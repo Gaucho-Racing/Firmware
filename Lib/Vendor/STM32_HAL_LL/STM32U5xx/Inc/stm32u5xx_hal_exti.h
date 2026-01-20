@@ -21,55 +21,59 @@
 #define STM32U5xx_HAL_EXTI_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @defgroup EXTI EXTI
- * @brief EXTI HAL module driver
- * @{
- */
+	/** @defgroup EXTI EXTI
+	 * @brief EXTI HAL module driver
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
+	/* Exported types ------------------------------------------------------------*/
 
-/** @defgroup EXTI_Exported_Types EXTI Exported Types
- * @{
- */
-typedef enum {
-	HAL_EXTI_COMMON_CB_ID = 0x00U,
-	HAL_EXTI_RISING_CB_ID = 0x01U,
-	HAL_EXTI_FALLING_CB_ID = 0x02U,
-} EXTI_CallbackIDTypeDef;
+	/** @defgroup EXTI_Exported_Types EXTI Exported Types
+	 * @{
+	 */
+	typedef enum
+	{
+		HAL_EXTI_COMMON_CB_ID = 0x00U,
+		HAL_EXTI_RISING_CB_ID = 0x01U,
+		HAL_EXTI_FALLING_CB_ID = 0x02U,
+	} EXTI_CallbackIDTypeDef;
 
-/**
- * @brief  EXTI Handle structure definition
- */
-typedef struct {
-	uint32_t Line;		       /*!<  Exti line number */
-	void (*RisingCallback)(void);  /*!<  Exti rising callback */
-	void (*FallingCallback)(void); /*!<  Exti falling callback */
-} EXTI_HandleTypeDef;
+	/**
+	 * @brief  EXTI Handle structure definition
+	 */
+	typedef struct
+	{
+		uint32_t Line;		       /*!<  Exti line number */
+		void (*RisingCallback)(void);  /*!<  Exti rising callback */
+		void (*FallingCallback)(void); /*!<  Exti falling callback */
+	} EXTI_HandleTypeDef;
 
-/**
- * @brief  EXTI Configuration structure definition
- */
-typedef struct {
-	uint32_t Line;	  /*!< The Exti line to be configured. This parameter
-			       can be a value of @ref EXTI_Line */
-	uint32_t Mode;	  /*!< The Exit Mode to be configured for a core.
-			       This parameter can be a combination of @ref EXTI_Mode */
-	uint32_t Trigger; /*!< The Exti Trigger to be configured. This parameter
-			       can be a value of @ref EXTI_Trigger */
-	uint32_t GPIOSel; /*!< The Exti GPIO multiplexer selection to be configured.
-			       This parameter is only possible for line 0 to 15. It
-			       can be a value of @ref EXTI_GPIOSel */
-} EXTI_ConfigTypeDef;
+	/**
+	 * @brief  EXTI Configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t Line;	  /*!< The Exti line to be configured. This parameter
+				       can be a value of @ref EXTI_Line */
+		uint32_t Mode;	  /*!< The Exit Mode to be configured for a core.
+				       This parameter can be a combination of @ref EXTI_Mode */
+		uint32_t Trigger; /*!< The Exti Trigger to be configured. This parameter
+				       can be a value of @ref EXTI_Trigger */
+		uint32_t GPIOSel; /*!< The Exti GPIO multiplexer selection to be configured.
+				       This parameter is only possible for line 0 to 15. It
+				       can be a value of @ref EXTI_GPIOSel */
+	} EXTI_ConfigTypeDef;
 
 /**
  * @}
@@ -289,72 +293,72 @@ typedef struct {
 
 #endif /* __ARM_FEATURE_CMSE */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @defgroup EXTI_Exported_Functions EXTI Exported Functions
- * @brief    EXTI Exported Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @defgroup EXTI_Exported_Functions EXTI Exported Functions
+	 * @brief    EXTI Exported Functions
+	 * @{
+	 */
 
-/** @defgroup EXTI_Exported_Functions_Group1 Configuration functions
- * @brief    Configuration functions
- * @{
- */
-/* Configuration functions ****************************************************/
-HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
-HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
-HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti);
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void));
-HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine);
-/**
- * @}
- */
+	/** @defgroup EXTI_Exported_Functions_Group1 Configuration functions
+	 * @brief    Configuration functions
+	 * @{
+	 */
+	/* Configuration functions ****************************************************/
+	HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
+	HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
+	HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti);
+	HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void));
+	HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine);
+	/**
+	 * @}
+	 */
 
-/** @defgroup EXTI_Exported_Functions_Group2 IO operation functions
- * @brief    IO operation functions
- * @{
- */
-/* IO operation functions *****************************************************/
-void HAL_EXTI_IRQHandler(const EXTI_HandleTypeDef *hexti);
-uint32_t HAL_EXTI_GetPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge);
-void HAL_EXTI_ClearPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge);
-void HAL_EXTI_GenerateSWI(const EXTI_HandleTypeDef *hexti);
+	/** @defgroup EXTI_Exported_Functions_Group2 IO operation functions
+	 * @brief    IO operation functions
+	 * @{
+	 */
+	/* IO operation functions *****************************************************/
+	void HAL_EXTI_IRQHandler(const EXTI_HandleTypeDef *hexti);
+	uint32_t HAL_EXTI_GetPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge);
+	void HAL_EXTI_ClearPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge);
+	void HAL_EXTI_GenerateSWI(const EXTI_HandleTypeDef *hexti);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup EXTI_Exported_Functions_Group3 EXTI line attributes management
- * functions
- * @{
- */
+	/** @addtogroup EXTI_Exported_Functions_Group3 EXTI line attributes management
+	 * functions
+	 * @{
+	 */
 
-/* EXTI line attributes management functions **********************************/
-void HAL_EXTI_ConfigLineAttributes(uint32_t ExtiLine, uint32_t LineAttributes);
-HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine, uint32_t *pLineAttributes);
+	/* EXTI line attributes management functions **********************************/
+	void HAL_EXTI_ConfigLineAttributes(uint32_t ExtiLine, uint32_t LineAttributes);
+	HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine, uint32_t *pLineAttributes);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-void HAL_EXTI_LockAttributes(void);
-uint32_t HAL_EXTI_GetLockAttributes(void);
+	void HAL_EXTI_LockAttributes(void);
+	uint32_t HAL_EXTI_GetLockAttributes(void);
 #endif /* __ARM_FEATURE_CMSE */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

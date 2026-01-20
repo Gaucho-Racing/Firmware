@@ -21,7 +21,8 @@
 #define STM32U5xx_LL_SDMMC_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -31,121 +32,127 @@ extern "C" {
  * @{
  */
 #if defined(SDMMC1) || defined(SDMMC2)
-/** @addtogroup SDMMC_LL
- * @{
- */
+	/** @addtogroup SDMMC_LL
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup SDMMC_LL_Exported_Types SDMMC_LL Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup SDMMC_LL_Exported_Types SDMMC_LL Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  SDMMC Configuration Structure definition
- */
-typedef struct {
-	uint32_t ClockEdge; /*!< Specifies the SDMMC_CCK clock transition on
-			       which Data and Command change. This parameter can
-			       be a value of @ref SDMMC_LL_Clock_Edge */
+	/**
+	 * @brief  SDMMC Configuration Structure definition
+	 */
+	typedef struct
+	{
+		uint32_t ClockEdge; /*!< Specifies the SDMMC_CCK clock transition on
+				       which Data and Command change. This parameter can
+				       be a value of @ref SDMMC_LL_Clock_Edge */
 
-	uint32_t ClockPowerSave; /*!< Specifies whether SDMMC Clock output is
-				    enabled or disabled when the bus is idle.
-				      This parameter can be a value of @ref
-				    SDMMC_LL_Clock_Power_Save           */
+		uint32_t ClockPowerSave; /*!< Specifies whether SDMMC Clock output is
+					    enabled or disabled when the bus is idle.
+					      This parameter can be a value of @ref
+					    SDMMC_LL_Clock_Power_Save           */
 
-	uint32_t BusWide; /*!< Specifies the SDMMC bus width.
-			       This parameter can be a value of @ref
-			     SDMMC_LL_Bus_Wide                   */
+		uint32_t BusWide; /*!< Specifies the SDMMC bus width.
+				       This parameter can be a value of @ref
+				     SDMMC_LL_Bus_Wide                   */
 
-	uint32_t HardwareFlowControl; /*!< Specifies whether the SDMMC hardware
-					 flow control is enabled or disabled.
-					   This parameter can be a value of @ref
-					 SDMMC_LL_Hardware_Flow_Control      */
+		uint32_t HardwareFlowControl; /*!< Specifies whether the SDMMC hardware
+						 flow control is enabled or disabled.
+						   This parameter can be a value of @ref
+						 SDMMC_LL_Hardware_Flow_Control      */
 
-	uint32_t ClockDiv; /*!< Specifies the clock frequency of the SDMMC
-			      controller. This parameter can be a value between
-			      Min_Data = 0 and Max_Data = 1023   */
+		uint32_t ClockDiv; /*!< Specifies the clock frequency of the SDMMC
+				      controller. This parameter can be a value between
+				      Min_Data = 0 and Max_Data = 1023   */
 
 #if (USE_SD_TRANSCEIVER != 0U) || (USE_SDIO_TRANSCEIVER != 0U)
-	uint32_t TranceiverPresent; /*!< Specifies if there is a 1V8
-				       Transceiver/Switcher. This parameter can be a
-				       value of @ref SDMMC_LL_TRANSCEIVER_PRESENT */
-#endif				    /* USE_SD_TRANSCEIVER || USE_SDIO_TRANSCEIVER */
-} SDMMC_InitTypeDef;
+		uint32_t TranceiverPresent; /*!< Specifies if there is a 1V8
+					       Transceiver/Switcher. This parameter can be a
+					       value of @ref SDMMC_LL_TRANSCEIVER_PRESENT */
+#endif					    /* USE_SD_TRANSCEIVER || USE_SDIO_TRANSCEIVER */
+	} SDMMC_InitTypeDef;
 
-/**
- * @brief  SDMMC Command Control structure
- */
-typedef struct {
-	uint32_t Argument; /*!< Specifies the SDMMC command argument which is
-			      sent to a card as part of a command message. If a
-			      command contains an argument, it must be loaded
-			      into this register before writing the command to
-			      the command register.              */
+	/**
+	 * @brief  SDMMC Command Control structure
+	 */
+	typedef struct
+	{
+		uint32_t Argument; /*!< Specifies the SDMMC command argument which is
+				      sent to a card as part of a command message. If a
+				      command contains an argument, it must be loaded
+				      into this register before writing the command to
+				      the command register.              */
 
-	uint32_t CmdIndex; /*!< Specifies the SDMMC command index. It must be
-			      Min_Data = 0 and Max_Data = 64 */
+		uint32_t CmdIndex; /*!< Specifies the SDMMC command index. It must be
+				      Min_Data = 0 and Max_Data = 64 */
 
-	uint32_t Response; /*!< Specifies the SDMMC response type.
-				This parameter can be a value of @ref
-			      SDMMC_LL_Response_Type         */
-
-	uint32_t WaitForInterrupt; /*!< Specifies whether SDMMC wait for
-				      interrupt request is enabled or disabled.
+		uint32_t Response; /*!< Specifies the SDMMC response type.
 					This parameter can be a value of @ref
-				      SDMMC_LL_Wait_Interrupt_State  */
+				      SDMMC_LL_Response_Type         */
 
-	uint32_t CPSM; /*!< Specifies whether SDMMC Command path state machine
-			  (CPSM) is enabled or disabled. This parameter can be a
-			  value of @ref SDMMC_LL_CPSM_State            */
-} SDMMC_CmdInitTypeDef;
+		uint32_t WaitForInterrupt; /*!< Specifies whether SDMMC wait for
+					      interrupt request is enabled or disabled.
+						This parameter can be a value of @ref
+					      SDMMC_LL_Wait_Interrupt_State  */
 
-/**
- * @brief  SDMMC Data Control structure
- */
-typedef struct {
-	uint32_t DataTimeOut; /*!< Specifies the data timeout period in card bus
-				 clock periods.  */
+		uint32_t CPSM; /*!< Specifies whether SDMMC Command path state machine
+				  (CPSM) is enabled or disabled. This parameter can be a
+				  value of @ref SDMMC_LL_CPSM_State            */
+	} SDMMC_CmdInitTypeDef;
 
-	uint32_t DataLength; /*!< Specifies the number of data bytes to be
-				transferred.         */
+	/**
+	 * @brief  SDMMC Data Control structure
+	 */
+	typedef struct
+	{
+		uint32_t DataTimeOut; /*!< Specifies the data timeout period in card bus
+					 clock periods.  */
 
-	uint32_t DataBlockSize; /*!< Specifies the data block size for block
-				   transfer. This parameter can be a value of
-				   @ref SDMMC_LL_Data_Block_Size    */
+		uint32_t DataLength; /*!< Specifies the number of data bytes to be
+					transferred.         */
 
-	uint32_t TransferDir; /*!< Specifies the data transfer direction, whether the
-				 transfer is a read or write. This parameter can be a
-				 value of @ref SDMMC_LL_Transfer_Direction */
+		uint32_t DataBlockSize; /*!< Specifies the data block size for block
+					   transfer. This parameter can be a value of
+					   @ref SDMMC_LL_Data_Block_Size    */
 
-	uint32_t TransferMode; /*!< Specifies whether data transfer is in stream
-				  or block mode. This parameter can be a value
-				  of @ref SDMMC_LL_Transfer_Type      */
+		uint32_t TransferDir; /*!< Specifies the data transfer direction, whether the
+					 transfer is a read or write. This parameter can be a
+					 value of @ref SDMMC_LL_Transfer_Direction */
 
-	uint32_t DPSM; /*!< Specifies whether SDMMC Data path state machine
-			  (DPSM) is enabled or disabled. This parameter can be a
-			  value of @ref SDMMC_LL_DPSM_State         */
-} SDMMC_DataInitTypeDef;
+		uint32_t TransferMode; /*!< Specifies whether data transfer is in stream
+					  or block mode. This parameter can be a value
+					  of @ref SDMMC_LL_Transfer_Type      */
 
-/** @defgroup SDEx_Exported_Types_Group1 SD Card Internal DMA Buffer structure
- * @{
- */
-typedef struct {
-	__IO uint32_t IDMALAR;	 /*!< SDMMC DMA linked list configuration register  */
-	__IO uint32_t IDMABASER; /*!< SDMMC DMA buffer base address register */
-	__IO uint32_t IDMABSIZE; /*!< SDMMC DMA buffer size register */
-} SDMMC_DMALinkNodeTypeDef;
+		uint32_t DPSM; /*!< Specifies whether SDMMC Data path state machine
+				  (DPSM) is enabled or disabled. This parameter can be a
+				  value of @ref SDMMC_LL_DPSM_State         */
+	} SDMMC_DataInitTypeDef;
 
-typedef struct {
-	uint32_t BufferAddress; /*!<  Node Buffer address */
-	uint32_t BufferSize;	/*!<  Node Buffer size    */
-} SDMMC_DMALinkNodeConfTypeDef;
+	/** @defgroup SDEx_Exported_Types_Group1 SD Card Internal DMA Buffer structure
+	 * @{
+	 */
+	typedef struct
+	{
+		__IO uint32_t IDMALAR;	 /*!< SDMMC DMA linked list configuration register  */
+		__IO uint32_t IDMABASER; /*!< SDMMC DMA buffer base address register */
+		__IO uint32_t IDMABSIZE; /*!< SDMMC DMA buffer size register */
+	} SDMMC_DMALinkNodeTypeDef;
 
-typedef struct {
-	SDMMC_DMALinkNodeTypeDef *pHeadNode; /*!<  Linked List Node Head */
-	SDMMC_DMALinkNodeTypeDef *pTailNode; /*!<  Linked List Node Head */
-	uint32_t NodesCounter;		     /*!<  Node is ready for execution */
-} SDMMC_DMALinkedListTypeDef;
+	typedef struct
+	{
+		uint32_t BufferAddress; /*!<  Node Buffer address */
+		uint32_t BufferSize;	/*!<  Node Buffer size    */
+	} SDMMC_DMALinkNodeConfTypeDef;
+
+	typedef struct
+	{
+		SDMMC_DMALinkNodeTypeDef *pHeadNode; /*!<  Linked List Node Head */
+		SDMMC_DMALinkNodeTypeDef *pTailNode; /*!<  Linked List Node Head */
+		uint32_t NodesCounter;		     /*!<  Node is ready for execution */
+	} SDMMC_DMALinkedListTypeDef;
 /**
  * @}
  */
@@ -1280,136 +1287,136 @@ typedef struct {
  */
 #define __SDMMC_CMDSTOP_DISABLE(__INSTANCE__) ((__INSTANCE__)->CMD &= ~SDMMC_CMD_CMDSTOP)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup SDMMC_LL_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup SDMMC_LL_Exported_Functions
+	 * @{
+	 */
 
-/* Initialization/de-initialization functions
- * **********************************/
-/** @addtogroup HAL_SDMMC_LL_Group1
- * @{
- */
-HAL_StatusTypeDef SDMMC_Init(SDMMC_TypeDef *SDMMCx, SDMMC_InitTypeDef Init);
-/**
- * @}
- */
+	/* Initialization/de-initialization functions
+	 * **********************************/
+	/** @addtogroup HAL_SDMMC_LL_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef SDMMC_Init(SDMMC_TypeDef *SDMMCx, SDMMC_InitTypeDef Init);
+	/**
+	 * @}
+	 */
 
-/* I/O operation functions
- * *****************************************************/
-/** @addtogroup HAL_SDMMC_LL_Group2
- * @{
- */
-uint32_t SDMMC_ReadFIFO(const SDMMC_TypeDef *SDMMCx);
-HAL_StatusTypeDef SDMMC_WriteFIFO(SDMMC_TypeDef *SDMMCx, uint32_t *pWriteData);
-/**
- * @}
- */
+	/* I/O operation functions
+	 * *****************************************************/
+	/** @addtogroup HAL_SDMMC_LL_Group2
+	 * @{
+	 */
+	uint32_t SDMMC_ReadFIFO(const SDMMC_TypeDef *SDMMCx);
+	HAL_StatusTypeDef SDMMC_WriteFIFO(SDMMC_TypeDef *SDMMCx, uint32_t *pWriteData);
+	/**
+	 * @}
+	 */
 
-/* Peripheral Control functions
- * ************************************************/
-/** @addtogroup HAL_SDMMC_LL_Group3
- * @{
- */
-HAL_StatusTypeDef SDMMC_PowerState_ON(SDMMC_TypeDef *SDMMCx);
-HAL_StatusTypeDef SDMMC_PowerState_Cycle(SDMMC_TypeDef *SDMMCx);
-HAL_StatusTypeDef SDMMC_PowerState_OFF(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_GetPowerState(const SDMMC_TypeDef *SDMMCx);
+	/* Peripheral Control functions
+	 * ************************************************/
+	/** @addtogroup HAL_SDMMC_LL_Group3
+	 * @{
+	 */
+	HAL_StatusTypeDef SDMMC_PowerState_ON(SDMMC_TypeDef *SDMMCx);
+	HAL_StatusTypeDef SDMMC_PowerState_Cycle(SDMMC_TypeDef *SDMMCx);
+	HAL_StatusTypeDef SDMMC_PowerState_OFF(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_GetPowerState(const SDMMC_TypeDef *SDMMCx);
 
-/* Command path state machine (CPSM) management functions */
-HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx, const SDMMC_CmdInitTypeDef *Command);
-uint8_t SDMMC_GetCommandResponse(const SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_GetResponse(const SDMMC_TypeDef *SDMMCx, uint32_t Response);
+	/* Command path state machine (CPSM) management functions */
+	HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx, const SDMMC_CmdInitTypeDef *Command);
+	uint8_t SDMMC_GetCommandResponse(const SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_GetResponse(const SDMMC_TypeDef *SDMMCx, uint32_t Response);
 
-/* Data path state machine (DPSM) management functions */
-HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx, const SDMMC_DataInitTypeDef *Data);
-uint32_t SDMMC_GetDataCounter(const SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_GetFIFOCount(const SDMMC_TypeDef *SDMMCx);
+	/* Data path state machine (DPSM) management functions */
+	HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx, const SDMMC_DataInitTypeDef *Data);
+	uint32_t SDMMC_GetDataCounter(const SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_GetFIFOCount(const SDMMC_TypeDef *SDMMCx);
 
-/* SDMMC Cards mode management functions */
-HAL_StatusTypeDef SDMMC_SetSDMMCReadWaitMode(SDMMC_TypeDef *SDMMCx, uint32_t SDMMC_ReadWaitMode);
-/**
- * @}
- */
+	/* SDMMC Cards mode management functions */
+	HAL_StatusTypeDef SDMMC_SetSDMMCReadWaitMode(SDMMC_TypeDef *SDMMCx, uint32_t SDMMC_ReadWaitMode);
+	/**
+	 * @}
+	 */
 
-/* SDMMC Commands management functions
- * ******************************************/
-/** @addtogroup HAL_SDMMC_LL_Group4
- * @{
- */
-uint32_t SDMMC_CmdBlockLength(SDMMC_TypeDef *SDMMCx, uint32_t BlockSize);
-uint32_t SDMMC_CmdReadSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd);
-uint32_t SDMMC_CmdReadMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd);
-uint32_t SDMMC_CmdWriteSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd);
-uint32_t SDMMC_CmdWriteMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd);
-uint32_t SDMMC_CmdEraseStartAdd(SDMMC_TypeDef *SDMMCx, uint32_t StartAdd);
-uint32_t SDMMC_CmdSDEraseStartAdd(SDMMC_TypeDef *SDMMCx, uint32_t StartAdd);
-uint32_t SDMMC_CmdEraseEndAdd(SDMMC_TypeDef *SDMMCx, uint32_t EndAdd);
-uint32_t SDMMC_CmdSDEraseEndAdd(SDMMC_TypeDef *SDMMCx, uint32_t EndAdd);
-uint32_t SDMMC_CmdErase(SDMMC_TypeDef *SDMMCx, uint32_t EraseType);
-uint32_t SDMMC_CmdStopTransfer(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdSelDesel(SDMMC_TypeDef *SDMMCx, uint32_t Addr);
-uint32_t SDMMC_CmdGoIdleState(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdOperCond(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdAppCommand(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdAppOperCommand(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdBusWidth(SDMMC_TypeDef *SDMMCx, uint32_t BusWidth);
-uint32_t SDMMC_CmdSendSCR(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdSendCID(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdSendCSD(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdSetRelAdd(SDMMC_TypeDef *SDMMCx, uint16_t *pRCA);
-uint32_t SDMMC_CmdSetRelAddMmc(SDMMC_TypeDef *SDMMCx, uint16_t RCA);
-uint32_t SDMMC_CmdSleepMmc(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdSendStatus(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdStatusRegister(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdVoltageSwitch(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_CmdOpCondition(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdSwitch(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdSendEXTCSD(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdBlockCount(SDMMC_TypeDef *SDMMCx, uint32_t BlockCount);
-uint32_t SDMMC_SDIO_CmdReadWriteDirect(SDMMC_TypeDef *SDMMCx, uint32_t Argument, uint8_t *pResponse);
-uint32_t SDMMC_SDIO_CmdReadWriteExtended(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
-uint32_t SDMMC_CmdSendOperationcondition(SDMMC_TypeDef *SDMMCx, uint32_t Argument, uint32_t *pResp);
-/**
- * @}
- */
+	/* SDMMC Commands management functions
+	 * ******************************************/
+	/** @addtogroup HAL_SDMMC_LL_Group4
+	 * @{
+	 */
+	uint32_t SDMMC_CmdBlockLength(SDMMC_TypeDef *SDMMCx, uint32_t BlockSize);
+	uint32_t SDMMC_CmdReadSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd);
+	uint32_t SDMMC_CmdReadMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd);
+	uint32_t SDMMC_CmdWriteSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd);
+	uint32_t SDMMC_CmdWriteMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd);
+	uint32_t SDMMC_CmdEraseStartAdd(SDMMC_TypeDef *SDMMCx, uint32_t StartAdd);
+	uint32_t SDMMC_CmdSDEraseStartAdd(SDMMC_TypeDef *SDMMCx, uint32_t StartAdd);
+	uint32_t SDMMC_CmdEraseEndAdd(SDMMC_TypeDef *SDMMCx, uint32_t EndAdd);
+	uint32_t SDMMC_CmdSDEraseEndAdd(SDMMC_TypeDef *SDMMCx, uint32_t EndAdd);
+	uint32_t SDMMC_CmdErase(SDMMC_TypeDef *SDMMCx, uint32_t EraseType);
+	uint32_t SDMMC_CmdStopTransfer(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdSelDesel(SDMMC_TypeDef *SDMMCx, uint32_t Addr);
+	uint32_t SDMMC_CmdGoIdleState(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdOperCond(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdAppCommand(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdAppOperCommand(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdBusWidth(SDMMC_TypeDef *SDMMCx, uint32_t BusWidth);
+	uint32_t SDMMC_CmdSendSCR(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdSendCID(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdSendCSD(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdSetRelAdd(SDMMC_TypeDef *SDMMCx, uint16_t *pRCA);
+	uint32_t SDMMC_CmdSetRelAddMmc(SDMMC_TypeDef *SDMMCx, uint16_t RCA);
+	uint32_t SDMMC_CmdSleepMmc(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdSendStatus(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdStatusRegister(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdVoltageSwitch(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_CmdOpCondition(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdSwitch(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdSendEXTCSD(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdBlockCount(SDMMC_TypeDef *SDMMCx, uint32_t BlockCount);
+	uint32_t SDMMC_SDIO_CmdReadWriteDirect(SDMMC_TypeDef *SDMMCx, uint32_t Argument, uint8_t *pResponse);
+	uint32_t SDMMC_SDIO_CmdReadWriteExtended(SDMMC_TypeDef *SDMMCx, uint32_t Argument);
+	uint32_t SDMMC_CmdSendOperationcondition(SDMMC_TypeDef *SDMMCx, uint32_t Argument, uint32_t *pResp);
+	/**
+	 * @}
+	 */
 
-/* SDMMC Responses management functions
- * *****************************************/
-/** @addtogroup HAL_SDMMC_LL_Group5
- * @{
- */
-uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint32_t Timeout);
-uint32_t SDMMC_GetCmdResp2(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_GetCmdResp3(SDMMC_TypeDef *SDMMCx);
-uint32_t SDMMC_GetCmdResp4(SDMMC_TypeDef *SDMMCx, uint32_t *pResp);
-uint32_t SDMMC_GetCmdResp5(SDMMC_TypeDef *SDMMCx, uint8_t SDIO_CMD, uint8_t *pData);
-uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint16_t *pRCA);
-uint32_t SDMMC_GetCmdResp7(SDMMC_TypeDef *SDMMCx);
-/**
- * @}
- */
+	/* SDMMC Responses management functions
+	 * *****************************************/
+	/** @addtogroup HAL_SDMMC_LL_Group5
+	 * @{
+	 */
+	uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint32_t Timeout);
+	uint32_t SDMMC_GetCmdResp2(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_GetCmdResp3(SDMMC_TypeDef *SDMMCx);
+	uint32_t SDMMC_GetCmdResp4(SDMMC_TypeDef *SDMMCx, uint32_t *pResp);
+	uint32_t SDMMC_GetCmdResp5(SDMMC_TypeDef *SDMMCx, uint8_t SDIO_CMD, uint8_t *pData);
+	uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint16_t *pRCA);
+	uint32_t SDMMC_GetCmdResp7(SDMMC_TypeDef *SDMMCx);
+	/**
+	 * @}
+	 */
 
-/* Linked List functions
- * *******************************************************/
-/** @addtogroup HAL_SDMMC_LL_Group6
- * @{
- */
-uint32_t SDMMC_DMALinkedList_BuildNode(SDMMC_DMALinkNodeTypeDef *pNode, const SDMMC_DMALinkNodeConfTypeDef *pNodeConf);
-uint32_t SDMMC_DMALinkedList_InsertNode(SDMMC_DMALinkedListTypeDef *pLinkedList, SDMMC_DMALinkNodeTypeDef *pPrevNode, SDMMC_DMALinkNodeTypeDef *pNode);
-uint32_t SDMMC_DMALinkedList_RemoveNode(SDMMC_DMALinkedListTypeDef *pLinkedList, SDMMC_DMALinkNodeTypeDef *pNode);
-uint32_t SDMMC_DMALinkedList_LockNode(SDMMC_DMALinkNodeTypeDef *pNode);
-uint32_t SDMMC_DMALinkedList_UnlockNode(SDMMC_DMALinkNodeTypeDef *pNode);
-uint32_t SDMMC_DMALinkedList_EnableCircularMode(SDMMC_DMALinkedListTypeDef *pLinkedList);
-uint32_t SDMMC_DMALinkedList_DisableCircularMode(SDMMC_DMALinkedListTypeDef *pLinkedList);
+	/* Linked List functions
+	 * *******************************************************/
+	/** @addtogroup HAL_SDMMC_LL_Group6
+	 * @{
+	 */
+	uint32_t SDMMC_DMALinkedList_BuildNode(SDMMC_DMALinkNodeTypeDef *pNode, const SDMMC_DMALinkNodeConfTypeDef *pNodeConf);
+	uint32_t SDMMC_DMALinkedList_InsertNode(SDMMC_DMALinkedListTypeDef *pLinkedList, SDMMC_DMALinkNodeTypeDef *pPrevNode, SDMMC_DMALinkNodeTypeDef *pNode);
+	uint32_t SDMMC_DMALinkedList_RemoveNode(SDMMC_DMALinkedListTypeDef *pLinkedList, SDMMC_DMALinkNodeTypeDef *pNode);
+	uint32_t SDMMC_DMALinkedList_LockNode(SDMMC_DMALinkNodeTypeDef *pNode);
+	uint32_t SDMMC_DMALinkedList_UnlockNode(SDMMC_DMALinkNodeTypeDef *pNode);
+	uint32_t SDMMC_DMALinkedList_EnableCircularMode(SDMMC_DMALinkedListTypeDef *pLinkedList);
+	uint32_t SDMMC_DMALinkedList_DisableCircularMode(SDMMC_DMALinkedListTypeDef *pLinkedList);
 /**
  * @}
  */

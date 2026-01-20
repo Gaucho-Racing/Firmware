@@ -89,19 +89,28 @@ ErrorStatus LL_LPTIM_DeInit(const LPTIM_TypeDef *LPTIMx)
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(LPTIMx));
 
-	if (LPTIMx == LPTIM1) {
+	if (LPTIMx == LPTIM1)
+	{
 		LL_APB3_GRP1_ForceReset(LL_APB3_GRP1_PERIPH_LPTIM1);
 		LL_APB3_GRP1_ReleaseReset(LL_APB3_GRP1_PERIPH_LPTIM1);
-	} else if (LPTIMx == LPTIM2) {
+	}
+	else if (LPTIMx == LPTIM2)
+	{
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_LPTIM2);
 		LL_APB1_GRP2_ReleaseReset(LL_APB1_GRP2_PERIPH_LPTIM2);
-	} else if (LPTIMx == LPTIM3) {
+	}
+	else if (LPTIMx == LPTIM3)
+	{
 		LL_APB3_GRP1_ForceReset(LL_APB3_GRP1_PERIPH_LPTIM3);
 		LL_APB3_GRP1_ReleaseReset(LL_APB3_GRP1_PERIPH_LPTIM3);
-	} else if (LPTIMx == LPTIM4) {
+	}
+	else if (LPTIMx == LPTIM4)
+	{
 		LL_APB3_GRP1_ForceReset(LL_APB3_GRP1_PERIPH_LPTIM4);
 		LL_APB3_GRP1_ReleaseReset(LL_APB3_GRP1_PERIPH_LPTIM4);
-	} else {
+	}
+	else
+	{
 		result = ERROR;
 	}
 
@@ -145,9 +154,12 @@ ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPT
 	/* The LPTIMx_CFGR register must only be modified when the LPTIM is
 	   disabled (ENABLE bit is reset to 0).
 	*/
-	if (LL_LPTIM_IsEnabled(LPTIMx) == 1UL) {
+	if (LL_LPTIM_IsEnabled(LPTIMx) == 1UL)
+	{
 		result = ERROR;
-	} else {
+	}
+	else
+	{
 		/* Set CKSEL bitfield according to ClockSource value */
 		/* Set PRESC bitfield according to Prescaler value */
 		/* Set WAVE bitfield according to Waveform value */

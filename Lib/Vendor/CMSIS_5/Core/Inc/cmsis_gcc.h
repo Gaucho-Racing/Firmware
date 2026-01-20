@@ -71,7 +71,8 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpacked"
 #pragma GCC diagnostic ignored "-Wattributes"
-struct __attribute__((packed)) T_UINT32 {
+struct __attribute__((packed)) T_UINT32
+{
 	uint32_t v;
 };
 #pragma GCC diagnostic pop
@@ -135,13 +136,15 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 {
 	extern void _start(void) __NO_RETURN;
 
-	typedef struct {
+	typedef struct
+	{
 		uint32_t const *src;
 		uint32_t *dest;
 		uint32_t wlen;
 	} __copy_table_t;
 
-	typedef struct {
+	typedef struct
+	{
 		uint32_t *dest;
 		uint32_t wlen;
 	} __zero_table_t;
@@ -151,14 +154,18 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 	extern const __zero_table_t __zero_table_start__;
 	extern const __zero_table_t __zero_table_end__;
 
-	for (__copy_table_t const *pTable = &__copy_table_start__; pTable < &__copy_table_end__; ++pTable) {
-		for (uint32_t i = 0u; i < pTable->wlen; ++i) {
+	for (__copy_table_t const *pTable = &__copy_table_start__; pTable < &__copy_table_end__; ++pTable)
+	{
+		for (uint32_t i = 0u; i < pTable->wlen; ++i)
+		{
 			pTable->dest[i] = pTable->src[i];
 		}
 	}
 
-	for (__zero_table_t const *pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable) {
-		for (uint32_t i = 0u; i < pTable->wlen; ++i) {
+	for (__zero_table_t const *pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable)
+	{
+		for (uint32_t i = 0u; i < pTable->wlen; ++i)
+		{
 			pTable->dest[i] = 0u;
 		}
 	}
@@ -331,7 +338,8 @@ __STATIC_FORCEINLINE int16_t __REVSH(int16_t value)
 __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
 	op2 %= 32U;
-	if (op2 == 0U) {
+	if (op2 == 0U)
+	{
 		return op1;
 	}
 	return (op1 >> op2) | (op1 << (32U - op2));
@@ -363,7 +371,8 @@ __STATIC_FORCEINLINE uint32_t __RBIT(uint32_t value)
 	uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
 
 	result = value; /* r will be reversed bits of v; first get LSB of v */
-	for (value >>= 1U; value != 0U; value >>= 1U) {
+	for (value >>= 1U; value != 0U; value >>= 1U)
+	{
 		result <<= 1U;
 		result |= value & 1U;
 		s--;
@@ -389,7 +398,8 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
 	   __builtin_clz, so it is non-zero". ARM GCC 7.3 and possibly earlier
 	   will optimise this test away, leaving a single CLZ instruction.
 	 */
-	if (value == 0U) {
+	if (value == 0U)
+	{
 		return 32U;
 	}
 	return __builtin_clz(value);
@@ -655,12 +665,16 @@ __STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr) { __ASM
  */
 __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
 {
-	if ((sat >= 1U) && (sat <= 32U)) {
+	if ((sat >= 1U) && (sat <= 32U))
+	{
 		const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
 		const int32_t min = -1 - max;
-		if (val > max) {
+		if (val > max)
+		{
 			return max;
-		} else if (val < min) {
+		}
+		else if (val < min)
+		{
 			return min;
 		}
 	}
@@ -676,11 +690,15 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
  */
 __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
-	if (sat <= 31U) {
+	if (sat <= 31U)
+	{
 		const uint32_t max = ((1U << sat) - 1U);
-		if (val > (int32_t)max) {
+		if (val > (int32_t)max)
+		{
 			return max;
-		} else if (val < 0) {
+		}
+		else if (val < 0)
+		{
 			return 0U;
 		}
 	}
@@ -1814,9 +1832,12 @@ __STATIC_FORCEINLINE uint32_t __SXTB16(uint32_t op1)
 __STATIC_FORCEINLINE uint32_t __SXTB16_RORn(uint32_t op1, uint32_t rotate)
 {
 	uint32_t result;
-	if (__builtin_constant_p(rotate) && ((rotate == 8U) || (rotate == 16U) || (rotate == 24U))) {
+	if (__builtin_constant_p(rotate) && ((rotate == 8U) || (rotate == 16U) || (rotate == 24U)))
+	{
 		__ASM volatile("sxtb16 %0, %1, ROR %2" : "=r"(result) : "r"(op1), "i"(rotate));
-	} else {
+	}
+	else
+	{
 		result = __SXTB16(__ROR(op1, rotate));
 	}
 	return result;
@@ -1833,9 +1854,12 @@ __STATIC_FORCEINLINE uint32_t __SXTAB16(uint32_t op1, uint32_t op2)
 __STATIC_FORCEINLINE uint32_t __SXTAB16_RORn(uint32_t op1, uint32_t op2, uint32_t rotate)
 {
 	uint32_t result;
-	if (__builtin_constant_p(rotate) && ((rotate == 8U) || (rotate == 16U) || (rotate == 24U))) {
+	if (__builtin_constant_p(rotate) && ((rotate == 8U) || (rotate == 16U) || (rotate == 24U)))
+	{
 		__ASM volatile("sxtab16 %0, %1, %2, ROR %3" : "=r"(result) : "r"(op1), "r"(op2), "i"(rotate));
-	} else {
+	}
+	else
+	{
 		result = __SXTAB16(op1, __ROR(op2, rotate));
 	}
 	return result;
@@ -1875,7 +1899,8 @@ __STATIC_FORCEINLINE uint32_t __SMLADX(uint32_t op1, uint32_t op2, uint32_t op3)
 
 __STATIC_FORCEINLINE uint64_t __SMLALD(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;
@@ -1892,7 +1917,8 @@ __STATIC_FORCEINLINE uint64_t __SMLALD(uint32_t op1, uint32_t op2, uint64_t acc)
 
 __STATIC_FORCEINLINE uint64_t __SMLALDX(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;
@@ -1941,7 +1967,8 @@ __STATIC_FORCEINLINE uint32_t __SMLSDX(uint32_t op1, uint32_t op2, uint32_t op3)
 
 __STATIC_FORCEINLINE uint64_t __SMLSLD(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;
@@ -1958,7 +1985,8 @@ __STATIC_FORCEINLINE uint64_t __SMLSLD(uint32_t op1, uint32_t op2, uint64_t acc)
 
 __STATIC_FORCEINLINE uint64_t __SMLSLDX(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;

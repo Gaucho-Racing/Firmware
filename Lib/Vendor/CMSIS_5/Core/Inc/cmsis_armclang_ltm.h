@@ -65,7 +65,8 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpacked"
 /*lint -esym(9058, T_UINT32)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT32 */
-struct __attribute__((packed)) T_UINT32 {
+struct __attribute__((packed)) T_UINT32
+{
 	uint32_t v;
 };
 #pragma clang diagnostic pop
@@ -258,7 +259,8 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S(uint32_t *stackTop) { *((uint64_t
 __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
 	op2 %= 32U;
-	if (op2 == 0U) {
+	if (op2 == 0U)
+	{
 		return op1;
 	}
 	return (op1 >> op2) | (op1 << (32U - op2));
@@ -299,7 +301,8 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
 	   earlier will optimise this test away, leaving a single CLZ
 	   instruction.
 	 */
-	if (value == 0U) {
+	if (value == 0U)
+	{
 		return 32U;
 	}
 	return __builtin_clz(value);
@@ -488,12 +491,16 @@ __STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr) { __ASM
  */
 __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
 {
-	if ((sat >= 1U) && (sat <= 32U)) {
+	if ((sat >= 1U) && (sat <= 32U))
+	{
 		const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
 		const int32_t min = -1 - max;
-		if (val > max) {
+		if (val > max)
+		{
 			return max;
-		} else if (val < min) {
+		}
+		else if (val < min)
+		{
 			return min;
 		}
 	}
@@ -509,11 +516,15 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
  */
 __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
-	if (sat <= 31U) {
+	if (sat <= 31U)
+	{
 		const uint32_t max = ((1U << sat) - 1U);
-		if (val > (int32_t)max) {
+		if (val > (int32_t)max)
+		{
 			return max;
-		} else if (val < 0) {
+		}
+		else if (val < 0)
+		{
 			return 0U;
 		}
 	}
@@ -1631,7 +1642,8 @@ __STATIC_FORCEINLINE uint32_t __SMLADX(uint32_t op1, uint32_t op2, uint32_t op3)
 
 __STATIC_FORCEINLINE uint64_t __SMLALD(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;
@@ -1648,7 +1660,8 @@ __STATIC_FORCEINLINE uint64_t __SMLALD(uint32_t op1, uint32_t op2, uint64_t acc)
 
 __STATIC_FORCEINLINE uint64_t __SMLALDX(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;
@@ -1697,7 +1710,8 @@ __STATIC_FORCEINLINE uint32_t __SMLSDX(uint32_t op1, uint32_t op2, uint32_t op3)
 
 __STATIC_FORCEINLINE uint64_t __SMLSLD(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;
@@ -1714,7 +1728,8 @@ __STATIC_FORCEINLINE uint64_t __SMLSLD(uint32_t op1, uint32_t op2, uint64_t acc)
 
 __STATIC_FORCEINLINE uint64_t __SMLSLDX(uint32_t op1, uint32_t op2, uint64_t acc)
 {
-	union llreg_u {
+	union llreg_u
+	{
 		uint32_t w32[2];
 		uint64_t w64;
 	} llr;

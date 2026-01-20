@@ -149,7 +149,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	assert_param(IS_SPI_ALL_INSTANCE(SPIx));
 
 #if defined(SPI1)
-	if (SPIx == SPI1) {
+	if (SPIx == SPI1)
+	{
 		/* Force reset of SPI clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_SPI1);
 
@@ -161,7 +162,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI1 */
 #if defined(SPI2)
-	if (SPIx == SPI2) {
+	if (SPIx == SPI2)
+	{
 		/* Force reset of SPI clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_SPI2);
 
@@ -173,7 +175,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI2 */
 #if defined(SPI3)
-	if (SPIx == SPI3) {
+	if (SPIx == SPI3)
+	{
 		/* Force reset of SPI clock */
 		LL_APB3_GRP1_ForceReset(LL_APB3_GRP1_PERIPH_SPI3);
 
@@ -185,7 +188,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI3 */
 #if defined(SPI4)
-	if (SPIx == SPI4) {
+	if (SPIx == SPI4)
+	{
 		/* Force reset of SPI clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_SPI4);
 
@@ -197,7 +201,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI4 */
 #if defined(SPI5)
-	if (SPIx == SPI5) {
+	if (SPIx == SPI5)
+	{
 		/* Force reset of SPI clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_SPI5);
 
@@ -209,7 +214,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI5 */
 #if defined(SPI6)
-	if (SPIx == SPI6) {
+	if (SPIx == SPI6)
+	{
 		/* Force reset of SPI clock */
 		LL_APB5_GRP1_ForceReset(LL_APB5_GRP1_PERIPH_SPI6);
 
@@ -256,7 +262,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 	assert_param(IS_LL_SPI_CRCCALCULATION(SPI_InitStruct->CRCCalculation));
 
 	/* Check the SPI instance is not enabled */
-	if (LL_SPI_IsEnabled(SPIx) == 0x00000000UL) {
+	if (LL_SPI_IsEnabled(SPIx) == 0x00000000UL)
+	{
 		/*---------------------------- SPIx CFG1 Configuration
 		 * ------------------------ Configure SPIx CFG1 with parameters:
 		 * - Master Baud Rate       : SPI_CFG1_MBR[2:0] bits &
@@ -273,7 +280,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 		/* Checks to setup Internal SS signal level and avoid a MODF
 		 * Error */
 		if ((tmp_nss == LL_SPI_NSS_SOFT) &&
-		    (((tmp_nss_polarity == LL_SPI_NSS_POLARITY_LOW) && (tmp_mode == LL_SPI_MODE_MASTER)) || ((tmp_nss_polarity == LL_SPI_NSS_POLARITY_HIGH) && (tmp_mode == LL_SPI_MODE_SLAVE)))) {
+		    (((tmp_nss_polarity == LL_SPI_NSS_POLARITY_LOW) && (tmp_mode == LL_SPI_MODE_MASTER)) || ((tmp_nss_polarity == LL_SPI_NSS_POLARITY_HIGH) && (tmp_mode == LL_SPI_MODE_SLAVE))))
+		{
 			LL_SPI_SetInternalSSLevel(SPIx, LL_SPI_SS_LEVEL_HIGH);
 		}
 
@@ -300,7 +308,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 		 * ---------------------- Configure SPIx CRCPOLY with parameter:
 		 * - CRCPoly                : CRCPOLY[31:0] bits
 		 */
-		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE) {
+		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE)
+		{
 			assert_param(IS_LL_SPI_CRC_POLYNOMIAL(SPI_InitStruct->CRCPoly));
 			LL_SPI_SetCRCPolynomial(SPIx, SPI_InitStruct->CRCPoly);
 		}

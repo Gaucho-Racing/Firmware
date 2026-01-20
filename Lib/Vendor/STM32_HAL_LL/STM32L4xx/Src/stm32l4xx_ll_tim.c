@@ -155,61 +155,75 @@ ErrorStatus LL_TIM_DeInit(const TIM_TypeDef *TIMx)
 	/* Check the parameters */
 	assert_param(IS_TIM_INSTANCE(TIMx));
 
-	if (TIMx == TIM1) {
+	if (TIMx == TIM1)
+	{
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_TIM1);
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_TIM1);
-	} else if (TIMx == TIM2) {
+	}
+	else if (TIMx == TIM2)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_TIM2);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_TIM2);
 	}
 #if defined(TIM3)
-	else if (TIMx == TIM3) {
+	else if (TIMx == TIM3)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_TIM3);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_TIM3);
 	}
 #endif /* TIM3 */
 #if defined(TIM4)
-	else if (TIMx == TIM4) {
+	else if (TIMx == TIM4)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_TIM4);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_TIM4);
 	}
 #endif /* TIM4 */
 #if defined(TIM5)
-	else if (TIMx == TIM5) {
+	else if (TIMx == TIM5)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_TIM5);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_TIM5);
 	}
 #endif /* TIM5 */
-	else if (TIMx == TIM6) {
+	else if (TIMx == TIM6)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_TIM6);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_TIM6);
 	}
 #if defined(TIM7)
-	else if (TIMx == TIM7) {
+	else if (TIMx == TIM7)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_TIM7);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_TIM7);
 	}
 #endif /* TIM7 */
 #if defined(TIM8)
-	else if (TIMx == TIM8) {
+	else if (TIMx == TIM8)
+	{
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_TIM8);
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_TIM8);
 	}
 #endif /* TIM8 */
-	else if (TIMx == TIM15) {
+	else if (TIMx == TIM15)
+	{
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_TIM15);
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_TIM15);
-	} else if (TIMx == TIM16) {
+	}
+	else if (TIMx == TIM16)
+	{
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_TIM16);
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_TIM16);
 	}
 #if defined(TIM17)
-	else if (TIMx == TIM17) {
+	else if (TIMx == TIM17)
+	{
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_TIM17);
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_TIM17);
 	}
 #endif /* TIM17 */
-	else {
+	else
+	{
 		result = ERROR;
 	}
 
@@ -253,12 +267,14 @@ ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx, const LL_TIM_InitTypeDef *TIM_InitStr
 
 	tmpcr1 = LL_TIM_ReadReg(TIMx, CR1);
 
-	if (IS_TIM_COUNTER_MODE_SELECT_INSTANCE(TIMx)) {
+	if (IS_TIM_COUNTER_MODE_SELECT_INSTANCE(TIMx))
+	{
 		/* Select the Counter Mode */
 		MODIFY_REG(tmpcr1, (TIM_CR1_DIR | TIM_CR1_CMS), TIM_InitStruct->CounterMode);
 	}
 
-	if (IS_TIM_CLOCK_DIVISION_INSTANCE(TIMx)) {
+	if (IS_TIM_CLOCK_DIVISION_INSTANCE(TIMx))
+	{
 		/* Set the clock division */
 		MODIFY_REG(tmpcr1, TIM_CR1_CKD, TIM_InitStruct->ClockDivision);
 	}
@@ -272,7 +288,8 @@ ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx, const LL_TIM_InitTypeDef *TIM_InitStr
 	/* Set the Prescaler value */
 	LL_TIM_SetPrescaler(TIMx, TIM_InitStruct->Prescaler);
 
-	if (IS_TIM_REPETITION_COUNTER_INSTANCE(TIMx)) {
+	if (IS_TIM_REPETITION_COUNTER_INSTANCE(TIMx))
+	{
 		/* Set the Repetition Counter value */
 		LL_TIM_SetRepetitionCounter(TIMx, TIM_InitStruct->RepetitionCounter);
 	}
@@ -324,7 +341,8 @@ ErrorStatus LL_TIM_OC_Init(TIM_TypeDef *TIMx, uint32_t Channel, const LL_TIM_OC_
 {
 	ErrorStatus result = ERROR;
 
-	switch (Channel) {
+	switch (Channel)
+	{
 		case LL_TIM_CHANNEL_CH1:
 			result = OC1Config(TIMx, TIM_OC_InitStruct);
 			break;
@@ -384,7 +402,8 @@ ErrorStatus LL_TIM_IC_Init(TIM_TypeDef *TIMx, uint32_t Channel, const LL_TIM_IC_
 {
 	ErrorStatus result = ERROR;
 
-	switch (Channel) {
+	switch (Channel)
+	{
 		case LL_TIM_CHANNEL_CH1:
 			result = IC1Config(TIMx, TIM_IC_InitStruct);
 			break;
@@ -670,7 +689,8 @@ ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx, const LL_TIM_BDTR_InitTypeDef *T
 	MODIFY_REG(tmpbdtr, TIM_BDTR_AOE, TIM_BDTRInitStruct->AutomaticOutput);
 	MODIFY_REG(tmpbdtr, TIM_BDTR_BKF, TIM_BDTRInitStruct->BreakFilter);
 
-	if (IS_TIM_BKIN2_INSTANCE(TIMx)) {
+	if (IS_TIM_BKIN2_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_BREAK2_STATE(TIM_BDTRInitStruct->Break2State));
 		assert_param(IS_LL_TIM_BREAK2_POLARITY(TIM_BDTRInitStruct->Break2Polarity));
 		assert_param(IS_LL_TIM_BREAK2_FILTER(TIM_BDTRInitStruct->Break2Filter));
@@ -743,7 +763,8 @@ static ErrorStatus OC1Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM
 	/* Set the Output State */
 	MODIFY_REG(tmpccer, TIM_CCER_CC1E, TIM_OCInitStruct->OCState);
 
-	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
+	if (IS_TIM_BREAK_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
 		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
@@ -822,7 +843,8 @@ static ErrorStatus OC2Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM
 	/* Set the Output State */
 	MODIFY_REG(tmpccer, TIM_CCER_CC2E, TIM_OCInitStruct->OCState << 4U);
 
-	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
+	if (IS_TIM_BREAK_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
 		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
@@ -901,7 +923,8 @@ static ErrorStatus OC3Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM
 	/* Set the Output State */
 	MODIFY_REG(tmpccer, TIM_CCER_CC3E, TIM_OCInitStruct->OCState << 8U);
 
-	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
+	if (IS_TIM_BREAK_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
 		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
@@ -980,7 +1003,8 @@ static ErrorStatus OC4Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM
 	/* Set the Output State */
 	MODIFY_REG(tmpccer, TIM_CCER_CC4E, TIM_OCInitStruct->OCState << 12U);
 
-	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
+	if (IS_TIM_BREAK_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 
 		/* Set the Output Idle state */
@@ -1042,7 +1066,8 @@ static ErrorStatus OC5Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM
 	/* Set the Output State */
 	MODIFY_REG(tmpccer, TIM_CCER_CC5E, TIM_OCInitStruct->OCState << 16U);
 
-	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
+	if (IS_TIM_BREAK_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 
@@ -1102,7 +1127,8 @@ static ErrorStatus OC6Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM
 	/* Set the Output State */
 	MODIFY_REG(tmpccer, TIM_CCER_CC6E, TIM_OCInitStruct->OCState << 20U);
 
-	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
+	if (IS_TIM_BREAK_INSTANCE(TIMx))
+	{
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
 		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 

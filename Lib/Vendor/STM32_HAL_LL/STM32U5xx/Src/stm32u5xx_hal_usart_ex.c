@@ -491,7 +491,8 @@ HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husar
 {
 	uint32_t tmpreg;
 
-	if (husart->State == HAL_USART_STATE_READY) {
+	if (husart->State == HAL_USART_STATE_READY)
+	{
 		/* Check the parameters */
 		assert_param(IS_USART_TRIGGER_POLARITY(sConfig->TriggerPolarity));
 		assert_param(IS_USART_IDLE_FRAME_TRANSMIT(sConfig->IdleFrame));
@@ -527,7 +528,9 @@ HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husar
 		__HAL_UNLOCK(husart);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -562,7 +565,8 @@ HAL_StatusTypeDef HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef 
  */
 HAL_StatusTypeDef HAL_USARTEx_ClearConfigAutonomousMode(USART_HandleTypeDef *husart)
 {
-	if (husart->State == HAL_USART_STATE_READY) {
+	if (husart->State == HAL_USART_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(husart);
 
@@ -583,7 +587,9 @@ HAL_StatusTypeDef HAL_USARTEx_ClearConfigAutonomousMode(USART_HandleTypeDef *hus
 		__HAL_UNLOCK(husart);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -618,10 +624,13 @@ static void USARTEx_SetNbDataToProcess(USART_HandleTypeDef *husart)
 	static const uint8_t numerator[] = {1U, 1U, 1U, 3U, 7U, 1U, 0U, 0U};
 	static const uint8_t denominator[] = {8U, 4U, 2U, 4U, 8U, 1U, 1U, 1U};
 
-	if (husart->FifoMode == USART_FIFOMODE_DISABLE) {
+	if (husart->FifoMode == USART_FIFOMODE_DISABLE)
+	{
 		husart->NbTxDataToProcess = 1U;
 		husart->NbRxDataToProcess = 1U;
-	} else {
+	}
+	else
+	{
 		rx_fifo_depth = RX_FIFO_DEPTH;
 		tx_fifo_depth = TX_FIFO_DEPTH;
 		rx_fifo_threshold = (uint8_t)((READ_BIT(husart->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos) & 0xFFU);

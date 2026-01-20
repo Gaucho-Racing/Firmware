@@ -21,48 +21,50 @@
 #define STM32U5xx_HAL_ICACHE_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes -----------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
 #if defined(ICACHE)
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup ICACHE
- * @{
- */
+	/** @addtogroup ICACHE
+	 * @{
+	 */
 
-/* Exported types -----------------------------------------------------------*/
-/** @defgroup ICACHE_Exported_Types ICACHE Exported Types
- * @{
- */
+	/* Exported types -----------------------------------------------------------*/
+	/** @defgroup ICACHE_Exported_Types ICACHE Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  HAL ICACHE region configuration structure definition
- */
-typedef struct {
-	uint32_t BaseAddress; /*!< Configures the Base address of Region i to be
-				 remapped */
+	/**
+	 * @brief  HAL ICACHE region configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t BaseAddress; /*!< Configures the Base address of Region i to be
+					 remapped */
 
-	uint32_t RemapAddress; /*!< Configures the Remap address of Region i to
-				  be remapped */
+		uint32_t RemapAddress; /*!< Configures the Remap address of Region i to
+					  be remapped */
 
-	uint32_t Size; /*!< Configures the Region size.
-			    This parameter can be a value of @ref
-			  ICACHE_Region_Size */
-
-	uint32_t TrafficRoute; /*!< Selects the traffic route.
+		uint32_t Size; /*!< Configures the Region size.
 				    This parameter can be a value of @ref
-				  ICACHE_Traffic_Route */
+				  ICACHE_Region_Size */
 
-	uint32_t OutputBurstType; /*!< Selects the output burst type.
-				       This parameter can be a value of @ref
-				     ICACHE_Output_Burst_Type */
-} ICACHE_RegionConfigTypeDef;
+		uint32_t TrafficRoute; /*!< Selects the traffic route.
+					    This parameter can be a value of @ref
+					  ICACHE_Traffic_Route */
+
+		uint32_t OutputBurstType; /*!< Selects the output burst type.
+					       This parameter can be a value of @ref
+					     ICACHE_Output_Burst_Type */
+	} ICACHE_RegionConfigTypeDef;
 /**
  * @}
  */
@@ -211,68 +213,68 @@ typedef struct {
  */
 #define __HAL_ICACHE_CLEAR_FLAG(__FLAG__) WRITE_REG(ICACHE->FCR, (__FLAG__))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions -------------------------------------------------------*/
-/** @addtogroup ICACHE_Exported_Functions
- * @{
- */
+	/* Exported functions -------------------------------------------------------*/
+	/** @addtogroup ICACHE_Exported_Functions
+	 * @{
+	 */
 
-/** @addtogroup ICACHE_Exported_Functions_Group1
- * @brief    Initialization and control functions
- * @{
- */
-/* Peripheral Control functions **********************************************/
-HAL_StatusTypeDef HAL_ICACHE_Enable(void);
-HAL_StatusTypeDef HAL_ICACHE_Disable(void);
-uint32_t HAL_ICACHE_IsEnabled(void);
-HAL_StatusTypeDef HAL_ICACHE_ConfigAssociativityMode(uint32_t AssociativityMode);
-HAL_StatusTypeDef HAL_ICACHE_DeInit(void);
+	/** @addtogroup ICACHE_Exported_Functions_Group1
+	 * @brief    Initialization and control functions
+	 * @{
+	 */
+	/* Peripheral Control functions **********************************************/
+	HAL_StatusTypeDef HAL_ICACHE_Enable(void);
+	HAL_StatusTypeDef HAL_ICACHE_Disable(void);
+	uint32_t HAL_ICACHE_IsEnabled(void);
+	HAL_StatusTypeDef HAL_ICACHE_ConfigAssociativityMode(uint32_t AssociativityMode);
+	HAL_StatusTypeDef HAL_ICACHE_DeInit(void);
 
-/******* Invalidate in blocking mode (Polling) */
-HAL_StatusTypeDef HAL_ICACHE_Invalidate(void);
-/******* Invalidate in non-blocking mode (Interrupt) */
-HAL_StatusTypeDef HAL_ICACHE_Invalidate_IT(void);
-/******* Wait for Invalidate complete in blocking mode (Polling) */
-HAL_StatusTypeDef HAL_ICACHE_WaitForInvalidateComplete(void);
+	/******* Invalidate in blocking mode (Polling) */
+	HAL_StatusTypeDef HAL_ICACHE_Invalidate(void);
+	/******* Invalidate in non-blocking mode (Interrupt) */
+	HAL_StatusTypeDef HAL_ICACHE_Invalidate_IT(void);
+	/******* Wait for Invalidate complete in blocking mode (Polling) */
+	HAL_StatusTypeDef HAL_ICACHE_WaitForInvalidateComplete(void);
 
-/******* Performance instruction cache monitoring functions */
-HAL_StatusTypeDef HAL_ICACHE_Monitor_Start(uint32_t MonitorType);
-HAL_StatusTypeDef HAL_ICACHE_Monitor_Stop(uint32_t MonitorType);
-HAL_StatusTypeDef HAL_ICACHE_Monitor_Reset(uint32_t MonitorType);
-uint32_t HAL_ICACHE_Monitor_GetHitValue(void);
-uint32_t HAL_ICACHE_Monitor_GetMissValue(void);
+	/******* Performance instruction cache monitoring functions */
+	HAL_StatusTypeDef HAL_ICACHE_Monitor_Start(uint32_t MonitorType);
+	HAL_StatusTypeDef HAL_ICACHE_Monitor_Stop(uint32_t MonitorType);
+	HAL_StatusTypeDef HAL_ICACHE_Monitor_Reset(uint32_t MonitorType);
+	uint32_t HAL_ICACHE_Monitor_GetHitValue(void);
+	uint32_t HAL_ICACHE_Monitor_GetMissValue(void);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup ICACHE_Exported_Functions_Group2
- * @brief    IRQ and callback functions
- * @{
- */
-/******* IRQHandler and Callbacks used in non-blocking mode (Interrupt) */
-void HAL_ICACHE_IRQHandler(void);
-void HAL_ICACHE_InvalidateCompleteCallback(void);
-void HAL_ICACHE_ErrorCallback(void);
+	/** @addtogroup ICACHE_Exported_Functions_Group2
+	 * @brief    IRQ and callback functions
+	 * @{
+	 */
+	/******* IRQHandler and Callbacks used in non-blocking mode (Interrupt) */
+	void HAL_ICACHE_IRQHandler(void);
+	void HAL_ICACHE_InvalidateCompleteCallback(void);
+	void HAL_ICACHE_ErrorCallback(void);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup ICACHE_Exported_Functions_Group3
- * @brief    Memory remapped regions functions
- * @{
- */
-/******* Memory remapped regions functions */
-HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(uint32_t Region, const ICACHE_RegionConfigTypeDef *const pRegionConfig);
-HAL_StatusTypeDef HAL_ICACHE_DisableRemapRegion(uint32_t Region);
+	/** @addtogroup ICACHE_Exported_Functions_Group3
+	 * @brief    Memory remapped regions functions
+	 * @{
+	 */
+	/******* Memory remapped regions functions */
+	HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(uint32_t Region, const ICACHE_RegionConfigTypeDef *const pRegionConfig);
+	HAL_StatusTypeDef HAL_ICACHE_DisableRemapRegion(uint32_t Region);
 
 /**
  * @}

@@ -131,7 +131,8 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, const LL_OPAMP_InitTypeDef *OPA
 	/*       or PGA with external capacitors for filtering circuit. */
 	/*       Otherwise (OPAMP in mode follower), OPAMP inverting input is */
 	/*       not used (not connected to GPIO pin). */
-	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
+	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER)
+	{
 		assert_param(IS_LL_OPAMP_INPUT_INVERTING(OPAMPx, OPAMP_InitStruct->InputInverting));
 	}
 
@@ -142,10 +143,13 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, const LL_OPAMP_InitTypeDef *OPA
 	/*  - Input inverting */
 	/* Note: Bit OPAMP_CSR_CALON reset to ensure to be in functional mode.
 	 */
-	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
+	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER)
+	{
 		MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_OPALPM | OPAMP_CSR_OPAMODE | OPAMP_CSR_CALON | OPAMP_CSR_VM_SEL | OPAMP_CSR_VP_SEL | OPAMP_CSR_HSM,
 			   OPAMP_InitStruct->PowerMode | OPAMP_InitStruct->FunctionalMode | OPAMP_InitStruct->InputNonInverting | OPAMP_InitStruct->InputInverting);
-	} else {
+	}
+	else
+	{
 		MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_OPALPM | OPAMP_CSR_OPAMODE | OPAMP_CSR_CALON | OPAMP_CSR_VM_SEL | OPAMP_CSR_VP_SEL | OPAMP_CSR_HSM,
 			   OPAMP_InitStruct->PowerMode | LL_OPAMP_MODE_FOLLOWER | OPAMP_InitStruct->InputNonInverting | LL_OPAMP_INPUT_INVERT_CONNECT_NO);
 	}

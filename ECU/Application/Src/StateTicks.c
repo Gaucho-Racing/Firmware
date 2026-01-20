@@ -20,7 +20,8 @@ void ECU_State_Tick(void)
 {
 	LOGOMATIC("ECU Current State: %d\n", stateLump.ecuStatus1.ecu_status);
 
-	switch (stateLump.ecuStatus1.ecu_status) {
+	switch (stateLump.ecuStatus1.ecu_status)
+	{
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
 			break;
@@ -73,7 +74,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	*/
 
 	// TODO Implement functionality
-	if (stateData->ts_active_button_engaged) {
+	if (stateData->ts_active_button_engaged)
+	{
 		stateData->ecuStatus1.ecu_status = GR_PRECHARGE_ENGAGED;
 	}
 }
@@ -81,7 +83,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
-	if (stateData->ecuStatus2.ts_voltage > 60) {
+	if (stateData->ecuStatus2.ts_voltage > 60)
+	{
 		// Go to TS discharge
 		stateData->ecuStatus1.ecu_status = GR_TS_DISCHARGE;
 		// Emit an error
@@ -161,7 +164,8 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		Discharge the tractive system to below 60 volts
 		If TS voltage < 60 --> stateData->GLV_ON
 	*/
-	if (stateData->ecuStatus2.ts_voltage < 60) {
+	if (stateData->ecuStatus2.ts_voltage < 60)
+	{
 		stateData->ecuStatus1.ecu_status = GR_GLV_ON;
 	}
 	/*

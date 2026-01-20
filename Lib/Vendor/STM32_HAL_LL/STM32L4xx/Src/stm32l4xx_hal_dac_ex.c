@@ -239,9 +239,12 @@ HAL_StatusTypeDef HAL_DACEx_DualSetValue(DAC_HandleTypeDef *hdac, uint32_t Align
 	assert_param(IS_DAC_DATA(Data2));
 
 	/* Calculate and set dual DAC data holding register value */
-	if (Alignment == DAC_ALIGN_8B_R) {
+	if (Alignment == DAC_ALIGN_8B_R)
+	{
 		data = ((uint32_t)Data2 << 8U) | Data1;
-	} else {
+	}
+	else
+	{
 		data = ((uint32_t)Data2 << 16U) | Data1;
 	}
 
@@ -359,11 +362,16 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 
 	/* Check the DAC handle allocation */
 	/* Check if DAC running */
-	if (hdac == NULL) {
+	if (hdac == NULL)
+	{
 		status = HAL_ERROR;
-	} else if (hdac->State == HAL_DAC_STATE_BUSY) {
+	}
+	else if (hdac->State == HAL_DAC_STATE_BUSY)
+	{
 		status = HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Process locked */
 		__HAL_LOCK(hdac);
 
@@ -382,9 +390,12 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 #if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
     defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
     defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-		if (Channel == DAC_CHANNEL_1) {
+		if (Channel == DAC_CHANNEL_1)
+		{
 			tmp += DAC_DHR12R1_ALIGNMENT(DAC_ALIGN_12B_R);
-		} else {
+		}
+		else
+		{
 			tmp += DAC_DHR12R2_ALIGNMENT(DAC_ALIGN_12B_R);
 		}
 #endif		/* STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx */
@@ -406,7 +417,8 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 		/* Medium value */
 		trimmingvalue = 16U;
 		delta = 8U;
-		while (delta != 0U) {
+		while (delta != 0U)
+		{
 			/* Set candidate trimming */
 			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
@@ -416,11 +428,14 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 			 * steps */
 			HAL_Delay(1);
 
-			if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) {
+			if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL)))
+			{
 				/* DAC_SR_CAL_FLAGx is HIGH try higher trimming
 				 */
 				trimmingvalue -= delta;
-			} else {
+			}
+			else
+			{
 				/* DAC_SR_CAL_FLAGx is LOW try lower trimming */
 				trimmingvalue += delta;
 			}
@@ -439,9 +454,11 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 		/* i.e. minimum time needed between two calibration steps */
 		HAL_Delay(1U);
 
-		if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == 0UL) {
+		if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == 0UL)
+		{
 			/* Check trimming value below maximum */
-			if (trimmingvalue < 0x1FU) {
+			if (trimmingvalue < 0x1FU)
+			{
 				/* Trimming is actually one value more */
 				trimmingvalue++;
 
@@ -491,9 +508,12 @@ HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_Channel
 	assert_param(IS_DAC_NEWTRIMMINGVALUE(NewTrimmingValue));
 
 	/* Check the DAC handle allocation */
-	if (hdac == NULL) {
+	if (hdac == NULL)
+	{
 		status = HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Process locked */
 		__HAL_LOCK(hdac);
 

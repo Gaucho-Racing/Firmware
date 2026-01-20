@@ -21,7 +21,8 @@
 #define STM32U5xx_HAL_COMP_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -32,116 +33,119 @@ extern "C" {
  */
 #if defined(COMP1) || defined(COMP2)
 
-/** @addtogroup COMP
- * @{
- */
+	/** @addtogroup COMP
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup COMP_Exported_Types COMP Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup COMP_Exported_Types COMP Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  COMP Init structure definition
- */
-typedef struct {
+	/**
+	 * @brief  COMP Init structure definition
+	 */
+	typedef struct
+	{
 #if defined(COMP_WINDOW_MODE_SUPPORT)
 #if defined(COMP2)
-	uint32_t WindowMode; /*!< Set window mode of a pair of comparators instances
-				  (2 consecutive instances odd and even COMP<x> and
-				COMP<x+1>). Note: HAL COMP driver allows to set
-				window mode from any COMP instance of the pair of
-				COMP instances composing window mode. This parameter
-				can be a value of @ref COMP_WindowMode */
-#endif			     /* COMP2 */
+		uint32_t WindowMode; /*!< Set window mode of a pair of comparators instances
+					  (2 consecutive instances odd and even COMP<x> and
+					COMP<x+1>). Note: HAL COMP driver allows to set
+					window mode from any COMP instance of the pair of
+					COMP instances composing window mode. This parameter
+					can be a value of @ref COMP_WindowMode */
+#endif				     /* COMP2 */
 
-	uint32_t WindowOutput; /*!< Set window mode output.
-				    This parameter can be a value of @ref
-				  COMP_WindowOutput */
-#endif			       /* COMP_WINDOW_MODE_SUPPORT */
-	uint32_t Mode;	       /*!< Set comparator operating mode to adjust power and
-				  speed. Note: For the characteristics of comparator
-				  power modes (propagation delay and power consumption),
-				  refer to device datasheet. This parameter can be a
-				  value of @ref COMP_PowerMode */
+		uint32_t WindowOutput; /*!< Set window mode output.
+					    This parameter can be a value of @ref
+					  COMP_WindowOutput */
+#endif				       /* COMP_WINDOW_MODE_SUPPORT */
+		uint32_t Mode;	       /*!< Set comparator operating mode to adjust power and
+					  speed. Note: For the characteristics of comparator
+					  power modes (propagation delay and power consumption),
+					  refer to device datasheet. This parameter can be a
+					  value of @ref COMP_PowerMode */
 
-	uint32_t InputPlus; /*!< Set comparator input plus (non-inverting
-			       input). This parameter can be a value of @ref
-			       COMP_InputPlus */
+		uint32_t InputPlus; /*!< Set comparator input plus (non-inverting
+				       input). This parameter can be a value of @ref
+				       COMP_InputPlus */
 
-	uint32_t InputMinus; /*!< Set comparator input minus (inverting input).
-				  This parameter can be a value of @ref
-				COMP_InputMinus */
+		uint32_t InputMinus; /*!< Set comparator input minus (inverting input).
+					  This parameter can be a value of @ref
+					COMP_InputMinus */
 
-	uint32_t Hysteresis; /*!< Set comparator hysteresis mode of the input
-				minus. This parameter can be a value of @ref
-				COMP_Hysteresis */
+		uint32_t Hysteresis; /*!< Set comparator hysteresis mode of the input
+					minus. This parameter can be a value of @ref
+					COMP_Hysteresis */
 
-	uint32_t OutputPol; /*!< Set comparator output polarity.
-				 This parameter can be a value of @ref
-			       COMP_OutputPolarity */
+		uint32_t OutputPol; /*!< Set comparator output polarity.
+					 This parameter can be a value of @ref
+				       COMP_OutputPolarity */
 
-	uint32_t BlankingSrce; /*!< Set comparator blanking source.
-				    This parameter can be a value of @ref
-				  COMP_BlankingSrce */
+		uint32_t BlankingSrce; /*!< Set comparator blanking source.
+					    This parameter can be a value of @ref
+					  COMP_BlankingSrce */
 
-	uint32_t TriggerMode; /*!< Set the comparator output triggering External
-				 Interrupt Line (EXTI). This parameter can be a
-				 value of @ref COMP_EXTI_TriggerMode */
+		uint32_t TriggerMode; /*!< Set the comparator output triggering External
+					 Interrupt Line (EXTI). This parameter can be a
+					 value of @ref COMP_EXTI_TriggerMode */
 
-} COMP_InitTypeDef;
+	} COMP_InitTypeDef;
 
 /**
  * @brief  HAL COMP state machine: HAL COMP states definition
  */
 #define COMP_STATE_BITFIELD_LOCK (0x10U)
-typedef enum {
-	HAL_COMP_STATE_RESET = 0x00U,							 /*!< COMP not yet initialized */
-	HAL_COMP_STATE_RESET_LOCKED = (HAL_COMP_STATE_RESET | COMP_STATE_BITFIELD_LOCK), /*!< COMP not yet initialized and
-											    configuration is locked */
-	HAL_COMP_STATE_READY = 0x01U,							 /*!< COMP initialized and ready for use */
-	HAL_COMP_STATE_READY_LOCKED = (HAL_COMP_STATE_READY | COMP_STATE_BITFIELD_LOCK), /*!< COMP initialized but
-											    configuration is locked */
-	HAL_COMP_STATE_BUSY = 0x02U,							 /*!< COMP is running    */
-	HAL_COMP_STATE_BUSY_LOCKED = (HAL_COMP_STATE_BUSY | COMP_STATE_BITFIELD_LOCK)	 /*!< COMP is running and
-											    configuration is    locked    */
-} HAL_COMP_StateTypeDef;
+	typedef enum
+	{
+		HAL_COMP_STATE_RESET = 0x00U,							 /*!< COMP not yet initialized */
+		HAL_COMP_STATE_RESET_LOCKED = (HAL_COMP_STATE_RESET | COMP_STATE_BITFIELD_LOCK), /*!< COMP not yet initialized and
+												    configuration is locked */
+		HAL_COMP_STATE_READY = 0x01U,							 /*!< COMP initialized and ready for use */
+		HAL_COMP_STATE_READY_LOCKED = (HAL_COMP_STATE_READY | COMP_STATE_BITFIELD_LOCK), /*!< COMP initialized but
+												    configuration is locked */
+		HAL_COMP_STATE_BUSY = 0x02U,							 /*!< COMP is running    */
+		HAL_COMP_STATE_BUSY_LOCKED = (HAL_COMP_STATE_BUSY | COMP_STATE_BITFIELD_LOCK)	 /*!< COMP is running and
+												    configuration is    locked    */
+	} HAL_COMP_StateTypeDef;
 
 /**
  * @brief  COMP Handle Structure definition
  */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-typedef struct __COMP_HandleTypeDef
+	typedef struct __COMP_HandleTypeDef
 #else
-typedef struct
+	typedef struct
 #endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
-{
-	COMP_TypeDef *Instance;		  /*!< Register base address    */
-	COMP_InitTypeDef Init;		  /*!< COMP required parameters */
-	HAL_LockTypeDef Lock;		  /*!< Locking object           */
-	__IO HAL_COMP_StateTypeDef State; /*!< COMP communication state */
-	__IO uint32_t ErrorCode;	  /*!< COMP error code */
+	{
+		COMP_TypeDef *Instance;		  /*!< Register base address    */
+		COMP_InitTypeDef Init;		  /*!< COMP required parameters */
+		HAL_LockTypeDef Lock;		  /*!< Locking object           */
+		__IO HAL_COMP_StateTypeDef State; /*!< COMP communication state */
+		__IO uint32_t ErrorCode;	  /*!< COMP error code */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-	void (*TriggerCallback)(struct __COMP_HandleTypeDef *hcomp);   /*!< COMP trigger callback */
-	void (*MspInitCallback)(struct __COMP_HandleTypeDef *hcomp);   /*!< COMP Msp Init callback */
-	void (*MspDeInitCallback)(struct __COMP_HandleTypeDef *hcomp); /*!< COMP Msp DeInit callback */
-#endif								       /* USE_HAL_COMP_REGISTER_CALLBACKS */
-} COMP_HandleTypeDef;
+		void (*TriggerCallback)(struct __COMP_HandleTypeDef *hcomp);   /*!< COMP trigger callback */
+		void (*MspInitCallback)(struct __COMP_HandleTypeDef *hcomp);   /*!< COMP Msp Init callback */
+		void (*MspDeInitCallback)(struct __COMP_HandleTypeDef *hcomp); /*!< COMP Msp DeInit callback */
+#endif									       /* USE_HAL_COMP_REGISTER_CALLBACKS */
+	} COMP_HandleTypeDef;
 
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-/**
- * @brief  HAL COMP Callback ID enumeration definition
- */
-typedef enum {
-	HAL_COMP_TRIGGER_CB_ID = 0x00U,	 /*!< COMP trigger callback ID */
-	HAL_COMP_MSPINIT_CB_ID = 0x01U,	 /*!< COMP Msp Init callback ID */
-	HAL_COMP_MSPDEINIT_CB_ID = 0x02U /*!< COMP Msp DeInit callback ID */
-} HAL_COMP_CallbackIDTypeDef;
+	/**
+	 * @brief  HAL COMP Callback ID enumeration definition
+	 */
+	typedef enum
+	{
+		HAL_COMP_TRIGGER_CB_ID = 0x00U,	 /*!< COMP trigger callback ID */
+		HAL_COMP_MSPINIT_CB_ID = 0x01U,	 /*!< COMP Msp Init callback ID */
+		HAL_COMP_MSPDEINIT_CB_ID = 0x02U /*!< COMP Msp DeInit callback ID */
+	} HAL_COMP_CallbackIDTypeDef;
 
-/**
- * @brief  HAL COMP Callback pointer definition
- */
-typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer to a COMP callback function */
+	/**
+	 * @brief  HAL COMP Callback pointer definition
+	 */
+	typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer to a COMP callback function */
 
 #endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
 
@@ -163,9 +167,9 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 	(0x01UL) /*!< Invalid Callback error                                                                                                                                                           \
 		  */
 #endif		 /* USE_HAL_COMP_REGISTER_CALLBACKS */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #if defined(COMP_WINDOW_MODE_SUPPORT)
 #if defined(COMP2)
@@ -438,7 +442,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
 #define __HAL_COMP_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		(__HANDLE__)->State = HAL_COMP_STATE_RESET;                                                                                                                                            \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -524,7 +529,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @retval None
  */
 #define __HAL_COMP_COMP1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_COMP_COMP1_EXTI_ENABLE_RISING_EDGE();                                                                                                                                            \
 		__HAL_COMP_COMP1_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                           \
 	} while (0)
@@ -534,7 +540,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @retval None
  */
 #define __HAL_COMP_COMP1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_COMP_COMP1_EXTI_DISABLE_RISING_EDGE();                                                                                                                                           \
 		__HAL_COMP_COMP1_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                          \
 	} while (0)
@@ -623,7 +630,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @retval None
  */
 #define __HAL_COMP_COMP2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_COMP_COMP2_EXTI_ENABLE_RISING_EDGE();                                                                                                                                            \
 		__HAL_COMP_COMP2_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                           \
 	} while (0)
@@ -633,7 +641,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @retval None
  */
 #define __HAL_COMP_COMP2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_COMP_COMP2_EXTI_DISABLE_RISING_EDGE();                                                                                                                                           \
 		__HAL_COMP_COMP2_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                          \
 	} while (0)
@@ -809,70 +818,70 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 
 #define IS_COMP_OUTPUT_LEVEL(__OUTPUT_LEVEL__) (((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_LOW) || ((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_HIGH))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup COMP_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup COMP_Exported_Functions
+	 * @{
+	 */
 
-/** @addtogroup COMP_Exported_Functions_Group1
- * @{
- */
+	/** @addtogroup COMP_Exported_Functions_Group1
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions
- * **********************************/
-HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp);
-HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp);
-void HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp);
-void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp);
+	/* Initialization and de-initialization functions
+	 * **********************************/
+	HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp);
+	HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp);
+	void HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp);
+	void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp);
 
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-/* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID, pCOMP_CallbackTypeDef pCallback);
-HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID);
+	/* Callbacks Register/UnRegister functions  ***********************************/
+	HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID, pCOMP_CallbackTypeDef pCallback);
+	HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* IO operation functions *****************************************************/
-/** @addtogroup COMP_Exported_Functions_Group2
- * @{
- */
-HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp);
-HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp);
-void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp);
-/**
- * @}
- */
+	/* IO operation functions *****************************************************/
+	/** @addtogroup COMP_Exported_Functions_Group2
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp);
+	HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp);
+	void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp);
+	/**
+	 * @}
+	 */
 
-/* Peripheral Control functions
- * ************************************************/
-/** @addtogroup COMP_Exported_Functions_Group3
- * @{
- */
-HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp);
-uint32_t HAL_COMP_GetOutputLevel(const COMP_HandleTypeDef *hcomp);
-/* Callback in interrupt mode */
-void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp);
-/**
- * @}
- */
+	/* Peripheral Control functions
+	 * ************************************************/
+	/** @addtogroup COMP_Exported_Functions_Group3
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp);
+	uint32_t HAL_COMP_GetOutputLevel(const COMP_HandleTypeDef *hcomp);
+	/* Callback in interrupt mode */
+	void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp);
+	/**
+	 * @}
+	 */
 
-/* Peripheral State functions
- * **************************************************/
-/** @addtogroup COMP_Exported_Functions_Group4
- * @{
- */
-HAL_COMP_StateTypeDef HAL_COMP_GetState(const COMP_HandleTypeDef *hcomp);
-uint32_t HAL_COMP_GetError(const COMP_HandleTypeDef *hcomp);
+	/* Peripheral State functions
+	 * **************************************************/
+	/** @addtogroup COMP_Exported_Functions_Group4
+	 * @{
+	 */
+	HAL_COMP_StateTypeDef HAL_COMP_GetState(const COMP_HandleTypeDef *hcomp);
+	uint32_t HAL_COMP_GetError(const COMP_HandleTypeDef *hcomp);
 /**
  * @}
  */
@@ -885,9 +894,9 @@ uint32_t HAL_COMP_GetError(const COMP_HandleTypeDef *hcomp);
  * @}
  */
 #endif /* COMP1 || COMP2 */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

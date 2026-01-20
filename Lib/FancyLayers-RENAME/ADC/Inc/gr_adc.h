@@ -6,7 +6,8 @@
 void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
 
 // What the prescaler value
-typedef enum {
+typedef enum
+{
 	PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
 	PS_2 = LL_ADC_CLOCK_ASYNC_DIV2,
 	PS_4 = LL_ADC_CLOCK_ASYNC_DIV4,
@@ -22,13 +23,24 @@ typedef enum {
 } Pre_Scaler_Values;
 
 // Resolution of the ADC in bits
-typedef enum { RESOLUTION_12 = LL_ADC_RESOLUTION_12B, RESOLUTION_10 = LL_ADC_RESOLUTION_10B, RESOLUTION_8 = LL_ADC_RESOLUTION_8B, RESOLUTION_6 = LL_ADC_RESOLUTION_6B } Resolution;
+typedef enum
+{
+	RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
+	RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
+	RESOLUTION_8 = LL_ADC_RESOLUTION_8B,
+	RESOLUTION_6 = LL_ADC_RESOLUTION_6B
+} Resolution;
 
 // Data Alignment
-typedef enum { RIGHT = LL_ADC_DATA_ALIGN_RIGHT, LEFT = LL_ADC_DATA_ALIGN_LEFT } Alignment;
+typedef enum
+{
+	RIGHT = LL_ADC_DATA_ALIGN_RIGHT,
+	LEFT = LL_ADC_DATA_ALIGN_LEFT
+} Alignment;
 
 // Struct to easily initialize pins(?)
-typedef struct {
+typedef struct
+{
 	unsigned long pin;  // Bit mask of pins
 	GPIO_TypeDef *port; // Port
 } Pin_Ports;
@@ -43,7 +55,8 @@ void ADC_Init(ADC_TypeDef *ADC, Resolution res, Alignment align);
 void ADC_Init_Pins(Pin_Ports *input);
 
 // How many ranks to enable
-typedef enum {
+typedef enum
+{
 	NO_RANKS = LL_ADC_REG_SEQ_SCAN_DISABLE,
 	RANKS_2 = LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
 	RANKS_3 = LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS,
@@ -66,7 +79,8 @@ typedef enum {
 void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
 
 // How many ranks to enable
-typedef enum {
+typedef enum
+{
 	RANK_1 = LL_ADC_REG_RANK_1,
 	RANK_2 = LL_ADC_REG_RANK_2,
 	RANK_3 = LL_ADC_REG_RANK_3,
@@ -117,9 +131,14 @@ __extension__ typedef enum {
 	VOPAMP6 = LL_ADC_CHANNEL_VOPAMP6,
 } Channel;
 
-typedef enum { SINGLE_ENDED = LL_ADC_SINGLE_ENDED, DIFFERENTIAL_ENDED = LL_ADC_DIFFERENTIAL_ENDED } ChannelSingleDiff;
+typedef enum
+{
+	SINGLE_ENDED = LL_ADC_SINGLE_ENDED,
+	DIFFERENTIAL_ENDED = LL_ADC_DIFFERENTIAL_ENDED
+} ChannelSingleDiff;
 
-typedef enum {
+typedef enum
+{
 	SAMPLINGTIME_2CYCLES_5 = LL_ADC_SAMPLINGTIME_2CYCLES_5,
 	SAMPLINGTIME_6CYCLES_5 = LL_ADC_SAMPLINGTIME_6CYCLES_5,
 	SAMPLINGTIME_12CYCLES_5 = LL_ADC_SAMPLINGTIME_12CYCLES_5,
@@ -142,7 +161,8 @@ void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel, ChannelSingl
 
 // Return a pointer to DMA
 
-typedef enum {
+typedef enum
+{
 	SYNC_PCLK_DIV1 = LL_ADC_CLOCK_SYNC_PCLK_DIV1,
 	SYNC_PCLK_DIV2 = LL_ADC_CLOCK_SYNC_PCLK_DIV2,
 	SYNC_PCLK_DIV4 = LL_ADC_CLOCK_SYNC_PCLK_DIV4,
@@ -163,9 +183,16 @@ typedef enum {
 void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock);
 CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common);
 
-typedef enum { LOW = LL_DMA_PRIORITY_LOW, MEDIUM = LL_DMA_PRIORITY_MEDIUM, HIGH = LL_DMA_PRIORITY_HIGH, VERYHIGH = LL_DMA_PRIORITY_VERYHIGH } DMA_Priority;
+typedef enum
+{
+	LOW = LL_DMA_PRIORITY_LOW,
+	MEDIUM = LL_DMA_PRIORITY_MEDIUM,
+	HIGH = LL_DMA_PRIORITY_HIGH,
+	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
+} DMA_Priority;
 
-typedef enum {
+typedef enum
+{
 	DMA_CHANNEL_1 = LL_DMA_CHANNEL_1,
 	DMA_CHANNEL_2 = LL_DMA_CHANNEL_2,
 	DMA_CHANNEL_3 = LL_DMA_CHANNEL_3,

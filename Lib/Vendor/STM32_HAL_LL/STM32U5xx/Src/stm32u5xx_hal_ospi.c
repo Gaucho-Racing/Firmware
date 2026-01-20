@@ -354,10 +354,13 @@ HAL_StatusTypeDef HAL_OSPI_Init(OSPI_HandleTypeDef *hospi)
 	uint32_t tickstart = HAL_GetTick();
 
 	/* Check the OSPI handle allocation */
-	if (hospi == NULL) {
+	if (hospi == NULL)
+	{
 		status = HAL_ERROR;
 		/* No error code can be set set as the handler is null */
-	} else {
+	}
+	else
+	{
 		/* Check the parameters of the initialization structure */
 		assert_param(IS_OSPI_FIFO_THRESHOLD(hospi->Init.FifoThreshold));
 		assert_param(IS_OSPI_DUALQUAD_MODE(hospi->Init.DualQuad));
@@ -378,7 +381,8 @@ HAL_StatusTypeDef HAL_OSPI_Init(OSPI_HandleTypeDef *hospi)
 		hospi->ErrorCode = HAL_OSPI_ERROR_NONE;
 
 		/* Check if the state is the reset state */
-		if (hospi->State == HAL_OSPI_STATE_RESET) {
+		if (hospi->State == HAL_OSPI_STATE_RESET)
+		{
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 			/* Reset Callback pointers in HAL_OSPI_STATE_RESET only
 			 */
@@ -393,7 +397,8 @@ HAL_StatusTypeDef HAL_OSPI_Init(OSPI_HandleTypeDef *hospi)
 			hospi->StatusMatchCallback = HAL_OSPI_StatusMatchCallback;
 			hospi->TimeOutCallback = HAL_OSPI_TimeOutCallback;
 
-			if (hospi->MspInitCallback == NULL) {
+			if (hospi->MspInitCallback == NULL)
+			{
 				hospi->MspInitCallback = HAL_OSPI_MspInit;
 			}
 
@@ -432,7 +437,8 @@ HAL_StatusTypeDef HAL_OSPI_Init(OSPI_HandleTypeDef *hospi)
 			/* Wait till busy flag is reset */
 			status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, hospi->Timeout);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Configure clock prescaler */
 				MODIFY_REG(hospi->Instance->DCR2, OCTOSPI_DCR2_PRESCALER, ((hospi->Init.ClockPrescaler - 1U) << OCTOSPI_DCR2_PRESCALER_Pos));
 
@@ -448,14 +454,18 @@ HAL_StatusTypeDef HAL_OSPI_Init(OSPI_HandleTypeDef *hospi)
 
 				/* Enable free running clock if needed : must be
 				 * done after OSPI enable */
-				if (hospi->Init.FreeRunningClock == HAL_OSPI_FREERUNCLK_ENABLE) {
+				if (hospi->Init.FreeRunningClock == HAL_OSPI_FREERUNCLK_ENABLE)
+				{
 					SET_BIT(hospi->Instance->DCR1, OCTOSPI_DCR1_FRCK);
 				}
 
 				/* Initialize the OSPI state */
-				if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS) {
+				if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)
+				{
 					hospi->State = HAL_OSPI_STATE_HYPERBUS_INIT;
-				} else {
+				}
+				else
+				{
 					hospi->State = HAL_OSPI_STATE_READY;
 				}
 			}
@@ -491,10 +501,13 @@ HAL_StatusTypeDef HAL_OSPI_DeInit(OSPI_HandleTypeDef *hospi)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the OSPI handle allocation */
-	if (hospi == NULL) {
+	if (hospi == NULL)
+	{
 		status = HAL_ERROR;
 		/* No error code can be set set as the handler is null */
-	} else {
+	}
+	else
+	{
 		/* Disable OctoSPI */
 		__HAL_OSPI_DISABLE(hospi);
 
@@ -503,7 +516,8 @@ HAL_StatusTypeDef HAL_OSPI_DeInit(OSPI_HandleTypeDef *hospi)
 		CLEAR_BIT(hospi->Instance->DCR1, OCTOSPI_DCR1_FRCK);
 
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
-		if (hospi->MspDeInitCallback == NULL) {
+		if (hospi->MspDeInitCallback == NULL)
+		{
 			hospi->MspDeInitCallback = HAL_OSPI_MspDeInit;
 		}
 
@@ -577,22 +591,29 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 
 	/* OctoSPI fifo threshold interrupt occurred
 	 * -------------------------------*/
-	if (((flag & HAL_OSPI_FLAG_FT) != 0U) && ((itsource & HAL_OSPI_IT_FT) != 0U)) {
-		if (currentstate == HAL_OSPI_STATE_BUSY_TX) {
+	if (((flag & HAL_OSPI_FLAG_FT) != 0U) && ((itsource & HAL_OSPI_IT_FT) != 0U))
+	{
+		if (currentstate == HAL_OSPI_STATE_BUSY_TX)
+		{
 			/* Write a data in the fifo */
 			*((__IO uint8_t *)data_reg) = *hospi->pBuffPtr;
 			hospi->pBuffPtr++;
 			hospi->XferCount--;
-		} else if (currentstate == HAL_OSPI_STATE_BUSY_RX) {
+		}
+		else if (currentstate == HAL_OSPI_STATE_BUSY_RX)
+		{
 			/* Read a data from the fifo */
 			*hospi->pBuffPtr = *((__IO uint8_t *)data_reg);
 			hospi->pBuffPtr++;
 			hospi->XferCount--;
-		} else {
+		}
+		else
+		{
 			/* Nothing to do */
 		}
 
-		if (hospi->XferCount == 0U) {
+		if (hospi->XferCount == 0U)
+		{
 			/* All data have been received or transmitted for the
 			 * transfer */
 			/* Disable fifo threshold interrupt */
@@ -609,14 +630,19 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 	}
 	/* OctoSPI transfer complete interrupt occurred
 	   ----------------------------*/
-	else if (((flag & HAL_OSPI_FLAG_TC) != 0U) && ((itsource & HAL_OSPI_IT_TC) != 0U)) {
-		if (currentstate == HAL_OSPI_STATE_BUSY_RX) {
-			if ((hospi->XferCount > 0U) && ((flag & OCTOSPI_SR_FLEVEL) != 0U)) {
+	else if (((flag & HAL_OSPI_FLAG_TC) != 0U) && ((itsource & HAL_OSPI_IT_TC) != 0U))
+	{
+		if (currentstate == HAL_OSPI_STATE_BUSY_RX)
+		{
+			if ((hospi->XferCount > 0U) && ((flag & OCTOSPI_SR_FLEVEL) != 0U))
+			{
 				/* Read the last data received in the fifo */
 				*hospi->pBuffPtr = *((__IO uint8_t *)data_reg);
 				hospi->pBuffPtr++;
 				hospi->XferCount--;
-			} else if (hospi->XferCount == 0U) {
+			}
+			else if (hospi->XferCount == 0U)
+			{
 				/* Clear flag */
 				hospi->Instance->FCR = HAL_OSPI_FLAG_TC;
 
@@ -633,10 +659,14 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 				HAL_OSPI_RxCpltCallback(hospi);
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
-		} else {
+		}
+		else
+		{
 			/* Clear flag */
 			hospi->Instance->FCR = HAL_OSPI_FLAG_TC;
 
@@ -646,7 +676,8 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 			/* Update state */
 			hospi->State = HAL_OSPI_STATE_READY;
 
-			if (currentstate == HAL_OSPI_STATE_BUSY_TX) {
+			if (currentstate == HAL_OSPI_STATE_BUSY_TX)
+			{
 				/* TX complete callback */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 				hospi->TxCpltCallback(hospi);
@@ -654,7 +685,9 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 				HAL_OSPI_TxCpltCallback(hospi);
 #endif /* defined (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                 \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
-			} else if (currentstate == HAL_OSPI_STATE_BUSY_CMD) {
+			}
+			else if (currentstate == HAL_OSPI_STATE_BUSY_CMD)
+			{
 				/* Command complete callback */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 				hospi->CmdCpltCallback(hospi);
@@ -662,8 +695,11 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 				HAL_OSPI_CmdCpltCallback(hospi);
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
-			} else if (currentstate == HAL_OSPI_STATE_ABORT) {
-				if (hospi->ErrorCode == HAL_OSPI_ERROR_NONE) {
+			}
+			else if (currentstate == HAL_OSPI_STATE_ABORT)
+			{
+				if (hospi->ErrorCode == HAL_OSPI_ERROR_NONE)
+				{
 					/* Abort called by the user */
 					/* Abort complete callback */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
@@ -672,7 +708,9 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 					HAL_OSPI_AbortCpltCallback(hospi);
 #endif /* defined (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                 \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)*/
-				} else {
+				}
+				else
+				{
 					/* Abort due to an error (eg : DMA
 					 * error) */
 					/* Error callback */
@@ -683,19 +721,23 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 				}
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 		}
 	}
 	/* OctoSPI status match interrupt occurred
 	   ---------------------------------*/
-	else if (((flag & HAL_OSPI_FLAG_SM) != 0U) && ((itsource & HAL_OSPI_IT_SM) != 0U)) {
+	else if (((flag & HAL_OSPI_FLAG_SM) != 0U) && ((itsource & HAL_OSPI_IT_SM) != 0U))
+	{
 		/* Clear flag */
 		hospi->Instance->FCR = HAL_OSPI_FLAG_SM;
 
 		/* Check if automatic poll mode stop is activated */
-		if ((hospi->Instance->CR & OCTOSPI_CR_APMS) != 0U) {
+		if ((hospi->Instance->CR & OCTOSPI_CR_APMS) != 0U)
+		{
 			/* Disable the interrupts */
 			__HAL_OSPI_DISABLE_IT(hospi, HAL_OSPI_IT_SM | HAL_OSPI_IT_TE);
 
@@ -713,7 +755,8 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 	}
 	/* OctoSPI transfer error interrupt occurred
 	   -------------------------------*/
-	else if (((flag & HAL_OSPI_FLAG_TE) != 0U) && ((itsource & HAL_OSPI_IT_TE) != 0U)) {
+	else if (((flag & HAL_OSPI_FLAG_TE) != 0U) && ((itsource & HAL_OSPI_IT_TE) != 0U))
+	{
 		/* Clear flag */
 		hospi->Instance->FCR = HAL_OSPI_FLAG_TE;
 
@@ -724,13 +767,15 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 		hospi->ErrorCode = HAL_OSPI_ERROR_TRANSFER;
 
 		/* Check if the DMA is enabled */
-		if ((hospi->Instance->CR & OCTOSPI_CR_DMAEN) != 0U) {
+		if ((hospi->Instance->CR & OCTOSPI_CR_DMAEN) != 0U)
+		{
 			/* Disable the DMA transfer on the OctoSPI side */
 			CLEAR_BIT(hospi->Instance->CR, OCTOSPI_CR_DMAEN);
 
 			/* Disable the DMA transfer on the DMA side */
 			hospi->hdma->XferAbortCallback = OSPI_DMAAbortCplt;
-			if (HAL_DMA_Abort_IT(hospi->hdma) != HAL_OK) {
+			if (HAL_DMA_Abort_IT(hospi->hdma) != HAL_OK)
+			{
 				/* Update state */
 				hospi->State = HAL_OSPI_STATE_READY;
 
@@ -742,7 +787,9 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)*/
 			}
-		} else {
+		}
+		else
+		{
 			/* Update state */
 			hospi->State = HAL_OSPI_STATE_READY;
 
@@ -757,7 +804,8 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 	}
 	/* OctoSPI timeout interrupt occurred
 	   --------------------------------------*/
-	else if (((flag & HAL_OSPI_FLAG_TO) != 0U) && ((itsource & HAL_OSPI_IT_TO) != 0U)) {
+	else if (((flag & HAL_OSPI_FLAG_TO) != 0U) && ((itsource & HAL_OSPI_IT_TO) != 0U))
+	{
 		/* Clear flag */
 		hospi->Instance->FCR = HAL_OSPI_FLAG_TO;
 
@@ -768,7 +816,9 @@ void HAL_OSPI_IRQHandler(OSPI_HandleTypeDef *hospi)
 		HAL_OSPI_TimeOutCallback(hospi);
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 }
@@ -790,31 +840,37 @@ HAL_StatusTypeDef HAL_OSPI_Command(OSPI_HandleTypeDef *hospi, OSPI_RegularCmdTyp
 	/* Check the parameters of the command structure */
 	assert_param(IS_OSPI_OPERATION_TYPE(cmd->OperationType));
 
-	if (hospi->Init.DualQuad == HAL_OSPI_DUALQUAD_DISABLE) {
+	if (hospi->Init.DualQuad == HAL_OSPI_DUALQUAD_DISABLE)
+	{
 		assert_param(IS_OSPI_FLASH_ID(cmd->FlashId));
 	}
 
 	assert_param(IS_OSPI_INSTRUCTION_MODE(cmd->InstructionMode));
-	if (cmd->InstructionMode != HAL_OSPI_INSTRUCTION_NONE) {
+	if (cmd->InstructionMode != HAL_OSPI_INSTRUCTION_NONE)
+	{
 		assert_param(IS_OSPI_INSTRUCTION_SIZE(cmd->InstructionSize));
 		assert_param(IS_OSPI_INSTRUCTION_DTR_MODE(cmd->InstructionDtrMode));
 	}
 
 	assert_param(IS_OSPI_ADDRESS_MODE(cmd->AddressMode));
-	if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE) {
+	if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE)
+	{
 		assert_param(IS_OSPI_ADDRESS_SIZE(cmd->AddressSize));
 		assert_param(IS_OSPI_ADDRESS_DTR_MODE(cmd->AddressDtrMode));
 	}
 
 	assert_param(IS_OSPI_ALT_BYTES_MODE(cmd->AlternateBytesMode));
-	if (cmd->AlternateBytesMode != HAL_OSPI_ALTERNATE_BYTES_NONE) {
+	if (cmd->AlternateBytesMode != HAL_OSPI_ALTERNATE_BYTES_NONE)
+	{
 		assert_param(IS_OSPI_ALT_BYTES_SIZE(cmd->AlternateBytesSize));
 		assert_param(IS_OSPI_ALT_BYTES_DTR_MODE(cmd->AlternateBytesDtrMode));
 	}
 
 	assert_param(IS_OSPI_DATA_MODE(cmd->DataMode));
-	if (cmd->DataMode != HAL_OSPI_DATA_NONE) {
-		if (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG) {
+	if (cmd->DataMode != HAL_OSPI_DATA_NONE)
+	{
+		if (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG)
+		{
 			assert_param(IS_OSPI_NUMBER_DATA(cmd->NbData));
 		}
 		assert_param(IS_OSPI_DATA_DTR_MODE(cmd->DataDtrMode));
@@ -828,19 +884,23 @@ HAL_StatusTypeDef HAL_OSPI_Command(OSPI_HandleTypeDef *hospi, OSPI_RegularCmdTyp
 	state = hospi->State;
 	if (((state == HAL_OSPI_STATE_READY) && (hospi->Init.MemoryType != HAL_OSPI_MEMTYPE_HYPERBUS)) ||
 	    ((state == HAL_OSPI_STATE_READ_CMD_CFG) && ((cmd->OperationType == HAL_OSPI_OPTYPE_WRITE_CFG) || (cmd->OperationType == HAL_OSPI_OPTYPE_WRAP_CFG))) ||
-	    ((state == HAL_OSPI_STATE_WRITE_CMD_CFG) && ((cmd->OperationType == HAL_OSPI_OPTYPE_READ_CFG) || (cmd->OperationType == HAL_OSPI_OPTYPE_WRAP_CFG)))) {
+	    ((state == HAL_OSPI_STATE_WRITE_CMD_CFG) && ((cmd->OperationType == HAL_OSPI_OPTYPE_READ_CFG) || (cmd->OperationType == HAL_OSPI_OPTYPE_WRAP_CFG))))
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Initialize error code */
 			hospi->ErrorCode = HAL_OSPI_ERROR_NONE;
 
 			/* Configure the registers */
 			status = OSPI_ConfigCmd(hospi, cmd);
 
-			if (status == HAL_OK) {
-				if (cmd->DataMode == HAL_OSPI_DATA_NONE) {
+			if (status == HAL_OK)
+			{
+				if (cmd->DataMode == HAL_OSPI_DATA_NONE)
+				{
 					/* When there is no data phase, the
 					   transfer start as soon as the
 					   configuration is done so wait until
@@ -849,30 +909,47 @@ HAL_StatusTypeDef HAL_OSPI_Command(OSPI_HandleTypeDef *hospi, OSPI_RegularCmdTyp
 					status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_TC, SET, tickstart, Timeout);
 
 					__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_TC);
-				} else {
+				}
+				else
+				{
 					/* Update the state */
-					if (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG) {
+					if (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG)
+					{
 						hospi->State = HAL_OSPI_STATE_CMD_CFG;
-					} else if (cmd->OperationType == HAL_OSPI_OPTYPE_READ_CFG) {
-						if (hospi->State == HAL_OSPI_STATE_WRITE_CMD_CFG) {
+					}
+					else if (cmd->OperationType == HAL_OSPI_OPTYPE_READ_CFG)
+					{
+						if (hospi->State == HAL_OSPI_STATE_WRITE_CMD_CFG)
+						{
 							hospi->State = HAL_OSPI_STATE_CMD_CFG;
-						} else {
+						}
+						else
+						{
 							hospi->State = HAL_OSPI_STATE_READ_CMD_CFG;
 						}
-					} else if (cmd->OperationType == HAL_OSPI_OPTYPE_WRITE_CFG) {
-						if (hospi->State == HAL_OSPI_STATE_READ_CMD_CFG) {
+					}
+					else if (cmd->OperationType == HAL_OSPI_OPTYPE_WRITE_CFG)
+					{
+						if (hospi->State == HAL_OSPI_STATE_READ_CMD_CFG)
+						{
 							hospi->State = HAL_OSPI_STATE_CMD_CFG;
-						} else {
+						}
+						else
+						{
 							hospi->State = HAL_OSPI_STATE_WRITE_CMD_CFG;
 						}
-					} else {
+					}
+					else
+					{
 						/* Wrap configuration, no state
 						 * change */
 					}
 				}
 			}
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -896,30 +973,35 @@ HAL_StatusTypeDef HAL_OSPI_Command_IT(OSPI_HandleTypeDef *hospi, OSPI_RegularCmd
 	/* Check the parameters of the command structure */
 	assert_param(IS_OSPI_OPERATION_TYPE(cmd->OperationType));
 
-	if (hospi->Init.DualQuad == HAL_OSPI_DUALQUAD_DISABLE) {
+	if (hospi->Init.DualQuad == HAL_OSPI_DUALQUAD_DISABLE)
+	{
 		assert_param(IS_OSPI_FLASH_ID(cmd->FlashId));
 	}
 
 	assert_param(IS_OSPI_INSTRUCTION_MODE(cmd->InstructionMode));
-	if (cmd->InstructionMode != HAL_OSPI_INSTRUCTION_NONE) {
+	if (cmd->InstructionMode != HAL_OSPI_INSTRUCTION_NONE)
+	{
 		assert_param(IS_OSPI_INSTRUCTION_SIZE(cmd->InstructionSize));
 		assert_param(IS_OSPI_INSTRUCTION_DTR_MODE(cmd->InstructionDtrMode));
 	}
 
 	assert_param(IS_OSPI_ADDRESS_MODE(cmd->AddressMode));
-	if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE) {
+	if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE)
+	{
 		assert_param(IS_OSPI_ADDRESS_SIZE(cmd->AddressSize));
 		assert_param(IS_OSPI_ADDRESS_DTR_MODE(cmd->AddressDtrMode));
 	}
 
 	assert_param(IS_OSPI_ALT_BYTES_MODE(cmd->AlternateBytesMode));
-	if (cmd->AlternateBytesMode != HAL_OSPI_ALTERNATE_BYTES_NONE) {
+	if (cmd->AlternateBytesMode != HAL_OSPI_ALTERNATE_BYTES_NONE)
+	{
 		assert_param(IS_OSPI_ALT_BYTES_SIZE(cmd->AlternateBytesSize));
 		assert_param(IS_OSPI_ALT_BYTES_DTR_MODE(cmd->AlternateBytesDtrMode));
 	}
 
 	assert_param(IS_OSPI_DATA_MODE(cmd->DataMode));
-	if (cmd->DataMode != HAL_OSPI_DATA_NONE) {
+	if (cmd->DataMode != HAL_OSPI_DATA_NONE)
+	{
 		assert_param(IS_OSPI_NUMBER_DATA(cmd->NbData));
 		assert_param(IS_OSPI_DATA_DTR_MODE(cmd->DataDtrMode));
 		assert_param(IS_OSPI_DUMMY_CYCLES(cmd->DummyCycles));
@@ -930,11 +1012,13 @@ HAL_StatusTypeDef HAL_OSPI_Command_IT(OSPI_HandleTypeDef *hospi, OSPI_RegularCmd
 
 	/* Check the state of the driver */
 	if ((hospi->State == HAL_OSPI_STATE_READY) && (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG) && (cmd->DataMode == HAL_OSPI_DATA_NONE) &&
-	    (hospi->Init.MemoryType != HAL_OSPI_MEMTYPE_HYPERBUS)) {
+	    (hospi->Init.MemoryType != HAL_OSPI_MEMTYPE_HYPERBUS))
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, hospi->Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Initialize error code */
 			hospi->ErrorCode = HAL_OSPI_ERROR_NONE;
 
@@ -944,7 +1028,8 @@ HAL_StatusTypeDef HAL_OSPI_Command_IT(OSPI_HandleTypeDef *hospi, OSPI_RegularCmd
 			/* Configure the registers */
 			status = OSPI_ConfigCmd(hospi, cmd);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Update the state */
 				hospi->State = HAL_OSPI_STATE_BUSY_CMD;
 
@@ -953,7 +1038,9 @@ HAL_StatusTypeDef HAL_OSPI_Command_IT(OSPI_HandleTypeDef *hospi, OSPI_RegularCmd
 				__HAL_OSPI_ENABLE_IT(hospi, HAL_OSPI_IT_TC | HAL_OSPI_IT_TE);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -983,18 +1070,22 @@ HAL_StatusTypeDef HAL_OSPI_HyperbusCfg(OSPI_HandleTypeDef *hospi, OSPI_HyperbusC
 
 	/* Check the state of the driver */
 	state = hospi->State;
-	if ((state == HAL_OSPI_STATE_HYPERBUS_INIT) || (state == HAL_OSPI_STATE_READY)) {
+	if ((state == HAL_OSPI_STATE_HYPERBUS_INIT) || (state == HAL_OSPI_STATE_READY))
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Configure Hyperbus configuration Latency register */
 			WRITE_REG(hospi->Instance->HLCR, ((cfg->RWRecoveryTime << OCTOSPI_HLCR_TRWR_Pos) | (cfg->AccessTime << OCTOSPI_HLCR_TACC_Pos) | cfg->WriteZeroLatency | cfg->LatencyMode));
 
 			/* Update the state */
 			hospi->State = HAL_OSPI_STATE_READY;
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1022,11 +1113,13 @@ HAL_StatusTypeDef HAL_OSPI_HyperbusCmd(OSPI_HandleTypeDef *hospi, OSPI_HyperbusC
 	assert_param(IS_OSPI_DQS_MODE(cmd->DQSMode));
 
 	/* Check the state of the driver */
-	if ((hospi->State == HAL_OSPI_STATE_READY) && (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)) {
+	if ((hospi->State == HAL_OSPI_STATE_READY) && (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS))
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Re-initialize the value of the functional mode */
 			MODIFY_REG(hospi->Instance->CR, OCTOSPI_CR_FMODE, 0U);
 
@@ -1050,7 +1143,9 @@ HAL_StatusTypeDef HAL_OSPI_HyperbusCmd(OSPI_HandleTypeDef *hospi, OSPI_HyperbusC
 			/* Update the state */
 			hospi->State = HAL_OSPI_STATE_CMD_CFG;
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1074,12 +1169,16 @@ HAL_StatusTypeDef HAL_OSPI_Transmit(OSPI_HandleTypeDef *hospi, uint8_t *pData, u
 	__IO uint32_t *data_reg = &hospi->Instance->DR;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL) {
+	if (pData == NULL)
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
-	} else {
+	}
+	else
+	{
 		/* Check the state */
-		if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
+		if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+		{
 			/* Configure counters and size */
 			hospi->XferCount = READ_REG(hospi->Instance->DLR) + 1U;
 			hospi->XferSize = hospi->XferCount;
@@ -1089,12 +1188,14 @@ HAL_StatusTypeDef HAL_OSPI_Transmit(OSPI_HandleTypeDef *hospi, uint8_t *pData, u
 			 * indirect write */
 			MODIFY_REG(hospi->Instance->CR, OCTOSPI_CR_FMODE, OSPI_FUNCTIONAL_MODE_INDIRECT_WRITE);
 
-			do {
+			do
+			{
 				/* Wait till fifo threshold flag is set to send
 				 * data */
 				status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_FT, SET, tickstart, Timeout);
 
-				if (status != HAL_OK) {
+				if (status != HAL_OK)
+				{
 					break;
 				}
 
@@ -1103,12 +1204,14 @@ HAL_StatusTypeDef HAL_OSPI_Transmit(OSPI_HandleTypeDef *hospi, uint8_t *pData, u
 				hospi->XferCount--;
 			} while (hospi->XferCount > 0U);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Wait till transfer complete flag is set to go
 				 * back in idle state */
 				status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_TC, SET, tickstart, Timeout);
 
-				if (status == HAL_OK) {
+				if (status == HAL_OK)
+				{
 					/* Clear transfer complete flag */
 					__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_TC);
 
@@ -1116,7 +1219,9 @@ HAL_StatusTypeDef HAL_OSPI_Transmit(OSPI_HandleTypeDef *hospi, uint8_t *pData, u
 					hospi->State = HAL_OSPI_STATE_READY;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1143,12 +1248,16 @@ HAL_StatusTypeDef HAL_OSPI_Receive(OSPI_HandleTypeDef *hospi, uint8_t *pData, ui
 	uint32_t ir_reg = hospi->Instance->IR;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL) {
+	if (pData == NULL)
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
-	} else {
+	}
+	else
+	{
 		/* Check the state */
-		if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
+		if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+		{
 			/* Configure counters and size */
 			hospi->XferCount = READ_REG(hospi->Instance->DLR) + 1U;
 			hospi->XferSize = hospi->XferCount;
@@ -1160,22 +1269,30 @@ HAL_StatusTypeDef HAL_OSPI_Receive(OSPI_HandleTypeDef *hospi, uint8_t *pData, ui
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS) {
+			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)
+			{
 				WRITE_REG(hospi->Instance->AR, addr_reg);
-			} else {
-				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE) {
+			}
+			else
+			{
+				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE)
+				{
 					WRITE_REG(hospi->Instance->AR, addr_reg);
-				} else {
+				}
+				else
+				{
 					WRITE_REG(hospi->Instance->IR, ir_reg);
 				}
 			}
 
-			do {
+			do
+			{
 				/* Wait till fifo threshold or transfer complete
 				 * flags are set to read received data */
 				status = OSPI_WaitFlagStateUntilTimeout(hospi, (HAL_OSPI_FLAG_FT | HAL_OSPI_FLAG_TC), SET, tickstart, Timeout);
 
-				if (status != HAL_OK) {
+				if (status != HAL_OK)
+				{
 					break;
 				}
 
@@ -1184,12 +1301,14 @@ HAL_StatusTypeDef HAL_OSPI_Receive(OSPI_HandleTypeDef *hospi, uint8_t *pData, ui
 				hospi->XferCount--;
 			} while (hospi->XferCount > 0U);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Wait till transfer complete flag is set to go
 				 * back in idle state */
 				status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_TC, SET, tickstart, Timeout);
 
-				if (status == HAL_OK) {
+				if (status == HAL_OK)
+				{
 					/* Clear transfer complete flag */
 					__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_TC);
 
@@ -1197,7 +1316,9 @@ HAL_StatusTypeDef HAL_OSPI_Receive(OSPI_HandleTypeDef *hospi, uint8_t *pData, ui
 					hospi->State = HAL_OSPI_STATE_READY;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1219,12 +1340,16 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_IT(OSPI_HandleTypeDef *hospi, uint8_t *pData
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL) {
+	if (pData == NULL)
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
-	} else {
+	}
+	else
+	{
 		/* Check the state */
-		if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
+		if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+		{
 			/* Configure counters and size */
 			hospi->XferCount = READ_REG(hospi->Instance->DLR) + 1U;
 			hospi->XferSize = hospi->XferCount;
@@ -1243,7 +1368,9 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_IT(OSPI_HandleTypeDef *hospi, uint8_t *pData
 			/* Enable the transfer complete, fifo threshold and
 			 * transfer error interrupts */
 			__HAL_OSPI_ENABLE_IT(hospi, HAL_OSPI_IT_TC | HAL_OSPI_IT_FT | HAL_OSPI_IT_TE);
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1267,12 +1394,16 @@ HAL_StatusTypeDef HAL_OSPI_Receive_IT(OSPI_HandleTypeDef *hospi, uint8_t *pData)
 	uint32_t ir_reg = hospi->Instance->IR;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL) {
+	if (pData == NULL)
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
-	} else {
+	}
+	else
+	{
 		/* Check the state */
-		if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
+		if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+		{
 			/* Configure counters and size */
 			hospi->XferCount = READ_REG(hospi->Instance->DLR) + 1U;
 			hospi->XferSize = hospi->XferCount;
@@ -1294,16 +1425,24 @@ HAL_StatusTypeDef HAL_OSPI_Receive_IT(OSPI_HandleTypeDef *hospi, uint8_t *pData)
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS) {
+			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)
+			{
 				WRITE_REG(hospi->Instance->AR, addr_reg);
-			} else {
-				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE) {
+			}
+			else
+			{
+				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE)
+				{
 					WRITE_REG(hospi->Instance->AR, addr_reg);
-				} else {
+				}
+				else
+				{
 					WRITE_REG(hospi->Instance->IR, ir_reg);
 				}
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1332,31 +1471,45 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 	uint32_t data_width = DMA_DEST_DATAWIDTH_BYTE;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL) {
+	if (pData == NULL)
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
-	} else {
+	}
+	else
+	{
 		/* Check the state */
-		if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
-			if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+		{
+			if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+			{
 				p_queue = hospi->hdma->LinkedListQueue;
-				if ((p_queue != NULL) && (p_queue->Head != NULL)) {
+				if ((p_queue != NULL) && (p_queue->Head != NULL))
+				{
 					data_width = p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DDW_LOG2;
-				} else {
+				}
+				else
+				{
 					/* Set Error Code */
 					hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 
 					/* Return function status */
 					status = HAL_ERROR;
 				}
-			} else {
+			}
+			else
+			{
 				data_width = hospi->hdma->Init.DestDataWidth;
 			}
 			/* Configure counters and size */
-			if (data_width == DMA_DEST_DATAWIDTH_BYTE) {
+			if (data_width == DMA_DEST_DATAWIDTH_BYTE)
+			{
 				hospi->XferCount = data_size;
-			} else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD) {
-				if (((data_size % 2U) != 0U) || ((hospi->Init.FifoThreshold % 2U) != 0U)) {
+			}
+			else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD)
+			{
+				if (((data_size % 2U) != 0U) || ((hospi->Init.FifoThreshold % 2U) != 0U))
+				{
 					/* The number of data or the fifo
 					threshold is not aligned on halfword
 					=> no transfer possible with DMA
@@ -1364,25 +1517,35 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 				      */
 					hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				} else {
+				}
+				else
+				{
 					hospi->XferCount = data_size;
 				}
-			} else if (data_width == DMA_DEST_DATAWIDTH_WORD) {
-				if (((data_size % 4U) != 0U) || ((hospi->Init.FifoThreshold % 4U) != 0U)) {
+			}
+			else if (data_width == DMA_DEST_DATAWIDTH_WORD)
+			{
+				if (((data_size % 4U) != 0U) || ((hospi->Init.FifoThreshold % 4U) != 0U))
+				{
 					/* The number of data or the fifo
 					threshold is not aligned on word
 					=> no transfer possible with DMA
 					peripheral access configured as word */
 					hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				} else {
+				}
+				else
+				{
 					hospi->XferCount = data_size;
 				}
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				hospi->XferSize = hospi->XferCount;
 				hospi->pBuffPtr = pData;
 
@@ -1410,8 +1573,10 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 				hospi->hdma->XferAbortCallback = NULL;
 
 				/* Enable the transmit DMA Channel */
-				if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-					if (hospi->hdma->LinkedListQueue != NULL) {
+				if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+				{
+					if (hospi->hdma->LinkedListQueue != NULL)
+					{
 						/* Enable the DMA channel */
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET], (DMA_CTR1_SINC | DMA_CTR1_DINC), (DMA_SINC_INCREMENTED | DMA_DINC_FIXED));
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET], DMA_CTR2_DREQ, DMA_MEMORY_TO_PERIPH);
@@ -1423,7 +1588,9 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 						 */
 						p_queue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)&hospi->Instance->DR;
 						status = HAL_DMAEx_List_Start_IT(hospi->hdma);
-					} else {
+					}
+					else
+					{
 						/* Set Error Code */
 						hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 
@@ -1433,7 +1600,9 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 						/* Return function status */
 						status = HAL_ERROR;
 					}
-				} else {
+				}
+				else
+				{
 					/* Configure the direction of the DMA */
 					MODIFY_REG(hospi->hdma->Instance->CTR1, (DMA_CTR1_SINC | DMA_CTR1_DINC), (DMA_SINC_INCREMENTED | DMA_DINC_FIXED));
 					MODIFY_REG(hospi->hdma->Instance->CTR2, DMA_CTR2_DREQ, DMA_MEMORY_TO_PERIPH);
@@ -1441,7 +1610,8 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 					status = HAL_DMA_Start_IT(hospi->hdma, (uint32_t)pData, (uint32_t)&hospi->Instance->DR, hospi->XferSize);
 				}
 
-				if (status == HAL_OK) {
+				if (status == HAL_OK)
+				{
 					/* Enable the transfer error interrupt
 					 */
 					__HAL_OSPI_ENABLE_IT(hospi, HAL_OSPI_IT_TE);
@@ -1449,13 +1619,17 @@ HAL_StatusTypeDef HAL_OSPI_Transmit_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pDat
 					/* Enable the DMA transfer by setting
 					 * the DMAEN bit  */
 					SET_BIT(hospi->Instance->CR, OCTOSPI_CR_DMAEN);
-				} else {
+				}
+				else
+				{
 					status = HAL_ERROR;
 					hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 					hospi->State = HAL_OSPI_STATE_READY;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1485,32 +1659,46 @@ HAL_StatusTypeDef HAL_OSPI_Receive_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pData
 	DMA_QListTypeDef *p_queue = {NULL};
 	uint32_t data_width = DMA_DEST_DATAWIDTH_BYTE;
 	/* Check the data pointer allocation */
-	if (pData == NULL) {
+	if (pData == NULL)
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
-	} else {
+	}
+	else
+	{
 		/* Check the state */
-		if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
-			if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+		{
+			if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+			{
 				p_queue = hospi->hdma->LinkedListQueue;
-				if ((p_queue != NULL) && (p_queue->Head != NULL)) {
+				if ((p_queue != NULL) && (p_queue->Head != NULL))
+				{
 					data_width = p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DDW_LOG2;
-				} else {
+				}
+				else
+				{
 					/* Set Error Code */
 					hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 
 					/* Return function status */
 					status = HAL_ERROR;
 				}
-			} else {
+			}
+			else
+			{
 				data_width = hospi->hdma->Init.DestDataWidth;
 			}
 
 			/* Configure counters and size */
-			if (data_width == DMA_DEST_DATAWIDTH_BYTE) {
+			if (data_width == DMA_DEST_DATAWIDTH_BYTE)
+			{
 				hospi->XferCount = data_size;
-			} else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD) {
-				if (((data_size % 2U) != 0U) || ((hospi->Init.FifoThreshold % 2U) != 0U)) {
+			}
+			else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD)
+			{
+				if (((data_size % 2U) != 0U) || ((hospi->Init.FifoThreshold % 2U) != 0U))
+				{
 					/* The number of data or the fifo
 					threshold is not aligned on halfword
 					=> no transfer possible with DMA
@@ -1518,25 +1706,35 @@ HAL_StatusTypeDef HAL_OSPI_Receive_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pData
 				      */
 					hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				} else {
+				}
+				else
+				{
 					hospi->XferCount = data_size;
 				}
-			} else if (data_width == DMA_DEST_DATAWIDTH_WORD) {
-				if (((data_size % 4U) != 0U) || ((hospi->Init.FifoThreshold % 4U) != 0U)) {
+			}
+			else if (data_width == DMA_DEST_DATAWIDTH_WORD)
+			{
+				if (((data_size % 4U) != 0U) || ((hospi->Init.FifoThreshold % 4U) != 0U))
+				{
 					/* The number of data or the fifo
 					threshold is not aligned on word
 					=> no transfer possible with DMA
 					peripheral access configured as word */
 					hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				} else {
+				}
+				else
+				{
 					hospi->XferCount = data_size;
 				}
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				hospi->XferSize = hospi->XferCount;
 				hospi->pBuffPtr = pData;
 
@@ -1564,8 +1762,10 @@ HAL_StatusTypeDef HAL_OSPI_Receive_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pData
 				hospi->hdma->XferAbortCallback = NULL;
 
 				/* Enable the transmit DMA Channel */
-				if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-					if (hospi->hdma->LinkedListQueue != NULL) {
+				if ((hospi->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+				{
+					if (hospi->hdma->LinkedListQueue != NULL)
+					{
 						/* Enable the DMA channel */
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET], (DMA_CTR1_SINC | DMA_CTR1_DINC), (DMA_SINC_FIXED | DMA_DINC_INCREMENTED));
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET], DMA_CTR2_DREQ, DMA_PERIPH_TO_MEMORY);
@@ -1578,7 +1778,9 @@ HAL_StatusTypeDef HAL_OSPI_Receive_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pData
 						p_queue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 						status = HAL_DMAEx_List_Start_IT(hospi->hdma);
-					} else {
+					}
+					else
+					{
 						/* Set Error Code */
 						hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 
@@ -1590,26 +1792,34 @@ HAL_StatusTypeDef HAL_OSPI_Receive_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pData
 					}
 				}
 
-				else {
+				else
+				{
 					/* Configure the direction of the DMA */
 					MODIFY_REG(hospi->hdma->Instance->CTR1, (DMA_CTR1_SINC | DMA_CTR1_DINC), (DMA_SINC_FIXED | DMA_DINC_INCREMENTED));
 					MODIFY_REG(hospi->hdma->Instance->CTR2, DMA_CTR2_DREQ, DMA_PERIPH_TO_MEMORY);
 
 					status = HAL_DMA_Start_IT(hospi->hdma, (uint32_t)&hospi->Instance->DR, (uint32_t)pData, hospi->XferSize);
 				}
-				if (status == HAL_OK) {
+				if (status == HAL_OK)
+				{
 					/* Enable the transfer error interrupt
 					 */
 					__HAL_OSPI_ENABLE_IT(hospi, HAL_OSPI_IT_TE);
 
 					/* Trig the transfer by re-writing
 					 * address or instruction register */
-					if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS) {
+					if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)
+					{
 						WRITE_REG(hospi->Instance->AR, addr_reg);
-					} else {
-						if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE) {
+					}
+					else
+					{
+						if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE)
+						{
 							WRITE_REG(hospi->Instance->AR, addr_reg);
-						} else {
+						}
+						else
+						{
 							WRITE_REG(hospi->Instance->IR, ir_reg);
 						}
 					}
@@ -1617,13 +1827,17 @@ HAL_StatusTypeDef HAL_OSPI_Receive_DMA(OSPI_HandleTypeDef *hospi, uint8_t *pData
 					/* Enable the DMA transfer by setting
 					 * the DMAEN bit  */
 					SET_BIT(hospi->Instance->CR, OCTOSPI_CR_DMAEN);
-				} else {
+				}
+				else
+				{
 					status = HAL_ERROR;
 					hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 					hospi->State = HAL_OSPI_STATE_READY;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1659,11 +1873,13 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling(OSPI_HandleTypeDef *hospi, OSPI_AutoPolli
 	assert_param(IS_OSPI_STATUS_BYTES_SIZE(dlr_reg + 1U));
 
 	/* Check the state */
-	if ((hospi->State == HAL_OSPI_STATE_CMD_CFG) && (cfg->AutomaticStop == HAL_OSPI_AUTOMATIC_STOP_ENABLE)) {
+	if ((hospi->State == HAL_OSPI_STATE_CMD_CFG) && (cfg->AutomaticStop == HAL_OSPI_AUTOMATIC_STOP_ENABLE))
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Configure registers */
 			WRITE_REG(hospi->Instance->PSMAR, cfg->Match);
 			WRITE_REG(hospi->Instance->PSMKR, cfg->Mask);
@@ -1672,12 +1888,18 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling(OSPI_HandleTypeDef *hospi, OSPI_AutoPolli
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS) {
+			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)
+			{
 				WRITE_REG(hospi->Instance->AR, addr_reg);
-			} else {
-				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE) {
+			}
+			else
+			{
+				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE)
+				{
 					WRITE_REG(hospi->Instance->AR, addr_reg);
-				} else {
+				}
+				else
+				{
 					WRITE_REG(hospi->Instance->IR, ir_reg);
 				}
 			}
@@ -1686,7 +1908,8 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling(OSPI_HandleTypeDef *hospi, OSPI_AutoPolli
 			 * state */
 			status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_SM, SET, tickstart, Timeout);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Clear status match flag */
 				__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_SM);
 
@@ -1694,7 +1917,9 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling(OSPI_HandleTypeDef *hospi, OSPI_AutoPolli
 				hospi->State = HAL_OSPI_STATE_READY;
 			}
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1728,11 +1953,13 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling_IT(OSPI_HandleTypeDef *hospi, OSPI_AutoPo
 	assert_param(IS_OSPI_STATUS_BYTES_SIZE(dlr_reg + 1U));
 
 	/* Check the state */
-	if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
+	if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, hospi->Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Configure registers */
 			WRITE_REG(hospi->Instance->PSMAR, cfg->Match);
 			WRITE_REG(hospi->Instance->PSMKR, cfg->Mask);
@@ -1751,17 +1978,25 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling_IT(OSPI_HandleTypeDef *hospi, OSPI_AutoPo
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS) {
+			if (hospi->Init.MemoryType == HAL_OSPI_MEMTYPE_HYPERBUS)
+			{
 				WRITE_REG(hospi->Instance->AR, addr_reg);
-			} else {
-				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE) {
+			}
+			else
+			{
+				if (READ_BIT(hospi->Instance->CCR, OCTOSPI_CCR_ADMODE) != HAL_OSPI_ADDRESS_NONE)
+				{
 					WRITE_REG(hospi->Instance->AR, addr_reg);
-				} else {
+				}
+				else
+				{
 					WRITE_REG(hospi->Instance->IR, ir_reg);
 				}
 			}
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1787,15 +2022,18 @@ HAL_StatusTypeDef HAL_OSPI_MemoryMapped(OSPI_HandleTypeDef *hospi, OSPI_MemoryMa
 	assert_param(IS_OSPI_TIMEOUT_ACTIVATION(cfg->TimeOutActivation));
 
 	/* Check the state */
-	if (hospi->State == HAL_OSPI_STATE_CMD_CFG) {
+	if (hospi->State == HAL_OSPI_STATE_CMD_CFG)
+	{
 		/* Wait till busy flag is reset */
 		status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, hospi->Timeout);
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			/* Update state */
 			hospi->State = HAL_OSPI_STATE_BUSY_MEM_MAPPED;
 
-			if (cfg->TimeOutActivation == HAL_OSPI_TIMEOUT_COUNTER_ENABLE) {
+			if (cfg->TimeOutActivation == HAL_OSPI_TIMEOUT_COUNTER_ENABLE)
+			{
 				assert_param(IS_OSPI_TIMEOUT_PERIOD(cfg->TimeOutPeriod));
 
 				/* Configure register */
@@ -1812,7 +2050,9 @@ HAL_StatusTypeDef HAL_OSPI_MemoryMapped(OSPI_HandleTypeDef *hospi, OSPI_MemoryMa
 			 * memory-mapped */
 			MODIFY_REG(hospi->Instance->CR, (OCTOSPI_CR_TCEN | OCTOSPI_CR_FMODE), (cfg->TimeOutActivation | OSPI_FUNCTIONAL_MODE_MEMORY_MAPPED));
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2012,14 +2252,17 @@ HAL_StatusTypeDef HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
 		return HAL_ERROR;
 	}
 
-	if (hospi->State == HAL_OSPI_STATE_READY) {
-		switch (CallbackID) {
+	if (hospi->State == HAL_OSPI_STATE_READY)
+	{
+		switch (CallbackID)
+		{
 			case HAL_OSPI_ERROR_CB_ID:
 				hospi->ErrorCallback = pCallback;
 				break;
@@ -2063,8 +2306,11 @@ HAL_StatusTypeDef HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (hospi->State == HAL_OSPI_STATE_RESET) {
-		switch (CallbackID) {
+	}
+	else if (hospi->State == HAL_OSPI_STATE_RESET)
+	{
+		switch (CallbackID)
+		{
 			case HAL_OSPI_MSP_INIT_CB_ID:
 				hospi->MspInitCallback = pCallback;
 				break;
@@ -2078,7 +2324,9 @@ HAL_StatusTypeDef HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -2117,8 +2365,10 @@ HAL_StatusTypeDef HAL_OSPI_UnRegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSP
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (hospi->State == HAL_OSPI_STATE_READY) {
-		switch (CallbackID) {
+	if (hospi->State == HAL_OSPI_STATE_READY)
+	{
+		switch (CallbackID)
+		{
 			case HAL_OSPI_ERROR_CB_ID:
 				hospi->ErrorCallback = HAL_OSPI_ErrorCallback;
 				break;
@@ -2162,8 +2412,11 @@ HAL_StatusTypeDef HAL_OSPI_UnRegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSP
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (hospi->State == HAL_OSPI_STATE_RESET) {
-		switch (CallbackID) {
+	}
+	else if (hospi->State == HAL_OSPI_STATE_RESET)
+	{
+		switch (CallbackID)
+		{
 			case HAL_OSPI_MSP_INIT_CB_ID:
 				hospi->MspInitCallback = HAL_OSPI_MspInit;
 				break;
@@ -2177,7 +2430,9 @@ HAL_StatusTypeDef HAL_OSPI_UnRegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSP
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -2226,20 +2481,24 @@ HAL_StatusTypeDef HAL_OSPI_Abort(OSPI_HandleTypeDef *hospi)
 
 	/* Check if the state is in one of the busy or configured states */
 	state = hospi->State;
-	if (((state & OSPI_BUSY_STATE_MASK) != 0U) || ((state & OSPI_CFG_STATE_MASK) != 0U)) {
+	if (((state & OSPI_BUSY_STATE_MASK) != 0U) || ((state & OSPI_CFG_STATE_MASK) != 0U))
+	{
 		/* Check if the DMA is enabled */
-		if ((hospi->Instance->CR & OCTOSPI_CR_DMAEN) != 0U) {
+		if ((hospi->Instance->CR & OCTOSPI_CR_DMAEN) != 0U)
+		{
 			/* Disable the DMA transfer on the OctoSPI side */
 			CLEAR_BIT(hospi->Instance->CR, OCTOSPI_CR_DMAEN);
 
 			/* Disable the DMA transfer on the DMA side */
 			status = HAL_DMA_Abort(hospi->hdma);
-			if (status != HAL_OK) {
+			if (status != HAL_OK)
+			{
 				hospi->ErrorCode = HAL_OSPI_ERROR_DMA;
 			}
 		}
 
-		if (__HAL_OSPI_GET_FLAG(hospi, HAL_OSPI_FLAG_BUSY) != RESET) {
+		if (__HAL_OSPI_GET_FLAG(hospi, HAL_OSPI_FLAG_BUSY) != RESET)
+		{
 			/* Perform an abort of the OctoSPI */
 			SET_BIT(hospi->Instance->CR, OCTOSPI_CR_ABORT);
 
@@ -2247,7 +2506,8 @@ HAL_StatusTypeDef HAL_OSPI_Abort(OSPI_HandleTypeDef *hospi)
 			 * back in idle state */
 			status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_TC, SET, tickstart, hospi->Timeout);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Clear transfer complete flag */
 				__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_TC);
 
@@ -2255,16 +2515,21 @@ HAL_StatusTypeDef HAL_OSPI_Abort(OSPI_HandleTypeDef *hospi)
 				 * in idle state */
 				status = OSPI_WaitFlagStateUntilTimeout(hospi, HAL_OSPI_FLAG_BUSY, RESET, tickstart, hospi->Timeout);
 
-				if (status == HAL_OK) {
+				if (status == HAL_OK)
+				{
 					/* Update state */
 					hospi->State = HAL_OSPI_STATE_READY;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			/* Update state */
 			hospi->State = HAL_OSPI_STATE_READY;
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2285,7 +2550,8 @@ HAL_StatusTypeDef HAL_OSPI_Abort_IT(OSPI_HandleTypeDef *hospi)
 
 	/* Check if the state is in one of the busy or configured states */
 	state = hospi->State;
-	if (((state & OSPI_BUSY_STATE_MASK) != 0U) || ((state & OSPI_CFG_STATE_MASK) != 0U)) {
+	if (((state & OSPI_BUSY_STATE_MASK) != 0U) || ((state & OSPI_CFG_STATE_MASK) != 0U))
+	{
 		/* Disable all interrupts */
 		__HAL_OSPI_DISABLE_IT(hospi, (HAL_OSPI_IT_TO | HAL_OSPI_IT_SM | HAL_OSPI_IT_FT | HAL_OSPI_IT_TC | HAL_OSPI_IT_TE));
 
@@ -2293,13 +2559,15 @@ HAL_StatusTypeDef HAL_OSPI_Abort_IT(OSPI_HandleTypeDef *hospi)
 		hospi->State = HAL_OSPI_STATE_ABORT;
 
 		/* Check if the DMA is enabled */
-		if ((hospi->Instance->CR & OCTOSPI_CR_DMAEN) != 0U) {
+		if ((hospi->Instance->CR & OCTOSPI_CR_DMAEN) != 0U)
+		{
 			/* Disable the DMA transfer on the OctoSPI side */
 			CLEAR_BIT(hospi->Instance->CR, OCTOSPI_CR_DMAEN);
 
 			/* Disable the DMA transfer on the DMA side */
 			hospi->hdma->XferAbortCallback = OSPI_DMAAbortCplt;
-			if (HAL_DMA_Abort_IT(hospi->hdma) != HAL_OK) {
+			if (HAL_DMA_Abort_IT(hospi->hdma) != HAL_OK)
+			{
 				/* Update state */
 				hospi->State = HAL_OSPI_STATE_READY;
 
@@ -2311,8 +2579,11 @@ HAL_StatusTypeDef HAL_OSPI_Abort_IT(OSPI_HandleTypeDef *hospi)
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)*/
 			}
-		} else {
-			if (__HAL_OSPI_GET_FLAG(hospi, HAL_OSPI_FLAG_BUSY) != RESET) {
+		}
+		else
+		{
+			if (__HAL_OSPI_GET_FLAG(hospi, HAL_OSPI_FLAG_BUSY) != RESET)
+			{
 				/* Clear transfer complete flag */
 				__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_TC);
 
@@ -2321,7 +2592,9 @@ HAL_StatusTypeDef HAL_OSPI_Abort_IT(OSPI_HandleTypeDef *hospi)
 
 				/* Perform an abort of the OctoSPI */
 				SET_BIT(hospi->Instance->CR, OCTOSPI_CR_ABORT);
-			} else {
+			}
+			else
+			{
 				/* Update state */
 				hospi->State = HAL_OSPI_STATE_READY;
 
@@ -2334,7 +2607,9 @@ HAL_StatusTypeDef HAL_OSPI_Abort_IT(OSPI_HandleTypeDef *hospi)
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 			}
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2353,15 +2628,17 @@ HAL_StatusTypeDef HAL_OSPI_SetFifoThreshold(OSPI_HandleTypeDef *hospi, uint32_t 
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the state */
-	if ((hospi->State & OSPI_BUSY_STATE_MASK) == 0U) {
+	if ((hospi->State & OSPI_BUSY_STATE_MASK) == 0U)
+	{
 		/* Synchronize initialization structure with the new fifo
 		 * threshold value */
 		hospi->Init.FifoThreshold = Threshold;
 
 		/* Configure new fifo threshold */
 		MODIFY_REG(hospi->Instance->CR, OCTOSPI_CR_FTHRES, ((hospi->Init.FifoThreshold - 1U) << OCTOSPI_CR_FTHRES_Pos));
-
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2452,31 +2729,39 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 	assert_param(IS_OSPIM_IO_PORT(cfg->IOLowPort));
 	assert_param(IS_OSPIM_IO_PORT(cfg->IOHighPort));
 
-	if (hospi->Instance == (OCTOSPI_TypeDef *)OCTOSPI1) {
+	if (hospi->Instance == (OCTOSPI_TypeDef *)OCTOSPI1)
+	{
 		instance = 0U;
 		other_instance = 1U;
-	} else {
+	}
+	else
+	{
 		instance = 1U;
 		other_instance = 0U;
 	}
 
 	/**************** Get current configuration of the instances
 	 * ****************/
-	for (index = 0U; index < OSPI_NB_INSTANCE; index++) {
-		if (OSPIM_GetConfig(index + 1U, &(IOM_cfg[index])) != HAL_OK) {
+	for (index = 0U; index < OSPI_NB_INSTANCE; index++)
+	{
+		if (OSPIM_GetConfig(index + 1U, &(IOM_cfg[index])) != HAL_OK)
+		{
 			status = HAL_ERROR;
 			hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_PARAM;
 		}
 	}
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/********** Disable both OctoSPI to configure OctoSPI IO Manager
 		 * **********/
-		if ((OCTOSPI1->CR & OCTOSPI_CR_EN) != 0U) {
+		if ((OCTOSPI1->CR & OCTOSPI_CR_EN) != 0U)
+		{
 			CLEAR_BIT(OCTOSPI1->CR, OCTOSPI_CR_EN);
 			ospi_enabled |= 0x1U;
 		}
-		if ((OCTOSPI2->CR & OCTOSPI_CR_EN) != 0U) {
+		if ((OCTOSPI2->CR & OCTOSPI_CR_EN) != 0U)
+		{
 			CLEAR_BIT(OCTOSPI2->CR, OCTOSPI_CR_EN);
 			ospi_enabled |= 0x2U;
 		}
@@ -2484,32 +2769,43 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 		/***************** Deactivation of previous configuration
 		 * *****************/
 		CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[instance].NCSPort - 1U)], OCTOSPIM_PCR_NCSEN);
-		if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U) {
+		if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U)
+		{
 			/* De-multiplexing should be performed */
 			CLEAR_BIT(OCTOSPIM->CR, OCTOSPIM_CR_MUXEN);
 
-			if (other_instance == 1U) {
+			if (other_instance == 1U)
+			{
 				SET_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].ClkPort - 1U)], OCTOSPIM_PCR_CLKSRC);
-				if (IOM_cfg[other_instance].DQSPort != 0U) {
+				if (IOM_cfg[other_instance].DQSPort != 0U)
+				{
 					SET_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].DQSPort - 1U)], OCTOSPIM_PCR_DQSSRC);
 				}
-				if (IOM_cfg[other_instance].IOLowPort != HAL_OSPIM_IOPORT_NONE) {
+				if (IOM_cfg[other_instance].IOLowPort != HAL_OSPIM_IOPORT_NONE)
+				{
 					SET_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOLSRC_1);
 				}
-				if (IOM_cfg[other_instance].IOHighPort != HAL_OSPIM_IOPORT_NONE) {
+				if (IOM_cfg[other_instance].IOHighPort != HAL_OSPIM_IOPORT_NONE)
+				{
 					SET_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOHSRC_1);
 				}
 			}
-		} else {
-			if (IOM_cfg[instance].ClkPort != 0U) {
+		}
+		else
+		{
+			if (IOM_cfg[instance].ClkPort != 0U)
+			{
 				CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[instance].ClkPort - 1U)], OCTOSPIM_PCR_CLKEN);
-				if (IOM_cfg[instance].DQSPort != 0U) {
+				if (IOM_cfg[instance].DQSPort != 0U)
+				{
 					CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[instance].DQSPort - 1U)], OCTOSPIM_PCR_DQSEN);
 				}
-				if (IOM_cfg[instance].IOLowPort != HAL_OSPIM_IOPORT_NONE) {
+				if (IOM_cfg[instance].IOLowPort != HAL_OSPIM_IOPORT_NONE)
+				{
 					CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[instance].IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOLEN);
 				}
-				if (IOM_cfg[instance].IOHighPort != HAL_OSPIM_IOPORT_NONE) {
+				if (IOM_cfg[instance].IOHighPort != HAL_OSPIM_IOPORT_NONE)
+				{
 					CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[instance].IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOHEN);
 				}
 			}
@@ -2519,21 +2815,28 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 		 * *********************/
 		if ((cfg->ClkPort == IOM_cfg[other_instance].ClkPort) || (cfg->NCSPort == IOM_cfg[other_instance].NCSPort) ||
 		    ((cfg->DQSPort == IOM_cfg[other_instance].DQSPort) && (cfg->DQSPort != 0U)) || (cfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) ||
-		    (cfg->IOHighPort == IOM_cfg[other_instance].IOHighPort)) {
+		    (cfg->IOHighPort == IOM_cfg[other_instance].IOHighPort))
+		{
 			if ((cfg->ClkPort == IOM_cfg[other_instance].ClkPort) && (cfg->DQSPort == IOM_cfg[other_instance].DQSPort) && (cfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) &&
-			    (cfg->IOHighPort == IOM_cfg[other_instance].IOHighPort)) {
+			    (cfg->IOHighPort == IOM_cfg[other_instance].IOHighPort))
+			{
 				/* Multiplexing should be performed */
 				SET_BIT(OCTOSPIM->CR, OCTOSPIM_CR_MUXEN);
-			} else {
+			}
+			else
+			{
 				CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].ClkPort - 1U)], OCTOSPIM_PCR_CLKEN);
-				if (IOM_cfg[other_instance].DQSPort != 0U) {
+				if (IOM_cfg[other_instance].DQSPort != 0U)
+				{
 					CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].DQSPort - 1U)], OCTOSPIM_PCR_DQSEN);
 				}
 				CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].NCSPort - 1U)], OCTOSPIM_PCR_NCSEN);
-				if (IOM_cfg[other_instance].IOLowPort != HAL_OSPIM_IOPORT_NONE) {
+				if (IOM_cfg[other_instance].IOLowPort != HAL_OSPIM_IOPORT_NONE)
+				{
 					CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOLEN);
 				}
-				if (IOM_cfg[other_instance].IOHighPort != HAL_OSPIM_IOPORT_NONE) {
+				if (IOM_cfg[other_instance].IOHighPort != HAL_OSPIM_IOPORT_NONE)
+				{
 					CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOHEN);
 				}
 			}
@@ -2543,68 +2846,99 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 		 * *********************/
 		MODIFY_REG(OCTOSPIM->PCR[(cfg->NCSPort - 1U)], (OCTOSPIM_PCR_NCSEN | OCTOSPIM_PCR_NCSSRC), (OCTOSPIM_PCR_NCSEN | (instance << OCTOSPIM_PCR_NCSSRC_Pos)));
 
-		if (((cfg->Req2AckTime) >= 1U) && ((cfg->Req2AckTime) <= 256U)) {
-			if ((cfg->Req2AckTime - 1U) > ((OCTOSPIM->CR & OCTOSPIM_CR_REQ2ACK_TIME) >> OCTOSPIM_CR_REQ2ACK_TIME_Pos)) {
+		if (((cfg->Req2AckTime) >= 1U) && ((cfg->Req2AckTime) <= 256U))
+		{
+			if ((cfg->Req2AckTime - 1U) > ((OCTOSPIM->CR & OCTOSPIM_CR_REQ2ACK_TIME) >> OCTOSPIM_CR_REQ2ACK_TIME_Pos))
+			{
 				MODIFY_REG(OCTOSPIM->CR, OCTOSPIM_CR_REQ2ACK_TIME, ((cfg->Req2AckTime - 1U) << OCTOSPIM_CR_REQ2ACK_TIME_Pos));
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 		}
 
-		if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U) {
+		if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U)
+		{
 			MODIFY_REG(OCTOSPIM->PCR[(cfg->ClkPort - 1U)], (OCTOSPIM_PCR_CLKEN | OCTOSPIM_PCR_CLKSRC), OCTOSPIM_PCR_CLKEN);
-			if (cfg->DQSPort != 0U) {
+			if (cfg->DQSPort != 0U)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[(cfg->DQSPort - 1U)], (OCTOSPIM_PCR_DQSEN | OCTOSPIM_PCR_DQSSRC), OCTOSPIM_PCR_DQSEN);
 			}
 
-			if ((cfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U) {
+			if ((cfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC), OCTOSPIM_PCR_IOLEN);
-			} else if (cfg->IOLowPort != HAL_OSPIM_IOPORT_NONE) {
+			}
+			else if (cfg->IOLowPort != HAL_OSPIM_IOPORT_NONE)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC), OCTOSPIM_PCR_IOHEN);
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 
-			if ((cfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U) {
+			if ((cfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC), (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC_0));
-			} else if (cfg->IOHighPort != HAL_OSPIM_IOPORT_NONE) {
+			}
+			else if (cfg->IOHighPort != HAL_OSPIM_IOPORT_NONE)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC), (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC_0));
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
-		} else {
+		}
+		else
+		{
 			MODIFY_REG(OCTOSPIM->PCR[(cfg->ClkPort - 1U)], (OCTOSPIM_PCR_CLKEN | OCTOSPIM_PCR_CLKSRC), (OCTOSPIM_PCR_CLKEN | (instance << OCTOSPIM_PCR_CLKSRC_Pos)));
-			if (cfg->DQSPort != 0U) {
+			if (cfg->DQSPort != 0U)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[(cfg->DQSPort - 1U)], (OCTOSPIM_PCR_DQSEN | OCTOSPIM_PCR_DQSSRC), (OCTOSPIM_PCR_DQSEN | (instance << OCTOSPIM_PCR_DQSSRC_Pos)));
 			}
 
-			if ((cfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U) {
+			if ((cfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 					   (OCTOSPIM_PCR_IOLEN | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
-			} else if (cfg->IOLowPort != HAL_OSPIM_IOPORT_NONE) {
+			}
+			else if (cfg->IOLowPort != HAL_OSPIM_IOPORT_NONE)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 					   (OCTOSPIM_PCR_IOHEN | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 
-			if ((cfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U) {
+			if ((cfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 					   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC_0 | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
-			} else if (cfg->IOHighPort != HAL_OSPIM_IOPORT_NONE) {
+			}
+			else if (cfg->IOHighPort != HAL_OSPIM_IOPORT_NONE)
+			{
 				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 					   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC_0 | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 		}
 
 		/******* Re-enable both OctoSPI after configure OctoSPI IO
 		 * Manager ********/
-		if ((ospi_enabled & 0x1U) != 0U) {
+		if ((ospi_enabled & 0x1U) != 0U)
+		{
 			SET_BIT(OCTOSPI1->CR, OCTOSPI_CR_EN);
 		}
-		if ((ospi_enabled & 0x2U) != 0U) {
+		if ((ospi_enabled & 0x2U) != 0U)
+		{
 			SET_BIT(OCTOSPI2->CR, OCTOSPI_CR_EN);
 		}
 	}
@@ -2651,14 +2985,17 @@ static void OSPI_DMAHalfCplt(DMA_HandleTypeDef *hdma)
 	OSPI_HandleTypeDef *hospi = (OSPI_HandleTypeDef *)(hdma->Parent);
 	hospi->XferCount = (hospi->XferCount >> 1);
 
-	if (hospi->State == HAL_OSPI_STATE_BUSY_RX) {
+	if (hospi->State == HAL_OSPI_STATE_BUSY_RX)
+	{
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 		hospi->RxHalfCpltCallback(hospi);
 #else
 		HAL_OSPI_RxHalfCpltCallback(hospi);
 #endif /*(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS                                                                                                                         \
 	  == 1U) */
-	} else {
+	}
+	else
+	{
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 		hospi->TxHalfCpltCallback(hospi);
 #else
@@ -2683,7 +3020,8 @@ static void OSPI_DMAError(DMA_HandleTypeDef *hdma)
 	CLEAR_BIT(hospi->Instance->CR, OCTOSPI_CR_DMAEN);
 
 	/* Abort the OctoSPI */
-	if (HAL_OSPI_Abort_IT(hospi) != HAL_OK) {
+	if (HAL_OSPI_Abort_IT(hospi) != HAL_OK)
+	{
 		/* Disable the interrupts */
 		__HAL_OSPI_DISABLE_IT(hospi, HAL_OSPI_IT_TC | HAL_OSPI_IT_FT | HAL_OSPI_IT_TE);
 
@@ -2711,9 +3049,11 @@ static void OSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 	hospi->XferCount = 0;
 
 	/* Check the state */
-	if (hospi->State == HAL_OSPI_STATE_ABORT) {
+	if (hospi->State == HAL_OSPI_STATE_ABORT)
+	{
 		/* DMA abort called by OctoSPI abort */
-		if (__HAL_OSPI_GET_FLAG(hospi, HAL_OSPI_FLAG_BUSY) != RESET) {
+		if (__HAL_OSPI_GET_FLAG(hospi, HAL_OSPI_FLAG_BUSY) != RESET)
+		{
 			/* Clear transfer complete flag */
 			__HAL_OSPI_CLEAR_FLAG(hospi, HAL_OSPI_FLAG_TC);
 
@@ -2722,7 +3062,9 @@ static void OSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 
 			/* Perform an abort of the OctoSPI */
 			SET_BIT(hospi->Instance->CR, OCTOSPI_CR_ABORT);
-		} else {
+		}
+		else
+		{
 			/* Update state */
 			hospi->State = HAL_OSPI_STATE_READY;
 
@@ -2734,7 +3076,9 @@ static void OSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 #endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 		}
-	} else {
+	}
+	else
+	{
 		/* DMA abort called due to a transfer error interrupt */
 		/* Update state */
 		hospi->State = HAL_OSPI_STATE_READY;
@@ -2761,13 +3105,17 @@ static void OSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 static HAL_StatusTypeDef OSPI_WaitFlagStateUntilTimeout(OSPI_HandleTypeDef *hospi, uint32_t Flag, FlagStatus State, uint32_t Tickstart, uint32_t Timeout)
 {
 	/* Wait until flag is in expected state */
-	while ((__HAL_OSPI_GET_FLAG(hospi, Flag)) != State) {
+	while ((__HAL_OSPI_GET_FLAG(hospi, Flag)) != State)
+	{
 		/* Check for the Timeout */
-		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U)) {
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U))
+			{
 				/* New check to avoid false timeout detection in
 				 * case of preemption */
-				if ((hospi->Instance->SR & Flag) != (uint32_t)State) {
+				if ((hospi->Instance->SR & Flag) != (uint32_t)State)
+				{
 					hospi->State = HAL_OSPI_STATE_ERROR;
 					hospi->ErrorCode |= HAL_OSPI_ERROR_TIMEOUT;
 
@@ -2797,21 +3145,27 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 	MODIFY_REG(hospi->Instance->CR, OCTOSPI_CR_FMODE, 0U);
 
 	/* Configure the flash ID */
-	if (hospi->Init.DualQuad == HAL_OSPI_DUALQUAD_DISABLE) {
+	if (hospi->Init.DualQuad == HAL_OSPI_DUALQUAD_DISABLE)
+	{
 		MODIFY_REG(hospi->Instance->CR, OCTOSPI_CR_MSEL, cmd->FlashId);
 	}
 
-	if (cmd->OperationType == HAL_OSPI_OPTYPE_WRITE_CFG) {
+	if (cmd->OperationType == HAL_OSPI_OPTYPE_WRITE_CFG)
+	{
 		ccr_reg = &(hospi->Instance->WCCR);
 		tcr_reg = &(hospi->Instance->WTCR);
 		ir_reg = &(hospi->Instance->WIR);
 		abr_reg = &(hospi->Instance->WABR);
-	} else if (cmd->OperationType == HAL_OSPI_OPTYPE_WRAP_CFG) {
+	}
+	else if (cmd->OperationType == HAL_OSPI_OPTYPE_WRAP_CFG)
+	{
 		ccr_reg = &(hospi->Instance->WPCCR);
 		tcr_reg = &(hospi->Instance->WPTCR);
 		ir_reg = &(hospi->Instance->WPIR);
 		abr_reg = &(hospi->Instance->WPABR);
-	} else {
+	}
+	else
+	{
 		ccr_reg = &(hospi->Instance->CCR);
 		tcr_reg = &(hospi->Instance->TCR);
 		ir_reg = &(hospi->Instance->IR);
@@ -2821,7 +3175,8 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 	/* Configure the CCR register with DQS and SIOO modes */
 	*ccr_reg = (cmd->DQSMode | cmd->SIOOMode);
 
-	if (cmd->AlternateBytesMode != HAL_OSPI_ALTERNATE_BYTES_NONE) {
+	if (cmd->AlternateBytesMode != HAL_OSPI_ALTERNATE_BYTES_NONE)
+	{
 		/* Configure the ABR register with alternate bytes value */
 		*abr_reg = cmd->AlternateBytes;
 
@@ -2833,16 +3188,21 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 	/* Configure the TCR register with the number of dummy cycles */
 	MODIFY_REG((*tcr_reg), OCTOSPI_TCR_DCYC, cmd->DummyCycles);
 
-	if (cmd->DataMode != HAL_OSPI_DATA_NONE) {
-		if (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG) {
+	if (cmd->DataMode != HAL_OSPI_DATA_NONE)
+	{
+		if (cmd->OperationType == HAL_OSPI_OPTYPE_COMMON_CFG)
+		{
 			/* Configure the DLR register with the number of data */
 			hospi->Instance->DLR = (cmd->NbData - 1U);
 		}
 	}
 
-	if (cmd->InstructionMode != HAL_OSPI_INSTRUCTION_NONE) {
-		if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE) {
-			if (cmd->DataMode != HAL_OSPI_DATA_NONE) {
+	if (cmd->InstructionMode != HAL_OSPI_INSTRUCTION_NONE)
+	{
+		if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE)
+		{
+			if (cmd->DataMode != HAL_OSPI_DATA_NONE)
+			{
 				/* ---- Command with instruction, address and
 				 * data ---- */
 
@@ -2853,7 +3213,9 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 				    (OCTOSPI_CCR_IMODE | OCTOSPI_CCR_IDTR | OCTOSPI_CCR_ISIZE | OCTOSPI_CCR_ADMODE | OCTOSPI_CCR_ADDTR | OCTOSPI_CCR_ADSIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
 				    (cmd->InstructionMode | cmd->InstructionDtrMode | cmd->InstructionSize | cmd->AddressMode | cmd->AddressDtrMode | cmd->AddressSize | cmd->DataMode |
 				     cmd->DataDtrMode));
-			} else {
+			}
+			else
+			{
 				/* ---- Command with instruction and address
 				 * ---- */
 
@@ -2864,7 +3226,8 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 
 				/* The DHQC bit is linked with DDTR bit which
 				 * should be activated */
-				if ((hospi->Init.DelayHoldQuarterCycle == HAL_OSPI_DHQC_ENABLE) && (cmd->InstructionDtrMode == HAL_OSPI_INSTRUCTION_DTR_ENABLE)) {
+				if ((hospi->Init.DelayHoldQuarterCycle == HAL_OSPI_DHQC_ENABLE) && (cmd->InstructionDtrMode == HAL_OSPI_INSTRUCTION_DTR_ENABLE))
+				{
 					MODIFY_REG((*ccr_reg), OCTOSPI_CCR_DDTR, HAL_OSPI_DATA_DTR_ENABLE);
 				}
 			}
@@ -2875,8 +3238,11 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 
 			/* Configure the AR register with the address value */
 			hospi->Instance->AR = cmd->Address;
-		} else {
-			if (cmd->DataMode != HAL_OSPI_DATA_NONE) {
+		}
+		else
+		{
+			if (cmd->DataMode != HAL_OSPI_DATA_NONE)
+			{
 				/* ---- Command with instruction and data ----
 				 */
 
@@ -2884,7 +3250,9 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 				 * communication parameters */
 				MODIFY_REG((*ccr_reg), (OCTOSPI_CCR_IMODE | OCTOSPI_CCR_IDTR | OCTOSPI_CCR_ISIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
 					   (cmd->InstructionMode | cmd->InstructionDtrMode | cmd->InstructionSize | cmd->DataMode | cmd->DataDtrMode));
-			} else {
+			}
+			else
+			{
 				/* ---- Command with only instruction ---- */
 
 				/* Configure the CCR register with all
@@ -2893,7 +3261,8 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 
 				/* The DHQC bit is linked with DDTR bit which
 				 * should be activated */
-				if ((hospi->Init.DelayHoldQuarterCycle == HAL_OSPI_DHQC_ENABLE) && (cmd->InstructionDtrMode == HAL_OSPI_INSTRUCTION_DTR_ENABLE)) {
+				if ((hospi->Init.DelayHoldQuarterCycle == HAL_OSPI_DHQC_ENABLE) && (cmd->InstructionDtrMode == HAL_OSPI_INSTRUCTION_DTR_ENABLE))
+				{
 					MODIFY_REG((*ccr_reg), OCTOSPI_CCR_DDTR, HAL_OSPI_DATA_DTR_ENABLE);
 				}
 			}
@@ -2902,16 +3271,22 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 			 */
 			*ir_reg = cmd->Instruction;
 		}
-	} else {
-		if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE) {
-			if (cmd->DataMode != HAL_OSPI_DATA_NONE) {
+	}
+	else
+	{
+		if (cmd->AddressMode != HAL_OSPI_ADDRESS_NONE)
+		{
+			if (cmd->DataMode != HAL_OSPI_DATA_NONE)
+			{
 				/* ---- Command with address and data ---- */
 
 				/* Configure the CCR register with all
 				 * communication parameters */
 				MODIFY_REG((*ccr_reg), (OCTOSPI_CCR_ADMODE | OCTOSPI_CCR_ADDTR | OCTOSPI_CCR_ADSIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
 					   (cmd->AddressMode | cmd->AddressDtrMode | cmd->AddressSize | cmd->DataMode | cmd->DataDtrMode));
-			} else {
+			}
+			else
+			{
 				/* ---- Command with only address ---- */
 
 				/* Configure the CCR register with all
@@ -2922,7 +3297,9 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 			/* Configure the AR register with the instruction value
 			 */
 			hospi->Instance->AR = cmd->Address;
-		} else {
+		}
+		else
+		{
 			/* ---- Invalid command configuration (no instruction,
 			 * no address) ---- */
 			status = HAL_ERROR;
@@ -2948,10 +3325,13 @@ static HAL_StatusTypeDef OSPIM_GetConfig(uint8_t instance_nb, OSPIM_CfgTypeDef *
 	uint32_t value = 0U;
 	uint32_t index;
 
-	if ((instance_nb == 0U) || (instance_nb > OSPI_NB_INSTANCE) || (cfg == NULL)) {
+	if ((instance_nb == 0U) || (instance_nb > OSPI_NB_INSTANCE) || (cfg == NULL))
+	{
 		/* Invalid parameter -> error returned */
 		status = HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Initialize the structure */
 		cfg->ClkPort = 0U;
 		cfg->DQSPort = 0U;
@@ -2959,66 +3339,87 @@ static HAL_StatusTypeDef OSPIM_GetConfig(uint8_t instance_nb, OSPIM_CfgTypeDef *
 		cfg->IOLowPort = 0U;
 		cfg->IOHighPort = 0U;
 
-		if (instance_nb == 2U) {
-			if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) == 0U) {
+		if (instance_nb == 2U)
+		{
+			if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) == 0U)
+			{
 				value = (OCTOSPIM_PCR_CLKSRC | OCTOSPIM_PCR_DQSSRC | OCTOSPIM_PCR_NCSSRC | OCTOSPIM_PCR_IOLSRC_1 | OCTOSPIM_PCR_IOHSRC_1);
-			} else {
+			}
+			else
+			{
 				value = OCTOSPIM_PCR_NCSSRC;
 			}
 		}
 
 		/* Get the information about the instance */
-		for (index = 0U; index < OSPI_IOM_NB_PORTS; index++) {
+		for (index = 0U; index < OSPI_IOM_NB_PORTS; index++)
+		{
 			reg = OCTOSPIM->PCR[index];
 
-			if ((reg & OCTOSPIM_PCR_CLKEN) != 0U) {
+			if ((reg & OCTOSPIM_PCR_CLKEN) != 0U)
+			{
 				/* The clock is enabled on this port */
-				if ((reg & OCTOSPIM_PCR_CLKSRC) == (value & OCTOSPIM_PCR_CLKSRC)) {
+				if ((reg & OCTOSPIM_PCR_CLKSRC) == (value & OCTOSPIM_PCR_CLKSRC))
+				{
 					/* The clock correspond to the instance
 					 * passed as parameter */
 					cfg->ClkPort = index + 1U;
 				}
 			}
 
-			if ((reg & OCTOSPIM_PCR_DQSEN) != 0U) {
+			if ((reg & OCTOSPIM_PCR_DQSEN) != 0U)
+			{
 				/* The DQS is enabled on this port */
-				if ((reg & OCTOSPIM_PCR_DQSSRC) == (value & OCTOSPIM_PCR_DQSSRC)) {
+				if ((reg & OCTOSPIM_PCR_DQSSRC) == (value & OCTOSPIM_PCR_DQSSRC))
+				{
 					/* The DQS correspond to the instance
 					 * passed as parameter */
 					cfg->DQSPort = index + 1U;
 				}
 			}
 
-			if ((reg & OCTOSPIM_PCR_NCSEN) != 0U) {
+			if ((reg & OCTOSPIM_PCR_NCSEN) != 0U)
+			{
 				/* The nCS is enabled on this port */
-				if ((reg & OCTOSPIM_PCR_NCSSRC) == (value & OCTOSPIM_PCR_NCSSRC)) {
+				if ((reg & OCTOSPIM_PCR_NCSSRC) == (value & OCTOSPIM_PCR_NCSSRC))
+				{
 					/* The nCS correspond to the instance
 					 * passed as parameter */
 					cfg->NCSPort = index + 1U;
 				}
 			}
 
-			if ((reg & OCTOSPIM_PCR_IOLEN) != 0U) {
+			if ((reg & OCTOSPIM_PCR_IOLEN) != 0U)
+			{
 				/* The IO Low is enabled on this port */
-				if ((reg & OCTOSPIM_PCR_IOLSRC_1) == (value & OCTOSPIM_PCR_IOLSRC_1)) {
+				if ((reg & OCTOSPIM_PCR_IOLSRC_1) == (value & OCTOSPIM_PCR_IOLSRC_1))
+				{
 					/* The IO Low correspond to the instance
 					 * passed as parameter */
-					if ((reg & OCTOSPIM_PCR_IOLSRC_0) == 0U) {
+					if ((reg & OCTOSPIM_PCR_IOLSRC_0) == 0U)
+					{
 						cfg->IOLowPort = (OCTOSPIM_PCR_IOLEN | (index + 1U));
-					} else {
+					}
+					else
+					{
 						cfg->IOLowPort = (OCTOSPIM_PCR_IOHEN | (index + 1U));
 					}
 				}
 			}
 
-			if ((reg & OCTOSPIM_PCR_IOHEN) != 0U) {
+			if ((reg & OCTOSPIM_PCR_IOHEN) != 0U)
+			{
 				/* The IO High is enabled on this port */
-				if ((reg & OCTOSPIM_PCR_IOHSRC_1) == (value & OCTOSPIM_PCR_IOHSRC_1)) {
+				if ((reg & OCTOSPIM_PCR_IOHSRC_1) == (value & OCTOSPIM_PCR_IOHSRC_1))
+				{
 					/* The IO High correspond to the
 					 * instance passed as parameter */
-					if ((reg & OCTOSPIM_PCR_IOHSRC_0) == 0U) {
+					if ((reg & OCTOSPIM_PCR_IOHSRC_0) == 0U)
+					{
 						cfg->IOHighPort = (OCTOSPIM_PCR_IOLEN | (index + 1U));
-					} else {
+					}
+					else
+					{
 						cfg->IOHighPort = (OCTOSPIM_PCR_IOHEN | (index + 1U));
 					}
 				}
@@ -3062,7 +3463,8 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_SetConfig(OSPI_HandleTypeDef *hospi, HAL_OSPI_DL
 	/* Update OCTOSPI state */
 	hospi->State = HAL_OSPI_STATE_BUSY_CMD;
 
-	if (hospi->Instance == OCTOSPI1) {
+	if (hospi->Instance == OCTOSPI1)
+	{
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI1);
 
@@ -3072,7 +3474,8 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_SetConfig(OSPI_HandleTypeDef *hospi, HAL_OSPI_DL
 	}
 
 #if defined(OCTOSPI2)
-	else if (hospi->Instance == OCTOSPI2) {
+	else if (hospi->Instance == OCTOSPI2)
+	{
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI2);
 
@@ -3082,7 +3485,8 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_SetConfig(OSPI_HandleTypeDef *hospi, HAL_OSPI_DL
 	}
 #endif /* OCTOSPI2 */
 
-	else {
+	else
+	{
 		/* Nothing to do */
 	}
 
@@ -3106,18 +3510,21 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_GetConfig(const OSPI_HandleTypeDef *hospi, HAL_O
 {
 	HAL_StatusTypeDef status = HAL_ERROR;
 
-	if (hospi->Instance == OCTOSPI1) {
+	if (hospi->Instance == OCTOSPI1)
+	{
 		LL_DLYB_GetDelay(DLYB_OCTOSPI1, pdlyb_cfg);
 		status = HAL_OK;
 	}
 #if defined(OCTOSPI2)
-	else if (hospi->Instance == OCTOSPI2) {
+	else if (hospi->Instance == OCTOSPI2)
+	{
 		LL_DLYB_GetDelay(DLYB_OCTOSPI2, pdlyb_cfg);
 		status = HAL_OK;
 	}
 #endif /* OCTOSPI2 */
 
-	else {
+	else
+	{
 		/* Nothing to do */
 	}
 
@@ -3140,12 +3547,14 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_GetClockPeriod(OSPI_HandleTypeDef *hospi, HAL_OS
 	/* Update OCTOSPI state */
 	hospi->State = HAL_OSPI_STATE_BUSY_CMD;
 
-	if (hospi->Instance == OCTOSPI1) {
+	if (hospi->Instance == OCTOSPI1)
+	{
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI1);
 
 		/* try to detect Period */
-		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI1, pdlyb_cfg) == (uint32_t)SUCCESS) {
+		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI1, pdlyb_cfg) == (uint32_t)SUCCESS)
+		{
 			status = HAL_OK;
 		}
 
@@ -3154,12 +3563,14 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_GetClockPeriod(OSPI_HandleTypeDef *hospi, HAL_OS
 	}
 
 #if defined(OCTOSPI2)
-	else if (hospi->Instance == OCTOSPI2) {
+	else if (hospi->Instance == OCTOSPI2)
+	{
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI2);
 
 		/* try to detect Period */
-		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI2, pdlyb_cfg) == (uint32_t)SUCCESS) {
+		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI2, pdlyb_cfg) == (uint32_t)SUCCESS)
+		{
 			status = HAL_OK;
 		}
 
@@ -3168,7 +3579,8 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_GetClockPeriod(OSPI_HandleTypeDef *hospi, HAL_OS
 	}
 #endif /* OCTOSPI2 */
 
-	else {
+	else
+	{
 		/* Nothing to do */
 	}
 

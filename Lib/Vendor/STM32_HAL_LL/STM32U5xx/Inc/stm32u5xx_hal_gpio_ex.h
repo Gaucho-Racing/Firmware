@@ -21,29 +21,31 @@
 #define STM32U5xx_HAL_GPIO_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @defgroup GPIOEx GPIOEx
- * @brief GPIO Extended HAL module driver
- * @{
- */
+	/** @defgroup GPIOEx GPIOEx
+	 * @brief GPIO Extended HAL module driver
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup LPGPIO_MapTypeDef GPIO/Ex Exported Types
- * @{
- */
-typedef struct {
-	GPIO_TypeDef *GPIO_PORT;
-	uint32_t Pin_Pos;
-} LPGPIO_MapTypeDef;
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup LPGPIO_MapTypeDef GPIO/Ex Exported Types
+	 * @{
+	 */
+	typedef struct
+	{
+		GPIO_TypeDef *GPIO_PORT;
+		uint32_t Pin_Pos;
+	} LPGPIO_MapTypeDef;
 /**
  * @}
  */
@@ -375,23 +377,23 @@ typedef struct {
 /* GPIO_Peripheral_Memory_Mapping Peripheral Memory Mapping */
 #define GPIO_GET_INDEX(__GPIOx__) (((uint32_t)(__GPIOx__) & (~GPIOA_BASE)) >> 10)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
+	/* Exported functions --------------------------------------------------------*/
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

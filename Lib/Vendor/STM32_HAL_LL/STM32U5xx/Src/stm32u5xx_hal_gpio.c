@@ -222,18 +222,21 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 	p_gpio = GPIOx;
 
 	/* Configure the port pins */
-	while (((pGPIO_Init->Pin) >> position) != 0U) {
+	while (((pGPIO_Init->Pin) >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = (pGPIO_Init->Pin) & (1UL << position);
 
 		/* Save Pin Position */
 		pin_position = position;
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 			/*--------------------- GPIO Mode Configuration
 			 * ------------------------*/
 			/* In case of Alternate function mode selection */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* MODER configuration */
 				tmp = GPIOx->MODER;
 				tmp &= ~(LPGPIO_MODER_MOD0 << position);
@@ -256,7 +259,9 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				tmp &= ~(GPIO_MODER_MODE0 << (pin_position * GPIO_MODER_MODE1_Pos));
 				tmp |= ((GPIO_MODE_AF_PP & 0x0FUL) << (pin_position * GPIO_MODER_MODE1_Pos));
 				p_gpio->MODER = tmp;
-			} else if ((pGPIO_Init->Mode == GPIO_MODE_AF_PP) || (pGPIO_Init->Mode == GPIO_MODE_AF_OD)) {
+			}
+			else if ((pGPIO_Init->Mode == GPIO_MODE_AF_PP) || (pGPIO_Init->Mode == GPIO_MODE_AF_OD))
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 				assert_param(IS_GPIO_AF_INSTANCE(GPIOx));
@@ -274,7 +279,9 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				tmp &= ~(GPIO_MODER_MODE0 << (pin_position * GPIO_MODER_MODE1_Pos));
 				tmp |= ((pGPIO_Init->Mode & GPIO_MODE) << (pin_position * GPIO_MODER_MODE1_Pos));
 				p_gpio->MODER = tmp;
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 
@@ -288,7 +295,8 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 
 			/* In case of Output or Alternate function mode
 			 * selection */
-			if ((pGPIO_Init->Mode == GPIO_MODE_OUTPUT_PP) || (pGPIO_Init->Mode == GPIO_MODE_AF_PP) || (pGPIO_Init->Mode == GPIO_MODE_OUTPUT_OD) || (pGPIO_Init->Mode == GPIO_MODE_AF_OD)) {
+			if ((pGPIO_Init->Mode == GPIO_MODE_OUTPUT_PP) || (pGPIO_Init->Mode == GPIO_MODE_AF_PP) || (pGPIO_Init->Mode == GPIO_MODE_OUTPUT_OD) || (pGPIO_Init->Mode == GPIO_MODE_AF_OD))
+			{
 				/* Check the Speed parameter */
 				assert_param(IS_GPIO_SPEED(pGPIO_Init->Speed));
 
@@ -305,7 +313,8 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				p_gpio->OTYPER = tmp;
 			}
 
-			if ((pGPIO_Init->Mode != GPIO_MODE_ANALOG) || ((pGPIO_Init->Mode == GPIO_MODE_ANALOG) && (pGPIO_Init->Pull != GPIO_PULLUP))) {
+			if ((pGPIO_Init->Mode != GPIO_MODE_ANALOG) || ((pGPIO_Init->Mode == GPIO_MODE_ANALOG) && (pGPIO_Init->Pull != GPIO_PULLUP)))
+			{
 				/* Check the Pull parameters */
 				assert_param(IS_GPIO_PULL(pGPIO_Init->Pull));
 
@@ -321,7 +330,8 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 			 * ------------------------*/
 			/* Configure the External Interrupt or event for the
 			 * current IO */
-			if ((pGPIO_Init->Mode & EXTI_MODE) == EXTI_MODE) {
+			if ((pGPIO_Init->Mode & EXTI_MODE) == EXTI_MODE)
+			{
 				tmp = EXTI->EXTICR[position >> 2U];
 				tmp &= ~((0x0FUL) << (EXTI_EXTICR1_EXTI1_Pos * (position & 0x03U)));
 				tmp |= (GPIO_GET_INDEX(GPIOx) << (EXTI_EXTICR1_EXTI1_Pos * (position & 0x03U)));
@@ -330,14 +340,16 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				/* Clear Rising Falling edge configuration */
 				tmp = EXTI->RTSR1;
 				tmp &= ~((uint32_t)iocurrent);
-				if ((pGPIO_Init->Mode & RISING_EDGE) == RISING_EDGE) {
+				if ((pGPIO_Init->Mode & RISING_EDGE) == RISING_EDGE)
+				{
 					tmp |= iocurrent;
 				}
 				EXTI->RTSR1 = tmp;
 
 				tmp = EXTI->FTSR1;
 				tmp &= ~((uint32_t)iocurrent);
-				if ((pGPIO_Init->Mode & FALLING_EDGE) == FALLING_EDGE) {
+				if ((pGPIO_Init->Mode & FALLING_EDGE) == FALLING_EDGE)
+				{
 					tmp |= iocurrent;
 				}
 				EXTI->FTSR1 = tmp;
@@ -345,14 +357,16 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				/* Clear EXTI line configuration */
 				tmp = EXTI->EMR1;
 				tmp &= ~((uint32_t)iocurrent);
-				if ((pGPIO_Init->Mode & GPIO_MODE_EVT) == GPIO_MODE_EVT) {
+				if ((pGPIO_Init->Mode & GPIO_MODE_EVT) == GPIO_MODE_EVT)
+				{
 					tmp |= iocurrent;
 				}
 				EXTI->EMR1 = tmp;
 
 				tmp = EXTI->IMR1;
 				tmp &= ~((uint32_t)iocurrent);
-				if ((pGPIO_Init->Mode & GPIO_MODE_IT) == GPIO_MODE_IT) {
+				if ((pGPIO_Init->Mode & GPIO_MODE_IT) == GPIO_MODE_IT)
+				{
 					tmp |= iocurrent;
 				}
 				EXTI->IMR1 = tmp;
@@ -386,21 +400,26 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 	p_gpio = GPIOx;
 
 	/* Configure the port pins */
-	while ((GPIO_Pin >> position) != 0U) {
+	while ((GPIO_Pin >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = (GPIO_Pin) & (1UL << position);
 
 		/*Save Pin Position */
 		pin_position = position;
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 			/* In case of LPGPIO port selected */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* Configure LP/IO in Input Mode */
 				p_gpio = LPGPIO_Map[pin_position].GPIO_PORT;
 				pin_position = LPGPIO_Map[position].Pin_Pos;
 				LPGPIO1->MODER &= ~(1U << pin_position);
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 
@@ -410,7 +429,8 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 				 * current IO */
 				tmp = EXTI->EXTICR[position >> 2U];
 				tmp &= ((0x0FUL) << (8U * (position & 0x03U)));
-				if (tmp == (GPIO_GET_INDEX(GPIOx) << (8U * (position & 0x03U)))) {
+				if (tmp == (GPIO_GET_INDEX(GPIOx) << (8U * (position & 0x03U))))
+				{
 					/* Clear EXTI line configuration */
 					EXTI->IMR1 &= ~(iocurrent);
 					EXTI->EMR1 &= ~(iocurrent);
@@ -480,9 +500,12 @@ GPIO_PinState HAL_GPIO_ReadPin(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	/* Check the parameters */
 	assert_param(IS_GPIO_PIN(GPIO_Pin));
 
-	if ((GPIOx->IDR & GPIO_Pin) != 0U) {
+	if ((GPIOx->IDR & GPIO_Pin) != 0U)
+	{
 		bitstatus = GPIO_PIN_SET;
-	} else {
+	}
+	else
+	{
 		bitstatus = GPIO_PIN_RESET;
 	}
 
@@ -511,9 +534,12 @@ void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState Pin
 	assert_param(IS_GPIO_PIN(GPIO_Pin));
 	assert_param(IS_GPIO_PIN_ACTION(PinState));
 
-	if (PinState != GPIO_PIN_RESET) {
+	if (PinState != GPIO_PIN_RESET)
+	{
 		GPIOx->BSRR = (uint32_t)GPIO_Pin;
-	} else {
+	}
+	else
+	{
 		GPIOx->BRR = (uint32_t)GPIO_Pin;
 	}
 }
@@ -603,14 +629,17 @@ HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	p_gpio = GPIOx;
 
 	/* Configure the port pins */
-	while ((GPIO_Pin >> position) != 0U) {
+	while ((GPIO_Pin >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = GPIO_Pin & (1UL << position);
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 
 			/* In case of LPGPIO Port */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* Save GPIO Port and pin index */
 				p_gpio = LPGPIO_Map[position].GPIO_PORT;
 				pin_position = (1UL << (LPGPIO_Map[position].Pin_Pos));
@@ -620,7 +649,9 @@ HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 
 				/* Apply lock key write sequence */
 				tmp |= (pin_locked | pin_position);
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 
@@ -645,7 +676,8 @@ HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 			tmp = p_gpio->LCKR;
 
 			/* read again in order to confirm lock is active */
-			if ((p_gpio->LCKR & GPIO_LCKR_LCKK) != GPIO_LCKR_LCKK) {
+			if ((p_gpio->LCKR & GPIO_LCKR_LCKK) != GPIO_LCKR_LCKK)
+			{
 				return HAL_ERROR;
 			}
 		}
@@ -681,20 +713,25 @@ void HAL_GPIO_EnableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	p_gpio = GPIOx;
 
 	/* Configure the port pins */
-	while ((GPIO_Pin >> position) != 0U) {
+	while ((GPIO_Pin >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = GPIO_Pin & (1UL << position);
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 			/* In case of LPGPIO Port */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* Get GPIO pin position */
 				position = POSITION_VAL(GPIO_Pin);
 
 				/* Save GPIO Port and pin index */
 				p_gpio = LPGPIO_Map[position].GPIO_PORT;
 				pin_position = (1UL << (LPGPIO_Map[position].Pin_Pos));
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 
@@ -735,20 +772,25 @@ void HAL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	p_gpio = GPIOx;
 
 	/* Configure the port pins */
-	while ((GPIO_Pin >> position) != 0U) {
+	while ((GPIO_Pin >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = GPIO_Pin & (1UL << position);
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 			/* In case of LPGPIO Port */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* Get GPIO pin position */
 				position = POSITION_VAL(GPIO_Pin);
 
 				/* Save GPIO Port and pin index */
 				p_gpio = LPGPIO_Map[position].GPIO_PORT;
 				pin_position = (1UL << (LPGPIO_Map[position].Pin_Pos));
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 
@@ -771,12 +813,14 @@ void HAL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
 {
 	/* EXTI line interrupt detected */
-	if (__HAL_GPIO_EXTI_GET_RISING_IT(GPIO_Pin) != 0U) {
+	if (__HAL_GPIO_EXTI_GET_RISING_IT(GPIO_Pin) != 0U)
+	{
 		__HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
 		HAL_GPIO_EXTI_Rising_Callback(GPIO_Pin);
 	}
 
-	if (__HAL_GPIO_EXTI_GET_FALLING_IT(GPIO_Pin) != 0U) {
+	if (__HAL_GPIO_EXTI_GET_FALLING_IT(GPIO_Pin) != 0U)
+	{
 		__HAL_GPIO_EXTI_CLEAR_FALLING_IT(GPIO_Pin);
 		HAL_GPIO_EXTI_Falling_Callback(GPIO_Pin);
 	}
@@ -861,20 +905,25 @@ void HAL_GPIO_ConfigPinAttributes(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32
 	p_gpio = GPIOx;
 
 	/* Configure the port pins */
-	while ((GPIO_Pin >> position) != 0U) {
+	while ((GPIO_Pin >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = GPIO_Pin & (1UL << position);
 
 		/* Save pin position */
 		pin_position = position;
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 			/* In case of LPGPIO Port */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* Save GPIO Port and pin index */
 				p_gpio = LPGPIO_Map[position].GPIO_PORT;
 				pin_position = LPGPIO_Map[position].Pin_Pos;
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 			}
@@ -908,22 +957,28 @@ HAL_StatusTypeDef HAL_GPIO_GetConfigPinAttributes(const GPIO_TypeDef *GPIOx, uin
 	assert_param(IS_GPIO_SINGLE_PIN(GPIO_Pin));
 
 	/* Check null pointer */
-	if (pPinAttributes == NULL) {
+	if (pPinAttributes == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Get secure attribute of the port pin */
-	while ((GPIO_Pin >> position) != 0U) {
+	while ((GPIO_Pin >> position) != 0U)
+	{
 		/* Get current io position */
 		iocurrent = GPIO_Pin & (1UL << position);
 
-		if (iocurrent != 0U) {
+		if (iocurrent != 0U)
+		{
 			/* In case of LPGPIO Port */
-			if (GPIOx == LPGPIO1) {
+			if (GPIOx == LPGPIO1)
+			{
 				/* Save  GPIO Port and pin index */
 				p_gpio = LPGPIO_Map[position].GPIO_PORT;
 				pin_position = LPGPIO_Map[position].Pin_Pos;
-			} else {
+			}
+			else
+			{
 				/* Check the parameters */
 				assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
 
@@ -934,9 +989,12 @@ HAL_StatusTypeDef HAL_GPIO_GetConfigPinAttributes(const GPIO_TypeDef *GPIOx, uin
 			}
 
 			/* Get the IO secure attribute */
-			if ((p_gpio->SECCFGR & (GPIO_SECCFGR_SEC0 << pin_position)) != 0U) {
+			if ((p_gpio->SECCFGR & (GPIO_SECCFGR_SEC0 << pin_position)) != 0U)
+			{
 				*pPinAttributes = GPIO_PIN_SEC;
-			} else {
+			}
+			else
+			{
 				*pPinAttributes = GPIO_PIN_NSEC;
 			}
 

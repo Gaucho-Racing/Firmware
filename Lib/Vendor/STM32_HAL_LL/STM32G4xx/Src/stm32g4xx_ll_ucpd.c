@@ -85,7 +85,8 @@ ErrorStatus LL_UCPD_DeInit(UCPD_TypeDef *UCPDx)
 
 	LL_UCPD_Disable(UCPDx);
 
-	if (UCPD1 == UCPDx) {
+	if (UCPD1 == UCPDx)
+	{
 		/* Force reset of ucpd clock */
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_UCPD1);
 
@@ -118,7 +119,8 @@ ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, const LL_UCPD_InitTypeDef *UCPD_In
 	/* Check the ucpd Instance UCPDx*/
 	assert_param(IS_UCPD_ALL_INSTANCE(UCPDx));
 
-	if (UCPD1 == UCPDx) {
+	if (UCPD1 == UCPDx)
+	{
 		LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_UCPD1);
 	}
 

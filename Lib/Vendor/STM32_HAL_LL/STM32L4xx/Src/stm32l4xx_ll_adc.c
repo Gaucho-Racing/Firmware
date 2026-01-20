@@ -251,7 +251,8 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, const LL_ADC_Com
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 	assert_param(IS_LL_ADC_MULTI_MODE(pADC_CommonInitStruct->Multimode));
-	if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT) {
+	if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
+	{
 		assert_param(IS_LL_ADC_MULTI_DMA_TRANSFER(pADC_CommonInitStruct->MultiDMATransfer));
 		assert_param(IS_LL_ADC_MULTI_TWOSMP_DELAY(pADC_CommonInitStruct->MultiTwoSamplingDelay));
 	}
@@ -263,7 +264,8 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, const LL_ADC_Com
 	 * to  */
 	/*       ADC state: */
 	/*       All ADC instances of the ADC common group must be disabled. */
-	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(ADCxy_COMMON) == 0UL) {
+	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(ADCxy_COMMON) == 0UL)
+	{
 		/* Configuration of ADC hierarchical scope: */
 		/*  - common to several ADC */
 		/*    (all ADC instances belonging to the same ADC common
@@ -275,16 +277,21 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, const LL_ADC_Com
 		/*    - Set ADC multimode DMA transfer */
 		/*    - Set ADC multimode: delay between 2 sampling phases */
 #if defined(ADC_MULTIMODE_SUPPORT)
-		if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT) {
+		if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
+		{
 			MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_CKMODE | ADC_CCR_PRESC | ADC_CCR_DUAL | ADC_CCR_MDMA | ADC_CCR_DELAY,
 				   pADC_CommonInitStruct->CommonClock | pADC_CommonInitStruct->Multimode | pADC_CommonInitStruct->MultiDMATransfer | pADC_CommonInitStruct->MultiTwoSamplingDelay);
-		} else {
+		}
+		else
+		{
 			MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_CKMODE | ADC_CCR_PRESC | ADC_CCR_DUAL | ADC_CCR_MDMA | ADC_CCR_DELAY, pADC_CommonInitStruct->CommonClock | LL_ADC_MULTI_INDEPENDENT);
 		}
 #else
 		LL_ADC_SetCommonClock(ADCxy_COMMON, pADC_CommonInitStruct->CommonClock);
 #endif /* ADC_MULTIMODE_SUPPORT */
-	} else {
+	}
+	else
+	{
 		/* Initialization error: One or several ADC instances belonging
 		 * to        */
 		/* the same ADC common instance are not disabled. */
@@ -343,28 +350,35 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
 	assert_param(IS_ADC_ALL_INSTANCE(ADCx));
 
 	/* Disable ADC instance if not already disabled. */
-	if (LL_ADC_IsEnabled(ADCx) == 1UL) {
+	if (LL_ADC_IsEnabled(ADCx) == 1UL)
+	{
 		/* Stop potential ADC conversion on going on ADC group regular.
 		 */
-		if (LL_ADC_REG_IsConversionOngoing(ADCx) != 0UL) {
-			if (LL_ADC_REG_IsStopConversionOngoing(ADCx) == 0UL) {
+		if (LL_ADC_REG_IsConversionOngoing(ADCx) != 0UL)
+		{
+			if (LL_ADC_REG_IsStopConversionOngoing(ADCx) == 0UL)
+			{
 				LL_ADC_REG_StopConversion(ADCx);
 			}
 		}
 
 		/* Stop potential ADC conversion on going on ADC group injected.
 		 */
-		if (LL_ADC_INJ_IsConversionOngoing(ADCx) != 0UL) {
-			if (LL_ADC_INJ_IsStopConversionOngoing(ADCx) == 0UL) {
+		if (LL_ADC_INJ_IsConversionOngoing(ADCx) != 0UL)
+		{
+			if (LL_ADC_INJ_IsStopConversionOngoing(ADCx) == 0UL)
+			{
 				LL_ADC_INJ_StopConversion(ADCx);
 			}
 		}
 
 		/* Wait for ADC conversions are effectively stopped */
 		timeout_cpu_cycles = ADC_TIMEOUT_STOP_CONVERSION_CPU_CYCLES;
-		while ((LL_ADC_REG_IsStopConversionOngoing(ADCx) | LL_ADC_INJ_IsStopConversionOngoing(ADCx)) == 1UL) {
+		while ((LL_ADC_REG_IsStopConversionOngoing(ADCx) | LL_ADC_INJ_IsStopConversionOngoing(ADCx)) == 1UL)
+		{
 			timeout_cpu_cycles--;
-			if (timeout_cpu_cycles == 0UL) {
+			if (timeout_cpu_cycles == 0UL)
+			{
 				/* Time-out error */
 				status = ERROR;
 				break;
@@ -383,9 +397,11 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
 
 		/* Wait for ADC instance is effectively disabled */
 		timeout_cpu_cycles = ADC_TIMEOUT_DISABLE_CPU_CYCLES;
-		while (LL_ADC_IsDisableOngoing(ADCx) == 1UL) {
+		while (LL_ADC_IsDisableOngoing(ADCx) == 1UL)
+		{
 			timeout_cpu_cycles--;
-			if (timeout_cpu_cycles == 0UL) {
+			if (timeout_cpu_cycles == 0UL)
+			{
 				/* Time-out error */
 				status = ERROR;
 				break;
@@ -394,7 +410,8 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
 	}
 
 	/* Check whether ADC state is compliant with expected state */
-	if (READ_BIT(ADCx->CR, (ADC_CR_JADSTP | ADC_CR_ADSTP | ADC_CR_JADSTART | ADC_CR_ADSTART | ADC_CR_ADDIS | ADC_CR_ADEN)) == 0UL) {
+	if (READ_BIT(ADCx->CR, (ADC_CR_JADSTP | ADC_CR_ADSTP | ADC_CR_JADSTART | ADC_CR_ADSTART | ADC_CR_ADDIS | ADC_CR_ADEN)) == 0UL)
+	{
 		/* ========== Reset ADC registers ========== */
 		/* Reset register IER */
 		CLEAR_BIT(ADCx->IER, (LL_ADC_IT_ADRDY | LL_ADC_IT_EOC | LL_ADC_IT_EOS | LL_ADC_IT_OVR | LL_ADC_IT_EOSMP | LL_ADC_IT_JEOC | LL_ADC_IT_JEOS | LL_ADC_IT_JQOVF | LL_ADC_IT_AWD1 |
@@ -489,7 +506,9 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
 
 		/* Reset register CALFACT */
 		CLEAR_BIT(ADCx->CALFACT, ADC_CALFACT_CALFACT_D | ADC_CALFACT_CALFACT_S);
-	} else {
+	}
+	else
+	{
 		/* ADC instance is in an unknown state */
 		/* Need to performing a hard reset of ADC instance, using high
 		 * level      */
@@ -556,15 +575,17 @@ ErrorStatus LL_ADC_Init(ADC_TypeDef *ADCx, const LL_ADC_InitTypeDef *pADC_InitSt
 
 	/* Note: Hardware constraint (refer to description of this function): */
 	/*       ADC instance must be disabled. */
-	if (LL_ADC_IsEnabled(ADCx) == 0UL) {
+	if (LL_ADC_IsEnabled(ADCx) == 0UL)
+	{
 		/* Configuration of ADC hierarchical scope: */
 		/*  - ADC instance */
 		/*    - Set ADC data resolution */
 		/*    - Set ADC conversion data alignment */
 		/*    - Set ADC low power mode */
 		MODIFY_REG(ADCx->CFGR, ADC_CFGR_RES | ADC_CFGR_ALIGN | ADC_CFGR_AUTDLY, pADC_InitStruct->Resolution | pADC_InitStruct->DataAlignment | pADC_InitStruct->LowPowerMode);
-
-	} else {
+	}
+	else
+	{
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;
 	}
@@ -627,7 +648,8 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, const LL_ADC_REG_InitTypeDef *pAD
 	assert_param(IS_ADC_ALL_INSTANCE(ADCx));
 	assert_param(IS_LL_ADC_REG_TRIG_SOURCE(pADC_RegInitStruct->TriggerSource));
 	assert_param(IS_LL_ADC_REG_SEQ_SCAN_LENGTH(pADC_RegInitStruct->SequencerLength));
-	if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE) {
+	if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
+	{
 		assert_param(IS_LL_ADC_REG_SEQ_SCAN_DISCONT_MODE(pADC_RegInitStruct->SequencerDiscont));
 
 		/* ADC group regular continuous mode and discontinuous mode */
@@ -640,7 +662,8 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, const LL_ADC_REG_InitTypeDef *pAD
 
 	/* Note: Hardware constraint (refer to description of this function): */
 	/*       ADC instance must be disabled. */
-	if (LL_ADC_IsEnabled(ADCx) == 0UL) {
+	if (LL_ADC_IsEnabled(ADCx) == 0UL)
+	{
 		/* Configuration of ADC hierarchical scope: */
 		/*  - ADC group regular */
 		/*    - Set ADC group regular trigger source */
@@ -654,11 +677,14 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, const LL_ADC_REG_InitTypeDef *pAD
 		/* Note: On this STM32 series, ADC trigger edge is set to value
 		 * 0x0 by    */
 		/*       setting of trigger source to SW start. */
-		if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE) {
+		if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
+		{
 			MODIFY_REG(ADCx->CFGR, ADC_CFGR_EXTSEL | ADC_CFGR_EXTEN | ADC_CFGR_DISCEN | ADC_CFGR_DISCNUM | ADC_CFGR_CONT | ADC_CFGR_DMAEN | ADC_CFGR_DMACFG | ADC_CFGR_OVRMOD,
 				   pADC_RegInitStruct->TriggerSource | pADC_RegInitStruct->SequencerDiscont | pADC_RegInitStruct->ContinuousMode | pADC_RegInitStruct->DMATransfer |
 				       pADC_RegInitStruct->Overrun);
-		} else {
+		}
+		else
+		{
 			MODIFY_REG(ADCx->CFGR, ADC_CFGR_EXTSEL | ADC_CFGR_EXTEN | ADC_CFGR_DISCEN | ADC_CFGR_DISCNUM | ADC_CFGR_CONT | ADC_CFGR_DMAEN | ADC_CFGR_DMACFG | ADC_CFGR_OVRMOD,
 				   pADC_RegInitStruct->TriggerSource | LL_ADC_REG_SEQ_DISCONT_DISABLE | pADC_RegInitStruct->ContinuousMode | pADC_RegInitStruct->DMATransfer |
 				       pADC_RegInitStruct->Overrun);
@@ -666,7 +692,9 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, const LL_ADC_REG_InitTypeDef *pAD
 
 		/* Set ADC group regular sequencer length and scan direction */
 		LL_ADC_REG_SetSequencerLength(ADCx, pADC_RegInitStruct->SequencerLength);
-	} else {
+	}
+	else
+	{
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;
 	}
@@ -740,14 +768,16 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, const LL_ADC_INJ_InitTypeDef *pAD
 	assert_param(IS_ADC_ALL_INSTANCE(ADCx));
 	assert_param(IS_LL_ADC_INJ_TRIG_SOURCE(pADC_InjInitStruct->TriggerSource));
 	assert_param(IS_LL_ADC_INJ_SEQ_SCAN_LENGTH(pADC_InjInitStruct->SequencerLength));
-	if (pADC_InjInitStruct->SequencerLength != LL_ADC_INJ_SEQ_SCAN_DISABLE) {
+	if (pADC_InjInitStruct->SequencerLength != LL_ADC_INJ_SEQ_SCAN_DISABLE)
+	{
 		assert_param(IS_LL_ADC_INJ_SEQ_SCAN_DISCONT_MODE(pADC_InjInitStruct->SequencerDiscont));
 	}
 	assert_param(IS_LL_ADC_INJ_TRIG_AUTO(pADC_InjInitStruct->TrigAuto));
 
 	/* Note: Hardware constraint (refer to description of this function): */
 	/*       ADC instance must be disabled. */
-	if (LL_ADC_IsEnabled(ADCx) == 0UL) {
+	if (LL_ADC_IsEnabled(ADCx) == 0UL)
+	{
 		/* Configuration of ADC hierarchical scope: */
 		/*  - ADC group injected */
 		/*    - Set ADC group injected trigger source */
@@ -759,14 +789,19 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, const LL_ADC_INJ_InitTypeDef *pAD
 		/* Note: On this STM32 series, ADC trigger edge is set to value
 		 * 0x0 by    */
 		/*       setting of trigger source to SW start. */
-		if (pADC_InjInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE) {
+		if (pADC_InjInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
+		{
 			MODIFY_REG(ADCx->CFGR, ADC_CFGR_JDISCEN | ADC_CFGR_JAUTO, pADC_InjInitStruct->SequencerDiscont | pADC_InjInitStruct->TrigAuto);
-		} else {
+		}
+		else
+		{
 			MODIFY_REG(ADCx->CFGR, ADC_CFGR_JDISCEN | ADC_CFGR_JAUTO, LL_ADC_REG_SEQ_DISCONT_DISABLE | pADC_InjInitStruct->TrigAuto);
 		}
 
 		MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JL, pADC_InjInitStruct->TriggerSource | pADC_InjInitStruct->SequencerLength);
-	} else {
+	}
+	else
+	{
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;
 	}

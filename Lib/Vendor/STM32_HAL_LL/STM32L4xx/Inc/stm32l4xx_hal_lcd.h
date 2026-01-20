@@ -20,7 +20,8 @@
 #define STM32L4xx_HAL_LCD_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #if defined(STM32L433xx) || defined(STM32L443xx) || defined(STM32L476xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
@@ -28,85 +29,88 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-/** @addtogroup STM32L4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32L4xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup LCD
- * @{
- */
+	/** @addtogroup LCD
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup LCD_Exported_Types LCD Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup LCD_Exported_Types LCD Exported Types
+	 * @{
+	 */
 
-/**
- * @brief LCD Init structure definition
- */
+	/**
+	 * @brief LCD Init structure definition
+	 */
 
-typedef struct {
-	uint32_t Prescaler;	  /*!< Configures the LCD Prescaler.
-				       This parameter can be one value of @ref
-				     LCD_Prescaler */
-	uint32_t Divider;	  /*!< Configures the LCD Divider.
-				       This parameter can be one value of @ref LCD_Divider */
-	uint32_t Duty;		  /*!< Configures the LCD Duty.
-				       This parameter can be one value of @ref LCD_Duty */
-	uint32_t Bias;		  /*!< Configures the LCD Bias.
-				       This parameter can be one value of @ref LCD_Bias */
-	uint32_t VoltageSource;	  /*!< Selects the LCD Voltage source.
-				       This parameter can be one value of @ref
-				     LCD_Voltage_Source */
-	uint32_t Contrast;	  /*!< Configures the LCD Contrast.
-				       This parameter can be one value of @ref
-				     LCD_Contrast */
-	uint32_t DeadTime;	  /*!< Configures the LCD Dead Time.
-				       This parameter can be one value of @ref
-				     LCD_DeadTime */
-	uint32_t PulseOnDuration; /*!< Configures the LCD Pulse On Duration.
-				       This parameter can be one value of @ref
-				     LCD_PulseOnDuration */
-	uint32_t HighDrive;	  /*!< Enable or disable the low resistance divider.
-				       This parameter can be one value of @ref
-				     LCD_HighDrive */
-	uint32_t BlinkMode;	  /*!< Configures the LCD Blink Mode.
-				       This parameter can be one value of @ref
-				     LCD_BlinkMode */
-	uint32_t BlinkFrequency;  /*!< Configures the LCD Blink frequency.
-				       This parameter can be one value of @ref
-				     LCD_BlinkFrequency */
-	uint32_t MuxSegment;	  /*!< Enable or disable mux segment.
-				       This parameter can be one value of @ref
-				     LCD_MuxSegment */
-} LCD_InitTypeDef;
+	typedef struct
+	{
+		uint32_t Prescaler;	  /*!< Configures the LCD Prescaler.
+					       This parameter can be one value of @ref
+					     LCD_Prescaler */
+		uint32_t Divider;	  /*!< Configures the LCD Divider.
+					       This parameter can be one value of @ref LCD_Divider */
+		uint32_t Duty;		  /*!< Configures the LCD Duty.
+					       This parameter can be one value of @ref LCD_Duty */
+		uint32_t Bias;		  /*!< Configures the LCD Bias.
+					       This parameter can be one value of @ref LCD_Bias */
+		uint32_t VoltageSource;	  /*!< Selects the LCD Voltage source.
+					       This parameter can be one value of @ref
+					     LCD_Voltage_Source */
+		uint32_t Contrast;	  /*!< Configures the LCD Contrast.
+					       This parameter can be one value of @ref
+					     LCD_Contrast */
+		uint32_t DeadTime;	  /*!< Configures the LCD Dead Time.
+					       This parameter can be one value of @ref
+					     LCD_DeadTime */
+		uint32_t PulseOnDuration; /*!< Configures the LCD Pulse On Duration.
+					       This parameter can be one value of @ref
+					     LCD_PulseOnDuration */
+		uint32_t HighDrive;	  /*!< Enable or disable the low resistance divider.
+					       This parameter can be one value of @ref
+					     LCD_HighDrive */
+		uint32_t BlinkMode;	  /*!< Configures the LCD Blink Mode.
+					       This parameter can be one value of @ref
+					     LCD_BlinkMode */
+		uint32_t BlinkFrequency;  /*!< Configures the LCD Blink frequency.
+					       This parameter can be one value of @ref
+					     LCD_BlinkFrequency */
+		uint32_t MuxSegment;	  /*!< Enable or disable mux segment.
+					       This parameter can be one value of @ref
+					     LCD_MuxSegment */
+	} LCD_InitTypeDef;
 
-/**
- * @brief HAL LCD State structures definition
- */
-typedef enum {
-	HAL_LCD_STATE_RESET = 0x00,   /*!< Peripheral is not yet Initialized */
-	HAL_LCD_STATE_READY = 0x01,   /*!< Peripheral Initialized and ready for use */
-	HAL_LCD_STATE_BUSY = 0x02,    /*!< an internal process is ongoing */
-	HAL_LCD_STATE_TIMEOUT = 0x03, /*!< Timeout state */
-	HAL_LCD_STATE_ERROR = 0x04    /*!< Error */
-} HAL_LCD_StateTypeDef;
+	/**
+	 * @brief HAL LCD State structures definition
+	 */
+	typedef enum
+	{
+		HAL_LCD_STATE_RESET = 0x00,   /*!< Peripheral is not yet Initialized */
+		HAL_LCD_STATE_READY = 0x01,   /*!< Peripheral Initialized and ready for use */
+		HAL_LCD_STATE_BUSY = 0x02,    /*!< an internal process is ongoing */
+		HAL_LCD_STATE_TIMEOUT = 0x03, /*!< Timeout state */
+		HAL_LCD_STATE_ERROR = 0x04    /*!< Error */
+	} HAL_LCD_StateTypeDef;
 
-/**
- * @brief  UART handle Structure definition
- */
-typedef struct {
-	LCD_TypeDef *Instance; /* LCD registers base address */
+	/**
+	 * @brief  UART handle Structure definition
+	 */
+	typedef struct
+	{
+		LCD_TypeDef *Instance; /* LCD registers base address */
 
-	LCD_InitTypeDef Init; /* LCD communication parameters */
+		LCD_InitTypeDef Init; /* LCD communication parameters */
 
-	HAL_LockTypeDef Lock; /* Locking object */
+		HAL_LockTypeDef Lock; /* Locking object */
 
-	__IO HAL_LCD_StateTypeDef State; /* LCD communication state */
+		__IO HAL_LCD_StateTypeDef State; /* LCD communication state */
 
-	__IO uint32_t ErrorCode; /* LCD Error code */
+		__IO uint32_t ErrorCode; /* LCD Error code */
 
-} LCD_HandleTypeDef;
+	} LCD_HandleTypeDef;
 /**
  * @}
  */
@@ -315,25 +319,25 @@ typedef struct {
 #define LCD_RAM_REGISTER13 (0x0000000DU) /*!< LCD RAM Register 13 */
 #define LCD_RAM_REGISTER14 (0x0000000EU) /*!< LCD RAM Register 14 */
 #define LCD_RAM_REGISTER15 (0x0000000FU) /*!< LCD RAM Register 15 */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup LCD_HighDrive LCD High Drive
- * @{
- */
+	/** @defgroup LCD_HighDrive LCD High Drive
+	 * @{
+	 */
 
 #define LCD_HIGHDRIVE_DISABLE                                                                                                                                                                          \
 	((uint32_t)0x00000000)		  /*!< High drive disabled                                                                                                                                     \
 					   */
 #define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD) /*!< High drive enabled  */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup LCD_MuxSegment LCD Mux Segment
- * @{
- */
+	/** @defgroup LCD_MuxSegment LCD Mux Segment
+	 * @{
+	 */
 
 #define LCD_MUXSEGMENT_DISABLE (0x00000000U)   /*!< SEG pin multiplexing disabled                 */
 #define LCD_MUXSEGMENT_ENABLE (LCD_CR_MUX_SEG) /*!< SEG[31:28] are multiplexed with SEG[43:40]    */
@@ -391,7 +395,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_HIGHDRIVER_ENABLE(__HANDLE__)                                                                                                                                                        \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT((__HANDLE__)->Instance->FCR, LCD_FCR_HD);                                                                                                                                      \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -401,7 +406,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_HIGHDRIVER_DISABLE(__HANDLE__)                                                                                                                                                       \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		CLEAR_BIT((__HANDLE__)->Instance->FCR, LCD_FCR_HD);                                                                                                                                    \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -435,7 +441,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_PULSEONDURATION_CONFIG(__HANDLE__, __DURATION__)                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_PON, (__DURATION__));                                                                                                                  \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -456,7 +463,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_DEADTIME_CONFIG(__HANDLE__, __DEADTIME__)                                                                                                                                            \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_DEAD, (__DEADTIME__));                                                                                                                 \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -477,7 +485,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_CONTRAST_CONFIG(__HANDLE__, __CONTRAST__)                                                                                                                                            \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_CC, (__CONTRAST__));                                                                                                                   \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -506,7 +515,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_BLINK_CONFIG(__HANDLE__, __BLINKMODE__, __BLINKFREQUENCY__)                                                                                                                          \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		MODIFY_REG((__HANDLE__)->Instance->FCR, (LCD_FCR_BLINKF | LCD_FCR_BLINK), ((__BLINKMODE__) | (__BLINKFREQUENCY__)));                                                                   \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -520,7 +530,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT((__HANDLE__)->Instance->FCR, (__INTERRUPT__));                                                                                                                                 \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -534,7 +545,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_LCD_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                                \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		CLEAR_BIT((__HANDLE__)->Instance->FCR, (__INTERRUPT__));                                                                                                                               \
 		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
@@ -585,59 +597,59 @@ typedef struct {
  */
 #define __HAL_LCD_CLEAR_FLAG(__HANDLE__, __FLAG__) WRITE_REG((__HANDLE__)->Instance->CLR, (__FLAG__))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions ------------------------------------------------------- */
-/** @addtogroup LCD_Exported_Functions
- * @{
- */
+	/* Exported functions ------------------------------------------------------- */
+	/** @addtogroup LCD_Exported_Functions
+	 * @{
+	 */
 
-/* Initialization/de-initialization methods  **********************************/
-/** @addtogroup LCD_Exported_Functions_Group1
- * @{
- */
-HAL_StatusTypeDef HAL_LCD_DeInit(LCD_HandleTypeDef *hlcd);
-HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd);
-void HAL_LCD_MspInit(LCD_HandleTypeDef *hlcd);
-void HAL_LCD_MspDeInit(LCD_HandleTypeDef *hlcd);
-/**
- * @}
- */
+	/* Initialization/de-initialization methods  **********************************/
+	/** @addtogroup LCD_Exported_Functions_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_LCD_DeInit(LCD_HandleTypeDef *hlcd);
+	HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd);
+	void HAL_LCD_MspInit(LCD_HandleTypeDef *hlcd);
+	void HAL_LCD_MspDeInit(LCD_HandleTypeDef *hlcd);
+	/**
+	 * @}
+	 */
 
-/* IO operation methods *******************************************************/
-/** @addtogroup LCD_Exported_Functions_Group2
- * @{
- */
-HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterIndex, uint32_t RAMRegisterMask, uint32_t Data);
-HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd);
-HAL_StatusTypeDef HAL_LCD_UpdateDisplayRequest(LCD_HandleTypeDef *hlcd);
-/**
- * @}
- */
+	/* IO operation methods *******************************************************/
+	/** @addtogroup LCD_Exported_Functions_Group2
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterIndex, uint32_t RAMRegisterMask, uint32_t Data);
+	HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd);
+	HAL_StatusTypeDef HAL_LCD_UpdateDisplayRequest(LCD_HandleTypeDef *hlcd);
+	/**
+	 * @}
+	 */
 
-/* Peripheral State methods  **************************************************/
-/** @addtogroup LCD_Exported_Functions_Group3
- * @{
- */
-HAL_LCD_StateTypeDef HAL_LCD_GetState(LCD_HandleTypeDef *hlcd);
-uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd);
-/**
- * @}
- */
+	/* Peripheral State methods  **************************************************/
+	/** @addtogroup LCD_Exported_Functions_Group3
+	 * @{
+	 */
+	HAL_LCD_StateTypeDef HAL_LCD_GetState(LCD_HandleTypeDef *hlcd);
+	uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd);
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private types -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private constants ---------------------------------------------------------*/
-/* Private macros ------------------------------------------------------------*/
-/** @defgroup LCD_Private_Macros LCD Private Macros
- * @{
- */
+	/* Private types -------------------------------------------------------------*/
+	/* Private variables ---------------------------------------------------------*/
+	/* Private constants ---------------------------------------------------------*/
+	/* Private macros ------------------------------------------------------------*/
+	/** @defgroup LCD_Private_Macros LCD Private Macros
+	 * @{
+	 */
 
 #define IS_LCD_PRESCALER(__PRESCALER__)                                                                                                                                                                \
 	(((__PRESCALER__) == LCD_PRESCALER_1) || ((__PRESCALER__) == LCD_PRESCALER_2) || ((__PRESCALER__) == LCD_PRESCALER_4) || ((__PRESCALER__) == LCD_PRESCALER_8) ||                               \
@@ -687,28 +699,28 @@ uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd);
 
 #define IS_LCD_MUX_SEGMENT(__VALUE__) (((__VALUE__) == LCD_MUXSEGMENT_ENABLE) || ((__VALUE__) == LCD_MUXSEGMENT_DISABLE))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private functions ---------------------------------------------------------*/
-/** @addtogroup LCD_Private_Functions
- * @{
- */
+	/* Private functions ---------------------------------------------------------*/
+	/** @addtogroup LCD_Private_Functions
+	 * @{
+	 */
 
-HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd);
+	HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||                                                                                                                                  \
 	  STM32L496xx || STM32L4A6xx */

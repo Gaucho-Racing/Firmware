@@ -1,7 +1,8 @@
 #ifndef GR_OLD_NODE_ID_H
 #define GR_OLD_NODE_ID_H
 
-typedef enum {
+typedef enum
+{
 	GR_DTI_INVERTER = 0x00,
 	GR_ENERGY_METER = 0x00,
 	GR_CHARGER = 0x00,

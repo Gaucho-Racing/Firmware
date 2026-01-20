@@ -41,15 +41,16 @@
 #define STM32U5xx_LL_DMA_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx.h"
 
-/** @addtogroup STM32U5xx_LL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_LL_Driver
+	 * @{
+	 */
 
 #if (defined(GPDMA1) || defined(LPDMA1))
 
@@ -82,642 +83,646 @@ extern "C" {
 
 #define LL_DMA_CHANNEL_MAX LL_DMA_CHANNEL_15
 
-/* Array used to get the DMA Channel register offset versus Channel index
- * LL_DMA_CHANNEL_x */
-static const uint32_t LL_DMA_CH_OFFSET_TAB[] = {
-    DMA_CHANNEL0_OFFSET, DMA_CHANNEL1_OFFSET, DMA_CHANNEL2_OFFSET,  DMA_CHANNEL3_OFFSET,  DMA_CHANNEL4_OFFSET,	DMA_CHANNEL5_OFFSET,  DMA_CHANNEL6_OFFSET,  DMA_CHANNEL7_OFFSET,
-    DMA_CHANNEL8_OFFSET, DMA_CHANNEL9_OFFSET, DMA_CHANNEL10_OFFSET, DMA_CHANNEL11_OFFSET, DMA_CHANNEL12_OFFSET, DMA_CHANNEL13_OFFSET, DMA_CHANNEL14_OFFSET, DMA_CHANNEL15_OFFSET,
-};
+	/* Array used to get the DMA Channel register offset versus Channel index
+	 * LL_DMA_CHANNEL_x */
+	static const uint32_t LL_DMA_CH_OFFSET_TAB[] = {
+	    DMA_CHANNEL0_OFFSET, DMA_CHANNEL1_OFFSET, DMA_CHANNEL2_OFFSET,  DMA_CHANNEL3_OFFSET,  DMA_CHANNEL4_OFFSET,	DMA_CHANNEL5_OFFSET,  DMA_CHANNEL6_OFFSET,  DMA_CHANNEL7_OFFSET,
+	    DMA_CHANNEL8_OFFSET, DMA_CHANNEL9_OFFSET, DMA_CHANNEL10_OFFSET, DMA_CHANNEL11_OFFSET, DMA_CHANNEL12_OFFSET, DMA_CHANNEL13_OFFSET, DMA_CHANNEL14_OFFSET, DMA_CHANNEL15_OFFSET,
+	};
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private constants ---------------------------------------------------------*/
-/* Private macros ------------------------------------------------------------*/
-/* Exported types ------------------------------------------------------------*/
+	/* Private constants ---------------------------------------------------------*/
+	/* Private macros ------------------------------------------------------------*/
+	/* Exported types ------------------------------------------------------------*/
 
 #if defined(USE_FULL_LL_DRIVER)
-/** @defgroup DMA_LL_ES_INIT DMA Exported Init structure
- * @{
- */
+	/** @defgroup DMA_LL_ES_INIT DMA Exported Init structure
+	 * @{
+	 */
 
-/**
- * @brief  LL DMA init structure definition.
- */
-typedef struct {
-	uint32_t SrcAddress; /*!< This field specify the data transfer source
-				address. Programming this field is mandatory for
-				all available DMA channels. This parameter must
-				be a value between Min_Data = 0 and Max_Data =
-				0xFFFFFFFF. This feature can be modified
-				afterwards using unitary function
-				  @ref LL_DMA_SetSrcAddress(). */
+	/**
+	 * @brief  LL DMA init structure definition.
+	 */
+	typedef struct
+	{
+		uint32_t SrcAddress; /*!< This field specify the data transfer source
+					address. Programming this field is mandatory for
+					all available DMA channels. This parameter must
+					be a value between Min_Data = 0 and Max_Data =
+					0xFFFFFFFF. This feature can be modified
+					afterwards using unitary function
+					  @ref LL_DMA_SetSrcAddress(). */
 
-	uint32_t DestAddress; /*!< This field specify the data transfer
-				 destination address. Programming this field is
-				 mandatory for all available DMA channels. This
-				 parameter must be a value between Min_Data = 0
-				 and Max_Data = 0xFFFFFFFF. This feature can be
-				 modified afterwards using unitary function
-				   @ref LL_DMA_SetDestAddress(). */
-
-	uint32_t Direction; /*!< This field specify the data transfer direction.
-				 Programming this field is mandatory for all
-			       available DMA channels. This parameter can be a value
-			       of @ref DMA_LL_EC_TRANSFER_DIRECTION. This feature can
-			       be modified afterwards using unitary function
-				 @ref LL_DMA_SetDataTransferDirection(). */
-
-	uint32_t BlkHWRequest; /*!< This field specify the hardware request unity.
-				    Programming this field is mandatory for all
-				  available DMA channels. This parameter can be a
-				  value of @ref DMA_LL_EC_BLKHW_REQUEST. This feature
-				  can be modified afterwards using unitary function
-				    @ref LL_DMA_SetBlkHWRequest(). */
-
-	uint32_t DataAlignment; /*!< This field specify the transfer data
-				   alignment. Programming this field is
-				   mandatory for all available DMA channels.
-				     This parameter can be a value of @ref
-				   DMA_LL_EC_DATA_ALIGNMENT. This feature can be
-				   modified afterwards using unitary function
-				     @ref LL_DMA_SetDataAlignment(). */
-
-	uint32_t SrcBurstLength; /*!< This field specify the source burst length
-				    of transfer in bytes. Programming this field
-				    is not mandatory for LPDMA channels. This
-				    parameter must be a value between Min_Data =
-				    1 and Max_Data = 64. This feature can be
-				    modified afterwards using unitary function
-				      @ref LL_DMA_SetSrcBurstLength(). */
-
-	uint32_t DestBurstLength; /*!< This field specify the destination burst
-				     length of transfer in bytes. Programming this
-				     field is not mandatory for LPDMA channels. This
-				     parameter must be a value between Min_Data = 1
-				     and Max_Data = 64. This feature can be modified
-				     afterwards using unitary function
-				       @ref LL_DMA_SetDestBurstLength(). */
-
-	uint32_t SrcDataWidth; /*!< This field specify the source data width.
-				    Programming this field is mandatory for all
-				  available DMA channels. This parameter can be
-				  a value of @ref DMA_LL_EC_SOURCE_DATA_WIDTH.
-				    This feature can be modified afterwards
-				  using unitary function
-				    @ref LL_DMA_SetSrcDataWidth(). */
-
-	uint32_t DestDataWidth; /*!< This field specify the destination data width.
-				     Programming this field is mandatory for all
-				   available DMA channels. This parameter can be a
-				   value of @ref DMA_LL_EC_DESTINATION_DATA_WIDTH.
-				     This feature can be modified afterwards using
-				   unitary function
-				     @ref LL_DMA_SetDestDataWidth(). */
-
-	uint32_t SrcIncMode; /*!< This field specify the source burst increment mode.
-				  Programming this field is mandatory for all
-				available DMA channels. This parameter can be a value
-				of @ref DMA_LL_EC_SOURCE_INCREMENT_MODE. This feature
-				can be modified afterwards using unitary function
-				  @ref LL_DMA_SetSrcIncMode(). */
-
-	uint32_t DestIncMode; /*!< This field specify the destination burst increment
-				 mode. Programming this field is mandatory for all
-				 available DMA channels. This parameter can be a
-				 value of @ref DMA_LL_EC_DESTINATION_INCREMENT_MODE.
-				   This feature can be modified afterwards using
-				 unitary function
-				   @ref LL_DMA_SetDestIncMode(). */
-
-	uint32_t Priority; /*!< This field specify the channel priority level.
-				Programming this field is mandatory for all available
-			      DMA channels. This parameter can be a value of @ref
-			      DMA_LL_EC_PRIORITY_LEVEL. This feature can be modified
-			      afterwards using unitary function
-				@ref LL_DMA_SetChannelPriorityLevel(). */
-
-	uint32_t BlkDataLength; /*!< This field specify the length of a block
-				   transfer in bytes. Programming this field is
-				   mandatory for all available DMA channels. This
-				   parameter must be a value between Min_Data = 0 and
-				   Max_Data = 0x0000FFFF. This feature can be
-				   modified afterwards using unitary function
-				     @ref LL_DMA_SetBlkDataLength(). */
-
-	uint32_t BlkRptCount; /*!< This field specify the number of repetitions of
-				 the current block. Programming this field is
-				 mandatory only for 2D addressing channels. This
-				 parameter can be a value between 1 and 2048 Min_Data
-				 = 0 and Max_Data = 0x000007FF. This feature can be
-				 modified afterwards using unitary function
-				   @ref LL_DMA_SetBlkRptCount(). */
-
-	uint32_t TriggerMode; /*!< This field specify the trigger mode.
-				   Programming this field is mandatory for all
-				 available DMA channels. This parameter can be a
-				 value of @ref DMA_LL_EC_TRIGGER_MODE. This feature
-				 can be modified afterwards using unitary function
-				   @ref LL_DMA_SetTriggerMode(). */
-
-	uint32_t TriggerPolarity; /*!< This field specify the trigger event polarity.
-				       Programming this field is mandatory for all
-				     available DMA channels. This parameter can be a
-				     value of @ref DMA_LL_EC_TRIGGER_POLARITY. This
-				     feature can be modified afterwards using unitary
-				     function
-				       @ref LL_DMA_SetTriggerPolarity(). */
-
-	uint32_t TriggerSelection; /*!< This field specify the trigger event
-				      selection. Programming this field is mandatory
-				      for all available DMA channels. This parameter
-				      can be a value of @ref
-				      DMA_LL_EC_TRIGGER_SELECTION. This feature can
-				      be modified afterwards using unitary function
-					@ref LL_DMA_SetHWTrigger(). */
-
-	uint32_t Request; /*!< This field specify the peripheral request selection.
-			       Programming this field is mandatory for all available
-			     DMA channels. This parameter can be a value of @ref
-			     DMA_LL_EC_REQUEST_SELECTION. This feature can be
-			     modified afterwards using unitary function
-			       @ref LL_DMA_SetPeriphRequest(). */
-
-	uint32_t TransferEventMode; /*!< This field specify the transfer event mode.
-					 Programming this field is mandatory for all
-				       available DMA channels. This parameter can be
-				       a value of @ref DMA_LL_EC_TRANSFER_EVENT_MODE.
-					 This feature can be modified afterwards
-				       using unitary function
-					 @ref LL_DMA_SetTransferEventMode(). */
-
-	uint32_t DestHWordExchange; /*!< This field specify the destination half
-				       word exchange. Programming this field is
-				       not mandatory for LPDMA channels. This
-				       parameter can be a value of @ref
-				       DMA_LL_EC_DEST_HALFWORD_EXCHANGE. This
-				       feature can be modified afterwards using
-				       unitary function
-					 @ref LL_DMA_SetDestHWordExchange(). */
-
-	uint32_t DestByteExchange; /*!< This field specify the destination byte
-				      exchange. Programming this field is not
-				      mandatory for LPDMA channels. This parameter
-				      can be a value of @ref
-				      DMA_LL_EC_DEST_BYTE_EXCHANGE. This feature can
-				      be modified afterwards using unitary function
-					@ref LL_DMA_SetDestByteExchange(). */
-
-	uint32_t SrcByteExchange; /*!< This field specify the source byte exchange.
-				       Programming this field is not mandatory for
-				     LPDMA channels. This parameter can be a value of
-				     @ref DMA_LL_EC_SRC_BYTE_EXCHANGE. This feature
-				     can be modified afterwards using unitary
-				     function
-				       @ref LL_DMA_SetSrcByteExchange(). */
-
-	uint32_t SrcAllocatedPort; /*!< This field specify the source allocated port.
-					Programming this field is not mandatory for
-				      LPDMA channels. This parameter can be a value
-				      of @ref DMA_LL_EC_SOURCE_ALLOCATED_PORT. This
-				      feature can be modified afterwards using
-				      unitary function
-					@ref LL_DMA_SetSrcAllocatedPort(). */
-
-	uint32_t DestAllocatedPort; /*!< This field specify the destination
-				       allocated port. Programming this field is
-				       not mandatory for LPDMA channels. This
-				       parameter can be a value of @ref
-				       DMA_LL_EC_DESTINATION_ALLOCATED_PORT.
-					 This feature can be modified afterwards
-				       using unitary function
-					 @ref LL_DMA_SetDestAllocatedPort(). */
-
-	uint32_t LinkAllocatedPort; /*!< This field specify the linked-list
-				       allocated port. Programming this field is
-				       not mandatory for LPDMA channels. This
-				       parameter can be a value of @ref
-				       DMA_LL_EC_LINKED_LIST_ALLOCATED_PORT.
-					 This feature can be modified afterwards
-				       using unitary function
-					 @ref LL_DMA_SetLinkAllocatedPort(). */
-
-	uint32_t LinkStepMode; /*!< This field specify the link step mode.
-				    Programming this field is mandatory for all
-				  available DMA channels. This parameter can be
-				  a value of @ref DMA_LL_EC_LINK_STEP_MODE. This
-				  feature can be modified afterwards using
-				  unitary function
-				    @ref LL_DMA_SetLinkStepMode(). */
-
-	uint32_t SrcAddrUpdateMode; /*!< This field specify the source address
-				       update mode. Programming this field is
-				       mandatory only for 2D addressing
-				       channels. This parameter can be a value
-				       of @ref DMA_LL_EC_SRC_ADDR_UPDATE_MODE.
-					 This feature can be modified afterwards
-				       using unitary function
-					 @ref LL_DMA_SetSrcAddrUpdate(). */
-
-	uint32_t DestAddrUpdateMode; /*!< This field specify the destination address
-					update mode. Programming this field is
-					mandatory only for 2D addressing channels.
-					  This parameter can be a value of @ref
-					DMA_LL_EC_DEST_ADDR_UPDATE_MODE. This feature
-					can be modified afterwards using unitary
-					function
-					  @ref LL_DMA_SetDestAddrUpdate(). */
-
-	uint32_t SrcAddrOffset; /*!< This field specifies the source address offset.
-				     Programming this field is mandatory only for 2D
-				   addressing channels. This parameter can be a value
-				   Between 0 to 0x00001FFF. This feature can be
-				   modified afterwards using unitary function
-				     @ref LL_DMA_SetSrcAddrUpdateValue(). */
-
-	uint32_t DestAddrOffset; /*!< This field specifies the destination address
-				    offset. Programming this field is mandatory only
-				    for 2D addressing channels. This parameter can be
-				    a value Between 0 to 0x00001FFF. This feature can
-				    be modified afterwards using unitary function
-				      @ref LL_DMA_SetDestAddrUpdateValue(). */
-
-	uint32_t BlkRptSrcAddrUpdateMode; /*!< This field specifies the block repeat
-					     source address update mode. Programming
-					     this field is mandatory only for 2D
-					     addressing channels. This parameter can
-					     be a value of @ref
-					     DMA_LL_EC_BLK_RPT_SRC_ADDR_UPDATE_MODE.
-					       This feature can be modified
-					     afterwards using unitary function
-					       @ref LL_DMA_SetBlkRptSrcAddrUpdate().
-					   */
-
-	uint32_t BlkRptDestAddrUpdateMode; /*!< This field specifies the block repeat
-					      destination address update mode.
-						Programming this field is mandatory
-					      only for 2D addressing channels. This
-					      parameter can be a value of @ref
-					      DMA_LL_EC_BLK_RPT_DEST_ADDR_UPDATE_MODE.
-						This feature can be modified
-					      afterwards using unitary function
-						@ref
-					      LL_DMA_SetBlkRptDestAddrUpdate(). */
-
-	uint32_t BlkRptSrcAddrOffset; /*!< This field specifies the block repeat
-					 source address offset. Programming this
-					 field is mandatory only for 2D addressing
-					 channels. This parameter can be a value
-					 Between 0 to 0x0000FFFF. This feature can be
+		uint32_t DestAddress; /*!< This field specify the data transfer
+					 destination address. Programming this field is
+					 mandatory for all available DMA channels. This
+					 parameter must be a value between Min_Data = 0
+					 and Max_Data = 0xFFFFFFFF. This feature can be
 					 modified afterwards using unitary function
-					   @ref LL_DMA_SetBlkRptSrcAddrUpdateValue().
-				       */
+					   @ref LL_DMA_SetDestAddress(). */
 
-	uint32_t BlkRptDestAddrOffset; /*!< This field specifies the block repeat
-					  destination address offset. Programming
-					  this field is mandatory only for 2D
-					  addressing channels. This parameter can be
-					  a value Between 0 to 0x0000FFFF. This
-					  feature can be modified afterwards using
-					  unitary function
-					    @ref
-					  LL_DMA_SetBlkRptDestAddrUpdateValue(). */
+		uint32_t Direction; /*!< This field specify the data transfer direction.
+					 Programming this field is mandatory for all
+				       available DMA channels. This parameter can be a value
+				       of @ref DMA_LL_EC_TRANSFER_DIRECTION. This feature can
+				       be modified afterwards using unitary function
+					 @ref LL_DMA_SetDataTransferDirection(). */
 
-	uint32_t LinkedListBaseAddr; /*!< This field specify the linked list base
-					address. Programming this field is mandatory
-					for all available DMA channels. This
-					parameter can be a value Between 0 to
-					0xFFFF0000 (where the 4 first bytes are
-					always forced to 0). This feature can be
-					modified afterwards using unitary function
-					  @ref LL_DMA_SetLinkedListBaseAddr(). */
+		uint32_t BlkHWRequest; /*!< This field specify the hardware request unity.
+					    Programming this field is mandatory for all
+					  available DMA channels. This parameter can be a
+					  value of @ref DMA_LL_EC_BLKHW_REQUEST. This feature
+					  can be modified afterwards using unitary function
+					    @ref LL_DMA_SetBlkHWRequest(). */
 
-	uint32_t LinkedListAddrOffset; /*!< Specifies the linked list address offset.
-					    Programming this field is mandatory for
-					  all available DMA channels. This parameter
-					  can be a value Between 0 to 0x0000FFFC.
+		uint32_t DataAlignment; /*!< This field specify the transfer data
+					   alignment. Programming this field is
+					   mandatory for all available DMA channels.
+					     This parameter can be a value of @ref
+					   DMA_LL_EC_DATA_ALIGNMENT. This feature can be
+					   modified afterwards using unitary function
+					     @ref LL_DMA_SetDataAlignment(). */
+
+		uint32_t SrcBurstLength; /*!< This field specify the source burst length
+					    of transfer in bytes. Programming this field
+					    is not mandatory for LPDMA channels. This
+					    parameter must be a value between Min_Data =
+					    1 and Max_Data = 64. This feature can be
+					    modified afterwards using unitary function
+					      @ref LL_DMA_SetSrcBurstLength(). */
+
+		uint32_t DestBurstLength; /*!< This field specify the destination burst
+					     length of transfer in bytes. Programming this
+					     field is not mandatory for LPDMA channels. This
+					     parameter must be a value between Min_Data = 1
+					     and Max_Data = 64. This feature can be modified
+					     afterwards using unitary function
+					       @ref LL_DMA_SetDestBurstLength(). */
+
+		uint32_t SrcDataWidth; /*!< This field specify the source data width.
+					    Programming this field is mandatory for all
+					  available DMA channels. This parameter can be
+					  a value of @ref DMA_LL_EC_SOURCE_DATA_WIDTH.
 					    This feature can be modified afterwards
 					  using unitary function
-					    @ref LL_DMA_SetLinkedListAddrOffset(). */
+					    @ref LL_DMA_SetSrcDataWidth(). */
 
-} LL_DMA_InitTypeDef;
+		uint32_t DestDataWidth; /*!< This field specify the destination data width.
+					     Programming this field is mandatory for all
+					   available DMA channels. This parameter can be a
+					   value of @ref DMA_LL_EC_DESTINATION_DATA_WIDTH.
+					     This feature can be modified afterwards using
+					   unitary function
+					     @ref LL_DMA_SetDestDataWidth(). */
 
-/**
- * @brief  LL DMA init linked list structure definition.
- */
-typedef struct {
-	uint32_t Priority; /*!< This field specify the channel priority level.
-				Programming this field is mandatory for all available
-			      DMA channels. This parameter can be a value of @ref
-			      DMA_LL_EC_PRIORITY_LEVEL. This feature can be modified
-			      afterwards using unitary function
-				@ref LL_DMA_SetChannelPriorityLevel(). */
+		uint32_t SrcIncMode; /*!< This field specify the source burst increment mode.
+					  Programming this field is mandatory for all
+					available DMA channels. This parameter can be a value
+					of @ref DMA_LL_EC_SOURCE_INCREMENT_MODE. This feature
+					can be modified afterwards using unitary function
+					  @ref LL_DMA_SetSrcIncMode(). */
 
-	uint32_t LinkStepMode; /*!< This field specify the link step mode.
-				    Programming this field is mandatory for all
-				  available DMA channels. This parameter can be
-				  a value of @ref DMA_LL_EC_LINK_STEP_MODE. This
-				  feature can be modified afterwards using
-				  unitary function
-				    @ref LL_DMA_SetLinkStepMode(). */
+		uint32_t DestIncMode; /*!< This field specify the destination burst increment
+					 mode. Programming this field is mandatory for all
+					 available DMA channels. This parameter can be a
+					 value of @ref DMA_LL_EC_DESTINATION_INCREMENT_MODE.
+					   This feature can be modified afterwards using
+					 unitary function
+					   @ref LL_DMA_SetDestIncMode(). */
 
-	uint32_t LinkAllocatedPort; /*!< This field specify the linked-list
-				       allocated port. Programming this field is
-				       not mandatory for LPDMA channels. This
-				       parameter can be a value of @ref
-				       DMA_LL_EC_LINKED_LIST_ALLOCATED_PORT.
-					 This feature can be modified afterwards
-				       using unitary function
-					 @ref LL_DMA_SetLinkAllocatedPort(). */
+		uint32_t Priority; /*!< This field specify the channel priority level.
+					Programming this field is mandatory for all available
+				      DMA channels. This parameter can be a value of @ref
+				      DMA_LL_EC_PRIORITY_LEVEL. This feature can be modified
+				      afterwards using unitary function
+					@ref LL_DMA_SetChannelPriorityLevel(). */
 
-	uint32_t TransferEventMode; /*!< This field specify the transfer event mode.
-					 Programming this field is mandatory for all
-				       available DMA channels. This parameter can be
-				       a value of @ref DMA_LL_EC_TRANSFER_EVENT_MODE.
-					 This feature can be modified afterwards
-				       using unitary function
-					 @ref LL_DMA_SetTransferEventMode(). */
-} LL_DMA_InitLinkedListTypeDef;
+		uint32_t BlkDataLength; /*!< This field specify the length of a block
+					   transfer in bytes. Programming this field is
+					   mandatory for all available DMA channels. This
+					   parameter must be a value between Min_Data = 0 and
+					   Max_Data = 0x0000FFFF. This feature can be
+					   modified afterwards using unitary function
+					     @ref LL_DMA_SetBlkDataLength(). */
 
-/**
- * @brief  LL DMA node init structure definition.
- */
-typedef struct {
-	/* CTR1 register fields
-	   ****************************************************** If any CTR1
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CTR1 register fields and enable update
-	   CTR1 register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		uint32_t BlkRptCount; /*!< This field specify the number of repetitions of
+					 the current block. Programming this field is
+					 mandatory only for 2D addressing channels. This
+					 parameter can be a value between 1 and 2048 Min_Data
+					 = 0 and Max_Data = 0x000007FF. This feature can be
+					 modified afterwards using unitary function
+					   @ref LL_DMA_SetBlkRptCount(). */
 
-	   If the node to be created is for LPDMA channels, there is no need to
-	   fill the following fields for CTR1 register :
-	   - DestAllocatedPort.
-	   - DestHWordExchange.
-	   - DestByteExchange.
-	   - DestBurstLength.
-	   - SrcAllocatedPort.
-	   - SrcByteExchange.
-	   - SrcBurstLength.
+		uint32_t TriggerMode; /*!< This field specify the trigger mode.
+					   Programming this field is mandatory for all
+					 available DMA channels. This parameter can be a
+					 value of @ref DMA_LL_EC_TRIGGER_MODE. This feature
+					 can be modified afterwards using unitary function
+					   @ref LL_DMA_SetTriggerMode(). */
 
-	*/
+		uint32_t TriggerPolarity; /*!< This field specify the trigger event polarity.
+					       Programming this field is mandatory for all
+					     available DMA channels. This parameter can be a
+					     value of @ref DMA_LL_EC_TRIGGER_POLARITY. This
+					     feature can be modified afterwards using unitary
+					     function
+					       @ref LL_DMA_SetTriggerPolarity(). */
+
+		uint32_t TriggerSelection; /*!< This field specify the trigger event
+					      selection. Programming this field is mandatory
+					      for all available DMA channels. This parameter
+					      can be a value of @ref
+					      DMA_LL_EC_TRIGGER_SELECTION. This feature can
+					      be modified afterwards using unitary function
+						@ref LL_DMA_SetHWTrigger(). */
+
+		uint32_t Request; /*!< This field specify the peripheral request selection.
+				       Programming this field is mandatory for all available
+				     DMA channels. This parameter can be a value of @ref
+				     DMA_LL_EC_REQUEST_SELECTION. This feature can be
+				     modified afterwards using unitary function
+				       @ref LL_DMA_SetPeriphRequest(). */
+
+		uint32_t TransferEventMode; /*!< This field specify the transfer event mode.
+						 Programming this field is mandatory for all
+					       available DMA channels. This parameter can be
+					       a value of @ref DMA_LL_EC_TRANSFER_EVENT_MODE.
+						 This feature can be modified afterwards
+					       using unitary function
+						 @ref LL_DMA_SetTransferEventMode(). */
+
+		uint32_t DestHWordExchange; /*!< This field specify the destination half
+					       word exchange. Programming this field is
+					       not mandatory for LPDMA channels. This
+					       parameter can be a value of @ref
+					       DMA_LL_EC_DEST_HALFWORD_EXCHANGE. This
+					       feature can be modified afterwards using
+					       unitary function
+						 @ref LL_DMA_SetDestHWordExchange(). */
+
+		uint32_t DestByteExchange; /*!< This field specify the destination byte
+					      exchange. Programming this field is not
+					      mandatory for LPDMA channels. This parameter
+					      can be a value of @ref
+					      DMA_LL_EC_DEST_BYTE_EXCHANGE. This feature can
+					      be modified afterwards using unitary function
+						@ref LL_DMA_SetDestByteExchange(). */
+
+		uint32_t SrcByteExchange; /*!< This field specify the source byte exchange.
+					       Programming this field is not mandatory for
+					     LPDMA channels. This parameter can be a value of
+					     @ref DMA_LL_EC_SRC_BYTE_EXCHANGE. This feature
+					     can be modified afterwards using unitary
+					     function
+					       @ref LL_DMA_SetSrcByteExchange(). */
+
+		uint32_t SrcAllocatedPort; /*!< This field specify the source allocated port.
+						Programming this field is not mandatory for
+					      LPDMA channels. This parameter can be a value
+					      of @ref DMA_LL_EC_SOURCE_ALLOCATED_PORT. This
+					      feature can be modified afterwards using
+					      unitary function
+						@ref LL_DMA_SetSrcAllocatedPort(). */
+
+		uint32_t DestAllocatedPort; /*!< This field specify the destination
+					       allocated port. Programming this field is
+					       not mandatory for LPDMA channels. This
+					       parameter can be a value of @ref
+					       DMA_LL_EC_DESTINATION_ALLOCATED_PORT.
+						 This feature can be modified afterwards
+					       using unitary function
+						 @ref LL_DMA_SetDestAllocatedPort(). */
+
+		uint32_t LinkAllocatedPort; /*!< This field specify the linked-list
+					       allocated port. Programming this field is
+					       not mandatory for LPDMA channels. This
+					       parameter can be a value of @ref
+					       DMA_LL_EC_LINKED_LIST_ALLOCATED_PORT.
+						 This feature can be modified afterwards
+					       using unitary function
+						 @ref LL_DMA_SetLinkAllocatedPort(). */
+
+		uint32_t LinkStepMode; /*!< This field specify the link step mode.
+					    Programming this field is mandatory for all
+					  available DMA channels. This parameter can be
+					  a value of @ref DMA_LL_EC_LINK_STEP_MODE. This
+					  feature can be modified afterwards using
+					  unitary function
+					    @ref LL_DMA_SetLinkStepMode(). */
+
+		uint32_t SrcAddrUpdateMode; /*!< This field specify the source address
+					       update mode. Programming this field is
+					       mandatory only for 2D addressing
+					       channels. This parameter can be a value
+					       of @ref DMA_LL_EC_SRC_ADDR_UPDATE_MODE.
+						 This feature can be modified afterwards
+					       using unitary function
+						 @ref LL_DMA_SetSrcAddrUpdate(). */
+
+		uint32_t DestAddrUpdateMode; /*!< This field specify the destination address
+						update mode. Programming this field is
+						mandatory only for 2D addressing channels.
+						  This parameter can be a value of @ref
+						DMA_LL_EC_DEST_ADDR_UPDATE_MODE. This feature
+						can be modified afterwards using unitary
+						function
+						  @ref LL_DMA_SetDestAddrUpdate(). */
+
+		uint32_t SrcAddrOffset; /*!< This field specifies the source address offset.
+					     Programming this field is mandatory only for 2D
+					   addressing channels. This parameter can be a value
+					   Between 0 to 0x00001FFF. This feature can be
+					   modified afterwards using unitary function
+					     @ref LL_DMA_SetSrcAddrUpdateValue(). */
+
+		uint32_t DestAddrOffset; /*!< This field specifies the destination address
+					    offset. Programming this field is mandatory only
+					    for 2D addressing channels. This parameter can be
+					    a value Between 0 to 0x00001FFF. This feature can
+					    be modified afterwards using unitary function
+					      @ref LL_DMA_SetDestAddrUpdateValue(). */
+
+		uint32_t BlkRptSrcAddrUpdateMode; /*!< This field specifies the block repeat
+						     source address update mode. Programming
+						     this field is mandatory only for 2D
+						     addressing channels. This parameter can
+						     be a value of @ref
+						     DMA_LL_EC_BLK_RPT_SRC_ADDR_UPDATE_MODE.
+						       This feature can be modified
+						     afterwards using unitary function
+						       @ref LL_DMA_SetBlkRptSrcAddrUpdate().
+						   */
+
+		uint32_t BlkRptDestAddrUpdateMode; /*!< This field specifies the block repeat
+						      destination address update mode.
+							Programming this field is mandatory
+						      only for 2D addressing channels. This
+						      parameter can be a value of @ref
+						      DMA_LL_EC_BLK_RPT_DEST_ADDR_UPDATE_MODE.
+							This feature can be modified
+						      afterwards using unitary function
+							@ref
+						      LL_DMA_SetBlkRptDestAddrUpdate(). */
+
+		uint32_t BlkRptSrcAddrOffset; /*!< This field specifies the block repeat
+						 source address offset. Programming this
+						 field is mandatory only for 2D addressing
+						 channels. This parameter can be a value
+						 Between 0 to 0x0000FFFF. This feature can be
+						 modified afterwards using unitary function
+						   @ref LL_DMA_SetBlkRptSrcAddrUpdateValue().
+					       */
+
+		uint32_t BlkRptDestAddrOffset; /*!< This field specifies the block repeat
+						  destination address offset. Programming
+						  this field is mandatory only for 2D
+						  addressing channels. This parameter can be
+						  a value Between 0 to 0x0000FFFF. This
+						  feature can be modified afterwards using
+						  unitary function
+						    @ref
+						  LL_DMA_SetBlkRptDestAddrUpdateValue(). */
+
+		uint32_t LinkedListBaseAddr; /*!< This field specify the linked list base
+						address. Programming this field is mandatory
+						for all available DMA channels. This
+						parameter can be a value Between 0 to
+						0xFFFF0000 (where the 4 first bytes are
+						always forced to 0). This feature can be
+						modified afterwards using unitary function
+						  @ref LL_DMA_SetLinkedListBaseAddr(). */
+
+		uint32_t LinkedListAddrOffset; /*!< Specifies the linked list address offset.
+						    Programming this field is mandatory for
+						  all available DMA channels. This parameter
+						  can be a value Between 0 to 0x0000FFFC.
+						    This feature can be modified afterwards
+						  using unitary function
+						    @ref LL_DMA_SetLinkedListAddrOffset(). */
+
+	} LL_DMA_InitTypeDef;
+
+	/**
+	 * @brief  LL DMA init linked list structure definition.
+	 */
+	typedef struct
+	{
+		uint32_t Priority; /*!< This field specify the channel priority level.
+					Programming this field is mandatory for all available
+				      DMA channels. This parameter can be a value of @ref
+				      DMA_LL_EC_PRIORITY_LEVEL. This feature can be modified
+				      afterwards using unitary function
+					@ref LL_DMA_SetChannelPriorityLevel(). */
+
+		uint32_t LinkStepMode; /*!< This field specify the link step mode.
+					    Programming this field is mandatory for all
+					  available DMA channels. This parameter can be
+					  a value of @ref DMA_LL_EC_LINK_STEP_MODE. This
+					  feature can be modified afterwards using
+					  unitary function
+					    @ref LL_DMA_SetLinkStepMode(). */
+
+		uint32_t LinkAllocatedPort; /*!< This field specify the linked-list
+					       allocated port. Programming this field is
+					       not mandatory for LPDMA channels. This
+					       parameter can be a value of @ref
+					       DMA_LL_EC_LINKED_LIST_ALLOCATED_PORT.
+						 This feature can be modified afterwards
+					       using unitary function
+						 @ref LL_DMA_SetLinkAllocatedPort(). */
+
+		uint32_t TransferEventMode; /*!< This field specify the transfer event mode.
+						 Programming this field is mandatory for all
+					       available DMA channels. This parameter can be
+					       a value of @ref DMA_LL_EC_TRANSFER_EVENT_MODE.
+						 This feature can be modified afterwards
+					       using unitary function
+						 @ref LL_DMA_SetTransferEventMode(). */
+	} LL_DMA_InitLinkedListTypeDef;
+
+	/**
+	 * @brief  LL DMA node init structure definition.
+	 */
+	typedef struct
+	{
+		/* CTR1 register fields
+		   ****************************************************** If any CTR1
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CTR1 register fields and enable update
+		   CTR1 register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
+
+		   If the node to be created is for LPDMA channels, there is no need to
+		   fill the following fields for CTR1 register :
+		   - DestAllocatedPort.
+		   - DestHWordExchange.
+		   - DestByteExchange.
+		   - DestBurstLength.
+		   - SrcAllocatedPort.
+		   - SrcByteExchange.
+		   - SrcBurstLength.
+
+		*/
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	uint32_t DestSecure; /*!< This field specify the destination secure.
-				  This parameter can be a value of @ref
-				DMA_LL_EC_DESTINATION_SECURITY_ATTRIBUTE. */
-#endif			     /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+		uint32_t DestSecure; /*!< This field specify the destination secure.
+					  This parameter can be a value of @ref
+					DMA_LL_EC_DESTINATION_SECURITY_ATTRIBUTE. */
+#endif				     /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-	uint32_t DestAllocatedPort; /*!< This field specify the destination allocated
-				       port. This parameter can be a value of @ref
-				       DMA_LL_EC_DESTINATION_ALLOCATED_PORT.     */
+		uint32_t DestAllocatedPort; /*!< This field specify the destination allocated
+					       port. This parameter can be a value of @ref
+					       DMA_LL_EC_DESTINATION_ALLOCATED_PORT.     */
 
-	uint32_t DestHWordExchange; /*!< This field specify the destination half word
-				       exchange. This parameter can be a value of
-				       @ref DMA_LL_EC_DEST_HALFWORD_EXCHANGE. */
+		uint32_t DestHWordExchange; /*!< This field specify the destination half word
+					       exchange. This parameter can be a value of
+					       @ref DMA_LL_EC_DEST_HALFWORD_EXCHANGE. */
 
-	uint32_t DestByteExchange; /*!< This field specify the destination byte
-				      exchange. This parameter can be a value of
-				      @ref DMA_LL_EC_DEST_BYTE_EXCHANGE. */
+		uint32_t DestByteExchange; /*!< This field specify the destination byte
+					      exchange. This parameter can be a value of
+					      @ref DMA_LL_EC_DEST_BYTE_EXCHANGE. */
 
-	uint32_t DestBurstLength; /*!< This field specify the destination burst
-				     length of transfer in bytes. This parameter
-				     must be a value between Min_Data = 1 and
-				     Max_Data = 64.          */
+		uint32_t DestBurstLength; /*!< This field specify the destination burst
+					     length of transfer in bytes. This parameter
+					     must be a value between Min_Data = 1 and
+					     Max_Data = 64.          */
 
-	uint32_t DestIncMode; /*!< This field specify the destination increment
-				 mode. This parameter can be a value of @ref
-				 DMA_LL_EC_DESTINATION_INCREMENT_MODE.     */
+		uint32_t DestIncMode; /*!< This field specify the destination increment
+					 mode. This parameter can be a value of @ref
+					 DMA_LL_EC_DESTINATION_INCREMENT_MODE.     */
 
-	uint32_t DestDataWidth; /*!< This field specify the destination data
-				   width. This parameter can be a value of @ref
-				   DMA_LL_EC_DESTINATION_DATA_WIDTH.         */
+		uint32_t DestDataWidth; /*!< This field specify the destination data
+					   width. This parameter can be a value of @ref
+					   DMA_LL_EC_DESTINATION_DATA_WIDTH.         */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	uint32_t SrcSecure; /*!< This field specify the source secure.
-				 This parameter can be a value of @ref
-			       DMA_LL_EC_SOURCE_SECURITY_ATTRIBUTE.      */
-#endif			    /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+		uint32_t SrcSecure; /*!< This field specify the source secure.
+					 This parameter can be a value of @ref
+				       DMA_LL_EC_SOURCE_SECURITY_ATTRIBUTE.      */
+#endif				    /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-	uint32_t SrcAllocatedPort; /*!< This field specify the source allocated
-				      port. This parameter can be a value of
-				      @ref DMA_LL_EC_SOURCE_ALLOCATED_PORT. */
+		uint32_t SrcAllocatedPort; /*!< This field specify the source allocated
+					      port. This parameter can be a value of
+					      @ref DMA_LL_EC_SOURCE_ALLOCATED_PORT. */
 
-	uint32_t SrcByteExchange; /*!< This field specify the source byte
-				     exchange. This parameter can be a value of
-				     @ref DMA_LL_EC_SRC_BYTE_EXCHANGE. */
+		uint32_t SrcByteExchange; /*!< This field specify the source byte
+					     exchange. This parameter can be a value of
+					     @ref DMA_LL_EC_SRC_BYTE_EXCHANGE. */
 
-	uint32_t DataAlignment; /*!< This field specify the transfer data
-				   alignment. This parameter can be a value of
-				   @ref DMA_LL_EC_DATA_ALIGNMENT. */
+		uint32_t DataAlignment; /*!< This field specify the transfer data
+					   alignment. This parameter can be a value of
+					   @ref DMA_LL_EC_DATA_ALIGNMENT. */
 
-	uint32_t SrcBurstLength; /*!< This field specify the source burst length of
-				    transfer in bytes. This parameter must be a value
-				    between Min_Data = 1 and Max_Data = 64. */
+		uint32_t SrcBurstLength; /*!< This field specify the source burst length of
+					    transfer in bytes. This parameter must be a value
+					    between Min_Data = 1 and Max_Data = 64. */
 
-	uint32_t SrcIncMode; /*!< This field specify the source increment mode.
-				  This parameter can be a value of @ref
-				DMA_LL_EC_SOURCE_INCREMENT_MODE.          */
+		uint32_t SrcIncMode; /*!< This field specify the source increment mode.
+					  This parameter can be a value of @ref
+					DMA_LL_EC_SOURCE_INCREMENT_MODE.          */
 
-	uint32_t SrcDataWidth; /*!< This field specify the source data width.
-				    This parameter can be a value of @ref
-				  DMA_LL_EC_SOURCE_DATA_WIDTH.              */
+		uint32_t SrcDataWidth; /*!< This field specify the source data width.
+					    This parameter can be a value of @ref
+					  DMA_LL_EC_SOURCE_DATA_WIDTH.              */
 
-	/* CTR2 register fields
-	   ****************************************************** If any CTR2
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CTR2 register fields and enable update
-	   CTR2 register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CTR2 register fields
+		   ****************************************************** If any CTR2
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CTR2 register fields and enable update
+		   CTR2 register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   For all node created, filling all fields is mandatory.
-	*/
-	uint32_t TransferEventMode; /*!< This field specify the transfer event
-				       mode. This parameter can be a value of
-				       @ref DMA_LL_EC_TRANSFER_EVENT_MODE. */
+		   For all node created, filling all fields is mandatory.
+		*/
+		uint32_t TransferEventMode; /*!< This field specify the transfer event
+					       mode. This parameter can be a value of
+					       @ref DMA_LL_EC_TRANSFER_EVENT_MODE. */
 
-	uint32_t TriggerPolarity; /*!< This field specify the trigger event
-				     polarity. This parameter can be a value of
-				     @ref DMA_LL_EC_TRIGGER_POLARITY. */
+		uint32_t TriggerPolarity; /*!< This field specify the trigger event
+					     polarity. This parameter can be a value of
+					     @ref DMA_LL_EC_TRIGGER_POLARITY. */
 
-	uint32_t TriggerSelection; /*!< This field specify the trigger event
-				      selection. This parameter can be a value
-				      of @ref DMA_LL_EC_TRIGGER_SELECTION. */
+		uint32_t TriggerSelection; /*!< This field specify the trigger event
+					      selection. This parameter can be a value
+					      of @ref DMA_LL_EC_TRIGGER_SELECTION. */
 
-	uint32_t TriggerMode; /*!< This field specify the trigger mode.
-				   This parameter can be a value of @ref
-				 DMA_LL_EC_TRIGGER_MODE.                   */
+		uint32_t TriggerMode; /*!< This field specify the trigger mode.
+					   This parameter can be a value of @ref
+					 DMA_LL_EC_TRIGGER_MODE.                   */
 
-	uint32_t BlkHWRequest; /*!< This field specify the hardware request
-				  unity. This parameter can be a value of @ref
-				  DMA_LL_EC_BLKHW_REQUEST.                  */
+		uint32_t BlkHWRequest; /*!< This field specify the hardware request
+					  unity. This parameter can be a value of @ref
+					  DMA_LL_EC_BLKHW_REQUEST.                  */
 
-	uint32_t Direction; /*!< This field specify the transfer direction.
-				 This parameter can be a value of @ref
-			       DMA_LL_EC_TRANSFER_DIRECTION.             */
+		uint32_t Direction; /*!< This field specify the transfer direction.
+					 This parameter can be a value of @ref
+				       DMA_LL_EC_TRANSFER_DIRECTION.             */
 
-	uint32_t Request; /*!< This field specify the peripheral request
-			     selection. This parameter can be a value of @ref
-			     DMA_LL_EC_REQUEST_SELECTION.              */
+		uint32_t Request; /*!< This field specify the peripheral request
+				     selection. This parameter can be a value of @ref
+				     DMA_LL_EC_REQUEST_SELECTION.              */
 
-	/* CBR1 register fields
-	   ****************************************************** If any CBR1
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CBR1 register fields and enable update
-	   CBR1 register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CBR1 register fields
+		   ****************************************************** If any CBR1
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CBR1 register fields and enable update
+		   CBR1 register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   If the node to be created is not for 2D addressing channels, there is
-	   no need to fill the following fields for CBR1 register :
-	   - BlkReptDestAddrUpdate.
-	   - BlkRptSrcAddrUpdate.
-	   - DestAddrUpdate.
-	   - SrcAddrUpdate.
-	   - BlkRptCount.
-	*/
-	uint32_t BlkRptDestAddrUpdateMode; /*!< This field specifies the block repeat
-					      destination address update mode. This
-					      parameter can be a value of
-						@ref
-					      DMA_LL_EC_BLK_RPT_DEST_ADDR_UPDATE_MODE.
-					    */
+		   If the node to be created is not for 2D addressing channels, there is
+		   no need to fill the following fields for CBR1 register :
+		   - BlkReptDestAddrUpdate.
+		   - BlkRptSrcAddrUpdate.
+		   - DestAddrUpdate.
+		   - SrcAddrUpdate.
+		   - BlkRptCount.
+		*/
+		uint32_t BlkRptDestAddrUpdateMode; /*!< This field specifies the block repeat
+						      destination address update mode. This
+						      parameter can be a value of
+							@ref
+						      DMA_LL_EC_BLK_RPT_DEST_ADDR_UPDATE_MODE.
+						    */
 
-	uint32_t BlkRptSrcAddrUpdateMode; /*!< This field specifies the block
-					     repeat source address update mode.
-					       This parameter can be a value of
-					       @ref
-					     DMA_LL_EC_BLK_RPT_SRC_ADDR_UPDATE_MODE.
-					   */
+		uint32_t BlkRptSrcAddrUpdateMode; /*!< This field specifies the block
+						     repeat source address update mode.
+						       This parameter can be a value of
+						       @ref
+						     DMA_LL_EC_BLK_RPT_SRC_ADDR_UPDATE_MODE.
+						   */
 
-	uint32_t DestAddrUpdateMode; /*!< This field specify the Destination address
-					update mode. This parameter can be a value of
-					@ref DMA_LL_EC_DEST_ADDR_UPDATE_MODE.      */
+		uint32_t DestAddrUpdateMode; /*!< This field specify the Destination address
+						update mode. This parameter can be a value of
+						@ref DMA_LL_EC_DEST_ADDR_UPDATE_MODE.      */
 
-	uint32_t SrcAddrUpdateMode; /*!< This field specify the Source address update
-				       mode. This parameter can be a value of @ref
-				       DMA_LL_EC_SRC_ADDR_UPDATE_MODE.       */
+		uint32_t SrcAddrUpdateMode; /*!< This field specify the Source address update
+					       mode. This parameter can be a value of @ref
+					       DMA_LL_EC_SRC_ADDR_UPDATE_MODE.       */
 
-	uint32_t BlkRptCount; /*!< This field specify the number of repetitions
-				 of the current block. This parameter can be a
-				 value between 1 and 2048 Min_Data = 0 and
-				 Max_Data = 0x000007FF. */
+		uint32_t BlkRptCount; /*!< This field specify the number of repetitions
+					 of the current block. This parameter can be a
+					 value between 1 and 2048 Min_Data = 0 and
+					 Max_Data = 0x000007FF. */
 
-	uint32_t BlkDataLength; /*!< This field specify the length of a block
-				   transfer in bytes. This parameter must be a value
-				   between Min_Data = 0 and Max_Data = 0x0000FFFF. */
+		uint32_t BlkDataLength; /*!< This field specify the length of a block
+					   transfer in bytes. This parameter must be a value
+					   between Min_Data = 0 and Max_Data = 0x0000FFFF. */
 
-	/* CSAR register fields
-	   ****************************************************** If any CSAR
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CSAR register fields and enable update
-	   CSAR register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CSAR register fields
+		   ****************************************************** If any CSAR
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CSAR register fields and enable update
+		   CSAR register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   For all node created, filling all fields is mandatory.
-	*/
-	uint32_t SrcAddress; /*!< This field specify the transfer source
-				address. This parameter must be a value between
-				Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
+		   For all node created, filling all fields is mandatory.
+		*/
+		uint32_t SrcAddress; /*!< This field specify the transfer source
+					address. This parameter must be a value between
+					Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
 
-	/* CDAR register fields
-	   ****************************************************** If any CDAR
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CDAR register fields and enable update
-	   CDAR register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CDAR register fields
+		   ****************************************************** If any CDAR
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CDAR register fields and enable update
+		   CDAR register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   For all node created, filling all fields is mandatory.
-	*/
-	uint32_t DestAddress; /*!< This field specify the transfer destination
-				 address. This parameter must be a value between
-				 Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
+		   For all node created, filling all fields is mandatory.
+		*/
+		uint32_t DestAddress; /*!< This field specify the transfer destination
+					 address. This parameter must be a value between
+					 Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
 
-	/* CTR3 register fields
-	   ****************************************************** If any CTR3
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CTR3 register fields and enable update
-	   CTR3 register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CTR3 register fields
+		   ****************************************************** If any CTR3
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CTR3 register fields and enable update
+		   CTR3 register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   This register is used only for 2D addressing channels.
-	   If used channel is linear addressing, this register will be
-	   overwritten by CLLR register in memory. When this register is enabled
-	   on UpdateRegisters and the selected channel is linear addressing, LL
-	   APIs will discard this register update in memory.
-	*/
-	uint32_t DestAddrOffset; /*!< This field specifies the destination
-				    address offset. This parameter can be a
-				    value Between 0 to 0x00001FFF. */
+		   This register is used only for 2D addressing channels.
+		   If used channel is linear addressing, this register will be
+		   overwritten by CLLR register in memory. When this register is enabled
+		   on UpdateRegisters and the selected channel is linear addressing, LL
+		   APIs will discard this register update in memory.
+		*/
+		uint32_t DestAddrOffset; /*!< This field specifies the destination
+					    address offset. This parameter can be a
+					    value Between 0 to 0x00001FFF. */
 
-	uint32_t SrcAddrOffset; /*!< This field specifies the source address
-				   offset. This parameter can be a value Between
-				   0 to 0x00001FFF.                          */
+		uint32_t SrcAddrOffset; /*!< This field specifies the source address
+					   offset. This parameter can be a value Between
+					   0 to 0x00001FFF.                          */
 
-	/* CBR2 register fields
-	   ****************************************************** If any CBR2
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CBR2 register fields and enable update
-	   CBR2 register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CBR2 register fields
+		   ****************************************************** If any CBR2
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CBR2 register fields and enable update
+		   CBR2 register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   This register is used only for 2D addressing channels.
-	   If used channel is linear addressing, this register will be discarded
-	   in memory. When this register is enabled on UpdateRegisters and the
-	   selected channel is linear addressing, LL APIs will discard this
-	   register update in memory.
-	*/
-	uint32_t BlkRptDestAddrOffset; /*!< This field specifies the block repeat
-					  destination address offset. This parameter
-					  can be a value Between 0 to 0x0000FFFF. */
+		   This register is used only for 2D addressing channels.
+		   If used channel is linear addressing, this register will be discarded
+		   in memory. When this register is enabled on UpdateRegisters and the
+		   selected channel is linear addressing, LL APIs will discard this
+		   register update in memory.
+		*/
+		uint32_t BlkRptDestAddrOffset; /*!< This field specifies the block repeat
+						  destination address offset. This parameter
+						  can be a value Between 0 to 0x0000FFFF. */
 
-	uint32_t BlkRptSrcAddrOffset; /*!< This field specifies the block repeat
-					 source address offset. This parameter can be
-					 a value Between 0 to 0x0000FFFF. */
+		uint32_t BlkRptSrcAddrOffset; /*!< This field specifies the block repeat
+						 source address offset. This parameter can be
+						 a value Between 0 to 0x0000FFFF. */
 
-	/* CLLR register fields
-	   ****************************************************** If any CLLR
-	   fields need to be updated comparing to previous node, it is mandatory
-	   to update the new value in CLLR register fields and enable update
-	   CLLR register in UpdateRegisters fields if it is not enabled in the
-	   previous node.
+		/* CLLR register fields
+		   ****************************************************** If any CLLR
+		   fields need to be updated comparing to previous node, it is mandatory
+		   to update the new value in CLLR register fields and enable update
+		   CLLR register in UpdateRegisters fields if it is not enabled in the
+		   previous node.
 
-	   If used channel is linear addressing, there is no need to
-	   enable/disable CTR3 and CBR2 register in UpdateRegisters fields as
-	   they will be discarded by LL APIs.
-	*/
-	uint32_t UpdateRegisters; /*!< Specifies the linked list register update.
-				       This parameter can be a value of @ref
-				     DMA_LL_EC_LINKEDLIST_REGISTER_UPDATE.     */
+		   If used channel is linear addressing, there is no need to
+		   enable/disable CTR3 and CBR2 register in UpdateRegisters fields as
+		   they will be discarded by LL APIs.
+		*/
+		uint32_t UpdateRegisters; /*!< Specifies the linked list register update.
+					       This parameter can be a value of @ref
+					     DMA_LL_EC_LINKEDLIST_REGISTER_UPDATE.     */
 
-	/* DMA Node type field
-	   ******************************************************* This
-	   parameter defines node types as node size and node content varies
-	   between channels.
-	   Thanks to this fields, linked list queue could be created
-	   independently from channel selection. So, one queue could be executed
-	   by all DMA channels.
-	*/
-	uint32_t NodeType; /*!< Specifies the node type to be created.
-				This parameter can be a value of @ref
-			      DMA_LL_EC_LINKEDLIST_NODE_TYPE.           */
-} LL_DMA_InitNodeTypeDef;
+		/* DMA Node type field
+		   ******************************************************* This
+		   parameter defines node types as node size and node content varies
+		   between channels.
+		   Thanks to this fields, linked list queue could be created
+		   independently from channel selection. So, one queue could be executed
+		   by all DMA channels.
+		*/
+		uint32_t NodeType; /*!< Specifies the node type to be created.
+					This parameter can be a value of @ref
+				      DMA_LL_EC_LINKEDLIST_NODE_TYPE.           */
+	} LL_DMA_InitNodeTypeDef;
 
-/**
- * @brief  LL DMA linked list node structure definition.
- * @note   For 2D addressing channels, the maximum node size is :
- *         (4 Bytes * 8 registers = 32 Bytes).
- *         For GPDMA linear addressing channels, the maximum node size is :
- *         (4 Bytes * 6 registers = 24 Bytes).
- *         For LPDMA linear addressing channels, the maximum node size is :
- *         (4 Bytes * 6 registers = 24 Bytes).
- */
-typedef struct {
-	__IO uint32_t LinkRegisters[8U];
+	/**
+	 * @brief  LL DMA linked list node structure definition.
+	 * @note   For 2D addressing channels, the maximum node size is :
+	 *         (4 Bytes * 8 registers = 32 Bytes).
+	 *         For GPDMA linear addressing channels, the maximum node size is :
+	 *         (4 Bytes * 6 registers = 24 Bytes).
+	 *         For LPDMA linear addressing channels, the maximum node size is :
+	 *         (4 Bytes * 6 registers = 24 Bytes).
+	 */
+	typedef struct
+	{
+		__IO uint32_t LinkRegisters[8U];
 
-} LL_DMA_LinkNodeTypeDef;
-/**
- * @}
- */
+	} LL_DMA_LinkNodeTypeDef;
+	/**
+	 * @}
+	 */
 
 #endif /* USE_FULL_LL_DRIVER */
 
@@ -749,9 +754,9 @@ typedef struct {
 #if defined(USE_FULL_LL_DRIVER)
 #define LL_DMA_CHANNEL_ALL (0x10U)
 #endif /* USE_FULL_LL_DRIVER */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup DMA_LL_EC_CLLR_OFFSET CLLR offset
@@ -1058,9 +1063,9 @@ typedef struct {
 #define LL_DMA_BURST_DEST_ADDR_DECREMENT                                                                                                                                                               \
 	DMA_CBR1_DDEC /*!< Destination address pointer is decremented after                                                                                                                            \
 			 each burst transfer by destination update value */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /** @defgroup DMA_LL_EC_SOURCE_SECURITY_ATTRIBUTE Source Security Attribute
@@ -1540,5533 +1545,5534 @@ typedef struct {
 	 : (((uint32_t)(__DMA_INSTANCE__) == ((uint32_t)GPDMA1)) && ((uint32_t)(__CHANNEL__) == ((uint32_t)LL_DMA_CHANNEL_14))) ? GPDMA1_Channel14                                                     \
 																: GPDMA1_Channel15)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
+	/* Exported functions --------------------------------------------------------*/
 
-/** @defgroup DMA_LL_Exported_Functions DMA Exported Functions
- * @{
- */
+	/** @defgroup DMA_LL_Exported_Functions DMA Exported Functions
+	 * @{
+	 */
 
-/** @defgroup DMA_LL_EF_Configuration Configuration
- * @{
- */
-/**
- * @brief Enable channel.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          EN            LL_DMA_EnableChannel
- * @param  DMAx DMAx Instance.
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_EN);
-}
+	/** @defgroup DMA_LL_EF_Configuration Configuration
+	 * @{
+	 */
+	/**
+	 * @brief Enable channel.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          EN            LL_DMA_EnableChannel
+	 * @param  DMAx DMAx Instance.
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_EN);
+	}
 
-/**
- * @brief Disable channel.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          EN            LL_DMA_DisableChannel
- * @param  DMAx DMAx Instance.
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, (DMA_CCR_SUSP | DMA_CCR_RESET));
-}
+	/**
+	 * @brief Disable channel.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          EN            LL_DMA_DisableChannel
+	 * @param  DMAx DMAx Instance.
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, (DMA_CCR_SUSP | DMA_CCR_RESET));
+	}
 
-/**
- * @brief Check if channel is enabled or disabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          EN            LL_DMA_IsEnabledChannel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_EN) == (DMA_CCR_EN)) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Check if channel is enabled or disabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          EN            LL_DMA_IsEnabledChannel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_EN) == (DMA_CCR_EN)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Reset channel.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          RESET            LL_DMA_ResetChannel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ResetChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_RESET);
-}
+	/**
+	 * @brief Reset channel.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          RESET            LL_DMA_ResetChannel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ResetChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_RESET);
+	}
 
-/**
- * @brief Suspend channel.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          SUSP            LL_DMA_SuspendChannel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SuspendChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_SUSP);
-}
+	/**
+	 * @brief Suspend channel.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          SUSP            LL_DMA_SuspendChannel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SuspendChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_SUSP);
+	}
 
-/**
- * @brief Resume channel.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          SUSP            LL_DMA_ResumeChannel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ResumeChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_SUSP);
-}
+	/**
+	 * @brief Resume channel.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          SUSP            LL_DMA_ResumeChannel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ResumeChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_SUSP);
+	}
 
-/**
- * @brief Check if channel is suspended.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          SUSP            LL_DMA_IsSuspendedChannel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsSuspendedChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_SUSP) == (DMA_CCR_SUSP)) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Check if channel is suspended.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          SUSP            LL_DMA_IsSuspendedChannel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsSuspendedChannel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_SUSP) == (DMA_CCR_SUSP)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Set linked-list base address.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLBAR          LBA           LL_DMA_SetLinkedListBaseAddr
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  LinkedListBaseAddr Between 0 to 0xFFFF0000 (where the 4 LSB bytes
- *         are always 0)
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetLinkedListBaseAddr(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkedListBaseAddr)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLBAR, DMA_CLBAR_LBA, (LinkedListBaseAddr & DMA_CLBAR_LBA));
-}
+	/**
+	 * @brief Set linked-list base address.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLBAR          LBA           LL_DMA_SetLinkedListBaseAddr
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  LinkedListBaseAddr Between 0 to 0xFFFF0000 (where the 4 LSB bytes
+	 *         are always 0)
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetLinkedListBaseAddr(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkedListBaseAddr)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLBAR, DMA_CLBAR_LBA, (LinkedListBaseAddr & DMA_CLBAR_LBA));
+	}
 
-/**
- * @brief Get linked-list base address.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLBAR          LBA           LL_DMA_GetLinkedListBaseAddr
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Value between 0 to 0xFFFF0000 (where the 4 LSB bytes are always 0)
- */
-__STATIC_INLINE uint32_t LL_DMA_GetLinkedListBaseAddr(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CLBAR, DMA_CLBAR_LBA));
-}
+	/**
+	 * @brief Get linked-list base address.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLBAR          LBA           LL_DMA_GetLinkedListBaseAddr
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Value between 0 to 0xFFFF0000 (where the 4 LSB bytes are always 0)
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetLinkedListBaseAddr(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CLBAR, DMA_CLBAR_LBA));
+	}
 
-/**
- * @brief Configure all parameters linked to channel control.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, LAP field programming is discarded.
- * @rmtoll CCR         PRIO           LL_DMA_ConfigControl\n
- *         CCR         LAP            LL_DMA_ConfigControl\n
- *         CCR         LSM            LL_DMA_ConfigControl
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Configuration This parameter must be a combination of all the
- *following values:
- *         @arg @ref LL_DMA_LOW_PRIORITY_LOW_WEIGHT  or @ref
- *LL_DMA_LOW_PRIORITY_MID_WEIGHT or
- *              @ref LL_DMA_LOW_PRIORITY_HIGH_WEIGHT or @ref
- *LL_DMA_HIGH_PRIORITY
- *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT0     or @ref
- *LL_DMA_LINK_ALLOCATED_PORT1
- *         @arg @ref LL_DMA_LSM_FULL_EXECUTION       or @ref
- *LL_DMA_LSM_1LINK_EXECUTION
- *@retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigControl(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, (DMA_CCR_PRIO | DMA_CCR_LAP | DMA_CCR_LSM), Configuration);
-}
+	/**
+	 * @brief Configure all parameters linked to channel control.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, LAP field programming is discarded.
+	 * @rmtoll CCR         PRIO           LL_DMA_ConfigControl\n
+	 *         CCR         LAP            LL_DMA_ConfigControl\n
+	 *         CCR         LSM            LL_DMA_ConfigControl
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Configuration This parameter must be a combination of all the
+	 *following values:
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_LOW_WEIGHT  or @ref
+	 *LL_DMA_LOW_PRIORITY_MID_WEIGHT or
+	 *              @ref LL_DMA_LOW_PRIORITY_HIGH_WEIGHT or @ref
+	 *LL_DMA_HIGH_PRIORITY
+	 *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT0     or @ref
+	 *LL_DMA_LINK_ALLOCATED_PORT1
+	 *         @arg @ref LL_DMA_LSM_FULL_EXECUTION       or @ref
+	 *LL_DMA_LSM_1LINK_EXECUTION
+	 *@retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigControl(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, (DMA_CCR_PRIO | DMA_CCR_LAP | DMA_CCR_LSM), Configuration);
+	}
 
-/**
- * @brief Set priority level.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          PRIO           LL_DMA_SetChannelPriorityLevel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Priority This parameter can be one of the following values:
- *         @arg @ref LL_DMA_LOW_PRIORITY_LOW_WEIGHT
- *         @arg @ref LL_DMA_LOW_PRIORITY_MID_WEIGHT
- *         @arg @ref LL_DMA_LOW_PRIORITY_HIGH_WEIGHT
- *         @arg @ref LL_DMA_HIGH_PRIORITY
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetChannelPriorityLevel(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Priority)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_PRIO, Priority);
-}
+	/**
+	 * @brief Set priority level.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          PRIO           LL_DMA_SetChannelPriorityLevel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Priority This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_LOW_WEIGHT
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_MID_WEIGHT
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_HIGH_WEIGHT
+	 *         @arg @ref LL_DMA_HIGH_PRIORITY
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetChannelPriorityLevel(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Priority)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_PRIO, Priority);
+	}
 
-/**
- * @brief Get Channel priority level.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          PRIO           LL_DMA_GetChannelPriorityLevel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_LOW_PRIORITY_LOW_WEIGHT
- *         @arg @ref LL_DMA_LOW_PRIORITY_MID_WEIGHT
- *         @arg @ref LL_DMA_LOW_PRIORITY_HIGH_WEIGHT
- *         @arg @ref LL_DMA_HIGH_PRIORITY
- */
-__STATIC_INLINE uint32_t LL_DMA_GetChannelPriorityLevel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_PRIO));
-}
+	/**
+	 * @brief Get Channel priority level.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          PRIO           LL_DMA_GetChannelPriorityLevel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_LOW_WEIGHT
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_MID_WEIGHT
+	 *         @arg @ref LL_DMA_LOW_PRIORITY_HIGH_WEIGHT
+	 *         @arg @ref LL_DMA_HIGH_PRIORITY
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetChannelPriorityLevel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_PRIO));
+	}
 
-/**
- * @brief Set linked-list allocated port.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CCR          LAP           LL_DMA_SetLinkAllocatedPort
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  LinkAllocatedPort This parameter can be one of the following values:
- *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT0
- *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT1
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetLinkAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkAllocatedPort)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LAP, LinkAllocatedPort);
-}
+	/**
+	 * @brief Set linked-list allocated port.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CCR          LAP           LL_DMA_SetLinkAllocatedPort
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  LinkAllocatedPort This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT0
+	 *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT1
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetLinkAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkAllocatedPort)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LAP, LinkAllocatedPort);
+	}
 
-/**
- * @brief Get linked-list allocated port.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CCR          LAP           LL_DMA_GetLinkAllocatedPort
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT0
- *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT1
- */
-__STATIC_INLINE uint32_t LL_DMA_GetLinkAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LAP));
-}
+	/**
+	 * @brief Get linked-list allocated port.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CCR          LAP           LL_DMA_GetLinkAllocatedPort
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT0
+	 *         @arg @ref LL_DMA_LINK_ALLOCATED_PORT1
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetLinkAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LAP));
+	}
 
-/**
- * @brief Set link step mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          LSM           LL_DMA_SetLinkStepMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  LinkStepMode This parameter can be one of the following values:
- *         @arg @ref LL_DMA_LSM_FULL_EXECUTION
- *         @arg @ref LL_DMA_LSM_1LINK_EXECUTION
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetLinkStepMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkStepMode)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LSM, LinkStepMode);
-}
+	/**
+	 * @brief Set link step mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          LSM           LL_DMA_SetLinkStepMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  LinkStepMode This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_LSM_FULL_EXECUTION
+	 *         @arg @ref LL_DMA_LSM_1LINK_EXECUTION
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetLinkStepMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkStepMode)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LSM, LinkStepMode);
+	}
 
-/**
- * @brief Get Link step mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR          LSM           LL_DMA_GetLinkStepMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_LSM_FULL_EXECUTION
- *         @arg @ref LL_DMA_LSM_1LINK_EXECUTION
- */
-__STATIC_INLINE uint32_t LL_DMA_GetLinkStepMode(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LSM));
-}
+	/**
+	 * @brief Get Link step mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR          LSM           LL_DMA_GetLinkStepMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_LSM_FULL_EXECUTION
+	 *         @arg @ref LL_DMA_LSM_1LINK_EXECUTION
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetLinkStepMode(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CCR, DMA_CCR_LSM));
+	}
 
-/**
- * @brief Configure data transfer.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels DAP, DHX, DBX, SAP, SBX fields programming is
- *        discarded.
- * @rmtoll CTR1          DAP           LL_DMA_ConfigTransfer\n
- *         CTR1          DHX           LL_DMA_ConfigTransfer\n
- *         CTR1          DBX           LL_DMA_ConfigTransfer\n
- *         CTR1          DINC          LL_DMA_ConfigTransfer\n
- *         CTR1          SAP           LL_DMA_ConfigTransfer\n
- *         CTR1          SBX           LL_DMA_ConfigTransfer\n
- *         CTR1          PAM           LL_DMA_ConfigTransfer\n
- *         CTR1          SINC          LL_DMA_ConfigTransfer
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Configuration This parameter must be a combination of all the
- *following values:
- *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT0     or @ref
- *LL_DMA_DEST_ALLOCATED_PORT1
- *         @arg @ref LL_DMA_DEST_HALFWORD_PRESERVE   or @ref
- *LL_DMA_DEST_HALFWORD_EXCHANGE
- *         @arg @ref LL_DMA_DEST_BYTE_PRESERVE       or @ref
- *LL_DMA_DEST_BYTE_EXCHANGE
- *         @arg @ref LL_DMA_SRC_BYTE_PRESERVE        or @ref
- *LL_DMA_SRC_BYTE_EXCHANGE
- *         @arg @ref LL_DMA_DEST_FIXED               or @ref
- *LL_DMA_DEST_INCREMENT
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_BYTE      or @ref
- *LL_DMA_DEST_DATAWIDTH_HALFWORD or
- *              @ref LL_DMA_DEST_DATAWIDTH_WORD
- *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT0      or @ref
- *LL_DMA_SRC_ALLOCATED_PORT1
- *         @arg @ref LL_DMA_DATA_ALIGN_ZEROPADD      or @ref
- *LL_DMA_DATA_ALIGN_SIGNEXTPADD  or
- *              @ref LL_DMA_DATA_PACK_UNPACK
- *         @arg @ref LL_DMA_SRC_FIXED                or @ref
- *LL_DMA_SRC_INCREMENT
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_BYTE       or @ref
- *LL_DMA_SRC_DATAWIDTH_HALFWORD  or
- *              @ref LL_DMA_SRC_DATAWIDTH_WORD
- *@retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigTransfer(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR1,
-		   DMA_CTR1_DAP | DMA_CTR1_DHX | DMA_CTR1_DBX | DMA_CTR1_SBX | DMA_CTR1_DINC | DMA_CTR1_SINC | DMA_CTR1_SAP | DMA_CTR1_PAM | DMA_CTR1_DDW_LOG2 | DMA_CTR1_SDW_LOG2, Configuration);
-}
+	/**
+	 * @brief Configure data transfer.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels DAP, DHX, DBX, SAP, SBX fields programming is
+	 *        discarded.
+	 * @rmtoll CTR1          DAP           LL_DMA_ConfigTransfer\n
+	 *         CTR1          DHX           LL_DMA_ConfigTransfer\n
+	 *         CTR1          DBX           LL_DMA_ConfigTransfer\n
+	 *         CTR1          DINC          LL_DMA_ConfigTransfer\n
+	 *         CTR1          SAP           LL_DMA_ConfigTransfer\n
+	 *         CTR1          SBX           LL_DMA_ConfigTransfer\n
+	 *         CTR1          PAM           LL_DMA_ConfigTransfer\n
+	 *         CTR1          SINC          LL_DMA_ConfigTransfer
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Configuration This parameter must be a combination of all the
+	 *following values:
+	 *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT0     or @ref
+	 *LL_DMA_DEST_ALLOCATED_PORT1
+	 *         @arg @ref LL_DMA_DEST_HALFWORD_PRESERVE   or @ref
+	 *LL_DMA_DEST_HALFWORD_EXCHANGE
+	 *         @arg @ref LL_DMA_DEST_BYTE_PRESERVE       or @ref
+	 *LL_DMA_DEST_BYTE_EXCHANGE
+	 *         @arg @ref LL_DMA_SRC_BYTE_PRESERVE        or @ref
+	 *LL_DMA_SRC_BYTE_EXCHANGE
+	 *         @arg @ref LL_DMA_DEST_FIXED               or @ref
+	 *LL_DMA_DEST_INCREMENT
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_BYTE      or @ref
+	 *LL_DMA_DEST_DATAWIDTH_HALFWORD or
+	 *              @ref LL_DMA_DEST_DATAWIDTH_WORD
+	 *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT0      or @ref
+	 *LL_DMA_SRC_ALLOCATED_PORT1
+	 *         @arg @ref LL_DMA_DATA_ALIGN_ZEROPADD      or @ref
+	 *LL_DMA_DATA_ALIGN_SIGNEXTPADD  or
+	 *              @ref LL_DMA_DATA_PACK_UNPACK
+	 *         @arg @ref LL_DMA_SRC_FIXED                or @ref
+	 *LL_DMA_SRC_INCREMENT
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_BYTE       or @ref
+	 *LL_DMA_SRC_DATAWIDTH_HALFWORD  or
+	 *              @ref LL_DMA_SRC_DATAWIDTH_WORD
+	 *@retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigTransfer(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR1,
+			   DMA_CTR1_DAP | DMA_CTR1_DHX | DMA_CTR1_DBX | DMA_CTR1_SBX | DMA_CTR1_DINC | DMA_CTR1_SINC | DMA_CTR1_SAP | DMA_CTR1_PAM | DMA_CTR1_DDW_LOG2 | DMA_CTR1_SDW_LOG2,
+			   Configuration);
+	}
 
-/**
- * @brief Configure source and destination burst length.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DBL_1           LL_DMA_SetDestBurstLength\n
- * @rmtoll CTR1          SBL_1           LL_DMA_SetDestBurstLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcBurstLength Between 1 to 64
- * @param  DestBurstLength Between 1 to 64
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcBurstLength, uint32_t DestBurstLength)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR1, (DMA_CTR1_SBL_1 | DMA_CTR1_DBL_1),
-		   (((SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1) | (((DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1));
-}
-
-#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/**
- * @brief Configure all secure parameters linked to DMA channel.
- * @note  This API is used for all available DMA channels.
- * @rmtoll SECCFGR       SEC            LL_DMA_ConfigChannelSecure\n
- * @rmtoll CTR1          SSEC           LL_DMA_ConfigChannelSecure\n
- * @rmtoll CTR1          DSEC           LL_DMA_ConfigChannelSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Configuration This parameter must be a combination of all the
- * following values:
- *         @arg @ref LL_DMA_CHANNEL_NSEC      or @ref LL_DMA_CHANNEL_SEC
- *         @arg @ref LL_DMA_CHANNEL_SRC_NSEC  or @ref LL_DMA_CHANNEL_SRC_SEC
- *         @arg @ref LL_DMA_CHANNEL_DEST_NSEC or @ref LL_DMA_CHANNEL_DEST_SEC
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigChannelSecure(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << Channel), ((Configuration & LL_DMA_CHANNEL_SEC) << Channel));
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, (DMA_CTR1_SSEC | DMA_CTR1_DSEC), (Configuration & (~LL_DMA_CHANNEL_SEC)));
-}
-
-/**
- * @brief Enable security attribute of the DMA transfer to the destination.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          DSEC           LL_DMA_EnableChannelDestSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableChannelDestSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DSEC);
-}
-
-/**
- * @brief Disable security attribute of the DMA transfer to the destination.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          DSEC           LL_DMA_DisableChannelDestSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableChannelDestSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DSEC);
-}
-#endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-
-/**
- * @brief Check security attribute of the DMA transfer to the destination.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          DSEC           LL_DMA_IsEnabledChannelDestSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelDestSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DSEC) == (DMA_CTR1_DSEC)) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Configure source and destination burst length.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DBL_1           LL_DMA_SetDestBurstLength\n
+	 * @rmtoll CTR1          SBL_1           LL_DMA_SetDestBurstLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcBurstLength Between 1 to 64
+	 * @param  DestBurstLength Between 1 to 64
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcBurstLength, uint32_t DestBurstLength)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR1, (DMA_CTR1_SBL_1 | DMA_CTR1_DBL_1),
+			   (((SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1) | (((DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1));
+	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/**
- * @brief Enable security attribute of the DMA transfer from the source.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SSEC           LL_DMA_EnableChannelSrcSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableChannelSrcSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SSEC);
-}
+	/**
+	 * @brief Configure all secure parameters linked to DMA channel.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll SECCFGR       SEC            LL_DMA_ConfigChannelSecure\n
+	 * @rmtoll CTR1          SSEC           LL_DMA_ConfigChannelSecure\n
+	 * @rmtoll CTR1          DSEC           LL_DMA_ConfigChannelSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Configuration This parameter must be a combination of all the
+	 * following values:
+	 *         @arg @ref LL_DMA_CHANNEL_NSEC      or @ref LL_DMA_CHANNEL_SEC
+	 *         @arg @ref LL_DMA_CHANNEL_SRC_NSEC  or @ref LL_DMA_CHANNEL_SRC_SEC
+	 *         @arg @ref LL_DMA_CHANNEL_DEST_NSEC or @ref LL_DMA_CHANNEL_DEST_SEC
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigChannelSecure(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << Channel), ((Configuration & LL_DMA_CHANNEL_SEC) << Channel));
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, (DMA_CTR1_SSEC | DMA_CTR1_DSEC), (Configuration & (~LL_DMA_CHANNEL_SEC)));
+	}
 
-/**
- * @brief Disable security attribute of the DMA transfer from the source.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SSEC           LL_DMA_DisableChannelSrcSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableChannelSrcSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SSEC);
-}
+	/**
+	 * @brief Enable security attribute of the DMA transfer to the destination.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          DSEC           LL_DMA_EnableChannelDestSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableChannelDestSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DSEC);
+	}
+
+	/**
+	 * @brief Disable security attribute of the DMA transfer to the destination.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          DSEC           LL_DMA_DisableChannelDestSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableChannelDestSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DSEC);
+	}
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-/**
- * @brief Check security attribute of the DMA transfer from the source.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SSEC           LL_DMA_IsEnabledChannelSrcSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelSrcSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SSEC) == (DMA_CTR1_SSEC)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Set destination allocated port.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DAP           LL_DMA_SetDestAllocatedPort
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestAllocatedPort This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT0
- *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT1
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAllocatedPort)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DAP, DestAllocatedPort);
-}
-
-/**
- * @brief Get destination allocated port.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DAP           LL_DMA_GetDestAllocatedPort
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT0
- *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT1
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DAP));
-}
-
-/**
- * @brief Set destination half-word exchange.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DHX            LL_DMA_SetDestHWordExchange
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestHWordExchange This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DEST_HALFWORD_PRESERVE
- *         @arg @ref LL_DMA_DEST_HALFWORD_EXCHANGE
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestHWordExchange(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestHWordExchange)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DHX, DestHWordExchange);
-}
-
-/**
- * @brief Get destination half-word exchange.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DHX            LL_DMA_GetDestHWordExchange
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DEST_HALFWORD_PRESERVE
- *         @arg @ref LL_DMA_DEST_HALFWORD_EXCHANGE
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestHWordExchange(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DHX));
-}
-
-/**
- * @brief Set destination byte exchange.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DBX            LL_DMA_SetDestByteExchange
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestByteExchange This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DEST_BYTE_PRESERVE
- *         @arg @ref LL_DMA_DEST_BYTE_EXCHANGE
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestByteExchange)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBX, DestByteExchange);
-}
-
-/**
- * @brief Get destination byte exchange.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DBX            LL_DMA_GetDestByteExchange
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DEST_BYTE_PRESERVE
- *         @arg @ref LL_DMA_DEST_BYTE_EXCHANGE
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBX));
-}
-
-/**
- * @brief Set source byte exchange.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          SBX            LL_DMA_SetSrcByteExchange
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcByteExchange This parameter can be one of the following values:
- *         @arg @ref LL_DMA_SRC_BYTE_PRESERVE
- *         @arg @ref LL_DMA_SRC_BYTE_EXCHANGE
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcByteExchange)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBX, SrcByteExchange);
-}
-
-/**
- * @brief Get source byte exchange.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          SBX            LL_DMA_GetSrcByteExchange
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_SRC_BYTE_PRESERVE
- *         @arg @ref LL_DMA_SRC_BYTE_EXCHANGE
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBX));
-}
-
-/**
- * @brief Set destination burst length.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DBL_1           LL_DMA_SetDestBurstLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestBurstLength Between 1 to 64
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestBurstLength)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBL_1, ((DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1);
-}
-
-/**
- * @brief Get destination burst length.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DBL_1           LL_DMA_GetDestBurstLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 1 to 64.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBL_1) >> DMA_CTR1_DBL_1_Pos) + 1U);
-}
-
-/**
- * @brief Set destination increment mode.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          DINC           LL_DMA_SetDestIncMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestInc This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DEST_FIXED
- *         @arg @ref LL_DMA_DEST_INCREMENT
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestIncMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestInc)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DINC, DestInc);
-}
-
-/**
- * @brief Get destination increment mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          DINC           LL_DMA_GetDestIncMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DEST_FIXED
- *         @arg @ref LL_DMA_DEST_INCREMENT
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestIncMode(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DINC));
-}
-
-/**
- * @brief Set destination data width.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          DDW_LOG2           LL_DMA_SetDestDataWidth
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestDataWidth This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_BYTE
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_HALFWORD
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_WORD
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestDataWidth)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DDW_LOG2, DestDataWidth);
-}
-
-/**
- * @brief Get destination data width.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          DDW_LOG2           LL_DMA_GetDestDataWidth
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_BYTE
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_HALFWORD
- *         @arg @ref LL_DMA_DEST_DATAWIDTH_WORD
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DDW_LOG2));
-}
-
-/**
- * @brief Set source allocated port.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          SAP           LL_DMA_SetSrcAllocatedPort
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcAllocatedPort This parameter can be one of the following values:
- *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT0
- *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT1
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAllocatedPort)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SAP, SrcAllocatedPort);
-}
-
-/**
- * @brief Get source allocated port.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          SAP           LL_DMA_GetSrcAllocatedPort
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT0
- *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT1
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SAP));
-}
-
-/**
- * @brief Set data alignment mode.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, PAM field is reduced to one bit.
- * @rmtoll CTR1          PAM           LL_DMA_SetDataAlignment
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DataAlignment This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DATA_ALIGN_ZEROPADD
- *         @arg @ref LL_DMA_DATA_ALIGN_SIGNEXTPADD
- *         @arg @ref LL_DMA_DATA_PACK_UNPACK (This value is not allowed for
- * LPDMA channels)
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDataAlignment(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DataAlignment)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_PAM, DataAlignment);
-}
-
-/**
- * @brief Get data alignment mode.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, PAM field is reduced to one bit.
- * @rmtoll CTR1          PAM           LL_DMA_GetDataAlignment
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DATA_ALIGN_ZEROPADD
- *         @arg @ref LL_DMA_DATA_ALIGN_SIGNEXTPADD
- *         @arg @ref LL_DMA_DATA_PACK_UNPACK (This value is not allowed for
- * LPDMA channels)
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDataAlignment(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_PAM));
-}
-
-/**
- * @brief Set source burst length.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          SBL_1           LL_DMA_SetSrcBurstLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcBurstLength Between 1 to 64
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcBurstLength)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBL_1, ((SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1);
-}
-
-/**
- * @brief Get source burst length.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CTR1          SBL_1           LL_DMA_GetSrcBurstLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 1 to 64
- * @retval None.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBL_1) >> DMA_CTR1_SBL_1_Pos) + 1U);
-}
-
-/**
- * @brief Set source increment mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SINC           LL_DMA_SetSrcIncMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcInc This parameter can be one of the following values:
- *         @arg @ref LL_DMA_SRC_FIXED
- *         @arg @ref LL_DMA_SRC_INCREMENT
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcIncMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcInc)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SINC, SrcInc);
-}
-
-/**
- * @brief Get source increment mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SINC           LL_DMA_GetSrcIncMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_SRC_FIXED
- *         @arg @ref LL_DMA_SRC_INCREMENT
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcIncMode(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SINC));
-}
-
-/**
- * @brief Set source data width.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SDW_LOG2           LL_DMA_SetSrcDataWidth
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcDataWidth This parameter can be one of the following values:
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_BYTE
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_HALFWORD
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_WORD
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcDataWidth)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SDW_LOG2, SrcDataWidth);
-}
-
-/**
- * @brief Get Source Data width.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR1          SDW_LOG2           LL_DMA_GetSrcDataWidth
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_BYTE
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_HALFWORD
- *         @arg @ref LL_DMA_SRC_DATAWIDTH_WORD
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SDW_LOG2));
-}
-
-/**
- * @brief Configure channel transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2        TCEM               LL_DMA_ConfigChannelTransfer\n
- *         CTR2        TRIGPOL            LL_DMA_ConfigChannelTransfer\n
- *         CTR2        TRIGM              LL_DMA_ConfigChannelTransfer\n
- *         CTR2        BREQ               LL_DMA_ConfigChannelTransfer\n
- *         CTR2        DREQ               LL_DMA_ConfigChannelTransfer\n
- *         CTR2        SWREQ              LL_DMA_ConfigChannelTransfer
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Configuration This parameter must be a combination of all the
- *following values:
- *         @arg @ref LL_DMA_TCEM_BLK_TRANSFER          or @ref
- *LL_DMA_TCEM_RPT_BLK_TRANSFER      or
- *              @ref LL_DMA_TCEM_EACH_LLITEM_TRANSFER  or @ref
- *LL_DMA_TCEM_LAST_LLITEM_TRANSFER
- *         @arg @ref LL_DMA_HWREQUEST_SINGLEBURST      or @ref
- *LL_DMA_HWREQUEST_BLK
- *         @arg @ref LL_DMA_TRIG_POLARITY_MASKED       or @ref
- *LL_DMA_TRIG_POLARITY_RISING       or
- *              @ref LL_DMA_TRIG_POLARITY_FALLING
- *         @arg @ref LL_DMA_TRIGM_BLK_TRANSFER         or @ref
- *LL_DMA_TRIGM_RPT_BLK_TRANSFER     or
- *              @ref LL_DMA_TRIGM_LLI_LINK_TRANSFER    or @ref
- *LL_DMA_TRIGM_SINGLBURST_TRANSFER
- *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY or @ref
- *LL_DMA_DIRECTION_MEMORY_TO_PERIPH or
- *              @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
- *@retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigChannelTransfer(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2,
-		   (DMA_CTR2_TCEM | DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGM | DMA_CTR2_DREQ | DMA_CTR2_SWREQ | DMA_CTR2_BREQ), Configuration);
-}
-
-/**
- * @brief Set transfer event mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          TCEM           LL_DMA_SetTransferEventMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  TransferEventMode This parameter can be one of the following values:
- *         @arg @ref LL_DMA_TCEM_BLK_TRANSFER
- *         @arg @ref LL_DMA_TCEM_RPT_BLK_TRANSFER
- *         @arg @ref LL_DMA_TCEM_EACH_LLITEM_TRANSFER
- *         @arg @ref LL_DMA_TCEM_LAST_LLITEM_TRANSFER
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetTransferEventMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t TransferEventMode)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TCEM, TransferEventMode);
-}
-
-/**
- * @brief Get transfer event mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          TCEM           LL_DMA_GetTransferEventMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_TCEM_BLK_TRANSFER
- *         @arg @ref LL_DMA_TCEM_RPT_BLK_TRANSFER
- *         @arg @ref LL_DMA_TCEM_EACH_LLITEM_TRANSFER
- *         @arg @ref LL_DMA_TCEM_LAST_LLITEM_TRANSFER
- */
-__STATIC_INLINE uint32_t LL_DMA_GetTransferEventMode(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_TCEM));
-}
-
-/**
- * @brief Set trigger polarity.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          TRIGPOL            LL_DMA_SetTriggerPolarity
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  TriggerPolarity This parameter can be one of the following values:
- *         @arg @ref LL_DMA_TRIG_POLARITY_MASKED
- *         @arg @ref LL_DMA_TRIG_POLARITY_RISING
- *         @arg @ref LL_DMA_TRIG_POLARITY_FALLING
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetTriggerPolarity(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t TriggerPolarity)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_TRIGPOL, TriggerPolarity);
-}
-
-/**
- * @brief Get trigger polarity.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          TRIGPOL            LL_DMA_GetTriggerPolarity
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_TRIG_POLARITY_MASKED
- *         @arg @ref LL_DMA_TRIG_POLARITY_RISING
- *         @arg @ref LL_DMA_TRIG_POLARITY_FALLING
- */
-__STATIC_INLINE uint32_t LL_DMA_GetTriggerPolarity(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGPOL));
-}
-
-/**
- * @brief Set trigger Mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          TRIGM            LL_DMA_SetTriggerMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  TriggerMode This parameter can be one of the following values:
- *         @arg @ref LL_DMA_TRIGM_BLK_TRANSFER
- *         @arg @ref LL_DMA_TRIGM_RPT_BLK_TRANSFER (This value is allowed only
- * for 2D addressing channels)
- *         @arg @ref LL_DMA_TRIGM_LLI_LINK_TRANSFER
- *         @arg @ref LL_DMA_TRIGM_SINGLBURST_TRANSFER
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetTriggerMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t TriggerMode)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGM, TriggerMode);
-}
-
-/**
- * @brief Get trigger Mode.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          TRIGM            LL_DMA_GetTriggerMode
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_TRIGM_BLK_TRANSFER
- *         @arg @ref LL_DMA_TRIGM_RPT_BLK_TRANSFER (This value is allowed only
- * for 2D addressing channels)
- *         @arg @ref LL_DMA_TRIGM_LLI_LINK_TRANSFER
- *         @arg @ref LL_DMA_TRIGM_SINGLBURST_TRANSFER
- */
-__STATIC_INLINE uint32_t LL_DMA_GetTriggerMode(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_TRIGM));
-}
-
-/**
- * @brief Set destination hardware and software transfer request.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          DREQ           LL_DMA_SetDataTransferDirection\n
- * @rmtoll CTR2          SWREQ          LL_DMA_SetDataTransferDirection
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Direction This parameter can be one of the following values:
- *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
- *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH (This value is not
- * allowed for LPDMA channels)
- *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY (This value is not
- * allowed for LPDMA channels)
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDataTransferDirection(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Direction)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_DREQ | DMA_CTR2_SWREQ, Direction);
-}
-
-/**
- * @brief Get destination hardware and software transfer request.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, DREQ fields programming is discarded.
- * @rmtoll CTR2          DREQ           LL_DMA_GetDataTransferDirection\n
- * @rmtoll CTR2          SWREQ          LL_DMA_GetDataTransferDirection
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
- *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH (This value is not
- * allowed for LPDMA channels)
- *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY (This value is not
- * allowed for LPDMA channels)
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDataTransferDirection(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_DREQ | DMA_CTR2_SWREQ));
-}
-
-/**
- * @brief Set block hardware request.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          BREQ           LL_DMA_SetBlkHWRequest\n
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkHWRequest This parameter can be one of the following values:
- *         @arg @ref LL_DMA_HWREQUEST_SINGLEBURST
- *         @arg @ref LL_DMA_HWREQUEST_BLK
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkHWRequest)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_BREQ, BlkHWRequest);
-}
-
-/**
- * @brief Get block hardware request.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CTR2          BREQ           LL_DMA_GetBlkHWRequest\n
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_HWREQUEST_SINGLEBURST
- *         @arg @ref LL_DMA_HWREQUEST_BLK
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_BREQ));
-}
-
-/**
- * @brief Set hardware request.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, REQSEL fields is reduced to 5 bits.
- * @rmtoll CTR2         REQSEL     LL_DMA_SetPeriphRequest
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Request This parameter can be one of the following values:
- *         @arg @ref LL_GPDMA1_REQUEST_ADC1
- *         @arg @ref LL_GPDMA1_REQUEST_ADC4
- *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM6_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM7_UP
- *         @arg @ref LL_GPDMA1_REQUEST_SPI1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI2_RX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI2_TX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI3_RX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI3_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C1_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_I2C2_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C2_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C2_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_I2C4_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C4_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C4_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_USART1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_USART1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_USART2_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART2_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART3_RX
- *         @arg @ref LL_GPDMA1_REQUEST_USART3_TX
- *         @arg @ref LL_GPDMA1_REQUEST_UART4_RX
- *         @arg @ref LL_GPDMA1_REQUEST_UART4_TX
- *         @arg @ref LL_GPDMA1_REQUEST_UART5_RX
- *         @arg @ref LL_GPDMA1_REQUEST_UART5_TX
- *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A
- *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B
- *         @arg @ref LL_GPDMA1_REQUEST_SAI2_A (*)
- *         @arg @ref LL_GPDMA1_REQUEST_SAI2_B (*)
- *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI1
- *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI2 (*)
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_COM
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_COM
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_COM
- *         @arg @ref LL_GPDMA1_REQUEST_TIM16_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM16_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM17_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM17_UP
- *         @arg @ref LL_GPDMA1_REQUEST_DCMI_PSSI
- *         @arg @ref LL_GPDMA1_REQUEST_AES_IN
- *         @arg @ref LL_GPDMA1_REQUEST_AES_OUT
- *         @arg @ref LL_GPDMA1_REQUEST_HASH_IN
- *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT0
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT1
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT2
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT3
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT4
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT5
- *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0
- *         @arg @ref LL_GPDMA1_REQUEST_FMAC_READ
- *         @arg @ref LL_GPDMA1_REQUEST_FMAC_WRITE
- *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_READ
- *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_WRITE
- *         @arg @ref LL_GPDMA1_REQUEST_SAES_IN
- *         @arg @ref LL_GPDMA1_REQUEST_SAES_OUT
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC1
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC2
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_UE
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC1
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC2
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_UE
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC1
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC2
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_UE
- *         @arg @ref LL_GPDMA1_REQUEST_HSPI1 (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C5_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C5_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C5_EVC (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C6_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C6_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C6_EVC (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART6_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART6_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_ADC2 (*)
- *         @arg @ref LL_GPDMA1_REQUEST_JPEG_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_JPEG_TX (*)
- *
- *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_RX
- *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_TX
- *         @arg @ref LL_LPDMA1_REQUEST_SPI3_RX
- *         @arg @ref LL_LPDMA1_REQUEST_SPI3_TX
- *         @arg @ref LL_LPDMA1_REQUEST_I2C3_RX
- *         @arg @ref LL_LPDMA1_REQUEST_I2C3_TX
- *         @arg @ref LL_LPDMA1_REQUEST_I2C3_EVC
- *         @arg @ref LL_LPDMA1_REQUEST_ADC4
- *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH1
- *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH2
- *         @arg @ref LL_LPDMA1_REQUEST_ADF1_FLT0
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC1
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC2
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_UE
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC1
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC2
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_UE
- *
- * @note   (*) Availability depends on devices.
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Request)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_REQSEL, Request);
-}
-
-/**
- * @brief  Get hardware request.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, REQSEL fields is reduced to 5 bits.
- * @rmtoll CTR2         REQSEL     LL_DMA_GetPeriphRequest
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_GPDMA1_REQUEST_ADC1
- *         @arg @ref LL_GPDMA1_REQUEST_ADC4
- *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM6_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM7_UP
- *         @arg @ref LL_GPDMA1_REQUEST_SPI1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI2_RX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI2_TX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI3_RX
- *         @arg @ref LL_GPDMA1_REQUEST_SPI3_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C1_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_I2C2_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C2_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C2_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_I2C4_RX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C4_TX
- *         @arg @ref LL_GPDMA1_REQUEST_I2C4_EVC
- *         @arg @ref LL_GPDMA1_REQUEST_USART1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_USART1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_USART2_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART2_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART3_RX
- *         @arg @ref LL_GPDMA1_REQUEST_USART3_TX
- *         @arg @ref LL_GPDMA1_REQUEST_UART4_RX
- *         @arg @ref LL_GPDMA1_REQUEST_UART4_TX
- *         @arg @ref LL_GPDMA1_REQUEST_UART5_RX
- *         @arg @ref LL_GPDMA1_REQUEST_UART5_TX
- *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_RX
- *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_TX
- *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A
- *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B
- *         @arg @ref LL_GPDMA1_REQUEST_SAI2_A (*)
- *         @arg @ref LL_GPDMA1_REQUEST_SAI2_B (*)
- *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI1
- *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI2 (*)
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM1_COM
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM8_COM
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM2_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM3_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM4_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH2
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH3
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH4
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM5_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_TRIG
- *         @arg @ref LL_GPDMA1_REQUEST_TIM15_COM
- *         @arg @ref LL_GPDMA1_REQUEST_TIM16_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM16_UP
- *         @arg @ref LL_GPDMA1_REQUEST_TIM17_CH1
- *         @arg @ref LL_GPDMA1_REQUEST_TIM17_UP
- *         @arg @ref LL_GPDMA1_REQUEST_DCMI_PSSI
- *         @arg @ref LL_GPDMA1_REQUEST_AES_IN
- *         @arg @ref LL_GPDMA1_REQUEST_AES_OUT
- *         @arg @ref LL_GPDMA1_REQUEST_HASH_IN
- *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT0
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT1
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT2
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT3
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT4
- *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT5
- *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0
- *         @arg @ref LL_GPDMA1_REQUEST_FMAC_READ
- *         @arg @ref LL_GPDMA1_REQUEST_FMAC_WRITE
- *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_READ
- *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_WRITE
- *         @arg @ref LL_GPDMA1_REQUEST_SAES_IN
- *         @arg @ref LL_GPDMA1_REQUEST_SAES_OUT
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC1
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC2
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_UE
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC1
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC2
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_UE
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC1
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC2
- *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_UE
- *         @arg @ref LL_GPDMA1_REQUEST_HSPI1 (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C5_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C5_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C5_EVC (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C6_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C6_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_I2C6_EVC (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART6_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_USART6_TX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_ADC2 (*)
- *         @arg @ref LL_GPDMA1_REQUEST_JPEG_RX (*)
- *         @arg @ref LL_GPDMA1_REQUEST_JPEG_TX (*)
- *
- *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_RX
- *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_TX
- *         @arg @ref LL_LPDMA1_REQUEST_SPI3_RX
- *         @arg @ref LL_LPDMA1_REQUEST_SPI3_TX
- *         @arg @ref LL_LPDMA1_REQUEST_I2C3_RX
- *         @arg @ref LL_LPDMA1_REQUEST_I2C3_TX
- *         @arg @ref LL_LPDMA1_REQUEST_I2C3_EVC
- *         @arg @ref LL_LPDMA1_REQUEST_ADC4
- *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH1
- *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH2
- *         @arg @ref LL_LPDMA1_REQUEST_ADF1_FLT0
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC1
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC2
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_UE
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC1
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC2
- *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_UE
- *
- * @note   (*) Availability depends on devices.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_REQSEL));
-}
-
-/**
- * @brief Set hardware trigger.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, TRIGSEL fields is reduced to 5 bits.
- * @rmtoll CTR2         TRIGSEL     LL_DMA_SetHWTrigger
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Trigger This parameter can be one of the following values:
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE0
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE1
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE2
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE3
- *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG1
- *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG2
- *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG3
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH1
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH2
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH1
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH2
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM4_OUT
- *         @arg @ref LL_GPDMA1_TRIGGER_COMP1_OUT
- *         @arg @ref LL_GPDMA1_TRIGGER_COMP2_OUT (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRA_TRG
- *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRB_TRG
- *         @arg @ref LL_GPDMA1_TRIGGER_RTC_WUT_TRG
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH0_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH1_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH2_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH3_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH4_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH5_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH6_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH7_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH8_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH9_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH10_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH11_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH12_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH13_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH14_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH15_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH0_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH1_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH2_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH3_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM2_TRGO
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM15_TRGO
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM3_TRGO (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM4_TRGO (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM5_TRGO (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_LTDC_LI (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DSI_TE (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DSI_ER (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TC (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_CTC (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TW (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG0 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG1 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG2 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG3 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_ADC4_AWD1
- *         @arg @ref LL_GPDMA1_TRIGGER_ADC1_AWD1
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT3 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT2 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT1 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT0 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_EOC (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFNF (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFT (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFNE (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFT (*)
- *
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE0
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE1
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE2
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE3
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE4
- *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG1
- *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG2
- *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG3
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH1
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH2
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM3_CH1
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM4_OUT
- *         @arg @ref LL_LPDMA1_TRIGGER_COMP1_OUT
- *         @arg @ref LL_LPDMA1_TRIGGER_COMP2_OUT (*)
- *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRA_TRG
- *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRB_TRG
- *         @arg @ref LL_LPDMA1_TRIGGER_RTC_WUT_TRG
- *         @arg @ref LL_LPDMA1_TRIGGER_ADC4_AWD1
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH0_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH1_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH2_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH3_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH0_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH1_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH4_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH5_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH6_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH7_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH12_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH13_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_TIM2_TRGO
- *         @arg @ref LL_LPDMA1_TRIGGER_TIM15_TRGO
- * @note   (*) Availability depends on devices.
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetHWTrigger(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Trigger)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGSEL, (Trigger << DMA_CTR2_TRIGSEL_Pos) & DMA_CTR2_TRIGSEL);
-}
-
-/**
- * @brief Get hardware triggers.
- * @note  This API is used for all available DMA channels.
- *        For LPDMA channels, TRIGSEL fields is reduced to 5 bits.
- * @rmtoll CTR2         TRIGSEL     LL_DMA_GetHWTrigger
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE0
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE1
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE2
- *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE3
- *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG1
- *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG2
- *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG3
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH1
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH2
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH1
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH2
- *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM4_OUT
- *         @arg @ref LL_GPDMA1_TRIGGER_COMP1_OUT
- *         @arg @ref LL_GPDMA1_TRIGGER_COMP2_OUT (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRA_TRG
- *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRB_TRG
- *         @arg @ref LL_GPDMA1_TRIGGER_RTC_WUT_TRG
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH0_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH1_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH2_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH3_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH4_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH5_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH6_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH7_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH8_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH9_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH10_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH11_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH12_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH13_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH14_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH15_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH0_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH1_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH2_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH3_TCF
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM2_TRGO
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM15_TRGO
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM3_TRGO (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM4_TRGO (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_TIM5_TRGO (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_LTDC_LI (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DSI_TE (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DSI_ER (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TC (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_CTC (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TW (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG0 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG1 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG2 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG3 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_ADC4_AWD1
- *         @arg @ref LL_GPDMA1_TRIGGER_ADC1_AWD1
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT3 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT2 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT1 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT0 (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_EOC (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFNF (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFT (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFNE (*)
- *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFT (*)
- *
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE0
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE1
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE2
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE3
- *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE4
- *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG1
- *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG2
- *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG3
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH1
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH2
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM3_CH1
- *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM4_OUT
- *         @arg @ref LL_LPDMA1_TRIGGER_COMP1_OUT
- *         @arg @ref LL_LPDMA1_TRIGGER_COMP2_OUT (*)
- *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRA_TRG
- *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRB_TRG
- *         @arg @ref LL_LPDMA1_TRIGGER_RTC_WUT_TRG
- *         @arg @ref LL_LPDMA1_TRIGGER_ADC4_AWD1
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH0_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH1_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH2_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH3_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH0_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH1_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH4_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH5_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH6_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH7_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH12_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH13_TCF
- *         @arg @ref LL_LPDMA1_TRIGGER_TIM2_TRGO
- *         @arg @ref LL_LPDMA1_TRIGGER_TIM15_TRGO
- * @note   (*) Availability depends on devices.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetHWTrigger(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGSEL) >> DMA_CTR2_TRIGSEL_Pos);
-}
-
-/**
- * @brief Configure addresses update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1         BRDDEC            LL_DMA_ConfigBlkRptAddrUpdate\n
- *         CBR1         BRSDEC            LL_DMA_ConfigBlkRptAddrUpdate\n
- *         CBR1         DDEC              LL_DMA_ConfigBlkRptAddrUpdate\n
- *         CBR1         SDEC              LL_DMA_ConfigBlkRptAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  Configuration This parameter must be a combination of all the
- *following values:
- *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_INCREMENT or @ref
- *LL_DMA_BLKRPT_DEST_ADDR_DECREMENT
- *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_INCREMENT  or @ref
- *LL_DMA_BLKRPT_SRC_ADDR_DECREMENT
- *         @arg @ref LL_DMA_BURST_DEST_ADDR_INCREMENT  or @ref
- *LL_DMA_BURST_DEST_ADDR_DECREMENT
- *         @arg @ref LL_DMA_BURST_SRC_ADDR_INCREMENT   or @ref
- *LL_DMA_BURST_SRC_ADDR_DECREMENT
- *@retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigBlkRptAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRDDEC | DMA_CBR1_BRSDEC | DMA_CBR1_DDEC | DMA_CBR1_SDEC,
-		   Configuration);
-}
-
-/**
-  * @brief Configure DMA Block number of data and repeat Count.
-  * @note  This API is used only for 2D addressing channels.
-  * @rmtoll CBR1         BNDT                     LL_DMA_ConfigBlkCounters\n
-  *         CBR1         BRC                      LL_DMA_ConfigBlkCounters
-  * @param  DMAx DMAx Instance
-  * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_12
-  *         @arg @ref LL_DMA_CHANNEL_13
-  *         @arg @ref LL_DMA_CHANNEL_14
-  *         @arg @ref LL_DMA_CHANNEL_15
-  * @param  BlkDataLength Block transfer length
-			  Value between 0 to 0x0000FFFF
-  * @param  BlkRptCount Block repeat counter
-  *                     Value between 0 to 0x000007FF
-  *@retval None.
-  */
-__STATIC_INLINE void LL_DMA_ConfigBlkCounters(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkDataLength, uint32_t BlkRptCount)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, (DMA_CBR1_BNDT | DMA_CBR1_BRC),
-		   (BlkDataLength | (BlkRptCount << DMA_CBR1_BRC_Pos)));
-}
-
-/**
- * @brief Set block repeat destination address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          BRDDEC           LL_DMA_SetBlkRptDestAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkRptDestAddrUpdate This parameter can be one of the following
- * values:
- *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_DECREMENT
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkRptDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptDestAddrUpdate)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRDDEC, BlkRptDestAddrUpdate);
-}
-
-/**
- * @brief Get block repeat destination address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          BRDDEC           LL_DMA_GetBlkRptDestAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_DECREMENT
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkRptDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRDDEC));
-}
-
-/**
- * @brief Set block repeat source address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          BRSDEC           LL_DMA_SetBlkRptSrcAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkRptSrcAddrUpdate This parameter can be one of the following
- * values:
- *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_DECREMENT
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkRptSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptSrcAddrUpdate)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRSDEC, BlkRptSrcAddrUpdate);
-}
-
-/**
- * @brief Get block repeat source address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          BRSDEC           LL_DMA_GetBlkRptSrcAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_DECREMENT
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkRptSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRSDEC));
-}
-
-/**
- * @brief Set destination address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          DDEC           LL_DMA_SetDestAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestAddrUpdate This parameter can be one of the following values:
- *         @arg @ref LL_DMA_BURST_DEST_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BURST_DEST_ADDR_DECREMENT
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAddrUpdate)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_DDEC, DestAddrUpdate);
-}
-
-/**
- * @brief Get destination address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          DDEC           LL_DMA_GetDestAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_BURST_DEST_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BURST_DEST_ADDR_DECREMENT
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_DDEC));
-}
-
-/**
- * @brief Set source address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          SDEC           LL_DMA_SetSrcAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcAddrUpdate This parameter can be one of the following values:
- *         @arg @ref LL_DMA_BURST_SRC_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BURST_SRC_ADDR_DECREMENT
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddrUpdate)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_SDEC, SrcAddrUpdate);
-}
-
-/**
- * @brief Get source address update.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1          SDEC           LL_DMA_GetSrcAddrUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Returned value can be one of the following values:
- *         @arg @ref LL_DMA_BURST_SRC_ADDR_INCREMENT
- *         @arg @ref LL_DMA_BURST_SRC_ADDR_DECREMENT
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_SDEC));
-}
-
-/**
- * @brief Set block repeat count.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1        BRC            LL_DMA_SetBlkRptCount
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkRptCount Block repeat counter
- *                     Value between 0 to 0x000007FF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkRptCount(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptCount)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRC, (BlkRptCount << DMA_CBR1_BRC_Pos) & DMA_CBR1_BRC);
-}
-
-/**
- * @brief Get block repeat count.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR1        BRC            LL_DMA_GetBlkRptCount
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x000007FF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkRptCount(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRC) >> DMA_CBR1_BRC_Pos);
-}
-
-/**
- * @brief  Set block data length in bytes to transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CBR1        BNDT         LL_DMA_SetBlkDataLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkDataLength Between 0 to 0x0000FFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkDataLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkDataLength)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BNDT, BlkDataLength);
-}
-
-/**
- * @brief  Get block data length in bytes to transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CBR1        BNDT         LL_DMA_GetBlkDataLength
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x0000FFFF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkDataLength(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BNDT));
-}
-
-/**
- * @brief Configure the source and destination addresses.
- * @note  This API is used for all available DMA channels.
- * @note   This API must not be called when the DMA Channel is enabled.
- * @rmtoll CSAR        SA          LL_DMA_ConfigAddresses\n
- *         CDAR        DA          LL_DMA_ConfigAddresses
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcAddress Between 0 to 0xFFFFFFFF
- * @param  DestAddress Between 0 to 0xFFFFFFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigAddresses(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddress, uint32_t DestAddress)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSAR, SrcAddress);
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CDAR, DestAddress);
-}
-
-/**
- * @brief Set source address.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSAR        SA         LL_DMA_SetSrcAddress
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcAddress Between 0 to 0xFFFFFFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcAddress(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddress)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSAR, SrcAddress);
-}
-
-/**
- * @brief  Get source address.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSAR        SA         LL_DMA_GetSrcAddress
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0xFFFFFFFF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcAddress(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSAR));
-}
-
-/**
- * @brief  Set destination address.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CDAR        DA         LL_DMA_SetDestAddress
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestAddress Between 0 to 0xFFFFFFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestAddress(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAddress)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CDAR, DestAddress);
-}
-
-/**
- * @brief  Get destination address.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CDAR        DA         LL_DMA_GetDestAddress
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0xFFFFFFFF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestAddress(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CDAR));
-}
-
-/**
- * @brief Configure source and destination addresses offset.
- * @note  This API is used only for 2D addressing channels.
- * @note   This API must not be called when the DMA Channel is enabled.
- * @rmtoll CTR3        DAO          LL_DMA_ConfigAddrUpdateValue\n
- *         CTR3        SAO          LL_DMA_ConfigAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestAddrOffset Between 0 to 0x00001FFF
- * @param  SrcAddrOffset Between 0 to 0x00001FFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddrOffset, uint32_t DestAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3,
-		  (SrcAddrOffset & DMA_CTR3_SAO) | ((DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO));
-}
-
-/**
- * @brief Set destination address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CTR3       DAO         LL_DMA_SetDestAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  DestAddrOffset Between 0 to 0x00001FFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_DAO, ((DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO));
-}
-
-/**
- * @brief Get destination address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CDAR        DAO         LL_DMA_GetDestAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x00001FFF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_DAO) >> DMA_CTR3_DAO_Pos);
-}
-
-/**
- * @brief Set source address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CTR3        SAO         LL_DMA_SetSrcAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  SrcAddrOffset Between 0 to 0x00001FFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_SAO, SrcAddrOffset & DMA_CTR3_SAO);
-}
-
-/**
- * @brief Get source address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CTR3        SAO         LL_DMA_GetSrcAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x00001FFF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_SAO));
-}
-
-/**
- * @brief Configure the block repeated source and destination addresses offset.
- * @note  This API is used only for 2D addressing channels.
- * @note   This API must not be called when the DMA Channel is enabled.
- * @rmtoll CBR2        BRDAO          LL_DMA_ConfigBlkRptAddrUpdateValue\n
- *         CBR2        BRSAO          LL_DMA_ConfigBlkRptAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkRptDestAddrOffset Between 0 to 0x0000FFFF
- * @param  BlkRptSrcAddrOffset Between 0 to 0x0000FFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigBlkRptAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptSrcAddrOffset, uint32_t BlkRptDestAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2,
-		  ((BlkRptDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO) | (BlkRptSrcAddrOffset & DMA_CBR2_BRSAO));
-}
-
-/**
- * @brief Set block repeated destination address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR2       BRDAO         LL_DMA_SetBlkRptDestAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkRptDestAddrOffset Between 0 to 0x0000FFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkRptDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptDestAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRDAO,
-		   ((BlkRptDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO));
-}
-
-/**
- * @brief Get block repeated destination address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR2        BRDAO         LL_DMA_GetBlkRptDestAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x0000FFFF.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkRptDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRDAO) >> DMA_CBR2_BRDAO_Pos);
-}
-
-/**
- * @brief Set block repeated source address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR2        BRSAO         LL_DMA_SetBlkRptSrcAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  BlkRptSrcAddrOffset Between 0 to 0x0000FFFF
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetBlkRptSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptSrcAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRSAO, BlkRptSrcAddrOffset);
-}
-
-/**
- * @brief Get block repeated source address offset.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CBR2        BRSAO         LL_DMA_GetBlkRptSrcAddrUpdateValue
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x0000FFFF
- */
-__STATIC_INLINE uint32_t LL_DMA_GetBlkRptSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRSAO));
-}
-
-/**
- * @brief Configure registers update and node address offset during the link
- * transfer.
- * @note  This API is used for all available DMA channels.
- *        For linear addressing channels, UT3 and UB2 fields are discarded.
- * @rmtoll CLLR          UT1            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          UT2            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          UB1            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          USA            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          UDA            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          UT3            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          UB2            LL_DMA_ConfigLinkUpdate\n
- * @rmtoll CLLR          ULL            LL_DMA_ConfigLinkUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  RegistersUpdate This parameter must be a combination of all the
- * following values:
- *         @arg @ref LL_DMA_UPDATE_CTR1
- *         @arg @ref LL_DMA_UPDATE_CTR2
- *         @arg @ref LL_DMA_UPDATE_CBR1
- *         @arg @ref LL_DMA_UPDATE_CSAR
- *         @arg @ref LL_DMA_UPDATE_CDAR
- *         @arg @ref LL_DMA_UPDATE_CTR3  (This value is allowed only for 2D
- * addressing channels)
- *         @arg @ref LL_DMA_UPDATE_CBR2  (This value is allowed only for 2D
- * addressing channels)
- *         @arg @ref LL_DMA_UPDATE_CLLR
- * @param  LinkedListAddrOffset Between 0 to 0x0000FFFC by increment of 4 Bytes.
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ConfigLinkUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t RegistersUpdate, uint32_t LinkedListAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR,
-		   (DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_UT3 | DMA_CLLR_UB2 | DMA_CLLR_ULL | DMA_CLLR_LA),
-		   (RegistersUpdate | (LinkedListAddrOffset & DMA_CLLR_LA)));
-}
-
-/**
- * @brief Enable CTR1 update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UT1            LL_DMA_EnableCTR1Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCTR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT1);
-}
-
-/**
- * @brief Disable CTR1 update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UT1            LL_DMA_DisableCTR1Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCTR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT1);
-}
-
-/**
- * @brief Check if CTR1 update during the link transfer is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UT1            LL_DMA_IsEnabledCTR1Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCTR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT1) == (DMA_CLLR_UT1)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CTR2 update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UT2            LL_DMA_EnableCTR2Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCTR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT2);
-}
-
-/**
- * @brief Disable CTR2 update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UT2            LL_DMA_DisableCTR2Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCTR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT2);
-}
-
-/**
- * @brief Check if CTR2 update during the link transfer is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UT2            LL_DMA_IsEnabledCTR2Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCTR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT2) == (DMA_CLLR_UT2)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CBR1 update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UB1            LL_DMA_EnableCBR1Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCBR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB1);
-}
-
-/**
- * @brief Disable CBR1 update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UB1            LL_DMA_DisableCBR1Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCBR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB1);
-}
-
-/**
- * @brief Check if CBR1 update during the link transfer is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UB1            LL_DMA_IsEnabledCBR1Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCBR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB1) == (DMA_CLLR_UB1)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CSAR update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          USA            LL_DMA_EnableCSARUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCSARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_USA);
-}
-
-/**
- * @brief Disable CSAR update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          USA            LL_DMA_DisableCSARUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCSARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_USA);
-}
-
-/**
- * @brief Check if CSAR update during the link transfer is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          USA            LL_DMA_IsEnabledCSARUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCSARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_USA) == (DMA_CLLR_USA)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CDAR update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UDA            LL_DMA_EnableCDARUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCDARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UDA);
-}
-
-/**
- * @brief Disable CDAR update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UDA            LL_DMA_DisableCDARUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCDARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UDA);
-}
-
-/**
- * @brief Check if CDAR update during the link transfer is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          UDA            LL_DMA_IsEnabledCDARUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCDARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UDA) == (DMA_CLLR_UDA)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CTR3 update during the link transfer.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CLLR          UT3            LL_DMA_EnableCTR3Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCTR3Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT3);
-}
-
-/**
- * @brief Disable CTR3 update during the link transfer.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CLLR          UT3            LL_DMA_DisableCTR3Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCTR3Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT3);
-}
-
-/**
- * @brief Check if CTR3 update during the link transfer is enabled.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CLLR          UT3            LL_DMA_IsEnabledCTR3Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCTR3Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT3) == (DMA_CLLR_UT3)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CBR2 update during the link transfer.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CLLR          UB2            LL_DMA_EnableCBR2Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCBR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB2);
-}
-
-/**
- * @brief Disable CBR2 update during the link transfer.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CLLR          UB2            LL_DMA_DisableCBR2Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCBR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB2);
-}
-
-/**
- * @brief Check if CBR2 update during the link transfer is enabled.
- * @note  This API is used only for 2D addressing channels.
- * @rmtoll CLLR          UB2            LL_DMA_IsEnabledCBR2Update
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCBR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB2) == (DMA_CLLR_UB2)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Enable CLLR update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          ULL            LL_DMA_EnableCLLRUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableCLLRUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_ULL);
-}
-
-/**
- * @brief Disable CLLR update during the link transfer.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          ULL            LL_DMA_DisableCLLRUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableCLLRUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_ULL);
-}
-
-/**
- * @brief Check if CLLR update during the link transfer is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          ULL            LL_DMA_IsEnabledCLLRUpdate
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledCLLRUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_ULL) == (DMA_CLLR_ULL)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Set linked list address offset.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          LA           LL_DMA_SetLinkedListAddrOffset
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @param  LinkedListAddrOffset Between 0 to 0x0000FFFC by increment of 4 Bytes.
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_SetLinkedListAddrOffset(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkedListAddrOffset)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_LA, (LinkedListAddrOffset & DMA_CLLR_LA));
-}
-
-/**
- * @brief Get linked list address offset.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CLLR          LA           LL_DMA_GetLinkedListAddrOffset
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x0000FFFC.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetLinkedListAddrOffset(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_LA) >> DMA_CLLR_LA_Pos);
-}
-
-/**
- * @brief Get FIFO level.
- * @note  This API is not used for LPDMA channels.
- * @rmtoll CSR          FIFOL           LL_DMA_GetFIFOLevel
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval Between 0 to 0x000000FF.
- */
-__STATIC_INLINE uint32_t LL_DMA_GetFIFOLevel(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos);
-}
+	/**
+	 * @brief Check security attribute of the DMA transfer to the destination.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          DSEC           LL_DMA_IsEnabledChannelDestSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelDestSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DSEC) == (DMA_CTR1_DSEC)) ? 1UL : 0UL);
+	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/**
- * @brief Enable the DMA channel secure attribute.
- * @note  This API is used for all available DMA channels.
- * @rmtoll SECCFGR  SECx    LL_DMA_EnableChannelSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableChannelSecure(DMA_TypeDef *DMAx, uint32_t Channel) { SET_BIT(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))); }
+	/**
+	 * @brief Enable security attribute of the DMA transfer from the source.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SSEC           LL_DMA_EnableChannelSrcSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableChannelSrcSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SSEC);
+	}
 
-/**
- * @brief Disable the DMA channel secure attribute.
- * @note  This API is used for all available DMA channels.
- * @rmtoll SECCFGR  SECx    LL_DMA_DisableChannelSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableChannelSecure(DMA_TypeDef *DMAx, uint32_t Channel) { CLEAR_BIT(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))); }
+	/**
+	 * @brief Disable security attribute of the DMA transfer from the source.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SSEC           LL_DMA_DisableChannelSrcSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableChannelSrcSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SSEC);
+	}
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-/**
- * @brief Check if DMA channel secure is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll SECCFGR             SECx          LL_DMA_IsEnabledChannelSecure
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	return ((READ_BIT(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))) == (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Check security attribute of the DMA transfer from the source.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SSEC           LL_DMA_IsEnabledChannelSrcSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelSrcSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SSEC) == (DMA_CTR1_SSEC)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Enable the DMA channel privilege attribute.
- * @note  This API is used for all available DMA channels.
- * @rmtoll PRIVCFGR          PRIVx      LL_DMA_EnableChannelPrivilege
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableChannelPrivilege(DMA_TypeDef *DMAx, uint32_t Channel) { SET_BIT(DMAx->PRIVCFGR, (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))); }
+	/**
+	 * @brief Set destination allocated port.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DAP           LL_DMA_SetDestAllocatedPort
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestAllocatedPort This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT0
+	 *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT1
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAllocatedPort)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DAP, DestAllocatedPort);
+	}
 
-/**
- * @brief Disable the DMA channel privilege attribute.
- * @note  This API is used for all available DMA channels.
- * @rmtoll PRIVCFGR          PRIVx      LL_DMA_DisableChannelPrivilege
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableChannelPrivilege(DMA_TypeDef *DMAx, uint32_t Channel) { CLEAR_BIT(DMAx->PRIVCFGR, (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))); }
+	/**
+	 * @brief Get destination allocated port.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DAP           LL_DMA_GetDestAllocatedPort
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT0
+	 *         @arg @ref LL_DMA_DEST_ALLOCATED_PORT1
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DAP));
+	}
 
-/**
- * @brief Check if DMA Channel privilege is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll PRIVCFGR          PRIVx      LL_DMA_IsEnabledChannelPrivilege
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelPrivilege(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	return ((READ_BIT(DMAx->PRIVCFGR, (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))) == (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Set destination half-word exchange.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DHX            LL_DMA_SetDestHWordExchange
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestHWordExchange This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_HALFWORD_PRESERVE
+	 *         @arg @ref LL_DMA_DEST_HALFWORD_EXCHANGE
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestHWordExchange(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestHWordExchange)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DHX, DestHWordExchange);
+	}
+
+	/**
+	 * @brief Get destination half-word exchange.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DHX            LL_DMA_GetDestHWordExchange
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_HALFWORD_PRESERVE
+	 *         @arg @ref LL_DMA_DEST_HALFWORD_EXCHANGE
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestHWordExchange(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DHX));
+	}
+
+	/**
+	 * @brief Set destination byte exchange.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DBX            LL_DMA_SetDestByteExchange
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestByteExchange This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_BYTE_PRESERVE
+	 *         @arg @ref LL_DMA_DEST_BYTE_EXCHANGE
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestByteExchange)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBX, DestByteExchange);
+	}
+
+	/**
+	 * @brief Get destination byte exchange.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DBX            LL_DMA_GetDestByteExchange
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_BYTE_PRESERVE
+	 *         @arg @ref LL_DMA_DEST_BYTE_EXCHANGE
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBX));
+	}
+
+	/**
+	 * @brief Set source byte exchange.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          SBX            LL_DMA_SetSrcByteExchange
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcByteExchange This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_BYTE_PRESERVE
+	 *         @arg @ref LL_DMA_SRC_BYTE_EXCHANGE
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcByteExchange)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBX, SrcByteExchange);
+	}
+
+	/**
+	 * @brief Get source byte exchange.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          SBX            LL_DMA_GetSrcByteExchange
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_BYTE_PRESERVE
+	 *         @arg @ref LL_DMA_SRC_BYTE_EXCHANGE
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcByteExchange(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBX));
+	}
+
+	/**
+	 * @brief Set destination burst length.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DBL_1           LL_DMA_SetDestBurstLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestBurstLength Between 1 to 64
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestBurstLength)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBL_1, ((DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1);
+	}
+
+	/**
+	 * @brief Get destination burst length.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DBL_1           LL_DMA_GetDestBurstLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 1 to 64.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DBL_1) >> DMA_CTR1_DBL_1_Pos) + 1U);
+	}
+
+	/**
+	 * @brief Set destination increment mode.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          DINC           LL_DMA_SetDestIncMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestInc This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_FIXED
+	 *         @arg @ref LL_DMA_DEST_INCREMENT
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestIncMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestInc)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DINC, DestInc);
+	}
+
+	/**
+	 * @brief Get destination increment mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          DINC           LL_DMA_GetDestIncMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_FIXED
+	 *         @arg @ref LL_DMA_DEST_INCREMENT
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestIncMode(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DINC));
+	}
+
+	/**
+	 * @brief Set destination data width.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          DDW_LOG2           LL_DMA_SetDestDataWidth
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestDataWidth This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_BYTE
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_HALFWORD
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_WORD
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestDataWidth)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DDW_LOG2, DestDataWidth);
+	}
+
+	/**
+	 * @brief Get destination data width.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          DDW_LOG2           LL_DMA_GetDestDataWidth
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_BYTE
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_HALFWORD
+	 *         @arg @ref LL_DMA_DEST_DATAWIDTH_WORD
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_DDW_LOG2));
+	}
+
+	/**
+	 * @brief Set source allocated port.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          SAP           LL_DMA_SetSrcAllocatedPort
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcAllocatedPort This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT0
+	 *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT1
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAllocatedPort)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SAP, SrcAllocatedPort);
+	}
+
+	/**
+	 * @brief Get source allocated port.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          SAP           LL_DMA_GetSrcAllocatedPort
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT0
+	 *         @arg @ref LL_DMA_SRC_ALLOCATED_PORT1
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcAllocatedPort(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SAP));
+	}
+
+	/**
+	 * @brief Set data alignment mode.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, PAM field is reduced to one bit.
+	 * @rmtoll CTR1          PAM           LL_DMA_SetDataAlignment
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DataAlignment This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DATA_ALIGN_ZEROPADD
+	 *         @arg @ref LL_DMA_DATA_ALIGN_SIGNEXTPADD
+	 *         @arg @ref LL_DMA_DATA_PACK_UNPACK (This value is not allowed for
+	 * LPDMA channels)
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDataAlignment(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DataAlignment)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_PAM, DataAlignment);
+	}
+
+	/**
+	 * @brief Get data alignment mode.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, PAM field is reduced to one bit.
+	 * @rmtoll CTR1          PAM           LL_DMA_GetDataAlignment
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DATA_ALIGN_ZEROPADD
+	 *         @arg @ref LL_DMA_DATA_ALIGN_SIGNEXTPADD
+	 *         @arg @ref LL_DMA_DATA_PACK_UNPACK (This value is not allowed for
+	 * LPDMA channels)
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDataAlignment(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_PAM));
+	}
+
+	/**
+	 * @brief Set source burst length.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          SBL_1           LL_DMA_SetSrcBurstLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcBurstLength Between 1 to 64
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcBurstLength)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBL_1, ((SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1);
+	}
+
+	/**
+	 * @brief Get source burst length.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CTR1          SBL_1           LL_DMA_GetSrcBurstLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 1 to 64
+	 * @retval None.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcBurstLength(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SBL_1) >> DMA_CTR1_SBL_1_Pos) + 1U);
+	}
+
+	/**
+	 * @brief Set source increment mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SINC           LL_DMA_SetSrcIncMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcInc This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_FIXED
+	 *         @arg @ref LL_DMA_SRC_INCREMENT
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcIncMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcInc)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SINC, SrcInc);
+	}
+
+	/**
+	 * @brief Get source increment mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SINC           LL_DMA_GetSrcIncMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_FIXED
+	 *         @arg @ref LL_DMA_SRC_INCREMENT
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcIncMode(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SINC));
+	}
+
+	/**
+	 * @brief Set source data width.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SDW_LOG2           LL_DMA_SetSrcDataWidth
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcDataWidth This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_BYTE
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_HALFWORD
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_WORD
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcDataWidth)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SDW_LOG2, SrcDataWidth);
+	}
+
+	/**
+	 * @brief Get Source Data width.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR1          SDW_LOG2           LL_DMA_GetSrcDataWidth
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_BYTE
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_HALFWORD
+	 *         @arg @ref LL_DMA_SRC_DATAWIDTH_WORD
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcDataWidth(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR1, DMA_CTR1_SDW_LOG2));
+	}
+
+	/**
+	 * @brief Configure channel transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2        TCEM               LL_DMA_ConfigChannelTransfer\n
+	 *         CTR2        TRIGPOL            LL_DMA_ConfigChannelTransfer\n
+	 *         CTR2        TRIGM              LL_DMA_ConfigChannelTransfer\n
+	 *         CTR2        BREQ               LL_DMA_ConfigChannelTransfer\n
+	 *         CTR2        DREQ               LL_DMA_ConfigChannelTransfer\n
+	 *         CTR2        SWREQ              LL_DMA_ConfigChannelTransfer
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Configuration This parameter must be a combination of all the
+	 *following values:
+	 *         @arg @ref LL_DMA_TCEM_BLK_TRANSFER          or @ref
+	 *LL_DMA_TCEM_RPT_BLK_TRANSFER      or
+	 *              @ref LL_DMA_TCEM_EACH_LLITEM_TRANSFER  or @ref
+	 *LL_DMA_TCEM_LAST_LLITEM_TRANSFER
+	 *         @arg @ref LL_DMA_HWREQUEST_SINGLEBURST      or @ref
+	 *LL_DMA_HWREQUEST_BLK
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_MASKED       or @ref
+	 *LL_DMA_TRIG_POLARITY_RISING       or
+	 *              @ref LL_DMA_TRIG_POLARITY_FALLING
+	 *         @arg @ref LL_DMA_TRIGM_BLK_TRANSFER         or @ref
+	 *LL_DMA_TRIGM_RPT_BLK_TRANSFER     or
+	 *              @ref LL_DMA_TRIGM_LLI_LINK_TRANSFER    or @ref
+	 *LL_DMA_TRIGM_SINGLBURST_TRANSFER
+	 *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY or @ref
+	 *LL_DMA_DIRECTION_MEMORY_TO_PERIPH or
+	 *              @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
+	 *@retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigChannelTransfer(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2,
+			   (DMA_CTR2_TCEM | DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGM | DMA_CTR2_DREQ | DMA_CTR2_SWREQ | DMA_CTR2_BREQ), Configuration);
+	}
+
+	/**
+	 * @brief Set transfer event mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          TCEM           LL_DMA_SetTransferEventMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  TransferEventMode This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_TCEM_BLK_TRANSFER
+	 *         @arg @ref LL_DMA_TCEM_RPT_BLK_TRANSFER
+	 *         @arg @ref LL_DMA_TCEM_EACH_LLITEM_TRANSFER
+	 *         @arg @ref LL_DMA_TCEM_LAST_LLITEM_TRANSFER
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetTransferEventMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t TransferEventMode)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TCEM, TransferEventMode);
+	}
+
+	/**
+	 * @brief Get transfer event mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          TCEM           LL_DMA_GetTransferEventMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_TCEM_BLK_TRANSFER
+	 *         @arg @ref LL_DMA_TCEM_RPT_BLK_TRANSFER
+	 *         @arg @ref LL_DMA_TCEM_EACH_LLITEM_TRANSFER
+	 *         @arg @ref LL_DMA_TCEM_LAST_LLITEM_TRANSFER
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetTransferEventMode(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_TCEM));
+	}
+
+	/**
+	 * @brief Set trigger polarity.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          TRIGPOL            LL_DMA_SetTriggerPolarity
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  TriggerPolarity This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_MASKED
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_RISING
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_FALLING
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetTriggerPolarity(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t TriggerPolarity)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_TRIGPOL, TriggerPolarity);
+	}
+
+	/**
+	 * @brief Get trigger polarity.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          TRIGPOL            LL_DMA_GetTriggerPolarity
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_MASKED
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_RISING
+	 *         @arg @ref LL_DMA_TRIG_POLARITY_FALLING
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetTriggerPolarity(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGPOL));
+	}
+
+	/**
+	 * @brief Set trigger Mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          TRIGM            LL_DMA_SetTriggerMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  TriggerMode This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_TRIGM_BLK_TRANSFER
+	 *         @arg @ref LL_DMA_TRIGM_RPT_BLK_TRANSFER (This value is allowed only
+	 * for 2D addressing channels)
+	 *         @arg @ref LL_DMA_TRIGM_LLI_LINK_TRANSFER
+	 *         @arg @ref LL_DMA_TRIGM_SINGLBURST_TRANSFER
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetTriggerMode(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t TriggerMode)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGM, TriggerMode);
+	}
+
+	/**
+	 * @brief Get trigger Mode.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          TRIGM            LL_DMA_GetTriggerMode
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_TRIGM_BLK_TRANSFER
+	 *         @arg @ref LL_DMA_TRIGM_RPT_BLK_TRANSFER (This value is allowed only
+	 * for 2D addressing channels)
+	 *         @arg @ref LL_DMA_TRIGM_LLI_LINK_TRANSFER
+	 *         @arg @ref LL_DMA_TRIGM_SINGLBURST_TRANSFER
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetTriggerMode(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_TRIGM));
+	}
+
+	/**
+	 * @brief Set destination hardware and software transfer request.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          DREQ           LL_DMA_SetDataTransferDirection\n
+	 * @rmtoll CTR2          SWREQ          LL_DMA_SetDataTransferDirection
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Direction This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
+	 *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH (This value is not
+	 * allowed for LPDMA channels)
+	 *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY (This value is not
+	 * allowed for LPDMA channels)
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDataTransferDirection(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Direction)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_DREQ | DMA_CTR2_SWREQ, Direction);
+	}
+
+	/**
+	 * @brief Get destination hardware and software transfer request.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, DREQ fields programming is discarded.
+	 * @rmtoll CTR2          DREQ           LL_DMA_GetDataTransferDirection\n
+	 * @rmtoll CTR2          SWREQ          LL_DMA_GetDataTransferDirection
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
+	 *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH (This value is not
+	 * allowed for LPDMA channels)
+	 *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY (This value is not
+	 * allowed for LPDMA channels)
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDataTransferDirection(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_DREQ | DMA_CTR2_SWREQ));
+	}
+
+	/**
+	 * @brief Set block hardware request.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          BREQ           LL_DMA_SetBlkHWRequest\n
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkHWRequest This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_HWREQUEST_SINGLEBURST
+	 *         @arg @ref LL_DMA_HWREQUEST_BLK
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkHWRequest)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_BREQ, BlkHWRequest);
+	}
+
+	/**
+	 * @brief Get block hardware request.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CTR2          BREQ           LL_DMA_GetBlkHWRequest\n
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_HWREQUEST_SINGLEBURST
+	 *         @arg @ref LL_DMA_HWREQUEST_BLK
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel]))->CTR2, DMA_CTR2_BREQ));
+	}
+
+	/**
+	 * @brief Set hardware request.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, REQSEL fields is reduced to 5 bits.
+	 * @rmtoll CTR2         REQSEL     LL_DMA_SetPeriphRequest
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Request This parameter can be one of the following values:
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADC4
+	 *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM6_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM7_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI2_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI2_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI3_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI3_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C1_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C2_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C2_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C2_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C4_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C4_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C4_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART2_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART2_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART3_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART3_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART4_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART4_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART5_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART5_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI2_A (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI2_B (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI1
+	 *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI2 (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_COM
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_COM
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_COM
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM16_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM16_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM17_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM17_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_DCMI_PSSI
+	 *         @arg @ref LL_GPDMA1_REQUEST_AES_IN
+	 *         @arg @ref LL_GPDMA1_REQUEST_AES_OUT
+	 *         @arg @ref LL_GPDMA1_REQUEST_HASH_IN
+	 *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT0
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT1
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT2
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT3
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT4
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT5
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0
+	 *         @arg @ref LL_GPDMA1_REQUEST_FMAC_READ
+	 *         @arg @ref LL_GPDMA1_REQUEST_FMAC_WRITE
+	 *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_READ
+	 *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_WRITE
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAES_IN
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAES_OUT
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC2
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_UE
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC2
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_UE
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC2
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_UE
+	 *         @arg @ref LL_GPDMA1_REQUEST_HSPI1 (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C5_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C5_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C5_EVC (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C6_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C6_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C6_EVC (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART6_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART6_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADC2 (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_JPEG_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_JPEG_TX (*)
+	 *
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_RX
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_TX
+	 *         @arg @ref LL_LPDMA1_REQUEST_SPI3_RX
+	 *         @arg @ref LL_LPDMA1_REQUEST_SPI3_TX
+	 *         @arg @ref LL_LPDMA1_REQUEST_I2C3_RX
+	 *         @arg @ref LL_LPDMA1_REQUEST_I2C3_TX
+	 *         @arg @ref LL_LPDMA1_REQUEST_I2C3_EVC
+	 *         @arg @ref LL_LPDMA1_REQUEST_ADC4
+	 *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH1
+	 *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH2
+	 *         @arg @ref LL_LPDMA1_REQUEST_ADF1_FLT0
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC1
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC2
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_UE
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC1
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC2
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_UE
+	 *
+	 * @note   (*) Availability depends on devices.
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Request)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_REQSEL, Request);
+	}
+
+	/**
+	 * @brief  Get hardware request.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, REQSEL fields is reduced to 5 bits.
+	 * @rmtoll CTR2         REQSEL     LL_DMA_GetPeriphRequest
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADC4
+	 *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_DAC1_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM6_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM7_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI2_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI2_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI3_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SPI3_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C1_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C2_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C2_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C2_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C4_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C4_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C4_EVC
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART2_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART2_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART3_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART3_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART4_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART4_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART5_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_UART5_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_RX
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_TX
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI2_A (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAI2_B (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI1
+	 *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI2 (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM1_COM
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM8_COM
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM2_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM3_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM4_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH2
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH3
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_CH4
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM5_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_TRIG
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM15_COM
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM16_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM16_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM17_CH1
+	 *         @arg @ref LL_GPDMA1_REQUEST_TIM17_UP
+	 *         @arg @ref LL_GPDMA1_REQUEST_DCMI_PSSI
+	 *         @arg @ref LL_GPDMA1_REQUEST_AES_IN
+	 *         @arg @ref LL_GPDMA1_REQUEST_AES_OUT
+	 *         @arg @ref LL_GPDMA1_REQUEST_HASH_IN
+	 *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_UCPD1_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT0
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT1
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT2
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT3
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT4
+	 *         @arg @ref LL_GPDMA1_REQUEST_MDF1_FLT5
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0
+	 *         @arg @ref LL_GPDMA1_REQUEST_FMAC_READ
+	 *         @arg @ref LL_GPDMA1_REQUEST_FMAC_WRITE
+	 *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_READ
+	 *         @arg @ref LL_GPDMA1_REQUEST_CORDIC_WRITE
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAES_IN
+	 *         @arg @ref LL_GPDMA1_REQUEST_SAES_OUT
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC2
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_UE
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_IC2
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM2_UE
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC1
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_IC2
+	 *         @arg @ref LL_GPDMA1_REQUEST_LPTIM3_UE
+	 *         @arg @ref LL_GPDMA1_REQUEST_HSPI1 (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C5_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C5_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C5_EVC (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C6_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C6_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_I2C6_EVC (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART6_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_USART6_TX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_ADC2 (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_JPEG_RX (*)
+	 *         @arg @ref LL_GPDMA1_REQUEST_JPEG_TX (*)
+	 *
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_RX
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPUART1_TX
+	 *         @arg @ref LL_LPDMA1_REQUEST_SPI3_RX
+	 *         @arg @ref LL_LPDMA1_REQUEST_SPI3_TX
+	 *         @arg @ref LL_LPDMA1_REQUEST_I2C3_RX
+	 *         @arg @ref LL_LPDMA1_REQUEST_I2C3_TX
+	 *         @arg @ref LL_LPDMA1_REQUEST_I2C3_EVC
+	 *         @arg @ref LL_LPDMA1_REQUEST_ADC4
+	 *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH1
+	 *         @arg @ref LL_LPDMA1_REQUEST_DAC1_CH2
+	 *         @arg @ref LL_LPDMA1_REQUEST_ADF1_FLT0
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC1
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_IC2
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM1_UE
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC1
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_IC2
+	 *         @arg @ref LL_LPDMA1_REQUEST_LPTIM3_UE
+	 *
+	 * @note   (*) Availability depends on devices.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_REQSEL));
+	}
+
+	/**
+	 * @brief Set hardware trigger.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, TRIGSEL fields is reduced to 5 bits.
+	 * @rmtoll CTR2         TRIGSEL     LL_DMA_SetHWTrigger
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Trigger This parameter can be one of the following values:
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE0
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE3
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG3
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM4_OUT
+	 *         @arg @ref LL_GPDMA1_TRIGGER_COMP1_OUT
+	 *         @arg @ref LL_GPDMA1_TRIGGER_COMP2_OUT (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRA_TRG
+	 *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRB_TRG
+	 *         @arg @ref LL_GPDMA1_TRIGGER_RTC_WUT_TRG
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH0_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH1_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH2_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH3_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH4_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH5_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH6_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH7_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH8_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH9_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH10_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH11_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH12_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH13_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH14_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH15_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH0_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH1_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH2_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH3_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM2_TRGO
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM15_TRGO
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM3_TRGO (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM4_TRGO (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM5_TRGO (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LTDC_LI (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DSI_TE (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DSI_ER (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TC (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_CTC (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TW (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG0 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG1 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG2 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG3 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_ADC4_AWD1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_ADC1_AWD1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT3 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT2 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT1 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT0 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_EOC (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFNF (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFT (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFNE (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFT (*)
+	 *
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE0
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE2
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE3
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE4
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG2
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG3
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH2
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM3_CH1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM4_OUT
+	 *         @arg @ref LL_LPDMA1_TRIGGER_COMP1_OUT
+	 *         @arg @ref LL_LPDMA1_TRIGGER_COMP2_OUT (*)
+	 *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRA_TRG
+	 *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRB_TRG
+	 *         @arg @ref LL_LPDMA1_TRIGGER_RTC_WUT_TRG
+	 *         @arg @ref LL_LPDMA1_TRIGGER_ADC4_AWD1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH0_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH1_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH2_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH3_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH0_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH1_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH4_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH5_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH6_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH7_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH12_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH13_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TIM2_TRGO
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TIM15_TRGO
+	 * @note   (*) Availability depends on devices.
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetHWTrigger(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Trigger)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGSEL, (Trigger << DMA_CTR2_TRIGSEL_Pos) & DMA_CTR2_TRIGSEL);
+	}
+
+	/**
+	 * @brief Get hardware triggers.
+	 * @note  This API is used for all available DMA channels.
+	 *        For LPDMA channels, TRIGSEL fields is reduced to 5 bits.
+	 * @rmtoll CTR2         TRIGSEL     LL_DMA_GetHWTrigger
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE0
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_EXTI_LINE3
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TAMP_TRG3
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM1_CH2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM2_CH2
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPTIM4_OUT
+	 *         @arg @ref LL_GPDMA1_TRIGGER_COMP1_OUT
+	 *         @arg @ref LL_GPDMA1_TRIGGER_COMP2_OUT (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRA_TRG
+	 *         @arg @ref LL_GPDMA1_TRIGGER_RTC_ALRB_TRG
+	 *         @arg @ref LL_GPDMA1_TRIGGER_RTC_WUT_TRG
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH0_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH1_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH2_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH3_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH4_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH5_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH6_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH7_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH8_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH9_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH10_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH11_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH12_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH13_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH14_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPDMA1_CH15_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH0_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH1_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH2_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LPDMA1_CH3_TCF
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM2_TRGO
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM15_TRGO
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM3_TRGO (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM4_TRGO (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_TIM5_TRGO (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_LTDC_LI (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DSI_TE (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DSI_ER (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TC (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_CTC (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_DMA2D_TW (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG0 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG1 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG2 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GPU2D_FLAG3 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_ADC4_AWD1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_ADC1_AWD1
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT3 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT2 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT1 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_GFXTIM_EVT0 (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_EOC (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFNF (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_IFT (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFNE (*)
+	 *         @arg @ref LL_GPDMA1_TRIGGER_JPEG_OFT (*)
+	 *
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE0
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE2
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE3
+	 *         @arg @ref LL_LPDMA1_TRIGGER_EXTI_LINE4
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG2
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TAMP_TRG3
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM1_CH2
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM3_CH1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPTIM4_OUT
+	 *         @arg @ref LL_LPDMA1_TRIGGER_COMP1_OUT
+	 *         @arg @ref LL_LPDMA1_TRIGGER_COMP2_OUT (*)
+	 *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRA_TRG
+	 *         @arg @ref LL_LPDMA1_TRIGGER_RTC_ALRB_TRG
+	 *         @arg @ref LL_LPDMA1_TRIGGER_RTC_WUT_TRG
+	 *         @arg @ref LL_LPDMA1_TRIGGER_ADC4_AWD1
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH0_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH1_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH2_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_LPDMA1_CH3_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH0_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH1_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH4_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH5_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH6_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH7_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH12_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_GPDMA1_CH13_TCF
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TIM2_TRGO
+	 *         @arg @ref LL_LPDMA1_TRIGGER_TIM15_TRGO
+	 * @note   (*) Availability depends on devices.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetHWTrigger(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR2, DMA_CTR2_TRIGSEL) >> DMA_CTR2_TRIGSEL_Pos);
+	}
+
+	/**
+	 * @brief Configure addresses update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1         BRDDEC            LL_DMA_ConfigBlkRptAddrUpdate\n
+	 *         CBR1         BRSDEC            LL_DMA_ConfigBlkRptAddrUpdate\n
+	 *         CBR1         DDEC              LL_DMA_ConfigBlkRptAddrUpdate\n
+	 *         CBR1         SDEC              LL_DMA_ConfigBlkRptAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  Configuration This parameter must be a combination of all the
+	 *following values:
+	 *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_INCREMENT or @ref
+	 *LL_DMA_BLKRPT_DEST_ADDR_DECREMENT
+	 *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_INCREMENT  or @ref
+	 *LL_DMA_BLKRPT_SRC_ADDR_DECREMENT
+	 *         @arg @ref LL_DMA_BURST_DEST_ADDR_INCREMENT  or @ref
+	 *LL_DMA_BURST_DEST_ADDR_DECREMENT
+	 *         @arg @ref LL_DMA_BURST_SRC_ADDR_INCREMENT   or @ref
+	 *LL_DMA_BURST_SRC_ADDR_DECREMENT
+	 *@retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigBlkRptAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRDDEC | DMA_CBR1_BRSDEC | DMA_CBR1_DDEC | DMA_CBR1_SDEC,
+			   Configuration);
+	}
+
+	/**
+	  * @brief Configure DMA Block number of data and repeat Count.
+	  * @note  This API is used only for 2D addressing channels.
+	  * @rmtoll CBR1         BNDT                     LL_DMA_ConfigBlkCounters\n
+	  *         CBR1         BRC                      LL_DMA_ConfigBlkCounters
+	  * @param  DMAx DMAx Instance
+	  * @param  Channel This parameter can be one of the following values:
+	  *         @arg @ref LL_DMA_CHANNEL_12
+	  *         @arg @ref LL_DMA_CHANNEL_13
+	  *         @arg @ref LL_DMA_CHANNEL_14
+	  *         @arg @ref LL_DMA_CHANNEL_15
+	  * @param  BlkDataLength Block transfer length
+				  Value between 0 to 0x0000FFFF
+	  * @param  BlkRptCount Block repeat counter
+	  *                     Value between 0 to 0x000007FF
+	  *@retval None.
+	  */
+	__STATIC_INLINE void LL_DMA_ConfigBlkCounters(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkDataLength, uint32_t BlkRptCount)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, (DMA_CBR1_BNDT | DMA_CBR1_BRC),
+			   (BlkDataLength | (BlkRptCount << DMA_CBR1_BRC_Pos)));
+	}
+
+	/**
+	 * @brief Set block repeat destination address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          BRDDEC           LL_DMA_SetBlkRptDestAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkRptDestAddrUpdate This parameter can be one of the following
+	 * values:
+	 *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_DECREMENT
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkRptDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptDestAddrUpdate)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRDDEC, BlkRptDestAddrUpdate);
+	}
+
+	/**
+	 * @brief Get block repeat destination address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          BRDDEC           LL_DMA_GetBlkRptDestAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BLKRPT_DEST_ADDR_DECREMENT
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkRptDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRDDEC));
+	}
+
+	/**
+	 * @brief Set block repeat source address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          BRSDEC           LL_DMA_SetBlkRptSrcAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkRptSrcAddrUpdate This parameter can be one of the following
+	 * values:
+	 *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_DECREMENT
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkRptSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptSrcAddrUpdate)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRSDEC, BlkRptSrcAddrUpdate);
+	}
+
+	/**
+	 * @brief Get block repeat source address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          BRSDEC           LL_DMA_GetBlkRptSrcAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BLKRPT_SRC_ADDR_DECREMENT
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkRptSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRSDEC));
+	}
+
+	/**
+	 * @brief Set destination address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          DDEC           LL_DMA_SetDestAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestAddrUpdate This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_BURST_DEST_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BURST_DEST_ADDR_DECREMENT
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAddrUpdate)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_DDEC, DestAddrUpdate);
+	}
+
+	/**
+	 * @brief Get destination address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          DDEC           LL_DMA_GetDestAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_BURST_DEST_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BURST_DEST_ADDR_DECREMENT
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_DDEC));
+	}
+
+	/**
+	 * @brief Set source address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          SDEC           LL_DMA_SetSrcAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcAddrUpdate This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_BURST_SRC_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BURST_SRC_ADDR_DECREMENT
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddrUpdate)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_SDEC, SrcAddrUpdate);
+	}
+
+	/**
+	 * @brief Get source address update.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1          SDEC           LL_DMA_GetSrcAddrUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Returned value can be one of the following values:
+	 *         @arg @ref LL_DMA_BURST_SRC_ADDR_INCREMENT
+	 *         @arg @ref LL_DMA_BURST_SRC_ADDR_DECREMENT
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcAddrUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_SDEC));
+	}
+
+	/**
+	 * @brief Set block repeat count.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1        BRC            LL_DMA_SetBlkRptCount
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkRptCount Block repeat counter
+	 *                     Value between 0 to 0x000007FF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkRptCount(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptCount)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRC, (BlkRptCount << DMA_CBR1_BRC_Pos) & DMA_CBR1_BRC);
+	}
+
+	/**
+	 * @brief Get block repeat count.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR1        BRC            LL_DMA_GetBlkRptCount
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x000007FF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkRptCount(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BRC) >> DMA_CBR1_BRC_Pos);
+	}
+
+	/**
+	 * @brief  Set block data length in bytes to transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CBR1        BNDT         LL_DMA_SetBlkDataLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkDataLength Between 0 to 0x0000FFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkDataLength(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkDataLength)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BNDT, BlkDataLength);
+	}
+
+	/**
+	 * @brief  Get block data length in bytes to transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CBR1        BNDT         LL_DMA_GetBlkDataLength
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x0000FFFF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkDataLength(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR1, DMA_CBR1_BNDT));
+	}
+
+	/**
+	 * @brief Configure the source and destination addresses.
+	 * @note  This API is used for all available DMA channels.
+	 * @note   This API must not be called when the DMA Channel is enabled.
+	 * @rmtoll CSAR        SA          LL_DMA_ConfigAddresses\n
+	 *         CDAR        DA          LL_DMA_ConfigAddresses
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcAddress Between 0 to 0xFFFFFFFF
+	 * @param  DestAddress Between 0 to 0xFFFFFFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigAddresses(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddress, uint32_t DestAddress)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSAR, SrcAddress);
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CDAR, DestAddress);
+	}
+
+	/**
+	 * @brief Set source address.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSAR        SA         LL_DMA_SetSrcAddress
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcAddress Between 0 to 0xFFFFFFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcAddress(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddress)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSAR, SrcAddress);
+	}
+
+	/**
+	 * @brief  Get source address.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSAR        SA         LL_DMA_GetSrcAddress
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0xFFFFFFFF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcAddress(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSAR));
+	}
+
+	/**
+	 * @brief  Set destination address.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CDAR        DA         LL_DMA_SetDestAddress
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestAddress Between 0 to 0xFFFFFFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestAddress(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAddress)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CDAR, DestAddress);
+	}
+
+	/**
+	 * @brief  Get destination address.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CDAR        DA         LL_DMA_GetDestAddress
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0xFFFFFFFF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestAddress(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CDAR));
+	}
+
+	/**
+	 * @brief Configure source and destination addresses offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @note   This API must not be called when the DMA Channel is enabled.
+	 * @rmtoll CTR3        DAO          LL_DMA_ConfigAddrUpdateValue\n
+	 *         CTR3        SAO          LL_DMA_ConfigAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestAddrOffset Between 0 to 0x00001FFF
+	 * @param  SrcAddrOffset Between 0 to 0x00001FFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddrOffset, uint32_t DestAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3,
+			  (SrcAddrOffset & DMA_CTR3_SAO) | ((DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO));
+	}
+
+	/**
+	 * @brief Set destination address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CTR3       DAO         LL_DMA_SetDestAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  DestAddrOffset Between 0 to 0x00001FFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t DestAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_DAO, ((DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO));
+	}
+
+	/**
+	 * @brief Get destination address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CDAR        DAO         LL_DMA_GetDestAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x00001FFF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_DAO) >> DMA_CTR3_DAO_Pos);
+	}
+
+	/**
+	 * @brief Set source address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CTR3        SAO         LL_DMA_SetSrcAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  SrcAddrOffset Between 0 to 0x00001FFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_SAO, SrcAddrOffset & DMA_CTR3_SAO);
+	}
+
+	/**
+	 * @brief Get source address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CTR3        SAO         LL_DMA_GetSrcAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x00001FFF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CTR3, DMA_CTR3_SAO));
+	}
+
+	/**
+	 * @brief Configure the block repeated source and destination addresses offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @note   This API must not be called when the DMA Channel is enabled.
+	 * @rmtoll CBR2        BRDAO          LL_DMA_ConfigBlkRptAddrUpdateValue\n
+	 *         CBR2        BRSAO          LL_DMA_ConfigBlkRptAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkRptDestAddrOffset Between 0 to 0x0000FFFF
+	 * @param  BlkRptSrcAddrOffset Between 0 to 0x0000FFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigBlkRptAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptSrcAddrOffset, uint32_t BlkRptDestAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2,
+			  ((BlkRptDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO) | (BlkRptSrcAddrOffset & DMA_CBR2_BRSAO));
+	}
+
+	/**
+	 * @brief Set block repeated destination address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR2       BRDAO         LL_DMA_SetBlkRptDestAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkRptDestAddrOffset Between 0 to 0x0000FFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkRptDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptDestAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRDAO,
+			   ((BlkRptDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO));
+	}
+
+	/**
+	 * @brief Get block repeated destination address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR2        BRDAO         LL_DMA_GetBlkRptDestAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x0000FFFF.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkRptDestAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRDAO) >> DMA_CBR2_BRDAO_Pos);
+	}
+
+	/**
+	 * @brief Set block repeated source address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR2        BRSAO         LL_DMA_SetBlkRptSrcAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  BlkRptSrcAddrOffset Between 0 to 0x0000FFFF
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetBlkRptSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t BlkRptSrcAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRSAO, BlkRptSrcAddrOffset);
+	}
+
+	/**
+	 * @brief Get block repeated source address offset.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CBR2        BRSAO         LL_DMA_GetBlkRptSrcAddrUpdateValue
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x0000FFFF
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetBlkRptSrcAddrUpdateValue(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CBR2, DMA_CBR2_BRSAO));
+	}
+
+	/**
+	 * @brief Configure registers update and node address offset during the link
+	 * transfer.
+	 * @note  This API is used for all available DMA channels.
+	 *        For linear addressing channels, UT3 and UB2 fields are discarded.
+	 * @rmtoll CLLR          UT1            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          UT2            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          UB1            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          USA            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          UDA            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          UT3            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          UB2            LL_DMA_ConfigLinkUpdate\n
+	 * @rmtoll CLLR          ULL            LL_DMA_ConfigLinkUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  RegistersUpdate This parameter must be a combination of all the
+	 * following values:
+	 *         @arg @ref LL_DMA_UPDATE_CTR1
+	 *         @arg @ref LL_DMA_UPDATE_CTR2
+	 *         @arg @ref LL_DMA_UPDATE_CBR1
+	 *         @arg @ref LL_DMA_UPDATE_CSAR
+	 *         @arg @ref LL_DMA_UPDATE_CDAR
+	 *         @arg @ref LL_DMA_UPDATE_CTR3  (This value is allowed only for 2D
+	 * addressing channels)
+	 *         @arg @ref LL_DMA_UPDATE_CBR2  (This value is allowed only for 2D
+	 * addressing channels)
+	 *         @arg @ref LL_DMA_UPDATE_CLLR
+	 * @param  LinkedListAddrOffset Between 0 to 0x0000FFFC by increment of 4 Bytes.
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ConfigLinkUpdate(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t RegistersUpdate, uint32_t LinkedListAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR,
+			   (DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_UT3 | DMA_CLLR_UB2 | DMA_CLLR_ULL | DMA_CLLR_LA),
+			   (RegistersUpdate | (LinkedListAddrOffset & DMA_CLLR_LA)));
+	}
+
+	/**
+	 * @brief Enable CTR1 update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UT1            LL_DMA_EnableCTR1Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCTR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT1);
+	}
+
+	/**
+	 * @brief Disable CTR1 update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UT1            LL_DMA_DisableCTR1Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCTR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT1);
+	}
+
+	/**
+	 * @brief Check if CTR1 update during the link transfer is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UT1            LL_DMA_IsEnabledCTR1Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCTR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT1) == (DMA_CLLR_UT1)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CTR2 update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UT2            LL_DMA_EnableCTR2Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCTR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT2);
+	}
+
+	/**
+	 * @brief Disable CTR2 update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UT2            LL_DMA_DisableCTR2Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCTR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT2);
+	}
+
+	/**
+	 * @brief Check if CTR2 update during the link transfer is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UT2            LL_DMA_IsEnabledCTR2Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCTR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT2) == (DMA_CLLR_UT2)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CBR1 update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UB1            LL_DMA_EnableCBR1Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCBR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB1);
+	}
+
+	/**
+	 * @brief Disable CBR1 update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UB1            LL_DMA_DisableCBR1Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCBR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB1);
+	}
+
+	/**
+	 * @brief Check if CBR1 update during the link transfer is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UB1            LL_DMA_IsEnabledCBR1Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCBR1Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB1) == (DMA_CLLR_UB1)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CSAR update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          USA            LL_DMA_EnableCSARUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCSARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_USA);
+	}
+
+	/**
+	 * @brief Disable CSAR update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          USA            LL_DMA_DisableCSARUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCSARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_USA);
+	}
+
+	/**
+	 * @brief Check if CSAR update during the link transfer is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          USA            LL_DMA_IsEnabledCSARUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCSARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_USA) == (DMA_CLLR_USA)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CDAR update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UDA            LL_DMA_EnableCDARUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCDARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UDA);
+	}
+
+	/**
+	 * @brief Disable CDAR update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UDA            LL_DMA_DisableCDARUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCDARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UDA);
+	}
+
+	/**
+	 * @brief Check if CDAR update during the link transfer is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          UDA            LL_DMA_IsEnabledCDARUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCDARUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UDA) == (DMA_CLLR_UDA)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CTR3 update during the link transfer.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CLLR          UT3            LL_DMA_EnableCTR3Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCTR3Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT3);
+	}
+
+	/**
+	 * @brief Disable CTR3 update during the link transfer.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CLLR          UT3            LL_DMA_DisableCTR3Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCTR3Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT3);
+	}
+
+	/**
+	 * @brief Check if CTR3 update during the link transfer is enabled.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CLLR          UT3            LL_DMA_IsEnabledCTR3Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCTR3Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UT3) == (DMA_CLLR_UT3)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CBR2 update during the link transfer.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CLLR          UB2            LL_DMA_EnableCBR2Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCBR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB2);
+	}
+
+	/**
+	 * @brief Disable CBR2 update during the link transfer.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CLLR          UB2            LL_DMA_DisableCBR2Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCBR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB2);
+	}
+
+	/**
+	 * @brief Check if CBR2 update during the link transfer is enabled.
+	 * @note  This API is used only for 2D addressing channels.
+	 * @rmtoll CLLR          UB2            LL_DMA_IsEnabledCBR2Update
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCBR2Update(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_UB2) == (DMA_CLLR_UB2)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Enable CLLR update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          ULL            LL_DMA_EnableCLLRUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableCLLRUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_ULL);
+	}
+
+	/**
+	 * @brief Disable CLLR update during the link transfer.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          ULL            LL_DMA_DisableCLLRUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableCLLRUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_ULL);
+	}
+
+	/**
+	 * @brief Check if CLLR update during the link transfer is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          ULL            LL_DMA_IsEnabledCLLRUpdate
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledCLLRUpdate(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_ULL) == (DMA_CLLR_ULL)) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Set linked list address offset.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          LA           LL_DMA_SetLinkedListAddrOffset
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @param  LinkedListAddrOffset Between 0 to 0x0000FFFC by increment of 4 Bytes.
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_SetLinkedListAddrOffset(const DMA_TypeDef *DMAx, uint32_t Channel, uint32_t LinkedListAddrOffset)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		MODIFY_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_LA, (LinkedListAddrOffset & DMA_CLLR_LA));
+	}
+
+	/**
+	 * @brief Get linked list address offset.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CLLR          LA           LL_DMA_GetLinkedListAddrOffset
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x0000FFFC.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetLinkedListAddrOffset(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CLLR, DMA_CLLR_LA) >> DMA_CLLR_LA_Pos);
+	}
+
+	/**
+	 * @brief Get FIFO level.
+	 * @note  This API is not used for LPDMA channels.
+	 * @rmtoll CSR          FIFOL           LL_DMA_GetFIFOLevel
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval Between 0 to 0x000000FF.
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_GetFIFOLevel(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return (READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos);
+	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/**
- * @brief Enable the DMA channel lock attributes.
- * @note  This API is used for all available DMA channels.
- * @rmtoll RCFGLOCKR           LOCKx         LL_DMA_EnableChannelLockAttribute
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableChannelLockAttribute(DMA_TypeDef *DMAx, uint32_t Channel) { SET_BIT(DMAx->RCFGLOCKR, (DMA_RCFGLOCKR_LOCK0 << (Channel & 0x0000000FU))); }
+	/**
+	 * @brief Enable the DMA channel secure attribute.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll SECCFGR  SECx    LL_DMA_EnableChannelSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableChannelSecure(DMA_TypeDef *DMAx, uint32_t Channel) { SET_BIT(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))); }
+
+	/**
+	 * @brief Disable the DMA channel secure attribute.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll SECCFGR  SECx    LL_DMA_DisableChannelSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableChannelSecure(DMA_TypeDef *DMAx, uint32_t Channel) { CLEAR_BIT(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))); }
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-/**
- * @brief Check if DMA channel attributes are locked.
- * @note  This API is used for all available DMA channels.
- * @rmtoll SECCFGR            LOCKx       LL_DMA_IsEnabledChannelLockAttribute
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelLockAttribute(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	return ((READ_BIT(DMAx->RCFGLOCKR, (DMA_RCFGLOCKR_LOCK0 << (Channel & 0x0000000FU))) == (DMA_RCFGLOCKR_LOCK0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Check if DMA channel secure is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll SECCFGR             SECx          LL_DMA_IsEnabledChannelSecure
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelSecure(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		return ((READ_BIT(DMAx->SECCFGR, (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))) == (DMA_SECCFGR_SEC0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
+	}
 
-/**
- * @}
- */
+	/**
+	 * @brief Enable the DMA channel privilege attribute.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll PRIVCFGR          PRIVx      LL_DMA_EnableChannelPrivilege
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableChannelPrivilege(DMA_TypeDef *DMAx, uint32_t Channel) { SET_BIT(DMAx->PRIVCFGR, (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))); }
 
-/** @defgroup DMA_LL_EF_FLAG_Management Flag Management
- * @{
- */
+	/**
+	 * @brief Disable the DMA channel privilege attribute.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll PRIVCFGR          PRIVx      LL_DMA_DisableChannelPrivilege
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableChannelPrivilege(DMA_TypeDef *DMAx, uint32_t Channel) { CLEAR_BIT(DMAx->PRIVCFGR, (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))); }
 
-/**
- * @brief Clear trigger overrun flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          TOF        LL_DMA_ClearFlag_TO
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_TOF);
-}
-
-/**
- * @brief Clear suspension flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          SUSPF        LL_DMA_ClearFlag_SUSP
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_SUSPF);
-}
-
-/**
- * @brief Clear user setting error flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          USEF         LL_DMA_ClearFlag_USE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_USEF);
-}
-
-/**
- * @brief Clear link transfer error flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          ULEF         LL_DMA_ClearFlag_ULE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_ULEF);
-}
-
-/**
- * @brief Clear data transfer error flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          DTEF         LL_DMA_ClearFlag_DTE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_DTEF);
-}
-
-/**
- * @brief Clear half transfer flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          HTF          LL_DMA_ClearFlag_HT
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_HTF);
-}
-
-/**
- * @brief Clear transfer complete flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CFCR          TCF          LL_DMA_ClearFlag_TC
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_TCF);
-}
-
-/**
- * @brief Get trigger overrun flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           TOF        LL_DMA_IsActiveFlag_TO
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_TOF) == (DMA_CSR_TOF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get suspension flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           SUSPF        LL_DMA_IsActiveFlag_SUSP
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_SUSPF) == (DMA_CSR_SUSPF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get user setting error flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           USEF         LL_DMA_IsActiveFlag_USE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_USEF) == (DMA_CSR_USEF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get user setting error flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           ULEF         LL_DMA_IsActiveFlag_ULE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_ULEF) == (DMA_CSR_ULEF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get data transfer error flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           DTEF         LL_DMA_IsActiveFlag_DTE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_DTEF) == (DMA_CSR_DTEF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get half transfer flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           HTF          LL_DMA_IsActiveFlag_HT
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_HTF) == (DMA_CSR_HTF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get transfer complete flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           TCF          LL_DMA_IsActiveFlag_TC
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_TCF) == (DMA_CSR_TCF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Get idle flag.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CSR           IDLEF        LL_DMA_IsActiveFlag_IDLE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_IDLE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_IDLEF) == (DMA_CSR_IDLEF)) ? 1UL : 0UL);
-}
-
-/**
- * @brief Check if nsecure masked interrupt is active.
- * @note  This API is used for all available DMA channels.
- * @rmtoll MISR  MISx    LL_DMA_IsActiveFlag_MIS
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_MIS(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	return ((READ_BIT(DMAx->MISR, (DMA_MISR_MIS0 << (Channel & 0x0FU))) == (DMA_MISR_MIS0 << (Channel & 0x0FU))) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Check if DMA Channel privilege is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll PRIVCFGR          PRIVx      LL_DMA_IsEnabledChannelPrivilege
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelPrivilege(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		return ((READ_BIT(DMAx->PRIVCFGR, (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))) == (DMA_PRIVCFGR_PRIV0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
+	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/**
- * @brief Check if secure masked interrupt is active.
- * @note  This API is used for all available DMA channels.
- * @rmtoll SMISR  MISx    LL_DMA_IsActiveFlag_SMIS
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_SMIS(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	return ((READ_BIT(DMAx->SMISR, (DMA_SMISR_MIS0 << (Channel & 0x0000000FU))) == (DMA_SMISR_MIS0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Enable the DMA channel lock attributes.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll RCFGLOCKR           LOCKx         LL_DMA_EnableChannelLockAttribute
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableChannelLockAttribute(DMA_TypeDef *DMAx, uint32_t Channel) { SET_BIT(DMAx->RCFGLOCKR, (DMA_RCFGLOCKR_LOCK0 << (Channel & 0x0000000FU))); }
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-/**
- * @}
- */
 
-/** @defgroup DMA_LL_EF_IT_Management Interrupt Management
- * @{
- */
+	/**
+	 * @brief Check if DMA channel attributes are locked.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll SECCFGR            LOCKx       LL_DMA_IsEnabledChannelLockAttribute
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledChannelLockAttribute(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		return ((READ_BIT(DMAx->RCFGLOCKR, (DMA_RCFGLOCKR_LOCK0 << (Channel & 0x0000000FU))) == (DMA_RCFGLOCKR_LOCK0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Enable trigger overrun interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           TOIE       LL_DMA_EnableIT_TO
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TOIE);
-}
+	/**
+	 * @}
+	 */
 
-/**
- * @brief Enable suspension interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           SUSPIE       LL_DMA_EnableIT_SUSP
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_SUSPIE);
-}
+	/** @defgroup DMA_LL_EF_FLAG_Management Flag Management
+	 * @{
+	 */
 
-/**
- * @brief Enable user setting error interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           USEIE        LL_DMA_EnableIT_USE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_USEIE);
-}
+	/**
+	 * @brief Clear trigger overrun flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          TOF        LL_DMA_ClearFlag_TO
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_TOF);
+	}
 
-/**
- * @brief Enable update link transfer error interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           ULEIE        LL_DMA_EnableIT_ULE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_ULEIE);
-}
+	/**
+	 * @brief Clear suspension flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          SUSPF        LL_DMA_ClearFlag_SUSP
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_SUSPF);
+	}
 
-/**
- * @brief Enable data transfer error interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           DTEIE        LL_DMA_EnableIT_DTE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_DTEIE);
-}
+	/**
+	 * @brief Clear user setting error flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          USEF         LL_DMA_ClearFlag_USE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_USEF);
+	}
 
-/**
- * @brief Enable half transfer complete interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           HTIE         LL_DMA_EnableIT_HT
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_HTIE);
-}
+	/**
+	 * @brief Clear link transfer error flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          ULEF         LL_DMA_ClearFlag_ULE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_ULEF);
+	}
 
-/**
- * @brief Enable transfer complete interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           TCIE         LL_DMA_EnableIT_TC
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_EnableIT_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TCIE);
-}
+	/**
+	 * @brief Clear data transfer error flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          DTEF         LL_DMA_ClearFlag_DTE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_DTEF);
+	}
 
-/**
- * @brief Disable trigger overrun interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           TOIE       LL_DMA_DisableIT_TO
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TOIE);
-}
+	/**
+	 * @brief Clear half transfer flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          HTF          LL_DMA_ClearFlag_HT
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_HTF);
+	}
 
-/**
- * @brief Disable suspension interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           SUSPIE       LL_DMA_DisableIT_SUSP
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_SUSPIE);
-}
+	/**
+	 * @brief Clear transfer complete flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CFCR          TCF          LL_DMA_ClearFlag_TC
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_ClearFlag_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		WRITE_REG(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CFCR, DMA_CFCR_TCF);
+	}
 
-/**
- * @brief Disable user setting error interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           USEIE        LL_DMA_DisableIT_USE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_USEIE);
-}
+	/**
+	 * @brief Get trigger overrun flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           TOF        LL_DMA_IsActiveFlag_TO
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_TOF) == (DMA_CSR_TOF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Disable update link transfer error interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           ULEIE        LL_DMA_DisableIT_ULE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_ULEIE);
-}
+	/**
+	 * @brief Get suspension flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           SUSPF        LL_DMA_IsActiveFlag_SUSP
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_SUSPF) == (DMA_CSR_SUSPF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Disable data transfer error interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           DTEIE        LL_DMA_DisableIT_DTE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_DTEIE);
-}
+	/**
+	 * @brief Get user setting error flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           USEF         LL_DMA_IsActiveFlag_USE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_USEF) == (DMA_CSR_USEF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Disable half transfer complete interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           HTIE         LL_DMA_DisableIT_HT
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_HTIE);
-}
+	/**
+	 * @brief Get user setting error flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           ULEF         LL_DMA_IsActiveFlag_ULE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_ULEF) == (DMA_CSR_ULEF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Disable transfer complete interrupt.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           TCIE         LL_DMA_DisableIT_TC
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval None.
- */
-__STATIC_INLINE void LL_DMA_DisableIT_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TCIE);
-}
+	/**
+	 * @brief Get data transfer error flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           DTEF         LL_DMA_IsActiveFlag_DTE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_DTEF) == (DMA_CSR_DTEF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Check if trigger overrun interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           TOIE       LL_DMA_IsEnabledIT_TO
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TOIE) == DMA_CCR_TOIE) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Get half transfer flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           HTF          LL_DMA_IsActiveFlag_HT
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_HTF) == (DMA_CSR_HTF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Check if suspension interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           SUSPIE       LL_DMA_IsEnabledIT_SUSP
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_SUSPIE) == DMA_CCR_SUSPIE) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Get transfer complete flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           TCF          LL_DMA_IsActiveFlag_TC
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_TCF) == (DMA_CSR_TCF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Check if user setting error interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR           USEIE        LL_DMA_IsEnabledIT_USE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_USEIE) == DMA_CCR_USEIE) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Get idle flag.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CSR           IDLEF        LL_DMA_IsActiveFlag_IDLE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_IDLE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CSR, DMA_CSR_IDLEF) == (DMA_CSR_IDLEF)) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Check if update link transfer error interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR        ULEIE         LL_DMA_IsEnabledIT_ULE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_ULEIE) == DMA_CCR_ULEIE) ? 1UL : 0UL);
-}
+	/**
+	 * @brief Check if nsecure masked interrupt is active.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll MISR  MISx    LL_DMA_IsActiveFlag_MIS
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_MIS(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		return ((READ_BIT(DMAx->MISR, (DMA_MISR_MIS0 << (Channel & 0x0FU))) == (DMA_MISR_MIS0 << (Channel & 0x0FU))) ? 1UL : 0UL);
+	}
 
-/**
- * @brief Check if data transfer error interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR        DTEIE         LL_DMA_IsEnabledIT_DTE
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_DTEIE) == DMA_CCR_DTEIE) ? 1UL : 0UL);
-}
+#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+	/**
+	 * @brief Check if secure masked interrupt is active.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll SMISR  MISx    LL_DMA_IsActiveFlag_SMIS
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_SMIS(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		return ((READ_BIT(DMAx->SMISR, (DMA_SMISR_MIS0 << (Channel & 0x0000000FU))) == (DMA_SMISR_MIS0 << (Channel & 0x0000000FU))) ? 1UL : 0UL);
+	}
+#endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+	/**
+	 * @}
+	 */
 
-/**
- * @brief Check if half transfer complete interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR        HTIE         LL_DMA_IsEnabledIT_HT
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_HTIE) == DMA_CCR_HTIE) ? 1UL : 0UL);
-}
+	/** @defgroup DMA_LL_EF_IT_Management Interrupt Management
+	 * @{
+	 */
 
-/**
- * @brief Check if transfer complete interrupt is enabled.
- * @note  This API is used for all available DMA channels.
- * @rmtoll CCR        TCIE         LL_DMA_IsEnabledIT_TC
- * @param  DMAx DMAx Instance
- * @param  Channel This parameter can be one of the following values:
- *         @arg @ref LL_DMA_CHANNEL_0
- *         @arg @ref LL_DMA_CHANNEL_1
- *         @arg @ref LL_DMA_CHANNEL_2
- *         @arg @ref LL_DMA_CHANNEL_3
- *         @arg @ref LL_DMA_CHANNEL_4
- *         @arg @ref LL_DMA_CHANNEL_5
- *         @arg @ref LL_DMA_CHANNEL_6
- *         @arg @ref LL_DMA_CHANNEL_7
- *         @arg @ref LL_DMA_CHANNEL_8
- *         @arg @ref LL_DMA_CHANNEL_9
- *         @arg @ref LL_DMA_CHANNEL_10
- *         @arg @ref LL_DMA_CHANNEL_11
- *         @arg @ref LL_DMA_CHANNEL_12
- *         @arg @ref LL_DMA_CHANNEL_13
- *         @arg @ref LL_DMA_CHANNEL_14
- *         @arg @ref LL_DMA_CHANNEL_15
- * @retval State of bit (1 or 0).
- */
-__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
-{
-	uint32_t dma_base_addr = (uint32_t)DMAx;
-	return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TCIE) == DMA_CCR_TCIE) ? 1UL : 0UL);
-}
-/**
- * @}
- */
+	/**
+	 * @brief Enable trigger overrun interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           TOIE       LL_DMA_EnableIT_TO
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TOIE);
+	}
+
+	/**
+	 * @brief Enable suspension interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           SUSPIE       LL_DMA_EnableIT_SUSP
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_SUSPIE);
+	}
+
+	/**
+	 * @brief Enable user setting error interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           USEIE        LL_DMA_EnableIT_USE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_USEIE);
+	}
+
+	/**
+	 * @brief Enable update link transfer error interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           ULEIE        LL_DMA_EnableIT_ULE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_ULEIE);
+	}
+
+	/**
+	 * @brief Enable data transfer error interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           DTEIE        LL_DMA_EnableIT_DTE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_DTEIE);
+	}
+
+	/**
+	 * @brief Enable half transfer complete interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           HTIE         LL_DMA_EnableIT_HT
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_HTIE);
+	}
+
+	/**
+	 * @brief Enable transfer complete interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           TCIE         LL_DMA_EnableIT_TC
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_EnableIT_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		SET_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TCIE);
+	}
+
+	/**
+	 * @brief Disable trigger overrun interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           TOIE       LL_DMA_DisableIT_TO
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TOIE);
+	}
+
+	/**
+	 * @brief Disable suspension interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           SUSPIE       LL_DMA_DisableIT_SUSP
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_SUSPIE);
+	}
+
+	/**
+	 * @brief Disable user setting error interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           USEIE        LL_DMA_DisableIT_USE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_USEIE);
+	}
+
+	/**
+	 * @brief Disable update link transfer error interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           ULEIE        LL_DMA_DisableIT_ULE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_ULEIE);
+	}
+
+	/**
+	 * @brief Disable data transfer error interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           DTEIE        LL_DMA_DisableIT_DTE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_DTEIE);
+	}
+
+	/**
+	 * @brief Disable half transfer complete interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           HTIE         LL_DMA_DisableIT_HT
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_HTIE);
+	}
+
+	/**
+	 * @brief Disable transfer complete interrupt.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           TCIE         LL_DMA_DisableIT_TC
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval None.
+	 */
+	__STATIC_INLINE void LL_DMA_DisableIT_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		CLEAR_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TCIE);
+	}
+
+	/**
+	 * @brief Check if trigger overrun interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           TOIE       LL_DMA_IsEnabledIT_TO
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TO(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TOIE) == DMA_CCR_TOIE) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Check if suspension interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           SUSPIE       LL_DMA_IsEnabledIT_SUSP
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_SUSP(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_SUSPIE) == DMA_CCR_SUSPIE) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Check if user setting error interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR           USEIE        LL_DMA_IsEnabledIT_USE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_USE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_USEIE) == DMA_CCR_USEIE) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Check if update link transfer error interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR        ULEIE         LL_DMA_IsEnabledIT_ULE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_ULE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_ULEIE) == DMA_CCR_ULEIE) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Check if data transfer error interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR        DTEIE         LL_DMA_IsEnabledIT_DTE
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_DTE(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_DTEIE) == DMA_CCR_DTEIE) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Check if half transfer complete interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR        HTIE         LL_DMA_IsEnabledIT_HT
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_HT(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_HTIE) == DMA_CCR_HTIE) ? 1UL : 0UL);
+	}
+
+	/**
+	 * @brief Check if transfer complete interrupt is enabled.
+	 * @note  This API is used for all available DMA channels.
+	 * @rmtoll CCR        TCIE         LL_DMA_IsEnabledIT_TC
+	 * @param  DMAx DMAx Instance
+	 * @param  Channel This parameter can be one of the following values:
+	 *         @arg @ref LL_DMA_CHANNEL_0
+	 *         @arg @ref LL_DMA_CHANNEL_1
+	 *         @arg @ref LL_DMA_CHANNEL_2
+	 *         @arg @ref LL_DMA_CHANNEL_3
+	 *         @arg @ref LL_DMA_CHANNEL_4
+	 *         @arg @ref LL_DMA_CHANNEL_5
+	 *         @arg @ref LL_DMA_CHANNEL_6
+	 *         @arg @ref LL_DMA_CHANNEL_7
+	 *         @arg @ref LL_DMA_CHANNEL_8
+	 *         @arg @ref LL_DMA_CHANNEL_9
+	 *         @arg @ref LL_DMA_CHANNEL_10
+	 *         @arg @ref LL_DMA_CHANNEL_11
+	 *         @arg @ref LL_DMA_CHANNEL_12
+	 *         @arg @ref LL_DMA_CHANNEL_13
+	 *         @arg @ref LL_DMA_CHANNEL_14
+	 *         @arg @ref LL_DMA_CHANNEL_15
+	 * @retval State of bit (1 or 0).
+	 */
+	__STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TC(const DMA_TypeDef *DMAx, uint32_t Channel)
+	{
+		uint32_t dma_base_addr = (uint32_t)DMAx;
+		return ((READ_BIT(((DMA_Channel_TypeDef *)(dma_base_addr + LL_DMA_CH_OFFSET_TAB[Channel & LL_DMA_CHANNEL_MAX]))->CCR, DMA_CCR_TCIE) == DMA_CCR_TCIE) ? 1UL : 0UL);
+	}
+	/**
+	 * @}
+	 */
 
 #if defined(USE_FULL_LL_DRIVER)
-/** @defgroup DMA_LL_EF_Init Initialization and de-initialization functions
- * @{
- */
-uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DMA_InitStruct);
-uint32_t LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel);
+	/** @defgroup DMA_LL_EF_Init Initialization and de-initialization functions
+	 * @{
+	 */
+	uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DMA_InitStruct);
+	uint32_t LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel);
 
-void LL_DMA_StructInit(LL_DMA_InitTypeDef *DMA_InitStruct);
-void LL_DMA_ListStructInit(LL_DMA_InitLinkedListTypeDef *DMA_InitLinkedListStruct);
-void LL_DMA_NodeStructInit(LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct);
+	void LL_DMA_StructInit(LL_DMA_InitTypeDef *DMA_InitStruct);
+	void LL_DMA_ListStructInit(LL_DMA_InitLinkedListTypeDef *DMA_InitLinkedListStruct);
+	void LL_DMA_NodeStructInit(LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct);
 
-uint32_t LL_DMA_List_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitLinkedListTypeDef *DMA_InitLinkedListStruct);
-uint32_t LL_DMA_List_DeInit(DMA_TypeDef *DMAx, uint32_t Channel);
+	uint32_t LL_DMA_List_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitLinkedListTypeDef *DMA_InitLinkedListStruct);
+	uint32_t LL_DMA_List_DeInit(DMA_TypeDef *DMAx, uint32_t Channel);
 
-uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct, LL_DMA_LinkNodeTypeDef *pNode);
-void LL_DMA_ConnectLinkNode(LL_DMA_LinkNodeTypeDef *pPrevLinkNode, uint32_t PrevNodeCLLRIdx, LL_DMA_LinkNodeTypeDef *pNewLinkNode, uint32_t NewNodeCLLRIdx);
-void LL_DMA_DisconnectNextLinkNode(LL_DMA_LinkNodeTypeDef *pLinkNode, uint32_t LinkNodeCLLRIdx);
+	uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct, LL_DMA_LinkNodeTypeDef *pNode);
+	void LL_DMA_ConnectLinkNode(LL_DMA_LinkNodeTypeDef *pPrevLinkNode, uint32_t PrevNodeCLLRIdx, LL_DMA_LinkNodeTypeDef *pNewLinkNode, uint32_t NewNodeCLLRIdx);
+	void LL_DMA_DisconnectNextLinkNode(LL_DMA_LinkNodeTypeDef *pLinkNode, uint32_t LinkNodeCLLRIdx);
 /**
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* GPDMA1 || LPDMA1 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

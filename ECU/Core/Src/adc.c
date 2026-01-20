@@ -137,7 +137,8 @@ void MX_ADC1_Init(void)
 	/* is only a few CPU processing cycles. */
 	uint32_t wait_loop_index;
 	wait_loop_index = ((LL_ADC_DELAY_INTERNAL_REGUL_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
-	while (wait_loop_index != 0) {
+	while (wait_loop_index != 0)
+	{
 		wait_loop_index--;
 	}
 
@@ -284,7 +285,8 @@ void MX_ADC2_Init(void)
 	/* is only a few CPU processing cycles. */
 	uint32_t wait_loop_index;
 	wait_loop_index = ((LL_ADC_DELAY_INTERNAL_REGUL_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
-	while (wait_loop_index != 0) {
+	while (wait_loop_index != 0)
+	{
 		wait_loop_index--;
 	}
 

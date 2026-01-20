@@ -199,18 +199,21 @@ de-initialization functions
 HAL_StatusTypeDef HAL_GPU2D_Init(GPU2D_HandleTypeDef *hgpu2d)
 {
 	/* Check the GPU2D handle validity */
-	if (hgpu2d == NULL) {
+	if (hgpu2d == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check the parameters */
 	assert_param(IS_GPU2D_ALL_INSTANCE(hgpu2d->Instance));
 
-	if (hgpu2d->State == HAL_GPU2D_STATE_RESET) {
+	if (hgpu2d->State == HAL_GPU2D_STATE_RESET)
+	{
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
 		/* Reset Callback pointers in HAL_GPU2D_STATE_RESET only */
 		hgpu2d->CommandListCpltCallback = HAL_GPU2D_CommandListCpltCallback;
-		if (hgpu2d->MspInitCallback == NULL) {
+		if (hgpu2d->MspInitCallback == NULL)
+		{
 			hgpu2d->MspInitCallback = HAL_GPU2D_MspInit;
 		}
 
@@ -255,7 +258,8 @@ HAL_StatusTypeDef HAL_GPU2D_Init(GPU2D_HandleTypeDef *hgpu2d)
 HAL_StatusTypeDef HAL_GPU2D_DeInit(GPU2D_HandleTypeDef *hgpu2d)
 {
 	/* Check the GPU2D handle validity */
-	if (hgpu2d == NULL) {
+	if (hgpu2d == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -265,9 +269,11 @@ HAL_StatusTypeDef HAL_GPU2D_DeInit(GPU2D_HandleTypeDef *hgpu2d)
 	/* Process locked */
 	__HAL_LOCK(hgpu2d);
 
-	if (hgpu2d->State == HAL_GPU2D_STATE_READY) {
+	if (hgpu2d->State == HAL_GPU2D_STATE_READY)
+	{
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-		if (hgpu2d->MspDeInitCallback == NULL) {
+		if (hgpu2d->MspDeInitCallback == NULL)
+		{
 			hgpu2d->MspDeInitCallback = HAL_GPU2D_MspDeInit;
 		}
 
@@ -347,7 +353,8 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GP
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the GPU2D handle validity */
-	if (hgpu2d == NULL) {
+	if (hgpu2d == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -355,13 +362,18 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GP
 	__HAL_LOCK(hgpu2d);
 
 	/* Check the pCallback parameter is valid or not */
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
 		status = HAL_ERROR;
-	} else {
-		if ((hgpu2d->State == HAL_GPU2D_STATE_READY) || (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
-			switch (CallbackID) {
+	}
+	else
+	{
+		if ((hgpu2d->State == HAL_GPU2D_STATE_READY) || (hgpu2d->State == HAL_GPU2D_STATE_RESET))
+		{
+			switch (CallbackID)
+			{
 				case HAL_GPU2D_MSPINIT_CB_ID:
 					hgpu2d->MspInitCallback = pCallback;
 					break;
@@ -376,7 +388,9 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GP
 					status = HAL_ERROR;
 					break;
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 		}
 	}
@@ -405,15 +419,18 @@ HAL_StatusTypeDef HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the GPU2D handle validity */
-	if (hgpu2d == NULL) {
+	if (hgpu2d == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Process locked */
 	__HAL_LOCK(hgpu2d);
 
-	if ((HAL_GPU2D_STATE_READY == hgpu2d->State) || (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
-		switch (CallbackID) {
+	if ((HAL_GPU2D_STATE_READY == hgpu2d->State) || (HAL_GPU2D_STATE_RESET == hgpu2d->State))
+	{
+		switch (CallbackID)
+		{
 			case HAL_GPU2D_MSPINIT_CB_ID:
 				hgpu2d->MspInitCallback = HAL_GPU2D_MspInit; /* Legacy weak Msp Init
 									      */
@@ -430,7 +447,9 @@ HAL_StatusTypeDef HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 	}
 
@@ -453,7 +472,8 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(GPU2D_HandleTypeDef 
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the GPU2D handle validity */
-	if (hgpu2d == NULL) {
+	if (hgpu2d == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -461,14 +481,20 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(GPU2D_HandleTypeDef 
 	__HAL_LOCK(hgpu2d);
 
 	/* Check the CallbackID is valid or not */
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
 		status = HAL_ERROR;
-	} else {
-		if ((HAL_GPU2D_STATE_READY == hgpu2d->State) || (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
+	}
+	else
+	{
+		if ((HAL_GPU2D_STATE_READY == hgpu2d->State) || (HAL_GPU2D_STATE_RESET == hgpu2d->State))
+		{
 			hgpu2d->CommandListCpltCallback = pCallback;
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 		}
 	}
@@ -492,16 +518,20 @@ HAL_StatusTypeDef HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDe
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the GPU2D handle validity */
-	if (hgpu2d == NULL) {
+	if (hgpu2d == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Process locked */
 	__HAL_LOCK(hgpu2d);
 
-	if ((hgpu2d->State == HAL_GPU2D_STATE_READY) || (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
+	if ((hgpu2d->State == HAL_GPU2D_STATE_READY) || (hgpu2d->State == HAL_GPU2D_STATE_RESET))
+	{
 		hgpu2d->CommandListCpltCallback = NULL; /* Invalidate the Callback pointer */
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 	}
 
@@ -595,7 +625,8 @@ void HAL_GPU2D_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
 	uint32_t isr_flags = GPU2D_ReadReg(hgpu2d->Instance, GPU2D_ITCTRL);
 
 	/* Command List Complete Interrupt management */
-	if ((isr_flags & GPU2D_FLAG_CLC) != 0U) {
+	if ((isr_flags & GPU2D_FLAG_CLC) != 0U)
+	{
 		uint32_t last_cl_id;
 
 		/* Clear the completion flag */
@@ -605,7 +636,8 @@ void HAL_GPU2D_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
 
 		/* Command List Complete Callback */
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-		if (hgpu2d->CommandListCpltCallback != NULL) {
+		if (hgpu2d->CommandListCpltCallback != NULL)
+		{
 			hgpu2d->CommandListCpltCallback(hgpu2d, last_cl_id);
 		}
 #else  /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 0 */
@@ -658,7 +690,8 @@ __weak void HAL_GPU2D_ErrorCallback(GPU2D_HandleTypeDef *hgpu2d)
 	   considered fatal and non recoverable.
 	 */
 
-	for (;;) {
+	for (;;)
+	{
 		/* infinite loop */
 	}
 }

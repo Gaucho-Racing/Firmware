@@ -21,7 +21,8 @@
 #define STM32U5xx_HAL_CONF_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Exported types ------------------------------------------------------------*/
@@ -255,8 +256,8 @@ extern "C" {
  */
 #define USE_SPI_CRC 0U
 
-/* ################## SDMMC peripheral configuration #########################
- */
+	/* ################## SDMMC peripheral configuration #########################
+	 */
 
 #define USE_SD_TRANSCEIVER 0U
 
@@ -265,10 +266,10 @@ extern "C" {
 #define USE_SDIO_TRANSCEIVER 0U
 #define SDIO_MAX_IO_NUMBER 7U
 
-/* Includes ------------------------------------------------------------------*/
-/**
- * @brief Include module's header file
- */
+	/* Includes ------------------------------------------------------------------*/
+	/**
+	 * @brief Include module's header file
+	 */
 
 #ifdef HAL_RCC_MODULE_ENABLED
 #include "stm32u5xx_hal_rcc.h"
@@ -513,8 +514,8 @@ extern "C" {
  * @retval None
  */
 #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
-/* Exported functions ------------------------------------------------------- */
-void assert_failed(uint8_t *file, uint32_t line);
+	/* Exported functions ------------------------------------------------------- */
+	void assert_failed(uint8_t *file, uint32_t line);
 #else
 #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */

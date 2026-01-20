@@ -206,30 +206,36 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* Current operation type */
 		pFlash.ProcedureOnGoing = pEraseInit->TypeErase;
 
 		/* Access to SECCR or NSCR depends on operation type */
 		reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH->NSCR);
 
-		if ((pEraseInit->TypeErase & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE) {
+		if ((pEraseInit->TypeErase & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE)
+		{
 			/* Mass erase to be done */
 			FLASH_MassErase(pEraseInit->Banks);
 
 			/* Wait for last operation to be completed */
 			status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
-		} else {
+		}
+		else
+		{
 			/*Initialization of PageError variable*/
 			*PageError = 0xFFFFFFFFU;
 
-			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages); page_index++) {
+			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages); page_index++)
+			{
 				FLASH_PageErase(page_index, pEraseInit->Banks);
 
 				/* Wait for last operation to be completed */
 				status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-				if (status != HAL_OK) {
+				if (status != HAL_OK)
+				{
 					/* In case of error, stop erase
 					 * procedure and return the faulty page
 					 */
@@ -275,10 +281,13 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status != HAL_OK) {
+	if (status != HAL_OK)
+	{
 		/* Process Unlocked */
 		__HAL_UNLOCK(&pFlash);
-	} else {
+	}
+	else
+	{
 		/* Set internal variables used by the IRQ handler */
 		pFlash.ProcedureOnGoing = pEraseInit->TypeErase;
 		pFlash.Bank = pEraseInit->Banks;
@@ -289,10 +298,13 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
 		/* Enable End of Operation and Error interrupts */
 		(*reg_cr) |= (FLASH_IT_EOP | FLASH_IT_OPERR);
 
-		if ((pEraseInit->TypeErase & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE) {
+		if ((pEraseInit->TypeErase & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE)
+		{
 			/* Mass erase to be done */
 			FLASH_MassErase(pEraseInit->Banks);
-		} else {
+		}
+		else
+		{
 			/* Erase by page to be done */
 			pFlash.NbPagesToErase = pEraseInit->NbPages;
 			pFlash.Page = pEraseInit->Page;
@@ -336,47 +348,55 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* Write protection configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_WRP) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_WRP) != 0U)
+		{
 			/* Configure of Write protection on the selected area */
 			FLASH_OB_WRPConfig(pOBInit->WRPArea, pOBInit->WRPStartOffset, pOBInit->WRPEndOffset, pOBInit->WRPLock);
 		}
 
 		/* Read protection configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_RDP) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_RDP) != 0U)
+		{
 			/* Configure the Read protection level */
 			FLASH_OB_RDPConfig(pOBInit->RDPLevel);
 		}
 
 		/* Read protection key configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_RDPKEY) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_RDPKEY) != 0U)
+		{
 			/* Configure the Read protection key */
 			FLASH_OB_RDPKeyConfig(pOBInit->RDPKeyType, pOBInit->RDPKey1, pOBInit->RDPKey2);
 		}
 
 		/* User Configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_USER) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_USER) != 0U)
+		{
 			/* Configure the user option bytes */
 			FLASH_OB_UserConfig(pOBInit->USERType, pOBInit->USERConfig);
 		}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 		/* Watermark secure configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_WMSEC) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_WMSEC) != 0U)
+		{
 			/* Configure the watermark-based secure area */
 			FLASH_OB_WMSECConfig(pOBInit->WMSecConfig, pOBInit->WMSecStartPage, pOBInit->WMSecEndPage, pOBInit->WMHDPEndPage);
 		}
 
 		/* Unique boot entry point configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_BOOT_LOCK) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_BOOT_LOCK) != 0U)
+		{
 			/* Configure the unique boot entry point */
 			FLASH_OB_BootLockConfig(pOBInit->BootLock);
 		}
 #endif /* __ARM_FEATURE_CMSE */
 
 		/* Boot address configuration */
-		if ((pOBInit->OptionType & OPTIONBYTE_BOOTADDR) != 0U) {
+		if ((pOBInit->OptionType & OPTIONBYTE_BOOTADDR) != 0U)
+		{
 			/* Configure the boot address */
 			FLASH_OB_BootAddrConfig(pOBInit->BootAddrConfig, pOBInit->BootAddr);
 		}
@@ -409,7 +429,8 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 	pOBInit->OptionType = (OPTIONBYTE_RDP | OPTIONBYTE_USER);
 
 	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) || (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB)) {
+	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB))
+	{
 		pOBInit->OptionType |= OPTIONBYTE_WRP;
 		/* Get write protection on the selected area */
 		FLASH_OB_GetWRP(pOBInit->WRPArea, &(pOBInit->WRPStartOffset), &(pOBInit->WRPEndOffset), &(pOBInit->WRPLock));
@@ -424,7 +445,8 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Get the configuration of the watermark secure area for the selected
 	 * area */
-	if ((pOBInit->WMSecConfig == OB_WMSEC_AREA1) || (pOBInit->WMSecConfig == OB_WMSEC_AREA2)) {
+	if ((pOBInit->WMSecConfig == OB_WMSEC_AREA1) || (pOBInit->WMSecConfig == OB_WMSEC_AREA2))
+	{
 		pOBInit->OptionType |= OPTIONBYTE_WMSEC;
 		FLASH_OB_GetWMSEC(&(pOBInit->WMSecConfig), &(pOBInit->WMSecStartPage), &(pOBInit->WMSecEndPage), &(pOBInit->WMHDPEndPage));
 	}
@@ -473,30 +495,41 @@ HAL_StatusTypeDef HAL_FLASHEx_ConfigBBAttributes(FLASH_BBAttributesTypeDef *pBBA
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* Set the first Block-Based register to write */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-		if (pBBAttributes->BBAttributesType == FLASH_BB_SEC) {
-			if (pBBAttributes->Bank == FLASH_BANK_1) {
+		if (pBBAttributes->BBAttributesType == FLASH_BB_SEC)
+		{
+			if (pBBAttributes->Bank == FLASH_BANK_1)
+			{
 				reg = &(FLASH->SECBB1R1);
-			} else {
+			}
+			else
+			{
 				reg = &(FLASH->SECBB2R1);
 			}
-		} else
+		}
+		else
 #endif /* __ARM_FEATURE_CMSE */
 		{
-			if (pBBAttributes->Bank == FLASH_BANK_1) {
+			if (pBBAttributes->Bank == FLASH_BANK_1)
+			{
 				reg = &(FLASH->PRIVBB1R1);
-			} else {
+			}
+			else
+			{
 				reg = &(FLASH->PRIVBB2R1);
 			}
 		}
 
 		/* Modify the register values and check that new attributes are
 		 * taken in account */
-		for (index = 0; index < FLASH_BLOCKBASED_NB_REG; index++) {
+		for (index = 0; index < FLASH_BLOCKBASED_NB_REG; index++)
+		{
 			*reg = pBBAttributes->BBAttributes_array[index];
-			if ((*reg) != pBBAttributes->BBAttributes_array[index]) {
+			if ((*reg) != pBBAttributes->BBAttributes_array[index])
+			{
 				status = HAL_ERROR;
 			}
 			reg++;
@@ -535,22 +568,32 @@ void HAL_FLASHEx_GetConfigBBAttributes(FLASH_BBAttributesTypeDef *pBBAttributes)
 	assert_param(IS_FLASH_BB_EXCLUSIVE(pBBAttributes->BBAttributesType));
 
 	/* Set the first Block-Based register to read */
-	if (pBBAttributes->BBAttributesType == FLASH_BB_SEC) {
-		if (pBBAttributes->Bank == FLASH_BANK_1) {
+	if (pBBAttributes->BBAttributesType == FLASH_BB_SEC)
+	{
+		if (pBBAttributes->Bank == FLASH_BANK_1)
+		{
 			reg = &(FLASH->SECBB1R1);
-		} else {
+		}
+		else
+		{
 			reg = &(FLASH->SECBB2R1);
 		}
-	} else {
-		if (pBBAttributes->Bank == FLASH_BANK_1) {
+	}
+	else
+	{
+		if (pBBAttributes->Bank == FLASH_BANK_1)
+		{
 			reg = &(FLASH->PRIVBB1R1);
-		} else {
+		}
+		else
+		{
 			reg = &(FLASH->PRIVBB2R1);
 		}
 	}
 
 	/* Read the register values */
-	for (index = 0; index < FLASH_BLOCKBASED_NB_REG; index++) {
+	for (index = 0; index < FLASH_BLOCKBASED_NB_REG; index++)
+	{
 		pBBAttributes->BBAttributes_array[index] = (*reg);
 		reg++;
 	}
@@ -573,11 +616,13 @@ void HAL_FLASHEx_EnableSecHideProtection(uint32_t Banks)
 	/* Check the parameters */
 	assert_param(IS_FLASH_BANK(Banks));
 
-	if ((Banks & FLASH_BANK_1) != 0U) {
+	if ((Banks & FLASH_BANK_1) != 0U)
+	{
 		SET_BIT(FLASH->SECHDPCR, FLASH_SECHDPCR_HDP1_ACCDIS);
 	}
 
-	if ((Banks & FLASH_BANK_2) != 0U) {
+	if ((Banks & FLASH_BANK_2) != 0U)
+	{
 		SET_BIT(FLASH->SECHDPCR, FLASH_SECHDPCR_HDP2_ACCDIS);
 	}
 }
@@ -657,7 +702,8 @@ HAL_StatusTypeDef HAL_FLASHEx_ConfigSecInversion(uint32_t SecInvState)
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		MODIFY_REG(FLASH->SECCR, FLASH_SECCR_INV, SecInvState);
 	}
 
@@ -697,14 +743,20 @@ HAL_StatusTypeDef HAL_FLASHEx_EnablePowerDown(uint32_t Banks)
 	assert_param(IS_FLASH_BANK(Banks));
 
 	/* Request power-down mode for Bank 1 */
-	if ((Banks & FLASH_BANK_1) != 0U) {
+	if ((Banks & FLASH_BANK_1) != 0U)
+	{
 		/* Check PD1 and PDREQ1 bits (Bank 1 is not in power-down mode
 		   and not being already under power-down request) */
-		if ((FLASH->NSSR & FLASH_NSSR_PD1) != 0U) {
+		if ((FLASH->NSSR & FLASH_NSSR_PD1) != 0U)
+		{
 			status = HAL_ERROR;
-		} else if ((FLASH->ACR & FLASH_ACR_PDREQ1) != 0U) {
+		}
+		else if ((FLASH->ACR & FLASH_ACR_PDREQ1) != 0U)
+		{
 			status = HAL_ERROR;
-		} else {
+		}
+		else
+		{
 			/* Unlock PDREQ1 bit */
 			WRITE_REG(FLASH->PDKEY1R, FLASH_PDKEY1_1);
 			WRITE_REG(FLASH->PDKEY1R, FLASH_PDKEY1_2);
@@ -714,8 +766,10 @@ HAL_StatusTypeDef HAL_FLASHEx_EnablePowerDown(uint32_t Banks)
 
 			/* Check PD1 bit */
 			tickstart = HAL_GetTick();
-			while (((FLASH->NSSR & FLASH_NSSR_PD1) != FLASH_NSSR_PD1)) {
-				if ((HAL_GetTick() - tickstart) > FLASH_TIMEOUT_VALUE) {
+			while (((FLASH->NSSR & FLASH_NSSR_PD1) != FLASH_NSSR_PD1))
+			{
+				if ((HAL_GetTick() - tickstart) > FLASH_TIMEOUT_VALUE)
+				{
 					return HAL_TIMEOUT;
 				}
 			}
@@ -723,14 +777,20 @@ HAL_StatusTypeDef HAL_FLASHEx_EnablePowerDown(uint32_t Banks)
 	}
 
 	/* Request power-down mode for Bank 2 */
-	if ((Banks & FLASH_BANK_2) != 0U) {
+	if ((Banks & FLASH_BANK_2) != 0U)
+	{
 		/* Check PD2 and PDREQ2 bits (Bank 2 is not in power-down mode
 		   and not being already under power-down request) */
-		if ((FLASH->NSSR & FLASH_NSSR_PD2) != 0U) {
+		if ((FLASH->NSSR & FLASH_NSSR_PD2) != 0U)
+		{
 			status = HAL_ERROR;
-		} else if ((FLASH->ACR & FLASH_ACR_PDREQ2) != 0U) {
+		}
+		else if ((FLASH->ACR & FLASH_ACR_PDREQ2) != 0U)
+		{
 			status = HAL_ERROR;
-		} else {
+		}
+		else
+		{
 			/* Unlock PDREQ2 bit */
 			WRITE_REG(FLASH->PDKEY2R, FLASH_PDKEY2_1);
 			WRITE_REG(FLASH->PDKEY2R, FLASH_PDKEY2_2);
@@ -740,8 +800,10 @@ HAL_StatusTypeDef HAL_FLASHEx_EnablePowerDown(uint32_t Banks)
 
 			/* Check PD2 bit */
 			tickstart = HAL_GetTick();
-			while (((FLASH->NSSR & FLASH_NSSR_PD2) != FLASH_NSSR_PD2)) {
-				if ((HAL_GetTick() - tickstart) > FLASH_TIMEOUT_VALUE) {
+			while (((FLASH->NSSR & FLASH_NSSR_PD2) != FLASH_NSSR_PD2))
+			{
+				if ((HAL_GetTick() - tickstart) > FLASH_TIMEOUT_VALUE)
+				{
 					return HAL_TIMEOUT;
 				}
 			}
@@ -772,7 +834,8 @@ HAL_StatusTypeDef HAL_FLASHEx_ConfigLowPowerRead(uint32_t ConfigLPM)
 	MODIFY_REG(FLASH->ACR, FLASH_ACR_LPM, ConfigLPM);
 
 	/* Check that low power read mode has been activated */
-	if (READ_BIT(FLASH->ACR, FLASH_ACR_LPM) != ConfigLPM) {
+	if (READ_BIT(FLASH->ACR, FLASH_ACR_LPM) != ConfigLPM)
+	{
 		status = HAL_ERROR;
 	}
 
@@ -844,12 +907,14 @@ static void FLASH_MassErase(uint32_t Banks)
 	reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
 	/* Set the Mass Erase Bit for the bank 1 and proceed to erase */
-	if ((Banks & FLASH_BANK_1) != 0U) {
+	if ((Banks & FLASH_BANK_1) != 0U)
+	{
 		SET_BIT((*reg_cr), FLASH_NSCR_MER1 | FLASH_NSCR_STRT);
 	}
 
 	/* Set the Mass Erase Bit for the bank 2 and proceed to erase */
-	if ((Banks & FLASH_BANK_2) != 0U) {
+	if ((Banks & FLASH_BANK_2) != 0U)
+	{
 		SET_BIT((*reg_cr), FLASH_NSCR_MER2 | FLASH_NSCR_STRT);
 	}
 }
@@ -876,9 +941,12 @@ void FLASH_PageErase(uint32_t Page, uint32_t Banks)
 	/* Access to SECCR or NSCR registers depends on operation type */
 	reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
-	if ((Banks & FLASH_BANK_1) != 0U) {
+	if ((Banks & FLASH_BANK_1) != 0U)
+	{
 		CLEAR_BIT((*reg_cr), FLASH_NSCR_BKER);
-	} else {
+	}
+	else
+	{
 		SET_BIT((*reg_cr), FLASH_NSCR_BKER);
 	}
 
@@ -927,15 +995,24 @@ static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32
 	assert_param(IS_FUNCTIONAL_STATE(WRPLock));
 
 	/* Configure the write protected area */
-	if (WRPArea == OB_WRPAREA_BANK1_AREAA) {
+	if (WRPArea == OB_WRPAREA_BANK1_AREAA)
+	{
 		FLASH->WRP1AR = (((uint32_t)(~WRPLock) << FLASH_WRP1AR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP1AR_WRP1A_PEND_Pos) | WRPStartOffset);
-	} else if (WRPArea == OB_WRPAREA_BANK1_AREAB) {
+	}
+	else if (WRPArea == OB_WRPAREA_BANK1_AREAB)
+	{
 		FLASH->WRP1BR = (((uint32_t)(~WRPLock) << FLASH_WRP1BR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP1BR_WRP1B_PEND_Pos) | WRPStartOffset);
-	} else if (WRPArea == OB_WRPAREA_BANK2_AREAA) {
+	}
+	else if (WRPArea == OB_WRPAREA_BANK2_AREAA)
+	{
 		FLASH->WRP2AR = (((uint32_t)(~WRPLock) << FLASH_WRP2AR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP2AR_WRP2A_PEND_Pos) | WRPStartOffset);
-	} else if (WRPArea == OB_WRPAREA_BANK2_AREAB) {
+	}
+	else if (WRPArea == OB_WRPAREA_BANK2_AREAB)
+	{
 		FLASH->WRP2BR = (((uint32_t)(~WRPLock) << FLASH_WRP2BR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP2BR_WRP2B_PEND_Pos) | WRPStartOffset);
-	} else {
+	}
+	else
+	{
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 }
@@ -984,10 +1061,13 @@ static void FLASH_OB_RDPKeyConfig(uint32_t RDPKeyType, uint32_t RDPKey1, uint32_
 	assert_param(IS_OB_RDP_KEY_TYPE(RDPKeyType));
 
 	/* Configure the RDP OEM key */
-	if (RDPKeyType == OB_RDP_KEY_OEM1) {
+	if (RDPKeyType == OB_RDP_KEY_OEM1)
+	{
 		WRITE_REG(FLASH->OEM1KEYR1, RDPKey1);
 		WRITE_REG(FLASH->OEM1KEYR2, RDPKey2);
-	} else {
+	}
+	else
+	{
 		WRITE_REG(FLASH->OEM2KEYR1, RDPKey1);
 		WRITE_REG(FLASH->OEM2KEYR2, RDPKey2);
 	}
@@ -1024,7 +1104,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 	/* Check the parameters */
 	assert_param(IS_OB_USER_TYPE(UserType));
 
-	if ((UserType & OB_USER_BOR_LEV) != 0U) {
+	if ((UserType & OB_USER_BOR_LEV) != 0U)
+	{
 		/* BOR level option byte should be modified */
 		assert_param(IS_OB_USER_BOR_LEVEL(UserConfig & FLASH_OPTR_BOR_LEV));
 
@@ -1033,7 +1114,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_BOR_LEV;
 	}
 
-	if ((UserType & OB_USER_NRST_STOP) != 0U) {
+	if ((UserType & OB_USER_NRST_STOP) != 0U)
+	{
 		/* nRST_STOP option byte should be modified */
 		assert_param(IS_OB_USER_STOP(UserConfig & FLASH_OPTR_nRST_STOP));
 
@@ -1042,7 +1124,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_nRST_STOP;
 	}
 
-	if ((UserType & OB_USER_NRST_STDBY) != 0U) {
+	if ((UserType & OB_USER_NRST_STDBY) != 0U)
+	{
 		/* nRST_STDBY option byte should be modified */
 		assert_param(IS_OB_USER_STANDBY(UserConfig & FLASH_OPTR_nRST_STDBY));
 
@@ -1051,7 +1134,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_nRST_STDBY;
 	}
 
-	if ((UserType & OB_USER_NRST_SHDW) != 0U) {
+	if ((UserType & OB_USER_NRST_SHDW) != 0U)
+	{
 		/* nRST_SHDW option byte should be modified */
 		assert_param(IS_OB_USER_SHUTDOWN(UserConfig & FLASH_OPTR_nRST_SHDW));
 
@@ -1060,7 +1144,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_nRST_SHDW;
 	}
 
-	if ((UserType & OB_USER_SRAM_RST) != 0U) {
+	if ((UserType & OB_USER_SRAM_RST) != 0U)
+	{
 		/* SRAM_RST option byte should be modified */
 		assert_param(IS_OB_USER_SRAM_RST(UserConfig & FLASH_OPTR_SRAM_RST));
 
@@ -1069,7 +1154,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_SRAM_RST;
 	}
 
-	if ((UserType & OB_USER_IWDG_SW) != 0U) {
+	if ((UserType & OB_USER_IWDG_SW) != 0U)
+	{
 		/* IWDG_SW option byte should be modified */
 		assert_param(IS_OB_USER_IWDG(UserConfig & FLASH_OPTR_IWDG_SW));
 
@@ -1078,7 +1164,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_IWDG_SW;
 	}
 
-	if ((UserType & OB_USER_IWDG_STOP) != 0U) {
+	if ((UserType & OB_USER_IWDG_STOP) != 0U)
+	{
 		/* IWDG_STOP option byte should be modified */
 		assert_param(IS_OB_USER_IWDG_STOP(UserConfig & FLASH_OPTR_IWDG_STOP));
 
@@ -1087,7 +1174,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_IWDG_STOP;
 	}
 
-	if ((UserType & OB_USER_IWDG_STDBY) != 0U) {
+	if ((UserType & OB_USER_IWDG_STDBY) != 0U)
+	{
 		/* IWDG_STDBY option byte should be modified */
 		assert_param(IS_OB_USER_IWDG_STDBY(UserConfig & FLASH_OPTR_IWDG_STDBY));
 
@@ -1096,7 +1184,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_IWDG_STDBY;
 	}
 
-	if ((UserType & OB_USER_WWDG_SW) != 0U) {
+	if ((UserType & OB_USER_WWDG_SW) != 0U)
+	{
 		/* WWDG_SW option byte should be modified */
 		assert_param(IS_OB_USER_WWDG(UserConfig & FLASH_OPTR_WWDG_SW));
 
@@ -1105,7 +1194,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_WWDG_SW;
 	}
 
-	if ((UserType & OB_USER_SWAP_BANK) != 0U) {
+	if ((UserType & OB_USER_SWAP_BANK) != 0U)
+	{
 		/* SWAP_BANK option byte should be modified */
 		assert_param(IS_OB_USER_SWAP_BANK(UserConfig & FLASH_OPTR_SWAP_BANK));
 
@@ -1114,7 +1204,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_SWAP_BANK;
 	}
 
-	if ((UserType & OB_USER_DUALBANK) != 0U) {
+	if ((UserType & OB_USER_DUALBANK) != 0U)
+	{
 		/* DUALBANK option byte should be modified */
 		assert_param(IS_OB_USER_DUALBANK(UserConfig & FLASH_OPTR_DUALBANK));
 
@@ -1123,7 +1214,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_DUALBANK;
 	}
 
-	if ((UserType & OB_USER_BKPRAM_ECC) != 0U) {
+	if ((UserType & OB_USER_BKPRAM_ECC) != 0U)
+	{
 		/* BKPRAM_ECC option byte should be modified */
 		assert_param(IS_OB_USER_BKPRAM_ECC(UserConfig & FLASH_OPTR_BKPRAM_ECC));
 
@@ -1132,7 +1224,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_BKPRAM_ECC;
 	}
 #if defined(SRAM3_BASE)
-	if ((UserType & OB_USER_SRAM3_ECC) != 0U) {
+	if ((UserType & OB_USER_SRAM3_ECC) != 0U)
+	{
 		/* SRAM3_ECC option byte should be modified */
 		assert_param(IS_OB_USER_SRAM3_ECC(UserConfig & FLASH_OPTR_SRAM3_ECC));
 
@@ -1141,7 +1234,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_SRAM3_ECC;
 	}
 #endif /* SRAM3_BASE */
-	if ((UserType & OB_USER_SRAM2_ECC) != 0U) {
+	if ((UserType & OB_USER_SRAM2_ECC) != 0U)
+	{
 		/* SRAM2_ECC option byte should be modified */
 		assert_param(IS_OB_USER_SRAM2_ECC(UserConfig & FLASH_OPTR_SRAM2_ECC));
 
@@ -1150,7 +1244,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_SRAM2_ECC;
 	}
 
-	if ((UserType & OB_USER_SRAM2_RST) != 0U) {
+	if ((UserType & OB_USER_SRAM2_RST) != 0U)
+	{
 		/* SRAM2_RST option byte should be modified */
 		assert_param(IS_OB_USER_SRAM2_RST(UserConfig & FLASH_OPTR_SRAM2_RST));
 
@@ -1159,7 +1254,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_SRAM2_RST;
 	}
 
-	if ((UserType & OB_USER_NSWBOOT0) != 0U) {
+	if ((UserType & OB_USER_NSWBOOT0) != 0U)
+	{
 		/* nSWBOOT0 option byte should be modified */
 		assert_param(IS_OB_USER_SWBOOT0(UserConfig & FLASH_OPTR_nSWBOOT0));
 
@@ -1168,7 +1264,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_nSWBOOT0;
 	}
 
-	if ((UserType & OB_USER_NBOOT0) != 0U) {
+	if ((UserType & OB_USER_NBOOT0) != 0U)
+	{
 		/* nBOOT0 option byte should be modified */
 		assert_param(IS_OB_USER_BOOT0(UserConfig & FLASH_OPTR_nBOOT0));
 
@@ -1177,7 +1274,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_nBOOT0;
 	}
 
-	if ((UserType & OB_USER_PA15_PUPEN) != 0U) {
+	if ((UserType & OB_USER_PA15_PUPEN) != 0U)
+	{
 		/* PA15_PUPEN option byte should be modified */
 		assert_param(IS_OB_USER_PA15_PUPEN(UserConfig & FLASH_OPTR_PA15_PUPEN));
 
@@ -1186,7 +1284,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_PA15_PUPEN;
 	}
 
-	if ((UserType & OB_USER_IO_VDD_HSLV) != 0U) {
+	if ((UserType & OB_USER_IO_VDD_HSLV) != 0U)
+	{
 		/* IO_VDD_HSLV option byte should be modified */
 		assert_param(IS_OB_USER_IO_VDD_HSLV(UserConfig & FLASH_OPTR_IO_VDD_HSLV));
 
@@ -1195,7 +1294,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_IO_VDD_HSLV;
 	}
 
-	if ((UserType & OB_USER_IO_VDDIO2_HSLV) != 0U) {
+	if ((UserType & OB_USER_IO_VDDIO2_HSLV) != 0U)
+	{
 		/* IO_VDDIO2_HSLV option byte should be modified */
 		assert_param(IS_OB_USER_IO_VDDIO2_HSLV(UserConfig & FLASH_OPTR_IO_VDDIO2_HSLV));
 
@@ -1204,7 +1304,8 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 		optr_reg_mask |= FLASH_OPTR_IO_VDDIO2_HSLV;
 	}
 
-	if ((UserType & OB_USER_TZEN) != 0U) {
+	if ((UserType & OB_USER_TZEN) != 0U)
+	{
 		/* TZEN option byte should be modified */
 		assert_param(IS_OB_USER_TZEN(UserConfig & FLASH_OPTR_TZEN));
 
@@ -1259,45 +1360,59 @@ static void FLASH_OB_WMSECConfig(uint32_t WMSecConfig, uint32_t WMSecStartPage, 
 	assert_param(IS_FLASH_PAGE(WMHDPEndPage));
 
 	/* Read SECWM registers */
-	if ((WMSecConfig & OB_WMSEC_AREA1) != 0U) {
+	if ((WMSecConfig & OB_WMSEC_AREA1) != 0U)
+	{
 		tmp_secwm1 = FLASH->SECWM1R1;
 		tmp_secwm2 = FLASH->SECWM1R2;
-	} else if ((WMSecConfig & OB_WMSEC_AREA2) != 0U) {
+	}
+	else if ((WMSecConfig & OB_WMSEC_AREA2) != 0U)
+	{
 		tmp_secwm1 = FLASH->SECWM2R1;
 		tmp_secwm2 = FLASH->SECWM2R2;
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 
 	/* Configure Secure Area */
-	if ((WMSecConfig & OB_WMSEC_SECURE_AREA_CONFIG) != 0U) {
+	if ((WMSecConfig & OB_WMSEC_SECURE_AREA_CONFIG) != 0U)
+	{
 		tmp_secwm1 = ((WMSecEndPage << FLASH_SECWM1R1_SECWM1_PEND_Pos) | WMSecStartPage);
 	}
 
 	/* Configure Secure Hide Area */
-	if ((WMSecConfig & OB_WMSEC_HDP_AREA_CONFIG) != 0U) {
+	if ((WMSecConfig & OB_WMSEC_HDP_AREA_CONFIG) != 0U)
+	{
 		tmp_secwm2 &= (~FLASH_SECWM1R2_HDP1_PEND);
 		tmp_secwm2 |= (WMHDPEndPage << FLASH_SECWM1R2_HDP1_PEND_Pos);
 	}
 
 	/* Enable Secure Hide Area */
-	if ((WMSecConfig & OB_WMSEC_HDP_AREA_ENABLE) != 0U) {
+	if ((WMSecConfig & OB_WMSEC_HDP_AREA_ENABLE) != 0U)
+	{
 		tmp_secwm2 |= FLASH_SECWM1R2_HDP1EN;
 	}
 
 	/* Disable Secure Hide Area */
-	if ((WMSecConfig & OB_WMSEC_HDP_AREA_DISABLE) != 0U) {
+	if ((WMSecConfig & OB_WMSEC_HDP_AREA_DISABLE) != 0U)
+	{
 		tmp_secwm2 &= (~FLASH_SECWM1R2_HDP1EN);
 	}
 
 	/* Write SECWM registers */
-	if ((WMSecConfig & OB_WMSEC_AREA1) != 0U) {
+	if ((WMSecConfig & OB_WMSEC_AREA1) != 0U)
+	{
 		FLASH->SECWM1R1 = tmp_secwm1;
 		FLASH->SECWM1R2 = tmp_secwm2;
-	} else if ((WMSecConfig & OB_WMSEC_AREA2) != 0U) {
+	}
+	else if ((WMSecConfig & OB_WMSEC_AREA2) != 0U)
+	{
 		FLASH->SECWM2R1 = tmp_secwm1;
 		FLASH->SECWM2R2 = tmp_secwm2;
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 }
@@ -1341,17 +1456,22 @@ static void FLASH_OB_BootAddrConfig(uint32_t BootAddrConfig, uint32_t BootAddr)
 	/* Check the parameters */
 	assert_param(IS_OB_BOOTADDR_CONFIG(BootAddrConfig));
 
-	if (BootAddrConfig == OB_BOOTADDR_NS0) {
+	if (BootAddrConfig == OB_BOOTADDR_NS0)
+	{
 		FLASH->NSBOOTADD0R = BootAddr;
-	} else if (BootAddrConfig == OB_BOOTADDR_NS1) {
+	}
+	else if (BootAddrConfig == OB_BOOTADDR_NS1)
+	{
 		FLASH->NSBOOTADD1R = BootAddr;
 	}
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	else if (BootAddrConfig == OB_BOOTADDR_SEC0) {
+	else if (BootAddrConfig == OB_BOOTADDR_SEC0)
+	{
 		MODIFY_REG(FLASH->SECBOOTADD0R, FLASH_SECBOOTADD0R_SECBOOTADD0, BootAddr);
 	}
 #endif /* __ARM_FEATURE_CMSE */
-	else {
+	else
+	{
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 }
@@ -1380,23 +1500,32 @@ static void FLASH_OB_BootAddrConfig(uint32_t BootAddrConfig, uint32_t BootAddr)
 static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRPEndOffset, FunctionalState *WRPLock)
 {
 	/* Get the configuration of the write protected area */
-	if (WRPArea == OB_WRPAREA_BANK1_AREAA) {
+	if (WRPArea == OB_WRPAREA_BANK1_AREAA)
+	{
 		*WRPStartOffset = READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_WRP1A_PSTRT);
 		*WRPEndOffset = (READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_WRP1A_PEND) >> FLASH_WRP1AR_WRP1A_PEND_Pos);
 		*WRPLock = (READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_UNLOCK) != 0U) ? DISABLE : ENABLE;
-	} else if (WRPArea == OB_WRPAREA_BANK1_AREAB) {
+	}
+	else if (WRPArea == OB_WRPAREA_BANK1_AREAB)
+	{
 		*WRPStartOffset = READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_WRP1B_PSTRT);
 		*WRPEndOffset = (READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_WRP1B_PEND) >> FLASH_WRP1BR_WRP1B_PEND_Pos);
 		*WRPLock = (READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_UNLOCK) != 0U) ? DISABLE : ENABLE;
-	} else if (WRPArea == OB_WRPAREA_BANK2_AREAA) {
+	}
+	else if (WRPArea == OB_WRPAREA_BANK2_AREAA)
+	{
 		*WRPStartOffset = READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_WRP2A_PSTRT);
 		*WRPEndOffset = (READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_WRP2A_PEND) >> FLASH_WRP2AR_WRP2A_PEND_Pos);
 		*WRPLock = (READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_UNLOCK) != 0U) ? DISABLE : ENABLE;
-	} else if (WRPArea == OB_WRPAREA_BANK2_AREAB) {
+	}
+	else if (WRPArea == OB_WRPAREA_BANK2_AREAB)
+	{
 		*WRPStartOffset = READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_WRP2B_PSTRT);
 		*WRPEndOffset = (READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_WRP2B_PEND) >> FLASH_WRP2BR_WRP2B_PEND_Pos);
 		*WRPLock = (READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_UNLOCK) != 0U) ? DISABLE : ENABLE;
-	} else {
+	}
+	else
+	{
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 }
@@ -1414,9 +1543,12 @@ static uint32_t FLASH_OB_GetRDP(void)
 {
 	uint32_t rdp_level = READ_BIT(FLASH->OPTR, FLASH_OPTR_RDP);
 
-	if ((rdp_level != OB_RDP_LEVEL_0) && (rdp_level != OB_RDP_LEVEL_0_5) && (rdp_level != OB_RDP_LEVEL_2)) {
+	if ((rdp_level != OB_RDP_LEVEL_0) && (rdp_level != OB_RDP_LEVEL_0_5) && (rdp_level != OB_RDP_LEVEL_2))
+	{
 		return (OB_RDP_LEVEL_1);
-	} else {
+	}
+	else
+	{
 		return rdp_level;
 	}
 }
@@ -1481,13 +1613,18 @@ static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, u
 	assert_param(IS_FLASH_BANK_EXCLUSIVE((*WMSecConfig) & 0x3U));
 
 	/* Read SECWM registers */
-	if (((*WMSecConfig) & OB_WMSEC_AREA1) != 0U) {
+	if (((*WMSecConfig) & OB_WMSEC_AREA1) != 0U)
+	{
 		tmp_secwm1 = FLASH->SECWM1R1;
 		tmp_secwm2 = FLASH->SECWM1R2;
-	} else if (((*WMSecConfig) & OB_WMSEC_AREA2) != 0U) {
+	}
+	else if (((*WMSecConfig) & OB_WMSEC_AREA2) != 0U)
+	{
 		tmp_secwm1 = FLASH->SECWM2R1;
 		tmp_secwm2 = FLASH->SECWM2R2;
-	} else {
+	}
+	else
+	{
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 
@@ -1498,9 +1635,12 @@ static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, u
 	/* Configuration of secure hide area */
 	*WMHDPEndPage = ((tmp_secwm2 & FLASH_SECWM1R2_HDP1_PEND) >> FLASH_SECWM1R2_HDP1_PEND_Pos);
 
-	if ((tmp_secwm2 & FLASH_SECWM1R2_HDP1EN) == 0U) {
+	if ((tmp_secwm2 & FLASH_SECWM1R2_HDP1EN) == 0U)
+	{
 		*WMSecConfig = ((*WMSecConfig) | OB_WMSEC_HDP_AREA_DISABLE);
-	} else {
+	}
+	else
+	{
 		*WMSecConfig = ((*WMSecConfig) | OB_WMSEC_HDP_AREA_ENABLE);
 	}
 }
@@ -1531,17 +1671,22 @@ static uint32_t FLASH_OB_GetBootLock(void) { return (FLASH->SECBOOTADD0R & FLASH
  */
 static void FLASH_OB_GetBootAddr(uint32_t BootAddrConfig, uint32_t *BootAddr)
 {
-	if (BootAddrConfig == OB_BOOTADDR_NS0) {
+	if (BootAddrConfig == OB_BOOTADDR_NS0)
+	{
 		*BootAddr = (FLASH->NSBOOTADD0R & FLASH_NSBOOTADD0R_NSBOOTADD0);
-	} else if (BootAddrConfig == OB_BOOTADDR_NS1) {
+	}
+	else if (BootAddrConfig == OB_BOOTADDR_NS1)
+	{
 		*BootAddr = (FLASH->NSBOOTADD1R & FLASH_NSBOOTADD1R_NSBOOTADD1);
 	}
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	else if (BootAddrConfig == OB_BOOTADDR_SEC0) {
+	else if (BootAddrConfig == OB_BOOTADDR_SEC0)
+	{
 		*BootAddr = (FLASH->SECBOOTADD0R & FLASH_SECBOOTADD0R_SECBOOTADD0);
 	}
 #endif /* __ARM_FEATURE_CMSE */
-	else {
+	else
+	{
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 }

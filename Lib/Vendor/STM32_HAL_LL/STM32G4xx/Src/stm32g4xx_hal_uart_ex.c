@@ -172,7 +172,8 @@ HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity,
 	uint32_t temp;
 
 	/* Check the UART handle allocation */
-	if (huart == NULL) {
+	if (huart == NULL)
+	{
 		return HAL_ERROR;
 	}
 	/* Check the Driver Enable UART instance */
@@ -187,14 +188,16 @@ HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity,
 	/* Check the Driver Enable deassertion time */
 	assert_param(IS_UART_DEASSERTIONTIME(DeassertionTime));
 
-	if (huart->gState == HAL_UART_STATE_RESET) {
+	if (huart->gState == HAL_UART_STATE_RESET)
+	{
 		/* Allocate lock resource and initialize it */
 		huart->Lock = HAL_UNLOCKED;
 
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
 		UART_InitCallbacksToDefault(huart);
 
-		if (huart->MspInitCallback == NULL) {
+		if (huart->MspInitCallback == NULL)
+		{
 			huart->MspInitCallback = HAL_UART_MspInit;
 		}
 
@@ -214,12 +217,14 @@ HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity,
 	/* Perform advanced settings configuration */
 	/* For some items, configuration requires to be done prior TE and RE
 	 * bits are set */
-	if (huart->AdvancedInit.AdvFeatureInit != UART_ADVFEATURE_NO_INIT) {
+	if (huart->AdvancedInit.AdvFeatureInit != UART_ADVFEATURE_NO_INIT)
+	{
 		UART_AdvFeatureConfig(huart);
 	}
 
 	/* Set the UART Communication parameters */
-	if (UART_SetConfig(huart) == HAL_ERROR) {
+	if (UART_SetConfig(huart) == HAL_ERROR)
+	{
 		return HAL_ERROR;
 	}
 
@@ -399,7 +404,8 @@ be executed when a reception error is detected.
 HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *huart, uint32_t AddressLength)
 {
 	/* Check the UART handle allocation */
-	if (huart == NULL) {
+	if (huart == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -454,7 +460,8 @@ HAL_StatusTypeDef HAL_UARTEx_StopModeWakeUpSourceConfig(UART_HandleTypeDef *huar
 	/* Set the wake-up selection scheme */
 	MODIFY_REG(huart->Instance->CR3, USART_CR3_WUS, WakeUpSelection.WakeUpEvent);
 
-	if (WakeUpSelection.WakeUpEvent == UART_WAKEUP_ON_ADDRESS) {
+	if (WakeUpSelection.WakeUpEvent == UART_WAKEUP_ON_ADDRESS)
+	{
 		UARTEx_Wakeup_AddressConfig(huart, WakeUpSelection);
 	}
 
@@ -465,9 +472,12 @@ HAL_StatusTypeDef HAL_UARTEx_StopModeWakeUpSourceConfig(UART_HandleTypeDef *huar
 	tickstart = HAL_GetTick();
 
 	/* Wait until REACK flag is set */
-	if (UART_WaitOnFlagUntilTimeout(huart, USART_ISR_REACK, RESET, tickstart, HAL_UART_TIMEOUT_VALUE) != HAL_OK) {
+	if (UART_WaitOnFlagUntilTimeout(huart, USART_ISR_REACK, RESET, tickstart, HAL_UART_TIMEOUT_VALUE) != HAL_OK)
+	{
 		status = HAL_TIMEOUT;
-	} else {
+	}
+	else
+	{
 		/* Initialize the UART State */
 		huart->gState = HAL_UART_STATE_READY;
 	}
@@ -728,8 +738,10 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 	uint32_t tickstart;
 
 	/* Check that a Rx process is not already ongoing */
-	if (huart->RxState == HAL_UART_STATE_READY) {
-		if ((pData == NULL) || (Size == 0U)) {
+	if (huart->RxState == HAL_UART_STATE_READY)
+	{
+		if ((pData == NULL) || (Size == 0U))
+		{
 			return HAL_ERROR;
 		}
 
@@ -750,10 +762,13 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 
 		/* In case of 9bits/No Parity transfer, pRxData needs to be
 		 * handled as a uint16_t pointer */
-		if ((huart->Init.WordLength == UART_WORDLENGTH_9B) && (huart->Init.Parity == UART_PARITY_NONE)) {
+		if ((huart->Init.WordLength == UART_WORDLENGTH_9B) && (huart->Init.Parity == UART_PARITY_NONE))
+		{
 			pdata8bits = NULL;
 			pdata16bits = (uint16_t *)pData;
-		} else {
+		}
+		else
+		{
 			pdata8bits = pData;
 			pdata16bits = NULL;
 		}
@@ -762,9 +777,11 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 		*RxLen = 0U;
 
 		/* as long as data have to be received */
-		while (huart->RxXferCount > 0U) {
+		while (huart->RxXferCount > 0U)
+		{
 			/* Check if IDLE flag is set */
-			if (__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE)) {
+			if (__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
+			{
 				/* Clear IDLE flag in ISR */
 				__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_IDLEF);
 
@@ -773,7 +790,8 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 				/* If Set, and data has already been received,
 				 * this means Idle Event is valid : End
 				 * reception */
-				if (*RxLen > 0U) {
+				if (*RxLen > 0U)
+				{
 					huart->RxEventType = HAL_UART_RXEVENT_IDLE;
 					huart->RxState = HAL_UART_STATE_READY;
 
@@ -782,11 +800,15 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 			}
 
 			/* Check if RXNE flag is set */
-			if (__HAL_UART_GET_FLAG(huart, UART_FLAG_RXNE)) {
-				if (pdata8bits == NULL) {
+			if (__HAL_UART_GET_FLAG(huart, UART_FLAG_RXNE))
+			{
+				if (pdata8bits == NULL)
+				{
 					*pdata16bits = (uint16_t)(huart->Instance->RDR & uhMask);
 					pdata16bits++;
-				} else {
+				}
+				else
+				{
 					*pdata8bits = (uint8_t)(huart->Instance->RDR & (uint8_t)uhMask);
 					pdata8bits++;
 				}
@@ -796,8 +818,10 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 			}
 
 			/* Check for the Timeout */
-			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+			if (Timeout != HAL_MAX_DELAY)
+			{
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+				{
 					huart->RxState = HAL_UART_STATE_READY;
 
 					return HAL_TIMEOUT;
@@ -812,7 +836,9 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *p
 		huart->RxState = HAL_UART_STATE_READY;
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -838,8 +864,10 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_IT(UART_HandleTypeDef *huart, uint8_t
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check that a Rx process is not already ongoing */
-	if (huart->RxState == HAL_UART_STATE_READY) {
-		if ((pData == NULL) || (Size == 0U)) {
+	if (huart->RxState == HAL_UART_STATE_READY)
+	{
+		if ((pData == NULL) || (Size == 0U))
+		{
 			return HAL_ERROR;
 		}
 
@@ -849,10 +877,13 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_IT(UART_HandleTypeDef *huart, uint8_t
 
 		(void)UART_Start_Receive_IT(huart, pData, Size);
 
-		if (huart->ReceptionType == HAL_UART_RECEPTION_TOIDLE) {
+		if (huart->ReceptionType == HAL_UART_RECEPTION_TOIDLE)
+		{
 			__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_IDLEF);
 			ATOMIC_SET_BIT(huart->Instance->CR1, USART_CR1_IDLEIE);
-		} else {
+		}
+		else
+		{
 			/* In case of errors already pending when reception is
 			   started, Interrupts may have already been raised and
 			   lead to reception abortion. (Overrun error for
@@ -862,7 +893,9 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_IT(UART_HandleTypeDef *huart, uint8_t
 		}
 
 		return status;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -892,8 +925,10 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_DMA(UART_HandleTypeDef *huart, uint8_
 	HAL_StatusTypeDef status;
 
 	/* Check that a Rx process is not already ongoing */
-	if (huart->RxState == HAL_UART_STATE_READY) {
-		if ((pData == NULL) || (Size == 0U)) {
+	if (huart->RxState == HAL_UART_STATE_READY)
+	{
+		if ((pData == NULL) || (Size == 0U))
+		{
 			return HAL_ERROR;
 		}
 
@@ -904,11 +939,15 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_DMA(UART_HandleTypeDef *huart, uint8_
 		status = UART_Start_Receive_DMA(huart, pData, Size);
 
 		/* Check Rx process has been successfully started */
-		if (status == HAL_OK) {
-			if (huart->ReceptionType == HAL_UART_RECEPTION_TOIDLE) {
+		if (status == HAL_OK)
+		{
+			if (huart->ReceptionType == HAL_UART_RECEPTION_TOIDLE)
+			{
 				__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_IDLEF);
 				ATOMIC_SET_BIT(huart->Instance->CR1, USART_CR1_IDLEIE);
-			} else {
+			}
+			else
+			{
 				/* In case of errors already pending when
 				   reception is started, Interrupts may have
 				   already been raised and lead to reception
@@ -920,7 +959,9 @@ HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_DMA(UART_HandleTypeDef *huart, uint8_
 		}
 
 		return status;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -1008,10 +1049,13 @@ static void UARTEx_SetNbDataToProcess(UART_HandleTypeDef *huart)
 	static const uint8_t numerator[] = {1U, 1U, 1U, 3U, 7U, 1U, 0U, 0U};
 	static const uint8_t denominator[] = {8U, 4U, 2U, 4U, 8U, 1U, 1U, 1U};
 
-	if (huart->FifoMode == UART_FIFOMODE_DISABLE) {
+	if (huart->FifoMode == UART_FIFOMODE_DISABLE)
+	{
 		huart->NbTxDataToProcess = 1U;
 		huart->NbRxDataToProcess = 1U;
-	} else {
+	}
+	else
+	{
 		rx_fifo_depth = RX_FIFO_DEPTH;
 		tx_fifo_depth = TX_FIFO_DEPTH;
 		rx_fifo_threshold = (uint8_t)(READ_BIT(huart->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos);

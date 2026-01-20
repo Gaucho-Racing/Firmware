@@ -298,7 +298,8 @@ void HAL_NVIC_SystemReset(void)
  */
 uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
 {
-	if ((TicksNumb - 1UL) > SysTick_LOAD_RELOAD_Msk) {
+	if ((TicksNumb - 1UL) > SysTick_LOAD_RELOAD_Msk)
+	{
 		/* Reload value impossible */
 		return (1UL);
 	}
@@ -454,7 +455,8 @@ void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource)
 {
 	/* Check the parameters */
 	assert_param(IS_SYSTICK_CLK_SOURCE(CLKSource));
-	switch (CLKSource) {
+	switch (CLKSource)
+	{
 		/* Select HCLK as Systick clock source */
 		case SYSTICK_CLKSOURCE_HCLK:
 			SET_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
@@ -498,14 +500,18 @@ uint32_t HAL_SYSTICK_GetCLKSourceConfig(void)
 	uint32_t systick_rcc_source;
 
 	/* Read SysTick->CTRL register for internal or external clock source */
-	if (READ_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk) != 0U) {
+	if (READ_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk) != 0U)
+	{
 		/* Internal clock source */
 		systick_source = SYSTICK_CLKSOURCE_HCLK;
-	} else {
+	}
+	else
+	{
 		/* External clock source, check the selected one in RCC */
 		systick_rcc_source = READ_BIT(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL);
 
-		switch (systick_rcc_source) {
+		switch (systick_rcc_source)
+		{
 			case (0x00000000U):
 				systick_source = SYSTICK_CLKSOURCE_HCLK_DIV8;
 				break;
@@ -828,11 +834,14 @@ static void MPU_ConfigMemoryAttributes(MPU_Type *MPUx, const MPU_Attributes_Init
 	 * configuration */
 	__DMB();
 
-	if (pMPU_AttributesInit->Number < MPU_ATTRIBUTES_NUMBER4) {
+	if (pMPU_AttributesInit->Number < MPU_ATTRIBUTES_NUMBER4)
+	{
 		/* Program MPU_MAIR0 */
 		p_mair = &(MPUx->MAIR0);
 		attr_number = pMPU_AttributesInit->Number;
-	} else {
+	}
+	else
+	{
 		/* Program MPU_MAIR1 */
 		p_mair = &(MPUx->MAIR1);
 		attr_number = (uint32_t)pMPU_AttributesInit->Number - 4U;

@@ -280,14 +280,16 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma)
 	uint32_t tickstart = HAL_GetTick();
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check the parameters */
 	assert_param(IS_DMA_ALL_INSTANCE(hdma->Instance));
 	assert_param(IS_DMA_DIRECTION(hdma->Init.Direction));
-	if (hdma->Init.Direction != DMA_MEMORY_TO_MEMORY) {
+	if (hdma->Init.Direction != DMA_MEMORY_TO_MEMORY)
+	{
 		assert_param(IS_DMA_REQUEST(hdma->Init.Request));
 	}
 	assert_param(IS_DMA_BLOCK_HW_REQUEST(hdma->Init.BlkHWRequest));
@@ -299,7 +301,8 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma)
 	assert_param(IS_DMA_TCEM_EVENT_MODE(hdma->Init.TransferEventMode));
 	assert_param(IS_DMA_MODE(hdma->Init.Mode));
 	/* Check DMA channel instance */
-	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U) {
+	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U)
+	{
 		assert_param(IS_DMA_BURST_LENGTH(hdma->Init.SrcBurstLength));
 		assert_param(IS_DMA_BURST_LENGTH(hdma->Init.DestBurstLength));
 		assert_param(IS_DMA_TRANSFER_ALLOCATED_PORT(hdma->Init.TransferAllocatedPort));
@@ -309,7 +312,8 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma)
 	__HAL_UNLOCK(hdma);
 
 	/* Initialize the callbacks */
-	if (hdma->State == HAL_DMA_STATE_RESET) {
+	if (hdma->State == HAL_DMA_STATE_RESET)
+	{
 		/* Clean all callbacks */
 		hdma->XferCpltCallback = NULL;
 		hdma->XferHalfCpltCallback = NULL;
@@ -325,9 +329,11 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma)
 	__HAL_DMA_DISABLE(hdma);
 
 	/* Check if the DMA channel is effectively disabled */
-	while ((hdma->Instance->CCR & DMA_CCR_EN) != 0U) {
+	while ((hdma->Instance->CCR & DMA_CCR_EN) != 0U)
+	{
 		/* Check for the Timeout */
-		if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT) {
+		if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT)
+		{
 			/* Update the DMA channel error code */
 			hdma->ErrorCode = HAL_DMA_ERROR_TIMEOUT;
 
@@ -367,7 +373,8 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma)
 	uint32_t tickstart = HAL_GetTick();
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -381,9 +388,11 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma)
 	__HAL_DMA_DISABLE(hdma);
 
 	/* Check if the DMA channel is effectively disabled */
-	while ((hdma->Instance->CCR & DMA_CCR_EN) != 0U) {
+	while ((hdma->Instance->CCR & DMA_CCR_EN) != 0U)
+	{
 		/* Check for the Timeout */
-		if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT) {
+		if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT)
+		{
 			/* Update the DMA channel error code */
 			hdma->ErrorCode = HAL_DMA_ERROR_TIMEOUT;
 
@@ -405,7 +414,8 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma)
 	hdma->Instance->CLLR = 0U;
 
 	/* Reset 2D Addressing registers */
-	if (IS_DMA_2D_ADDRESSING_INSTANCE(hdma->Instance) != 0U) {
+	if (IS_DMA_2D_ADDRESSING_INSTANCE(hdma->Instance) != 0U)
+	{
 		hdma->Instance->CTR3 = 0U;
 		hdma->Instance->CBR2 = 0U;
 	}
@@ -432,7 +442,8 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma)
 	hdma->LinkedListQueue = NULL;
 
 	/* Clean DMA parent */
-	if (hdma->Parent != NULL) {
+	if (hdma->Parent != NULL)
+	{
 		hdma->Parent = NULL;
 	}
 
@@ -504,7 +515,8 @@ callbacks. User callbacks are called under HAL_DMA_IRQHandler().
 HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -515,7 +527,8 @@ HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddre
 	__HAL_LOCK(hdma);
 
 	/* Check DMA channel state */
-	if (hdma->State == HAL_DMA_STATE_READY) {
+	if (hdma->State == HAL_DMA_STATE_READY)
+	{
 		/* Update the DMA channel state */
 		hdma->State = HAL_DMA_STATE_BUSY;
 
@@ -528,7 +541,9 @@ HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddre
 
 		/* Enable DMA channel */
 		__HAL_DMA_ENABLE(hdma);
-	} else {
+	}
+	else
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_BUSY;
 
@@ -555,7 +570,8 @@ HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddre
 HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -566,7 +582,8 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAd
 	__HAL_LOCK(hdma);
 
 	/* Check DMA channel state */
-	if (hdma->State == HAL_DMA_STATE_READY) {
+	if (hdma->State == HAL_DMA_STATE_READY)
+	{
 		/* Update the DMA channel state */
 		hdma->State = HAL_DMA_STATE_BUSY;
 
@@ -582,14 +599,16 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAd
 		__HAL_DMA_ENABLE_IT(hdma, (DMA_IT_TC | DMA_IT_DTE | DMA_IT_ULE | DMA_IT_USE | DMA_IT_TO));
 
 		/* Check half transfer complete callback */
-		if (hdma->XferHalfCpltCallback != NULL) {
+		if (hdma->XferHalfCpltCallback != NULL)
+		{
 			/* If Half Transfer complete callback is set, enable the
 			 * corresponding IT */
 			__HAL_DMA_ENABLE_IT(hdma, DMA_IT_HT);
 		}
 
 		/* Check Half suspend callback */
-		if (hdma->XferSuspendCallback != NULL) {
+		if (hdma->XferSuspendCallback != NULL)
+		{
 			/* If Transfer suspend callback is set, enable the
 			 * corresponding IT */
 			__HAL_DMA_ENABLE_IT(hdma, DMA_IT_SUSP);
@@ -597,7 +616,9 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAd
 
 		/* Enable DMA channel */
 		__HAL_DMA_ENABLE(hdma);
-	} else {
+	}
+	else
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_BUSY;
 
@@ -627,12 +648,14 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 	uint32_t tickstart = HAL_GetTick();
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check DMA channel state */
-	if (hdma->State != HAL_DMA_STATE_BUSY) {
+	if (hdma->State != HAL_DMA_STATE_BUSY)
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_NO_XFER;
 
@@ -640,7 +663,9 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		__HAL_UNLOCK(hdma);
 
 		return HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Suspend the channel */
 		hdma->Instance->CCR |= DMA_CCR_SUSP;
 
@@ -648,9 +673,11 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		hdma->State = HAL_DMA_STATE_SUSPEND;
 
 		/* Check if the DMA Channel is suspended */
-		while ((hdma->Instance->CSR & DMA_CSR_SUSPF) == 0U) {
+		while ((hdma->Instance->CSR & DMA_CSR_SUSPF) == 0U)
+		{
 			/* Check for the Timeout */
-			if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT) {
+			if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT)
+			{
 				/* Update the DMA channel error code */
 				hdma->ErrorCode |= HAL_DMA_ERROR_TIMEOUT;
 
@@ -658,7 +685,8 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 				hdma->State = HAL_DMA_STATE_ERROR;
 
 				/* Check DMA channel transfer mode */
-				if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+				if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+				{
 					/* Update the linked-list queue state */
 					hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 				}
@@ -683,7 +711,8 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		hdma->State = HAL_DMA_STATE_READY;
 
 		/* Check DMA channel transfer mode */
-		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+		{
 			/* Update the linked-list queue state */
 			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 
@@ -709,17 +738,21 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *const hdma)
 {
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check DMA channel state */
-	if (hdma->State != HAL_DMA_STATE_BUSY) {
+	if (hdma->State != HAL_DMA_STATE_BUSY)
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_NO_XFER;
 
 		return HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Update the DMA channel state */
 		hdma->State = HAL_DMA_STATE_ABORT;
 
@@ -746,7 +779,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	uint32_t tmp_csr;
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -754,7 +788,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	assert_param(IS_DMA_LEVEL_COMPLETE(CompleteLevel));
 
 	/* Check DMA channel state */
-	if (hdma->State != HAL_DMA_STATE_BUSY) {
+	if (hdma->State != HAL_DMA_STATE_BUSY)
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_NO_XFER;
 
@@ -765,7 +800,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	}
 
 	/* Polling mode is not supported in circular mode */
-	if ((hdma->Mode & DMA_LINKEDLIST_CIRCULAR) == DMA_LINKEDLIST_CIRCULAR) {
+	if ((hdma->Mode & DMA_LINKEDLIST_CIRCULAR) == DMA_LINKEDLIST_CIRCULAR)
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_NOT_SUPPORTED;
 
@@ -778,10 +814,13 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	/* Get DMA channel status */
 	tmp_csr = hdma->Instance->CSR;
 
-	while ((tmp_csr & level_flag) == 0U) {
+	while ((tmp_csr & level_flag) == 0U)
+	{
 		/* Check for the timeout */
-		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+			{
 				/* Update the DMA channel error code */
 				hdma->ErrorCode |= HAL_DMA_ERROR_TIMEOUT;
 
@@ -803,7 +842,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	}
 
 	/* Check trigger overrun flag */
-	if ((tmp_csr & DMA_FLAG_TO) != 0U) {
+	if ((tmp_csr & DMA_FLAG_TO) != 0U)
+	{
 		/* Update the DMA channel error code */
 		hdma->ErrorCode |= HAL_DMA_ERROR_TO;
 
@@ -812,9 +852,11 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	}
 
 	/* Check error flags */
-	if ((tmp_csr & (DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE)) != 0U) {
+	if ((tmp_csr & (DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE)) != 0U)
+	{
 		/* Check the data transfer error flag */
-		if ((tmp_csr & DMA_FLAG_DTE) != 0U) {
+		if ((tmp_csr & DMA_FLAG_DTE) != 0U)
+		{
 			/* Update the DMA channel error code */
 			hdma->ErrorCode |= HAL_DMA_ERROR_DTE;
 
@@ -823,7 +865,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 		}
 
 		/* Check the update link error flag */
-		if ((tmp_csr & DMA_FLAG_ULE) != 0U) {
+		if ((tmp_csr & DMA_FLAG_ULE) != 0U)
+		{
 			/* Update the DMA channel error code */
 			hdma->ErrorCode |= HAL_DMA_ERROR_ULE;
 
@@ -832,7 +875,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 		}
 
 		/* Check the user setting error flag */
-		if ((tmp_csr & DMA_FLAG_USE) != 0U) {
+		if ((tmp_csr & DMA_FLAG_USE) != 0U)
+		{
 			/* Update the DMA channel error code */
 			hdma->ErrorCode |= HAL_DMA_ERROR_USE;
 
@@ -847,7 +891,8 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 		hdma->State = HAL_DMA_STATE_READY;
 
 		/* Check DMA channel transfer mode */
-		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+		{
 			/* Update the linked-list queue state */
 			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 		}
@@ -859,10 +904,13 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 	}
 
 	/* Clear the transfer level flag */
-	if (CompleteLevel == HAL_DMA_HALF_TRANSFER) {
+	if (CompleteLevel == HAL_DMA_HALF_TRANSFER)
+	{
 		/* Clear the Half Transfer flag */
 		__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_HT);
-	} else if (CompleteLevel == HAL_DMA_FULL_TRANSFER) {
+	}
+	else if (CompleteLevel == HAL_DMA_FULL_TRANSFER)
+	{
 		/* Clear the transfer flags */
 		__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT));
 
@@ -870,14 +918,17 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA
 		hdma->State = HAL_DMA_STATE_READY;
 
 		/* Check DMA channel transfer mode */
-		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+		{
 			/* Update the linked-list queue state */
 			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 		}
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hdma);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -913,9 +964,11 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Data Transfer Error Interrupt management
 	 * *************************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_DTE) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_DTE) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_DTE) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_DTE) != 0U)
+		{
 			/* Clear the transfer error flag */
 			__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_DTE);
 
@@ -926,9 +979,11 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Update Linked-list Error Interrupt management
 	 * ********************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_ULE) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_ULE) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_ULE) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_ULE) != 0U)
+		{
 			/* Clear the update linked-list error flag */
 			__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_ULE);
 
@@ -939,9 +994,11 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* User Setting Error Interrupt management
 	 * **************************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_USE) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_USE) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_USE) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_USE) != 0U)
+		{
 			/* Clear the user setting error flag */
 			__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_USE);
 
@@ -952,9 +1009,11 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Trigger Overrun Interrupt management
 	 * *****************************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_TO) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_TO) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_TO) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_TO) != 0U)
+		{
 			/* Clear the trigger overrun flag */
 			__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_TO);
 
@@ -965,14 +1024,17 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Half Transfer Complete Interrupt management
 	 * **********************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_HT) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_HT) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_HT) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_HT) != 0U)
+		{
 			/* Clear the half transfer flag */
 			__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_HT);
 
 			/* Check half transfer complete callback */
-			if (hdma->XferHalfCpltCallback != NULL) {
+			if (hdma->XferHalfCpltCallback != NULL)
+			{
 				/* Half transfer callback */
 				hdma->XferHalfCpltCallback(hdma);
 			}
@@ -981,14 +1043,17 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Suspend Transfer Interrupt management
 	 * ****************************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_SUSP) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_SUSP) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_SUSP) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_SUSP) != 0U)
+		{
 			/* Clear the block transfer complete flag */
 			__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_SUSP);
 
 			/* Check DMA channel state */
-			if (hdma->State == HAL_DMA_STATE_ABORT) {
+			if (hdma->State == HAL_DMA_STATE_ABORT)
+			{
 				/* Disable the suspend transfer interrupt */
 				__HAL_DMA_DISABLE_IT(hdma, DMA_IT_SUSP);
 
@@ -1000,7 +1065,8 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 				hdma->State = HAL_DMA_STATE_READY;
 
 				/* Check DMA channel transfer mode */
-				if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+				if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+				{
 					/* Update the linked-list queue state */
 					hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 
@@ -1014,18 +1080,22 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 				__HAL_UNLOCK(hdma);
 
 				/* Check transfer abort callback */
-				if (hdma->XferAbortCallback != NULL) {
+				if (hdma->XferAbortCallback != NULL)
+				{
 					/* Transfer abort callback */
 					hdma->XferAbortCallback(hdma);
 				}
 
 				return;
-			} else {
+			}
+			else
+			{
 				/* Update the DMA channel state */
 				hdma->State = HAL_DMA_STATE_SUSPEND;
 
 				/* Check transfer suspend callback */
-				if (hdma->XferSuspendCallback != NULL) {
+				if (hdma->XferSuspendCallback != NULL)
+				{
 					/* Transfer suspend callback */
 					hdma->XferSuspendCallback(hdma);
 				}
@@ -1035,14 +1105,19 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Transfer Complete Interrupt management
 	 * ***************************************************************************/
-	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_TC) != 0U) {
+	if (__HAL_DMA_GET_FLAG(hdma, DMA_FLAG_TC) != 0U)
+	{
 		/* Check if interrupt source is enabled */
-		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_TC) != 0U) {
+		if (__HAL_DMA_GET_IT_SOURCE(hdma, DMA_IT_TC) != 0U)
+		{
 			/* Check DMA channel transfer mode */
-			if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+			if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+			{
 				/* If linked-list transfer */
-				if (hdma->Instance->CLLR == 0U) {
-					if (hdma->Instance->CBR1 == 0U) {
+				if (hdma->Instance->CLLR == 0U)
+				{
+					if (hdma->Instance->CBR1 == 0U)
+					{
 						/* Update the DMA channel state
 						 */
 						hdma->State = HAL_DMA_STATE_READY;
@@ -1052,9 +1127,12 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 						hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 					}
 				}
-			} else {
+			}
+			else
+			{
 				/* If normal transfer */
-				if (hdma->Instance->CBR1 == 0U) {
+				if (hdma->Instance->CBR1 == 0U)
+				{
 					/* Update the DMA channel state */
 					hdma->State = HAL_DMA_STATE_READY;
 				}
@@ -1067,7 +1145,8 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 			__HAL_UNLOCK(hdma);
 
 			/* Check transfer complete callback */
-			if (hdma->XferCpltCallback != NULL) {
+			if (hdma->XferCpltCallback != NULL)
+			{
 				/* Channel Transfer Complete callback */
 				hdma->XferCpltCallback(hdma);
 			}
@@ -1076,7 +1155,8 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 
 	/* Manage error case
 	 * ************************************************************************************************/
-	if (hdma->ErrorCode != HAL_DMA_ERROR_NONE) {
+	if (hdma->ErrorCode != HAL_DMA_ERROR_NONE)
+	{
 		/* Reset the channel internal state and reset the FIFO */
 		hdma->Instance->CCR |= DMA_CCR_RESET;
 
@@ -1084,7 +1164,8 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 		hdma->State = HAL_DMA_STATE_READY;
 
 		/* Check DMA channel transfer mode */
-		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
+		{
 			/* Update the linked-list queue state */
 			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 		}
@@ -1093,7 +1174,8 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 		__HAL_UNLOCK(hdma);
 
 		/* Check transfer error callback */
-		if (hdma->XferErrorCallback != NULL) {
+		if (hdma->XferErrorCallback != NULL)
+		{
 			/* Transfer error callback */
 			hdma->XferErrorCallback(hdma);
 		}
@@ -1117,51 +1199,62 @@ HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DM
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check DMA channel state */
-	if (hdma->State == HAL_DMA_STATE_READY) {
+	if (hdma->State == HAL_DMA_STATE_READY)
+	{
 		/* Check callback ID */
-		switch (CallbackID) {
-			case HAL_DMA_XFER_CPLT_CB_ID: {
+		switch (CallbackID)
+		{
+			case HAL_DMA_XFER_CPLT_CB_ID:
+			{
 				/* Register transfer complete callback */
 				hdma->XferCpltCallback = pCallback;
 				break;
 			}
 
-			case HAL_DMA_XFER_HALFCPLT_CB_ID: {
+			case HAL_DMA_XFER_HALFCPLT_CB_ID:
+			{
 				/* Register half transfer callback */
 				hdma->XferHalfCpltCallback = pCallback;
 				break;
 			}
 
-			case HAL_DMA_XFER_ERROR_CB_ID: {
+			case HAL_DMA_XFER_ERROR_CB_ID:
+			{
 				/* Register transfer error callback */
 				hdma->XferErrorCallback = pCallback;
 				break;
 			}
 
-			case HAL_DMA_XFER_ABORT_CB_ID: {
+			case HAL_DMA_XFER_ABORT_CB_ID:
+			{
 				/* Register abort callback */
 				hdma->XferAbortCallback = pCallback;
 				break;
 			}
 
-			case HAL_DMA_XFER_SUSPEND_CB_ID: {
+			case HAL_DMA_XFER_SUSPEND_CB_ID:
+			{
 				/* Register suspend callback */
 				hdma->XferSuspendCallback = pCallback;
 				break;
 			}
 
-			default: {
+			default:
+			{
 				/* Update error status */
 				status = HAL_ERROR;
 				break;
 			}
 		}
-	} else {
+	}
+	else
+	{
 		/* Update error status */
 		status = HAL_ERROR;
 	}
@@ -1185,45 +1278,54 @@ HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma, HAL_
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check DMA channel state */
-	if (hdma->State == HAL_DMA_STATE_READY) {
+	if (hdma->State == HAL_DMA_STATE_READY)
+	{
 		/* Check callback ID */
-		switch (CallbackID) {
-			case HAL_DMA_XFER_CPLT_CB_ID: {
+		switch (CallbackID)
+		{
+			case HAL_DMA_XFER_CPLT_CB_ID:
+			{
 				/* UnRegister transfer complete callback */
 				hdma->XferCpltCallback = NULL;
 				break;
 			}
 
-			case HAL_DMA_XFER_HALFCPLT_CB_ID: {
+			case HAL_DMA_XFER_HALFCPLT_CB_ID:
+			{
 				/* UnRegister half transfer callback */
 				hdma->XferHalfCpltCallback = NULL;
 				break;
 			}
 
-			case HAL_DMA_XFER_ERROR_CB_ID: {
+			case HAL_DMA_XFER_ERROR_CB_ID:
+			{
 				/* UnRegister transfer error callback */
 				hdma->XferErrorCallback = NULL;
 				break;
 			}
 
-			case HAL_DMA_XFER_ABORT_CB_ID: {
+			case HAL_DMA_XFER_ABORT_CB_ID:
+			{
 				/* UnRegister abort callback */
 				hdma->XferAbortCallback = NULL;
 				break;
 			}
 
-			case HAL_DMA_XFER_SUSPEND_CB_ID: {
+			case HAL_DMA_XFER_SUSPEND_CB_ID:
+			{
 				/* UnRegister suspend callback */
 				hdma->XferSuspendCallback = NULL;
 				break;
 			}
 
-			case HAL_DMA_XFER_ALL_CB_ID: {
+			case HAL_DMA_XFER_ALL_CB_ID:
+			{
 				/* UnRegister all available callbacks */
 				hdma->XferCpltCallback = NULL;
 				hdma->XferHalfCpltCallback = NULL;
@@ -1233,13 +1335,16 @@ HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma, HAL_
 				break;
 			}
 
-			default: {
+			default:
+			{
 				/* Update error status */
 				status = HAL_ERROR;
 				break;
 			}
 		}
-	} else {
+	}
+	else
+	{
 		/* Update error status */
 		status = HAL_ERROR;
 	}
@@ -1342,7 +1447,8 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
 	uint32_t channel_idx;
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -1356,42 +1462,58 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
 	channel_idx = 1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU);
 
 	/* Check DMA channel privilege attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_PRIV_MASK) == DMA_CHANNEL_ATTR_PRIV_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_PRIV_MASK) == DMA_CHANNEL_ATTR_PRIV_MASK)
+	{
 		/* Configure DMA channel privilege attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_PRIV) == DMA_CHANNEL_PRIV) {
+		if ((ChannelAttributes & DMA_CHANNEL_PRIV) == DMA_CHANNEL_PRIV)
+		{
 			p_dma_instance->PRIVCFGR |= channel_idx;
-		} else {
+		}
+		else
+		{
 			p_dma_instance->PRIVCFGR &= (~channel_idx);
 		}
 	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Check DMA channel security attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_MASK) == DMA_CHANNEL_ATTR_SEC_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_MASK) == DMA_CHANNEL_ATTR_SEC_MASK)
+	{
 		/* Configure DMA channel security attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_SEC) == DMA_CHANNEL_SEC) {
+		if ((ChannelAttributes & DMA_CHANNEL_SEC) == DMA_CHANNEL_SEC)
+		{
 			p_dma_instance->SECCFGR |= channel_idx;
-		} else {
+		}
+		else
+		{
 			p_dma_instance->SECCFGR &= (~channel_idx);
 		}
 	}
 
 	/* Channel source security attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_SRC_MASK) == DMA_CHANNEL_ATTR_SEC_SRC_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_SRC_MASK) == DMA_CHANNEL_ATTR_SEC_SRC_MASK)
+	{
 		/* Configure DMA channel source security attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_SRC_SEC) == DMA_CHANNEL_SRC_SEC) {
+		if ((ChannelAttributes & DMA_CHANNEL_SRC_SEC) == DMA_CHANNEL_SRC_SEC)
+		{
 			hdma->Instance->CTR1 |= DMA_CTR1_SSEC;
-		} else {
+		}
+		else
+		{
 			hdma->Instance->CTR1 &= (~DMA_CTR1_SSEC);
 		}
 	}
 
 	/* Channel destination security attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_DEST_MASK) == DMA_CHANNEL_ATTR_SEC_DEST_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_DEST_MASK) == DMA_CHANNEL_ATTR_SEC_DEST_MASK)
+	{
 		/* Configure DMA channel destination security attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_DEST_SEC) == DMA_CHANNEL_DEST_SEC) {
+		if ((ChannelAttributes & DMA_CHANNEL_DEST_SEC) == DMA_CHANNEL_DEST_SEC)
+		{
 			hdma->Instance->CTR1 |= DMA_CTR1_DSEC;
-		} else {
+		}
+		else
+		{
 			hdma->Instance->CTR1 &= (~DMA_CTR1_DSEC);
 		}
 	}
@@ -1414,7 +1536,8 @@ HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *co
 	uint32_t channel_idx;
 
 	/* Check the DMA peripheral handle and channel attributes parameters */
-	if ((hdma == NULL) || (pChannelAttributes == NULL)) {
+	if ((hdma == NULL) || (pChannelAttributes == NULL))
+	{
 		return HAL_ERROR;
 	}
 
@@ -1455,7 +1578,8 @@ HAL_StatusTypeDef HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const h
 	uint32_t channel_idx;
 
 	/* Check the DMA peripheral handle parameter */
-	if (hdma == NULL) {
+	if (hdma == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -1486,7 +1610,8 @@ HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *cons
 	uint32_t channel_idx;
 
 	/* Check the DMA peripheral handle and lock state parameters */
-	if ((hdma == NULL) || (pLockState == NULL)) {
+	if ((hdma == NULL) || (pLockState == NULL))
+	{
 		return HAL_ERROR;
 	}
 
@@ -1564,7 +1689,8 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 	tmpreg = hdma->Init.DestInc | hdma->Init.DestDataWidth | hdma->Init.SrcInc | hdma->Init.SrcDataWidth;
 
 	/* Add parameters specific to GPDMA */
-	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U) {
+	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U)
+	{
 		tmpreg |= (hdma->Init.TransferAllocatedPort | (((hdma->Init.DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1) |
 			   (((hdma->Init.SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1));
 	}
@@ -1577,15 +1703,20 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 	tmpreg = hdma->Init.BlkHWRequest | (hdma->Init.Request & DMA_CTR2_REQSEL) | hdma->Init.TransferEventMode;
 
 	/* Memory to Peripheral Transfer */
-	if ((hdma->Init.Direction) == DMA_MEMORY_TO_PERIPH) {
-		if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U) {
+	if ((hdma->Init.Direction) == DMA_MEMORY_TO_PERIPH)
+	{
+		if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U)
+		{
 			tmpreg |= DMA_CTR2_DREQ;
 		}
 	}
 	/* Memory to Memory Transfer */
-	else if ((hdma->Init.Direction) == DMA_MEMORY_TO_MEMORY) {
+	else if ((hdma->Init.Direction) == DMA_MEMORY_TO_MEMORY)
+	{
 		tmpreg |= DMA_CTR2_SWREQ;
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 
@@ -1597,7 +1728,8 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 	WRITE_REG(hdma->Instance->CBR1, 0U);
 
 	/* If 2D Addressing is supported by current channel */
-	if (IS_DMA_2D_ADDRESSING_INSTANCE(hdma->Instance) != 0U) {
+	if (IS_DMA_2D_ADDRESSING_INSTANCE(hdma->Instance) != 0U)
+	{
 		/* Write DMA Channel Transfer Register 3 (CTR3)
 		 * *******************************************************************/
 		WRITE_REG(hdma->Instance->CTR3, 0U);

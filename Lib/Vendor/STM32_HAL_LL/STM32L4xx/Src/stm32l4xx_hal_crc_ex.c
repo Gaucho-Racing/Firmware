@@ -103,9 +103,12 @@ HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc, uint32_t Pol
 	assert_param(IS_CRC_POL_LENGTH(PolyLength));
 
 	/* Ensure that the generating polynomial is odd */
-	if ((Pol & (uint32_t)(0x1U)) == 0U) {
+	if ((Pol & (uint32_t)(0x1U)) == 0U)
+	{
 		status = HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* check polynomial definition vs polynomial size:
 		 * polynomial length must be aligned with polynomial
 		 * definition. HAL_ERROR is reported if Pol degree is
@@ -113,23 +116,28 @@ HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc, uint32_t Pol
 		 * Look for MSB position: msb will contain the degree of
 		 *  the second to the largest polynomial member. E.g., for
 		 *  X^7 + X^6 + X^5 + X^2 + 1, msb = 6. */
-		while ((msb-- > 0U) && ((Pol & ((uint32_t)(0x1U) << (msb & 0x1FU))) == 0U)) {
+		while ((msb-- > 0U) && ((Pol & ((uint32_t)(0x1U) << (msb & 0x1FU))) == 0U))
+		{
 		}
 
-		switch (PolyLength) {
+		switch (PolyLength)
+		{
 
 			case CRC_POLYLENGTH_7B:
-				if (msb >= HAL_CRC_LENGTH_7B) {
+				if (msb >= HAL_CRC_LENGTH_7B)
+				{
 					status = HAL_ERROR;
 				}
 				break;
 			case CRC_POLYLENGTH_8B:
-				if (msb >= HAL_CRC_LENGTH_8B) {
+				if (msb >= HAL_CRC_LENGTH_8B)
+				{
 					status = HAL_ERROR;
 				}
 				break;
 			case CRC_POLYLENGTH_16B:
-				if (msb >= HAL_CRC_LENGTH_16B) {
+				if (msb >= HAL_CRC_LENGTH_16B)
+				{
 					status = HAL_ERROR;
 				}
 				break;
@@ -143,7 +151,8 @@ HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc, uint32_t Pol
 				break;
 		}
 	}
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* set generating polynomial */
 		WRITE_REG(hcrc->Instance->POL, Pol);
 

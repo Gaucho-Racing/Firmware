@@ -122,20 +122,23 @@
  */
 /*! @brief Selection between Cell terminal and Cell balancing diagnostic
     switches. */
-typedef enum {
+typedef enum
+{
 	BCC_SWITCH_SEL_CT = 0U, /*!< Cell terminal switches. */
 	BCC_SWITCH_SEL_CB = 1U	/*!< Cell balancing switches. */
 } bcc_diag_switch_sel_t;
 
 /*! @brief Selection between opened and closed diagnostic switches. */
-typedef enum {
+typedef enum
+{
 	BCC_SWITCH_POS_OPEN = 0U,  /*!< Opened switches. */
 	BCC_SWITCH_POS_CLOSED = 1U /*!< Closed switches. */
 } bcc_diag_switch_pos_t;
 
 /*! @brief Selection of diagnostic type and source of ADC2 for Current
  *  measurement diagnostics. */
-typedef enum {
+typedef enum
+{
 	BCC_DCM_PGA_SHORTED = 0U, /*!< Measuring the PGA with shorted input (SM37). */
 	BCC_DCM_VREF_GAIN4 = 1U	  /*!< Measuring of VREF_DIAG, with the PGA having
 				       the gain fixed to 4 (SM38). */
@@ -148,7 +151,8 @@ typedef enum {
  */
 /*! @brief Diagnostic time constants. See MC3377xC safety manuals for more
  * information. */
-typedef struct {
+typedef struct
+{
 	uint32_t sm01twait;	/*!< SM01 time constant T_wait (in [us]). */
 	uint32_t sm01trecv;	/*!< SM01 time constant T_recv (in [us]). */
 	uint16_t sm01uvTh;	/*!< SM01 diagnostic UV threshold (in [mV]).
@@ -171,14 +175,16 @@ typedef struct {
 } bcc_diag_const_t;
 
 /*! @brief Result of ADC1-A and ADC1-B functional verification. */
-typedef struct {
+typedef struct
+{
 	uint32_t adc1aAvg; /*!< Average of ADC1-A measured values (in [uV]). */
 	uint32_t adc1bAvg; /*!< Average of ADC1-B measured values (in [uV]). */
 	bool error;	   /*!< True if error detected, False otherwise. */
 } bcc_diag_adc1x_res_t;
 
 /*! @brief Result of overvoltage and undervoltage functional verification. */
-typedef struct {
+typedef struct
+{
 	uint16_t ovOdd;	 /*!< Content of CELL_OV_FLT register,
 			      OV fault is expected on odd cells. */
 	uint16_t uvEven; /*!< Content of CELL_UV_FLT register,
@@ -191,7 +197,8 @@ typedef struct {
 } bcc_diag_ov_uv_ver_res_t;
 
 /*! @brief Result overvoltage and undervoltage detection. */
-typedef struct {
+typedef struct
+{
 	uint32_t cellVoltCbOff[BCC_MAX_CELLS]; /*!< Measured cell voltages (in [uV])
 						  when CB off. MC33771C: [0] Cell 1,
 						  .., [13] Cell 14. MC33772C: [0]
@@ -205,7 +212,8 @@ typedef struct {
 
 /*! @brief Result of the CTx open detect and open detect functional
  * verification. */
-typedef struct {
+typedef struct
+{
 	uint32_t measOddClosed[BCC_MAX_CELLS];	/*!< Measured cell voltages (in [uV])
 						   when odd CT open terminal switches
 						   are closed. MC33771C: [0] Cell 1,
@@ -231,7 +239,8 @@ typedef struct {
 } bcc_diag_ctx_open_res_t;
 
 /*! @brief Result of the cell voltage channel functional verification. */
-typedef struct {
+typedef struct
+{
 	int32_t vErrX[BCC_MAX_CELLS];  /*!< Computed V_err_x errors (in [uV]).
 					    MC33771C: [0] V_err_1, .., [13]
 					  V_err_14. If an error in V_err_x is
@@ -258,7 +267,8 @@ typedef struct {
 
 /*! @brief Result of the procedure for detecting a connector having
  * an abnormally high contact resistance. */
-typedef struct {
+typedef struct
+{
 	int32_t diff[BCC_MAX_CELLS]; /*!< Voltage difference between CB ON and CB
 					OFF (Vcell(CB=ON) - Vcell(CB=OFF)) in [uV].
 					  MC33771C: [0] Cell 1, .., [13] Cell 14.
@@ -272,7 +282,8 @@ typedef struct {
 } bcc_diag_conn_res_res_t;
 
 /*! @brief Result of the cell terminal leakage diagnostics. */
-typedef struct {
+typedef struct
+{
 	uint32_t vLeakX[BCC_MAX_CELLS + 1U]; /*!< Vleak_x in [uV].
 						  [0] CT_REF (Vleak_1), [1] CT1 (Vleak_2), ...,
 						  MC33771C: [14] CT14 (Vleak_15).
@@ -286,7 +297,8 @@ typedef struct {
 } bcc_diag_ctx_leak_res_t;
 
 /*! @brief Result of GPIOx OT/UT functional verification. */
-typedef struct {
+typedef struct
+{
 	uint16_t untStat; /*!< Contains value of AN_OT_UT_FLT register when
 			       under-temperature is expected for all GPIOs). */
 	uint16_t ovtStat; /*!< Contains value of AN_OT_UT_FLT register when
@@ -295,7 +307,8 @@ typedef struct {
 } bcc_diag_gpiox_otut_res_t;
 
 /*! @brief Result of the cell balance fault diagnostics. */
-typedef struct {
+typedef struct
+{
 	uint16_t cbxOpenStatusEven; /*!< Contains CB_OPEN_FLT register when even
 					 CB open detection switches are closed. */
 	uint16_t cbxOpenStatusOdd;  /*!< Contains CB_OPEN_FLT register when odd

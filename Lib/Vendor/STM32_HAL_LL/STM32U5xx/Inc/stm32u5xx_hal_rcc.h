@@ -21,171 +21,175 @@
 #define STM32U5xx_HAL_RCC_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup RCC
- * @{
- */
+	/** @addtogroup RCC
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup RCC_Exported_Types RCC Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup RCC_Exported_Types RCC Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  RCC PLL configuration structure definition
- */
-typedef struct {
-	uint32_t PLLState; /*!< The new state of the PLL.
-				This parameter can be a value of @ref
-			      RCC_PLL_Config                      */
+	/**
+	 * @brief  RCC PLL configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t PLLState; /*!< The new state of the PLL.
+					This parameter can be a value of @ref
+				      RCC_PLL_Config                      */
 
-	uint32_t PLLSource; /*!< RCC_PLLSource: PLL entry clock source.
-				 This parameter must be a value of @ref
-			       RCC_PLL_Clock_Source               */
+		uint32_t PLLSource; /*!< RCC_PLLSource: PLL entry clock source.
+					 This parameter must be a value of @ref
+				       RCC_PLL_Clock_Source               */
 
-	uint32_t PLLM; /*!< PLLM: Division factor for PLL VCO input clock.
-			    This parameter must be a number between Min_Data = 1
-			  and Max_Data = 16    */
+		uint32_t PLLM; /*!< PLLM: Division factor for PLL VCO input clock.
+				    This parameter must be a number between Min_Data = 1
+				  and Max_Data = 16    */
 
-	uint32_t PLLMBOOST; /*!< PLLMBOOST: Prescaler for EPOD booster input
-			       clock. This parameter must be a value of @ref
-			       RCC_PLLMBOOST_EPOD_Clock_Divider   */
+		uint32_t PLLMBOOST; /*!< PLLMBOOST: Prescaler for EPOD booster input
+				       clock. This parameter must be a value of @ref
+				       RCC_PLLMBOOST_EPOD_Clock_Divider   */
 
-	uint32_t PLLN; /*!< PLLN: Multiplication factor for PLL VCO output
-			  clock. This parameter must be a number between
-			  Min_Data = 4 and Max_Data = 512   */
+		uint32_t PLLN; /*!< PLLN: Multiplication factor for PLL VCO output
+				  clock. This parameter must be a number between
+				  Min_Data = 4 and Max_Data = 512   */
 
-	uint32_t PLLP; /*!< PLLP: Division factor for peripheral clocks.
-			    This parameter must be a number between Min_Data = 1
-			  and Max_Data = 128   */
+		uint32_t PLLP; /*!< PLLP: Division factor for peripheral clocks.
+				    This parameter must be a number between Min_Data = 1
+				  and Max_Data = 128   */
 
-	uint32_t PLLQ; /*!< PLLQ: Division factor for peripheral clocks.
-			    This parameter must be a number between Min_Data = 1
-			  and Max_Data = 128   */
+		uint32_t PLLQ; /*!< PLLQ: Division factor for peripheral clocks.
+				    This parameter must be a number between Min_Data = 1
+				  and Max_Data = 128   */
 
-	uint32_t PLLR; /*!< PLLR: Division factor for system clock.
-			    This parameter must be a number between Min_Data = 2
-			  and Max_Data = 128 Only division by 1 and even
-			  division factors are allowed                  */
+		uint32_t PLLR; /*!< PLLR: Division factor for system clock.
+				    This parameter must be a number between Min_Data = 2
+				  and Max_Data = 128 Only division by 1 and even
+				  division factors are allowed                  */
 
-	uint32_t PLLRGE; /*!< PLLRGE: PLL1 clock Input range
-			      This parameter must be a value of @ref
-			    RCC_PLL_VCI_Range                  */
+		uint32_t PLLRGE; /*!< PLLRGE: PLL1 clock Input range
+				      This parameter must be a value of @ref
+				    RCC_PLL_VCI_Range                  */
 
-	uint32_t PLLFRACN; /*!< PLLFRACN: Specifies Fractional Part Of The
-			      Multiplication Factor for PLL1 VCO It should be a
-			      value between 0 and 8191 */
+		uint32_t PLLFRACN; /*!< PLLFRACN: Specifies Fractional Part Of The
+				      Multiplication Factor for PLL1 VCO It should be a
+				      value between 0 and 8191 */
 
-} RCC_PLLInitTypeDef;
+	} RCC_PLLInitTypeDef;
 
-/**
- * @brief  RCC Internal/External Oscillator (HSE, HSI, MSI, LSE and LSI)
- * configuration structure definition
- */
-typedef struct {
-	uint32_t OscillatorType; /*!< The oscillators to be configured.
-				      This parameter can be a value of @ref
-				    RCC_Oscillator_Type                   */
+	/**
+	 * @brief  RCC Internal/External Oscillator (HSE, HSI, MSI, LSE and LSI)
+	 * configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t OscillatorType; /*!< The oscillators to be configured.
+					      This parameter can be a value of @ref
+					    RCC_Oscillator_Type                   */
 
-	uint32_t HSEState; /*!< The new state of the HSE.
-				This parameter can be a value of @ref
-			      RCC_HSE_Config                        */
+		uint32_t HSEState; /*!< The new state of the HSE.
+					This parameter can be a value of @ref
+				      RCC_HSE_Config                        */
 
-	uint32_t LSEState; /*!< The new state of the LSE.
-				This parameter can be a value of @ref
-			      RCC_LSE_Config                        */
+		uint32_t LSEState; /*!< The new state of the LSE.
+					This parameter can be a value of @ref
+				      RCC_LSE_Config                        */
 
-	uint32_t HSIState; /*!< The new state of the HSI.
-				This parameter can be a value of @ref
-			      RCC_HSI_Config                        */
+		uint32_t HSIState; /*!< The new state of the HSI.
+					This parameter can be a value of @ref
+				      RCC_HSI_Config                        */
 
-	uint32_t HSICalibrationValue; /*!< The calibration trimming value (default is
-					 RCC_HSICALIBRATION_DEFAULT). This parameter
-					 must be a number between Min_Data = 0x00 and
-					 Max_Data = 0x7F on the other devices */
+		uint32_t HSICalibrationValue; /*!< The calibration trimming value (default is
+						 RCC_HSICALIBRATION_DEFAULT). This parameter
+						 must be a number between Min_Data = 0x00 and
+						 Max_Data = 0x7F on the other devices */
 
-	uint32_t LSIState; /*!< The new state of the LSI.
-				This parameter can be a value of @ref
-			      RCC_LSI_Config                        */
+		uint32_t LSIState; /*!< The new state of the LSI.
+					This parameter can be a value of @ref
+				      RCC_LSI_Config                        */
 
-	uint32_t LSIDiv; /*!< The division factor of the LSI.
-			      This parameter can be a value of @ref RCC_LSI_Div */
+		uint32_t LSIDiv; /*!< The division factor of the LSI.
+				      This parameter can be a value of @ref RCC_LSI_Div */
 
-	uint32_t MSIState; /*!< The new state of the MSI.
-				This parameter can be a value of @ref
-			      RCC_MSI_Config */
+		uint32_t MSIState; /*!< The new state of the MSI.
+					This parameter can be a value of @ref
+				      RCC_MSI_Config */
 
-	uint32_t MSICalibrationValue; /*!< The calibration trimming value (default is
-					 RCC_MSICALIBRATION_DEFAULT). This parameter
-					 must be a number between Min_Data = 0x00 and
-					 Max_Data = 0xFF */
+		uint32_t MSICalibrationValue; /*!< The calibration trimming value (default is
+						 RCC_MSICALIBRATION_DEFAULT). This parameter
+						 must be a number between Min_Data = 0x00 and
+						 Max_Data = 0xFF */
 
-	uint32_t MSIClockRange; /*!< The MSI frequency range.
-				     This parameter can be a value of @ref
-				   RCC_MSI_Clock_Range                   */
+		uint32_t MSIClockRange; /*!< The MSI frequency range.
+					     This parameter can be a value of @ref
+					   RCC_MSI_Clock_Range                   */
 
-	uint32_t MSIKClockRange; /*!< The MSIK frequency range.
-				     This parameter can be a value of @ref
-				    RCC_MSIK_Clock_Range                  */
+		uint32_t MSIKClockRange; /*!< The MSIK frequency range.
+					     This parameter can be a value of @ref
+					    RCC_MSIK_Clock_Range                  */
 
-	uint32_t HSI48State; /*!< The new state of the HSI48.
-				  This parameter can be a value of @ref
-				RCC_HSI48_Config                    */
+		uint32_t HSI48State; /*!< The new state of the HSI48.
+					  This parameter can be a value of @ref
+					RCC_HSI48_Config                    */
 
-	uint32_t SHSIState; /*!< The new state of the SHSI.
-				  This parameter can be a value of @ref
-			       RCC_SHSI_Config                    */
+		uint32_t SHSIState; /*!< The new state of the SHSI.
+					  This parameter can be a value of @ref
+				       RCC_SHSI_Config                    */
 
-	uint32_t MSIKState; /*!< The new state of the MSIK.
-				  This parameter can be a value of @ref
-			       RCC_MSIK_Config                     */
+		uint32_t MSIKState; /*!< The new state of the MSIK.
+					  This parameter can be a value of @ref
+				       RCC_MSIK_Config                     */
 
-	RCC_PLLInitTypeDef PLL; /*!< Main PLL structure parameters */
+		RCC_PLLInitTypeDef PLL; /*!< Main PLL structure parameters */
 
-} RCC_OscInitTypeDef;
+	} RCC_OscInitTypeDef;
 
-/**
- * @brief  RCC System, AHB and APB busses clock configuration structure
- * definition
- */
-typedef struct {
-	uint32_t ClockType; /*!< The clock to be configured.
-				 This parameter can be a value of @ref
-			       RCC_System_Clock_Type      */
+	/**
+	 * @brief  RCC System, AHB and APB busses clock configuration structure
+	 * definition
+	 */
+	typedef struct
+	{
+		uint32_t ClockType; /*!< The clock to be configured.
+					 This parameter can be a value of @ref
+				       RCC_System_Clock_Type      */
 
-	uint32_t SYSCLKSource; /*!< The clock source used as system clock
-				  (SYSCLK). This parameter can be a value of
-				  @ref RCC_System_Clock_Source    */
+		uint32_t SYSCLKSource; /*!< The clock source used as system clock
+					  (SYSCLK). This parameter can be a value of
+					  @ref RCC_System_Clock_Source    */
 
-	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is
-				   derived from the system clock (SYSCLK). This
-				   parameter can be a value of @ref
-				   RCC_AHB_Clock_Source       */
+		uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is
+					   derived from the system clock (SYSCLK). This
+					   parameter can be a value of @ref
+					   RCC_AHB_Clock_Source       */
 
-	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock
-				    is derived from the AHB clock (HCLK). This
-				    parameter can be a value of @ref
-				    RCC_APB1_APB2_APB3_Clock_Source */
+		uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock
+					    is derived from the AHB clock (HCLK). This
+					    parameter can be a value of @ref
+					    RCC_APB1_APB2_APB3_Clock_Source */
 
-	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock
-				    is derived from the AHB clock (HCLK). This
-				    parameter can be a value of @ref
-				    RCC_APB1_APB2_APB3_Clock_Source */
+		uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock
+					    is derived from the AHB clock (HCLK). This
+					    parameter can be a value of @ref
+					    RCC_APB1_APB2_APB3_Clock_Source */
 
-	uint32_t APB3CLKDivider; /*!< The APB3 clock (PCLK3) divider. This clock
-				    is derived from the AHB clock (HCLK). This
-				    parameter can be a value of @ref
-				    RCC_APB1_APB2_APB3_Clock_Source */
-} RCC_ClkInitTypeDef;
+		uint32_t APB3CLKDivider; /*!< The APB3 clock (PCLK3) divider. This clock
+					    is derived from the AHB clock (HCLK). This
+					    parameter can be a value of @ref
+					    RCC_APB1_APB2_APB3_Clock_Source */
+	} RCC_ClkInitTypeDef;
 
 /**
  * @}
@@ -718,7 +722,8 @@ typedef struct {
  * @{
  */
 #define __HAL_RCC_GPDMA1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPDMA1EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -726,7 +731,8 @@ typedef struct {
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 #define __HAL_RCC_CORDIC_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_CORDICEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -734,7 +740,8 @@ typedef struct {
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 #define __HAL_RCC_FMAC_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_FMACEN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -742,7 +749,8 @@ typedef struct {
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 #define __HAL_RCC_TSC_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_TSCEN);                                                                                                                                              \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -750,7 +758,8 @@ typedef struct {
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 #define __HAL_RCC_CRC_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_CRCEN);                                                                                                                                              \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -760,7 +769,8 @@ typedef struct {
 
 #if defined(JPEG)
 #define __HAL_RCC_JPEG_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_JPEGEN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -770,7 +780,8 @@ typedef struct {
 #endif /* JPEG */
 
 #define __HAL_RCC_RAMCFG_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_RAMCFGEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -778,7 +789,8 @@ typedef struct {
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 #define __HAL_RCC_FLASH_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_FLASHEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -787,7 +799,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_MDF1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_MDF1EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -797,7 +810,8 @@ typedef struct {
 
 #if defined(DMA2D)
 #define __HAL_RCC_DMA2D_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_DMA2DEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -808,7 +822,8 @@ typedef struct {
 
 #if defined(GFXMMU)
 #define __HAL_RCC_GFXMMU_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GFXMMUEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -819,7 +834,8 @@ typedef struct {
 
 #if defined(GPU2D)
 #define __HAL_RCC_GPU2D_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPU2DEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -830,7 +846,8 @@ typedef struct {
 
 #if defined(DCACHE2)
 #define __HAL_RCC_DCACHE2_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_DCACHE2EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -840,7 +857,8 @@ typedef struct {
 #endif /* DCACHE2 */
 
 #define __HAL_RCC_GTZC1_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GTZC1EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -849,7 +867,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_BKPSRAM_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_BKPSRAMEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -858,7 +877,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_DCACHE1_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_DCACHE1EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -867,7 +887,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_SRAM1_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_SRAM1EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -931,7 +952,8 @@ typedef struct {
  * @{
  */
 #define __HAL_RCC_GPIOA_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOAEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -940,7 +962,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_GPIOB_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOBEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -949,7 +972,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_GPIOC_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOCEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -958,7 +982,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_GPIOD_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIODEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -967,7 +992,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_GPIOE_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOEEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -977,7 +1003,8 @@ typedef struct {
 
 #if defined(GPIOF)
 #define __HAL_RCC_GPIOF_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOFEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -987,7 +1014,8 @@ typedef struct {
 #endif /* GPIOF */
 
 #define __HAL_RCC_GPIOG_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOGEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -996,7 +1024,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_GPIOH_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOHEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1006,7 +1035,8 @@ typedef struct {
 
 #if defined(GPIOI)
 #define __HAL_RCC_GPIOI_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOIEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1017,7 +1047,8 @@ typedef struct {
 
 #if defined(GPIOJ)
 #define __HAL_RCC_GPIOJ_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_GPIOJEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1028,7 +1059,8 @@ typedef struct {
 #endif /* GPIOJ */
 
 #define __HAL_RCC_ADC12_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_ADC12EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1037,7 +1069,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_DCMI_PSSI_CLK_ENABLE()                                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_DCMI_PSSIEN);                                                                                                                                      \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1046,7 +1079,8 @@ typedef struct {
 	} while (0)
 #if defined(USB_OTG_HS)
 #define __HAL_RCC_USB_OTG_HS_CLK_ENABLE()                                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_OTGEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1057,7 +1091,8 @@ typedef struct {
 
 #if defined(USB_OTG_FS)
 #define __HAL_RCC_USB_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_OTGEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1072,7 +1107,8 @@ typedef struct {
 
 #if defined(RCC_AHB2ENR1_USBPHYCEN)
 #define __HAL_RCC_USBPHYC_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_USBPHYCEN);                                                                                                                                        \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1083,7 +1119,8 @@ typedef struct {
 
 #if defined(AES)
 #define __HAL_RCC_AES_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_AESEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1094,7 +1131,8 @@ typedef struct {
 
 #if defined(HASH)
 #define __HAL_RCC_HASH_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_HASHEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1104,7 +1142,8 @@ typedef struct {
 #endif /* HASH */
 
 #define __HAL_RCC_RNG_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_RNGEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1114,7 +1153,8 @@ typedef struct {
 
 #if defined(PKA)
 #define __HAL_RCC_PKA_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_PKAEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1125,7 +1165,8 @@ typedef struct {
 
 #if defined(SAES)
 #define __HAL_RCC_SAES_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_SAESEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1136,7 +1177,8 @@ typedef struct {
 
 #if defined(OCTOSPIM)
 #define __HAL_RCC_OSPIM_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_OCTOSPIMEN);                                                                                                                                       \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1147,7 +1189,8 @@ typedef struct {
 
 #if defined(OTFDEC1)
 #define __HAL_RCC_OTFDEC1_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_OTFDEC1EN);                                                                                                                                        \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1158,7 +1201,8 @@ typedef struct {
 
 #if defined(OTFDEC2)
 #define __HAL_RCC_OTFDEC2_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_OTFDEC2EN);                                                                                                                                        \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1168,7 +1212,8 @@ typedef struct {
 #endif /* OTFDEC2 */
 
 #define __HAL_RCC_SDMMC1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_SDMMC1EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1178,7 +1223,8 @@ typedef struct {
 
 #if defined(SDMMC2)
 #define __HAL_RCC_SDMMC2_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_SDMMC2EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1188,7 +1234,8 @@ typedef struct {
 #endif /* SDMMC2 */
 
 #define __HAL_RCC_SRAM2_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_SRAM2EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1197,7 +1244,8 @@ typedef struct {
 	} while (0)
 #if defined(SRAM3_BASE)
 #define __HAL_RCC_SRAM3_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR1, RCC_AHB2ENR1_SRAM3EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1208,7 +1256,8 @@ typedef struct {
 
 #if defined(FMC_BASE)
 #define __HAL_RCC_FMC_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR2, RCC_AHB2ENR2_FSMCEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1218,7 +1267,8 @@ typedef struct {
 #endif /* FMC_BASE */
 
 #define __HAL_RCC_OSPI1_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR2, RCC_AHB2ENR2_OCTOSPI1EN);                                                                                                                                       \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1228,7 +1278,8 @@ typedef struct {
 
 #if defined(OCTOSPI2)
 #define __HAL_RCC_OSPI2_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR2, RCC_AHB2ENR2_OCTOSPI2EN);                                                                                                                                       \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1326,7 +1377,8 @@ typedef struct {
 
 #if defined(HSPI1)
 #define __HAL_RCC_HSPI1_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR2, RCC_AHB2ENR2_HSPI1EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1337,7 +1389,8 @@ typedef struct {
 
 #if defined(SRAM6_BASE)
 #define __HAL_RCC_SRAM6_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR2, RCC_AHB2ENR2_SRAM6EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1348,7 +1401,8 @@ typedef struct {
 
 #if defined(SRAM5_BASE)
 #define __HAL_RCC_SRAM5_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB2ENR2, RCC_AHB2ENR2_SRAM5EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1400,7 +1454,8 @@ typedef struct {
 #define __HAL_RCC_APB3_CLK_DISABLE() SET_BIT(RCC->CFGR3, RCC_CFGR3_APB3DIS);
 
 #define __HAL_RCC_AHB1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR2, RCC_CFGR2_AHB1DIS);                                                                                                                                              \
 		tmpreg = READ_BIT(RCC->CFGR2, RCC_CFGR2_AHB1DIS);                                                                                                                                      \
@@ -1408,7 +1463,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_AHB2_1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR2, RCC_CFGR2_AHB2DIS1);                                                                                                                                             \
 		tmpreg = READ_BIT(RCC->CFGR2, RCC_CFGR2_AHB2DIS1);                                                                                                                                     \
@@ -1416,7 +1472,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_AHB2_2_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR2, RCC_CFGR2_AHB2DIS2);                                                                                                                                             \
 		tmpreg = READ_BIT(RCC->CFGR2, RCC_CFGR2_AHB2DIS2);                                                                                                                                     \
@@ -1424,7 +1481,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_AHB3_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR3, RCC_CFGR3_AHB3DIS);                                                                                                                                              \
 		tmpreg = READ_BIT(RCC->CFGR3, RCC_CFGR3_AHB3DIS);                                                                                                                                      \
@@ -1432,7 +1490,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_APB1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR2, RCC_CFGR2_APB1DIS);                                                                                                                                              \
 		tmpreg = READ_BIT(RCC->CFGR2, RCC_CFGR2_APB1DIS);                                                                                                                                      \
@@ -1440,7 +1499,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_APB2_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR2, RCC_CFGR2_APB2DIS);                                                                                                                                              \
 		tmpreg = READ_BIT(RCC->CFGR2, RCC_CFGR2_APB2DIS);                                                                                                                                      \
@@ -1448,28 +1508,30 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_APB3_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(RCC->CFGR3, RCC_CFGR3_APB3DIS);                                                                                                                                              \
 		tmpreg = READ_BIT(RCC->CFGR3, RCC_CFGR3_APB3DIS);                                                                                                                                      \
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup RCC_AHB3_Clock_Enable_Disable AHB3ENR Peripheral Clock Enable
- * Disable
- * @brief  Enable or disable the AHB3ENR peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
- * @{
- */
+	/** @defgroup RCC_AHB3_Clock_Enable_Disable AHB3ENR Peripheral Clock Enable
+	 * Disable
+	 * @brief  Enable or disable the AHB3ENR peripheral clock.
+	 * @note   After reset, the peripheral clock (used for registers read/write
+	 * access) is disabled and the application software has to enable this clock
+	 * before using it.
+	 * @{
+	 */
 
 #define __HAL_RCC_LPGPIO1_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_LPGPIO1EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1478,7 +1540,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_PWR_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_PWREN);                                                                                                                                              \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1487,7 +1550,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_ADC4_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_ADC4EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1496,7 +1560,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_DAC1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_DAC1EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1505,7 +1570,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_LPDMA1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_LPDMA1EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1514,7 +1580,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_ADF1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_ADF1EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1523,7 +1590,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_GTZC2_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_GTZC2EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1532,7 +1600,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_SRAM4_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->AHB3ENR, RCC_AHB3ENR_SRAM4EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1556,20 +1625,21 @@ typedef struct {
 
 #define __HAL_RCC_SRAM4_CLK_DISABLE() CLEAR_BIT(RCC->AHB3ENR, RCC_AHB3ENR_SRAM4EN)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup RCC_APB1_Clock_Enable_Disable APB1 Peripheral Clock Enable Disable
- * @brief  Enable or disable the APB1 peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
- * @{
- */
+	/** @defgroup RCC_APB1_Clock_Enable_Disable APB1 Peripheral Clock Enable Disable
+	 * @brief  Enable or disable the APB1 peripheral clock.
+	 * @note   After reset, the peripheral clock (used for registers read/write
+	 * access) is disabled and the application software has to enable this clock
+	 * before using it.
+	 * @{
+	 */
 
 #define __HAL_RCC_TIM2_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_TIM2EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1578,7 +1648,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM3_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_TIM3EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1587,7 +1658,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM4_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_TIM4EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1596,7 +1668,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM5_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_TIM5EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1605,7 +1678,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM6_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_TIM6EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1614,7 +1688,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM7_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_TIM7EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1623,7 +1698,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_WWDG_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_WWDGEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1632,7 +1708,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_SPI2_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_SPI2EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1642,7 +1719,8 @@ typedef struct {
 
 #if defined(USART2)
 #define __HAL_RCC_USART2_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_USART2EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1652,7 +1730,8 @@ typedef struct {
 #endif /* USART2 */
 
 #define __HAL_RCC_USART3_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_USART3EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1661,7 +1740,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_UART4_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_UART4EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1670,7 +1750,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_UART5_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_UART5EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1679,7 +1760,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_I2C1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_I2C1EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1688,7 +1770,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_I2C2_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_I2C2EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1697,7 +1780,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_CRS_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_CRSEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1707,7 +1791,8 @@ typedef struct {
 
 #if defined(USART6)
 #define __HAL_RCC_USART6_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR1, RCC_APB1ENR1_USART6EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1717,7 +1802,8 @@ typedef struct {
 #endif /* USART6 */
 
 #define __HAL_RCC_I2C4_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR2, RCC_APB1ENR2_I2C4EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1726,7 +1812,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_LPTIM2_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR2, RCC_APB1ENR2_LPTIM2EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1736,7 +1823,8 @@ typedef struct {
 
 #if defined(I2C5)
 #define __HAL_RCC_I2C5_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR2, RCC_APB1ENR2_I2C5EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1747,7 +1835,8 @@ typedef struct {
 
 #if defined(I2C6)
 #define __HAL_RCC_I2C6_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR2, RCC_APB1ENR2_I2C6EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1757,7 +1846,8 @@ typedef struct {
 #endif /* I2C6 */
 
 #define __HAL_RCC_FDCAN1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR2, RCC_APB1ENR2_FDCAN1EN);                                                                                                                                         \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1767,7 +1857,8 @@ typedef struct {
 
 #if defined(UCPD1)
 #define __HAL_RCC_UCPD_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB1ENR2, RCC_APB1ENR2_UCPD1EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1840,7 +1931,8 @@ typedef struct {
  * @{
  */
 #define __HAL_RCC_TIM1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_TIM1EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1849,7 +1941,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_SPI1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_SPI1EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1858,7 +1951,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM8_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_TIM8EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1867,7 +1961,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_USART1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_USART1EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1876,7 +1971,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM15_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_TIM15EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1885,7 +1981,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM16_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_TIM16EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1894,7 +1991,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_TIM17_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_TIM17EN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1903,7 +2001,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_SAI1_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_SAI1EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1913,7 +2012,8 @@ typedef struct {
 
 #if defined(SAI2)
 #define __HAL_RCC_SAI2_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_SAI2EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1924,7 +2024,8 @@ typedef struct {
 
 #if defined(USB_DRD_FS)
 #define __HAL_RCC_USB_FS_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_USBEN);                                                                                                                                              \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1935,7 +2036,8 @@ typedef struct {
 
 #if defined(GFXTIM)
 #define __HAL_RCC_GFXTIM_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_GFXTIMEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1946,7 +2048,8 @@ typedef struct {
 
 #if defined(LTDC)
 #define __HAL_RCC_LTDC_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_LTDCEN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -1957,7 +2060,8 @@ typedef struct {
 
 #if defined(DSI)
 #define __HAL_RCC_DSI_CLK_ENABLE()                                                                                                                                                                     \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB2ENR, RCC_APB2ENR_DSIHOSTEN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2014,7 +2118,8 @@ typedef struct {
  * @{
  */
 #define __HAL_RCC_SYSCFG_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_SYSCFGEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2023,7 +2128,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_SPI3_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_SPI3EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2032,7 +2138,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_LPUART1_CLK_ENABLE()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_LPUART1EN);                                                                                                                                          \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2041,7 +2148,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_I2C3_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_I2C3EN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2050,7 +2158,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_LPTIM1_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_LPTIM1EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2059,7 +2168,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_LPTIM3_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_LPTIM3EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2068,7 +2178,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_LPTIM4_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_LPTIM4EN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2077,7 +2188,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_OPAMP_CLK_ENABLE()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_OPAMPEN);                                                                                                                                            \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2086,7 +2198,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_COMP_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_COMPEN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2095,7 +2208,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_VREF_CLK_ENABLE()                                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_VREFEN);                                                                                                                                             \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2104,7 +2218,8 @@ typedef struct {
 	} while (0)
 
 #define __HAL_RCC_RTCAPB_CLK_ENABLE()                                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(RCC->APB3ENR, RCC_APB3ENR_RTCAPBEN);                                                                                                                                           \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -2615,18 +2730,18 @@ typedef struct {
 #define __HAL_RCC_UCPD_IS_CLK_DISABLED() (READ_BIT(RCC->APB1ENR2, RCC_APB1ENR2_UCPD1EN) == 0U)
 #endif /* UCPD1 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup RCC_APB2_Peripheral_Clock_Enable_Disable_Status APB2 Peripheral
- * Clock Enabled or Disabled Status
- * @brief  Check whether the APB2 peripheral clock is enabled or not.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
- * @{
- */
+	/** @defgroup RCC_APB2_Peripheral_Clock_Enable_Disable_Status APB2 Peripheral
+	 * Clock Enabled or Disabled Status
+	 * @brief  Check whether the APB2 peripheral clock is enabled or not.
+	 * @note   After reset, the peripheral clock (used for registers read/write
+	 * access) is disabled and the application software has to enable this clock
+	 * before using it.
+	 * @{
+	 */
 
 #define __HAL_RCC_TIM1_IS_CLK_ENABLED() (READ_BIT(RCC->APB2ENR, RCC_APB2ENR_TIM1EN) != 0U)
 
@@ -2836,7 +2951,8 @@ typedef struct {
  * @{
  */
 #define __HAL_RCC_AHB2_FORCE_RESET()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		WRITE_REG(RCC->AHB2RSTR1, 0x19BF55FFU);                                                                                                                                                \
 		WRITE_REG(RCC->AHB2RSTR2, 0x00000111U);                                                                                                                                                \
 	} while (0)
@@ -2931,7 +3047,8 @@ typedef struct {
 #endif /* HSPI1 */
 
 #define __HAL_RCC_AHB2_RELEASE_RESET()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		WRITE_REG(RCC->AHB2RSTR1, 0x00000000U);                                                                                                                                                \
 		WRITE_REG(RCC->AHB2RSTR2, 0x00000000U);                                                                                                                                                \
 	} while (0)
@@ -3057,17 +3174,18 @@ typedef struct {
 
 #define __HAL_RCC_ADF1_RELEASE_RESET() CLEAR_BIT(RCC->AHB3RSTR, RCC_AHB3RSTR_ADF1RST)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup RCC_APB1_Force_Release_Reset APB1 Peripheral Force Release Reset
- * @brief  Force or release APB1 peripheral reset.
- * @{
- */
+	/** @defgroup RCC_APB1_Force_Release_Reset APB1 Peripheral Force Release Reset
+	 * @brief  Force or release APB1 peripheral reset.
+	 * @{
+	 */
 
 #define __HAL_RCC_APB1_FORCE_RESET()                                                                                                                                                                   \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		WRITE_REG(RCC->APB1RSTR1, 0x027E403FU);                                                                                                                                                \
 		WRITE_REG(RCC->APB1RSTR2, 0x00800222U);                                                                                                                                                \
 	} while (0)
@@ -3125,7 +3243,8 @@ typedef struct {
 #endif /* UCPD1 */
 
 #define __HAL_RCC_APB1_RELEASE_RESET()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		WRITE_REG(RCC->APB1RSTR1, 0x00000000U);                                                                                                                                                \
 		WRITE_REG(RCC->APB1RSTR2, 0x00000000U);                                                                                                                                                \
 	} while (0)
@@ -4217,7 +4336,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_MSI_RANGE_CONFIG(__MSIRANGEVALUE__)                                                                                                                                                  \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL);                                                                                                                                             \
 		MODIFY_REG(RCC->ICSCR1, RCC_ICSCR1_MSISRANGE, (__MSIRANGEVALUE__));                                                                                                                    \
 	} while (0)
@@ -4254,7 +4374,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_MSIK_RANGE_CONFIG(__MSIKRANGEVALUE__)                                                                                                                                                \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL);                                                                                                                                             \
 		MODIFY_REG(RCC->ICSCR1, RCC_ICSCR1_MSIKRANGE, (__MSIKRANGEVALUE__));                                                                                                                   \
 	} while (0)
@@ -4270,12 +4391,12 @@ typedef struct {
 
 #define __HAL_RCC_MSIBIAS_SELECTION_DISABLE() CLEAR_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIBIAS)
 
-/** @brief  Macros to enable or disable LSE clock glitch filter .
- * @note   The glitches on LSE can be filtred by setting the LSEGFON.
- * @note   LSEGFON must be written when the LSE is disabled (LSEON = 0 and
- * LSERDY = 0).
- * @retval None
- */
+	/** @brief  Macros to enable or disable LSE clock glitch filter .
+	 * @note   The glitches on LSE can be filtred by setting the LSEGFON.
+	 * @note   LSEGFON must be written when the LSE is disabled (LSEON = 0 and
+	 * LSERDY = 0).
+	 * @retval None
+	 */
 
 #define __HAL_RCC_LSE_GLITCHFILTER_ENABLE() SET_BIT(RCC->BDCR, RCC_BDCR_LSEGFON)
 
@@ -4296,7 +4417,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_MSI_STANDBY_RANGE_CONFIG(__MSIRANGEVALUE__)                                                                                                                                          \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL);                                                                                                                                             \
 		MODIFY_REG(RCC->CSR, RCC_CSR_MSISSRANGE, (__MSIRANGEVALUE__) >> (RCC_ICSCR1_MSISRANGE_Pos - RCC_CSR_MSISSRANGE_Pos));                                                                  \
 	} while (0)
@@ -4315,7 +4437,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_MSIK_STANDBY_RANGE_CONFIG(__MSIKRANGEVALUE__)                                                                                                                                        \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL);                                                                                                                                             \
 		MODIFY_REG(RCC->CSR, RCC_CSR_MSIKSRANGE, (__MSIKRANGEVALUE__) >> (RCC_ICSCR1_MSIKRANGE_Pos - RCC_CSR_MSIKSRANGE_Pos));                                                                 \
 	} while (0)
@@ -4408,18 +4531,26 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_HSE_CONFIG(__STATE__)                                                                                                                                                                \
-	do {                                                                                                                                                                                           \
-		if ((__STATE__) == RCC_HSE_ON) {                                                                                                                                                       \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if ((__STATE__) == RCC_HSE_ON)                                                                                                                                                         \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->CR, RCC_CR_HSEON);                                                                                                                                                \
-		} else if ((__STATE__) == RCC_HSE_BYPASS) {                                                                                                                                            \
+		}                                                                                                                                                                                      \
+		else if ((__STATE__) == RCC_HSE_BYPASS)                                                                                                                                                \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->CR, RCC_CR_HSEBYP);                                                                                                                                               \
 			CLEAR_BIT(RCC->CR, RCC_CR_HSEEXT);                                                                                                                                             \
 			SET_BIT(RCC->CR, RCC_CR_HSEON);                                                                                                                                                \
-		} else if ((__STATE__) == RCC_HSE_BYPASS_DIGITAL) {                                                                                                                                    \
+		}                                                                                                                                                                                      \
+		else if ((__STATE__) == RCC_HSE_BYPASS_DIGITAL)                                                                                                                                        \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->CR, RCC_CR_HSEBYP);                                                                                                                                               \
 			SET_BIT(RCC->CR, RCC_CR_HSEEXT);                                                                                                                                               \
 			SET_BIT(RCC->CR, RCC_CR_HSEON);                                                                                                                                                \
-		} else {                                                                                                                                                                               \
+		}                                                                                                                                                                                      \
+		else                                                                                                                                                                                   \
+		{                                                                                                                                                                                      \
 			CLEAR_BIT(RCC->CR, RCC_CR_HSEON);                                                                                                                                              \
 			CLEAR_BIT(RCC->CR, RCC_CR_HSEBYP);                                                                                                                                             \
 			CLEAR_BIT(RCC->CR, RCC_CR_HSEEXT);                                                                                                                                             \
@@ -4451,10 +4582,14 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_LSI_DIV_CONFIG(__DIVIDER__)                                                                                                                                                          \
-	do {                                                                                                                                                                                           \
-		if ((__DIVIDER__) == RCC_LSI_DIV128) {                                                                                                                                                 \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if ((__DIVIDER__) == RCC_LSI_DIV128)                                                                                                                                                   \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->BDCR, RCC_BDCR_LSIPREDIV);                                                                                                                                        \
-		} else {                                                                                                                                                                               \
+		}                                                                                                                                                                                      \
+		else                                                                                                                                                                                   \
+		{                                                                                                                                                                                      \
 			CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSIPREDIV);                                                                                                                                      \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -4486,18 +4621,28 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_LSE_CONFIG(__STATE__)                                                                                                                                                                \
-	do {                                                                                                                                                                                           \
-		if ((__STATE__) == RCC_LSE_ON_RTC_ONLY) {                                                                                                                                              \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if ((__STATE__) == RCC_LSE_ON_RTC_ONLY)                                                                                                                                                \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->BDCR, RCC_BDCR_LSEON);                                                                                                                                            \
-		} else if ((__STATE__) == RCC_LSE_ON) {                                                                                                                                                \
+		}                                                                                                                                                                                      \
+		else if ((__STATE__) == RCC_LSE_ON)                                                                                                                                                    \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->BDCR, (RCC_BDCR_LSEON | RCC_BDCR_LSESYSEN));                                                                                                                      \
-		} else if ((__STATE__) == RCC_LSE_BYPASS_RTC_ONLY) {                                                                                                                                   \
+		}                                                                                                                                                                                      \
+		else if ((__STATE__) == RCC_LSE_BYPASS_RTC_ONLY)                                                                                                                                       \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->BDCR, RCC_BDCR_LSEBYP);                                                                                                                                           \
 			SET_BIT(RCC->BDCR, RCC_BDCR_LSEON);                                                                                                                                            \
-		} else if ((__STATE__) == RCC_LSE_BYPASS) {                                                                                                                                            \
+		}                                                                                                                                                                                      \
+		else if ((__STATE__) == RCC_LSE_BYPASS)                                                                                                                                                \
+		{                                                                                                                                                                                      \
 			SET_BIT(RCC->BDCR, RCC_BDCR_LSEBYP);                                                                                                                                           \
 			SET_BIT(RCC->BDCR, (RCC_BDCR_LSEON | RCC_BDCR_LSESYSEN));                                                                                                                      \
-		} else {                                                                                                                                                                               \
+		}                                                                                                                                                                                      \
+		else                                                                                                                                                                                   \
+		{                                                                                                                                                                                      \
 			CLEAR_BIT(RCC->BDCR, (RCC_BDCR_LSEON | RCC_BDCR_LSESYSEN));                                                                                                                    \
 			CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSEBYP);                                                                                                                                         \
 		}                                                                                                                                                                                      \
@@ -4681,7 +4826,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_PLL_CONFIG(__PLL1SOURCE__, __PLL1MBOOST__, __PLL1M__, __PLL1N__, __PLL1P__, __PLL1Q__, __PLL1R__)                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		MODIFY_REG(RCC->PLL1CFGR, (RCC_PLL1CFGR_PLL1SRC | RCC_PLL1CFGR_PLL1M | RCC_PLL1CFGR_PLL1MBOOST),                                                                                       \
 			   ((__PLL1SOURCE__) << RCC_PLL1CFGR_PLL1SRC_Pos) | (((__PLL1M__) - 1U) << RCC_PLL1CFGR_PLL1M_Pos) | (__PLL1MBOOST__));                                                        \
 		MODIFY_REG(RCC->PLL1DIVR, (RCC_PLL1DIVR_PLL1N | RCC_PLL1DIVR_PLL1P | RCC_PLL1DIVR_PLL1Q | RCC_PLL1DIVR_PLL1R),                                                                         \
@@ -4987,63 +5133,63 @@ typedef struct {
 /* Include RCC HAL Extended module */
 #include "stm32u5xx_hal_rcc_ex.h"
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup RCC_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup RCC_Exported_Functions
+	 * @{
+	 */
 
-/** @addtogroup RCC_Exported_Functions_Group1
- * @{
- */
+	/** @addtogroup RCC_Exported_Functions_Group1
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions
- * ******************************/
-HAL_StatusTypeDef HAL_RCC_DeInit(void);
-HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *pRCC_OscInitStruct);
-HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *const pRCC_ClkInitStruct, uint32_t FLatency);
+	/* Initialization and de-initialization functions
+	 * ******************************/
+	HAL_StatusTypeDef HAL_RCC_DeInit(void);
+	HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *pRCC_OscInitStruct);
+	HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *const pRCC_ClkInitStruct, uint32_t FLatency);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup RCC_Exported_Functions_Group2
- * @{
- */
+	/** @addtogroup RCC_Exported_Functions_Group2
+	 * @{
+	 */
 
-/* Peripheral Control functions  **********************************************/
-void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
-void HAL_RCC_EnableCSS(void);
-uint32_t HAL_RCC_GetSysClockFreq(void);
-uint32_t HAL_RCC_GetHCLKFreq(void);
-uint32_t HAL_RCC_GetPCLK1Freq(void);
-uint32_t HAL_RCC_GetPCLK2Freq(void);
-uint32_t HAL_RCC_GetPCLK3Freq(void);
-void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef *pRCC_OscInitStruct);
-void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *pRCC_ClkInitStruct, uint32_t *pFLatency);
-uint32_t HAL_RCC_GetResetSource(void);
-/* CSS NMI IRQ handler */
-void HAL_RCC_NMI_IRQHandler(void);
-/* User Callbacks in non blocking mode (IT mode) */
-void HAL_RCC_CSSCallback(void);
+	/* Peripheral Control functions  **********************************************/
+	void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
+	void HAL_RCC_EnableCSS(void);
+	uint32_t HAL_RCC_GetSysClockFreq(void);
+	uint32_t HAL_RCC_GetHCLKFreq(void);
+	uint32_t HAL_RCC_GetPCLK1Freq(void);
+	uint32_t HAL_RCC_GetPCLK2Freq(void);
+	uint32_t HAL_RCC_GetPCLK3Freq(void);
+	void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef *pRCC_OscInitStruct);
+	void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *pRCC_ClkInitStruct, uint32_t *pFLatency);
+	uint32_t HAL_RCC_GetResetSource(void);
+	/* CSS NMI IRQ handler */
+	void HAL_RCC_NMI_IRQHandler(void);
+	/* User Callbacks in non blocking mode (IT mode) */
+	void HAL_RCC_CSSCallback(void);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Attributes management functions ********************************************/
-void HAL_RCC_ConfigAttributes(uint32_t Item, uint32_t Attributes);
-HAL_StatusTypeDef HAL_RCC_GetConfigAttributes(uint32_t Item, uint32_t *pAttributes);
+	/* Attributes management functions ********************************************/
+	void HAL_RCC_ConfigAttributes(uint32_t Item, uint32_t Attributes);
+	HAL_StatusTypeDef HAL_RCC_GetConfigAttributes(uint32_t Item, uint32_t *pAttributes);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

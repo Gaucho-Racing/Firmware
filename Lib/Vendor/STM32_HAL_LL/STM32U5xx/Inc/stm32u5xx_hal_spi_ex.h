@@ -21,42 +21,44 @@
 #define STM32U5xx_HAL_SPI_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup SPIEx
- * @{
- */
+	/** @addtogroup SPIEx
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup SPIEx_Exported_Types SPIEx Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup SPIEx_Exported_Types SPIEx Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  SPI Autonomous Mode Configuration structure definition
- */
-typedef struct {
-	uint32_t TriggerState; /*!< Specifies the trigger state. This parameter
-				  can be a value of @ref FunctionalState */
+	/**
+	 * @brief  SPI Autonomous Mode Configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t TriggerState; /*!< Specifies the trigger state. This parameter
+					  can be a value of @ref FunctionalState */
 
-	uint32_t TriggerSelection; /*!< Specifies the autonomous mode trigger signal
-				      selection. This parameter can be a value of
-				      @ref SPI_AutonomousMode_TriggerSelection */
+		uint32_t TriggerSelection; /*!< Specifies the autonomous mode trigger signal
+					      selection. This parameter can be a value of
+					      @ref SPI_AutonomousMode_TriggerSelection */
 
-	uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger
-				     signal polarity sensitivity. This parameter
-				       can be a value of @ref
-				     SPI_AutonomousMode_TriggerPolarity */
+		uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger
+					     signal polarity sensitivity. This parameter
+					       can be a value of @ref
+					     SPI_AutonomousMode_TriggerPolarity */
 
-} SPI_AutonomousModeConfTypeDef;
+	} SPI_AutonomousModeConfTypeDef;
 
 /**
  * @}
@@ -146,18 +148,18 @@ typedef struct {
  */
 #define SPI_TRIG_POLARITY_RISING (0x00000000UL)	     /* SPI HW Trigger signal on rising edge  */
 #define SPI_TRIG_POLARITY_FALLING SPI_AUTOCR_TRIGPOL /* SPI HW Trigger signal on falling edge */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported macros -----------------------------------------------------------*/
-/** @defgroup SPIEx_Exported_Macros SPIEx Extended Exported Macros
- * @{
- */
+	/* Exported macros -----------------------------------------------------------*/
+	/** @defgroup SPIEx_Exported_Macros SPIEx Extended Exported Macros
+	 * @{
+	 */
 
 #define IS_SPI_AUTO_MODE(__MODE__) (((__MODE__) == SPI_AUTO_MODE_DISABLE) || ((__MODE__) == SPI_AUTO_MODE_ENABLE))
 
@@ -185,47 +187,47 @@ typedef struct {
 
 #define IS_SPI_AUTO_MODE_TRG_POL(__POLARITY__) (((__POLARITY__) == SPI_TRIG_POLARITY_RISING) || ((__POLARITY__) == SPI_TRIG_POLARITY_FALLING))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup SPIEx_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup SPIEx_Exported_Functions
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions  ****************************/
-/* IO operation functions *****************************************************/
-/** @addtogroup SPIEx_Exported_Functions_Group1
- * @{
- */
-HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(const SPI_HandleTypeDef *hspi);
-HAL_StatusTypeDef HAL_SPIEx_EnableLockConfiguration(SPI_HandleTypeDef *hspi);
-HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t UnderrunDetection, uint32_t UnderrunBehaviour);
-/**
- * @}
- */
+	/* Initialization and de-initialization functions  ****************************/
+	/* IO operation functions *****************************************************/
+	/** @addtogroup SPIEx_Exported_Functions_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(const SPI_HandleTypeDef *hspi);
+	HAL_StatusTypeDef HAL_SPIEx_EnableLockConfiguration(SPI_HandleTypeDef *hspi);
+	HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t UnderrunDetection, uint32_t UnderrunBehaviour);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup SPI_Autonomous_Mode_Functions Autonomous Mode Functions
- * @{
- */
-HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi, const SPI_AutonomousModeConfTypeDef *sConfig);
-HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi, SPI_AutonomousModeConfTypeDef *sConfig);
-HAL_StatusTypeDef HAL_SPIEx_ClearConfigAutonomousMode(SPI_HandleTypeDef *hspi);
-/**
- * @}
- */
-/**
- * @}
- */
+	/** @addtogroup SPI_Autonomous_Mode_Functions Autonomous Mode Functions
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi, const SPI_AutonomousModeConfTypeDef *sConfig);
+	HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi, SPI_AutonomousModeConfTypeDef *sConfig);
+	HAL_StatusTypeDef HAL_SPIEx_ClearConfigAutonomousMode(SPI_HandleTypeDef *hspi);
+	/**
+	 * @}
+	 */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

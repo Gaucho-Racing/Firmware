@@ -21,7 +21,8 @@
 #define STM32L4xx_HAL_SMARTCARD_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -76,9 +77,9 @@ extern "C" {
 	0x00000100U /*!< TX completion indication before of after guard time                                                                                                                           \
 		     */
 #endif		    /* USART_TCBGT_SUPPORT */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #if defined(USART_CR1_FIFOEN)
 /** @defgroup SMARTCARDEx_FIFO_mode SMARTCARD FIFO mode
@@ -117,9 +118,9 @@ extern "C" {
 #define SMARTCARD_RXFIFO_THRESHOLD_3_4 (USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1) /*!< RXFIFO FIFO reaches 3/4 of its depth */
 #define SMARTCARD_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2			   /*!< RXFIFO FIFO reaches 7/8 of its depth */
 #define SMARTCARD_RXFIFO_THRESHOLD_8_8 (USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RXFIFO FIFO becomes full             */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* USART_CR1_FIFOEN */
 /** @defgroup SMARTCARDEx_Flags SMARTCARD Flags
@@ -254,16 +255,21 @@ extern "C" {
  */
 #if defined(USART_TCBGT_SUPPORT)
 #define SMARTCARD_TRANSMISSION_COMPLETION_SETTING(__HANDLE__)                                                                                                                                          \
-	do {                                                                                                                                                                                           \
-		if (HAL_IS_BIT_CLR((__HANDLE__)->AdvancedInit.AdvFeatureInit, SMARTCARD_ADVFEATURE_TXCOMPLETION)) {                                                                                    \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if (HAL_IS_BIT_CLR((__HANDLE__)->AdvancedInit.AdvFeatureInit, SMARTCARD_ADVFEATURE_TXCOMPLETION))                                                                                      \
+		{                                                                                                                                                                                      \
 			(__HANDLE__)->AdvancedInit.TxCompletionIndication = SMARTCARD_TC;                                                                                                              \
-		} else {                                                                                                                                                                               \
+		}                                                                                                                                                                                      \
+		else                                                                                                                                                                                   \
+		{                                                                                                                                                                                      \
 			assert_param(IS_SMARTCARD_TRANSMISSION_COMPLETION((__HANDLE__)->AdvancedInit.TxCompletionIndication));                                                                         \
 		}                                                                                                                                                                                      \
 	} while (0U)
 #else
 #define SMARTCARD_TRANSMISSION_COMPLETION_SETTING(__HANDLE__)                                                                                                                                          \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		(__HANDLE__)->AdvancedInit.TxCompletionIndication = SMARTCARD_TC;                                                                                                                      \
 	} while (0U)
 #endif /* USART_TCBGT_SUPPORT */
@@ -316,27 +322,27 @@ extern "C" {
 	 ((__THRESHOLD__) == SMARTCARD_RXFIFO_THRESHOLD_3_4) || ((__THRESHOLD__) == SMARTCARD_RXFIFO_THRESHOLD_7_8) || ((__THRESHOLD__) == SMARTCARD_RXFIFO_THRESHOLD_8_8))
 
 #endif /* USART_CR1_FIFOEN */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup SMARTCARDEx_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup SMARTCARDEx_Exported_Functions
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions  ****************************/
-/* IO operation methods *******************************************************/
+	/* Initialization and de-initialization functions  ****************************/
+	/* IO operation methods *******************************************************/
 
-/** @addtogroup SMARTCARDEx_Exported_Functions_Group1
- * @{
- */
+	/** @addtogroup SMARTCARDEx_Exported_Functions_Group1
+	 * @{
+	 */
 
-/* Peripheral Control functions ***********************************************/
-void HAL_SMARTCARDEx_BlockLength_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint8_t BlockLength);
-void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t TimeOutValue);
-HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard);
-HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard);
+	/* Peripheral Control functions ***********************************************/
+	void HAL_SMARTCARDEx_BlockLength_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint8_t BlockLength);
+	void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t TimeOutValue);
+	HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard);
+	HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard);
 
 /**
  * @}
@@ -349,8 +355,8 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef
 
 /* IO operation functions *****************************************************/
 #if defined(USART_CR1_FIFOEN)
-void HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartcard);
-void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartcard);
+	void HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartcard);
+	void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartcard);
 #endif /* USART_CR1_FIFOEN */
 
 /**
@@ -363,29 +369,29 @@ void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartcard);
 
 /* Peripheral Control functions ***********************************************/
 #if defined(USART_CR1_FIFOEN)
-HAL_StatusTypeDef HAL_SMARTCARDEx_EnableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard);
-HAL_StatusTypeDef HAL_SMARTCARDEx_DisableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard);
-HAL_StatusTypeDef HAL_SMARTCARDEx_SetTxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t Threshold);
-HAL_StatusTypeDef HAL_SMARTCARDEx_SetRxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t Threshold);
+	HAL_StatusTypeDef HAL_SMARTCARDEx_EnableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard);
+	HAL_StatusTypeDef HAL_SMARTCARDEx_DisableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard);
+	HAL_StatusTypeDef HAL_SMARTCARDEx_SetTxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t Threshold);
+	HAL_StatusTypeDef HAL_SMARTCARDEx_SetRxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t Threshold);
 #endif /* USART_CR1_FIFOEN */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private functions ---------------------------------------------------------*/
+	/* Private functions ---------------------------------------------------------*/
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

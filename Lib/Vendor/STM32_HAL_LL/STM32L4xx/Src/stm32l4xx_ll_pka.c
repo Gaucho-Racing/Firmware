@@ -81,13 +81,16 @@ ErrorStatus LL_PKA_DeInit(const PKA_TypeDef *PKAx)
 	/* Check the parameters */
 	assert_param(IS_PKA_ALL_INSTANCE(PKAx));
 
-	if (PKAx == PKA) {
+	if (PKAx == PKA)
+	{
 		/* Force PKA reset */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_PKA);
 
 		/* Release PKA reset */
 		LL_AHB2_GRP1_ReleaseReset(LL_AHB2_GRP1_PERIPH_PKA);
-	} else {
+	}
+	else
+	{
 		status = ERROR;
 	}
 

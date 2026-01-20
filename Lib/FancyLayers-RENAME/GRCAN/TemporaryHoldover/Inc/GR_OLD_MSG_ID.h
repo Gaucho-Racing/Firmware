@@ -1,7 +1,8 @@
 #ifndef GR_OLD_MSG_ID_H
 #define GR_OLD_MSG_ID_H
 
-typedef enum {
+typedef enum
+{
 	MSG_DEBUG_2_0 = 0x000,
 	MSG_DEBUG_FD = 0x001,
 	MSG_PING = 0x002,

@@ -171,9 +171,12 @@ HAL_StatusTypeDef HAL_Init(void)
 
 	/* Use SysTick as time base source and configure 1ms tick (default clock
 	 * after Reset is HSI) */
-	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
+	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK)
+	{
 		status = HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Init the low level hardware */
 		HAL_MspInit();
 	}
@@ -256,20 +259,29 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (uwTickFreq != 0U) {
+	if (uwTickFreq != 0U)
+	{
 		/* Configure the SysTick to have interrupt in 1ms time basis*/
-		if (HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq)) == 0U) {
+		if (HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq)) == 0U)
+		{
 			/* Configure the SysTick IRQ priority */
-			if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
+			if (TickPriority < (1UL << __NVIC_PRIO_BITS))
+			{
 				HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
 				uwTickPrio = TickPriority;
-			} else {
+			}
+			else
+			{
 				status = HAL_ERROR;
 			}
-		} else {
+		}
+		else
+		{
 			status = HAL_ERROR;
 		}
-	} else {
+	}
+	else
+	{
 		status = HAL_ERROR;
 	}
 
@@ -337,7 +349,8 @@ HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq)
 
 	assert_param(IS_TICKFREQ(Freq));
 
-	if (uwTickFreq != Freq) {
+	if (uwTickFreq != Freq)
+	{
 		/* Back up uwTickFreq frequency */
 		prevTickFreq = uwTickFreq;
 
@@ -347,7 +360,8 @@ HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq)
 		/* Apply the new tick Freq  */
 		status = HAL_InitTick(uwTickPrio);
 
-		if (status != HAL_OK) {
+		if (status != HAL_OK)
+		{
 			/* Restore previous tick frequency */
 			uwTickFreq = prevTickFreq;
 		}
@@ -380,11 +394,13 @@ __weak void HAL_Delay(uint32_t Delay)
 	uint32_t wait = Delay;
 
 	/* Add a freq to guarantee minimum wait */
-	if (wait < HAL_MAX_DELAY) {
+	if (wait < HAL_MAX_DELAY)
+	{
 		wait += (uint32_t)(uwTickFreq);
 	}
 
-	while ((HAL_GetTick() - tickstart) < wait) {
+	while ((HAL_GetTick() - tickstart) < wait)
+	{
 	}
 }
 
@@ -648,8 +664,10 @@ HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void)
 	tickstart = HAL_GetTick();
 
 	/* Wait for VRR bit  */
-	while (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == 0x00U) {
-		if ((HAL_GetTick() - tickstart) > VREFBUF_TIMEOUT_VALUE) {
+	while (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == 0x00U)
+	{
+		if ((HAL_GetTick() - tickstart) > VREFBUF_TIMEOUT_VALUE)
+		{
 			return HAL_TIMEOUT;
 		}
 	}

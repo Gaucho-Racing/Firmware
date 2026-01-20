@@ -198,12 +198,15 @@ void LL_mDelay(uint32_t Delay)
 	((void)tmp);
 	tmpDelay = Delay;
 	/* Add a period to guaranty minimum wait */
-	if (tmpDelay < LL_MAX_DELAY) {
+	if (tmpDelay < LL_MAX_DELAY)
+	{
 		tmpDelay++;
 	}
 
-	while (tmpDelay != 0U) {
-		if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U) {
+	while (tmpDelay != 0U)
+	{
+		if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U)
+		{
 			tmpDelay--;
 		}
 	}
@@ -290,21 +293,33 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
 	uint32_t latency = LL_FLASH_LATENCY_0; /* default value 0WS */
 
 	/* Frequency cannot be equal to 0 or greater than max clock */
-	if ((HCLKFrequency == 0U) || (HCLKFrequency > UTILS_SCALE1_LATENCY5_BOOST_FREQ)) {
+	if ((HCLKFrequency == 0U) || (HCLKFrequency > UTILS_SCALE1_LATENCY5_BOOST_FREQ))
+	{
 		status = ERROR;
-	} else {
-		if ((regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE1) && (regulatorbooststatus == 1U)) {
-			if (HCLKFrequency > UTILS_SCALE1_LATENCY4_BOOST_FREQ) {
+	}
+	else
+	{
+		if ((regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE1) && (regulatorbooststatus == 1U))
+		{
+			if (HCLKFrequency > UTILS_SCALE1_LATENCY4_BOOST_FREQ)
+			{
 				/* 136 < HCLK <= 170 => 4WS (5 CPU cycles) */
 				latency = LL_FLASH_LATENCY_4;
-			} else if (HCLKFrequency > UTILS_SCALE1_LATENCY3_BOOST_FREQ) {
+			}
+			else if (HCLKFrequency > UTILS_SCALE1_LATENCY3_BOOST_FREQ)
+			{
 				/* 102 < HCLK <= 136 => 3WS (4 CPU cycles) */
 				latency = LL_FLASH_LATENCY_3;
-			} else if (HCLKFrequency > UTILS_SCALE1_LATENCY2_BOOST_FREQ) {
+			}
+			else if (HCLKFrequency > UTILS_SCALE1_LATENCY2_BOOST_FREQ)
+			{
 				/* 68 < HCLK <= 102 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
-			} else {
-				if (HCLKFrequency > UTILS_SCALE1_LATENCY1_BOOST_FREQ) {
+			}
+			else
+			{
+				if (HCLKFrequency > UTILS_SCALE1_LATENCY1_BOOST_FREQ)
+				{
 					/* 34 < HCLK <= 68 => 1WS (2 CPU cycles)
 					 */
 					latency = LL_FLASH_LATENCY_1;
@@ -314,18 +329,27 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
 			}
 		}
 		/* SCALE1 normal mode*/
-		else if (regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE1) {
-			if (HCLKFrequency > UTILS_SCALE1_LATENCY4_FREQ) {
+		else if (regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE1)
+		{
+			if (HCLKFrequency > UTILS_SCALE1_LATENCY4_FREQ)
+			{
 				/* 120 < HCLK <= 150 => 4WS (5 CPU cycles) */
 				latency = LL_FLASH_LATENCY_4;
-			} else if (HCLKFrequency > UTILS_SCALE1_LATENCY3_FREQ) {
+			}
+			else if (HCLKFrequency > UTILS_SCALE1_LATENCY3_FREQ)
+			{
 				/* 90 < HCLK <= 120 => 3WS (4 CPU cycles) */
 				latency = LL_FLASH_LATENCY_3;
-			} else if (HCLKFrequency > UTILS_SCALE1_LATENCY2_FREQ) {
+			}
+			else if (HCLKFrequency > UTILS_SCALE1_LATENCY2_FREQ)
+			{
 				/* 60 < HCLK <= 90 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
-			} else {
-				if (HCLKFrequency > UTILS_SCALE1_LATENCY1_FREQ) {
+			}
+			else
+			{
+				if (HCLKFrequency > UTILS_SCALE1_LATENCY1_FREQ)
+				{
 					/* 30 < HCLK <= 60 => 1WS (2 CPU cycles)
 					 */
 					latency = LL_FLASH_LATENCY_1;
@@ -335,12 +359,17 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
 			}
 		}
 		/* SCALE2 */
-		else if (regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE2) {
-			if (HCLKFrequency > UTILS_SCALE2_LATENCY2_FREQ) {
+		else if (regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE2)
+		{
+			if (HCLKFrequency > UTILS_SCALE2_LATENCY2_FREQ)
+			{
 				/* 24 < HCLK <= 26 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
-			} else {
-				if (HCLKFrequency > UTILS_SCALE2_LATENCY1_FREQ) {
+			}
+			else
+			{
+				if (HCLKFrequency > UTILS_SCALE2_LATENCY1_FREQ)
+				{
 					/* 12 < HCLK <= 24 => 1WS (2 CPU cycles)
 					 */
 					latency = LL_FLASH_LATENCY_1;
@@ -348,24 +377,29 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
 				/* else HCLKFrequency <= 8MHz default
 				 * LL_FLASH_LATENCY_0 0WS */
 			}
-		} else {
+		}
+		else
+		{
 			/* Nothing to do */
 		}
 
-		if (status != ERROR) {
+		if (status != ERROR)
+		{
 			LL_FLASH_SetLatency(latency);
 
 			/* Check that the new number of wait states is taken
 			   into account to access the Flash memory by reading
 			   the FLASH_ACR register */
 			timeout = 2U;
-			do {
+			do
+			{
 				/* Wait for Flash latency to be updated */
 				getlatency = LL_FLASH_GetLatency();
 				timeout--;
 			} while ((getlatency != latency) && (timeout > 0U));
 
-			if (getlatency != latency) {
+			if (getlatency != latency)
+			{
 				status = ERROR;
 			}
 		}
@@ -401,14 +435,17 @@ ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitS
 	uint32_t hpre = LL_RCC_SYSCLK_DIV_1;
 
 	/* Check if one of the PLL is enabled */
-	if (UTILS_PLL_IsBusy() == SUCCESS) {
+	if (UTILS_PLL_IsBusy() == SUCCESS)
+	{
 		/* Calculate the new PLL output frequency */
 		pllfreq = UTILS_GetPLLOutputFrequency(HSI_VALUE, UTILS_PLLInitStruct);
 
 		/* Enable HSI if not enabled */
-		if (LL_RCC_HSI_IsReady() != 1U) {
+		if (LL_RCC_HSI_IsReady() != 1U)
+		{
 			LL_RCC_HSI_Enable();
-			while (LL_RCC_HSI_IsReady() != 1U) {
+			while (LL_RCC_HSI_IsReady() != 1U)
+			{
 				/* Wait for HSI ready */
 			}
 		}
@@ -418,8 +455,10 @@ ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitS
 
 		/* Prevent undershoot at highest frequency by applying
 		 * intermediate AHB prescaler 2 */
-		if (pllfreq > 80000000U) {
-			if (UTILS_ClkInitStruct->AHBCLKDivider == LL_RCC_SYSCLK_DIV_1) {
+		if (pllfreq > 80000000U)
+		{
+			if (UTILS_ClkInitStruct->AHBCLKDivider == LL_RCC_SYSCLK_DIV_1)
+			{
 				UTILS_ClkInitStruct->AHBCLKDivider = LL_RCC_SYSCLK_DIV_2;
 				hpre = LL_RCC_SYSCLK_DIV_2;
 			}
@@ -429,16 +468,20 @@ ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitS
 		status = UTILS_EnablePLLAndSwitchSystem(pllfreq, UTILS_ClkInitStruct);
 
 		/* Apply definitive AHB prescaler value if necessary */
-		if ((status == SUCCESS) && (hpre != LL_RCC_SYSCLK_DIV_1)) {
+		if ((status == SUCCESS) && (hpre != LL_RCC_SYSCLK_DIV_1))
+		{
 			/* Set FLASH latency to highest latency */
 			status = LL_SetFlashLatency(pllfreq);
-			if (status == SUCCESS) {
+			if (status == SUCCESS)
+			{
 				UTILS_ClkInitStruct->AHBCLKDivider = LL_RCC_SYSCLK_DIV_1;
 				LL_RCC_SetAHBPrescaler(UTILS_ClkInitStruct->AHBCLKDivider);
 				LL_SetSystemCoreClock(pllfreq);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		/* Current PLL configuration cannot be modified */
 		status = ERROR;
 	}
@@ -481,22 +524,28 @@ ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypa
 	assert_param(IS_LL_UTILS_HSE_BYPASS(HSEBypass));
 
 	/* Check if one of the PLL is enabled */
-	if (UTILS_PLL_IsBusy() == SUCCESS) {
+	if (UTILS_PLL_IsBusy() == SUCCESS)
+	{
 		/* Calculate the new PLL output frequency */
 		pllfreq = UTILS_GetPLLOutputFrequency(HSEFrequency, UTILS_PLLInitStruct);
 
 		/* Enable HSE if not enabled */
-		if (LL_RCC_HSE_IsReady() != 1U) {
+		if (LL_RCC_HSE_IsReady() != 1U)
+		{
 			/* Check if need to enable HSE bypass feature or not */
-			if (HSEBypass == LL_UTILS_HSEBYPASS_ON) {
+			if (HSEBypass == LL_UTILS_HSEBYPASS_ON)
+			{
 				LL_RCC_HSE_EnableBypass();
-			} else {
+			}
+			else
+			{
 				LL_RCC_HSE_DisableBypass();
 			}
 
 			/* Enable HSE */
 			LL_RCC_HSE_Enable();
-			while (LL_RCC_HSE_IsReady() != 1U) {
+			while (LL_RCC_HSE_IsReady() != 1U)
+			{
 				/* Wait for HSE ready */
 			}
 		}
@@ -506,8 +555,10 @@ ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypa
 
 		/* Prevent undershoot at highest frequency by applying
 		 * intermediate AHB prescaler 2 */
-		if (pllfreq > 80000000U) {
-			if (UTILS_ClkInitStruct->AHBCLKDivider == LL_RCC_SYSCLK_DIV_1) {
+		if (pllfreq > 80000000U)
+		{
+			if (UTILS_ClkInitStruct->AHBCLKDivider == LL_RCC_SYSCLK_DIV_1)
+			{
 				UTILS_ClkInitStruct->AHBCLKDivider = LL_RCC_SYSCLK_DIV_2;
 				hpre = LL_RCC_SYSCLK_DIV_2;
 			}
@@ -517,16 +568,20 @@ ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypa
 		status = UTILS_EnablePLLAndSwitchSystem(pllfreq, UTILS_ClkInitStruct);
 
 		/* Apply definitive AHB prescaler value if necessary */
-		if ((status == SUCCESS) && (hpre != LL_RCC_SYSCLK_DIV_1)) {
+		if ((status == SUCCESS) && (hpre != LL_RCC_SYSCLK_DIV_1))
+		{
 			/* Set FLASH latency to highest latency */
 			status = LL_SetFlashLatency(pllfreq);
-			if (status == SUCCESS) {
+			if (status == SUCCESS)
+			{
 				UTILS_ClkInitStruct->AHBCLKDivider = LL_RCC_SYSCLK_DIV_1;
 				LL_RCC_SetAHBPrescaler(UTILS_ClkInitStruct->AHBCLKDivider);
 				LL_SetSystemCoreClock(pllfreq);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		/* Current PLL configuration cannot be modified */
 		status = ERROR;
 	}
@@ -591,7 +646,8 @@ static ErrorStatus UTILS_PLL_IsBusy(void)
 	ErrorStatus status = SUCCESS;
 
 	/* Check if PLL is busy*/
-	if (LL_RCC_PLL_IsReady() != 0U) {
+	if (LL_RCC_PLL_IsReady() != 0U)
+	{
 		/* PLL configuration cannot be modified */
 		status = ERROR;
 	}
@@ -622,24 +678,28 @@ static ErrorStatus UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency, LL_
 
 	/* Increasing the number of wait states because of higher CPU frequency
 	 */
-	if (SystemCoreClock < hclk_frequency) {
+	if (SystemCoreClock < hclk_frequency)
+	{
 		/* Set FLASH latency to highest latency */
 		status = LL_SetFlashLatency(hclk_frequency);
 	}
 
 	/* Update system clock configuration */
-	if (status == SUCCESS) {
+	if (status == SUCCESS)
+	{
 		/* Enable PLL */
 		LL_RCC_PLL_Enable();
 		LL_RCC_PLL_EnableDomain_SYS();
-		while (LL_RCC_PLL_IsReady() != 1U) {
+		while (LL_RCC_PLL_IsReady() != 1U)
+		{
 			/* Wait for PLL ready */
 		}
 
 		/* Sysclk activation on the main PLL */
 		LL_RCC_SetAHBPrescaler(UTILS_ClkInitStruct->AHBCLKDivider);
 		LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-		while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {
+		while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
+		{
 			/* Wait for system clock switch to PLL */
 		}
 
@@ -650,13 +710,15 @@ static ErrorStatus UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency, LL_
 
 	/* Decreasing the number of wait states because of lower CPU frequency
 	 */
-	if (SystemCoreClock > hclk_frequency) {
+	if (SystemCoreClock > hclk_frequency)
+	{
 		/* Set FLASH latency to lowest latency */
 		status = LL_SetFlashLatency(hclk_frequency);
 	}
 
 	/* Update SystemCoreClock variable */
-	if (status == SUCCESS) {
+	if (status == SUCCESS)
+	{
 		LL_SetSystemCoreClock(hclk_frequency);
 	}
 

@@ -21,290 +21,297 @@
 #define STM32L4xx_HAL_CAN_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-/** @addtogroup STM32L4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32L4xx_HAL_Driver
+	 * @{
+	 */
 
 #if defined(CAN1)
-/** @addtogroup CAN
- * @{
- */
+	/** @addtogroup CAN
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup CAN_Exported_Types CAN Exported Types
- * @{
- */
-/**
- * @brief  HAL State structures definition
- */
-typedef enum {
-	HAL_CAN_STATE_RESET = 0x00U,	     /*!< CAN not yet initialized or disabled */
-	HAL_CAN_STATE_READY = 0x01U,	     /*!< CAN initialized and ready for use   */
-	HAL_CAN_STATE_LISTENING = 0x02U,     /*!< CAN receive process is ongoing */
-	HAL_CAN_STATE_SLEEP_PENDING = 0x03U, /*!< CAN sleep request is pending        */
-	HAL_CAN_STATE_SLEEP_ACTIVE = 0x04U,  /*!< CAN sleep mode is active */
-	HAL_CAN_STATE_ERROR = 0x05U	     /*!< CAN error state                     */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup CAN_Exported_Types CAN Exported Types
+	 * @{
+	 */
+	/**
+	 * @brief  HAL State structures definition
+	 */
+	typedef enum
+	{
+		HAL_CAN_STATE_RESET = 0x00U,	     /*!< CAN not yet initialized or disabled */
+		HAL_CAN_STATE_READY = 0x01U,	     /*!< CAN initialized and ready for use   */
+		HAL_CAN_STATE_LISTENING = 0x02U,     /*!< CAN receive process is ongoing */
+		HAL_CAN_STATE_SLEEP_PENDING = 0x03U, /*!< CAN sleep request is pending        */
+		HAL_CAN_STATE_SLEEP_ACTIVE = 0x04U,  /*!< CAN sleep mode is active */
+		HAL_CAN_STATE_ERROR = 0x05U	     /*!< CAN error state                     */
 
-} HAL_CAN_StateTypeDef;
+	} HAL_CAN_StateTypeDef;
 
-/**
- * @brief  CAN init structure definition
- */
-typedef struct {
-	uint32_t Prescaler; /*!< Specifies the length of a time quantum.
-				 This parameter must be a number between
-			       Min_Data = 1 and Max_Data = 1024. */
+	/**
+	 * @brief  CAN init structure definition
+	 */
+	typedef struct
+	{
+		uint32_t Prescaler; /*!< Specifies the length of a time quantum.
+					 This parameter must be a number between
+				       Min_Data = 1 and Max_Data = 1024. */
 
-	uint32_t Mode; /*!< Specifies the CAN operating mode.
-			    This parameter can be a value of @ref
-			  CAN_operating_mode */
+		uint32_t Mode; /*!< Specifies the CAN operating mode.
+				    This parameter can be a value of @ref
+				  CAN_operating_mode */
 
-	uint32_t SyncJumpWidth; /*!< Specifies the maximum number of time quanta
-				   the CAN hardware is allowed to lengthen or
-				   shorten a bit to perform resynchronization.
-				     This parameter can be a value of @ref
-				   CAN_synchronisation_jump_width */
+		uint32_t SyncJumpWidth; /*!< Specifies the maximum number of time quanta
+					   the CAN hardware is allowed to lengthen or
+					   shorten a bit to perform resynchronization.
+					     This parameter can be a value of @ref
+					   CAN_synchronisation_jump_width */
 
-	uint32_t TimeSeg1; /*!< Specifies the number of time quanta in Bit
-			      Segment 1. This parameter can be a value of @ref
-			      CAN_time_quantum_in_bit_segment_1 */
+		uint32_t TimeSeg1; /*!< Specifies the number of time quanta in Bit
+				      Segment 1. This parameter can be a value of @ref
+				      CAN_time_quantum_in_bit_segment_1 */
 
-	uint32_t TimeSeg2; /*!< Specifies the number of time quanta in Bit
-			      Segment 2. This parameter can be a value of @ref
-			      CAN_time_quantum_in_bit_segment_2 */
+		uint32_t TimeSeg2; /*!< Specifies the number of time quanta in Bit
+				      Segment 2. This parameter can be a value of @ref
+				      CAN_time_quantum_in_bit_segment_2 */
 
-	FunctionalState TimeTriggeredMode; /*!< Enable or disable the time triggered
-					      communication mode. This parameter can be set
-					      to ENABLE or DISABLE. */
+		FunctionalState TimeTriggeredMode; /*!< Enable or disable the time triggered
+						      communication mode. This parameter can be set
+						      to ENABLE or DISABLE. */
 
-	FunctionalState AutoBusOff; /*!< Enable or disable the automatic bus-off management.
-					 This parameter can be set to ENABLE or DISABLE. */
+		FunctionalState AutoBusOff; /*!< Enable or disable the automatic bus-off management.
+						 This parameter can be set to ENABLE or DISABLE. */
 
-	FunctionalState AutoWakeUp; /*!< Enable or disable the automatic wake-up mode.
-					 This parameter can be set to ENABLE or DISABLE. */
+		FunctionalState AutoWakeUp; /*!< Enable or disable the automatic wake-up mode.
+						 This parameter can be set to ENABLE or DISABLE. */
 
-	FunctionalState AutoRetransmission; /*!< Enable or disable the non-automatic
-					       retransmission mode. This parameter can be
-					       set to ENABLE or DISABLE. */
+		FunctionalState AutoRetransmission; /*!< Enable or disable the non-automatic
+						       retransmission mode. This parameter can be
+						       set to ENABLE or DISABLE. */
 
-	FunctionalState ReceiveFifoLocked; /*!< Enable or disable the Receive FIFO Locked
-					      mode. This parameter can be set to ENABLE or
-					      DISABLE. */
+		FunctionalState ReceiveFifoLocked; /*!< Enable or disable the Receive FIFO Locked
+						      mode. This parameter can be set to ENABLE or
+						      DISABLE. */
 
-	FunctionalState TransmitFifoPriority; /*!< Enable or disable the transmit FIFO
-						 priority. This parameter can be set to
-						 ENABLE or DISABLE. */
+		FunctionalState TransmitFifoPriority; /*!< Enable or disable the transmit FIFO
+							 priority. This parameter can be set to
+							 ENABLE or DISABLE. */
 
-} CAN_InitTypeDef;
+	} CAN_InitTypeDef;
 
-/**
- * @brief  CAN filter configuration structure definition
- */
-typedef struct {
-	uint32_t FilterIdHigh; /*!< Specifies the filter identification number (MSBs
-				  for a 32-bit configuration, first one for a 16-bit
-				  configuration). This parameter must be a number
-				  between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
+	/**
+	 * @brief  CAN filter configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t FilterIdHigh; /*!< Specifies the filter identification number (MSBs
+					  for a 32-bit configuration, first one for a 16-bit
+					  configuration). This parameter must be a number
+					  between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 
-	uint32_t FilterIdLow; /*!< Specifies the filter identification number (LSBs
-				 for a 32-bit configuration, second one for a 16-bit
-				 configuration). This parameter must be a number
-				 between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
+		uint32_t FilterIdLow; /*!< Specifies the filter identification number (LSBs
+					 for a 32-bit configuration, second one for a 16-bit
+					 configuration). This parameter must be a number
+					 between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 
-	uint32_t FilterMaskIdHigh; /*!< Specifies the filter mask number or
-				      identification number, according to the mode
-				      (MSBs for a 32-bit configuration, first one for
-				      a 16-bit configuration). This parameter must be
-				      a number between Min_Data = 0x0000 and Max_Data
-				      = 0xFFFF. */
+		uint32_t FilterMaskIdHigh; /*!< Specifies the filter mask number or
+					      identification number, according to the mode
+					      (MSBs for a 32-bit configuration, first one for
+					      a 16-bit configuration). This parameter must be
+					      a number between Min_Data = 0x0000 and Max_Data
+					      = 0xFFFF. */
 
-	uint32_t FilterMaskIdLow; /*!< Specifies the filter mask number or
-				     identification number, according to the
-				     mode (LSBs for a 32-bit configuration,
-				     second one for a 16-bit configuration).
-				     This parameter must be a number between
-				     Min_Data = 0x0000 and Max_Data = 0xFFFF. */
+		uint32_t FilterMaskIdLow; /*!< Specifies the filter mask number or
+					     identification number, according to the
+					     mode (LSBs for a 32-bit configuration,
+					     second one for a 16-bit configuration).
+					     This parameter must be a number between
+					     Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 
-	uint32_t FilterFIFOAssignment; /*!< Specifies the FIFO (0 or 1U) which will
-					  be assigned to the filter. This parameter
-					  can be a value of @ref CAN_filter_FIFO */
+		uint32_t FilterFIFOAssignment; /*!< Specifies the FIFO (0 or 1U) which will
+						  be assigned to the filter. This parameter
+						  can be a value of @ref CAN_filter_FIFO */
 
-	uint32_t FilterBank; /*!< Specifies the filter bank which will be
-				initialized. For single CAN instance(14
-				dedicated filter banks), this parameter must be
-				a number between Min_Data = 0 and Max_Data = 13.
-				  For dual CAN instances(28 filter banks
-				shared), this parameter must be a number between
-				Min_Data = 0 and Max_Data = 27. */
+		uint32_t FilterBank; /*!< Specifies the filter bank which will be
+					initialized. For single CAN instance(14
+					dedicated filter banks), this parameter must be
+					a number between Min_Data = 0 and Max_Data = 13.
+					  For dual CAN instances(28 filter banks
+					shared), this parameter must be a number between
+					Min_Data = 0 and Max_Data = 27. */
 
-	uint32_t FilterMode; /*!< Specifies the filter mode to be initialized.
-				  This parameter can be a value of @ref
-				CAN_filter_mode */
+		uint32_t FilterMode; /*!< Specifies the filter mode to be initialized.
+					  This parameter can be a value of @ref
+					CAN_filter_mode */
 
-	uint32_t FilterScale; /*!< Specifies the filter scale.
-				   This parameter can be a value of @ref
-				 CAN_filter_scale */
+		uint32_t FilterScale; /*!< Specifies the filter scale.
+					   This parameter can be a value of @ref
+					 CAN_filter_scale */
 
-	uint32_t FilterActivation; /*!< Enable or disable the filter.
-					This parameter can be a value of @ref
-				      CAN_filter_activation */
+		uint32_t FilterActivation; /*!< Enable or disable the filter.
+						This parameter can be a value of @ref
+					      CAN_filter_activation */
 
-	uint32_t SlaveStartFilterBank; /*!< Select the start filter bank for the
-					  slave CAN instance. For single CAN
-					  instances, this parameter is meaningless.
-					    For dual CAN instances, all filter banks
-					  with lower index are assigned to master CAN
-					  instance, whereas all filter banks with
-					  greater index are assigned to slave CAN
-					  instance. This parameter must be a number
-					  between Min_Data = 0 and Max_Data = 27. */
+		uint32_t SlaveStartFilterBank; /*!< Select the start filter bank for the
+						  slave CAN instance. For single CAN
+						  instances, this parameter is meaningless.
+						    For dual CAN instances, all filter banks
+						  with lower index are assigned to master CAN
+						  instance, whereas all filter banks with
+						  greater index are assigned to slave CAN
+						  instance. This parameter must be a number
+						  between Min_Data = 0 and Max_Data = 27. */
 
-} CAN_FilterTypeDef;
+	} CAN_FilterTypeDef;
 
-/**
- * @brief  CAN Tx message header structure definition
- */
-typedef struct {
-	uint32_t StdId; /*!< Specifies the standard identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x7FF. */
+	/**
+	 * @brief  CAN Tx message header structure definition
+	 */
+	typedef struct
+	{
+		uint32_t StdId; /*!< Specifies the standard identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x7FF. */
 
-	uint32_t ExtId; /*!< Specifies the extended identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x1FFFFFFF. */
+		uint32_t ExtId; /*!< Specifies the extended identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x1FFFFFFF. */
 
-	uint32_t IDE; /*!< Specifies the type of identifier for the message that
-			 will be transmitted. This parameter can be a value of
-			 @ref CAN_identifier_type */
+		uint32_t IDE; /*!< Specifies the type of identifier for the message that
+				 will be transmitted. This parameter can be a value of
+				 @ref CAN_identifier_type */
 
-	uint32_t RTR; /*!< Specifies the type of frame for the message that will
-			 be transmitted. This parameter can be a value of @ref
-			 CAN_remote_transmission_request */
+		uint32_t RTR; /*!< Specifies the type of frame for the message that will
+				 be transmitted. This parameter can be a value of @ref
+				 CAN_remote_transmission_request */
 
-	uint32_t DLC; /*!< Specifies the length of the frame that will be
-			 transmitted. This parameter must be a number between
-			 Min_Data = 0 and Max_Data = 8. */
+		uint32_t DLC; /*!< Specifies the length of the frame that will be
+				 transmitted. This parameter must be a number between
+				 Min_Data = 0 and Max_Data = 8. */
 
-	FunctionalState TransmitGlobalTime; /*!< Specifies whether the timestamp counter
-				value captured on start of frame transmission, is sent in
-				DATA6 and DATA7 replacing pData[6] and pData[7].
-				@note: Time Triggered Communication Mode must be enabled.
-				@note: DLC must be programmed as 8 bytes, in order these 2
-				bytes are sent. This parameter can be set to ENABLE or
-				DISABLE. */
+		FunctionalState TransmitGlobalTime; /*!< Specifies whether the timestamp counter
+					value captured on start of frame transmission, is sent in
+					DATA6 and DATA7 replacing pData[6] and pData[7].
+					@note: Time Triggered Communication Mode must be enabled.
+					@note: DLC must be programmed as 8 bytes, in order these 2
+					bytes are sent. This parameter can be set to ENABLE or
+					DISABLE. */
 
-} CAN_TxHeaderTypeDef;
+	} CAN_TxHeaderTypeDef;
 
-/**
- * @brief  CAN Rx message header structure definition
- */
-typedef struct {
-	uint32_t StdId; /*!< Specifies the standard identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x7FF. */
+	/**
+	 * @brief  CAN Rx message header structure definition
+	 */
+	typedef struct
+	{
+		uint32_t StdId; /*!< Specifies the standard identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x7FF. */
 
-	uint32_t ExtId; /*!< Specifies the extended identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x1FFFFFFF. */
+		uint32_t ExtId; /*!< Specifies the extended identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x1FFFFFFF. */
 
-	uint32_t IDE; /*!< Specifies the type of identifier for the message that
-			 will be transmitted. This parameter can be a value of
-			 @ref CAN_identifier_type */
+		uint32_t IDE; /*!< Specifies the type of identifier for the message that
+				 will be transmitted. This parameter can be a value of
+				 @ref CAN_identifier_type */
 
-	uint32_t RTR; /*!< Specifies the type of frame for the message that will
-			 be transmitted. This parameter can be a value of @ref
-			 CAN_remote_transmission_request */
+		uint32_t RTR; /*!< Specifies the type of frame for the message that will
+				 be transmitted. This parameter can be a value of @ref
+				 CAN_remote_transmission_request */
 
-	uint32_t DLC; /*!< Specifies the length of the frame that will be
-			 transmitted. This parameter must be a number between
-			 Min_Data = 0 and Max_Data = 8. */
+		uint32_t DLC; /*!< Specifies the length of the frame that will be
+				 transmitted. This parameter must be a number between
+				 Min_Data = 0 and Max_Data = 8. */
 
-	uint32_t Timestamp; /*!< Specifies the timestamp counter value captured
-			       on start of frame reception.
-				@note: Time Triggered Communication Mode must be
-			       enabled. This parameter must be a number between
-			       Min_Data = 0 and Max_Data = 0xFFFF. */
+		uint32_t Timestamp; /*!< Specifies the timestamp counter value captured
+				       on start of frame reception.
+					@note: Time Triggered Communication Mode must be
+				       enabled. This parameter must be a number between
+				       Min_Data = 0 and Max_Data = 0xFFFF. */
 
-	uint32_t FilterMatchIndex; /*!< Specifies the index of matching acceptance
-				filter element. This parameter must be a number
-				between Min_Data = 0 and Max_Data = 0xFF. */
+		uint32_t FilterMatchIndex; /*!< Specifies the index of matching acceptance
+					filter element. This parameter must be a number
+					between Min_Data = 0 and Max_Data = 0xFF. */
 
-} CAN_RxHeaderTypeDef;
+	} CAN_RxHeaderTypeDef;
 
 /**
  * @brief  CAN handle Structure definition
  */
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
-typedef struct __CAN_HandleTypeDef
+	typedef struct __CAN_HandleTypeDef
 #else
-typedef struct
+	typedef struct
 #endif /* USE_HAL_CAN_REGISTER_CALLBACKS */
-{
-	CAN_TypeDef *Instance; /*!< Register base address */
+	{
+		CAN_TypeDef *Instance; /*!< Register base address */
 
-	CAN_InitTypeDef Init; /*!< CAN required parameters */
+		CAN_InitTypeDef Init; /*!< CAN required parameters */
 
-	__IO HAL_CAN_StateTypeDef State; /*!< CAN communication state */
+		__IO HAL_CAN_StateTypeDef State; /*!< CAN communication state */
 
-	__IO uint32_t ErrorCode; /*!< CAN Error code.
-				      This parameter can be a value of @ref
-				    CAN_Error_Code */
+		__IO uint32_t ErrorCode; /*!< CAN Error code.
+					      This parameter can be a value of @ref
+					    CAN_Error_Code */
 
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
-	void (*TxMailbox0CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 0 complete callback */
-	void (*TxMailbox1CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 1 complete callback */
-	void (*TxMailbox2CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 2 complete callback */
-	void (*TxMailbox0AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 0 abort callback       */
-	void (*TxMailbox1AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 1 abort callback       */
-	void (*TxMailbox2AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 2 abort callback       */
-	void (*RxFifo0MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan);  /*!< CAN Rx FIFO 0 msg pending callback */
-	void (*RxFifo0FullCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Rx FIFO 0 full callback           */
-	void (*RxFifo1MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan);  /*!< CAN Rx FIFO 1 msg pending callback */
-	void (*RxFifo1FullCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Rx FIFO 1 full callback           */
-	void (*SleepCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Sleep callback */
-	void (*WakeUpFromRxMsgCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Wake Up from Rx msg callback      */
-	void (*ErrorCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Error callback */
+		void (*TxMailbox0CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 0 complete callback */
+		void (*TxMailbox1CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 1 complete callback */
+		void (*TxMailbox2CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 2 complete callback */
+		void (*TxMailbox0AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 0 abort callback       */
+		void (*TxMailbox1AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 1 abort callback       */
+		void (*TxMailbox2AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 2 abort callback       */
+		void (*RxFifo0MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan);  /*!< CAN Rx FIFO 0 msg pending callback */
+		void (*RxFifo0FullCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Rx FIFO 0 full callback           */
+		void (*RxFifo1MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan);  /*!< CAN Rx FIFO 1 msg pending callback */
+		void (*RxFifo1FullCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Rx FIFO 1 full callback           */
+		void (*SleepCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Sleep callback */
+		void (*WakeUpFromRxMsgCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Wake Up from Rx msg callback      */
+		void (*ErrorCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Error callback */
 
-	void (*MspInitCallback)(struct __CAN_HandleTypeDef *hcan);   /*!< CAN Msp Init callback */
-	void (*MspDeInitCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Msp DeInit callback */
+		void (*MspInitCallback)(struct __CAN_HandleTypeDef *hcan);   /*!< CAN Msp Init callback */
+		void (*MspDeInitCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Msp DeInit callback */
 
 #endif /* (USE_HAL_CAN_REGISTER_CALLBACKS) */
-} CAN_HandleTypeDef;
+	} CAN_HandleTypeDef;
 
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
-/**
- * @brief  HAL CAN common Callback ID enumeration definition
- */
-typedef enum {
-	HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID = 0x00U, /*!< CAN Tx Mailbox 0 complete callback ID         */
-	HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID = 0x01U, /*!< CAN Tx Mailbox 1 complete callback ID         */
-	HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID = 0x02U, /*!< CAN Tx Mailbox 2 complete callback ID         */
-	HAL_CAN_TX_MAILBOX0_ABORT_CB_ID = 0x03U,    /*!< CAN Tx Mailbox 0 abort callback ID            */
-	HAL_CAN_TX_MAILBOX1_ABORT_CB_ID = 0x04U,    /*!< CAN Tx Mailbox 1 abort callback ID            */
-	HAL_CAN_TX_MAILBOX2_ABORT_CB_ID = 0x05U,    /*!< CAN Tx Mailbox 2 abort callback ID            */
-	HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID = 0x06U, /*!< CAN Rx FIFO 0 message pending callback ID     */
-	HAL_CAN_RX_FIFO0_FULL_CB_ID = 0x07U,	    /*!< CAN Rx FIFO 0 full callback ID                */
-	HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID = 0x08U, /*!< CAN Rx FIFO 1 message pending callback ID     */
-	HAL_CAN_RX_FIFO1_FULL_CB_ID = 0x09U,	    /*!< CAN Rx FIFO 1 full callback ID                */
-	HAL_CAN_SLEEP_CB_ID = 0x0AU,		    /*!< CAN Sleep callback ID */
-	HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID = 0x0BU,   /*!< CAN Wake Up from Rx msg callback ID          */
-	HAL_CAN_ERROR_CB_ID = 0x0CU,		    /*!< CAN Error callback ID */
+	/**
+	 * @brief  HAL CAN common Callback ID enumeration definition
+	 */
+	typedef enum
+	{
+		HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID = 0x00U, /*!< CAN Tx Mailbox 0 complete callback ID         */
+		HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID = 0x01U, /*!< CAN Tx Mailbox 1 complete callback ID         */
+		HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID = 0x02U, /*!< CAN Tx Mailbox 2 complete callback ID         */
+		HAL_CAN_TX_MAILBOX0_ABORT_CB_ID = 0x03U,    /*!< CAN Tx Mailbox 0 abort callback ID            */
+		HAL_CAN_TX_MAILBOX1_ABORT_CB_ID = 0x04U,    /*!< CAN Tx Mailbox 1 abort callback ID            */
+		HAL_CAN_TX_MAILBOX2_ABORT_CB_ID = 0x05U,    /*!< CAN Tx Mailbox 2 abort callback ID            */
+		HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID = 0x06U, /*!< CAN Rx FIFO 0 message pending callback ID     */
+		HAL_CAN_RX_FIFO0_FULL_CB_ID = 0x07U,	    /*!< CAN Rx FIFO 0 full callback ID                */
+		HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID = 0x08U, /*!< CAN Rx FIFO 1 message pending callback ID     */
+		HAL_CAN_RX_FIFO1_FULL_CB_ID = 0x09U,	    /*!< CAN Rx FIFO 1 full callback ID                */
+		HAL_CAN_SLEEP_CB_ID = 0x0AU,		    /*!< CAN Sleep callback ID */
+		HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID = 0x0BU,   /*!< CAN Wake Up from Rx msg callback ID          */
+		HAL_CAN_ERROR_CB_ID = 0x0CU,		    /*!< CAN Error callback ID */
 
-	HAL_CAN_MSPINIT_CB_ID = 0x0DU,	 /*!< CAN MspInit callback ID   */
-	HAL_CAN_MSPDEINIT_CB_ID = 0x0EU, /*!< CAN MspDeInit callback ID */
+		HAL_CAN_MSPINIT_CB_ID = 0x0DU,	 /*!< CAN MspInit callback ID   */
+		HAL_CAN_MSPDEINIT_CB_ID = 0x0EU, /*!< CAN MspDeInit callback ID */
 
-} HAL_CAN_CallbackIDTypeDef;
+	} HAL_CAN_CallbackIDTypeDef;
 
-/**
- * @brief  HAL CAN Callback pointer definition
- */
-typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a CAN callback function   */
+	/**
+	 * @brief  HAL CAN Callback pointer definition
+	 */
+	typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a CAN callback function   */
 
 #endif /* USE_HAL_CAN_REGISTER_CALLBACKS */
 /**
@@ -598,7 +605,8 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
  */
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 #define __HAL_CAN_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		(__HANDLE__)->State = HAL_CAN_STATE_RESET;                                                                                                                                             \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -678,118 +686,118 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
 	 : (((__FLAG__) >> 8U) == 1U) ? (((__HANDLE__)->Instance->MSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                         \
 				      : 0U)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup CAN_Exported_Functions CAN Exported Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup CAN_Exported_Functions CAN Exported Functions
+	 * @{
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group1 Initialization and
- * de-initialization functions
- *  @brief    Initialization and Configuration functions
- * @{
- */
+	/** @addtogroup CAN_Exported_Functions_Group1 Initialization and
+	 * de-initialization functions
+	 *  @brief    Initialization and Configuration functions
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions *****************************/
-HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_DeInit(CAN_HandleTypeDef *hcan);
-void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan);
-void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan);
+	/* Initialization and de-initialization functions *****************************/
+	HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_DeInit(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan);
 
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
-/* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID, void (*pCallback)(CAN_HandleTypeDef *_hcan));
-HAL_StatusTypeDef HAL_CAN_UnRegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID);
+	/* Callbacks Register/UnRegister functions  ***********************************/
+	HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID, void (*pCallback)(CAN_HandleTypeDef *_hcan));
+	HAL_StatusTypeDef HAL_CAN_UnRegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID);
 
 #endif /* (USE_HAL_CAN_REGISTER_CALLBACKS) */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group2 Configuration functions
- *  @brief    Configuration functions
- * @{
- */
+	/** @addtogroup CAN_Exported_Functions_Group2 Configuration functions
+	 *  @brief    Configuration functions
+	 * @{
+	 */
 
-/* Configuration functions ****************************************************/
-HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_FilterTypeDef *sFilterConfig);
+	/* Configuration functions ****************************************************/
+	HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_FilterTypeDef *sFilterConfig);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group3 Control functions
- *  @brief    Control functions
- * @{
- */
+	/** @addtogroup CAN_Exported_Functions_Group3 Control functions
+	 *  @brief    Control functions
+	 * @{
+	 */
 
-/* Control functions **********************************************************/
-HAL_StatusTypeDef HAL_CAN_Start(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_Stop(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_RequestSleep(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_WakeUp(CAN_HandleTypeDef *hcan);
-uint32_t HAL_CAN_IsSleepActive(const CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader, const uint8_t aData[], uint32_t *pTxMailbox);
-HAL_StatusTypeDef HAL_CAN_AbortTxRequest(CAN_HandleTypeDef *hcan, uint32_t TxMailboxes);
-uint32_t HAL_CAN_GetTxMailboxesFreeLevel(const CAN_HandleTypeDef *hcan);
-uint32_t HAL_CAN_IsTxMessagePending(const CAN_HandleTypeDef *hcan, uint32_t TxMailboxes);
-uint32_t HAL_CAN_GetTxTimestamp(const CAN_HandleTypeDef *hcan, uint32_t TxMailbox);
-HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo, CAN_RxHeaderTypeDef *pHeader, uint8_t aData[]);
-uint32_t HAL_CAN_GetRxFifoFillLevel(const CAN_HandleTypeDef *hcan, uint32_t RxFifo);
+	/* Control functions **********************************************************/
+	HAL_StatusTypeDef HAL_CAN_Start(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_Stop(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_RequestSleep(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_WakeUp(CAN_HandleTypeDef *hcan);
+	uint32_t HAL_CAN_IsSleepActive(const CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader, const uint8_t aData[], uint32_t *pTxMailbox);
+	HAL_StatusTypeDef HAL_CAN_AbortTxRequest(CAN_HandleTypeDef *hcan, uint32_t TxMailboxes);
+	uint32_t HAL_CAN_GetTxMailboxesFreeLevel(const CAN_HandleTypeDef *hcan);
+	uint32_t HAL_CAN_IsTxMessagePending(const CAN_HandleTypeDef *hcan, uint32_t TxMailboxes);
+	uint32_t HAL_CAN_GetTxTimestamp(const CAN_HandleTypeDef *hcan, uint32_t TxMailbox);
+	HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo, CAN_RxHeaderTypeDef *pHeader, uint8_t aData[]);
+	uint32_t HAL_CAN_GetRxFifoFillLevel(const CAN_HandleTypeDef *hcan, uint32_t RxFifo);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group4 Interrupts management
- *  @brief    Interrupts management
- * @{
- */
-/* Interrupts management ******************************************************/
-HAL_StatusTypeDef HAL_CAN_ActivateNotification(CAN_HandleTypeDef *hcan, uint32_t ActiveITs);
-HAL_StatusTypeDef HAL_CAN_DeactivateNotification(CAN_HandleTypeDef *hcan, uint32_t InactiveITs);
-void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan);
+	/** @addtogroup CAN_Exported_Functions_Group4 Interrupts management
+	 *  @brief    Interrupts management
+	 * @{
+	 */
+	/* Interrupts management ******************************************************/
+	HAL_StatusTypeDef HAL_CAN_ActivateNotification(CAN_HandleTypeDef *hcan, uint32_t ActiveITs);
+	HAL_StatusTypeDef HAL_CAN_DeactivateNotification(CAN_HandleTypeDef *hcan, uint32_t InactiveITs);
+	void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group5 Callback functions
- *  @brief    Callback functions
- * @{
- */
-/* Callbacks functions ********************************************************/
+	/** @addtogroup CAN_Exported_Functions_Group5 Callback functions
+	 *  @brief    Callback functions
+	 * @{
+	 */
+	/* Callbacks functions ********************************************************/
 
-void HAL_CAN_TxMailbox0CompleteCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_TxMailbox1CompleteCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_TxMailbox2CompleteCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_TxMailbox0AbortCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_TxMailbox1AbortCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_TxMailbox2AbortCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_RxFifo1FullCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_SleepCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_WakeUpFromRxMsgCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxMailbox0CompleteCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxMailbox1CompleteCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxMailbox2CompleteCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxMailbox0AbortCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxMailbox1AbortCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxMailbox2AbortCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_RxFifo1FullCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_SleepCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_WakeUpFromRxMsgCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group6 Peripheral State and Error
- * functions
- *  @brief   CAN Peripheral State functions
- * @{
- */
-/* Peripheral State and Error functions ***************************************/
-HAL_CAN_StateTypeDef HAL_CAN_GetState(const CAN_HandleTypeDef *hcan);
-uint32_t HAL_CAN_GetError(const CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
+	/** @addtogroup CAN_Exported_Functions_Group6 Peripheral State and Error
+	 * functions
+	 *  @brief   CAN Peripheral State functions
+	 * @{
+	 */
+	/* Peripheral State and Error functions ***************************************/
+	HAL_CAN_StateTypeDef HAL_CAN_GetState(const CAN_HandleTypeDef *hcan);
+	uint32_t HAL_CAN_GetError(const CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
 
 /**
  * @}
@@ -822,14 +830,14 @@ HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
  * @{
  */
 #define CAN_FLAG_MASK (0x000000FFU)
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private Macros -----------------------------------------------------------*/
-/** @defgroup CAN_Private_Macros CAN Private Macros
- * @{
- */
+	/* Private Macros -----------------------------------------------------------*/
+	/** @defgroup CAN_Private_Macros CAN Private Macros
+	 * @{
+	 */
 
 #define IS_CAN_MODE(MODE) (((MODE) == CAN_MODE_NORMAL) || ((MODE) == CAN_MODE_LOOPBACK) || ((MODE) == CAN_MODE_SILENT) || ((MODE) == CAN_MODE_SILENT_LOOPBACK))
 #define IS_CAN_SJW(SJW) (((SJW) == CAN_SJW_1TQ) || ((SJW) == CAN_SJW_2TQ) || ((SJW) == CAN_SJW_3TQ) || ((SJW) == CAN_SJW_4TQ))
@@ -862,19 +870,19 @@ HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
 	((IT) <= (CAN_IT_TX_MAILBOX_EMPTY | CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO0_OVERRUN | CAN_IT_RX_FIFO1_MSG_PENDING | CAN_IT_RX_FIFO1_FULL |                        \
 		  CAN_IT_RX_FIFO1_OVERRUN | CAN_IT_WAKEUP | CAN_IT_SLEEP_ACK | CAN_IT_ERROR_WARNING | CAN_IT_ERROR_PASSIVE | CAN_IT_BUSOFF | CAN_IT_LAST_ERROR_CODE | CAN_IT_ERROR))
 
-/**
- * @}
- */
-/* End of private macros -----------------------------------------------------*/
+	/**
+	 * @}
+	 */
+	/* End of private macros -----------------------------------------------------*/
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* CAN1 */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

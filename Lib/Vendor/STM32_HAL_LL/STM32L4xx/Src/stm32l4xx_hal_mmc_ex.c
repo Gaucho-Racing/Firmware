@@ -91,13 +91,16 @@ and start read and write multibuffer mode for MMC HAL driver.
  */
 HAL_StatusTypeDef HAL_MMCEx_ConfigDMAMultiBuffer(MMC_HandleTypeDef *hmmc, uint32_t *pDataBuffer0, uint32_t *pDataBuffer1, uint32_t BufferSize)
 {
-	if (hmmc->State == HAL_MMC_STATE_READY) {
+	if (hmmc->State == HAL_MMC_STATE_READY)
+	{
 		hmmc->Instance->IDMABASE0 = (uint32_t)pDataBuffer0;
 		hmmc->Instance->IDMABASE1 = (uint32_t)pDataBuffer1;
 		hmmc->Instance->IDMABSIZE = (uint32_t)(MMC_BLOCKSIZE * BufferSize);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -119,15 +122,18 @@ HAL_StatusTypeDef HAL_MMCEx_ReadBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, ui
 	uint32_t errorstate;
 	uint32_t add = BlockAdd;
 
-	if (hmmc->State == HAL_MMC_STATE_READY) {
-		if ((BlockAdd + NumberOfBlocks) > (hmmc->MmcCard.LogBlockNbr)) {
+	if (hmmc->State == HAL_MMC_STATE_READY)
+	{
+		if ((BlockAdd + NumberOfBlocks) > (hmmc->MmcCard.LogBlockNbr))
+		{
 			hmmc->ErrorCode |= HAL_MMC_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
 
 		DmaBase0_reg = hmmc->Instance->IDMABASE0;
 		DmaBase1_reg = hmmc->Instance->IDMABASE1;
-		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
+		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U))
+		{
 			hmmc->ErrorCode = HAL_MMC_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -138,7 +144,8 @@ HAL_StatusTypeDef HAL_MMCEx_ReadBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, ui
 		hmmc->ErrorCode = HAL_MMC_ERROR_NONE;
 		hmmc->State = HAL_MMC_STATE_BUSY;
 
-		if ((hmmc->MmcCard.CardType) != MMC_HIGH_CAPACITY_CARD) {
+		if ((hmmc->MmcCard.CardType) != MMC_HIGH_CAPACITY_CARD)
+		{
 			add *= 512U;
 		}
 
@@ -162,7 +169,8 @@ HAL_StatusTypeDef HAL_MMCEx_ReadBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, ui
 
 		/* Read Multi Block command */
 		errorstate = SDMMC_CmdReadMultiBlock(hmmc->Instance, add);
-		if (errorstate != HAL_MMC_ERROR_NONE) {
+		if (errorstate != HAL_MMC_ERROR_NONE)
+		{
 			hmmc->State = HAL_MMC_STATE_READY;
 			hmmc->ErrorCode |= errorstate;
 			return HAL_ERROR;
@@ -171,7 +179,9 @@ HAL_StatusTypeDef HAL_MMCEx_ReadBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, ui
 		__HAL_MMC_ENABLE_IT(hmmc, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND | SDMMC_FLAG_IDMATE | SDMMC_FLAG_IDMABTC));
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -193,15 +203,18 @@ HAL_StatusTypeDef HAL_MMCEx_WriteBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, u
 	uint32_t DmaBase0_reg, DmaBase1_reg;
 	uint32_t add = BlockAdd;
 
-	if (hmmc->State == HAL_MMC_STATE_READY) {
-		if ((BlockAdd + NumberOfBlocks) > (hmmc->MmcCard.LogBlockNbr)) {
+	if (hmmc->State == HAL_MMC_STATE_READY)
+	{
+		if ((BlockAdd + NumberOfBlocks) > (hmmc->MmcCard.LogBlockNbr))
+		{
 			hmmc->ErrorCode |= HAL_MMC_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
 
 		DmaBase0_reg = hmmc->Instance->IDMABASE0;
 		DmaBase1_reg = hmmc->Instance->IDMABASE1;
-		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
+		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U))
+		{
 			hmmc->ErrorCode = HAL_MMC_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -213,7 +226,8 @@ HAL_StatusTypeDef HAL_MMCEx_WriteBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, u
 
 		hmmc->State = HAL_MMC_STATE_BUSY;
 
-		if ((hmmc->MmcCard.CardType) != MMC_HIGH_CAPACITY_CARD) {
+		if ((hmmc->MmcCard.CardType) != MMC_HIGH_CAPACITY_CARD)
+		{
 			add *= 512U;
 		}
 
@@ -235,7 +249,8 @@ HAL_StatusTypeDef HAL_MMCEx_WriteBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, u
 
 		/* Write Multi Block command */
 		errorstate = SDMMC_CmdWriteMultiBlock(hmmc->Instance, add);
-		if (errorstate != HAL_MMC_ERROR_NONE) {
+		if (errorstate != HAL_MMC_ERROR_NONE)
+		{
 			hmmc->State = HAL_MMC_STATE_READY;
 			hmmc->ErrorCode |= errorstate;
 			return HAL_ERROR;
@@ -244,7 +259,9 @@ HAL_StatusTypeDef HAL_MMCEx_WriteBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, u
 		__HAL_MMC_ENABLE_IT(hmmc, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND | SDMMC_FLAG_IDMATE | SDMMC_FLAG_IDMABTC));
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -263,10 +280,13 @@ HAL_StatusTypeDef HAL_MMCEx_WriteBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, u
  */
 HAL_StatusTypeDef HAL_MMCEx_ChangeDMABuffer(MMC_HandleTypeDef *hmmc, HAL_MMCEx_DMABuffer_MemoryTypeDef Buffer, uint32_t *pDataBuffer)
 {
-	if (Buffer == MMC_DMA_BUFFER0) {
+	if (Buffer == MMC_DMA_BUFFER0)
+	{
 		/* change the buffer0 address */
 		hmmc->Instance->IDMABASE0 = (uint32_t)pDataBuffer;
-	} else {
+	}
+	else
+	{
 		/* change the memory1 address */
 		hmmc->Instance->IDMABASE1 = (uint32_t)pDataBuffer;
 	}

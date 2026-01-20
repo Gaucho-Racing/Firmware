@@ -51,7 +51,8 @@ void MX_SPI1_Init(void)
 	hspi1.Init.CRCPolynomial = 7;
 	hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
 	hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-	if (HAL_SPI_Init(&hspi1) != HAL_OK) {
+	if (HAL_SPI_Init(&hspi1) != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN SPI1_Init 2 */
@@ -63,7 +64,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	if (spiHandle->Instance == SPI1) {
+	if (spiHandle->Instance == SPI1)
+	{
 		/* USER CODE BEGIN SPI1_MspInit 0 */
 
 		/* USER CODE END SPI1_MspInit 0 */
@@ -92,7 +94,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef *spiHandle)
 {
 
-	if (spiHandle->Instance == SPI1) {
+	if (spiHandle->Instance == SPI1)
+	{
 		/* USER CODE BEGIN SPI1_MspDeInit 0 */
 
 		/* USER CODE END SPI1_MspDeInit 0 */

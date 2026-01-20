@@ -116,7 +116,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	assert_param(IS_SPI_ALL_INSTANCE(SPIx));
 
 #if defined(SPI1)
-	if (SPIx == SPI1) {
+	if (SPIx == SPI1)
+	{
 		/* Force reset of SPI clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_SPI1);
 
@@ -127,7 +128,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI1 */
 #if defined(SPI2)
-	if (SPIx == SPI2) {
+	if (SPIx == SPI2)
+	{
 		/* Force reset of SPI clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_SPI2);
 
@@ -138,7 +140,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI2 */
 #if defined(SPI3)
-	if (SPIx == SPI3) {
+	if (SPIx == SPI3)
+	{
 		/* Force reset of SPI clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_SPI3);
 
@@ -149,7 +152,8 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI3 */
 #if defined(SPI4)
-	if (SPIx == SPI4) {
+	if (SPIx == SPI4)
+	{
 		/* Force reset of SPI clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_SPI4);
 
@@ -192,7 +196,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 	assert_param(IS_LL_SPI_BITORDER(SPI_InitStruct->BitOrder));
 	assert_param(IS_LL_SPI_CRCCALCULATION(SPI_InitStruct->CRCCalculation));
 
-	if (LL_SPI_IsEnabled(SPIx) == 0x00000000U) {
+	if (LL_SPI_IsEnabled(SPIx) == 0x00000000U)
+	{
 		/*---------------------------- SPIx CR1 Configuration
 		 * ------------------------ Configure SPIx CR1 with parameters:
 		 * - TransferDirection:  SPI_CR1_BIDIMODE, SPI_CR1_BIDIOE and
@@ -218,7 +223,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 
 		/* Set Rx FIFO to Quarter (1 Byte) in case of 8 Bits mode. No
 		 * DataPacking by default */
-		if (SPI_InitStruct->DataWidth < LL_SPI_DATAWIDTH_9BIT) {
+		if (SPI_InitStruct->DataWidth < LL_SPI_DATAWIDTH_9BIT)
+		{
 			LL_SPI_SetRxFIFOThreshold(SPIx, LL_SPI_RX_FIFO_TH_QUARTER);
 		}
 
@@ -226,7 +232,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 		 * ---------------------- Configure SPIx CRCPR with parameters:
 		 * - CRCPoly:            CRCPOLY[15:0] bits
 		 */
-		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE) {
+		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE)
+		{
 			assert_param(IS_LL_SPI_CRC_POLYNOMIAL(SPI_InitStruct->CRCPoly));
 			LL_SPI_SetCRCPolynomial(SPIx, SPI_InitStruct->CRCPoly);
 		}
@@ -369,7 +376,8 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
 	assert_param(IS_LL_I2S_AUDIO_FREQ(I2S_InitStruct->AudioFreq));
 	assert_param(IS_LL_I2S_CPOL(I2S_InitStruct->ClockPolarity));
 
-	if (LL_I2S_IsEnabled(SPIx) == 0x00000000U) {
+	if (LL_I2S_IsEnabled(SPIx) == 0x00000000U)
+	{
 		/*---------------------------- SPIx I2SCFGR Configuration
 		 * -------------------- Configure SPIx I2SCFGR with parameters:
 		 * - Mode:          SPI_I2SCFGR_I2SCFG[1:0] bit
@@ -393,12 +401,14 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
 		 * the prescaler (i2sodd, i2sdiv) else, default values are used:
 		 * i2sodd = 0U, i2sdiv = 2U.
 		 */
-		if (I2S_InitStruct->AudioFreq != LL_I2S_AUDIOFREQ_DEFAULT) {
+		if (I2S_InitStruct->AudioFreq != LL_I2S_AUDIOFREQ_DEFAULT)
+		{
 			/* Check the frame length (For the Prescaler computing)
 			 * Default value: LL_I2S_DATAFORMAT_16B (packetlength =
 			 * 1U).
 			 */
-			if (I2S_InitStruct->DataFormat != LL_I2S_DATAFORMAT_16B) {
+			if (I2S_InitStruct->DataFormat != LL_I2S_DATAFORMAT_16B)
+			{
 				/* Packet length is 32 bits */
 				packetlength = 2U;
 			}
@@ -411,10 +421,13 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
 
 			/* Compute the Real divider depending on the MCLK output
 			 * state with a floating point */
-			if (I2S_InitStruct->MCLKOutput == LL_I2S_MCLK_OUTPUT_ENABLE) {
+			if (I2S_InitStruct->MCLKOutput == LL_I2S_MCLK_OUTPUT_ENABLE)
+			{
 				/* MCLK output is enabled */
 				tmp = (((((sourceclock / 256U) * 10U) / I2S_InitStruct->AudioFreq)) + 5U);
-			} else {
+			}
+			else
+			{
 				/* MCLK output is disabled */
 				tmp = (((((sourceclock / (32U * packetlength)) * 10U) / I2S_InitStruct->AudioFreq)) + 5U);
 			}
@@ -434,7 +447,8 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
 		}
 
 		/* Test if the divider is 1 or 0 or greater than 0xFF */
-		if ((i2sdiv < 2U) || (i2sdiv > 0xFFU)) {
+		if ((i2sdiv < 2U) || (i2sdiv > 0xFFU))
+		{
 			/* Set the default values */
 			i2sdiv = 2U;
 			i2sodd = 0U;

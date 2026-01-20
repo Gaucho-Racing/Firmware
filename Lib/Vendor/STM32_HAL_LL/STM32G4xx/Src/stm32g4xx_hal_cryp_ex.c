@@ -110,11 +110,13 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 	uint32_t tagaddr = (uint32_t)AuthTag;
 
 	/* Correct headerlength if Init.HeaderSize is actually in bytes */
-	if (hcryp->Init.HeaderWidthUnit == CRYP_HEADERWIDTHUNIT_BYTE) {
+	if (hcryp->Init.HeaderWidthUnit == CRYP_HEADERWIDTHUNIT_BYTE)
+	{
 		headerlength /= 4U;
 	}
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* Process locked */
 		__HAL_LOCK(hcryp);
 
@@ -122,10 +124,12 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 		hcryp->State = HAL_CRYP_STATE_BUSY;
 
 		/* Check if initialization phase has already been performed */
-		if (hcryp->Phase == CRYPEx_PHASE_PROCESS) {
+		if (hcryp->Phase == CRYPEx_PHASE_PROCESS)
+		{
 			/* Change the CRYP phase */
 			hcryp->Phase = CRYPEx_PHASE_FINAL;
-		} else /* Initialization phase has not been performed*/
+		}
+		else /* Initialization phase has not been performed*/
 		{
 			/* Disable the Peripheral */
 			__HAL_CRYP_DISABLE(hcryp);
@@ -159,10 +163,13 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 
 		/* Wait for CCF flag to be raised */
 		tickstart = HAL_GetTick();
-		while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF)) {
+		while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF))
+		{
 			/* Check for the Timeout */
-			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+			if (Timeout != HAL_MAX_DELAY)
+			{
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+				{
 					/* Disable the CRYP peripheral clock */
 					__HAL_CRYP_DISABLE(hcryp);
 
@@ -197,7 +204,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hcryp);
-	} else {
+	}
+	else
+	{
 		/* Busy error code field */
 		hcryp->ErrorCode |= HAL_CRYP_ERROR_BUSY;
 		return HAL_ERROR;
@@ -219,7 +228,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 	uint32_t tagaddr = (uint32_t)AuthTag;
 	uint32_t tickstart;
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* Process locked */
 		__HAL_LOCK(hcryp);
 
@@ -231,10 +241,12 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 		hcryp->State = HAL_CRYP_STATE_BUSY;
 
 		/* Check if initialization phase has already been performed */
-		if (hcryp->Phase == CRYPEx_PHASE_PROCESS) {
+		if (hcryp->Phase == CRYPEx_PHASE_PROCESS)
+		{
 			/* Change the CRYP phase */
 			hcryp->Phase = CRYPEx_PHASE_FINAL;
-		} else /* Initialization phase has not been performed*/
+		}
+		else /* Initialization phase has not been performed*/
 		{
 			/* Disable the peripheral */
 			__HAL_CRYP_DISABLE(hcryp);
@@ -257,10 +269,13 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 
 		/* Wait for CCF flag to be raised */
 		tickstart = HAL_GetTick();
-		while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF)) {
+		while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF))
+		{
 			/* Check for the Timeout */
-			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+			if (Timeout != HAL_MAX_DELAY)
+			{
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+				{
 					/* Disable the CRYP peripheral Clock */
 					__HAL_CRYP_DISABLE(hcryp);
 
@@ -295,7 +310,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, u
 
 		/* Disable CRYP  */
 		__HAL_CRYP_DISABLE(hcryp);
-	} else {
+	}
+	else
+	{
 		/* Busy error code field */
 		hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
 		return HAL_ERROR;
@@ -329,9 +346,12 @@ functions
  */
 void HAL_CRYPEx_EnableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp)
 {
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		hcryp->AutoKeyDerivation = ENABLE;
-	} else {
+	}
+	else
+	{
 		/* Busy error code field */
 		hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
 	}
@@ -342,9 +362,12 @@ void HAL_CRYPEx_EnableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp)
  */
 void HAL_CRYPEx_DisableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp)
 {
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		hcryp->AutoKeyDerivation = DISABLE;
-	} else {
+	}
+	else
+	{
 		/* Busy error code field */
 		hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
 	}

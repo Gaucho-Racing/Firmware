@@ -56,7 +56,8 @@ void MX_FDCAN1_Init(void)
 	hfdcan1.Init.StdFiltersNbr = 0;
 	hfdcan1.Init.ExtFiltersNbr = 2;
 	hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK) {
+	if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN FDCAN1_Init 2 */
@@ -92,7 +93,8 @@ void MX_FDCAN2_Init(void)
 	hfdcan2.Init.StdFiltersNbr = 0;
 	hfdcan2.Init.ExtFiltersNbr = 2;
 	hfdcan2.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	if (HAL_FDCAN_Init(&hfdcan2) != HAL_OK) {
+	if (HAL_FDCAN_Init(&hfdcan2) != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN FDCAN2_Init 2 */
@@ -106,7 +108,8 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	if (fdcanHandle->Instance == FDCAN1) {
+	if (fdcanHandle->Instance == FDCAN1)
+	{
 		/* USER CODE BEGIN FDCAN1_MspInit 0 */
 
 		/* USER CODE END FDCAN1_MspInit 0 */
@@ -114,7 +117,8 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 
 		/* FDCAN1 clock enable */
 		HAL_RCC_FDCAN_CLK_ENABLED++;
-		if (HAL_RCC_FDCAN_CLK_ENABLED == 1) {
+		if (HAL_RCC_FDCAN_CLK_ENABLED == 1)
+		{
 			__HAL_RCC_FDCAN_CLK_ENABLE();
 		}
 
@@ -143,7 +147,9 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 		/* USER CODE BEGIN FDCAN1_MspInit 1 */
 
 		/* USER CODE END FDCAN1_MspInit 1 */
-	} else if (fdcanHandle->Instance == FDCAN2) {
+	}
+	else if (fdcanHandle->Instance == FDCAN2)
+	{
 		/* USER CODE BEGIN FDCAN2_MspInit 0 */
 
 		/* USER CODE END FDCAN2_MspInit 0 */
@@ -152,7 +158,8 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 
 		/* FDCAN2 clock enable */
 		HAL_RCC_FDCAN_CLK_ENABLED++;
-		if (HAL_RCC_FDCAN_CLK_ENABLED == 1) {
+		if (HAL_RCC_FDCAN_CLK_ENABLED == 1)
+		{
 			__HAL_RCC_FDCAN_CLK_ENABLE();
 		}
 
@@ -187,13 +194,15 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle)
 {
 
-	if (fdcanHandle->Instance == FDCAN1) {
+	if (fdcanHandle->Instance == FDCAN1)
+	{
 		/* USER CODE BEGIN FDCAN1_MspDeInit 0 */
 
 		/* USER CODE END FDCAN1_MspDeInit 0 */
 		/* Peripheral clock disable */
 		HAL_RCC_FDCAN_CLK_ENABLED--;
-		if (HAL_RCC_FDCAN_CLK_ENABLED == 0) {
+		if (HAL_RCC_FDCAN_CLK_ENABLED == 0)
+		{
 			__HAL_RCC_FDCAN_CLK_DISABLE();
 		}
 
@@ -208,13 +217,16 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle)
 		/* USER CODE BEGIN FDCAN1_MspDeInit 1 */
 
 		/* USER CODE END FDCAN1_MspDeInit 1 */
-	} else if (fdcanHandle->Instance == FDCAN2) {
+	}
+	else if (fdcanHandle->Instance == FDCAN2)
+	{
 		/* USER CODE BEGIN FDCAN2_MspDeInit 0 */
 
 		/* USER CODE END FDCAN2_MspDeInit 0 */
 		/* Peripheral clock disable */
 		HAL_RCC_FDCAN_CLK_ENABLED--;
-		if (HAL_RCC_FDCAN_CLK_ENABLED == 0) {
+		if (HAL_RCC_FDCAN_CLK_ENABLED == 0)
+		{
 			__HAL_RCC_FDCAN_CLK_DISABLE();
 		}
 

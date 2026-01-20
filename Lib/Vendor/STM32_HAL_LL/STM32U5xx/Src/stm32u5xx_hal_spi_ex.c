@@ -77,17 +77,23 @@ HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(const SPI_HandleTypeDef *hspi)
 	uint32_t itflag = hspi->Instance->SR;
 	__IO uint32_t tmpreg;
 
-	while (((hspi->Instance->SR & SPI_FLAG_FRLVL) != SPI_RX_FIFO_0PACKET) || ((itflag & SPI_FLAG_RXWNE) != 0UL)) {
+	while (((hspi->Instance->SR & SPI_FLAG_FRLVL) != SPI_RX_FIFO_0PACKET) || ((itflag & SPI_FLAG_RXWNE) != 0UL))
+	{
 		count += (uint8_t)4UL;
 		tmpreg = hspi->Instance->RXDR;
 		UNUSED(tmpreg); /* To avoid GCC warning */
 
-		if (IS_SPI_FULL_INSTANCE(hspi->Instance)) {
-			if (count > SPI_HIGHEND_FIFO_SIZE) {
+		if (IS_SPI_FULL_INSTANCE(hspi->Instance))
+		{
+			if (count > SPI_HIGHEND_FIFO_SIZE)
+			{
 				return HAL_TIMEOUT;
 			}
-		} else {
-			if (count > SPI_LOWEND_FIFO_SIZE) {
+		}
+		else
+		{
+			if (count > SPI_LOWEND_FIFO_SIZE)
+			{
 				return HAL_TIMEOUT;
 			}
 		}
@@ -110,7 +116,8 @@ HAL_StatusTypeDef HAL_SPIEx_EnableLockConfiguration(SPI_HandleTypeDef *hspi)
 	/* Process Locked */
 	__HAL_LOCK(hspi);
 
-	if (hspi->State != HAL_SPI_STATE_READY) {
+	if (hspi->State != HAL_SPI_STATE_READY)
+	{
 		errorcode = HAL_BUSY;
 		hspi->State = HAL_SPI_STATE_READY;
 		/* Process Unlocked */
@@ -119,9 +126,12 @@ HAL_StatusTypeDef HAL_SPIEx_EnableLockConfiguration(SPI_HandleTypeDef *hspi)
 	}
 
 	/* Check if the SPI is disabled to edit IOLOCK bit */
-	if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE) {
+	if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE)
+	{
 		SET_BIT(hspi->Instance->CR1, SPI_CR1_IOLOCK);
-	} else {
+	}
+	else
+	{
 		/* Disable SPI peripheral */
 		__HAL_SPI_DISABLE(hspi);
 
@@ -160,7 +170,8 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t 
 
 	/* Check State and Insure that Underrun configuration is managed only by
 	 * Salve */
-	if ((hspi->State != HAL_SPI_STATE_READY) || (hspi->Init.Mode != SPI_MODE_SLAVE)) {
+	if ((hspi->State != HAL_SPI_STATE_READY) || (hspi->Init.Mode != SPI_MODE_SLAVE))
+	{
 		errorcode = HAL_BUSY;
 		hspi->State = HAL_SPI_STATE_READY;
 		/* Process Unlocked */
@@ -172,10 +183,13 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t 
 	assert_param(IS_SPI_UNDERRUN_BEHAVIOUR(UnderrunBehaviour));
 
 	/* Check if the SPI is disabled to edit CFG1 register */
-	if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE) {
+	if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE)
+	{
 		/* Configure Underrun fields */
 		MODIFY_REG(hspi->Instance->CFG1, SPI_CFG1_UDRCFG, UnderrunBehaviour);
-	} else {
+	}
+	else
+	{
 		/* Disable SPI peripheral */
 		__HAL_SPI_DISABLE(hspi);
 
@@ -204,7 +218,8 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t 
  */
 HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi, const SPI_AutonomousModeConfTypeDef *sConfig)
 {
-	if (hspi->State == HAL_SPI_STATE_READY) {
+	if (hspi->State == HAL_SPI_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hspi);
 
@@ -228,7 +243,9 @@ HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi, con
 		__HAL_UNLOCK(hspi);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 }
@@ -254,9 +271,12 @@ HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hsp
 
 	sConfig->TriggerState = (autocr_tmp & SPI_AUTOCR_TRIGEN);
 #if defined(SPI_TRIG_GRP2)
-	if (IS_SPI_GRP2_INSTANCE(hspi->Instance)) {
+	if (IS_SPI_GRP2_INSTANCE(hspi->Instance))
+	{
 		sConfig->TriggerSelection = ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP2);
-	} else {
+	}
+	else
+	{
 		sConfig->TriggerSelection = ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP1);
 	}
 #else
@@ -276,7 +296,8 @@ HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hsp
  */
 HAL_StatusTypeDef HAL_SPIEx_ClearConfigAutonomousMode(SPI_HandleTypeDef *hspi)
 {
-	if (hspi->State == HAL_SPI_STATE_READY) {
+	if (hspi->State == HAL_SPI_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hspi);
 
@@ -300,7 +321,9 @@ HAL_StatusTypeDef HAL_SPIEx_ClearConfigAutonomousMode(SPI_HandleTypeDef *hspi)
 		__HAL_UNLOCK(hspi);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 }

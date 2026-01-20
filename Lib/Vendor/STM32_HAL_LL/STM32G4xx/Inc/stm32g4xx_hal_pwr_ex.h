@@ -21,36 +21,38 @@
 #define STM32G4xx_HAL_PWR_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal_def.h"
 
-/** @addtogroup STM32G4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32G4xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup PWREx
- * @{
- */
+	/** @addtogroup PWREx
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
+	/* Exported types ------------------------------------------------------------*/
 
-/** @defgroup PWREx_Exported_Types PWR Extended Exported Types
- * @{
- */
+	/** @defgroup PWREx_Exported_Types PWR Extended Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  PWR PVM configuration structure definition
- */
-typedef struct {
-	uint32_t PVMType; /*!< PVMType: Specifies which voltage is monitored and
-			     against which threshold. This parameter can be a
-			     value of @ref PWREx_PVM_Type. */
-	uint32_t Mode;	  /*!< Mode: Specifies the operating mode for the selected pins.
-			       This parameter can be a value of @ref PWREx_PVM_Mode. */
-} PWR_PVMTypeDef;
+	/**
+	 * @brief  PWR PVM configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t PVMType; /*!< PVMType: Specifies which voltage is monitored and
+				     against which threshold. This parameter can be a
+				     value of @ref PWREx_PVM_Type. */
+		uint32_t Mode;	  /*!< Mode: Specifies the operating mode for the selected pins.
+				       This parameter can be a value of @ref PWREx_PVM_Mode. */
+	} PWR_PVMTypeDef;
 
 /**
  * @}
@@ -278,18 +280,18 @@ typedef struct {
 #endif			       /* PWR_CR2_PVME2 */
 #define PWR_FLAG_PVMO3 0x004EU /*!< Power Voltage Monitoring 3 output flag */
 #define PWR_FLAG_PVMO4 0x004FU /*!< Power Voltage Monitoring 4 output flag */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported macros -----------------------------------------------------------*/
-/** @defgroup PWREx_Exported_Macros PWR Extended Exported Macros
- * @{
- */
+	/* Exported macros -----------------------------------------------------------*/
+	/** @defgroup PWREx_Exported_Macros PWR Extended Exported Macros
+	 * @{
+	 */
 
 #if defined(PWR_CR2_PVME1)
 /**
@@ -345,7 +347,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -355,7 +358,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -434,7 +438,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -444,7 +449,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -522,7 +528,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -532,7 +539,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -608,7 +616,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -618,7 +627,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -661,7 +671,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		MODIFY_REG(PWR->CR1, PWR_CR1_VOS, (__REGULATOR__));                                                                                                                                    \
 		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
@@ -669,14 +680,14 @@ typedef struct {
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private macros --------------------------------------------------------*/
-/** @addtogroup  PWREx_Private_Macros   PWR Extended Private Macros
- * @{
- */
+	/* Private macros --------------------------------------------------------*/
+	/** @addtogroup  PWREx_Private_Macros   PWR Extended Private Macros
+	 * @{
+	 */
 
 #define IS_PWR_WAKEUP_PIN(PIN)                                                                                                                                                                         \
 	(((PIN) == PWR_WAKEUP_PIN1) || ((PIN) == PWR_WAKEUP_PIN2) || ((PIN) == PWR_WAKEUP_PIN3) || ((PIN) == PWR_WAKEUP_PIN4) || ((PIN) == PWR_WAKEUP_PIN5) || ((PIN) == PWR_WAKEUP_PIN1_HIGH) ||      \
@@ -703,89 +714,89 @@ typedef struct {
 #define IS_PWR_GPIO(GPIO)                                                                                                                                                                              \
 	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) || ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) || ((GPIO) == PWR_GPIO_G))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup PWREx_Exported_Functions PWR Extended Exported Functions
- * @{
- */
+	/** @addtogroup PWREx_Exported_Functions PWR Extended Exported Functions
+	 * @{
+	 */
 
-/** @addtogroup PWREx_Exported_Functions_Group1 Extended Peripheral Control
- * functions
- * @{
- */
+	/** @addtogroup PWREx_Exported_Functions_Group1 Extended Peripheral Control
+	 * functions
+	 * @{
+	 */
 
-/* Peripheral Control functions  **********************************************/
-uint32_t HAL_PWREx_GetVoltageRange(void);
-HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling);
-void HAL_PWREx_EnableBatteryCharging(uint32_t ResistorSelection);
-void HAL_PWREx_DisableBatteryCharging(void);
-void HAL_PWREx_EnableInternalWakeUpLine(void);
-void HAL_PWREx_DisableInternalWakeUpLine(void);
-HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber);
-HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber);
-HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber);
-HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber);
-void HAL_PWREx_EnablePullUpPullDownConfig(void);
-void HAL_PWREx_DisablePullUpPullDownConfig(void);
-void HAL_PWREx_EnableSRAM2ContentRetention(void);
-void HAL_PWREx_DisableSRAM2ContentRetention(void);
+	/* Peripheral Control functions  **********************************************/
+	uint32_t HAL_PWREx_GetVoltageRange(void);
+	HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling);
+	void HAL_PWREx_EnableBatteryCharging(uint32_t ResistorSelection);
+	void HAL_PWREx_DisableBatteryCharging(void);
+	void HAL_PWREx_EnableInternalWakeUpLine(void);
+	void HAL_PWREx_DisableInternalWakeUpLine(void);
+	HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber);
+	HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber);
+	HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber);
+	HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber);
+	void HAL_PWREx_EnablePullUpPullDownConfig(void);
+	void HAL_PWREx_DisablePullUpPullDownConfig(void);
+	void HAL_PWREx_EnableSRAM2ContentRetention(void);
+	void HAL_PWREx_DisableSRAM2ContentRetention(void);
 #if defined(PWR_CR2_PVME1)
-void HAL_PWREx_EnablePVM1(void);
-void HAL_PWREx_DisablePVM1(void);
+	void HAL_PWREx_EnablePVM1(void);
+	void HAL_PWREx_DisablePVM1(void);
 #endif /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-void HAL_PWREx_EnablePVM2(void);
-void HAL_PWREx_DisablePVM2(void);
+	void HAL_PWREx_EnablePVM2(void);
+	void HAL_PWREx_DisablePVM2(void);
 #endif /* PWR_CR2_PVME2 */
-void HAL_PWREx_EnablePVM3(void);
-void HAL_PWREx_DisablePVM3(void);
-void HAL_PWREx_EnablePVM4(void);
-void HAL_PWREx_DisablePVM4(void);
-HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM);
+	void HAL_PWREx_EnablePVM3(void);
+	void HAL_PWREx_DisablePVM3(void);
+	void HAL_PWREx_EnablePVM4(void);
+	void HAL_PWREx_DisablePVM4(void);
+	HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM);
 
-/* Low Power modes configuration functions ************************************/
-void HAL_PWREx_EnableLowPowerRunMode(void);
-HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void);
-void HAL_PWREx_EnterSTOP0Mode(uint8_t STOPEntry);
-void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry);
-void HAL_PWREx_EnterSHUTDOWNMode(void);
+	/* Low Power modes configuration functions ************************************/
+	void HAL_PWREx_EnableLowPowerRunMode(void);
+	HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void);
+	void HAL_PWREx_EnterSTOP0Mode(uint8_t STOPEntry);
+	void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry);
+	void HAL_PWREx_EnterSHUTDOWNMode(void);
 
-void HAL_PWREx_PVD_PVM_IRQHandler(void);
+	void HAL_PWREx_PVD_PVM_IRQHandler(void);
 #if defined(PWR_CR2_PVME1)
-void HAL_PWREx_PVM1Callback(void);
+	void HAL_PWREx_PVM1Callback(void);
 #endif /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-void HAL_PWREx_PVM2Callback(void);
+	void HAL_PWREx_PVM2Callback(void);
 #endif /* PWR_CR2_PVME2 */
-void HAL_PWREx_PVM3Callback(void);
-void HAL_PWREx_PVM4Callback(void);
+	void HAL_PWREx_PVM3Callback(void);
+	void HAL_PWREx_PVM4Callback(void);
 
 #if defined(PWR_CR3_UCPD_STDBY)
-void HAL_PWREx_EnableUCPDStandbyMode(void);
-void HAL_PWREx_DisableUCPDStandbyMode(void);
+	void HAL_PWREx_EnableUCPDStandbyMode(void);
+	void HAL_PWREx_DisableUCPDStandbyMode(void);
 #endif /* PWR_CR3_UCPD_STDBY */
 #if defined(PWR_CR3_UCPD_DBDIS)
-void HAL_PWREx_EnableUCPDDeadBattery(void);
-void HAL_PWREx_DisableUCPDDeadBattery(void);
+	void HAL_PWREx_EnableUCPDDeadBattery(void);
+	void HAL_PWREx_DisableUCPDDeadBattery(void);
 #endif /* PWR_CR3_UCPD_DBDIS */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

@@ -215,7 +215,8 @@ __IAR_FT void __iar_uint32_write(void const *ptr, uint32_t val)
 #ifndef __UNALIGNED_UINT32 /* deprecated */
 #pragma language = save
 #pragma language = extended
-__packed struct __iar_u32 {
+__packed struct __iar_u32
+{
 	uint32_t v;
 };
 #pragma language = restore
@@ -537,14 +538,16 @@ __IAR_FT int16_t __REVSH(int16_t val) { return (int16_t)__iar_builtin_REVSH(val)
 
 __STATIC_INLINE uint8_t __CLZ(uint32_t data)
 {
-	if (data == 0U) {
+	if (data == 0U)
+	{
 		return 32U;
 	}
 
 	uint32_t count = 0U;
 	uint32_t mask = 0x80000000U;
 
-	while ((data & mask) == 0U) {
+	while ((data & mask) == 0U)
+	{
 		count += 1U;
 		mask = mask >> 1U;
 	}
@@ -555,7 +558,8 @@ __STATIC_INLINE uint32_t __RBIT(uint32_t v)
 {
 	uint8_t sc = 31U;
 	uint32_t r = v;
-	for (v >>= 1U; v; v >>= 1U) {
+	for (v >>= 1U; v; v >>= 1U)
+	{
 		r <<= 1U;
 		r |= v & 1U;
 		sc--;
@@ -766,12 +770,16 @@ __IAR_FT void __TZ_set_MSPLIM_NS(uint32_t value) { __asm volatile("MSR      MSPL
 #if __IAR_M0_FAMILY
 __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat)
 {
-	if ((sat >= 1U) && (sat <= 32U)) {
+	if ((sat >= 1U) && (sat <= 32U))
+	{
 		const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
 		const int32_t min = -1 - max;
-		if (val > max) {
+		if (val > max)
+		{
 			return max;
-		} else if (val < min) {
+		}
+		else if (val < min)
+		{
 			return min;
 		}
 	}
@@ -780,11 +788,15 @@ __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat)
 
 __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
-	if (sat <= 31U) {
+	if (sat <= 31U)
+	{
 		const uint32_t max = ((1U << sat) - 1U);
-		if (val > (int32_t)max) {
+		if (val > (int32_t)max)
+		{
 			return max;
-		} else if (val < 0) {
+		}
+		else if (val < 0)
+		{
 			return 0U;
 		}
 	}

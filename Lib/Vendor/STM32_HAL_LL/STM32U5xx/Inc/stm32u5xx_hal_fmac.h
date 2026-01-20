@@ -21,236 +21,240 @@
 #define STM32U5xx_HAL_FMAC_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
 #if defined(FMAC)
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup FMAC
- * @{
- */
+	/** @addtogroup FMAC
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup FMAC_Exported_Types FMAC Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup FMAC_Exported_Types FMAC Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  FMAC HAL State Structure definition
- */
-typedef enum {
-	HAL_FMAC_STATE_RESET = 0x00U,	/*!< FMAC not yet initialized or disabled */
-	HAL_FMAC_STATE_READY = 0x20U,	/*!< FMAC initialized and ready for use */
-	HAL_FMAC_STATE_BUSY = 0x24U,	/*!< FMAC internal process is ongoing  */
-	HAL_FMAC_STATE_BUSY_RD = 0x25U, /*!< FMAC reading configuration is ongoing */
-	HAL_FMAC_STATE_BUSY_WR = 0x26U, /*!< FMAC writing configuration is ongoing */
-	HAL_FMAC_STATE_TIMEOUT = 0xA0U, /*!< FMAC in Timeout state */
-	HAL_FMAC_STATE_ERROR = 0xE0U	/*!< FMAC in Error state    */
-} HAL_FMAC_StateTypeDef;
+	/**
+	 * @brief  FMAC HAL State Structure definition
+	 */
+	typedef enum
+	{
+		HAL_FMAC_STATE_RESET = 0x00U,	/*!< FMAC not yet initialized or disabled */
+		HAL_FMAC_STATE_READY = 0x20U,	/*!< FMAC initialized and ready for use */
+		HAL_FMAC_STATE_BUSY = 0x24U,	/*!< FMAC internal process is ongoing  */
+		HAL_FMAC_STATE_BUSY_RD = 0x25U, /*!< FMAC reading configuration is ongoing */
+		HAL_FMAC_STATE_BUSY_WR = 0x26U, /*!< FMAC writing configuration is ongoing */
+		HAL_FMAC_STATE_TIMEOUT = 0xA0U, /*!< FMAC in Timeout state */
+		HAL_FMAC_STATE_ERROR = 0xE0U	/*!< FMAC in Error state    */
+	} HAL_FMAC_StateTypeDef;
 
 /**
  * @brief  FMAC Handle Structure definition
  */
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
-typedef struct __FMAC_HandleTypeDef
+	typedef struct __FMAC_HandleTypeDef
 #else
-typedef struct
+	typedef struct
 #endif /* USE_HAL_FMAC_REGISTER_CALLBACKS */
-{
-	FMAC_TypeDef *Instance; /*!< Register base address */
+	{
+		FMAC_TypeDef *Instance; /*!< Register base address */
 
-	uint32_t FilterParam; /*!< Filter configuration (operation and parameters).
-				   Set to 0 if no valid configuration was applied. */
+		uint32_t FilterParam; /*!< Filter configuration (operation and parameters).
+					   Set to 0 if no valid configuration was applied. */
 
-	uint8_t InputAccess; /*!< Access to the input buffer (internal memory
-				area): DMA, IT, Polling, None. This parameter
-				can be a value of @ref FMAC_Buffer_Access. */
+		uint8_t InputAccess; /*!< Access to the input buffer (internal memory
+					area): DMA, IT, Polling, None. This parameter
+					can be a value of @ref FMAC_Buffer_Access. */
 
-	uint8_t OutputAccess; /*!< Access to the output buffer (internal memory
-				 area): DMA, IT, Polling, None. This parameter
-				 can be a value of @ref FMAC_Buffer_Access. */
+		uint8_t OutputAccess; /*!< Access to the output buffer (internal memory
+					 area): DMA, IT, Polling, None. This parameter
+					 can be a value of @ref FMAC_Buffer_Access. */
 
-	int16_t *pInput; /*!< Pointer to FMAC input data buffer */
+		int16_t *pInput; /*!< Pointer to FMAC input data buffer */
 
-	uint16_t InputCurrentSize; /*!< Number of the input elements already
-				      written into FMAC */
+		uint16_t InputCurrentSize; /*!< Number of the input elements already
+					      written into FMAC */
 
-	uint16_t *pInputSize; /*!< Number of input elements to write (memory allocated
-				 to pInput). In case of early interruption of the
-				 filter operation, its value will be updated. */
+		uint16_t *pInputSize; /*!< Number of input elements to write (memory allocated
+					 to pInput). In case of early interruption of the
+					 filter operation, its value will be updated. */
 
-	int16_t *pOutput; /*!< Pointer to FMAC output data buffer */
+		int16_t *pOutput; /*!< Pointer to FMAC output data buffer */
 
-	uint16_t OutputCurrentSize; /*!< Number of the output elements already
-				       read from FMAC */
+		uint16_t OutputCurrentSize; /*!< Number of the output elements already
+					       read from FMAC */
 
-	uint16_t *pOutputSize; /*!< Number of output elements to read (memory
-				  allocated to pOutput). In case of early
-				  interruption of the filter operation, its
-				  value will be updated. */
+		uint16_t *pOutputSize; /*!< Number of output elements to read (memory
+					  allocated to pOutput). In case of early
+					  interruption of the filter operation, its
+					  value will be updated. */
 
-	DMA_HandleTypeDef *hdmaIn; /*!< FMAC peripheral input data DMA handle parameters */
+		DMA_HandleTypeDef *hdmaIn; /*!< FMAC peripheral input data DMA handle parameters */
 
-	DMA_HandleTypeDef *hdmaOut; /*!< FMAC peripheral output data DMA handle parameters */
+		DMA_HandleTypeDef *hdmaOut; /*!< FMAC peripheral output data DMA handle parameters */
 
-	DMA_HandleTypeDef *hdmaPreload; /*!< FMAC peripheral preloaded data (X1,
-					   X2 and Y) DMA handle parameters */
+		DMA_HandleTypeDef *hdmaPreload; /*!< FMAC peripheral preloaded data (X1,
+						   X2 and Y) DMA handle parameters */
 
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
-	void (*ErrorCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC error callback */
+		void (*ErrorCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC error callback */
 
-	void (*HalfGetDataCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC get half data callback          */
+		void (*HalfGetDataCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC get half data callback          */
 
-	void (*GetDataCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC get data callback */
+		void (*GetDataCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC get data callback */
 
-	void (*HalfOutputDataReadyCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC half output data ready callback */
+		void (*HalfOutputDataReadyCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC half output data ready callback */
 
-	void (*OutputDataReadyCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC output data ready callback */
+		void (*OutputDataReadyCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC output data ready callback */
 
-	void (*FilterConfigCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC filter configuration callback   */
+		void (*FilterConfigCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC filter configuration callback   */
 
-	void (*FilterPreloadCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC filter preload callback         */
+		void (*FilterPreloadCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC filter preload callback         */
 
-	void (*MspInitCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC Msp Init callback */
+		void (*MspInitCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC Msp Init callback */
 
-	void (*MspDeInitCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC Msp DeInit callback */
+		void (*MspDeInitCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC Msp DeInit callback */
 
 #endif /* (USE_HAL_FMAC_REGISTER_CALLBACKS) */
 
-	HAL_LockTypeDef Lock; /*!< FMAC locking object */
+		HAL_LockTypeDef Lock; /*!< FMAC locking object */
 
-	__IO HAL_FMAC_StateTypeDef State; /*!< FMAC state related to global handle management
-					       This parameter can be a value of @ref
-					     HAL_FMAC_StateTypeDef */
+		__IO HAL_FMAC_StateTypeDef State; /*!< FMAC state related to global handle management
+						       This parameter can be a value of @ref
+						     HAL_FMAC_StateTypeDef */
 
-	__IO HAL_FMAC_StateTypeDef RdState; /*!< FMAC state related to read operations (access to Y
-					       buffer) This parameter can be a value of @ref
-					       HAL_FMAC_StateTypeDef */
+		__IO HAL_FMAC_StateTypeDef RdState; /*!< FMAC state related to read operations (access to Y
+						       buffer) This parameter can be a value of @ref
+						       HAL_FMAC_StateTypeDef */
 
-	__IO HAL_FMAC_StateTypeDef WrState; /*!< FMAC state related to write operations (access to X1
-					       buffer) This parameter can be a value of @ref
-					       HAL_FMAC_StateTypeDef */
+		__IO HAL_FMAC_StateTypeDef WrState; /*!< FMAC state related to write operations (access to X1
+						       buffer) This parameter can be a value of @ref
+						       HAL_FMAC_StateTypeDef */
 
-	__IO uint32_t ErrorCode; /*!< FMAC peripheral error code
-				      This parameter can be a value of @ref
-				    FMAC_Error_Code */
+		__IO uint32_t ErrorCode; /*!< FMAC peripheral error code
+					      This parameter can be a value of @ref
+					    FMAC_Error_Code */
 
-} FMAC_HandleTypeDef;
+	} FMAC_HandleTypeDef;
 
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
-/**
- * @brief  FMAC Callback ID enumeration definition
- */
-typedef enum {
-	HAL_FMAC_ERROR_CB_ID = 0x00U,		       /*!< FMAC error callback ID */
-	HAL_FMAC_HALF_GET_DATA_CB_ID = 0x01U,	       /*!< FMAC get half data callback ID          */
-	HAL_FMAC_GET_DATA_CB_ID = 0x02U,	       /*!< FMAC get data callback ID */
-	HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID = 0x03U, /*!< FMAC half output data ready callback ID */
-	HAL_FMAC_OUTPUT_DATA_READY_CB_ID = 0x04U,      /*!< FMAC output data ready callback ID      */
-	HAL_FMAC_FILTER_CONFIG_CB_ID = 0x05U,	       /*!< FMAC filter configuration callback ID   */
-	HAL_FMAC_FILTER_PRELOAD_CB_ID = 0x06U,	       /*!< FMAC filter preload callback ID         */
+	/**
+	 * @brief  FMAC Callback ID enumeration definition
+	 */
+	typedef enum
+	{
+		HAL_FMAC_ERROR_CB_ID = 0x00U,		       /*!< FMAC error callback ID */
+		HAL_FMAC_HALF_GET_DATA_CB_ID = 0x01U,	       /*!< FMAC get half data callback ID          */
+		HAL_FMAC_GET_DATA_CB_ID = 0x02U,	       /*!< FMAC get data callback ID */
+		HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID = 0x03U, /*!< FMAC half output data ready callback ID */
+		HAL_FMAC_OUTPUT_DATA_READY_CB_ID = 0x04U,      /*!< FMAC output data ready callback ID      */
+		HAL_FMAC_FILTER_CONFIG_CB_ID = 0x05U,	       /*!< FMAC filter configuration callback ID   */
+		HAL_FMAC_FILTER_PRELOAD_CB_ID = 0x06U,	       /*!< FMAC filter preload callback ID         */
 
-	HAL_FMAC_MSPINIT_CB_ID = 0x07U,	  /*!< FMAC MspInit callback ID   */
-	HAL_FMAC_MSPDEINIT_CB_ID = 0x08U, /*!< FMAC MspDeInit callback ID */
-} HAL_FMAC_CallbackIDTypeDef;
+		HAL_FMAC_MSPINIT_CB_ID = 0x07U,	  /*!< FMAC MspInit callback ID   */
+		HAL_FMAC_MSPDEINIT_CB_ID = 0x08U, /*!< FMAC MspDeInit callback ID */
+	} HAL_FMAC_CallbackIDTypeDef;
 
-/**
- * @brief  HAL FMAC Callback pointer definition
- */
-typedef void (*pFMAC_CallbackTypeDef)(FMAC_HandleTypeDef *hfmac); /*!< pointer to an FMAC callback function */
+	/**
+	 * @brief  HAL FMAC Callback pointer definition
+	 */
+	typedef void (*pFMAC_CallbackTypeDef)(FMAC_HandleTypeDef *hfmac); /*!< pointer to an FMAC callback function */
 
 #endif /* USE_HAL_FMAC_REGISTER_CALLBACKS */
 
-/**
- * @brief  FMAC Filter Configuration Structure definition
- */
-typedef struct {
-	uint8_t InputBaseAddress; /*!< Base address of the input buffer (X1) within
-				     the internal memory (0x00 to 0xFF). Ignored if
-				     InputBufferSize is set to 0 (previous
-				     configuration kept). Note: the buffers can
-				     overlap or even coincide exactly. */
+	/**
+	 * @brief  FMAC Filter Configuration Structure definition
+	 */
+	typedef struct
+	{
+		uint8_t InputBaseAddress; /*!< Base address of the input buffer (X1) within
+					     the internal memory (0x00 to 0xFF). Ignored if
+					     InputBufferSize is set to 0 (previous
+					     configuration kept). Note: the buffers can
+					     overlap or even coincide exactly. */
 
-	uint8_t InputBufferSize; /*!< Number of 16-bit words allocated to the
-				    input buffer (including the optional
-				    "headroom"). 0 if a previous configuration
-				    should be kept. */
+		uint8_t InputBufferSize; /*!< Number of 16-bit words allocated to the
+					    input buffer (including the optional
+					    "headroom"). 0 if a previous configuration
+					    should be kept. */
 
-	uint32_t InputThreshold; /*!< Input threshold: the buffer full flag will be
-				    set if the number of free spaces in the buffer is
-				    lower than this threshold. This parameter can be
-				    a value of @ref FMAC_Data_Buffer_Threshold. */
+		uint32_t InputThreshold; /*!< Input threshold: the buffer full flag will be
+					    set if the number of free spaces in the buffer is
+					    lower than this threshold. This parameter can be
+					    a value of @ref FMAC_Data_Buffer_Threshold. */
 
-	uint8_t CoeffBaseAddress; /*!< Base address of the coefficient buffer (X2)
-				     within the internal memory (0x00 to 0xFF).
-				     Ignored if CoeffBufferSize is set to 0
-				       (previous configuration kept).
-				       Note: the buffers can overlap or even
-				     coincide exactly. */
+		uint8_t CoeffBaseAddress; /*!< Base address of the coefficient buffer (X2)
+					     within the internal memory (0x00 to 0xFF).
+					     Ignored if CoeffBufferSize is set to 0
+					       (previous configuration kept).
+					       Note: the buffers can overlap or even
+					     coincide exactly. */
 
-	uint8_t CoeffBufferSize; /*!< Number of 16-bit words allocated to the
-				    coefficient buffer. 0 if a previous
-				    configuration should be kept. */
+		uint8_t CoeffBufferSize; /*!< Number of 16-bit words allocated to the
+					    coefficient buffer. 0 if a previous
+					    configuration should be kept. */
 
-	uint8_t OutputBaseAddress; /*!< Base address of the output buffer (Y) within
-				      the internal memory (0x00 to 0xFF). Ignored if
-				      OuputBufferSize is set to 0 (previous
-				      configuration kept). Note: the buffers can
-				      overlap or even coincide exactly. */
+		uint8_t OutputBaseAddress; /*!< Base address of the output buffer (Y) within
+					      the internal memory (0x00 to 0xFF). Ignored if
+					      OuputBufferSize is set to 0 (previous
+					      configuration kept). Note: the buffers can
+					      overlap or even coincide exactly. */
 
-	uint8_t OutputBufferSize; /*!< Number of 16-bit words allocated to the
-				     output buffer (including the optional
-				     "headroom"). 0 if a previous configuration
-				     should be kept. */
+		uint8_t OutputBufferSize; /*!< Number of 16-bit words allocated to the
+					     output buffer (including the optional
+					     "headroom"). 0 if a previous configuration
+					     should be kept. */
 
-	uint32_t OutputThreshold; /*!< Output threshold: the buffer empty flag
-				     will be set if the number of unread values
-				     in the buffer is lower than this threshold.
-				       This parameter can be a value
-				       of @ref FMAC_Data_Buffer_Threshold. */
+		uint32_t OutputThreshold; /*!< Output threshold: the buffer empty flag
+					     will be set if the number of unread values
+					     in the buffer is lower than this threshold.
+					       This parameter can be a value
+					       of @ref FMAC_Data_Buffer_Threshold. */
 
-	int16_t *pCoeffA; /*!< [IIR only] Initialization of the coefficient vector
-			     A. If not needed, it should be set to NULL. */
+		int16_t *pCoeffA; /*!< [IIR only] Initialization of the coefficient vector
+				     A. If not needed, it should be set to NULL. */
 
-	uint8_t CoeffASize; /*!< Size of the coefficient vector A. */
+		uint8_t CoeffASize; /*!< Size of the coefficient vector A. */
 
-	int16_t *pCoeffB; /*!< Initialization of the coefficient vector B.
-			       If not needed (re-use of a previously loaded
-			     buffer), it should be set to NULL. */
+		int16_t *pCoeffB; /*!< Initialization of the coefficient vector B.
+				       If not needed (re-use of a previously loaded
+				     buffer), it should be set to NULL. */
 
-	uint8_t CoeffBSize; /*!< Size of the coefficient vector B. */
+		uint8_t CoeffBSize; /*!< Size of the coefficient vector B. */
 
-	uint8_t InputAccess; /*!< Access to the input buffer (internal memory
-				area): DMA, IT, Polling, None. This parameter
-				can be a value of @ref FMAC_Buffer_Access. */
+		uint8_t InputAccess; /*!< Access to the input buffer (internal memory
+					area): DMA, IT, Polling, None. This parameter
+					can be a value of @ref FMAC_Buffer_Access. */
 
-	uint8_t OutputAccess; /*!< Access to the output buffer (internal memory
-				 area): DMA, IT, Polling, None. This parameter
-				 can be a value of @ref FMAC_Buffer_Access. */
+		uint8_t OutputAccess; /*!< Access to the output buffer (internal memory
+					 area): DMA, IT, Polling, None. This parameter
+					 can be a value of @ref FMAC_Buffer_Access. */
 
-	uint32_t Clip; /*!< Enable or disable the clipping feature. If the q1.15
-			  range is exceeded, wrapping is done when the clipping
-			  feature is disabled and saturation is done when the
-			  clipping feature is enabled. This parameter can be a
-			  value of @ref FMAC_Clip_State. */
+		uint32_t Clip; /*!< Enable or disable the clipping feature. If the q1.15
+				  range is exceeded, wrapping is done when the clipping
+				  feature is disabled and saturation is done when the
+				  clipping feature is enabled. This parameter can be a
+				  value of @ref FMAC_Clip_State. */
 
-	uint32_t Filter; /*!< Filter type.
-			      This parameter can be a value
-			      of @ref FMAC_Functions (filter related values). */
+		uint32_t Filter; /*!< Filter type.
+				      This parameter can be a value
+				      of @ref FMAC_Functions (filter related values). */
 
-	uint8_t P; /*!< Parameter P (vector length, number of filter taps, etc.). */
+		uint8_t P; /*!< Parameter P (vector length, number of filter taps, etc.). */
 
-	uint8_t Q; /*!< Parameter Q (vector length, etc.). Ignored if not needed. */
+		uint8_t Q; /*!< Parameter Q (vector length, etc.). Ignored if not needed. */
 
-	uint8_t R; /*!< Parameter R (gain, etc.). Ignored if not needed. */
+		uint8_t R; /*!< Parameter R (gain, etc.). Ignored if not needed. */
 
-} FMAC_FilterConfigTypeDef;
+	} FMAC_FilterConfigTypeDef;
 
 /**
  * @}
@@ -402,7 +406,8 @@ typedef struct {
  */
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
 #define __HAL_FMAC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		(__HANDLE__)->State = HAL_FMAC_STATE_RESET;                                                                                                                                            \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -502,14 +507,14 @@ typedef struct {
  */
 #define __HAL_FMAC_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (((__HANDLE__)->Instance->CR) & (__INTERRUPT__))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private defines -----------------------------------------------------------*/
-/** @addtogroup  FMAC_Private_Constants
- * @{
- */
+	/* Private defines -----------------------------------------------------------*/
+	/** @addtogroup  FMAC_Private_Constants
+	 * @{
+	 */
 
 #define FMAC_PARAM_P_MAX_IIR 64U /*!< Maximum value of P parameter with IIR */
 #define FMAC_PARAM_P_MAX_FIR                                                                                                                                                                           \
@@ -642,95 +647,95 @@ typedef struct {
 							  : 8U)) &&                                                                                                                                    \
 	 ((((__ACCESS__) == FMAC_BUFFER_ACCESS_DMA) && ((__WM__) == FMAC_THRESHOLD_1)) || ((__ACCESS__) != FMAC_BUFFER_ACCESS_DMA)))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions ------------------------------------------------------- */
-/** @addtogroup FMAC_Exported_Functions
- * @{
- */
+	/* Exported functions ------------------------------------------------------- */
+	/** @addtogroup FMAC_Exported_Functions
+	 * @{
+	 */
 
-/** @addtogroup FMAC_Exported_Functions_Group1
- * @{
- */
-/* Initialization and de-initialization functions  ****************************/
-HAL_StatusTypeDef HAL_FMAC_Init(FMAC_HandleTypeDef *hfmac);
-HAL_StatusTypeDef HAL_FMAC_DeInit(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_MspInit(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_MspDeInit(FMAC_HandleTypeDef *hfmac);
+	/** @addtogroup FMAC_Exported_Functions_Group1
+	 * @{
+	 */
+	/* Initialization and de-initialization functions  ****************************/
+	HAL_StatusTypeDef HAL_FMAC_Init(FMAC_HandleTypeDef *hfmac);
+	HAL_StatusTypeDef HAL_FMAC_DeInit(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_MspInit(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_MspDeInit(FMAC_HandleTypeDef *hfmac);
 
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
-/* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID, pFMAC_CallbackTypeDef pCallback);
-HAL_StatusTypeDef HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID);
+	/* Callbacks Register/UnRegister functions  ***********************************/
+	HAL_StatusTypeDef HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID, pFMAC_CallbackTypeDef pCallback);
+	HAL_StatusTypeDef HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_FMAC_REGISTER_CALLBACKS */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup FMAC_Exported_Functions_Group2
- * @{
- */
-/* Peripheral Control functions ***********************************************/
-HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig);
-HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig);
-HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize, int16_t *pOutput, uint8_t OutputSize);
-HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize, int16_t *pOutput, uint8_t OutputSize);
-HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);
-HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint16_t *pInputSize);
-HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);
-HAL_StatusTypeDef HAL_FMAC_PollFilterData(FMAC_HandleTypeDef *hfmac, uint32_t Timeout);
-HAL_StatusTypeDef HAL_FMAC_FilterStop(FMAC_HandleTypeDef *hfmac);
-/**
- * @}
- */
+	/** @addtogroup FMAC_Exported_Functions_Group2
+	 * @{
+	 */
+	/* Peripheral Control functions ***********************************************/
+	HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig);
+	HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig);
+	HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize, int16_t *pOutput, uint8_t OutputSize);
+	HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize, int16_t *pOutput, uint8_t OutputSize);
+	HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);
+	HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint16_t *pInputSize);
+	HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);
+	HAL_StatusTypeDef HAL_FMAC_PollFilterData(FMAC_HandleTypeDef *hfmac, uint32_t Timeout);
+	HAL_StatusTypeDef HAL_FMAC_FilterStop(FMAC_HandleTypeDef *hfmac);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup FMAC_Exported_Functions_Group3
- * @{
- */
-/* Callback functions *********************************************************/
-void HAL_FMAC_ErrorCallback(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_HalfGetDataCallback(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_GetDataCallback(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_HalfOutputDataReadyCallback(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_OutputDataReadyCallback(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_FilterConfigCallback(FMAC_HandleTypeDef *hfmac);
-void HAL_FMAC_FilterPreloadCallback(FMAC_HandleTypeDef *hfmac);
-/**
- * @}
- */
+	/** @addtogroup FMAC_Exported_Functions_Group3
+	 * @{
+	 */
+	/* Callback functions *********************************************************/
+	void HAL_FMAC_ErrorCallback(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_HalfGetDataCallback(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_GetDataCallback(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_HalfOutputDataReadyCallback(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_OutputDataReadyCallback(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_FilterConfigCallback(FMAC_HandleTypeDef *hfmac);
+	void HAL_FMAC_FilterPreloadCallback(FMAC_HandleTypeDef *hfmac);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup FMAC_Exported_Functions_Group4
- * @{
- */
-/* IRQ handler management *****************************************************/
-void HAL_FMAC_IRQHandler(FMAC_HandleTypeDef *hfmac);
-/**
- * @}
- */
+	/** @addtogroup FMAC_Exported_Functions_Group4
+	 * @{
+	 */
+	/* IRQ handler management *****************************************************/
+	void HAL_FMAC_IRQHandler(FMAC_HandleTypeDef *hfmac);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup FMAC_Exported_Functions_Group5
- * @{
- */
-/* Peripheral State functions *************************************************/
-HAL_FMAC_StateTypeDef HAL_FMAC_GetState(const FMAC_HandleTypeDef *hfmac);
-uint32_t HAL_FMAC_GetError(const FMAC_HandleTypeDef *hfmac);
-/**
- * @}
- */
+	/** @addtogroup FMAC_Exported_Functions_Group5
+	 * @{
+	 */
+	/* Peripheral State functions *************************************************/
+	HAL_FMAC_StateTypeDef HAL_FMAC_GetState(const FMAC_HandleTypeDef *hfmac);
+	uint32_t HAL_FMAC_GetError(const FMAC_HandleTypeDef *hfmac);
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* FMAC */
 

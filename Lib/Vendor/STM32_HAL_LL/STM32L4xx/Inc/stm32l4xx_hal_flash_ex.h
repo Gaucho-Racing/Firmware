@@ -20,7 +20,8 @@
 #define STM32L4xx_HAL_FLASH_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -57,45 +58,45 @@ extern "C" {
  */
 #endif /* FLASH_CFGR_LVEN */
 
-/* Exported macro ------------------------------------------------------------*/
+	/* Exported macro ------------------------------------------------------------*/
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup FLASHEx_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup FLASHEx_Exported_Functions
+	 * @{
+	 */
 
-/* Extended Program operation functions  *************************************/
-/** @addtogroup FLASHEx_Exported_Functions_Group1
- * @{
- */
-HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
-HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
-HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit);
-void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit);
-/**
- * @}
- */
+	/* Extended Program operation functions  *************************************/
+	/** @addtogroup FLASHEx_Exported_Functions_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
+	HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
+	HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit);
+	void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit);
+	/**
+	 * @}
+	 */
 
 #if defined(FLASH_CFGR_LVEN)
-/** @addtogroup FLASHEx_Exported_Functions_Group2
- * @{
- */
-HAL_StatusTypeDef HAL_FLASHEx_ConfigLVEPin(uint32_t ConfigLVE);
+	/** @addtogroup FLASHEx_Exported_Functions_Group2
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_FLASHEx_ConfigLVEPin(uint32_t ConfigLVE);
 /**
  * @}
  */
 #endif /* FLASH_CFGR_LVEN */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private function ----------------------------------------------------------*/
-/** @addtogroup FLASHEx_Private_Functions FLASHEx Private Functions
- * @{
- */
-void FLASH_PageErase(uint32_t Page, uint32_t Banks);
-void FLASH_FlushCaches(void);
+	/* Private function ----------------------------------------------------------*/
+	/** @addtogroup FLASHEx_Private_Functions FLASHEx Private Functions
+	 * @{
+	 */
+	void FLASH_PageErase(uint32_t Page, uint32_t Banks);
+	void FLASH_FlushCaches(void);
 /**
  * @}
  */
@@ -107,17 +108,17 @@ void FLASH_FlushCaches(void);
 #if defined(FLASH_CFGR_LVEN)
 #define IS_FLASH_LVE_PIN(CFG) (((CFG) == FLASH_LVE_PIN_CTRL) || ((CFG) == FLASH_LVE_PIN_FORCED))
 #endif /* FLASH_CFGR_LVEN */
-/**
-  @endcond
-  */
+	/**
+	  @endcond
+	  */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

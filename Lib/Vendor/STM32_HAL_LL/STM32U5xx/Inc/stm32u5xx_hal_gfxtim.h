@@ -21,7 +21,8 @@
 #define STM32U5xx_HAL_GFXTIM_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -29,265 +30,273 @@ extern "C" {
 
 #if defined(GFXTIM)
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup GFXTIM
- * @{
- */
+	/** @addtogroup GFXTIM
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup GFXTIM_Exported_Types  GFXTIM Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup GFXTIM_Exported_Types  GFXTIM Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  HAL GFXTIM states definition
- */
-typedef enum {
-	HAL_GFXTIM_STATE_RESET = 0x00U, /*!< GFXTIM not initialized */
-	HAL_GFXTIM_STATE_READY = 0x01U, /*!< GFXTIM initialized and ready for use */
-	HAL_GFXTIM_STATE_ERROR = 0xFFU	/*!< GFXTIM state error */
-} HAL_GFXTIM_StateTypeDef;
+	/**
+	 * @brief  HAL GFXTIM states definition
+	 */
+	typedef enum
+	{
+		HAL_GFXTIM_STATE_RESET = 0x00U, /*!< GFXTIM not initialized */
+		HAL_GFXTIM_STATE_READY = 0x01U, /*!< GFXTIM initialized and ready for use */
+		HAL_GFXTIM_STATE_ERROR = 0xFFU	/*!< GFXTIM state error */
+	} HAL_GFXTIM_StateTypeDef;
 
-/**
- * @brief  GFXTIM initialization structure definition
- */
-typedef struct {
-	uint32_t SynchroSrc;		 /*!< Synchronization signals (HSYNC and VSYNC)
-					 sources. This parameter can be a value of @ref
-					 GFXTIM_SynchroSrc */
-	uint32_t TearingEffectSrc;	 /*!< Tearing effect source
-					 This parameter can be a value of @ref
-					 GFXTIM_TearingEffectSrc */
-	uint32_t TearingEffectPolarity;	 /*!< Tearing effect source
-					 This parameter can be a value of @ref
-					 GFXTIM_TearingEffectPolarity */
-	uint32_t TearingEffectInterrupt; /*!< Tearing effect interrupt Enable or
-					 Disable This parameter can be a value
-					 of @ref GFXTIM_Interrupt */
-} GFXTIM_InitTypeDef;
+	/**
+	 * @brief  GFXTIM initialization structure definition
+	 */
+	typedef struct
+	{
+		uint32_t SynchroSrc;		 /*!< Synchronization signals (HSYNC and VSYNC)
+						 sources. This parameter can be a value of @ref
+						 GFXTIM_SynchroSrc */
+		uint32_t TearingEffectSrc;	 /*!< Tearing effect source
+						 This parameter can be a value of @ref
+						 GFXTIM_TearingEffectSrc */
+		uint32_t TearingEffectPolarity;	 /*!< Tearing effect source
+						 This parameter can be a value of @ref
+						 GFXTIM_TearingEffectPolarity */
+		uint32_t TearingEffectInterrupt; /*!< Tearing effect interrupt Enable or
+						 Disable This parameter can be a value
+						 of @ref GFXTIM_Interrupt */
+	} GFXTIM_InitTypeDef;
 
 /**
  * @brief  GFXTIM handle structure definition
  */
 #if (USE_HAL_GFXTIM_REGISTER_CALLBACKS == 1)
-typedef struct __GFXTIM_HandleTypeDef
+	typedef struct __GFXTIM_HandleTypeDef
 #else
-typedef struct
+	typedef struct
 #endif /* USE_HAL_GFXTIM_REGISTER_CALLBACKS */
-{
-	GFXTIM_TypeDef *Instance;	    /*!< GFXTIM instance */
-	__IO HAL_GFXTIM_StateTypeDef State; /*!< GFXTIM state */
-	__IO uint32_t ErrorCode;	    /*!< GFXTIM error code */
-	GFXTIM_InitTypeDef Init;	    /*!< GFXTIM initialization */
+	{
+		GFXTIM_TypeDef *Instance;	    /*!< GFXTIM instance */
+		__IO HAL_GFXTIM_StateTypeDef State; /*!< GFXTIM state */
+		__IO uint32_t ErrorCode;	    /*!< GFXTIM error code */
+		GFXTIM_InitTypeDef Init;	    /*!< GFXTIM initialization */
 #if (USE_HAL_GFXTIM_REGISTER_CALLBACKS == 1)
-	void (*HAL_GFXTIM_AbsoluteTimer_AFCC1Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute frame counter compare 1 callback
-												    */
-	void (*HAL_GFXTIM_AbsoluteTimer_AFCOFCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute frame counter overflow callback
-												    */
-	void (*HAL_GFXTIM_AbsoluteTimer_ALCC1Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute line counter compare 1 callback
-												    */
-	void (*HAL_GFXTIM_AbsoluteTimer_ALCC2Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute line counter compare 2 callback
-												    */
-	void (*HAL_GFXTIM_AbsoluteTimer_ALCOFCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute line counter overflow callback */
-	void (*HAL_GFXTIM_RelativeTimer_RFC1RCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Relative frame counter 1 reload callback
-												    */
-	void (*HAL_GFXTIM_RelativeTimer_RFC2RCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Relative frame counter 2 reload callback
-												    */
-	void (*HAL_GFXTIM_TECallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);			   /*!< GFXTIM Tearing effect callback */
-	void (*HAL_GFXTIM_EventGenerator_EV1Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 1 callback */
-	void (*HAL_GFXTIM_EventGenerator_EV2Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 2 callback */
-	void (*HAL_GFXTIM_EventGenerator_EV3Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 3 callback */
-	void (*HAL_GFXTIM_EventGenerator_EV4Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 4 callback */
-	void (*HAL_GFXTIM_WatchdogTimer_AlarmCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Watchdog alarm callback */
-	void (*HAL_GFXTIM_WatchdogTimer_PreAlarmCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim); /*!< GFXTIM Watchdog pre alarm callback */
-	void (*ErrorCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);				   /*!< GFXTIM error callback */
-	void (*MspInitCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);			   /*!< GFXTIM MSP initialization user callback */
-	void (*MspDeInitCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);			   /*!< GFXTIM MSP de-initialization user callback */
-#endif												   /* USE_HAL_GFXTIM_REGISTER_CALLBACKS */
-} GFXTIM_HandleTypeDef;
+		void (*HAL_GFXTIM_AbsoluteTimer_AFCC1Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute frame counter compare 1 callback
+													    */
+		void (*HAL_GFXTIM_AbsoluteTimer_AFCOFCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute frame counter overflow callback
+													    */
+		void (*HAL_GFXTIM_AbsoluteTimer_ALCC1Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute line counter compare 1 callback
+													    */
+		void (*HAL_GFXTIM_AbsoluteTimer_ALCC2Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute line counter compare 2 callback
+													    */
+		void (*HAL_GFXTIM_AbsoluteTimer_ALCOFCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Absolute line counter overflow callback */
+		void (*HAL_GFXTIM_RelativeTimer_RFC1RCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Relative frame counter 1 reload callback
+													    */
+		void (*HAL_GFXTIM_RelativeTimer_RFC2RCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Relative frame counter 2 reload callback
+													    */
+		void (*HAL_GFXTIM_TECallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);			   /*!< GFXTIM Tearing effect callback */
+		void (*HAL_GFXTIM_EventGenerator_EV1Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 1 callback */
+		void (*HAL_GFXTIM_EventGenerator_EV2Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 2 callback */
+		void (*HAL_GFXTIM_EventGenerator_EV3Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 3 callback */
+		void (*HAL_GFXTIM_EventGenerator_EV4Callback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Event events 4 callback */
+		void (*HAL_GFXTIM_WatchdogTimer_AlarmCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);	   /*!< GFXTIM Watchdog alarm callback */
+		void (*HAL_GFXTIM_WatchdogTimer_PreAlarmCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim); /*!< GFXTIM Watchdog pre alarm callback */
+		void (*ErrorCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);				   /*!< GFXTIM error callback */
+		void (*MspInitCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);			   /*!< GFXTIM MSP initialization user callback */
+		void (*MspDeInitCallback)(struct __GFXTIM_HandleTypeDef *hgfxtim);			   /*!< GFXTIM MSP de-initialization user callback */
+#endif													   /* USE_HAL_GFXTIM_REGISTER_CALLBACKS */
+	} GFXTIM_HandleTypeDef;
 
 #if (USE_HAL_GFXTIM_REGISTER_CALLBACKS == 1)
-/**
- * @brief  GFXTIM callback ID enumeration definition
- */
-typedef enum {
-	HAL_GFXTIM_AFC_COMPARE1_CB_ID = 1U,  /*!< GFXTIM Absolute frame counter compare 1 callback ID */
-	HAL_GFXTIM_AFC_OVERFLOW_CB_ID = 2U,  /*!< GFXTIM Absolute frame counter overflow callback ID */
-	HAL_GFXTIM_ALC_COMPARE1_CB_ID = 3U,  /*!< GFXTIM Absolute line counter compare 1 callback ID */
-	HAL_GFXTIM_ALC_COMPARE2_CB_ID = 4U,  /*!< GFXTIM Absolute line counter compare 2 callback ID */
-	HAL_GFXTIM_ALC_OVERFLOW_CB_ID = 5U,  /*!< GFXTIM Absolute line counter overflow callback ID */
-	HAL_GFXTIM_RFC1_RELOAD_CB_ID = 6U,   /*!< GFXTIM Relative frame counter 1 reload callback ID */
-	HAL_GFXTIM_RFC2_RELOAD_CB_ID = 7U,   /*!< GFXTIM Relative frame counter 2 reload callback ID */
-	HAL_GFXTIM_TE_CB_ID = 8U,	     /*!< GFXTIM External tearing effect callback ID */
-	HAL_GFXTIM_EVENT1_CB_ID = 9U,	     /*!< GFXTIM Event events 1 callback ID */
-	HAL_GFXTIM_EVENT2_CB_ID = 10U,	     /*!< GFXTIM Event events 2 callback ID */
-	HAL_GFXTIM_EVENT3_CB_ID = 11U,	     /*!< GFXTIM Event events 3 callback ID */
-	HAL_GFXTIM_EVENT4_CB_ID = 12U,	     /*!< GFXTIM Event events 4 callback ID */
-	HAL_GFXTIM_WDG_ALARM_CB_ID = 13U,    /*!< GFXTIM Watchdog alarm callback ID */
-	HAL_GFXTIM_WDG_PREALARM_CB_ID = 14U, /*!< GFXTIM Watchdog pre alarm callback ID */
-	HAL_GFXTIM_ERROR_CB_ID = 15U,	     /*!< GFXTIM error callback ID */
-	HAL_GFXTIM_MSP_INIT_CB_ID = 16U,     /*!< GFXTIM MSP initialization user callback ID */
-	HAL_GFXTIM_MSP_DEINIT_CB_ID = 17U,   /*!< GFXTIM MSP de-initialization user callback ID */
-} HAL_GFXTIM_CallbackIDTypeDef;
+	/**
+	 * @brief  GFXTIM callback ID enumeration definition
+	 */
+	typedef enum
+	{
+		HAL_GFXTIM_AFC_COMPARE1_CB_ID = 1U,  /*!< GFXTIM Absolute frame counter compare 1 callback ID */
+		HAL_GFXTIM_AFC_OVERFLOW_CB_ID = 2U,  /*!< GFXTIM Absolute frame counter overflow callback ID */
+		HAL_GFXTIM_ALC_COMPARE1_CB_ID = 3U,  /*!< GFXTIM Absolute line counter compare 1 callback ID */
+		HAL_GFXTIM_ALC_COMPARE2_CB_ID = 4U,  /*!< GFXTIM Absolute line counter compare 2 callback ID */
+		HAL_GFXTIM_ALC_OVERFLOW_CB_ID = 5U,  /*!< GFXTIM Absolute line counter overflow callback ID */
+		HAL_GFXTIM_RFC1_RELOAD_CB_ID = 6U,   /*!< GFXTIM Relative frame counter 1 reload callback ID */
+		HAL_GFXTIM_RFC2_RELOAD_CB_ID = 7U,   /*!< GFXTIM Relative frame counter 2 reload callback ID */
+		HAL_GFXTIM_TE_CB_ID = 8U,	     /*!< GFXTIM External tearing effect callback ID */
+		HAL_GFXTIM_EVENT1_CB_ID = 9U,	     /*!< GFXTIM Event events 1 callback ID */
+		HAL_GFXTIM_EVENT2_CB_ID = 10U,	     /*!< GFXTIM Event events 2 callback ID */
+		HAL_GFXTIM_EVENT3_CB_ID = 11U,	     /*!< GFXTIM Event events 3 callback ID */
+		HAL_GFXTIM_EVENT4_CB_ID = 12U,	     /*!< GFXTIM Event events 4 callback ID */
+		HAL_GFXTIM_WDG_ALARM_CB_ID = 13U,    /*!< GFXTIM Watchdog alarm callback ID */
+		HAL_GFXTIM_WDG_PREALARM_CB_ID = 14U, /*!< GFXTIM Watchdog pre alarm callback ID */
+		HAL_GFXTIM_ERROR_CB_ID = 15U,	     /*!< GFXTIM error callback ID */
+		HAL_GFXTIM_MSP_INIT_CB_ID = 16U,     /*!< GFXTIM MSP initialization user callback ID */
+		HAL_GFXTIM_MSP_DEINIT_CB_ID = 17U,   /*!< GFXTIM MSP de-initialization user callback ID */
+	} HAL_GFXTIM_CallbackIDTypeDef;
 
-/**
- * @brief  GFXTIM callback pointers definition
- */
-typedef void (*pGFXTIM_CallbackTypeDef)(GFXTIM_HandleTypeDef *hgfxtim);
+	/**
+	 * @brief  GFXTIM callback pointers definition
+	 */
+	typedef void (*pGFXTIM_CallbackTypeDef)(GFXTIM_HandleTypeDef *hgfxtim);
 #endif /* USE_HAL_GFXTIM_REGISTER_CALLBACKS */
 
-/**
- * @brief  GFXTIM clock generator structure definition
- */
-typedef struct {
-	uint32_t LCCHwReloadSrc; /*!< Line Clock Counter hardware reload source
-				 This parameter can be a value of @ref
-				 GFXTIM_LCCHwReloadSrc */
+	/**
+	 * @brief  GFXTIM clock generator structure definition
+	 */
+	typedef struct
+	{
+		uint32_t LCCHwReloadSrc; /*!< Line Clock Counter hardware reload source
+					 This parameter can be a value of @ref
+					 GFXTIM_LCCHwReloadSrc */
 
-	uint32_t LCCReloadValue; /*!< Line Clock Counter reload value (22 bits)
-				 This parameter must be a number between
-				 Min_Data = 1 and Max_Data = 4194303 */
+		uint32_t LCCReloadValue; /*!< Line Clock Counter reload value (22 bits)
+					 This parameter must be a number between
+					 Min_Data = 1 and Max_Data = 4194303 */
 
-	uint32_t LCCClockSrc; /*!< Line Clock Counter Clock Source
-			      This parameter can be a value of @ref
-			      GFXTIM_LCCClockSrc */
+		uint32_t LCCClockSrc; /*!< Line Clock Counter Clock Source
+				      This parameter can be a value of @ref
+				      GFXTIM_LCCClockSrc */
 
-	uint32_t LineClockSrc; /*!< Line Clock Source
-			       This parameter can be a value of @ref
-			       GFXTIM_LineClockSrc */
+		uint32_t LineClockSrc; /*!< Line Clock Source
+				       This parameter can be a value of @ref
+				       GFXTIM_LineClockSrc */
 
-	uint32_t FCCHwReloadSrc; /*!< Frame Clock Counter hardware reload source
-				 This parameter can be a value of @ref
-				 GFXTIM_FCCHwReloadSrc */
+		uint32_t FCCHwReloadSrc; /*!< Frame Clock Counter hardware reload source
+					 This parameter can be a value of @ref
+					 GFXTIM_FCCHwReloadSrc */
 
-	uint32_t FCCReloadValue; /*!< Frame Clock Counter reload value (12 bits)
-				 This parameter must be a number between
-				 Min_Data = 1 and Max_Data = 4095 */
+		uint32_t FCCReloadValue; /*!< Frame Clock Counter reload value (12 bits)
+					 This parameter must be a number between
+					 Min_Data = 1 and Max_Data = 4095 */
 
-	uint32_t FCCClockSrc; /*!< Frame Clock Counter Clock Source
-			      This parameter can be a value of @ref
-			      GFXTIM_FCCClockSrc */
+		uint32_t FCCClockSrc; /*!< Frame Clock Counter Clock Source
+				      This parameter can be a value of @ref
+				      GFXTIM_FCCClockSrc */
 
-	uint32_t FrameClockSrc; /*!< Frame Clock Source
-				This parameter can be a value of @ref
-				GFXTIM_FrameClockSrc */
+		uint32_t FrameClockSrc; /*!< Frame Clock Source
+					This parameter can be a value of @ref
+					GFXTIM_FrameClockSrc */
 
-	uint32_t LineClockCalib; /*!< Debug purpose
-				 This parameter can be a value of @ref
-				 GFXTIM_LineClockCalib */
+		uint32_t LineClockCalib; /*!< Debug purpose
+					 This parameter can be a value of @ref
+					 GFXTIM_LineClockCalib */
 
-	uint32_t FrameClockCalib; /*!< Debug purpose
-				  This parameter can be a value of @ref
-				  GFXTIM_FrameClockCalib */
-} GFXTIM_ClockGeneratorConfigTypeDef;
+		uint32_t FrameClockCalib; /*!< Debug purpose
+					  This parameter can be a value of @ref
+					  GFXTIM_FrameClockCalib */
+	} GFXTIM_ClockGeneratorConfigTypeDef;
 
-/**
- * @brief  GFXTIM absolute timer configuration structure
- */
-typedef struct {
-	uint32_t FrameCompare1Value; /*!< Absolute Frame Compare 1 value (20
-				     bits) This parameter must be a number
-				     between 1 and 1048575 */
+	/**
+	 * @brief  GFXTIM absolute timer configuration structure
+	 */
+	typedef struct
+	{
+		uint32_t FrameCompare1Value; /*!< Absolute Frame Compare 1 value (20
+					     bits) This parameter must be a number
+					     between 1 and 1048575 */
 
-	uint32_t FrameCounterValue; /*!< Absolute Frame Counter initial value
-				    (20 bits) This parameter must be a number
-				    between 1 and 1048575 */
+		uint32_t FrameCounterValue; /*!< Absolute Frame Counter initial value
+					    (20 bits) This parameter must be a number
+					    between 1 and 1048575 */
 
-	uint32_t FrameOverflowInterrupt; /*!< Absolute Frame Counter Overflow
-					 Interrupt Enable or Disable This parameter
-					 can be a value of @ref GFXTIM_Interrupt */
+		uint32_t FrameOverflowInterrupt; /*!< Absolute Frame Counter Overflow
+						 Interrupt Enable or Disable This parameter
+						 can be a value of @ref GFXTIM_Interrupt */
 
-	uint32_t FrameCompare1Interrupt; /*!< Absolute Frame Compare 1 Interrupt
-					 Enable or Disable This parameter can be
-					 a value of @ref GFXTIM_Interrupt */
+		uint32_t FrameCompare1Interrupt; /*!< Absolute Frame Compare 1 Interrupt
+						 Enable or Disable This parameter can be
+						 a value of @ref GFXTIM_Interrupt */
 
-	uint32_t LineCompare1Value; /*!< Absolute Line Compare 1 value (12 bits)
-				    This parameter must be a number between 1
-				    and 4095 */
+		uint32_t LineCompare1Value; /*!< Absolute Line Compare 1 value (12 bits)
+					    This parameter must be a number between 1
+					    and 4095 */
 
-	uint32_t LineCompare2Value; /*!< Absolute Line Compare 2 value (12 bits)
-				    This parameter must be a number between 1
-				    and 4095 */
+		uint32_t LineCompare2Value; /*!< Absolute Line Compare 2 value (12 bits)
+					    This parameter must be a number between 1
+					    and 4095 */
 
-	uint32_t LineCounterValue; /*!< Absolute Line Counter value (12 bits)
-				   This parameter must be a number between 1 and
-				   4095 */
+		uint32_t LineCounterValue; /*!< Absolute Line Counter value (12 bits)
+					   This parameter must be a number between 1 and
+					   4095 */
 
-	uint32_t LineOverflowInterrupt; /*!< Absolute Line Counter Overflow Interrupt
-					Enable or Disable This parameter can be a
-					value of @ref GFXTIM_Interrupt */
+		uint32_t LineOverflowInterrupt; /*!< Absolute Line Counter Overflow Interrupt
+						Enable or Disable This parameter can be a
+						value of @ref GFXTIM_Interrupt */
 
-	uint32_t LineCompare1Interrupt; /*!< Absolute Line Compare 1 Interrupt
-					Enable or Disable This parameter can be
-					a value of @ref GFXTIM_Interrupt */
+		uint32_t LineCompare1Interrupt; /*!< Absolute Line Compare 1 Interrupt
+						Enable or Disable This parameter can be
+						a value of @ref GFXTIM_Interrupt */
 
-	uint32_t LineCompare2Interrupt; /*!< Absolute Line Compare 2 Interrupt
-					Enable or Disable This parameter can be
-					a value of @ref GFXTIM_Interrupt */
-} GFXTIM_AbsoluteTimerConfigTypeDef;
+		uint32_t LineCompare2Interrupt; /*!< Absolute Line Compare 2 Interrupt
+						Enable or Disable This parameter can be
+						a value of @ref GFXTIM_Interrupt */
+	} GFXTIM_AbsoluteTimerConfigTypeDef;
 
-/**
- * @brief  GFXTIM relative timer configuration structure
- */
-typedef struct {
-	uint32_t AutoReloadValue; /*!< Auto reload value (12 bits)
-				  This parameter must be a number between 1 and
-				  4095 */
+	/**
+	 * @brief  GFXTIM relative timer configuration structure
+	 */
+	typedef struct
+	{
+		uint32_t AutoReloadValue; /*!< Auto reload value (12 bits)
+					  This parameter must be a number between 1 and
+					  4095 */
 
-	uint32_t CounterMode;	  /*!< Counter Mode
-				  This parameter can be a value of
-				  GFXTIM_RelativeCounterMode */
-	uint32_t ReloadInterrupt; /*!< Relative Frame Counter Reload Interrupt
-				  Enable or Disable This parameter can be a
-				  value of @ref GFXTIM_Interrupt */
-} GFXTIM_RelativeTimerConfigTypeDef;
+		uint32_t CounterMode;	  /*!< Counter Mode
+					  This parameter can be a value of
+					  GFXTIM_RelativeCounterMode */
+		uint32_t ReloadInterrupt; /*!< Relative Frame Counter Reload Interrupt
+					  Enable or Disable This parameter can be a
+					  value of @ref GFXTIM_Interrupt */
+	} GFXTIM_RelativeTimerConfigTypeDef;
 
-/**
- * @brief  GFXTIM event generator configuration structure
- */
-typedef struct {
-	uint32_t LineEvent; /*!< Line event selection
-			    This parameter can be a value of GFXTIM_EventLine */
+	/**
+	 * @brief  GFXTIM event generator configuration structure
+	 */
+	typedef struct
+	{
+		uint32_t LineEvent; /*!< Line event selection
+				    This parameter can be a value of GFXTIM_EventLine */
 
-	uint32_t FrameEvent; /*!< Frmae event selection
-			     This parameter can be a value of GFXTIM_EventFrame */
+		uint32_t FrameEvent; /*!< Frmae event selection
+				     This parameter can be a value of GFXTIM_EventFrame */
 
-	uint32_t EventInterrupt; /*!< Event interrupt Enable or Disable
-				 This parameter can be a value of @ref
-				 GFXTIM_Interrupt */
-} GFXTIM_EventGeneratorConfigTypeDef;
+		uint32_t EventInterrupt; /*!< Event interrupt Enable or Disable
+					 This parameter can be a value of @ref
+					 GFXTIM_Interrupt */
+	} GFXTIM_EventGeneratorConfigTypeDef;
 
-/**
- * @brief  GFXTIM watchdog configuration structure
- */
-typedef struct {
-	uint32_t ClockSrc; /*!< Clock source
-			   This parameter can be a value of
-			   GFXTIM_WatchdogClockSrc */
+	/**
+	 * @brief  GFXTIM watchdog configuration structure
+	 */
+	typedef struct
+	{
+		uint32_t ClockSrc; /*!< Clock source
+				   This parameter can be a value of
+				   GFXTIM_WatchdogClockSrc */
 
-	uint32_t AutoReloadValue; /*!< Reload value (16 bits)
-				  This parameter must be a number between 1 and
-				  65535 */
+		uint32_t AutoReloadValue; /*!< Reload value (16 bits)
+					  This parameter must be a number between 1 and
+					  65535 */
 
-	uint32_t HwReloadConfig; /*!< Hardware reload configuration
-				 This parameter can be a value of
-				 GFXTIM_WatchdogHwReloadConfig */
+		uint32_t HwReloadConfig; /*!< Hardware reload configuration
+					 This parameter can be a value of
+					 GFXTIM_WatchdogHwReloadConfig */
 
-	uint32_t PreAlarmValue; /*!< Pre-alarm value (16 bits)
-				This parameter must be a number between 1 and
-				65535 */
+		uint32_t PreAlarmValue; /*!< Pre-alarm value (16 bits)
+					This parameter must be a number between 1 and
+					65535 */
 
-	uint32_t AlarmInterrupt; /*!< Interrupt Enable or Disable when watchdog
-				 counter reaches 0 This parameter can be a value
-				 of @ref GFXTIM_Interrupt */
+		uint32_t AlarmInterrupt; /*!< Interrupt Enable or Disable when watchdog
+					 counter reaches 0 This parameter can be a value
+					 of @ref GFXTIM_Interrupt */
 
-	uint32_t PreAlarmInterrupt; /*!< Interrupt Enable or Disable when watchdog
-				     counter reaches pre-alarm value This parameter
-				     can be a value of @ref GFXTIM_Interrupt */
-} GFXTIM_WatchdogConfigTypeDef;
+		uint32_t PreAlarmInterrupt; /*!< Interrupt Enable or Disable when watchdog
+					     counter reaches pre-alarm value This parameter
+					     can be a value of @ref GFXTIM_Interrupt */
+	} GFXTIM_WatchdogConfigTypeDef;
 
 /**
  * @}
@@ -715,7 +724,8 @@ typedef struct {
  */
 #if (USE_HAL_GFXTIM_REGISTER_CALLBACKS == 1)
 #define __HAL_GFXTIM_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		(__HANDLE__)->State = HAL_GFXTIM_STATE_RESET;                                                                                                                                          \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -770,132 +780,132 @@ typedef struct {
  */
 #define __HAL_GFXTIM_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->ICR) = (__FLAG__))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup GFXTIM_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup GFXTIM_Exported_Functions
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions  ****************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group1
- * @{
- */
-HAL_StatusTypeDef HAL_GFXTIM_Init(GFXTIM_HandleTypeDef *hgfxtim);
-HAL_StatusTypeDef HAL_GFXTIM_DeInit(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_MspInit(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_MspDeInit(GFXTIM_HandleTypeDef *hgfxtim);
+	/* Initialization and de-initialization functions  ****************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_GFXTIM_Init(GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_StatusTypeDef HAL_GFXTIM_DeInit(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_MspInit(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_MspDeInit(GFXTIM_HandleTypeDef *hgfxtim);
 #if (USE_HAL_GFXTIM_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_GFXTIM_RegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, HAL_GFXTIM_CallbackIDTypeDef CallbackID, pGFXTIM_CallbackTypeDef pCallback);
-HAL_StatusTypeDef HAL_GFXTIM_UnRegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, HAL_GFXTIM_CallbackIDTypeDef CallbackID);
+	HAL_StatusTypeDef HAL_GFXTIM_RegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, HAL_GFXTIM_CallbackIDTypeDef CallbackID, pGFXTIM_CallbackTypeDef pCallback);
+	HAL_StatusTypeDef HAL_GFXTIM_UnRegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, HAL_GFXTIM_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_GFXTIM_REGISTER_CALLBACKS */
-void HAL_GFXTIM_TECallback(GFXTIM_HandleTypeDef *hgfxtim);
-/**
- * @}
- */
+	void HAL_GFXTIM_TECallback(GFXTIM_HandleTypeDef *hgfxtim);
+	/**
+	 * @}
+	 */
 
-/* Clock Generator functions
- * *****************************************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group2
- * @{
- */
-HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_ClockGeneratorConfigTypeDef *pClockGeneratorConfig);
-HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Reload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t ClockGeneratorCounter);
-/**
- * @}
- */
+	/* Clock Generator functions
+	 * *****************************************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group2
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_ClockGeneratorConfigTypeDef *pClockGeneratorConfig);
+	HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Reload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t ClockGeneratorCounter);
+	/**
+	 * @}
+	 */
 
-/* Absolute Timer functions  *****************************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group3
- * @{
- */
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_AbsoluteTimerConfigTypeDef *pAbsoluteTimerConfig);
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Start(GFXTIM_HandleTypeDef *hgfxtim);
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Stop(GFXTIM_HandleTypeDef *hgfxtim);
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Reset(GFXTIM_HandleTypeDef *hgfxtim);
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteTime, uint32_t *pValue);
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetFrameCompare(GFXTIM_HandleTypeDef *hgfxtim, uint32_t Value);
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetLineCompare(GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteLineComparator, uint32_t Value);
-void HAL_GFXTIM_AbsoluteTimer_AFCC1Callback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_AbsoluteTimer_AFCOFCallback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_AbsoluteTimer_ALCC1Callback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_AbsoluteTimer_ALCC2Callback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_AbsoluteTimer_ALCOFCallback(GFXTIM_HandleTypeDef *hgfxtim);
-/**
- * @}
- */
+	/* Absolute Timer functions  *****************************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group3
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_AbsoluteTimerConfigTypeDef *pAbsoluteTimerConfig);
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Start(GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Stop(GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Reset(GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteTime, uint32_t *pValue);
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetFrameCompare(GFXTIM_HandleTypeDef *hgfxtim, uint32_t Value);
+	HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetLineCompare(GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteLineComparator, uint32_t Value);
+	void HAL_GFXTIM_AbsoluteTimer_AFCC1Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_AbsoluteTimer_AFCOFCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_AbsoluteTimer_ALCC1Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_AbsoluteTimer_ALCC2Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_AbsoluteTimer_ALCOFCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	/**
+	 * @}
+	 */
 
-/* Relative Timer functions  *****************************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group4
- * @{
- */
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_RelativeTimerConfigTypeDef *pRelativeTimerConfig, uint32_t RelativeTimer);
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Start(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer);
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Stop(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer);
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_ForceReload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer);
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_SetReload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer, uint32_t Value);
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer, uint32_t *pValue);
-void HAL_GFXTIM_RelativeTimer_RFC1RCallback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_RelativeTimer_RFC2RCallback(GFXTIM_HandleTypeDef *hgfxtim);
-/**
- * @}
- */
+	/* Relative Timer functions  *****************************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group4
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_RelativeTimerConfigTypeDef *pRelativeTimerConfig, uint32_t RelativeTimer);
+	HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Start(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer);
+	HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Stop(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer);
+	HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_ForceReload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer);
+	HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_SetReload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer, uint32_t Value);
+	HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer, uint32_t *pValue);
+	void HAL_GFXTIM_RelativeTimer_RFC1RCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_RelativeTimer_RFC2RCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	/**
+	 * @}
+	 */
 
-/* Event Generator functions  *****************************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group5
- * @{
- */
-HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator, const GFXTIM_EventGeneratorConfigTypeDef *pEventGeneratorConfig);
-HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Enable(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator);
-HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Disable(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator);
-void HAL_GFXTIM_EventGenerator_EV1Callback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_EventGenerator_EV2Callback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_EventGenerator_EV3Callback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_EventGenerator_EV4Callback(GFXTIM_HandleTypeDef *hgfxtim);
-/**
- * @}
- */
+	/* Event Generator functions  *****************************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group5
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator, const GFXTIM_EventGeneratorConfigTypeDef *pEventGeneratorConfig);
+	HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Enable(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator);
+	HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Disable(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator);
+	void HAL_GFXTIM_EventGenerator_EV1Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_EventGenerator_EV2Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_EventGenerator_EV3Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_EventGenerator_EV4Callback(GFXTIM_HandleTypeDef *hgfxtim);
+	/**
+	 * @}
+	 */
 
-/* Watchdog functions  *****************************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group6
- * @{
- */
-HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_WatchdogConfigTypeDef *pWatchdogConfig);
-HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Enable(GFXTIM_HandleTypeDef *hgfxtim);
-HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Disable(GFXTIM_HandleTypeDef *hgfxtim);
-HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Refresh(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_WatchdogTimer_AlarmCallback(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_WatchdogTimer_PreAlarmCallback(GFXTIM_HandleTypeDef *hgfxtim);
-/**
- * @}
- */
+	/* Watchdog functions  *****************************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group6
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_WatchdogConfigTypeDef *pWatchdogConfig);
+	HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Enable(GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Disable(GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Refresh(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_WatchdogTimer_AlarmCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_WatchdogTimer_PreAlarmCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	/**
+	 * @}
+	 */
 
-/* Generic functions  *********************************************************/
-/** @addtogroup GFXTIM_Exported_Functions_Group7
- * @{
- */
-void HAL_GFXTIM_IRQHandler(GFXTIM_HandleTypeDef *hgfxtim);
-void HAL_GFXTIM_ErrorCallback(GFXTIM_HandleTypeDef *hgfxtim);
-uint32_t HAL_GFXTIM_GetError(const GFXTIM_HandleTypeDef *hgfxtim);
-HAL_GFXTIM_StateTypeDef HAL_GFXTIM_GetState(const GFXTIM_HandleTypeDef *hgfxtim);
+	/* Generic functions  *********************************************************/
+	/** @addtogroup GFXTIM_Exported_Functions_Group7
+	 * @{
+	 */
+	void HAL_GFXTIM_IRQHandler(GFXTIM_HandleTypeDef *hgfxtim);
+	void HAL_GFXTIM_ErrorCallback(GFXTIM_HandleTypeDef *hgfxtim);
+	uint32_t HAL_GFXTIM_GetError(const GFXTIM_HandleTypeDef *hgfxtim);
+	HAL_GFXTIM_StateTypeDef HAL_GFXTIM_GetState(const GFXTIM_HandleTypeDef *hgfxtim);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* GFXTIM */
 

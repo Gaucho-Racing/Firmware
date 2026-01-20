@@ -79,10 +79,13 @@ ErrorStatus LL_LPGPIO_DeInit(const GPIO_TypeDef *LPGPIOx)
 	assert_param(IS_LPGPIO_ALL_INSTANCE(LPGPIOx));
 
 	/* Force and Release reset on clock of LPGPIOx Port */
-	if (LPGPIOx == LPGPIO1) {
+	if (LPGPIOx == LPGPIO1)
+	{
 		LL_AHB3_GRP1_ForceReset(LL_AHB3_GRP1_PERIPH_LPGPIO1);
 		LL_AHB3_GRP1_ReleaseReset(LL_AHB3_GRP1_PERIPH_LPGPIO1);
-	} else {
+	}
+	else
+	{
 		status = ERROR;
 	}
 
@@ -116,11 +119,13 @@ ErrorStatus LL_LPGPIO_Init(GPIO_TypeDef *LPGPIOx, const LL_LPGPIO_InitTypeDef *c
 	pinpos = POSITION_VAL(LPGPIO_InitStruct->Pin);
 
 	/* Configure the port pins */
-	while (((LPGPIO_InitStruct->Pin) >> pinpos) != 0U) {
+	while (((LPGPIO_InitStruct->Pin) >> pinpos) != 0U)
+	{
 		/* Get current io position */
 		currentpin = (LPGPIO_InitStruct->Pin) & (1UL << pinpos);
 
-		if (currentpin != 0U) {
+		if (currentpin != 0U)
+		{
 			/* Pin Mode configuration */
 			LL_LPGPIO_SetPinMode(LPGPIOx, currentpin, LPGPIO_InitStruct->Mode);
 		}

@@ -5,13 +5,16 @@
 
 #ifdef LOGOMATIC_ENABLED
 #define LOGOMATIC(...)                                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		printf(__VA_ARGS__);                                                                                                                                                                   \
 	} while (0)
 #else
 #define LOGOMATIC(...)                                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
-		if (0) {                                                                                                                                                                               \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if (0)                                                                                                                                                                                 \
+		{                                                                                                                                                                                      \
 			printf(__VA_ARGS__);                                                                                                                                                           \
 		}                                                                                                                                                                                      \
 	} while (0)

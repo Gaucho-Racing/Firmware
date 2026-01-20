@@ -88,10 +88,13 @@ ErrorStatus LL_LPTIM_DeInit(const LPTIM_TypeDef *LPTIMx)
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(LPTIMx));
 
-	if (LPTIMx == LPTIM1) {
+	if (LPTIMx == LPTIM1)
+	{
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_LPTIM1);
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_LPTIM1);
-	} else {
+	}
+	else
+	{
 		result = ERROR;
 	}
 
@@ -137,9 +140,12 @@ ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPT
 	/* The LPTIMx_CFGR register must only be modified when the LPTIM is
 	   disabled (ENABLE bit is reset to 0).
 	*/
-	if (LL_LPTIM_IsEnabled(LPTIMx) == 1UL) {
+	if (LL_LPTIM_IsEnabled(LPTIMx) == 1UL)
+	{
 		result = ERROR;
-	} else {
+	}
+	else
+	{
 		/* Set CKSEL bitfield according to ClockSource value */
 		/* Set PRESC bitfield according to Prescaler value */
 		/* Set WAVE bitfield according to Waveform value */
@@ -180,7 +186,8 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 
 	/********** Save LPTIM Config *********/
 	/* Save LPTIM source clock */
-	switch ((uint32_t)LPTIMx) {
+	switch ((uint32_t)LPTIMx)
+	{
 		case LPTIM1_BASE:
 			tmpclksource = LL_RCC_GetLPTIMClockSource(LL_RCC_LPTIM1_CLKSOURCE);
 			break;
@@ -201,9 +208,11 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 	/********* Restore LPTIM Config *******/
 	LL_RCC_GetSystemClocksFreq(&rcc_clock);
 
-	if ((tmpCMP != 0UL) || (tmpARR != 0UL)) {
+	if ((tmpCMP != 0UL) || (tmpARR != 0UL))
+	{
 		/* Force LPTIM source kernel clock from APB */
-		switch ((uint32_t)LPTIMx) {
+		switch ((uint32_t)LPTIMx)
+		{
 			case LPTIM1_BASE:
 				LL_RCC_SetLPTIMClockSource(LL_RCC_LPTIM1_CLKSOURCE_PCLK1);
 				break;
@@ -211,7 +220,8 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 				break;
 		}
 
-		if (tmpCMP != 0UL) {
+		if (tmpCMP != 0UL)
+		{
 			/* Restore CMP and ARR registers (LPTIM should be
 			 * enabled first) */
 			LPTIMx->CR |= LPTIM_CR_ENABLE;
@@ -219,21 +229,24 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 
 			/* Polling on CMP write ok status after above restore
 			 * operation */
-			do {
+			do
+			{
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
 			} while (((LL_LPTIM_IsActiveFlag_CMPOK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
 
 			LL_LPTIM_ClearFlag_CMPOK(LPTIMx);
 		}
 
-		if (tmpARR != 0UL) {
+		if (tmpARR != 0UL)
+		{
 			LPTIMx->CR |= LPTIM_CR_ENABLE;
 			LPTIMx->ARR = tmpARR;
 
 			LL_RCC_GetSystemClocksFreq(&rcc_clock);
 			/* Polling on ARR write ok status after above restore
 			 * operation */
-			do {
+			do
+			{
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
 			} while (((LL_LPTIM_IsActiveFlag_ARROK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
 

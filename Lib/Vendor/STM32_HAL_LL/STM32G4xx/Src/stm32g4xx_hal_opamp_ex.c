@@ -131,35 +131,48 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
 	    || (hopamp6 == NULL)
 #endif /* STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx */
-	) {
+	)
+	{
 		return HAL_ERROR;
-	} else if (hopamp1->State != HAL_OPAMP_STATE_READY) {
+	}
+	else if (hopamp1->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
 	}
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
     defined(STM32G491xx) || defined(STM32G4A1xx)
-	else if (hopamp2->State != HAL_OPAMP_STATE_READY) {
+	else if (hopamp2->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
-	} else if (hopamp3->State != HAL_OPAMP_STATE_READY) {
+	}
+	else if (hopamp3->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
 	}
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||                                                                                                                                  \
 	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                                                                                                  \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx)
-	else if (hopamp4->State != HAL_OPAMP_STATE_READY) {
+	else if (hopamp4->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
-	} else if (hopamp5->State != HAL_OPAMP_STATE_READY) {
+	}
+	else if (hopamp5->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
-	} else if (hopamp6->State != HAL_OPAMP_STATE_READY) {
+	}
+	else if (hopamp6->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
 	}
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-	else if (hopamp6->State != HAL_OPAMP_STATE_READY) {
+	else if (hopamp6->State != HAL_OPAMP_STATE_READY)
+	{
 		return HAL_ERROR;
 	}
 #endif /* STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx */
-	else {
+	else
+	{
 
 		/* Check the parameter */
 		assert_param(IS_OPAMP_ALL_INSTANCE(hopamp1->Instance));
@@ -285,7 +298,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 #endif /* STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx */
 		delta = 8UL;
 
-		while (delta != 0UL) {
+		while (delta != 0UL)
+		{
 			/* Set candidate trimming */
 			MODIFY_REG(hopamp1->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen1 << OPAMP_INPUT_INVERTING);
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
@@ -310,30 +324,39 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(2);
 
-			if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen1 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen1 -= delta;
 			}
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
     defined(STM32G491xx) || defined(STM32G4A1xx)
-			if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen2 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen2 -= delta;
 			}
 
-			if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen3 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen3 -= delta;
 			}
@@ -342,39 +365,51 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                                                                                                  \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx)
-			if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen4 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen4 -= delta;
 			}
 
-			if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen5 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen5 -= delta;
 			}
 
-			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen6 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen6 -= delta;
 			}
 
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluen6 += delta;
-			} else {
+			}
+			else
+			{
 				/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 				trimmingvaluen6 -= delta;
 			}
@@ -410,7 +445,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		/* two steps to have 1 mV accuracy */
 		HAL_Delay(2);
 
-		if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen1++;
 			/* Set right trimming */
@@ -418,14 +454,16 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		}
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
     defined(STM32G491xx) || defined(STM32G4A1xx)
-		if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen2++;
 			/* Set right trimming */
 			MODIFY_REG(hopamp2->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen2 << OPAMP_INPUT_INVERTING);
 		}
 
-		if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen3++;
 			/* Set right trimming */
@@ -436,21 +474,24 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                                                                                                  \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx)
-		if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen4++;
 			/* Set right trimming */
 			MODIFY_REG(hopamp4->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen4 << OPAMP_INPUT_INVERTING);
 		}
 
-		if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen5++;
 			/* Set right trimming */
 			MODIFY_REG(hopamp5->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen5 << OPAMP_INPUT_INVERTING);
 		}
 
-		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen6++;
 			/* Set right trimming */
@@ -458,7 +499,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		}
 
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* OPAMP_CSR_OUTCAL is actually one value more */
 			trimmingvaluen6++;
 			/* Set right trimming */
@@ -504,7 +546,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 
 		delta = 8UL;
 
-		while (delta != 0UL) {
+		while (delta != 0UL)
+		{
 			/* Set candidate trimming */
 			MODIFY_REG(hopamp1->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep1 << OPAMP_INPUT_NONINVERTING);
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
@@ -529,29 +572,38 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(2);
 
-			if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep1 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep1 -= delta;
 			}
 
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
     defined(STM32G491xx) || defined(STM32G4A1xx)
-			if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep2 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep2 -= delta;
 			}
 
-			if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep3 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep3 -= delta;
 			}
 
@@ -559,36 +611,48 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                                                                                                  \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx)
-			if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep4 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep4 -= delta;
 			}
 
-			if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep5 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep5 -= delta;
 			}
 
-			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep6 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep6 -= delta;
 			}
 
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+			if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+			{
 				/* OPAMP_CSR_OUTCAL is HIGH try higher trimming
 				 */
 				trimmingvaluep6 += delta;
-			} else {
+			}
+			else
+			{
 				trimmingvaluep6 -= delta;
 			}
 #endif /* STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx */
@@ -624,7 +688,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		/* two steps to have 1 mV accuracy */
 		HAL_Delay(2);
 
-		if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp1->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep1++;
 			/* Set right trimming */
@@ -633,14 +698,16 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 
 #if defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx) ||    \
     defined(STM32G491xx) || defined(STM32G4A1xx)
-		if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp2->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep2++;
 			/* Set right trimming */
 			MODIFY_REG(hopamp2->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep2 << OPAMP_INPUT_NONINVERTING);
 		}
 
-		if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp3->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep3++;
 			/* Set right trimming */
@@ -651,21 +718,24 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                                                                                                  \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx)
-		if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp4->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep4++;
 			/* Set right trimming */
 			MODIFY_REG(hopamp4->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep4 << OPAMP_INPUT_NONINVERTING);
 		}
 
-		if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp5->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep5++;
 			/* Set right trimming */
 			MODIFY_REG(hopamp5->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep5 << OPAMP_INPUT_NONINVERTING);
 		}
 
-		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep6++;
 			/* Set right trimming */
@@ -673,7 +743,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		}
 
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
+		if ((hopamp6->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL)
+		{
 			/* Trimming value is actually one value more */
 			trimmingvaluep6++;
 			/* Set right trimming */

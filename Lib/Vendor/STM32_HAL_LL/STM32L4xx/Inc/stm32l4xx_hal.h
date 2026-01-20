@@ -22,29 +22,36 @@
 #define STM32L4xx_HAL_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_conf.h"
 
-/** @addtogroup STM32L4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32L4xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup HAL
- * @{
- */
+	/** @addtogroup HAL
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup HAL_Exported_Types HAL Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup HAL_Exported_Types HAL Exported Types
+	 * @{
+	 */
 
-/** @defgroup HAL_TICK_FREQ Tick Frequency
- * @{
- */
-typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FREQ_1KHZ = 1U, HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ } HAL_TickFreqTypeDef;
+	/** @defgroup HAL_TICK_FREQ Tick Frequency
+	 * @{
+	 */
+	typedef enum
+	{
+		HAL_TICK_FREQ_10HZ = 100U,
+		HAL_TICK_FREQ_100HZ = 10U,
+		HAL_TICK_FREQ_1KHZ = 1U,
+		HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
+	} HAL_TickFreqTypeDef;
 /**
  * @}
  */
@@ -72,12 +79,12 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
 #if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||    \
     defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define SYSCFG_BOOT_FMC SYSCFG_MEMRMP_MEM_MODE_1
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
-	  STM32L486xx || */
-       /* STM32L496xx || STM32L4A6xx || */
-       /* STM32L4P5xx || STM32L4Q5xx || */
-/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
- * STM32L4S9xx */
+#endif	/* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                 \
+	   STM32L486xx || */
+	/* STM32L496xx || STM32L4A6xx || */
+	/* STM32L4P5xx || STM32L4Q5xx || */
+	/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
+	 * STM32L4S9xx */
 
 #define SYSCFG_BOOT_SRAM (SYSCFG_MEMRMP_MEM_MODE_1 | SYSCFG_MEMRMP_MEM_MODE_0)
 
@@ -151,9 +158,9 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
 #define SYSCFG_SRAM2WRP_PAGE31 SYSCFG_SWPR_PAGE31 /*!< SRAM2 Write protection page 31 */
 #endif						  /* SYSCFG_SWPR_PAGE31 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #if defined(SYSCFG_SWPR2_PAGE63)
 /** @defgroup SYSCFG_SRAM2WRP_32_63 SRAM2 Page Write protection (32 to 63)
@@ -221,9 +228,9 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  */
 #endif /* VREFBUF */
 
-/** @defgroup SYSCFG_flags_definition Flags
- * @{
- */
+	/** @defgroup SYSCFG_flags_definition Flags
+	 * @{
+	 */
 
 #define SYSCFG_FLAG_SRAM2_PE SYSCFG_CFGR2_SPF	    /*!< SRAM2 parity error */
 #define SYSCFG_FLAG_SRAM2_BUSY SYSCFG_SCSR_SRAM2BSY /*!< SRAM2 busy by erase operation */
@@ -407,12 +414,12 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  */
 #define __HAL_SYSCFG_REMAPMEMORY_FMC() MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, SYSCFG_MEMRMP_MEM_MODE_1)
 
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
-	  STM32L486xx || */
-       /* STM32L496xx || STM32L4A6xx || */
-       /* STM32L4P5xx || STM32L4Q5xx || */
-/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
- * STM32L4S9xx */
+#endif	/* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                 \
+	   STM32L486xx || */
+	/* STM32L496xx || STM32L4A6xx || */
+	/* STM32L4P5xx || STM32L4Q5xx || */
+	/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
+	 * STM32L4S9xx */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
@@ -461,7 +468,8 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  * @note   Write protection can only be disabled by a system reset
  */
 #define __HAL_SYSCFG_SRAM2_WRP_1_31_ENABLE(__SRAM2WRP__)                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		assert_param(IS_SYSCFG_SRAM2WRP_PAGE((__SRAM2WRP__)));                                                                                                                                 \
 		SET_BIT(SYSCFG->SWPR, (__SRAM2WRP__));                                                                                                                                                 \
 	} while (0)
@@ -473,7 +481,8 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  * @note   Write protection can only be disabled by a system reset
  */
 #define __HAL_SYSCFG_SRAM2_WRP_32_63_ENABLE(__SRAM2WRP__)                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		assert_param(IS_SYSCFG_SRAM2WRP_PAGE((__SRAM2WRP__)));                                                                                                                                 \
 		SET_BIT(SYSCFG->SWPR2, (__SRAM2WRP__));                                                                                                                                                \
 	} while (0)
@@ -483,7 +492,8 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  * @note   Writing a wrong key reactivates the write protection
  */
 #define __HAL_SYSCFG_SRAM2_WRP_UNLOCK()                                                                                                                                                                \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SYSCFG->SKR = 0xCA;                                                                                                                                                                    \
 		SYSCFG->SKR = 0x53;                                                                                                                                                                    \
 	} while (0)
@@ -499,13 +509,15 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  * SYSCFG_FPU_Interrupts
  */
 #define __HAL_SYSCFG_FPU_INTERRUPT_ENABLE(__INTERRUPT__)                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		assert_param(IS_SYSCFG_FPU_INTERRUPT((__INTERRUPT__)));                                                                                                                                \
 		SET_BIT(SYSCFG->CFGR1, (__INTERRUPT__));                                                                                                                                               \
 	} while (0)
 
 #define __HAL_SYSCFG_FPU_INTERRUPT_DISABLE(__INTERRUPT__)                                                                                                                                              \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		assert_param(IS_SYSCFG_FPU_INTERRUPT((__INTERRUPT__)));                                                                                                                                \
 		CLEAR_BIT(SYSCFG->CFGR1, (__INTERRUPT__));                                                                                                                                             \
 	} while (0)
@@ -567,33 +579,35 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  * activation on PB9
  */
 #define __HAL_SYSCFG_FASTMODEPLUS_ENABLE(__FASTMODEPLUS__)                                                                                                                                             \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		assert_param(IS_SYSCFG_FASTMODEPLUS((__FASTMODEPLUS__)));                                                                                                                              \
 		SET_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));                                                                                                                                            \
 	} while (0)
 
 #define __HAL_SYSCFG_FASTMODEPLUS_DISABLE(__FASTMODEPLUS__)                                                                                                                                            \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		assert_param(IS_SYSCFG_FASTMODEPLUS((__FASTMODEPLUS__)));                                                                                                                              \
 		CLEAR_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));                                                                                                                                          \
 	} while (0)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private macros ------------------------------------------------------------*/
-/** @defgroup HAL_Private_Macros HAL Private Macros
- * @{
- */
+	/* Private macros ------------------------------------------------------------*/
+	/** @defgroup HAL_Private_Macros HAL Private Macros
+	 * @{
+	 */
 
-/** @defgroup SYSCFG_Private_Macros SYSCFG Private Macros
- * @{
- */
+	/** @defgroup SYSCFG_Private_Macros SYSCFG Private Macros
+	 * @{
+	 */
 
 #define IS_SYSCFG_FPU_INTERRUPT(__INTERRUPT__)                                                                                                                                                         \
 	((((__INTERRUPT__) & SYSCFG_IT_FPU_IOC) == SYSCFG_IT_FPU_IOC) || (((__INTERRUPT__) & SYSCFG_IT_FPU_DZC) == SYSCFG_IT_FPU_DZC) ||                                                               \
@@ -628,126 +642,126 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
 #else
 #define IS_SYSCFG_FASTMODEPLUS(__PIN__) ((((__PIN__) & SYSCFG_FASTMODEPLUS_PB6) == SYSCFG_FASTMODEPLUS_PB6) || (((__PIN__) & SYSCFG_FASTMODEPLUS_PB7) == SYSCFG_FASTMODEPLUS_PB7))
 #endif
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported variables --------------------------------------------------------*/
+	/* Exported variables --------------------------------------------------------*/
 
-/** @addtogroup HAL_Exported_Variables
- * @{
- */
-extern __IO uint32_t uwTick;
-extern uint32_t uwTickPrio;
-extern HAL_TickFreqTypeDef uwTickFreq;
-/**
- * @}
- */
+	/** @addtogroup HAL_Exported_Variables
+	 * @{
+	 */
+	extern __IO uint32_t uwTick;
+	extern uint32_t uwTickPrio;
+	extern HAL_TickFreqTypeDef uwTickFreq;
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
+	/* Exported functions --------------------------------------------------------*/
 
-/** @addtogroup HAL_Exported_Functions
- * @{
- */
+	/** @addtogroup HAL_Exported_Functions
+	 * @{
+	 */
 
-/** @addtogroup HAL_Exported_Functions_Group1
- * @{
- */
+	/** @addtogroup HAL_Exported_Functions_Group1
+	 * @{
+	 */
 
-/* Initialization and de-initialization functions
- * ******************************/
-HAL_StatusTypeDef HAL_Init(void);
-HAL_StatusTypeDef HAL_DeInit(void);
-void HAL_MspInit(void);
-void HAL_MspDeInit(void);
-HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
+	/* Initialization and de-initialization functions
+	 * ******************************/
+	HAL_StatusTypeDef HAL_Init(void);
+	HAL_StatusTypeDef HAL_DeInit(void);
+	void HAL_MspInit(void);
+	void HAL_MspDeInit(void);
+	HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup HAL_Exported_Functions_Group2
- * @{
- */
+	/** @addtogroup HAL_Exported_Functions_Group2
+	 * @{
+	 */
 
-/* Peripheral Control functions
- * ************************************************/
-void HAL_IncTick(void);
-void HAL_Delay(uint32_t Delay);
-uint32_t HAL_GetTick(void);
-uint32_t HAL_GetTickPrio(void);
-HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq);
-HAL_TickFreqTypeDef HAL_GetTickFreq(void);
-void HAL_SuspendTick(void);
-void HAL_ResumeTick(void);
-uint32_t HAL_GetHalVersion(void);
-uint32_t HAL_GetREVID(void);
-uint32_t HAL_GetDEVID(void);
-uint32_t HAL_GetUIDw0(void);
-uint32_t HAL_GetUIDw1(void);
-uint32_t HAL_GetUIDw2(void);
+	/* Peripheral Control functions
+	 * ************************************************/
+	void HAL_IncTick(void);
+	void HAL_Delay(uint32_t Delay);
+	uint32_t HAL_GetTick(void);
+	uint32_t HAL_GetTickPrio(void);
+	HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq);
+	HAL_TickFreqTypeDef HAL_GetTickFreq(void);
+	void HAL_SuspendTick(void);
+	void HAL_ResumeTick(void);
+	uint32_t HAL_GetHalVersion(void);
+	uint32_t HAL_GetREVID(void);
+	uint32_t HAL_GetDEVID(void);
+	uint32_t HAL_GetUIDw0(void);
+	uint32_t HAL_GetUIDw1(void);
+	uint32_t HAL_GetUIDw2(void);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup HAL_Exported_Functions_Group3
- * @{
- */
+	/** @addtogroup HAL_Exported_Functions_Group3
+	 * @{
+	 */
 
-/* DBGMCU Peripheral Control functions
- * *****************************************/
-void HAL_DBGMCU_EnableDBGSleepMode(void);
-void HAL_DBGMCU_DisableDBGSleepMode(void);
-void HAL_DBGMCU_EnableDBGStopMode(void);
-void HAL_DBGMCU_DisableDBGStopMode(void);
-void HAL_DBGMCU_EnableDBGStandbyMode(void);
-void HAL_DBGMCU_DisableDBGStandbyMode(void);
+	/* DBGMCU Peripheral Control functions
+	 * *****************************************/
+	void HAL_DBGMCU_EnableDBGSleepMode(void);
+	void HAL_DBGMCU_DisableDBGSleepMode(void);
+	void HAL_DBGMCU_EnableDBGStopMode(void);
+	void HAL_DBGMCU_DisableDBGStopMode(void);
+	void HAL_DBGMCU_EnableDBGStandbyMode(void);
+	void HAL_DBGMCU_DisableDBGStandbyMode(void);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup HAL_Exported_Functions_Group4
- * @{
- */
+	/** @addtogroup HAL_Exported_Functions_Group4
+	 * @{
+	 */
 
-/* SYSCFG Control functions
- * ****************************************************/
-void HAL_SYSCFG_SRAM2Erase(void);
-void HAL_SYSCFG_EnableMemorySwappingBank(void);
-void HAL_SYSCFG_DisableMemorySwappingBank(void);
+	/* SYSCFG Control functions
+	 * ****************************************************/
+	void HAL_SYSCFG_SRAM2Erase(void);
+	void HAL_SYSCFG_EnableMemorySwappingBank(void);
+	void HAL_SYSCFG_DisableMemorySwappingBank(void);
 
 #if defined(VREFBUF)
-void HAL_SYSCFG_VREFBUF_VoltageScalingConfig(uint32_t VoltageScaling);
-void HAL_SYSCFG_VREFBUF_HighImpedanceConfig(uint32_t Mode);
-void HAL_SYSCFG_VREFBUF_TrimmingConfig(uint32_t TrimmingValue);
-HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void);
-void HAL_SYSCFG_DisableVREFBUF(void);
+	void HAL_SYSCFG_VREFBUF_VoltageScalingConfig(uint32_t VoltageScaling);
+	void HAL_SYSCFG_VREFBUF_HighImpedanceConfig(uint32_t Mode);
+	void HAL_SYSCFG_VREFBUF_TrimmingConfig(uint32_t TrimmingValue);
+	HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void);
+	void HAL_SYSCFG_DisableVREFBUF(void);
 #endif /* VREFBUF */
 
-void HAL_SYSCFG_EnableIOAnalogSwitchBooster(void);
-void HAL_SYSCFG_DisableIOAnalogSwitchBooster(void);
+	void HAL_SYSCFG_EnableIOAnalogSwitchBooster(void);
+	void HAL_SYSCFG_DisableIOAnalogSwitchBooster(void);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

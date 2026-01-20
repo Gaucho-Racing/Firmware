@@ -66,14 +66,18 @@ ErrorStatus LL_FMAC_Init(FMAC_TypeDef *FMACx)
 	/* Check the parameters */
 	assert_param(IS_FMAC_ALL_INSTANCE(FMACx));
 
-	if (FMACx == FMAC) {
+	if (FMACx == FMAC)
+	{
 		/* Perform the reset */
 		LL_FMAC_EnableReset(FMACx);
 
 		/* Wait until flag is reset */
-		while (LL_FMAC_IsEnabledReset(FMACx) != 0UL) {
+		while (LL_FMAC_IsEnabledReset(FMACx) != 0UL)
+		{
 		}
-	} else {
+	}
+	else
+	{
 		status = ERROR;
 	}
 
@@ -95,13 +99,16 @@ ErrorStatus LL_FMAC_DeInit(const FMAC_TypeDef *FMACx)
 	/* Check the parameters */
 	assert_param(IS_FMAC_ALL_INSTANCE(FMACx));
 
-	if (FMACx == FMAC) {
+	if (FMACx == FMAC)
+	{
 		/* Force FMAC reset */
 		LL_AHB1_GRP1_ForceReset(LL_AHB1_GRP1_PERIPH_FMAC);
 
 		/* Release FMAC reset */
 		LL_AHB1_GRP1_ReleaseReset(LL_AHB1_GRP1_PERIPH_FMAC);
-	} else {
+	}
+	else
+	{
 		status = ERROR;
 	}
 

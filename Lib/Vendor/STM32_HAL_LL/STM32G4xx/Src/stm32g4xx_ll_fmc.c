@@ -201,9 +201,12 @@ HAL_StatusTypeDef FMC_NORSRAM_Init(FMC_NORSRAM_TypeDef *Device, const FMC_NORSRA
 	__FMC_NORSRAM_DISABLE(Device, Init->NSBank);
 
 	/* Set NORSRAM device control parameters */
-	if (Init->MemoryType == FMC_MEMORY_TYPE_NOR) {
+	if (Init->MemoryType == FMC_MEMORY_TYPE_NOR)
+	{
 		flashaccess = FMC_NORSRAM_FLASH_ACCESS_ENABLE;
-	} else {
+	}
+	else
+	{
 		flashaccess = FMC_NORSRAM_FLASH_ACCESS_DISABLE;
 	}
 
@@ -227,18 +230,21 @@ HAL_StatusTypeDef FMC_NORSRAM_Init(FMC_NORSRAM_TypeDef *Device, const FMC_NORSRA
 
 	/* Configure synchronous mode when Continuous clock is enabled for
 	 * bank2..4 */
-	if ((Init->ContinuousClock == FMC_CONTINUOUS_CLOCK_SYNC_ASYNC) && (Init->NSBank != FMC_NORSRAM_BANK1)) {
+	if ((Init->ContinuousClock == FMC_CONTINUOUS_CLOCK_SYNC_ASYNC) && (Init->NSBank != FMC_NORSRAM_BANK1))
+	{
 		MODIFY_REG(Device->BTCR[FMC_NORSRAM_BANK1], FMC_BCR1_CCLKEN, Init->ContinuousClock);
 	}
 
-	if (Init->NSBank != FMC_NORSRAM_BANK1) {
+	if (Init->NSBank != FMC_NORSRAM_BANK1)
+	{
 		/* Configure Write FIFO mode when Write Fifo is enabled for
 		 * bank2..4 */
 		SET_BIT(Device->BTCR[FMC_NORSRAM_BANK1], (uint32_t)(Init->WriteFifo));
 	}
 
 	/* Check PSRAM chip select counter state */
-	if (Init->MaxChipSelectPulse == ENABLE) {
+	if (Init->MaxChipSelectPulse == ENABLE)
+	{
 		/* Check the parameters */
 		assert_param(IS_FMC_MAX_CHIP_SELECT_PULSE_TIME(Init->MaxChipSelectPulseTime));
 
@@ -246,7 +252,8 @@ HAL_StatusTypeDef FMC_NORSRAM_Init(FMC_NORSRAM_TypeDef *Device, const FMC_NORSRA
 		MODIFY_REG(Device->PCSCNTR, FMC_PCSCNTR_CSCOUNT, (uint32_t)(Init->MaxChipSelectPulseTime));
 
 		/* Enable PSRAM chip select counter for the bank */
-		switch (Init->NSBank) {
+		switch (Init->NSBank)
+		{
 			case FMC_NORSRAM_BANK1:
 				SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB1EN);
 				break;
@@ -287,11 +294,13 @@ HAL_StatusTypeDef FMC_NORSRAM_DeInit(FMC_NORSRAM_TypeDef *Device, FMC_NORSRAM_EX
 
 	/* De-initialize the FMC_NORSRAM device */
 	/* FMC_NORSRAM_BANK1 */
-	if (Bank == FMC_NORSRAM_BANK1) {
+	if (Bank == FMC_NORSRAM_BANK1)
+	{
 		Device->BTCR[Bank] = 0x000030DBU;
 	}
 	/* FMC_NORSRAM_BANK2, FMC_NORSRAM_BANK3 or FMC_NORSRAM_BANK4 */
-	else {
+	else
+	{
 		Device->BTCR[Bank] = 0x000030D2U;
 	}
 
@@ -299,7 +308,8 @@ HAL_StatusTypeDef FMC_NORSRAM_DeInit(FMC_NORSRAM_TypeDef *Device, FMC_NORSRAM_EX
 	ExDevice->BWTR[Bank] = 0x0FFFFFFFU;
 
 	/* De-initialize PSRAM chip select counter */
-	switch (Bank) {
+	switch (Bank)
+	{
 		case FMC_NORSRAM_BANK1:
 			CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB1EN);
 			break;
@@ -351,7 +361,8 @@ HAL_StatusTypeDef FMC_NORSRAM_Timing_Init(FMC_NORSRAM_TypeDef *Device, const FMC
 
 	/* Configure Clock division value (in NORSRAM bank 1) when continuous
 	 * clock is enabled */
-	if (HAL_IS_BIT_SET(Device->BTCR[FMC_NORSRAM_BANK1], FMC_BCR1_CCLKEN)) {
+	if (HAL_IS_BIT_SET(Device->BTCR[FMC_NORSRAM_BANK1], FMC_BCR1_CCLKEN))
+	{
 		tmpr = (uint32_t)(Device->BTCR[FMC_NORSRAM_BANK1 + 1U] & ~((0x0FU) << FMC_BTRx_CLKDIV_Pos));
 		tmpr |= (uint32_t)(((Timing->CLKDivision) - 1U) << FMC_BTRx_CLKDIV_Pos);
 		MODIFY_REG(Device->BTCR[FMC_NORSRAM_BANK1 + 1U], FMC_BTRx_CLKDIV, tmpr);
@@ -379,7 +390,8 @@ HAL_StatusTypeDef FMC_NORSRAM_Extended_Timing_Init(FMC_NORSRAM_EXTENDED_TypeDef 
 
 	/* Set NORSRAM device timing register for write configuration, if
 	 * extended mode is used */
-	if (ExtendedMode == FMC_EXTENDED_MODE_ENABLE) {
+	if (ExtendedMode == FMC_EXTENDED_MODE_ENABLE)
+	{
 		/* Check the parameters */
 		assert_param(IS_FMC_NORSRAM_EXTENDED_DEVICE(Device));
 		assert_param(IS_FMC_ADDRESS_SETUP_TIME(Timing->AddressSetupTime));
@@ -395,7 +407,9 @@ HAL_StatusTypeDef FMC_NORSRAM_Extended_Timing_Init(FMC_NORSRAM_EXTENDED_TypeDef 
 		MODIFY_REG(Device->BWTR[Bank], BWTR_CLEAR_MASK,
 			   (Timing->AddressSetupTime | ((Timing->AddressHoldTime) << FMC_BWTRx_ADDHLD_Pos) | ((Timing->DataSetupTime) << FMC_BWTRx_DATAST_Pos) |
 			    ((Timing->DataHoldTime) << FMC_BWTRx_DATAHLD_Pos) | Timing->AccessMode | ((Timing->BusTurnAroundDuration) << FMC_BWTRx_BUSTURN_Pos)));
-	} else {
+	}
+	else
+	{
 		Device->BWTR[Bank] = 0x0FFFFFFFU;
 	}
 
@@ -707,10 +721,13 @@ HAL_StatusTypeDef FMC_NAND_GetECC(const FMC_NAND_TypeDef *Device, uint32_t *ECCv
 	tickstart = HAL_GetTick();
 
 	/* Wait until FIFO is empty */
-	while (__FMC_NAND_GET_FLAG(Device, Bank, FMC_FLAG_FEMPT) == RESET) {
+	while (__FMC_NAND_GET_FLAG(Device, Bank, FMC_FLAG_FEMPT) == RESET)
+	{
 		/* Check for the Timeout */
-		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+			{
 				return HAL_TIMEOUT;
 			}
 		}

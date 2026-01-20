@@ -135,7 +135,8 @@ void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint32_
  */
 HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
 {
-	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY) {
+	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hsmartcard);
 
@@ -150,7 +151,9 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef 
 		__HAL_UNLOCK(hsmartcard);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -162,7 +165,8 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef 
  */
 HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
 {
-	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY) {
+	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hsmartcard);
 
@@ -177,7 +181,9 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef
 		__HAL_UNLOCK(hsmartcard);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -470,10 +476,13 @@ static void SMARTCARDEx_SetNbDataToProcess(SMARTCARD_HandleTypeDef *hsmartcard)
 	static const uint8_t numerator[] = {1U, 1U, 1U, 3U, 7U, 1U, 0U, 0U};
 	static const uint8_t denominator[] = {8U, 4U, 2U, 4U, 8U, 1U, 1U, 1U};
 
-	if (hsmartcard->FifoMode == SMARTCARD_FIFOMODE_DISABLE) {
+	if (hsmartcard->FifoMode == SMARTCARD_FIFOMODE_DISABLE)
+	{
 		hsmartcard->NbTxDataToProcess = 1U;
 		hsmartcard->NbRxDataToProcess = 1U;
-	} else {
+	}
+	else
+	{
 		rx_fifo_depth = RX_FIFO_DEPTH;
 		tx_fifo_depth = TX_FIFO_DEPTH;
 		rx_fifo_threshold = (uint8_t)(READ_BIT(hsmartcard->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos);

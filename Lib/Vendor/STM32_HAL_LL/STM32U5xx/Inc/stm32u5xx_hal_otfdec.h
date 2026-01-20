@@ -21,105 +21,109 @@
 #define STM32U5xx_HAL_OTFDEC_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
 #if defined(OTFDEC1)
 
-/** @addtogroup OTFDEC
- * @{
- */
+	/** @addtogroup OTFDEC
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
+	/* Exported types ------------------------------------------------------------*/
 
-/** @defgroup OTFDEC_Exported_Types OTFDEC Exported Types
- * @{
- */
+	/** @defgroup OTFDEC_Exported_Types OTFDEC Exported Types
+	 * @{
+	 */
 
-/** @defgroup OTFDEC_Exported_Types_Group1 OTFDEC region configuration
- * definitions
- * @{
- */
+	/** @defgroup OTFDEC_Exported_Types_Group1 OTFDEC region configuration
+	 * definitions
+	 * @{
+	 */
 
-/**
- * @brief OTFDEC region configuration structure definition
- */
-typedef struct {
-	uint32_t Nonce[2]; /*!< OTFDEC region nonce */
+	/**
+	 * @brief OTFDEC region configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t Nonce[2]; /*!< OTFDEC region nonce */
 
-	uint32_t StartAddress; /*!< OTFDEC region start address */
+		uint32_t StartAddress; /*!< OTFDEC region start address */
 
-	uint32_t EndAddress; /*!< OTFDEC region end address */
+		uint32_t EndAddress; /*!< OTFDEC region end address */
 
-	uint16_t Version; /*!< OTFDEC region firmware version */
+		uint16_t Version; /*!< OTFDEC region firmware version */
 
-} OTFDEC_RegionConfigTypeDef;
+	} OTFDEC_RegionConfigTypeDef;
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @defgroup OTFDEC_Exported_Types_Group2 OTFDEC Peripheral handle definitions
- * @{
- */
+	/** @defgroup OTFDEC_Exported_Types_Group2 OTFDEC Peripheral handle definitions
+	 * @{
+	 */
 
-/**
- * @brief OTFDEC states structure definition
- */
-typedef enum {
-	HAL_OTFDEC_STATE_RESET = 0x00U, /*!< OTFDEC not yet initialized or disabled */
-	HAL_OTFDEC_STATE_READY = 0x01U, /*!< OTFDEC initialized and ready for use   */
-	HAL_OTFDEC_STATE_BUSY = 0x02U,	/*!< OTFDEC internal processing is ongoing  */
-} HAL_OTFDEC_StateTypeDef;
+	/**
+	 * @brief OTFDEC states structure definition
+	 */
+	typedef enum
+	{
+		HAL_OTFDEC_STATE_RESET = 0x00U, /*!< OTFDEC not yet initialized or disabled */
+		HAL_OTFDEC_STATE_READY = 0x01U, /*!< OTFDEC initialized and ready for use   */
+		HAL_OTFDEC_STATE_BUSY = 0x02U,	/*!< OTFDEC internal processing is ongoing  */
+	} HAL_OTFDEC_StateTypeDef;
 
 /**
  * @brief OTFDEC handle structure definition
  */
 #if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
-typedef struct __OTFDEC_HandleTypeDef
+	typedef struct __OTFDEC_HandleTypeDef
 #else
-typedef struct
+	typedef struct
 #endif /* USE_HAL_OTFDEC_REGISTER_CALLBACKS */
-{
-	OTFDEC_TypeDef *Instance; /*!< OTFDEC registers base address */
+	{
+		OTFDEC_TypeDef *Instance; /*!< OTFDEC registers base address */
 
-	HAL_OTFDEC_StateTypeDef State; /*!< OTFDEC state */
+		HAL_OTFDEC_StateTypeDef State; /*!< OTFDEC state */
 
-	HAL_LockTypeDef Lock; /*!< OTFDEC locking object */
+		HAL_LockTypeDef Lock; /*!< OTFDEC locking object */
 
-	__IO uint32_t ErrorCode; /*!< OTFDEC error code */
-
-#if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
-	void (*ErrorCallback)(struct __OTFDEC_HandleTypeDef *hotfdec); /*!< OTFDEC error callback */
-
-	void (*MspInitCallback)(struct __OTFDEC_HandleTypeDef *hotfdec); /*!< OTFDEC Msp Init callback */
-
-	void (*MspDeInitCallback)(struct __OTFDEC_HandleTypeDef *hotfdec); /*!< OTFDEC Msp DeInit callback */
-#endif									   /* USE_HAL_OTFDEC_REGISTER_CALLBACKS */
-
-} OTFDEC_HandleTypeDef;
+		__IO uint32_t ErrorCode; /*!< OTFDEC error code */
 
 #if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
-/**
- * @brief  HAL OTFDEC Callback ID enumeration definition
- */
-typedef enum {
-	HAL_OTFDEC_ERROR_CB_ID = 0x00U,	   /*!< OTFDEC error callback ID      */
-	HAL_OTFDEC_MSPINIT_CB_ID = 0x01U,  /*!< OTFDEC Msp DeInit callback ID */
-	HAL_OTFDEC_MSPDEINIT_CB_ID = 0x02U /*!< OTFDEC Msp DeInit callback ID */
-} HAL_OTFDEC_CallbackIDTypeDef;
+		void (*ErrorCallback)(struct __OTFDEC_HandleTypeDef *hotfdec); /*!< OTFDEC error callback */
 
-/**
- * @brief  HAL OTFDEC Callback pointer definition
- */
-typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< pointer to a OTFDEC callback function */
+		void (*MspInitCallback)(struct __OTFDEC_HandleTypeDef *hotfdec); /*!< OTFDEC Msp Init callback */
+
+		void (*MspDeInitCallback)(struct __OTFDEC_HandleTypeDef *hotfdec); /*!< OTFDEC Msp DeInit callback */
+#endif										   /* USE_HAL_OTFDEC_REGISTER_CALLBACKS */
+
+	} OTFDEC_HandleTypeDef;
+
+#if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
+	/**
+	 * @brief  HAL OTFDEC Callback ID enumeration definition
+	 */
+	typedef enum
+	{
+		HAL_OTFDEC_ERROR_CB_ID = 0x00U,	   /*!< OTFDEC error callback ID      */
+		HAL_OTFDEC_MSPINIT_CB_ID = 0x01U,  /*!< OTFDEC Msp DeInit callback ID */
+		HAL_OTFDEC_MSPDEINIT_CB_ID = 0x02U /*!< OTFDEC Msp DeInit callback ID */
+	} HAL_OTFDEC_CallbackIDTypeDef;
+
+	/**
+	 * @brief  HAL OTFDEC Callback pointer definition
+	 */
+	typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< pointer to a OTFDEC callback function */
 
 #endif /* USE_HAL_OTFDEC_REGISTER_CALLBACKS */
 
@@ -238,7 +242,8 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
  */
 #if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
 #define __HAL_OTFDEC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		(__HANDLE__)->State = HAL_OTFDEC_STATE_RESET;                                                                                                                                          \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -336,68 +341,68 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
  */
 #define __HAL_OTFDEC_CLEAR_FLAG(__HANDLE__, __FLAG__) SET_BIT((__HANDLE__)->Instance->ICR, (__FLAG__))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @defgroup OTFDEC_Exported_Functions OTFDEC Exported Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @defgroup OTFDEC_Exported_Functions OTFDEC Exported Functions
+	 * @{
+	 */
 
-/** @addtogroup OTFDEC_Exported_Functions_Group1 Initialization and
- * de-initialization functions
- * @{
- */
-HAL_StatusTypeDef HAL_OTFDEC_Init(OTFDEC_HandleTypeDef *hotfdec);
-HAL_StatusTypeDef HAL_OTFDEC_DeInit(OTFDEC_HandleTypeDef *hotfdec);
-void HAL_OTFDEC_MspInit(OTFDEC_HandleTypeDef *hotfdec);
-void HAL_OTFDEC_MspDeInit(OTFDEC_HandleTypeDef *hotfdec);
+	/** @addtogroup OTFDEC_Exported_Functions_Group1 Initialization and
+	 * de-initialization functions
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_OTFDEC_Init(OTFDEC_HandleTypeDef *hotfdec);
+	HAL_StatusTypeDef HAL_OTFDEC_DeInit(OTFDEC_HandleTypeDef *hotfdec);
+	void HAL_OTFDEC_MspInit(OTFDEC_HandleTypeDef *hotfdec);
+	void HAL_OTFDEC_MspDeInit(OTFDEC_HandleTypeDef *hotfdec);
 
 #if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
-/* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID, pOTFDEC_CallbackTypeDef pCallback);
-HAL_StatusTypeDef HAL_OTFDEC_UnRegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID);
+	/* Callbacks Register/UnRegister functions  ***********************************/
+	HAL_StatusTypeDef HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID, pOTFDEC_CallbackTypeDef pCallback);
+	HAL_StatusTypeDef HAL_OTFDEC_UnRegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_OTFDEC_REGISTER_CALLBACKS */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup OTFDEC_Exported_Functions_Group2 OTFDEC IRQ handler management
- * @{
- */
-void HAL_OTFDEC_IRQHandler(OTFDEC_HandleTypeDef *hotfdec);
-void HAL_OTFDEC_ErrorCallback(OTFDEC_HandleTypeDef *hotfdec);
-/**
- * @}
- */
+	/** @addtogroup OTFDEC_Exported_Functions_Group2 OTFDEC IRQ handler management
+	 * @{
+	 */
+	void HAL_OTFDEC_IRQHandler(OTFDEC_HandleTypeDef *hotfdec);
+	void HAL_OTFDEC_ErrorCallback(OTFDEC_HandleTypeDef *hotfdec);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup OTFDEC_Exported_Functions_Group3 Peripheral Control functions
- * @{
- */
-HAL_StatusTypeDef HAL_OTFDEC_RegionKeyLock(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
-HAL_StatusTypeDef HAL_OTFDEC_RegionSetKey(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, uint32_t *pKey);
-HAL_StatusTypeDef HAL_OTFDEC_RegionSetMode(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, uint32_t mode);
-HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const OTFDEC_RegionConfigTypeDef *Config, uint32_t lock);
-uint32_t HAL_OTFDEC_KeyCRCComputation(const uint32_t *pKey);
-HAL_StatusTypeDef HAL_OTFDEC_RegionEnable(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
-HAL_StatusTypeDef HAL_OTFDEC_RegionDisable(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
-HAL_StatusTypeDef HAL_OTFDEC_ConfigAttributes(OTFDEC_HandleTypeDef *hotfdec, uint32_t Attributes);
-HAL_StatusTypeDef HAL_OTFDEC_EnableEnciphering(OTFDEC_HandleTypeDef *hotfdec);
-HAL_StatusTypeDef HAL_OTFDEC_DisableEnciphering(OTFDEC_HandleTypeDef *hotfdec);
-HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const uint32_t *input, uint32_t *output, uint32_t size, uint32_t start_address);
-/**
- * @}
- */
+	/** @addtogroup OTFDEC_Exported_Functions_Group3 Peripheral Control functions
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_OTFDEC_RegionKeyLock(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
+	HAL_StatusTypeDef HAL_OTFDEC_RegionSetKey(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, uint32_t *pKey);
+	HAL_StatusTypeDef HAL_OTFDEC_RegionSetMode(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, uint32_t mode);
+	HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const OTFDEC_RegionConfigTypeDef *Config, uint32_t lock);
+	uint32_t HAL_OTFDEC_KeyCRCComputation(const uint32_t *pKey);
+	HAL_StatusTypeDef HAL_OTFDEC_RegionEnable(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
+	HAL_StatusTypeDef HAL_OTFDEC_RegionDisable(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
+	HAL_StatusTypeDef HAL_OTFDEC_ConfigAttributes(OTFDEC_HandleTypeDef *hotfdec, uint32_t Attributes);
+	HAL_StatusTypeDef HAL_OTFDEC_EnableEnciphering(OTFDEC_HandleTypeDef *hotfdec);
+	HAL_StatusTypeDef HAL_OTFDEC_DisableEnciphering(OTFDEC_HandleTypeDef *hotfdec);
+	HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const uint32_t *input, uint32_t *output, uint32_t size, uint32_t start_address);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup @addtogroup OTFDEC_Exported_Functions_Group4 Peripheral State
- * and Status functions
- * @{
- */
-HAL_OTFDEC_StateTypeDef HAL_OTFDEC_GetState(const OTFDEC_HandleTypeDef *hotfdec);
-HAL_StatusTypeDef HAL_OTFDEC_GetConfigAttributes(OTFDEC_HandleTypeDef *hotfdec, uint32_t *Attributes);
-uint32_t HAL_OTFDEC_RegionGetKeyCRC(const OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
-HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, OTFDEC_RegionConfigTypeDef *Config);
+	/** @addtogroup @addtogroup OTFDEC_Exported_Functions_Group4 Peripheral State
+	 * and Status functions
+	 * @{
+	 */
+	HAL_OTFDEC_StateTypeDef HAL_OTFDEC_GetState(const OTFDEC_HandleTypeDef *hotfdec);
+	HAL_StatusTypeDef HAL_OTFDEC_GetConfigAttributes(OTFDEC_HandleTypeDef *hotfdec, uint32_t *Attributes);
+	uint32_t HAL_OTFDEC_RegionGetKeyCRC(const OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
+	HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, OTFDEC_RegionConfigTypeDef *Config);
 /**
  * @}
  */
@@ -474,28 +479,28 @@ HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint
  */
 #define IS_OTFDEC_ATTRIBUTE(__ATTRIBUTE__) (((__ATTRIBUTE__) == OTFDEC_ATTRIBUTE_PRIV) || ((__ATTRIBUTE__) == OTFDEC_ATTRIBUTE_NPRIV))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private functions ---------------------------------------------------------*/
-/** @defgroup OTFDEC_Private_Functions OTFDEC Private Functions
- * @{
- */
+	/* Private functions ---------------------------------------------------------*/
+	/** @defgroup OTFDEC_Private_Functions OTFDEC Private Functions
+	 * @{
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* OTFDEC1 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

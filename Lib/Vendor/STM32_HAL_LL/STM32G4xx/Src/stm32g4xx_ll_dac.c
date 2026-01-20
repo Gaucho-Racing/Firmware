@@ -147,7 +147,8 @@ ErrorStatus LL_DAC_DeInit(const DAC_TypeDef *DACx)
 	assert_param(IS_DAC_ALL_INSTANCE(DACx));
 
 #ifdef DAC1
-	if (DACx == DAC1) {
+	if (DACx == DAC1)
+	{
 		/* Force reset of DAC clock */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_DAC1);
 
@@ -156,7 +157,8 @@ ErrorStatus LL_DAC_DeInit(const DAC_TypeDef *DACx)
 	}
 #endif /* DAC1 */
 #ifdef DAC2
-	if (DACx == DAC2) {
+	if (DACx == DAC2)
+	{
 		/* Force reset of DAC clock */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_DAC2);
 
@@ -165,7 +167,8 @@ ErrorStatus LL_DAC_DeInit(const DAC_TypeDef *DACx)
 	}
 #endif /* DAC2 */
 #ifdef DAC3
-	if (DACx == DAC3) {
+	if (DACx == DAC3)
+	{
 		/* Force reset of DAC clock */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_DAC3);
 
@@ -174,7 +177,8 @@ ErrorStatus LL_DAC_DeInit(const DAC_TypeDef *DACx)
 	}
 #endif /* DAC3 */
 #ifdef DAC4
-	if (DACx == DAC4) {
+	if (DACx == DAC4)
+	{
 		/* Force reset of DAC clock */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_DAC4);
 
@@ -226,21 +230,25 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 	assert_param(IS_LL_DAC_OUTPUT_CONNECTION(DAC_InitStruct->OutputConnection));
 	assert_param(IS_LL_DAC_OUTPUT_MODE(DAC_InitStruct->OutputMode));
 	assert_param(IS_LL_DAC_WAVE_AUTO_GENER_MODE(DAC_InitStruct->WaveAutoGeneration));
-	if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
+	if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE)
+	{
 		assert_param(IS_LL_DAC_WAVE_AUTO_GENER_CONFIG(DAC_InitStruct->WaveAutoGeneration, DAC_InitStruct->WaveAutoGenerationConfig));
 	}
 
 	/* Note: Hardware constraint (refer to description of this function) */
 	/*       DAC instance must be disabled. */
-	if (LL_DAC_IsEnabled(DACx, DAC_Channel) == 0UL) {
+	if (LL_DAC_IsEnabled(DACx, DAC_Channel) == 0UL)
+	{
 		/* Configuration of DAC channel: */
 		/*  - TriggerSource */
 		/*  - WaveAutoGeneration */
 		/*  - OutputBuffer */
 		/*  - OutputConnection */
 		/*  - OutputMode */
-		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
-			if (DAC_InitStruct->WaveAutoGeneration == LL_DAC_WAVE_AUTO_GENERATION_SAWTOOTH) {
+		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE)
+		{
+			if (DAC_InitStruct->WaveAutoGeneration == LL_DAC_WAVE_AUTO_GENERATION_SAWTOOTH)
+			{
 				assert_param(IS_LL_DAC_TRIGGER_SOURCE2(DACx, DAC_InitStruct->TriggerSource2));
 
 				MODIFY_REG(DACx->CR, DAC_CR_WAVE1 << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK), DAC_InitStruct->WaveAutoGeneration << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
@@ -252,18 +260,24 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 
 				WRITE_REG(*(__DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0)),
 					  DAC_InitStruct->WaveAutoGenerationConfig);
-			} else {
+			}
+			else
+			{
 				MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 					   (DAC_InitStruct->TriggerSource | DAC_InitStruct->WaveAutoGeneration | DAC_InitStruct->WaveAutoGenerationConfig)
 					       << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 			}
-		} else {
+		}
+		else
+		{
 			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | LL_DAC_WAVE_AUTO_GENERATION_NONE) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 		}
 		MODIFY_REG(DACx->MCR, (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 			   (DAC_InitStruct->OutputBuffer | DAC_InitStruct->OutputConnection | DAC_InitStruct->OutputMode) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
-	} else {
+	}
+	else
+	{
 		/* Initialization error: DAC instance is not disabled. */
 		status = ERROR;
 	}

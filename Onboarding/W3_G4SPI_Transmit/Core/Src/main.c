@@ -120,7 +120,8 @@ int main(void)
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12,
 			  GPIO_PIN_RESET); // Set the CS line to active low to
 					   // enable the slave
-	while (1) {
+	while (1)
+	{
 		/* USER CODE END WHILE */
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		HAL_SPI_Transmit(&hspi2, TX_Buffer, sizeof(TX_Buffer), 1000);
@@ -150,7 +151,8 @@ void SystemClock_Config(void)
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+	{
 		Error_Handler();
 	}
 
@@ -162,7 +164,8 @@ void SystemClock_Config(void)
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+	{
 		Error_Handler();
 	}
 }
@@ -200,7 +203,8 @@ static void MX_SPI2_Init(void)
 	hspi2.Init.CRCPolynomial = 7;
 	hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
 	hspi2.Init.NSSPMode = SPI_NSS_PULSE_DISABLED;
-	if (HAL_SPI_Init(&hspi2) != HAL_OK) {
+	if (HAL_SPI_Init(&hspi2) != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN SPI2_Init 2 */
@@ -229,19 +233,24 @@ static void MX_USART2_Init(void)
 	husart2.Init.CLKLastBit = USART_LASTBIT_DISABLE;
 	husart2.Init.ClockPrescaler = USART_PRESCALER_DIV1;
 	husart2.SlaveMode = USART_SLAVEMODE_ENABLE;
-	if (HAL_USART_Init(&husart2) != HAL_OK) {
+	if (HAL_USART_Init(&husart2) != HAL_OK)
+	{
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetTxFifoThreshold(&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
+	if (HAL_USARTEx_SetTxFifoThreshold(&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+	{
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetRxFifoThreshold(&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
+	if (HAL_USARTEx_SetRxFifoThreshold(&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+	{
 		Error_Handler();
 	}
-	if (HAL_USARTEx_DisableFifoMode(&husart2) != HAL_OK) {
+	if (HAL_USARTEx_DisableFifoMode(&husart2) != HAL_OK)
+	{
 		Error_Handler();
 	}
-	if (HAL_USARTEx_EnableSlaveMode(&husart2) != HAL_OK) {
+	if (HAL_USARTEx_EnableSlaveMode(&husart2) != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN USART2_Init 2 */
@@ -304,7 +313,8 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
-	while (1) {
+	while (1)
+	{
 	}
 	/* USER CODE END Error_Handler_Debug */
 }

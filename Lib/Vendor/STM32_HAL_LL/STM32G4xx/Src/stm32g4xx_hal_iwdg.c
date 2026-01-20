@@ -172,7 +172,8 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 	uint32_t tickstart;
 
 	/* Check the IWDG handle allocation */
-	if (hiwdg == NULL) {
+	if (hiwdg == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -197,9 +198,12 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 	tickstart = HAL_GetTick();
 
 	/* Wait for register to be updated */
-	while ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) != 0x00u) {
-		if ((HAL_GetTick() - tickstart) > HAL_IWDG_DEFAULT_TIMEOUT) {
-			if ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) != 0x00u) {
+	while ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) != 0x00u)
+	{
+		if ((HAL_GetTick() - tickstart) > HAL_IWDG_DEFAULT_TIMEOUT)
+		{
+			if ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) != 0x00u)
+			{
 				return HAL_TIMEOUT;
 			}
 		}
@@ -207,12 +211,15 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 
 	/* If window parameter is different than current value, modify window
 	register */
-	if (hiwdg->Instance->WINR != hiwdg->Init.Window) {
+	if (hiwdg->Instance->WINR != hiwdg->Init.Window)
+	{
 		/* Write to IWDG WINR the IWDG_Window value to compare with. In
 		any case, even if window feature is disabled, Watchdog will be
 		reloaded by writing windows register */
 		hiwdg->Instance->WINR = hiwdg->Init.Window;
-	} else {
+	}
+	else
+	{
 		/* Reload IWDG counter with value defined in the reload register
 		 */
 		__HAL_IWDG_RELOAD_COUNTER(hiwdg);

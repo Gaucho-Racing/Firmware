@@ -21,71 +21,74 @@
 #define __STM32U5xx_HAL_CORTEX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-/** @addtogroup STM32U5xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32U5xx_HAL_Driver
+	 * @{
+	 */
 
-/** @defgroup CORTEX CORTEX
- * @{
- */
+	/** @defgroup CORTEX CORTEX
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup CORTEX_Exported_Types CORTEX Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup CORTEX_Exported_Types CORTEX Exported Types
+	 * @{
+	 */
 
-/** @defgroup CORTEX_MPU_Region_Initialization_Structure_definition MPU Region
- * Initialization Structure Definition
- * @{
- */
-typedef struct {
-	uint8_t Enable;		  /*!< Specifies the status of the region.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Enable       */
-	uint8_t Number;		  /*!< Specifies the index of the region to protect.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Number       */
-	uint32_t BaseAddress;	  /*!< Specifies the base address of the region to
-				     protect.                 */
-	uint32_t LimitAddress;	  /*!< Specifies the limit address of the region to
-				     protect.                */
-	uint8_t AttributesIndex;  /*!< Specifies the memory attributes index.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Attributes_Number   */
-	uint8_t AccessPermission; /*!< Specifies the region access permission
-				     type. This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Permission_Attributes */
-	uint8_t DisableExec;	  /*!< Specifies the instruction access status.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Instruction_Access  */
-	uint8_t IsShareable;	  /*!< Specifies the shareability status of the
-				     protected region.      This parameter can be a
-				     value      of @ref CORTEX_MPU_Access_Shareable    */
-} MPU_Region_InitTypeDef;
-/**
- * @}
- */
+	/** @defgroup CORTEX_MPU_Region_Initialization_Structure_definition MPU Region
+	 * Initialization Structure Definition
+	 * @{
+	 */
+	typedef struct
+	{
+		uint8_t Enable;		  /*!< Specifies the status of the region.
+					       This parameter can be a value of @ref
+					     CORTEX_MPU_Region_Enable       */
+		uint8_t Number;		  /*!< Specifies the index of the region to protect.
+					       This parameter can be a value of @ref
+					     CORTEX_MPU_Region_Number       */
+		uint32_t BaseAddress;	  /*!< Specifies the base address of the region to
+					     protect.                 */
+		uint32_t LimitAddress;	  /*!< Specifies the limit address of the region to
+					     protect.                */
+		uint8_t AttributesIndex;  /*!< Specifies the memory attributes index.
+					       This parameter can be a value of @ref
+					     CORTEX_MPU_Attributes_Number   */
+		uint8_t AccessPermission; /*!< Specifies the region access permission
+					     type. This parameter can be a value of @ref
+					     CORTEX_MPU_Region_Permission_Attributes */
+		uint8_t DisableExec;	  /*!< Specifies the instruction access status.
+					       This parameter can be a value of @ref
+					     CORTEX_MPU_Instruction_Access  */
+		uint8_t IsShareable;	  /*!< Specifies the shareability status of the
+					     protected region.      This parameter can be a
+					     value      of @ref CORTEX_MPU_Access_Shareable    */
+	} MPU_Region_InitTypeDef;
+	/**
+	 * @}
+	 */
 
-/** @defgroup CORTEX_MPU_Attributes_Initialization_Structure_definition MPU
- * Attributes Initialization Structure Definition
- * @{
- */
-typedef struct {
-	uint8_t Number; /*!< Specifies the number of the memory attributes to
-			   configure. This parameter can be a value of @ref
-			   CORTEX_MPU_Attributes_Number   */
+	/** @defgroup CORTEX_MPU_Attributes_Initialization_Structure_definition MPU
+	 * Attributes Initialization Structure Definition
+	 * @{
+	 */
+	typedef struct
+	{
+		uint8_t Number; /*!< Specifies the number of the memory attributes to
+				   configure. This parameter can be a value of @ref
+				   CORTEX_MPU_Attributes_Number   */
 
-	uint8_t Attributes; /*!< Specifies the memory attributes value.
-			       Attributes This parameter can be a combination of
-			       @ref CORTEX_MPU_Attributes                   */
+		uint8_t Attributes; /*!< Specifies the memory attributes value.
+				       Attributes This parameter can be a combination of
+				       @ref CORTEX_MPU_Attributes                   */
 
-} MPU_Attributes_InitTypeDef;
+	} MPU_Attributes_InitTypeDef;
 /**
  * @}
  */
@@ -276,61 +279,61 @@ typedef struct {
 #define OUTER(__ATTR__) ((__ATTR__) << 4U)
 #define INNER_OUTER(__ATTR__) ((__ATTR__) | ((__ATTR__) << 4U))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @defgroup CORTEX_Exported_Functions CORTEX Exported Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @defgroup CORTEX_Exported_Functions CORTEX Exported Functions
+	 * @{
+	 */
 
-/** @defgroup CORTEX_Exported_Functions_Group1 Initialization and Configuration
- * functions
- * @brief    Initialization and Configuration functions
- * @{
- */
-/* Initialization and Configuration functions *****************************/
-void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
-void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority);
-void HAL_NVIC_EnableIRQ(IRQn_Type IRQn);
-void HAL_NVIC_DisableIRQ(IRQn_Type IRQn);
-void HAL_NVIC_SystemReset(void);
-uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb);
-/**
- * @}
- */
+	/** @defgroup CORTEX_Exported_Functions_Group1 Initialization and Configuration
+	 * functions
+	 * @brief    Initialization and Configuration functions
+	 * @{
+	 */
+	/* Initialization and Configuration functions *****************************/
+	void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
+	void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority);
+	void HAL_NVIC_EnableIRQ(IRQn_Type IRQn);
+	void HAL_NVIC_DisableIRQ(IRQn_Type IRQn);
+	void HAL_NVIC_SystemReset(void);
+	uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb);
+	/**
+	 * @}
+	 */
 
-/** @defgroup CORTEX_Exported_Functions_Group2 Peripheral Control functions
- * @brief   Cortex control functions
- * @{
- */
-/* Peripheral Control functions ***********************************************/
-uint32_t HAL_NVIC_GetPriorityGrouping(void);
-void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority, uint32_t *const pSubPriority);
-uint32_t HAL_NVIC_GetPendingIRQ(IRQn_Type IRQn);
-void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn);
-void HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn);
-uint32_t HAL_NVIC_GetActive(IRQn_Type IRQn);
-void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource);
-uint32_t HAL_SYSTICK_GetCLKSourceConfig(void);
-void HAL_SYSTICK_IRQHandler(void);
-void HAL_SYSTICK_Callback(void);
+	/** @defgroup CORTEX_Exported_Functions_Group2 Peripheral Control functions
+	 * @brief   Cortex control functions
+	 * @{
+	 */
+	/* Peripheral Control functions ***********************************************/
+	uint32_t HAL_NVIC_GetPriorityGrouping(void);
+	void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority, uint32_t *const pSubPriority);
+	uint32_t HAL_NVIC_GetPendingIRQ(IRQn_Type IRQn);
+	void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn);
+	void HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn);
+	uint32_t HAL_NVIC_GetActive(IRQn_Type IRQn);
+	void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource);
+	uint32_t HAL_SYSTICK_GetCLKSourceConfig(void);
+	void HAL_SYSTICK_IRQHandler(void);
+	void HAL_SYSTICK_Callback(void);
 
-void HAL_MPU_Enable(uint32_t MPU_Control);
-void HAL_MPU_Disable(void);
-void HAL_MPU_EnableRegion(uint32_t RegionNumber);
-void HAL_MPU_DisableRegion(uint32_t RegionNumber);
-void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit);
-void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit);
+	void HAL_MPU_Enable(uint32_t MPU_Control);
+	void HAL_MPU_Disable(void);
+	void HAL_MPU_EnableRegion(uint32_t RegionNumber);
+	void HAL_MPU_DisableRegion(uint32_t RegionNumber);
+	void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit);
+	void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/* MPU_NS Control functions ***********************************************/
-void HAL_MPU_Enable_NS(uint32_t MPU_Control);
-void HAL_MPU_Disable_NS(void);
-void HAL_MPU_EnableRegion_NS(uint32_t RegionNumber);
-void HAL_MPU_DisableRegion_NS(uint32_t RegionNumber);
-void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit);
-void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit);
+	/* MPU_NS Control functions ***********************************************/
+	void HAL_MPU_Enable_NS(uint32_t MPU_Control);
+	void HAL_MPU_Disable_NS(void);
+	void HAL_MPU_EnableRegion_NS(uint32_t RegionNumber);
+	void HAL_MPU_DisableRegion_NS(uint32_t RegionNumber);
+	void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit);
+	void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit);
 #endif /* __ARM_FEATURE_CMSE */
 /**
  * @}
@@ -378,19 +381,19 @@ void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const p
 	(((NUMBER) == MPU_ATTRIBUTES_NUMBER0) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER1) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER2) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER3) ||                               \
 	 ((NUMBER) == MPU_ATTRIBUTES_NUMBER4) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER5) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER6) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER7))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private functions ---------------------------------------------------------*/
+	/* Private functions ---------------------------------------------------------*/
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

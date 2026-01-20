@@ -105,7 +105,8 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 	HAL_StatusTypeDef status;
 
 	/* Check the RNG handle allocation */
-	if ((hrng == NULL) || (pConf == NULL)) {
+	if ((hrng == NULL) || (pConf == NULL))
+	{
 		return HAL_ERROR;
 	}
 
@@ -118,7 +119,8 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 	assert_param(IS_RNG_CONFIG3(pConf->Config3));
 
 	/* Check RNG peripheral state */
-	if (hrng->State == HAL_RNG_STATE_READY) {
+	if (hrng->State == HAL_RNG_STATE_READY)
+	{
 		/* Change RNG peripheral state */
 		hrng->State = HAL_RNG_STATE_BUSY;
 
@@ -150,11 +152,14 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 		tickstart = HAL_GetTick();
 
 		/* Wait for conditioning reset process to be completed */
-		while (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST)) {
-			if ((HAL_GetTick() - tickstart) > RNG_TIMEOUT_VALUE) {
+		while (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST))
+		{
+			if ((HAL_GetTick() - tickstart) > RNG_TIMEOUT_VALUE)
+			{
 				/* New check to avoid false timeout detection in
 				 * case of prememption */
-				if (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST)) {
+				if (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST))
+				{
 					hrng->State = HAL_RNG_STATE_READY;
 					hrng->ErrorCode = HAL_RNG_ERROR_TIMEOUT;
 					return HAL_ERROR;
@@ -170,7 +175,9 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 
 		/* function status */
 		status = HAL_OK;
-	} else {
+	}
+	else
+	{
 		hrng->ErrorCode = HAL_RNG_ERROR_BUSY;
 		status = HAL_ERROR;
 	}
@@ -195,12 +202,14 @@ HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef
 	HAL_StatusTypeDef status;
 
 	/* Check the RNG handle allocation */
-	if ((hrng == NULL) || (pConf == NULL)) {
+	if ((hrng == NULL) || (pConf == NULL))
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check RNG peripheral state */
-	if (hrng->State == HAL_RNG_STATE_READY) {
+	if (hrng->State == HAL_RNG_STATE_READY)
+	{
 		/* Change RNG peripheral state */
 		hrng->State = HAL_RNG_STATE_BUSY;
 
@@ -216,7 +225,9 @@ HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef
 
 		/* function status */
 		status = HAL_OK;
-	} else {
+	}
+	else
+	{
 		hrng->ErrorCode |= HAL_RNG_ERROR_BUSY;
 		status = HAL_ERROR;
 	}
@@ -239,12 +250,14 @@ HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng)
 	HAL_StatusTypeDef status;
 
 	/* Check the RNG handle allocation */
-	if (hrng == NULL) {
+	if (hrng == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check RNG peripheral state */
-	if (hrng->State == HAL_RNG_STATE_READY) {
+	if (hrng->State == HAL_RNG_STATE_READY)
+	{
 		/* Change RNG peripheral state */
 		hrng->State = HAL_RNG_STATE_BUSY;
 
@@ -256,7 +269,9 @@ HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng)
 
 		/* function status */
 		status = HAL_OK;
-	} else {
+	}
+	else
+	{
 		hrng->ErrorCode = HAL_RNG_ERROR_BUSY;
 		status = HAL_ERROR;
 	}
@@ -293,18 +308,22 @@ HAL_StatusTypeDef HAL_RNGEx_RecoverSeedError(RNG_HandleTypeDef *hrng)
 	HAL_StatusTypeDef status;
 
 	/* Check the RNG handle allocation */
-	if (hrng == NULL) {
+	if (hrng == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check RNG peripheral state */
-	if (hrng->State == HAL_RNG_STATE_READY) {
+	if (hrng->State == HAL_RNG_STATE_READY)
+	{
 		/* Change RNG peripheral state */
 		hrng->State = HAL_RNG_STATE_BUSY;
 
 		/* sequence to fully recover from a seed error */
 		status = RNG_RecoverSeedError(hrng);
-	} else {
+	}
+	else
+	{
 		hrng->ErrorCode = HAL_RNG_ERROR_BUSY;
 		status = HAL_ERROR;
 	}

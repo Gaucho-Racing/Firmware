@@ -405,13 +405,15 @@ functions
 HAL_StatusTypeDef HAL_DAC_Init(DAC_HandleTypeDef *hdac)
 {
 	/* Check DAC handle */
-	if (hdac == NULL) {
+	if (hdac == NULL)
+	{
 		return HAL_ERROR;
 	}
 	/* Check the parameters */
 	assert_param(IS_DAC_ALL_INSTANCE(hdac->Instance));
 
-	if (hdac->State == HAL_DAC_STATE_RESET) {
+	if (hdac->State == HAL_DAC_STATE_RESET)
+	{
 #if (USE_HAL_DAC_REGISTER_CALLBACKS == 1)
 		/* Init the DAC Callback settings */
 		hdac->ConvCpltCallbackCh1 = HAL_DAC_ConvCpltCallbackCh1;
@@ -433,7 +435,8 @@ HAL_StatusTypeDef HAL_DAC_Init(DAC_HandleTypeDef *hdac)
 		/* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx STM32L4S7xx
 		 * STM32L4S9xx             */
 
-		if (hdac->MspInitCallback == NULL) {
+		if (hdac->MspInitCallback == NULL)
+		{
 			hdac->MspInitCallback = HAL_DAC_MspInit;
 		}
 #endif /* USE_HAL_DAC_REGISTER_CALLBACKS */
@@ -473,7 +476,8 @@ HAL_StatusTypeDef HAL_DAC_Init(DAC_HandleTypeDef *hdac)
 HAL_StatusTypeDef HAL_DAC_DeInit(DAC_HandleTypeDef *hdac)
 {
 	/* Check DAC handle */
-	if (hdac == NULL) {
+	if (hdac == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -484,7 +488,8 @@ HAL_StatusTypeDef HAL_DAC_DeInit(DAC_HandleTypeDef *hdac)
 	hdac->State = HAL_DAC_STATE_BUSY;
 
 #if (USE_HAL_DAC_REGISTER_CALLBACKS == 1)
-	if (hdac->MspDeInitCallback == NULL) {
+	if (hdac->MspDeInitCallback == NULL)
+	{
 		hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
 	}
 	/* DeInit the low level hardware */
@@ -586,15 +591,20 @@ HAL_StatusTypeDef HAL_DAC_Start(DAC_HandleTypeDef *hdac, uint32_t Channel)
 	__HAL_DAC_ENABLE(hdac, Channel);
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		/* Check if software trigger enabled */
-		if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == DAC_TRIGGER_SOFTWARE) {
+		if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == DAC_TRIGGER_SOFTWARE)
+		{
 			/* Enable the selected DAC software conversion */
 			SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG1);
 		}
-	} else {
+	}
+	else
+	{
 		/* Check if software trigger enabled */
-		if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == (DAC_TRIGGER_SOFTWARE << (Channel & 0x10UL))) {
+		if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == (DAC_TRIGGER_SOFTWARE << (Channel & 0x10UL)))
+		{
 			/* Enable the selected DAC software conversion*/
 			SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG2);
 		}
@@ -605,15 +615,20 @@ HAL_StatusTypeDef HAL_DAC_Start(DAC_HandleTypeDef *hdac, uint32_t Channel)
 
 #if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
     defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		/* Check if software trigger enabled */
-		if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == DAC_CR_TEN1) {
+		if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == DAC_CR_TEN1)
+		{
 			/* Enable the selected DAC software conversion */
 			SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG1);
 		}
-	} else {
+	}
+	else
+	{
 		/* Check if software trigger enabled */
-		if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == DAC_CR_TEN2) {
+		if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == DAC_CR_TEN2)
+		{
 			/* Enable the selected DAC software conversion*/
 			SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG2);
 		}
@@ -624,7 +639,8 @@ HAL_StatusTypeDef HAL_DAC_Start(DAC_HandleTypeDef *hdac, uint32_t Channel)
 
 #if defined(STM32L451xx) || defined(STM32L452xx) || defined(STM32L462xx)
 	/* Check if software trigger enabled */
-	if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == (DAC_CR_TEN1 | DAC_CR_TSEL1)) {
+	if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == (DAC_CR_TEN1 | DAC_CR_TSEL1))
+	{
 		/* Enable the selected DAC software conversion */
 		SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG1);
 	}
@@ -710,7 +726,8 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 	SET_BIT(hdac->Instance->CR, DAC_CR_DMAEN1);
 
 	/* Case of use of channel 1 */
-	switch (Alignment) {
+	switch (Alignment)
+	{
 		case DAC_ALIGN_12B_R:
 			/* Get DHR12R1 address */
 			tmpreg = (uint32_t)&hdac->Instance->DHR12R1;
@@ -737,10 +754,13 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 	/* Process Unlocked */
 	__HAL_UNLOCK(hdac);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* Enable the Peripheral */
 		__HAL_DAC_ENABLE(hdac, Channel);
-	} else {
+	}
+	else
+	{
 		hdac->ErrorCode |= HAL_DAC_ERROR_DMA;
 	}
 
@@ -786,7 +806,8 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 	/* Change DAC state */
 	hdac->State = HAL_DAC_STATE_BUSY;
 
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		/* Set the DMA transfer complete callback for channel1 */
 		hdac->DMA_Handle1->XferCpltCallback = DAC_DMAConvCpltCh1;
 
@@ -800,7 +821,8 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 		SET_BIT(hdac->Instance->CR, DAC_CR_DMAEN1);
 
 		/* Case of use of channel 1 */
-		switch (Alignment) {
+		switch (Alignment)
+		{
 			case DAC_ALIGN_12B_R:
 				/* Get DHR12R1 address */
 				tmpreg = (uint32_t)&hdac->Instance->DHR12R1;
@@ -816,7 +838,9 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 			default:
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Set the DMA transfer complete callback for channel2 */
 		hdac->DMA_Handle2->XferCpltCallback = DAC_DMAConvCpltCh2;
 
@@ -830,7 +854,8 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 		SET_BIT(hdac->Instance->CR, DAC_CR_DMAEN2);
 
 		/* Case of use of channel 2 */
-		switch (Alignment) {
+		switch (Alignment)
+		{
 			case DAC_ALIGN_12B_R:
 				/* Get DHR12R2 address */
 				tmpreg = (uint32_t)&hdac->Instance->DHR12R2;
@@ -849,13 +874,16 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 	}
 
 	/* Enable the DMA channel */
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		/* Enable the DAC DMA underrun interrupt */
 		__HAL_DAC_ENABLE_IT(hdac, DAC_IT_DMAUDR1);
 
 		/* Enable the DMA channel */
 		status = HAL_DMA_Start_IT(hdac->DMA_Handle1, (uint32_t)pData, tmpreg, Length);
-	} else {
+	}
+	else
+	{
 		/* Enable the DAC DMA underrun interrupt */
 		__HAL_DAC_ENABLE_IT(hdac, DAC_IT_DMAUDR2);
 
@@ -866,10 +894,13 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, u
 	/* Process Unlocked */
 	__HAL_UNLOCK(hdac);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* Enable the Peripheral */
 		__HAL_DAC_ENABLE(hdac, Channel);
-	} else {
+	}
+	else
+	{
 		hdac->ErrorCode |= HAL_DAC_ERROR_DMA;
 	}
 
@@ -908,13 +939,15 @@ HAL_StatusTypeDef HAL_DAC_Stop_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel)
     defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
     defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* Channel1 is used */
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		/* Disable the DMA channel */
 		(void)HAL_DMA_Abort(hdac->DMA_Handle1);
 
 		/* Disable the DAC DMA underrun interrupt */
 		__HAL_DAC_DISABLE_IT(hdac, DAC_IT_DMAUDR1);
-	} else /* Channel2 is used for */
+	}
+	else /* Channel2 is used for */
 	{
 		/* Disable the DMA channel */
 		(void)HAL_DMA_Abort(hdac->DMA_Handle2);
@@ -956,9 +989,11 @@ HAL_StatusTypeDef HAL_DAC_Stop_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel)
  */
 void HAL_DAC_IRQHandler(DAC_HandleTypeDef *hdac)
 {
-	if (__HAL_DAC_GET_IT_SOURCE(hdac, DAC_IT_DMAUDR1)) {
+	if (__HAL_DAC_GET_IT_SOURCE(hdac, DAC_IT_DMAUDR1))
+	{
 		/* Check underrun flag of DAC channel 1 */
-		if (__HAL_DAC_GET_FLAG(hdac, DAC_FLAG_DMAUDR1)) {
+		if (__HAL_DAC_GET_FLAG(hdac, DAC_FLAG_DMAUDR1))
+		{
 			/* Change DAC state to error state */
 			hdac->State = HAL_DAC_STATE_ERROR;
 
@@ -982,9 +1017,11 @@ void HAL_DAC_IRQHandler(DAC_HandleTypeDef *hdac)
 #if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
     defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
     defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-	if (__HAL_DAC_GET_IT_SOURCE(hdac, DAC_IT_DMAUDR2)) {
+	if (__HAL_DAC_GET_IT_SOURCE(hdac, DAC_IT_DMAUDR2))
+	{
 		/* Check underrun flag of DAC channel 2 */
-		if (__HAL_DAC_GET_FLAG(hdac, DAC_FLAG_DMAUDR2)) {
+		if (__HAL_DAC_GET_FLAG(hdac, DAC_FLAG_DMAUDR2))
+		{
 			/* Change DAC state to error state */
 			hdac->State = HAL_DAC_STATE_ERROR;
 
@@ -1039,9 +1076,12 @@ HAL_StatusTypeDef HAL_DAC_SetValue(DAC_HandleTypeDef *hdac, uint32_t Channel, ui
 	assert_param(IS_DAC_DATA(Data));
 
 	tmp = (uint32_t)hdac->Instance;
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		tmp += DAC_DHR12R1_ALIGNMENT(Alignment);
-	} else {
+	}
+	else
+	{
 		tmp += DAC_DHR12R2_ALIGNMENT(Alignment);
 	}
 
@@ -1167,9 +1207,12 @@ uint32_t HAL_DAC_GetValue(DAC_HandleTypeDef *hdac, uint32_t Channel)
 #if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
     defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
     defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-	if (Channel == DAC_CHANNEL_1) {
+	if (Channel == DAC_CHANNEL_1)
+	{
 		return hdac->Instance->DOR1;
-	} else {
+	}
+	else
+	{
 		return hdac->Instance->DOR2;
 	}
 #endif	/* STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx */
@@ -1215,11 +1258,13 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, DAC_ChannelConf
 	assert_param(IS_DAC_OUTPUT_BUFFER_STATE(sConfig->DAC_OutputBuffer));
 	assert_param(IS_DAC_CHIP_CONNECTION(sConfig->DAC_ConnectOnChipPeripheral));
 	assert_param(IS_DAC_TRIMMING(sConfig->DAC_UserTrimming));
-	if ((sConfig->DAC_UserTrimming) == DAC_TRIMMING_USER) {
+	if ((sConfig->DAC_UserTrimming) == DAC_TRIMMING_USER)
+	{
 		assert_param(IS_DAC_TRIMMINGVALUE(sConfig->DAC_TrimmingValue));
 	}
 	assert_param(IS_DAC_SAMPLEANDHOLD(sConfig->DAC_SampleAndHold));
-	if ((sConfig->DAC_SampleAndHold) == DAC_SAMPLEANDHOLD_ENABLE) {
+	if ((sConfig->DAC_SampleAndHold) == DAC_SAMPLEANDHOLD_ENABLE)
+	{
 		assert_param(IS_DAC_SAMPLETIME(sConfig->DAC_SampleAndHoldConfig.DAC_SampleTime));
 		assert_param(IS_DAC_HOLDTIME(sConfig->DAC_SampleAndHoldConfig.DAC_HoldTime));
 		assert_param(IS_DAC_REFRESHTIME(sConfig->DAC_SampleAndHoldConfig.DAC_RefreshTime));
@@ -1238,15 +1283,19 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, DAC_ChannelConf
 		/* Get timeout */
 		tickstart = HAL_GetTick();
 
-		if (Channel == DAC_CHANNEL_1) {
+		if (Channel == DAC_CHANNEL_1)
+		{
 
 			/* SHSR1 can be written when BWST1 is cleared */
-			while (((hdac->Instance->SR) & DAC_SR_BWST1) != 0UL) {
+			while (((hdac->Instance->SR) & DAC_SR_BWST1) != 0UL)
+			{
 				/* Check for the Timeout */
-				if ((HAL_GetTick() - tickstart) > TIMEOUT_DAC_CALIBCONFIG) {
+				if ((HAL_GetTick() - tickstart) > TIMEOUT_DAC_CALIBCONFIG)
+				{
 					/* New check to avoid false timeout
 					 * detection in case of preemption */
-					if (((hdac->Instance->SR) & DAC_SR_BWST1) != 0UL) {
+					if (((hdac->Instance->SR) & DAC_SR_BWST1) != 0UL)
+					{
 						/* Update error code */
 						SET_BIT(hdac->ErrorCode, HAL_DAC_ERROR_TIMEOUT);
 
@@ -1265,12 +1314,15 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, DAC_ChannelConf
 		{
 			/* SHSR2 can be written when BWST2 is cleared */
 
-			while (((hdac->Instance->SR) & DAC_SR_BWST2) != 0UL) {
+			while (((hdac->Instance->SR) & DAC_SR_BWST2) != 0UL)
+			{
 				/* Check for the Timeout */
-				if ((HAL_GetTick() - tickstart) > TIMEOUT_DAC_CALIBCONFIG) {
+				if ((HAL_GetTick() - tickstart) > TIMEOUT_DAC_CALIBCONFIG)
+				{
 					/* New check to avoid false timeout
 					 * detection in case of preemption */
-					if (((hdac->Instance->SR) & DAC_SR_BWST2) != 0UL) {
+					if (((hdac->Instance->SR) & DAC_SR_BWST2) != 0UL)
+					{
 						/* Update error code */
 						SET_BIT(hdac->ErrorCode, HAL_DAC_ERROR_TIMEOUT);
 
@@ -1335,19 +1387,27 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, DAC_ChannelConf
 	/* Calculate CR register value depending on DAC_Channel */
 	tmpreg1 |= tmpreg2 << (Channel & 0x10UL);
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-	if (DAC_HIGH_FREQUENCY_INTERFACE_MODE_ABOVE_80MHZ == sConfig->DAC_HighFrequency) {
+	if (DAC_HIGH_FREQUENCY_INTERFACE_MODE_ABOVE_80MHZ == sConfig->DAC_HighFrequency)
+	{
 		tmpreg1 |= DAC_CR_HFSEL;
-	} else {
-		if (DAC_HIGH_FREQUENCY_INTERFACE_MODE_DISABLE == sConfig->DAC_HighFrequency) {
+	}
+	else
+	{
+		if (DAC_HIGH_FREQUENCY_INTERFACE_MODE_DISABLE == sConfig->DAC_HighFrequency)
+		{
 			tmpreg1 &= ~(DAC_CR_HFSEL);
-		} else /* Automatic selection */
+		}
+		else /* Automatic selection */
 		{
 			hclkfreq = HAL_RCC_GetHCLKFreq();
-			if (hclkfreq > HFSEL_ENABLE_THRESHOLD_80MHZ) {
+			if (hclkfreq > HFSEL_ENABLE_THRESHOLD_80MHZ)
+			{
 				/* High frequency enable when HCLK frequency
 				 * higher than 80   */
 				tmpreg1 |= DAC_CR_HFSEL;
-			} else {
+			}
+			else
+			{
 				/* High frequency disable when HCLK frequency
 				 * higher than 80  */
 				tmpreg1 &= ~(DAC_CR_HFSEL);
@@ -1462,7 +1522,8 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
 		return HAL_ERROR;
@@ -1471,8 +1532,10 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
 	/* Process locked */
 	__HAL_LOCK(hdac);
 
-	if (hdac->State == HAL_DAC_STATE_READY) {
-		switch (CallbackID) {
+	if (hdac->State == HAL_DAC_STATE_READY)
+	{
+		switch (CallbackID)
+		{
 			case HAL_DAC_CH1_COMPLETE_CB_ID:
 				hdac->ConvCpltCallbackCh1 = pCallback;
 				break;
@@ -1510,8 +1573,11 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (hdac->State == HAL_DAC_STATE_RESET) {
-		switch (CallbackID) {
+	}
+	else if (hdac->State == HAL_DAC_STATE_RESET)
+	{
+		switch (CallbackID)
+		{
 			case HAL_DAC_MSPINIT_CB_ID:
 				hdac->MspInitCallback = pCallback;
 				break;
@@ -1525,7 +1591,9 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -1574,8 +1642,10 @@ HAL_StatusTypeDef HAL_DAC_UnRegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Ca
 	/* Process locked */
 	__HAL_LOCK(hdac);
 
-	if (hdac->State == HAL_DAC_STATE_READY) {
-		switch (CallbackID) {
+	if (hdac->State == HAL_DAC_STATE_READY)
+	{
+		switch (CallbackID)
+		{
 			case HAL_DAC_CH1_COMPLETE_CB_ID:
 				hdac->ConvCpltCallbackCh1 = HAL_DAC_ConvCpltCallbackCh1;
 				break;
@@ -1645,8 +1715,11 @@ HAL_StatusTypeDef HAL_DAC_UnRegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (hdac->State == HAL_DAC_STATE_RESET) {
-		switch (CallbackID) {
+	}
+	else if (hdac->State == HAL_DAC_STATE_RESET)
+	{
+		switch (CallbackID)
+		{
 			case HAL_DAC_MSPINIT_CB_ID:
 				hdac->MspInitCallback = HAL_DAC_MspInit;
 				break;
@@ -1660,7 +1733,9 @@ HAL_StatusTypeDef HAL_DAC_UnRegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
 		/* update return status */

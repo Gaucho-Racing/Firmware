@@ -184,35 +184,45 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		pFlash.ErrorCode = HAL_FLASH_ERROR_NONE;
 
 		/* Deactivate the data cache if they are activated to avoid data
 		 * misbehavior */
-		if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
+		if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U)
+		{
 			/* Disable data cache  */
 			__HAL_FLASH_DATA_CACHE_DISABLE();
 			pFlash.CacheToReactivate = FLASH_CACHE_DCACHE_ENABLED;
-		} else {
+		}
+		else
+		{
 			pFlash.CacheToReactivate = FLASH_CACHE_DISABLED;
 		}
 
-		if (TypeProgram == FLASH_TYPEPROGRAM_DOUBLEWORD) {
+		if (TypeProgram == FLASH_TYPEPROGRAM_DOUBLEWORD)
+		{
 			/* Program double-word (64-bit) at a specified address
 			 */
 			FLASH_Program_DoubleWord(Address, Data);
 			prog_bit = FLASH_CR_PG;
-		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
+		}
+		else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST))
+		{
 			/* Fast program a 32 row double-word (64-bit) at a
 			 * specified address */
 			FLASH_Program_Fast(Address, (uint32_t)Data);
 
 			/* If it is the last row, the bit will be cleared at the
 			 * end of the operation */
-			if (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST) {
+			if (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)
+			{
 				prog_bit = FLASH_CR_FSTPG;
 			}
-		} else {
+		}
+		else
+		{
 			/* Nothing to do */
 		}
 
@@ -221,7 +231,8 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 
 		/* If the program operation is completed, disable the PG or
 		 * FSTPG Bit */
-		if (prog_bit != 0U) {
+		if (prog_bit != 0U)
+		{
 			CLEAR_BIT(FLASH->CR, prog_bit);
 		}
 
@@ -262,18 +273,24 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, u
 
 	/* Deactivate the data cache if they are activated to avoid data
 	 * misbehavior */
-	if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
+	if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U)
+	{
 		/* Disable data cache  */
 		__HAL_FLASH_DATA_CACHE_DISABLE();
 		pFlash.CacheToReactivate = FLASH_CACHE_DCACHE_ENABLED;
-	} else {
+	}
+	else
+	{
 		pFlash.CacheToReactivate = FLASH_CACHE_DISABLED;
 	}
 
 	/* Set internal variables used by the IRQ handler */
-	if (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST) {
+	if (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)
+	{
 		pFlash.ProcedureOnGoing = FLASH_PROC_PROGRAM_LAST;
-	} else {
+	}
+	else
+	{
 		pFlash.ProcedureOnGoing = FLASH_PROC_PROGRAM;
 	}
 	pFlash.Address = Address;
@@ -281,14 +298,19 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, u
 	/* Enable End of Operation and Error interrupts */
 	__HAL_FLASH_ENABLE_IT(FLASH_IT_EOP | FLASH_IT_OPERR);
 
-	if (TypeProgram == FLASH_TYPEPROGRAM_DOUBLEWORD) {
+	if (TypeProgram == FLASH_TYPEPROGRAM_DOUBLEWORD)
+	{
 		/* Program double-word (64-bit) at a specified address */
 		FLASH_Program_DoubleWord(Address, Data);
-	} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
+	}
+	else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST))
+	{
 		/* Fast program a 32 row double-word (64-bit) at a specified
 		 * address */
 		FLASH_Program_Fast(Address, (uint32_t)Data);
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 
@@ -314,14 +336,16 @@ void HAL_FLASH_IRQHandler(void)
 #endif
 
 	/* Disable the FSTPG Bit only if it is the last row programmed */
-	if (pFlash.ProcedureOnGoing == FLASH_PROC_PROGRAM_LAST) {
+	if (pFlash.ProcedureOnGoing == FLASH_PROC_PROGRAM_LAST)
+	{
 		CLEAR_BIT(FLASH->CR, FLASH_CR_FSTPG);
 	}
 
 	/* Check FLASH operation error flags */
 	error = (FLASH->SR & FLASH_FLAG_SR_ERRORS);
 
-	if (error != 0U) {
+	if (error != 0U)
+	{
 		/*Save the error code*/
 		pFlash.ErrorCode |= error;
 
@@ -333,13 +357,20 @@ void HAL_FLASH_IRQHandler(void)
 
 		/* FLASH error interrupt user callback */
 		procedure = pFlash.ProcedureOnGoing;
-		if (procedure == FLASH_PROC_PAGE_ERASE) {
+		if (procedure == FLASH_PROC_PAGE_ERASE)
+		{
 			HAL_FLASH_OperationErrorCallback(pFlash.Page);
-		} else if (procedure == FLASH_PROC_MASS_ERASE) {
+		}
+		else if (procedure == FLASH_PROC_MASS_ERASE)
+		{
 			HAL_FLASH_OperationErrorCallback(pFlash.Bank);
-		} else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST)) {
+		}
+		else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST))
+		{
 			HAL_FLASH_OperationErrorCallback(pFlash.Address);
-		} else {
+		}
+		else
+		{
 			HAL_FLASH_OperationErrorCallback(0U);
 		}
 
@@ -348,16 +379,19 @@ void HAL_FLASH_IRQHandler(void)
 	}
 
 	/* Check FLASH End of Operation flag  */
-	if (__HAL_FLASH_GET_FLAG(FLASH_FLAG_EOP) != 0U) {
+	if (__HAL_FLASH_GET_FLAG(FLASH_FLAG_EOP) != 0U)
+	{
 		/* Clear FLASH End of Operation pending bit */
 		__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP);
 
-		if (pFlash.ProcedureOnGoing == FLASH_PROC_PAGE_ERASE) {
+		if (pFlash.ProcedureOnGoing == FLASH_PROC_PAGE_ERASE)
+		{
 			/* Nb of pages to erased can be decreased */
 			pFlash.NbPagesToErase--;
 
 			/* Check if there are still pages to erase*/
-			if (pFlash.NbPagesToErase != 0U) {
+			if (pFlash.NbPagesToErase != 0U)
+			{
 				/* Indicate user which page has been erased*/
 				HAL_FLASH_EndOfOperationCallback(pFlash.Page);
 
@@ -365,7 +399,9 @@ void HAL_FLASH_IRQHandler(void)
 				pFlash.Page++;
 				tmp_page = pFlash.Page;
 				FLASH_PageErase(tmp_page, pFlash.Bank);
-			} else {
+			}
+			else
+			{
 				/* No more pages to Erase */
 				/* Reset Address and stop Erase pages procedure
 				 */
@@ -379,21 +415,28 @@ void HAL_FLASH_IRQHandler(void)
 				/* FLASH EOP interrupt user callback */
 				HAL_FLASH_EndOfOperationCallback(pFlash.Page);
 			}
-		} else {
+		}
+		else
+		{
 			/* Flush the caches to be sure of the data consistency
 			 */
 			FLASH_FlushCaches();
 
 			procedure = pFlash.ProcedureOnGoing;
-			if (procedure == FLASH_PROC_MASS_ERASE) {
+			if (procedure == FLASH_PROC_MASS_ERASE)
+			{
 				/* MassErase ended. Return the selected bank */
 				/* FLASH EOP interrupt user callback */
 				HAL_FLASH_EndOfOperationCallback(pFlash.Bank);
-			} else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST)) {
+			}
+			else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST))
+			{
 				/* Program ended. Return the selected address */
 				/* FLASH EOP interrupt user callback */
 				HAL_FLASH_EndOfOperationCallback(pFlash.Address);
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
 
@@ -402,7 +445,8 @@ void HAL_FLASH_IRQHandler(void)
 		}
 	}
 
-	if (pFlash.ProcedureOnGoing == FLASH_PROC_NONE) {
+	if (pFlash.ProcedureOnGoing == FLASH_PROC_NONE)
+	{
 		/* Disable End of Operation and Error interrupts */
 		__HAL_FLASH_DISABLE_IT(FLASH_IT_EOP | FLASH_IT_OPERR);
 
@@ -477,13 +521,15 @@ HAL_StatusTypeDef HAL_FLASH_Unlock(void)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (READ_BIT(FLASH->CR, FLASH_CR_LOCK) != 0U) {
+	if (READ_BIT(FLASH->CR, FLASH_CR_LOCK) != 0U)
+	{
 		/* Authorize the FLASH Registers access */
 		WRITE_REG(FLASH->KEYR, FLASH_KEY1);
 		WRITE_REG(FLASH->KEYR, FLASH_KEY2);
 
 		/* Verify Flash is unlocked */
-		if (READ_BIT(FLASH->CR, FLASH_CR_LOCK) != 0U) {
+		if (READ_BIT(FLASH->CR, FLASH_CR_LOCK) != 0U)
+		{
 			status = HAL_ERROR;
 		}
 	}
@@ -509,11 +555,14 @@ HAL_StatusTypeDef HAL_FLASH_Lock(void)
  */
 HAL_StatusTypeDef HAL_FLASH_OB_Unlock(void)
 {
-	if (READ_BIT(FLASH->CR, FLASH_CR_OPTLOCK) != 0U) {
+	if (READ_BIT(FLASH->CR, FLASH_CR_OPTLOCK) != 0U)
+	{
 		/* Authorizes the Option Byte register programming */
 		WRITE_REG(FLASH->OPTKEYR, FLASH_OPTKEY1);
 		WRITE_REG(FLASH->OPTKEYR, FLASH_OPTKEY2);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -617,9 +666,12 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 	uint32_t tickstart = HAL_GetTick();
 	uint32_t error;
 
-	while (__HAL_FLASH_GET_FLAG(FLASH_FLAG_BSY)) {
-		if (Timeout != HAL_MAX_DELAY) {
-			if ((HAL_GetTick() - tickstart) >= Timeout) {
+	while (__HAL_FLASH_GET_FLAG(FLASH_FLAG_BSY))
+	{
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if ((HAL_GetTick() - tickstart) >= Timeout)
+			{
 				return HAL_TIMEOUT;
 			}
 		}
@@ -627,7 +679,8 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 
 	error = (FLASH->SR & FLASH_FLAG_SR_ERRORS);
 
-	if (error != 0u) {
+	if (error != 0u)
+	{
 		/*Save the error code*/
 		pFlash.ErrorCode |= error;
 
@@ -638,7 +691,8 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 	}
 
 	/* Check FLASH End of Operation flag  */
-	if (__HAL_FLASH_GET_FLAG(FLASH_FLAG_EOP)) {
+	if (__HAL_FLASH_GET_FLAG(FLASH_FLAG_EOP))
+	{
 		/* Clear FLASH End of Operation pending bit */
 		__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP);
 	}
@@ -696,7 +750,8 @@ static void FLASH_Program_Fast(uint32_t Address, uint32_t DataAddress)
 	__disable_irq();
 
 	/* Program the double word of the row */
-	do {
+	do
+	{
 		*dest_addr = *src_addr;
 		dest_addr++;
 		src_addr++;

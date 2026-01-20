@@ -128,7 +128,8 @@ ErrorStatus LL_RTC_DeInit(RTC_TypeDef *RTCx)
 	LL_RTC_DisableWriteProtection(RTCx);
 
 	/* Set Initialization mode */
-	if (LL_RTC_EnterInitMode(RTCx) != ERROR) {
+	if (LL_RTC_EnterInitMode(RTCx) != ERROR)
+	{
 		/* Reset TR, DR and CR registers */
 		WRITE_REG(RTCx->TR, 0x00000000U);
 #if defined(RTC_WAKEUP_SUPPORT)
@@ -208,7 +209,8 @@ ErrorStatus LL_RTC_Init(RTC_TypeDef *RTCx, LL_RTC_InitTypeDef *RTC_InitStruct)
 	LL_RTC_DisableWriteProtection(RTCx);
 
 	/* Set Initialization mode */
-	if (LL_RTC_EnterInitMode(RTCx) != ERROR) {
+	if (LL_RTC_EnterInitMode(RTCx) != ERROR)
+	{
 		/* Set Hour Format */
 		LL_RTC_SetHourFormat(RTCx, RTC_InitStruct->HourFormat);
 
@@ -262,21 +264,30 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 	assert_param(IS_RTC_ALL_INSTANCE(RTCx));
 	assert_param(IS_LL_RTC_FORMAT(RTC_Format));
 
-	if (RTC_Format == LL_RTC_FORMAT_BIN) {
-		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR) {
+	if (RTC_Format == LL_RTC_FORMAT_BIN)
+	{
+		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR)
+		{
 			assert_param(IS_LL_RTC_HOUR12(RTC_TimeStruct->Hours));
 			assert_param(IS_LL_RTC_TIME_FORMAT(RTC_TimeStruct->TimeFormat));
-		} else {
+		}
+		else
+		{
 			RTC_TimeStruct->TimeFormat = 0x00U;
 			assert_param(IS_LL_RTC_HOUR24(RTC_TimeStruct->Hours));
 		}
 		assert_param(IS_LL_RTC_MINUTES(RTC_TimeStruct->Minutes));
 		assert_param(IS_LL_RTC_SECONDS(RTC_TimeStruct->Seconds));
-	} else {
-		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR) {
+	}
+	else
+	{
+		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR)
+		{
 			assert_param(IS_LL_RTC_HOUR12(__LL_RTC_CONVERT_BCD2BIN(RTC_TimeStruct->Hours)));
 			assert_param(IS_LL_RTC_TIME_FORMAT(RTC_TimeStruct->TimeFormat));
-		} else {
+		}
+		else
+		{
 			RTC_TimeStruct->TimeFormat = 0x00U;
 			assert_param(IS_LL_RTC_HOUR24(__LL_RTC_CONVERT_BCD2BIN(RTC_TimeStruct->Hours)));
 		}
@@ -288,11 +299,15 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 	LL_RTC_DisableWriteProtection(RTCx);
 
 	/* Set Initialization mode */
-	if (LL_RTC_EnterInitMode(RTCx) != ERROR) {
+	if (LL_RTC_EnterInitMode(RTCx) != ERROR)
+	{
 		/* Check the input parameters format */
-		if (RTC_Format != LL_RTC_FORMAT_BIN) {
+		if (RTC_Format != LL_RTC_FORMAT_BIN)
+		{
 			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, RTC_TimeStruct->Hours, RTC_TimeStruct->Minutes, RTC_TimeStruct->Seconds);
-		} else {
+		}
+		else
+		{
 			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Hours), __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Minutes),
 					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Seconds));
 		}
@@ -302,9 +317,12 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 
 		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check
 		 * is not needed */
-		if (LL_RTC_IsShadowRegBypassEnabled(RTCx) == 0U) {
+		if (LL_RTC_IsShadowRegBypassEnabled(RTCx) == 0U)
+		{
 			status = LL_RTC_WaitForSynchro(RTCx);
-		} else {
+		}
+		else
+		{
 			status = SUCCESS;
 		}
 	}
@@ -350,14 +368,18 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 	assert_param(IS_RTC_ALL_INSTANCE(RTCx));
 	assert_param(IS_LL_RTC_FORMAT(RTC_Format));
 
-	if ((RTC_Format == LL_RTC_FORMAT_BIN) && ((RTC_DateStruct->Month & 0x10U) == 0x10U)) {
+	if ((RTC_Format == LL_RTC_FORMAT_BIN) && ((RTC_DateStruct->Month & 0x10U) == 0x10U))
+	{
 		RTC_DateStruct->Month = (uint8_t)(RTC_DateStruct->Month & (uint8_t) ~(0x10U)) + 0x0AU;
 	}
-	if (RTC_Format == LL_RTC_FORMAT_BIN) {
+	if (RTC_Format == LL_RTC_FORMAT_BIN)
+	{
 		assert_param(IS_LL_RTC_YEAR(RTC_DateStruct->Year));
 		assert_param(IS_LL_RTC_MONTH(RTC_DateStruct->Month));
 		assert_param(IS_LL_RTC_DAY(RTC_DateStruct->Day));
-	} else {
+	}
+	else
+	{
 		assert_param(IS_LL_RTC_YEAR(__LL_RTC_CONVERT_BCD2BIN(RTC_DateStruct->Year)));
 		assert_param(IS_LL_RTC_MONTH(__LL_RTC_CONVERT_BCD2BIN(RTC_DateStruct->Month)));
 		assert_param(IS_LL_RTC_DAY(__LL_RTC_CONVERT_BCD2BIN(RTC_DateStruct->Day)));
@@ -368,11 +390,15 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 	LL_RTC_DisableWriteProtection(RTCx);
 
 	/* Set Initialization mode */
-	if (LL_RTC_EnterInitMode(RTCx) != ERROR) {
+	if (LL_RTC_EnterInitMode(RTCx) != ERROR)
+	{
 		/* Check the input parameters format */
-		if (RTC_Format != LL_RTC_FORMAT_BIN) {
+		if (RTC_Format != LL_RTC_FORMAT_BIN)
+		{
 			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, RTC_DateStruct->Day, RTC_DateStruct->Month, RTC_DateStruct->Year);
-		} else {
+		}
+		else
+		{
 			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Day), __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Month),
 					   __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Year));
 		}
@@ -382,9 +408,12 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 
 		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check
 		 * is not needed */
-		if (LL_RTC_IsShadowRegBypassEnabled(RTCx) == 0U) {
+		if (LL_RTC_IsShadowRegBypassEnabled(RTCx) == 0U)
+		{
 			status = LL_RTC_WaitForSynchro(RTCx);
-		} else {
+		}
+		else
+		{
 			status = SUCCESS;
 		}
 	}
@@ -432,29 +461,41 @@ ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 	assert_param(IS_LL_RTC_ALMA_MASK(RTC_AlarmStruct->AlarmMask));
 	assert_param(IS_LL_RTC_ALMA_DATE_WEEKDAY_SEL(RTC_AlarmStruct->AlarmDateWeekDaySel));
 
-	if (RTC_Format == LL_RTC_FORMAT_BIN) {
+	if (RTC_Format == LL_RTC_FORMAT_BIN)
+	{
 		/* initialize the AlarmTime for Binary format */
-		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR) {
+		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR)
+		{
 			assert_param(IS_LL_RTC_HOUR12(RTC_AlarmStruct->AlarmTime.Hours));
 			assert_param(IS_LL_RTC_TIME_FORMAT(RTC_AlarmStruct->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			RTC_AlarmStruct->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_LL_RTC_HOUR24(RTC_AlarmStruct->AlarmTime.Hours));
 		}
 		assert_param(IS_LL_RTC_MINUTES(RTC_AlarmStruct->AlarmTime.Minutes));
 		assert_param(IS_LL_RTC_SECONDS(RTC_AlarmStruct->AlarmTime.Seconds));
 
-		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE) {
+		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_LL_RTC_DAY(RTC_AlarmStruct->AlarmDateWeekDay));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_LL_RTC_WEEKDAY(RTC_AlarmStruct->AlarmDateWeekDay));
 		}
-	} else {
+	}
+	else
+	{
 		/* initialize the AlarmTime for BCD format */
-		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR) {
+		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR)
+		{
 			assert_param(IS_LL_RTC_HOUR12(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Hours)));
 			assert_param(IS_LL_RTC_TIME_FORMAT(RTC_AlarmStruct->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			RTC_AlarmStruct->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_LL_RTC_HOUR24(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Hours)));
 		}
@@ -462,9 +503,12 @@ ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 		assert_param(IS_LL_RTC_MINUTES(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Minutes)));
 		assert_param(IS_LL_RTC_SECONDS(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Seconds)));
 
-		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE) {
+		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_LL_RTC_DAY(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmDateWeekDay)));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_LL_RTC_WEEKDAY(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmDateWeekDay)));
 		}
 	}
@@ -473,24 +517,33 @@ ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 	LL_RTC_DisableWriteProtection(RTCx);
 
 	/* Select weekday selection */
-	if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE) {
+	if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE)
+	{
 		/* Set the date for ALARM */
 		LL_RTC_ALMA_DisableWeekday(RTCx);
-		if (RTC_Format != LL_RTC_FORMAT_BIN) {
+		if (RTC_Format != LL_RTC_FORMAT_BIN)
+		{
 			LL_RTC_ALMA_SetDay(RTCx, RTC_AlarmStruct->AlarmDateWeekDay);
-		} else {
+		}
+		else
+		{
 			LL_RTC_ALMA_SetDay(RTCx, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmDateWeekDay));
 		}
-	} else {
+	}
+	else
+	{
 		/* Set the week day for ALARM */
 		LL_RTC_ALMA_EnableWeekday(RTCx);
 		LL_RTC_ALMA_SetWeekDay(RTCx, RTC_AlarmStruct->AlarmDateWeekDay);
 	}
 
 	/* Configure the Alarm register */
-	if (RTC_Format != LL_RTC_FORMAT_BIN) {
+	if (RTC_Format != LL_RTC_FORMAT_BIN)
+	{
 		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours, RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
-	} else {
+	}
+	else
+	{
 		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
 				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes), __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
 	}
@@ -525,29 +578,41 @@ ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 	assert_param(IS_LL_RTC_ALMB_MASK(RTC_AlarmStruct->AlarmMask));
 	assert_param(IS_LL_RTC_ALMB_DATE_WEEKDAY_SEL(RTC_AlarmStruct->AlarmDateWeekDaySel));
 
-	if (RTC_Format == LL_RTC_FORMAT_BIN) {
+	if (RTC_Format == LL_RTC_FORMAT_BIN)
+	{
 		/* initialize the AlarmTime for Binary format */
-		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR) {
+		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR)
+		{
 			assert_param(IS_LL_RTC_HOUR12(RTC_AlarmStruct->AlarmTime.Hours));
 			assert_param(IS_LL_RTC_TIME_FORMAT(RTC_AlarmStruct->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			RTC_AlarmStruct->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_LL_RTC_HOUR24(RTC_AlarmStruct->AlarmTime.Hours));
 		}
 		assert_param(IS_LL_RTC_MINUTES(RTC_AlarmStruct->AlarmTime.Minutes));
 		assert_param(IS_LL_RTC_SECONDS(RTC_AlarmStruct->AlarmTime.Seconds));
 
-		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE) {
+		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_LL_RTC_DAY(RTC_AlarmStruct->AlarmDateWeekDay));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_LL_RTC_WEEKDAY(RTC_AlarmStruct->AlarmDateWeekDay));
 		}
-	} else {
+	}
+	else
+	{
 		/* initialize the AlarmTime for BCD format */
-		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR) {
+		if (LL_RTC_GetHourFormat(RTCx) != LL_RTC_HOURFORMAT_24HOUR)
+		{
 			assert_param(IS_LL_RTC_HOUR12(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Hours)));
 			assert_param(IS_LL_RTC_TIME_FORMAT(RTC_AlarmStruct->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			RTC_AlarmStruct->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_LL_RTC_HOUR24(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Hours)));
 		}
@@ -555,9 +620,12 @@ ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 		assert_param(IS_LL_RTC_MINUTES(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Minutes)));
 		assert_param(IS_LL_RTC_SECONDS(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmTime.Seconds)));
 
-		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE) {
+		if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_LL_RTC_DAY(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmDateWeekDay)));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_LL_RTC_WEEKDAY(__LL_RTC_CONVERT_BCD2BIN(RTC_AlarmStruct->AlarmDateWeekDay)));
 		}
 	}
@@ -566,24 +634,33 @@ ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 	LL_RTC_DisableWriteProtection(RTCx);
 
 	/* Select weekday selection */
-	if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE) {
+	if (RTC_AlarmStruct->AlarmDateWeekDaySel == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE)
+	{
 		/* Set the date for ALARM */
 		LL_RTC_ALMB_DisableWeekday(RTCx);
-		if (RTC_Format != LL_RTC_FORMAT_BIN) {
+		if (RTC_Format != LL_RTC_FORMAT_BIN)
+		{
 			LL_RTC_ALMB_SetDay(RTCx, RTC_AlarmStruct->AlarmDateWeekDay);
-		} else {
+		}
+		else
+		{
 			LL_RTC_ALMB_SetDay(RTCx, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmDateWeekDay));
 		}
-	} else {
+	}
+	else
+	{
 		/* Set the week day for ALARM */
 		LL_RTC_ALMB_EnableWeekday(RTCx);
 		LL_RTC_ALMB_SetWeekDay(RTCx, RTC_AlarmStruct->AlarmDateWeekDay);
 	}
 
 	/* Configure the Alarm register */
-	if (RTC_Format != LL_RTC_FORMAT_BIN) {
+	if (RTC_Format != LL_RTC_FORMAT_BIN)
+	{
 		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours, RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
-	} else {
+	}
+	else
+	{
 		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
 				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes), __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
 	}
@@ -663,19 +740,23 @@ ErrorStatus LL_RTC_EnterInitMode(RTC_TypeDef *RTCx)
 	assert_param(IS_RTC_ALL_INSTANCE(RTCx));
 
 	/* Check if the Initialization mode is set */
-	if (LL_RTC_IsActiveFlag_INIT(RTCx) == 0U) {
+	if (LL_RTC_IsActiveFlag_INIT(RTCx) == 0U)
+	{
 		/* Set the Initialization mode */
 		LL_RTC_EnableInitMode(RTCx);
 
 		/* Wait till RTC is in INIT state and if Time out is reached
 		 * exit */
 		tmp = LL_RTC_IsActiveFlag_INIT(RTCx);
-		while ((timeout != 0U) && (tmp != 1U)) {
-			if (LL_SYSTICK_IsActiveCounterFlag() == 1U) {
+		while ((timeout != 0U) && (tmp != 1U))
+		{
+			if (LL_SYSTICK_IsActiveCounterFlag() == 1U)
+			{
 				timeout--;
 			}
 			tmp = LL_RTC_IsActiveFlag_INIT(RTCx);
-			if (timeout == 0U) {
+			if (timeout == 0U)
+			{
 				status = ERROR;
 			}
 		}
@@ -735,25 +816,32 @@ ErrorStatus LL_RTC_WaitForSynchro(RTC_TypeDef *RTCx)
 
 	/* Wait the registers to be synchronised */
 	tmp = LL_RTC_IsActiveFlag_RS(RTCx);
-	while ((timeout != 0U) && (tmp != 0U)) {
-		if (LL_SYSTICK_IsActiveCounterFlag() == 1U) {
+	while ((timeout != 0U) && (tmp != 0U))
+	{
+		if (LL_SYSTICK_IsActiveCounterFlag() == 1U)
+		{
 			timeout--;
 		}
 		tmp = LL_RTC_IsActiveFlag_RS(RTCx);
-		if (timeout == 0U) {
+		if (timeout == 0U)
+		{
 			status = ERROR;
 		}
 	}
 
-	if (status != ERROR) {
+	if (status != ERROR)
+	{
 		timeout = RTC_SYNCHRO_TIMEOUT;
 		tmp = LL_RTC_IsActiveFlag_RS(RTCx);
-		while ((timeout != 0U) && (tmp != 1U)) {
-			if (LL_SYSTICK_IsActiveCounterFlag() == 1U) {
+		while ((timeout != 0U) && (tmp != 1U))
+		{
+			if (LL_SYSTICK_IsActiveCounterFlag() == 1U)
+			{
 				timeout--;
 			}
 			tmp = LL_RTC_IsActiveFlag_RS(RTCx);
-			if (timeout == 0U) {
+			if (timeout == 0U)
+			{
 				status = ERROR;
 			}
 		}

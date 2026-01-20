@@ -30,10 +30,12 @@ void setSoftwareLatch(bool close)
 
 bool CriticalError(const ECU_StateData *stateData)
 {
-	if (stateData->ecuStatus1.max_cell_temp > 60) {
+	if (stateData->ecuStatus1.max_cell_temp > 60)
+	{
 		return true;
 	}
-	if (stateData->ecuStatus2.ts_voltage > 600) {
+	if (stateData->ecuStatus2.ts_voltage > 600)
+	{
 		return true;
 	}
 	return false;

@@ -21,226 +21,233 @@
 #define __STM32L4xx_CAN_LEGACY_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #if defined(CAN1)
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-/** @addtogroup STM32L4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32L4xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup CAN
- * @{
- */
+	/** @addtogroup CAN
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup CAN_Exported_Types CAN Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup CAN_Exported_Types CAN Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  HAL State structures definition
- */
-typedef enum {
-	HAL_CAN_STATE_RESET = 0x00,	 /*!< CAN not yet initialized or disabled */
-	HAL_CAN_STATE_READY = 0x01,	 /*!< CAN initialized and ready for use   */
-	HAL_CAN_STATE_BUSY = 0x02,	 /*!< CAN process is ongoing              */
-	HAL_CAN_STATE_BUSY_TX = 0x12,	 /*!< CAN process is ongoing    */
-	HAL_CAN_STATE_BUSY_RX = 0x22,	 /*!< CAN process is ongoing    */
-	HAL_CAN_STATE_BUSY_TX_RX = 0x32, /*!< CAN process is ongoing */
-	HAL_CAN_STATE_TIMEOUT = 0x03,	 /*!< Timeout state    */
-	HAL_CAN_STATE_ERROR = 0x04	 /*!< CAN error state                     */
+	/**
+	 * @brief  HAL State structures definition
+	 */
+	typedef enum
+	{
+		HAL_CAN_STATE_RESET = 0x00,	 /*!< CAN not yet initialized or disabled */
+		HAL_CAN_STATE_READY = 0x01,	 /*!< CAN initialized and ready for use   */
+		HAL_CAN_STATE_BUSY = 0x02,	 /*!< CAN process is ongoing              */
+		HAL_CAN_STATE_BUSY_TX = 0x12,	 /*!< CAN process is ongoing    */
+		HAL_CAN_STATE_BUSY_RX = 0x22,	 /*!< CAN process is ongoing    */
+		HAL_CAN_STATE_BUSY_TX_RX = 0x32, /*!< CAN process is ongoing */
+		HAL_CAN_STATE_TIMEOUT = 0x03,	 /*!< Timeout state    */
+		HAL_CAN_STATE_ERROR = 0x04	 /*!< CAN error state                     */
 
-} HAL_CAN_StateTypeDef;
+	} HAL_CAN_StateTypeDef;
 
-/**
- * @brief  CAN init structure definition
- */
-typedef struct {
-	uint32_t Prescaler; /*!< Specifies the length of a time quantum.
-				 This parameter must be a number between
-			       Min_Data = 1 and Max_Data = 1024 */
+	/**
+	 * @brief  CAN init structure definition
+	 */
+	typedef struct
+	{
+		uint32_t Prescaler; /*!< Specifies the length of a time quantum.
+					 This parameter must be a number between
+				       Min_Data = 1 and Max_Data = 1024 */
 
-	uint32_t Mode; /*!< Specifies the CAN operating mode.
-			    This parameter can be a value of @ref
-			  CAN_operating_mode */
+		uint32_t Mode; /*!< Specifies the CAN operating mode.
+				    This parameter can be a value of @ref
+				  CAN_operating_mode */
 
-	uint32_t SJW; /*!< Specifies the maximum number of time quanta
-			   the CAN hardware is allowed to lengthen or
-			   shorten a bit to perform resynchronization.
-			   This parameter can be a value of @ref
-			 CAN_synchronisation_jump_width */
-
-	uint32_t BS1; /*!< Specifies the number of time quanta in Bit Segment 1.
-			   This parameter can be a value of @ref
-			 CAN_time_quantum_in_bit_segment_1 */
-
-	uint32_t BS2; /*!< Specifies the number of time quanta in Bit Segment 2.
-			   This parameter can be a value of @ref
-			 CAN_time_quantum_in_bit_segment_2 */
-
-	uint32_t TTCM; /*!< Enable or disable the time triggered communication mode.
-			    This parameter can be set to ENABLE or DISABLE. */
-
-	uint32_t ABOM; /*!< Enable or disable the automatic bus-off management.
-			    This parameter can be set to ENABLE or DISABLE */
-
-	uint32_t AWUM; /*!< Enable or disable the automatic wake-up mode.
-			    This parameter can be set to ENABLE or DISABLE */
-
-	uint32_t NART; /*!< Enable or disable the non-automatic retransmission mode.
-			    This parameter can be set to ENABLE or DISABLE */
-
-	uint32_t RFLM; /*!< Enable or disable the receive FIFO Locked mode.
-			    This parameter can be set to ENABLE or DISABLE */
-
-	uint32_t TXFP; /*!< Enable or disable the transmit FIFO priority.
-			    This parameter can be set to ENABLE or DISABLE */
-} CAN_InitTypeDef;
-
-/**
- * @brief  CAN filter configuration structure definition
- */
-typedef struct {
-	uint32_t FilterIdHigh; /*!< Specifies the filter identification number (MSBs
-				  for a 32-bit configuration, first one for a 16-bit
-				  configuration). This parameter must be a number
-				  between Min_Data = 0x0000 and Max_Data = 0xFFFF */
-
-	uint32_t FilterIdLow; /*!< Specifies the filter identification number (LSBs
-				 for a 32-bit configuration, second one for a 16-bit
-				 configuration). This parameter must be a number
-				 between Min_Data = 0x0000 and Max_Data = 0xFFFF */
-
-	uint32_t FilterMaskIdHigh; /*!< Specifies the filter mask number or
-				      identification number, according to the
-				      mode (MSBs for a 32-bit configuration,
-					first one for a 16-bit configuration).
-					This parameter must be a number between
-				      Min_Data = 0x0000 and Max_Data = 0xFFFF */
-
-	uint32_t FilterMaskIdLow; /*!< Specifies the filter mask number or
-				     identification number, according to the
-				     mode (LSBs for a 32-bit configuration,
-				       second one for a 16-bit configuration).
-				       This parameter must be a number between
-				     Min_Data = 0x0000 and Max_Data = 0xFFFF */
-
-	uint32_t FilterFIFOAssignment; /*!< Specifies the FIFO (0 or 1) which will be
-					  assigned to the filter. This parameter can
-					  be a value of @ref CAN_filter_FIFO */
-
-	uint32_t FilterNumber; /*!< Specifies the filter which will be
-				  initialized. This parameter must be a number
-				  between Min_Data = 0 and Max_Data = 27 */
-
-	uint32_t FilterMode; /*!< Specifies the filter mode to be initialized.
-				  This parameter can be a value of @ref
-				CAN_filter_mode */
-
-	uint32_t FilterScale; /*!< Specifies the filter scale.
+		uint32_t SJW; /*!< Specifies the maximum number of time quanta
+				   the CAN hardware is allowed to lengthen or
+				   shorten a bit to perform resynchronization.
 				   This parameter can be a value of @ref
-				 CAN_filter_scale */
+				 CAN_synchronisation_jump_width */
 
-	uint32_t FilterActivation; /*!< Enable or disable the filter.
-					This parameter can be set to ENABLE or
-				      DISABLE */
+		uint32_t BS1; /*!< Specifies the number of time quanta in Bit Segment 1.
+				   This parameter can be a value of @ref
+				 CAN_time_quantum_in_bit_segment_1 */
 
-	uint32_t BankNumber; /*!< Select the start slave bank filter.
-				  This parameter must be a number between
-				Min_Data = 0 and Max_Data = 28 */
+		uint32_t BS2; /*!< Specifies the number of time quanta in Bit Segment 2.
+				   This parameter can be a value of @ref
+				 CAN_time_quantum_in_bit_segment_2 */
 
-} CAN_FilterConfTypeDef;
+		uint32_t TTCM; /*!< Enable or disable the time triggered communication mode.
+				    This parameter can be set to ENABLE or DISABLE. */
 
-/**
- * @brief  CAN Tx message structure definition
- */
-typedef struct {
-	uint32_t StdId; /*!< Specifies the standard identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x7FF */
+		uint32_t ABOM; /*!< Enable or disable the automatic bus-off management.
+				    This parameter can be set to ENABLE or DISABLE */
 
-	uint32_t ExtId; /*!< Specifies the extended identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x1FFFFFFF */
+		uint32_t AWUM; /*!< Enable or disable the automatic wake-up mode.
+				    This parameter can be set to ENABLE or DISABLE */
 
-	uint32_t IDE; /*!< Specifies the type of identifier for the message that
-			 will be transmitted. This parameter can be a value of
-			 @ref CAN_identifier_type */
+		uint32_t NART; /*!< Enable or disable the non-automatic retransmission mode.
+				    This parameter can be set to ENABLE or DISABLE */
 
-	uint32_t RTR; /*!< Specifies the type of frame for the message that will
-			 be transmitted. This parameter can be a value of @ref
-			 CAN_remote_transmission_request */
+		uint32_t RFLM; /*!< Enable or disable the receive FIFO Locked mode.
+				    This parameter can be set to ENABLE or DISABLE */
 
-	uint32_t DLC; /*!< Specifies the length of the frame that will be
-			 transmitted. This parameter must be a number between
-			 Min_Data = 0 and Max_Data = 8 */
+		uint32_t TXFP; /*!< Enable or disable the transmit FIFO priority.
+				    This parameter can be set to ENABLE or DISABLE */
+	} CAN_InitTypeDef;
 
-	uint8_t Data[8]; /*!< Contains the data to be transmitted.
-			      This parameter must be a number between Min_Data =
-			    0 and Max_Data = 0xFF */
+	/**
+	 * @brief  CAN filter configuration structure definition
+	 */
+	typedef struct
+	{
+		uint32_t FilterIdHigh; /*!< Specifies the filter identification number (MSBs
+					  for a 32-bit configuration, first one for a 16-bit
+					  configuration). This parameter must be a number
+					  between Min_Data = 0x0000 and Max_Data = 0xFFFF */
 
-} CanTxMsgTypeDef;
+		uint32_t FilterIdLow; /*!< Specifies the filter identification number (LSBs
+					 for a 32-bit configuration, second one for a 16-bit
+					 configuration). This parameter must be a number
+					 between Min_Data = 0x0000 and Max_Data = 0xFFFF */
 
-/**
- * @brief  CAN Rx message structure definition
- */
-typedef struct {
-	uint32_t StdId; /*!< Specifies the standard identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x7FF */
+		uint32_t FilterMaskIdHigh; /*!< Specifies the filter mask number or
+					      identification number, according to the
+					      mode (MSBs for a 32-bit configuration,
+						first one for a 16-bit configuration).
+						This parameter must be a number between
+					      Min_Data = 0x0000 and Max_Data = 0xFFFF */
 
-	uint32_t ExtId; /*!< Specifies the extended identifier.
-			     This parameter must be a number between Min_Data =
-			   0 and Max_Data = 0x1FFFFFFF */
+		uint32_t FilterMaskIdLow; /*!< Specifies the filter mask number or
+					     identification number, according to the
+					     mode (LSBs for a 32-bit configuration,
+					       second one for a 16-bit configuration).
+					       This parameter must be a number between
+					     Min_Data = 0x0000 and Max_Data = 0xFFFF */
 
-	uint32_t IDE; /*!< Specifies the type of identifier for the message that
-			 will be received. This parameter can be a value of @ref
-			 CAN_identifier_type */
+		uint32_t FilterFIFOAssignment; /*!< Specifies the FIFO (0 or 1) which will be
+						  assigned to the filter. This parameter can
+						  be a value of @ref CAN_filter_FIFO */
 
-	uint32_t RTR; /*!< Specifies the type of frame for the received message.
-			   This parameter can be a value of @ref
-			 CAN_remote_transmission_request */
+		uint32_t FilterNumber; /*!< Specifies the filter which will be
+					  initialized. This parameter must be a number
+					  between Min_Data = 0 and Max_Data = 27 */
 
-	uint32_t DLC; /*!< Specifies the length of the frame that will be
-			 received. This parameter must be a number between
-			 Min_Data = 0 and Max_Data = 8 */
+		uint32_t FilterMode; /*!< Specifies the filter mode to be initialized.
+					  This parameter can be a value of @ref
+					CAN_filter_mode */
 
-	uint8_t Data[8]; /*!< Contains the data to be received.
-			      This parameter must be a number between Min_Data =
-			    0 and Max_Data = 0xFF */
+		uint32_t FilterScale; /*!< Specifies the filter scale.
+					   This parameter can be a value of @ref
+					 CAN_filter_scale */
 
-	uint32_t FMI; /*!< Specifies the index of the filter the message stored
-			 in the mailbox passes through. This parameter must be a
-			 number between Min_Data = 0 and Max_Data = 0xFF */
+		uint32_t FilterActivation; /*!< Enable or disable the filter.
+						This parameter can be set to ENABLE or
+					      DISABLE */
 
-	uint32_t FIFONumber; /*!< Specifies the receive FIFO number.
-				  This parameter can be CAN_FIFO0 or CAN_FIFO1 */
+		uint32_t BankNumber; /*!< Select the start slave bank filter.
+					  This parameter must be a number between
+					Min_Data = 0 and Max_Data = 28 */
 
-} CanRxMsgTypeDef;
+	} CAN_FilterConfTypeDef;
 
-/**
- * @brief  CAN handle Structure definition
- */
-typedef struct {
-	CAN_TypeDef *Instance; /*!< Register base address          */
+	/**
+	 * @brief  CAN Tx message structure definition
+	 */
+	typedef struct
+	{
+		uint32_t StdId; /*!< Specifies the standard identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x7FF */
 
-	CAN_InitTypeDef Init; /*!< CAN required parameters        */
+		uint32_t ExtId; /*!< Specifies the extended identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x1FFFFFFF */
 
-	CanTxMsgTypeDef *pTxMsg; /*!< Pointer to transmit structure  */
+		uint32_t IDE; /*!< Specifies the type of identifier for the message that
+				 will be transmitted. This parameter can be a value of
+				 @ref CAN_identifier_type */
 
-	CanRxMsgTypeDef *pRxMsg; /*!< Pointer to reception structure */
+		uint32_t RTR; /*!< Specifies the type of frame for the message that will
+				 be transmitted. This parameter can be a value of @ref
+				 CAN_remote_transmission_request */
 
-	__IO HAL_CAN_StateTypeDef State; /*!< CAN communication state        */
+		uint32_t DLC; /*!< Specifies the length of the frame that will be
+				 transmitted. This parameter must be a number between
+				 Min_Data = 0 and Max_Data = 8 */
 
-	HAL_LockTypeDef Lock; /*!< CAN locking object             */
+		uint8_t Data[8]; /*!< Contains the data to be transmitted.
+				      This parameter must be a number between Min_Data =
+				    0 and Max_Data = 0xFF */
 
-	__IO uint32_t ErrorCode; /*!< CAN Error code                 */
+	} CanTxMsgTypeDef;
 
-} CAN_HandleTypeDef;
+	/**
+	 * @brief  CAN Rx message structure definition
+	 */
+	typedef struct
+	{
+		uint32_t StdId; /*!< Specifies the standard identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x7FF */
+
+		uint32_t ExtId; /*!< Specifies the extended identifier.
+				     This parameter must be a number between Min_Data =
+				   0 and Max_Data = 0x1FFFFFFF */
+
+		uint32_t IDE; /*!< Specifies the type of identifier for the message that
+				 will be received. This parameter can be a value of @ref
+				 CAN_identifier_type */
+
+		uint32_t RTR; /*!< Specifies the type of frame for the received message.
+				   This parameter can be a value of @ref
+				 CAN_remote_transmission_request */
+
+		uint32_t DLC; /*!< Specifies the length of the frame that will be
+				 received. This parameter must be a number between
+				 Min_Data = 0 and Max_Data = 8 */
+
+		uint8_t Data[8]; /*!< Contains the data to be received.
+				      This parameter must be a number between Min_Data =
+				    0 and Max_Data = 0xFF */
+
+		uint32_t FMI; /*!< Specifies the index of the filter the message stored
+				 in the mailbox passes through. This parameter must be a
+				 number between Min_Data = 0 and Max_Data = 0xFF */
+
+		uint32_t FIFONumber; /*!< Specifies the receive FIFO number.
+					  This parameter can be CAN_FIFO0 or CAN_FIFO1 */
+
+	} CanRxMsgTypeDef;
+
+	/**
+	 * @brief  CAN handle Structure definition
+	 */
+	typedef struct
+	{
+		CAN_TypeDef *Instance; /*!< Register base address          */
+
+		CAN_InitTypeDef Init; /*!< CAN required parameters        */
+
+		CanTxMsgTypeDef *pTxMsg; /*!< Pointer to transmit structure  */
+
+		CanRxMsgTypeDef *pRxMsg; /*!< Pointer to reception structure */
+
+		__IO HAL_CAN_StateTypeDef State; /*!< CAN communication state        */
+
+		HAL_LockTypeDef Lock; /*!< CAN locking object             */
+
+		__IO uint32_t ErrorCode; /*!< CAN Error code                 */
+
+	} CAN_HandleTypeDef;
 
 /**
  * @}
@@ -629,58 +636,58 @@ typedef struct {
  */
 #define __HAL_CAN_DBG_FREEZE(__HANDLE__, __NEWSTATE__) (((__NEWSTATE__) == ENABLE) ? ((__HANDLE__)->Instance->MCR |= CAN_MCR_DBF) : ((__HANDLE__)->Instance->MCR &= ~CAN_MCR_DBF))
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup CAN_Exported_Functions CAN Exported Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup CAN_Exported_Functions CAN Exported Functions
+	 * @{
+	 */
 
-/** @defgroup CAN_Exported_Functions_Group1 Initialization and de-initialization
- * functions
- *  @brief    Initialization and Configuration functions
- * @{
- */
-/* addtogroup and de-initialization functions *****************************/
-HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, CAN_FilterConfTypeDef *sFilterConfig);
-HAL_StatusTypeDef HAL_CAN_DeInit(CAN_HandleTypeDef *hcan);
-void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan);
-void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan);
-/**
- * @}
- */
+	/** @defgroup CAN_Exported_Functions_Group1 Initialization and de-initialization
+	 * functions
+	 *  @brief    Initialization and Configuration functions
+	 * @{
+	 */
+	/* addtogroup and de-initialization functions *****************************/
+	HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, CAN_FilterConfTypeDef *sFilterConfig);
+	HAL_StatusTypeDef HAL_CAN_DeInit(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group2 Input and Output operation
- * functions
- *  @brief    I/O operation functions
- * @{
- */
-/* IO operation functions *****************************************************/
-HAL_StatusTypeDef HAL_CAN_Transmit(CAN_HandleTypeDef *hcan, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CAN_Transmit_IT(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_Receive(CAN_HandleTypeDef *hcan, uint8_t FIFONumber, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CAN_Receive_IT(CAN_HandleTypeDef *hcan, uint8_t FIFONumber);
-HAL_StatusTypeDef HAL_CAN_Sleep(CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_WakeUp(CAN_HandleTypeDef *hcan);
-void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan);
-void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan);
-void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan);
-/**
- * @}
- */
+	/** @addtogroup CAN_Exported_Functions_Group2 Input and Output operation
+	 * functions
+	 *  @brief    I/O operation functions
+	 * @{
+	 */
+	/* IO operation functions *****************************************************/
+	HAL_StatusTypeDef HAL_CAN_Transmit(CAN_HandleTypeDef *hcan, uint32_t Timeout);
+	HAL_StatusTypeDef HAL_CAN_Transmit_IT(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_Receive(CAN_HandleTypeDef *hcan, uint8_t FIFONumber, uint32_t Timeout);
+	HAL_StatusTypeDef HAL_CAN_Receive_IT(CAN_HandleTypeDef *hcan, uint8_t FIFONumber);
+	HAL_StatusTypeDef HAL_CAN_Sleep(CAN_HandleTypeDef *hcan);
+	HAL_StatusTypeDef HAL_CAN_WakeUp(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan);
+	void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan);
+	/**
+	 * @}
+	 */
 
-/** @addtogroup CAN_Exported_Functions_Group3 Peripheral State and Error
- * functions
- *  @brief   CAN Peripheral State functions
- * @{
- */
-/* Peripheral State and Error functions ***************************************/
-uint32_t HAL_CAN_GetError(CAN_HandleTypeDef *hcan);
-HAL_CAN_StateTypeDef HAL_CAN_GetState(CAN_HandleTypeDef *hcan);
+	/** @addtogroup CAN_Exported_Functions_Group3 Peripheral State and Error
+	 * functions
+	 *  @brief   CAN Peripheral State functions
+	 * @{
+	 */
+	/* Peripheral State and Error functions ***************************************/
+	uint32_t HAL_CAN_GetError(CAN_HandleTypeDef *hcan);
+	HAL_CAN_StateTypeDef HAL_CAN_GetState(CAN_HandleTypeDef *hcan);
 /**
  * @}
  */
@@ -705,14 +712,14 @@ HAL_CAN_StateTypeDef HAL_CAN_GetState(CAN_HandleTypeDef *hcan);
  */
 #define CAN_FLAG_MASK ((uint32_t)0x000000FF)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private macros ------------------------------------------------------------*/
-/** @defgroup CAN_Private_Macros CAN Private Macros
- * @{
- */
+	/* Private macros ------------------------------------------------------------*/
+	/** @defgroup CAN_Private_Macros CAN Private Macros
+	 * @{
+	 */
 
 #define IS_CAN_MODE(MODE) (((MODE) == CAN_MODE_NORMAL) || ((MODE) == CAN_MODE_LOOPBACK) || ((MODE) == CAN_MODE_SILENT) || ((MODE) == CAN_MODE_SILENT_LOOPBACK))
 

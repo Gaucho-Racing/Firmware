@@ -21,44 +21,46 @@
 #define STM32L4xx_HAL_RNG_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-/** @addtogroup STM32L4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32L4xx_HAL_Driver
+	 * @{
+	 */
 
 #if defined(RNG)
 #if defined(RNG_CR_CONDRST)
 
-/** @defgroup RNGEx RNGEx
- * @brief RNG Extension HAL module driver
- * @{
- */
+	/** @defgroup RNGEx RNGEx
+	 * @brief RNG Extension HAL module driver
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup RNGEx_Exported_Types RNGEx Exported Types
- * @brief RNGEx Exported types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup RNGEx_Exported_Types RNGEx Exported Types
+	 * @brief RNGEx Exported types
+	 * @{
+	 */
 
-/**
- * @brief RNGEx Configuration Structure definition
- */
+	/**
+	 * @brief RNGEx Configuration Structure definition
+	 */
 
-typedef struct {
-	uint32_t Config1;	 /*!< Config1 must be a value between 0 and 0x3F */
-	uint32_t Config2;	 /*!< Config2 must be a value between 0 and 0x7 */
-	uint32_t Config3;	 /*!< Config3 must be a value between 0 and 0xF */
-	uint32_t ClockDivider;	 /*!< Clock Divider factor.This parameter can
-				      be a value of @ref
-				    RNGEx_Clock_Divider_Factor	*/
-	uint32_t NistCompliance; /*!< NIST compliance.This parameter can be a
-				      value of @ref RNGEx_NIST_Compliance   */
-} RNG_ConfigTypeDef;
+	typedef struct
+	{
+		uint32_t Config1;	 /*!< Config1 must be a value between 0 and 0x3F */
+		uint32_t Config2;	 /*!< Config2 must be a value between 0 and 0x7 */
+		uint32_t Config3;	 /*!< Config3 must be a value between 0 and 0xF */
+		uint32_t ClockDivider;	 /*!< Clock Divider factor.This parameter can
+					      be a value of @ref
+					    RNGEx_Clock_Divider_Factor	*/
+		uint32_t NistCompliance; /*!< NIST compliance.This parameter can be a
+					      value of @ref RNGEx_NIST_Compliance   */
+	} RNG_ConfigTypeDef;
 
 /**
  * @}
@@ -114,45 +116,45 @@ typedef struct {
 #define RNG_NIST_COMPLIANT (0x00000000UL) /*!< NIST compliant configuration*/
 #define RNG_CUSTOM_NIST (RNG_CR_NISTC)	  /*!< Custom NIST configuration */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private types -------------------------------------------------------------*/
-/** @defgroup RNGEx_Private_Types RNGEx Private Types
- * @{
- */
+	/* Private types -------------------------------------------------------------*/
+	/** @defgroup RNGEx_Private_Types RNGEx Private Types
+	 * @{
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private variables ---------------------------------------------------------*/
-/** @defgroup RNGEx_Private_Variables RNGEx Private Variables
- * @{
- */
+	/* Private variables ---------------------------------------------------------*/
+	/** @defgroup RNGEx_Private_Variables RNGEx Private Variables
+	 * @{
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private constants ---------------------------------------------------------*/
-/** @defgroup RNGEx_Private_Constants RNGEx Private Constants
- * @{
- */
+	/* Private constants ---------------------------------------------------------*/
+	/** @defgroup RNGEx_Private_Constants RNGEx Private Constants
+	 * @{
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private macros ------------------------------------------------------------*/
-/** @defgroup RNGEx_Private_Macros RNGEx Private Macros
- * @{
- */
+	/* Private macros ------------------------------------------------------------*/
+	/** @defgroup RNGEx_Private_Macros RNGEx Private Macros
+	 * @{
+	 */
 
 #define IS_RNG_CLOCK_DIVIDER(__CLOCK_DIV__)                                                                                                                                                            \
 	(((__CLOCK_DIV__) == RNG_CLKDIV_BY_1) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8) ||                               \
@@ -168,62 +170,62 @@ typedef struct {
 
 #define IS_RNG_CONFIG3(__CONFIG3__) ((__CONFIG3__) <= 0xFUL)
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private functions ---------------------------------------------------------*/
-/** @defgroup RNGEx_Private_Functions RNGEx Private Functions
- * @{
- */
+	/* Private functions ---------------------------------------------------------*/
+	/** @defgroup RNGEx_Private_Functions RNGEx Private Functions
+	 * @{
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup RNGEx_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup RNGEx_Exported_Functions
+	 * @{
+	 */
 
-/** @addtogroup RNGEx_Exported_Functions_Group1
- * @{
- */
-HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigTypeDef *pConf);
-HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef *pConf);
-HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng);
+	/** @addtogroup RNGEx_Exported_Functions_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigTypeDef *pConf);
+	HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef *pConf);
+	HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup RNGEx_Exported_Functions_Group2
- * @{
- */
-HAL_StatusTypeDef HAL_RNGEx_RecoverSeedError(RNG_HandleTypeDef *hrng);
+	/** @addtogroup RNGEx_Exported_Functions_Group2
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_RNGEx_RecoverSeedError(RNG_HandleTypeDef *hrng);
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #endif /* RNG_CR_CONDRST */
 #endif /* RNG */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

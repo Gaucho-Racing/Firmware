@@ -14,7 +14,8 @@
 // RX Callback must perform a deep copy of the data
 //
 typedef void (*CAN_RXCallback)(void *data, uint32_t size);
-typedef struct {
+typedef struct
+{
 	// can baud rate is set by fdcan prescaler and RCC clock configurations
 	FDCAN_GlobalTypeDef *fdcan_instance; // Base address of FDCAN peripheral in memory (FDCAN1, FDCAN2, FDCAN3 macros)
 
@@ -35,7 +36,8 @@ typedef struct {
 } CANConfig;
 
 // FDCAN peripheral for STM32G4
-typedef struct {
+typedef struct
+{
 	FDCAN_HandleTypeDef *hal_fdcanP;
 	CircularBuffer *tx_buffer;
 	uint32_t tx_buffer_length;
@@ -55,11 +57,13 @@ typedef struct {
 } CANHandle;
 
 #define FDCAN_MAX_DATA_BYTES 64
-typedef struct {
+typedef struct
+{
 	FDCAN_TxHeaderTypeDef tx_header;
 	uint8_t data[FDCAN_MAX_DATA_BYTES];
 } FDCANTxMessage;
-typedef struct {
+typedef struct
+{
 	FDCAN_RxHeaderTypeDef rx_header;
 	uint8_t data[FDCAN_MAX_DATA_BYTES];
 } FDCANRxMessage;

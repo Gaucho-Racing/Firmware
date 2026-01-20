@@ -252,7 +252,8 @@ functions
 HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 {
 	/* Check TSC handle allocation */
-	if (htsc == NULL) {
+	if (htsc == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -274,7 +275,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 	assert_param(IS_TSC_GROUP(htsc->Init.ShieldIOs));
 	assert_param(IS_TSC_GROUP(htsc->Init.SamplingIOs));
 
-	if (htsc->State == HAL_TSC_STATE_RESET) {
+	if (htsc->State == HAL_TSC_STATE_RESET)
+	{
 		/* Allocate lock resource and initialize it */
 		htsc->Lock = HAL_UNLOCKED;
 
@@ -283,7 +285,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 		htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak ConvCpltCallback */
 		htsc->ErrorCallback = HAL_TSC_ErrorCallback;	   /* Legacy weak ErrorCallback */
 
-		if (htsc->MspInitCallback == NULL) {
+		if (htsc->MspInitCallback == NULL)
+		{
 			htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit  */
 		}
 
@@ -309,7 +312,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 			       htsc->Init.PulseGeneratorPrescaler | htsc->Init.MaxCountValue | htsc->Init.SynchroPinPolarity | htsc->Init.AcquisitionMode);
 
 	/* Spread spectrum */
-	if (htsc->Init.SpreadSpectrum == ENABLE) {
+	if (htsc->Init.SpreadSpectrum == ENABLE)
+	{
 		htsc->Instance->CR |= TSC_CR_SSE;
 	}
 
@@ -349,7 +353,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 HAL_StatusTypeDef HAL_TSC_DeInit(TSC_HandleTypeDef *htsc)
 {
 	/* Check TSC handle allocation */
-	if (htsc == NULL) {
+	if (htsc == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -360,7 +365,8 @@ HAL_StatusTypeDef HAL_TSC_DeInit(TSC_HandleTypeDef *htsc)
 	htsc->State = HAL_TSC_STATE_BUSY;
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
-	if (htsc->MspDeInitCallback == NULL) {
+	if (htsc->MspDeInitCallback == NULL)
+	{
 		htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit  */
 	}
 
@@ -433,7 +439,8 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Call
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
@@ -442,8 +449,10 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Call
 	/* Process locked */
 	__HAL_LOCK(htsc);
 
-	if (HAL_TSC_STATE_READY == htsc->State) {
-		switch (CallbackID) {
+	if (HAL_TSC_STATE_READY == htsc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_TSC_CONV_COMPLETE_CB_ID:
 				htsc->ConvCpltCallback = pCallback;
 				break;
@@ -468,8 +477,11 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (HAL_TSC_STATE_RESET == htsc->State) {
-		switch (CallbackID) {
+	}
+	else if (HAL_TSC_STATE_RESET == htsc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_TSC_MSPINIT_CB_ID:
 				htsc->MspInitCallback = pCallback;
 				break;
@@ -486,7 +498,9 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
@@ -521,8 +535,10 @@ HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Ca
 	/* Process locked */
 	__HAL_LOCK(htsc);
 
-	if (HAL_TSC_STATE_READY == htsc->State) {
-		switch (CallbackID) {
+	if (HAL_TSC_STATE_READY == htsc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_TSC_CONV_COMPLETE_CB_ID:
 				htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak
 										      ConvCpltCallback
@@ -552,8 +568,11 @@ HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (HAL_TSC_STATE_RESET == htsc->State) {
-		switch (CallbackID) {
+	}
+	else if (HAL_TSC_STATE_RESET == htsc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_TSC_MSPINIT_CB_ID:
 				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit */
 				break;
@@ -571,7 +590,9 @@ HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
@@ -633,9 +654,12 @@ HAL_StatusTypeDef HAL_TSC_Start(TSC_HandleTypeDef *htsc)
 	__HAL_TSC_CLEAR_FLAG(htsc, (TSC_FLAG_EOA | TSC_FLAG_MCE));
 
 	/* Set touch sensing IOs not acquired to the specified IODefaultMode */
-	if (htsc->Init.IODefaultMode == TSC_IODEF_OUT_PP_LOW) {
+	if (htsc->Init.IODefaultMode == TSC_IODEF_OUT_PP_LOW)
+	{
 		__HAL_TSC_SET_IODEF_OUTPPLOW(htsc);
-	} else {
+	}
+	else
+	{
 		__HAL_TSC_SET_IODEF_INFLOAT(htsc);
 	}
 
@@ -671,9 +695,12 @@ HAL_StatusTypeDef HAL_TSC_Start_IT(TSC_HandleTypeDef *htsc)
 	__HAL_TSC_ENABLE_IT(htsc, TSC_IT_EOA);
 
 	/* Enable max count error interrupt (optional) */
-	if (htsc->Init.MaxCountInterrupt == ENABLE) {
+	if (htsc->Init.MaxCountInterrupt == ENABLE)
+	{
 		__HAL_TSC_ENABLE_IT(htsc, TSC_IT_MCE);
-	} else {
+	}
+	else
+	{
 		__HAL_TSC_DISABLE_IT(htsc, TSC_IT_MCE);
 	}
 
@@ -681,9 +708,12 @@ HAL_StatusTypeDef HAL_TSC_Start_IT(TSC_HandleTypeDef *htsc)
 	__HAL_TSC_CLEAR_FLAG(htsc, (TSC_FLAG_EOA | TSC_FLAG_MCE));
 
 	/* Set touch sensing IOs not acquired to the specified IODefaultMode */
-	if (htsc->Init.IODefaultMode == TSC_IODEF_OUT_PP_LOW) {
+	if (htsc->Init.IODefaultMode == TSC_IODEF_OUT_PP_LOW)
+	{
 		__HAL_TSC_SET_IODEF_OUTPPLOW(htsc);
-	} else {
+	}
+	else
+	{
 		__HAL_TSC_SET_IODEF_INFLOAT(htsc);
 	}
 
@@ -783,7 +813,8 @@ HAL_StatusTypeDef HAL_TSC_PollForAcquisition(TSC_HandleTypeDef *htsc)
 	__HAL_LOCK(htsc);
 
 	/* Check end of acquisition */
-	while (HAL_TSC_GetState(htsc) == HAL_TSC_STATE_BUSY) {
+	while (HAL_TSC_GetState(htsc) == HAL_TSC_STATE_BUSY)
+	{
 		/* The timeout (max count error) is managed by the TSC
 		 * peripheral itself. */
 	}
@@ -901,9 +932,12 @@ HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc, FunctionalState c
 	/* Process locked */
 	__HAL_LOCK(htsc);
 
-	if (choice == ENABLE) {
+	if (choice == ENABLE)
+	{
 		__HAL_TSC_SET_IODEF_OUTPPLOW(htsc);
-	} else {
+	}
+	else
+	{
 		__HAL_TSC_SET_IODEF_INFLOAT(htsc);
 	}
 
@@ -945,14 +979,19 @@ HAL_TSC_StateTypeDef HAL_TSC_GetState(TSC_HandleTypeDef *htsc)
 	/* Check the parameters */
 	assert_param(IS_TSC_ALL_INSTANCE(htsc->Instance));
 
-	if (htsc->State == HAL_TSC_STATE_BUSY) {
+	if (htsc->State == HAL_TSC_STATE_BUSY)
+	{
 		/* Check end of acquisition flag */
-		if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_EOA) != RESET) {
+		if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_EOA) != RESET)
+		{
 			/* Check max count error flag */
-			if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_MCE) != RESET) {
+			if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_MCE) != RESET)
+			{
 				/* Change TSC state */
 				htsc->State = HAL_TSC_STATE_ERROR;
-			} else {
+			}
+			else
+			{
 				/* Change TSC state */
 				htsc->State = HAL_TSC_STATE_READY;
 			}
@@ -983,13 +1022,15 @@ void HAL_TSC_IRQHandler(TSC_HandleTypeDef *htsc)
 	assert_param(IS_TSC_ALL_INSTANCE(htsc->Instance));
 
 	/* Check if the end of acquisition occurred */
-	if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_EOA) != RESET) {
+	if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_EOA) != RESET)
+	{
 		/* Clear EOA flag */
 		__HAL_TSC_CLEAR_FLAG(htsc, TSC_FLAG_EOA);
 	}
 
 	/* Check if max count error occurred */
-	if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_MCE) != RESET) {
+	if (__HAL_TSC_GET_FLAG(htsc, TSC_FLAG_MCE) != RESET)
+	{
 		/* Clear MCE flag */
 		__HAL_TSC_CLEAR_FLAG(htsc, TSC_FLAG_MCE);
 		/* Change TSC state */
@@ -1000,7 +1041,9 @@ void HAL_TSC_IRQHandler(TSC_HandleTypeDef *htsc)
 		/* Conversion completed callback */
 		HAL_TSC_ErrorCallback(htsc);
 #endif /* USE_HAL_TSC_REGISTER_CALLBACKS */
-	} else {
+	}
+	else
+	{
 		/* Change TSC state */
 		htsc->State = HAL_TSC_STATE_READY;
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
@@ -1069,8 +1112,10 @@ static uint32_t TSC_extract_groups(uint32_t iomask)
 	uint32_t groups = 0UL;
 	uint32_t idx;
 
-	for (idx = 0UL; idx < (uint32_t)TSC_NB_OF_GROUPS; idx++) {
-		if ((iomask & (0x0FUL << (idx * 4UL))) != 0UL) {
+	for (idx = 0UL; idx < (uint32_t)TSC_NB_OF_GROUPS; idx++)
+	{
+		if ((iomask & (0x0FUL << (idx * 4UL))) != 0UL)
+		{
 			groups |= (1UL << idx);
 		}
 	}

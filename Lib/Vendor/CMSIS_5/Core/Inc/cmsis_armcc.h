@@ -250,7 +250,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 	uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
 
 	result = value; /* r will be reversed bits of v; first get LSB of v */
-	for (value >>= 1U; value != 0U; value >>= 1U) {
+	for (value >>= 1U; value != 0U; value >>= 1U)
+	{
 		result <<= 1U;
 		result |= value & 1U;
 		s--;
@@ -443,12 +444,16 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
  */
 __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat)
 {
-	if ((sat >= 1U) && (sat <= 32U)) {
+	if ((sat >= 1U) && (sat <= 32U))
+	{
 		const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
 		const int32_t min = -1 - max;
-		if (val > max) {
+		if (val > max)
+		{
 			return max;
-		} else if (val < min) {
+		}
+		else if (val < min)
+		{
 			return min;
 		}
 	}
@@ -464,11 +469,15 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint3
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
-	if (sat <= 31U) {
+	if (sat <= 31U)
+	{
 		const uint32_t max = ((1U << sat) - 1U);
-		if (val > (int32_t)max) {
+		if (val > (int32_t)max)
+		{
 			return max;
-		} else if (val < 0) {
+		}
+		else if (val < 0)
+		{
 			return 0U;
 		}
 	}

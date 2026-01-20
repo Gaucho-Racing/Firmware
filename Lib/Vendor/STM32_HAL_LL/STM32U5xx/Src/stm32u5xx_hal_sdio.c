@@ -341,23 +341,27 @@ HAL_StatusTypeDef HAL_SDIO_Init(SDIO_HandleTypeDef *hsdio)
 	assert_param(IS_SDMMC_CLKDIV(hsdio->Init.ClockDiv));
 
 	/* Check the SDIO handle allocation */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_RESET) {
+	if (hsdio->State == HAL_SDIO_STATE_RESET)
+	{
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
 		/* Reset Callback pointers in HAL_SDIO_STATE_RESET only */
 		hsdio->TxCpltCallback = HAL_SDIO_TxCpltCallback;
 		hsdio->RxCpltCallback = HAL_SDIO_RxCpltCallback;
 		hsdio->ErrorCallback = HAL_SDIO_ErrorCallback;
 #if (USE_SDIO_TRANSCEIVER != 0U)
-		if (hsdio->Init.TranceiverPresent == SDMMC_TRANSCEIVER_PRESENT) {
+		if (hsdio->Init.TranceiverPresent == SDMMC_TRANSCEIVER_PRESENT)
+		{
 			hsdio->DriveTransceiver_1_8V_Callback = HAL_SDIO_DriveTransceiver_1_8V_Callback;
 		}
 #endif /* USE_SDIO_TRANSCEIVER */
 
-		if (hsdio->MspInitCallback == NULL) {
+		if (hsdio->MspInitCallback == NULL)
+		{
 			hsdio->MspInitCallback = HAL_SDIO_MspInit;
 		}
 		/* Init the low level hardware */
@@ -374,7 +378,8 @@ HAL_StatusTypeDef HAL_SDIO_Init(SDIO_HandleTypeDef *hsdio)
 	Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
 
 	sdmmc_clk = HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_SDMMC);
-	if (sdmmc_clk == 0U) {
+	if (sdmmc_clk == 0U)
+	{
 		hsdio->ErrorCode = SDMMC_ERROR_INVALID_PARAMETER;
 		return HAL_ERROR;
 	}
@@ -387,19 +392,23 @@ HAL_StatusTypeDef HAL_SDIO_Init(SDIO_HandleTypeDef *hsdio)
 
 	/* wait 74 Cycles: required power up waiting time before starting the
 	 * SDIO initialization sequence */
-	if (Init.ClockDiv != 0U) {
+	if (Init.ClockDiv != 0U)
+	{
 		sdmmc_clk = sdmmc_clk / (2U * Init.ClockDiv);
 	}
 
-	if (sdmmc_clk != 0U) {
+	if (sdmmc_clk != 0U)
+	{
 		HAL_Delay(1U + (74U * 1000U / (sdmmc_clk)));
 	}
 
-	if (hsdio->SDIO_IdentifyCard == NULL) {
+	if (hsdio->SDIO_IdentifyCard == NULL)
+	{
 		hsdio->SDIO_IdentifyCard = SDIO_InitCard;
 	}
 	/* SDIO enumeration sequence */
-	if (hsdio->SDIO_IdentifyCard(hsdio) != HAL_OK) {
+	if (hsdio->SDIO_IdentifyCard(hsdio) != HAL_OK)
+	{
 		hsdio->State = HAL_SDIO_STATE_RESET;
 		return HAL_ERROR;
 	}
@@ -413,7 +422,8 @@ HAL_StatusTypeDef HAL_SDIO_Init(SDIO_HandleTypeDef *hsdio)
 	(void)SDMMC_Init(hsdio->Instance, Init);
 
 	data = (hsdio->Init.BusWide == HAL_SDIO_4_WIRES_MODE) ? 2U : 0U;
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -434,7 +444,8 @@ HAL_StatusTypeDef HAL_SDIO_DeInit(SDIO_HandleTypeDef *hsdio)
 	assert_param(IS_SDMMC_ALL_INSTANCE(hsdio->Instance));
 
 	/* Check the SDIO handle allocation */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -442,7 +453,8 @@ HAL_StatusTypeDef HAL_SDIO_DeInit(SDIO_HandleTypeDef *hsdio)
 	(void)SDMMC_PowerState_OFF(hsdio->Instance);
 
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
-	if (hsdio->MspDeInitCallback == NULL) {
+	if (hsdio->MspDeInitCallback == NULL)
+	{
 		hsdio->MspDeInitCallback = HAL_SDIO_MspDeInit;
 	}
 
@@ -526,18 +538,23 @@ HAL_StatusTypeDef HAL_SDIO_SetDataBusWidth(SDIO_HandleTypeDef *hsdio, uint32_t B
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		data = (BusWide == HAL_SDIO_4_WIRES_MODE) ? 2U : 0U;
 		MODIFY_REG(hsdio->Instance->CLKCR, SDMMC_CLKCR_WIDBUS, (BusWide == HAL_SDIO_4_WIRES_MODE) ? SDMMC_BUS_WIDE_4B : SDMMC_BUS_WIDE_1B);
 
-		if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data) != HAL_OK) {
+		if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data) != HAL_OK)
+		{
 			error_state = HAL_ERROR;
 		}
-	} else {
+	}
+	else
+	{
 		error_state = HAL_ERROR;
 	}
 
@@ -558,14 +575,18 @@ HAL_StatusTypeDef HAL_SDIO_ConfigFrequency(SDIO_HandleTypeDef *hsdio, uint32_t C
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		ClockDiv = (HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_SDMMC)) / (2U * ClockSpeed);
 		MODIFY_REG(hsdio->Instance->CLKCR, SDMMC_CLKCR_CLKDIV, ClockDiv);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -591,7 +612,8 @@ HAL_StatusTypeDef HAL_SDIO_SetBlockSize(SDIO_HandleTypeDef *hsdio, uint8_t funct
 	assert_param(IS_SDIO_SUPPORTED_BLOCK_SIZE(BlockSize));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -600,7 +622,8 @@ HAL_StatusTypeDef HAL_SDIO_SetBlockSize(SDIO_HandleTypeDef *hsdio, uint8_t funct
 	cmd53.OpCode = HAL_SDIO_OP_CODE_AUTO_INC;
 	cmd53.Block_Mode = HAL_SDIO_MODE_BYTE;
 	cmd53.Reg_Addr = (function_nbr * 0x100UL) + 0x10UL;
-	if (SDIO_WriteExtended(hsdio, &cmd53, (uint8_t *)(&BlockSize), 2U) != HAL_OK) {
+	if (SDIO_WriteExtended(hsdio, &cmd53, (uint8_t *)(&BlockSize), 2U) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -624,11 +647,13 @@ HAL_StatusTypeDef HAL_SDIO_SetSpeedMode(SDIO_HandleTypeDef *hsdio, uint32_t Data
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	switch (DataRate) {
+	switch (DataRate)
+	{
 		case HAL_SDIOS_DATA_RATE_SDR25:
 			data = SDIO_BUS_SPEED_SDR25;
 			errorstate = SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR16_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
@@ -667,7 +692,8 @@ HAL_StatusTypeDef HAL_SDIO_CardReset(SDIO_HandleTypeDef *hsdio)
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -677,7 +703,8 @@ HAL_StatusTypeDef HAL_SDIO_CardReset(SDIO_HandleTypeDef *hsdio)
 	 * I/O card or the I/O portion of a combo card, Use CMD52 to write 1 to
 	 * the RES bit in the CCC(bit3 of register 6).
 	 */
-	if (SDIO_WriteDirect(hsdio, ((SDIO_FUNCTION_0 << 2) | (SDIO_FUNCTION_0 << 1) | (SDIO_FUNCTION_0 << 14) | SDMMC_SDIO_CCCR4_SD_BYTE2), HAL_SDIO_WRITE_ONLY, 0U, &data) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, ((SDIO_FUNCTION_0 << 2) | (SDIO_FUNCTION_0 << 1) | (SDIO_FUNCTION_0 << 14) | SDMMC_SDIO_CCCR4_SD_BYTE2), HAL_SDIO_WRITE_ONLY, 0U, &data) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -700,12 +727,15 @@ HAL_StatusTypeDef HAL_SDIO_GetCardCommonControlRegister(SDIO_HandleTypeDef *hsdi
 	assert_param(hsdio != NULL);
 	assert_param(pCccr != NULL);
 
-	if ((hsdio == NULL) || (pCccr == NULL)) {
+	if ((hsdio == NULL) || (pCccr == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	for (count = 0U; count <= SDIO_CCCR_REG_NUMBER; count++) {
-		if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0 + count, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &tempBuffer[count]) != HAL_OK) {
+	for (count = 0U; count <= SDIO_CCCR_REG_NUMBER; count++)
+	{
+		if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0 + count, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &tempBuffer[count]) != HAL_OK)
+		{
 			return HAL_ERROR;
 		}
 	}
@@ -736,13 +766,17 @@ HAL_StatusTypeDef HAL_SDIO_GetCardFBRRegister(SDIO_HandleTypeDef *hsdio, HAL_SDI
 	assert_param(hsdio != NULL);
 	assert_param(pFbr != NULL);
 
-	if ((hsdio == NULL) || (pFbr == NULL)) {
+	if ((hsdio == NULL) || (pFbr == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	for (func_idx = 2U; func_idx <= SDIO_MAX_IO_NUMBER; func_idx++) {
-		for (count = 0U; count <= SDIO_CCCR_REG_NUMBER; count++) {
-			if (SDIO_ReadDirect(hsdio, (((uint32_t)SDMMC_SDIO_F1BR0 * (uint32_t)func_idx) + count), HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &tempBuffer[count]) != HAL_OK) {
+	for (func_idx = 2U; func_idx <= SDIO_MAX_IO_NUMBER; func_idx++)
+	{
+		for (count = 0U; count <= SDIO_CCCR_REG_NUMBER; count++)
+		{
+			if (SDIO_ReadDirect(hsdio, (((uint32_t)SDMMC_SDIO_F1BR0 * (uint32_t)func_idx) + count), HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &tempBuffer[count]) != HAL_OK)
+			{
 				return HAL_ERROR;
 			}
 		}
@@ -750,10 +784,12 @@ HAL_StatusTypeDef HAL_SDIO_GetCardFBRRegister(SDIO_HandleTypeDef *hsdio, HAL_SDI
 		pFbr[(uint32_t)func_idx - 1U].ioExtFunctionCode = tempBuffer[1U];
 		pFbr[(uint32_t)func_idx - 1U].ioPointerToCIS = tempBuffer[9U] | ((uint32_t)tempBuffer[10U] << 8U) | ((uint32_t)tempBuffer[11U] << 16U);
 		pFbr[(uint32_t)func_idx - 1U].ioPointerToCSA = tempBuffer[12U] | ((uint32_t)tempBuffer[13U] << 8U) | ((uint32_t)tempBuffer[14U] << 16U);
-		if ((tempBuffer[2U] & 0x01U) != 0U) {
+		if ((tempBuffer[2U] & 0x01U) != 0U)
+		{
 			pFbr[(uint32_t)func_idx - 1U].flags |= (uint8_t)HAL_SDIO_FBR_SUPPORT_POWER_SELECTION;
 		}
-		if ((tempBuffer[0U] & 0x40U) != 0U) {
+		if ((tempBuffer[0U] & 0x40U) != 0U)
+		{
 			pFbr[(uint32_t)func_idx - 1U].flags |= (uint8_t)HAL_SDIO_FBR_SUPPORT_CSA;
 		}
 	}
@@ -797,11 +833,13 @@ HAL_StatusTypeDef HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_
 	assert_param(pData != NULL);
 	assert_param(IS_SDIO_RAW_FLAG(Argument->ReadAfterWrite));
 
-	if ((hsdio == NULL) || (Argument == NULL) || (NULL == pData)) {
+	if ((hsdio == NULL) || (Argument == NULL) || (NULL == pData))
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->ErrorCode = HAL_SDIO_ERROR_NONE;
 		hsdio->State = HAL_SDIO_STATE_BUSY;
 
@@ -812,9 +850,11 @@ HAL_StatusTypeDef HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_
 		cmd |= 0U;
 		errorstate = SDMMC_SDIO_CmdReadWriteDirect(hsdio->Instance, cmd, pData);
 
-		if (errorstate != HAL_SDIO_ERROR_NONE) {
+		if (errorstate != HAL_SDIO_ERROR_NONE)
+		{
 			hsdio->ErrorCode |= errorstate;
-			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR)) {
+			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR))
+			{
 				/* Clear all the static flags */
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				hsdio->State = HAL_SDIO_STATE_READY;
@@ -829,7 +869,9 @@ HAL_StatusTypeDef HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 
 		hsdio->State = HAL_SDIO_STATE_READY;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 
@@ -854,11 +896,13 @@ HAL_StatusTypeDef HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO
 	assert_param(Argument != NULL);
 	assert_param(IS_SDIO_RAW_FLAG(Argument->ReadAfterWrite));
 
-	if ((hsdio == NULL) || (Argument == NULL)) {
+	if ((hsdio == NULL) || (Argument == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->ErrorCode = HAL_SDIO_ERROR_NONE;
 		hsdio->State = HAL_SDIO_STATE_BUSY;
 
@@ -868,9 +912,11 @@ HAL_StatusTypeDef HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO
 		cmd |= (Argument->Reg_Addr & 0x1FFFFU) << 9U;
 		cmd |= Data;
 		errorstate = SDMMC_SDIO_CmdReadWriteDirect(hsdio->Instance, cmd, &Data);
-		if (errorstate != HAL_SDIO_ERROR_NONE) {
+		if (errorstate != HAL_SDIO_ERROR_NONE)
+		{
 			hsdio->ErrorCode |= errorstate;
-			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR)) {
+			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR))
+			{
 				/* Clear all the static flags */
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				hsdio->State = HAL_SDIO_STATE_READY;
@@ -885,7 +931,9 @@ HAL_StatusTypeDef HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 
 		hsdio->State = HAL_SDIO_STATE_READY;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 
@@ -919,11 +967,13 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 	assert_param(Argument != NULL);
 	assert_param(pData != NULL);
 
-	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL)) {
+	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->ErrorCode = HAL_SDIO_ERROR_NONE;
 		hsdio->State = HAL_SDIO_STATE_BUSY;
 
@@ -932,9 +982,12 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 		nbr_of_block = (Size_byte & ~(hsdio->block_size & 1U)) >> __CLZ(__RBIT(hsdio->block_size));
 
 		/* Initialize data control register */
-		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U) {
+		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U)
+		{
 			hsdio->Instance->DCTRL = SDMMC_DCTRL_SDIOEN;
-		} else {
+		}
+		else
+		{
 			hsdio->Instance->DCTRL = 0U;
 		}
 
@@ -942,12 +995,15 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
 		/* (HAL_SDIO_MODE_BLOCK << 27) corresponds to the block mode bit
 		 * of the CMD argument */
-		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK) {
+		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK)
+		{
 			/* (Argument & 0x1FFU) is to get the 9 bits of
 			 * Block/Byte counts */
 			config.DataLength = (uint32_t)(nbr_of_block * hsdio->block_size);
 			config.DataBlockSize = SDIO_Convert_Block_Size(hsdio, hsdio->block_size);
-		} else {
+		}
+		else
+		{
 			/* (Argument & 0x1FFU) is to get the 9 bits of
 			 * Block/Byte counts */
 			config.DataLength = (Size_byte > 0U) ? Size_byte : HAL_SDIO_DATA_BLOCK_SIZE_512BYTE;
@@ -972,9 +1028,11 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 		cmd |= (Argument->Reg_Addr & 0x1FFFFU) << 9U;
 		cmd |= (Size_byte & 0x1FFU);
 		errorstate = SDMMC_SDIO_CmdReadWriteExtended(hsdio->Instance, cmd);
-		if (errorstate != HAL_SDIO_ERROR_NONE) {
+		if (errorstate != HAL_SDIO_ERROR_NONE)
+		{
 			hsdio->ErrorCode |= errorstate;
-			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR)) {
+			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR))
+			{
 				MODIFY_REG(hsdio->Instance->DCTRL, SDMMC_DCTRL_FIFORST, SDMMC_DCTRL_FIFORST);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
@@ -988,10 +1046,13 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 		/* Poll on SDMMC flags */
 		dataremaining = config.DataLength;
 
-		while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND)) {
-			if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOHF) && (dataremaining >= SDMMC_FIFO_SIZE)) {
+		while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
+		{
+			if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOHF) && (dataremaining >= SDMMC_FIFO_SIZE))
+			{
 				/* Read data from SDMMC Rx FIFO */
-				for (regCount = 0U; regCount < (SDMMC_FIFO_SIZE / 4U); regCount++) {
+				for (regCount = 0U; regCount < (SDMMC_FIFO_SIZE / 4U); regCount++)
+				{
 					data = SDMMC_ReadFIFO(hsdio->Instance);
 					*tempbuff = (uint8_t)(data & 0xFFU);
 					tempbuff++;
@@ -1003,21 +1064,29 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 					tempbuff++;
 				}
 				dataremaining -= SDMMC_FIFO_SIZE;
-			} else if (dataremaining < SDMMC_FIFO_SIZE) {
-				while (!(__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOE)) && (dataremaining > 0U)) {
+			}
+			else if (dataremaining < SDMMC_FIFO_SIZE)
+			{
+				while (!(__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOE)) && (dataremaining > 0U))
+				{
 					data = SDMMC_ReadFIFO(hsdio->Instance);
-					for (byteCount = 0U; byteCount < 4U; byteCount++) {
-						if (dataremaining > 0U) {
+					for (byteCount = 0U; byteCount < 4U; byteCount++)
+					{
+						if (dataremaining > 0U)
+						{
 							*tempbuff = (uint8_t)((data >> (byteCount * 8U)) & 0xFFU);
 							tempbuff++;
 							dataremaining--;
 						}
 					}
 				}
-			} else {
+			}
+			else
+			{
 				/* Nothing to do */
 			}
-			if ((HAL_GetTick() - tickstart) >= Timeout_Ms) {
+			if ((HAL_GetTick() - tickstart) >= Timeout_Ms)
+			{
 				/* Clear all the static flags */
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				hsdio->ErrorCode |= HAL_SDIO_ERROR_TIMEOUT;
@@ -1028,21 +1097,26 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 		}
 		__SDMMC_CMDTRANS_DISABLE(hsdio->Instance);
 		/* Get error state */
-		if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DTIMEOUT)) {
+		if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DTIMEOUT))
+		{
 			/* Clear all the static flags */
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			hsdio->ErrorCode |= HAL_SDIO_ERROR_DATA_TIMEOUT;
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL)) {
+		}
+		else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL))
+		{
 			/* Clear all the static flags */
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			hsdio->ErrorCode |= HAL_SDIO_ERROR_DATA_CRC_FAIL;
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXOVERR)) {
+		}
+		else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXOVERR))
+		{
 			/* Clear all the static flags */
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			/* (SDIO_WRITE << 31) correspond to the write or read
@@ -1051,12 +1125,16 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else if (hsdio->ErrorCode == SDMMC_ERROR_INVALID_PARAMETER) {
+		}
+		else if (hsdio->ErrorCode == SDMMC_ERROR_INVALID_PARAMETER)
+		{
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else {
+		}
+		else
+		{
 			/* Nothing to do */
 		}
 
@@ -1064,7 +1142,9 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 
 		hsdio->State = HAL_SDIO_STATE_READY;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 
@@ -1099,11 +1179,13 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 	assert_param(Argument != NULL);
 	assert_param(pData != NULL);
 
-	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL)) {
+	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->ErrorCode = HAL_SDIO_ERROR_NONE;
 		hsdio->State = HAL_SDIO_STATE_BUSY;
 
@@ -1112,18 +1194,24 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 		nbr_of_block = (Size_byte & ~(hsdio->block_size & 1U)) >> __CLZ(__RBIT(hsdio->block_size));
 
 		/* Initialize data control register */
-		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U) {
+		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U)
+		{
 			hsdio->Instance->DCTRL = SDMMC_DCTRL_SDIOEN;
-		} else {
+		}
+		else
+		{
 			hsdio->Instance->DCTRL = 0U;
 		}
 
 		/* Configure the SDIO DPSM (Data Path State Machine) */
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
-		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK) {
+		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK)
+		{
 			config.DataLength = (uint32_t)(nbr_of_block * hsdio->block_size);
 			config.DataBlockSize = SDIO_Convert_Block_Size(hsdio, hsdio->block_size);
-		} else {
+		}
+		else
+		{
 			config.DataLength = (Size_byte > 0U) ? Size_byte : HAL_SDIO_DATA_BLOCK_SIZE_512BYTE;
 			config.DataBlockSize = SDMMC_DATABLOCK_SIZE_1B;
 		}
@@ -1145,9 +1233,11 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 		cmd |= (Argument->Reg_Addr & 0x1FFFFU) << 9U;
 		cmd |= (Size_byte & 0x1FFU);
 		errorstate = SDMMC_SDIO_CmdReadWriteExtended(hsdio->Instance, cmd);
-		if (errorstate != HAL_SDIO_ERROR_NONE) {
+		if (errorstate != HAL_SDIO_ERROR_NONE)
+		{
 			hsdio->ErrorCode |= errorstate;
-			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR)) {
+			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR))
+			{
 				MODIFY_REG(hsdio->Instance->DCTRL, SDMMC_DCTRL_FIFORST, SDMMC_DCTRL_FIFORST);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
@@ -1158,20 +1248,27 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 		}
 		/* Write block(s) in polling mode */
 		dataremaining = config.DataLength;
-		while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND)) {
+		while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
+		{
 
-			if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= SDMMC_FIFO_SIZE)) {
+			if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= SDMMC_FIFO_SIZE))
+			{
 				/* Read data from SDMMC Rx FIFO */
-				for (regCount = 0U; regCount < (SDMMC_FIFO_SIZE / 4U); regCount++) {
+				for (regCount = 0U; regCount < (SDMMC_FIFO_SIZE / 4U); regCount++)
+				{
 					hsdio->Instance->FIFO = *u32tempbuff;
 					u32tempbuff++;
 				}
 				dataremaining -= SDMMC_FIFO_SIZE;
-			} else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) && (dataremaining < SDMMC_FIFO_SIZE)) {
+			}
+			else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) && (dataremaining < SDMMC_FIFO_SIZE))
+			{
 				const uint8_t *u8buff = (uint8_t *)u32tempbuff;
-				while (dataremaining > 0U) {
+				while (dataremaining > 0U)
+				{
 					data = 0U;
-					for (byteCount = 0U; (byteCount < 4U) && (dataremaining > 0U); byteCount++) {
+					for (byteCount = 0U; (byteCount < 4U) && (dataremaining > 0U); byteCount++)
+					{
 						data |= ((uint32_t)(*u8buff) << (byteCount << 3U));
 						u8buff++;
 						dataremaining--;
@@ -1179,7 +1276,8 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 					hsdio->Instance->FIFO = data;
 				}
 			}
-			if (((HAL_GetTick() - tickstart) >= Timeout_Ms)) {
+			if (((HAL_GetTick() - tickstart) >= Timeout_Ms))
+			{
 				/* Clear all the static flags */
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				hsdio->ErrorCode |= HAL_SDIO_ERROR_TIMEOUT;
@@ -1191,21 +1289,26 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 
 		__SDMMC_CMDTRANS_DISABLE(hsdio->Instance);
 		/* Get error state */
-		if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DTIMEOUT)) {
+		if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DTIMEOUT))
+		{
 			/* Clear all the static flags */
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			hsdio->ErrorCode |= HAL_SDIO_ERROR_DATA_TIMEOUT;
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL)) {
+		}
+		else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL))
+		{
 			/* Clear all the static flags */
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			hsdio->ErrorCode |= HAL_SDIO_ERROR_DATA_CRC_FAIL;
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR)) {
+		}
+		else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR))
+		{
 			/* Clear all the static flags */
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			/* (SDIO_WRITE << 31) correspond to the write or read
@@ -1214,12 +1317,16 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else if (hsdio->ErrorCode == SDMMC_ERROR_INVALID_PARAMETER) {
+		}
+		else if (hsdio->ErrorCode == SDMMC_ERROR_INVALID_PARAMETER)
+		{
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 			hsdio->State = HAL_SDIO_STATE_READY;
 			hsdio->Context = SDIO_CONTEXT_NONE;
 			return HAL_ERROR;
-		} else {
+		}
+		else
+		{
 			/* Nothing to do */
 		}
 
@@ -1227,7 +1334,9 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 
 		hsdio->State = HAL_SDIO_STATE_READY;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 
@@ -1256,18 +1365,23 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL
 	assert_param(Argument != NULL);
 	assert_param(pData != NULL);
 
-	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL)) {
+	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->ErrorCode = HAL_SDIO_ERROR_NONE;
 		hsdio->State = HAL_SDIO_STATE_BUSY;
 
 		/* Initialize data control register */
-		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U) {
+		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U)
+		{
 			hsdio->Instance->DCTRL = SDMMC_DCTRL_SDIOEN;
-		} else {
+		}
+		else
+		{
 			hsdio->Instance->DCTRL = 0U;
 		}
 
@@ -1280,14 +1394,18 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL
 		 * data_size to be send */
 		nbr_of_block = (Size_byte & ~(hsdio->block_size & 1U)) >> __CLZ(__RBIT(hsdio->block_size));
 
-		if (nbr_of_block != 0U) {
+		if (nbr_of_block != 0U)
+		{
 			hsdio->remaining_data = (Size_byte - (hsdio->block_size * nbr_of_block));
 			hsdio->next_reg_addr =
 			    (Argument->Reg_Addr) | ((((nbr_of_block * hsdio->block_size) >> 1U) & 0x3FFFU) << 1U) | ((hsdio->remaining_data <= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? 1U : 0U);
 			hsdio->next_data_addr += (nbr_of_block * hsdio->block_size);
-		} else {
+		}
+		else
+		{
 			hsdio->next_data_addr += (Size_byte < HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? Size_byte : HAL_SDIO_DATA_BLOCK_SIZE_512BYTE;
-			if (hsdio->remaining_data != 0U) {
+			if (hsdio->remaining_data != 0U)
+			{
 				hsdio->remaining_data = (Size_byte >= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? (Size_byte - HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) : (Size_byte - hsdio->remaining_data);
 				hsdio->next_reg_addr += (Size_byte >= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? (HAL_SDIO_DATA_BLOCK_SIZE_512BYTE + 1U) : (Size_byte + 1U);
 			}
@@ -1299,10 +1417,13 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL
 
 		/* Configure the SD DPSM (Data Path State Machine) */
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
-		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK) {
+		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK)
+		{
 			config.DataLength = (uint32_t)(nbr_of_block * hsdio->block_size);
 			config.DataBlockSize = SDIO_Convert_Block_Size(hsdio, hsdio->block_size);
-		} else {
+		}
+		else
+		{
 			config.DataLength = (Size_byte > 0U) ? Size_byte : HAL_SDIO_DATA_BLOCK_SIZE_512BYTE;
 			config.DataBlockSize = SDMMC_DATABLOCK_SIZE_1B;
 		}
@@ -1324,9 +1445,11 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL
 		cmd |= (Argument->Reg_Addr & 0x1FFFFU) << 9U;
 		cmd |= ((nbr_of_block == 0U) ? Size_byte : nbr_of_block) & 0x1FFU;
 		errorstate = SDMMC_SDIO_CmdReadWriteExtended(hsdio->Instance, cmd);
-		if (errorstate != HAL_SDIO_ERROR_NONE) {
+		if (errorstate != HAL_SDIO_ERROR_NONE)
+		{
 			hsdio->ErrorCode |= errorstate;
-			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR)) {
+			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR))
+			{
 				MODIFY_REG(hsdio->Instance->DCTRL, SDMMC_DCTRL_FIFORST, SDMMC_DCTRL_FIFORST);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
@@ -1337,7 +1460,9 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL
 		}
 		/* Enable interrupt */
 		__HAL_SDIO_ENABLE_IT(hsdio, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND));
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 
@@ -1366,18 +1491,23 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HA
 	assert_param(Argument != NULL);
 	assert_param(pData != NULL);
 
-	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL)) {
+	if ((hsdio == NULL) || (Argument == NULL) || (pData == NULL))
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->ErrorCode = HAL_SDIO_ERROR_NONE;
 		hsdio->State = HAL_SDIO_STATE_BUSY;
 
 		/* Initialize data control register */
-		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U) {
+		if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U)
+		{
 			hsdio->Instance->DCTRL = SDMMC_DCTRL_SDIOEN;
-		} else {
+		}
+		else
+		{
 			hsdio->Instance->DCTRL = 0U;
 		}
 
@@ -1388,18 +1518,25 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HA
 
 		nbr_of_block = (Size_byte & ~(hsdio->block_size & 1U)) >> __CLZ(__RBIT(hsdio->block_size));
 
-		if (nbr_of_block != 0U) {
+		if (nbr_of_block != 0U)
+		{
 			hsdio->remaining_data = (Size_byte - (hsdio->block_size * nbr_of_block));
-			if (hsdio->block_size <= 128U) {
+			if (hsdio->block_size <= 128U)
+			{
 				hsdio->next_reg_addr =
 				    (Argument->Reg_Addr) | ((((nbr_of_block * hsdio->block_size) >> 1U) & 0x3FFFU) << 1U) | ((hsdio->remaining_data <= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? 1U : 0U);
-			} else {
+			}
+			else
+			{
 				hsdio->next_reg_addr = (nbr_of_block * hsdio->block_size) >> 1U;
 			}
 			hsdio->next_data_addr += (nbr_of_block * hsdio->block_size);
-		} else {
+		}
+		else
+		{
 			hsdio->remaining_data = (Size_byte >= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? (Size_byte - HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) : (Size_byte - hsdio->remaining_data);
-			if (hsdio->remaining_data != 0U) {
+			if (hsdio->remaining_data != 0U)
+			{
 				hsdio->remaining_data = (Size_byte >= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? (Size_byte - HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) : (Size_byte - hsdio->remaining_data);
 				hsdio->next_reg_addr +=
 				    ((Size_byte >= HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? (HAL_SDIO_DATA_BLOCK_SIZE_512BYTE >> 1U) : (Size_byte >> 1U)) | (((hsdio->remaining_data > 0U) ? 0U : 1U));
@@ -1413,10 +1550,13 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HA
 
 		/* Configure the SDIO DPSM (Data Path State Machine) */
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
-		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK) {
+		if (Argument->Block_Mode == HAL_SDIO_MODE_BLOCK)
+		{
 			config.DataLength = (uint32_t)(nbr_of_block * hsdio->block_size);
 			config.DataBlockSize = SDIO_Convert_Block_Size(hsdio, hsdio->block_size);
-		} else {
+		}
+		else
+		{
 			config.DataLength = (Size_byte > HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? HAL_SDIO_DATA_BLOCK_SIZE_512BYTE : Size_byte;
 			config.DataBlockSize = SDMMC_DATABLOCK_SIZE_1B;
 		}
@@ -1437,9 +1577,11 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HA
 		cmd |= (Argument->Reg_Addr & 0x1FFFFU) << 9U;
 		cmd |= ((nbr_of_block == 0U) ? ((Size_byte > HAL_SDIO_DATA_BLOCK_SIZE_512BYTE) ? HAL_SDIO_DATA_BLOCK_SIZE_512BYTE : Size_byte) : nbr_of_block) & 0x1FFU;
 		errorstate = SDMMC_SDIO_CmdReadWriteExtended(hsdio->Instance, cmd);
-		if (errorstate != HAL_SDIO_ERROR_NONE) {
+		if (errorstate != HAL_SDIO_ERROR_NONE)
+		{
 			hsdio->ErrorCode |= errorstate;
-			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR)) {
+			if (errorstate != (SDMMC_ERROR_ADDR_OUT_OF_RANGE | SDMMC_ERROR_ILLEGAL_CMD | SDMMC_ERROR_COM_CRC_FAILED | SDMMC_ERROR_GENERAL_UNKNOWN_ERR))
+			{
 				MODIFY_REG(hsdio->Instance->DCTRL, SDMMC_DCTRL_FIFORST, SDMMC_DCTRL_FIFORST);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 				__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
@@ -1450,7 +1592,9 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HA
 		}
 		/* Enable interrupt */
 		__HAL_SDIO_ENABLE_IT(hsdio, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND));
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 
@@ -1489,11 +1633,13 @@ void HAL_SDIO_IRQHandler(SDIO_HandleTypeDef *hsdio)
 
 	flags = READ_REG(((SDMMC_TypeDef *)((uint32_t)(hsdio)->Instance))->STA);
 
-	if (READ_BIT(flags, SDMMC_FLAG_SDIOIT) != 0U) {
+	if (READ_BIT(flags, SDMMC_FLAG_SDIOIT) != 0U)
+	{
 		(void)SDIO_IOFunction_IRQHandler(hsdio);
 	}
 
-	if (READ_BIT(flags, SDMMC_FLAG_DATAEND) != 0U) {
+	if (READ_BIT(flags, SDMMC_FLAG_DATAEND) != 0U)
+	{
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_FLAG_DATAEND);
 
 		hsdio->State = HAL_SDIO_STATE_READY;
@@ -1503,44 +1649,57 @@ void HAL_SDIO_IRQHandler(SDIO_HandleTypeDef *hsdio)
 		__HAL_SDIO_DISABLE_IT(hsdio, SDMMC_IT_IDMABTC);
 		__SDMMC_CMDTRANS_DISABLE(hsdio->Instance);
 
-		if ((ctx & SDIO_CONTEXT_DMA) != 0U) {
+		if ((ctx & SDIO_CONTEXT_DMA) != 0U)
+		{
 			hsdio->Instance->DLEN = 0;
 			hsdio->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
-			if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U) {
+			if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U)
+			{
 				hsdio->Instance->DCTRL = SDMMC_DCTRL_SDIOEN;
-			} else {
+			}
+			else
+			{
 				hsdio->Instance->DCTRL = 0U;
 			}
 
 			hsdio->Context = SDIO_CONTEXT_NONE;
 		}
 
-		if (hsdio->remaining_data != 0U) {
+		if (hsdio->remaining_data != 0U)
+		{
 			CMD53_desc.Block_Mode = HAL_SDIO_MODE_BYTE;
 			CMD53_desc.Reg_Addr = hsdio->next_reg_addr;
 			CMD53_desc.IOFunctionNbr = 1;
 			CMD53_desc.OpCode = 1;
-			if (((ctx & SDIO_CONTEXT_READ_SINGLE_BLOCK) != 0U) || ((ctx & SDIO_CONTEXT_READ_MULTIPLE_BLOCK) != 0U)) {
+			if (((ctx & SDIO_CONTEXT_READ_SINGLE_BLOCK) != 0U) || ((ctx & SDIO_CONTEXT_READ_MULTIPLE_BLOCK) != 0U))
+			{
 				hsdio->pRxBuffPtr = (uint8_t *)hsdio->next_data_addr;
 				errorstate = HAL_SDIO_ReadExtended_DMA(hsdio, &CMD53_desc, hsdio->pRxBuffPtr, hsdio->remaining_data);
-			} else {
+			}
+			else
+			{
 				hsdio->pTxBuffPtr = (uint8_t *)hsdio->next_data_addr;
 				errorstate = HAL_SDIO_WriteExtended_DMA(hsdio, &CMD53_desc, hsdio->pTxBuffPtr, hsdio->remaining_data);
 			}
-			if (errorstate != HAL_OK) {
+			if (errorstate != HAL_OK)
+			{
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1)
 				hsdio->ErrorCallback(hsdio);
 #else
 				HAL_SDIO_ErrorCallback(hsdio);
 #endif /* USE_HAL_SDIO_REGISTER_CALLBACKS */
 			}
-		} else if (((ctx & SDIO_CONTEXT_READ_SINGLE_BLOCK) != 0U) || ((ctx & SDIO_CONTEXT_READ_MULTIPLE_BLOCK) != 0U)) {
+		}
+		else if (((ctx & SDIO_CONTEXT_READ_SINGLE_BLOCK) != 0U) || ((ctx & SDIO_CONTEXT_READ_MULTIPLE_BLOCK) != 0U))
+		{
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
 			hsdio->RxCpltCallback(hsdio);
 #else
 			HAL_SDIO_RxCpltCallback(hsdio);
 #endif /* USE_HAL_SDIO_REGISTER_CALLBACKS */
-		} else {
+		}
+		else
+		{
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
 			hsdio->TxCpltCallback(hsdio);
 #else
@@ -1549,7 +1708,8 @@ void HAL_SDIO_IRQHandler(SDIO_HandleTypeDef *hsdio)
 		}
 	}
 
-	if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_RXOVERR | SDMMC_FLAG_TXUNDERR)) {
+	if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_RXOVERR | SDMMC_FLAG_TXUNDERR))
+	{
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1)
 		hsdio->ErrorCallback(hsdio);
 #else
@@ -1671,14 +1831,17 @@ HAL_StatusTypeDef HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 	assert_param(hsdio != NULL);
 	assert_param(pCallback != NULL);
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
-		switch (CallbackID) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
+		switch (CallbackID)
+		{
 			case HAL_SDIO_TX_CPLT_CB_ID:
 				hsdio->TxCpltCallback = pCallback;
 				break;
@@ -1701,8 +1864,11 @@ HAL_StatusTypeDef HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (hsdio->State == HAL_SDIO_STATE_RESET) {
-		switch (CallbackID) {
+	}
+	else if (hsdio->State == HAL_SDIO_STATE_RESET)
+	{
+		switch (CallbackID)
+		{
 			case HAL_SDIO_MSP_INIT_CB_ID:
 				hsdio->MspInitCallback = pCallback;
 				break;
@@ -1716,7 +1882,9 @@ HAL_StatusTypeDef HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -1746,12 +1914,15 @@ HAL_StatusTypeDef HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDI
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
-		switch (CallbackID) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
+		switch (CallbackID)
+		{
 			case HAL_SDIO_TX_CPLT_CB_ID:
 				hsdio->TxCpltCallback = HAL_SDIO_TxCpltCallback;
 				break;
@@ -1772,8 +1943,11 @@ HAL_StatusTypeDef HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDI
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (hsdio->State == HAL_SDIO_STATE_RESET) {
-		switch (CallbackID) {
+	}
+	else if (hsdio->State == HAL_SDIO_STATE_RESET)
+	{
+		switch (CallbackID)
+		{
 			case HAL_SDIO_MSP_INIT_CB_ID:
 				hsdio->MspInitCallback = HAL_SDIO_MspInit;
 				break;
@@ -1785,7 +1959,9 @@ HAL_StatusTypeDef HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDI
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		status = HAL_ERROR;
 	}
@@ -1806,15 +1982,19 @@ HAL_StatusTypeDef HAL_SDIO_RegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		return HAL_ERROR;
 	}
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->DriveTransceiver_1_8V_Callback = pCallback;
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -1835,9 +2015,12 @@ HAL_StatusTypeDef HAL_SDIO_UnRegisterTransceiverCallback(SDIO_HandleTypeDef *hsd
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (hsdio->State == HAL_SDIO_STATE_READY) {
+	if (hsdio->State == HAL_SDIO_STATE_READY)
+	{
 		hsdio->DriveTransceiver_1_8V_Callback = HAL_SDIO_DriveTransceiver_1_8V_Callback;
-	} else {
+	}
+	else
+	{
 		/* Update the error code */
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -1860,7 +2043,8 @@ HAL_StatusTypeDef HAL_SDIO_RegisterIdentifyCardCallback(SDIO_HandleTypeDef *hsdi
 	assert_param(hsdio != NULL);
 	assert_param(pCallback != NULL);
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		/* Update the error code */
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
 		return HAL_ERROR;
@@ -1936,23 +2120,29 @@ HAL_StatusTypeDef HAL_SDIO_EnableIOFunctionInterrupt(SDIO_HandleTypeDef *hsdio, 
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &intEn) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &intEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
 	/* if already enable , do not need enable again */
-	if ((((intEn >> (uint32_t)IOFunction) & 0x01U) == 0x01U) && ((intEn & 0x01U) != 0U)) {
+	if ((((intEn >> (uint32_t)IOFunction) & 0x01U) == 0x01U) && ((intEn & 0x01U) != 0U))
+	{
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		intEn |= (1U << (uint32_t)IOFunction) | 0x01U;
 		hsdio->IOInterruptNbr++;
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &intEn) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &intEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -1979,30 +2169,39 @@ HAL_StatusTypeDef HAL_SDIO_DisableIOFunctionInterrupt(SDIO_HandleTypeDef *hsdio,
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &intEn) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &intEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
 	/* if already disable , do not need enable again */
-	if (((intEn >> (uint32_t)IOFunction) & 0x01U) == 0x00U) {
+	if (((intEn >> (uint32_t)IOFunction) & 0x01U) == 0x00U)
+	{
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		/* disable the interrupt, don't disable the interrupt master
 		 * here */
 		intEn &= ~(1U << (uint32_t)IOFunction);
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &intEn) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &intEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
-	if (hsdio->IOInterruptNbr > 1U) {
+	if (hsdio->IOInterruptNbr > 1U)
+	{
 		hsdio->IOInterruptNbr--;
-	} else {
+	}
+	else
+	{
 		hsdio->IOInterruptNbr = 0U;
 		__HAL_SDIO_DISABLE_IT(hsdio, SDMMC_IT_SDIOIT);
 	}
@@ -2025,30 +2224,38 @@ HAL_StatusTypeDef HAL_SDIO_EnableIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t 
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &ioEn) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &ioEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
 	/* if already enable , do not need to enable again */
-	if (((ioEn >> (uint32_t)IOFunction) & 0x01U) == 0x01U) {
+	if (((ioEn >> (uint32_t)IOFunction) & 0x01U) == 0x01U)
+	{
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		ioEn |= (1U << (uint32_t)IOFunction);
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &ioEn) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &ioEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &ioReady) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE3, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &ioReady) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 	/* check if IO ready */
-	if ((ioReady & (1U << (uint32_t)IOFunction)) != 0U) {
+	if ((ioReady & (1U << (uint32_t)IOFunction)) != 0U)
+	{
 		return HAL_OK;
 	}
 
@@ -2070,22 +2277,28 @@ HAL_StatusTypeDef HAL_SDIO_DisableIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &ioEn) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &ioEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
 	/* if already enable , do not need enable again */
-	if (((ioEn >> (uint32_t)IOFunction) & 0x01U) == 0x00U) {
+	if (((ioEn >> (uint32_t)IOFunction) & 0x01U) == 0x00U)
+	{
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		ioEn &= ~(1U << (uint32_t)IOFunction);
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &ioEn) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR0_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &ioEn) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2105,11 +2318,13 @@ HAL_StatusTypeDef HAL_SDIO_SelectIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t 
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR12_SD_BYTE1, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, (uint8_t *)&IOFunction) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR12_SD_BYTE1, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, (uint8_t *)&IOFunction) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2129,11 +2344,13 @@ HAL_StatusTypeDef HAL_SDIO_AbortIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t I
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, (uint8_t *)&IOFunction) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, (uint8_t *)&IOFunction) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2153,22 +2370,28 @@ HAL_StatusTypeDef HAL_SDIO_EnableIOAsynInterrupt(SDIO_HandleTypeDef *hsdio)
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
 	/* if already enable , do not need enable again */
-	if ((enable_asyn_it & 0x02U) == 0x02U) {
+	if ((enable_asyn_it & 0x02U) == 0x02U)
+	{
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		enable_asyn_it |= 0x02U;
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2188,22 +2411,28 @@ HAL_StatusTypeDef HAL_SDIO_DisableIOAsynInterrupt(SDIO_HandleTypeDef *hsdio)
 	assert_param(hsdio != NULL);
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK) {
+	if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
 	/* if already disable , do not need disable again */
-	if ((enable_asyn_it & 0x02U) == 0x00U) {
+	if ((enable_asyn_it & 0x02U) == 0x00U)
+	{
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		enable_asyn_it &= (uint8_t) ~(0x02U);
 	}
 
-	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK) {
+	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2223,7 +2452,8 @@ HAL_StatusTypeDef HAL_SDIO_RegisterIOFunctionCallback(SDIO_HandleTypeDef *hsdio,
 	assert_param(IS_SDIO_FUNCTION(IOFunction));
 
 	/* Check the SDIO peripheral handle parameter */
-	if (hsdio == NULL) {
+	if (hsdio == NULL)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2260,36 +2490,45 @@ static HAL_StatusTypeDef SDIO_InitCard(SDIO_HandleTypeDef *hsdio)
 
 	/* Identify card operating voltage */
 	errorstate = SDMMC_CmdGoIdleState(hsdio->Instance);
-	if (errorstate != HAL_SDIO_ERROR_NONE) {
+	if (errorstate != HAL_SDIO_ERROR_NONE)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Check the power State */
-	if (SDMMC_GetPowerState(hsdio->Instance) == 0U) {
+	if (SDMMC_GetPowerState(hsdio->Instance) == 0U)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Send CMD5 */
 	errorstate = SDMMC_CmdSendOperationcondition(hsdio->Instance, 0U, &Resp4);
-	if (errorstate != HAL_SDIO_ERROR_NONE) {
+	if (errorstate != HAL_SDIO_ERROR_NONE)
+	{
 		return HAL_ERROR;
 	}
 
 	nbr_of_func = ((Resp4 & 0x70000000U) >> 28U);
 	/* Check if Nbr of function > 0 and OCR valid */
-	if (nbr_of_func > 0U) {
+	if (nbr_of_func > 0U)
+	{
 		/* Send CMD5 with arg= S18R, WV*/
-		if (SDMMC_CmdSendOperationcondition(hsdio->Instance, (SDIO_OCR_VDD_32_33 | SDIO_OCR_SDIO_S18R), &Resp4) != HAL_SDIO_ERROR_NONE) {
+		if (SDMMC_CmdSendOperationcondition(hsdio->Instance, (SDIO_OCR_VDD_32_33 | SDIO_OCR_SDIO_S18R), &Resp4) != HAL_SDIO_ERROR_NONE)
+		{
 			return HAL_ERROR;
 		}
 		/* Check if IORDY = 1 and S18A = 1 */
-		if ((((Resp4 & 0x80000000U) >> 31U) != 0U) && (((Resp4 & 0x1000000U) >> 24U) != 0U)) {
+		if ((((Resp4 & 0x80000000U) >> 31U) != 0U) && (((Resp4 & 0x1000000U) >> 24U) != 0U))
+		{
 			/* Send CMD11 to switch 1.8V mode */
 			errorstate = SDMMC_CmdVoltageSwitch(hsdio->Instance);
-			if (errorstate != HAL_SDIO_ERROR_NONE) {
+			if (errorstate != HAL_SDIO_ERROR_NONE)
+			{
 				return HAL_ERROR;
 			}
-		} else {
+		}
+		else
+		{
 			/* S18A is not supported */
 		}
 	}
@@ -2298,19 +2537,22 @@ static HAL_StatusTypeDef SDIO_InitCard(SDIO_HandleTypeDef *hsdio)
 	 * partial init test done before (sending cmd0 after the sequence
 	 * cmd0/cmd3 is sent is considered illegal).
 	 */
-	do {
+	do
+	{
 		errorstate = SDMMC_CmdSetRelAdd(hsdio->Instance, &sdio_rca);
 		timeout++;
 		HAL_Delay(1);
 	} while ((errorstate == SDMMC_ERROR_ILLEGAL_CMD) && (timeout != SDIO_TIMEOUT));
 
-	if ((timeout == SDIO_TIMEOUT) || (errorstate != HAL_SDIO_ERROR_NONE)) {
+	if ((timeout == SDIO_TIMEOUT) || (errorstate != HAL_SDIO_ERROR_NONE))
+	{
 		return HAL_ERROR;
 	}
 
 	/* Select the Card ( Sending CMD7)*/
 	errorstate = SDMMC_CmdSelDesel(hsdio->Instance, (uint32_t)(((uint32_t)sdio_rca) << 16U));
-	if (errorstate != HAL_SDIO_ERROR_NONE) {
+	if (errorstate != HAL_SDIO_ERROR_NONE)
+	{
 		return HAL_ERROR;
 	}
 
@@ -2334,7 +2576,8 @@ static HAL_StatusTypeDef SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, uint32_t add
 	cmd |= raw << 27U;
 	cmd |= (addr & 0x1FFFFU) << 9U;
 	errorstate = SDMMC_SDIO_CmdReadWriteDirect(hsdio->Instance, cmd, pData);
-	if (errorstate != HAL_SDIO_ERROR_NONE) {
+	if (errorstate != HAL_SDIO_ERROR_NONE)
+	{
 		hsdio->ErrorCode |= errorstate;
 		/* Clear all the static flags */
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
@@ -2370,7 +2613,8 @@ static HAL_StatusTypeDef SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, uint32_t ad
 	cmd |= ((uint32_t)*pData & 0x000000FFU);
 	errorstate = SDMMC_SDIO_CmdReadWriteDirect(hsdio->Instance, cmd, &response);
 
-	if (errorstate != HAL_SDIO_ERROR_NONE) {
+	if (errorstate != HAL_SDIO_ERROR_NONE)
+	{
 		hsdio->ErrorCode |= errorstate;
 		/* Clear all the static flags */
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
@@ -2415,18 +2659,24 @@ static HAL_StatusTypeDef SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 	nbr_of_block = (((uint32_t)Size_byte & ~((uint32_t)hsdio->block_size & 1U))) >> __CLZ(__RBIT(hsdio->block_size));
 
 	/* Initialize data control register */
-	if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U) {
+	if ((hsdio->Instance->DCTRL & SDMMC_DCTRL_SDIOEN) != 0U)
+	{
 		hsdio->Instance->DCTRL = SDMMC_DCTRL_SDIOEN;
-	} else {
+	}
+	else
+	{
 		hsdio->Instance->DCTRL = 0U;
 	}
 
 	/* Configure the SDIO DPSM (Data Path State Machine) */
 	config.DataTimeOut = SDMMC_DATATIMEOUT;
-	if (cmd_arg->Block_Mode == HAL_SDIO_MODE_BLOCK) {
+	if (cmd_arg->Block_Mode == HAL_SDIO_MODE_BLOCK)
+	{
 		config.DataLength = (uint32_t)(nbr_of_block * hsdio->block_size);
 		config.DataBlockSize = SDIO_Convert_Block_Size(hsdio, hsdio->block_size);
-	} else {
+	}
+	else
+	{
 		config.DataLength = Size_byte;
 		config.DataBlockSize = SDMMC_DATABLOCK_SIZE_1B;
 	}
@@ -2445,7 +2695,8 @@ static HAL_StatusTypeDef SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 	cmd |= (cmd_arg->Reg_Addr & 0x1FFFFU) << 9U;
 	cmd |= (((uint32_t)Size_byte) & 0x1FFU);
 	errorstate = SDMMC_SDIO_CmdReadWriteExtended(hsdio->Instance, cmd);
-	if (errorstate != HAL_SDIO_ERROR_NONE) {
+	if (errorstate != HAL_SDIO_ERROR_NONE)
+	{
 		MODIFY_REG(hsdio->Instance->DCTRL, SDMMC_DCTRL_FIFORST, SDMMC_DCTRL_FIFORST);
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
@@ -2457,18 +2708,25 @@ static HAL_StatusTypeDef SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 
 	SDMMCx = hsdio->Instance;
 	dataremaining = config.DataLength;
-	while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND)) {
-		if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= SDMMC_FIFO_SIZE)) {
-			for (regCount = SDMMC_FIFO_SIZE / 4U; regCount > 0U; regCount--) {
+	while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
+	{
+		if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= SDMMC_FIFO_SIZE))
+		{
+			for (regCount = SDMMC_FIFO_SIZE / 4U; regCount > 0U; regCount--)
+			{
 				SDMMCx->FIFO = *u32tempbuff;
 				u32tempbuff++;
 			}
 			dataremaining -= SDMMC_FIFO_SIZE;
-		} else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) && (dataremaining < SDMMC_FIFO_SIZE)) {
+		}
+		else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) && (dataremaining < SDMMC_FIFO_SIZE))
+		{
 			const uint8_t *u8buff = (uint8_t *)u32tempbuff;
-			while (dataremaining > 0U) {
+			while (dataremaining > 0U)
+			{
 				data = 0U;
-				for (byteCount = 0U; (byteCount < 4U) && (dataremaining > 0U); byteCount++) {
+				for (byteCount = 0U; (byteCount < 4U) && (dataremaining > 0U); byteCount++)
+				{
 					data |= ((uint32_t)(*u8buff) << (byteCount << 3U));
 					u8buff++;
 					dataremaining--;
@@ -2476,7 +2734,8 @@ static HAL_StatusTypeDef SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 				SDMMCx->FIFO = data;
 			}
 		}
-		if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT) {
+		if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT)
+		{
 			__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 			hsdio->ErrorCode |= HAL_SDIO_ERROR_TIMEOUT;
 			hsdio->State = HAL_SDIO_STATE_READY;
@@ -2486,30 +2745,39 @@ static HAL_StatusTypeDef SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
 	}
 
 	__SDMMC_CMDTRANS_DISABLE(hsdio->Instance);
-	if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DTIMEOUT)) {
+	if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DTIMEOUT))
+	{
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_DATA_TIMEOUT;
 		hsdio->State = HAL_SDIO_STATE_READY;
 		hsdio->Context = SDIO_CONTEXT_NONE;
 		return HAL_ERROR;
-	} else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL)) {
+	}
+	else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_DCRCFAIL))
+	{
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_DATA_CRC_FAIL;
 		hsdio->State = HAL_SDIO_STATE_READY;
 		hsdio->Context = SDIO_CONTEXT_NONE;
 		return HAL_ERROR;
-	} else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR)) {
+	}
+	else if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR))
+	{
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_FLAGS);
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_TX_UNDERRUN;
 		hsdio->State = HAL_SDIO_STATE_READY;
 		hsdio->Context = SDIO_CONTEXT_NONE;
 		return HAL_ERROR;
-	} else if (hsdio->ErrorCode == SDMMC_ERROR_INVALID_PARAMETER) {
+	}
+	else if (hsdio->ErrorCode == SDMMC_ERROR_INVALID_PARAMETER)
+	{
 		__HAL_SDIO_CLEAR_FLAG(hsdio, SDMMC_STATIC_DATA_FLAGS);
 		hsdio->State = HAL_SDIO_STATE_READY;
 		hsdio->Context = SDIO_CONTEXT_NONE;
 		return HAL_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 
@@ -2531,7 +2799,8 @@ static uint8_t SDIO_Convert_Block_Size(const SDIO_HandleTypeDef *hsdio, uint32_t
 
 	uint8_t most_bit = (uint8_t)__CLZ(__RBIT(block_size));
 	/*(1 << most_bit) - 1) is the mask used for blocksize*/
-	if (((uint8_t)block_size & ((1U << most_bit) - 1U)) != 0U) {
+	if (((uint8_t)block_size & ((1U << most_bit) - 1U)) != 0U)
+	{
 		return (uint8_t)SDMMC_DATABLOCK_SIZE_4B;
 	}
 	return most_bit << SDMMC_DCTRL_DBLOCKSIZE_Pos;
@@ -2550,26 +2819,37 @@ static HAL_StatusTypeDef SDIO_IOFunction_IRQHandler(SDIO_HandleTypeDef *hsdio)
 	uint8_t count;
 	uint8_t pendingInt;
 
-	if (hsdio->IOInterruptNbr == 1U) {
-		if ((hsdio->SDIO_IOFunction_Callback[hsdio->IOFunctionMask - 1U]) != NULL) {
+	if (hsdio->IOInterruptNbr == 1U)
+	{
+		if ((hsdio->SDIO_IOFunction_Callback[hsdio->IOFunctionMask - 1U]) != NULL)
+		{
 			(hsdio->SDIO_IOFunction_Callback[hsdio->IOFunctionMask - 1U])(hsdio, hsdio->IOFunctionMask - 1U);
 		}
-	} else if ((hsdio->IOInterruptNbr > 1U) && (hsdio->IOFunctionMask != 0U)) {
+	}
+	else if ((hsdio->IOInterruptNbr > 1U) && (hsdio->IOFunctionMask != 0U))
+	{
 		/* Get pending int firstly */
-		if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE1, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &pendingInt) != HAL_OK) {
+		if (SDIO_ReadDirect(hsdio, SDMMC_SDIO_CCCR4_SD_BYTE1, HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &pendingInt) != HAL_OK)
+		{
 			return HAL_ERROR;
 		}
 
-		if ((pendingInt != 0U) && (hsdio->IOFunctionMask != 0U)) {
-			for (count = 1; count <= SDIO_MAX_IO_NUMBER; count++) {
-				if (((pendingInt & (1U << count)) != 0U) && (((1U << count) & hsdio->IOFunctionMask) != 0U)) {
-					if ((hsdio->SDIO_IOFunction_Callback[count - 1U]) != NULL) {
+		if ((pendingInt != 0U) && (hsdio->IOFunctionMask != 0U))
+		{
+			for (count = 1; count <= SDIO_MAX_IO_NUMBER; count++)
+			{
+				if (((pendingInt & (1U << count)) != 0U) && (((1U << count) & hsdio->IOFunctionMask) != 0U))
+				{
+					if ((hsdio->SDIO_IOFunction_Callback[count - 1U]) != NULL)
+					{
 						(hsdio->SDIO_IOFunction_Callback[count - 1U])(hsdio, count);
 					}
 				}
 			}
 		}
-	} else {
+	}
+	else
+	{
 		/* Nothing to do */
 	}
 

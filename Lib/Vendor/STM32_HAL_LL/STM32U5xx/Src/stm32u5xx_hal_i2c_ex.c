@@ -111,7 +111,8 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t
 	assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
 	assert_param(IS_I2C_ANALOG_FILTER(AnalogFilter));
 
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -134,7 +135,9 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -156,7 +159,8 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_
 	assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
 	assert_param(IS_I2C_DIGITAL_FILTER(DigitalFilter));
 
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -185,7 +189,9 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -219,7 +225,8 @@ HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hi2c->Instance));
 
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -239,7 +246,9 @@ HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c)
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -256,7 +265,8 @@ HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hi2c->Instance));
 
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -276,7 +286,9 @@ HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c)
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -312,7 +324,8 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t
 	assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
 	assert_param(IS_I2C_FASTMODEPLUS(FastModePlus));
 
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -321,10 +334,13 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t
 		/* Disable the selected I2C peripheral */
 		__HAL_I2C_DISABLE(hi2c);
 
-		if (FastModePlus == I2C_FASTMODEPLUS_ENABLE) {
+		if (FastModePlus == I2C_FASTMODEPLUS_ENABLE)
+		{
 			/* Set I2Cx FMP bit */
 			hi2c->Instance->CR1 |= (I2C_CR1_FMP);
-		} else {
+		}
+		else
+		{
 			/* Reset I2Cx FMP bit */
 			hi2c->Instance->CR1 &= ~(I2C_CR1_FMP);
 		}
@@ -337,7 +353,9 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -372,7 +390,8 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t
  */
 HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c, const I2C_AutonomousModeConfTypeDef *sConfig)
 {
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -399,7 +418,9 @@ HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c, con
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 }
@@ -424,9 +445,12 @@ HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2
 	autocr_tmp = hi2c->Instance->AUTOCR;
 
 	sConfig->TriggerState = (autocr_tmp & I2C_AUTOCR_TRIGEN);
-	if (IS_I2C_GRP2_INSTANCE(hi2c->Instance)) {
+	if (IS_I2C_GRP2_INSTANCE(hi2c->Instance))
+	{
 		sConfig->TriggerSelection = ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | I2C_TRIG_GRP2);
-	} else {
+	}
+	else
+	{
 		sConfig->TriggerSelection = ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | I2C_TRIG_GRP1);
 	}
 	sConfig->TriggerPolarity = (autocr_tmp & I2C_AUTOCR_TRIGPOL);
@@ -443,7 +467,8 @@ HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2
  */
 HAL_StatusTypeDef HAL_I2CEx_ClearConfigAutonomousMode(I2C_HandleTypeDef *hi2c)
 {
-	if (hi2c->State == HAL_I2C_STATE_READY) {
+	if (hi2c->State == HAL_I2C_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -467,7 +492,9 @@ HAL_StatusTypeDef HAL_I2CEx_ClearConfigAutonomousMode(I2C_HandleTypeDef *hi2c)
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 }

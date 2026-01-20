@@ -39,7 +39,8 @@
 #define MC33772C_MCU_IF_REG_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdint.h>

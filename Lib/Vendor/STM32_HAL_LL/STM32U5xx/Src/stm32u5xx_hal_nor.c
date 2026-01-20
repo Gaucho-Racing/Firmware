@@ -242,16 +242,19 @@ HAL_StatusTypeDef HAL_NOR_Init(NOR_HandleTypeDef *hnor, FMC_NORSRAM_TimingTypeDe
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the NOR handle parameter */
-	if (hnor == NULL) {
+	if (hnor == NULL)
+	{
 		return HAL_ERROR;
 	}
 
-	if (hnor->State == HAL_NOR_STATE_RESET) {
+	if (hnor->State == HAL_NOR_STATE_RESET)
+	{
 		/* Allocate lock resource and initialize it */
 		hnor->Lock = HAL_UNLOCKED;
 
 #if (USE_HAL_NOR_REGISTER_CALLBACKS == 1)
-		if (hnor->MspInitCallback == NULL) {
+		if (hnor->MspInitCallback == NULL)
+		{
 			hnor->MspInitCallback = HAL_NOR_MspInit;
 		}
 
@@ -276,9 +279,12 @@ HAL_StatusTypeDef HAL_NOR_Init(NOR_HandleTypeDef *hnor, FMC_NORSRAM_TimingTypeDe
 	__FMC_NORSRAM_ENABLE(hnor->Instance, hnor->Init.NSBank);
 
 	/* Initialize NOR Memory Data Width*/
-	if (hnor->Init.MemoryDataWidth == FMC_NORSRAM_MEM_BUS_WIDTH_8) {
+	if (hnor->Init.MemoryDataWidth == FMC_NORSRAM_MEM_BUS_WIDTH_8)
+	{
 		uwNORMemoryDataWidth = NOR_MEMORY_8B;
-	} else {
+	}
+	else
+	{
 		uwNORMemoryDataWidth = NOR_MEMORY_16B;
 	}
 
@@ -289,27 +295,39 @@ HAL_StatusTypeDef HAL_NOR_Init(NOR_HandleTypeDef *hnor, FMC_NORSRAM_TimingTypeDe
 	hnor->State = HAL_NOR_STATE_READY;
 
 	/* Select the NOR device address */
-	if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+	if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+	{
 		deviceaddress = NOR_MEMORY_ADRESS1;
-	} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+	}
+	else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+	{
 		deviceaddress = NOR_MEMORY_ADRESS2;
-	} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+	}
+	else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+	{
 		deviceaddress = NOR_MEMORY_ADRESS3;
-	} else /* FMC_NORSRAM_BANK4 */
+	}
+	else /* FMC_NORSRAM_BANK4 */
 	{
 		deviceaddress = NOR_MEMORY_ADRESS4;
 	}
 
-	if (hnor->Init.WriteOperation == FMC_WRITE_OPERATION_DISABLE) {
+	if (hnor->Init.WriteOperation == FMC_WRITE_OPERATION_DISABLE)
+	{
 		(void)FMC_NORSRAM_WriteOperation_Disable(hnor->Instance, hnor->Init.NSBank);
 
 		/* Update the NOR controller state */
 		hnor->State = HAL_NOR_STATE_PROTECTED;
-	} else {
+	}
+	else
+	{
 		/* Get the value of the command set */
-		if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+		{
 			NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_CFI_BYTE), NOR_CMD_DATA_CFI);
-		} else {
+		}
+		else
+		{
 			NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_CFI), NOR_CMD_DATA_CFI);
 		}
 
@@ -330,7 +348,8 @@ HAL_StatusTypeDef HAL_NOR_Init(NOR_HandleTypeDef *hnor, FMC_NORSRAM_TimingTypeDe
 HAL_StatusTypeDef HAL_NOR_DeInit(NOR_HandleTypeDef *hnor)
 {
 #if (USE_HAL_NOR_REGISTER_CALLBACKS == 1)
-	if (hnor->MspDeInitCallback == NULL) {
+	if (hnor->MspDeInitCallback == NULL)
+	{
 		hnor->MspDeInitCallback = HAL_NOR_MspDeInit;
 	}
 
@@ -436,11 +455,16 @@ HAL_StatusTypeDef HAL_NOR_Read_ID(NOR_HandleTypeDef *hnor, NOR_IDTypeDef *pNOR_I
 
 	/* Check the NOR controller state */
 	state = hnor->State;
-	if (state == HAL_NOR_STATE_BUSY) {
+	if (state == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (state == HAL_NOR_STATE_PROTECTED) {
+	}
+	else if (state == HAL_NOR_STATE_PROTECTED)
+	{
 		return HAL_ERROR;
-	} else if (state == HAL_NOR_STATE_READY) {
+	}
+	else if (state == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -448,36 +472,51 @@ HAL_StatusTypeDef HAL_NOR_Read_ID(NOR_HandleTypeDef *hnor, NOR_IDTypeDef *pNOR_I
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send read ID command */
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD_BYTE), NOR_CMD_DATA_AUTO_SELECT);
-			} else {
+			}
+			else
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD), NOR_CMD_DATA_AUTO_SELECT);
 			}
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			NOR_WRITE(deviceaddress, NOR_CMD_DATA_AUTO_SELECT);
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
 
-		if (status != HAL_ERROR) {
+		if (status != HAL_ERROR)
+		{
 			/* Read the NOR IDs */
 			pNOR_ID->Manufacturer_Code = *(__IO uint16_t *)NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, MC_ADDRESS);
 			pNOR_ID->Device_Code1 = *(__IO uint16_t *)NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, DEVICE_CODE1_ADDR);
@@ -490,7 +529,9 @@ HAL_StatusTypeDef HAL_NOR_Read_ID(NOR_HandleTypeDef *hnor, NOR_IDTypeDef *pNOR_I
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -511,11 +552,16 @@ HAL_StatusTypeDef HAL_NOR_ReturnToReadMode(NOR_HandleTypeDef *hnor)
 
 	/* Check the NOR controller state */
 	state = hnor->State;
-	if (state == HAL_NOR_STATE_BUSY) {
+	if (state == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (state == HAL_NOR_STATE_PROTECTED) {
+	}
+	else if (state == HAL_NOR_STATE_PROTECTED)
+	{
 		return HAL_ERROR;
-	} else if (state == HAL_NOR_STATE_READY) {
+	}
+	else if (state == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -523,22 +569,33 @@ HAL_StatusTypeDef HAL_NOR_ReturnToReadMode(NOR_HandleTypeDef *hnor)
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
 			NOR_WRITE(deviceaddress, NOR_CMD_DATA_READ_RESET);
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			NOR_WRITE(deviceaddress, NOR_CMD_READ_ARRAY);
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
@@ -548,7 +605,9 @@ HAL_StatusTypeDef HAL_NOR_ReturnToReadMode(NOR_HandleTypeDef *hnor)
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -571,11 +630,16 @@ HAL_StatusTypeDef HAL_NOR_Read(NOR_HandleTypeDef *hnor, uint32_t *pAddress, uint
 
 	/* Check the NOR controller state */
 	state = hnor->State;
-	if (state == HAL_NOR_STATE_BUSY) {
+	if (state == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (state == HAL_NOR_STATE_PROTECTED) {
+	}
+	else if (state == HAL_NOR_STATE_PROTECTED)
+	{
 		return HAL_ERROR;
-	} else if (state == HAL_NOR_STATE_READY) {
+	}
+	else if (state == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -583,36 +647,51 @@ HAL_StatusTypeDef HAL_NOR_Read(NOR_HandleTypeDef *hnor, uint32_t *pAddress, uint
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send read data command */
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD_BYTE), NOR_CMD_DATA_READ_RESET);
-			} else {
+			}
+			else
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD), NOR_CMD_DATA_READ_RESET);
 			}
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			NOR_WRITE(pAddress, NOR_CMD_READ_ARRAY);
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
 
-		if (status != HAL_ERROR) {
+		if (status != HAL_ERROR)
+		{
 			/* Read the data */
 			*pData = (uint16_t)(*(__IO uint32_t *)pAddress);
 		}
@@ -622,7 +701,9 @@ HAL_StatusTypeDef HAL_NOR_Read(NOR_HandleTypeDef *hnor, uint32_t *pAddress, uint
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -643,9 +724,12 @@ HAL_StatusTypeDef HAL_NOR_Program(NOR_HandleTypeDef *hnor, uint32_t *pAddress, u
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the NOR controller state */
-	if (hnor->State == HAL_NOR_STATE_BUSY) {
+	if (hnor->State == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (hnor->State == HAL_NOR_STATE_READY) {
+	}
+	else if (hnor->State == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -653,36 +737,51 @@ HAL_StatusTypeDef HAL_NOR_Program(NOR_HandleTypeDef *hnor, uint32_t *pAddress, u
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send program data command */
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD_BYTE), NOR_CMD_DATA_PROGRAM);
-			} else {
+			}
+			else
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD), NOR_CMD_DATA_PROGRAM);
 			}
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			NOR_WRITE(pAddress, NOR_CMD_WORD_PROGRAM);
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
 
-		if (status != HAL_ERROR) {
+		if (status != HAL_ERROR)
+		{
 			/* Write the data */
 			NOR_WRITE(pAddress, *pData);
 		}
@@ -692,7 +791,9 @@ HAL_StatusTypeDef HAL_NOR_Program(NOR_HandleTypeDef *hnor, uint32_t *pAddress, u
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -719,11 +820,16 @@ HAL_StatusTypeDef HAL_NOR_ReadBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress
 
 	/* Check the NOR controller state */
 	state = hnor->State;
-	if (state == HAL_NOR_STATE_BUSY) {
+	if (state == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (state == HAL_NOR_STATE_PROTECTED) {
+	}
+	else if (state == HAL_NOR_STATE_PROTECTED)
+	{
 		return HAL_ERROR;
-	} else if (state == HAL_NOR_STATE_READY) {
+	}
+	else if (state == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -731,38 +837,54 @@ HAL_StatusTypeDef HAL_NOR_ReadBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send read data command */
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD_BYTE), NOR_CMD_DATA_READ_RESET);
-			} else {
+			}
+			else
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD), NOR_CMD_DATA_READ_RESET);
 			}
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			NOR_WRITE(deviceaddress, NOR_CMD_READ_ARRAY);
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
 
-		if (status != HAL_ERROR) {
+		if (status != HAL_ERROR)
+		{
 			/* Read buffer */
-			while (size > 0U) {
+			while (size > 0U)
+			{
 				*data = *(__IO uint16_t *)address;
 				data++;
 				address += 2U;
@@ -775,7 +897,9 @@ HAL_StatusTypeDef HAL_NOR_ReadBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -800,9 +924,12 @@ HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddr
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the NOR controller state */
-	if (hnor->State == HAL_NOR_STATE_BUSY) {
+	if (hnor->State == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (hnor->State == HAL_NOR_STATE_READY) {
+	}
+	else if (hnor->State == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -810,13 +937,19 @@ HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddr
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
@@ -825,12 +958,16 @@ HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddr
 		p_currentaddress = (uint16_t *)(deviceaddress + uwAddress);
 		p_endaddress = (uint16_t *)(deviceaddress + uwAddress + (2U * (uwBufferSize - 1U)));
 
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				/* Issue unlock command sequence */
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
-			} else {
+			}
+			else
+			{
 				/* Issue unlock command sequence */
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
@@ -838,28 +975,36 @@ HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddr
 			/* Write Buffer Load Command */
 			NOR_WRITE((deviceaddress + uwAddress), NOR_CMD_DATA_BUFFER_AND_PROG);
 			NOR_WRITE((deviceaddress + uwAddress), (uint16_t)(uwBufferSize - 1U));
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			/* Write Buffer Load Command */
 			NOR_WRITE((deviceaddress + uwAddress), NOR_CMD_BUFFERED_PROGRAM);
 			NOR_WRITE((deviceaddress + uwAddress), (uint16_t)(uwBufferSize - 1U));
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
 
-		if (status != HAL_ERROR) {
+		if (status != HAL_ERROR)
+		{
 			/* Load Data into NOR Buffer */
-			while (p_currentaddress <= p_endaddress) {
+			while (p_currentaddress <= p_endaddress)
+			{
 				NOR_WRITE(p_currentaddress, *data);
 
 				data++;
 				p_currentaddress++;
 			}
 
-			if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
+			if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+			{
 				NOR_WRITE((deviceaddress + uwAddress), NOR_CMD_DATA_BUFFER_AND_PROG_CONFIRM);
-			} else /* => hnor->CommandSet ==
-				  NOR_INTEL_SHARP_EXT_COMMAND_SET */
+			}
+			else /* => hnor->CommandSet ==
+				NOR_INTEL_SHARP_EXT_COMMAND_SET */
 			{
 				NOR_WRITE((deviceaddress + uwAddress), NOR_CMD_CONFIRM);
 			}
@@ -870,7 +1015,9 @@ HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddr
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -891,9 +1038,12 @@ HAL_StatusTypeDef HAL_NOR_Erase_Block(NOR_HandleTypeDef *hnor, uint32_t BlockAdd
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the NOR controller state */
-	if (hnor->State == HAL_NOR_STATE_BUSY) {
+	if (hnor->State == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (hnor->State == HAL_NOR_STATE_READY) {
+	}
+	else if (hnor->State == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -901,24 +1051,34 @@ HAL_StatusTypeDef HAL_NOR_Erase_Block(NOR_HandleTypeDef *hnor, uint32_t BlockAdd
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send block erase command sequence */
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD_BYTE), NOR_CMD_DATA_CHIP_BLOCK_ERASE_THIRD);
-			} else {
+			}
+			else
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD), NOR_CMD_DATA_CHIP_BLOCK_ERASE_THIRD);
@@ -926,12 +1086,16 @@ HAL_StatusTypeDef HAL_NOR_Erase_Block(NOR_HandleTypeDef *hnor, uint32_t BlockAdd
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIFTH), NOR_CMD_DATA_CHIP_BLOCK_ERASE_FIFTH);
 			}
 			NOR_WRITE((uint32_t)(BlockAddress + Address), NOR_CMD_DATA_BLOCK_ERASE);
-		} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
+		}
+		else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+		{
 			NOR_WRITE((BlockAddress + Address), NOR_CMD_BLOCK_UNLOCK);
 			NOR_WRITE((BlockAddress + Address), NOR_CMD_CONFIRM);
 			NOR_WRITE((BlockAddress + Address), NOR_CMD_BLOCK_ERASE);
 			NOR_WRITE((BlockAddress + Address), NOR_CMD_CONFIRM);
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
@@ -942,7 +1106,9 @@ HAL_StatusTypeDef HAL_NOR_Erase_Block(NOR_HandleTypeDef *hnor, uint32_t BlockAdd
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -963,9 +1129,12 @@ HAL_StatusTypeDef HAL_NOR_Erase_Chip(NOR_HandleTypeDef *hnor, uint32_t Address)
 	UNUSED(Address);
 
 	/* Check the NOR controller state */
-	if (hnor->State == HAL_NOR_STATE_BUSY) {
+	if (hnor->State == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (hnor->State == HAL_NOR_STATE_READY) {
+	}
+	else if (hnor->State == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -973,24 +1142,34 @@ HAL_StatusTypeDef HAL_NOR_Erase_Chip(NOR_HandleTypeDef *hnor, uint32_t Address)
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send NOR chip erase command sequence */
-		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-			if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+		{
+			if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_BYTE), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND_BYTE), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD_BYTE), NOR_CMD_DATA_CHIP_BLOCK_ERASE_THIRD);
-			} else {
+			}
+			else
+			{
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST), NOR_CMD_DATA_FIRST);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SECOND), NOR_CMD_DATA_SECOND);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_THIRD), NOR_CMD_DATA_CHIP_BLOCK_ERASE_THIRD);
@@ -998,7 +1177,9 @@ HAL_StatusTypeDef HAL_NOR_Erase_Chip(NOR_HandleTypeDef *hnor, uint32_t Address)
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIFTH), NOR_CMD_DATA_CHIP_BLOCK_ERASE_FIFTH);
 				NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_SIXTH), NOR_CMD_DATA_CHIP_ERASE);
 			}
-		} else {
+		}
+		else
+		{
 			/* Primary command set not supported by the driver */
 			status = HAL_ERROR;
 		}
@@ -1009,7 +1190,9 @@ HAL_StatusTypeDef HAL_NOR_Erase_Chip(NOR_HandleTypeDef *hnor, uint32_t Address)
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -1030,11 +1213,16 @@ HAL_StatusTypeDef HAL_NOR_Read_CFI(NOR_HandleTypeDef *hnor, NOR_CFITypeDef *pNOR
 
 	/* Check the NOR controller state */
 	state = hnor->State;
-	if (state == HAL_NOR_STATE_BUSY) {
+	if (state == HAL_NOR_STATE_BUSY)
+	{
 		return HAL_BUSY;
-	} else if (state == HAL_NOR_STATE_PROTECTED) {
+	}
+	else if (state == HAL_NOR_STATE_PROTECTED)
+	{
 		return HAL_ERROR;
-	} else if (state == HAL_NOR_STATE_READY) {
+	}
+	else if (state == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -1042,21 +1230,30 @@ HAL_StatusTypeDef HAL_NOR_Read_CFI(NOR_HandleTypeDef *hnor, NOR_CFITypeDef *pNOR
 		hnor->State = HAL_NOR_STATE_BUSY;
 
 		/* Select the NOR device address */
-		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1) {
+		if (hnor->Init.NSBank == FMC_NORSRAM_BANK1)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS1;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK2)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS2;
-		} else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3) {
+		}
+		else if (hnor->Init.NSBank == FMC_NORSRAM_BANK3)
+		{
 			deviceaddress = NOR_MEMORY_ADRESS3;
-		} else /* FMC_NORSRAM_BANK4 */
+		}
+		else /* FMC_NORSRAM_BANK4 */
 		{
 			deviceaddress = NOR_MEMORY_ADRESS4;
 		}
 
 		/* Send read CFI query command */
-		if (uwNORMemoryDataWidth == NOR_MEMORY_8B) {
+		if (uwNORMemoryDataWidth == NOR_MEMORY_8B)
+		{
 			NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_CFI_BYTE), NOR_CMD_DATA_CFI);
-		} else {
+		}
+		else
+		{
 			NOR_WRITE(NOR_ADDR_SHIFT(deviceaddress, uwNORMemoryDataWidth, NOR_CMD_ADDRESS_FIRST_CFI), NOR_CMD_DATA_CFI);
 		}
 		/* read the NOR CFI information */
@@ -1070,7 +1267,9 @@ HAL_StatusTypeDef HAL_NOR_Read_CFI(NOR_HandleTypeDef *hnor, NOR_CFITypeDef *pNOR
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -1094,13 +1293,16 @@ HAL_StatusTypeDef HAL_NOR_RegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_Call
 	HAL_StatusTypeDef status = HAL_OK;
 	HAL_NOR_StateTypeDef state;
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	state = hnor->State;
-	if ((state == HAL_NOR_STATE_READY) || (state == HAL_NOR_STATE_RESET) || (state == HAL_NOR_STATE_PROTECTED)) {
-		switch (CallbackId) {
+	if ((state == HAL_NOR_STATE_READY) || (state == HAL_NOR_STATE_RESET) || (state == HAL_NOR_STATE_PROTECTED))
+	{
+		switch (CallbackId)
+		{
 			case HAL_NOR_MSP_INIT_CB_ID:
 				hnor->MspInitCallback = pCallback;
 				break;
@@ -1112,7 +1314,9 @@ HAL_StatusTypeDef HAL_NOR_RegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* update return status */
 		status = HAL_ERROR;
 	}
@@ -1136,8 +1340,10 @@ HAL_StatusTypeDef HAL_NOR_UnRegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_Ca
 	HAL_NOR_StateTypeDef state;
 
 	state = hnor->State;
-	if ((state == HAL_NOR_STATE_READY) || (state == HAL_NOR_STATE_RESET) || (state == HAL_NOR_STATE_PROTECTED)) {
-		switch (CallbackId) {
+	if ((state == HAL_NOR_STATE_READY) || (state == HAL_NOR_STATE_RESET) || (state == HAL_NOR_STATE_PROTECTED))
+	{
+		switch (CallbackId)
+		{
 			case HAL_NOR_MSP_INIT_CB_ID:
 				hnor->MspInitCallback = HAL_NOR_MspInit;
 				break;
@@ -1149,7 +1355,9 @@ HAL_StatusTypeDef HAL_NOR_UnRegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* update return status */
 		status = HAL_ERROR;
 	}
@@ -1186,7 +1394,8 @@ HAL_StatusTypeDef HAL_NOR_UnRegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_Ca
 HAL_StatusTypeDef HAL_NOR_WriteOperation_Enable(NOR_HandleTypeDef *hnor)
 {
 	/* Check the NOR controller state */
-	if (hnor->State == HAL_NOR_STATE_PROTECTED) {
+	if (hnor->State == HAL_NOR_STATE_PROTECTED)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -1201,7 +1410,9 @@ HAL_StatusTypeDef HAL_NOR_WriteOperation_Enable(NOR_HandleTypeDef *hnor)
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -1217,7 +1428,8 @@ HAL_StatusTypeDef HAL_NOR_WriteOperation_Enable(NOR_HandleTypeDef *hnor)
 HAL_StatusTypeDef HAL_NOR_WriteOperation_Disable(NOR_HandleTypeDef *hnor)
 {
 	/* Check the NOR controller state */
-	if (hnor->State == HAL_NOR_STATE_READY) {
+	if (hnor->State == HAL_NOR_STATE_READY)
+	{
 		/* Process Locked */
 		__HAL_LOCK(hnor);
 
@@ -1232,7 +1444,9 @@ HAL_StatusTypeDef HAL_NOR_WriteOperation_Disable(NOR_HandleTypeDef *hnor)
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hnor);
-	} else {
+	}
+	else
+	{
 		return HAL_ERROR;
 	}
 
@@ -1292,11 +1506,15 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 	/* Get tick */
 	tickstart = HAL_GetTick();
 
-	if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
-		while ((status != HAL_NOR_STATUS_SUCCESS) && (status != HAL_NOR_STATUS_TIMEOUT)) {
+	if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET)
+	{
+		while ((status != HAL_NOR_STATUS_SUCCESS) && (status != HAL_NOR_STATUS_TIMEOUT))
+		{
 			/* Check for the Timeout */
-			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+			if (Timeout != HAL_MAX_DELAY)
+			{
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+				{
 					status = HAL_NOR_STATUS_TIMEOUT;
 				}
 			}
@@ -1307,11 +1525,13 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 
 			/* If DQ6 did not toggle between the two reads then
 			 * return HAL_NOR_STATUS_SUCCESS  */
-			if ((tmpsr1 & NOR_MASK_STATUS_DQ6) == (tmpsr2 & NOR_MASK_STATUS_DQ6)) {
+			if ((tmpsr1 & NOR_MASK_STATUS_DQ6) == (tmpsr2 & NOR_MASK_STATUS_DQ6))
+			{
 				return HAL_NOR_STATUS_SUCCESS;
 			}
 
-			if ((tmpsr1 & NOR_MASK_STATUS_DQ5) == NOR_MASK_STATUS_DQ5) {
+			if ((tmpsr1 & NOR_MASK_STATUS_DQ5) == NOR_MASK_STATUS_DQ5)
+			{
 				status = HAL_NOR_STATUS_ONGOING;
 			}
 
@@ -1320,21 +1540,28 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 
 			/* If DQ6 did not toggle between the two reads then
 			 * return HAL_NOR_STATUS_SUCCESS  */
-			if ((tmpsr1 & NOR_MASK_STATUS_DQ6) == (tmpsr2 & NOR_MASK_STATUS_DQ6)) {
+			if ((tmpsr1 & NOR_MASK_STATUS_DQ6) == (tmpsr2 & NOR_MASK_STATUS_DQ6))
+			{
 				return HAL_NOR_STATUS_SUCCESS;
 			}
-			if ((tmpsr1 & NOR_MASK_STATUS_DQ5) == NOR_MASK_STATUS_DQ5) {
+			if ((tmpsr1 & NOR_MASK_STATUS_DQ5) == NOR_MASK_STATUS_DQ5)
+			{
 				return HAL_NOR_STATUS_ERROR;
 			}
 		}
-	} else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET) {
-		do {
+	}
+	else if (hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET)
+	{
+		do
+		{
 			NOR_WRITE(Address, NOR_CMD_READ_STATUS_REG);
 			tmpsr2 = *(__IO uint16_t *)(Address);
 
 			/* Check for the Timeout */
-			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+			if (Timeout != HAL_MAX_DELAY)
+			{
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+				{
 					return HAL_NOR_STATUS_TIMEOUT;
 				}
 			}
@@ -1342,14 +1569,19 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 
 		NOR_WRITE(Address, NOR_CMD_READ_STATUS_REG);
 		tmpsr1 = *(__IO uint16_t *)(Address);
-		if ((tmpsr1 & (NOR_MASK_STATUS_DQ5 | NOR_MASK_STATUS_DQ4)) != 0U) {
+		if ((tmpsr1 & (NOR_MASK_STATUS_DQ5 | NOR_MASK_STATUS_DQ4)) != 0U)
+		{
 			/* Clear the Status Register  */
 			NOR_WRITE(Address, NOR_CMD_READ_STATUS_REG);
 			status = HAL_NOR_STATUS_ERROR;
-		} else {
+		}
+		else
+		{
 			status = HAL_NOR_STATUS_SUCCESS;
 		}
-	} else {
+	}
+	else
+	{
 		/* Primary command set not supported by the driver */
 		status = HAL_NOR_STATUS_ERROR;
 	}

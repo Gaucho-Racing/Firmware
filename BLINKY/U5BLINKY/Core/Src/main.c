@@ -100,7 +100,8 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	while (1) {
+	while (1)
+	{
 		/* USER CODE END WHILE */
 		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_RESET);
 		HAL_Delay(500);
@@ -122,7 +123,8 @@ void SystemClock_Config(void)
 
 	/** Configure the main internal regulator output voltage
 	 */
-	if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE4) != HAL_OK) {
+	if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE4) != HAL_OK)
+	{
 		Error_Handler();
 	}
 
@@ -133,7 +135,8 @@ void SystemClock_Config(void)
 	RCC_OscInitStruct.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
 	RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_4;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+	{
 		Error_Handler();
 	}
 
@@ -146,7 +149,8 @@ void SystemClock_Config(void)
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+	{
 		Error_Handler();
 	}
 }
@@ -161,7 +165,8 @@ static void SystemPower_Config(void)
 	/*
 	 * Switch to SMPS regulator instead of LDO
 	 */
-	if (HAL_PWREx_ConfigSupply(PWR_SMPS_SUPPLY) != HAL_OK) {
+	if (HAL_PWREx_ConfigSupply(PWR_SMPS_SUPPLY) != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN PWR */
@@ -186,10 +191,12 @@ static void MX_ICACHE_Init(void)
 
 	/** Enable instruction cache in 1-way (direct mapped cache)
 	 */
-	if (HAL_ICACHE_ConfigAssociativityMode(ICACHE_1WAY) != HAL_OK) {
+	if (HAL_ICACHE_ConfigAssociativityMode(ICACHE_1WAY) != HAL_OK)
+	{
 		Error_Handler();
 	}
-	if (HAL_ICACHE_Enable() != HAL_OK) {
+	if (HAL_ICACHE_Enable() != HAL_OK)
+	{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN ICACHE_Init 2 */
@@ -241,7 +248,8 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
-	while (1) {
+	while (1)
+	{
 	}
 	/* USER CODE END Error_Handler_Debug */
 }

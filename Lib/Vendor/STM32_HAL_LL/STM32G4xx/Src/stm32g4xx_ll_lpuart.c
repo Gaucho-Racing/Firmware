@@ -120,13 +120,16 @@ ErrorStatus LL_LPUART_DeInit(const USART_TypeDef *LPUARTx)
 	/* Check the parameters */
 	assert_param(IS_LPUART_INSTANCE(LPUARTx));
 
-	if (LPUARTx == LPUART1) {
+	if (LPUARTx == LPUART1)
+	{
 		/* Force reset of LPUART peripheral */
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_LPUART1);
 
 		/* Release reset of LPUART peripheral */
 		LL_APB1_GRP2_ReleaseReset(LL_APB1_GRP2_PERIPH_LPUART1);
-	} else {
+	}
+	else
+	{
 		status = ERROR;
 	}
 
@@ -169,7 +172,8 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 	/* LPUART needs to be in disabled state, in order to be able to
 	   configure some bits in CRx registers. Otherwise (LPUART not in
 	   Disabled state) => return ERROR */
-	if (LL_LPUART_IsEnabled(LPUARTx) == 0U) {
+	if (LL_LPUART_IsEnabled(LPUARTx) == 0U)
+	{
 		/*---------------------------- LPUART CR1 Configuration
 		 * ----------------------- Configure LPUARTx CR1 (LPUART Word
 		 * Length, Parity and Transfer Direction bits) with parameters:
@@ -211,7 +215,8 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 		   - Peripheral clock as returned by RCC service, should be
 		   valid (different from 0).
 		*/
-		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (LPUART_InitStruct->BaudRate != 0U)) {
+		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (LPUART_InitStruct->BaudRate != 0U))
+		{
 			status = SUCCESS;
 			LL_LPUART_SetBaudRate(LPUARTx, periphclk, LPUART_InitStruct->PrescalerValue, LPUART_InitStruct->BaudRate);
 

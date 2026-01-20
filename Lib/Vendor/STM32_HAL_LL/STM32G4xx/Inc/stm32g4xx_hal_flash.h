@@ -20,142 +20,159 @@
 #define STM32G4xx_HAL_FLASH_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal_def.h"
 
-/** @addtogroup STM32G4xx_HAL_Driver
- * @{
- */
+	/** @addtogroup STM32G4xx_HAL_Driver
+	 * @{
+	 */
 
-/** @addtogroup FLASH
- * @{
- */
+	/** @addtogroup FLASH
+	 * @{
+	 */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup FLASH_Exported_Types FLASH Exported Types
- * @{
- */
+	/* Exported types ------------------------------------------------------------*/
+	/** @defgroup FLASH_Exported_Types FLASH Exported Types
+	 * @{
+	 */
 
-/**
- * @brief  FLASH Erase structure definition
- */
-typedef struct {
-	uint32_t TypeErase; /*!< Mass erase or page erase.
-				 This parameter can be a value of @ref
-			       FLASH_Type_Erase */
-	uint32_t Banks;	    /*!< Select bank to erase.
-				 This parameter must be a value of @ref FLASH_Banks
-				 (FLASH_BANK_BOTH should be used only for mass erase) */
-	uint32_t Page;	    /*!< Initial Flash page to erase when page erase is disabled.
-				 This parameter must be a value between 0 and (max number
-			       of pages in the bank - 1) (eg : 127 for 512KB dual bank) */
-	uint32_t NbPages;   /*!< Number of pages to be erased.
-				 This parameter must be a value between 1 and (max
-			       number of pages in the bank - value of initial page)*/
-} FLASH_EraseInitTypeDef;
+	/**
+	 * @brief  FLASH Erase structure definition
+	 */
+	typedef struct
+	{
+		uint32_t TypeErase; /*!< Mass erase or page erase.
+					 This parameter can be a value of @ref
+				       FLASH_Type_Erase */
+		uint32_t Banks;	    /*!< Select bank to erase.
+					 This parameter must be a value of @ref FLASH_Banks
+					 (FLASH_BANK_BOTH should be used only for mass erase) */
+		uint32_t Page;	    /*!< Initial Flash page to erase when page erase is disabled.
+					 This parameter must be a value between 0 and (max number
+				       of pages in the bank - 1) (eg : 127 for 512KB dual bank) */
+		uint32_t NbPages;   /*!< Number of pages to be erased.
+					 This parameter must be a value between 1 and (max
+				       number of pages in the bank - value of initial page)*/
+	} FLASH_EraseInitTypeDef;
 
-/**
- * @brief  FLASH Option Bytes Program structure definition
- */
-typedef struct {
-	uint32_t OptionType;	 /*!< Option byte to be configured.
-				      This parameter can be a combination of the
-				    values of @ref FLASH_OB_Type */
-	uint32_t WRPArea;	 /*!< Write protection area to be programmed (used for
-				    OPTIONBYTE_WRP). Only one WRP area could be
-				    programmed at the same time. This parameter can be
-				    value of @ref FLASH_OB_WRP_Area */
-	uint32_t WRPStartOffset; /*!< Write protection start offset (used for
-				    OPTIONBYTE_WRP). This parameter must be a
-				    value between 0 and (max number of pages in
-				    the bank - 1) */
-	uint32_t WRPEndOffset;	 /*!< Write protection end offset (used for
-				    OPTIONBYTE_WRP).   This parameter must be a
-				    value between WRPStartOffset and (max number
-				    of pages in the bank - 1) */
-	uint32_t RDPLevel;	 /*!< Set the read protection level.. (used for
-				    OPTIONBYTE_RDP).       This parameter can be a value of
-				    @ref FLASH_OB_Read_Protection */
-	uint32_t USERType;	 /*!< User option byte(s) to be configured (used for
-				    OPTIONBYTE_USER).   This parameter can be a
-				    combination of @ref FLASH_OB_USER_Type */
-	uint32_t USERConfig;	 /*!< Value of the user option byte (used for
-				    OPTIONBYTE_USER). This parameter can be a
-				    combination of @ref FLASH_OB_USER_BOR_LEVEL,
-				      @ref FLASH_OB_USER_nRST_STOP, @ref
-				    FLASH_OB_USER_nRST_STANDBY,
-				      @ref FLASH_OB_USER_nRST_SHUTDOWN, @ref
-				    FLASH_OB_USER_IWDG_SW,
-				      @ref FLASH_OB_USER_IWDG_STOP, @ref
-				    FLASH_OB_USER_IWDG_STANDBY,
-				      @ref FLASH_OB_USER_WWDG_SW, @ref
-				    FLASH_OB_USER_BFB2 (*),
-				      @ref FLASH_OB_USER_nBOOT1, @ref
-				    FLASH_OB_USER_SRAM_PE,
-				      @ref FLASH_OB_USER_CCMSRAM_RST
-				      @note (*) availability depends on devices */
-	uint32_t PCROPConfig;	 /*!< Configuration of the PCROP (used for
-				    OPTIONBYTE_PCROP).    This parameter must be a
-				    combination of @ref FLASH_Banks (except
-				    FLASH_BANK_BOTH)    and @ref FLASH_OB_PCROP_RDP */
-	uint32_t PCROPStartAddr; /*!< PCROP Start address (used for
-				    OPTIONBYTE_PCROP). This parameter must be a
-				    value between begin and end of bank
-				      => Be careful of the bank swapping for the
-				    address */
-	uint32_t PCROPEndAddr;	 /*!< PCROP End address (used for OPTIONBYTE_PCROP).
-				      This parameter must be a value between PCROP
-				    Start address and end of bank */
-	uint32_t BootEntryPoint; /*!< Set the Boot Lock (used for
-				    OPTIONBYTE_BOOT_LOCK). This parameter can be
-				    a value of @ref FLASH_OB_Boot_Lock */
-	uint32_t SecBank;	 /*!< Bank of securable memory area to be programmed (used
-				    for OPTIONBYTE_SEC). Only one securable memory area
-				    could be programmed at the same time. This parameter can
-				    be one of the following values: FLASH_BANK_1: Securable
-				    memory area to be programmed in bank 1 FLASH_BANK_2:
-				    Securable memory area to be programmed in bank 2 (*)
-				      @note (*) availability depends on devices */
-	uint32_t SecSize;	 /*!< Size of securable memory area to be programmed (used
-				    for OPTIONBYTE_SEC), in number of pages. Securable
-				    memory area is starting from first page of the bank.
-				      Only one securable memory could be programmed at the
-				    same time. This parameter must be a value between 0 and
-				    (max number of pages in the bank - 1) */
-} FLASH_OBProgramInitTypeDef;
+	/**
+	 * @brief  FLASH Option Bytes Program structure definition
+	 */
+	typedef struct
+	{
+		uint32_t OptionType;	 /*!< Option byte to be configured.
+					      This parameter can be a combination of the
+					    values of @ref FLASH_OB_Type */
+		uint32_t WRPArea;	 /*!< Write protection area to be programmed (used for
+					    OPTIONBYTE_WRP). Only one WRP area could be
+					    programmed at the same time. This parameter can be
+					    value of @ref FLASH_OB_WRP_Area */
+		uint32_t WRPStartOffset; /*!< Write protection start offset (used for
+					    OPTIONBYTE_WRP). This parameter must be a
+					    value between 0 and (max number of pages in
+					    the bank - 1) */
+		uint32_t WRPEndOffset;	 /*!< Write protection end offset (used for
+					    OPTIONBYTE_WRP).   This parameter must be a
+					    value between WRPStartOffset and (max number
+					    of pages in the bank - 1) */
+		uint32_t RDPLevel;	 /*!< Set the read protection level.. (used for
+					    OPTIONBYTE_RDP).       This parameter can be a value of
+					    @ref FLASH_OB_Read_Protection */
+		uint32_t USERType;	 /*!< User option byte(s) to be configured (used for
+					    OPTIONBYTE_USER).   This parameter can be a
+					    combination of @ref FLASH_OB_USER_Type */
+		uint32_t USERConfig;	 /*!< Value of the user option byte (used for
+					    OPTIONBYTE_USER). This parameter can be a
+					    combination of @ref FLASH_OB_USER_BOR_LEVEL,
+					      @ref FLASH_OB_USER_nRST_STOP, @ref
+					    FLASH_OB_USER_nRST_STANDBY,
+					      @ref FLASH_OB_USER_nRST_SHUTDOWN, @ref
+					    FLASH_OB_USER_IWDG_SW,
+					      @ref FLASH_OB_USER_IWDG_STOP, @ref
+					    FLASH_OB_USER_IWDG_STANDBY,
+					      @ref FLASH_OB_USER_WWDG_SW, @ref
+					    FLASH_OB_USER_BFB2 (*),
+					      @ref FLASH_OB_USER_nBOOT1, @ref
+					    FLASH_OB_USER_SRAM_PE,
+					      @ref FLASH_OB_USER_CCMSRAM_RST
+					      @note (*) availability depends on devices */
+		uint32_t PCROPConfig;	 /*!< Configuration of the PCROP (used for
+					    OPTIONBYTE_PCROP).    This parameter must be a
+					    combination of @ref FLASH_Banks (except
+					    FLASH_BANK_BOTH)    and @ref FLASH_OB_PCROP_RDP */
+		uint32_t PCROPStartAddr; /*!< PCROP Start address (used for
+					    OPTIONBYTE_PCROP). This parameter must be a
+					    value between begin and end of bank
+					      => Be careful of the bank swapping for the
+					    address */
+		uint32_t PCROPEndAddr;	 /*!< PCROP End address (used for OPTIONBYTE_PCROP).
+					      This parameter must be a value between PCROP
+					    Start address and end of bank */
+		uint32_t BootEntryPoint; /*!< Set the Boot Lock (used for
+					    OPTIONBYTE_BOOT_LOCK). This parameter can be
+					    a value of @ref FLASH_OB_Boot_Lock */
+		uint32_t SecBank;	 /*!< Bank of securable memory area to be programmed (used
+					    for OPTIONBYTE_SEC). Only one securable memory area
+					    could be programmed at the same time. This parameter can
+					    be one of the following values: FLASH_BANK_1: Securable
+					    memory area to be programmed in bank 1 FLASH_BANK_2:
+					    Securable memory area to be programmed in bank 2 (*)
+					      @note (*) availability depends on devices */
+		uint32_t SecSize;	 /*!< Size of securable memory area to be programmed (used
+					    for OPTIONBYTE_SEC), in number of pages. Securable
+					    memory area is starting from first page of the bank.
+					      Only one securable memory could be programmed at the
+					    same time. This parameter must be a value between 0 and
+					    (max number of pages in the bank - 1) */
+	} FLASH_OBProgramInitTypeDef;
 
-/**
- * @brief  FLASH Procedure structure definition
- */
-typedef enum { FLASH_PROC_NONE = 0, FLASH_PROC_PAGE_ERASE, FLASH_PROC_MASS_ERASE, FLASH_PROC_PROGRAM, FLASH_PROC_PROGRAM_LAST } FLASH_ProcedureTypeDef;
+	/**
+	 * @brief  FLASH Procedure structure definition
+	 */
+	typedef enum
+	{
+		FLASH_PROC_NONE = 0,
+		FLASH_PROC_PAGE_ERASE,
+		FLASH_PROC_MASS_ERASE,
+		FLASH_PROC_PROGRAM,
+		FLASH_PROC_PROGRAM_LAST
+	} FLASH_ProcedureTypeDef;
 
-/**
- * @brief  FLASH Cache structure definition
- */
-typedef enum { FLASH_CACHE_DISABLED = 0, FLASH_CACHE_ICACHE_ENABLED, FLASH_CACHE_DCACHE_ENABLED, FLASH_CACHE_ICACHE_DCACHE_ENABLED } FLASH_CacheTypeDef;
+	/**
+	 * @brief  FLASH Cache structure definition
+	 */
+	typedef enum
+	{
+		FLASH_CACHE_DISABLED = 0,
+		FLASH_CACHE_ICACHE_ENABLED,
+		FLASH_CACHE_DCACHE_ENABLED,
+		FLASH_CACHE_ICACHE_DCACHE_ENABLED
+	} FLASH_CacheTypeDef;
 
-/**
- * @brief  FLASH handle Structure definition
- */
-typedef struct {
-	HAL_LockTypeDef Lock;			      /* FLASH locking object */
-	__IO uint32_t ErrorCode;		      /* FLASH error code */
-	__IO FLASH_ProcedureTypeDef ProcedureOnGoing; /* Internal variable to indicate which procedure
-							 is ongoing or not in IT context */
-	__IO uint32_t Address;			      /* Internal variable to save address selected for
-							 program in IT context */
-	__IO uint32_t Bank;			      /* Internal variable to save current bank selected
-							 during erase in IT context */
-	__IO uint32_t Page;			      /* Internal variable to define the current page
-							 which is erasing in IT context */
-	__IO uint32_t NbPagesToErase;		      /* Internal variable to save the remaining
-							 pages to erase in IT context */
-	__IO FLASH_CacheTypeDef CacheToReactivate;    /* Internal variable to indicate which caches
-							 should be reactivated */
-} FLASH_ProcessTypeDef;
+	/**
+	 * @brief  FLASH handle Structure definition
+	 */
+	typedef struct
+	{
+		HAL_LockTypeDef Lock;			      /* FLASH locking object */
+		__IO uint32_t ErrorCode;		      /* FLASH error code */
+		__IO FLASH_ProcedureTypeDef ProcedureOnGoing; /* Internal variable to indicate which procedure
+								 is ongoing or not in IT context */
+		__IO uint32_t Address;			      /* Internal variable to save address selected for
+								 program in IT context */
+		__IO uint32_t Bank;			      /* Internal variable to save current bank selected
+								 during erase in IT context */
+		__IO uint32_t Page;			      /* Internal variable to define the current page
+								 which is erasing in IT context */
+		__IO uint32_t NbPagesToErase;		      /* Internal variable to save the remaining
+								 pages to erase in IT context */
+		__IO FLASH_CacheTypeDef CacheToReactivate;    /* Internal variable to indicate which caches
+								 should be reactivated */
+	} FLASH_ProcessTypeDef;
 
 /**
  * @}
@@ -403,9 +420,9 @@ typedef struct {
  */
 #define OB_WWDG_HW 0x00000000U	      /*!< Hardware window watchdog */
 #define OB_WWDG_SW FLASH_OPTR_WWDG_SW /*!< Software window watchdog */
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #if defined(FLASH_OPTR_DBANK)
 /** @defgroup FLASH_OB_USER_BFB2 FLASH Option Bytes User BFB2 Mode
@@ -736,7 +753,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_FLASH_INSTRUCTION_CACHE_RESET()                                                                                                                                                          \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT(FLASH->ACR, FLASH_ACR_ICRST);                                                                                                                                                  \
 		CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST);                                                                                                                                                \
 	} while (0)
@@ -747,7 +765,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_FLASH_DATA_CACHE_RESET()                                                                                                                                                                 \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		SET_BIT(FLASH->ACR, FLASH_ACR_DCRST);                                                                                                                                                  \
 		CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST);                                                                                                                                                \
 	} while (0)
@@ -758,7 +777,8 @@ typedef struct {
  *         lost and a new unlock sequence is necessary to re-write it to 0.
  */
 #define __HAL_FLASH_POWER_DOWN_ENABLE()                                                                                                                                                                \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);                                                                                                                                                \
 		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);                                                                                                                                                \
 		SET_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);                                                                                                                                                 \
@@ -770,7 +790,8 @@ typedef struct {
  *         lost and a new unlock sequence is necessary to re-write it to 1.
  */
 #define __HAL_FLASH_POWER_DOWN_DISABLE()                                                                                                                                                               \
-	do {                                                                                                                                                                                           \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
 		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);                                                                                                                                                \
 		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);                                                                                                                                                \
 		CLEAR_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);                                                                                                                                               \
@@ -808,11 +829,14 @@ typedef struct {
  * @retval none
  */
 #define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)                                                                                                                                                           \
-	do {                                                                                                                                                                                           \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
+		{                                                                                                                                                                                      \
 			SET_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
+		{                                                                                                                                                                                      \
 			SET_BIT(FLASH->CR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                      \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -828,11 +852,14 @@ typedef struct {
  * @retval none
  */
 #define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)                                                                                                                                                          \
-	do {                                                                                                                                                                                           \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
+		{                                                                                                                                                                                      \
 			CLEAR_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
+		{                                                                                                                                                                                      \
 			CLEAR_BIT(FLASH->CR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                    \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -895,11 +922,14 @@ typedef struct {
  * @retval None
  */
 #define __HAL_FLASH_CLEAR_FLAG(__FLAG__)                                                                                                                                                               \
-	do {                                                                                                                                                                                           \
-		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) {                                                                                                                                     \
+	do                                                                                                                                                                                             \
+	{                                                                                                                                                                                              \
+		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U)                                                                                                                                       \
+		{                                                                                                                                                                                      \
 			SET_BIT(FLASH->ECCR, ((__FLAG__) & FLASH_FLAG_ECCR_ERRORS));                                                                                                                   \
 		}                                                                                                                                                                                      \
-		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U) {                                                                                                                                  \
+		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U)                                                                                                                                    \
+		{                                                                                                                                                                                      \
 			WRITE_REG(FLASH->SR, ((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)));                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -911,66 +941,66 @@ typedef struct {
 #include "stm32g4xx_hal_flash_ex.h"
 #include "stm32g4xx_hal_flash_ramfunc.h"
 
-/* Exported variables --------------------------------------------------------*/
-/** @defgroup FLASH_Exported_Variables FLASH Exported Variables
- * @{
- */
-extern FLASH_ProcessTypeDef pFlash;
-/**
- * @}
- */
+	/* Exported variables --------------------------------------------------------*/
+	/** @defgroup FLASH_Exported_Variables FLASH Exported Variables
+	 * @{
+	 */
+	extern FLASH_ProcessTypeDef pFlash;
+	/**
+	 * @}
+	 */
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup FLASH_Exported_Functions
- * @{
- */
+	/* Exported functions --------------------------------------------------------*/
+	/** @addtogroup FLASH_Exported_Functions
+	 * @{
+	 */
 
-/* Program operation functions  ***********************************************/
-/** @addtogroup FLASH_Exported_Functions_Group1
- * @{
- */
-HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint64_t Data);
-HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint64_t Data);
-/* FLASH IRQ handler method */
-void HAL_FLASH_IRQHandler(void);
-/* Callbacks in non blocking modes */
-void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue);
-void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue);
-/**
- * @}
- */
+	/* Program operation functions  ***********************************************/
+	/** @addtogroup FLASH_Exported_Functions_Group1
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint64_t Data);
+	HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint64_t Data);
+	/* FLASH IRQ handler method */
+	void HAL_FLASH_IRQHandler(void);
+	/* Callbacks in non blocking modes */
+	void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue);
+	void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue);
+	/**
+	 * @}
+	 */
 
-/* Peripheral Control functions  **********************************************/
-/** @addtogroup FLASH_Exported_Functions_Group2
- * @{
- */
-HAL_StatusTypeDef HAL_FLASH_Unlock(void);
-HAL_StatusTypeDef HAL_FLASH_Lock(void);
-/* Option bytes control */
-HAL_StatusTypeDef HAL_FLASH_OB_Unlock(void);
-HAL_StatusTypeDef HAL_FLASH_OB_Lock(void);
-HAL_StatusTypeDef HAL_FLASH_OB_Launch(void);
-/**
- * @}
- */
+	/* Peripheral Control functions  **********************************************/
+	/** @addtogroup FLASH_Exported_Functions_Group2
+	 * @{
+	 */
+	HAL_StatusTypeDef HAL_FLASH_Unlock(void);
+	HAL_StatusTypeDef HAL_FLASH_Lock(void);
+	/* Option bytes control */
+	HAL_StatusTypeDef HAL_FLASH_OB_Unlock(void);
+	HAL_StatusTypeDef HAL_FLASH_OB_Lock(void);
+	HAL_StatusTypeDef HAL_FLASH_OB_Launch(void);
+	/**
+	 * @}
+	 */
 
-/* Peripheral State functions  ************************************************/
-/** @addtogroup FLASH_Exported_Functions_Group3
- * @{
- */
-uint32_t HAL_FLASH_GetError(void);
-/**
- * @}
- */
+	/* Peripheral State functions  ************************************************/
+	/** @addtogroup FLASH_Exported_Functions_Group3
+	 * @{
+	 */
+	uint32_t HAL_FLASH_GetError(void);
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/** @addtogroup FLASH_Private_Functions
- * @{
- */
-HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
+	/** @addtogroup FLASH_Private_Functions
+	 * @{
+	 */
+	HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 /**
  * @}
  */
@@ -996,14 +1026,14 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 
 #define FLASH_TIMEOUT_VALUE 1000U /* 1 s  */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/* Private macros ------------------------------------------------------------*/
-/** @defgroup FLASH_Private_Macros FLASH Private Macros
- *  @{
- */
+	/* Private macros ------------------------------------------------------------*/
+	/** @defgroup FLASH_Private_Macros FLASH Private Macros
+	 *  @{
+	 */
 
 #define IS_FLASH_TYPEERASE(VALUE) (((VALUE) == FLASH_TYPEERASE_PAGES) || ((VALUE) == FLASH_TYPEERASE_MASSERASE))
 
@@ -1090,17 +1120,17 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 	 ((LATENCY) == FLASH_LATENCY_5) || ((LATENCY) == FLASH_LATENCY_6) || ((LATENCY) == FLASH_LATENCY_7) || ((LATENCY) == FLASH_LATENCY_8) || ((LATENCY) == FLASH_LATENCY_9) ||                     \
 	 ((LATENCY) == FLASH_LATENCY_10) || ((LATENCY) == FLASH_LATENCY_11) || ((LATENCY) == FLASH_LATENCY_12) || ((LATENCY) == FLASH_LATENCY_13) || ((LATENCY) == FLASH_LATENCY_14) ||                \
 	 ((LATENCY) == FLASH_LATENCY_15))
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
-/**
- * @}
- */
+	/**
+	 * @}
+	 */
 
 #ifdef __cplusplus
 }

@@ -169,14 +169,20 @@ available:
 HAL_StatusTypeDef HAL_CRYPEx_AES(CRYP_HandleTypeDef *hcryp, uint8_t *pInputData, uint16_t Size, uint8_t *pOutputData, uint32_t Timeout)
 {
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* Check parameters setting */
-		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) {
-			if (pOutputData == NULL) {
+		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION)
+		{
+			if (pOutputData == NULL)
+			{
 				return HAL_ERROR;
 			}
-		} else {
-			if ((pInputData == NULL) || (pOutputData == NULL) || (Size == 0U)) {
+		}
+		else
+		{
+			if ((pInputData == NULL) || (pOutputData == NULL) || (Size == 0U))
+			{
 				return HAL_ERROR;
 			}
 		}
@@ -189,19 +195,25 @@ HAL_StatusTypeDef HAL_CRYPEx_AES(CRYP_HandleTypeDef *hcryp, uint8_t *pInputData,
 
 		/* Call CRYP_ReadKey() API if the operating mode is set to
 		   key derivation, CRYP_ProcessData() otherwise  */
-		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) {
-			if (CRYP_ReadKey(hcryp, pOutputData, Timeout) != HAL_OK) {
+		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION)
+		{
+			if (CRYP_ReadKey(hcryp, pOutputData, Timeout) != HAL_OK)
+			{
 				return HAL_TIMEOUT;
 			}
-		} else {
-			if (CRYP_ProcessData(hcryp, pInputData, Size, pOutputData, Timeout) != HAL_OK) {
+		}
+		else
+		{
+			if (CRYP_ProcessData(hcryp, pInputData, Size, pOutputData, Timeout) != HAL_OK)
+			{
 				return HAL_TIMEOUT;
 			}
 		}
 
 		/* If the state has not been set to SUSPENDED, set it to
 		   READY, otherwise keep it as it is */
-		if (hcryp->State != HAL_CRYP_STATE_SUSPENDED) {
+		if (hcryp->State != HAL_CRYP_STATE_SUSPENDED)
+		{
 			hcryp->State = HAL_CRYP_STATE_READY;
 		}
 
@@ -209,7 +221,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES(CRYP_HandleTypeDef *hcryp, uint8_t *pInputData,
 		__HAL_UNLOCK(hcryp);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -235,14 +249,20 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pInputDa
 {
 	uint32_t inputaddr;
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* Check parameters setting */
-		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) {
-			if (pOutputData == NULL) {
+		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION)
+		{
+			if (pOutputData == NULL)
+			{
 				return HAL_ERROR;
 			}
-		} else {
-			if ((pInputData == NULL) || (pOutputData == NULL) || (Size == 0U)) {
+		}
+		else
+		{
+			if ((pInputData == NULL) || (pOutputData == NULL) || (Size == 0U))
+			{
 				return HAL_ERROR;
 			}
 		}
@@ -251,13 +271,16 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pInputDa
 
 		/* If operating mode is not limited to key derivation only,
 		   get the buffers addresses and sizes */
-		if (hcryp->Init.OperatingMode != CRYP_ALGOMODE_KEYDERIVATION) {
+		if (hcryp->Init.OperatingMode != CRYP_ALGOMODE_KEYDERIVATION)
+		{
 
 			hcryp->CrypInCount = Size;
 			hcryp->pCrypInBuffPtr = pInputData;
 			hcryp->pCrypOutBuffPtr = pOutputData;
 			hcryp->CrypOutCount = Size;
-		} else {
+		}
+		else
+		{
 			/* For key derivation, set output buffer only
 			  (will point at derivated key) */
 			hcryp->pCrypOutBuffPtr = pOutputData;
@@ -276,7 +299,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pInputDa
 		   already been entered during the initialization process. For
 		   the other operating modes, they are fed to the CRYP hardware
 		   block at this point. */
-		if (hcryp->Init.OperatingMode != CRYP_ALGOMODE_KEYDERIVATION) {
+		if (hcryp->Init.OperatingMode != CRYP_ALGOMODE_KEYDERIVATION)
+		{
 			/* Initiate the processing under interrupt in entering
 			   the first input data */
 			inputaddr = (uint32_t)hcryp->pCrypInBuffPtr;
@@ -296,7 +320,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pInputDa
 
 		/* Return function status */
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -330,15 +356,20 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pInputD
 	uint32_t inputaddr;
 	uint32_t outputaddr;
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* Check parameters setting */
-		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) {
+		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION)
+		{
 			/* no DMA channel is provided for key derivation
 			   operating mode, access to AES_KEYRx registers must be
 			   done by software */
 			return HAL_ERROR;
-		} else {
-			if ((pInputData == NULL) || (pOutputData == NULL) || (Size == 0U)) {
+		}
+		else
+		{
+			if ((pInputData == NULL) || (pOutputData == NULL) || (Size == 0U))
+			{
 				return HAL_ERROR;
 			}
 		}
@@ -360,7 +391,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pInputD
 
 		/* Return function status */
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -413,12 +446,17 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 	uint32_t difflength = 0;
 	uint32_t addhoc_process = 0;
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* input/output parameters check */
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* No processing required */
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
-			if (((hcryp->Init.Header != NULL) && (hcryp->Init.HeaderSize == 0U)) || ((hcryp->Init.Header == NULL) && (hcryp->Init.HeaderSize != 0U))) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
+			if (((hcryp->Init.Header != NULL) && (hcryp->Init.HeaderSize == 0U)) || ((hcryp->Init.Header == NULL) && (hcryp->Init.HeaderSize != 0U)))
+			{
 				return HAL_ERROR;
 			}
 #if defined(AES_CR_NPBLB)
@@ -430,24 +468,34 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 				/* In case of CMAC or CCM (when applicable)
 				 * header phase resumption, we can have
 				 * pInputData = NULL and  Size = 0 */
-				if (((pInputData != NULL) && (Size == 0U)) || ((pInputData == NULL) && (Size != 0U))) {
+				if (((pInputData != NULL) && (Size == 0U)) || ((pInputData == NULL) && (Size != 0U)))
+				{
 					return HAL_ERROR;
 				}
 			}
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
-			if (((pInputData == NULL) && (Size != 0U)) || ((pInputData != NULL) && (Size == 0U)) || ((pInputData != NULL) && (Size != 0U) && (pOutputData == NULL))) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
+			if (((pInputData == NULL) && (Size != 0U)) || ((pInputData != NULL) && (Size == 0U)) || ((pInputData != NULL) && (Size != 0U) && (pOutputData == NULL)))
+			{
 				return HAL_ERROR;
 			}
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE) {
-			if (pOutputData == NULL) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE)
+		{
+			if (pOutputData == NULL)
+			{
 				return HAL_ERROR;
 			}
 #if !defined(AES_CR_NPBLB)
-			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (pInputData == NULL)) {
+			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (pInputData == NULL))
+			{
 				return HAL_ERROR;
 			}
 #endif
-		} else {
+		}
+		else
+		{
 			/* Unspecified Phase */
 			return HAL_ERROR;
 		}
@@ -465,9 +513,11 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 		   Vector) have already been entered during the initialization
 		   process. Therefore, the API just waits for the CCF flag to be
 		   set. */
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* just wait for hash computation */
-			if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+			if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				__HAL_UNLOCK(hcryp);
 				return HAL_TIMEOUT;
@@ -481,13 +531,16 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 		/*=======================================================*/
 		/* GCM/GMAC or (CCM / CMAC when applicable) header phase */
 		/*=======================================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
 #if !defined(AES_CR_NPBLB)
 			/* Set header phase; for GCM or GMAC, set data-byte at
 			 * this point */
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC)
+			{
 				MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH | AES_CR_DATATYPE, CRYP_HEADER_PHASE | hcryp->Init.DataType);
-			} else
+			}
+			else
 #endif
 			{
 				MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_HEADER_PHASE);
@@ -502,11 +555,13 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 			/* If Size = 0 (possible case of resumption after CMAC
 			   header phase suspension), skip these steps and go
 			   directly to header buffer feeding to the HW */
-			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (Size != 0U)) {
+			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (Size != 0U))
+			{
 				uint64_t index_test;
 				inputaddr = (uint32_t)pInputData;
 
-				for (index = 0U; (index < Size); index += 16U) {
+				for (index = 0U; (index < Size); index += 16U)
+				{
 					/* Write the Input block in the Data
 					 * Input register */
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -518,7 +573,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 					inputaddr += 4U;
 
-					if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+					if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+					{
 						hcryp->State = HAL_CRYP_STATE_READY;
 						__HAL_UNLOCK(hcryp);
 						return HAL_TIMEOUT;
@@ -530,7 +586,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 					 raised and if the processing is not
 					 about to end, suspend processing */
 					index_test = (uint64_t)index + 16U;
-					if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && (index_test < Size)) {
+					if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && (index_test < Size))
+					{
 						/* reset SuspendRequest */
 						hcryp->SuspendRequest = HAL_CRYP_SUSPEND_NONE;
 						/* Change the CRYP state */
@@ -565,10 +622,12 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 			   multiple of 128 bits, remaining header data (if any)
 			   are handled after this loop */
 			headerlength = (((hcryp->Init.HeaderSize) / 16U) * 16U);
-			if ((hcryp->Init.HeaderSize % 16U) != 0U) {
+			if ((hcryp->Init.HeaderSize % 16U) != 0U)
+			{
 				difflength = (uint32_t)(hcryp->Init.HeaderSize - headerlength);
 			}
-			for (index = 0U; index < headerlength; index += 16U) {
+			for (index = 0U; index < headerlength; index += 16U)
+			{
 				uint64_t index_temp;
 				/* Write the Input block in the Data Input
 				 * register */
@@ -581,7 +640,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
 
-				if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+				if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+				{
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_TIMEOUT;
@@ -593,7 +653,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 				 the processing is not about to end, suspend
 				 processing */
 				index_temp = (uint64_t)index + 16U;
-				if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && (index_temp < headerlength)) {
+				if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && (index_temp < headerlength))
+				{
 					/* reset SuspendRequest */
 					hcryp->SuspendRequest = HAL_CRYP_SUSPEND_NONE;
 					/* Change the CRYP state */
@@ -618,7 +679,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 			}
 
 			/* Case header length is not a multiple of 16 bytes */
-			if (difflength != 0U) {
+			if (difflength != 0U)
+			{
 				hcryp->pCrypInBuffPtr = (uint8_t *)inputaddr;
 				CRYP_Padding(hcryp, difflength, CRYP_POLLING_ON);
 			}
@@ -629,13 +691,15 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 		/*============================================*/
 		/* GCM (or CCM when applicable) payload phase */
 		/*============================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
 
 			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PAYLOAD_PHASE);
 
 			/* if the header phase has been bypassed, AES must be
 			 * enabled again */
-			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER) {
+			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER)
+			{
 				__HAL_CRYP_ENABLE(hcryp);
 			}
 
@@ -645,16 +709,20 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 			/* Enter payload */
 			/* Specific handling to manage payload last block size
 			 * less than 128 bits */
-			if ((Size % 16U) != 0U) {
+			if ((Size % 16U) != 0U)
+			{
 				payloadlength = (Size / 16U) * 16U;
 				difflength = (uint32_t)(Size - payloadlength);
 				addhoc_process = 1;
-			} else {
+			}
+			else
+			{
 				payloadlength = Size;
 			}
 
 			/* Feed payload */
-			for (index = 0U; index < payloadlength; index += 16U) {
+			for (index = 0U; index < payloadlength; index += 16U)
+			{
 				uint64_t index_temp;
 				/* Write the Input block in the Data Input
 				 * register */
@@ -667,7 +735,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
 
-				if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+				if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+				{
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_TIMEOUT;
@@ -691,12 +760,15 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 				 the processing is not about to end, suspend
 				 processing */
 				index_temp = (uint64_t)index + 16U;
-				if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && (index_temp < payloadlength)) {
+				if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && (index_temp < payloadlength))
+				{
 					/* no flag waiting under IRQ handling */
-					if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) {
+					if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT)
+					{
 						/* Ensure that Busy flag is
 						 * reset */
-						if (CRYP_WaitOnBusyFlagReset(hcryp, CRYP_BUSY_TIMEOUTVALUE) != HAL_OK) {
+						if (CRYP_WaitOnBusyFlagReset(hcryp, CRYP_BUSY_TIMEOUTVALUE) != HAL_OK)
+						{
 							hcryp->State = HAL_CRYP_STATE_READY;
 							__HAL_UNLOCK(hcryp);
 							return HAL_TIMEOUT;
@@ -728,7 +800,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 			/* Additional processing to manage GCM(/CCM) encryption
 			   and decryption cases when payload last block size
 			   less than 128 bits */
-			if (addhoc_process == 1U) {
+			if (addhoc_process == 1U)
+			{
 
 				hcryp->pCrypInBuffPtr = (uint8_t *)inputaddr;
 				hcryp->pCrypOutBuffPtr = (uint8_t *)outputaddr;
@@ -742,7 +815,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 		/*==================================*/
 		/* GCM/GMAC/CCM or CMAC final phase */
 		/*==================================*/
-		else {
+		else
+		{
 			tagaddr = (uint32_t)pOutputData;
 
 #if defined(AES_CR_NPBLB)
@@ -754,36 +828,47 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 
 			/* if the header and payload phases have been bypassed,
 			 * AES must be enabled again */
-			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER) {
+			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER)
+			{
 				__HAL_CRYP_ENABLE(hcryp);
 			}
 
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC)
+			{
 				headerlength = hcryp->Init.HeaderSize * 8U; /* Header length in bits */
 				inputlength = Size * 8U;		    /* input length in bits */
 
 #if !defined(AES_CR_NPBLB)
-				if (hcryp->Init.DataType == CRYP_DATATYPE_1B) {
+				if (hcryp->Init.DataType == CRYP_DATATYPE_1B)
+				{
 					hcryp->Instance->DINR = __RBIT((uint32_t)(headerlength >> 32));
 					hcryp->Instance->DINR = __RBIT((uint32_t)headerlength);
 					hcryp->Instance->DINR = __RBIT((uint32_t)(inputlength >> 32));
 					hcryp->Instance->DINR = __RBIT((uint32_t)inputlength);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_8B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_8B)
+				{
 					hcryp->Instance->DINR = __REV((uint32_t)(headerlength >> 32));
 					hcryp->Instance->DINR = __REV((uint32_t)headerlength);
 					hcryp->Instance->DINR = __REV((uint32_t)(inputlength >> 32));
 					hcryp->Instance->DINR = __REV((uint32_t)inputlength);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_16B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_16B)
+				{
 					hcryp->Instance->DINR = __ROR((uint32_t)(headerlength >> 32), 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)headerlength, 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)(inputlength >> 32), 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)inputlength, 16);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_32B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_32B)
+				{
 					hcryp->Instance->DINR = (uint32_t)(headerlength >> 32);
 					hcryp->Instance->DINR = (uint32_t)(headerlength);
 					hcryp->Instance->DINR = (uint32_t)(inputlength >> 32);
 					hcryp->Instance->DINR = (uint32_t)(inputlength);
-				} else {
+				}
+				else
+				{
 					/* Unspecified Data Type */
 					return HAL_ERROR;
 				}
@@ -795,7 +880,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 #endif
 			}
 #if !defined(AES_CR_NPBLB)
-			else if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) {
+			else if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
+			{
 				inputaddr = (uint32_t)pInputData;
 				/* Enter the last block made of a 128-bit value
 				   formatted from the original B0 packet. */
@@ -806,13 +892,16 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
-			} else {
+			}
+			else
+			{
 				/* Unspecified Chaining Mode */
 				return HAL_ERROR;
 			}
 #endif
 
-			if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+			if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				__HAL_UNLOCK(hcryp);
 				return HAL_TIMEOUT;
@@ -842,7 +931,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth(CRYP_HandleTypeDef *hcryp, uint8_t *pInput
 		__HAL_UNLOCK(hcryp);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -909,12 +1000,17 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 	mask[3][1] = 0x0000FFFFU;
 	mask[3][2] = 0x00FFFFFFU; /* Bit data    */
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* input/output parameters check */
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* No processing required */
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
-			if (((hcryp->Init.Header != NULL) && (hcryp->Init.HeaderSize == 0U)) || ((hcryp->Init.Header == NULL) && (hcryp->Init.HeaderSize != 0U))) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
+			if (((hcryp->Init.Header != NULL) && (hcryp->Init.HeaderSize == 0U)) || ((hcryp->Init.Header == NULL) && (hcryp->Init.HeaderSize != 0U)))
+			{
 				return HAL_ERROR;
 			}
 #if defined(AES_CR_NPBLB)
@@ -926,24 +1022,34 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				/* In case of CMAC or CCM header phase
 				 * resumption, we can have pInputData = NULL and
 				 * Size = 0 */
-				if (((pInputData != NULL) && (Size == 0U)) || ((pInputData == NULL) && (Size != 0U))) {
+				if (((pInputData != NULL) && (Size == 0U)) || ((pInputData == NULL) && (Size != 0U)))
+				{
 					return HAL_ERROR;
 				}
 			}
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
-			if ((pInputData != NULL) && (Size != 0U) && (pOutputData == NULL)) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
+			if ((pInputData != NULL) && (Size != 0U) && (pOutputData == NULL))
+			{
 				return HAL_ERROR;
 			}
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE) {
-			if (pOutputData == NULL) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE)
+		{
+			if (pOutputData == NULL)
+			{
 				return HAL_ERROR;
 			}
 #if !defined(AES_CR_NPBLB)
-			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (pInputData == NULL)) {
+			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (pInputData == NULL))
+			{
 				return HAL_ERROR;
 			}
 #endif
-		} else {
+		}
+		else
+		{
 			/* Unspecified Phase */
 			return HAL_ERROR;
 		}
@@ -963,7 +1069,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 		/*==============================================*/
 		/* GCM/GMAC (or CCM when applicable) init phase */
 		/*==============================================*/
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* In case of init phase, the input data (Key and
 			   Initialization Vector) have already been entered
 			   during the initialization process. Therefore, the
@@ -974,7 +1081,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 		/*===================================*/
 		/* GCM/GMAC/CCM or CMAC header phase */
 		/*===================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
 
 #if defined(AES_CR_NPBLB)
 			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM)
@@ -990,14 +1098,19 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				   blocks have been entered (in that case, Size
 				   = 0), only the remainder of the non-processed
 				   header bytes are entered. */
-				if (Size != 0U) {
+				if (Size != 0U)
+				{
 					hcryp->CrypInCount = (uint32_t)(Size + hcryp->Init.HeaderSize);
 					hcryp->pCrypInBuffPtr = pInputData;
-				} else {
+				}
+				else
+				{
 					hcryp->CrypInCount = (uint32_t)hcryp->Init.HeaderSize;
 					hcryp->pCrypInBuffPtr = hcryp->Init.Header;
 				}
-			} else {
+			}
+			else
+			{
 				/* Get the header addresses and sizes */
 				hcryp->CrypInCount = (uint32_t)hcryp->Init.HeaderSize;
 				hcryp->pCrypInBuffPtr = hcryp->Init.Header;
@@ -1008,9 +1121,11 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 #if !defined(AES_CR_NPBLB)
 			/* Set header phase; for GCM or GMAC, set data-byte at
 			 * this point */
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC)
+			{
 				MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH | AES_CR_DATATYPE, CRYP_HEADER_PHASE | hcryp->Init.DataType);
-			} else
+			}
+			else
 #endif
 			{
 				MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_HEADER_PHASE);
@@ -1020,18 +1135,23 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 			__HAL_CRYP_ENABLE(hcryp);
 
 			/* Increment/decrement instance pointer/counter */
-			if (hcryp->CrypInCount == 0U) {
+			if (hcryp->CrypInCount == 0U)
+			{
 				/* Case of no header */
 				hcryp->State = HAL_CRYP_STATE_READY;
 				/* Mark that the header phase is over */
 				hcryp->Phase = HAL_CRYP_PHASE_HEADER_OVER;
 				return HAL_OK;
-			} else if (hcryp->CrypInCount < 16U) {
+			}
+			else if (hcryp->CrypInCount < 16U)
+			{
 				hcryp->CrypInCount = 0;
 				addhoc_process = 1;
 				difflength = (uint32_t)(hcryp->Init.HeaderSize);
 				difflengthmod4 = difflength % 4U;
-			} else {
+			}
+			else
+			{
 				hcryp->pCrypInBuffPtr += 16;
 				hcryp->CrypInCount -= 16U;
 			}
@@ -1042,7 +1162,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
 #endif
 			{
-				if (hcryp->CrypInCount == hcryp->Init.HeaderSize) {
+				if (hcryp->CrypInCount == hcryp->Init.HeaderSize)
+				{
 					/* All B blocks will have been entered
 					   after the next four DINR writing, so
 					   point at header buffer for the next
@@ -1053,7 +1174,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 
 			/* Enter header first block to initiate the process
 			   in the Data Input register */
-			if (addhoc_process == 0U) {
+			if (addhoc_process == 0U)
+			{
 				/* Header has size equal or larger than 128 bits
 				 */
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -1063,10 +1185,13 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
-			} else {
+			}
+			else
+			{
 				/* Header has size less than 128 bits */
 				/* Enter complete words when possible */
-				for (index = 0U; index < (difflength / 4U); index++) {
+				for (index = 0U; index < (difflength / 4U); index++)
+				{
 					/* Write the Input block in the Data
 					 * Input register */
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -1075,12 +1200,14 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				/* Enter incomplete word padded with zeroes if
 				  applicable (case of header length not a
 				  multiple of 32-bits) */
-				if (difflengthmod4 != 0U) {
+				if (difflengthmod4 != 0U)
+				{
 					hcryp->Instance->DINR = ((*(uint32_t *)(inputaddr)) & mask[mask_index][difflengthmod4 - 1U]);
 				}
 				/* Pad with zero-words to reach 128-bit long
 				 * block and wrap-up header feeding to the IP */
-				for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+				for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+				{
 					hcryp->Instance->DINR = 0;
 				}
 			}
@@ -1088,7 +1215,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 		/*============================================*/
 		/* GCM (or CCM when applicable) payload phase */
 		/*============================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
 			/* Get the buffer addresses and sizes */
 			hcryp->CrypInCount = (uint32_t)Size;
 			hcryp->pCrypInBuffPtr = pInputData;
@@ -1101,12 +1229,14 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 
 			/* if the header phase has been bypassed, AES must be
 			 * enabled again */
-			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER) {
+			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER)
+			{
 				__HAL_CRYP_ENABLE(hcryp);
 			}
 
 			/* No payload case */
-			if (pInputData == NULL) {
+			if (pInputData == NULL)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				/* Mark that the header phase is over */
 				hcryp->Phase = HAL_CRYP_PHASE_PAYLOAD_OVER;
@@ -1118,17 +1248,20 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 
 			/* Specific handling to manage payload size less than
 			 * 128 bits */
-			if (Size < 16U) {
+			if (Size < 16U)
+			{
 				difflength = (uint32_t)(Size);
 #if defined(AES_CR_NPBLB)
 				/* In case of GCM encryption or CCM decryption,
 				   specify the number of padding bytes in last
 				   block of payload */
-				if (READ_BIT(hcryp->Instance->CR, AES_CR_GCMPH) == CRYP_PAYLOAD_PHASE) {
+				if (READ_BIT(hcryp->Instance->CR, AES_CR_GCMPH) == CRYP_PAYLOAD_PHASE)
+				{
 					uint32_t cr_temp = hcryp->Instance->CR;
 
 					if (((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_GCM_GMAC | CRYP_ALGOMODE_ENCRYPT)) ||
-					    ((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_CCM | CRYP_ALGOMODE_DECRYPT))) {
+					    ((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_CCM | CRYP_ALGOMODE_DECRYPT)))
+					{
 						/* Set NPBLB field in writing
 						   the number of padding bytes
 						   for the last block of payload
@@ -1139,7 +1272,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 #else
 				/* Software workaround applied to GCM encryption
 				 * only */
-				if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) {
+				if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT)
+				{
 					/* Change the mode configured in CHMOD
 					 * bits of CR register to select CTR
 					 * mode */
@@ -1158,7 +1292,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				/*  Insert the last block (which size is
 				   inferior to 128 bits) padded with zeroes to
 				   have a complete block of 128 bits */
-				for (index = 0U; index < (difflength / 4U); index++) {
+				for (index = 0U; index < (difflength / 4U); index++)
+				{
 					/* Write the Input block in the Data
 					 * Input register */
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -1166,15 +1301,19 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				}
 				/* If required, manage input data size not
 				 * multiple of 32 bits */
-				if (difflengthmod4 != 0U) {
+				if (difflengthmod4 != 0U)
+				{
 					hcryp->Instance->DINR = ((*(uint32_t *)(inputaddr)) & mask[mask_index][difflengthmod4 - 1U]);
 				}
 				/* Wrap-up in padding with zero-words if
 				 * applicable */
-				for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+				for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+				{
 					hcryp->Instance->DINR = 0;
 				}
-			} else {
+			}
+			else
+			{
 				/* Increment/decrement instance pointer/counter
 				 */
 				hcryp->pCrypInBuffPtr += 16;
@@ -1194,7 +1333,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 		/*==================================*/
 		/* GCM/GMAC/CCM or CMAC final phase */
 		/*==================================*/
-		else {
+		else
+		{
 			hcryp->pCrypOutBuffPtr = pOutputData;
 
 #if defined(AES_CR_NPBLB)
@@ -1206,11 +1346,13 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 
 			/* if the header and payload phases have been bypassed,
 			 * AES must be enabled again */
-			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER) {
+			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER)
+			{
 				__HAL_CRYP_ENABLE(hcryp);
 			}
 
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC)
+			{
 				headerlength = hcryp->Init.HeaderSize * 8U; /* Header length in bits */
 				inputlength = Size * 8U;		    /* Input length in bits */
 									    /* Write the number of bits in the header on 64
@@ -1218,27 +1360,36 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 									       payload on 64 bits as well */
 
 #if !defined(AES_CR_NPBLB)
-				if (hcryp->Init.DataType == CRYP_DATATYPE_1B) {
+				if (hcryp->Init.DataType == CRYP_DATATYPE_1B)
+				{
 					hcryp->Instance->DINR = __RBIT((uint32_t)((headerlength) >> 32));
 					hcryp->Instance->DINR = __RBIT((uint32_t)headerlength);
 					hcryp->Instance->DINR = __RBIT((uint32_t)((inputlength) >> 32));
 					hcryp->Instance->DINR = __RBIT((uint32_t)inputlength);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_8B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_8B)
+				{
 					hcryp->Instance->DINR = __REV((uint32_t)(headerlength >> 32));
 					hcryp->Instance->DINR = __REV((uint32_t)headerlength);
 					hcryp->Instance->DINR = __REV((uint32_t)(inputlength >> 32));
 					hcryp->Instance->DINR = __REV((uint32_t)inputlength);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_16B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_16B)
+				{
 					hcryp->Instance->DINR = __ROR((uint32_t)((headerlength) >> 32), 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)headerlength, 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)((inputlength) >> 32), 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)inputlength, 16);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_32B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_32B)
+				{
 					hcryp->Instance->DINR = (uint32_t)(headerlength >> 32);
 					hcryp->Instance->DINR = (uint32_t)(headerlength);
 					hcryp->Instance->DINR = (uint32_t)(inputlength >> 32);
 					hcryp->Instance->DINR = (uint32_t)(inputlength);
-				} else {
+				}
+				else
+				{
 					/* Unspecified Data Type */
 					return HAL_ERROR;
 				}
@@ -1250,7 +1401,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 #endif
 			}
 #if !defined(AES_CR_NPBLB)
-			else if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) {
+			else if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
+			{
 				inputaddr = (uint32_t)pInputData;
 				/* Enter the last block made of a 128-bit value
 				   formatted from the original B0 packet. */
@@ -1261,7 +1413,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
-			} else {
+			}
+			else
+			{
 				/* Unspecified Chaining Mode */
 				return HAL_ERROR;
 			}
@@ -1269,7 +1423,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 		}
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -1320,44 +1476,62 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 	uint64_t inputlength;
 	uint64_t payloadlength;
 
-	if (hcryp->State == HAL_CRYP_STATE_READY) {
+	if (hcryp->State == HAL_CRYP_STATE_READY)
+	{
 		/* input/output parameters check */
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* No processing required */
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
-			if ((hcryp->Init.Header != NULL) && (hcryp->Init.HeaderSize == 0U)) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
+			if ((hcryp->Init.Header != NULL) && (hcryp->Init.HeaderSize == 0U))
+			{
 				return HAL_ERROR;
 			}
 #if defined(AES_CR_NPBLB)
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM)
+			{
 				/* In case of CMAC or CCM header phase
 				 * resumption, we can have pInputData = NULL and
 				 * Size = 0 */
-				if (((pInputData != NULL) && (Size == 0U)) || ((pInputData == NULL) && (Size != 0U))) {
+				if (((pInputData != NULL) && (Size == 0U)) || ((pInputData == NULL) && (Size != 0U)))
+				{
 					return HAL_ERROR;
 				}
 			}
 #else
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) {
-				if ((pInputData == NULL) || (Size == 0U)) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
+			{
+				if ((pInputData == NULL) || (Size == 0U))
+				{
 					return HAL_ERROR;
 				}
 			}
 #endif
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
-			if ((pInputData != NULL) && (Size != 0U) && (pOutputData == NULL)) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
+			if ((pInputData != NULL) && (Size != 0U) && (pOutputData == NULL))
+			{
 				return HAL_ERROR;
 			}
-		} else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE) {
-			if (pOutputData == NULL) {
+		}
+		else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE)
+		{
+			if (pOutputData == NULL)
+			{
 				return HAL_ERROR;
 			}
 #if !defined(AES_CR_NPBLB)
-			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (pInputData == NULL)) {
+			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) && (pInputData == NULL))
+			{
 				return HAL_ERROR;
 			}
 #endif
-		} else {
+		}
+		else
+		{
 			/* Unspecified Phase */
 			return HAL_ERROR;
 		}
@@ -1375,9 +1549,11 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 		   Vector) have already been entered during the initialization
 		   process. No DMA transfer is required at that point therefore,
 		   the software just waits for the CCF flag to be raised. */
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* just wait for hash computation */
-			if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+			if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				__HAL_UNLOCK(hcryp);
 				return HAL_TIMEOUT;
@@ -1392,13 +1568,16 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 		/*====================================*/
 		/* GCM/GMAC/ CCM or CMAC header phase */
 		/*====================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
 #if !defined(AES_CR_NPBLB)
 			/* Set header phase; for GCM or GMAC, set data-byte at
 			 * this point */
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC)
+			{
 				MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH | AES_CR_DATATYPE, CRYP_HEADER_PHASE | hcryp->Init.DataType);
-			} else
+			}
+			else
 #endif
 			{
 				MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_HEADER_PHASE);
@@ -1410,7 +1589,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 #if !defined(AES_CR_NPBLB)
 			/* enter first B0 block in polling mode (no DMA transfer
 			 * for B0) */
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
+			{
 				inputaddr = (uint32_t)pInputData;
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
@@ -1420,7 +1600,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 				inputaddr += 4U;
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 
-				if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+				if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+				{
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_TIMEOUT;
@@ -1431,7 +1612,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 #endif
 
 			/* No header case */
-			if (hcryp->Init.Header == NULL) {
+			if (hcryp->Init.Header == NULL)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				/* Mark that the header phase is over */
 				hcryp->Phase = HAL_CRYP_PHASE_HEADER_OVER;
@@ -1442,9 +1624,11 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 			}
 
 			inputaddr = (uint32_t)hcryp->Init.Header;
-			if ((hcryp->Init.HeaderSize % 16U) != 0U) {
+			if ((hcryp->Init.HeaderSize % 16U) != 0U)
+			{
 
-				if (hcryp->Init.HeaderSize < 16U) {
+				if (hcryp->Init.HeaderSize < 16U)
+				{
 					hcryp->pCrypInBuffPtr = (uint8_t *)inputaddr;
 					CRYP_Padding(hcryp, (uint32_t)(hcryp->Init.HeaderSize), CRYP_POLLING_OFF);
 
@@ -1459,7 +1643,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 					  applicable)
 					  - final phase (GMAC or CMAC when
 					  applicable).  */
-				} else {
+				}
+				else
+				{
 					/* Local variable headerlength is a
 					  number of bytes multiple of 128 bits,
 					  remaining header data (if any) are
@@ -1478,7 +1664,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 					   padding */
 					CRYP_Authentication_SetDMAConfig(hcryp, inputaddr, (uint16_t)headerlength, 0);
 				}
-			} else {
+			}
+			else
+			{
 				hcryp->CrypInCount = 0;
 				/* Set the input address and start DMA transfer
 				 */
@@ -1488,17 +1676,22 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 		/*============================================*/
 		/* GCM (or CCM when applicable) payload phase */
 		/*============================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
 			/* Coming from header phase, wait for CCF flag to be
 			   raised if header present and fed to the IP in the
 			   previous phase */
-			if (hcryp->Init.Header != NULL) {
-				if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+			if (hcryp->Init.Header != NULL)
+			{
+				if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+				{
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_TIMEOUT;
 				}
-			} else {
+			}
+			else
+			{
 				/* Enable the Peripheral since wasn't in header
 				 * phase (no header case) */
 				__HAL_CRYP_ENABLE(hcryp);
@@ -1509,7 +1702,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PAYLOAD_PHASE);
 
 			/* No payload case */
-			if (pInputData == NULL) {
+			if (pInputData == NULL)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				/* Mark that the header phase is over */
 				hcryp->Phase = HAL_CRYP_PHASE_PAYLOAD_OVER;
@@ -1521,10 +1715,12 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 
 			/* Specific handling to manage payload size less than
 			 * 128 bits */
-			if ((Size % 16U) != 0U) {
+			if ((Size % 16U) != 0U)
+			{
 				inputaddr = (uint32_t)pInputData;
 				outputaddr = (uint32_t)pOutputData;
-				if (Size < 16U) {
+				if (Size < 16U)
+				{
 					/* Block is now entered in polling mode,
 					 * no actual gain in resorting to DMA */
 					hcryp->pCrypInBuffPtr = (uint8_t *)inputaddr;
@@ -1545,7 +1741,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 #else
 					HAL_CRYP_OutCpltCallback(hcryp);
 #endif /* USE_HAL_CRYP_REGISTER_CALLBACKS */
-				} else {
+				}
+				else
+				{
 					payloadlength = (Size / 16U) * 16U;
 
 					/* Store the ending transfer points */
@@ -1564,7 +1762,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 					 */
 					CRYP_Authentication_SetDMAConfig(hcryp, inputaddr, (uint16_t)payloadlength, outputaddr);
 				}
-			} else {
+			}
+			else
+			{
 				hcryp->CrypInCount = 0;
 				inputaddr = (uint32_t)pInputData;
 				outputaddr = (uint32_t)pOutputData;
@@ -1577,11 +1777,14 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 		/*==================================*/
 		/* GCM/GMAC/CCM or CMAC final phase */
 		/*==================================*/
-		else {
+		else
+		{
 			/* If coming from header phase (GMAC or CMAC case when
 			   applicable), wait for CCF flag to be raised */
-			if (READ_BIT(hcryp->Instance->CR, AES_CR_GCMPH) == CRYP_HEADER_PHASE) {
-				if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+			if (READ_BIT(hcryp->Instance->CR, AES_CR_GCMPH) == CRYP_HEADER_PHASE)
+			{
+				if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+				{
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_TIMEOUT;
@@ -1600,38 +1803,49 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 
 			/* if the header and payload phases have been bypassed,
 			 * AES must be enabled again */
-			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER) {
+			if (hcryp->Phase == HAL_CRYP_PHASE_INIT_OVER)
+			{
 				__HAL_CRYP_ENABLE(hcryp);
 			}
 
-			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
+			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC)
+			{
 				headerlength = hcryp->Init.HeaderSize * 8U; /* Header length in bits */
 				inputlength = Size * 8U;		    /* input length in bits */
 									    /* Write the number of bits in the header on 64
 									       bits followed by the number of bits in the
 									       payload on 64 bits as well */
 #if !defined(AES_CR_NPBLB)
-				if (hcryp->Init.DataType == CRYP_DATATYPE_1B) {
+				if (hcryp->Init.DataType == CRYP_DATATYPE_1B)
+				{
 					hcryp->Instance->DINR = __RBIT((uint32_t)(headerlength >> 32));
 					hcryp->Instance->DINR = __RBIT((uint32_t)headerlength);
 					hcryp->Instance->DINR = __RBIT((uint32_t)(inputlength >> 32));
 					hcryp->Instance->DINR = __RBIT((uint32_t)inputlength);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_8B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_8B)
+				{
 					hcryp->Instance->DINR = __REV((uint32_t)(headerlength >> 32));
 					hcryp->Instance->DINR = __REV((uint32_t)headerlength);
 					hcryp->Instance->DINR = __REV((uint32_t)(inputlength >> 32));
 					hcryp->Instance->DINR = __REV((uint32_t)inputlength);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_16B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_16B)
+				{
 					hcryp->Instance->DINR = __ROR((uint32_t)(headerlength >> 32), 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)headerlength, 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)(inputlength >> 32), 16);
 					hcryp->Instance->DINR = __ROR((uint32_t)inputlength, 16);
-				} else if (hcryp->Init.DataType == CRYP_DATATYPE_32B) {
+				}
+				else if (hcryp->Init.DataType == CRYP_DATATYPE_32B)
+				{
 					hcryp->Instance->DINR = (uint32_t)(headerlength >> 32);
 					hcryp->Instance->DINR = (uint32_t)(headerlength);
 					hcryp->Instance->DINR = (uint32_t)(inputlength >> 32);
 					hcryp->Instance->DINR = (uint32_t)(inputlength);
-				} else {
+				}
+				else
+				{
 					/* Unspecified Data Type */
 					return HAL_ERROR;
 				}
@@ -1643,7 +1857,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 #endif
 			}
 #if !defined(AES_CR_NPBLB)
-			else if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC) {
+			else if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
+			{
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 
 				inputaddr = (uint32_t)pInputData;
@@ -1656,7 +1871,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 				inputaddr += 4U;
 				hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
-			} else {
+			}
+			else
+			{
 				/* Unspecified Chaining Mode */
 				return HAL_ERROR;
 			}
@@ -1665,7 +1882,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 			/* No DMA transfer is required at that point therefore,
 			   the software just waits for the CCF flag to be
 			   raised. */
-			if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+			if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				__HAL_UNLOCK(hcryp);
 				return HAL_TIMEOUT;
@@ -1694,7 +1912,9 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 		__HAL_UNLOCK(hcryp);
 
 		return HAL_OK;
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -1788,9 +2008,11 @@ void HAL_CRYPEx_Read_SuspendRegisters(CRYP_HandleTypeDef *hcryp, uint8_t *Output
 
 	/* In case of GCM payload phase encryption, check that suspension can be
 	 * carried out */
-	if (READ_BIT(hcryp->Instance->CR, (AES_CR_CHMOD | AES_CR_GCMPH | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_GCM_GMAC | CRYP_PAYLOAD_PHASE | CRYP_ALGOMODE_ENCRYPT)) {
+	if (READ_BIT(hcryp->Instance->CR, (AES_CR_CHMOD | AES_CR_GCMPH | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_GCM_GMAC | CRYP_PAYLOAD_PHASE | CRYP_ALGOMODE_ENCRYPT))
+	{
 		/* Ensure that Busy flag is reset */
-		if (CRYP_WaitOnBusyFlagReset(hcryp, CRYP_BUSY_TIMEOUTVALUE) != HAL_OK) {
+		if (CRYP_WaitOnBusyFlagReset(hcryp, CRYP_BUSY_TIMEOUTVALUE) != HAL_OK)
+		{
 			hcryp->ErrorCode |= HAL_CRYP_BUSY_ERROR;
 			hcryp->State = HAL_CRYP_STATE_ERROR;
 
@@ -1868,7 +2090,8 @@ void HAL_CRYPEx_Read_KeyRegisters(CRYP_HandleTypeDef *hcryp, uint8_t *Output, ui
 {
 	uint32_t keyaddr = (uint32_t)Output;
 
-	if (KeySize == CRYP_KEYSIZE_256B) {
+	if (KeySize == CRYP_KEYSIZE_256B)
+	{
 		*(uint32_t *)(keyaddr) = __REV(hcryp->Instance->KEYR7);
 		keyaddr += 4U;
 		*(uint32_t *)(keyaddr) = __REV(hcryp->Instance->KEYR6);
@@ -1902,7 +2125,8 @@ void HAL_CRYPEx_Write_KeyRegisters(CRYP_HandleTypeDef *hcryp, uint8_t *Input, ui
 {
 	uint32_t keyaddr = (uint32_t)Input;
 
-	if (KeySize == CRYP_KEYSIZE_256B) {
+	if (KeySize == CRYP_KEYSIZE_256B)
+	{
 		hcryp->Instance->KEYR7 = __REV(*(uint32_t *)(keyaddr));
 		keyaddr += 4U;
 		hcryp->Instance->KEYR6 = __REV(*(uint32_t *)(keyaddr));
@@ -2000,9 +2224,11 @@ static void CRYP_Authentication_DMAInCplt(DMA_HandleTypeDef *hdma)
 	/* Disable the DMA transfer for input request  */
 	CLEAR_BIT(hcryp->Instance->CR, AES_CR_DMAINEN);
 
-	if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
+	if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+	{
 
-		if (hcryp->CrypInCount != 0U) {
+		if (hcryp->CrypInCount != 0U)
+		{
 			/* Last block is now entered in polling mode, no actual
 			 * gain in resorting to DMA */
 			difflength = hcryp->CrypInCount;
@@ -2047,7 +2273,8 @@ static void CRYP_Authentication_DMAOutCplt(DMA_HandleTypeDef *hdma)
 	__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 
 	/* Initiate additional transfer to wrap-up data feeding to the IP */
-	if (hcryp->CrypInCount != 0U) {
+	if (hcryp->CrypInCount != 0U)
+	{
 		/* Last block is now entered in polling mode, no actual gain in
 		 * resorting to DMA */
 		difflength = hcryp->CrypInCount;
@@ -2124,11 +2351,13 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 	mask[3][1] = 0x0000FFFFU;
 	mask[3][2] = 0x00FFFFFFU; /* Bit data    */
 
-	if (hcryp->State == HAL_CRYP_STATE_BUSY) {
+	if (hcryp->State == HAL_CRYP_STATE_BUSY)
+	{
 		/*===========================*/
 		/* GCM/GMAC(/CCM) init phase */
 		/*===========================*/
-		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE) {
+		if (hcryp->Init.GCMCMACPhase == CRYP_INIT_PHASE)
+		{
 			/* Clear Computation Complete Flag */
 			__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 			/* Disable Computation Complete Flag and Errors
@@ -2153,9 +2382,11 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 		/*========================================*/
 		/* GCM/GMAC (or CCM or CMAC) header phase */
 		/*========================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_HEADER_PHASE)
+		{
 			/* Check if all input header data have been entered */
-			if (hcryp->CrypInCount == 0U) {
+			if (hcryp->CrypInCount == 0U)
+			{
 				/* Clear Computation Complete Flag */
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 				/* Disable Computation Complete Flag and Errors
@@ -2180,7 +2411,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 			}
 			/* If suspension flag has been raised, suspend
 			   processing */
-			else if (hcryp->SuspendRequest == HAL_CRYP_SUSPEND) {
+			else if (hcryp->SuspendRequest == HAL_CRYP_SUSPEND)
+			{
 				/* Clear CCF Flag */
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 
@@ -2198,8 +2430,9 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 				__HAL_UNLOCK(hcryp);
 
 				return HAL_OK;
-			} else /* Carry on feeding input data to the CRYP
-				  hardware block */
+			}
+			else /* Carry on feeding input data to the CRYP
+				hardware block */
 			{
 				/* Clear Computation Complete Flag */
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
@@ -2208,12 +2441,15 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 
 				/* Increment/decrement instance pointer/counter
 				 */
-				if (hcryp->CrypInCount < 16U) {
+				if (hcryp->CrypInCount < 16U)
+				{
 					difflength = hcryp->CrypInCount;
 					hcryp->CrypInCount = 0;
 					addhoc_process = 1;
 					difflengthmod4 = difflength % 4U;
-				} else {
+				}
+				else
+				{
 					hcryp->pCrypInBuffPtr += 16;
 					hcryp->CrypInCount -= 16U;
 				}
@@ -2224,7 +2460,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 				if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)
 #endif
 				{
-					if (hcryp->CrypInCount == hcryp->Init.HeaderSize) {
+					if (hcryp->CrypInCount == hcryp->Init.HeaderSize)
+					{
 						/* All B blocks will have been
 						  entered after the next four
 						  DINR writing, so point at
@@ -2236,7 +2473,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 
 				/* Write the Input block in the Data Input
 				 * register */
-				if (addhoc_process == 0U) {
+				if (addhoc_process == 0U)
+				{
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 					inputaddr += 4U;
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -2244,11 +2482,14 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 					inputaddr += 4U;
 					hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
-				} else {
+				}
+				else
+				{
 					/* Header remainder has size less than
 					 * 128 bits */
 					/* Enter complete words when possible */
-					for (index = 0U; index < (difflength / 4U); index++) {
+					for (index = 0U; index < (difflength / 4U); index++)
+					{
 						/* Write the Input block in the
 						 * Data Input register */
 						hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -2257,13 +2498,15 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					/* Enter incomplete word padded with
 					  zeroes if applicable (case of header
 					  length not a multiple of 32-bits) */
-					if (difflengthmod4 != 0U) {
+					if (difflengthmod4 != 0U)
+					{
 						hcryp->Instance->DINR = ((*(uint32_t *)(inputaddr)) & mask[mask_index][difflengthmod4 - 1U]);
 					}
 					/* Pad with zero-words to reach 128-bit
 					 * long block and wrap-up header feeding
 					 * to the IP */
-					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+					{
 						hcryp->Instance->DINR = 0;
 					}
 				}
@@ -2274,7 +2517,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 		/*=======================*/
 		/* GCM/CCM payload phase */
 		/*=======================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+		{
 			/* Get the last output data address */
 			outputaddr = (uint32_t)hcryp->pCrypOutBuffPtr;
 
@@ -2293,12 +2537,14 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 				hcryp->CrypOutCount = 0; /* mark that no more output data will be
 							    needed */
 				/* Retrieve intermediate data */
-				for (index = 0U; index < 4U; index++) {
+				for (index = 0U; index < 4U; index++)
+				{
 					intermediate_data[index] = hcryp->Instance->DOUTR;
 				}
 				/* Retrieve last words of cyphered data */
 				/* First, retrieve complete output words */
-				for (index = 0U; index < (difflength / 4U); index++) {
+				for (index = 0U; index < (difflength / 4U); index++)
+				{
 					*(uint32_t *)(outputaddr) = intermediate_data[index];
 					outputaddr += 4U;
 				}
@@ -2307,13 +2553,15 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 				   intermediate data with a mask of zeros of
 				   same size than the padding applied to the
 				   last block of payload */
-				if (difflengthmod4 != 0U) {
+				if (difflengthmod4 != 0U)
+				{
 					intermediate_data[difflength / 4U] &= mask[mask_index][difflengthmod4 - 1U];
 					*(uint32_t *)(outputaddr) = intermediate_data[difflength / 4U];
 				}
 
 #if !defined(AES_CR_NPBLB)
-				if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) {
+				if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT)
+				{
 					/* Change again CHMOD configuration to
 					 * GCM mode */
 					__HAL_CRYP_SET_CHAININGMODE(hcryp, CRYP_CHAINMODE_AES_GCM_GMAC);
@@ -2326,7 +2574,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					   a mask of zeros of same size than the
 					   padding applied to the last block of
 					   payload */
-					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+					{
 						intermediate_data[((difflength + 3U) / 4U) + index] = 0;
 					}
 
@@ -2336,10 +2585,12 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					/* Clear Computation Complete Flag
 					 * before entering new block */
 					__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
-					for (index = 0U; index < 4U; index++) {
+					for (index = 0U; index < 4U; index++)
+					{
 						hcryp->Instance->DINR = intermediate_data[index];
 					}
-				} else
+				}
+				else
 #endif
 				{
 					/* Payload phase is now over */
@@ -2365,8 +2616,11 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 #endif /* USE_HAL_CRYP_REGISTER_CALLBACKS */
 				}
 				return HAL_OK;
-			} else {
-				if (hcryp->CrypOutCount != 0U) {
+			}
+			else
+			{
+				if (hcryp->CrypOutCount != 0U)
+				{
 					/* Usual case (different than GCM/CCM
 					 * last block < 128 bits ciphering) */
 					/* Retrieve the last block available
@@ -2387,11 +2641,13 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					hcryp->CrypOutCount -= 16U;
 				}
 #if !defined(AES_CR_NPBLB)
-				else {
+				else
+				{
 					/* Software work-around: additional Data
 					 * Output Register reading round to
 					 * discard the data */
-					for (index = 0U; index < 4U; index++) {
+					for (index = 0U; index < 4U; index++)
+					{
 						intermediate_data[index] = hcryp->Instance->DOUTR;
 					}
 				}
@@ -2399,7 +2655,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 			}
 
 			/* Check if all output text has been retrieved */
-			if (hcryp->CrypOutCount == 0U) {
+			if (hcryp->CrypOutCount == 0U)
+			{
 				/* Clear Computation Complete Flag */
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 				/* Disable Computation Complete Flag and Errors
@@ -2424,7 +2681,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 			}
 			/* If suspension flag has been raised, suspend
 			   processing */
-			else if (hcryp->SuspendRequest == HAL_CRYP_SUSPEND) {
+			else if (hcryp->SuspendRequest == HAL_CRYP_SUSPEND)
+			{
 				/* Clear CCF Flag */
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 
@@ -2442,9 +2700,10 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 				__HAL_UNLOCK(hcryp);
 
 				return HAL_OK;
-			} else /* Output data are still expected, carry on
-				  feeding the CRYP hardware block with input
-				  data */
+			}
+			else /* Output data are still expected, carry on
+				feeding the CRYP hardware block with input
+				data */
 			{
 				/* Clear Computation Complete Flag */
 				__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
@@ -2452,7 +2711,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 				inputaddr = (uint32_t)hcryp->pCrypInBuffPtr;
 
 				/* Usual input data feeding case */
-				if (hcryp->CrypInCount < 16U) {
+				if (hcryp->CrypInCount < 16U)
+				{
 					difflength = (uint32_t)(hcryp->CrypInCount);
 					difflengthmod4 = difflength % 4U;
 					hcryp->CrypInCount = 0;
@@ -2466,7 +2726,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 						uint32_t cr_temp = hcryp->Instance->CR;
 
 						if (((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_GCM_GMAC | CRYP_ALGOMODE_ENCRYPT)) ||
-						    ((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_CCM | CRYP_ALGOMODE_DECRYPT))) {
+						    ((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_CCM | CRYP_ALGOMODE_DECRYPT)))
+						{
 							/* Set NPBLB field in
 							writing the number of
 							padding bytes for the
@@ -2477,7 +2738,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 #else
 					/* Software workaround applied to GCM
 					 * encryption only */
-					if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) {
+					if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT)
+					{
 						/* Change the mode configured in
 						 * CHMOD bits of CR register to
 						 * select CTR mode */
@@ -2489,7 +2751,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					   inferior to 128 bits) padded with
 					   zeroes to have a complete block of
 					   128 bits */
-					for (index = 0U; index < (difflength / 4U); index++) {
+					for (index = 0U; index < (difflength / 4U); index++)
+					{
 						/* Write the Input block in the
 						 * Data Input register */
 						hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
@@ -2497,16 +2760,19 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					}
 					/* If required, manage input data size
 					 * not multiple of 32 bits */
-					if (difflengthmod4 != 0U) {
+					if (difflengthmod4 != 0U)
+					{
 						hcryp->Instance->DINR = ((*(uint32_t *)(inputaddr)) & mask[mask_index][difflengthmod4 - 1U]);
 					}
 					/* Wrap-up in padding with zero-words if
 					 * applicable */
-					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+					{
 						hcryp->Instance->DINR = 0;
 					}
-
-				} else {
+				}
+				else
+				{
 					hcryp->pCrypInBuffPtr += 16;
 					hcryp->CrypInCount -= 16U;
 
@@ -2527,7 +2793,8 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 		/*=======================================*/
 		/* GCM/GMAC (or CCM or CMAC) final phase */
 		/*=======================================*/
-		else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE) {
+		else if (hcryp->Init.GCMCMACPhase == CRYP_FINAL_PHASE)
+		{
 			/* Clear Computation Complete Flag */
 			__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 
@@ -2566,14 +2833,18 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 #endif /* USE_HAL_CRYP_REGISTER_CALLBACKS */
 
 			return HAL_OK;
-		} else {
+		}
+		else
+		{
 			/* Clear Computation Complete Flag */
 			__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 			hcryp->State = HAL_CRYP_STATE_ERROR;
 			__HAL_UNLOCK(hcryp);
 			return HAL_ERROR;
 		}
-	} else {
+	}
+	else
+	{
 		return HAL_BUSY;
 	}
 }
@@ -2597,7 +2868,8 @@ static void CRYP_Authentication_SetDMAConfig(CRYP_HandleTypeDef *hcryp, uint32_t
 	/* Set the DMA error callback */
 	hcryp->hdmain->XferErrorCallback = CRYP_Authentication_DMAError;
 
-	if (outputaddr != 0U) {
+	if (outputaddr != 0U)
+	{
 		/* Set the output CRYP DMA transfer complete callback */
 		hcryp->hdmaout->XferCpltCallback = CRYP_Authentication_DMAOutCplt;
 		/* Set the DMA error callback */
@@ -2608,7 +2880,8 @@ static void CRYP_Authentication_SetDMAConfig(CRYP_HandleTypeDef *hcryp, uint32_t
 	__HAL_CRYP_ENABLE(hcryp);
 
 	/* Enable the DMA input stream */
-	if (HAL_DMA_Start_IT(hcryp->hdmain, inputaddr, (uint32_t)&hcryp->Instance->DINR, ((uint32_t)Size) / 4U) != HAL_OK) {
+	if (HAL_DMA_Start_IT(hcryp->hdmain, inputaddr, (uint32_t)&hcryp->Instance->DINR, ((uint32_t)Size) / 4U) != HAL_OK)
+	{
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
 		hcryp->ErrorCallback(hcryp);
 #else
@@ -2619,9 +2892,11 @@ static void CRYP_Authentication_SetDMAConfig(CRYP_HandleTypeDef *hcryp, uint32_t
 	/* Enable the DMA input request */
 	SET_BIT(hcryp->Instance->CR, AES_CR_DMAINEN);
 
-	if (outputaddr != 0U) {
+	if (outputaddr != 0U)
+	{
 		/* Enable the DMA output stream */
-		if (HAL_DMA_Start_IT(hcryp->hdmaout, (uint32_t)&hcryp->Instance->DOUTR, outputaddr, ((uint32_t)Size) / 4U) != HAL_OK) {
+		if (HAL_DMA_Start_IT(hcryp->hdmaout, (uint32_t)&hcryp->Instance->DOUTR, outputaddr, ((uint32_t)Size) / 4U) != HAL_OK)
+		{
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
 			hcryp->ErrorCallback(hcryp);
 #else
@@ -2651,7 +2926,8 @@ static HAL_StatusTypeDef CRYP_ProcessData(CRYP_HandleTypeDef *hcryp, uint8_t *In
 	uint32_t inputaddr = (uint32_t)Input;
 	uint32_t outputaddr = (uint32_t)Output;
 
-	for (index = 0U; (index < Ilength); index += 16U) {
+	for (index = 0U; (index < Ilength); index += 16U)
+	{
 		/* Write the Input block in the Data Input register */
 		hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 		inputaddr += 4U;
@@ -2663,7 +2939,8 @@ static HAL_StatusTypeDef CRYP_ProcessData(CRYP_HandleTypeDef *hcryp, uint8_t *In
 		inputaddr += 4U;
 
 		/* Wait for CCF flag to be raised */
-		if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+		if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+		{
 			hcryp->State = HAL_CRYP_STATE_READY;
 			__HAL_UNLOCK(hcryp);
 			return HAL_TIMEOUT;
@@ -2684,7 +2961,8 @@ static HAL_StatusTypeDef CRYP_ProcessData(CRYP_HandleTypeDef *hcryp, uint8_t *In
 
 		/* If the suspension flag has been raised and if the processing
 		   is not about to end, suspend processing */
-		if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && ((index + 16U) < Ilength)) {
+		if ((hcryp->SuspendRequest == HAL_CRYP_SUSPEND) && ((index + 16U) < Ilength))
+		{
 			/* Reset SuspendRequest */
 			hcryp->SuspendRequest = HAL_CRYP_SUSPEND_NONE;
 
@@ -2720,7 +2998,8 @@ static HAL_StatusTypeDef CRYP_ReadKey(CRYP_HandleTypeDef *hcryp, uint8_t *Output
 	uint32_t outputaddr = (uint32_t)Output;
 
 	/* Wait for CCF flag to be raised */
-	if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK) {
+	if (CRYP_WaitOnCCFlag(hcryp, Timeout) != HAL_OK)
+	{
 		hcryp->State = HAL_CRYP_STATE_READY;
 		__HAL_UNLOCK(hcryp);
 		return HAL_TIMEOUT;
@@ -2729,7 +3008,8 @@ static HAL_StatusTypeDef CRYP_ReadKey(CRYP_HandleTypeDef *hcryp, uint8_t *Output
 	__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
 
 	/* Read the derivative key from the AES_KEYRx registers */
-	if (hcryp->Init.KeySize == CRYP_KEYSIZE_256B) {
+	if (hcryp->Init.KeySize == CRYP_KEYSIZE_256B)
+	{
 		*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR7);
 		outputaddr += 4U;
 		*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR6);
@@ -2774,7 +3054,8 @@ static void CRYP_SetDMAConfig(CRYP_HandleTypeDef *hcryp, uint32_t inputaddr, uin
 	hcryp->hdmaout->XferErrorCallback = CRYP_DMAError;
 
 	/* Enable the DMA input stream */
-	if (HAL_DMA_Start_IT(hcryp->hdmain, inputaddr, (uint32_t)&hcryp->Instance->DINR, ((uint32_t)Size) / 4U) != HAL_OK) {
+	if (HAL_DMA_Start_IT(hcryp->hdmain, inputaddr, (uint32_t)&hcryp->Instance->DINR, ((uint32_t)Size) / 4U) != HAL_OK)
+	{
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
 		hcryp->ErrorCallback(hcryp);
 #else
@@ -2783,7 +3064,8 @@ static void CRYP_SetDMAConfig(CRYP_HandleTypeDef *hcryp, uint32_t inputaddr, uin
 	}
 
 	/* Enable the DMA output stream */
-	if (HAL_DMA_Start_IT(hcryp->hdmaout, (uint32_t)&hcryp->Instance->DOUTR, outputaddr, ((uint32_t)Size) / 4U) != HAL_OK) {
+	if (HAL_DMA_Start_IT(hcryp->hdmaout, (uint32_t)&hcryp->Instance->DOUTR, outputaddr, ((uint32_t)Size) / 4U) != HAL_OK)
+	{
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
 		hcryp->ErrorCallback(hcryp);
 #else
@@ -2813,10 +3095,13 @@ static HAL_StatusTypeDef CRYP_WaitOnCCFlag(CRYP_HandleTypeDef const *const hcryp
 	/* Get timeout */
 	tickstart = HAL_GetTick();
 
-	while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF)) {
+	while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF))
+	{
 		/* Check for the Timeout */
-		if (Timeout != HAL_MAX_DELAY) {
-			if ((HAL_GetTick() - tickstart) > Timeout) {
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if ((HAL_GetTick() - tickstart) > Timeout)
+			{
 				return HAL_TIMEOUT;
 			}
 		}
@@ -2839,10 +3124,13 @@ static HAL_StatusTypeDef CRYP_WaitOnBusyFlagReset(CRYP_HandleTypeDef const *cons
 	/* Get timeout */
 	tickstart = HAL_GetTick();
 
-	while (HAL_IS_BIT_SET(hcryp->Instance->SR, AES_SR_BUSY)) {
+	while (HAL_IS_BIT_SET(hcryp->Instance->SR, AES_SR_BUSY))
+	{
 		/* Check for the Timeout */
-		if (Timeout != HAL_MAX_DELAY) {
-			if ((HAL_GetTick() - tickstart) > Timeout) {
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if ((HAL_GetTick() - tickstart) > Timeout)
+			{
 				return HAL_TIMEOUT;
 			}
 		}
@@ -2957,11 +3245,13 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 #if defined(AES_CR_NPBLB)
 	/* In case of GCM encryption or CCM decryption, specify the number of
 	   padding bytes in last block of payload */
-	if (READ_BIT(hcryp->Instance->CR, AES_CR_GCMPH) == CRYP_PAYLOAD_PHASE) {
+	if (READ_BIT(hcryp->Instance->CR, AES_CR_GCMPH) == CRYP_PAYLOAD_PHASE)
+	{
 		uint32_t cr_temp = hcryp->Instance->CR;
 
 		if (((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_GCM_GMAC | CRYP_ALGOMODE_ENCRYPT)) ||
-		    ((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_CCM | CRYP_ALGOMODE_DECRYPT))) {
+		    ((cr_temp & (AES_CR_CHMOD | AES_CR_MODE)) == (CRYP_CHAINMODE_AES_CCM | CRYP_ALGOMODE_DECRYPT)))
+		{
 			/* Set NPBLB field in writing the number of padding
 			   bytes for the last block of payload */
 			MODIFY_REG(hcryp->Instance->CR, AES_CR_NPBLB, (16U - difflength) << AES_POSITION_CR_NPBLB);
@@ -2969,7 +3259,8 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 	}
 #else
 	/* Software workaround applied to GCM encryption only */
-	if ((hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) && (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT)) {
+	if ((hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) && (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT))
+	{
 		/* Change the mode configured in CHMOD bits of CR register to
 		 * select CTR mode */
 		__HAL_CRYP_SET_CHAININGMODE(hcryp, CRYP_CHAINMODE_AES_CTR);
@@ -2978,24 +3269,29 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 
 	/* Wrap-up entering header or payload data */
 	/* Enter complete words when possible */
-	for (index = 0U; index < (difflength / 4U); index++) {
+	for (index = 0U; index < (difflength / 4U); index++)
+	{
 		/* Write the Input block in the Data Input register */
 		hcryp->Instance->DINR = *(uint32_t *)(inputaddr);
 		inputaddr += 4U;
 	}
 	/* Enter incomplete word padded with zeroes if applicable
 	  (case of header length not a multiple of 32-bits) */
-	if (difflengthmod4 != 0U) {
+	if (difflengthmod4 != 0U)
+	{
 		hcryp->Instance->DINR = ((*(uint32_t *)(inputaddr)) & mask[mask_index][difflengthmod4 - 1U]);
 	}
 	/* Pad with zero-words to reach 128-bit long block and wrap-up header
 	 * feeding to the IP */
-	for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+	for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+	{
 		hcryp->Instance->DINR = 0;
 	}
 
-	if (polling == (uint32_t)CRYP_POLLING_ON) {
-		if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+	if (polling == (uint32_t)CRYP_POLLING_ON)
+	{
+		if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+		{
 			hcryp->State = HAL_CRYP_STATE_READY;
 			__HAL_UNLOCK(hcryp);
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
@@ -3010,15 +3306,18 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 	}
 
 	/* if payload */
-	if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE) {
+	if (hcryp->Init.GCMCMACPhase == CRYP_PAYLOAD_PHASE)
+	{
 
 		/* Retrieve intermediate data */
-		for (index = 0U; index < 4U; index++) {
+		for (index = 0U; index < 4U; index++)
+		{
 			intermediate_data[index] = hcryp->Instance->DOUTR;
 		}
 		/* Retrieve last words of cyphered data */
 		/* First, retrieve complete output words */
-		for (index = 0U; index < (difflength / 4U); index++) {
+		for (index = 0U; index < (difflength / 4U); index++)
+		{
 			*(uint32_t *)(outputaddr) = intermediate_data[index];
 			outputaddr += 4U;
 		}
@@ -3026,7 +3325,8 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 		   at the same time, start masking intermediate data
 		   with a mask of zeros of same size than the padding
 		   applied to the last block of payload */
-		if (difflengthmod4 != 0U) {
+		if (difflengthmod4 != 0U)
+		{
 			intermediate_data[difflength / 4U] &= mask[mask_index][difflengthmod4 - 1U];
 			*(uint32_t *)(outputaddr) = intermediate_data[difflength / 4U];
 		}
@@ -3035,7 +3335,8 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 		/* Software workaround applied to GCM encryption only,
 		   applicable for AES IP v2 version (where NPBLB is not defined)
 		 */
-		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) {
+		if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT)
+		{
 			/* Change again CHMOD configuration to GCM mode */
 			__HAL_CRYP_SET_CHAININGMODE(hcryp, CRYP_CHAINMODE_AES_GCM_GMAC);
 
@@ -3046,17 +3347,20 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 			   masking operation with a mask of zeros of same size
 			   than the padding applied to the last block of payload
 			 */
-			for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
+			for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++)
+			{
 				intermediate_data[((difflength + 3U) / 4U) + index] = 0;
 			}
 			/* Insert intermediate data */
-			for (index = 0U; index < 4U; index++) {
+			for (index = 0U; index < 4U; index++)
+			{
 				hcryp->Instance->DINR = intermediate_data[index];
 			}
 
 			/*  Wait for completion, and read data on Data Output
 			 * Register. This data is to discard. */
-			if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK) {
+			if (CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)
+			{
 				hcryp->State = HAL_CRYP_STATE_READY;
 				__HAL_UNLOCK(hcryp);
 				HAL_CRYP_ErrorCallback(hcryp);
@@ -3065,7 +3369,8 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
 			/* Read data to discard */
 			/* Clear CCF Flag */
 			__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
-			for (index = 0U; index < 4U; index++) {
+			for (index = 0U; index < 4U; index++)
+			{
 				intermediate_data[index] = hcryp->Instance->DOUTR;
 			}
 

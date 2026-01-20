@@ -154,12 +154,14 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 
 	Status = HAL_RCC_OscConfig(&RCC_OscInitStruct);
 
-	if (Status == HAL_OK) {
+	if (Status == HAL_OK)
+	{
 		PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
 		Status = HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
 	}
 
-	if (Status == HAL_OK) {
+	if (Status == HAL_OK)
+	{
 		hRTC_Handle.Instance = RTC;
 		hRTC_Handle.Init.HourFormat = RTC_HOURFORMAT_24;
 		hRTC_Handle.Init.AsynchPrediv = RTC_ASYNCH_PREDIV;
@@ -176,15 +178,19 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 #endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
 	}
 
-	if (Status == HAL_OK) {
+	if (Status == HAL_OK)
+	{
 		Status = HAL_RTCEx_SetWakeUpTimer_IT(&hRTC_Handle, 0, RTC_WAKEUPCLOCK_CK_SPRE_16BITS, 0);
 	}
 
-	if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
+	if (TickPriority < (1UL << __NVIC_PRIO_BITS))
+	{
 		/* Enable the RTC global Interrupt */
 		HAL_NVIC_SetPriority(RTC_IRQn, TickPriority, 0U);
 		uwTickPrio = TickPriority;
-	} else {
+	}
+	else
+	{
 		Status = HAL_ERROR;
 	}
 

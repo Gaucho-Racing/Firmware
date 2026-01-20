@@ -315,7 +315,8 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 	HAL_StatusTypeDef status = HAL_ERROR;
 
 	/* Check the RTC peripheral state */
-	if (hrtc != NULL) {
+	if (hrtc != NULL)
+	{
 		/* Check the parameters */
 		assert_param(IS_RTC_HOUR_FORMAT(hrtc->Init.HourFormat));
 		assert_param(IS_RTC_ASYNCH_PREDIV(hrtc->Init.AsynchPrediv));
@@ -327,7 +328,8 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 		assert_param(IS_RTC_OUTPUT_PULLUP(hrtc->Init.OutPutPullUp));
 
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
-		if (hrtc->State == HAL_RTC_STATE_RESET) {
+		if (hrtc->State == HAL_RTC_STATE_RESET)
+		{
 			/* Allocate lock resource and initialize it */
 			hrtc->Lock = HAL_UNLOCKED;
 
@@ -391,18 +393,21 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 												      */
 #endif												     /* RTC_TAMP_INT_7_SUPPORT */
 
-			if (hrtc->MspInitCallback == NULL) {
+			if (hrtc->MspInitCallback == NULL)
+			{
 				hrtc->MspInitCallback = HAL_RTC_MspInit;
 			}
 			/* Init the low level hardware */
 			hrtc->MspInitCallback(hrtc);
 
-			if (hrtc->MspDeInitCallback == NULL) {
+			if (hrtc->MspDeInitCallback == NULL)
+			{
 				hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
 			}
 		}
 #else
-		if (hrtc->State == HAL_RTC_STATE_RESET) {
+		if (hrtc->State == HAL_RTC_STATE_RESET)
+		{
 			/* Allocate lock resource and initialize it */
 			hrtc->Lock = HAL_UNLOCKED;
 
@@ -415,14 +420,16 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 		hrtc->State = HAL_RTC_STATE_BUSY;
 
 		/* Check whether the calendar needs to be initialized */
-		if (__HAL_RTC_IS_CALENDAR_INITIALIZED(hrtc) == 0U) {
+		if (__HAL_RTC_IS_CALENDAR_INITIALIZED(hrtc) == 0U)
+		{
 			/* Disable the write protection for RTC registers */
 			__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
 			/* Enter Initialization mode */
 			status = RTC_EnterInitMode(hrtc);
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				/* Clear RTC_CR FMT, OSEL and POL Bits */
 				CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_FMT | RTC_CR_POL | RTC_CR_OSEL | RTC_CR_TAMPOE));
 				/* Set RTC_CR register */
@@ -435,18 +442,22 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 				status = RTC_ExitInitMode(hrtc);
 			}
 
-			if (status == HAL_OK) {
+			if (status == HAL_OK)
+			{
 				MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPALRM_PU | RTC_CR_TAMPALRM_TYPE | RTC_CR_OUT2EN, hrtc->Init.OutPutPullUp | hrtc->Init.OutPutType | hrtc->Init.OutPutRemap);
 			}
 
 			/* Enable the write protection for RTC registers */
 			__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
-		} else {
+		}
+		else
+		{
 			/* The calendar is already initialized */
 			status = HAL_OK;
 		}
 
-		if (status == HAL_OK) {
+		if (status == HAL_OK)
+		{
 			hrtc->State = HAL_RTC_STATE_READY;
 		}
 	}
@@ -473,10 +484,13 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
 	status = RTC_EnterInitMode(hrtc);
 
 	/* Set Initialization mode */
-	if (status != HAL_OK) {
+	if (status != HAL_OK)
+	{
 		/* Set RTC state */
 		hrtc->State = HAL_RTC_STATE_ERROR;
-	} else {
+	}
+	else
+	{
 		/* Reset all RTC CR register bits */
 		CLEAR_REG(hrtc->Instance->CR);
 		WRITE_REG(hrtc->Instance->DR, (uint32_t)(RTC_DR_WDU_0 | RTC_DR_MU_0 | RTC_DR_DU_0));
@@ -496,9 +510,12 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
 
 		status = HAL_RTC_WaitForSynchro(hrtc);
 
-		if (status != HAL_OK) {
+		if (status != HAL_OK)
+		{
 			hrtc->State = HAL_RTC_STATE_ERROR;
-		} else {
+		}
+		else
+		{
 			/* Reset TAMP registers */
 			WRITE_REG(TAMP->CR1, RTC_INT_TAMPER_ALL);
 			CLEAR_REG(TAMP->CR2);
@@ -509,9 +526,11 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
-		if (hrtc->MspDeInitCallback == NULL) {
+		if (hrtc->MspDeInitCallback == NULL)
+		{
 			hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
 		}
 
@@ -574,15 +593,18 @@ HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_Call
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL) {
+	if (pCallback == NULL)
+	{
 		return HAL_ERROR;
 	}
 
 	/* Process locked */
 	__HAL_LOCK(hrtc);
 
-	if (HAL_RTC_STATE_READY == hrtc->State) {
-		switch (CallbackID) {
+	if (HAL_RTC_STATE_READY == hrtc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_RTC_ALARM_A_EVENT_CB_ID:
 				hrtc->AlarmAEventCallback = pCallback;
 				break;
@@ -663,8 +685,11 @@ HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (HAL_RTC_STATE_RESET == hrtc->State) {
-		switch (CallbackID) {
+	}
+	else if (HAL_RTC_STATE_RESET == hrtc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_RTC_MSPINIT_CB_ID:
 				hrtc->MspInitCallback = pCallback;
 				break;
@@ -678,7 +703,9 @@ HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_Call
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Return error status */
 		status = HAL_ERROR;
 	}
@@ -731,8 +758,10 @@ HAL_StatusTypeDef HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_Ca
 	/* Process locked */
 	__HAL_LOCK(hrtc);
 
-	if (HAL_RTC_STATE_READY == hrtc->State) {
-		switch (CallbackID) {
+	if (HAL_RTC_STATE_READY == hrtc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_RTC_ALARM_A_EVENT_CB_ID:
 				hrtc->AlarmAEventCallback = HAL_RTC_AlarmAEventCallback; /* Legacy weak
 											    AlarmAEventCallback
@@ -852,8 +881,11 @@ HAL_StatusTypeDef HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else if (HAL_RTC_STATE_RESET == hrtc->State) {
-		switch (CallbackID) {
+	}
+	else if (HAL_RTC_STATE_RESET == hrtc->State)
+	{
+		switch (CallbackID)
+		{
 			case HAL_RTC_MSPINIT_CB_ID:
 				hrtc->MspInitCallback = HAL_RTC_MspInit;
 				break;
@@ -867,7 +899,9 @@ HAL_StatusTypeDef HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_Ca
 				status = HAL_ERROR;
 				break;
 		}
-	} else {
+	}
+	else
+	{
 		/* Return error status */
 		status = HAL_ERROR;
 	}
@@ -958,12 +992,17 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTim
 
 	/* Enter Initialization mode */
 	status = RTC_EnterInitMode(hrtc);
-	if (status == HAL_OK) {
-		if (Format == RTC_FORMAT_BIN) {
-			if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U) {
+	if (status == HAL_OK)
+	{
+		if (Format == RTC_FORMAT_BIN)
+		{
+			if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U)
+			{
 				assert_param(IS_RTC_HOUR12(sTime->Hours));
 				assert_param(IS_RTC_HOURFORMAT12(sTime->TimeFormat));
-			} else {
+			}
+			else
+			{
 				sTime->TimeFormat = 0x00U;
 				assert_param(IS_RTC_HOUR24(sTime->Hours));
 			}
@@ -972,11 +1011,16 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTim
 
 			tmpreg = (uint32_t)(((uint32_t)RTC_ByteToBcd2(sTime->Hours) << RTC_TR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sTime->Minutes) << RTC_TR_MNU_Pos) |
 					    ((uint32_t)RTC_ByteToBcd2(sTime->Seconds) << RTC_TR_SU_Pos) | (((uint32_t)sTime->TimeFormat) << RTC_TR_PM_Pos));
-		} else {
-			if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U) {
+		}
+		else
+		{
+			if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U)
+			{
 				assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sTime->Hours)));
 				assert_param(IS_RTC_HOURFORMAT12(sTime->TimeFormat));
-			} else {
+			}
+			else
+			{
 				sTime->TimeFormat = 0x00U;
 				assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sTime->Hours)));
 			}
@@ -1003,7 +1047,8 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTim
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		hrtc->State = HAL_RTC_STATE_READY;
 	}
 	__HAL_UNLOCK(hrtc);
@@ -1060,7 +1105,8 @@ HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTim
 	sTime->TimeFormat = (uint8_t)((tmpreg & (RTC_TR_PM)) >> RTC_TR_PM_Pos);
 
 	/* Check the input parameters format */
-	if (Format == RTC_FORMAT_BIN) {
+	if (Format == RTC_FORMAT_BIN)
+	{
 		/* Convert the time structure parameters to Binary format */
 		sTime->Hours = (uint8_t)RTC_Bcd2ToByte(sTime->Hours);
 		sTime->Minutes = (uint8_t)RTC_Bcd2ToByte(sTime->Minutes);
@@ -1093,20 +1139,24 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDat
 
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
-	if ((Format == RTC_FORMAT_BIN) && ((sDate->Month & 0x10U) == 0x10U)) {
+	if ((Format == RTC_FORMAT_BIN) && ((sDate->Month & 0x10U) == 0x10U))
+	{
 		sDate->Month = (uint8_t)((sDate->Month & (uint8_t) ~(0x10U)) + (uint8_t)0x0AU);
 	}
 
 	assert_param(IS_RTC_WEEKDAY(sDate->WeekDay));
 
-	if (Format == RTC_FORMAT_BIN) {
+	if (Format == RTC_FORMAT_BIN)
+	{
 		assert_param(IS_RTC_YEAR(sDate->Year));
 		assert_param(IS_RTC_MONTH(sDate->Month));
 		assert_param(IS_RTC_DATE(sDate->Date));
 
 		datetmpreg = (((uint32_t)RTC_ByteToBcd2(sDate->Year) << RTC_DR_YU_Pos) | ((uint32_t)RTC_ByteToBcd2(sDate->Month) << RTC_DR_MU_Pos) |
 			      ((uint32_t)RTC_ByteToBcd2(sDate->Date) << RTC_DR_DU_Pos) | ((uint32_t)sDate->WeekDay << RTC_DR_WDU_Pos));
-	} else {
+	}
+	else
+	{
 		assert_param(IS_RTC_YEAR(RTC_Bcd2ToByte(sDate->Year)));
 		assert_param(IS_RTC_MONTH(RTC_Bcd2ToByte(sDate->Month)));
 		assert_param(IS_RTC_DATE(RTC_Bcd2ToByte(sDate->Date)));
@@ -1120,7 +1170,8 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDat
 
 	/* Enter Initialization mode */
 	status = RTC_EnterInitMode(hrtc);
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 		/* Set the RTC_DR register */
 		WRITE_REG(hrtc->Instance->DR, (uint32_t)(datetmpreg & RTC_DR_RESERVED_MASK));
 
@@ -1131,7 +1182,8 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDat
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
-	if (status == HAL_OK) {
+	if (status == HAL_OK)
+	{
 
 		hrtc->State = HAL_RTC_STATE_READY;
 	}
@@ -1172,7 +1224,8 @@ HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDat
 	sDate->WeekDay = (uint8_t)((datetmpreg & (RTC_DR_WDU)) >> RTC_DR_WDU_Pos);
 
 	/* Check the input parameters format */
-	if (Format == RTC_FORMAT_BIN) {
+	if (Format == RTC_FORMAT_BIN)
+	{
 		/* Convert the date structure parameters to Binary format */
 		sDate->Year = (uint8_t)RTC_Bcd2ToByte(sDate->Year);
 		sDate->Month = (uint8_t)RTC_Bcd2ToByte(sDate->Month);
@@ -1227,11 +1280,15 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
-	if (Format == RTC_FORMAT_BIN) {
-		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U) {
+	if (Format == RTC_FORMAT_BIN)
+	{
+		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U)
+		{
 			assert_param(IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
 			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
 		}
@@ -1239,21 +1296,28 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		assert_param(IS_RTC_SECONDS(sAlarm->AlarmTime.Seconds));
 
 #ifdef USE_FULL_ASSERT
-		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(sAlarm->AlarmDateWeekDay));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(sAlarm->AlarmDateWeekDay));
 		}
 #endif /* USE_FULL_ASSERT*/
 		tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
 			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
 			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
-	} else /* Format BCD */
+	}
+	else /* Format BCD */
 	{
-		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U) {
+		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U)
+		{
 			assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 		}
@@ -1262,9 +1326,12 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
 
 #ifdef USE_FULL_ASSERT
-		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 		}
 
@@ -1281,7 +1348,8 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
 	/* Configure the Alarm register */
-	if (sAlarm->Alarm == RTC_ALARM_A) {
+	if (sAlarm->Alarm == RTC_ALARM_A)
+	{
 		/* Disable the Alarm A interrupt */
 		/* In case of interrupt mode is used, the interrupt source must
 		 * disabled */
@@ -1293,8 +1361,10 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		tickstart = HAL_GetTick();
 		/* Wait till RTC ALRAWF flag is set and if Time out is reached
 		 * exit */
-		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRAWF) == 0U) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRAWF) == 0U)
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				/* Enable the write protection for RTC registers
 				 */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1313,7 +1383,9 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		WRITE_REG(hrtc->Instance->ALRMASSR, subsecondtmpreg);
 		/* Configure the Alarm state: Enable Alarm */
 		SET_BIT(hrtc->Instance->CR, RTC_CR_ALRAE);
-	} else {
+	}
+	else
+	{
 		/* Disable the Alarm B interrupt */
 		/* In case of interrupt mode is used, the interrupt source must
 		 * disabled */
@@ -1325,8 +1397,10 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		tickstart = HAL_GetTick();
 		/* Wait till RTC ALRBWF flag is set and if Time out is reached
 		 * exit */
-		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRBWF) == 0U) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRBWF) == 0U)
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				/* Enable the write protection for RTC registers
 				 */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1392,11 +1466,15 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
-	if (Format == RTC_FORMAT_BIN) {
-		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U) {
+	if (Format == RTC_FORMAT_BIN)
+	{
+		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U)
+		{
 			assert_param(IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
 			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
 		}
@@ -1404,21 +1482,28 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 		assert_param(IS_RTC_SECONDS(sAlarm->AlarmTime.Seconds));
 
 #ifdef USE_FULL_ASSERT
-		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(sAlarm->AlarmDateWeekDay));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(sAlarm->AlarmDateWeekDay));
 		}
 #endif /* USE_FULL_ASSERT */
 		tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
 			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
 			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
-	} else /* Format BCD */
+	}
+	else /* Format BCD */
 	{
-		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U) {
+		if (READ_BIT(hrtc->Instance->CR, RTC_CR_FMT) != 0U)
+		{
 			assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
-		} else {
+		}
+		else
+		{
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 		}
@@ -1427,9 +1512,12 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 		assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
 
 #ifdef USE_FULL_ASSERT
-		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE)
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
-		} else {
+		}
+		else
+		{
 			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 		}
 
@@ -1446,7 +1534,8 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
 	/* Configure the Alarm register */
-	if (sAlarm->Alarm == RTC_ALARM_A) {
+	if (sAlarm->Alarm == RTC_ALARM_A)
+	{
 		/* Disable the Alarm A interrupt */
 		CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_ALRAE | RTC_CR_ALRAIE));
 
@@ -1457,8 +1546,10 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 		tickstart = HAL_GetTick();
 		/* Wait till RTC ALRAWF flag is set and if Time out is reached
 		 * exit */
-		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRAWF) == 0U) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRAWF) == 0U)
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				/* Enable the write protection for RTC registers
 				 */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1477,7 +1568,9 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 		WRITE_REG(hrtc->Instance->ALRMASSR, subsecondtmpreg);
 		/* Configure the Alarm interrupt : Enable Alarm */
 		SET_BIT(hrtc->Instance->CR, (RTC_CR_ALRAE | RTC_CR_ALRAIE));
-	} else {
+	}
+	else
+	{
 		/* Disable the Alarm B interrupt */
 		CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_ALRBE | RTC_CR_ALRBIE));
 
@@ -1488,8 +1581,10 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef 
 		tickstart = HAL_GetTick();
 		/* Wait till RTC ALRBWF flag is set and if Time out is reached
 		 * exit */
-		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRBWF) == 0U) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRBWF) == 0U)
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				/* Enable the write protection for RTC registers
 				 */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1550,7 +1645,8 @@ HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alar
 	/* Disable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
-	if (Alarm == RTC_ALARM_A) {
+	if (Alarm == RTC_ALARM_A)
+	{
 		/* AlarmA */
 		/* In case of interrupt mode is used, the interrupt source must
 		 * disabled */
@@ -1561,8 +1657,10 @@ HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alar
 
 		/* Wait till RTC ALRxWF flag is set and if Time out is reached
 		 * exit */
-		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRAWF) == 0U) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRAWF) == 0U)
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				/* Enable the write protection for RTC registers
 				 */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1575,7 +1673,9 @@ HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alar
 				return HAL_TIMEOUT;
 			}
 		}
-	} else {
+	}
+	else
+	{
 		/* AlarmB */
 		/* In case of interrupt mode is used, the interrupt source must
 		 * disabled */
@@ -1586,8 +1686,10 @@ HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alar
 
 		/* Wait till RTC ALRxWF flag is set and if Time out is reached
 		 * exit */
-		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRBWF) == 0U) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_ALRBWF) == 0U)
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				/* Enable the write protection for RTC registers
 				 */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1634,7 +1736,8 @@ HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 	assert_param(IS_RTC_FORMAT(Format));
 	assert_param(IS_RTC_ALARM(Alarm));
 
-	if (Alarm == RTC_ALARM_A) {
+	if (Alarm == RTC_ALARM_A)
+	{
 		/* AlarmA */
 		sAlarm->Alarm = RTC_ALARM_A;
 
@@ -1650,7 +1753,9 @@ HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		sAlarm->AlarmDateWeekDay = (uint8_t)((tmpreg & (RTC_ALRMAR_DT | RTC_ALRMAR_DU)) >> RTC_ALRMAR_DU_Pos);
 		sAlarm->AlarmDateWeekDaySel = (uint32_t)(tmpreg & RTC_ALRMAR_WDSEL);
 		sAlarm->AlarmMask = (uint32_t)(tmpreg & RTC_ALARMMASK_ALL);
-	} else {
+	}
+	else
+	{
 		sAlarm->Alarm = RTC_ALARM_B;
 
 		tmpreg = READ_REG(hrtc->Instance->ALRMBR);
@@ -1667,7 +1772,8 @@ HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sA
 		sAlarm->AlarmMask = (uint32_t)(tmpreg & RTC_ALARMMASK_ALL);
 	}
 
-	if (Format == RTC_FORMAT_BIN) {
+	if (Format == RTC_FORMAT_BIN)
+	{
 		sAlarm->AlarmTime.Hours = RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours);
 		sAlarm->AlarmTime.Minutes = RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes);
 		sAlarm->AlarmTime.Seconds = RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds);
@@ -1687,7 +1793,8 @@ void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc)
 	/* Get interrupt status */
 	uint32_t tmp = READ_REG(hrtc->Instance->MISR);
 
-	if ((tmp & RTC_MISR_ALRAMF) != 0U) {
+	if ((tmp & RTC_MISR_ALRAMF) != 0U)
+	{
 		/* Clear the AlarmA interrupt pending bit */
 		WRITE_REG(hrtc->Instance->SCR, RTC_SCR_CALRAF);
 		__HAL_RTC_ALARM_EXTI_CLEAR_IT();
@@ -1700,7 +1807,8 @@ void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc)
 #endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
 	}
 
-	if ((tmp & RTC_MISR_ALRBMF) != 0U) {
+	if ((tmp & RTC_MISR_ALRBMF) != 0U)
+	{
 		/* Clear the AlarmB interrupt pending bit */
 		WRITE_REG(hrtc->Instance->SCR, RTC_SCR_CALRBF);
 		__HAL_RTC_ALARM_EXTI_CLEAR_IT();
@@ -1744,9 +1852,12 @@ HAL_StatusTypeDef HAL_RTC_PollForAlarmAEvent(RTC_HandleTypeDef *hrtc, uint32_t T
 
 	uint32_t tickstart = HAL_GetTick();
 
-	while (READ_BIT(hrtc->Instance->SR, RTC_SR_ALRAF) == 0U) {
-		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+	while (READ_BIT(hrtc->Instance->SR, RTC_SR_ALRAF) == 0U)
+	{
+		if (Timeout != HAL_MAX_DELAY)
+		{
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
+			{
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 
 				/* Process Unlocked */
@@ -1810,8 +1921,10 @@ HAL_StatusTypeDef HAL_RTC_WaitForSynchro(RTC_HandleTypeDef *hrtc)
 	tickstart = HAL_GetTick();
 
 	/* Wait the registers to be synchronised */
-	while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_RSF) == 0U) {
-		if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+	while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_RSF) == 0U)
+	{
+		if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+		{
 			return HAL_TIMEOUT;
 		}
 	}
@@ -1871,15 +1984,18 @@ HAL_StatusTypeDef RTC_EnterInitMode(RTC_HandleTypeDef *hrtc)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check if the Initialization mode is set */
-	if (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) {
+	if (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U)
+	{
 		/* Set the Initialization mode */
 		SET_BIT(hrtc->Instance->ICSR, RTC_ICSR_INIT);
 
 		tickstart = HAL_GetTick();
 		/* Wait till RTC is in INIT state and if Time out is reached
 		 * exit */
-		while ((READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) && (status != HAL_TIMEOUT)) {
-			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
+		while ((READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) && (status != HAL_TIMEOUT))
+		{
+			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
+			{
 				status = HAL_TIMEOUT;
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 			}
@@ -1902,17 +2018,21 @@ HAL_StatusTypeDef RTC_ExitInitMode(RTC_HandleTypeDef *hrtc)
 	CLEAR_BIT(hrtc->Instance->ICSR, RTC_ICSR_INIT);
 
 	/* If CR_BYPSHAD bit = 0, wait for synchro */
-	if (READ_BIT(hrtc->Instance->CR, RTC_CR_BYPSHAD) == 0U) {
-		if (HAL_RTC_WaitForSynchro(hrtc) != HAL_OK) {
+	if (READ_BIT(hrtc->Instance->CR, RTC_CR_BYPSHAD) == 0U)
+	{
+		if (HAL_RTC_WaitForSynchro(hrtc) != HAL_OK)
+		{
 			hrtc->State = HAL_RTC_STATE_TIMEOUT;
 			status = HAL_TIMEOUT;
 		}
-	} else /* WA 2.9.6 Calendar initialization may fail in case of
-		  consecutive INIT mode entry */
+	}
+	else /* WA 2.9.6 Calendar initialization may fail in case of
+		consecutive INIT mode entry */
 	{
 		/* Clear BYPSHAD bit */
 		CLEAR_BIT(hrtc->Instance->CR, RTC_CR_BYPSHAD);
-		if (HAL_RTC_WaitForSynchro(hrtc) != HAL_OK) {
+		if (HAL_RTC_WaitForSynchro(hrtc) != HAL_OK)
+		{
 			hrtc->State = HAL_RTC_STATE_TIMEOUT;
 			status = HAL_TIMEOUT;
 		}
@@ -1933,7 +2053,8 @@ uint8_t RTC_ByteToBcd2(uint8_t Value)
 	uint32_t bcdhigh = 0U;
 	uint8_t tmp_Value = Value;
 
-	while (tmp_Value >= 10U) {
+	while (tmp_Value >= 10U)
+	{
 		bcdhigh++;
 		tmp_Value -= 10U;
 	}

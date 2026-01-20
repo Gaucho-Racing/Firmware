@@ -23,7 +23,8 @@
 #define STM32_ASSERT_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Exported types ------------------------------------------------------------*/
@@ -40,8 +41,8 @@ extern "C" {
  * @retval None
  */
 #define assert_param(expr) ((expr) ? (void)0U : assert_failed((char *)__FILE__, __LINE__))
-/* Exported functions ------------------------------------------------------- */
-void assert_failed(char *file, uint32_t line);
+	/* Exported functions ------------------------------------------------------- */
+	void assert_failed(char *file, uint32_t line);
 #else
 #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
