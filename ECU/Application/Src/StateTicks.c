@@ -77,7 +77,7 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 	UNUSED(stateData);
 	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!");
 	setSoftwareLatch(0); // TODO: need???
-	// TODO ERROR --> GLV_OFF should never be reached
+			     // TODO ERROR --> GLV_OFF should never be reached
 }
 
 void ECU_GLV_On(ECU_StateData *stateData)
