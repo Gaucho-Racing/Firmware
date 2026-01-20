@@ -418,6 +418,7 @@ int main(void)
 		read_digital();
 		ADC_UpdateAnalogValues(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
 		ADC_UpdateAnalogValues(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
+		SendECUStateDataOverCAN(&stateLump);
 		write_state_data();
 		ECU_State_Tick();
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);

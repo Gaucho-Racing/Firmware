@@ -83,7 +83,7 @@ typedef volatile struct ECU_StateData {
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
 	uint8_t glv_soc;	      /** GLV SoC, 20x/51=% */
-	uint8_t acu_error_warning_bits;
+	uint8_t bcu_error_warning_bits;
 	uint8_t inverter_fault_map;
 	bool ts_active;
 	bool rtd;

@@ -1,5 +1,10 @@
 #include "StateTicks.h"
 
+#include "CANutils.h"
+#include "GR_OLD_BUS_ID.h"
+#include "GR_OLD_MSG_DAT.h"
+#include "GR_OLD_MSG_ID.h"
+#include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
@@ -174,7 +179,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		}
 		if (!RTD) {
 			stateData->currentState = GR_PRECHARGE_COMPLETE
-			emit a warning if not moving
+			emit a warning if moving
 			break
 		}
 		and then we drive the car
@@ -185,12 +190,17 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		// TODO: emit a error
+		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System");
 		return;
 	}
 
 	if (!stateData->rtd) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
-		// TODO: emit a warning if not moving
+		// TODO: emit a warning if moving
+		if (vehicle_is_moving(stateData)) {
+			LOGOMATIC("Warning: Vehicle is moving during state trasition.");
+		}
+
 		return;
 	}
 }
@@ -199,16 +209,8 @@ void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
 	LOGOMATIC("tell the BCU to discharge TS");
-	FDCANTxMessage msg = {.tx_header = {.Identifier = 0x00A,
-					    .IdType = FDCAN_STANDARD_ID,
-					    .TxFrameType = FDCAN_DATA_FRAME,
-					    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-					    .DataLength = 1,
-					    .BitRateSwitch = FDCAN_BRS_OFF,
-					    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
-					    .MessageMarker = 0}};
-	msg.data[0] = 1; // Go TS Active/Precharge
-	can_send(can1Handle, &msg);
+	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
+	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->dischargeStartMillis = 0;
 }
 

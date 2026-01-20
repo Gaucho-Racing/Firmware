@@ -51,7 +51,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			// TODO See Issue #143
 			break;
 
-		case MSG_ACU_STATUS_1:
+		case MSG_BCU_STATUS_1:
 			if (data_length != sizeof(GR_OLD_BCU_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -62,14 +62,14 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01;
 			break;
 
-		case MSG_ACU_STATUS_2:
+		case MSG_BCU_STATUS_2:
 			if (data_length != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
 			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
 			state_data->max_cell_temp = bcu_status_2->max_cell_temp * 0.25;
-			state_data->acu_error_warning_bits = bcu_status_2->error_bits;
+			state_data->bcu_error_warning_bits = bcu_status_2->error_bits;
 			state_data->ir_minus = GETBIT(bcu_status_2->precharge_bits, 1);
 			state_data->ir_plus = GETBIT(bcu_status_2->precharge_bits, 2);
 			break;

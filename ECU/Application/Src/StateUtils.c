@@ -96,3 +96,8 @@ float CalcPedalTravel(volatile const ECU_StateData *stateData)
 {
 	return (float)(stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1) / (THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2);
 }
+
+bool vehicle_is_moving(volatile const ECU_StateData *stateData){
+	const float tolerance = 0.1;
+	return stateData->rl_wheel_rpm > tolerance || stateData->rr_wheel_rpm > tolerance;
+}
