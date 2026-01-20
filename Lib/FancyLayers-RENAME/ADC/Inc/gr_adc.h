@@ -126,6 +126,7 @@ __extension__ typedef enum {
 	VOPAMP6 = LL_ADC_CHANNEL_VOPAMP6,
 } Channel;
 
+/// @brief For oversampling, number of times to sample the channel before returning the output
 typedef enum {
 	SAMPLINGTIME_2CYCLES_5 = LL_ADC_SAMPLINGTIME_2CYCLES_5,
 	SAMPLINGTIME_6CYCLES_5 = LL_ADC_SAMPLINGTIME_6CYCLES_5,
@@ -137,17 +138,8 @@ typedef enum {
 	SAMPLINGTIME_640CYCLES_5 = LL_ADC_SAMPLINGTIME_640CYCLES_5,
 } SamplingTime;
 
-// Initialize each channel TODO: combine pin initialization with channel
-// initialization
+// Initialize each channel
 void ADC_Channel_Init(ADC_TypeDef *adc, uint32_t rank, Channel channel, SamplingTime time);
-
-/* 3 Init Function
- * 1. Initialize each group: 1&2, 3&4, 5
- * 2. Initialize each ADC
- * 4. Initialize each pin in the ADC
- */
-
-// Return a pointer to DMA
 
 typedef enum {
 	SYNC_PCLK_DIV1 = LL_ADC_CLOCK_SYNC_PCLK_DIV1,
