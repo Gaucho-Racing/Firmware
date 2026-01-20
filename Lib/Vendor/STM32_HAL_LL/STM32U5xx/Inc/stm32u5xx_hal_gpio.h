@@ -165,9 +165,9 @@ extern "C"
 #define GPIO_NOPULL (0x00000000U)   /*!< No Pull-up or Pull-down activation  */
 #define GPIO_PULLUP (0x00000001U)   /*!< Pull-up activation                  */
 #define GPIO_PULLDOWN (0x00000002U) /*!< Pull-down activation */
-	/**
-	 * @}
-	 */
+				    /**
+				     * @}
+				     */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
@@ -177,9 +177,9 @@ extern "C"
  */
 #define GPIO_PIN_SEC (0x00000001U)  /*!< Secure pin attribute      */
 #define GPIO_PIN_NSEC (0x00000000U) /*!< Non-secure pin attribute  */
-	/**
-	 * @}
-	 */
+				    /**
+				     * @}
+				     */
 
 #endif /* __ARM_FEATURE_CMSE */
 /**
