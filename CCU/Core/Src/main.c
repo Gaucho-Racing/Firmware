@@ -19,7 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "StateTicks.c"
+#include "StateTicks.h"
+#include "CCUStateData.h"
+#include "StateMachine.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -119,19 +121,26 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
 	uint32_t on = 0;
+	CCU_StateData state_data;
+	UNUSED(state_data);
+	CCU_STATE state = CCU_STATE_IDLE;
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 		LL_mDelay(100);
 		if (LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_13)) {
-			void CCU_State_Tick(void);
 			if (on == 0) {
+				state_data.Button_Status = 1;
 				on = 1;
 				LOGOMATIC("On\n");
+
 			} else {
 				on = 0;
+				state_data.Button_Status = 0;
 				LOGOMATIC("Off\n");
 			}
 		}
+		CCU_State_Tick(&state_data, state);
+
 		LL_mDelay(200);
 
 		/* USER CODE END 3 */

@@ -1,24 +1,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#ifndef STATE_MACHINE_H
-#define STATE_MACHINE_H
+#ifndef STATE_STATEDATA_H
+#define STATE_STATEDATA_H
 
-typedef uint8_t CCU_STATE;
 
-enum CCU_STATE { // State Machine
-	/*
-	 * The CCU is listening for BCU_STATUS_2 and 3 msgs, waiting to be told to start charging
-	 */
-	CCU_STATE_IDLE = 0, // Transition: Told to charge AND checks passed
-	/*
-	 * The CCU has been told to charge and checks have passed, starts charging
-	 */
-	CCU_STATE_CHARGING // Transition: Told to stop OR fault
-
-};
-
-#endif
+#define CHECK_BIT(value, bit) (((value) == (bit)) & 1)
 
 typedef struct {
 	// name lwk might be too long
@@ -42,7 +29,6 @@ typedef struct {
 	// bool ACU_S2_UNDERVOLTSDC_WARNING;
 	// bool ACU_S2_PRECHARGE_ERROR;
 
-#define CHECK_BIT(value, bit) (((value) == (bit)) & 1)
 
 	// State
 	uint8_t ACU_S2_PRECHARGE_BITS;
@@ -60,3 +46,5 @@ typedef struct {
 	bool ACU_PRECHARGE_SET_TS_ACTIVE;
 
 } CCU_StateData;
+
+#endif
