@@ -50,6 +50,19 @@ jobs:
       - name: Setup Shared Compilation Cache
         uses: mozilla-actions/sccache-action@v0.0.9
 
+      - name: Install Perl YAML::XS (Linux)
+        if: matrix.operatingSystem == 'ubuntu-latest'
+        run: sudo cpan -T YAML::XS
+
+      - name: Install Perl YAML::XS (macOS)
+        if: matrix.operatingSystem == 'macos-latest'
+        run: cpan -T YAML::XS
+
+      - name: Install Perl YAML::XS (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: cpan -T YAML::XS
+
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
