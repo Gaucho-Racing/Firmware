@@ -4757,7 +4757,7 @@ typedef struct {
 				     space) */
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-/*@} */
+       /*@} */
 
 /**
   \ingroup    CMSIS_core_register

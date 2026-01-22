@@ -305,9 +305,9 @@ typedef struct {
 #define LL_RCC_MCO1_DIV_4 RCC_CFGR_MCOPRE_DIV4	 /*!< MCO divided by 4 */
 #define LL_RCC_MCO1_DIV_8 RCC_CFGR_MCOPRE_DIV8	 /*!< MCO divided by 8 */
 #define LL_RCC_MCO1_DIV_16 RCC_CFGR_MCOPRE_DIV16 /*!< MCO divided by 16 */
-/**
- * @}
- */
+						 /**
+						  * @}
+						  */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup RCC_LL_EC_PERIPH_FREQUENCY Peripheral clock frequency
@@ -444,9 +444,9 @@ typedef struct {
 #define LL_RCC_I2S_CLKSOURCE_PLL RCC_CCIPR_I2S23SEL_0			       /*!< PLL clock used as I2S clock source */
 #define LL_RCC_I2S_CLKSOURCE_PIN RCC_CCIPR_I2S23SEL_1			       /*!< EXT clock used as I2S clock source */
 #define LL_RCC_I2S_CLKSOURCE_HSI (RCC_CCIPR_I2S23SEL_0 | RCC_CCIPR_I2S23SEL_1) /*!< HSI clock used as I2S clock source */
-/**
- * @}
- */
+									       /**
+										* @}
+										*/
 
 #if defined(FDCAN1)
 /** @defgroup RCC_LL_EC_FDCAN_CLKSOURCE  Peripheral FDCAN clock source selection
@@ -579,9 +579,9 @@ typedef struct {
  * @{
  */
 #define LL_RCC_I2S_CLKSOURCE RCC_CCIPR_I2S23SEL /*!< I2S Clock source selection */
-/**
- * @}
- */
+						/**
+						 * @}
+						 */
 
 #if defined(FDCAN1)
 /** @defgroup RCC_LL_EC_FDCAN  Peripheral FDCAN get clock source

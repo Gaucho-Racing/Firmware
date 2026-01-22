@@ -1466,7 +1466,6 @@ static void HCD_Port_IRQHandler(HCD_HandleTypeDef *hhcd)
 #else
 			HAL_HCD_PortEnabled_Callback(hhcd);
 #endif /* USE_HAL_HCD_REGISTER_CALLBACKS */
-
 		} else {
 #if (USE_HAL_HCD_REGISTER_CALLBACKS == 1U)
 			hhcd->PortDisabledCallback(hhcd);

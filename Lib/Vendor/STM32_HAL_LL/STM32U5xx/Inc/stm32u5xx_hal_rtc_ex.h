@@ -956,9 +956,9 @@ typedef struct {
 #define RTC_SECURE_FULL_NO                                                                                                                                                                             \
 	0U /*!< RTC is not full secure, features can be unsecure. See                                                                                                                                  \
 	      RTC_LL_EC_UNSECURE_RTC_FEATURE */
-/**
- * @}
- */
+	   /**
+	    * @}
+	    */
 
 /** @defgroup RTCEx_RTC_NonSecure_Features  RTCEx Secure Features Definition
  * @{

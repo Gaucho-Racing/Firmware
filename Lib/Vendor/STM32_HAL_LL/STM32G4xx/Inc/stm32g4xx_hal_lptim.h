@@ -335,9 +335,9 @@ typedef void (*pLPTIM_CallbackTypeDef)(LPTIM_HandleTypeDef *hlptim); /*!< pointe
 #if defined(COMP7)
 #define LPTIM_INPUT1SOURCE_COMP7 (LPTIM_OR_IN1_2 | LPTIM_OR_IN1_1 | LPTIM_OR_IN1_0)
 #endif /* COMP7 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup LPTIM_Input2_Source LPTIM Input2 Source
  * @{
@@ -349,9 +349,9 @@ typedef void (*pLPTIM_CallbackTypeDef)(LPTIM_HandleTypeDef *hlptim); /*!< pointe
 #if defined(COMP6)
 #define LPTIM_INPUT2SOURCE_COMP6 (LPTIM_OR_IN2_2 | LPTIM_OR_IN2_0)
 #endif /* COMP6 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup LPTIM_Flag_Definition LPTIM Flags Definition
  * @{

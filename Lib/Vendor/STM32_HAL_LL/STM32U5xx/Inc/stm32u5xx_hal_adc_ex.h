@@ -584,9 +584,9 @@ typedef struct {
 #define ADC_INJECTED_RANK_2 (LL_ADC_INJ_RANK_2) /*!< ADC group injected sequencer rank 2 */
 #define ADC_INJECTED_RANK_3 (LL_ADC_INJ_RANK_3) /*!< ADC group injected sequencer rank 3 */
 #define ADC_INJECTED_RANK_4 (LL_ADC_INJ_RANK_4) /*!< ADC group injected sequencer rank 4 */
-/**
- * @}
- */
+						/**
+						 * @}
+						 */
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /** @defgroup ADC_HAL_EC_MULTI_MODE  Multimode - Mode

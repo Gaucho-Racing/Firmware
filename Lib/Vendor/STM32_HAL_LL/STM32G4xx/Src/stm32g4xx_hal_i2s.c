@@ -1332,7 +1332,6 @@ HAL_StatusTypeDef HAL_I2S_DMAStop(I2S_HandleTypeDef *hi2s)
 
 		/* Disable the I2S Tx DMA requests */
 		CLEAR_BIT(hi2s->Instance->CR2, SPI_CR2_TXDMAEN);
-
 	}
 
 	else if ((hi2s->Init.Mode == I2S_MODE_MASTER_RX) || (hi2s->Init.Mode == I2S_MODE_SLAVE_RX)) {

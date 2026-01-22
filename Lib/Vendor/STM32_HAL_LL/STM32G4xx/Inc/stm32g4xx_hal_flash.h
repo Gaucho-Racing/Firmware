@@ -403,9 +403,9 @@ typedef struct {
  */
 #define OB_WWDG_HW 0x00000000U	      /*!< Hardware window watchdog */
 #define OB_WWDG_SW FLASH_OPTR_WWDG_SW /*!< Software window watchdog */
-/**
- * @}
- */
+				      /**
+				       * @}
+				       */
 
 #if defined(FLASH_OPTR_DBANK)
 /** @defgroup FLASH_OB_USER_BFB2 FLASH Option Bytes User BFB2 Mode

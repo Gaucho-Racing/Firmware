@@ -366,9 +366,9 @@ typedef struct {
  */
 #define LL_USART_OVERSAMPLING_16 0x00000000U	/*!< Oversampling by 16 */
 #define LL_USART_OVERSAMPLING_8 USART_CR1_OVER8 /*!< Oversampling by 8 */
-/**
- * @}
- */
+						/**
+						 * @}
+						 */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup USART_LL_EC_CLOCK Clock Signal

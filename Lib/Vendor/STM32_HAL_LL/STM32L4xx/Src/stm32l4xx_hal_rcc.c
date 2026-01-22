@@ -517,7 +517,6 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct)
 				/* Adjusts the Multiple Speed oscillator (MSI)
 				 * calibration value.*/
 				__HAL_RCC_MSI_CALIBRATIONVALUE_ADJUST(RCC_OscInitStruct->MSICalibrationValue);
-
 			} else {
 				/* Disable the Internal High Speed oscillator
 				 * (MSI). */

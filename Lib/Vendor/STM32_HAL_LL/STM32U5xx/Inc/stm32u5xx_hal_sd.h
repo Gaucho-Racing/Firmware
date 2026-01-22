@@ -292,9 +292,9 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
  * @}
  */
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup SD_Exported_Constants SD Exported Constants

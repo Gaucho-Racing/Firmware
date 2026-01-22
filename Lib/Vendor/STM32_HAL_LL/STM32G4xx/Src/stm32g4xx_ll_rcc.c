@@ -136,24 +136,21 @@ ErrorStatus LL_RCC_DeInit(void)
 
 	/* Set HSION bit and wait for HSI READY bit */
 	LL_RCC_HSI_Enable();
-	while (LL_RCC_HSI_IsReady() == 0U) {
-	}
+	while (LL_RCC_HSI_IsReady() == 0U) {}
 
 	/* Set HSITRIM bits to reset value*/
 	LL_RCC_HSI_SetCalibTrimming(0x40U);
 
 	/* Reset whole CFGR register but keep HSI as system clock source */
 	LL_RCC_WriteReg(CFGR, LL_RCC_SYS_CLKSOURCE_HSI);
-	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {
-	};
+	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {};
 
 	/* Reset whole CR register but HSI in 2 steps in case HSEBYP is set */
 	LL_RCC_WriteReg(CR, RCC_CR_HSION);
 	LL_RCC_WriteReg(CR, RCC_CR_HSION);
 
 	/* Wait for PLL READY bit to be reset */
-	while (LL_RCC_PLL_IsReady() != 0U) {
-	}
+	while (LL_RCC_PLL_IsReady() != 0U) {}
 
 	/* Reset PLLCFGR register */
 	LL_RCC_WriteReg(PLLCFGR, 16U << RCC_PLLCFGR_PLLN_Pos);

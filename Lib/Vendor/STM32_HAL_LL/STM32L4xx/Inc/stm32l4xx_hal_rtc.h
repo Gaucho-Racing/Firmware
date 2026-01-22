@@ -577,9 +577,9 @@ typedef void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc); /*!< pointer to a
 #endif
 #define RTC_IT_ALRA RTC_CR_ALRAIE /*!< Enable Alarm A Interrupt      */
 #define RTC_IT_ALRB RTC_CR_ALRBIE /*!< Enable Alarm B Interrupt      */
-/**
- * @}
- */
+				  /**
+				   * @}
+				   */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTC_Flag_Mask    RTC Flag Mask (5bits) describe in
