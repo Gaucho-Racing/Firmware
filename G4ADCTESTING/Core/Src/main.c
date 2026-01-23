@@ -181,7 +181,7 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
 		// ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
-        ADC_UpdateAnalogValues_EMA(buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+        ADC_UpdateAnalogValues_EMA(buffers, NUM_SIGNALS, 0.3, outputs);
         LOGOMATIC("Moving Average: %u\n", outputs[0]);
         DMA_Transfer_Complete = 0;
 		// just test 1 pin for now

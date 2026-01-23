@@ -161,7 +161,7 @@ void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_val
 
 void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values,
                                 int num_signals,
-                                int window_size,
+                                double alpha,
                                 uint16_t *weighted_output);
 
 #endif
