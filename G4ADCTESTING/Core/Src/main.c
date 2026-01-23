@@ -105,6 +105,7 @@ void ADC_Configure(void)
 	init_vals.Channels = &c;
 	SamplingTime s = SAMPLINGTIME_247CYCLES_5;
 	init_vals.SamplingTimes = &s;
+	ADC_Init(&init_vals);
 
 	// Initialize DMA
 	DMA_Init_Values DMA_Init_Vals = {0};
@@ -179,11 +180,11 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
+		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+		LOGOMATIC("Moving Average: %u\n", outputs[0]);
+		DMA_Transfer_Complete = 0;
 		// just test 1 pin for now
 		if (DMA_Transfer_Complete){
-			ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
-			LOGOMATIC("Moving Average: %u\n", outputs[0]);
-			DMA_Transfer_Complete = 0;
 		}
 	}
 
