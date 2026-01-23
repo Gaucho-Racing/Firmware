@@ -17,19 +17,14 @@ jobs:
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
-      actions: write
     strategy:
       fail-fast: true
       matrix:
         prefix: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
         operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
-    env:
-      SCCACHE_DIR: ${{ github.workspace }}/sccache
-      SCCACHE_LOG: "info"
-      SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
@@ -37,31 +32,6 @@ jobs:
         uses: carlosperate/arm-none-eabi-gcc-action@v1
         with:
           release: '12.2.Rel1'
-
-      - name: Setup Shared Compilation Cache
-        uses: actions/cache@v5
-        with:
-          path: ${{ env.SCCACHE_DIR }}
-          key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
-          restore-keys: |
-            sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-
-            sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-
-
-      - name: Setup Shared Compilation Cache
-        uses: mozilla-actions/sccache-action@v0.0.9
-
-      - name: Install Perl YAML::XS (Linux)
-        if: matrix.operatingSystem == 'ubuntu-latest'
-        run: sudo cpan -T YAML::XS
-
-      - name: Install Perl YAML::XS (macOS)
-        if: matrix.operatingSystem == 'macos-latest'
-        run: cpan -T YAML::XS
-
-      - name: Install Perl YAML::XS (Windows)
-        if: matrix.operatingSystem == 'windows-latest'
-        shell: pwsh
-        run: cpan -T YAML::XS
 
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
@@ -71,7 +41,7 @@ jobs:
           echo "<details><summary>CMake Configuration</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset ${{ matrix.prefix }} -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset ${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -83,7 +53,7 @@ jobs:
           echo "<details><summary>CMake Configuration</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          cmake --preset ${{ matrix.prefix }} -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
@@ -139,38 +109,9 @@ jobs:
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: Shared Compilation Cache Errors (Unix)
-        if: matrix.operatingSystem != 'windows-latest'
-        shell: bash
-        run: |
-          set -o pipefail
-          if [ -f "$SCCACHE_ERROR_LOG" ]; then
-            echo "<details><summary>Shared Compilation Cache Errors</summary>" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cat "$SCCACHE_ERROR_LOG" | tee -a $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "</details>" >> $GITHUB_STEP_SUMMARY
-          fi
-
-      - name: Shared Compilation Cache Errors (Windows)
-        if: matrix.operatingSystem == 'windows-latest'
-        shell: pwsh
-        run: |
-          if (Test-Path $env:SCCACHE_ERROR_LOG) {
-            echo "<details><summary>Shared Compilation Cache Errors</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            Get-Content $env:SCCACHE_ERROR_LOG | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          }
-
       - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf

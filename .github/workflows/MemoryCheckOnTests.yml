@@ -18,16 +18,13 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Install Perl YAML::XS
-        run: sudo cpan -T YAML::XS
-
       - name: Set up Valgrind
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: valgrind
 
