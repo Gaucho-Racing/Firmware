@@ -123,7 +123,7 @@ void read_digital(void)
 
 	stateLump.prev_ts_active_button_state = ts_press;
 	stateLump.prev_rtd_button_state = rtd_press;
-	
+
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 }

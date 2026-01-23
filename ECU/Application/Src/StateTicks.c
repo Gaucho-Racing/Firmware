@@ -40,19 +40,21 @@ void ECU_State_Tick()
 		stateLump.lastECUStatusMsgMillis = stateLump.millisSinceBoot;
 	}
 
-	if(bmsFailure(&stateLump) || imdFailure(&stateLump))
+	if (bmsFailure(&stateLump) || imdFailure(&stateLump)) {
 		stateLump.tssi_red = true;
+	}
 
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
-	if(stateLump.tssi_red){
+	if (stateLump.tssi_red) {
 		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
-		if(stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 175)
+		if (stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 175) {
 			LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_6);
-		else if(stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 350)
+		} else if (stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 350) {
 			LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
-		else
+		} else {
 			stateLump.tssi_red_blinking_current_cycle_starting_millis = stateLump.millisSinceBoot;
+		}
 	}
 
 	switch (stateLump.ecu_state) {

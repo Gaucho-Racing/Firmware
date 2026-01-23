@@ -44,11 +44,13 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	return problem;
 }
 
-bool bmsFailure(volatile const ECU_StateData *stateData){
-	return (stateData->ams_sense >= 2.7) || (stateData->ams_sense <= 1.45);// TODO: find better range
+bool bmsFailure(volatile const ECU_StateData *stateData)
+{
+	return (stateData->ams_sense >= 2.7) || (stateData->ams_sense <= 1.45); // TODO: find better range
 }
 
-bool imdFailure(volatile const ECU_StateData *stateData){
+bool imdFailure(volatile const ECU_StateData *stateData)
+{
 	return (stateData->imd_sense >= 2.7) || (stateData->imd_sense <= 1.45); // TODO: find better range
 }
 
