@@ -4,12 +4,14 @@ on:
   pull_request:
 
 jobs:
-  perlcritic:
+  perltidy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Check Perl formatting
         run: |
           files=$(git ls-files '*.pl' '*.pm')
