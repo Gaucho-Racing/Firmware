@@ -79,3 +79,5 @@ Autogen/CAN/Inc/can_msg_ids.h
 Autogen/CAN/Inc/CANDler.h
 Autogen/CAN/Inc/Custom_CAN_ID.h
 Autogen/CAN/Inc/GR_IDS.h
+Autogen/CAN/Inc/output.dbc
+Autogen/CAN/Src/output.dbc
