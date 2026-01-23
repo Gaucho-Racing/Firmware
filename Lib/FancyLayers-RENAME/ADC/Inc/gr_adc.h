@@ -37,31 +37,6 @@ typedef struct {
 	GPIO_TypeDef *port; // Port
 } Pin_Ports;
 
-/// @brief The struct used to initialize each ADC
-///
-/// @param ADC The ADC to be initialized (ADC 1 to 5)
-/// @param PS_Values Determines the conversion speed of the ADC
-/// @param res Determines the resolution/range of data
-/// @param Pins Array of pins (with their respective ports) to be initialized 
-/// @param Num_Pin_Port_Objs Number of pin port objects to initialize
-/// @param Num_Channels Number of ADC channels, must be a value between 1 and 16
-/// @param Channels Array of channels to be initialized, DMA output will match the order
-/// 					of this array
-/// @param SamplingTimes Array of channel sampling times, should align with channels array
-typedef struct{
-	ADC_TypeDef *ADC;
-	Pre_Scaler_Values PS_Values;
-	Resolution res;
-	uint32_t Num_Pin_Port_Objs;
-	Pin_Ports *Pins;
-	uint32_t Num_Channels;
-	Channel *Channels;
-	SamplingTime *SamplingTimes;
-} ADC_Init_Values;
-
-// Main ADC initialization function
-void ADC_Init(ADC_Init_Values *Init_Values);
-
 __extension__ typedef enum {
 	ADC_CHANNEL_1 = LL_ADC_CHANNEL_1,
 	ADC_CHANNEL_2 = LL_ADC_CHANNEL_2,
@@ -105,6 +80,31 @@ typedef enum {
 	SAMPLINGTIME_247CYCLES_5 = LL_ADC_SAMPLINGTIME_247CYCLES_5,
 	SAMPLINGTIME_640CYCLES_5 = LL_ADC_SAMPLINGTIME_640CYCLES_5,
 } SamplingTime;
+
+/// @brief The struct used to initialize each ADC
+///
+/// @param ADC The ADC to be initialized (ADC 1 to 5)
+/// @param PS_Values Determines the conversion speed of the ADC
+/// @param res Determines the resolution/range of data
+/// @param Pins Array of pins (with their respective ports) to be initialized 
+/// @param Num_Pin_Port_Objs Number of pin port objects to initialize
+/// @param Num_Channels Number of ADC channels, must be a value between 1 and 16
+/// @param Channels Array of channels to be initialized, DMA output will match the order
+/// 					of this array
+/// @param SamplingTimes Array of channel sampling times, should align with channels array
+typedef struct{
+	ADC_TypeDef *ADC;
+	Pre_Scaler_Values PS_Value;
+	Resolution res;
+	uint32_t Num_Pin_Port_Objs;
+	Pin_Ports *Pins;
+	uint32_t Num_Channels;
+	Channel *Channels;
+	SamplingTime *SamplingTimes;
+} ADC_Init_Values;
+
+// Main ADC initialization function
+void ADC_Init(ADC_Init_Values *Init_Values);
 
 //--------------------------------------DMA Initialization-------------------------------------
 /// @brief Priority of DMA transfer

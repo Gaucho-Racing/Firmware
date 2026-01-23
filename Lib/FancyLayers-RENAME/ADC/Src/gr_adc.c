@@ -62,7 +62,7 @@ void ADC_Init(ADC_Init_Values *Init_Values){
 		group_initialized = 1;
 	}
 	if (!group_initialized) {
-		ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Values);
+		ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Value);
 	}
 
 	ADC_Group_Done:

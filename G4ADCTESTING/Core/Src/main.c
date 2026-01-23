@@ -93,7 +93,18 @@ void ADC_Configure(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
-	ADC_Init_Values init_vals = {ADC1, PS_8, RESOLUTION_12, 1, {GPIOA, LL_GPIO_PIN_0}, 1, {ADC_CHANNEL_1}, {SAMPLINGTIME_247CYCLES_5}};
+	ADC_Init_Values init_vals = {0};
+	init_vals.ADC = ADC1;
+	init_vals.PS_Value = PS_8;
+	init_vals.res = RESOLUTION_12;
+	init_vals.Num_Pin_Port_Objs = 1;
+	Pin_Ports p = {LL_GPIO_PIN_0, GPIOA};
+	init_vals.Pins = &p;
+	init_vals.Num_Channels = 1;
+	Channel c = ADC_CHANNEL_1;
+	init_vals.Channels = &c;
+	SamplingTime s = SAMPLINGTIME_247CYCLES_5;
+	init_vals.SamplingTimes = &s;
 
 	// Initialize DMA
 	DMA_Init_Values DMA_Init_Vals = {0};
