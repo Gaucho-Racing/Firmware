@@ -77,9 +77,9 @@ void GR_SPI_Close(GR_SPI_Handler *handler);
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle);
 
 // Map SPI1-3 IRQHandlers to custom interrupt handler
-inline void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]); }
-inline void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]); }
-inline void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
+void SPI1_IRQHandler(void);
+void SPI2_IRQHandler(void);
+void SPI3_IRQHandler(void);
 
 // ============================= Tx/Rx =============================
 

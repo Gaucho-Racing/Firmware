@@ -80,6 +80,10 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	else {
 		handle->transfer_size = GR_SPI_TRANSFER_SIZE_16;
 	}
+	
+	// Enable SPI peripheral after BSY flag clears
+	while (LL_SPI_IsActiveFlag_BSY(handle->pins->SPIx)) {}
+	LL_SPI_Enable(handle->pins->SPIx);
 
 	// Enable interrupts in NVIC
 	int SPI_IRQn = GR_SPI_Get_IRQn(handle->pins->SPIx);
@@ -91,13 +95,20 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	}
 
 	// Enable interrupts at peripheral level
-	/*LL_SPI_EnableIT_ERR(handle->pins->SPIx);  // Error interrupt
+	LL_SPI_EnableIT_ERR(handle->pins->SPIx);  // Error interrupt
 	LL_SPI_EnableIT_RXNE(handle->pins->SPIx); // Not empty Rx buffer
-	LL_SPI_EnableIT_TXE(handle->pins->SPIx);  // Empty Tx buffer*/
+}
 
-	// Enable SPI peripheral after BSY flag clears
-	while (LL_SPI_IsActiveFlag_BSY(handle->pins->SPIx)) {}
-	LL_SPI_Enable(handle->pins->SPIx);
+void SPI1_IRQHandler(void) { 
+	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]);
+}
+
+void SPI2_IRQHandler(void) {
+	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]);
+}
+
+void SPI3_IRQHandler(void) {
+	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]);
 }
 
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
@@ -187,6 +198,9 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 				handle->current_msg = GR_CircularBuffer_Pop(handle->tx_buffer);
 				handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
 				handle->current_tx_msg_index = 0;
+			}
+			else {
+				LL_SPI_DisableIT_TXE(handle->pins->SPIx); // Empty Tx buffer
 			}
 		}
 		// Now check if there is an ongoing message
