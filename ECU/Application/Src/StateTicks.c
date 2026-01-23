@@ -188,13 +188,12 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	// If you are pressing the brake, then you have the negativetorque request calculated
 	bool brakePressed = PressingBrake(stateData);
 	torque_request -= brakePressed * CalcBrakePercent(stateData) * MAX_REVERSE_CURRENT_AMPS; // This is negative current
-	
+
 	GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
 	if (brakePressed) {
 		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_4);
-	}
-	else {
+	} else {
 		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_4);
 	}
 }
