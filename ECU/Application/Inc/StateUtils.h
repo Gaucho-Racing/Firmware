@@ -30,6 +30,8 @@ void setSoftwareLatch(bool close);
 
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
+bool bmsFailure(volatile const ECU_StateData *stateData);
+bool imdFailure(volatile const ECU_StateData *stateData);
 bool CommunicationError(volatile const ECU_StateData *stateData);
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData);
 bool PressingBrake(volatile const ECU_StateData *stateData);
