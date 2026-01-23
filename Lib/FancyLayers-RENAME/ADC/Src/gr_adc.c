@@ -221,7 +221,7 @@ void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values,
                                uint16_t *weighted_output)
 {
     for (int i = 0; i < num_signals; ++i) {
-        int a = 0.5;
+        double a = 0.3;
         weighted_output[i] = a * new_values[i] + (1-a) * weighted_output[i];
     }
 }
