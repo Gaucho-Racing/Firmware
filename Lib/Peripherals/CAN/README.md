@@ -70,6 +70,6 @@ Library Centric Testing:
 - Test the implementation in each library.
 
 HAL_Rewrite:
-- Alternatively, rewrite without using HAL, just use CMSIS definitions.
-- PROS: Would look good on your Github.
+- Alternatively, rewrite without using HAL, just use CMSIS definitions. 
+- PROS: Would look good on your Github. 
 - CONS: takes too long
