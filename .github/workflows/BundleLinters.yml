@@ -1,0 +1,35 @@
+name: Lint
+
+on:
+  pull_request:
+
+jobs:
+  clang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Run clang-format / clang-tidy"
+
+  cmake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Validate CMake"
+
+  perl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Run perltidy + perlcritic"
+
+  configs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Validate YAML / JSON configs"
+
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/analyze@v3
