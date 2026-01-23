@@ -1,10 +1,12 @@
-#include <string.h>
 #include "StateTicks.h"
+
+#include <string.h>
+
 #include "CCUStateData.h"
-#include "StateMachine.h"
-#include "bitManipulations.h"
-#include "Unused.h"
 #include "Logomatic.h"
+#include "StateMachine.h"
+#include "Unused.h"
+#include "bitManipulations.h"
 
 // FIXME: Currently defining check to switch CCU state from idle to charging and etc.
 
