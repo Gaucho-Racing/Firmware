@@ -125,12 +125,12 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 	LOGOMATIC("Booted!\n");
 
-	ex_config.TransferDirection = LL_SPI_HALF_DUPLEX_TX;
+	ex_config.TransferDirection = LL_SPI_FULL_DUPLEX;
 	ex_config.Mode = LL_SPI_MODE_MASTER;
 	ex_config.DataWidth = LL_SPI_DATAWIDTH_8BIT;
 	ex_config.ClockPolarity = LL_SPI_POLARITY_LOW;
 	ex_config.ClockPhase = LL_SPI_PHASE_1EDGE;
-	ex_config.NSS = LL_SPI_NSS_HARD_INPUT;
+	ex_config.NSS = LL_SPI_NSS_HARD_OUTPUT;
 	ex_config.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV2;
 	ex_config.BitOrder = LL_SPI_LSB_FIRST;
 	ex_config.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
