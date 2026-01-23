@@ -48,7 +48,7 @@ typedef union {
 typedef volatile struct ECU_StateData {
 
 	// TODO: Remove unneeded states
-	
+
 	uint32_t millisSinceBoot;
 
 	int32_t dischargeStartMillis;
