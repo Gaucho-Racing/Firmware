@@ -159,4 +159,9 @@ void DMA_Init(DMA_Init_Values *Init_Values);
  */
 void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output);
 
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values,
+                                int num_signals,
+                                int window_size,
+                                uint16_t *weighted_output);
+
 #endif
