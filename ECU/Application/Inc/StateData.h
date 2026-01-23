@@ -97,6 +97,10 @@ typedef volatile struct ECU_StateData {
 	bool ir_plus;
 	bool ir_minus;
 	bool bcu_software_latch;
+
+	bool bms_light;
+	bool imd_light;
+	bool tssi_red;
 	GR_ECU_State ecu_state;
 } ECU_StateData;
 
