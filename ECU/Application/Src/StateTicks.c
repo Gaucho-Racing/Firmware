@@ -11,6 +11,7 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
+#include "stm32g4xx_ll_gpio.h"
 
 /**
  * @brief The ECU state data lump.
@@ -37,6 +38,21 @@ void ECU_State_Tick()
 	if (stateLump.millisSinceBoot - stateLump.lastECUStatusMsgMillis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
 		stateLump.lastECUStatusMsgMillis = stateLump.millisSinceBoot;
+	}
+
+	if(bmsFailure(&stateLump) || imdFailure(&stateLump))
+		stateLump.tssi_red = true;
+
+	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
+	//     Here we chose a period of 350ms
+	if(stateLump.tssi_red){
+		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
+		if(stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 175)
+			LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_6);
+		else if(stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 350)
+			LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
+		else
+			stateLump.tssi_red_blinking_current_cycle_starting_millis = stateLump.millisSinceBoot;
 	}
 
 	switch (stateLump.ecu_state) {
@@ -83,6 +99,9 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
+	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_5);
+	LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
+
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("Error: TS Voltage >= 60!");

@@ -101,6 +101,9 @@ typedef volatile struct ECU_StateData {
 	bool bms_light;
 	bool imd_light;
 	bool tssi_red;
+
+	uint32_t tssi_red_blinking_current_cycle_starting_millis;
+
 	GR_ECU_State ecu_state;
 } ECU_StateData;
 
