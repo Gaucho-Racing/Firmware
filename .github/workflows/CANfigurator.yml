@@ -1,0 +1,48 @@
+name: Autogen 
+run-name: Autogen - ${{ github.ref_name }}
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  canfigurator:
+    name: CANfigurator Setup 
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+    steps:
+      - name: Checkout Pull Request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+      - name: install cpanm and multiple modules
+        uses: perl-actions/install-with-cpanm@v1
+        with:
+          install: YAML::XS
+
+      - name: Run Parsers
+        run: |
+            perl Src/CANdlerparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Src/CANparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Src/DBC.pl Autogen/CAN/Doc/format.CANdo
+            perl Src/GRparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo
+          
+
+
+      - name: Save Changes
+        uses: EndBug/add-and-commit@v9
+        if: github.ref_type != 'tag'
+        env:
+          HOME: ${{ github.workspace }}
+        with:
+          default_author: github_actions
+          message: 'Automatic Clang-Format: Standardized formatting automatically'
+          fetch: 'false'
+          add: '. --force'
