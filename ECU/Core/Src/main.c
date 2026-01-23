@@ -62,7 +62,6 @@
 
 /* USER CODE END PV */
 
-
 // CAN
 
 #define CAN_TX_BUFFER_LENGTH 10
