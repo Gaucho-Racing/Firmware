@@ -1,4 +1,5 @@
 #include <string.h>
+
 #include "CCUStateData.h"
 #include "StateMachine.h"
 #include "bitManipulations.h"

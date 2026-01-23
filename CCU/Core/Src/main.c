@@ -19,9 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "StateTicks.h"
 #include "CCUStateData.h"
 #include "StateMachine.h"
+#include "StateTicks.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"

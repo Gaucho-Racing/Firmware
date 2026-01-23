@@ -1,7 +1,6 @@
 // #include <stdint.h>
 // #include <CANDler.h>
 
-
 // #include "CCUStateData.h"
 // #include "GR_OLD_BUS_ID.h"
 // #include "GR_OLD_MSG_ID.h"
