@@ -28,11 +28,11 @@ jobs:
 
       - name: Run Parsers
         run: |
-            perl Src/CANdlerparser.pl Autogen/CAN/Doc/format.CANdo
-            perl Src/CANparser.pl Autogen/CAN/Doc/format.CANdo
-            perl Src/DBC.pl Autogen/CAN/Doc/format.CANdo
-            perl Src/GRparser.pl Autogen/CAN/Doc/format.CANdo
-            perl Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Autogen/CAN/Src/CANdlerparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Autogen/CAN/Src/CANparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Autogen/CAN/Src/DBC.pl Autogen/CAN/Doc/format.CANdo
+            perl Autogen/CAN/Src/GRparser.pl Autogen/CAN/Doc/format.CANdo
+            perl Autogen/CAN/Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo
           
 
 
