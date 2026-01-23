@@ -26,16 +26,17 @@ CANHandle *data_can;
 
 ECU_StateData stateLump = {0};
 
-#define ECU_STATUS_MSG_PERIOD (100)
-#define TRACTIVE_SYSTEM_MAX_DISCHARGE_TIME (10000) // TODO: determine an appropriate wait time
+#define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
+// EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
+#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
 
 void ECU_State_Tick()
 {
-	if (stateLump.lastECUStatusMsgTick >= ECU_STATUS_MSG_PERIOD) {
+	stateLump.millisSinceBoot = MillisecondsSinceBoot();
+
+	if (stateLump.millisSinceBoot - stateLump.lastECUStatusMsgMillis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
-		stateLump.lastECUStatusMsgTick = 0;
-	} else {
-		stateLump.lastECUStatusMsgTick++;
+		stateLump.lastECUStatusMsgMillis = stateLump.millisSinceBoot;
 	}
 
 	switch (stateLump.ecu_state) {
@@ -204,30 +205,24 @@ void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
 	LOGOMATIC("ECU: BCU discharge Tractive System");
 	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
-	stateData->dischargeStartMillis = 0;
+	stateData->dischargeStartMillis = stateData->millisSinceBoot;
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
-	// TODO Implement functionality of state itself
 	/*
 		Discharge the tractive system to below 60 volts
 		If TS voltage < 60 --> stateData->GLV_ON
 	*/
 	if (stateData->ts_voltage < SAFE_VOLTAGE_LIMIT) {
 		stateData->ecu_state = GR_GLV_ON;
-		stateData->dischargeStartMillis = 0;
 		return;
 	}
 	/*
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
 	*/
-	if (stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_DISCHARGE_TIME) {
-		LOGOMATIC("Tractive System fails to discharge in time.");
-	}
-
-	if (stateData->dischargeStartMillis < INT32_MAX) {
-		stateData->dischargeStartMillis++;
+	if (stateData->millisSinceBoot - stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
+		LOGOMATIC("Warning: Tractive System fails to discharge in time.");
 	}
 }
