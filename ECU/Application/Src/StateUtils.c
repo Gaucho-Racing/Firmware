@@ -39,6 +39,8 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= stateData->ir_plus && !stateData->ir_minus;
 	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);
 	problem |= !stateData->ir_minus && (stateData->ecu_state == GR_PRECHARGE_ENGAGED || stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);
+	problem |= (stateData->imd_sense >= 2.7) || (stateData->imd_sense <= 1.45); // TODO: find better range
+	problem |= (stateData->ams_sense >= 2.7) || (stateData->ams_sense <= 1.45); // TODO: find better range
 	return problem;
 }
 
