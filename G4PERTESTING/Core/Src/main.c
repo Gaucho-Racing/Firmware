@@ -151,7 +151,7 @@ int main(void)
 	ex_pins.alternate_function_number = 5;
 
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
-	
+
 	// LOGOMATIC("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
 	// /* ---------------- SPI ---------------- */
 	// LOGOMATIC("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
@@ -209,7 +209,7 @@ int main(void)
 	// LOGOMATIC("-= End Verification =-\n");
 
 	GR_SPI_Message msg;
-	msg.data = (uint8_t*)malloc(4*sizeof(uint8_t));
+	msg.data = (uint8_t *)malloc(4 * sizeof(uint8_t));
 	msg.size = 4;
 
 	msg.data[0] = 'a';
@@ -219,12 +219,12 @@ int main(void)
 
 	GR_SPI_Send(&ex_handler, &msg);
 
-	GR_SPI_Message* msgPtr = NULL;
-	while(!msgPtr) {
+	GR_SPI_Message *msgPtr = NULL;
+	while (!msgPtr) {
 		msgPtr = GR_SPI_Receive(&ex_handler);
 	}
 
-	LOGOMATIC("Received: %c\n", msgPtr->data[0]);	
+	LOGOMATIC("Received: %c\n", msgPtr->data[0]);
 
 	GR_SPI_Close(&ex_handler);
 	/* USER CODE END 2 */
