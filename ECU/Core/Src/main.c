@@ -162,6 +162,15 @@ void read_digital(void)
 	stateLump.prev_ts_active_button_state = ts_press;
 	stateLump.prev_rtd_button_state = rtd_press;
 
+	if (stateLump.ts_active) {
+		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_5);
+		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_6);
+	}
+	else {
+		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
+		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
+	}
+
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 }
