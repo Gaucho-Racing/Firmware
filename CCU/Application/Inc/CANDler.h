@@ -1,5 +1,3 @@
 
 
-
-
-void CAN_Configure(){};
+void CAN_Configure() {};

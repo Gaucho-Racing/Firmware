@@ -1,5 +1,3 @@
-#include "main.h"
-
 #include "GR_OLD_BUS_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
@@ -8,6 +6,7 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "gr_adc.h"
+#include "main.h"
 #include "malloc.h"
 #include "usart.h"
 
@@ -20,13 +19,11 @@
 #include "adc.h"
 #include "can.h"
 
-
 /* USER CODE END Includes */
-
 
 void CAN_Configure()
 {
-	CANConfig canCfg; //FIXME: somethings are undefined, fix
+	CANConfig canCfg; // FIXME: somethings are undefined, fix
 
 	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
@@ -47,7 +44,7 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
-	canCfg.rx_callback = NULL; //FIXME: add function when CAN READS look in ECU/main;
+	canCfg.rx_callback = NULL;	   // FIXME: add function when CAN READS look in ECU/main;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
 	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
@@ -79,7 +76,7 @@ void CAN_Configure()
 	*/
 
 	// PCLK1 from SYSCLK
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1); //FIXME
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1); // FIXME
 
 	// CAN1 =====================================================================
 	canCfg.fdcan_instance = FDCAN1;
@@ -94,7 +91,7 @@ void CAN_Configure()
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	primary_can = can_init(&canCfg); //FIXME: make type *CANHANDLE, look at can.h
+	primary_can = can_init(&canCfg); // FIXME: make type *CANHANDLE, look at can.h
 
 	// Filter 1 Definitions
 	FDCAN_FilterTypeDef fdcan1_filter;
@@ -111,11 +108,8 @@ void CAN_Configure()
 	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
 
 	// CAN2 ======================================================
-	
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	
 
 	can_start(primary_can);
-	
 }
