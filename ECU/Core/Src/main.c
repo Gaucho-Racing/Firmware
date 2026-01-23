@@ -165,8 +165,7 @@ void read_digital(void)
 	if (stateLump.ts_active) {
 		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_5);
 		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_6);
-	}
-	else {
+	} else {
 		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
 		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
 	}
