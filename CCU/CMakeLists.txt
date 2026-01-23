@@ -49,6 +49,8 @@ target_sources(
 		# Application
 		# Application/Src/CANDler.c
 		Application/Src/StateTicks.c
+
+
 )
 
 target_link_libraries(
@@ -56,6 +58,7 @@ target_link_libraries(
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
 		BitManipulations_Lib
+		PERIPHERAL_CAN_LIB
 )
 
 target_include_directories(

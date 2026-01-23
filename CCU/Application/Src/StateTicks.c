@@ -10,34 +10,34 @@
 
 
 
-void CCU_State_Tick(CCU_StateData *state_data, CCU_STATE state)
+void CCU_State_Tick(CCU_StateData *state_data)
 {
 
-	LOGOMATIC("CCU Current State: %d\n");
+	LOGOMATIC("CCU Current State: %d\n", state_data->state); //Logo I think not working
 
 	// FIXME:
-	switch (state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
+	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 			 // General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
 			// TODO: Create IDLE func elsewhere & Call state IDLE function
-			STATE_IDLE(state_data, state);
+			STATE_IDLE(state_data);
 			break;
 
 		case CCU_STATE_CHARGING:
 			// TODO: Create Charging func elsewhere & Call charging func
-			STATE_CHARGING(state_data, state);
+			STATE_CHARGING(state_data);
 			break;
 
 		default:
-			state = CCU_STATE_IDLE;
+			state_data->state = CCU_STATE_IDLE;
 			break;
 	};
 }
 
 // TODO: Implement State functionality
 
-void STATE_IDLE(CCU_StateData *state_data, CCU_STATE state)
+void STATE_IDLE(CCU_StateData *state_data)
 {
 	UNUSED(state_data);
 	state_data->ACU_S2_OVERTEMP_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 40);
@@ -50,11 +50,11 @@ void STATE_IDLE(CCU_StateData *state_data, CCU_STATE state)
 	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
 
 	if (!anyErrors && state_data->Button_Status) {
-		state = CCU_STATE_CHARGING;
+		state_data->state = CCU_STATE_CHARGING;
 	}
 }
 
-void STATE_CHARGING(CCU_StateData *state_data, CCU_STATE state)
+void STATE_CHARGING(CCU_StateData *state_data)
 {
 	UNUSED(state_data);
 	state_data->ACU_S2_OVERTEMP_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 40);
@@ -67,6 +67,7 @@ void STATE_CHARGING(CCU_StateData *state_data, CCU_STATE state)
 	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
 
 	if (anyErrors && !(state_data->Button_Status)) {
-		state = CCU_STATE_IDLE;
+		state_data->state = CCU_STATE_IDLE;
 	}
 }
+ 
