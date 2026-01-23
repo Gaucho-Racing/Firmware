@@ -77,11 +77,11 @@ AUX_SIGNAL (36): PB14 -> ADC1_IN5
 
 	ADC 2
 STEERING_ANGLE_SIGNAL (37): PB15 -> ADC2_IN15
+BSPD_SENSE (19): PA5 -> ADC2_IN13
+IMD_SENSE (20): PA6 -> ADC2_IN3
+AMS_SENSE (21): PA7 -> ADC2_IN4
 
 -- DIGITAL IN --
-BSPD_SENSE (19): PA5
-IMD_SENSE (20): PA6
-AMS_SENSE (21): PA7
 TS_ACTIVE_BTN_SENSE (54): PC12
 RTD_BTN_SENSE (53): PC11
 INERTIA_SW_SENSE (52): PC10
@@ -102,7 +102,7 @@ RTD_BTN_LED_CONTROL (42): PA8
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
-#define NUM_SIGNALS_ADC2 1
+#define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0};		      // Contains new values
@@ -141,10 +141,6 @@ static void ITM_Enable(void)
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 void read_digital(void)
 {
-	stateLump.bspd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
-	stateLump.imd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
-	stateLump.ams_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
-
 	// debouncing/latching for ts/rtd active
 	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
 	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
@@ -185,6 +181,9 @@ void write_state_data()
 	stateLump.Brake_R_Signal = ADC1_outputs[5];
 	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
 	stateLump.STEERING_ANGLE_SIGNAL = ADC2_outputs[0];
+	stateLump.bspd_sense = ADC2_outputs[1];
+	stateLump.imd_sense = ADC2_outputs[2];
+	stateLump.ams_sense = ADC2_outputs[3];
 }
 
 void ADC_Configure(void)
@@ -220,7 +219,7 @@ void ADC_Configure(void)
 
 	// Initialize ADC2
 	ADC_Init(ADC2, RESOLUTION_12, RIGHT);
-	ADC_Regular_Group_Init(ADC2, NO_RANKS);
+	ADC_Regular_Group_Init(ADC2, RANKS_4);
 
 	// Initialize the pins and channels
 	Pin_Ports p3 = {0};
@@ -228,6 +227,9 @@ void ADC_Configure(void)
 	p3.pin = LL_GPIO_PIN_15;
 	ADC_Init_Pins(&p3);
 	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC2, RANK_2, ADC_CHANNEL_13, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC2, RANK_3, ADC_CHANNEL_3, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC2, RANK_4, ADC_CHANNEL_4, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
 
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
 	// DMA reads into buffer
