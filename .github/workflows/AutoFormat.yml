@@ -16,11 +16,11 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN || github.token }}
 
       - name: Format C Files
         run: |
@@ -49,7 +49,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
@@ -62,7 +62,7 @@ jobs:
           pip-install: gersemi
 
       - name: Format CMake Files
-        run: gersemi --in-place --warnings-as-errors --no-warn-about-unknown-commands --indent tabs --list-expansion favour-expansion --line-length 100 .
+        run: gersemi --in-place ${{ github.workspace }}
 
       - name: Save Changes
         uses: EndBug/add-and-commit@v9
@@ -80,7 +80,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
