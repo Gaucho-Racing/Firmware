@@ -40,13 +40,16 @@ jobs:
           set -o pipefail
           git ls-files 'Autogen/CAN/*.c' 'Autogen/CAN/*.h' | xargs -r clang-format -i --verbose
 
-      - name: Save Changes
-        uses: EndBug/add-and-commit@v9
-        if: github.ref_type != 'tag'
-        env:
-          HOME: ${{ github.workspace }}
-        with:
-          default_author: github_actions
-          message: 'Automatic CANfigurator: Updated CAN files automatically'
-          fetch: 'false'
-          add: '. --force'
+      # - name: Save Changes
+      #   uses: EndBug/add-and-commit@v9
+      #   if: github.ref_type != 'tag'
+      #   env:
+      #     HOME: ${{ github.workspace }}
+      #   with:
+      #     default_author: github_actions
+      #     message: 'Automatic CANfigurator: Updated CAN files automatically'
+      #     fetch: 'false'
+      #     add: '. --force'
+
+      - name: FAIL JOB
+        run: exit 1
