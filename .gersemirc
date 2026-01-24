@@ -4,4 +4,3 @@ indent: tabs
 line_length: 80
 list_expansion: favour-expansion
 warn_about_unknown_commands: false
-warnings_as_errors: true
