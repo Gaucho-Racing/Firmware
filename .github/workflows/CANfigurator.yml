@@ -1,4 +1,4 @@
-name: Autogen 
+name: Autogen
 run-name: Autogen - ${{ github.ref_name }}
 
 on:
@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   canfigurator:
-    name: CANfigurator Setup 
+    name: CANfigurator Setup
     runs-on: ubuntu-latest
     permissions:
         contents: write
@@ -33,7 +33,7 @@ jobs:
             # perl Autogen/CAN/Src/DBC.pl Autogen/CAN/Doc/format.CANdo
             perl Autogen/CAN/Src/GRparser.pl Autogen/CAN/Doc/format.CANdo
             perl Autogen/CAN/Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo
-          
+
 
 
       - name: Save Changes
@@ -43,6 +43,6 @@ jobs:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Clang-Format: Standardized formatting automatically'
+          message: 'Automatic CANfigurator: Updated CANfigurator automatically'
           fetch: 'false'
           add: '. --force'
