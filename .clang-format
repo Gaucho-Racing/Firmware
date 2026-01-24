@@ -10,9 +10,6 @@ InsertBraces: true
 LineEnding: LF
 SortIncludes: CaseSensitive
 IncludeBlocks: Regroup
-AlignTrailingComments: true
-AlignConsecutiveAssignments: None
-AlignConsecutiveDeclarations: None
 IncludeCategories:
   - Regex:           '<[^>]*>'
     Priority:        1
