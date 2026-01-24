@@ -21,7 +21,8 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
-      - name: install cpanm and multiple modules
+
+      - name: Install YAML::XS
         uses: perl-actions/install-with-cpanm@v1
         with:
           install: YAML::XS
@@ -34,7 +35,7 @@ jobs:
             perl Autogen/CAN/Src/GRparser.pl Autogen/CAN/Doc/format.CANdo
             perl Autogen/CAN/Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo
 
-      - name: Clang Format CAN Files
+      - name: Clang-Format Autogen Files
         run: |
           set -o pipefail
           git ls-files 'Autogen/CAN/*.c' 'Autogen/CAN/*.h' | xargs -r clang-format -i --verbose
