@@ -129,7 +129,7 @@ jobs:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Perl Format: Standardized formatting automatically'
+          message: 'Automatic Perl Tidy: Standardized formatting automatically'
           fetch: 'false'
   all:
     name: Complete Auto Format
