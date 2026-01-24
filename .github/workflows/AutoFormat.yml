@@ -53,6 +53,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          fetch-depth: 1
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -85,6 +86,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          fetch-depth: 1
 
       - name: Format JSON Files
         run: |
@@ -111,6 +113,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          fetch-depth: 1
 
       - name: Install Perl Tidy
         uses: perl-actions/install-with-cpanm@v1
