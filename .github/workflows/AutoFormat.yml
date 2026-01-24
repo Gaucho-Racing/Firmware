@@ -56,13 +56,10 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.x'
-          cache: 'pip'
-
-      - name: Install Gersemi
-        run: pip3 install gersemi
+          pip-install: gersemi
 
       - name: Format CMake Files
         run: gersemi --in-place --warnings-as-errors --no-warn-about-unknown-commands --indent tabs --list-expansion favour-expansion --line-length 100 .

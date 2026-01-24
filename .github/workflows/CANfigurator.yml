@@ -21,6 +21,7 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+
       - name: install cpanm and multiple modules
         uses: perl-actions/install-with-cpanm@v1
         with:
