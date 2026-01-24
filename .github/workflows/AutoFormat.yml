@@ -1,4 +1,4 @@
-///!!! name: Auto Format
+name: Auto Format
 run-name: Auto Format - ${{ github.ref_name }}
 
 on:
@@ -9,18 +9,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-/////  clang:
+  clang:
     name: Clang
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN || github.token }}
 
       - name: Format C Files
         run: |
@@ -28,7 +28,7 @@ jobs:
           echo "<details open><summary>Clang-Format Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          # git ls-files '*.c' '*.h' | xargs -r clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          git ls-files '*.c' '*.h' | xargs -r clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -42,20 +42,20 @@ jobs:
           default_author: github_actions
           message: 'Automatic Clang-Format: Standardized formatting automatically'
           fetch: 'false'
- /////:::::||||||~~~~~ cmake:
+  cmake:
     name: CMake
     runs-on: ubuntu-slim
     permissions:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN || github.token }}
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.x'
 
@@ -63,7 +63,7 @@ jobs:
         run: pip3 install gersemi
 
       - name: Format CMake Files
-        run: gersemi --in-place --warnings-as-errors --no-warn-about-unknown-commands --indent tabs --list-expansion favour-expansion --line-length 100 .
+        run: gersemi --in-place ${{ github.workspace }}
 
       - name: Save Changes
         uses: EndBug/add-and-commit@v9
@@ -81,10 +81,10 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN || github.token }}
 
       - name: Format JSON Files
         run: |
