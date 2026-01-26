@@ -20,6 +20,12 @@ if (!-e $yaml_path) {
     die "Error: Could not find YAML file at: $yaml_path\n";
 }
 
+# If output is a directory, append default filename
+if (-d $output_path) {
+    $output_path =~ s/\/$//;  # remove trailing slash
+    $output_path .= '/output.dbc';
+}
+
 # ============================================================================
 # DATA TYPE MAPPINGS
 # ============================================================================
@@ -110,10 +116,11 @@ sub parse_yaml {
     my ($filename) = @_;
 
     my %data = (
-        'routing'    => [],
-        'Message ID' => {},
-        'GR ID'      => {},
-        'byte order' => 'little_endian',
+        'routing'       => [],
+        'Message ID'    => {},
+        'Custom CAN ID' => {},
+        'GR ID'         => {},
+        'byte order'    => 'little_endian',
     );
 
     open my $fh, '<', $filename or die "Cannot open $filename: $!";
@@ -179,6 +186,48 @@ sub parse_yaml {
                 $val =~ s/^["']|["']$//g;
                 $data{'GR ID'}{$name} = $val;
             }
+            next;
+        }
+
+        # ---- CUSTOM CAN ID SECTION ----
+        if ($current_section eq 'Custom CAN ID') {
+
+            # Message name at indent 2: "  DTI Control 1:"
+            if ($indent_len == 2 && $content =~ /^["']?([^"':]+)["']?:/) {
+                $current_msg = $1;
+                $current_msg =~ s/^\s+|\s+$//g;
+                $data{'Custom CAN ID'}{$current_msg} = { signals => [] };
+                next;
+            }
+
+            # Message properties at indent 4
+            if ($indent_len == 4 && $current_msg) {
+                if ($content =~ /^['"]?CAN ID['"]?:\s*(.+)/) {
+                    $data{'Custom CAN ID'}{$current_msg}{'CAN ID'} = $1;
+                }
+                if ($content =~ /^['"]?Length['"]?:\s*(\d+)/) {
+                    $data{'Custom CAN ID'}{$current_msg}{'Length'} = int($1);
+                }
+                next;
+            }
+
+            # Signal list item at indent 6: "- name: ..."
+            if ($indent_len == 6 && $current_msg && $content =~ /^-\s*name:\s*["']?([^"']+)["']?/) {
+                my $sig_name = $1;
+                $sig_name =~ s/^\s+|\s+$//g;
+                push @{$data{'Custom CAN ID'}{$current_msg}{signals}}, { name => $sig_name };
+                next;
+            }
+
+            # Signal bit_start at indent 8
+            if ($indent_len == 8 && $current_msg && $content =~ /^bit_start:\s*(\d+)/) {
+                my $sigs = $data{'Custom CAN ID'}{$current_msg}{signals};
+                if (@$sigs) {
+                    $sigs->[-1]{bit_start} = int($1);
+                }
+                next;
+            }
+
             next;
         }
 
@@ -261,15 +310,17 @@ print "Parsing $yaml_path...\n";
 
 my $yaml = parse_yaml($yaml_path);
 
-my $messages   = $yaml->{'Message ID'} // {};
-my $gr_ids     = $yaml->{'GR ID'}      // {};
-my $routing    = $yaml->{'routing'}    // [];
-my $byte_order = $yaml->{'byte order'} // 'little_endian';
+my $messages        = $yaml->{'Message ID'}    // {};
+my $custom_messages = $yaml->{'Custom CAN ID'} // {};
+my $gr_ids          = $yaml->{'GR ID'}         // {};
+my $routing         = $yaml->{'routing'}       // [];
+my $byte_order      = $yaml->{'byte order'}    // 'little_endian';
 
 # Byte order: 1 = little endian, 0 = big endian
 my $bo_value = ($byte_order eq 'little_endian') ? 1 : 0;
 
 print "Found " . scalar(keys %$messages) . " message definitions\n";
+print "Found " . scalar(keys %$custom_messages) . " custom CAN ID messages\n";
 print "Found " . scalar(@$routing) . " routing entries\n";
 print "Found " . scalar(keys %$gr_ids) . " node IDs\n";
 
@@ -296,8 +347,15 @@ for my $route (@$routing) {
 
     next unless defined $sender && defined $msg_name && defined $target;
 
-    # Get message definition
+    # Get message definition (check both sections)
     my $msg_def = $messages->{$msg_name};
+    my $is_custom = 0;
+
+    if (!defined $msg_def && defined $custom_messages->{$msg_name}) {
+        $msg_def = $custom_messages->{$msg_name};
+        $is_custom = 1;
+    }
+
     unless (defined $msg_def) {
         warn "Warning: Message '$msg_name' not found, skipping\n";
         next;
@@ -307,6 +365,9 @@ for my $route (@$routing) {
     my $can_id;
     if (defined $can_id_override) {
         $can_id = hex_to_int($can_id_override);
+    } elsif ($is_custom && defined $msg_def->{'CAN ID'}) {
+        # Custom messages have their own CAN ID
+        $can_id = hex_to_int($msg_def->{'CAN ID'});
     } else {
         my $sender_id = hex_to_int($gr_ids->{$sender});
         my $target_id = hex_to_int($gr_ids->{$target});
@@ -326,7 +387,7 @@ for my $route (@$routing) {
     next if $seen_ids{$id_key}++;
 
     # Message length
-    my $length = $msg_def->{'MSG LENGTH'} // 8;
+    my $length = $msg_def->{'MSG LENGTH'} // $msg_def->{'Length'} // 8;
 
     # Build DBC message name
     my $dbc_msg_name = normalize_name($sender) . "_" .
@@ -335,51 +396,83 @@ for my $route (@$routing) {
 
     # Collect signals
     my @signals;
-    for my $sig_name (keys %$msg_def) {
-        next if $sig_name eq 'MSG ID';
-        next if $sig_name eq 'MSG LENGTH';
-        next if $sig_name =~ /^Reserved/i;
 
-        my $sig_def = $msg_def->{$sig_name};
-        next unless ref($sig_def) eq 'HASH';
+    if ($is_custom) {
+        # Custom CAN ID format: signals is an array
+        my $sig_list = $msg_def->{signals} // [];
+        for my $sig (@$sig_list) {
+            my $sig_name = $sig->{name};
+            next unless defined $sig_name;
 
-        # Get bit start
-        my $bit_start = $sig_def->{'_bit_start'};
-        unless (defined $bit_start) {
-            warn "Warning: No bit start for '$sig_name' in '$msg_name', skipping signal\n";
-            next;
+            my $bit_start = $sig->{bit_start};
+            unless (defined $bit_start) {
+                warn "Warning: No bit start for '$sig_name' in '$msg_name', skipping signal\n";
+                next;
+            }
+
+            # Custom messages don't have type info, default to u16
+            push @signals, {
+                name       => normalize_name($sig_name),
+                start_bit  => $bit_start,
+                length     => 16,  # default
+                byte_order => $bo_value,
+                sign       => '+',
+                scale      => 1,
+                offset     => 0,
+                min        => 0,
+                max        => 0,
+                unit       => '',
+                receiver   => normalize_name($target),
+            };
         }
+    } else {
+        # Standard Message ID format
+        for my $sig_name (keys %$msg_def) {
+            next if $sig_name eq 'MSG ID';
+            next if $sig_name eq 'MSG LENGTH';
+            next if $sig_name =~ /^Reserved/i;
 
-        my $dtype = $sig_def->{'data type'} // 'u8';
-        my $bit_length = get_bit_length($dtype);
-        my $sign_char = get_sign_char($dtype);
+            my $sig_def = $msg_def->{$sig_name};
+            next unless ref($sig_def) eq 'HASH';
 
-        my ($scale, $offset) = parse_map_equation($sig_def->{'map equation'});
+            # Get bit start
+            my $bit_start = $sig_def->{'_bit_start'};
+            unless (defined $bit_start) {
+                warn "Warning: No bit start for '$sig_name' in '$msg_name', skipping signal\n";
+                next;
+            }
 
-        my $min_val = $sig_def->{'scaled min'} // 0;
-        my $max_val = $sig_def->{'scaled max'} // 0;
-        $min_val = 0 if !defined($min_val) || $min_val eq '-' || $min_val eq '';
-        $max_val = 0 if !defined($max_val) || $max_val eq '-' || $max_val eq '';
+            my $dtype = $sig_def->{'data type'} // 'u8';
+            my $bit_length = get_bit_length($dtype);
+            my $sign_char = get_sign_char($dtype);
 
-        my $unit = $sig_def->{'units'} // '';
-        $unit = '' if $unit eq '-';
+            my ($scale, $offset) = parse_map_equation($sig_def->{'map equation'});
 
-        push @signals, {
-            name       => normalize_name($sig_name),
-            start_bit  => $bit_start,
-            length     => $bit_length,
-            byte_order => $bo_value,
-            sign       => $sign_char,
-            scale      => $scale,
-            offset     => $offset,
-            min        => $min_val,
-            max        => $max_val,
-            unit       => $unit,
-            receiver   => normalize_name($target),
-        };
+            my $min_val = $sig_def->{'scaled min'} // 0;
+            my $max_val = $sig_def->{'scaled max'} // 0;
+            $min_val = 0 if !defined($min_val) || $min_val eq '-' || $min_val eq '';
+            $max_val = 0 if !defined($max_val) || $max_val eq '-' || $max_val eq '';
+
+            my $unit = $sig_def->{'units'} // '';
+            $unit = '' if $unit eq '-';
+
+            push @signals, {
+                name       => normalize_name($sig_name),
+                start_bit  => $bit_start,
+                length     => $bit_length,
+                byte_order => $bo_value,
+                sign       => $sign_char,
+                scale      => $scale,
+                offset     => $offset,
+                min        => $min_val,
+                max        => $max_val,
+                unit       => $unit,
+                receiver   => normalize_name($target),
+            };
+        }
     }
 
-    # Sort signals by bit position
+    # Sort signals by bit position, then by name for determinism
     @signals = sort { $a->{start_bit} <=> $b->{start_bit} || $a->{name} cmp $b->{name} } @signals;
 
     push @dbc_messages, {
