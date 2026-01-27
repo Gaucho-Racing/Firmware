@@ -46,7 +46,6 @@ include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 
 # FIXME Temporary holdover for CAN messages until URCA is ready for merge
 include("${lib_path}/FancyLayers-RENAME/GRCAN/TemporaryHoldover/temp.cmake")
-include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 
 message(
 	STATUS

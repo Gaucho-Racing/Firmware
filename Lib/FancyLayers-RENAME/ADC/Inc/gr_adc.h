@@ -134,7 +134,7 @@ typedef struct {
 	ADC_TypeDef *ADC;
 	DMA_Channel Channel;
 	uint32_t Src_Address;
-	void *Dest_Address;
+	const volatile void *Dest_Address;
 	DMA_Data_Size Data_Size;
 	DMA_Priority Priority;
 } DMA_Init_Values;

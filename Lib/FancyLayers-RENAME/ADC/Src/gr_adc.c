@@ -60,7 +60,6 @@ void ADC_Init(ADC_Init_Values *Init_Values)
 		ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Value);
 	}
 
-ADC_Group_Done:
 	// Initialize the individual ADCs
 	ADC_Init_Single(Init_Values->ADC, Init_Values->res);
 
@@ -68,12 +67,12 @@ ADC_Group_Done:
 	ADC_Regular_Group_Init(Init_Values->ADC, Num_Channel_Options[Init_Values->Num_Channels - 1]);
 
 	// Initialize all pins
-	for (int i = 0; i < Init_Values->Num_Pin_Port_Objs; ++i) {
+	for (uint32_t i = 0; i < Init_Values->Num_Pin_Port_Objs; ++i) {
 		ADC_Init_Pins(&(Init_Values->Pins[i]));
 	}
 
 	// Initialize Channels
-	for (int i = 0; i < Init_Values->Num_Channels; ++i) {
+	for (uint32_t i = 0; i < Init_Values->Num_Channels; ++i) {
 		ADC_Channel_Init(Init_Values->ADC, Rank[i], Init_Values->Channels[i], Init_Values->SamplingTimes[i]);
 	}
 }
