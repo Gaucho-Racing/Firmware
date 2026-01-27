@@ -1,43 +1,23 @@
 add_library(BitManipulations_Lib INTERFACE)
 
-target_include_directories(
-	BitManipulations_Lib
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
-)
+target_include_directories(BitManipulations_Lib INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Inc)
 
-target_sources(
-	BitManipulations_Lib
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Src/setBits.c
-)
+target_sources(BitManipulations_Lib INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/setBits.c)
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-	add_executable(
-		BitManipulations_VerifyGetBit_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetBit.c
-	)
+	add_executable(BitManipulations_VerifyGetBit_test ${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetBit.c)
 	target_link_libraries(BitManipulations_VerifyGetBit_test BitManipulations_Lib)
 	add_test(BitManipulations_VerifyGetBit BitManipulations_VerifyGetBit_test)
 
-	add_executable(
-		BitManipulations_VerifyGetBits_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetBits.c
-	)
+	add_executable(BitManipulations_VerifyGetBits_test ${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetBits.c)
 	target_link_libraries(BitManipulations_VerifyGetBits_test BitManipulations_Lib)
 	add_test(BitManipulations_VerifyGetBits BitManipulations_VerifyGetBits_test)
 
-	add_executable(
-		BitManipulations_VerifySetBit_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/verifySetBit.c
-	)
+	add_executable(BitManipulations_VerifySetBit_test ${CMAKE_CURRENT_LIST_DIR}/Test/verifySetBit.c)
 	target_link_libraries(BitManipulations_VerifySetBit_test BitManipulations_Lib)
 	add_test(BitManipulations_VerifySetBit BitManipulations_VerifySetBit_test)
 
-	add_executable(
-		BitManipulations_VerifySetBits_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/verifySetBits.c
-	)
+	add_executable(BitManipulations_VerifySetBits_test ${CMAKE_CURRENT_LIST_DIR}/Test/verifySetBits.c)
 	target_link_libraries(BitManipulations_VerifySetBits_test BitManipulations_Lib)
 	add_test(BitManipulations_VerifySetBits BitManipulations_VerifySetBits_test)
 
@@ -45,25 +25,13 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		BitManipulations_VerifyGetAndSetBit_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetAndSetBit.c
 	)
-	target_link_libraries(
-		BitManipulations_VerifyGetAndSetBit_test
-		BitManipulations_Lib
-	)
-	add_test(
-		BitManipulations_VerifyGetAndSetBit
-		BitManipulations_VerifyGetAndSetBit_test
-	)
+	target_link_libraries(BitManipulations_VerifyGetAndSetBit_test BitManipulations_Lib)
+	add_test(BitManipulations_VerifyGetAndSetBit BitManipulations_VerifyGetAndSetBit_test)
 
 	add_executable(
 		BitManipulations_VerifyGetAndSetBits_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetAndSetBits.c
 	)
-	target_link_libraries(
-		BitManipulations_VerifyGetAndSetBits_test
-		BitManipulations_Lib
-	)
-	add_test(
-		BitManipulations_VerifyGetAndSetBits
-		BitManipulations_VerifyGetAndSetBits_test
-	)
+	target_link_libraries(BitManipulations_VerifyGetAndSetBits_test BitManipulations_Lib)
+	add_test(BitManipulations_VerifyGetAndSetBits BitManipulations_VerifyGetAndSetBits_test)
 endif()

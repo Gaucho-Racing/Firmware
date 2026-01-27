@@ -1,20 +1,8 @@
 add_library(GLOBALSHARE_LIB INTERFACE)
 
-target_include_directories(
-	GLOBALSHARE_LIB
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
-)
+target_include_directories(GLOBALSHARE_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Inc)
 
-if(
-	CMAKE_PRESET_NAME
-		STREQUAL
-		"Debug"
-	OR
-		CMAKE_PRESET_NAME
-			STREQUAL
-			"RelWithDebInfo"
-)
+if(CMAKE_PRESET_NAME STREQUAL "Debug" OR CMAKE_PRESET_NAME STREQUAL "RelWithDebInfo")
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 	add_compile_options(
 		-u
@@ -30,29 +18,17 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
 	add_executable(logomatic_simple)
-	target_sources(
-		logomatic_simple
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_simple_print.c
-	)
+	target_sources(logomatic_simple PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_simple_print.c)
 	target_link_libraries(logomatic_simple PRIVATE GLOBALSHARE_LIB)
 	add_test(logomatic_simple_test logomatic_simple)
 
 	add_executable(logomatic_float)
-	target_sources(
-		logomatic_float
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_float_print.c
-	)
+	target_sources(logomatic_float PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_float_print.c)
 	target_link_libraries(logomatic_float PRIVATE GLOBALSHARE_LIB)
 	add_test(logomatic_float_test logomatic_float)
 
 	add_executable(stringification)
-	target_sources(
-		stringification
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/stringification.c
-	)
+	target_sources(stringification PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/stringification.c)
 	target_link_libraries(stringification PRIVATE GLOBALSHARE_LIB)
 	add_test(stringification_test stringification)
 
