@@ -30,9 +30,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
+
 #include "Logomatic.h"
 #include "spi.h"
-#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -231,7 +232,7 @@ int main(void)
 	GR_SPI_Receive(&ex_handler, &recv_msg);
 
 	char str[5];
-	strcpy(str, (char*)recv_msg.data);
+	strcpy(str, (char *)recv_msg.data);
 	str[4] = '\0';
 
 	LOGOMATIC("Received: %s\n", str);

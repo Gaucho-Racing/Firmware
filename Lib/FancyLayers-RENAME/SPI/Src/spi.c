@@ -10,7 +10,7 @@
 // Current message status codes
 #define GR_SPI_MSG_IN_PROGRESS 1
 #define GR_SPI_MSG_IDLE 0
-#define GR_SPI_INVALID_TX_SIZE 257 //test value - change later
+#define GR_SPI_INVALID_TX_SIZE 257 // test value - change later
 
 void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config)
 {
@@ -55,11 +55,9 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	// Store handler in lookup table for interrupts
 	if (handle->pins->SPIx == SPI1) {
 		GR_SPI_HANDLER_LUT[0] = handle;
-	}
-	else if (handle->pins->SPIx == SPI2) {
+	} else if (handle->pins->SPIx == SPI2) {
 		GR_SPI_HANDLER_LUT[1] = handle;
-	}
-	else if (handle->pins->SPIx == SPI3) {
+	} else if (handle->pins->SPIx == SPI3) {
 		GR_SPI_HANDLER_LUT[2] = handle;
 	}
 	/* else: do nothing */
@@ -77,7 +75,7 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	// Configure SPI protocol with config values
 	LL_SPI_Init(handle->pins->SPIx, config);
 	// Transaction size is 8-bits
-	if (config->DataWidth <= (SPI_CR2_DS_0 |  SPI_CR2_DS_1 |  SPI_CR2_DS_2)) {
+	if (config->DataWidth <= (SPI_CR2_DS_0 | SPI_CR2_DS_1 | SPI_CR2_DS_2)) {
 		handle->transfer_size = GR_SPI_TRANSFER_SIZE_8;
 		// Make the RXNE trigger when >= 8 bits are received
 		handle->pins->SPIx->CR2 |= SPI_CR2_FRXTH;
@@ -293,7 +291,7 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 {
 	uint16_t tx_index = handle->current_tx_msg_index, msg_size = handle->current_msg->size;
 	// Send two bytes if transferring 16 bits
-	if (handle->transfer_size  == GR_SPI_TRANSFER_SIZE_16 && tx_index <= msg_size - 2) {
+	if (handle->transfer_size == GR_SPI_TRANSFER_SIZE_16 && tx_index <= msg_size - 2) {
 		uint16_t data = (((uint16_t)handle->current_msg->data[tx_index]) << 8) + handle->current_msg->data[tx_index + 1];
 		LL_SPI_TransmitData16(handle->pins->SPIx, data);
 		handle->current_tx_msg_index += 2;
@@ -383,5 +381,5 @@ void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
 
 	// Enable TXE interrupts for loading bytes into TX buffer
 	// ---Warning: Without an if-statement conditional, this statement could take over register buses quite often
-	//LL_SPI_EnableIT_TXE(handle->pins->SPIx); // Empty Tx buffer
+	// LL_SPI_EnableIT_TXE(handle->pins->SPIx); // Empty Tx buffer
 }
