@@ -73,7 +73,7 @@ void GR_SPI_Close(GR_SPI_Handler *handler);
  *
  * @param handler
  */
-inline void GR_SPI_Msg_Free(GR_SPI_Message *msg);
+void GR_SPI_Msg_Free(GR_SPI_Message *msg);
 
 /**
  * @brief Handles SPI interrupts
@@ -113,7 +113,7 @@ void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg);
  * @param handler
  * @return Same as GR_CircularBuffer_IsEmpty
  */
-inline bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle);
+bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle);
 
 // ============================= Helper Functions =============================
 

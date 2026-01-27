@@ -32,6 +32,7 @@
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
 #include "spi.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -208,6 +209,8 @@ int main(void)
 	// }
 	// LOGOMATIC("-= End Verification =-\n");
 
+	LOGOMATIC("Starting message transaction...\n");
+
 	GR_SPI_Message msg;
 	msg.data = (uint8_t *)malloc(4 * sizeof(uint8_t));
 	msg.size = 4;
@@ -219,12 +222,19 @@ int main(void)
 
 	GR_SPI_Send(&ex_handler, &msg);
 
-	GR_SPI_Message *msgPtr = NULL;
-	while (!msgPtr) {
-		msgPtr = GR_SPI_Receive(&ex_handler);
-	}
+	LOGOMATIC("Sent message, now receiving...\n");
 
-	LOGOMATIC("Received: %c\n", msgPtr->data[0]);
+	GR_SPI_Message recv_msg;
+
+	while (GR_SPI_IsRxEmpty(&ex_handler)) {}
+
+	GR_SPI_Receive(&ex_handler, &recv_msg);
+
+	char str[5];
+	strcpy(str, (char*)recv_msg.data);
+	str[4] = '\0';
+
+	LOGOMATIC("Received: %s\n", str);
 
 	GR_SPI_Close(&ex_handler);
 	/* USER CODE END 2 */
