@@ -49,8 +49,6 @@ target_sources(
 		# Application
 		# Application/Src/CANDler.c
 		Application/Src/StateTicks.c
-
-
 )
 
 target_link_libraries(
