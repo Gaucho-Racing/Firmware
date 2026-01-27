@@ -82,13 +82,13 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	// Transaction size is 8-bits
 	if (config->DataWidth <= 8) {
 		handle->transfer_size = GR_SPI_TRANSFER_SIZE_8;
-		//Make the RXNE trigger when >= 8 bits are received
+		// Make the RXNE trigger when >= 8 bits are received
 		handle->pins->SPIx->CR2 |= SPI_CR2_FRXTH;
 	}
 	// Transaction size is 16-bits
 	else {
 		handle->transfer_size = GR_SPI_TRANSFER_SIZE_16;
-		//Make the RXNE trigger when >= 16 bits are received
+		// Make the RXNE trigger when >= 16 bits are received
 		handle->pins->SPIx->CR2 &= ~SPI_CR2_FRXTH;
 	}
 
@@ -266,30 +266,30 @@ void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg)
 {
 	GR_SPI_Message *rx_msg = GR_CircularBuffer_Pop(handle->rx_buffer);
 
-	//Check if there was a message returned by buffer pop
-	if(rx_msg) {
-		//If sizes don't match, re-malloc correct size inside destination message
-		if(dest_msg->size != rx_msg->size) {
+	// Check if there was a message returned by buffer pop
+	if (rx_msg) {
+		// If sizes don't match, re-malloc correct size inside destination message
+		if (dest_msg->size != rx_msg->size) {
 			free(dest_msg->data);
 			dest_msg->size = rx_msg->size;
 			dest_msg->data = malloc(rx_msg->size * sizeof(uint8_t));
 		}
 
-		//Copy over data into the destination message
-		for(int i = 0; i < dest_msg->size; i++) {
+		// Copy over data into the destination message
+		for (int i = 0; i < dest_msg->size; i++) {
 			dest_msg->data[i] = rx_msg->data[i];
 		}
 
-		//Deallocate rx_msg
+		// Deallocate rx_msg
 		GR_SPI_Msg_Free(rx_msg);
 	}
 }
 
 void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_config)
 {
-	LL_GPIO_StructInit(pin_config);			  // Default config values
-	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH; // Very high output speed
-	pin_config->Pull = LL_GPIO_PULL_NO;		  // No pull-up or pull-down
+	LL_GPIO_StructInit(pin_config);					 // Default config values
+	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;		 // Very high output speed
+	pin_config->Pull = LL_GPIO_PULL_NO;				 // No pull-up or pull-down
 	pin_config->OutputType = LL_GPIO_OUTPUT_PUSHPULL;		 // Push-pull output (not open-drain)
 	pin_config->Mode = LL_GPIO_MODE_ALTERNATE;			 // Alternate pin function mode
 	pin_config->Alternate = handle->pins->alternate_function_number; // Alternate function number
@@ -369,25 +369,27 @@ void GR_SPI_Close(GR_SPI_Handler *handler)
 	GR_CircularBuffer_Free(&handler->tx_buffer);
 }
 
-void GR_SPI_Msg_Free(GR_SPI_Message *msg) {
-	if(msg) {
-		if(msg->data) free(msg->data);
+void GR_SPI_Msg_Free(GR_SPI_Message *msg)
+{
+	if (msg) {
+		if (msg->data) {
+			free(msg->data);
+		}
 		free(msg);
 	}
 }
 
-bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle) {
-	return GR_CircularBuffer_IsEmpty(handle->rx_buffer);
-}
+bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle) { return GR_CircularBuffer_IsEmpty(handle->rx_buffer); }
 
-void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle) {
+void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
+{
 	// Re-initiate a transaction
 	handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
 	handle->current_tx_msg_index = 0;
 	handle->current_rx_msg_index = 0;
 	handle->current_msg = GR_CircularBuffer_Pop(handle->tx_buffer);
 
-	//Pull chip select to active low
+	// Pull chip select to active low
 	LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
 
 	// Note: This will trigger a TXE flag eventually (and maybe execute the handler below)
