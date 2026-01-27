@@ -57,10 +57,6 @@ jobs:
         if: matrix.build_mode == 'manual'
         run: mkdir -p /home/runner/work/_temp/trapCaches/cpp/tarballs
 
-      - name: Install Perl YAML::XS
-        if: matrix.build_mode == 'manual'
-        run: sudo cpan -T YAML::XS
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
