@@ -338,9 +338,9 @@ typedef struct {
 #if defined(USART_CR1_FIFOEN)
 #define LL_USART_CR3_RXFTIE USART_CR3_RXFTIE /*!< RX FIFO threshold interrupt enable */
 #endif					     /* USART_CR1_FIFOEN */
-/**
- * @}
- */
+					     /**
+					      * @}
+					      */
 
 #if defined(USART_CR1_FIFOEN)
 /** @defgroup USART_LL_EC_FIFOTHRESHOLD FIFO Threshold
@@ -352,9 +352,9 @@ typedef struct {
 #define LL_USART_FIFOTHRESHOLD_3_4 0x00000003U /*!< FIFO reaches 3/4 of its depth */
 #define LL_USART_FIFOTHRESHOLD_7_8 0x00000004U /*!< FIFO reaches 7/8 of its depth */
 #define LL_USART_FIFOTHRESHOLD_8_8 0x00000005U /*!< FIFO becomes empty for TX and full for RX */
-/**
- * @}
- */
+					       /**
+						* @}
+						*/
 
 #endif /* USART_CR1_FIFOEN */
 /** @defgroup USART_LL_EC_DIRECTION Communication Direction
@@ -412,9 +412,9 @@ typedef struct {
  */
 #define LL_USART_OVERSAMPLING_16 0x00000000U	/*!< Oversampling by 16 */
 #define LL_USART_OVERSAMPLING_8 USART_CR1_OVER8 /*!< Oversampling by 8 */
-/**
- * @}
- */
+						/**
+						 * @}
+						 */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup USART_LL_EC_CLOCK Clock Signal
@@ -463,9 +463,9 @@ typedef struct {
 #define LL_USART_POLARITY_HIGH                                                                                                                                                                         \
 	USART_CR2_CPOL /*!< Steady high value on SCLK pin outside transmission                                                                                                                         \
 			  window */
-/**
- * @}
- */
+		       /**
+			* @}
+			*/
 
 #if defined(USART_PRESC_PRESCALER)
 /** @defgroup USART_LL_EC_PRESCALER Clock Source Prescaler
@@ -489,9 +489,9 @@ typedef struct {
 #define LL_USART_PRESCALER_DIV256                                                                                                                                                                      \
 	(USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_1 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 256                                                                                  \
 										       */
-/**
- * @}
- */
+										      /**
+										       * @}
+										       */
 
 #endif /* USART_PRESC_PRESCALER */
 /** @defgroup USART_LL_EC_STOPBITS Stop Bits

@@ -1065,7 +1065,6 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
 			/* V_err_3 = (MEAS_CELL4) - (MEAS_CELL1 + MEAS_CELL2)/2
 			 */
 			results->vErrX[0] = ((int32_t)(measVoltUv[3])) - ((int32_t)(measVoltUv[0] + measVoltUv[1])) / 2;
-
 		} else {
 			/* V_err_3 = (MEAS_CELL3 + MEAS_CELL4)/2 - (MEAS_CELL1 +
 			 * MEAS_CELL2)/2 */

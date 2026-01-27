@@ -407,9 +407,9 @@ typedef struct {
 #define RCC_RTCCLKSOURCE_HSE_DIV32                                                                                                                                                                     \
 	RCC_BDCR_RTCSEL /*!< HSE oscillator clock divided by 32 used as RTC                                                                                                                            \
 			   clock */
-/**
- * @}
- */
+			/**
+			 * @}
+			 */
 
 /** @defgroup RCC_MCO_Index MCO Index
  * @{

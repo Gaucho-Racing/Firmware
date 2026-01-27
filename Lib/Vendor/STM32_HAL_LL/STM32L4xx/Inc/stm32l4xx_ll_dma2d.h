@@ -591,9 +591,9 @@ typedef struct {
 	DMA2D_FGPFCCR_AM_1 /*!< Replace original alpha channel value by                                                                                                                                \
 				programmed alpha value with,                                                                                                                                           \
 				original alpha channel value               */
-/**
- * @}
- */
+			   /**
+			    * @}
+			    */
 
 #if defined(DMA2D_OUTPUT_TWO_BY_TWO_SWAP_SUPPORT)
 /** @defgroup DMA2D_LL_EC_OUTPUT_SWAP_MODE Swap Mode
@@ -620,9 +620,9 @@ typedef struct {
  */
 #define LL_DMA2D_ALPHA_REGULAR 0x00000000U	 /*!< Regular alpha  */
 #define LL_DMA2D_ALPHA_INVERTED DMA2D_FGPFCCR_AI /*!< Inverted alpha */
-/**
- * @}
- */
+						 /**
+						  * @}
+						  */
 
 #if defined(DMA2D_LINE_OFFSET_MODE_SUPPORT)
 /** @defgroup DMA2D_LL_EC_LINE_OFFSET_MODE Line Offset Mode

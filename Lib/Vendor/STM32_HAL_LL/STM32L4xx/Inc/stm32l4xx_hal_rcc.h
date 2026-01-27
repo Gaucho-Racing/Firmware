@@ -278,9 +278,9 @@ typedef struct {
 #define RCC_MSI_ON RCC_CR_MSION /*!< MSI clock activation */
 
 #define RCC_MSICALIBRATION_DEFAULT 0U /*!< Default MSI calibration trimming value */
-/**
- * @}
- */
+				      /**
+				       * @}
+				       */
 
 #if defined(RCC_HSI48_SUPPORT)
 /** @defgroup RCC_HSI48_Config HSI48 Config
@@ -307,9 +307,9 @@ typedef struct {
 #define RCC_PLL_NONE 0x00000000U /*!< PLL configuration unchanged */
 #define RCC_PLL_OFF 0x00000001U	 /*!< PLL deactivation */
 #define RCC_PLL_ON 0x00000002U	 /*!< PLL activation */
-/**
- * @}
- */
+				 /**
+				  * @}
+				  */
 
 #if defined(RCC_PLLP_SUPPORT)
 /** @defgroup RCC_PLLP_Clock_Divider PLLP Clock Divider
@@ -441,9 +441,9 @@ typedef struct {
 #define RCC_PLLSAI2_LTDCCLK RCC_PLLSAI2CFGR_PLLSAI2REN /*!< PLLLTDCCLK selection from PLLSAI2 */
 #endif						       /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                  \
 							  STM32L486xx || STM32L496xx || STM32L4A6xx */
-/**
- * @}
- */
+						       /**
+							* @}
+							*/
 
 #endif /* RCC_PLLSAI2_SUPPORT */
 
@@ -670,9 +670,9 @@ typedef struct {
  */
 #define RCC_STOP_WAKEUPCLOCK_MSI 0x00000000U	   /*!< MSI selection after wake-up from STOP */
 #define RCC_STOP_WAKEUPCLOCK_HSI RCC_CFGR_STOPWUCK /*!< HSI selection after wake-up from STOP */
-/**
- * @}
- */
+						   /**
+						    * @}
+						    */
 
 /**
  * @}

@@ -82,9 +82,9 @@ extern "C" {
 #define LL_HANDLER_FAULT_USG SCB_SHCSR_USGFAULTENA_Msk /*!< Usage fault */
 #define LL_HANDLER_FAULT_BUS SCB_SHCSR_BUSFAULTENA_Msk /*!< Bus fault */
 #define LL_HANDLER_FAULT_MEM SCB_SHCSR_MEMFAULTENA_Msk /*!< Memory management fault */
-/**
- * @}
- */
+						       /**
+							* @}
+							*/
 
 #if __MPU_PRESENT
 
@@ -622,9 +622,9 @@ __STATIC_INLINE void LL_MPU_DisableRegion(uint32_t Region)
  */
 
 #endif /* __MPU_PRESENT */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /**
  * @}

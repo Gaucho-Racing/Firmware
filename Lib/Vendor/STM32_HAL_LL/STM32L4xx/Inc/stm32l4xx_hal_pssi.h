@@ -241,9 +241,9 @@ typedef enum {
  */
 #define HAL_PSSI_FALLING_EDGE 0x0U /*!< Fallling Edge */
 #define HAL_PSSI_RISING_EDGE 0x1U  /*!< Rising Edge */
-/**
- * @}
- */
+				   /**
+				    * @}
+				    */
 
 /** @defgroup PSSI_DEFINITION PSSI definitions
  * @{

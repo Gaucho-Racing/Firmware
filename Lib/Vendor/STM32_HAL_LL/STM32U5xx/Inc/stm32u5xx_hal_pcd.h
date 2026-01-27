@@ -406,9 +406,9 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd);
  * @}
  */
 #endif /* defined (USB_DRD_FS) */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #if defined(USB_OTG_FS) || defined(USB_OTG_HS)
 #ifndef USB_OTG_DOEPINT_OTEPSPR

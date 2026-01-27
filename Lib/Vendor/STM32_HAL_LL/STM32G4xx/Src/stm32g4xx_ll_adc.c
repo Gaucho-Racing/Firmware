@@ -705,7 +705,6 @@ ErrorStatus LL_ADC_Init(ADC_TypeDef *ADCx, const LL_ADC_InitTypeDef *pADC_InitSt
 		/*    - Set ADC conversion data alignment */
 		/*    - Set ADC low power mode */
 		MODIFY_REG(ADCx->CFGR, ADC_CFGR_RES | ADC_CFGR_ALIGN | ADC_CFGR_AUTDLY, pADC_InitStruct->Resolution | pADC_InitStruct->DataAlignment | pADC_InitStruct->LowPowerMode);
-
 	} else {
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;

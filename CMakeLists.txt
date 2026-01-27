@@ -41,6 +41,8 @@ include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
+include("${lib_path}/Peripherals/CAN/common.cmake")
+include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 
 # FIXME Temporary holdover for CAN messages until URCA is ready for merge
 include("${lib_path}/FancyLayers-RENAME/GRCAN/TemporaryHoldover/temp.cmake")
@@ -66,6 +68,8 @@ add_gr_project(STM32G474xE CCU)
 
 # Development
 add_gr_project(STM32G474xE G4ADCTESTING)
+add_gr_project(STM32G474xE G4PERTESTING)
+add_gr_project(STM32G474xE G4CANTESTING)
 
 # # BLINKY Demos
 # add_gr_project(STM32G474xE BLINKY G4HELLO)
@@ -73,9 +77,6 @@ add_gr_project(STM32G474xE G4ADCTESTING)
 # add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 # add_gr_project(STM32L476xG BLINKY L4BLINKY)
 
-# # Onboarding Workshops
-# add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
-# add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
-
-# Onboarding Projects
-# TODO Add onboarding projects here as needed
+# Onboarding Workshops
+add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
+add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)

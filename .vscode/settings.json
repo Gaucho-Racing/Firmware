@@ -9,5 +9,9 @@
 		"*.s": "asm"
 	},
 	"C_Cpp.default.cStandard": "gnu11",
-	"markdown.validate.enabled": true
+	"markdown.validate.enabled": true,
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"files.trimTrailingWhitespace": true,
+	"files.eol": "\n"
 }
