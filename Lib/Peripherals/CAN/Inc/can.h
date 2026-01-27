@@ -10,10 +10,11 @@
 
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
+#include "GR_OLD_MSG_ID.h"
 
 // RX Callback must perform a deep copy of the data
 //
-typedef void (*CAN_RXCallback)(uint32_t id, void *data, uint32_t size);
+typedef void (*CAN_RXCallback)(void *data, uint32_t size, GR_OLD_MSG_ID ID);
 typedef struct {
 	// can baud rate is set by fdcan prescaler and RCC clock configurations
 	FDCAN_GlobalTypeDef *fdcan_instance; // Base address of FDCAN peripheral in memory (FDCAN1, FDCAN2, FDCAN3 macros)
