@@ -11,7 +11,6 @@
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
 
-
 // RX Callback must perform a deep copy of the data
 //
 typedef void (*CAN_RXCallback)(uint32_t ID, void *data, uint32_t size);

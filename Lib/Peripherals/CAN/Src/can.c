@@ -391,17 +391,17 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
 	FDCAN_RxHeaderTypeDef rx_header;
 
-	//TODO: Stack allocation may be unsafe
+	// TODO: Stack allocation may be unsafe
 	uint8_t rx_data[64] = {0};
 
-	//TODO: maybe also use a timer for this?
+	// TODO: maybe also use a timer for this?
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 
 		// stack allocation should be fine? Callback needs to terminate first before stack is popped
 		// should switch this over to malloc at some point to avoid double copies?
-		//GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
-		//GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
+		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
+		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 		handle->rx_callback(rx_header.Identifier, rx_data, rx_header.DataLength);
 	}
 
