@@ -8,9 +8,9 @@
 #error "Unsupported STM32 Family"
 #endif
 
+#include "GR_OLD_MSG_ID.h"
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
-#include "GR_OLD_MSG_ID.h"
 
 // RX Callback must perform a deep copy of the data
 //

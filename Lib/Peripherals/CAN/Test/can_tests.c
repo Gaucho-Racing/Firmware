@@ -2,8 +2,8 @@
 
 #include <string.h>
 
-#include "can.h"
 #include "GR_OLD_MSG_ID.h"
+#include "can.h"
 
 // each family has a constant number of CAN peripherals
 
