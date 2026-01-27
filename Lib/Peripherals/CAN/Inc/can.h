@@ -44,7 +44,9 @@ typedef struct {
 
 	// for release
 	GPIO_TypeDef *rx_gpio;
+	uint32_t rx_pin;
 	GPIO_TypeDef *tx_gpio;
+	uint32_t tx_pin;
 	uint32_t Clock_Source;
 
 	// state
