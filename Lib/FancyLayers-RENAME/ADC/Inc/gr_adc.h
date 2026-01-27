@@ -6,7 +6,7 @@
 //--------------------------------------ADC Initialization-------------------------------------
 
 void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
-								
+
 /// @brief Number of clock cycles to be considered one tick of the ADC
 typedef enum {
 	PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
@@ -24,12 +24,7 @@ typedef enum {
 } Pre_Scaler_Values;
 
 /// @brief Number of bits used to store the converted data, defines range/resolution of data
-typedef enum { 
-	RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
-	RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
-	RESOLUTION_8 = LL_ADC_RESOLUTION_8B,
-	RESOLUTION_6 = LL_ADC_RESOLUTION_6B
-} Resolution;
+typedef enum { RESOLUTION_12 = LL_ADC_RESOLUTION_12B, RESOLUTION_10 = LL_ADC_RESOLUTION_10B, RESOLUTION_8 = LL_ADC_RESOLUTION_8B, RESOLUTION_6 = LL_ADC_RESOLUTION_6B } Resolution;
 
 /// @brief Struct for pin initialization
 typedef struct {
@@ -86,13 +81,13 @@ typedef enum {
 /// @param ADC The ADC to be initialized (ADC 1 to 5)
 /// @param PS_Values Determines the conversion speed of the ADC
 /// @param res Determines the resolution/range of data
-/// @param Pins Array of pins (with their respective ports) to be initialized 
+/// @param Pins Array of pins (with their respective ports) to be initialized
 /// @param Num_Pin_Port_Objs Number of pin port objects to initialize
 /// @param Num_Channels Number of ADC channels, must be a value between 1 and 16
 /// @param Channels Array of channels to be initialized, DMA output will match the order
 /// 					of this array
 /// @param SamplingTimes Array of channel sampling times, should align with channels array
-typedef struct{
+typedef struct {
 	ADC_TypeDef *ADC;
 	Pre_Scaler_Values PS_Value;
 	Resolution res;
@@ -108,12 +103,7 @@ void ADC_Init(ADC_Init_Values *Init_Values);
 
 //--------------------------------------DMA Initialization-------------------------------------
 /// @brief Priority of DMA transfer
-typedef enum { 
-	LOW = LL_DMA_PRIORITY_LOW, 
-	MEDIUM = LL_DMA_PRIORITY_MEDIUM,
-	HIGH = LL_DMA_PRIORITY_HIGH,
-	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
-} DMA_Priority;
+typedef enum { LOW = LL_DMA_PRIORITY_LOW, MEDIUM = LL_DMA_PRIORITY_MEDIUM, HIGH = LL_DMA_PRIORITY_HIGH, VERYHIGH = LL_DMA_PRIORITY_VERYHIGH } DMA_Priority;
 
 /// @brief DMA channels
 typedef enum {
@@ -128,11 +118,7 @@ typedef enum {
 } DMA_Channel;
 
 /// @brief The data size of the data to be transfered by DMA
-typedef enum {
-	Byte,
-	Half_Word,
-	Word
-} DMA_Data_Size;
+typedef enum { Byte, Half_Word, Word } DMA_Data_Size;
 
 /// @brief The struct used to initialize each DMA
 ///
@@ -143,7 +129,7 @@ typedef enum {
 /// @param Dest_Addresses Pointers to destination buffer
 /// @param Data_Size Array of data sizes, can be options of DMA_Data_Size
 /// @param Priority Array of priorities to set the priorities of each DMA channel
-typedef struct{
+typedef struct {
 	DMA_TypeDef *DMA;
 	ADC_TypeDef *ADC;
 	DMA_Channel Channel;
@@ -159,9 +145,6 @@ void DMA_Init(DMA_Init_Values *Init_Values);
  */
 void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output);
 
-void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values,
-                                int num_signals,
-                                double alpha,
-                                uint16_t *weighted_output);
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
 
 #endif

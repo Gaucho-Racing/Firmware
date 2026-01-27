@@ -181,12 +181,11 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
 		// ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
-        ADC_UpdateAnalogValues_EMA(buffers, NUM_SIGNALS, 0.3, outputs);
-        LOGOMATIC("Moving Average: %u\n", outputs[0]);
-        DMA_Transfer_Complete = 0;
+		ADC_UpdateAnalogValues_EMA(buffers, NUM_SIGNALS, 0.3, outputs);
+		LOGOMATIC("Moving Average: %u\n", outputs[0]);
+		DMA_Transfer_Complete = 0;
 		// just test 1 pin for now
-		if (DMA_Transfer_Complete){
-		}
+		if (DMA_Transfer_Complete) {}
 	}
 
 	free(adcDataValues[0]);
@@ -194,12 +193,11 @@ int main(void)
 
 void DMA1_Channel1_IRQHandler(void)
 {
-    if (LL_DMA_IsActiveFlag_TC1(DMA1)) {
-        LL_DMA_ClearFlag_TC1(DMA1);
-        DMA_Transfer_Complete = 1;   // notify main loop
-    }
+	if (LL_DMA_IsActiveFlag_TC1(DMA1)) {
+		LL_DMA_ClearFlag_TC1(DMA1);
+		DMA_Transfer_Complete = 1; // notify main loop
+	}
 }
-
 
 /**
  * @brief System Clock Configuration
