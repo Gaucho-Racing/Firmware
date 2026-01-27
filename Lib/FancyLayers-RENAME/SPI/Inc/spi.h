@@ -69,6 +69,13 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 void GR_SPI_Close(GR_SPI_Handler *handler);
 
 /**
+ * @brief Deallocate the memory in a GR_SPI_Message
+ *
+ * @param handler
+ */
+inline void GR_SPI_Msg_Free(GR_SPI_Message *msg);
+
+/**
  * @brief Handles SPI interrupts
  *
  * @param
@@ -98,15 +105,15 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *data);
  * @param handle
  * @return SPI_Message
  */
-
-GR_SPI_Message *GR_SPI_Receive(GR_SPI_Handler *handle);
+void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg);
 
 /**
- * @brief Checks if the Rx circular buffer is empty
+ * @brief Returns whether a message was received and is waiting in the Rx buffer
  *
- * @param handle
+ * @param handler
+ * @return Same as GR_CircularBuffer_IsEmpty
  */
-inline bool GR_SPI_Is_RXE(GR_SPI_Handler *handle) { return GR_CircularBuffer_IsEmpty(handle->rx_buffer); }
+inline bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle);
 
 // ============================= Helper Functions =============================
 
@@ -135,9 +142,17 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_conf
 /**
  * @brief Continues sending the next byte(s) within an SPI message
  *
- * @param config
- * @param pins
+ * @param handle
+ * @param
  */
 void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle);
+
+/**
+ * @brief Pops off the next Tx message and initiates its transaction
+ *
+ * @param handle
+ * @param
+ */
+void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle);
 
 #endif // SPI_H
