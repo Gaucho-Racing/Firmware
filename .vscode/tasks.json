@@ -72,7 +72,7 @@
 			],
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4PERTESTING"
 		},
-				{
+		{
 			"label": "CMake: configure and build G4ADCTESTING",
 			"type": "shell",
 			"dependsOrder": "sequence",
