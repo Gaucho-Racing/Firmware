@@ -1,9 +1,9 @@
 #include "can_tests.h"
 
+#include <inttypes.h>
 #include <string.h>
 
 #include "can.h"
-#include <inttypes.h>
 
 // each family has a constant number of CAN peripherals
 
