@@ -2,7 +2,6 @@
 
 #include <string.h>
 
-#include "GR_OLD_MSG_ID.h"
 #include "can.h"
 
 // each family has a constant number of CAN peripherals
@@ -13,14 +12,14 @@ int can_test_instance(FDCAN_HandleTypeDef fdcan_handle)
 	return 0;
 }
 
-void can_test_rx_callback2(void *data, uint32_t size, GR_OLD_MSG_ID id)
+void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
 	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %u\n", size, *(char *)data, id);
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
 
-void can_test_rx_callback1(void *data, uint32_t size, GR_OLD_MSG_ID id)
+void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 {
 	LOGOMATIC("CAN1 Got data! Size %ld, data[0] = 0x%x, id %u\n", size, *(char *)data, id);
 

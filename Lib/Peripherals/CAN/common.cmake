@@ -4,7 +4,6 @@ target_link_libraries(
 	PERIPHERAL_CAN_LIB
 	INTERFACE
 		CircularBuffer_Lib
-		GR_OLD_CAN_MESSAGES
 )
 
 target_sources(PERIPHERAL_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/can.c)
