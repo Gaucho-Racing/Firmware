@@ -301,8 +301,11 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
     // IF TX Fifos are not full, send directly to them
     // If TX Fifos are full, append to circular buffer
     // If circular buffer is full, return an error code
+    //stop can interrupts from activating
+    __set_PRIMASK(1);
     uint32_t primask = __get_BASEPRI();
-    __set_BASEPRI(canHandle->tx_interrupt_priority); //acquire the lock on the circular buffer
+    __set_PRIMASK(0);
+    __set_BASEPRI( canHandle->tx_interrupt_priority );
 
     uint32_t free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP);
 
