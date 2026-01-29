@@ -42,6 +42,9 @@ typedef struct {
 
 	CAN_RXCallback rx_callback;
 
+	uint32_t rx_interrupt_priority;
+	uint32_t tx_interrupt_priority;
+
 	// for release
 	GPIO_TypeDef *rx_gpio;
 	uint32_t rx_pin;
