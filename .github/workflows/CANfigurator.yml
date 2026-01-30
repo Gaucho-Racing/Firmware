@@ -56,5 +56,5 @@ jobs:
           fetch: 'false'
           add: '. --force'
 
-      - name: FAIL JOB
-        run: exit 1
+      # - name: FAIL JOB
+      #   run: exit 1
