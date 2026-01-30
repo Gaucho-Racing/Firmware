@@ -47,8 +47,9 @@ target_sources(
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
 		# Application
-		# Application/Src/CANDler.c
+		Application/Src/CANDler.c
 		Application/Src/StateTicks.c
+		Application/Src/UpdateButton.c
 )
 
 target_link_libraries(

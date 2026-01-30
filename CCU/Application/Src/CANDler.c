@@ -1,32 +1,20 @@
 #include "GR_OLD_BUS_ID.h"
-#include "StateData.h"
-#include "StateTicks.h"
-#include "adc.h"
-#include "dma.h"
-#include "fdcan.h"
-#include "gpio.h"
-#include "gr_adc.h"
+#include "CCUStateData.h"
 #include "main.h"
-#include "malloc.h"
-#include "usart.h"
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 #include "CANdler.h"
 #include "Logomatic.h"
-#include "StateTicks.h"
-#include "StateUtils.h"
-#include "adc.h"
 #include "bitManipulations.h"
 #include "can.h"
 
-/* USER CODE END Includes */
+CANHandle* primary_can = {0};
 
 void readCAN(void *data, uint32_t size)
 {
+	UNUSED(size);
 	uint8_t *dataArr = (uint8_t *)data;
 	state_data.ACU_S2_ERROR_BITS = dataArr[5];
 }
+
 void CAN_Configure()
 {
 	CANConfig canCfg; // FIXME: somethings are undefined, fix
@@ -53,7 +41,7 @@ void CAN_Configure()
 	canCfg.rx_callback = NULL;	   // FIXME: add function when CAN READS look in ECU/main;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
-	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
+	canCfg.tx_buffer_length = 5;
 
 	// RX shared settings
 	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
@@ -95,7 +83,7 @@ void CAN_Configure()
 	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
 	// RX Callback CAN1
-	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
+	canCfg.rx_callback = readCAN; // TODO: Make sure the wrapper for this is defined correctly
 
 	primary_can = can_init(&canCfg); // FIXME: make type *CANHANDLE, look at can.h
 
