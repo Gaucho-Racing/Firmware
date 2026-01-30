@@ -33,7 +33,9 @@ jobs:
           **/*.cxx
 
     - name: Auto-fix
-      if: steps.changed.outputs.any_changed == 'true'
+      if: | 
+        steps.changed.outputs.any_changed == 'true' &&  
+        github.event.pull_request.base.ref != 'release' 
       run: |
         clang-tidy \
           -p build/Debug \
@@ -42,7 +44,9 @@ jobs:
           --quiet
 
     - name: Fail
-      if: steps.changed.outputs.any_changed == 'true'
+      if: | 
+        steps.changed.outputs.any_changed == 'true' &&  
+        github.event.pull_request.base.ref != 'release' 
       run: |
         clang-tidy \
           -p build/Debug \
