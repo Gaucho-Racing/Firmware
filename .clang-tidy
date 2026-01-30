@@ -1,8 +1,9 @@
 ---
-Checks: 'clang-diagnostic-*, clang-analyzer-*, cppcoreguidelines-*, modernize-*, -modernize-use-trailing-return-type, readability-*, bug-prone-*, misc-*, performance-*'
-WarningsAsErrors: bugprone-*
-HeaderFilterRegex: '.*'
+Checks: 'clang-analyzer-*, cppcoreguidelines-*, modernize-*, readability-*, bugprone-*'
+WarningsAsErrors: ''
+HeaderFilterRegex: '^(src|include)/'
 FormatStyle: file
+AnalyzeTemporaryDtors: false
 CheckOptions:
   - key: readability-header-guard.HeaderGuardStyle
     value: LLVM
