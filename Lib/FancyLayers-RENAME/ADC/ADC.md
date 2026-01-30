@@ -1,8 +1,8 @@
 # ADC Usage
-First of all read main.c and figure it out.
+This library is used to set up ADC for STM32 G4 boards. To initialize each individual ADC, use the `ADC_Init` function.
 
 ## Example
-```cpp
+```cppset up ADC
 
 ```
 
