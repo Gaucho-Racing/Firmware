@@ -1,6 +1,6 @@
 ---
-Checks: 'clang-analyzer-*, cppcoreguidelines-*, modernize-*, readability-*, bugprone-*'
-WarningsAsErrors: ''
+Checks: 'clang-analyzer-*, cppcoreguidelines-*, modernize-*, readability-*, bugprone-*, performance-*, cert-*'
+WarningsAsErrors: 'clang-analyzer-*'
 HeaderFilterRegex: '^(src|include)/'
 FormatStyle: file
 SystemHeaders: false
