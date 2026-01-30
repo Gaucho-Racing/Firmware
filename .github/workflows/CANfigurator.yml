@@ -29,27 +29,32 @@ jobs:
 
       - name: Run Parsers
         run: |
-            perl Autogen/CAN/Src/CANdlerparser.pl Autogen/CAN/Doc/format.CANdo
-            perl Autogen/CAN/Src/CANparser.pl Autogen/CAN/Doc/format.CANdo
-            # perl Autogen/CAN/Src/DBC.pl Autogen/CAN/Doc/format.CANdo
-            perl Autogen/CAN/Src/GRparser.pl Autogen/CAN/Doc/format.CANdo
-            perl Autogen/CAN/Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo
-
-      - name: Clang-Format Autogen Files
+            perl Autogen/CAN/Src/CANdlerparser.pl Autogen/CAN/Doc/format.CANdo Autogen/CAN/Inc/CANDler.h
+            perl Autogen/CAN/Src/CANparser.pl Autogen/CAN/Doc/format.CANdo Autogen/CAN/Inc/Custom_CAN_ID.h
+            perl Autogen/CAN/Src/DBC.pl Autogen/CAN/Doc/format.CANdo Autogen/CAN/Doc/output.dbc
+            perl Autogen/CAN/Src/GRparser.pl Autogen/CAN/Doc/format.CANdo Autogen/CAN/Inc/GR_IDS.h
+            perl Autogen/CAN/Src/MSGparser.pl Autogen/CAN/Doc/format.CANdo Autogen/CAN/Inc/can_msg_ids.h
+      - name: Auto Format header files
         run: |
-          set -o pipefail
-          git ls-files 'Autogen/CAN/*.c' 'Autogen/CAN/*.h' | xargs -r clang-format -i --verbose
+            clang-format -i --verbose Autogen/CAN/Inc/*.h
+            # clang-format -i --verbose Autogen/CAN/Inc/Custom_CAN_ID.h
+            # clang-format -i --verbose Autogen/CAN/Inc/GR_IDS.h
+            # clang-format -i --verbose Autogen/CAN/Inc/can_msg_ids.h
+      # - name: Clang-Format Autogen Files
+      #   run: |
+      #     set -o pipefail
+      #     git ls-files 'Autogen/CAN/*.c' 'Autogen/CAN/*.h' | xargs -r clang-format -i --verbose
 
-      # - name: Save Changes
-      #   uses: EndBug/add-and-commit@v9
-      #   if: github.ref_type != 'tag'
-      #   env:
-      #     HOME: ${{ github.workspace }}
-      #   with:
-      #     default_author: github_actions
-      #     message: 'Automatic CANfigurator: Updated CAN files automatically'
-      #     fetch: 'false'
-      #     add: '. --force'
+      - name: Save Changes
+        uses: EndBug/add-and-commit@v9
+        if: github.ref_type != 'tag'
+        env:
+          HOME: ${{ github.workspace }}
+        with:
+          default_author: github_actions
+          message: 'Automatic CANfigurator: Updated CAN files automatically'
+          fetch: 'false'
+          add: '. --force'
 
       - name: FAIL JOB
         run: exit 1
