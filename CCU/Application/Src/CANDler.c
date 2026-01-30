@@ -11,6 +11,8 @@
 #include "bitManipulations.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
+#include "Logomatic.h"
+#include "bitManipulations.h"
 #include "can.h"
 #include "main.h"
 
@@ -42,7 +44,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size){
 
 void CAN_Configure()
 {
-	CANConfig canCfg; // FIXME: somethings are undefined, fix
+	CANConfig canCfg; 
 
 	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
