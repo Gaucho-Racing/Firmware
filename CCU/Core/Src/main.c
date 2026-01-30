@@ -121,12 +121,7 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
-<<<<<<< HEAD
-	uint32_t on = 0;
-
-=======
 	CCU_StateData state_data;
->>>>>>> 93eb10716f51aa75b240e98436536e2dba026b64
 	UNUSED(state_data);
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
