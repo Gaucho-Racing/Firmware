@@ -10,7 +10,7 @@
 
 // FIXME: Currently defining check to switch CCU state from idle to charging and etc.
 
-CCU_StateData state_data = {0}; //prolly initialize the default values to reasonable values that don't break
+CCU_StateData state_data = {0}; // prolly initialize the default values to reasonable values that don't break
 
 void CCU_State_Tick(CCU_StateData *state_data)
 {
