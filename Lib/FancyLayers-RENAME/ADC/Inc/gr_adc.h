@@ -90,7 +90,7 @@ typedef enum {
 typedef struct {
 	ADC_TypeDef *ADC;
 	Pre_Scaler_Values PS_Value;
-	Resolution res;
+	Resolution Res;
 	uint32_t Num_Pin_Port_Objs;
 	Pin_Ports *Pins;
 	uint32_t Num_Channels;
