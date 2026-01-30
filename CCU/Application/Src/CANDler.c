@@ -13,38 +13,34 @@
 #include "malloc.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
-#include "Logomatic.h"
-#include "bitManipulations.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
+#include "Logomatic.h"
+#include "bitManipulations.h"
 #include "can.h"
 #include "main.h"
 
 CANHandle *primary_can = {0};
 
-void Read_CAN(uint32_t ID, void *data, uint32_t size){
+void Read_CAN(uint32_t ID, void *data, uint32_t size)
+{
 	GR_OLD_MESSAGE_ID messageId = (0x000FFF00 & ID) >> 8;
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
-	switch (messageId)
-	{
+	switch (messageId) {
 		case MSG_ACU_STATUS_3:
-			//FIXME: if bad message do a thing
+			// FIXME: if bad message do a thing
 
-
-			//cast *data to whatever msg dti control 10 struct there is
-			//copy data from that struct into the ccu state data struct (eg GETBIT)
+			// cast *data to whatever msg dti control 10 struct there is
+			// copy data from that struct into the ccu state data struct (eg GETBIT)
 			state_data->ACU_S2_OVERTEMP_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 0);
 			state_data->ACU_S2_OVERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 1);
 			state_data->ACU_S2_UNDERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 2);
 			state_data->ACU_S2_OVERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 3);
 			state_data->ACU_S2_UNDERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 4);
-
-
 	}
 }
 
