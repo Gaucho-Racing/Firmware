@@ -37,14 +37,14 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size){
 			// state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 4);
 
 		case MSG_ACU_STATUS_3:
-			LOGOMATIC("Received a ACU STATus 3 msg");
+			LOGOMATIC("Received a ACU STATUS 3 msg");
 
 	}
 }
 
 void CAN_Configure()
 {
-	CANConfig canCfg; 
+	CANConfig canCfg;
 
 	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
