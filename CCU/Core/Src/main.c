@@ -121,7 +121,7 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
 	uint32_t on = 0;
-	CCU_StateData state_data;
+
 	UNUSED(state_data);
 	CCU_STATE state = CCU_STATE_IDLE;
 	while (1) {

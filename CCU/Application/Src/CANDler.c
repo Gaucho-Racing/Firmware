@@ -18,9 +18,14 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
+#include "bitManipulations.h"
 
 /* USER CODE END Includes */
 
+void readCAN(void *data, uint32_t size){
+	uint8_t *dataArr = (uint8_t*) data;
+	state_data.ACU_S2_ERROR_BITS = dataArr[5];
+}
 void CAN_Configure()
 {
 	CANConfig canCfg; // FIXME: somethings are undefined, fix

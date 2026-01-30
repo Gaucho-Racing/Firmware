@@ -48,4 +48,6 @@ typedef struct {
 
 } CCU_StateData;
 
+extern CCU_StateData state_data;
+
 #endif
