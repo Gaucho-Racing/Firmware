@@ -1,12 +1,13 @@
-#include "GR_OLD_BUS_ID.h"
-#include "CCUStateData.h"
-#include "main.h"
 #include "CANdler.h"
+
+#include "CCUStateData.h"
+#include "GR_OLD_BUS_ID.h"
 #include "Logomatic.h"
 #include "bitManipulations.h"
 #include "can.h"
+#include "main.h"
 
-CANHandle* primary_can = {0};
+CANHandle *primary_can = {0};
 
 void readCAN(void *data, uint32_t size)
 {
