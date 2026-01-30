@@ -28,6 +28,7 @@ void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 	return;
 }
 
+//TODO: G4 tests are dependent on the System clock configuration
 int can_test(void)
 {
 

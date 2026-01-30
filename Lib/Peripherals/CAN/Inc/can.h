@@ -24,7 +24,7 @@ typedef struct {
 	uint32_t tx_interrupt_priority;
 
 	// Circular Buffer
-	uint32_t tx_buffer_length;
+	//uint32_t tx_buffer_capacity;
 
 	GPIO_TypeDef *rx_gpio;	       // Instance name, like GPIOA, GPIOB, etc.
 	GPIO_InitTypeDef init_rx_gpio; // GPIO Parameters - set correct Alternate Function, no pullup/pulldown, high/very_high frequency
@@ -36,10 +36,15 @@ typedef struct {
 
 // FDCAN peripheral for STM32G4
 typedef struct {
-	FDCAN_HandleTypeDef *hal_fdcanP;
-	CircularBuffer *tx_buffer;
-	uint32_t tx_buffer_length;
+	FDCAN_HandleTypeDef *hal_fdcanP; //DO NOT REORDER THIS
 
+	//TX buffer
+	volatile FDCANTxMessage *tx_buffer;
+	volatile uint32_t tx_capacity;
+	volatile uint32_t tx_tail;
+	volatile uint32_t tx_elements;
+
+	//RX Callback
 	CAN_RXCallback rx_callback;
 
 	uint32_t rx_interrupt_priority;

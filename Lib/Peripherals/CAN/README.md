@@ -19,8 +19,12 @@ If no filters are set, the default behaviour is to accept all standard and exten
 
 CHANGES:
 - with a single producer, single consumer tx buffer, can instead use a fixed-size ring buffer instead of the circular buffer
+- DMA support for copying from circular buffer
+- Timer Support for continously dequeuing, or call can_tx_dequeue_helper after every hardware enqueue
 - avoids free issues inside the ISR
 - can also use the ISR to drain the tx buffer, can_send only adds to it
+- 
+
 
 PROBLEMS:
 - Freeing within ISRs whenever popping from CircularBuffer (yes its faster, than stack copies, but heap is getting fragmented)

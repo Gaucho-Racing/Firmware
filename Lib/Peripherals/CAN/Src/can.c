@@ -9,18 +9,24 @@
 
 // HAL handles
 // #ifdef USECAN1
+#define TX_BUFFER_1_SIZE 10
 static FDCAN_HandleTypeDef hal_fdcan1 = {.Instance = FDCAN1};
-volatile static CANHandle CAN1 = {.hal_fdcanP = &hal_fdcan1};
+FDCANTxMessage tx_buffer_1[TX_BUFFER_1_SIZE] = {0};
+static CANHandle CAN1 = {.hal_fdcanP = &hal_fdcan1, .tx_buffer = tx_buffer_1};
 // #endif
 
 // #ifdef USECAN2
+#define TX_BUFFER_2_SIZE 10
 static FDCAN_HandleTypeDef hal_fdcan2 = {.Instance = FDCAN2};
-volatile static CANHandle CAN2 = {.hal_fdcanP = &hal_fdcan2};
+FDCANTxMessage tx_buffer_2[TX_BUFFER_2_SIZE] = {0};
+static CANHandle CAN2 = {.hal_fdcanP = &hal_fdcan2, .tx_buffer = tx_buffer_2};
 // #endif
 
 // #ifdef USECAN3
+#define TX_BUFFER_3_SIZE 10
 static FDCAN_HandleTypeDef hal_fdcan3 = {.Instance = FDCAN3};
-volatile static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3};
+FDCANTxMessage tx_buffer_3[TX_BUFFER_3_SIZE] = {0};
+static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
 // #endif
 
 #define MIN(A,B) ((A < B) ? A : B)
@@ -79,7 +85,7 @@ volatile static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3};
 
 //TODO: Modify helpers to work across families
 //helpers =================
-volatile static int fdcan_shared_clock_ref = 0;
+static int fdcan_shared_clock_ref = 0;
 static inline void fdcan_enable_shared_clock(void);
 static inline void fdcan_disable_shared_clock(void);
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
@@ -109,6 +115,8 @@ CANHandle *can_init(const CANConfig *config)
             return 0;
         } else {
             canHandle = &CAN1;
+            canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+
         }
     }
     // #endif
@@ -119,6 +127,8 @@ CANHandle *can_init(const CANConfig *config)
             return 0;
         } else {
             canHandle = &CAN2;
+            canHandle->tx_capacity = TX_BUFFER_2_SIZE;
+
         }
     }
     // #ifdef USECAN3
@@ -128,6 +138,7 @@ CANHandle *can_init(const CANConfig *config)
             return 0;
         } else {
             canHandle = &CAN3;
+            canHandle->tx_capacity = TX_BUFFER_3_SIZE;
         }
     }
     // #endif
@@ -155,26 +166,30 @@ CANHandle *can_init(const CANConfig *config)
     canHandle->rx_interrupt_priority = config->rx_interrupt_priority;
     canHandle->tx_interrupt_priority = config->tx_interrupt_priority;
 
-
     canHandle->rx_callback = config->rx_callback;
-    canHandle->tx_buffer_length = config->tx_buffer_length;
+
+    //tx buffer
+    //canHandle->tx_capacity = TX_BUFFER_SIZE_1; //dependent on can instance
+    canHandle->tx_tail = 0;
+    canHandle->tx_elements = 0;
 
     // alternately -> have can_msp_init setup state for HAL_FDCAN_MspInit to work correctly
     // have can_msp_deinit setup state for HAL_FDCAN_MspDeInit to work correctly
     // Then call HAL_FDCAN_Init() and HAL_FDCAN_DeInit()
 
     // Current idea, redefine HAL_FDCAN_MspInit and MspDeInit do nothing at all, do all the work in can_msp_init()
-    if (can_msp_init(canHandle, (CANConfig *)config)) {
+    uint32_t failure = 0;
+    if ( failure |= (can_msp_init(canHandle, (CANConfig *)config))) {
         LOGOMATIC("CAN_init: could not initialize MSP resources");
-        can_release(canHandle);
     }
 
     // PROBLEM: HAL_FDCAN_Init expects HAL_FDCAN_MspInit() to be defined
     if (HAL_FDCAN_Init(canHandle->hal_fdcanP) != HAL_OK) {
+        failure |= HAL_ERROR;
         LOGOMATIC("CAN: HAL Could not initialize FDCAN peripheral");
-        return NULL;
         // Error_Handler();
     }
+
 
     // Active FDCAN callbacks - rxcalback uses line0, txcallback uses line1
     // uint32_t rxevents = FDCAN_IT_RX_FIFO0_NEW_MESSAGE;
@@ -192,22 +207,34 @@ CANHandle *can_init(const CANConfig *config)
 
     if (status & HAL_ERROR) {
         LOGOMATIC("CAN: Could not activate rx and tx interrupts\n");
-        return NULL;
+        failure |= status;
     }
 
     // Circular Buffer
-    canHandle->tx_buffer = GR_CircularBuffer_Create(config->tx_buffer_length);
+    //canHandle->tx_buffer = GR_CircularBuffer_Create(config->tx_buffer_length);
+    //canHandle->tx_buffer = malloc(sizeof(FDCANTxMessage)*canHandle->tx_buffer_length);
     if (!canHandle->tx_buffer) {
-        LOGOMATIC("CAN: Could not allocate circular buffer\n");
+        LOGOMATIC("tx_buffer isn't valid?");
+        failure |= 1;
+    }
+
+    if (failure) {
+        can_msp_deinit(canHandle);
+        FDCAN_InstanceDeInit(canHandle->hal_fdcanP);
+        memset(canHandle+sizeof(FDCAN_HandleTypeDef), 0, sizeof(*canHandle) - sizeof(FDCAN_HandleTypeDef)); //FIXME: Make sure instance is not being overwritten (FDCANx)
         return 0;
     }
+
+    /*if (!canHandle->tx_buffer) {
+        LOGOMATIC("CAN: Could not allocate circular buffer\n");
+        return 0;
+    }*/
 
     canHandle->init = true;
     canHandle->started = false;
 
     return canHandle;
 }
-
 
 int can_release(CANHandle *canHandle)
 {
@@ -222,6 +249,8 @@ int can_release(CANHandle *canHandle)
     }
     can_stop(canHandle); // try to prevent more interrupts from firing
 
+    //No more interrupts should be firing that modify canHandle
+
     can_msp_deinit(canHandle);
 
     // reset FDCANx instance and message RAM and filters, clear interrupts
@@ -233,12 +262,13 @@ int can_release(CANHandle *canHandle)
     //__ISB(); // Instruction Synchronization Barrier
 
     // free circular buffer contents
-    GR_CircularBuffer_Free(&(canHandle->tx_buffer));
+    //GR_CircularBuffer_Free(&(canHandle->tx_buffer));
+    memset(canHandle->tx_buffer, 0, canHandle->tx_capacity*sizeof(FDCANTxMessage));
+    canHandle->tx_elements = 0;
+    canHandle->tx_tail = 0;
 
     // reset can handle
-    FDCAN_HandleTypeDef *temp = canHandle->hal_fdcanP;
-    memset(canHandle, 0, sizeof(*canHandle));
-    canHandle->hal_fdcanP = temp;
+    memset( (void*)canHandle+sizeof(FDCAN_HandleTypeDef), 0, sizeof(*canHandle) - sizeof(FDCAN_HandleTypeDef));
 
     return 0;
 }
@@ -252,38 +282,45 @@ static void can_tx_dequeue_helper(CANHandle *handle)
         return;
     }
 
-    if (GR_CircularBuffer_IsEmpty(handle->tx_buffer)) {
+
+    //TODO: use interrupt masking in case any other ISRs need to lock the circular buffer
+    uint32_t basepri = __get_BASEPRI();
+
+    __set_BASEPRI(handle->tx_interrupt_priority);
+    //single consumer shouldn't affect state of circular buffer too closely
+    if (handle->tx_elements == 0) {
+        __set_BASEPRI(basepri);
         return;
     }
 
-    //uint32_t primask = __get_PRIMASK();
+    //uint32_t basepri = __get_basepri();
     //__disable_irq();
     //TODO: No need to lock circular buffer, as this ISR cannot interrupt the thread mode (can_send)
-    if (!GR_CircularBuffer_IsEmpty(handle->tx_buffer)) {
 
-        //Can Add to Fifo Q
-        if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hal_fdcanP)) {
+    //Can Add to Fifo Q
+    if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hal_fdcanP)) {
+        //lock the Circular Buffer
+        FDCANTxMessage *msg = &handle->tx_buffer[handle->tx_tail];
 
-            //lock the Circular Buffer
-            FDCANTxMessage *msg = GR_CircularBuffer_Pop(handle->tx_buffer);
-            if (!msg) {
-                return ;
-            }
+        //should call Tx Buffer Callback once complete
+        HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(handle->hal_fdcanP, &msg->tx_header, msg->data);
 
-            //should call Tx Buffer Callback once complete
-            HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(handle->hal_fdcanP, &msg->tx_header, msg->data);
-
-            if (status != HAL_OK) {
-                LOGOMATIC("CAN_tx_helper: failed to add message to FIFO\n");
-                //free(msg); // Free the message we couldn't send
-                return;    // Stop trying to send more
-            }
-            free(msg); // Successfully sent, free the entry in the circular buffer
-
-        } else { //TODO: call can_tx_dequeue_helper later with a timer?
-
+        if (status != HAL_OK) {
+            //LOGOMATIC("CAN_tx_helper: failed to add message to FIFO\n"); //FIXME: Logomatic may not work with interrupts disabled
+            __set_BASEPRI(basepri);
+            return;    // Stop trying to send more
         }
-    }
+        //free(msg); // Successfully sent, free the entry in the circular buffer (which is pointed to by tail)
+        handle->tx_tail = ++handle->tx_tail % handle->tx_capacity;
+        handle->tx_elements--;
+
+    } else { //FIXME: call can_tx_dequeue_helper later with a timer, if this gets implemented, need to mask timer interrupts to allow atomic access
+
+    } //alternatively, if fifo is full, tx_dequeue should get called anyways, and we don't need the else statement
+
+    __set_BASEPRI(basepri);
+
+
 }
 
 int can_send(CANHandle *canHandle, FDCANTxMessage *message)
@@ -301,43 +338,47 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
     // IF TX Fifos are not full, send directly to them
     // If TX Fifos are full, append to circular buffer
     // If circular buffer is full, return an error code
-    //stop can interrupts from activating
-    __set_PRIMASK(1);
-    uint32_t primask = __get_BASEPRI();
-    __set_PRIMASK(0);
+
+    //stop can_tx_dequeue_helper from from interleaving
+    uint32_t basepri = __get_BASEPRI();
     __set_BASEPRI( canHandle->tx_interrupt_priority );
 
-    uint32_t free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP);
+    if (HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP) > 0) {
+        HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
 
-    if (free > 0) {
-        HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header),
-                                     message->data // Not &message->data if data is array
-        );
-
+        uint32_t val = 0;
         if (status != HAL_OK) {
             LOGOMATIC("CAN_send: failed to add to HW FIFO\n");
-            return -1;
+            val = -1;
+        } else {
+            val = 0;
         }
-        return 0;
+        __set_BASEPRI( basepri );
+        return val;
     }
 
-
     // Hardware FIFO full, try software buffer
-    if (!GR_CircularBuffer_IsFull(canHandle->tx_buffer)) {
-        int result = GR_CircularBuffer_Push(canHandle->tx_buffer, message, sizeof(FDCANTxMessage));
+    if (canHandle->tx_elements < canHandle->tx_capacity) {
+        //int result = GR_CircularBuffer_Push(canHandle->tx_buffer, message, sizeof(FDCANTxMessage));
 
-        __set_BASEPRI(primask);
+        uint32_t idx = (canHandle->tx_tail + canHandle->tx_elements) % canHandle->tx_capacity;
+        canHandle->tx_buffer[idx] = *message;
+        canHandle->tx_elements++;
+        //memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
-        if (result != 0) {
+        //__set_BASEPRI(primask);
+
+        /*if (result != 0) {
             LOGOMATIC("CAN_send: buffer push failed\n");
             return -1;
         } else {
             return 0;
-        }
+        }*/
+    } else {
+        LOGOMATIC("CAN_send: all buffers full\n");
     }
-    __set_BASEPRI(primask);
+    __set_BASEPRI(basepri);
     // Both buffers full
-    LOGOMATIC("CAN_send: all buffers full\n");
     return -1;
 }
 
@@ -349,6 +390,12 @@ void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t Bu
     // #ifdef USECAN1
     CANHandle *handle = can_get_handle(hfdcan);
     // see if you can pop any more from the buffer
+    can_tx_dequeue_helper(handle);
+}
+
+void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
+{
+    CANHandle *handle = can_get_handle(hfdcan);
     can_tx_dequeue_helper(handle);
 }
 
@@ -453,10 +500,8 @@ int can_start(CANHandle *canHandle)
 
     canHandle->started = true;
 
-    __set_PRIMASK(1);
     HAL_NVIC_EnableIRQ(rx0it);
     HAL_NVIC_EnableIRQ(txit);
-    __set_PRIMASK(0);
 
     return 0;
 }
@@ -472,9 +517,7 @@ int can_stop(CANHandle *canHandle)
     }
 
     //stop can interrupts from activating
-    __set_PRIMASK(1);
     uint32_t prev_priority = __get_BASEPRI();
-    __set_PRIMASK(0);
     __set_BASEPRI( MIN(canHandle->rx_interrupt_priority, canHandle->tx_interrupt_priority) );
 
     HAL_FDCAN_Stop(canHandle->hal_fdcanP);
