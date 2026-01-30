@@ -22,12 +22,12 @@
 #include "CCUStateData.h"
 #include "StateMachine.h"
 #include "StateTicks.h"
+#include "UpdateButton.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
 #include "usart.h"
-#include "UpdateButton.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
