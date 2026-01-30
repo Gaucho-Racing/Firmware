@@ -6,7 +6,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  tidy:
     runs-on: ubuntu-latest
 
     steps:
