@@ -2,7 +2,8 @@
 use strict;
 use warnings;
 use YAML::XS 'LoadFile';
-
+use File::Basename;
+use File::Path qw(make_path);
 my $yaml_path   = $ARGV[0] // 'format.CANdo';
 my $output_path = $ARGV[1] // 'GR_IDS.h';
 my$dir = dirname($output_path);
