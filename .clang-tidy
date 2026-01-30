@@ -3,6 +3,7 @@ Checks: 'clang-analyzer-*, cppcoreguidelines-*, modernize-*, readability-*, bugp
 WarningsAsErrors: ''
 HeaderFilterRegex: '^(src|include)/'
 FormatStyle: file
+SystemHeaders: false
 CheckOptions:
   - key: readability-header-guard.HeaderGuardStyle
     value: LLVM
