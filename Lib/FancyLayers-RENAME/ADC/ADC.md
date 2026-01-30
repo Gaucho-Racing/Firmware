@@ -11,7 +11,10 @@ ADC: ADC1/2/3 ...
 
 ADC_Group_Init(ADC1, PS_Val)
 
-### ADC_Init(ADC, Resolution, Alignment)
+### `ADC_Init(ADC_Init_Values *Init_Values)`
+```cpp
+//ADC_Init_Values is the struct used to initialize each ADC
+```
 ### Resolution: RESOLUTION:_6/8/10/12 bytes, Alignment: LEFT/RIGHT
 ### ADC_Regular_Group_Init(ADC, sequence_length)
 

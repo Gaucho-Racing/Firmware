@@ -68,6 +68,8 @@ void SystemClock_Config(void);
 volatile uint16_t buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t outputs[NUM_SIGNALS] = {0};	      // Updated averages
 uint16_t *adcDataValues[NUM_SIGNALS] = {0};
+// Flag raised with DMA finishes transfer
+volatile uint8_t DMA_Transfer_Complete = 0;
 
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
@@ -91,20 +93,30 @@ void ADC_Configure(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
-	// Initialize the ADC
-	ADC_Group_Init(ADC1, PS_8);
-	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
-	ADC_Regular_Group_Init(ADC1, NO_RANKS);
-
-	// Initialize the pins and channels
-	Pin_Ports p = {0};
-	p.port = GPIOA;
-	p.pin = LL_GPIO_PIN_0;
-	ADC_Init_Pins(&p);
-	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_1, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Init_Values init_vals = {0};
+	init_vals.ADC = ADC1;
+	init_vals.PS_Value = PS_8;
+	init_vals.res = RESOLUTION_12;
+	init_vals.Num_Pin_Port_Objs = 1;
+	Pin_Ports p = {LL_GPIO_PIN_0, GPIOA};
+	init_vals.Pins = &p;
+	init_vals.Num_Channels = 1;
+	Channel c = ADC_CHANNEL_1;
+	init_vals.Channels = &c;
+	SamplingTime s = SAMPLINGTIME_247CYCLES_5;
+	init_vals.SamplingTimes = &s;
+	ADC_Init(&init_vals);
 
 	// Initialize DMA
-	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint32_t)&buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS, ADC1, HIGH);
+	DMA_Init_Values DMA_Init_Vals = {0};
+	DMA_Init_Vals.DMA = DMA1;
+	DMA_Init_Vals.ADC = ADC1;
+	DMA_Init_Vals.Channel = DMA_CHANNEL_1;
+	DMA_Init_Vals.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals.Dest_Address = &buffers;
+	DMA_Init_Vals.Data_Size = Word;
+	DMA_Init_Vals.Priority = LOW;
+	DMA_Init(&DMA_Init_Vals);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
 	ADC_Enable_And_Calibrate(ADC1);
@@ -168,12 +180,23 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
-		// just test 1 pin for now
-		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+		// ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+		ADC_UpdateAnalogValues_EMA(buffers, NUM_SIGNALS, 0.3, outputs);
 		LOGOMATIC("Moving Average: %u\n", outputs[0]);
+		DMA_Transfer_Complete = 0;
+		// just test 1 pin for now
+		if (DMA_Transfer_Complete) {}
 	}
 
 	free(adcDataValues[0]);
+}
+
+void DMA1_Channel1_IRQHandler(void)
+{
+	if (LL_DMA_IsActiveFlag_TC1(DMA1)) {
+		LL_DMA_ClearFlag_TC1(DMA1);
+		DMA_Transfer_Complete = 1; // notify main loop
+	}
 }
 
 /**
