@@ -5,7 +5,8 @@ use YAML::XS 'LoadFile';
 
 my $yaml_path   = $ARGV[0] // 'format.CANdo';
 my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
-
+my$dir = dirname($output_path);
+make_path($dir) if $dir && $dir ne '.' && !-d $dir;
 # Check if YAML exists to avoid confusing Perl errors
 if ( !-e $yaml_path ) {
 	die "CANfigurator Error: Could not find YAML file at: $yaml_path\n";
