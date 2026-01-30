@@ -18,7 +18,7 @@ typedef struct {
 	uint8_t ACU_S2_MIN_CELL_Volt;
 	uint8_t ACU_S2_MAX_CELL_Volt;
 	// Error & Warnings
-	uint8_t ACU_S2_ERROR_BITS;
+	// uint8_t ACU_S2_ERROR_BITS;
 	bool ACU_S2_OVERTEMP_ERROR;
 	bool ACU_S2_OVERVOLT_ERROR;
 	bool ACU_S2_UNDERVOLT_ERROR;
