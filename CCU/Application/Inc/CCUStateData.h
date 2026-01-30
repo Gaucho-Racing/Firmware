@@ -5,8 +5,6 @@
 #ifndef STATE_STATEDATA_H
 #define STATE_STATEDATA_H
 
-#define CHECK_BIT(value, bit) (((value) == (bit)) & 1)
-
 typedef struct {
 	CCU_STATE state;
 
