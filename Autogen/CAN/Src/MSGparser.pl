@@ -5,8 +5,9 @@ use File::Basename;
 use File::Path qw(make_path);
 my $yaml_file   = $ARGV[0] // 'format.CANdo';
 my $output_file = $ARGV[1] // 'can_msg_ids.h';
-my$dir = dirname($output_path);
+my$dir = dirname($output_file);
 make_path($dir) if $dir && $dir ne '.' && !-d $dir;
+
 # Safety check: Verify the YAML source exists before parsing
 if ( !-e $yaml_file ) {
 	die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n" . "Check your CMake source paths or provide the file as the first argument.\n";
