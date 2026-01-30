@@ -10,7 +10,7 @@
 
 // FIXME: Currently defining check to switch CCU state from idle to charging and etc.
 
-CCU_StateData state_data = {0}; // prolly initialize the default values to reasonable values that don't break
+ // prolly initialize the default values to reasonable values that don't break
 
 void CCU_State_Tick(CCU_StateData *state_data)
 {
@@ -41,12 +41,6 @@ void CCU_State_Tick(CCU_StateData *state_data)
 
 void STATE_IDLE(CCU_StateData *state_data)
 {
-	UNUSED(state_data);
-	state_data->ACU_S2_OVERTEMP_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 0);
-	state_data->ACU_S2_OVERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 1);
-	state_data->ACU_S2_UNDERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 2);
-	state_data->ACU_S2_OVERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 3);
-	state_data->ACU_S2_UNDERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 4);
 
 	bool anyErrors =
 	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERVOLT_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
@@ -58,12 +52,6 @@ void STATE_IDLE(CCU_StateData *state_data)
 
 void STATE_CHARGING(CCU_StateData *state_data)
 {
-	UNUSED(state_data);
-	state_data->ACU_S2_OVERTEMP_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 0);
-	state_data->ACU_S2_OVERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 1);
-	state_data->ACU_S2_UNDERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 2);
-	state_data->ACU_S2_OVERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 3);
-	state_data->ACU_S2_UNDERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 4);
 
 	bool anyErrors =
 	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERVOLT_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
