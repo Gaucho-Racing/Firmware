@@ -1,22 +1,12 @@
-#include "CANdler.h"
-
 #include "CCUStateData.h"
 #include "GR_OLD_BUS_ID.h"
-#include "StateData.h"
-#include "StateTicks.h"
-#include "adc.h"
-#include "dma.h"
-#include "fdcan.h"
-#include "gpio.h"
-#include "gr_adc.h"
-#include "main.h"
-#include "malloc.h"
-#include "usart.h"
+
+
 
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "CANdler.h"
+#include "CANDler.h"
 #include "Logomatic.h"
 #include "bitManipulations.h"
 #include "GR_OLD_MSG_ID.h"
@@ -27,23 +17,25 @@
 CANHandle *primary_can = {0};
 
 void Read_CAN(uint32_t ID, void *data, uint32_t size){
-	GR_OLD_MESSAGE_ID messageId = (0x000FFF00 & ID) >> 8;
+	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
 	switch (messageId)
 	{
-		case MSG_ACU_STATUS_3:
+		case MSG_ACU_STATUS_2:
 			//FIXME: if bad message do a thing
-
+			LOGOMATIC("Received a ACU STATUS 2 msg");
 
 			//cast *data to whatever msg dti control 10 struct there is
 			//copy data from that struct into the ccu state data struct (eg GETBIT)
-			state_data->ACU_S2_OVERTEMP_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 0);
-			state_data->ACU_S2_OVERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 1);
-			state_data->ACU_S2_UNDERVOLT_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 2);
-			state_data->ACU_S2_OVERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 3);
-			state_data->ACU_S2_UNDERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 4);
+			// state_data.ACU_S2_OVERTEMP_ERROR = GETBIT();
+			// state_data.ACU_S2_OVERVOLT_ERROR = GETBIT();
+			// state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT();
+			// state_data.ACU_S2_OVERCURR_ERROR = GETBIT();
+			// state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(state_data->ACU_S2_ERROR_BITS, 4);
 
+		case MSG_ACU_STATUS_3:
+			LOGOMATIC("Received a ACU STATus 3 msg");
 
 	}
 }
@@ -71,7 +63,7 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
-	canCfg.rx_callback = readCAN;	   // FIXME: add function when CAN READS look in ECU/main;
+	canCfg.rx_callback = Read_CAN;	   // FIXME: add function when CAN READS look in ECU/main;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
 	canCfg.tx_buffer_length = 5;
@@ -116,7 +108,7 @@ void CAN_Configure()
 	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
 	// RX Callback CAN1
-	canCfg.rx_callback = readCAN; // TODO: Make sure the wrapper for this is defined correctly
+	canCfg.rx_callback = Read_CAN; // TODO: Make sure the wrapper for this is defined correctly
 
 	primary_can = can_init(&canCfg); // FIXME: make type *CANHANDLE, look at can.h
 
