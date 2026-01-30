@@ -27,6 +27,7 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "usart.h"
+#include "UpdateButton.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -120,26 +121,13 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
-	uint32_t on = 0;
 	CCU_StateData state_data;
 	UNUSED(state_data);
-	CCU_STATE state = CCU_STATE_IDLE;
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 		LL_mDelay(100);
-		if (LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_13)) {
-			if (on == 0) {
-				state_data.Button_Status = 1;
-				on = 1;
-				LOGOMATIC("On\n");
-
-			} else {
-				on = 0;
-				state_data.Button_Status = 0;
-				LOGOMATIC("Off\n");
-			}
-		}
-		CCU_State_Tick(&state_data, state);
+		Check_Button(&state_data);
+		CCU_State_Tick(&state_data);
 
 		LL_mDelay(200);
 
