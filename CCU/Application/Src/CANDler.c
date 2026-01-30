@@ -33,7 +33,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 		case MSG_ACU_STATUS_3:
 			LOGOMATIC("Received a ACU STATUS 3 msg");
-
 	}
 }
 
