@@ -41,20 +41,23 @@ void ECU_State_Tick()
 	}
 
 	if (bmsFailure(&stateLump) || imdFailure(&stateLump)) {
-		stateLump.tssi_red = true;
+		stateLump.tssi_fault = true;
 	}
 
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
-	if (stateLump.tssi_red) {
-		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
+	if (stateLump.tssi_fault) {
+		LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 		if (stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 175) {
-			LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_6);
+			LL_GPIO_SetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
 		} else if (stateLump.millisSinceBoot - stateLump.tssi_red_blinking_current_cycle_starting_millis < 350) {
-			LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
+			LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
 		} else {
 			stateLump.tssi_red_blinking_current_cycle_starting_millis = stateLump.millisSinceBoot;
 		}
+	} else{
+		LL_GPIO_SetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
+		LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
 	}
 
 	switch (stateLump.ecu_state) {
@@ -84,12 +87,6 @@ void ECU_State_Tick()
 	}
 }
 
-/*
-
-TODO: implement state functionality when loading INTO the state, not just
-transitioning state
-
-*/
 
 void ECU_GLV_Off(ECU_StateData *stateData)
 {
@@ -101,9 +98,6 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
-	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_5);
-	LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
-
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("Error: TS Voltage >= 60!");
@@ -151,51 +145,39 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.");
-		setSoftwareLatch(0);
+		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+
 		return;
 	}
 
 	if (PressingBrake(stateData) && stateData->rtd) {
-		stateData->ecu_state = GR_DRIVE_ACTIVE;
 		GR_OLD_INVERTER_CONFIG_MSG message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .abs_max_motor_rpm = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_CONFIG, &message, sizeof(message));
+		ECU_Drive_Start(stateData);
 		return;
 	}
 }
 
+static uint32_t buzzer_start_millis;
+
+void ECU_Drive_Start(ECU_StateData *stateData) {
+	buzzer_start_millis = stateData->millisSinceBoot;
+	stateData->ecu_state = GR_DRIVE_ACTIVE;
+}
+
 void ECU_Drive_Active(ECU_StateData *stateData)
 {
-	// TODO Implement functionality
-	/*
-		If APPS/BSE Violation --> Don't drive until resolved (no state
-		change) If Tractive System (TS) active/Critical Error -->
-	   Tractive System Discharge
-			--> pressed again
-		If RTD (Ready to Drive) --> Precharge Complete
-	*/
-
-	// Pseudocode
-	/*
-		if (!TSActive || criticalError(stateData)) {
-			stateData->currentState = GR_TS_DISCHARGE
-			emit an error
-			break
-		}
-		if (!RTD) {
-			stateData->currentState = GR_PRECHARGE_COMPLETE
-			emit a warning if moving
-			break
-		}
-		and then we drive the car
-		 - calcPedalTravel func :p
-		 - make tuna-ble function
-	*/
-
 	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.");
-		setSoftwareLatch(0);
+		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		return;
+	}
+
+	if(stateData->millisSinceBoot - buzzer_start_millis > 2000) {
+		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
+	} else {
+		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	}
 
 	if (!stateData->rtd) {
@@ -206,18 +188,22 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	float torque_request = CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
-	// If you are pressing the brake, then you have the negativetorque request calculated
-	bool brakePressed = PressingBrake(stateData);
-	torque_request -= brakePressed * CalcBrakePercent(stateData) * MAX_REVERSE_CURRENT_AMPS; // This is negative current
+	float torque_request = PressingBrake(stateData) && stateData->vehicle_speed > REGEN_MIN_SPEED ?
+		-MIN(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS :
+		CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
+
+	if(APPS_BSE_Violation(stateData)) {
+		stateData->apps_bse_violation = true;
+	} else if(CalcPedalTravel(stateData) < 0.05f) {
+		stateData->apps_bse_violation = false;
+	}
+
+	if(stateData->apps_bse_violation) {
+		torque_request = 0;
+	}
 
 	GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
-	if (brakePressed) {
-		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_4);
-	} else {
-		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_4);
-	}
 }
 
 void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)

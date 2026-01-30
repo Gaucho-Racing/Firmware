@@ -132,7 +132,7 @@ void write_state_data()
 {
 	// analog
 	// TODO: bse signal idk what to do ADC1_outputs[0]
-	// TODO: bspd signal idk what to do ADC1_outputs[1]
+	// TODO: bspd signal --> ADC1_outputs[1], find use
 	stateLump.APPS1_Signal = ADC1_outputs[2];
 	stateLump.APPS2_Signal = ADC1_outputs[3];
 	stateLump.Brake_F_Signal = ADC1_outputs[4];
@@ -389,12 +389,15 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+
+		// read brakes for light
 		read_digital();
 		ADC_UpdateAnalogValues(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
 		ADC_UpdateAnalogValues(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
 		SendECUStateDataOverCAN(&stateLump);
 		write_state_data();
 		ECU_State_Tick();
+		write_brake_light();
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}

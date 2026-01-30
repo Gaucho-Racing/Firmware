@@ -14,33 +14,18 @@ uint32_t MillisecondsSinceBoot(void)
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
 
-// use estop_sense to detect close(?)
-void setSoftwareLatch(bool close)
-{
-	UNUSED(close);
-	// TODO Implement functionality
-	LOGOMATIC("Setting software latch to %d\n", close);
-
-	if (close && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) // Avoid writing pins that are already written to
-	{
-		LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-	} else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-	}
-}
-
 bool CriticalError(volatile const ECU_StateData *stateData)
 {
 	bool problem = false;
 	problem |= stateData->max_cell_temp > 60;
 	problem |= stateData->ts_voltage > 600;
-	problem |= APPS_BSE_Violation(stateData);
+	// problem |= APPS_BSE_Violation(stateData); not a critical error actually
 	problem |= !stateData->bcu_software_latch;
 	problem |= stateData->ir_plus && !stateData->ir_minus;
 	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);
 	problem |= !stateData->ir_minus && (stateData->ecu_state == GR_PRECHARGE_ENGAGED || stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);
-	problem |= (stateData->imd_sense >= 2.7) || (stateData->imd_sense <= 1.45); // TODO: find better range
-	problem |= (stateData->ams_sense >= 2.7) || (stateData->ams_sense <= 1.45); // TODO: find better range
+	problem |= imdFailure(stateData);
+	problem |= bmsFailure(stateData);
 	return problem;
 }
 
@@ -67,6 +52,8 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 	return PressingBrake(stateData) && CalcPedalTravel(stateData) >= 0.25f;
 }
 
+// TODO: move this out of state machine because the brake light will need to be driven at all times
+// TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
 	uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
@@ -77,14 +64,16 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
-float CalcBrakePercent(volatile const ECU_StateData *stateData) // THIS IS NOT ACTUALLY BRAKE TRAVEL,
-								// PRESSURE SENSORS CAPTURE BRAKE TRAVEL
+float CalcBrakePercent(volatile const ECU_StateData *stateData)
 {
 	float total_brake_range = BRAKE_F_MAX - BRAKE_F_MIN + BRAKE_R_MAX - BRAKE_R_MIN;
 	float total_brake_value = stateData->Brake_F_Signal + stateData->Brake_R_Signal - BRAKE_R_MIN - BRAKE_F_MIN;
 	return total_brake_value / total_brake_range;
 }
 
+// TODO: reconsider deadzone
+// TODO: APPS implausibility check (within 10% travel)
+	// Stop throttle if implausible for > 100ms
 float CalcPedalTravel(volatile const ECU_StateData *stateData)
 {
 	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
