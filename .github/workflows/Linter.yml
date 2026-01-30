@@ -23,10 +23,5 @@ jobs:
       run: cmake --preset Debug
 
     - name: Run clang-tidy
-      run: |
-        files=$(git diff --name-only origin/${{ github.base_ref }} | grep -E '\.(cpp|cc|cxx|c)$' || true)
-        if [ -z "$files" ]; then
-          echo "No C/C++ source files changed"
-          exit 0
-        fi
+      run: 
         clang-tidy -p build/Debug $files
