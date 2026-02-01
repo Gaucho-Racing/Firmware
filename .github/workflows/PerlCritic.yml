@@ -77,7 +77,7 @@ jobs:
             | tee perlcritic_annotations.json
 
       - name: Upload Annotations
-        if: always()
+        if: ${{ github.event_name == 'pull_request' }}
         uses: yuzutech/annotations-action@v0.5.0
         with:
           title: 'Perl Linter Findings'
