@@ -10,13 +10,14 @@ use strict;
 use warnings;
 use File::Basename;
 use File::Path qw(make_path);
+
 # ============================================================================
 # ARGUMENTS
 # ============================================================================
 my $yaml_path   = $ARGV[0] // 'format.CANdo';
 my $output_path = $ARGV[1] // 'output.dbc';
-my $bus_filter  = $ARGV[2];    # optional: CAN1, CAN2, or CAN3
-my$dir = dirname($output_path);
+my $bus_filter  = $ARGV[2];                # optional: CAN1, CAN2, or CAN3
+my $dir         = dirname($output_path);
 make_path($dir) if $dir && $dir ne '.' && !-d $dir;
 if ( !-e $yaml_path ) {
 	die "Error: Could not find YAML file at: $yaml_path\n";

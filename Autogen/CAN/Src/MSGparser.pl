@@ -5,7 +5,7 @@ use File::Basename;
 use File::Path qw(make_path);
 my $yaml_file   = $ARGV[0] // 'format.CANdo';
 my $output_file = $ARGV[1] // 'can_msg_ids.h';
-my$dir = dirname($output_file);
+my $dir         = dirname($output_file);
 make_path($dir) if $dir && $dir ne '.' && !-d $dir;
 
 # Safety check: Verify the YAML source exists before parsing

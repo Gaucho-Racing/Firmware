@@ -6,8 +6,9 @@ use File::Basename;
 use File::Path qw(make_path);
 my $yaml_path   = $ARGV[0] // 'format.CANdo';
 my $output_path = $ARGV[1] // 'GR_IDS.h';
-my$dir = dirname($output_path);
+my $dir         = dirname($output_path);
 make_path($dir) if $dir && $dir ne '.' && !-d $dir;
+
 # Safety check for input file
 if ( !-e $yaml_path ) {
 	die "CANfigurator Error: Could not find YAML file at: $yaml_path\n";

@@ -3,13 +3,15 @@ use strict;
 use warnings;
 use File::Basename;
 use File::Path qw(make_path);
+
 # --- Configuration ---
 my $yaml_path   = $ARGV[0] // 'format.CANdo';    # First argument: Input
 my $output_path = $ARGV[1] // 'CANDler.h';       # Second argument: Output
 my $prefix      = "GR_OLD";
 
-my$dir = dirname($output_path);
+my $dir = dirname($output_path);
 make_path($dir) if $dir && $dir ne '.' && !-d $dir;
+
 # Now use these variables in your open calls:
 open( my $in,  '<', $yaml_path )   or die "Can't open YAML: $!";
 open( my $out, '>', $output_path ) or die "Can't open Output: $!";
