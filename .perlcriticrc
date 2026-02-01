@@ -1,7 +1,11 @@
 severity = brutal
 verbose = 10
+
 [-ErrorHandling::RequireCarping]
 [-RegularExpressions::RequireExtendedFormatting]
 [-Modules::RequireVersionVar]
 [-RegularExpressions::RequireDotMatchAnything]
 [-RegularExpressions::RequireLineBoundaryMatching]
+
+[ValuesAndExpressions::ProhibitMagicNumbers]
+allowed_values = 8
