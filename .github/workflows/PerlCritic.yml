@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: read
+      checks: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -31,10 +32,27 @@ jobs:
       - name: Run Perl Critic
         run: |
           set -o pipefail
-          echo "<details open><summary>Perl::Critic Output</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git ls-files '*.pl' '*.pm' | xargs perlcritic | tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
+          git ls-files '*.pl' '*.pm' \
+            | xargs perlcritic --verbose '%f:%l:%c:%m (%p)\n' \
+            | jq -R -s '
+                split("\n")
+                | map(
+                    select(length > 0)
+                    | match("^([^:]+):([^:]+):([^:]+):(.+)$")
+                    | {
+                        file: .captures[0].string,
+                        line: (.captures[1].string | tonumber),
+                        start_column: (.captures[2].string | tonumber),
+                        end_column: (.captures[2].string | tonumber),
+                        annotation_level: "failure",
+                        message: .captures[3].string
+                      }
+                  )
+              ' \
+            > perlcritic_annotation.json
+
+      - name: Annotate Files
+        uses: yuzutech/annotations-action@v0.5.0
+        with:
+          repo-token: ${{ github.token }}
+          input: 'perlcritic_annotation.json'
