@@ -34,7 +34,7 @@ jobs:
         run: |
           set -o pipefail
           git ls-files '*.pl' '*.pm' \
-            | xargs perlcritic --verbose '%f:%l:%c:%m (%p)\n' \
+            | xargs -r perlcritic --verbose '%f:%l:%c:%m (%p)\n' \
             | jq -R -s '
                 split("\n")
                 | map(
