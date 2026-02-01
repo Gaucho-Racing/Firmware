@@ -1,24 +1,39 @@
 name: Perl Critic
+run-name: Perl Critic Linting - ${{ github.ref_name }}
+
 on:
+  push:
+    branches: [ main ]
   pull_request:
-  
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   perlcritic:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Perl
-        uses: shogo82148/actions-setup-perl@v1
+      - name: Checkout Repository
+        uses: actions/checkout@v6
         with:
-          perl-version: '5.38'
-      
-      - name: Install Perl::Critic
+          fetch-depth: 1
+
+      - name: Install Perl Critic
+        uses: perl-actions/install-with-cpanm@v1
+        with:
+          install: 'Perl::Critic'
+
+      - name: Run Perl Critic
         run: |
-          cpanm --notest Perl::Critic
-      
-      - name: Run Perl::Critic
-        run: |
-          perlcritic --profile .perlcriticrc lib/
+          set -o pipefail
+          echo "<details open><summary>`Perl::Critic` Output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          perlcritic | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
