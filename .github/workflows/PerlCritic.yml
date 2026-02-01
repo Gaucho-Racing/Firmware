@@ -52,19 +52,25 @@ jobs:
         run: |
           set -o pipefail
           git ls-files '*.pl' '*.pm' \
-            | xargs -r perlcritic --verbose '%f:%l:%c:%m (%p)\n' \
+            | xargs -r perlcritic --verbose '%f:%l:%c:%s:%m (%p)\n' \
             | jq -R -s '
                 split("\n")
                 | map(
                     select(length > 0)
-                    | match("^([^:]+):([^:]+):([^:]+):(.+)$")
+                    | match("^([^:]+):([^:]+):([^:]+):([^:]+):(.+)$")
+                    | (.captures[3].string | tonumber) as $severity
                     | {
                         file: .captures[0].string,
                         line: (.captures[1].string | tonumber),
                         start_column: (.captures[2].string | tonumber),
                         end_column: (.captures[2].string | tonumber),
-                        annotation_level: "failure",
-                        message: .captures[3].string
+                        annotation_level: (
+                          if $severity >= 5 then "notice"
+                          elif $severity >= 3 then "warning"
+                          else "failure"
+                          end
+                        ),
+                        message: .captures[4].string
                       }
                   )
               ' \
