@@ -1,0 +1,10 @@
+-l=200
+-i=4
+-tabs
+-syn
+-ole=unix
+-b
+-sfs
+-nolq
+-nola
+-bext='/'
