@@ -74,7 +74,7 @@ jobs:
                       }
                   )
               ' \
-            | tee perlcritic_annotation.json
+            | tee perlcritic_annotations.json
 
       - name: Upload Annotations
         if: always()
@@ -82,4 +82,4 @@ jobs:
         with:
           title: 'Perl Linter Findings'
           repo-token: ${{ github.token }}
-          input: 'perlcritic_annotation.json'
+          input: 'perlcritic_annotations.json'
