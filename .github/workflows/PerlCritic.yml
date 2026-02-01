@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  perlcritic:
-    name: Lint Perl
+  perllinter:
+    name: Perl Linter
     runs-on: ubuntu-slim
     permissions:
       contents: read
