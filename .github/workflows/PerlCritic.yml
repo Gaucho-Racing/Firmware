@@ -30,6 +30,7 @@ jobs:
           install: 'Perl::Critic'
 
       - name: Run Perl Critic
+        id: run_perl_critic
         run: |
           set -o pipefail
           git ls-files '*.pl' '*.pm' \
@@ -52,6 +53,7 @@ jobs:
             | tee perlcritic_annotation.json
 
       - name: Annotate Files
+        if: steps.run_perl_critic.outcome == 'failure'
         uses: yuzutech/annotations-action@v0.5.0
         with:
           repo-token: ${{ github.token }}
