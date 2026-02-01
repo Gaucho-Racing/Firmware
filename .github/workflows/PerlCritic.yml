@@ -53,7 +53,7 @@ jobs:
             | tee perlcritic_annotation.json
 
       - name: Annotate Files
-        if: steps.run_perl_critic.outcome == 'failure'
+        if: always()
         uses: yuzutech/annotations-action@v0.5.0
         with:
           repo-token: ${{ github.token }}
