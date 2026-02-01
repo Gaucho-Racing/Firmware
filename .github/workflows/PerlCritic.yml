@@ -1,0 +1,24 @@
+name: Perl Critic
+on:
+  pull_request:
+  
+jobs:
+  perlcritic:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.38'
+      
+      - name: Install Perl::Critic
+        run: |
+          cpanm --notest Perl::Critic
+      
+      - name: Run Perl::Critic
+        run: |
+          perlcritic --profile .perlcriticrc lib/
