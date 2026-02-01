@@ -34,7 +34,7 @@ jobs:
           set -o pipefail
           while IFS= read -r file; do
             echo "<details>" >> $GITHUB_STEP_SUMMARY
-            echo "<summary>Perl Critic on \`$file\`</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary><code>$file</code></summary>" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             perlcritic "$file" 2>&1 | tee -a $GITHUB_STEP_SUMMARY || true
