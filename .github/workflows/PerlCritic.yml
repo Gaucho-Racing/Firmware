@@ -29,7 +29,19 @@ jobs:
         with:
           install: 'Perl::Critic'
 
-      - name: Run Perl Critic
+      - name: Perl Critic For Output
+        id: perl_critic_output
+        run: |
+          set -o pipefail
+          echo "<details open><summary>Perl Critic Output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          git ls-files '*.pl' '*.pm' | xargs -r perlcritic 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Perl Critic For Annotations
         id: run_perl_critic
         run: |
           set -o pipefail
@@ -52,9 +64,10 @@ jobs:
               ' \
             | tee perlcritic_annotation.json
 
-      - name: Annotate Files
+      - name: Upload Annotations
         if: always()
         uses: yuzutech/annotations-action@v0.5.0
         with:
+          title: 'Perl::Critic'
           repo-token: ${{ github.token }}
           input: 'perlcritic_annotation.json'
