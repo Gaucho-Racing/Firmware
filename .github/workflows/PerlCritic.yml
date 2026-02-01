@@ -24,10 +24,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Perl Critic
-        uses: perl-actions/install-with-cpanm@v1
+      - name: Setup Perl
+        uses: shogo82148/actions-setup-perl@v1
         with:
-          install: 'Perl::Critic'
+          install-modules: 'Perl::Critic'
 
       - name: Perl Critic For Output
         run: |
