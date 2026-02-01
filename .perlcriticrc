@@ -1,2 +1,4 @@
-severity = harsh
+severity = brutal
 verbose = 10
+[-ErrorHandling::RequireCarping]
+[-RegularExpressions::RequireExtendedFormatting]
