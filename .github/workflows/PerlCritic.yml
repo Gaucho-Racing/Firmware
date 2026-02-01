@@ -13,6 +13,7 @@ concurrency:
 
 jobs:
   perlcritic:
+    name: Lint Perl
     runs-on: ubuntu-slim
     permissions:
       contents: read
@@ -30,7 +31,7 @@ jobs:
       - name: Run Perl Critic
         run: |
           set -o pipefail
-          echo "<details open><summary>`Perl::Critic` Output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<details open><summary>Perl::Critic Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           perlcritic | tee -a $GITHUB_STEP_SUMMARY
