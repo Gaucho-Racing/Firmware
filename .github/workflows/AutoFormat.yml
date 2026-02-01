@@ -113,10 +113,10 @@ jobs:
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
 
-      - name: Install Perl Tidy
-        uses: perl-actions/install-with-cpanm@v1
+      - name: Setup Perl
+        uses: shogo82148/actions-setup-perl@v1
         with:
-          install: 'Perl::Tidy'
+          install-modules: 'Perl::Tidy'
 
       - name: Format Perl Files
         run: |
