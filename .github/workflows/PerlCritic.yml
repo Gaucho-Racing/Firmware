@@ -65,9 +65,9 @@ jobs:
                         start_column: (.captures[2].string | tonumber),
                         end_column: (.captures[2].string | tonumber),
                         annotation_level: (
-                          if $severity >= 5 then "notice"
+                          if $severity == 5 then "failure"
                           elif $severity >= 3 then "warning"
-                          else "failure"
+                          else "notice"
                           end
                         ),
                         message: .captures[4].string
