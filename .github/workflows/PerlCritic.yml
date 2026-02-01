@@ -1,0 +1,85 @@
+name: Perl Critic
+run-name: Perl Critic Linting - ${{ github.ref_name }}
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  perllinter:
+    name: Perl Linter
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          install-modules: 'Perl::Critic'
+
+      - name: Perl Critic Output
+        run: |
+          set -o pipefail
+          violations_found=0
+          while IFS= read -r file; do
+            echo "<details>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary><code>$file</code></summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            if ! perlcritic "$file" 2>&1 | tee -a $GITHUB_STEP_SUMMARY; then
+              violations_found=1
+            fi
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          done < <(git ls-files '*.pl' '*.pm')
+          exit $violations_found
+
+      - name: Perl Critic Annotations
+        if: always()
+        run: |
+          set -o pipefail
+          git ls-files '*.pl' '*.pm' \
+            | xargs -r perlcritic --verbose '%f:%l:%c:%s:%m (%p)\n' \
+            | jq -R -s '
+                split("\n")
+                | map(
+                    select(length > 0)
+                    | match("^([^:]+):([^:]+):([^:]+):([^:]+):(.+)$")
+                    | (.captures[3].string | tonumber) as $severity
+                    | {
+                        file: .captures[0].string,
+                        line: (.captures[1].string | tonumber),
+                        start_column: (.captures[2].string | tonumber),
+                        end_column: (.captures[2].string | tonumber),
+                        annotation_level: (
+                          if $severity == 5 then "failure"
+                          elif $severity >= 3 then "warning"
+                          else "notice"
+                          end
+                        ),
+                        message: .captures[4].string
+                      }
+                  )
+              ' \
+            | tee perlcritic_annotations.json
+
+      - name: Upload Annotations
+        if: failure() && github.event_name == 'pull_request'
+        uses: yuzutech/annotations-action@v0.5.0
+        with:
+          title: 'Perl Linter Findings'
+          repo-token: ${{ github.token }}
+          input: 'perlcritic_annotations.json'
