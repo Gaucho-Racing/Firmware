@@ -32,11 +32,9 @@ jobs:
       - name: Perl Critic For Output
         run: |
           set -o pipefail
-          echo "<details open><summary>Perl Critic Output</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           while IFS= read -r file; do
             echo "<details>" >> $GITHUB_STEP_SUMMARY
-            echo "<summary>$file</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary>Perl Critic on \`$file\`</summary>" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             perlcritic "$file" 2>&1 | tee -a $GITHUB_STEP_SUMMARY || true
@@ -44,8 +42,6 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "</details>" >> $GITHUB_STEP_SUMMARY
           done < <(git ls-files '*.pl' '*.pm')
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Perl Critic For Annotations
         if: always()
