@@ -34,7 +34,7 @@ jobs:
           echo "<details open><summary>Perl::Critic Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          perlcritic . | tee -a $GITHUB_STEP_SUMMARY
+          git ls-files '*.pl' '*.pm' | xargs perlcritic | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
