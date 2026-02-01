@@ -30,7 +30,6 @@ jobs:
           install: 'Perl::Critic'
 
       - name: Perl Critic For Output
-        id: perl_critic_output
         run: |
           set -o pipefail
           echo "<details open><summary>Perl Critic Output</summary>" >> $GITHUB_STEP_SUMMARY
@@ -42,7 +41,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Perl Critic For Annotations
-        id: run_perl_critic
+        if: always()
         run: |
           set -o pipefail
           git ls-files '*.pl' '*.pm' \
