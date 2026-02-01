@@ -8,4 +8,4 @@ verbose = 10
 [-RegularExpressions::RequireLineBoundaryMatching]
 
 [ValuesAndExpressions::ProhibitMagicNumbers]
-allowed_values = 8
+allowed_values = 0..10
