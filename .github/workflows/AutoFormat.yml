@@ -157,7 +157,7 @@ jobs:
       - name: Install asmfmt
         run: |
           set -o pipefail
-          go install github.com/klauspost/asmfmt/cmd/asmfmt@v1.3.2
+          go install github.com/klauspost/asmfmt/cmd/asmfmt@latest
 
       - name: Format Assembly Files
         run: |
