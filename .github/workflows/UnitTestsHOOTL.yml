@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   cmake:
-    name: Configure and Build
+    name: CMake Configuration and Build
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
@@ -193,8 +193,9 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
+
   ctest:
-    name: Configure, Build, and Run HOOTLTest
+    name: CTest on HOOTL Tests
     needs: cmake
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
@@ -307,13 +308,13 @@ jobs:
         run: |
             set -o pipefail
             if [ -f "$SCCACHE_ERROR_LOG" ]; then
-            echo "<details><summary>Shared Compilation Cache Errors</summary>" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cat "$SCCACHE_ERROR_LOG" | tee -a $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "</details>" >> $GITHUB_STEP_SUMMARY
+              echo "<details><summary>Shared Compilation Cache Errors</summary>" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              cat "$SCCACHE_ERROR_LOG" | tee -a $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "</details>" >> $GITHUB_STEP_SUMMARY
             fi
 
       - name: Shared Compilation Cache Errors (Windows)
@@ -321,17 +322,27 @@ jobs:
         shell: pwsh
         run: |
             if (Test-Path $env:SCCACHE_ERROR_LOG) {
-            echo "<details><summary>Shared Compilation Cache Errors</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            Get-Content $env:SCCACHE_ERROR_LOG | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              echo "<details><summary>Shared Compilation Cache Errors</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              Get-Content $env:SCCACHE_ERROR_LOG | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             }
+
+  prove:
+    name: Prove CANfigurator Unit Tests
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    steps:
+      - name: Placeholder for CANfigurator Unit Tests
+        run: echo "Placeholder for CANfigurator unit tests using Prove (or some other testing framework)."
+
   all:
     name: All HOOTL Unit Tests
-    needs: [ cmake, ctest, valgrind ]
+    needs: [ cmake, ctest, valgrind, prove ]
     runs-on: ubuntu-slim
     steps:
       - name: Complete HOOTL Unit Tests
