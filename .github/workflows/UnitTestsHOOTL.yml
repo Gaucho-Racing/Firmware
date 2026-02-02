@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   cmake:
-    name: CMake Configuration and Build
+    name: CMake Build All Configurations
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
