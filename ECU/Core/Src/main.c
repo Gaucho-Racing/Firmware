@@ -82,7 +82,7 @@ int main(void)
 {
 
 	/* USER CODE BEGIN 1 */
-
+	broken
 	/* USER CODE END 1 */
 
 	/* MCU
