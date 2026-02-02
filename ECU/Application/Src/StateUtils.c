@@ -73,7 +73,7 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 
 // TODO: reconsider deadzone
 // TODO: APPS implausibility check (within 10% travel)
-	// Stop throttle if implausible for > 100ms
+// Stop throttle if implausible for > 100ms
 float CalcPedalTravel(volatile const ECU_StateData *stateData)
 {
 	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;

@@ -55,7 +55,7 @@ void ECU_State_Tick()
 		} else {
 			stateLump.tssi_red_blinking_current_cycle_starting_millis = stateLump.millisSinceBoot;
 		}
-	} else{
+	} else {
 		LL_GPIO_SetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 		LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
 	}
@@ -86,7 +86,6 @@ void ECU_State_Tick()
 			break;
 	}
 }
-
 
 void ECU_GLV_Off(ECU_StateData *stateData)
 {
@@ -160,7 +159,8 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 
 static uint32_t buzzer_start_millis;
 
-void ECU_Drive_Start(ECU_StateData *stateData) {
+void ECU_Drive_Start(ECU_StateData *stateData)
+{
 	buzzer_start_millis = stateData->millisSinceBoot;
 	stateData->ecu_state = GR_DRIVE_ACTIVE;
 }
@@ -174,7 +174,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	if(stateData->millisSinceBoot - buzzer_start_millis > 2000) {
+	if (stateData->millisSinceBoot - buzzer_start_millis > 2000) {
 		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	} else {
 		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
@@ -188,17 +188,16 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	float torque_request = PressingBrake(stateData) && stateData->vehicle_speed > REGEN_MIN_SPEED ?
-		-MIN(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS :
-		CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
+	float torque_request = PressingBrake(stateData) && stateData->vehicle_speed > REGEN_MIN_SPEED ? -MIN(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS
+												      : CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
 
-	if(APPS_BSE_Violation(stateData)) {
+	if (APPS_BSE_Violation(stateData)) {
 		stateData->apps_bse_violation = true;
-	} else if(CalcPedalTravel(stateData) < 0.05f) {
+	} else if (CalcPedalTravel(stateData) < 0.05f) {
 		stateData->apps_bse_violation = false;
 	}
 
-	if(stateData->apps_bse_violation) {
+	if (stateData->apps_bse_violation) {
 		torque_request = 0;
 	}
 
