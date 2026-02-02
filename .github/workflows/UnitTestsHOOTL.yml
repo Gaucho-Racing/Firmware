@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   cmake:
-    name: CMake Build All Configurations
+    name: CMake Builds
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
@@ -167,7 +167,7 @@ jobs:
           overwrite: true
 
   ctest:
-    name: CTest on HOOTL Tests
+    name: CTests
     needs: cmake
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
@@ -304,7 +304,7 @@ jobs:
             }
 
   valgrind:
-    name: Valgrind on HOOTL Tests
+    name: Valgrind
     needs: cmake
     runs-on: ubuntu-latest
     permissions:
@@ -332,7 +332,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
   prove:
-    name: Prove CANfigurator Unit Tests
+    name: Prove CANfigurator
     runs-on: ubuntu-slim
     permissions: { }
     steps:
@@ -340,7 +340,7 @@ jobs:
         run: echo "Placeholder for CANfigurator unit tests using Prove (or some other testing framework)."
 
   all:
-    name: All HOOTL Unit Tests
+    name: Completed All HOOTL Unit Tests
     needs: [ cmake, ctest, valgrind, prove ]
     runs-on: ubuntu-slim
     permissions: { }
