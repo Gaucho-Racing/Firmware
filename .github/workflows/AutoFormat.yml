@@ -151,6 +151,8 @@ jobs:
 
       - name: Setup Go
         uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
 
       - name: Install asmfmt
         run: |
