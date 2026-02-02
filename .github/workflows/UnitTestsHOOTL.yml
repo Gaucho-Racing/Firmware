@@ -334,8 +334,7 @@ jobs:
   prove:
     name: Prove CANfigurator Unit Tests
     runs-on: ubuntu-slim
-    permissions:
-      contents: read
+    permissions: { }
     steps:
       - name: Placeholder for CANfigurator Unit Tests
         run: echo "Placeholder for CANfigurator unit tests using Prove (or some other testing framework)."
@@ -344,6 +343,7 @@ jobs:
     name: All HOOTL Unit Tests
     needs: [ cmake, ctest, valgrind, prove ]
     runs-on: ubuntu-slim
+    permissions: { }
     steps:
       - name: Complete HOOTL Unit Tests
         run: |
