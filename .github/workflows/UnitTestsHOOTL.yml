@@ -166,34 +166,6 @@ jobs:
           compression-level: 0
           overwrite: true
 
-  valgrind:
-    name: Valgrind on HOOTL Tests
-    needs: cmake
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
-
-      - name: Set up Valgrind
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
-        with:
-          packages: valgrind
-
-      - name: Build and Run Memory Check
-        run: |
-          set -o pipefail
-          echo "<details open><summary>HOOTLTest Memory Check</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          make valgrind 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-
   ctest:
     name: CTest on HOOTL Tests
     needs: cmake
@@ -331,6 +303,34 @@ jobs:
               echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             }
 
+  valgrind:
+    name: Valgrind on HOOTL Tests
+    needs: cmake
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up Valgrind
+        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        with:
+          packages: valgrind
+
+      - name: Build and Run Memory Check
+        run: |
+          set -o pipefail
+          echo "<details open><summary>HOOTLTest Memory Check</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          make valgrind 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
   prove:
     name: Prove CANfigurator Unit Tests
     runs-on: ubuntu-slim
@@ -347,7 +347,13 @@ jobs:
     if: always()
     steps:
       - name: Fail HOOTL Unit Tests
-        if: ${{ needs.cmake.result == 'failure' || needs.ctest.result == 'failure' || needs.valgrind.result == 'failure' || needs.prove.result == 'failure' }}
+        if: >
+          ${{
+            needs.cmake.result == 'failure' ||
+            needs.ctest.result == 'failure' ||
+            needs.valgrind.result == 'failure' ||
+            needs.prove.result == 'failure'
+          }}
         run: |
           echo "One or more HOOTL unit test jobs have failed."
           echo "Please review the logs of the individual jobs for more details."
