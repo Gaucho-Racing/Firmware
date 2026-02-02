@@ -344,7 +344,14 @@ jobs:
     needs: [ cmake, ctest, valgrind, prove ]
     runs-on: ubuntu-slim
     permissions: { }
+    if: always()
     steps:
+      - name: Fail HOOTL Unit Tests
+        if: ${{ needs.cmake.result == 'failure' || needs.ctest.result == 'failure' || needs.valgrind.result == 'failure' || needs.prove.result == 'failure' }}
+        run: |
+          echo "One or more HOOTL unit test jobs have failed."
+          exit 1
+
       - name: Complete HOOTL Unit Tests
         run: |
           echo "All HOOTL unit tests have been executed across all operating systems."
