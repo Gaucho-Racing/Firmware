@@ -11,11 +11,11 @@ Nucleo-G474RE-C04
 
 ## 1. Wiring
 
-Wire the boards together by referring to the [MCU pin functions](https://wiki.gauchoracing.com/books/onboarding-4Mh/page/w3-peripherals-workshop-images) and [Nucleo Board Pinout](https://wiki.gauchoracing.com/books/onboarding-4Mh/page/w3-peripherals-workshop-images). Either board can act as transmitter or receiver with this wiring setup.
+Wire the boards together by referring to the [MCU pin functions](https://wiki.gauchoracing.com/link/404#bkmrk-g4-pin-functions) and [Nucleo Board Pinout](https://wiki.gauchoracing.com/link/404#bkmrk-nucleo-pinout). Either board can act as transmitter or receiver with this wiring setup.
 
 - You only need to wire the pins that are labeled SPI.
 - You should only need to use the female jumper cables to connect male headers together.
-- The pin labeled PA5 controls the [User LED](https://wiki.gauchoracing.com/books/onboarding-4Mh/page/w3-peripherals-workshop-images) on each board.
+- The pin labeled PA5 controls the [User LED](https://wiki.gauchoracing.com/link/404#bkmrk-user-led) on each board.
 
 ## 2. Compilation
 
