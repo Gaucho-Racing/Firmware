@@ -73,6 +73,7 @@ jobs:
           default_author: github_actions
           message: 'Automatic CMake Format: Standardized formatting automatically'
           fetch: 'false'
+
   json:
     name: Json
     runs-on: ubuntu-slim
@@ -100,6 +101,7 @@ jobs:
           default_author: github_actions
           message: 'Automatic Json Format: Standardized formatting automatically'
           fetch: 'false'
+
   perl:
     name: Perl
     runs-on: ubuntu-slim
