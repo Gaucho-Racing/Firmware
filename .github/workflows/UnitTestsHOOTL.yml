@@ -349,10 +349,10 @@ jobs:
       - name: Fail HOOTL Unit Tests
         if: >
           ${{
-            needs.cmake.result == 'failure' ||
-            needs.ctest.result == 'failure' ||
-            needs.valgrind.result == 'failure' ||
-            needs.prove.result == 'failure'
+            needs.cmake.result != 'success' ||
+            needs.ctest.result != 'success' ||
+            needs.valgrind.result != 'success' ||
+            needs.prove.result != 'success'
           }}
         run: |
           echo "One or more HOOTL unit test jobs have failed."
