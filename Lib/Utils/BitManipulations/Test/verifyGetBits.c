@@ -139,5 +139,5 @@ int main(void)
 		return 39;
 	}
 
-	return 10;
+	return 0;
 }
