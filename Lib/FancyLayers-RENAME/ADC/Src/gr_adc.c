@@ -14,56 +14,95 @@
 #include "Logomatic.h"
 #include "main.h"
 
-ADC_TypeDef *GetADC(unsigned long adc)
+// Initializes an ADC group
+void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val);
+
+// Initializes each individual ADC
+void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res);
+
+// Initialize the channel configurations of the ADC
+void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
+
+// Initialize a single port and all the pins used on that port
+void ADC_Init_Pins(Pin_Ports *input);
+
+// Initialize each channel
+void ADC_Channel_Init(ADC_TypeDef *adc, uint32_t rank, Channel channel, SamplingTime time);
+
+// Internal variables
+// Store ADC groups have been initialized
+uint8_t ADC12_Initialized = 0, ADC345_Initialized = 0;
+// Array of the possible ranks a channel can be set to
+uint32_t Rank[] = {LL_ADC_REG_RANK_1, LL_ADC_REG_RANK_2,  LL_ADC_REG_RANK_3,  LL_ADC_REG_RANK_4,  LL_ADC_REG_RANK_5,  LL_ADC_REG_RANK_6,  LL_ADC_REG_RANK_7,  LL_ADC_REG_RANK_8,
+		   LL_ADC_REG_RANK_9, LL_ADC_REG_RANK_10, LL_ADC_REG_RANK_11, LL_ADC_REG_RANK_12, LL_ADC_REG_RANK_13, LL_ADC_REG_RANK_14, LL_ADC_REG_RANK_15, LL_ADC_REG_RANK_16};
+// Array of number of channels that can be initialized
+uint32_t Num_Channel_Options[] = {LL_ADC_REG_SEQ_SCAN_DISABLE,	      LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,  LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS,  LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
+				  LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS,  LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS,  LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS,  LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS,
+				  LL_ADC_REG_SEQ_SCAN_ENABLE_9RANKS,  LL_ADC_REG_SEQ_SCAN_ENABLE_10RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_11RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_12RANKS,
+				  LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS};
+
+void ADC_Init(ADC_Init_Values *Init_Values)
 {
-	switch (adc) {
-		case 1:
-			return ADC1;
-		case 2:
-			return ADC2;
-		case 3:
-			return ADC3;
-		case 4:
-			return ADC4;
-		case 5:
-			return ADC5;
+	// Initialize the ADC Common Group
+	uint8_t group_initialized = 0; // For checking if the group is already initialized
+
+	// ADC Group 12 already initialized
+	if (__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC1) && ADC12_Initialized) {
+		LOGOMATIC("ADC Group 12 already initialized");
+		group_initialized = 1;
+	}
+	// ADC Group 345 already initialized
+	if (__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC3) && ADC345_Initialized) {
+		LOGOMATIC("ADC Group 345 already initialized");
+		group_initialized = 1;
+	}
+	if (!group_initialized) {
+		ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Value);
 	}
 
-	LOGOMATIC("Invalid ADC number: %lu\n",
-		  adc); // Please put these calls more often to help with debugging in
-			// non-performance areas such as during initializations
-	Error_Handler();
-	return NULL;
+	// Initialize the individual ADCs
+	ADC_Init_Single(Init_Values->ADC, Init_Values->res);
+
+	// Initialize regular channels for individual ADC
+	ADC_Regular_Group_Init(Init_Values->ADC, Num_Channel_Options[Init_Values->Num_Channels - 1]);
+
+	// Initialize all pins
+	for (uint32_t i = 0; i < Init_Values->Num_Pin_Port_Objs; ++i) {
+		ADC_Init_Pins(&(Init_Values->Pins[i]));
+	}
+
+	// Initialize Channels
+	for (uint32_t i = 0; i < Init_Values->Num_Channels; ++i) {
+		ADC_Channel_Init(Init_Values->ADC, Rank[i], Init_Values->Channels[i], Init_Values->SamplingTimes[i]);
+	}
 }
 
 void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val)
 {
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
 	ADC_CommonInitStruct.CommonClock = PS_Val;
-	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
+	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT; // ADC Dual Mode disabled
 	LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC), &ADC_CommonInitStruct);
 }
 
-void ADC_Init(ADC_TypeDef *ADC, Resolution res, Alignment align)
+void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res)
 {
 	LL_ADC_InitTypeDef ADC_InitStruct = {0};
 	ADC_InitStruct.Resolution = res;
-	ADC_InitStruct.DataAlignment = align;
-	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
+	ADC_InitStruct.DataAlignment = LL_ADC_DATA_ALIGN_RIGHT; // Right Align: LSB at bit 0, directly translates to numerical value
+	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;	// No ADC low power mode
 	LL_ADC_Init(ADC, &ADC_InitStruct);
 }
 
-// FIXME: ADC_TYPEDEF* is here for now. We may need to fix later. Originally was
-// an unsigned long
 void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length)
 {
 	LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
-	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
+	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE; // ADC conversion is triggered by software
 	ADC_REG_InitStruct.SequencerLength = Sequence_Length;
-	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
-	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED;
-	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_OVERWRITTEN;
+	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE; // No interrupts
+	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;	      // Continuous conversion
+	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED;   // Allows unlimited DMA transfer of regular group data
+	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_OVERWRITTEN;	      // Allows data to be overwritten when the buffer fills
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 
@@ -76,11 +115,11 @@ void ADC_Init_Pins(Pin_Ports *input)
 	LL_GPIO_Init(input->port, &GPIO_InitStruct);
 }
 
-void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel, ChannelSingleDiff diff, SamplingTime time)
+void ADC_Channel_Init(ADC_TypeDef *ADC, uint32_t rank, Channel channel, SamplingTime time)
 {
 	LL_ADC_REG_SetSequencerRanks(ADC, rank, channel);
 	LL_ADC_SetChannelSamplingTime(ADC, channel, time);
-	LL_ADC_SetChannelSingleDiff(ADC, channel, diff);
+	LL_ADC_SetChannelSingleDiff(ADC, channel, LL_ADC_SINGLE_ENDED);
 }
 
 // Enable ADC with proper calibration and voltage regulator handling
@@ -102,40 +141,45 @@ void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC)
 	LL_ADC_REG_StartConversion(ADC);
 }
 
-void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock) { LL_ADC_SetCommonClock(ADC_Common, commonClock); }
-
-CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common) { return LL_ADC_GetCommonClock(ADC_Common); }
-// note to self: these are not valid errors; they appear in vscode but not on
-// compile	<-- To be clear I do not have any errors anywhere at all...
-void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, volatile void *dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
-	      DMA_Priority priority)
+void DMA_Init(DMA_Init_Values *Init_Values)
 {
 	LL_DMA_InitTypeDef config = {0};
-	config.PeriphOrM2MSrcAddress = src_address;
-	config.MemoryOrM2MDstAddress = (uint32_t)dest_address;
-	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
-	config.Mode = LL_DMA_MODE_CIRCULAR;
-	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
-	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;
-	config.PeriphOrM2MSrcDataSize = p_data_size;
-	config.MemoryOrM2MDstDataSize = m_data_size;
-	config.NbData = num_data;
+	config.PeriphOrM2MSrcAddress = Init_Values->Src_Address;
+	config.MemoryOrM2MDstAddress = (uint32_t)Init_Values->Dest_Address;
+	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;	  // Direction of data transfer: from peripheral to memory
+	config.Mode = LL_DMA_MODE_CIRCULAR;			  // Circular mode: continuously transfers after the last cycle finishes
+	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT; // Peripheral memory address doesn't increments - all results written to the ADCx->DR register
+	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;	  // Memory address increments after every transfer
+	config.NbData = 1;					  // Transfers one data unit at a time
+	switch (Init_Values->Data_Size) {
+		case (Byte):
+			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_BYTE;
+			config.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_BYTE;
+			break;
+		case (Half_Word):
+			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_HALFWORD;
+			config.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_HALFWORD;
+			break;
+		case (Word):
+			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_WORD;
+			config.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_WORD;
+	}
 
 	// Select ADC DMAMUX request
-	if (ADC == ADC1) {
+	if (Init_Values->ADC == ADC1) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC1;
-	} else if (ADC == ADC2) {
+	} else if (Init_Values->ADC == ADC2) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC2;
-	} else if (ADC == ADC3) {
+	} else if (Init_Values->ADC == ADC3) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC3;
-	} else if (ADC == ADC4) {
+	} else if (Init_Values->ADC == ADC4) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC4;
-	} else if (ADC == ADC5) {
+	} else if (Init_Values->ADC == ADC5) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC5;
 	}
 
-	config.Priority = priority;
-	LL_DMA_Init(DMA, channel, &config);
+	config.Priority = Init_Values->Priority;
+	LL_DMA_Init(Init_Values->DMA, Init_Values->Channel, &config);
 }
 
 // NOTE: DMA init is still using NOINCREMENT
@@ -164,6 +208,13 @@ void ADC_WeightedOutput(uint16_t *latest, float *weighted_output, int num_signal
 	}
 }
 */
+
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output)
+{
+	for (int i = 0; i < num_signals; ++i) {
+		weighted_output[i] = alpha * new_values[i] + (1 - alpha) * weighted_output[i];
+	}
+}
 
 // void updateAnalogInputs(void)
 // {

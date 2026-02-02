@@ -73,3 +73,6 @@ Icon\r
 # Other Editors
 .*.swp
 .ccls-cache
+
+# Perl
+local

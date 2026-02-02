@@ -1,5 +1,6 @@
 #include "can_tests.h"
 
+#include <inttypes.h>
 #include <string.h>
 
 #include "can.h"
@@ -12,16 +13,17 @@ int can_test_instance(FDCAN_HandleTypeDef fdcan_handle)
 	return 0;
 }
 
-void can_test_rx_callback2(void *data, uint32_t size, uint32_t ID)
+void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
-	LOGOMATIC("CAN2 Got data! Size %ld, ID 0x%lx, data[0] = 0x%x\n", size, ID, *(char *)data);
+	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
 
-void can_test_rx_callback1(void *data, uint32_t size, uint32_t ID)
+void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 {
-	LOGOMATIC("CAN1 Got data! Size %ld, ID 0x%lx, data[0] = 0x%x\n", size, ID, *(char *)data);
+	LOGOMATIC("CAN1 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
+
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
