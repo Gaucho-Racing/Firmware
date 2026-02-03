@@ -82,6 +82,15 @@
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4BLINKY"
 		},
 		{
+			"label": "CMake: configure and build AnalogCalibration",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target AnalogCalibration"
+		},
+		{
 			"label": "CMake: configure and build U5BLINKY",
 			"type": "shell",
 			"dependsOrder": "sequence",
