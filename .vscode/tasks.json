@@ -64,24 +64,6 @@
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4CANTESTING"
 		},
 		{
-			"label": "CMake: configure and build G4PERTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4PERTESTING"
-		},
-		{
-			"label": "CMake: configure and build G4ADCTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
-		},
-		{
 			"label": "CMake: configure and build G4BLINKY",
 			"type": "shell",
 			"dependsOrder": "sequence",
