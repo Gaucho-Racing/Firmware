@@ -132,25 +132,26 @@ int main(void)
 	ex_config.DataWidth = LL_SPI_DATAWIDTH_8BIT;
 	ex_config.ClockPolarity = LL_SPI_POLARITY_LOW;
 	ex_config.ClockPhase = LL_SPI_PHASE_1EDGE;
-	ex_config.NSS = LL_SPI_NSS_HARD_OUTPUT;
+	ex_config.NSS = LL_SPI_NSS_SOFT;
 	ex_config.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV2;
 	ex_config.BitOrder = LL_SPI_LSB_FIRST;
 	ex_config.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
 	ex_config.CRCPoly = 0x1D;
 
-	ex_pins.SPIx = SPI1;
+	ex_pins.SPIx = SPI3;
 	ex_pins.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
 	// All pins are in the A clock port
-	for (int i = 0; i < 4; i++) {
-		*(ex_pins.GPIOx + i) = GPIOA;
+	for (int i = 0; i < 3; i++) {
+		*(ex_pins.GPIOx + i) = GPIOC;
 	}
+	ex_pins.GPIOx[3] = GPIOA;
 	ex_pins.num_pins = 4;
 	ex_pins.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
-	ex_pins.pin_nums[0] = LL_GPIO_PIN_7; // COPI
-	ex_pins.pin_nums[1] = LL_GPIO_PIN_6; // CIPO
-	ex_pins.pin_nums[2] = LL_GPIO_PIN_5; // SCK
+	ex_pins.pin_nums[0] = LL_GPIO_PIN_12; // COPI
+	ex_pins.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
+	ex_pins.pin_nums[2] = LL_GPIO_PIN_10; // SCK
 	ex_pins.pin_nums[3] = LL_GPIO_PIN_4; // NSS
-	ex_pins.alternate_function_number = 5;
+	ex_pins.alternate_function_number = 6;
 
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
 
@@ -211,32 +212,46 @@ int main(void)
 	// LOGOMATIC("-= End Verification =-\n");
 
 	LOGOMATIC("Starting message transaction...\n");
+	/*
+	uint8_t data = 0x00;
+	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4); // NSS low
 
+	for(uint8_t i = 1; i < 128; i++) {
+		LL_SPI_TransmitData8(SPI3, i);
+		while (LL_SPI_IsActiveFlag_BSY(SPI3));
+		data = LL_SPI_ReceiveData8(SPI3);
+		LOGOMATIC("data: %d\n", data);
+	}
+
+	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);   // NSS high
+	*/
 	GR_SPI_Message msg;
-	msg.data = (uint8_t *)malloc(4 * sizeof(uint8_t));
-	msg.size = 4;
+	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
+	msg.size = 32;
 
-	msg.data[0] = 'a';
-	msg.data[1] = '0';
-	msg.data[2] = '0';
-	msg.data[3] = '0';
+	for(int i = 0; i < msg.size; i++) {
+		msg.data[i] = 'A' + i;
+	}
 
 	GR_SPI_Send(&ex_handler, &msg);
 
 	LOGOMATIC("Sent message, now receiving...\n");
 
-	GR_SPI_Message recv_msg;
+	for(int i = 0; i < msg.size; i++) {
+		msg.data[i] = '#';
+	}
 
 	while (GR_SPI_IsRxEmpty(&ex_handler)) {}
 
-	GR_SPI_Receive(&ex_handler, &recv_msg);
+	GR_SPI_Receive(&ex_handler, &msg);
 
-	char str[5];
-	strcpy(str, (char *)recv_msg.data);
-	str[4] = '\0';
+	char str[33];
+	strncpy(str, msg.data, msg.size);
+	str[32] = '\0';
 
 	LOGOMATIC("Received: %s\n", str);
 
+	free(msg.data);
 	GR_SPI_Close(&ex_handler);
 	/* USER CODE END 2 */
 

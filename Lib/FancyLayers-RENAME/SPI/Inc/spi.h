@@ -45,9 +45,6 @@ typedef struct {
 	volatile uint8_t msg_status;
 } GR_SPI_Handler;
 
-static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handler structs for SPI1
-					      // (0), SPI2 (1), & SPI3 (2)
-
 // ============================= Handler Functions =============================
 
 /**

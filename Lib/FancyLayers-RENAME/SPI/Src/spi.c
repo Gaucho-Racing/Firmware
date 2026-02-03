@@ -12,6 +12,9 @@
 #define GR_SPI_MSG_IDLE 0
 #define GR_SPI_INVALID_TX_SIZE 257 // test value - change later
 
+static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handler structs for SPI1
+					      // (0), SPI2 (1), & SPI3 (2)
+
 void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config)
 {
 	// Create Circular Buffers
@@ -162,7 +165,8 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 		if (handle->current_rx_msg_index == msg_size) {
 			handle->current_rx_msg_index = 0;
 			GR_CircularBuffer_Push(handle->rx_buffer, (void *)handle->current_msg, sizeof(GR_SPI_Message));
-			GR_SPI_Msg_Free(handle->current_msg);
+			// Free message struct but not the byte array within the message (pointed to by the message on the rx_buffer)
+			free(handle->current_msg);
 			handle->current_msg = NULL;
 			// Finish transaction
 			LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
@@ -241,8 +245,15 @@ void GR_SPI_Enable_Clocks(GR_SPI_Handler *handle)
 
 void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 {
+	GR_SPI_Message temp_msg;
+	temp_msg.size = msg->size;
+	temp_msg.data = malloc(temp_msg.size * sizeof(uint8_t));
+	for(int i = 0; i < temp_msg.size; i++) {
+		temp_msg.data[i] = msg->data[i];
+	}
+
 	// Push the new message (copy) onto the Tx circular buffer
-	GR_CircularBuffer_Push(handle->tx_buffer, msg, sizeof(GR_SPI_Message));
+	GR_CircularBuffer_Push(handle->tx_buffer, &temp_msg, sizeof(GR_SPI_Message));
 
 	// Check if there is no message in progress
 	if (handle->msg_status != GR_SPI_MSG_IN_PROGRESS) {
@@ -376,10 +387,6 @@ void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
 	// Pull chip select to active low
 	LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
 
-	// Note: This will trigger a TXE flag eventually (and maybe execute the handler below)
-	GR_SPI_Transfer_Tx_Bytes(handle);
-
 	// Enable TXE interrupts for loading bytes into TX buffer
-	// ---Warning: Without an if-statement conditional, this statement could take over register buses quite often
-	// LL_SPI_EnableIT_TXE(handle->pins->SPIx); // Empty Tx buffer
+	LL_SPI_EnableIT_TXE(handle->pins->SPIx); // Empty Tx buffer
 }
