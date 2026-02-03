@@ -15,6 +15,7 @@ CANHandle *primary_can = {0};
 
 void Read_CAN(uint32_t ID, void *data, uint32_t size)
 {
+	uint8_t byte = ((uint8_t *)data)[5];
 	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
@@ -25,14 +26,16 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			// cast *data to whatever msg dti control 10 struct there is
 			// copy data from that struct into the ccu state data struct (eg GETBIT)
-			//  state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(data, 40);
-			//  state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(data, 41);
-			//  state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(data, 42);
-			//  state_data.ACU_S2_OVERCURR_ERROR = GETBIT(data, 43);
-			//  state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(data, 44);
+			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(byte, 0);
+			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(byte, 1);
+			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(byte, 2);
+			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(byte, 3);
+			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(byte, 4);
+			break;
 
 		case MSG_ACU_STATUS_3:
 			LOGOMATIC("Received a ACU STATUS 3 msg");
+			break;
 	}
 }
 
