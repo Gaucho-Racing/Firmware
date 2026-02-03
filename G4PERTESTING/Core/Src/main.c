@@ -150,7 +150,7 @@ int main(void)
 	ex_pins.pin_nums[0] = LL_GPIO_PIN_12; // COPI
 	ex_pins.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
 	ex_pins.pin_nums[2] = LL_GPIO_PIN_10; // SCK
-	ex_pins.pin_nums[3] = LL_GPIO_PIN_4; // NSS
+	ex_pins.pin_nums[3] = LL_GPIO_PIN_4;  // NSS
 	ex_pins.alternate_function_number = 6;
 
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
@@ -229,7 +229,7 @@ int main(void)
 	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
 	msg.size = 32;
 
-	for(int i = 0; i < msg.size; i++) {
+	for (int i = 0; i < msg.size; i++) {
 		msg.data[i] = 'A' + i;
 	}
 
@@ -237,7 +237,7 @@ int main(void)
 
 	LOGOMATIC("Sent message, now receiving...\n");
 
-	for(int i = 0; i < msg.size; i++) {
+	for (int i = 0; i < msg.size; i++) {
 		msg.data[i] = '#';
 	}
 

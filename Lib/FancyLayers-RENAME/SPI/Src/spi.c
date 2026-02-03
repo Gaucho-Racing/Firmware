@@ -248,7 +248,7 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 	GR_SPI_Message temp_msg;
 	temp_msg.size = msg->size;
 	temp_msg.data = malloc(temp_msg.size * sizeof(uint8_t));
-	for(int i = 0; i < temp_msg.size; i++) {
+	for (int i = 0; i < temp_msg.size; i++) {
 		temp_msg.data[i] = msg->data[i];
 	}
 
