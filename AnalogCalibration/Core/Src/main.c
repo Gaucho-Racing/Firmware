@@ -19,13 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "adc.h"
 #include "dma.h"
-#include "fdcan.h"
-#include "gpio.h"
 #include "gr_adc.h"
-#include "malloc.h"
-#include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -158,19 +153,6 @@ int main(void)
 	/* Configure the system clock */
 	SystemClock_Config();
 
-	/* USER CODE BEGIN SysInit */
-
-	/* USER CODE END SysInit */
-
-	/* Initialize all configured peripherals */
-	MX_GPIO_Init();
-	MX_DMA_Init();
-	MX_FDCAN1_Init();
-	MX_FDCAN2_Init();
-	MX_ADC1_Init();
-	MX_ADC2_Init();
-	MX_LPUART1_UART_Init();
-
 	ADC_Configure();
 
 	/* USER CODE END 2 */
@@ -202,9 +184,10 @@ int main(void)
 
 		ADC_UpdateAnalogValues_EMA(ADC_Buffers, NUM_SIGNALS, 0.3, ADC_Outputs);
 		for (int i = 0; i < NUM_SIGNALS; i++){
-			LOGOMATIC("Max %s: %d\t", pin_names[i], max_vals[i]);
-			LOGOMATIC("Min %s: %d\t", pin_names[i], min_vals[i]);
-			LOGOMATIC("Current %s Value: %d\n", pin_names[i], ADC_Outputs[i]);
+			if (i == 7)
+				LOGOMATIC("%s\tMin: %d\t Max: %d\t Current Value: %d\n", pin_names[i], min_vals[i], max_vals[i], ADC_Outputs[i]);
+			else
+				LOGOMATIC("%s\t\tMin: %d\t Max: %d\t Current Value: %d\n", pin_names[i], min_vals[i], max_vals[i], ADC_Outputs[i]);
 		}
 		LL_mDelay(250); // FIXME Reduce or remove delay
 	}
