@@ -51,6 +51,7 @@ void ADC_Init(ADC_Init_Values *Init_Values)
 		LOGOMATIC("ADC Group 12 already initialized");
 		group_initialized = 1;
 	}
+
 	// ADC Group 345 already initialized
 	if (__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC3) && ADC345_Initialized) {
 		LOGOMATIC("ADC Group 345 already initialized");
@@ -61,7 +62,7 @@ void ADC_Init(ADC_Init_Values *Init_Values)
 	}
 
 	// Initialize the individual ADCs
-	ADC_Init_Single(Init_Values->ADC, Init_Values->res);
+	ADC_Init_Single(Init_Values->ADC, Init_Values->Res);
 
 	// Initialize regular channels for individual ADC
 	ADC_Regular_Group_Init(Init_Values->ADC, Num_Channel_Options[Init_Values->Num_Channels - 1]);
