@@ -152,12 +152,12 @@ void ADC_Configure(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
+	// OLD ADC (FOR REF)
+	/*
 	// Initialize the ADC1
 	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
-	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
 	ADC_Regular_Group_Init(ADC1, RANKS_7);
 
-	// TODO: INITIALIZE PIN_PORTS BETTER!!!
 	// Initialize the pins and channels
 	Pin_Ports p1 = {0};
 	p1.port = GPIOC;
@@ -188,12 +188,66 @@ void ADC_Configure(void)
 	ADC_Channel_Init(ADC2, RANK_2, ADC_CHANNEL_13, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
 	ADC_Channel_Init(ADC2, RANK_3, ADC_CHANNEL_3, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
 	ADC_Channel_Init(ADC2, RANK_4, ADC_CHANNEL_4, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	*/
+
+	// ADC 1
+	ADC_Init_Values init_vals_adc1 = {0};
+	init_vals.ADC = ADC1;
+	init_vals.PS_Value = PS_8; // TODO: change later
+	init_vals.res = RESOLUTION_12; // TODO: change later
+	init_vals.Num_Pin_Port_Objs = 2;
+	Pin_Ports* p1 = {{LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, GPIOC}, {LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, GPIOB}};
+	init_vals.Pins = p1;
+	init_vals.Num_Channels = 7; // check multiple GPIO stuff
+	Channel *c1 = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
+	init_vals.Channels = c1;
+	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
+	init_vals.SamplingTimes = &s1;
+	ADC_Init(&init_vals);
+
+	// ADC 2
+	ADC_Init_Values init_vals_adc2 = {0};
+	init_vals.ADC = ADC2;
+	init_vals.PS_Value = PS_8; // TODO: change later
+	init_vals.res = RESOLUTION_12; // TODO: change later
+	init_vals.Num_Pin_Port_Objs = 1;
+	Pin_Ports* p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
+	init_vals.Pins = p2;
+	init_vals.Num_Channels = 4; // check multiple GPIO stuff
+	Channel* c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
+	init_vals.Channels = c2;
+	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
+	init_vals.SamplingTimes = &s2;
+	ADC_Init(&init_vals_adc2);
 
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
 	// DMA reads into buffer
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1, ADC1, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2, ADC2, HIGH);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
+
+	// Initialize DMA (for both ADCs)
+	DMA_Init_Values DMA_Init_Vals_ADC1 = {0};
+	DMA_Init_Vals.DMA = DMA1;
+	DMA_Init_Vals.ADC = ADC1;
+	DMA_Init_Vals.Channel = DMA_CHANNEL_1;
+	DMA_Init_Vals.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals.Dest_Address = &ADC1_buffers;
+	DMA_Init_Vals.Data_Size = Word;
+	DMA_Init_Vals.Priority = HIGH; // TODO: check what this does
+	DMA_Init(&DMA_Init_Vals_ADC1);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+	DMA_Init_Values DMA_Init_Vals_ADC2 = {0};
+	DMA_Init_Vals.DMA = DMA1;
+	DMA_Init_Vals.ADC = ADC2;
+	DMA_Init_Vals.Channel = DMA_CHANNEL_2;
+	DMA_Init_Vals.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals.Dest_Address = &ADC1_buffers;
+	DMA_Init_Vals.Data_Size = Word;
+	DMA_Init_Vals.Priority = HIGH; // TODO: check what this does
+	DMA_Init(&DMA_Init_Vals_ADC2);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
 
 	ADC_Enable_And_Calibrate(ADC1);
@@ -392,12 +446,12 @@ int main(void)
 
 		// read brakes for light
 		read_digital();
-		ADC_UpdateAnalogValues(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
-		ADC_UpdateAnalogValues(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
+		ADC_UpdateAnalogValues_EMA(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
+		ADC_UpdateAnalogValues_EMA(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
 		SendECUStateDataOverCAN(&stateLump);
 		write_state_data();
 		ECU_State_Tick();
-		write_brake_light();
+		write_brake_light(); // TODO: actually implement LOL
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}
