@@ -15,7 +15,10 @@ CANHandle *primary_can = {0};
 
 void Read_CAN(uint32_t ID, void *data, uint32_t size)
 {
-	uint8_t byte = ((uint8_t *)data)[5];
+	uint8_t byte_3 = ((uint8_t *)data)[3];
+	uint8_t byte_4 = ((uint8_t *)data)[4];
+	uint8_t byte_5 = ((uint8_t *)data)[5];
+	uint8_t byte_6 = ((uint8_t *)data)[6];
 	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
@@ -26,11 +29,23 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			// cast *data to whatever msg dti control 10 struct there is
 			// copy data from that struct into the ccu state data struct (eg GETBIT)
-			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(byte, 0);
-			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(byte, 1);
-			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(byte, 2);
-			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(byte, 3);
-			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(byte, 4);
+			//ACU_STATUS_2 MIN CELL Volt (3)
+			state_data.ACU_S2_MIN_CELL_Volt = GETBITS(byte_3, 0, 8);
+
+			///ACU_STATUS_2 MAX CELL TEMP(4)
+			state_data.ACU_S2_MAX_CELL_TEMP = GETBITS(byte_4, 0, 8);
+
+			///ACU_STATUS_2 Error Byte (5)
+			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(byte_5, 0);
+			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(byte_5, 1);
+			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(byte_5, 2);
+			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(byte_5, 3);
+			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(byte_5, 4);
+
+
+			//ACU_STATUS_2 PRECHARGE + SOFTWARE LATCH (6)
+			state_data.ACU_S2_SOFTWARE_LATCH = GETBIT(byte_6, 3);
+
 			break;
 
 		case MSG_ACU_STATUS_3:
