@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "GR_OLD_BUS_ID.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -32,15 +31,13 @@
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
 #include "adc.h"
-#include "can.h"
 
 // ADC 1
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
-volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
-uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
-uint16_t *adcDataValues[NUM_SIGNALS] = {0};	  // 2D Array
+volatile uint16_t ADC_Buffers[NUM_SIGNALS] = {0}; // Most recent values
+uint16_t ADC_Outputs[NUM_SIGNALS] = {0};	  // Updated averages
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -71,54 +68,16 @@ void ADC_Configure(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
-	// OLD ADC (FOR REF)
-	/*
-	// Initialize the ADC1
-	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
-	ADC_Regular_Group_Init(ADC1, RANKS_7);
-
-	// Initialize the pins and channels
-	Pin_Ports p1 = {0};
-	p1.port = GPIOC;
-	p1.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3;
-	ADC_Init_Pins(&p1);
-	Pin_Ports p2 = {0};
-	p2.port = GPIOB;
-	p2.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14;
-	ADC_Init_Pins(&p2);
-	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_6, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_2, ADC_CHANNEL_7, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_3, ADC_CHANNEL_8, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_4, ADC_CHANNEL_9, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_5, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_6, ADC_CHANNEL_12, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_7, ADC_CHANNEL_5, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-
-	// Initialize ADC2
-	ADC_Init(ADC2, RESOLUTION_12, RIGHT);
-	ADC_Regular_Group_Init(ADC2, RANKS_4);
-
-	// Initialize the pins and channels
-	Pin_Ports p3 = {0};
-	p3.port = GPIOA;
-	p3.pin = LL_GPIO_PIN_15;
-	ADC_Init_Pins(&p3);
-	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_2, ADC_CHANNEL_13, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_3, ADC_CHANNEL_3, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_4, ADC_CHANNEL_4, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	*/
-
-	// ADC 1
+	// Initialize ADC 1
 	ADC_Init_Values Init_Vals_ADC1 = {0};
 	Init_Vals_ADC1.ADC = ADC1;
-	Init_Vals_ADC1.PS_Value = PS_8;	    // TODO: change later
-	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
+	Init_Vals_ADC1.PS_Value = PS_8;
+	Init_Vals_ADC1.Res = RESOLUTION_12;
 	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
 	Pin_Ports p1[2] = {{.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, .port = GPIOC}, {.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, .port = GPIOB}};
 	Init_Vals_ADC1.Pins = p1;
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
-	Channel *c1 = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
+	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
 	Init_Vals_ADC1.Channels = c1;
 	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC1.SamplingTimes = &s1;
@@ -127,13 +86,13 @@ void ADC_Configure(void)
 	// ADC 2
 	ADC_Init_Values Init_Vals_ADC2 = {0};
 	Init_Vals_ADC2.ADC = ADC2;
-	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
-	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
+	Init_Vals_ADC2.PS_Value = PS_8;
+	Init_Vals_ADC2.Res = RESOLUTION_12;
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
 	Pin_Ports p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
 	Init_Vals_ADC2.Pins = &p2;
 	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
-	Channel *c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
+	Channel c2[] = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
 	Init_Vals_ADC2.Channels = c2;
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
@@ -153,7 +112,7 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC1.ADC = ADC1;
 	DMA_Init_Vals_ADC1.Channel = DMA_CHANNEL_1;
 	DMA_Init_Vals_ADC1.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
-	DMA_Init_Vals_ADC1.Dest_Address = ADC_buffers;
+	DMA_Init_Vals_ADC1.Dest_Address = ADC_Buffers;
 	DMA_Init_Vals_ADC1.Data_Size = Word;
 	DMA_Init_Vals_ADC1.Priority = HIGH; // TODO: check what this does
 	DMA_Init(&DMA_Init_Vals_ADC1);
@@ -164,7 +123,7 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC2.ADC = ADC2;
 	DMA_Init_Vals_ADC2.Channel = DMA_CHANNEL_2;
 	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
-	DMA_Init_Vals_ADC2.Dest_Address = ADC_buffers + NUM_SIGNALS_ADC1;
+	DMA_Init_Vals_ADC2.Dest_Address = ADC_Buffers + NUM_SIGNALS_ADC1;
 	DMA_Init_Vals_ADC2.Data_Size = Word;
 	DMA_Init_Vals_ADC2.Priority = HIGH; // TODO: check what this does
 	DMA_Init(&DMA_Init_Vals_ADC2);
@@ -212,38 +171,42 @@ int main(void)
 	MX_ADC2_Init();
 	MX_LPUART1_UART_Init();
 
-	/* USER CODE BEGIN 2 */
-
-	// Set Software Latch to closed
-	setSoftwareLatch(1);
-
-	// Initialize CAN
-	CAN_Configure();
-
 	ADC_Configure();
-	for (int i = 0; i < NUM_SIGNALS; i++) {
-		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
-	}
-
-	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	// Array for min/max values
+	uint16_t min_vals[NUM_SIGNALS];
+	uint16_t max_vals[NUM_SIGNALS];
+	for (int i = 0; i < NUM_SIGNALS; i++){
+		min_vals[i] = UINT16_MAX;
+		max_vals[i] = 0;
+	}
+	char* pin_names[] = {"BSE_SIGNAL", "BSPD_SIGNAL", "APPS1_SIGNAL", "APPS2_SIGNAL", "BRAKE_F_SIGNAL",
+						  "BRAKE_R_SIGNAL", "AUX_SIGNAL", "STEERING_ANGLE_SIGNAL" , "BSPD_SENSE", "IMD_SENSE", "AMS_SENSE"};
+
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		// TODO: determine alpha
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
-		SendECUStateDataOverCAN(&stateLump);
-		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
-		LL_mDelay(250); // FIXME Reduce or remove de
-	}
-	/* USER CODE END 3 */
-	for (int i = NUM_SIGNALS - 1; i >= 0; i--) {
-		free(adcDataValues[i]);
+		for (int i = 0; i < NUM_SIGNALS; i++){
+			// Update min
+			if (min_vals[i] > ADC_Buffers[i])
+				min_vals[i] = ADC_Buffers[i];
+			// Update max
+			if (max_vals[i] < ADC_Buffers[i])
+				max_vals[i] = ADC_Buffers[i];
+		}
+
+		ADC_UpdateAnalogValues_EMA(ADC_Buffers, NUM_SIGNALS, 0.3, ADC_Outputs);
+		for (int i = 0; i < NUM_SIGNALS; i++){
+			LOGOMATIC("Max %s: %d\n", pin_names[i], max_vals[i]);
+			LOGOMATIC("Min %s: %d\n", pin_names[i], min_vals[i]);
+			LOGOMATIC("Current %s Value: %d\n", pin_names[i], ADC_Outputs[i]);
+		}
+		LL_mDelay(250); // FIXME Reduce or remove delay
 	}
 }
 

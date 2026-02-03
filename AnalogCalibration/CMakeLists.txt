@@ -30,19 +30,15 @@ target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Core/Src/adc.c
-		Core/Src/crc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
 		Core/Src/gpio.c
-		Core/Src/i2c.c
 		Core/Src/main.c
-		Core/Src/spi.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-		Core/Src/tim.c
 		Core/Src/usart.c
 )
 
