@@ -72,9 +72,9 @@
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
-volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};		      // Contains new values
-uint16_t ADC_outputs[NUM_SIGNALS] = {0};			      // Updated averages
-uint16_t *adcDataValues[NUM_SIGNALS] = {0}; // 2D Array
+volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
+uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
+uint16_t *adcDataValues[NUM_SIGNALS] = {0};	  // 2D Array
 
 // DIGITAL
 
@@ -192,19 +192,10 @@ void ADC_Configure(void)
 	// ADC 1
 	ADC_Init_Values Init_Vals_ADC1 = {0};
 	Init_Vals_ADC1.ADC = ADC1;
-	Init_Vals_ADC1.PS_Value = PS_8; // TODO: change later
+	Init_Vals_ADC1.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
-	Pin_Ports p1[2] = {
-		{
-			.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-			.port = GPIOC
-		},
-		{
-			.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14,
-			.port = GPIOB
-		}
-	};
+	Pin_Ports p1[2] = {{.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, .port = GPIOC}, {.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, .port = GPIOB}};
 	Init_Vals_ADC1.Pins = p1;
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
@@ -216,7 +207,7 @@ void ADC_Configure(void)
 	// ADC 2
 	ADC_Init_Values Init_Vals_ADC2 = {0};
 	Init_Vals_ADC2.ADC = ADC2;
-	Init_Vals_ADC2.PS_Value = PS_8; // TODO: change later
+	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
 	Pin_Ports p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
