@@ -162,32 +162,35 @@ int main(void)
 	// Array for min/max values
 	uint16_t min_vals[NUM_SIGNALS];
 	uint16_t max_vals[NUM_SIGNALS];
-	for (int i = 0; i < NUM_SIGNALS; i++){
+	for (int i = 0; i < NUM_SIGNALS; i++) {
 		min_vals[i] = UINT16_MAX;
 		max_vals[i] = 0;
 	}
-	char* pin_names[] = {"BSE_SIGNAL", "BSPD_SIGNAL", "APPS1_SIGNAL", "APPS2_SIGNAL", "BRAKE_F_SIGNAL",
-						  "BRAKE_R_SIGNAL", "AUX_SIGNAL", "STEERING_ANGLE_SIGNAL" , "BSPD_SENSE", "IMD_SENSE", "AMS_SENSE"};
+	char *pin_names[] = {"BSE_SIGNAL", "BSPD_SIGNAL",	    "APPS1_SIGNAL", "APPS2_SIGNAL", "BRAKE_F_SIGNAL", "BRAKE_R_SIGNAL",
+			     "AUX_SIGNAL", "STEERING_ANGLE_SIGNAL", "BSPD_SENSE",   "IMD_SENSE",    "AMS_SENSE"};
 
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		for (int i = 0; i < NUM_SIGNALS; i++){
+		for (int i = 0; i < NUM_SIGNALS; i++) {
 			// Update min
-			if (min_vals[i] > ADC_Buffers[i])
+			if (min_vals[i] > ADC_Buffers[i]) {
 				min_vals[i] = ADC_Buffers[i];
+			}
 			// Update max
-			if (max_vals[i] < ADC_Buffers[i])
+			if (max_vals[i] < ADC_Buffers[i]) {
 				max_vals[i] = ADC_Buffers[i];
+			}
 		}
 
 		ADC_UpdateAnalogValues_EMA(ADC_Buffers, NUM_SIGNALS, 0.3, ADC_Outputs);
-		for (int i = 0; i < NUM_SIGNALS; i++){
-			if (i == 7)
+		for (int i = 0; i < NUM_SIGNALS; i++) {
+			if (i == 7) {
 				LOGOMATIC("%s\tMin: %d\t Max: %d\t Current Value: %d\n", pin_names[i], min_vals[i], max_vals[i], ADC_Outputs[i]);
-			else
+			} else {
 				LOGOMATIC("%s\t\tMin: %d\t Max: %d\t Current Value: %d\n", pin_names[i], min_vals[i], max_vals[i], ADC_Outputs[i]);
+			}
 		}
 		LL_mDelay(250); // FIXME Reduce or remove delay
 	}
