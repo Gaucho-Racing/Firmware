@@ -69,13 +69,12 @@
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 4
+#define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
-volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0};		      // Contains new values
-volatile uint16_t ADC2_buffers[NUM_SIGNALS_ADC2] = {0};		      // Contains new values
-uint16_t ADC1_outputs[NUM_SIGNALS_ADC1] = {0};			      // Updated averages
-uint16_t ADC2_outputs[NUM_SIGNALS_ADC2] = {0};			      // Updated averages
-uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0}; // 2D Array
+volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};		      // Contains new values
+uint16_t ADC_outputs[NUM_SIGNALS] = {0};			      // Updated averages
+uint16_t *adcDataValues[NUM_SIGNALS] = {0}; // 2D Array
 
 // DIGITAL
 
@@ -131,17 +130,17 @@ void read_digital(void)
 void write_state_data()
 {
 	// analog
-	// TODO: bse signal idk what to do ADC1_outputs[0]
-	// TODO: bspd signal --> ADC1_outputs[1], find use
-	stateLump.APPS1_Signal = ADC1_outputs[2];
-	stateLump.APPS2_Signal = ADC1_outputs[3];
-	stateLump.Brake_F_Signal = ADC1_outputs[4];
-	stateLump.Brake_R_Signal = ADC1_outputs[5];
+	// TODO: bse signal idk what to do ADC_outputs[0]
+	// TODO: bspd signal --> ADC_outputs[1], find use
+	stateLump.APPS1_Signal = ADC_outputs[2];
+	stateLump.APPS2_Signal = ADC_outputs[3];
+	stateLump.Brake_F_Signal = ADC_outputs[4];
+	stateLump.Brake_R_Signal = ADC_outputs[5];
 	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
-	stateLump.STEERING_ANGLE_SIGNAL = ADC2_outputs[0];
-	stateLump.bspd_sense = ADC2_outputs[1];
-	stateLump.imd_sense = ADC2_outputs[2];
-	stateLump.ams_sense = ADC2_outputs[3];
+	stateLump.STEERING_ANGLE_SIGNAL = ADC_outputs[6];
+	stateLump.bspd_sense = ADC_outputs[7];
+	stateLump.imd_sense = ADC_outputs[8];
+	stateLump.ams_sense = ADC_outputs[9];
 }
 
 void ADC_Configure(void)
@@ -191,62 +190,72 @@ void ADC_Configure(void)
 	*/
 
 	// ADC 1
-	ADC_Init_Values init_vals_adc1 = {0};
-	init_vals.ADC = ADC1;
-	init_vals.PS_Value = PS_8; // TODO: change later
-	init_vals.res = RESOLUTION_12; // TODO: change later
-	init_vals.Num_Pin_Port_Objs = 2;
-	Pin_Ports* p1 = {{LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, GPIOC}, {LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, GPIOB}};
-	init_vals.Pins = p1;
-	init_vals.Num_Channels = 7; // check multiple GPIO stuff
+	ADC_Init_Values Init_Vals_ADC1 = {0};
+	Init_Vals_ADC1.ADC = ADC1;
+	Init_Vals_ADC1.PS_Value = PS_8; // TODO: change later
+	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
+	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
+	Pin_Ports p1[2] = {
+		{
+			.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+			.port = GPIOC
+		},
+		{
+			.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14,
+			.port = GPIOB
+		}
+	};
+	Init_Vals_ADC1.Pins = p1;
+	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel *c1 = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
-	init_vals.Channels = c1;
+	Init_Vals_ADC1.Channels = c1;
 	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
-	init_vals.SamplingTimes = &s1;
-	ADC_Init(&init_vals);
+	Init_Vals_ADC1.SamplingTimes = &s1;
+	ADC_Init(&Init_Vals_ADC1);
 
 	// ADC 2
-	ADC_Init_Values init_vals_adc2 = {0};
-	init_vals.ADC = ADC2;
-	init_vals.PS_Value = PS_8; // TODO: change later
-	init_vals.res = RESOLUTION_12; // TODO: change later
-	init_vals.Num_Pin_Port_Objs = 1;
-	Pin_Ports* p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
-	init_vals.Pins = p2;
-	init_vals.Num_Channels = 4; // check multiple GPIO stuff
+	ADC_Init_Values Init_Vals_ADC2 = {0};
+	Init_Vals_ADC2.ADC = ADC2;
+	Init_Vals_ADC2.PS_Value = PS_8; // TODO: change later
+	Init_Vals_ADC2.res = RESOLUTION_12; // TODO: change later
+	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
+	Pin_Ports p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
+	Init_Vals_ADC2.Pins = &p2;
+	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
 	Channel* c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
-	init_vals.Channels = c2;
+	Init_Vals_ADC2.Channels = c2;
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
-	init_vals.SamplingTimes = &s2;
-	ADC_Init(&init_vals_adc2);
+	Init_Vals_ADC2.SamplingTimes = &s2;
+	ADC_Init(&Init_Vals_ADC2);
 
+	/*
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
 	// DMA reads into buffer
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1, ADC1, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2, ADC2, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
-
+	*/
 	// Initialize DMA (for both ADCs)
 	DMA_Init_Values DMA_Init_Vals_ADC1 = {0};
-	DMA_Init_Vals.DMA = DMA1;
-	DMA_Init_Vals.ADC = ADC1;
-	DMA_Init_Vals.Channel = DMA_CHANNEL_1;
-	DMA_Init_Vals.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
-	DMA_Init_Vals.Dest_Address = &ADC1_buffers;
-	DMA_Init_Vals.Data_Size = Word;
-	DMA_Init_Vals.Priority = HIGH; // TODO: check what this does
+	DMA_Init_Vals_ADC1.DMA = DMA1;
+	DMA_Init_Vals_ADC1.ADC = ADC1;
+	DMA_Init_Vals_ADC1.Channel = DMA_CHANNEL_1;
+	DMA_Init_Vals_ADC1.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals_ADC1.Dest_Address = ADC_buffers;
+	DMA_Init_Vals_ADC1.Data_Size = Word;
+	DMA_Init_Vals_ADC1.Priority = HIGH; // TODO: check what this does
 	DMA_Init(&DMA_Init_Vals_ADC1);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
 	DMA_Init_Values DMA_Init_Vals_ADC2 = {0};
-	DMA_Init_Vals.DMA = DMA1;
-	DMA_Init_Vals.ADC = ADC2;
-	DMA_Init_Vals.Channel = DMA_CHANNEL_2;
-	DMA_Init_Vals.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
-	DMA_Init_Vals.Dest_Address = &ADC1_buffers;
-	DMA_Init_Vals.Data_Size = Word;
-	DMA_Init_Vals.Priority = HIGH; // TODO: check what this does
+	DMA_Init_Vals_ADC2.DMA = DMA1;
+	DMA_Init_Vals_ADC2.ADC = ADC2;
+	DMA_Init_Vals_ADC2.Channel = DMA_CHANNEL_2;
+	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals_ADC2.Dest_Address = ADC_buffers + NUM_SIGNALS_ADC1;
+	DMA_Init_Vals_ADC2.Data_Size = Word;
+	DMA_Init_Vals_ADC2.Priority = HIGH; // TODO: check what this does
 	DMA_Init(&DMA_Init_Vals_ADC2);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
 
@@ -429,7 +438,7 @@ int main(void)
 	CAN_Configure();
 
 	ADC_Configure();
-	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++) {
+	for (int i = 0; i < NUM_SIGNALS; i++) {
 		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 	}
 
@@ -443,11 +452,9 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-
-		// read brakes for light
 		read_digital();
-		ADC_UpdateAnalogValues_EMA(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
-		ADC_UpdateAnalogValues_EMA(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
+		// TODO: determine alpha
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
 		SendECUStateDataOverCAN(&stateLump);
 		write_state_data();
 		ECU_State_Tick();
@@ -456,7 +463,7 @@ int main(void)
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */
-	for (int i = (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2) - 1; i >= 0; i--) {
+	for (int i = NUM_SIGNALS - 1; i >= 0; i--) {
 		free(adcDataValues[i]);
 	}
 }
