@@ -20,8 +20,6 @@
 #include "main.h"
 
 #include "GR_OLD_BUS_ID.h"
-#include "StateData.h"
-#include "StateTicks.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -32,54 +30,17 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "CANdler.h"
-#include "CANutils.h"
 #include "Logomatic.h"
-#include "StateTicks.h"
-#include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
-/* USER CODE END Includes */
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-// CAN
-
-#define CAN_TX_BUFFER_LENGTH 10
 // ADC 1
-#define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
-#define NUM_SIGNALS_DIGITAL 8
-// TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
 uint16_t *adcDataValues[NUM_SIGNALS] = {0};	  // 2D Array
-
-// DIGITAL
-
-// STATE DATA
-extern ECU_StateData stateLump;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -100,47 +61,6 @@ static void ITM_Enable(void)
 
 	/* Set trace control register */
 	ITM->TCR |= ITM_TCR_ITMENA_Msk;
-}
-/* USER CODE END 0 */
-
-// TODO: state data stores stuff as either FLOATS or BOOLS...check
-void read_digital(void)
-{
-	// debouncing/latching for ts/rtd active
-	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
-	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-	uint32_t curr_time = MillisecondsSinceBoot();
-
-	if (!stateLump.prev_ts_active_button_state && ts_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
-		stateLump.ts_active = !stateLump.ts_active;
-		stateLump.prev_ts_press_millis = curr_time;
-	}
-	if (!stateLump.prev_rtd_button_state && rtd_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
-		stateLump.rtd = !stateLump.rtd;
-		stateLump.prev_rtd_press_millis = curr_time;
-	}
-
-	stateLump.prev_ts_active_button_state = ts_press;
-	stateLump.prev_rtd_button_state = rtd_press;
-
-	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-	stateLump.estop_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
-}
-
-void write_state_data()
-{
-	// analog
-	// TODO: bse signal idk what to do ADC_outputs[0]
-	// TODO: bspd signal --> ADC_outputs[1], find use
-	stateLump.APPS1_Signal = ADC_outputs[2];
-	stateLump.APPS2_Signal = ADC_outputs[3];
-	stateLump.Brake_F_Signal = ADC_outputs[4];
-	stateLump.Brake_R_Signal = ADC_outputs[5];
-	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
-	stateLump.STEERING_ANGLE_SIGNAL = ADC_outputs[6];
-	stateLump.bspd_sense = ADC_outputs[7];
-	stateLump.imd_sense = ADC_outputs[8];
-	stateLump.ams_sense = ADC_outputs[9];
 }
 
 void ADC_Configure(void)
@@ -254,134 +174,6 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC2);
 }
 
-void CAN1_rx_callback(void *data, uint32_t size, uint32_t ID)
-{
-	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
-			       (0x000FFF00 & ID) >> 8, // TODO: Double check
-			       (0xFF00000 & ID) >> 20, data, size);
-}
-
-void CAN2_rx_callback(void *data, uint32_t size, uint32_t ID) { ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size); }
-
-void CAN_Configure()
-{
-	CANConfig canCfg;
-
-	// SHARED config ddata for CAN1 and CAN2
-	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
-	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
-	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
-	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
-	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
-	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
-	canCfg.hal_fdcan_init.NominalPrescaler = 1;
-	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
-	canCfg.hal_fdcan_init.DataPrescaler = 8;
-	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
-
-	canCfg.rx_callback = NULL;
-	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
-	canCfg.tx_interrupt_priority = 15;
-	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
-
-	// RX shared settings
-	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
-	canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
-	canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-
-	// TX Shared settings
-	canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
-	canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
-	canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-
-	/*FDCAN_TxHeaderTypeDef TxHeader = {
-	    .Identifier = 1,
-
-	    .IdType = FDCAN_STANDARD_ID,
-	    .TxFrameType = FDCAN_DATA_FRAME,
-	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 1,
-	    .BitRateSwitch = FDCAN_BRS_OFF,
-	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
-	};
-
-	FDCANTxMessage msg = {.data = {0x80}, .tx_header = TxHeader};
-	*/
-
-	// PCLK1 from SYSCLK
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
-
-	// CAN1 =====================================================================
-	canCfg.fdcan_instance = FDCAN1;
-	canCfg.rx_gpio = GPIOA;
-	canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
-	canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
-
-	canCfg.tx_gpio = GPIOA;
-	canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
-	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
-
-	// RX Callback CAN1
-	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
-
-	primary_can = can_init(&canCfg);
-
-	// Filter 1 Definitions
-	FDCAN_FilterTypeDef fdcan1_filter;
-
-	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter.FilterIndex = 0;
-	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
-	fdcan1_filter.FilterID2 = 0x00000FF;
-
-	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
-
-	// CAN2 ======================================================
-	canCfg.fdcan_instance = FDCAN2;
-	canCfg.rx_gpio = GPIOB;
-	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
-	canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
-
-	canCfg.tx_gpio = GPIOB;
-	canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
-	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
-
-	// RX Callback CAN2
-	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
-
-	// Filter definitions
-	FDCAN_FilterTypeDef fdcan2_filter;
-
-	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan2_filter.FilterIndex = 0;
-	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
-	fdcan2_filter.FilterID2 = 0x00000FF;
-
-	fdcan2_filter.FilterIndex = 1;
-	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
-
-	data_can = can_init(&canCfg);
-
-	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigFilter(data_can->hal_fdcanP, &fdcan2_filter);
-
-	can_start(primary_can);
-	can_start(data_can);
-}
 /**
  * @brief  The application entry point.
  * @retval int
@@ -443,13 +235,9 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		read_digital();
 		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
 		SendECUStateDataOverCAN(&stateLump);
-		write_state_data();
-		ECU_State_Tick();
-		write_brake_light(); // TODO: actually implement LOL
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}
