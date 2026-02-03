@@ -193,10 +193,10 @@ void ADC_Configure(void)
 	// ADC 1
 	ADC_Init_Values init_vals_adc1 = {0};
 	init_vals.ADC = ADC1;
-	init_vals.PS_Value = PS_8; // TODO: change later
+	init_vals.PS_Value = PS_8;     // TODO: change later
 	init_vals.res = RESOLUTION_12; // TODO: change later
 	init_vals.Num_Pin_Port_Objs = 2;
-	Pin_Ports* p1 = {{LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, GPIOC}, {LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, GPIOB}};
+	Pin_Ports *p1 = {{LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, GPIOC}, {LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, GPIOB}};
 	init_vals.Pins = p1;
 	init_vals.Num_Channels = 7; // check multiple GPIO stuff
 	Channel *c1 = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
@@ -208,13 +208,13 @@ void ADC_Configure(void)
 	// ADC 2
 	ADC_Init_Values init_vals_adc2 = {0};
 	init_vals.ADC = ADC2;
-	init_vals.PS_Value = PS_8; // TODO: change later
+	init_vals.PS_Value = PS_8;     // TODO: change later
 	init_vals.res = RESOLUTION_12; // TODO: change later
 	init_vals.Num_Pin_Port_Objs = 1;
-	Pin_Ports* p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
+	Pin_Ports *p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
 	init_vals.Pins = p2;
 	init_vals.Num_Channels = 4; // check multiple GPIO stuff
-	Channel* c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
+	Channel *c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
 	init_vals.Channels = c2;
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	init_vals.SamplingTimes = &s2;
