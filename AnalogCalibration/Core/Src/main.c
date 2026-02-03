@@ -202,8 +202,8 @@ int main(void)
 
 		ADC_UpdateAnalogValues_EMA(ADC_Buffers, NUM_SIGNALS, 0.3, ADC_Outputs);
 		for (int i = 0; i < NUM_SIGNALS; i++){
-			LOGOMATIC("Max %s: %d\n", pin_names[i], max_vals[i]);
-			LOGOMATIC("Min %s: %d\n", pin_names[i], min_vals[i]);
+			LOGOMATIC("Max %s: %d\t", pin_names[i], max_vals[i]);
+			LOGOMATIC("Min %s: %d\t", pin_names[i], min_vals[i]);
 			LOGOMATIC("Current %s Value: %d\n", pin_names[i], ADC_Outputs[i]);
 		}
 		LL_mDelay(250); // FIXME Reduce or remove delay
