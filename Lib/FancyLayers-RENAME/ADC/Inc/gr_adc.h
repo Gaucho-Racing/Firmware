@@ -148,4 +148,6 @@ void DMA_Init(DMA_Init_Values *Init_Values);
 /// @param weighted_output Takes in the current output, overwrites with the new output
 void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
 
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
+
 #endif
