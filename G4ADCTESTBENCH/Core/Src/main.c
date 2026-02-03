@@ -19,16 +19,26 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "GR_OLD_BUS_ID.h"
+#include "StateData.h"
+#include "StateTicks.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
+#include "gr_adc.h"
+#include "malloc.h"
 #include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "CANdler.h"
+#include "CANutils.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
+#include "StateUtils.h"
+#include "adc.h"
+#include "can.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,6 +62,26 @@
 
 /* USER CODE END PV */
 
+// CAN
+
+#define CAN_TX_BUFFER_LENGTH 10
+// ADC 1
+#define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
+#define NUM_SIGNALS_ADC1 7
+#define NUM_SIGNALS_ADC2 4
+#define NUM_SIGNALS_DIGITAL 8
+// TODO: check which data size to use (floats...ints...etc)
+volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0};		      // Contains new values
+volatile uint16_t ADC2_buffers[NUM_SIGNALS_ADC2] = {0};		      // Contains new values
+uint16_t ADC1_outputs[NUM_SIGNALS_ADC1] = {0};			      // Updated averages
+uint16_t ADC2_outputs[NUM_SIGNALS_ADC2] = {0};			      // Updated averages
+uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0}; // 2D Array
+
+// DIGITAL
+
+// STATE DATA
+extern ECU_StateData stateLump;
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
@@ -74,6 +104,230 @@ static void ITM_Enable(void)
 }
 /* USER CODE END 0 */
 
+// TODO: state data stores stuff as either FLOATS or BOOLS...check
+void read_digital(void)
+{
+	// debouncing/latching for ts/rtd active
+	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
+	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
+	uint32_t curr_time = MillisecondsSinceBoot();
+
+	if (!stateLump.prev_ts_active_button_state && ts_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
+		stateLump.ts_active = !stateLump.ts_active;
+		stateLump.prev_ts_press_millis = curr_time;
+	}
+	if (!stateLump.prev_rtd_button_state && rtd_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
+		stateLump.rtd = !stateLump.rtd;
+		stateLump.prev_rtd_press_millis = curr_time;
+	}
+
+	stateLump.prev_ts_active_button_state = ts_press;
+	stateLump.prev_rtd_button_state = rtd_press;
+
+	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
+	stateLump.estop_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
+}
+
+void write_state_data()
+{
+	// analog
+	// TODO: bse signal idk what to do ADC1_outputs[0]
+	// TODO: bspd signal idk what to do ADC1_outputs[1]
+	stateLump.APPS1_Signal = ADC1_outputs[2];
+	stateLump.APPS2_Signal = ADC1_outputs[3];
+	stateLump.Brake_F_Signal = ADC1_outputs[4];
+	stateLump.Brake_R_Signal = ADC1_outputs[5];
+	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
+	stateLump.STEERING_ANGLE_SIGNAL = ADC2_outputs[0];
+	stateLump.bspd_sense = ADC2_outputs[1];
+	stateLump.imd_sense = ADC2_outputs[2];
+	stateLump.ams_sense = ADC2_outputs[3];
+}
+
+void ADC_Configure(void)
+{
+	// Initialize which clock source to use
+	LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
+	/* Peripheral clock enable */
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+
+	// Initialize the ADC1
+	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
+	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
+	ADC_Regular_Group_Init(ADC1, RANKS_7);
+
+	// TODO: INITIALIZE PIN_PORTS BETTER!!!
+	// Initialize the pins and channels
+	Pin_Ports p1 = {0};
+	p1.port = GPIOC;
+	p1.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3;
+	ADC_Init_Pins(&p1);
+	Pin_Ports p2 = {0};
+	p2.port = GPIOB;
+	p2.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14;
+	ADC_Init_Pins(&p2);
+	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_6, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_2, ADC_CHANNEL_7, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_3, ADC_CHANNEL_8, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_4, ADC_CHANNEL_9, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_5, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_6, ADC_CHANNEL_12, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_7, ADC_CHANNEL_5, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+
+	// Initialize ADC2
+	ADC_Init(ADC2, RESOLUTION_12, RIGHT);
+	ADC_Regular_Group_Init(ADC2, RANKS_4);
+
+	// Initialize the pins and channels
+	Pin_Ports p3 = {0};
+	p3.port = GPIOA;
+	p3.pin = LL_GPIO_PIN_15;
+	ADC_Init_Pins(&p3);
+	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC2, RANK_2, ADC_CHANNEL_13, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC2, RANK_3, ADC_CHANNEL_3, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC2, RANK_4, ADC_CHANNEL_4, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+
+	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
+	// DMA reads into buffer
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1, ADC1, HIGH);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2, ADC2, HIGH);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
+
+	ADC_Enable_And_Calibrate(ADC1);
+	ADC_Enable_And_Calibrate(ADC2);
+}
+
+void CAN1_rx_callback(void *data, uint32_t size, uint32_t ID)
+{
+	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
+			       (0x000FFF00 & ID) >> 8, // TODO: Double check
+			       (0xFF00000 & ID) >> 20, data, size);
+}
+
+void CAN2_rx_callback(void *data, uint32_t size, uint32_t ID) { ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size); }
+
+void CAN_Configure()
+{
+	CANConfig canCfg;
+
+	// SHARED config ddata for CAN1 and CAN2
+	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
+	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
+	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
+	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
+	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
+	canCfg.hal_fdcan_init.NominalPrescaler = 1;
+	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
+	canCfg.hal_fdcan_init.DataPrescaler = 8;
+	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+
+	canCfg.rx_callback = NULL;
+	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
+	canCfg.tx_interrupt_priority = 15;
+	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
+
+	// RX shared settings
+	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
+	canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
+	canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+	// TX Shared settings
+	canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
+	canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
+	canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+	/*FDCAN_TxHeaderTypeDef TxHeader = {
+	    .Identifier = 1,
+
+	    .IdType = FDCAN_STANDARD_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .DataLength = 1,
+	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
+	};
+
+	FDCANTxMessage msg = {.data = {0x80}, .tx_header = TxHeader};
+	*/
+
+	// PCLK1 from SYSCLK
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+	// CAN1 =====================================================================
+	canCfg.fdcan_instance = FDCAN1;
+	canCfg.rx_gpio = GPIOA;
+	canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+	canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+	canCfg.tx_gpio = GPIOA;
+	canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+	// RX Callback CAN1
+	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
+
+	primary_can = can_init(&canCfg);
+
+	// Filter 1 Definitions
+	FDCAN_FilterTypeDef fdcan1_filter;
+
+	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
+	fdcan1_filter.FilterIndex = 0;
+	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
+	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
+	fdcan1_filter.FilterID2 = 0x00000FF;
+
+	fdcan1_filter.FilterIndex = 1;
+	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
+	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
+
+	// CAN2 ======================================================
+	canCfg.fdcan_instance = FDCAN2;
+	canCfg.rx_gpio = GPIOB;
+	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
+	canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	canCfg.tx_gpio = GPIOB;
+	canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
+	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	// RX Callback CAN2
+	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
+
+	// Filter definitions
+	FDCAN_FilterTypeDef fdcan2_filter;
+
+	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
+	fdcan2_filter.FilterIndex = 0;
+	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
+	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
+	fdcan2_filter.FilterID2 = 0x00000FF;
+
+	fdcan2_filter.FilterIndex = 1;
+	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
+
+	data_can = can_init(&canCfg);
+
+	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
+	HAL_FDCAN_ConfigFilter(data_can->hal_fdcanP, &fdcan2_filter);
+
+	can_start(primary_can);
+	can_start(data_can);
+}
 /**
  * @brief  The application entry point.
  * @retval int
@@ -111,7 +365,21 @@ int main(void)
 	MX_ADC1_Init();
 	MX_ADC2_Init();
 	MX_LPUART1_UART_Init();
+
 	/* USER CODE BEGIN 2 */
+
+	// Set Software Latch to closed
+	setSoftwareLatch(1);
+
+	// Initialize CAN
+	CAN_Configure();
+
+	ADC_Configure();
+	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++) {
+		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
+	}
+
+	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	/* USER CODE END 2 */
 
@@ -121,11 +389,19 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		read_digital();
+		ADC_UpdateAnalogValues(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
+		ADC_UpdateAnalogValues(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
+		SendECUStateDataOverCAN(&stateLump);
+		write_state_data();
 		ECU_State_Tick();
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
-		LL_mDelay(250); // FIXME Reduce or remove delay
+		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */
+	for (int i = (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2) - 1; i >= 0; i--) {
+		free(adcDataValues[i]);
+	}
 }
 
 /**
@@ -149,6 +425,7 @@ void SystemClock_Config(void)
 	while (LL_RCC_PLL_IsReady() != 1) {}
 
 	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
+
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
 	/* Wait till System clock is ready */
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
