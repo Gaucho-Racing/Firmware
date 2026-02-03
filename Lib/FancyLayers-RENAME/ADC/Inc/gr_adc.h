@@ -90,7 +90,7 @@ typedef enum {
 typedef struct {
 	ADC_TypeDef *ADC;
 	Pre_Scaler_Values PS_Value;
-	Resolution res;
+	Resolution Res;
 	uint32_t Num_Pin_Port_Objs;
 	Pin_Ports *Pins;
 	uint32_t Num_Channels;
@@ -124,11 +124,11 @@ typedef enum { Byte, Half_Word, Word } DMA_Data_Size;
 ///
 /// @param DMA The DMA to be initialized
 /// @param ADC The ADC instance this DMA channel handles
-/// @param Channels DMA channel to initialize - each channel handles a single instance of ADC
+/// @param Channel DMA channel to initialize - each channel handles a single instance of ADC
 /// @param Src_Address Source address, use LL_ADC_DMA_GetRegAddr() to get the address
 /// @param Dest_Addresses Pointers to destination buffer
-/// @param Data_Size Array of data sizes, can be options of DMA_Data_Size
-/// @param Priority Array of priorities to set the priorities of each DMA channel
+/// @param Data_Size Size of data to be transfered, can be options of DMA_Data_Size
+/// @param Priority Sets the priority of the DMA channel
 typedef struct {
 	DMA_TypeDef *DMA;
 	ADC_TypeDef *ADC;
@@ -141,9 +141,12 @@ typedef struct {
 
 void DMA_Init(DMA_Init_Values *Init_Values);
 
-/*
- */
-void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output);
+/// @brief A smoothing function using an Exponential Moving Average
+/// @param new_values An array of the most recent values
+/// @param num_signals Number of signals to be updated
+/// @param alpha The weight of the newest values (0.0 - 1.0)
+/// @param weighted_output Takes in the current output, overwrites with the new output
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
 
 void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
 
