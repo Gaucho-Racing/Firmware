@@ -17,12 +17,12 @@ typedef struct {
 } GR_SPI_Message;
 
 typedef struct {
-	SPI_TypeDef *SPIx; 						// Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
-	GPIO_TypeDef **GPIOx; 					// Pointer to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
-											// COPI, CIPO, SCLK, CS
-	uint32_t *pin_nums; 					// SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
-	uint32_t num_pins;						// Number of SPI pins
-	uint32_t alternate_function_number; 	// Refer to the datasheet for the correct number (based on SPIx)
+	SPI_TypeDef *SPIx;		    // Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
+	GPIO_TypeDef **GPIOx;		    // Pointer to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
+					    // COPI, CIPO, SCLK, CS
+	uint32_t *pin_nums;		    // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
+	uint32_t num_pins;		    // Number of SPI pins
+	uint32_t alternate_function_number; // Refer to the datasheet for the correct number (based on SPIx)
 } GR_SPI_Pins;
 
 typedef struct GR_SPI_Handler_struct GR_SPI_Handler;

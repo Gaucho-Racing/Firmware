@@ -25,8 +25,8 @@
 #define GR_SPI_ERR_BAD_ADD -10
 #define GR_SPI_ERR_FULL_TRANSMIT -11;
 
-static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; 	// Stores pointer to the handle structs for SPI1
-					      						// (0), SPI2 (1), & SPI3 (2)
+static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handle structs for SPI1
+					      // (0), SPI2 (1), & SPI3 (2)
 
 struct GR_SPI_Handler_struct {
 	// Contains all configuration information
@@ -69,7 +69,7 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	*handle->spi_config = *config;
 
 	// Deep copy of pins struct
-	handle->pins = (GR_SPI_Pins *)malloc(sizeof(GR_SPI_Pins));				    				// Make memory for GR_SPI_Pins struct
+	handle->pins = (GR_SPI_Pins *)malloc(sizeof(GR_SPI_Pins));				    // Make memory for GR_SPI_Pins struct
 	handle->pins->pin_nums = (uint32_t *)malloc(pin_config->num_pins * sizeof(uint32_t));	    // Make memory for pin_nums[num_pins]
 	handle->pins->GPIOx = (GPIO_TypeDef **)malloc(pin_config->num_pins * sizeof(GPIO_TypeDef)); // Make memory for GPIOx[num_pins]
 	for (uint32_t i = 0; i < pin_config->num_pins; i++) {
@@ -150,7 +150,7 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 	GR_SPI_Message temp_msg;
 	temp_msg.size = msg->size;
 	temp_msg.data = malloc(temp_msg.size * sizeof(uint8_t));
-	for(int i = 0; i < temp_msg.size; i++) {
+	for (int i = 0; i < temp_msg.size; i++) {
 		temp_msg.data[i] = msg->data[i];
 	}
 
@@ -372,12 +372,12 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 
 void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_config)
 {
-	LL_GPIO_StructInit(pin_config);					 						// Default config values
-	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;		 				// Very high output speed
-	pin_config->Pull = LL_GPIO_PULL_NO;				 						// No pull-up or pull-down
-	pin_config->OutputType = LL_GPIO_OUTPUT_PUSHPULL;		 				// Push-pull output (not open-drain)
-	pin_config->Mode = LL_GPIO_MODE_ALTERNATE;			 					// Alternate pin function mode
-	pin_config->Alternate = handle->pins->alternate_function_number; 		// Alternate function number
+	LL_GPIO_StructInit(pin_config);					 // Default config values
+	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;		 // Very high output speed
+	pin_config->Pull = LL_GPIO_PULL_NO;				 // No pull-up or pull-down
+	pin_config->OutputType = LL_GPIO_OUTPUT_PUSHPULL;		 // Push-pull output (not open-drain)
+	pin_config->Mode = LL_GPIO_MODE_ALTERNATE;			 // Alternate pin function mode
+	pin_config->Alternate = handle->pins->alternate_function_number; // Alternate function number
 	for (uint32_t i = 0; i < handle->pins->num_pins; i++) {
 		pin_config->Pin = handle->pins->pin_nums[i];
 		LL_GPIO_Init(handle->pins->GPIOx[i], pin_config);
