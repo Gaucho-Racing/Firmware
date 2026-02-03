@@ -96,7 +96,7 @@ void ADC_Configure(void)
 	ADC_Init_Values init_vals = {0};
 	init_vals.ADC = ADC1;
 	init_vals.PS_Value = PS_8;
-	init_vals.res = RESOLUTION_12;
+	init_vals.Res = RESOLUTION_12;
 	init_vals.Num_Pin_Port_Objs = 1;
 	Pin_Ports p = {LL_GPIO_PIN_0, GPIOA};
 	init_vals.Pins = &p;
