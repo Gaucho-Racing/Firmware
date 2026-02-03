@@ -32,8 +32,6 @@ uint32_t MillisecondsSinceBoot(void);
 #define MIN(x, y) (x > y ? y : x)
 #define MAX(x, y) (x > y ? x : y)
 
-void setSoftwareLatch(bool close);
-
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
 bool bmsFailure(volatile const ECU_StateData *stateData);

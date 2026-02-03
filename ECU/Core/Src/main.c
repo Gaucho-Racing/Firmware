@@ -207,7 +207,7 @@ void ADC_Configure(void)
 	};
 	Init_Vals_ADC1.Pins = p1;
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
-	Channel *c1 = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
+	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
 	Init_Vals_ADC1.Channels = c1;
 	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC1.SamplingTimes = &s1;
@@ -222,7 +222,7 @@ void ADC_Configure(void)
 	Pin_Ports p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
 	Init_Vals_ADC2.Pins = &p2;
 	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
-	Channel* c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
+	Channel c2[] = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
 	Init_Vals_ADC2.Channels = c2;
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
@@ -263,14 +263,14 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC2);
 }
 
-void CAN1_rx_callback(void *data, uint32_t size, uint32_t ID)
+void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
 	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
 			       (0x000FFF00 & ID) >> 8, // TODO: Double check
 			       (0xFF00000 & ID) >> 20, data, size);
 }
 
-void CAN2_rx_callback(void *data, uint32_t size, uint32_t ID) { ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size); }
+void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size) { ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size); }
 
 void CAN_Configure()
 {
@@ -431,9 +431,6 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 
-	// Set Software Latch to closed
-	setSoftwareLatch(1);
-
 	// Initialize CAN
 	CAN_Configure();
 
@@ -458,14 +455,10 @@ int main(void)
 		SendECUStateDataOverCAN(&stateLump);
 		write_state_data();
 		ECU_State_Tick();
-		write_brake_light(); // TODO: actually implement LOL
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */
-	for (int i = NUM_SIGNALS - 1; i >= 0; i--) {
-		free(adcDataValues[i]);
-	}
 }
 
 /**

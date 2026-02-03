@@ -82,6 +82,17 @@ void ECU_Precharge_Complete(ECU_StateData *stateData);
  *
  * @return void
  */
+void ECU_Drive_Start(ECU_StateData *stateData);
+
+/**
+ * @brief State handler for the Precharge Fault state.
+ *
+ * Handles actions and transitions specific to the Precharge Fault state.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
 void ECU_Drive_Active(ECU_StateData *stateData);
 
 /**
