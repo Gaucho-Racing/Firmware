@@ -112,12 +112,11 @@ int main(void)
 	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 	ITM_Enable();
-	    /* USER CODE END 2 */
+	/* USER CODE END 2 */
 
-	    /* Infinite loop */
-	    /* USER CODE BEGIN WHILE */
-	    while (1)
-	{
+	/* Infinite loop */
+	/* USER CODE BEGIN WHILE */
+	while (1) {
 		/* USER CODE END WHILE */
 		LOGOMATIC("Hello from DashPanel!\n");
 		LL_mDelay(1000);
