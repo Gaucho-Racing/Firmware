@@ -190,7 +190,6 @@ void ADC_Configure(void)
 	*/
 
 	// ADC 1
-<<<<<<< HEAD
 	ADC_Init_Values Init_Vals_ADC1 = {0};
 	Init_Vals_ADC1.ADC = ADC1;
 	Init_Vals_ADC1.PS_Value = PS_8; // TODO: change later
@@ -208,16 +207,6 @@ void ADC_Configure(void)
 	};
 	Init_Vals_ADC1.Pins = p1;
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
-=======
-	ADC_Init_Values init_vals_adc1 = {0};
-	init_vals.ADC = ADC1;
-	init_vals.PS_Value = PS_8;     // TODO: change later
-	init_vals.res = RESOLUTION_12; // TODO: change later
-	init_vals.Num_Pin_Port_Objs = 2;
-	Pin_Ports *p1 = {{LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, GPIOC}, {LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, GPIOB}};
-	init_vals.Pins = p1;
-	init_vals.Num_Channels = 7; // check multiple GPIO stuff
->>>>>>> 2d2d7ea95a9dce69f3f2d91bae3a1bdd2cfe9c05
 	Channel *c1 = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
 	Init_Vals_ADC1.Channels = c1;
 	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
@@ -225,29 +214,16 @@ void ADC_Configure(void)
 	ADC_Init(&Init_Vals_ADC1);
 
 	// ADC 2
-<<<<<<< HEAD
 	ADC_Init_Values Init_Vals_ADC2 = {0};
 	Init_Vals_ADC2.ADC = ADC2;
 	Init_Vals_ADC2.PS_Value = PS_8; // TODO: change later
-	Init_Vals_ADC2.res = RESOLUTION_12; // TODO: change later
+	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
 	Pin_Ports p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
 	Init_Vals_ADC2.Pins = &p2;
 	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
 	Channel* c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
 	Init_Vals_ADC2.Channels = c2;
-=======
-	ADC_Init_Values init_vals_adc2 = {0};
-	init_vals.ADC = ADC2;
-	init_vals.PS_Value = PS_8;     // TODO: change later
-	init_vals.res = RESOLUTION_12; // TODO: change later
-	init_vals.Num_Pin_Port_Objs = 1;
-	Pin_Ports *p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
-	init_vals.Pins = p2;
-	init_vals.Num_Channels = 4; // check multiple GPIO stuff
-	Channel *c2 = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
-	init_vals.Channels = c2;
->>>>>>> 2d2d7ea95a9dce69f3f2d91bae3a1bdd2cfe9c05
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
 	ADC_Init(&Init_Vals_ADC2);
