@@ -31,14 +31,13 @@ void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 //TODO: G4 tests are dependent on the System clock configuration
 int can_test(void)
 {
-
 	CANConfig canCfg;
 	// canCfg.fdcan_instance = FDCAN2;
 
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK;
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
@@ -54,9 +53,8 @@ int can_test(void)
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
 	canCfg.rx_callback = NULL;	  // PLEASE SET
-	canCfg.rx_interrupt_priority = 0; // PLEASE SET
-	canCfg.tx_interrupt_priority = 0; // PLEASE SET
-	canCfg.tx_buffer_length = 3;	  // PLEASE SET
+	canCfg.rx_interrupt_priority = 5; // PLEASE SET
+	canCfg.tx_interrupt_priority = 5; // PLEASE SET
 
 	// canCfg.rx_gpio = GPIOB;
 	// canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
@@ -92,14 +90,13 @@ int can_test(void)
 	};
 
 	FDCANTxMessage msg;
-	msg.data[0] = 0x80;
 	memset(&(msg.data), 0, sizeof(msg.data));
+	msg.data[0] = 0x80;
 	msg.tx_header = TxHeader;
 
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
 #ifdef FDCAN1
-
 	canCfg.fdcan_instance = FDCAN1;
 	canCfg.rx_gpio = GPIOA;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
@@ -114,11 +111,15 @@ int can_test(void)
 	CANHandle *can1Handle = can_init(&canCfg);
 	HAL_FDCAN_ConfigGlobalFilter(can1Handle->hal_fdcanP, 0, 0, 0, 0);
 
+	//can1Handle->tx_buffer[0] = msg;
+	//can1Handle->tx_buffer[1] = msg;
+	//can1Handle->tx_buffer[2] = msg;
+	//can1Handle->tx_elements = 3;
+
 	can_start(can1Handle);
 
 #endif
 #ifdef FDCAN2
-
 	canCfg.fdcan_instance = FDCAN2;
 	canCfg.rx_gpio = GPIOB;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
@@ -149,11 +150,15 @@ int can_test(void)
 	// API Testing
 	// can_init(&canCfg);
 
+	//can2Handle->tx_buffer[0] = msg;
+	//can2Handle->tx_buffer[1] = msg;
+	//can2Handle->tx_buffer[2] = msg;
+	//can2Handle->tx_elements = 3;
+
 	can_start(can2Handle);
 
 	can_send(can2Handle, &msg);
 	// can_release(can2Handle);
-
 #endif
 #ifdef FDCAN3
 

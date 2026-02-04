@@ -34,6 +34,18 @@ typedef struct {
 	// additional parameters
 } CANConfig;
 
+
+#define FDCAN_MAX_DATA_BYTES 64
+typedef struct {
+	FDCAN_TxHeaderTypeDef tx_header;
+	uint8_t data[FDCAN_MAX_DATA_BYTES];
+} FDCANTxMessage;
+typedef struct {
+	FDCAN_RxHeaderTypeDef rx_header;
+	uint8_t data[FDCAN_MAX_DATA_BYTES];
+} FDCANRxMessage;
+
+
 // FDCAN peripheral for STM32G4
 typedef struct {
 	FDCAN_HandleTypeDef *hal_fdcanP; //DO NOT REORDER THIS
@@ -64,15 +76,7 @@ typedef struct {
 	// error states
 } CANHandle;
 
-#define FDCAN_MAX_DATA_BYTES 64
-typedef struct {
-	FDCAN_TxHeaderTypeDef tx_header;
-	uint8_t data[FDCAN_MAX_DATA_BYTES];
-} FDCANTxMessage;
-typedef struct {
-	FDCAN_RxHeaderTypeDef rx_header;
-	uint8_t data[FDCAN_MAX_DATA_BYTES];
-} FDCANRxMessage;
+
 
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
 int can_start(CANHandle *handle);

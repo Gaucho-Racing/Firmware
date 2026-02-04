@@ -23,7 +23,7 @@ CHANGES:
 - Timer Support for continously dequeuing, or call can_tx_dequeue_helper after every hardware enqueue
 - avoids free issues inside the ISR
 - can also use the ISR to drain the tx buffer, can_send only adds to it
-- 
+
 
 
 PROBLEMS:

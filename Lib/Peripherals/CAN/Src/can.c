@@ -9,27 +9,29 @@
 
 // HAL handles
 // #ifdef USECAN1
-#define TX_BUFFER_1_SIZE 10
+#define TX_BUFFER_1_SIZE 3
 static FDCAN_HandleTypeDef hal_fdcan1 = {.Instance = FDCAN1};
 FDCANTxMessage tx_buffer_1[TX_BUFFER_1_SIZE] = {0};
 static CANHandle CAN1 = {.hal_fdcanP = &hal_fdcan1, .tx_buffer = tx_buffer_1};
 // #endif
 
 // #ifdef USECAN2
-#define TX_BUFFER_2_SIZE 10
+#define TX_BUFFER_2_SIZE 3
 static FDCAN_HandleTypeDef hal_fdcan2 = {.Instance = FDCAN2};
 FDCANTxMessage tx_buffer_2[TX_BUFFER_2_SIZE] = {0};
 static CANHandle CAN2 = {.hal_fdcanP = &hal_fdcan2, .tx_buffer = tx_buffer_2};
 // #endif
 
 // #ifdef USECAN3
-#define TX_BUFFER_3_SIZE 10
+#define TX_BUFFER_3_SIZE 3
 static FDCAN_HandleTypeDef hal_fdcan3 = {.Instance = FDCAN3};
 FDCANTxMessage tx_buffer_3[TX_BUFFER_3_SIZE] = {0};
 static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
 // #endif
 
 #define MIN(A,B) ((A < B) ? A : B)
+
+bool hardwareEnabled = false;
 
 // macro lore
 /*
@@ -343,19 +345,22 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
     uint32_t basepri = __get_BASEPRI();
     __set_BASEPRI( canHandle->tx_interrupt_priority );
 
-    if (HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP) > 0) {
-        HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
+    //FIXME: get rid of this jank
+    //if (hardwareEnabled) {
+        if (HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP) > 0) {
+            HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
 
-        uint32_t val = 0;
-        if (status != HAL_OK) {
-            LOGOMATIC("CAN_send: failed to add to HW FIFO\n");
-            val = -1;
-        } else {
-            val = 0;
+            uint32_t val = 0;
+            if (status != HAL_OK) {
+                LOGOMATIC("CAN_send: failed to add to HW FIFO\n");
+                val = -1;
+            } else {
+                val = 0;
+            }
+            __set_BASEPRI( basepri );
+            return val;
         }
-        __set_BASEPRI( basepri );
-        return val;
-    }
+    //}
 
     // Hardware FIFO full, try software buffer
     if (canHandle->tx_elements < canHandle->tx_capacity) {

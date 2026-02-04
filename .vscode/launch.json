@@ -222,7 +222,7 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4ADCTESTING.elf",
+			"executable": "${command:cmake.buildDirectory}/G4CANTESTING.elf",
 			"name": "G4CANTESTING",
 			"request": "launch",
 			"type": "cortex-debug",
@@ -232,7 +232,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4ADCTESTING",
+			"preLaunchTask": "CMake: configure and build G4CANTESTING",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
 			"swoConfig": {
