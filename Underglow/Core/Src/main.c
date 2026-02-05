@@ -19,6 +19,20 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "stm32g4xx_hal.h"
+#include "stm32g4xx_ll_adc.h"
+#include "stm32g4xx_ll_bus.h"
+#include "stm32g4xx_ll_cortex.h"
+#include "stm32g4xx_ll_crs.h"
+#include "stm32g4xx_ll_dma.h"
+#include "stm32g4xx_ll_exti.h"
+#include "stm32g4xx_ll_gpio.h"
+#include "stm32g4xx_ll_lpuart.h"
+#include "stm32g4xx_ll_pwr.h"
+#include "stm32g4xx_ll_rcc.h"
+#include "stm32g4xx_ll_system.h"
+#include "stm32g4xx_ll_utils.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -40,8 +54,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-// SPI_HandleTypeDef hspi2; (un-needed? TIM?)
-LL_SPI_InitTypeDef SPI_InitStruct = {0};
+SPI_HandleTypeDef hspi2;
 DMA_HandleTypeDef hdma_spi2_tx;
 
 TIM_HandleTypeDef htim2;
@@ -57,11 +70,6 @@ static void MX_GPIO_Init(void);
 
 //static void MX_TIM2_Init(void);
 static void MX_SPI2_Init(void);
-
-static void SPI2_LL_Init();
-static void DMA_LL_Init();
-
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -69,167 +77,58 @@ static void DMA_LL_Init();
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+/* USER CODE END 0 */
 
 
+//SPI PROBABLY NEEDS TO BE REWORKED, LOOK AT TIM FIRST
 /**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-**/
-
-// TODO: finish LL init
-
-static void DMA_LL_Init(void) {
-
-
-
-}
-
-
-/**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-
-// TODO: finish LL init
-
-// Initializes LL for SPI (freely adjust params here)
-// Data Size is 8 bit --> MSB = 0x1_______, each "bit" is 3 bits --> 0x110 = high, 0x100 = low
-  // MSB important here
-// adjust
-void SPI2_LL_Init(void) {
-
-  LL_SPI_InitTypeDef SPI_InitStruct = {0};
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  // Enable peripheral and GPIO clocks
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
-  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-
-  // Configure GPIO pins for SPI2: PB13=SCK, PB14=MISO, PB15=MOSI
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-
-  SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
-  SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_RX;
-  SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
-  SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
-  SPI_InitStruct.ClockPhase = LL_SPI_PHASE_1EDGE;
-  SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
-  SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
-  SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
-  SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
-
-  // TODO: DMA set up?
-
-  if (LL_SPI_Init(SPI2, &SPI_InitStruct) != SUCCESS)
-  {
-    Error_Handler();
-  }
-
-  LL_SPI_Enable(SPI2);
-
-}
-
-  
-/**
- * @brief
- *  
- * Manually transmits data with SPI by waiting for SPI queue/buffer to empty, then transmits a single byte (data-width)
  * 
- * @param SPIx the enabled SPI thing (idk what to call it)
- * @param data array of bytes (size 9)
+ * @brief Each WS2812B bit corresponds to 6 SPI bits
+ * @param val The 8 bits to convert to 3 half-words
+ * @param out_arr The location to store the 3 half-words
  */
-void LL_SPI_Transmit(SPI_TypeDef *SPIx, uint8_t *data)
-{
-    for (uint16_t i = 0; i < 9; i++)
-    {
-        // Wait TXE = 1 (TX = empty)
-        while (!LL_SPI_IsActiveFlag_TXE(SPIx));
-
-        // Send one byte
-        LL_SPI_TransmitData8(SPIx, data[i]);
-    }
-
-    // Wait for BSY flag to clear
-    while (LL_SPI_IsActiveFlag_BSY(SPIx));
-}
-
-
-/**
- * @brief
- *  
- * Encodes WS2812B bits from 3 actual bits
- * Utilizes bitstream technique --> 4 byte bit stream, bitwise operators to extract the 3 bits needed
- * 
- * @param val the given value
- * @param our_arr an array of 3 bytes 
- */
-#define SPI_BITS_TO_LED 3
-short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
+#define SPI_BITS_TO_LED 6
+short WS2812B_SPI_Encoding(uint8_t val, uint16_t* out_arr) {
   uint8_t mask = 0b1 << 7;
-  uint32_t allBits = 0; // bitstream
-  int bitPos = 24; // build 24 bits, start at position 24
   
-  int words =  0; 
+  int words = 0; 
   int bits_used = 0; 
 
-  uint8_t buff = 0; 
-  // TODO: test
-  for (int i = 0; i < 7; i++) {
-    // Each bit of 'val' becomes a 3-bit encoding
-    uint8_t encoding = (val>>i & mask) ? 0b110 : 0b100; // logical high or low if val AND mask are 1
+  uint16_t buff = 0; 
+  for (int i = 0; i < 8; i++) {
+    // Each bit of 'val' becomes a 6-bit encoding
+    uint16_t encoding = (val & mask) ? 0b111100 : 0b110000;
 
-    // new method --> gets full bit stream (32 bit int) but only uses first 24 positions
-      // assembles bitstream and then gets the desired bytes by shifting and masking to 8 bits
-    bitPos -= SPI_BITS_TO_LED;
-    allBits |= ((uint32_t)encoding << bitPos);
-  
-// old method of doing it --> kinda annoying with byte splitting
-/*
-    // Remaining bits in the current buffer --> configured to 8 bit words
-    int bits_left = 8 - bits_used;
+    // Remaining bits in the current buffer
+    int bits_left = 16 - bits_used;
 
-    if (bits_left >= SPI_BITS_TO_LED) {
+    if (bits_left >= 6) {
         // Fits fully in current buffer
-        buff |= (encoding << (bits_left - SPI_BITS_TO_LED));
-        bits_used += SPI_BITS_TO_LED;
+        buff |= (encoding << (bits_left - 6));
+        bits_used += 6;
     } else {
         // Split across current and next word
-        buff |= (encoding >> (SPI_BITS_TO_LED - bits_left));   // upper part into remaining bits
+        buff |= (encoding >> (6 - bits_left));   // upper part into remaining bits
         out_arr[words++] = buff;                 // write full word
 
         // carry remainder into next buffer (MSBs)
-        buff = (encoding << (8 - (SPI_BITS_TO_LED - bits_left))) & 0xFF;
-        bits_used = (SPI_BITS_TO_LED - bits_left);
+        buff = (encoding << (16 - (6 - bits_left))) & 0xFFFF;
+        bits_used = (6 - bits_left);
     }
 
         // If current buffer filled, push it out
-        if (bits_used == 8) {
+        if (bits_used == 16) {
             out_arr[words++] = buff;
             buff = 0;
             bits_used = 0;
         }
-*/
-  }  
 
-  
-  out_arr[0] = (allBits >> 16) & 0xFF;
-    out_arr[1] = (allBits >> 8) & 0xFF;
-    out_arr[2] = allBits & 0xFF;
+        mask >>= 1;
+    }
 
-    mask >>= 1;
     // If any bits remain in buffer at end, flush them
     //if (bits_used > 0) out_arr[words++] = buff;
 }
-
 /**
  * @brief
  *  SPI Freq = 2.5 MHz -> 0.4 us
@@ -247,16 +146,15 @@ short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
  * @param brightness 0-100
  * @param arr pointer to an array of 9 half-words
  */
-void WS2812B_writeRGB_SPI(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, uint8_t *arr) {
+void WS2812B_writeRGB_SPI(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, uint16_t *arr) {
   brightness = (brightness <=100) ? brightness : 100;
   
   R = R * ((float)brightness/100);
   G = G * ((float)brightness/100);
   B = B * ((float)brightness/100); 
 
-  uint8_t out_arr[3]; 
+  uint16_t out_arr[3]; 
   
-  // remember GRB and NOT RGB!
   int j = 0; 
   WS2812B_SPI_Encoding(G, out_arr);
   for (int i = 0; i < 3; i++) arr[j++] = out_arr[i]; 
@@ -273,8 +171,8 @@ void WS2812B_writeRGB_SPI(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, u
 void WS2812B_TIM_Encoding(uint8_t val, uint16_t *out_arr) {
     // Each bit becomes one uint16_t in the output array
     // Bit 1 -> 32, Bit 0 -> 16
-    for (int i = 0; i < 8; i++) {
-        out_arr[i] = (val & (1 << (7 - i))) ? 66 : 33; // 1 or 0 duty
+    for (int i = 0; i < 8; i++) { //figure out waveform made via values
+        out_arr[i] = (val & (1 << (7 - i))) ? 0 : 41; // 1 or 0 duty
     }
 }
 
@@ -282,9 +180,9 @@ void WS2812B_TIM_Encoding(uint8_t val, uint16_t *out_arr) {
 void WS2812B_writeRGB_TIM(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, uint16_t *arr) {
     brightness = (brightness > 100) ? 100: brightness; 
 
-    uint8_t r = (float)(R * brightness) / 100;
-    uint8_t g = (float)(G * brightness) / 100;
-    uint8_t b = (float)(B * brightness) / 100;
+    uint8_t r = (R * brightness) / 100;
+    uint8_t g = (G * brightness) / 100;
+    uint8_t b = (B * brightness) / 100;
 
     // WS2812B expects **GRB order**
     // Each call writes 8 elements into arr
@@ -294,7 +192,7 @@ void WS2812B_writeRGB_TIM(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, u
     // Total of 24 elements in arr per LED
 }
 
-#define NUM_LEDS 55
+#define NUM_LEDS 100
 #define RESET_PIXELS 20 
 #define BITS_PER_LED 24
 #define LED_TIM_BUFFER_LEN ((NUM_LEDS + RESET_PIXELS) * BITS_PER_LED)
@@ -315,8 +213,8 @@ void WS2812B_TIM_SendFrame(void) {
 
     // --- 3. Timer setup (PWM, 800kHz bit rate = 1.25 µs) ---
     LL_TIM_DisableCounter(TIM2);
-    LL_TIM_SetPrescaler(TIM2, 0);
-    LL_TIM_SetAutoReload(TIM2, 100 - 1);
+    LL_TIM_SetPrescaler(TIM2, 1); //1
+    LL_TIM_SetAutoReload(TIM2, 212); //212
     LL_TIM_OC_SetMode(TIM2, LL_TIM_CHANNEL_CH1, LL_TIM_OCMODE_PWM1);
     LL_TIM_OC_EnablePreload(TIM2, LL_TIM_CHANNEL_CH1);
     LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1);
@@ -372,8 +270,8 @@ void WS2812B_TIM_SendFrame(void) {
     //LL_TIM_Disable
 }
 
-#define LED_SPI_BUFFER_SIZE (9*NUM_LEDS) 
-uint16_t led_spi_data[LED_SPI_BUFFER_SIZE];
+
+uint16_t led_spi_data[];
 /**
   * @brief  The application entry point.
   * @retval int
@@ -383,7 +281,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  // HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -398,46 +296,33 @@ int main(void)
 
   /* Initialize all configured peripherals */
   //MX_GPIO_Init();
-  //MX_DMA_Init(); --> HAL also (stinky!)
+  //MX_DMA_Init();
   //MX_TIM2_Init();
-  //MX_SPI2_Init(); --> MXCube, HAL (stinky!)
-
-  // TODO: make DMA init for LL
-  SPI2_LL_Init();
-  
-
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1) {
 
-  // TODO: implement SPI
-
-  SystemCoreClockUpdate();
-
-  // TODO: get clock freq (looks very annoying to get LOL)
   uint32_t spi_freq = HAL_RCC_GetPCLK1Freq();
   //__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0); // 75% duty cycle
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
-  //uint8_t led[9]; 
+  //uint16_t led[9]; 
   //uint8_t reset = 0; 
   //WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
-  
-  // what does this do LOL --> not needed?? HAL?? SPI2 used instead for LL
-  /*
-  *SPIx = (&hspi2)->Instance;
-  LL_SPI_Enable(SPIx);
-  */
+    
+  // *SPIx = (&hspi2)->Instance;
+  //LL_SPI_Enable(SPIx);
+
   //50 / 1.25 = 40
   //round up to 48 -> 48/24 = 2 pixels
 
 
-  #define USE_SPI
-  //#define USE_TIM
+  //#define USE_SPI
+  #define USE_TIM
 
   #ifdef USE_TIM
  // =================================== FRAME DEFINITION =========================
@@ -448,10 +333,11 @@ int main(void)
           WS2812B_writeRGB_TIM(255,0,0,10,led_tim_data+24*i);
           break;
         case 1:
-          WS2812B_writeRGB_TIM(0,255,0,10,led_tim_data+24*i);
+          WS2812B_writeRGB_TIM(255,0,0,10,led_tim_data+24*i);
           break;
+
         case 2:
-          WS2812B_writeRGB_TIM(0,0,255,10,led_tim_data+24*i);
+          WS2812B_writeRGB_TIM(255,0,0,10,led_tim_data+24*i);
       }
   }
   //RESET Pixels
@@ -527,85 +413,38 @@ int main(void)
   WS2812B_TIM_SendFrame();
   #endif
 
- 
+  while (1)
+  {
     #ifdef USE_SPI
-      uint8_t led[9]; // this works! each led has 3 REAL bytes but each WS2812B bit is 3 actual bytes! so 3 real bytes is 9 of THOSE bytes
-      uint8_t reset = 0;
-      
-      // TODO: implement more variable patterns HERE (light_patterns.c)
-      // also --> iterate over TOTAL LEDs, 3 bytes PER LED...
+    HAL_SPI_Transmit(&hspi2, (uint8_t*) led_spi_data, 9, 1000);
+    #endif
+  }
+}
 
-      WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
-
-      // Transmits LED data
-      LL_SPI_Transmit(SPI2, led);
-
-      for (int i = 0; i < 9; i++) {
-        led[i] = reset;
-      }
-
-      LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-      LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
-      LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
-      LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
-
-      // --- 2. GPIO setup (PA0 = TIM2_CH1) ---
-      LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE);
-      LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_0, LL_GPIO_AF_1);
-      LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH);
-      LL_GPIO_SetPinOutputType(GPIOA, LL_GPIO_PIN_0, LL_GPIO_OUTPUT_PUSHPULL);
-      LL_GPIO_SetPinPull(GPIOA, LL_GPIO_PIN_0, LL_GPIO_PULL_NO); 
-
-      // fix this for LL SPI
-      LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
-      while(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_1));
-
-      LL_DMA_ClearFlag_TC1(DMA1);
-      LL_DMA_ClearFlag_HT1(DMA1);
-      LL_DMA_ClearFlag_TE1(DMA1);
-
-      LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)led);
-      LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)& (SPI2->DR) );
-      LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led)/sizeof(uint16_t));
-      
-      //start transfer
-      LL_SPI_EnableDMAReq_TX(SPI2);
-      LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-
-      // Wait for DMA channel transfer complete
-      while(!LL_DMA_IsActiveFlag_TC1(DMA1));
-      
-      // 5️⃣ DMA channel 1 setup
-      LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
-      while(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_1));
-      LL_DMA_ConfigTransfer(DMA1,
-                              LL_DMA_CHANNEL_1,
-                              LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
-                              LL_DMA_MODE_NORMAL |
-                              LL_DMA_PERIPH_NOINCREMENT |
-                              LL_DMA_MEMORY_INCREMENT |
-                              LL_DMA_PDATAALIGN_WORD |     //VERY IMPORTANT, VERY STRANGE BEHAVIOUR UNLESS USE EXACTLY THIS COMBINATION
-                              LL_DMA_MDATAALIGN_HALFWORD | //
-                              LL_DMA_PRIORITY_HIGH);
     
-      // TODO: CHANGE FOR LL_SPI (check SPI->DR)
-      LL_DMA_ConfigAddresses(DMA1,
-                              LL_DMA_CHANNEL_1,
-                              (uint32_t) led,
-                              (uint32_t)&SPI2->DR,
-                              LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
-      LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led)/sizeof(led[0]));
 
-      // 4️⃣ DMAMUX: TIM2 update → DMA1 channel 1
-      LL_DMAMUX_SetRequestID(DMAMUX1, LL_DMAMUX_CHANNEL_0, LL_DMAMUX_REQ_SPI2_TX);
-      //VERY IMPORTANT TO SET THE MULTIPLEXER CORRECTLY
+    /*
+    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+    while(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_1));
 
-      DMA1->IFCR |= 0; //NOT IMPORTANT, not using interrupts
+    LL_DMA_ClearFlag_TC1(DMA1);
+    LL_DMA_ClearFlag_HT1(DMA1);
+    LL_DMA_ClearFlag_TE1(DMA1);
 
-      LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1); //very important
-      #endif
-    }
-} 
+    LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)led);
+    LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)& (SPIx->DR) );
+    LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led)/sizeof(uint16_t));
+    
+    //start transfer
+    LL_SPI_EnableDMAReq_TX(SPIx);
+    LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+    // Wait for DMA channel transfer complete
+    while(!LL_DMA_IsActiveFlag_TC1(DMA1));
+    while(LL_SPI_IsActiveFlag_BSY(SPIx));
+    */
+
+    
   
 
 /**
@@ -614,44 +453,39 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
+	LL_PWR_EnableRange1BoostMode();
+	LL_RCC_HSI_Enable();
+	/* Wait till HSI is ready */
+	while (LL_RCC_HSI_IsReady() != 1) {}
 
-  /** Configure the main internal regulator output voltage
-  */
-  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
+	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
+	LL_RCC_PLL_EnableDomain_SYS();
+	LL_RCC_PLL_Enable();
+	/* Wait till PLL is ready */
+	while (LL_RCC_PLL_IsReady() != 1) {}
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
-  RCC_OscInitStruct.PLL.PLLN = 10;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+	/* Wait till System clock is ready */
+	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	/* Insure 1us transition state at intermediate medium speed clock*/
+	for (__IO uint32_t i = (170 >> 1); i != 0; i--)
+		;
+
+	/* Set AHB prescaler*/
+	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
+	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+	LL_SetSystemCoreClock(170000000);
+
+	/* Update the time base */
+	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
+		Error_Handler();
+	}
 }
 
 /**
@@ -686,10 +520,12 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
+/**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
 
-
-
-// HAL
 static void MX_SPI2_Init(void)
 {
 
@@ -701,31 +537,24 @@ static void MX_SPI2_Init(void)
 
   /* USER CODE END SPI2_Init 1 */
   /* SPI2 parameter configuration*/
-
-  // commented = HAL
-
-  /*
   hspi2.Instance = SPI2;
   hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_1LINE;
-  hspi2.Init.DataSize = SPI_DATASIZE_8BIT; 
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.DataSize = SPI_DATASIZE_16BIT; 
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
   hspi2.Init.CRCPolynomial = 7;
   hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
   hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-  */
-/*
   if (HAL_SPI_Init(&hspi2) != HAL_OK)
   {
     Error_Handler();
   }
-    */
   /* USER CODE BEGIN SPI2_Init 2 */
 
   /* USER CODE END SPI2_Init 2 */
@@ -790,7 +619,6 @@ static void MX_SPI2_Init(void)
   //HAL_TIM_MspPostInit(&htim2);*/
 
 //}
-
 /*
 static void MX_DMA_Init(void)
 {
