@@ -105,6 +105,7 @@ void Error_Handler(void);
 #define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+extern CANHandle
 
 /* USER CODE END Private defines */
 

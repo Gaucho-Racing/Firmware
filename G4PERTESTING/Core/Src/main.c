@@ -105,6 +105,9 @@ int main(void)
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 
+	/* Initialize CAN interface */
+
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
