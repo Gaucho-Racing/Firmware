@@ -1,10 +1,11 @@
 #include "StateTicks.h"
 
 #include <string.h>
-#include "StateUtils.h"
+
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
+#include "StateUtils.h"
 #include "Unused.h"
 #include "bitManipulations.h"
 
