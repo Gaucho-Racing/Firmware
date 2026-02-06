@@ -6,7 +6,10 @@
 2. Export button inputs
 3. Import ECU CAN messages
 
-
+- Torque, Current, Speed, or put battery before drive
+- Probably need to figure out what we're putting on the board for now
+- We should set up the ECU send too...
+- Also update the README
 
 ## Buttons
 

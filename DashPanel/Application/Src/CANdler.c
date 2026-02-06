@@ -6,8 +6,12 @@
 #define ECU_ID 1  // ID of correct ECU message - TODO: change with correct ID
 #define PING_ID 2 // ID of ping message - TODO: change with correct ID
 
+DashStatus dashStatus;
+
 void CANInitialize()
 {
+	dashStatus = {0};
+
 	CANConfig canCfg;
 
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
@@ -51,27 +55,35 @@ void CANInitialize()
 	// can_add_filter(can2Handle, &filter);
 	/* USER CODE END 2 */
 
-	// FDCAN_TxHeaderTypeDef TxHeader = {
-	//     .Identifier = 1,
-
-	//     .IdType = FDCAN_STANDARD_ID,
-	//     .TxFrameType = FDCAN_DATA_FRAME,
-	//     .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-	// 					     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	//     .DataLength = 1,
-	//     .BitRateSwitch = FDCAN_BRS_OFF,
-	//     .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-	//     .MessageMarker = 0			      // also change this to a real address if you change fifo control
-	// };
 	CANHandle *can_handler = can_init(&canCfg);
 	can_start(can_handler);
 }
 
+void CAN_sendPing() {
+	FDCAN_TxHeaderTypeDef PingTxHeader = {
+	    .Identifier = GR_DASH_PANEL | ,
+
+	    .IdType = FDCAN_STANDARD_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .DataLength = 4,
+	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
+	};
+}
+
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
+	// Process data
 	if (ID == ECU_ID) {
-		// process data
+		CAN_MSG_ECU* ecu_data = (CAN_MSG_ECU*) data;
+		dashStatus->vehicleSpeed = ecu_data->vehicleSpeed;
+		dashStatus->ECUState = ecu_data->ECUState;
+	// Process data
 	} else if (ID == PING_ID) {
 		// process ping
+		CAN_sendPing();
 	}
 }
