@@ -3,6 +3,7 @@
 #define CAN_MSG_IDS_H
 
 typedef enum {
+	MSG_DGPS = 0x000,
 	MSG_DEBUG_FD = 0x001,
 	MSG_PING = 0x002,
 	MSG_ECU_STATUS_1 = 0x003,
