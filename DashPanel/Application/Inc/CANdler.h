@@ -2,12 +2,12 @@
 #define CANDLER_H
 
 typedef struct {
-    uint16_t vehicleSpeed;
-    uint8_t ECUState;
+	uint16_t vehicleSpeed;
+	uint8_t ECUState;
 } DashStatus;
 typedef struct {
-    uint16_t vehicleSpeed;
-    uint8_t ECUState;
+	uint16_t vehicleSpeed;
+	uint8_t ECUState;
 } CAN_MSG_ECU;
 
 typedef struct {

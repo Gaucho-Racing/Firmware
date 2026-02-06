@@ -59,9 +59,10 @@ void CANInitialize()
 	can_start(can_handler);
 }
 
-void CAN_sendPing() {
+void CAN_sendPing()
+{
 	FDCAN_TxHeaderTypeDef PingTxHeader = {
-	    .Identifier = GR_DASH_PANEL | ,
+	    .Identifier = GR_DASH_PANEL |,
 
 	    .IdType = FDCAN_STANDARD_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
@@ -78,10 +79,10 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
 	// Process data
 	if (ID == ECU_ID) {
-		CAN_MSG_ECU* ecu_data = (CAN_MSG_ECU*) data;
+		CAN_MSG_ECU *ecu_data = (CAN_MSG_ECU *)data;
 		dashStatus->vehicleSpeed = ecu_data->vehicleSpeed;
 		dashStatus->ECUState = ecu_data->ECUState;
-	// Process data
+		// Process data
 	} else if (ID == PING_ID) {
 		// process ping
 		CAN_sendPing();
