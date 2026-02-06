@@ -21,17 +21,16 @@
  *
  * @remark Intentionally not a globally accessible variable
  */
+ECU_StateData stateLump = {0};
 
 CANHandle *primary_can;
 CANHandle *data_can;
-
-ECU_StateData stateLump = {0};
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 // EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
 
-void ECU_State_Tick()
+void ECU_State_Tick(void)
 {
 	stateLump.millisSinceBoot = MillisecondsSinceBoot();
 
