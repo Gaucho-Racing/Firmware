@@ -1,12 +1,14 @@
-#include "can.h"
-#include "stm32g4xx_hal_fdcan.h"
 #include "CANdler.h"
 
-#define ECU_ID 1 // ID of correct ECU message - TODO: change with correct ID
+#include "can.h"
+#include "stm32g4xx_hal_fdcan.h"
+
+#define ECU_ID 1  // ID of correct ECU message - TODO: change with correct ID
 #define PING_ID 2 // ID of ping message - TODO: change with correct ID
 
-void CANInitialize() {
-    CANConfig canCfg;
+void CANInitialize()
+{
+	CANConfig canCfg;
 
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
@@ -26,10 +28,10 @@ void CANInitialize() {
 	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
-	canCfg.rx_callback = CAN_callback;	  // PLEASE SET
-	canCfg.rx_interrupt_priority = 0; // PLEASE SET
-	canCfg.tx_interrupt_priority = 0; // PLEASE SET
-	canCfg.tx_buffer_length = 3;	  // PLEASE SET
+	canCfg.rx_callback = CAN_callback; // PLEASE SET
+	canCfg.rx_interrupt_priority = 0;  // PLEASE SET
+	canCfg.tx_interrupt_priority = 0;  // PLEASE SET
+	canCfg.tx_buffer_length = 3;	   // PLEASE SET
 
 	// canCfg.rx_gpio = GPIOB;
 	// canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
@@ -49,7 +51,6 @@ void CANInitialize() {
 	// can_add_filter(can2Handle, &filter);
 	/* USER CODE END 2 */
 
-
 	// FDCAN_TxHeaderTypeDef TxHeader = {
 	//     .Identifier = 1,
 
@@ -66,10 +67,11 @@ void CANInitialize() {
 	can_start(can_handler);
 }
 
-void CAN_callback(uint32_t ID, void *data, uint32_t size){
-    if (ID == ECU_ID) {
-        // process data
-    } else if (ID == PING_ID) {
-        // process ping
-    }
+void CAN_callback(uint32_t ID, void *data, uint32_t size)
+{
+	if (ID == ECU_ID) {
+		// process data
+	} else if (ID == PING_ID) {
+		// process ping
+	}
 }
