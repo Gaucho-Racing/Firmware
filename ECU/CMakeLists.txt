@@ -21,19 +21,22 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			Application/Inc
 			Core/Inc
 	)
-	target_sources(StateTicksTest PRIVATE
-		Test/StateTicksTest.c
-		Application/Src/StateTicks.c
-		Application/Src/StateUtils.c
+	target_sources(
+		StateTicksTest
+		PRIVATE
+			Test/StateTicksTest.c
+			Application/Src/StateTicks.c
+			Application/Src/StateUtils.c
 	)
-	target_link_libraries(StateTicksTest
+	target_link_libraries(
+		StateTicksTest
 		PRIVATE
 			GLOBALSHARE_LIB
 			GR_OLD_CAN_MESSAGES
 			GR_ADC
 			PERIPHERAL_CAN_LIB
 			BitManipulations_Lib
-		)
+	)
 	add_test(StateTicksTest StateTicksTest)
 
 	# FIXME Add more HOOTL tests
