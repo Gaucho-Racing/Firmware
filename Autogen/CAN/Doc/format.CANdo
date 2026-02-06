@@ -1,270 +1,244 @@
 routing:
-
-messages:
-  ACU:
-    CAN1:
-      Debugger:
-        - msg: Debug 2.0
-        - msg: Ping
-      ECU:
-        - msg: Ping
-        - msg: ACU Status 1
-        - msg: ACU Status 2
-        - msg: ACU Status 3
-        - msg: DC-DC Status
-
-    CAN2:
-      Debugger:
-        - msg: Debug FD
-        - msg: Ping
-      ECU:
-        - msg: Ping
-      ALL:
-        - msg: ACU Cell Data 1
-        - msg: ACU Cell Data 2
-        - msg: ACU Cell Data 3
-        - msg: ACU Cell Data 4
-        - msg: ACU Cell Data 5
-
-    CAN3:
-      Charger:
-        - msg: Charger Control
-          can_id_override: 0x1806E5F4
-
-
-  Charger:
-    CAN3:
-      ACU:
-        - msg: Charger Data
-          can_id_override: 0x18FF50E5
-
-
-  Dash Panel:
-    CAN1:
-      Debugger:
-        - msg: Debug 2.0
-        - msg: Ping
-      ECU:
-        - msg: Ping
-        - msg: Dash Status
-
-
-  Debugger:
-
-    CAN1:
-      ECU:
-        - msg: Debug 2.0
-        - msg: Ping
-        - msg: ECU config
-      ACU:
-        - msg: Debug 2.0
-        - msg: Ping
-      TCM:
-        - msg: Debug 2.0
-        - msg: Ping
-      Dash Panel:
-        - msg: Debug 2.0
-        - msg: Ping
-      GR Inverter 1:
-        - msg: Debug 2.0
-        - msg: Ping
-      GR Inverter 2:
-        - msg: Debug 2.0
-        - msg: Ping
-      GR Inverter 3:
-        - msg: Debug 2.0
-        - msg: Ping
-      GR Inverter 4:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 1:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 2:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 3:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 4:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 5:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 6:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 7:
-        - msg: Debug 2.0
-        - msg: Ping
-      Fan Controller 8:
-        - msg: Debug 2.0
-        - msg: Ping
-      LV DC-DC:
-        - msg: Debug 2.0
-        - msg: Ping
-
-    CAN2:
-      ECU:
-        - msg: Debug FD
-        - msg: Ping
-      ACU:
-        - msg: Debug FD
-        - msg: Ping
-      TCM:
-        - msg: Debug FD
-        - msg: Ping
-      Steering Wheel:
-        - msg: Debug FD
-        - msg: Ping
-      SAM1: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM2: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM3: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM4: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM5: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM6: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM7: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM8: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM9: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM10: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM11: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM12: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM13: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM14: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM15: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM16: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM17: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM18: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM19: [ { msg: Debug FD }, { msg: Ping } ]
-      SAM20: [ { msg: Debug FD }, { msg: Ping } ]
-
-    CAN3:
-      Charging SDC:
-        - msg: Ping
-
-
-  DTI Inverter:
-    CAN1:
-      ECU:
-        - msg: DTI Data 1
-          can_id_override: 0x2016
-        - msg: DTI Data 2
-          can_id_override: 0x2116
-        - msg: DTI Data 3
-          can_id_override: 0x2216
-        - msg: DTI Data 4
-          can_id_override: 0x2316
-        - msg: DTI Data 5
-          can_id_override: 0x2416
-
-
-  ECU:
-
-    CAN1:
-      DTI Inverter:
-        - msg: DTI Control 1
-          can_id_override: 0x116
-        - msg: DTI Control 2
-          can_id_override: 0x216
-        - msg: DTI Control 3
-          can_id_override: 0x316
-        - msg: DTI Control 4
-          can_id_override: 0x416
-        - msg: DTI Control 5
-          can_id_override: 0x516
-        - msg: DTI Control 6
-          can_id_override: 0x616
-        - msg: DTI Control 7
-          can_id_override: 0x716
-        - msg: DTI Control 8
-          can_id_override: 0x816
-        - msg: DTI Control 9
-          can_id_override: 0x916
-        - msg: DTI Control 10
-          can_id_override: 0xA16
-        - msg: DTI Control 11
-          can_id_override: 0xB16
-        - msg: DTI Control 12
-          can_id_override: 0xC16
-
-      Debugger:
-        - msg: Debug 2.0
-        - msg: Ping
-      ALL:
-        - msg: Ping
-        - msg: ECU Status 1
-        - msg: ECU Status 2
-        - msg: ECU Status 3
-      ACU:
-        - msg: ACU Precharge
-        - msg: ACU Config Charge Parameters
-        - msg: ACU Config Operational Parameters
-      Dash Panel:
-        - msg: Dash Config
-        - msg: Dash Warning Flags
-        - msg: Specific Brake IR
-
-    CAN2:
-      Debugger:
-        - msg: Debug FD
-        - msg: Ping
-      ALL:
-        - msg: Ping
-      Steering Wheel:
-        - msg: Steering Config
-        - msg: ECU Ping Information
-      TCM:
-        - msg: ECU Pedals Data
-
-
-  Energy Meter:
-    CAN3:
-      ACU:
-        - msg: EM Measurement
-          can_id_override: 0x10d
-        - msg: EM Team Data 1
-          can_id_override: 0x30d
-        - msg: EM Team Data 2
-          can_id_override: 0x30e
-        - msg: EM Status
-          can_id_override: 0x40d
-        - msg: EM Temperature
-          can_id_override: 0x60d
-
-
-  IMD:
-    CAN3:
-      ACU:
-        - msg: IMD response
-          can_id_override: 0x23
-        - msg: IMD isolation info
-          can_id_override: 0x18EFF4FE
-        - msg: IMD voltage
-          can_id_override: 0x18EFF4FE
-        - msg: IMD IT-system
-          can_id_override: 0x18EFF4FE
-        - msg: IMD request
-          can_id_override: 0x18EFF4FE
-        - msg: IMD general
-          can_id_override: 0x18FF01F4
-
-
-  DGPS:
-    CAN2:
-      ALL:
-        - msg: UVW DGPS
-        - msg: GPS LAT
-        - msg: GPS LON
-        - msg: GPS ALT
-        - msg: GPS PX
-        - msg: GPS QY
-        - msg: GPS RZ
+    messages:
+    ACU:
+      CAN1:
+        Debugger:
+          - msg: Debug 2.0
+          - msg: Ping
+        ECU:
+          - msg: Ping
+          - msg: ACU Status 1
+          - msg: ACU Status 2
+          - msg: ACU Status 3
+          - msg: DC-DC Status
+      CAN2:
+        Debugger:
+          - msg: Debug FD
+          - msg: Ping
+        ECU:
+          - msg: Ping
+        ALL:
+          - msg: ACU Cell Data 1
+          - msg: ACU Cell Data 2
+          - msg: ACU Cell Data 3
+          - msg: ACU Cell Data 4
+          - msg: ACU Cell Data 5
+      CAN3:
+        Charger:
+          - msg: Charger Control
+            can_id_override: 0x1806E5F4
+    Charger:
+      CAN3:
+        ACU:
+          - msg: Charger Data
+            can_id_override: 0x18FF50E5
+    Dash Panel:
+      CAN1:
+        Debugger:
+          - msg: Debug 2.0
+          - msg: Ping
+        ECU:
+          - msg: Ping
+          - msg: Dash Status
+    Debugger:
+      CAN1:
+        ECU:
+          - msg: Debug 2.0
+          - msg: Ping
+          - msg: ECU config
+        ACU:
+          - msg: Debug 2.0
+          - msg: Ping
+        TCM:
+          - msg: Debug 2.0
+          - msg: Ping
+        Dash Panel:
+          - msg: Debug 2.0
+          - msg: Ping
+        GR Inverter 1:
+          - msg: Debug 2.0
+          - msg: Ping
+        GR Inverter 2:
+          - msg: Debug 2.0
+          - msg: Ping
+        GR Inverter 3:
+          - msg: Debug 2.0
+          - msg: Ping
+        GR Inverter 4:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 1:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 2:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 3:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 4:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 5:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 6:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 7:
+          - msg: Debug 2.0
+          - msg: Ping
+        Fan Controller 8:
+          - msg: Debug 2.0
+          - msg: Ping
+        LV DC-DC:
+          - msg: Debug 2.0
+          - msg: Ping
+      CAN2:
+        ECU:
+          - msg: Debug FD
+          - msg: Ping
+        ACU:
+          - msg: Debug FD
+          - msg: Ping
+        TCM:
+          - msg: Debug FD
+          - msg: Ping
+        Steering Wheel:
+          - msg: Debug FD
+          - msg: Ping
+        SAM1: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM2: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM3: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM4: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM5: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM6: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM7: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM8: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM9: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM10: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM11: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM12: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM13: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM14: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM15: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM16: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM17: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM18: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM19: [ { msg: Debug FD }, { msg: Ping } ]
+        SAM20: [ { msg: Debug FD }, { msg: Ping } ]
+      CAN3:
+        Charging SDC:
+          - msg: Ping
+    DTI Inverter:
+      CAN1:
+        ECU:
+          - msg: DTI Data 1
+            can_id_override: 0x2016
+          - msg: DTI Data 2
+            can_id_override: 0x2116
+          - msg: DTI Data 3
+            can_id_override: 0x2216
+          - msg: DTI Data 4
+            can_id_override: 0x2316
+          - msg: DTI Data 5
+            can_id_override: 0x2416
+    ECU:
+      CAN1:
+        DTI Inverter:
+          - msg: DTI Control 1
+            can_id_override: 0x116
+          - msg: DTI Control 2
+            can_id_override: 0x216
+          - msg: DTI Control 3
+            can_id_override: 0x316
+          - msg: DTI Control 4
+            can_id_override: 0x416
+          - msg: DTI Control 5
+            can_id_override: 0x516
+          - msg: DTI Control 6
+            can_id_override: 0x616
+          - msg: DTI Control 7
+            can_id_override: 0x716
+          - msg: DTI Control 8
+            can_id_override: 0x816
+          - msg: DTI Control 9
+            can_id_override: 0x916
+          - msg: DTI Control 10
+            can_id_override: 0xA16
+          - msg: DTI Control 11
+            can_id_override: 0xB16
+          - msg: DTI Control 12
+            can_id_override: 0xC16
+        Debugger:
+          - msg: Debug 2.0
+          - msg: Ping
+        ALL:
+          - msg: Ping
+          - msg: ECU Status 1
+          - msg: ECU Status 2
+          - msg: ECU Status 3
+        ACU:
+          - msg: ACU Precharge
+          - msg: ACU Config Charge Parameters
+          - msg: ACU Config Operational Parameters
+        Dash Panel:
+          - msg: Dash Config
+          - msg: Dash Warning Flags
+          - msg: Specific Brake IR
+      CAN2:
+        Debugger:
+          - msg: Debug FD
+          - msg: Ping
+        ALL:
+          - msg: Ping
+        Steering Wheel:
+          - msg: Steering Config
+          - msg: ECU Ping Information
+        TCM:
+          - msg: ECU Pedals Data
+    Energy Meter:
+      CAN3:
+        ACU:
+          - msg: EM Measurement
+            can_id_override: 0x10d
+          - msg: EM Team Data 1
+            can_id_override: 0x30d
+          - msg: EM Team Data 2
+            can_id_override: 0x30e
+          - msg: EM Status
+            can_id_override: 0x40d
+          - msg: EM Temperature
+            can_id_override: 0x60d
+    IMD:
+      CAN3:
+        ACU:
+          - msg: IMD response
+            can_id_override: 0x23
+          - msg: IMD isolation info
+            can_id_override: 0x18EFF4FE
+          - msg: IMD voltage
+            can_id_override: 0x18EFF4FE
+          - msg: IMD IT-system
+            can_id_override: 0x18EFF4FE
+          - msg: IMD request
+            can_id_override: 0x18EFF4FE
+          - msg: IMD general
+            can_id_override: 0x18FF01F4
+    DGPS:
+      CAN2:
+        ALL:
+          - msg: UVW DGPS
+          - msg: GPS LAT
+          - msg: GPS LON
+          - msg: GPS ALT
+          - msg: GPS PX
+          - msg: GPS QY
+          - msg: GPS RZ
 
 byte order: little_endian
 
 Message ID:
-
   Debug 2.0:
     MSG ID: 0x000
     MSG LENGTH: 8
