@@ -107,7 +107,6 @@ int main(void)
 
 	/* Initialize CAN interface */
 
-
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
