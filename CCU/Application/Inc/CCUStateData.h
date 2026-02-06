@@ -16,7 +16,7 @@ typedef struct {
 	uint8_t ACU_S2_12Volt;
 	uint8_t ACU_S2_SDC_Volt;
 	uint8_t ACU_S2_MIN_CELL_Volt;
-	uint8_t ACU_S2_MAX_CELL_Volt;
+	uint8_t ACU_S2_MAX_CELL_TEMP;
 	// Error & Warnings
 	// uint8_t ACU_S2_ERROR_BITS;
 	bool ACU_S2_OVERTEMP_ERROR;
@@ -32,8 +32,8 @@ typedef struct {
 	// State
 	uint8_t ACU_S2_PRECHARGE_BITS;
 	// bool ACU_S2_PRECHARGE_STATE;
-	// bool ACU_S2_STATE;
-	// bool ACU_S2_SOFTWARE_LATCH;
+	// bool ACU_S2_IR_STATE;
+	bool ACU_S2_SOFTWARE_LATCH;
 
 	// ACU_STATUS_3
 	uint16_t ACU_S3_HV_INPUTVolt;
