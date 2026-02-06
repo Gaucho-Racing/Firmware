@@ -104,6 +104,7 @@ static void ITM_Enable(void)
 /* USER CODE END 0 */
 
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
+// TODO: TS and RTD button signals will come over CAN
 void read_digital(void)
 {
 	// debouncing/latching for ts/rtd active
@@ -253,6 +254,7 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC1);
 	ADC_Enable_And_Calibrate(ADC2);
 }
+
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
