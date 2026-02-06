@@ -255,7 +255,6 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC2);
 }
 
-
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
 	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,

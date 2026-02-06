@@ -21,15 +21,12 @@
  *
  * @remark Intentionally not a globally accessible variable
  */
-ECU_StateData stateLump = {
-	.ecu_state = GR_GLV_ON
-};
+ECU_StateData stateLump = {.ecu_state = GR_GLV_ON};
 
 /*
 CANHandle *primary_can;
 CANHandle *data_can;
 */
-
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 // EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
@@ -113,17 +110,17 @@ void ECU_GLV_On(ECU_StateData *stateData)
 void ECU_Precharge_Start(ECU_StateData *stateData)
 {
 	/*send message to BCU to start precharging*/
-/*
-	FDCANTxMessage msg = {.tx_header = {.Identifier = 0x00A,
-					    .IdType = FDCAN_STANDARD_ID,
-					    .TxFrameType = FDCAN_DATA_FRAME,
-					    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-					    .DataLength = 1,
-					    .BitRateSwitch = FDCAN_BRS_OFF,
-					    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
-					    .MessageMarker = 0}};
-	msg.data[0] = 1; // Go TS Active/Precharge
-	can_send(primary_can, &msg); */
+	/*
+		FDCANTxMessage msg = {.tx_header = {.Identifier = 0x00A,
+						    .IdType = FDCAN_STANDARD_ID,
+						    .TxFrameType = FDCAN_DATA_FRAME,
+						    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+						    .DataLength = 1,
+						    .BitRateSwitch = FDCAN_BRS_OFF,
+						    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+						    .MessageMarker = 0}};
+		msg.data[0] = 1; // Go TS Active/Precharge
+		can_send(primary_can, &msg); */
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
 	return;
@@ -155,8 +152,8 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 
 	if (PressingBrake(stateData) && stateData->rtd) {
-		//GR_OLD_INVERTER_CONFIG_MSG message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .abs_max_motor_rpm = 0xFFFF, .motor_direction = 0};
-		//ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_CONFIG, &message, sizeof(message));
+		// GR_OLD_INVERTER_CONFIG_MSG message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .abs_max_motor_rpm = 0xFFFF, .motor_direction = 0};
+		// ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_CONFIG, &message, sizeof(message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Drive_Start(stateData);
 		return;
@@ -208,16 +205,16 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		torque_request = 0;
 	}
 
-	//GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
-	//ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
+	// GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
+	// ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
 }
 
 void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
 	LOGOMATIC("ECU: BCU discharge Tractive System\n");
-	//GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
-	//ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
+	// GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
+	// ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->dischargeStartMillis = stateData->millisSinceBoot;
 }
 
