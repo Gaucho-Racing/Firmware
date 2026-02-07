@@ -6,18 +6,18 @@
 #include <stdint.h>
 
 typedef enum {
-    COLOR_GREEN = (uint32_t)0xFF0000,
-    COLOR_RED = (uint32_t)0x03FC00,
-    COLOR_BLUE = (uint32_t)0x0000FF,
+	COLOR_GREEN = (uint32_t)0xFF0000,
+	COLOR_RED = (uint32_t)0x03FC00,
+	COLOR_BLUE = (uint32_t)0x0000FF,
 } Color;
 
 typedef union {
-    struct {
-        Color TS_Active;
-        Color RTD;
-    };
+	struct {
+		Color TS_Active;
+		Color RTD;
+	};
 
-    uint32_t rawData[2];
+	uint32_t rawData[2];
 } NeoPixelData;
 
 void Neopixel_update();

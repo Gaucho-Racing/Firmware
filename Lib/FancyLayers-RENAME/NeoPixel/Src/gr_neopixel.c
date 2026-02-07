@@ -1,24 +1,27 @@
 #include "gr_neopixel.h"
-#include "main.h"
-#include "spi.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 
-void Neopixel_update() {
+#include "main.h"
+#include "spi.h"
 
-    NeoPixelData globalNeoPixelData = {0};
+void Neopixel_update()
+{
 
-    // temp color set
-    globalNeoPixelData.RTD = COLOR_BLUE;
-    globalNeoPixelData.TS_Active = COLOR_BLUE;
+	NeoPixelData globalNeoPixelData = {0};
 
-    uint8_t neopixelTransmission[48];
-    for (int i = 0; i < 2; i++) {
-        for (int j = 23; j >= 0; j--) {
-            neopixelTransmission[i * 24 + 23 - j] = 0x4 + ((globalNeoPixelData.rawData[i] >> j) & 0x1 << 1); // 0x06 is high, 0x04 is low
-        }
-    }
+	// temp color set
+	globalNeoPixelData.RTD = COLOR_BLUE;
+	globalNeoPixelData.TS_Active = COLOR_BLUE;
 
-    //might need to iterate through array and send each bit individually
-    LL_SPI_TransmitData8(SPI1, neopixelTransmission);
+	uint8_t neopixelTransmission[48];
+	for (int i = 0; i < 2; i++) {
+		for (int j = 23; j >= 0; j--) {
+			neopixelTransmission[i * 24 + 23 - j] = 0x4 + ((globalNeoPixelData.rawData[i] >> j) & 0x1 << 1); // 0x06 is high, 0x04 is low
+		}
+	}
+
+	// might need to iterate through array and send each bit individually
+	LL_SPI_TransmitData8(SPI1, neopixelTransmission);
 }

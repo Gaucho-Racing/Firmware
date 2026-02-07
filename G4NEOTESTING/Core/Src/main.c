@@ -23,12 +23,11 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
+#include "gr_neopixel.h"
 #include "i2c.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-
-#include "gr_neopixel.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -121,8 +120,8 @@ int main(void)
 		HAL_Delay(1000);
 
 		/* USER CODE BEGIN 3 */
-        Neopixel_update();
-    }
+		Neopixel_update();
+	}
 }
 
 /**
