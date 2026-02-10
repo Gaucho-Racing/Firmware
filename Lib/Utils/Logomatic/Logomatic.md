@@ -1,5 +1,7 @@
 # Logomatic
 
+A smart drop-in replacement for `printf` that dynamically works in HOOTL and embedded environments. It is also backwards compatible and can coexist with older manual implementations.
+
 ## What it does
 
 - **HOOTL builds**: Writes to stdout (tests/CI can capture output)
