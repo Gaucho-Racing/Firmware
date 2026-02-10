@@ -1,5 +1,3 @@
-#include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_gpio.h"
 #include "StateUtils.h"
 
 #include <math.h>
@@ -7,8 +5,10 @@
 
 #include "Logomatic.h"
 #include "StateData.h"
-#include "main.h"
 #include "Unused.h"
+#include "main.h"
+#include "stm32g4xx_hal.h"
+#include "stm32g4xx_ll_gpio.h"
 
 uint32_t MillisecondsSinceBoot(void)
 {
