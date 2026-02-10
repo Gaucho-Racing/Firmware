@@ -29,7 +29,7 @@ HOOTLTest:
 	$(call cmake_build,$(@))
 
 sanitizer: HOOTLTest
-	ctest --test-dir build/HOOTLTest
+	ctest --test-dir build/HOOTLTest --output-on-failure
 
 clean:
 	$(rmd) build
