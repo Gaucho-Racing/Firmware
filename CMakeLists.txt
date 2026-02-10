@@ -38,6 +38,7 @@ include("${platform_path}/STM32L476xG/chip.cmake")
 
 # Utils
 include("${lib_path}/GlobalShare/common.cmake")
+include("${lib_path}/Utils/Logomatic/logomatic.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
@@ -73,7 +74,7 @@ add_gr_project(STM32G474xE G4CANTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4HELLO)
-add_gr_project(STM32G474xE BLINKY G4BLINKY)
+# add_gr_project(STM32G474xE BLINKY G4BLINKY)
 add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
 

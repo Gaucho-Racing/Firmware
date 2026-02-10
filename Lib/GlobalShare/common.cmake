@@ -29,24 +29,6 @@ endif()
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
-	add_executable(logomatic_simple)
-	target_sources(
-		logomatic_simple
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_simple_print.c
-	)
-	target_link_libraries(logomatic_simple PRIVATE GLOBALSHARE_LIB)
-	add_test(logomatic_simple_test logomatic_simple)
-
-	add_executable(logomatic_float)
-	target_sources(
-		logomatic_float
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_float_print.c
-	)
-	target_link_libraries(logomatic_float PRIVATE GLOBALSHARE_LIB)
-	add_test(logomatic_float_test logomatic_float)
-
 	add_executable(stringification)
 	target_sources(
 		stringification
