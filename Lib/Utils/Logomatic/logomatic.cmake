@@ -12,11 +12,7 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Src/Logomatic.c
 )
 
-target_link_libraries(
-LOGOMATIC_LIB
-INTERFACE
-GLOBALSHARE_LIB
-)
+target_link_libraries(LOGOMATIC_LIB INTERFACE GLOBALSHARE_LIB)
 
 if(
 	CMAKE_PRESET_NAME
