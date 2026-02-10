@@ -1,3 +1,5 @@
+#include "stm32g4xx_hal.h"
+#include "stm32g4xx_ll_gpio.h"
 #include "StateUtils.h"
 
 #include <math.h>
@@ -6,10 +8,11 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "main.h"
+#include "Unused.h"
 
 uint32_t MillisecondsSinceBoot(void)
 {
-	// For some reason, GetTickFreq returns period in millisecon instead of frequency
+	// For some reason, GetTickFreq returns period in milliseconds instead of frequency
 	// See https://community.st.com/t5/stm32-mcus-embedded-software/name-amp-description-of-hal-gettickfreq-misleading/td-p/242457
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
