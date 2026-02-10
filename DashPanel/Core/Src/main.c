@@ -284,33 +284,25 @@ static void MX_GPIO_Init(void)
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_7;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
@@ -356,6 +348,8 @@ void EXTI3_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
 
+		// Blame Electronics if hardware debounce doesn't work
+
 		LOGOMATIC("TS Active Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
 	}
@@ -371,6 +365,13 @@ void EXTI4_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
 
+		// Blame Electronics if hardware debounce doesn't work
+
+		CAN_SEND_ECU msg_struct;
+		msg_struct.TSActiveButton = 0;
+		msg_struct.RTDButton = 1;
+
+		CAN_sendECU(can_handler, &msg_struct);
 		LOGOMATIC("RTD Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
