@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
-    name: Complete Validation
+  configs:
+    name: Configuration Files
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Validates Configuration Files
+      - name: Validate Configuration Files
         uses: kehoecj/validate-configs-action@v4
 
   codeql:
@@ -169,7 +169,7 @@ jobs:
 
   all:
     name: Completed All Linting
-    needs: [ validate, codeql, perllinter ]
+    needs: [ configs, codeql, perllinter ]
     runs-on: ubuntu-slim
     permissions: { }
     if: always()
