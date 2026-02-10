@@ -10,6 +10,25 @@ typedef enum {
     RTD_CONTROL_GPIO_Port
 } GPIO_TypeDef_e;
 
+typedef struct {
+	uint32_t Pin; /*!< Specifies the GPIO pins to be configured.
+			  This parameter can be any value of @ref GPIO_pins */
+
+	uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
+			   This parameter can be a value of @ref GPIO_mode */
+
+	uint32_t Pull; /*!< Specifies the Pull-up or Pull-Down activation for
+			  the selected pins. This parameter can be a value of
+			  @ref GPIO_pull */
+
+	uint32_t Speed; /*!< Specifies the speed for the selected pins.
+			    This parameter can be a value of @ref GPIO_speed */
+
+	uint32_t Alternate; /*!< Peripheral to be connected to the selected pins
+				 This parameter can be a value of @ref
+			       GPIOEx_Alternate_function_selection */
+} GPIO_InitTypeDef_e;
+
 #define TSSI_R_CONTROL_Pin 0
 #define TSSI_G_CONTROL_Pin 0
 #define RTD_CONTROL_Pin 0

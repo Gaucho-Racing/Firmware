@@ -26,7 +26,7 @@ ECU_StateData stateLump = {0};
 // EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
 
-static void ECU_Pseudo_Time_Progress(uint32_t dt) { stateLump.millisSinceBoot += dt; }
+// static void ECU_Pseudo_Time_Progress(uint32_t dt) { stateLump.millisSinceBoot += dt; }
 
 static void ECU_Pseudo_State_Tick(void)
 {
@@ -159,7 +159,7 @@ int main(void)
 	// ##########################
 	// ## Step 0.4             ##
 	// ##########################
-	if (stateLump.ecu_state != ECU_Precharge_Engaged) {
+	if (stateLump.ecu_state != GR_PRECHARGE_ENGAGED) {
 		printf("0.4 Failure: ecu state not in precharge engaged\n");
 		return 4;
 	}
