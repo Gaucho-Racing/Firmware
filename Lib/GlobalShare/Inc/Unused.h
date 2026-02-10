@@ -1,6 +1,4 @@
-#ifndef _UNUSED_H_
-#define _UNUSED_H_
-
+#ifndef UNUSED
 /**
  * @brief Macro to mark a variable or parameter as unused.
  *
@@ -11,5 +9,4 @@
  * @param x The variable or parameter to be marked as unused.
  */
 #define UNUSED(x) (void)(x)
-
 #endif
