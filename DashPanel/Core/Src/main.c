@@ -51,6 +51,7 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_LPUART1_UART_Init(void);
+static void GPIO_Interrupt_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -100,6 +101,7 @@ int main(void)
 
 	/* USER CODE BEGIN Init */
 	CANInitialize();
+	GPIO_Interrupt_Init();
 
 	/* USER CODE END Init */
 
@@ -319,6 +321,59 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+ * @brief GPIO Interrupt Handler Setup Function
+ * @param None
+ * @retval None
+ */
+static void GPIO_Interrupt_Init(void) {
+
+	// Map PA3 and PA4 to EXTI lines 3 and 4
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3);
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE4);
+
+	LL_EXTI_EnableIT_0_31(LL_SYSCFG_EXTI_LINE3);
+	LL_EXTI_EnableIT_0_31(LL_SYSCFG_EXTI_LINE4);
+	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_0);
+	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_0);
+
+	NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+	NVIC_SetPriority(EXTI4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+
+	// Enable interrupts
+	NVIC_EnableIRQ(EXTI3_IRQn);
+	NVIC_EnableIRQ(EXTI4_IRQn);
+
+}
+
+/**
+ * @brief EXTI Line 3 Interrupt Handler (for TS Active button)
+ * @param None
+ * @retval None
+ */
+void EXTI3_IRQHandler(void) {
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
+
+		LOGOMATIC("TS Active Pressed!");
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+	}
+
+}
+
+/**
+ * @brief EXTI Line 4 Interrupt Handler (for RTD button)
+ * @param None
+ * @retval None
+ */
+void EXTI4_IRQHandler(void) {
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
+
+		LOGOMATIC("RTD Pressed!");
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
+	}
+}
 /* USER CODE END 4 */
 
 /**
