@@ -177,7 +177,7 @@ jobs:
       - name: Fail Linting
         if: >
           ${{
-            needs.validate.result != 'success' ||
+            needs.configs.result != 'success' ||
             needs.codeql.result != 'success' ||
             needs.perllinter.result != 'success'
           }}
