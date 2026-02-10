@@ -1,11 +1,13 @@
 #include "CANdler.h"
 
 #include "can.h"
+#include "dashutils.h"
 #include "stm32g4xx_hal_fdcan.h"
 
 #define ECU_ID 1  // ID of correct ECU message - TODO: change with correct ID
 #define PING_ID 2 // ID of ping message - TODO: change with correct ID
 
+CANHandle *can_handler;
 DashStatus dashStatus;
 
 void CANInitialize()
@@ -55,24 +57,34 @@ void CANInitialize()
 	// can_add_filter(can2Handle, &filter);
 	/* USER CODE END 2 */
 
-	CANHandle *can_handler = can_init(&canCfg);
+	can_handler = can_init(&canCfg);
 	can_start(can_handler);
 }
 
-void CAN_sendPing()
+void CAN_sendPing(GR_OLD_NODE_ID to)
 {
-	FDCAN_TxHeaderTypeDef PingTxHeader = {
-	    .Identifier = GR_DASH_PANEL |,
+	FDCANTxMessage pingMsg;
+	pingMsg.tx_header.Identifier = (GR_DASH_PANEL<<20) | (MSG_PING<<8) | to;
+	pingMsg.tx_header.IdType = FDCAN_STANDARD_ID;
+	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	pingMsg.tx_header.DataLength = 4;
+	pingMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	pingMsg.tx_header.MessageMarker = 0;
 
-	    .IdType = FDCAN_STANDARD_ID,
-	    .TxFrameType = FDCAN_DATA_FRAME,
-	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 4,
-	    .BitRateSwitch = FDCAN_BRS_OFF,
-	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
-	};
+	((uint32_t*) (pingMsg.data))[0] = MillisecondsSinceBoot();
+	can_send(can_handler, &pingMsg);
+}
+
+void CAN_sendECU(CANHandle *c, CAN_SEND_ECU* msg) {
+
+	FDCANTxMessage sendECUMsg;
+
+	// TODO: set up the message
+
+	can_send(c, &sendECUMsg);
+
 }
 
 void CAN_callback(uint32_t ID, void *data, uint32_t size)

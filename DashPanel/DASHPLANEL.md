@@ -13,8 +13,8 @@
 
 ## Buttons
 
-1. Process button inputs (THE BUTTONS DO NOT LATCH)
-2. Implement debouncing
+1. Test button interrupts
+2. Move the CAN messages to grand loop + make global status + create CAN send flag
 
 ## LED
 
