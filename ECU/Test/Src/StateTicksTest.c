@@ -1,5 +1,3 @@
-#include "stm32g4xx_hal.h"
-#include "can.h"
 #include "StateTicks.h"
 
 #include <stdint.h>
@@ -7,6 +5,8 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateUtils.h"
+#include "can.h"
+#include "stm32g4xx_hal.h"
 
 /*
 - GLV ON
