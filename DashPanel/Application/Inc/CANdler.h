@@ -17,7 +17,7 @@ typedef struct {
 } CAN_SEND_ECU;
 
 extern DashStatus dashStatus;
-extern CANHandle * can_handler;
+extern CANHandle *can_handler;
 
 void CANInitialize();
 void CAN_sendPing(GR_OLD_NODE_ID to);

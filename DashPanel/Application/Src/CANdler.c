@@ -64,7 +64,7 @@ void CANInitialize()
 void CAN_sendPing(GR_OLD_NODE_ID to)
 {
 	FDCANTxMessage pingMsg;
-	pingMsg.tx_header.Identifier = (GR_DASH_PANEL<<20) | (MSG_PING<<8) | to;
+	pingMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to;
 	pingMsg.tx_header.IdType = FDCAN_STANDARD_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
@@ -73,18 +73,18 @@ void CAN_sendPing(GR_OLD_NODE_ID to)
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
 
-	((uint32_t*) (pingMsg.data))[0] = MillisecondsSinceBoot();
+	((uint32_t *)(pingMsg.data))[0] = MillisecondsSinceBoot();
 	can_send(can_handler, &pingMsg);
 }
 
-void CAN_sendECU(CANHandle *c, CAN_SEND_ECU* msg) {
+void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg)
+{
 
 	FDCANTxMessage sendECUMsg;
 
 	// TODO: set up the message
 
 	can_send(c, &sendECUMsg);
-
 }
 
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
