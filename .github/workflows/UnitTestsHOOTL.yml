@@ -167,7 +167,7 @@ jobs:
           overwrite: true
 
   ctest:
-    name: CTests
+    name: CTest
     needs: cmake
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
