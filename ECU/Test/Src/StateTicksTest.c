@@ -1,3 +1,5 @@
+#include "stm32g4xx_hal.h"
+#include "can.h"
 #include "StateTicks.h"
 
 #include <stdint.h>
@@ -5,7 +7,6 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateUtils.h"
-#include "stm32g4xx_hal.h"
 
 /*
 - GLV ON
@@ -20,7 +21,7 @@
 - TS DISCHARGE (ts voltage > 60), then less than 60 -> GLV ON
 */
 
-ECU_StateData stateLump = {0};
+extern ECU_StateData stateLump;
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 // EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds

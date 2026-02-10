@@ -25,11 +25,13 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_sources(
 		StateTicksTest
 		PRIVATE
+			Test/Src/can.c
 			Test/Src/StateTicksTest.c
-			Application/Src/StateTicks.c
-			Application/Src/StateUtils.c
 			Test/Src/stm32g4xx_hal.c
 			Test/Src/stm32g4xx_ll_gpio.c
+			Application/Src/StateTicks.c
+			Application/Src/StateUtils.c
+			Application/Src/CANutils.c
 	)
 	target_link_libraries(
 		StateTicksTest

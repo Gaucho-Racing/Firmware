@@ -76,7 +76,7 @@ typedef struct {
 				  offset: 0x0E4 */
 	uint32_t TXEFA;   /*!< FDCAN Tx Event FIFO Acknowledge register,
 				  Address offset: 0x0E8 */
-} FDCAN_GlobalTypeDef_e;
+} FDCAN_GlobalTypeDef;
 
 typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
 #define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
@@ -162,7 +162,7 @@ typedef struct {
 				       This parameter can be a value of @ref
 				     FDCAN_txFifoQueue_Mode */
 
-} FDCAN_InitTypeDef_e;
+} FDCAN_InitTypeDef;
 
 
 // RX Callback must perform a deep copy of the data
@@ -170,9 +170,9 @@ typedef struct {
 typedef void (*CAN_RXCallback)(uint32_t ID, void *data, uint32_t size);
 typedef struct {
 	// can baud rate is set by fdcan prescaler and RCC clock configurations
-	FDCAN_GlobalTypeDef_e *fdcan_instance; // Base address of FDCAN peripheral in memory (FDCAN1, FDCAN2, FDCAN3 macros)
+	FDCAN_GlobalTypeDef *fdcan_instance; // Base address of FDCAN peripheral in memory (FDCAN1, FDCAN2, FDCAN3 macros)
 
-	FDCAN_InitTypeDef_e hal_fdcan_init;
+	FDCAN_InitTypeDef hal_fdcan_init;
 	CAN_RXCallback rx_callback;
 	uint32_t rx_interrupt_priority;
 	uint32_t tx_interrupt_priority;
@@ -180,27 +180,27 @@ typedef struct {
 	// Circular Buffer
 	uint32_t tx_buffer_length;
 
-	GPIO_TypeDef_e *rx_gpio;	       // Instance name, like GPIOA, GPIOB, etc.
-	GPIO_InitTypeDef_e init_rx_gpio; // GPIO Parameters - set correct Alternate Function, no pullup/pulldown, high/very_high frequency
-	GPIO_TypeDef_e *tx_gpio;
-	GPIO_InitTypeDef_e init_tx_gpio;
+	GPIO_TypeDef *rx_gpio;	       // Instance name, like GPIOA, GPIOB, etc.
+	GPIO_InitTypeDef init_rx_gpio; // GPIO Parameters - set correct Alternate Function, no pullup/pulldown, high/very_high frequency
+	GPIO_TypeDef *tx_gpio;
+	GPIO_InitTypeDef init_tx_gpio;
 
 	// additional parameters
 } CANConfig;
 
-typedef struct FDCAN_HandleTypeDef_st FDCAN_HandleTypeDef_e;
-typedef struct CircularBuffer_st CircularBuffer_e;
+typedef struct FDCAN_HandleTypeDef_st FDCAN_HandleTypeDef;
+typedef struct CircularBuffer_st CircularBuffer;
 // FDCAN peripheral for STM32G4
 typedef struct {
-	FDCAN_HandleTypeDef_e *hal_fdcanP;
-	CircularBuffer_e *tx_buffer;
+	FDCAN_HandleTypeDef *hal_fdcanP;
+	CircularBuffer *tx_buffer;
 	uint32_t tx_buffer_length;
 
 	CAN_RXCallback rx_callback;
 
 	// for release
-	GPIO_TypeDef_e *rx_gpio;
-	GPIO_TypeDef_e *tx_gpio;
+	GPIO_TypeDef *rx_gpio;
+	GPIO_TypeDef *tx_gpio;
 	uint32_t Clock_Source;
 
 	// state
@@ -257,10 +257,10 @@ typedef struct {
 				   of Tx message status. This parameter must be
 				   a number between 0 and 0xFF                */
 
-} FDCAN_TxHeaderTypeDef_e;
+} FDCAN_TxHeaderTypeDef;
 
 typedef struct {
-	FDCAN_TxHeaderTypeDef_e tx_header;
+	FDCAN_TxHeaderTypeDef tx_header;
 	uint8_t data[FDCAN_MAX_DATA_BYTES];
 } FDCANTxMessage;
 
@@ -324,10 +324,10 @@ typedef struct {
 					   matched an Rx filter or 1 if it did not
 					   match any Rx filter */
 
-} FDCAN_RxHeaderTypeDef_e;
+} FDCAN_RxHeaderTypeDef;
 
 typedef struct {
-	FDCAN_RxHeaderTypeDef_e rx_header;
+	FDCAN_RxHeaderTypeDef rx_header;
 	uint8_t data[FDCAN_MAX_DATA_BYTES];
 } FDCANRxMessage;
 
@@ -367,7 +367,7 @@ typedef struct {
 				  - 0 and 0x1FFFFFFF, if IdType is
 			       FDCAN_EXTENDED_ID       */
 
-} FDCAN_FilterTypeDef_e;
+} FDCAN_FilterTypeDef;
 
 
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
@@ -375,7 +375,7 @@ int can_start(CANHandle *handle);
 int can_stop(CANHandle *handle);
 int can_send(CANHandle *handle, FDCANTxMessage *buffer);
 int can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
-int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef_e *filter);
+int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // alternatively use
 // HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
 // HAL_FDCAN_ConfigFilter()

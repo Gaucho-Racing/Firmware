@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef enum { SOFTWARE_OK_CONTROL_GPIO_Port, TSSI_R_CONTROL_GPIO_Port, TSSI_G_CONTROL_GPIO_Port, RTD_CONTROL_GPIO_Port } GPIO_TypeDef_e;
+typedef enum { SOFTWARE_OK_CONTROL_GPIO_Port, TSSI_R_CONTROL_GPIO_Port, TSSI_G_CONTROL_GPIO_Port, RTD_CONTROL_GPIO_Port } GPIO_TypeDef;
 
 typedef struct {
 	uint32_t Pin; /*!< Specifies the GPIO pins to be configured.
@@ -22,15 +22,15 @@ typedef struct {
 	uint32_t Alternate; /*!< Peripheral to be connected to the selected pins
 				 This parameter can be a value of @ref
 			       GPIOEx_Alternate_function_selection */
-} GPIO_InitTypeDef_e;
+} GPIO_InitTypeDef;
 
 #define TSSI_R_CONTROL_Pin 0
 #define TSSI_G_CONTROL_Pin 0
 #define RTD_CONTROL_Pin 0
 #define SOFTWARE_OK_CONTROL_Pin 0
 
-void LL_GPIO_SetOutputPin(GPIO_TypeDef_e GPIOx, uint32_t PinMask);
-void LL_GPIO_ResetOutputPin(GPIO_TypeDef_e GPIOx, uint32_t PinMask);
+void LL_GPIO_SetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
+void LL_GPIO_ResetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
 
 // void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) {
 //     (void)GPIOx;
