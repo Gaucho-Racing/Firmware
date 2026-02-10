@@ -21,7 +21,7 @@ void example_function(int count, float value)
 
 ## Logomatic Initialization
 
-When ITM and LL GPIO are available, `Setup_Logomatic()` expects a `LogomaticConfig` that describes the LPUART1 setup, on a STM32G474xE for LPUART1 this could look like:
+When ITM and LL GPIO are available, `Setup_Logomatic()` expects a `LogomaticConfig`, on a STM32G474xE for LPUART1 this could look like:
 
 ```c
 LogomaticConfig logomaticConfig = {
