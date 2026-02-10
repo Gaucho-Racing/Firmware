@@ -27,7 +27,7 @@
 
 // static void ECU_Pseudo_Time_Progress(uint32_t dt) { stateLumpTest.millisSinceBoot += dt; }
 
-static void ECU_Pseudo_State_Tick(ECU_StateData* stateLumpTest)
+static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 {
 	if (stateLumpTest->millisSinceBoot - stateLumpTest->lastECUStatusMsgMillis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
 		LOGOMATIC("ECU Current State: %d\n", stateLumpTest->ecu_state);
