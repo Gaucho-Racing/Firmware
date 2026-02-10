@@ -20,6 +20,7 @@ if(NOT DEFINED CMAKE_PRESET_NAME)
 endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+set(CMAKE_CXX_CLANG_TIDY "clang-tidy")
 
 set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")

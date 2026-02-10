@@ -1,0 +1,47 @@
+name: Clang Tidy
+run-name: Clang Tidy - ${{ github.ref_name }}
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  clangtidy:
+    name: Clang Tidy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Pull Request
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+
+      - name: Build All
+        run: make -j$(nproc) all
+
+      - name: Clang Tidy
+        run: |
+          set -o pipefail
+          echo "<details open><summary>Clang-Tidy Output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          git ls-files '*.c' '*.h' | xargs clang-tidy -p="build/Debug" -fix-errors 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Save Changes
+        uses: EndBug/add-and-commit@v9
+        if: github.ref_type != 'tag'
+        env:
+          HOME: ${{ github.workspace }}
+        with:
+          default_author: github_actions
+          message: 'Automatic Clang-Format: Standardized formatting automatically'
+          fetch: 'false'
