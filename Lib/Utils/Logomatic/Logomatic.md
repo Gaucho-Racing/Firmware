@@ -56,9 +56,9 @@ int main(void)
 
 ITM (Instrumentation Trace Macrocell) is an on-chip debug trace block on ARM Cortex-M. It can stream characters over the SWO pin to your debugger. Logomatic uses CMSIS `ITM_SendChar()` and enables ITM port 0 in `Setup_Logomatic()`.
 
-## VS Code cortex-debug SWO setup
+## VS Code Cortex-Debug SWO setup
 
-Use cortex-debug with SWO enabled so the debugger can show ITM output:
+Use Cortex-Debug with SWO enabled so the debugger can show ITM output, remember to set the clock speed according to your chip!
 
 ```json
 {
