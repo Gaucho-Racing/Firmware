@@ -151,6 +151,7 @@ int main(void)
 	// ##########################
 	LOGOMATIC("Press TS ACTIVE: Go to PRECHARGE ENGAGE\n");
 	stateLumpTest.ts_active = true;
+	stateLumpTest.ir_minus = true;
 	ECU_Pseudo_State_Tick();
 	if (stateLumpTest.ecu_state != GR_PRECHARGE_ENGAGED) {
 		LOGOMATIC("0.3 Failure: ecu state not in precharge engaged\n");
@@ -221,7 +222,6 @@ int main(void)
 	stateLumpTest.rtd = true;
 	ECU_Pseudo_State_Tick();
 	LOGOMATIC("Release RTD\n");
-	stateLumpTest.rtd = false;
 	ECU_Pseudo_State_Tick();
 	if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 		LOGOMATIC("0.7 Failure: ecu state not in drive active\n");
@@ -352,7 +352,7 @@ int main(void)
 	// ## Step 0.15            ##
 	// ##########################
 	LOGOMATIC("Press RTD -> MOVE TO PRECHARGE COMPLETE\n");
-	stateLumpTest.rtd = true;
+	stateLumpTest.rtd = !stateLumpTest.rtd;
 	ECU_Pseudo_State_Tick();
 	if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 		LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
@@ -363,7 +363,6 @@ int main(void)
 		return 15;
 	}
 	LOGOMATIC("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
-	stateLumpTest.rtd = false;
 	ECU_Pseudo_State_Tick();
 	if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 		LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
@@ -410,7 +409,7 @@ int main(void)
 	// ## Step 0.18            ##
 	// ##########################
 	LOGOMATIC("Press TS Active Button -> MOVE to TS DISCHARGE\n");
-	stateLumpTest.ts_active = true;
+	stateLumpTest.ts_active = !stateLumpTest.ts_active;
 	ECU_Pseudo_State_Tick();
 	if (stateLumpTest.ecu_state != GR_TS_DISCHARGE) {
 		LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");
@@ -422,7 +421,6 @@ int main(void)
 	}
 
 	LOGOMATIC("Release TS Active Button -> STAY IN TS DISCHARGE\n");
-	stateLumpTest.ts_active = false;
 	ECU_Pseudo_State_Tick();
 	if (stateLumpTest.ecu_state != GR_TS_DISCHARGE) {
 		LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");

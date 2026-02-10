@@ -142,7 +142,13 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 // TODO: change for CAN button messenging
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
-	if (!stateData->ts_active || CriticalError(stateData)) {
+	if (!stateData->ts_active) {
+		ECU_Tractive_System_Discharge_Start(stateData);
+		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
+		return;
+	}
+	if (CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.\n");
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
