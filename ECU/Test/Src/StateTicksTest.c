@@ -21,11 +21,7 @@
 - TS DISCHARGE (ts voltage > 60), then less than 60 -> GLV ON
 */
 
-ECU_StateData stateLumpTest = {
-	.ecu_state = GR_GLV_ON,
-	.ams_sense = 2,
-	.imd_sense = 2
-};
+ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2};
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 // EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
