@@ -62,7 +62,7 @@ void Setup_LPUART1_Logomatic(LogomaticConfig *config)
 	LL_LPUART_DisableFIFO(LPUART1);
 	LL_LPUART_Enable(LPUART1);
 
-	switch (config->transfer_direction){
+	switch (config->transfer_direction) {
 		case LOGOMATIC_DIRECTION_TX:
 			while (!(LL_LPUART_IsActiveFlag_TEACK(LPUART1))) {}
 			break;
@@ -106,7 +106,8 @@ void Setup_Logomatic(LogomaticConfig *config)
 	ITM->TER |= (1UL << 0);
 	ITM->TCR |= ITM_TCR_ITMENA_Msk;
 #elif defined(LOGOMATIC_ENABLED)
-#pragma message("Logomatic is only supported on platforms with ITM and the full LL driver. Logomatic functions will be compiled out. You can still use LOGOMATIC if you set up LPUART and enable ITM by hand.")
+#pragma message(                                                                                                                                                                                       \
+    "Logomatic is only supported on platforms with ITM and the full LL driver. Logomatic functions will be compiled out. You can still use LOGOMATIC if you set up LPUART and enable ITM by hand.")
 	UNUSED(config);
 #else
 	UNUSED(config);

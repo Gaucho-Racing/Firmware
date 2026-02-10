@@ -62,21 +62,19 @@
 /* USER CODE END PV */
 
 // LOGOMATIC
-LogomaticConfig logomaticConfig = {
-	.clock_source = LOGOMATIC_PCLK1,
-	.bus = LOGOMATIC_BUS,
-	.gpio_port = LOGOMATIC_GPIOA,
-	.gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-	.baud_rate = 115200,
-	.data_width = LOGOMATIC_DATAWIDTH_8B,
-	.stop_bits = LOGOMATIC_STOPBITS_1,
-	.parity = LOGOMATIC_PARITY_NONE,
-	.transfer_direction = LOGOMATIC_DIRECTION_TX,
-	.hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-	.prescaler = LOGOMATIC_PRESCALER_DIV1,
-	.tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-	.rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8
-};
+LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
+				   .bus = LOGOMATIC_BUS,
+				   .gpio_port = LOGOMATIC_GPIOA,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .baud_rate = 115200,
+				   .data_width = LOGOMATIC_DATAWIDTH_8B,
+				   .stop_bits = LOGOMATIC_STOPBITS_1,
+				   .parity = LOGOMATIC_PARITY_NONE,
+				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
+				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
+				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
 // CAN
 
