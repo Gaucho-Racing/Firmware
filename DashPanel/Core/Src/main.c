@@ -326,7 +326,8 @@ static void MX_GPIO_Init(void)
  * @param None
  * @retval None
  */
-static void GPIO_Interrupt_Init(void) {
+static void GPIO_Interrupt_Init(void)
+{
 
 	// Map PA3 and PA4 to EXTI lines 3 and 4
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3);
@@ -343,7 +344,6 @@ static void GPIO_Interrupt_Init(void) {
 	// Enable interrupts
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
-
 }
 
 /**
@@ -351,14 +351,14 @@ static void GPIO_Interrupt_Init(void) {
  * @param None
  * @retval None
  */
-void EXTI3_IRQHandler(void) {
+void EXTI3_IRQHandler(void)
+{
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
 
 		LOGOMATIC("TS Active Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
 	}
-
 }
 
 /**
@@ -366,7 +366,8 @@ void EXTI3_IRQHandler(void) {
  * @param None
  * @retval None
  */
-void EXTI4_IRQHandler(void) {
+void EXTI4_IRQHandler(void)
+{
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
 
