@@ -187,6 +187,41 @@ void SysTick_Handler(void)
 	/* USER CODE END SysTick_IRQn 1 */
 }
 
+/******************************************************************************/
+/* STM32G4xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32g4xx.s).                    */
+/******************************************************************************/
+
+/**
+ * @brief This function handles FDCAN1 interrupt 0.
+ */
+void FDCAN1_IT0_IRQHandler(void)
+{
+	/* USER CODE BEGIN FDCAN1_IT0_IRQn 0 */
+
+	/* USER CODE END FDCAN1_IT0_IRQn 0 */
+	HAL_FDCAN_IRQHandler(&hfdcan1);
+	/* USER CODE BEGIN FDCAN1_IT0_IRQn 1 */
+
+	/* USER CODE END FDCAN1_IT0_IRQn 1 */
+}
+
+/**
+ * @brief This function handles FDCAN2 interrupt 0.
+ */
+void FDCAN2_IT0_IRQHandler(void)
+{
+	/* USER CODE BEGIN FDCAN2_IT0_IRQn 0 */
+
+	/* USER CODE END FDCAN2_IT0_IRQn 0 */
+	HAL_FDCAN_IRQHandler(&hfdcan2);
+	/* USER CODE BEGIN FDCAN2_IT0_IRQn 1 */
+
+	/* USER CODE END FDCAN2_IT0_IRQn 1 */
+}
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
