@@ -20,23 +20,22 @@ If no filters are set, the default behaviour is to accept all standard and exten
 CHANGES:
 - with a single producer, single consumer tx buffer, can instead use a fixed-size ring buffer instead of the circular buffer
 - DMA support for copying from circular buffer
-- Timer Support for continously dequeuing, or call can_tx_dequeue_helper after every hardware enqueue
-- avoids free issues inside the ISR
-- can also use the ISR to drain the tx buffer, can_send only adds to it
+- Timer Support for continously dequeuing between API calls,
+    - call can_tx_dequeue_helper after every successful hardware enqueue.
+    - avoids free issues inside the ISR
+- Error counter handling, waiting for more stable CAN bus state?????
 
 
 
 PROBLEMS:
-- Freeing within ISRs whenever popping from CircularBuffer (yes its faster, than stack copies, but heap is getting fragmented)
 - ISRS might take too long to resolve because popping and freeing circular buffer.
-
 - HARDCODE Platform Usage Flag for compiler definitions
 - CAN.H expects #STM32G4 to be defined,
 - RX Callback must perform deep copy of data supplied to it - could also malloc, but not safe to do inside ISRs
 
 IDEAS for other features:
-- - DMA support for copying from circular buffer
-- Circular buffer should be fixed size anyways
+-
+- DMA support for copying 64 bytes from circular buffer
 - abstract to different STM families besides STM32G4
 - Rx Buffering
 - TX Buffering policy, do we spread them out over multiple TX buffers
