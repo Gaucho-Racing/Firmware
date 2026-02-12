@@ -23,10 +23,10 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= stateData->max_cell_temp > 60;
 	problem |= stateData->ts_voltage > 600;
 	// problem |= APPS_BSE_Violation(stateData); not a critical error actually
-	problem |= stateData->bcu_software_latch;
+	problem |= !stateData->bcu_software_latch; // when latch is OPEN (0), then system shut down
 	problem |= stateData->ir_plus && !stateData->ir_minus;
-	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);
-	problem |= !stateData->ir_minus && (stateData->ecu_state == GR_PRECHARGE_ENGAGED || stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);
+	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE); // ensured pre charge is complete via ir+ latch
+	problem |= !stateData->ir_minus && (stateData->ecu_state == GR_PRECHARGE_ENGAGED || stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE); // ensures precharge has begun with ir- latch
 	problem |= imdFailure(stateData);
 	problem |= bmsFailure(stateData);
 	return problem;

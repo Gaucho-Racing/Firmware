@@ -1,4 +1,4 @@
-# Relevant Ports and Pins
+# Relevant Ports and Pins (GR26)
 
 -- ANALOG IN --
 ADC 1 (ADC_1 BUFFERS array is IN ORDER from top to bottom of this list)

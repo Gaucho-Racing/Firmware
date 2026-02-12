@@ -22,7 +22,7 @@
  *
  * @remark Intentionally not a globally accessible variable
  */
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON};
+ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
 
 CANHandle *primary_can;
 CANHandle *data_can;
