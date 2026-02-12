@@ -2,6 +2,11 @@
 
 #include <stdint.h>
 
+int getValue(int a)
+{
+	return a;
+}
+
 int main(void)
 {
 	int a = 5, b = 10;
@@ -97,6 +102,53 @@ int main(void)
 	uint16_t kk = 65535, ll = 255;
 	if (MIN_WITH_TYPES(kk, ll) != 255 || MAX_WITH_TYPES(kk, ll) != 65535) {
 		return 19;
+	}
+
+	if (MIN_WITH_TYPES(getValue(5), getValue(10)) != 5 || MAX_WITH_TYPES(getValue(5), getValue(10)) != 10) {
+		return 20;
+	}
+
+	if (MIN_WITH_TYPES(getValue(-3), getValue(2)) != -3 || MAX_WITH_TYPES(getValue(-3), getValue(2)) != 2) {
+		return 21;
+	}
+
+	if (MIN_WITH_TYPES(getValue(0), getValue(0)) != 0 || MAX_WITH_TYPES(getValue(0), getValue(0)) != 0) {
+		return 22;
+	}
+
+	if (MIN_WITH_TYPES(getValue(5), getValue(5)) != 5 || MAX_WITH_TYPES(getValue(5), getValue(5)) != 5) {
+		return 23;
+	}
+
+	if (MIN_WITH_TYPES(getValue(3), getValue(7)) != 3 || MAX_WITH_TYPES(getValue(3), getValue(7)) != 7) {
+		return 24;
+	}
+
+	if (MIN_WITH_TYPES(getValue(5), getValue(5)) != 5 || MAX_WITH_TYPES(getValue(5), getValue(5)) != 5) {
+		return 25;
+	}
+
+	if (MIN_WITH_TYPES(MIN_WITH_TYPES(5, 10), MIN_WITH_TYPES(3, 7)) != 3 || MAX_WITH_TYPES(MAX_WITH_TYPES(5, 10), MAX_WITH_TYPES(3, 7)) != 10) {
+		return 26;
+	}
+
+	if (MIN_WITH_TYPES(MIN_WITH_TYPES(-3, 2), MIN_WITH_TYPES(0, 0)) != -3 || MAX_WITH_TYPES(MAX_WITH_TYPES(-3, 2), MAX_WITH_TYPES(0, 0)) != 2) {
+		return 27;
+	}
+
+	if (MIN_WITH_TYPES(MIN_WITH_TYPES(0, 0), MIN_WITH_TYPES(0, 0)) != 0 || MAX_WITH_TYPES(MAX_WITH_TYPES(0, 0), MAX_WITH_TYPES(0, 0)) != 0) {
+		return 28;
+	}
+
+	int *ptr1 = (int *)0x1000;
+	int *ptr2 = (int *)0x2000;
+	if (MIN_WITH_TYPES(ptr1, ptr2) != ptr1 || MAX_WITH_TYPES(ptr1, ptr2) != ptr2) {
+		return 29;
+	}
+
+	char char1 = 'A', char2 = 'B';
+	if (MIN_WITH_TYPES(char1, char2) != 'A' || MAX_WITH_TYPES(char1, char2) != 'B') {
+		return 30;
 	}
 
 	return 0;
