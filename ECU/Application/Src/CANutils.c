@@ -53,7 +53,7 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
 
 // TODO: If you try to send anything but control messages, you are cooked buddy
 // Doesn't actually use Motorola order for multiple fields, just sends the bytes in reverse order
-/*void ECU_Write_DTI(uint16_t msgID, uint8_t data[], uint32_t length)
+/*void ECU_CAN_Send_DTI(uint16_t msgID, uint8_t data[], uint32_t length)
 {
 	if ((MSG_DTI_CONTROL_10 & 0xFF) != 0x16) {
 		LOGOMATIC("NOT A DTI MESSAGE");

@@ -22,7 +22,6 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	bool problem = false;
 	problem |= stateData->max_cell_temp > 60;
 	problem |= stateData->ts_voltage > 600;
-	// problem |= APPS_BSE_Violation(stateData); not a critical error actually
 	problem |= !stateData->bcu_software_latch; // when latch is OPEN (0), then system shut down
 	problem |= stateData->ir_plus && !stateData->ir_minus;
 	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE); // ensured pre charge is complete via ir+ latch
