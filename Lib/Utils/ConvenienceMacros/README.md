@@ -4,7 +4,7 @@ Any macro implemented must not contain any anti-patterns.
 
 Prefer using macros that are "well known" to be safe.
 
-Relevant macros should follow proper `do { /* ... */ } while(0)` formatting if appropriate.
+Relevant macros should follow proper `do { /* ... */ } while(0)` when needed, and should keep internal variables named in a manner to prevent collisions. 
 
 ## Testing
 
