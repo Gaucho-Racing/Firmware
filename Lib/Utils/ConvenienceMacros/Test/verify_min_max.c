@@ -1,11 +1,8 @@
-#include "ConvenienceMacros.h"
-
 #include <stdint.h>
 
-int getValue(int a)
-{
-	return a;
-}
+#include "ConvenienceMacros.h"
+
+int getValue(int a) { return a; }
 
 int main(void)
 {
