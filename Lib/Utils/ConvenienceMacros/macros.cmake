@@ -11,12 +11,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		ConvenienceMacros_Min_Max
 		${CMAKE_CURRENT_LIST_DIR}/Test/verify_min_max.c
 	)
-	target_link_libraries(
-		ConvenienceMacros_Min_Max
-		ConvenienceMacros_Lib
-	)
-	add_test(
-		ConvenienceMacros_Min_Max
-		ConvenienceMacros_Min_Max
-	)
+	target_link_libraries(ConvenienceMacros_Min_Max ConvenienceMacros_Lib)
+	add_test(ConvenienceMacros_Min_Max ConvenienceMacros_Min_Max)
 endif()
