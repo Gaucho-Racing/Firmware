@@ -38,6 +38,7 @@ include("${platform_path}/STM32L476xG/chip.cmake")
 
 # Utils
 include("${lib_path}/GlobalShare/common.cmake")
+include("${lib_path}/Utils/ConvenienceMacros/macros.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
