@@ -11,7 +11,6 @@ CANHandle *can_handler;
 DashStatus dashStatus;
 bool canReadyToSend;
 
-
 void CANInitialize()
 {
 	dashStatus = {0};

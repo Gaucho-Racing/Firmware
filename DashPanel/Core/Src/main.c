@@ -133,13 +133,16 @@ int main(void)
 			msg_struct.RTDButton = dashStatus.RTDButton;
 
 			// Kinda weird ngl but it doesn't matter
-			if (dashStatus.TSActiveButton) dashStatus.TSActiveButton = 0;
-			if (dashStatus.RTDButton) dashStatus.RTDButton = 0;
+			if (dashStatus.TSActiveButton) {
+				dashStatus.TSActiveButton = 0;
+			}
+			if (dashStatus.RTDButton) {
+				dashStatus.RTDButton = 0;
+			}
 
 			CAN_sendECU(can_handler, &msg_struct);
 
 			canReadyToSend = false;
-
 		}
 		/* USER CODE BEGIN 3 */
 	}
