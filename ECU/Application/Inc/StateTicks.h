@@ -1,8 +1,13 @@
 #include "StateData.h"
 #include "StateMachine.h"
+#include "adc.h"
+#include "can.h"
 
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_
+
+extern CANHandle *primary_can;
+extern CANHandle *data_can;
 
 /**
  * @brief Tick function for the ECU state machine.
@@ -36,6 +41,17 @@ void ECU_GLV_Off(ECU_StateData *stateData);
 void ECU_GLV_On(ECU_StateData *stateData);
 
 /**
+ * @brief Handles the transition from GLV On to Precharge Engaged state.
+ *
+ * Initiates the precharge process by switching to the Precharge Engaged state.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
+void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData);
+
+/**
  * @brief State handler for the Precharge Engaged state.
  *
  * Handles actions and transitions specific to the Precharge Engaged state.
@@ -58,15 +74,38 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData);
 void ECU_Precharge_Complete(ECU_StateData *stateData);
 
 /**
- * @brief State handler for the Precharge Fault state.
+ * @brief State transition handler for the Drive Active State
  *
- * Handles actions and transitions specific to the Precharge Fault state.
+ * Handles transitions into the Drive Active state.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
+void ECU_Transition_To_Drive_Active(ECU_StateData *stateData);
+
+/**
+ * @brief State handler for the Drive Active state.
+ *
+ * Handles actions and transitions specific to the Drive Active state.
  *
  * @param stateData Pointer to the ECU state data structure.
  *
  * @return void
  */
 void ECU_Drive_Active(ECU_StateData *stateData);
+
+/**
+ * @brief Init function for ECU_Tractive_System_Discharge_Start.
+ *
+ * Resets Tractive System discharge timer and switches on the Tractive System
+ * Discharge state.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
+void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Tractive System Discharge state.
