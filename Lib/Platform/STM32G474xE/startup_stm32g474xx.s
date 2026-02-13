@@ -593,4 +593,3 @@ g_pfnVectors:
 
 	.weak FMAC_IRQHandler
 	.thumb_set FMAC_IRQHandler,Default_Handler
-

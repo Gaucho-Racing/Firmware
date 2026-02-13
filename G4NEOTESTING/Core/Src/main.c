@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "Logomatic.h"
 
 #include "adc.h"
 #include "dma.h"
@@ -62,7 +63,18 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/* Enable ITM for SWO output */
+static void ITM_Enable(void)
+{
+	/* Enable TRC (Trace) */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
+	/* Enable stimulus port 0 */
+	ITM->TER |= (1UL << 0);
+
+	/* Set trace control register */
+	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+}
 /* USER CODE END 0 */
 
 /**
@@ -76,7 +88,7 @@ void MX_SPI1_Init(void)
 	LL_SPI_InitTypeDef SPI_InitStruct = {0};
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI1);
+	LL_APB1_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
 
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
 
@@ -120,6 +132,7 @@ void MX_SPI1_Init(void)
 	LL_SPI_Init(SPI1, &SPI_InitStruct);
 	LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
 	LL_SPI_EnableNSSPulseMgt(SPI1);
+	ITM_Enable();
 }
 
 int main(void)
@@ -174,6 +187,8 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		Neopixel_update();
+
+		LOGOMATIC("Hello world! \n");
 	}
 }
 

@@ -1,4 +1,5 @@
 #include "gr_neopixel.h"
+#include "Logomatic.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -21,7 +22,11 @@ void Neopixel_update()
 
 	// HAL_SPI_Transmit(SPI1, neopixelTransmission, 48, 1000);
 
-	for (int i = 0; i < sizeof(neopixelTransmission); i++) {
-		LL_SPI_TransmitData8(SPI1, neopixelTransmission[i]);
-	}
+	//int test = sizeof(neopixelTransmission)/sizeof(neopixelTransmission[0]);
+
+    for(uint8_t i = 0; i < sizeof(neopixelTransmission); i++)
+    {
+        LL_SPI_TransmitData8(SPI1, neopixelTransmission[i]);
+    }
+
 }
