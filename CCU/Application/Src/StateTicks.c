@@ -1,7 +1,7 @@
 #include "StateTicks.h"
 
 #include <string.h>
-
+#include "CANDler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
@@ -15,7 +15,6 @@ void CCU_State_Tick(CCU_StateData *state_data)
 {
 
 	LOGOMATIC("CCU Current State: %d\n", state_data->state);
-	LOGOMATIC("CCU Current State: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
 
 
 	// FIXME:
@@ -48,6 +47,8 @@ void STATE_IDLE(CCU_StateData *state_data)
 		setSoftwareLatch(1);
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->ACU_PRECHARGE_SET_TS_ACTIVE = 1;
+		LOGOMATIC("CCU Current State: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
+
 		SendPrechargeStatus();
 	}
 }
@@ -60,6 +61,8 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		setSoftwareLatch(0);
 		state_data->state = CCU_STATE_IDLE;
 		state_data->ACU_PRECHARGE_SET_TS_ACTIVE = 0;
+		LOGOMATIC("CCU Current State: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
+
 		SendPrechargeStatus();
 	}
 }

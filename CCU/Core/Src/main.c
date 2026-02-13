@@ -124,6 +124,7 @@ int main(void)
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 		LL_mDelay(100);
+		setSoftwareLatch(1);
 		Check_Button(&state_data);
 		CCU_State_Tick(&state_data);
 
