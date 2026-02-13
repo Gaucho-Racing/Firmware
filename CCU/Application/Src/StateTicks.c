@@ -16,7 +16,6 @@ void CCU_State_Tick(CCU_StateData *state_data)
 
 	LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
-
 	// FIXME:
 	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 				     // General checks for State Transition, if any error detected, transition back to IDLE state
@@ -57,7 +56,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 {
 	bool anyErrors = CriticalError(state_data);
 
-	if  (anyErrors || !(state_data->Button_Status)) {
+	if (anyErrors || !(state_data->Button_Status)) {
 		setSoftwareLatch(0);
 		state_data->state = CCU_STATE_IDLE;
 		state_data->ACU_PRECHARGE_SET_TS_ACTIVE = 0;
