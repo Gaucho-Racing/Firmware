@@ -28,6 +28,7 @@
 #include "gpio.h"
 #include "gr_adc.h"
 #include "usart.h"
+#include "malloc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
