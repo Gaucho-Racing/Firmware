@@ -32,7 +32,7 @@ target_sources(
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-	# Application
+		# Application
 		Application/Src/CANdler.c
 		Application/Src/dashutils.c
 	# TODO
