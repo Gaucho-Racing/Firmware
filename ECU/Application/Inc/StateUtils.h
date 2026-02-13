@@ -29,9 +29,6 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
-#define MIN(x, y) (x > y ? y : x)
-#define MAX(x, y) (x > y ? x : y)
-
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
 bool bmsFailure(volatile const ECU_StateData *stateData);

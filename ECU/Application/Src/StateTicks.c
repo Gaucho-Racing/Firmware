@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "CANutils.h"
+#include "ConvenienceMacros.h"
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_DAT.h"
 #include "GR_OLD_MSG_ID.h"
