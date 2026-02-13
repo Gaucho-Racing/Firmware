@@ -1,6 +1,7 @@
 #ifndef CANDLER_H
 #define CANDLER_H
 #include "can.h"
+#include "GR_OLD_NODE_ID.h"
 
 typedef struct {
 	uint16_t vehicleSpeed;
