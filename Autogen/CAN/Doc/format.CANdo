@@ -405,7 +405,6 @@ routing:
       CAN1:
         Debugger:
           - msg: Ping
-          - msg: Ping
         ECU
           - msg: Ping
           - msg: DC-DC Status
@@ -519,7 +518,7 @@ routing:
           - msg: TCM Status
           - msg: TCM Resource Utilization
     DGPS:
-      CAN1:
+      CAN2:
         ECU:
           - msg: UVW DGPS
           - msg: GPS LAT
