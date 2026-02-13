@@ -37,6 +37,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			GLOBALSHARE_LIB
 			GR_OLD_CAN_MESSAGES
+			LOGOMATIC_LIB
 			# GR_ADC
 			# PERIPHERAL_CAN_LIB
 			BitManipulations_Lib
@@ -75,7 +76,6 @@ target_sources(
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-		Core/Src/usart.c
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
