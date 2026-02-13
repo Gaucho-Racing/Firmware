@@ -1,10 +1,10 @@
 #ifndef CANDLER_H
 #define CANDLER_H
+#include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "can.h"
-#include "GR_OLD_MSG_ID.h"
 
-	typedef struct {
+typedef struct {
 	uint16_t vehicleSpeed;
 	uint8_t ECUState;
 	uint8_t TSActiveButton;
