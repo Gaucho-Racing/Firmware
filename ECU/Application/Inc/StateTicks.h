@@ -74,9 +74,9 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData);
 void ECU_Precharge_Complete(ECU_StateData *stateData);
 
 /**
- * @brief State handler for the Precharge Fault state.
+ * @brief State transition handler for the Drive Active State
  *
- * Handles actions and transitions specific to the Precharge Fault state.
+ * Handles transitions into the Drive Active state.
  *
  * @param stateData Pointer to the ECU state data structure.
  *
@@ -85,9 +85,9 @@ void ECU_Precharge_Complete(ECU_StateData *stateData);
 void ECU_Drive_Start(ECU_StateData *stateData);
 
 /**
- * @brief State handler for the Precharge Fault state.
+ * @brief State handler for the Drive Active state.
  *
- * Handles actions and transitions specific to the Precharge Fault state.
+ * Handles actions and transitions specific to the Drive Active state.
  *
  * @param stateData Pointer to the ECU state data structure.
  *
