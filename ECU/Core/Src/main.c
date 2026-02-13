@@ -110,28 +110,13 @@ void SystemClock_Config(void);
 // TODO: TS and RTD button signals will come over CAN
 void read_digital(void)
 {
-	// debouncing/latching for ts/rtd active
-	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
-	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-	uint32_t curr_time = MillisecondsSinceBoot();
-
-	if (!stateLump.prev_ts_active_button_state && ts_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
-		stateLump.ts_active = !stateLump.ts_active;
-		stateLump.prev_ts_press_millis = curr_time;
-	}
-	if (!stateLump.prev_rtd_button_state && rtd_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
-		stateLump.rtd = !stateLump.rtd;
-		stateLump.prev_rtd_press_millis = curr_time;
-	}
-
-	stateLump.prev_ts_active_button_state = ts_press;
-	stateLump.prev_rtd_button_state = rtd_press;
+	// TODO: implement CAN button messenge receiving
 
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-	stateLump.estop_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
+	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
 }
 
-void write_state_data()
+void write_adc_values_to_state_data()
 {
 	// analog
 	// TODO: bse signal idk what to do ADC_outputs[0]
@@ -199,7 +184,8 @@ void ADC_Configure(void)
 	Init_Vals_ADC1.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
-	Pin_Ports p1[2] = {{.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3, .port = GPIOC}, {.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14, .port = GPIOB}};
+	Pin_Ports p1[2] = {{.pin = BSE_SIGNAL_Pin | BSPD_SENSE_Pin | APPS1_SIGNAL_Pin | APPS2_SIGNAL_Pin, .port = GPIOC},
+			   {.pin = BRAKE_F_SIGNAL_Pin | BRAKE_R_SIGNAL_Pin | AUX_SIGNAL_Pin, .port = GPIOB}};
 	Init_Vals_ADC1.Pins = p1;
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
@@ -214,8 +200,8 @@ void ADC_Configure(void)
 	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
-	Pin_Ports p2 = {LL_GPIO_PIN_15 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_7, GPIOA};
-	Init_Vals_ADC2.Pins = &p2;
+	Pin_Ports p2[2] = {{.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA}, {.pin = STEERING_ANGLE_Pin, .port = STEERING_ANGLE_GPIO_Port}};
+	Init_Vals_ADC2.Pins = p2;
 	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
 	Channel c2[] = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
 	Init_Vals_ADC2.Channels = c2;
@@ -416,12 +402,13 @@ int main(void)
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
+	// TODO: do we need these?
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_FDCAN1_Init();
-	MX_FDCAN2_Init();
 	MX_ADC1_Init();
 	MX_ADC2_Init();
+	MX_FDCAN2_Init();
 
 	/* USER CODE BEGIN 2 */
 	LOGOMATIC("Starting ECU Firmware\n");
@@ -448,9 +435,9 @@ int main(void)
 		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
 		SendECUStateDataOverCAN(&stateLump);
-		write_state_data();
+		write_adc_values_to_state_data();
 		ECU_State_Tick();
-		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
+		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */

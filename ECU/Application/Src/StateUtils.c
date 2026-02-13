@@ -20,8 +20,8 @@ uint32_t MillisecondsSinceBoot(void)
 bool CriticalError(volatile const ECU_StateData *stateData)
 {
 	bool problem = false;
-	problem |= stateData->max_cell_temp > 60;
-	problem |= stateData->ts_voltage > 600;
+	problem |= stateData->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
+	problem |= stateData->ts_voltage > CRITICAL_TS_VOLTAGE;
 	problem |= !stateData->bcu_software_latch; // when latch is OPEN (0), then system shut down
 	problem |= stateData->ir_plus && !stateData->ir_minus;
 	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE); // ensured pre charge is complete via ir+ latch
@@ -52,7 +52,7 @@ bool CommunicationError(volatile const ECU_StateData *stateData)
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
-	return PressingBrake(stateData) && CalcPedalTravel(stateData) >= 0.25f;
+	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
 }
 
 // TODO: move this out of state machine because the brake light will need to be driven at all times
@@ -77,7 +77,7 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzone
 // TODO: APPS implausibility check (within 10% travel)
 // Stop throttle if implausible for > 100ms
-float CalcPedalTravel(volatile const ECU_StateData *stateData)
+float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
 	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
 	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
@@ -88,5 +88,5 @@ float CalcPedalTravel(volatile const ECU_StateData *stateData)
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)
 {
 	const float tolerance = 0.1; // In MPH
-	return stateData->vehicle_speed > tolerance;
+	return stateData->vehicle_speed_mph > tolerance;
 }

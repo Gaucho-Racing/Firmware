@@ -21,6 +21,8 @@
 
 #define SAFE_VOLTAGE_LIMIT 60
 #define BUTTON_REFRESH_RATE_MS 100
+#define CRITICAL_MAX_CELL_TEMP_C 60
+#define CRITICAL_TS_VOLTAGE 600
 
 typedef union {
 	struct {
@@ -50,6 +52,7 @@ typedef volatile struct ECU_StateData {
 	// TODO: Remove unneeded states
 
 	uint32_t millisSinceBoot;
+	uint32_t can_msg_cooldown_tick;
 
 	int32_t dischargeStartMillis;
 	uint32_t lastECUStatusMsgMillis;
@@ -58,13 +61,13 @@ typedef volatile struct ECU_StateData {
 
 	float min_amk_heat_cap_throttle_percent;
 	float ts_voltage;
-	float max_cell_temp; /** Temperature of hottest cell, celsius */
+	float max_cell_temp_c; /** Temperature of hottest cell, celsius */
 
-	float vehicle_speed; /** Vehicle speed, MPH */
-	float fr_wheel_rpm;  /** FR wheel, RPM */
-	float fl_wheel_rpm;  /** FL wheel, RPM */
-	float rr_wheel_rpm;  /** RRv wheel, RPM */
-	float rl_wheel_rpm;  /** RL wheel, RPM */
+	float vehicle_speed_mph; /** Vehicle speed, MPH */
+	float fr_wheel_rpm;	 /** FR wheel, RPM */
+	float fl_wheel_rpm;	 /** FL wheel, RPM */
+	float rr_wheel_rpm;	 /** RRv wheel, RPM */
+	float rl_wheel_rpm;	 /** RL wheel, RPM */
 
 	// 0.5V when things go to shit (X_OK low) (BAD)
 	// 3V when things almost poggers (X_OK high but SDC not reset) (BAD)
@@ -88,12 +91,8 @@ typedef volatile struct ECU_StateData {
 	uint8_t glv_soc;
 	uint8_t bcu_error_warning_bits;
 	uint8_t inverter_fault_map;
-	bool ts_active;
-	bool rtd;
-	bool prev_ts_active_button_state;
-	bool prev_rtd_button_state;
-	uint32_t prev_ts_press_millis;
-	uint32_t prev_rtd_press_millis;
+	bool ts_active_button_active;
+	bool rtd_button_active;
 	bool ir_plus;
 	bool ir_minus;
 	bool bcu_software_latch;

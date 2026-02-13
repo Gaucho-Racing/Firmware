@@ -23,14 +23,11 @@ uint32_t MillisecondsSinceBoot(void);
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
-#define REGEN_STRENGTH 2.0f	  // define ratio of regen braking percent to brake pressure percent
-#define REGEN_MIN_SPEED 3.106856f // MPH
+#define REGEN_STRENGTH 2.0f	      // define ratio of regen braking percent to brake pressure percent
+#define REGEN_MIN_SPEED_MPH 3.106856f // MPH
 
 #define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
-
-#define MIN(x, y) (x > y ? y : x)
-#define MAX(x, y) (x > y ? x : y)
 
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
@@ -40,7 +37,7 @@ bool CommunicationError(volatile const ECU_StateData *stateData);
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData);
 bool PressingBrake(volatile const ECU_StateData *stateData);
 float CalcBrakePercent(volatile const ECU_StateData *stateData);
-float CalcPedalTravel(volatile const ECU_StateData *stateData);
+float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
 bool vehicle_is_moving(volatile const ECU_StateData *stateData);
 
 #endif
