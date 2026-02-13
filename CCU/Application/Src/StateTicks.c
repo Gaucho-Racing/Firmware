@@ -41,10 +41,8 @@ void CCU_State_Tick(CCU_StateData *state_data)
 void STATE_IDLE(CCU_StateData *state_data)
 {
 
-	bool anyErrors =
-	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERVOLT_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
 
-	if (!anyErrors && state_data->Button_Status) {
+	if (!CriticalErrors(&state_data) && state_data->Button_Status) {
 		setSoftwareLatch(1);
 		state_data->state = CCU_STATE_CHARGING;
 	}
@@ -53,11 +51,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 void STATE_CHARGING(CCU_StateData *state_data)
 {
 
-	bool anyErrors =
-	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERVOLT_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
-
-	if (anyErrors || !(state_data->Button_Status)) {
-		setSoftwareLatch(0);
+	if (CriticalErrors(&state_data) || !(state_data->Button_Status)) {
 		state_data->state = CCU_STATE_IDLE;
 	}
 }
