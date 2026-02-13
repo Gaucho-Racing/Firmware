@@ -28,21 +28,7 @@
 static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handle structs for SPI1
 					      // (0), SPI2 (1), & SPI3 (2)
 
-struct GR_SPI_Handler_struct {
-	// Contains all configuration information
-	LL_SPI_InitTypeDef *spi_config;
-	GR_SPI_Pins *pins;
-	// GR structs
-	CircularBuffer *rx_buffer;
-	CircularBuffer *tx_buffer;
-	// Tx-Rx parameters
-	uint8_t transfer_size;
-	// Tx-Rx current messages
-	GR_SPI_Message *current_msg;
-	volatile uint16_t current_tx_msg_index, current_rx_msg_index;
-	volatile uint8_t msg_status;
-	volatile int8_t error_status;
-};
+
 
 void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config)
 {

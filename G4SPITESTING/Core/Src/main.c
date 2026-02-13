@@ -226,7 +226,7 @@ int main(void)
 	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);   // NSS high
 	*/
 	GR_SPI_Message msg;
-	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
+	msg.data = (int *)malloc(32 * sizeof(int));
 	msg.size = 32;
 
 	for (int i = 0; i < msg.size; i++) {

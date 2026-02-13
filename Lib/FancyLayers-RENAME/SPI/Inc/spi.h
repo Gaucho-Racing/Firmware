@@ -2,10 +2,8 @@
 #define SPI_H
 
 #include "circularBuffer.h"
-#include "stm32g4xx_ll_bus.h"
-#include "stm32g4xx_ll_gpio.h"
-#include "stm32g4xx_ll_rcc.h"
-#include "stm32g4xx_ll_spi.h"
+#include "main.h"
+#include <stdint.h>
 
 #define GR_SPI_UNKNOWN_IRQN -64
 #define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
@@ -25,7 +23,21 @@ typedef struct {
 	uint32_t alternate_function_number; // Refer to the datasheet for the correct number (based on SPIx)
 } GR_SPI_Pins;
 
-typedef struct GR_SPI_Handler_struct GR_SPI_Handler;
+typedef struct GR_SPI_Handler_struct {
+	// Contains all configuration information
+	LL_SPI_InitTypeDef *spi_config;
+	GR_SPI_Pins *pins;
+	// GR structs
+	CircularBuffer *rx_buffer;
+	CircularBuffer *tx_buffer;
+	// Tx-Rx parameters
+	uint8_t transfer_size;
+	// Tx-Rx current messages
+	GR_SPI_Message *current_msg;
+	volatile uint16_t current_tx_msg_index, current_rx_msg_index;
+	volatile uint8_t msg_status;
+	volatile int8_t error_status;
+}	GR_SPI_Handler;
 
 // ============================= handle Functions =============================
 
