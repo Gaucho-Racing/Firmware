@@ -3,11 +3,11 @@
 #include "GR_OLD_NODE_ID.h"
 <<<<<<< Updated upstream
 #include "can.h"
-=======
+    =======
 #include "GR_OLD_MSG_ID.h"
->>>>>>> Stashed changes
+    >>>>>>> Stashed changes
 
-typedef struct {
+    typedef struct {
 	uint16_t vehicleSpeed;
 	uint8_t ECUState;
 	uint8_t TSActiveButton;
