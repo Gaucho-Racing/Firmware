@@ -198,7 +198,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	float torque_request = PressingBrake(stateData) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH ? -MIN(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS
-													  : CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
+													      : CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
 
 	if (APPS_BSE_Violation(stateData)) {
 		stateData->apps_bse_violation = true;
