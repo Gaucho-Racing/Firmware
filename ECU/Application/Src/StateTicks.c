@@ -162,7 +162,6 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 }
 
-
 void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 {
 	buzzer_start_millis = stateData->millisSinceBoot;
@@ -207,7 +206,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		torque_request = 0;
 	}
 
-	if(stateData->millisSinceBoot - last_can_inverter_request_millis > 10){
+	if (stateData->millisSinceBoot - last_can_inverter_request_millis > 10) {
 		GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
 		last_can_inverter_request_millis = stateData->millisSinceBoot;
