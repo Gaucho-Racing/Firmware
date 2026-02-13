@@ -48,7 +48,7 @@ typedef struct {
 	uint16_t rl_wheel_rpm; /** RL wheel, 0.1x-3276.8 RPM */
 } GR_OLD_ECU_STATUS_3_MSG;
 
-/** ACU Status 1 */
+/** BCU Status 1 */
 typedef struct {
 	uint16_t tractivebattery_voltage; /** All cells sum, 0.01V */
 	uint16_t ts_voltage;		  /** TS output voltage, 0.01V */
@@ -57,7 +57,7 @@ typedef struct {
 	uint8_t glv_soc;		  /** GLV SoC, 20x/51=% */
 } GR_OLD_BCU_STATUS_1_MSG;
 
-/** ACU Status 2 */
+/** BCU Status 2 */
 typedef struct {
 	uint8_t voltage_20v;	  /** 20V GLV, 0.1V */
 	uint8_t voltage_12v;	  /** 12V supply, 0.1V */
@@ -68,7 +68,7 @@ typedef struct {
 	uint8_t precharge_bits;	  /** Precharge & relay states */
 } GR_OLD_BCU_STATUS_2_MSG;
 
-/** ACU Status 3 */
+/** BCU Status 3 */
 typedef struct {
 	uint16_t hv_input_voltage;  /** 600V input, 0.01V */
 	uint16_t hv_output_voltage; /** 20V output, 0.01V */
@@ -76,24 +76,24 @@ typedef struct {
 	uint16_t hv_output_current; /** 20V output, 0.001A */
 } GR_OLD_BCU_STATUS_3_MSG;
 
-/** ACU Precharge cmd */
+/** BCU Precharge cmd */
 typedef struct {
 	uint8_t precharge; /** Set TS active (0=shutdown, 1=precharge) */
 } GR_OLD_BCU_PRECHARGE_MSG;
 
-/** ACU Config Charge Params */
+/** BCU Config Charge Params */
 typedef struct {
 	uint16_t charge_voltage; /** Target charge V, 0.1V */
 	uint16_t charge_current; /** Target charge I, 0.1A */
 } GR_OLD_BCU_CONFIG_CHARGE_PARAMS_MSG;
 
-/** ACU Config Operational Params */
+/** BCU Config Operational Params */
 typedef struct {
 	uint8_t min_cell_voltage; /** Min cell V thresh, 0.01x+2 V */
 	uint8_t max_cell_voltage; /** Max cell temp thresh, 0.25°C */
 } GR_OLD_BCU_CONFIG_OPS_PARAMS_MSG;
 
-/** ACU Cell Data 1 - Cells 0-31 */
+/** BCU Cell Data 1 - Cells 0-31 */
 typedef struct {
 	struct {
 		uint8_t voltage;     /** Cell V, 0.01x+2 V */
@@ -101,7 +101,7 @@ typedef struct {
 	} cells[32];
 } GR_OLD_BCU_CELL_DATA_1_MSG;
 
-/** ACU Cell Data 2 - Cells 32-63 */
+/** BCU Cell Data 2 - Cells 32-63 */
 typedef struct {
 	struct {
 		uint8_t voltage;     /** Cell V, 0.01x+2 V */
@@ -109,7 +109,7 @@ typedef struct {
 	} cells[32];
 } GR_OLD_BCU_CELL_DATA_2_MSG;
 
-/** ACU Cell Data 3 - Cells 64-95 */
+/** BCU Cell Data 3 - Cells 64-95 */
 typedef struct {
 	struct {
 		uint8_t voltage;     /** Cell V, 0.01x+2 V */
@@ -117,7 +117,7 @@ typedef struct {
 	} cells[32];
 } GR_OLD_BCU_CELL_DATA_3_MSG;
 
-/** ACU Cell Data 4 - Cells 96-127 */
+/** BCU Cell Data 4 - Cells 96-127 */
 typedef struct {
 	struct {
 		uint8_t voltage;     /** Cell V, 0.01x+2 V */
@@ -125,7 +125,7 @@ typedef struct {
 	} cells[32];
 } GR_OLD_BCU_CELL_DATA_4_MSG;
 
-/** ACU Cell Data 5 - Cells 128-159 */
+/** BCU Cell Data 5 - Cells 128-159 */
 typedef struct {
 	struct {
 		uint8_t voltage;     /** Cell V, 0.01x+2 V */
