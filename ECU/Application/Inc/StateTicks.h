@@ -49,7 +49,7 @@ void ECU_GLV_On(ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Precharge_Start(ECU_StateData *stateData);
+void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Precharge Engaged state.
@@ -82,7 +82,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Drive_Start(ECU_StateData *stateData);
+void ECU_Transition_To_Drive_Active(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Drive Active state.
@@ -105,7 +105,7 @@ void ECU_Drive_Active(ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData);
+void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Tractive System Discharge state.

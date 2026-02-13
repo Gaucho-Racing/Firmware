@@ -20,7 +20,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			Application/Inc
 			Test/Inc
-			../Lib/GlobalShare/Inc
 	)
 	target_sources(
 		StateTicksTest
