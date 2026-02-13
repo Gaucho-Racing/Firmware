@@ -2,13 +2,7 @@
 #define CANDLER_H
 #include "GR_OLD_NODE_ID.h"
 #include "can.h"
-<<<<<<< Updated upstream
-    == == ==
-    =
 #include "GR_OLD_MSG_ID.h"
-	>>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 	typedef struct {
 	uint16_t vehicleSpeed;
