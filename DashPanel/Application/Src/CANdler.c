@@ -1,19 +1,21 @@
 #include "CANdler.h"
 
+#include "main.h"
 #include "can.h"
 #include "dashutils.h"
 #include "stm32g4xx_hal_fdcan.h"
+#include "GR_OLD_MSG_ID.h"
+#include "GR_OLD_NODE_ID.h"
 
-#define ECU_ID 1  // ID of correct ECU message - TODO: change with correct ID
-#define PING_ID 2 // ID of ping message - TODO: change with correct ID
+#define ECU_ID GR_ECU  // ID of correct ECU message - TODO: change with correct ID
+#define PING_ID MSG_PING // ID of ping message - TODO: change with correct ID
 
 CANHandle *can_handler;
-DashStatus dashStatus;
+DashStatus dashStatus = {0};
 bool canReadyToSend;
 
 void CANInitialize()
 {
-	dashStatus = {0};
 	canReadyToSend = false;
 
 	CANConfig canCfg;
@@ -93,12 +95,13 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
 	// Process data
 	if (ID == ECU_ID) {
-		CAN_MSG_ECU *ecu_data = (CAN_MSG_ECU *)data;
-		dashStatus->vehicleSpeed = ecu_data->vehicleSpeed;
-		dashStatus->ECUState = ecu_data->ECUState;
+		CAN_RECEIVE_ECU *ecu_data = (CAN_RECEIVE_ECU *)data;
+		dashStatus.vehicleSpeed = ecu_data->vehicleSpeed;
+		dashStatus.ECUState = ecu_data->ECUState;
 		// Process data
 	} else if (ID == PING_ID) {
 		// process ping
-		CAN_sendPing();
+		// TODO: fix ping
+		// CAN_sendPing();
 	}
 }
