@@ -226,7 +226,7 @@ int main(void)
 	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);   // NSS high
 	*/
 	GR_SPI_Message msg;
-	msg.data = (int *)malloc(32 * sizeof(int));
+	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
 	msg.size = 32;
 
 	for (int i = 0; i < msg.size; i++) {
@@ -246,7 +246,7 @@ int main(void)
 	GR_SPI_Receive(&ex_handler, &msg);
 
 	char str[33];
-	strncpy(str, msg.data, msg.size);
+	memcpy(str, msg.data, msg.size);
 	str[32] = '\0';
 
 	LOGOMATIC("Received: %s\n", str);
