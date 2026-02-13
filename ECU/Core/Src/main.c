@@ -113,11 +113,11 @@ void read_digital(void)
 	uint32_t curr_time = MillisecondsSinceBoot();
 
 	if (!stateLump.prev_ts_active_button_state && ts_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
-		stateLump.ts_active = !stateLump.ts_active;
+		stateLump.ts_active_button_active = !stateLump.ts_active_button_active;
 		stateLump.prev_ts_press_millis = curr_time;
 	}
 	if (!stateLump.prev_rtd_button_state && rtd_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
-		stateLump.rtd = !stateLump.rtd;
+		stateLump.rtd_button_active = !stateLump.rtd_button_active;
 		stateLump.prev_rtd_press_millis = curr_time;
 	}
 

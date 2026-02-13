@@ -88,8 +88,8 @@ typedef volatile struct ECU_StateData {
 	uint8_t glv_soc;
 	uint8_t bcu_error_warning_bits;
 	uint8_t inverter_fault_map;
-	bool ts_active;
-	bool rtd;
+	bool ts_active_button_active;
+	bool rtd_button_active;
 	bool prev_ts_active_button_state;
 	bool prev_rtd_button_state;
 	uint32_t prev_ts_press_millis;

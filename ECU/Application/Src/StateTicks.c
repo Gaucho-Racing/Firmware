@@ -99,7 +99,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 		return;
 	}
 
-	if (stateData->ts_active /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
+	if (stateData->ts_active_button_active /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
 		ECU_Precharge_Start(stateData);
 		LOGOMATIC("GLV ON to PRECHARGE START!\n");
 		return;
@@ -132,7 +132,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (!stateData->ts_active || CommunicationError(stateData)) {
+	if (!stateData->ts_active_button_active || CommunicationError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("ERROR or ts_active OFF! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		return;
@@ -142,7 +142,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 // TODO: change for CAN button messenging
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
-	if (!stateData->ts_active) {
+	if (!stateData->ts_active_button_active) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
@@ -156,7 +156,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		return;
 	}
 
-	if (PressingBrake(stateData) && stateData->rtd) {
+	if (PressingBrake(stateData) && stateData->rtd_button_active) {
 		GR_OLD_INVERTER_CONFIG_MSG message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .abs_max_motor_rpm = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_CONFIG, &message, sizeof(message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
@@ -175,7 +175,7 @@ void ECU_Drive_Start(ECU_StateData *stateData)
 
 void ECU_Drive_Active(ECU_StateData *stateData)
 {
-	if (!stateData->ts_active || CriticalError(stateData)) {
+	if (!stateData->ts_active_button_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.\n");
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
@@ -189,7 +189,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		LOGOMATIC("buzz!\n");
 	}
 
-	if (!stateData->rtd) {
+	if (!stateData->rtd_button_active) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		if (vehicle_is_moving(stateData)) {
 			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
