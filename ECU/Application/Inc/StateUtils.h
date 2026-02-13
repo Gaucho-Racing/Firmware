@@ -24,7 +24,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
 #define REGEN_STRENGTH 2.0f	  // define ratio of regen braking percent to brake pressure percent
-#define REGEN_MIN_SPEED 3.106856f // MPH
+#define REGEN_MIN_SPEED_MPH 3.106856f // MPH
 
 #define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
