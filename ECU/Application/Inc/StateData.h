@@ -61,10 +61,10 @@ typedef volatile struct ECU_StateData {
 	float max_cell_temp_c; /** Temperature of hottest cell, celsius */
 
 	float vehicle_speed_mph; /** Vehicle speed, MPH */
-	float fr_wheel_rpm;  /** FR wheel, RPM */
-	float fl_wheel_rpm;  /** FL wheel, RPM */
-	float rr_wheel_rpm;  /** RRv wheel, RPM */
-	float rl_wheel_rpm;  /** RL wheel, RPM */
+	float fr_wheel_rpm;	 /** FR wheel, RPM */
+	float fl_wheel_rpm;	 /** FL wheel, RPM */
+	float rr_wheel_rpm;	 /** RRv wheel, RPM */
+	float rl_wheel_rpm;	 /** RL wheel, RPM */
 
 	// 0.5V when things go to shit (X_OK low) (BAD)
 	// 3V when things almost poggers (X_OK high but SDC not reset) (BAD)
