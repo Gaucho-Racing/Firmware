@@ -28,8 +28,6 @@
 static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handle structs for SPI1
 					      // (0), SPI2 (1), & SPI3 (2)
 
-
-
 void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config)
 {
 	// Create Circular Buffers

@@ -1,9 +1,10 @@
 #ifndef SPI_H
 #define SPI_H
 
+#include <stdint.h>
+
 #include "circularBuffer.h"
 #include "main.h"
-#include <stdint.h>
 
 #define GR_SPI_UNKNOWN_IRQN -64
 #define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
@@ -37,7 +38,7 @@ typedef struct GR_SPI_Handler_struct {
 	volatile uint16_t current_tx_msg_index, current_rx_msg_index;
 	volatile uint8_t msg_status;
 	volatile int8_t error_status;
-}	GR_SPI_Handler;
+} GR_SPI_Handler;
 
 // ============================= handle Functions =============================
 
