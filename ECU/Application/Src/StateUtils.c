@@ -88,5 +88,5 @@ float CalcPedalTravel(volatile const ECU_StateData *stateData)
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)
 {
 	const float tolerance = 0.1; // In MPH
-	return stateData->vehicle_speed > tolerance;
+	return stateData->vehicle_speed_mph > tolerance;
 }

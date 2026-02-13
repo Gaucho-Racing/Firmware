@@ -60,7 +60,7 @@ typedef volatile struct ECU_StateData {
 	float ts_voltage;
 	float max_cell_temp_c; /** Temperature of hottest cell, celsius */
 
-	float vehicle_speed; /** Vehicle speed, MPH */
+	float vehicle_speed_mph; /** Vehicle speed, MPH */
 	float fr_wheel_rpm;  /** FR wheel, RPM */
 	float fl_wheel_rpm;  /** FL wheel, RPM */
 	float rr_wheel_rpm;  /** RRv wheel, RPM */

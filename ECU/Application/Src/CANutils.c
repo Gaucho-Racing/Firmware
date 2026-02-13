@@ -104,7 +104,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 					.AccumulatorStateOfCharge = (uint8_t)(stateData->tractivebattery_soc * 51 / 20),
 					.GLVStateOfCharge = (uint8_t)(stateData->glv_soc * 51 / 20),
 					.TractiveSystemVoltage = (uint16_t)(stateData->ts_voltage * 100),
-					.VehicleSpeed = (uint16_t)(stateData->vehicle_speed * 100),
+					.VehicleSpeed = (uint16_t)(stateData->vehicle_speed_mph * 100),
 					.FRWheelRPM = (uint16_t)(stateData->fr_wheel_rpm * 10 + 32768),
 					.FLWheelRPM = (uint16_t)(stateData->fl_wheel_rpm * 10 + 32768),
 					.RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
