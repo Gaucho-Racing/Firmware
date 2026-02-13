@@ -18,8 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "Logomatic.h"
 
+#include "Logomatic.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
