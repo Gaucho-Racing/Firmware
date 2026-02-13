@@ -1,4 +1,5 @@
 #include "StateTicks.h"
+
 #include <stdint.h>
 
 #include "CANutils.h"
@@ -110,7 +111,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 void ECU_Precharge_Start(ECU_StateData *stateData)
 {
 	/*send message to BCU to start precharging*/
-	GR_OLD_BCU_PRECHARGE_MSG message = { .precharge = 1 }; // Go TS Active/Precharge
+	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 1}; // Go TS Active/Precharge
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
