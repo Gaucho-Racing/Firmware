@@ -147,7 +147,8 @@ void CAN_Configure()
 	can_start(primary_can);
 }
 
-void SendPrechargeStatus(){
+void SendPrechargeStatus()
+{
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) & ((0xFFF & MSG_ACU_PRECHARGE) << 8) & (0xFF & GR_ACU);
 	msg.tx_header.IdType = FDCAN_STANDARD_ID;
@@ -163,5 +164,4 @@ void SendPrechargeStatus(){
 	can_send(primary_can, &msg);
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
-
 }
