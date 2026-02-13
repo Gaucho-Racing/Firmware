@@ -20,7 +20,7 @@ uint32_t MillisecondsSinceBoot(void)
 bool CriticalError(volatile const ECU_StateData *stateData)
 {
 	bool problem = false;
-	problem |= stateData->max_cell_temp > 60;
+	problem |= stateData->max_cell_temp_c > 60;
 	problem |= stateData->ts_voltage > 600;
 	problem |= !stateData->bcu_software_latch; // when latch is OPEN (0), then system shut down
 	problem |= stateData->ir_plus && !stateData->ir_minus;
