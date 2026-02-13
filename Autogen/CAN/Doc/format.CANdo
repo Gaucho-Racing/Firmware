@@ -406,7 +406,7 @@ routing:
         Debugger:
           - msg: Ping
           - msg: Ping
-        ECU:
+        ECU
           - msg: Ping
           - msg: DC-DC Status
     SAM1:
