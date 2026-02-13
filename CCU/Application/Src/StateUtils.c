@@ -19,7 +19,8 @@ void setSoftwareLatch(bool close)
 	}
 }
 
-bool CriticalError(const CCU_StateData* state_data){
+bool CriticalError(const CCU_StateData *state_data)
+{
 
 	if (state_data->ACU_S2_OVERCURR_ERROR) {
 		setSoftwareLatch(0);
@@ -43,6 +44,5 @@ bool CriticalError(const CCU_StateData* state_data){
 
 	} else {
 		return false;
-
 	}
 }
