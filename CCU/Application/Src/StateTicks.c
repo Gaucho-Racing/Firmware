@@ -44,7 +44,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 	bool anyErrors = CriticalError(state_data);
 
 	if (!anyErrors && state_data->Button_Status) {
-		setSoftwareLatch(1);
+		
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->ACU_PRECHARGE_SET_TS_ACTIVE = 1;
 		LOGOMATIC("CCU Current State: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
