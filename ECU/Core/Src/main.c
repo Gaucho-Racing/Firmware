@@ -58,10 +58,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-// LOGOMATIC
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
@@ -75,6 +71,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+/* USER CODE END PV */
 
 // CAN
 
@@ -105,151 +102,6 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-
-// TODO: state data stores stuff as either FLOATS or BOOLS...check
-// TODO: TS and RTD button signals will come over CAN
-void read_digital(void)
-{
-	// TODO: implement CAN button messenge receiving
-
-	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
-}
-
-void write_adc_values_to_state_data()
-{
-	// analog
-	// TODO: bse signal idk what to do ADC_outputs[0]
-	// TODO: bspd signal --> ADC_outputs[1], find use
-	stateLump.APPS1_Signal = ADC_outputs[2];
-	stateLump.APPS2_Signal = ADC_outputs[3];
-	stateLump.Brake_F_Signal = ADC_outputs[4];
-	stateLump.Brake_R_Signal = ADC_outputs[5];
-	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
-	stateLump.STEERING_ANGLE_SIGNAL = ADC_outputs[6];
-	stateLump.bspd_sense = ADC_outputs[7];
-	stateLump.imd_sense = ADC_outputs[8];
-	stateLump.ams_sense = ADC_outputs[9];
-}
-
-void ADC_Configure(void)
-{
-	// Initialize which clock source to use
-	LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
-	/* Peripheral clock enable */
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-
-	// OLD ADC (FOR REF)
-	/*
-	// Initialize the ADC1
-	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
-	ADC_Regular_Group_Init(ADC1, RANKS_7);
-
-	// Initialize the pins and channels
-	Pin_Ports p1 = {0};
-	p1.port = GPIOC;
-	p1.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3;
-	ADC_Init_Pins(&p1);
-	Pin_Ports p2 = {0};
-	p2.port = GPIOB;
-	p2.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14;
-	ADC_Init_Pins(&p2);
-	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_6, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_2, ADC_CHANNEL_7, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_3, ADC_CHANNEL_8, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_4, ADC_CHANNEL_9, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_5, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_6, ADC_CHANNEL_12, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_7, ADC_CHANNEL_5, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-
-	// Initialize ADC2
-	ADC_Init(ADC2, RESOLUTION_12, RIGHT);
-	ADC_Regular_Group_Init(ADC2, RANKS_4);
-
-	// Initialize the pins and channels
-	Pin_Ports p3 = {0};
-	p3.port = GPIOA;
-	p3.pin = LL_GPIO_PIN_15;
-	ADC_Init_Pins(&p3);
-	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_2, ADC_CHANNEL_13, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_3, ADC_CHANNEL_3, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_4, ADC_CHANNEL_4, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	*/
-
-	// ADC 1
-	ADC_Init_Values Init_Vals_ADC1 = {0};
-	Init_Vals_ADC1.ADC = ADC1;
-	Init_Vals_ADC1.PS_Value = PS_8;	    // TODO: change later
-	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
-	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
-	Pin_Ports p1[2] = {{.pin = BSE_SIGNAL_Pin | BSPD_SENSE_Pin | APPS1_SIGNAL_Pin | APPS2_SIGNAL_Pin, .port = GPIOC},
-			   {.pin = BRAKE_F_SIGNAL_Pin | BRAKE_R_SIGNAL_Pin | AUX_SIGNAL_Pin, .port = GPIOB}};
-	Init_Vals_ADC1.Pins = p1;
-	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
-	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
-	Init_Vals_ADC1.Channels = c1;
-	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
-	Init_Vals_ADC1.SamplingTimes = &s1;
-	ADC_Init(&Init_Vals_ADC1);
-
-	// ADC 2
-	ADC_Init_Values Init_Vals_ADC2 = {0};
-	Init_Vals_ADC2.ADC = ADC2;
-	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
-	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
-	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
-	Pin_Ports p2[2] = {{.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA}, {.pin = STEERING_ANGLE_Pin, .port = STEERING_ANGLE_GPIO_Port}};
-	Init_Vals_ADC2.Pins = p2;
-	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
-	Channel c2[] = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
-	Init_Vals_ADC2.Channels = c2;
-	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
-	Init_Vals_ADC2.SamplingTimes = &s2;
-	ADC_Init(&Init_Vals_ADC2);
-
-	/*
-	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
-	// DMA reads into buffer
-	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1, ADC1, HIGH);
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2, ADC2, HIGH);
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
-	*/
-	// Initialize DMA (for both ADCs)
-	DMA_Init_Values DMA_Init_Vals_ADC1 = {0};
-	DMA_Init_Vals_ADC1.DMA = DMA1;
-	DMA_Init_Vals_ADC1.ADC = ADC1;
-	DMA_Init_Vals_ADC1.Channel = DMA_CHANNEL_1;
-	DMA_Init_Vals_ADC1.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
-	DMA_Init_Vals_ADC1.Dest_Address = ADC_buffers;
-	DMA_Init_Vals_ADC1.Data_Size = Word;
-	DMA_Init_Vals_ADC1.Priority = HIGH; // TODO: check what this does
-	DMA_Init(&DMA_Init_Vals_ADC1);
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-
-	DMA_Init_Values DMA_Init_Vals_ADC2 = {0};
-	DMA_Init_Vals_ADC2.DMA = DMA1;
-	DMA_Init_Vals_ADC2.ADC = ADC2;
-	DMA_Init_Vals_ADC2.Channel = DMA_CHANNEL_2;
-	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
-	DMA_Init_Vals_ADC2.Dest_Address = ADC_buffers + NUM_SIGNALS_ADC1;
-	DMA_Init_Vals_ADC2.Data_Size = Word;
-	DMA_Init_Vals_ADC2.Priority = HIGH; // TODO: check what this does
-	DMA_Init(&DMA_Init_Vals_ADC2);
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
-
-	ADC_Enable_And_Calibrate(ADC1);
-	ADC_Enable_And_Calibrate(ADC2);
-}
-
-void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
-{
-	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
-			       (0x000FFF00 & ID) >> 8, // TODO: Double check
-			       (0xFF00000 & ID) >> 20, data, size);
-}
 
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 // TODO: TS and RTD button signals will come over CAN
@@ -554,19 +406,7 @@ int main(void)
 	MX_ADC1_Init();
 	MX_ADC2_Init();
 	MX_FDCAN2_Init();
-
 	/* USER CODE BEGIN 2 */
-	LOGOMATIC("Starting ECU Firmware\n");
-
-	// Initialize CAN
-	CAN_Configure();
-
-	ADC_Configure();
-	for (int i = 0; i < NUM_SIGNALS; i++) {
-		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
-	}
-
-	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	// Initialize CAN
 	CAN_Configure();
