@@ -10,6 +10,6 @@
 #define STATE_UTILS_H
 
 void setSoftwareLatch(bool close);
-bool const CriticalErrors(CCU_StateData* state_data);
+bool const CriticalErrors(CCU_StateData *state_data);
 
 #endif

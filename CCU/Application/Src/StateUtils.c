@@ -19,32 +19,30 @@ void setSoftwareLatch(bool close)
 	}
 }
 
-bool CriticalError(CCU_StateData* state_data){
+bool CriticalError(CCU_StateData *state_data)
+{
 
-	if (state_data->ACU_S2_OVERCURR_ERROR){
+	if (state_data->ACU_S2_OVERCURR_ERROR) {
 		setSoftwareLatch(0);
 		return true;
 
-	} else if (state_data->ACU_S2_OVERTEMP_ERROR){
+	} else if (state_data->ACU_S2_OVERTEMP_ERROR) {
 		setSoftwareLatch(0);
 		return true;
 
-	} else if (state_data->ACU_S2_OVERVOLT_ERROR){
+	} else if (state_data->ACU_S2_OVERVOLT_ERROR) {
 		setSoftwareLatch(0);
 		return true;
 
-	} else if (state_data->ACU_S2_UNDERCURR_ERROR){
+	} else if (state_data->ACU_S2_UNDERCURR_ERROR) {
 		setSoftwareLatch(0);
 		return true;
 
-	} else if (state_data->ACU_S2_UNDERVOLT_ERROR){
+	} else if (state_data->ACU_S2_UNDERVOLT_ERROR) {
 		setSoftwareLatch(0);
 		return true;
 
 	} else {
 		return false;
-		
 	}
-
-
 }
