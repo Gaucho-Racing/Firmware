@@ -80,7 +80,7 @@ void MX_SPI1_Init(void)
 
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
 
-	//mosi
+	// mosi
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
 	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -89,7 +89,7 @@ void MX_SPI1_Init(void)
 	GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
 	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	//miso
+	// miso
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
 	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -98,7 +98,7 @@ void MX_SPI1_Init(void)
 	GPIO_InitStruct.Alternate = LL_GPIO_AF_6; //?
 	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	//sysclk
+	// sysclk
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
 	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -120,7 +120,6 @@ void MX_SPI1_Init(void)
 	LL_SPI_Init(SPI1, &SPI_InitStruct);
 	LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
 	LL_SPI_EnableNSSPulseMgt(SPI1);
-
 }
 
 int main(void)
@@ -150,14 +149,14 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	//MX_DMA_Init();
-	//MX_FDCAN2_Init();
-	//MX_ADC1_Init();
-	//MX_LPUART1_UART_Init();
-	//MX_I2C2_Init();
-	//MX_USART1_UART_Init();
+	// MX_DMA_Init();
+	// MX_FDCAN2_Init();
+	// MX_ADC1_Init();
+	// MX_LPUART1_UART_Init();
+	// MX_I2C2_Init();
+	// MX_USART1_UART_Init();
 	MX_SPI1_Init();
-	//MX_TIM2_Init();
+	// MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 
 	/* USER CODE END 2 */

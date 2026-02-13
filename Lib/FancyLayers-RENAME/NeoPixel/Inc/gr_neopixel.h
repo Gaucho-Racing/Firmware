@@ -22,7 +22,6 @@ typedef union {
 
 void Neopixel_update();
 
-
 // make typedefs for all constants
 // create initialization structs (one for GPIO, one for SPI)
 // create a function to initialize SPI
