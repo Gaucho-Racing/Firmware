@@ -146,3 +146,19 @@ void CAN_Configure()
 
 	can_start(primary_can);
 }
+
+void SendPrechargeStatus(){
+	FDCANTxMessage msg;
+	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) & ((0xFFF & MSG_ACU_PRECHARGE) << 8) & (0xFF & GR_ACU);
+	msg.tx_header.IdType = FDCAN_STANDARD_ID;
+	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	msg.tx_header.DataLength = 1;
+	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	msg.tx_header.MessageMarker = 0;
+
+	msg.data[0] = (state_data.ACU_PRECHARGE_SET_TS_ACTIVE);
+
+	can_send(primary_can, &msg);
+}

@@ -40,17 +40,23 @@ void CCU_State_Tick(CCU_StateData *state_data)
 
 void STATE_IDLE(CCU_StateData *state_data)
 {
+	bool anyErrors = CriticalError(state_data);
 
-	if (!CriticalErrors(&state_data) && state_data->Button_Status) {
+	if (!anyErrors && state_data->Button_Status) {
 		setSoftwareLatch(1);
 		state_data->state = CCU_STATE_CHARGING;
+
+
+
 	}
 }
 
 void STATE_CHARGING(CCU_StateData *state_data)
 {
+	bool anyErrors = CriticalError(state_data);
 
-	if (CriticalErrors(&state_data) || !(state_data->Button_Status)) {
+	if  (anyErrors || !(state_data->Button_Status)) {
+		setSoftwareLatch(0);
 		state_data->state = CCU_STATE_IDLE;
 	}
 }
