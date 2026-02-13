@@ -43,6 +43,7 @@ target_link_libraries(
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
 		PERIPHERAL_CAN_LIB
+		CircularBuffer_Lib
 )
 
 target_include_directories(

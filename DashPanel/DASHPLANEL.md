@@ -14,7 +14,7 @@
 ## Buttons
 
 1. Test button interrupts
-2. Move the CAN messages to grand loop + make global status + create CAN send flag
+2. Actually set up CAN send and ping
 
 ## LED
 
