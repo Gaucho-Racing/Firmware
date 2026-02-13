@@ -1,0 +1,44 @@
+# Relevant Ports and Pins (GR26)
+
+When in doubt please refer back to the official source on [Altium](https://gauchoracing.365.altium.com/designs).
+
+---
+
+## Analog In
+
+### ADC 1
+
+ADC_1 BUFFERS array is IN ORDER from top to bottom of this list
+
+- `BSE_SIGNAL` (8): PC0 -> ADC12_IN6 (ADC 1 and ADC 2)
+- `BSPD_SIGNAL` (9): PC1 -> ADC12_IN7
+- `APPS1_SIGNAL` (10): PC2 -> ADC12_IN8
+- `APPS2_SIGNAL` (11): PC3 -> ADC12_IN9
+- `BRAKE_F_SIGNAL` (24): PB0 -> ADC1_IN15
+- `BRAKE_R_SIGNAL` (25): PB1 -> ADC1_IN12
+- `AUX_SIGNAL` (36): PB14 -> ADC1_IN5
+
+### ADC 2
+
+- `STEERING_ANGLE_SIGNAL` (37): PB15 -> ADC2_IN15
+- `BSPD_SENSE` (19): PA5 -> ADC2_IN13
+- `IMD_SENSE` (20): PA6 -> ADC2_IN3
+- `AMS_SENSE` (21): PA7 -> ADC2_IN4 (actually is the BMS!! (ACU))
+
+---
+
+## Digital In
+- `TS_ACTIVE_BTN_SENSE` (54): PC12
+- `RTD_BTN_SENSE` (53): PC11
+- `INERTIA_SW_SENSE` (52): PC10
+- `ESTOP_SENSE` (51): PA15
+
+---
+
+## Digital Out
+- `RTD_CONTROL` (60): PB7
+- `TSSI_R_CONTROL` (59): PB6
+- `TSSI_G_CONTROL` (58): PB5
+- `BRAKE_CONTROL` (57): PB4
+- `TS_ACTIVE_BTN_LED_CONTROL` (43): PA9
+- `RTD_BTN_LED_CONTROL` (42): PA8

@@ -1,0 +1,192 @@
+name: Linter
+run-name: Linter - ${{ github.ref_name }}
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  configs:
+    name: Configuration Files
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Validate Configuration Files
+        uses: kehoecj/validate-configs-action@v4
+
+  codeql:
+    name: Analyze Code
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - languages: 'c'
+          build_mode: 'manual'
+        - languages: 'actions'
+          build_mode: 'none'
+    env:
+      SCCACHE_DIR: ${{ github.workspace }}/sccache
+      SCCACHE_LOG: "info"
+      SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
+    - name: Install Arm Toolchain
+      if: matrix.build_mode == 'manual'
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+      with:
+        release: '12.2.Rel1'
+
+    - name: Setup Shared Compilation Cache
+      if: matrix.build_mode == 'manual'
+      uses: actions/cache@v5
+      with:
+        path: ${{ env.SCCACHE_DIR }}
+        key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
+        restore-keys: |
+            sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-
+            sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-
+
+    - name: Setup Shared Compilation Cache
+      if: matrix.build_mode == 'manual'
+      uses: mozilla-actions/sccache-action@v0.0.9
+
+    - name: Setup Trap Cache Directory
+      if: matrix.build_mode == 'manual'
+      run: mkdir -p /home/runner/work/_temp/trapCaches/cpp/tarballs
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v4
+      with:
+        languages: ${{ matrix.languages }}
+        build-mode: ${{ matrix.build_mode }}
+
+    - name: Build CodeQL Database
+      if: matrix.build_mode == 'manual'
+      run: CMAKE_C_COMPILER_LAUNCHER=sccache make all -j
+
+    - name: Analyze CodeQL
+      id: analyze
+      uses: github/codeql-action/analyze@v4
+
+    - name: Upload Analysis Results
+      if: always()
+      uses: actions/upload-artifact@v6
+      with:
+        name: codeql-${{ matrix.languages }}
+        path: ${{ steps.analyze.outputs.sarif-output }}
+        retention-days: 2
+
+  perllinter:
+    name: Perl Linter
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          install-modules: 'Perl::Critic'
+
+      - name: Perl Critic Output
+        run: |
+          set -o pipefail
+          violations_found=0
+          while IFS= read -r file; do
+            echo "<details>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary><code>$file</code></summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            if ! perlcritic "$file" 2>&1 | tee -a $GITHUB_STEP_SUMMARY; then
+              violations_found=1
+            fi
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          done < <(git ls-files '*.pl' '*.pm')
+          exit $violations_found
+
+      - name: Perl Critic Annotations
+        if: always()
+        run: |
+          set -o pipefail
+          git ls-files '*.pl' '*.pm' \
+            | xargs -r perlcritic --verbose '%f:%l:%c:%s:%m (%p)\n' \
+            | jq -R -s '
+                split("\n")
+                | map(
+                    select(length > 0)
+                    | match("^([^:]+):([^:]+):([^:]+):([^:]+):(.+)$")
+                    | (.captures[3].string | tonumber) as $severity
+                    | {
+                        file: .captures[0].string,
+                        line: (.captures[1].string | tonumber),
+                        start_column: (.captures[2].string | tonumber),
+                        end_column: (.captures[2].string | tonumber),
+                        annotation_level: (
+                          if $severity == 5 then "failure"
+                          elif $severity >= 3 then "warning"
+                          else "notice"
+                          end
+                        ),
+                        message: .captures[4].string
+                      }
+                  )
+              ' \
+            | tee perlcritic_annotations.json
+
+      - name: Upload Annotations
+        if: failure() && github.event_name == 'pull_request'
+        uses: yuzutech/annotations-action@v0.5.0
+        with:
+          title: 'Perl Linter Findings'
+          repo-token: ${{ github.token }}
+          input: 'perlcritic_annotations.json'
+
+  all:
+    name: Completed All Linting
+    needs: [ configs, codeql, perllinter ]
+    runs-on: ubuntu-slim
+    permissions: { }
+    if: always()
+    steps:
+      - name: Fail Linting
+        if: >
+          ${{
+            needs.configs.result != 'success' ||
+            needs.codeql.result != 'success' ||
+            needs.perllinter.result != 'success'
+          }}
+        run: |
+          echo "One or more linting jobs have failed."
+          echo "Please check the individual job logs for details."
+          exit 1
+
+      - name: Complete Linting
+        run: |
+          echo "Linting has been completed for all configured linters."
+          echo "Please refer to the individual job logs for detailed linting information."

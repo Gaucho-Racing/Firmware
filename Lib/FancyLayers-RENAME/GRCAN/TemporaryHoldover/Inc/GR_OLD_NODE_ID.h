@@ -8,7 +8,7 @@ typedef enum {
 	GR_IMD = 0x00,
 	GR_DEBUGGER = 0x01,
 	GR_ECU = 0x02,
-	GR_ACU = 0x03,
+	GR_BCU = 0x03,
 	GR_TCM = 0x04,
 	GR_DASH_PANEL = 0x05,
 	GR_STEERING_WHEEL = 0x06,
