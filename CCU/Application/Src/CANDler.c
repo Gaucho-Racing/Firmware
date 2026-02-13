@@ -161,4 +161,7 @@ void SendPrechargeStatus(){
 	msg.data[0] = (state_data.ACU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);
+
+	LOGOMATIC("CAN MESSAGE SENT:\n");
+
 }
