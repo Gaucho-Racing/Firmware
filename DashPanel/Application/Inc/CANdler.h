@@ -5,6 +5,8 @@
 typedef struct {
 	uint16_t vehicleSpeed;
 	uint8_t ECUState;
+	uint8_t TSActiveButton;
+	uint8_t RTDButton;
 } DashStatus;
 typedef struct {
 	uint16_t vehicleSpeed;
@@ -18,9 +20,11 @@ typedef struct {
 
 extern DashStatus dashStatus;
 extern CANHandle *can_handler;
+extern bool canReadyToSend;
 
 void CANInitialize();
 void CAN_sendPing(GR_OLD_NODE_ID to);
 void CAN_callback(uint32_t ID, void *data, uint32_t size);
+void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg);
 
 #endif

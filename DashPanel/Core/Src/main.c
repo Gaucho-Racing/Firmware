@@ -123,8 +123,24 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-		LOGOMATIC("Hello from DashPanel!\n");
-		LL_mDelay(1000);
+		// LOGOMATIC("Hello from DashPanel!\n");
+		// LL_mDelay(1000);
+
+		if (canReadyToSend) {
+
+			CAN_SEND_ECU msg_struct;
+			msg_struct.TSActiveButton = dashStatus.TSActiveButton;
+			msg_struct.RTDButton = dashStatus.RTDButton;
+
+			// Kinda weird ngl but it doesn't matter
+			if (dashStatus.TSActiveButton) dashStatus.TSActiveButton = 0;
+			if (dashStatus.RTDButton) dashStatus.RTDButton = 0;
+
+			CAN_sendECU(can_handler, &msg_struct);
+
+			canReadyToSend = false;
+
+		}
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
@@ -350,6 +366,8 @@ void EXTI3_IRQHandler(void)
 
 		// Blame Electronics if hardware debounce doesn't work
 
+		dashStatus.TSActiveButton = 1;
+		canReadyToSend = true;
 		LOGOMATIC("TS Active Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
 	}
@@ -367,11 +385,8 @@ void EXTI4_IRQHandler(void)
 
 		// Blame Electronics if hardware debounce doesn't work
 
-		CAN_SEND_ECU msg_struct;
-		msg_struct.TSActiveButton = 0;
-		msg_struct.RTDButton = 1;
-
-		CAN_sendECU(can_handler, &msg_struct);
+		dashStatus.RTDButton = 1;
+		canReadyToSend = true;
 		LOGOMATIC("RTD Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
