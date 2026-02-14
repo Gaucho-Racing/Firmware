@@ -42,7 +42,6 @@ target_sources(
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 		Core/Src/tim.c
-		Core/Src/usart.c
 )
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE SPI_Lib)
