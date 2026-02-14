@@ -22,19 +22,19 @@ void setSoftwareLatch(bool close)
 bool CriticalError(const CCU_StateData *state_data)
 {
 
-	if (state_data->ACU_S2_OVERCURR_ERROR) {
+	if (state_data->BCU_S2_OVERCURR_ERROR) {
 		return true;
 
-	} else if (state_data->ACU_S2_OVERTEMP_ERROR) {
+	} else if (state_data->BCU_S2_OVERTEMP_ERROR) {
 		return true;
 
-	} else if (state_data->ACU_S2_OVERVOLT_ERROR) {
+	} else if (state_data->BCU_S2_OVERVOLT_ERROR) {
 		return true;
 
-	} else if (state_data->ACU_S2_UNDERCURR_ERROR) {
+	} else if (state_data->BCU_S2_UNDERCURR_ERROR) {
 		return true;
 
-	} else if (state_data->ACU_S2_UNDERVOLT_ERROR) {
+	} else if (state_data->BCU_S2_UNDERVOLT_ERROR) {
 		return true;
 
 	} else {
