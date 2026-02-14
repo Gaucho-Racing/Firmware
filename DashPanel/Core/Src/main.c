@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "dashutils.h"
 #include "CANdler.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -44,13 +45,24 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
+				   .bus = LOGOMATIC_BUS,
+				   .gpio_port = LOGOMATIC_GPIOA,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .baud_rate = 115200,
+				   .data_width = LOGOMATIC_DATAWIDTH_8B,
+				   .stop_bits = LOGOMATIC_STOPBITS_1,
+				   .parity = LOGOMATIC_PARITY_NONE,
+				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
+				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
+				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_LPUART1_UART_Init(void);
 static void GPIO_Interrupt_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -58,18 +70,7 @@ static void GPIO_Interrupt_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* Enable ITM for SWO output */
-static void ITM_Enable(void)
-{
-	/* Enable TRC (Trace) */
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
-	/* Enable stimulus port 0 */
-	ITM->TER |= (1UL << 0);
-
-	/* Set trace control register */
-	ITM->TCR |= ITM_TCR_ITMENA_Msk;
-}
 /* USER CODE END 0 */
 
 /**
@@ -102,21 +103,20 @@ int main(void)
 	/* USER CODE BEGIN Init */
 	CANInitialize();
 	GPIO_Interrupt_Init();
-
+	Setup_Logomatic(&logomaticConfig);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-
+	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
-	ITM_Enable();
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -189,76 +189,6 @@ void SystemClock_Config(void)
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
 		Error_Handler();
 	}
-}
-
-/**
- * @brief LPUART1 Initialization Function
- * @param None
- * @retval None
- */
-static void MX_LPUART1_UART_Init(void)
-{
-
-	/* USER CODE BEGIN LPUART1_Init 0 */
-
-	/* USER CODE END LPUART1_Init 0 */
-
-	LL_LPUART_InitTypeDef LPUART_InitStruct = {0};
-
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-	LL_RCC_SetLPUARTClockSource(LL_RCC_LPUART1_CLKSOURCE_PCLK1);
-
-	/* Peripheral clock enable */
-	LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_LPUART1);
-
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
-	/**LPUART1 GPIO Configuration
-	PC0   ------> LPUART1_RX
-	PC1   ------> LPUART1_TX
-	*/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_0;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	GPIO_InitStruct.Alternate = LL_GPIO_AF_8;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	GPIO_InitStruct.Alternate = LL_GPIO_AF_8;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-	/* USER CODE BEGIN LPUART1_Init 1 */
-
-	/* USER CODE END LPUART1_Init 1 */
-	LPUART_InitStruct.PrescalerValue = LL_LPUART_PRESCALER_DIV1;
-	LPUART_InitStruct.BaudRate = 115200;
-	LPUART_InitStruct.DataWidth = LL_LPUART_DATAWIDTH_8B;
-	LPUART_InitStruct.StopBits = LL_LPUART_STOPBITS_1;
-	LPUART_InitStruct.Parity = LL_LPUART_PARITY_NONE;
-	LPUART_InitStruct.TransferDirection = LL_LPUART_DIRECTION_TX_RX;
-	LPUART_InitStruct.HardwareFlowControl = LL_LPUART_HWCONTROL_NONE;
-	LL_LPUART_Init(LPUART1, &LPUART_InitStruct);
-	LL_LPUART_SetTXFIFOThreshold(LPUART1, LL_LPUART_FIFOTHRESHOLD_1_8);
-	LL_LPUART_SetRXFIFOThreshold(LPUART1, LL_LPUART_FIFOTHRESHOLD_1_8);
-	LL_LPUART_DisableFIFO(LPUART1);
-
-	/* USER CODE BEGIN WKUPType LPUART1 */
-
-	/* USER CODE END WKUPType LPUART1 */
-
-	LL_LPUART_Enable(LPUART1);
-
-	/* Polling LPUART1 initialisation */
-	while ((!(LL_LPUART_IsActiveFlag_TEACK(LPUART1))) || (!(LL_LPUART_IsActiveFlag_REACK(LPUART1)))) {}
-	/* USER CODE BEGIN LPUART1_Init 2 */
-
-	/* USER CODE END LPUART1_Init 2 */
 }
 
 /**
