@@ -330,7 +330,7 @@
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 160000000,
+				"cpuFrequency": 170000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
