@@ -53,6 +53,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
+				   .bus = LOGOMATIC_BUS,
+				   .gpio_port = LOGOMATIC_GPIOA,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .baud_rate = 115200,
+				   .data_width = LOGOMATIC_DATAWIDTH_8B,
+				   .stop_bits = LOGOMATIC_STOPBITS_1,
+				   .parity = LOGOMATIC_PARITY_NONE,
+				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
+				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
+				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,18 +76,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* Enable ITM for SWO output */
-static void ITM_Enable(void)
-{
-	/* Enable TRC (Trace) */
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
-	/* Enable stimulus port 0 */
-	ITM->TER |= (1UL << 0);
-
-	/* Set trace control register */
-	ITM->TCR |= ITM_TCR_ITMENA_Msk;
-}
 /* USER CODE END 0 */
 
 /**
@@ -90,7 +92,8 @@ void MX_SPI1_Init(void)
 
 	LL_APB1_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
 
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
 
 	// mosi
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
@@ -110,14 +113,14 @@ void MX_SPI1_Init(void)
 	GPIO_InitStruct.Alternate = LL_GPIO_AF_6; //?
 	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	// sysclk
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
+	// sck (move off PB3/SWO to PA5)
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
 	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
 	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	GPIO_InitStruct.Alternate = LL_GPIO_AF_6; //?
-	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	SPI_InitStruct.TransferDirection = LL_SPI_FULL_DUPLEX;
 	SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
@@ -132,7 +135,6 @@ void MX_SPI1_Init(void)
 	LL_SPI_Init(SPI1, &SPI_InitStruct);
 	LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
 	LL_SPI_EnableNSSPulseMgt(SPI1);
-	ITM_Enable();
 }
 
 int main(void)
@@ -150,26 +152,20 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
+	Setup_Logomatic(&logomaticConfig);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-
+	LL_mDelay(1000); // Wait for peripherals to stabilize
+ 	LOGOMATIC("Booted!\n");
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	// MX_DMA_Init();
-	// MX_FDCAN2_Init();
-	// MX_ADC1_Init();
-	// MX_LPUART1_UART_Init();
-	// MX_I2C2_Init();
-	// MX_USART1_UART_Init();
 	MX_SPI1_Init();
-	// MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 
 	/* USER CODE END 2 */
@@ -179,13 +175,8 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		// BLINKY
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-		HAL_Delay(1000);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-		HAL_Delay(1000);
-
 		/* USER CODE BEGIN 3 */
+		LL_mDelay(500);
 		Neopixel_update();
 
 		LOGOMATIC("Hello world! \n");
@@ -201,12 +192,12 @@ void SystemClock_Config(void)
 	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
 	LL_PWR_EnableRange1BoostMode();
-	LL_RCC_HSE_Enable();
-	/* Wait till HSE is ready */
-	while (LL_RCC_HSE_IsReady() != 1) {}
+	LL_RCC_HSI_Enable();
+	/* Wait till HSI is ready */
+	while (LL_RCC_HSI_IsReady() != 1) {}
 
-	LL_RCC_HSE_EnableCSS();
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
+	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
@@ -225,7 +216,7 @@ void SystemClock_Config(void)
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(160000000);
+	LL_SetSystemCoreClock(170000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
