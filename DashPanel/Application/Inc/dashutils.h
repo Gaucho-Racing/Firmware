@@ -1,4 +1,6 @@
-#ifdef DASHPANEL_UTILS_H
+#include <stdint.h>
+
+#ifndef DASHPANEL_UTILS_H
 #define DASHPANEL_UTILS_H
 
 uint32_t MillisecondsSinceBoot(void);
