@@ -160,7 +160,7 @@ int main(void)
 
 	/* USER CODE BEGIN SysInit */
 	LL_mDelay(1000); // Wait for peripherals to stabilize
- 	LOGOMATIC("Booted!\n");
+	LOGOMATIC("Booted!\n");
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
