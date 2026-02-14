@@ -56,7 +56,10 @@ extern "C" {
 /** @defgroup DMAMUX_LL_Private_Macros DMAMUX Private Macros
  * @{
  */
+#if !defined(UNUSED)
 #define UNUSED(X) (void)X
+#endif /* !defined (UNUSED) */
+
 /**
  * @}
  */

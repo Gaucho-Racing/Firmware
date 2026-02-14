@@ -43,7 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "GR_OLD_NODE_ID.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -58,7 +58,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define LOCAL_GR_ID GR_ECU
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -69,6 +69,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+// GPIOC
 #define BSE_SIGNAL_Pin LL_GPIO_PIN_0
 #define BSE_SIGNAL_GPIO_Port GPIOC
 #define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
@@ -77,12 +78,18 @@ void Error_Handler(void);
 #define APPS1_SIGNAL_GPIO_Port GPIOC
 #define APPS2_SIGNAL_Pin LL_GPIO_PIN_3
 #define APPS2_SIGNAL_GPIO_Port GPIOC
+
+// GPIOA
 #define BSPD_SENSE_Pin LL_GPIO_PIN_5
 #define BSPD_SENSE_GPIO_Port GPIOA
 #define IMD_SENSE_Pin LL_GPIO_PIN_6
 #define IMD_SENSE_GPIO_Port GPIOA
 #define AMS_SENSE_Pin LL_GPIO_PIN_7
 #define AMS_SENSE_GPIO_Port GPIOA
+#define ESTOP_SENSE_Pin LL_GPIO_PIN_15
+#define ESTOP_SENSE_GPIO_Port GPIOA
+
+// GPIOB
 #define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0
 #define BRAKE_F_SIGNAL_GPIO_Port GPIOB
 #define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_1
