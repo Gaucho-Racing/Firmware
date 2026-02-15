@@ -17,21 +17,22 @@ int can_add_global_filter(CANHandle* handle, HAL_FDCAN_FilterTypeDef* filter);
 
 If no filters are set, the default behaviour is to accept all standard and extended frames into the RXFIFO0
 
-CHANGES:
-- with a single producer, single consumer tx buffer, can instead use a fixed-size ring buffer instead of the circular buffer
-- DMA support for copying from circular buffer
-- Timer Support for continously dequeuing between API calls,
-    - call can_tx_dequeue_helper after every successful hardware enqueue.
-    - avoids free issues inside the ISR
-- Error counter handling, waiting for more stable CAN bus state?????
-
-
-
 PROBLEMS:
+Verify ISR safety, no race conditions, atomic read/writes
+   - Interrupts keep firing while trying to can_release()
+    - Could try to set the NVIC register to selectively disable interrupts (preferably using a bitmask)
+- Need to discuss expected behaviour of API
+    - particularly can_start, can_stop
+    - can_release
+- Freeing within ISRs whenever popping from CircularBuffer (yes its faster, than stack copies, but heap is getting fragmented)
 - ISRS might take too long to resolve because popping and freeing circular buffer.
+
 - HARDCODE Platform Usage Flag for compiler definitions
 - CAN.H expects #STM32G4 to be defined,
+
 - RX Callback must perform deep copy of data supplied to it - could also malloc, but not safe to do inside ISRs
+
+-Shouldn't disable GPIOs in the MSP layers when releasing, might affect other peripherals
 
 IDEAS for other features:
 -
@@ -39,7 +40,8 @@ IDEAS for other features:
 - abstract to different STM families besides STM32G4
 - Rx Buffering
 - TX Buffering policy, do we spread them out over multiple TX buffers
-- Smaller can headers for tx and rx (right now its just use the HAL TXHeaderTypeDef)
+- DMA support for copying from circular buffer, circular buffer could then be stack allocated
+- Smaller can headers for tx and rx (right now its just use the TXHeaderTypeDef)
 - TX FIFO vs Queue policy (only allow FIFOS)
 - Add support for RXFifo1
 
@@ -63,6 +65,9 @@ Two approaches:
 Platform centric
 - In G4PERTesting, include "can_tests.h" and call the top level function in can_test.c
 - This approach is better because we can abstract the logging and debug method
+
+Library Centric Testing:
+- Test the implementation in each library.
 
 HAL_Rewrite:
 - Alternatively, rewrite without using HAL, just use CMSIS definitions.

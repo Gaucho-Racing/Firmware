@@ -145,7 +145,7 @@ int main(void)
 		// Receive on GPIOs
 		// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET
 		// : GPIO_PIN_RESET); HAL_Delay(1000); msg.data[0] = toggleze ?
-		// 0x00 : 0x80; can_send(can2Handle, &msg);
+		// 0x00 : 0x80; can_send(data_can, &msg);
 
 		// RCC->CFGR |= RCC_CFGR_SW;
 		/* USER CODE BEGIN 3 */

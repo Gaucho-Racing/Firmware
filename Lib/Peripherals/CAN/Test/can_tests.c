@@ -73,7 +73,7 @@ int can_test(void)
 	// Not testing filters at the moment
 	// FDCAN_FilterTypeDef filter;
 
-	// can_add_filter(can2Handle, &filter);
+	// can_add_filter(data_can, &filter);
 	/* USER CODE END 2 */
 
 	FDCAN_TxHeaderTypeDef TxHeader = {
@@ -108,15 +108,10 @@ int can_test(void)
 
 	canCfg.rx_callback = can_test_rx_callback1; // PLEASE SET
 
-	CANHandle *can1Handle = can_init(&canCfg);
-	HAL_FDCAN_ConfigGlobalFilter(can1Handle->hal_fdcanP, 0, 0, 0, 0);
+	CANHandle *primary_can = can_init(&canCfg);
+	HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
 
-	//can1Handle->tx_buffer[0] = msg;
-	//can1Handle->tx_buffer[1] = msg;
-	//can1Handle->tx_buffer[2] = msg;
-	//can1Handle->tx_elements = 3;
-
-	can_start(can1Handle);
+	can_start(primary_can);
 
 #endif
 #ifdef FDCAN2
@@ -139,26 +134,22 @@ int can_test(void)
 	// filter.FilterID1 = 0x00;
 	// filter.FilterID2 = 0x02;
 
-	CANHandle *can2Handle = can_init(&canCfg);
+	CANHandle *data_can = can_init(&canCfg);
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, 0, 0, 0, 0);
+	HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0);
 
 	// not accepting filters
-	// can_add_filter(can2Handle, &filter);
+	// can_add_filter(data_can, &filter);
 
 	// API Testing
 	// can_init(&canCfg);
 
-	//can2Handle->tx_buffer[0] = msg;
-	//can2Handle->tx_buffer[1] = msg;
-	//can2Handle->tx_buffer[2] = msg;
-	//can2Handle->tx_elements = 3;
+	can_start(data_can);
 
-	can_start(can2Handle);
+	can_send(data_can, &msg);
+	// can_release(data_can);
 
-	can_send(can2Handle, &msg);
-	// can_release(can2Handle);
 #endif
 #ifdef FDCAN3
 
@@ -167,10 +158,10 @@ int can_test(void)
 	while (1) {
 		HAL_Delay(1000);
 		msg.data[0] = 0x2;
-		can_send(can1Handle, &msg);
+		can_send(primary_can, &msg);
 		HAL_Delay(1000);
 		msg.data[0] = 0x10;
-		can_send(can2Handle, &msg);
+		can_send(data_can, &msg);
 	}
 
 	return 0;

@@ -28,13 +28,13 @@
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target CCU"
 		},
 		{
-			"label": "CMake: configure and build G4ADCTESTING",
+			"label": "CMake: configure and build G4HELLO",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4HELLO"
 		},
 		{
 			"label": "CMake: configure and build G4PERTESTING",
@@ -46,6 +46,15 @@
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4PERTESTING"
 		},
 		{
+			"label": "CMake: configure and build G4ADCTESTING",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
+		},
+		{
 			"label": "CMake: configure and build G4CANTESTING",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -55,15 +64,6 @@
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4CANTESTING"
 		},
 		{
-			"label": "CMake: configure and build G4HELLO",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4HELLO"
-		},
-		{
 			"label": "CMake: configure and build G4BLINKY",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -71,6 +71,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4BLINKY"
+		},
+		{
+			"label": "CMake: configure and build AnalogCalibration",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target AnalogCalibration"
 		},
 		{
 			"label": "CMake: configure and build U5BLINKY",

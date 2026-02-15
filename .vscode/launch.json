@@ -34,6 +34,37 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/AnalogCalibration.elf",
+			"name": "AnalogCalibration",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build AnalogCalibration",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CCU.elf",
 			"name": "CCU",
 			"request": "launch",
@@ -222,8 +253,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4CANTESTING.elf",
-			"name": "G4CANTESTING",
+			"executable": "${command:cmake.buildDirectory}/G4ADCTESTING.elf",
+			"name": "G4ADCTESTING",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -234,7 +265,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4CANTESTING",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -265,7 +296,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4CANTESTING",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
