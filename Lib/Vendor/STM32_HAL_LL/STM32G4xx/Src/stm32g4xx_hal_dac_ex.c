@@ -568,12 +568,12 @@ HAL_StatusTypeDef HAL_DACEx_SawtoothWaveGenerate(DAC_HandleTypeDef *hdac, uint32
 
 	if (Channel == DAC_CHANNEL_1) {
 		/* Configure the sawtooth wave generation data parameters */
-		MODIFY_REG(
-		    hdac->Instance->STR1, DAC_STR1_STINCDATA1 | DAC_STR1_STDIR1 | DAC_STR1_STRSTDATA1, (StepData << DAC_STR1_STINCDATA1_Pos) | Polarity | (ResetData << DAC_STR1_STRSTDATA1_Pos));
+		MODIFY_REG(hdac->Instance->STR1, DAC_STR1_STINCDATA1 | DAC_STR1_STDIR1 | DAC_STR1_STRSTDATA1,
+			   (StepData << DAC_STR1_STINCDATA1_Pos) | Polarity | (ResetData << DAC_STR1_STRSTDATA1_Pos));
 	} else {
 		/* Configure the sawtooth wave generation data parameters */
-		MODIFY_REG(
-		    hdac->Instance->STR2, DAC_STR2_STINCDATA2 | DAC_STR2_STDIR2 | DAC_STR2_STRSTDATA2, (StepData << DAC_STR2_STINCDATA2_Pos) | Polarity | (ResetData << DAC_STR2_STRSTDATA2_Pos));
+		MODIFY_REG(hdac->Instance->STR2, DAC_STR2_STINCDATA2 | DAC_STR2_STDIR2 | DAC_STR2_STRSTDATA2,
+			   (StepData << DAC_STR2_STINCDATA2_Pos) | Polarity | (ResetData << DAC_STR2_STRSTDATA2_Pos));
 	}
 
 	/* Enable the sawtooth wave generation for the selected DAC channel */

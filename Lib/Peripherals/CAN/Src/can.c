@@ -531,9 +531,8 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 	// Optionally reset FIFOs / buffers
 
 	// Disable interrupts
-	__HAL_FDCAN_DISABLE_IT(hfdcan,
-			       FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | FDCAN_IT_LIST_BIT_LINE_ERROR |
-				   FDCAN_IT_LIST_PROTOCOL_ERROR);
+	__HAL_FDCAN_DISABLE_IT(hfdcan, FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | FDCAN_IT_LIST_BIT_LINE_ERROR |
+					   FDCAN_IT_LIST_PROTOCOL_ERROR);
 
 	// Exit INIT mode
 	hfdcan->Instance->CCCR &= ~FDCAN_CCCR_INIT;
@@ -610,8 +609,7 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	uint32_t free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP);
 
 	if (free > 0) {
-		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP,
-									 &(message->tx_header),
+		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header),
 									 message->data // Not &message->data if data is array
 		);
 

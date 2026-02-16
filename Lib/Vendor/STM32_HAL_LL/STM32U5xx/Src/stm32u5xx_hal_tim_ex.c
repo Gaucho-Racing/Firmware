@@ -3051,18 +3051,15 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigEncoderIndex(TIM_HandleTypeDef *htim, TIMEx_En
 #if defined(STM32U575xx) || defined(STM32U585xx)
 	if (HAL_GetREVID() >= REV_ID_B) /* supported in cut2 */
 	{
-		MODIFY_REG(htim->Instance->ECR,
-			   TIM_ECR_IDIR_Msk | TIM_ECR_IBLK_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
+		MODIFY_REG(htim->Instance->ECR, TIM_ECR_IDIR_Msk | TIM_ECR_IBLK_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
 			   (sEncoderIndexConfig->Direction | (sEncoderIndexConfig->Blanking) | ((sEncoderIndexConfig->FirstIndexEnable == ENABLE) ? (0x1U << TIM_ECR_FIDX_Pos) : 0U) |
 			    sEncoderIndexConfig->Position | TIM_ECR_IE));
 	} else {
-		MODIFY_REG(htim->Instance->ECR,
-			   TIM_ECR_IDIR_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
+		MODIFY_REG(htim->Instance->ECR, TIM_ECR_IDIR_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
 			   (sEncoderIndexConfig->Direction | ((sEncoderIndexConfig->FirstIndexEnable == ENABLE) ? (0x1U << TIM_ECR_FIDX_Pos) : 0U) | sEncoderIndexConfig->Position | TIM_ECR_IE));
 	}
 #else
-	MODIFY_REG(htim->Instance->ECR,
-		   TIM_ECR_IDIR_Msk | TIM_ECR_IBLK_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
+	MODIFY_REG(htim->Instance->ECR, TIM_ECR_IDIR_Msk | TIM_ECR_IBLK_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
 		   (sEncoderIndexConfig->Direction | (sEncoderIndexConfig->Blanking) | ((sEncoderIndexConfig->FirstIndexEnable == ENABLE) ? (0x1U << TIM_ECR_FIDX_Pos) : 0U) |
 		    sEncoderIndexConfig->Position | TIM_ECR_IE));
 #endif /* STM32U575xx || STM32U585xx */

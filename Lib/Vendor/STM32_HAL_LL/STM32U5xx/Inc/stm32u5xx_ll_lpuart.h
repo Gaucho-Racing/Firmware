@@ -44,22 +44,8 @@ extern "C" {
  */
 /* Array used to get the LPUART prescaler division decimal values versus @ref
  * LPUART_LL_EC_PRESCALER values */
-static const uint16_t LPUART_PRESCALER_TAB[] = {(uint16_t)1,
-						(uint16_t)2,
-						(uint16_t)4,
-						(uint16_t)6,
-						(uint16_t)8,
-						(uint16_t)10,
-						(uint16_t)12,
-						(uint16_t)16,
-						(uint16_t)32,
-						(uint16_t)64,
-						(uint16_t)128,
-						(uint16_t)256,
-						(uint16_t)256,
-						(uint16_t)256,
-						(uint16_t)256,
-						(uint16_t)256};
+static const uint16_t LPUART_PRESCALER_TAB[] = {(uint16_t)1,  (uint16_t)2,  (uint16_t)4,   (uint16_t)6,	  (uint16_t)8,	 (uint16_t)10,	(uint16_t)12,  (uint16_t)16,
+						(uint16_t)32, (uint16_t)64, (uint16_t)128, (uint16_t)256, (uint16_t)256, (uint16_t)256, (uint16_t)256, (uint16_t)256};
 /**
  * @}
  */

@@ -1277,8 +1277,7 @@ typedef struct {
 #define __HAL_RCC_PLL2_CONFIG(__PLL2SOURCE__, __PLL2M__, __PLL2N__, __PLL2P__, __PLL2Q__, __PLL2R__)                                                                                                   \
 	do {                                                                                                                                                                                           \
 		MODIFY_REG(RCC->PLL2CFGR, (RCC_PLL2CFGR_PLL2SRC | RCC_PLL2CFGR_PLL2M), ((__PLL2SOURCE__) << RCC_PLL2CFGR_PLL2SRC_Pos) | (((__PLL2M__) - 1U) << RCC_PLL2CFGR_PLL2M_Pos));               \
-		MODIFY_REG(RCC->PLL2DIVR,                                                                                                                                                              \
-			   (RCC_PLL2DIVR_PLL2N | RCC_PLL2DIVR_PLL2P | RCC_PLL2DIVR_PLL2Q | RCC_PLL2DIVR_PLL2R),                                                                                        \
+		MODIFY_REG(RCC->PLL2DIVR, (RCC_PLL2DIVR_PLL2N | RCC_PLL2DIVR_PLL2P | RCC_PLL2DIVR_PLL2Q | RCC_PLL2DIVR_PLL2R),                                                                         \
 			   ((((__PLL2N__) - 1U) & RCC_PLL2DIVR_PLL2N) | ((((__PLL2P__) - 1U) << RCC_PLL2DIVR_PLL2P_Pos) & RCC_PLL2DIVR_PLL2P) |                                                        \
 			    ((((__PLL2Q__) - 1U) << RCC_PLL2DIVR_PLL2Q_Pos) & RCC_PLL2DIVR_PLL2Q) | ((((__PLL2R__) - 1U) << RCC_PLL2DIVR_PLL2R_Pos) & RCC_PLL2DIVR_PLL2R)));                           \
 	} while (0)
@@ -1413,8 +1412,7 @@ typedef struct {
 #define __HAL_RCC_PLL3_CONFIG(__PLL3SOURCE__, __PLL3M__, __PLL3N__, __PLL3P__, __PLL3Q__, __PLL3R__)                                                                                                   \
 	do {                                                                                                                                                                                           \
 		MODIFY_REG(RCC->PLL3CFGR, (RCC_PLL3CFGR_PLL3SRC | RCC_PLL3CFGR_PLL3M), ((__PLL3SOURCE__) << RCC_PLL3CFGR_PLL3SRC_Pos) | (((__PLL3M__) - 1U) << RCC_PLL3CFGR_PLL3M_Pos));               \
-		MODIFY_REG(RCC->PLL3DIVR,                                                                                                                                                              \
-			   (RCC_PLL3DIVR_PLL3N | RCC_PLL3DIVR_PLL3P | RCC_PLL3DIVR_PLL3Q | RCC_PLL3DIVR_PLL3R),                                                                                        \
+		MODIFY_REG(RCC->PLL3DIVR, (RCC_PLL3DIVR_PLL3N | RCC_PLL3DIVR_PLL3P | RCC_PLL3DIVR_PLL3Q | RCC_PLL3DIVR_PLL3R),                                                                         \
 			   ((((__PLL3N__) - 1U) & RCC_PLL3DIVR_PLL3N) | ((((__PLL3P__) - 1U) << RCC_PLL3DIVR_PLL3P_Pos) & RCC_PLL3DIVR_PLL3P) |                                                        \
 			    ((((__PLL3Q__) - 1U) << RCC_PLL3DIVR_PLL3Q_Pos) & RCC_PLL3DIVR_PLL3Q) | ((((__PLL3R__) - 1U) << RCC_PLL3DIVR_PLL3R_Pos) & RCC_PLL3DIVR_PLL3R)));                           \
 	} while (0)

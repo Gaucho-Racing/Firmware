@@ -303,8 +303,7 @@ HAL_StatusTypeDef HAL_PSSI_Init(PSSI_HandleTypeDef *hpssi)
 	 * ----------------------*/
 	/* Configure PSSIx: Control Signal and Bus Width*/
 
-	MODIFY_REG(hpssi->Instance->CR,
-		   PSSI_CR_DERDYCFG | PSSI_CR_EDM | PSSI_CR_DEPOL | PSSI_CR_RDYPOL,
+	MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DERDYCFG | PSSI_CR_EDM | PSSI_CR_DEPOL | PSSI_CR_RDYPOL,
 		   hpssi->Init.ControlSignal | hpssi->Init.DataEnablePolarity | hpssi->Init.ReadyPolarity | hpssi->Init.BusWidth);
 
 	hpssi->ErrorCode = HAL_PSSI_ERROR_NONE;
@@ -929,12 +928,10 @@ HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDa
 
 				/* Configure BusWidth */
 				if (hpssi->hdmatx->Init.DestDataWidth == DMA_DEST_DATAWIDTH_BYTE) {
-					MODIFY_REG(hpssi->Instance->CR,
-						   PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
 						   PSSI_CR_DMA_ENABLE | PSSI_CR_OUTEN_OUTPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? 0U : PSSI_CR_CKPOL));
 				} else {
-					MODIFY_REG(hpssi->Instance->CR,
-						   PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
 						   PSSI_CR_DMA_ENABLE | hpssi->Init.BusWidth | PSSI_CR_OUTEN_OUTPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? 0U : PSSI_CR_CKPOL));
 				}
 
@@ -1068,12 +1065,10 @@ HAL_StatusTypeDef HAL_PSSI_Receive_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDat
 			if (hpssi->hdmarx != NULL) {
 				/* Configure BusWidth */
 				if (hpssi->hdmarx->Init.SrcDataWidth == DMA_SRC_DATAWIDTH_BYTE) {
-					MODIFY_REG(hpssi->Instance->CR,
-						   PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
 						   PSSI_CR_DMA_ENABLE | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? PSSI_CR_CKPOL : 0U));
 				} else {
-					MODIFY_REG(hpssi->Instance->CR,
-						   PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
 						   PSSI_CR_DMA_ENABLE | hpssi->Init.BusWidth | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? PSSI_CR_CKPOL : 0U));
 				}
 

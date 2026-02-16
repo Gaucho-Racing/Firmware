@@ -180,8 +180,7 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 		 * - TransferDirection:  USART_CR1_TE, USART_CR1_RE bits
 		 * according to LPUART_InitStruct->TransferDirection value
 		 */
-		MODIFY_REG(LPUARTx->CR1,
-			   (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
+		MODIFY_REG(LPUARTx->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
 			   (LPUART_InitStruct->DataWidth | LPUART_InitStruct->Parity | LPUART_InitStruct->TransferDirection));
 
 		/*---------------------------- LPUART CR2 Configuration

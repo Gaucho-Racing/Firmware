@@ -1330,8 +1330,7 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigGlobalFilter(FDCAN_HandleTypeDef *hfdcan, uint
 	if (hfdcan->State == HAL_FDCAN_STATE_READY) {
 		/* Configure global filter */
 		MODIFY_REG(
-		    hfdcan->Instance->RXGFC,
-		    (FDCAN_RXGFC_ANFS | FDCAN_RXGFC_ANFE | FDCAN_RXGFC_RRFS | FDCAN_RXGFC_RRFE),
+		    hfdcan->Instance->RXGFC, (FDCAN_RXGFC_ANFS | FDCAN_RXGFC_ANFE | FDCAN_RXGFC_RRFS | FDCAN_RXGFC_RRFE),
 		    ((NonMatchingStd << FDCAN_RXGFC_ANFS_Pos) | (NonMatchingExt << FDCAN_RXGFC_ANFE_Pos) | (RejectRemoteStd << FDCAN_RXGFC_RRFS_Pos) | (RejectRemoteExt << FDCAN_RXGFC_RRFE_Pos)));
 
 		/* Return function status */

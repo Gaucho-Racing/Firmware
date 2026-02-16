@@ -731,8 +731,8 @@ bcc_status_t BCC_Meas_StartConversion(bcc_drv_config_t *const drvConfig, const b
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	return BCC_Reg_Update(
-	    drvConfig, cid, MC33771C_ADC_CFG_OFFSET, MC33771C_ADC_CFG_SOC_MASK | MC33771C_ADC_CFG_AVG_MASK, MC33771C_ADC_CFG_SOC(MC33771C_ADC_CFG_SOC_ENABLED_ENUM_VAL) | MC33771C_ADC_CFG_AVG(avg));
+	return BCC_Reg_Update(drvConfig, cid, MC33771C_ADC_CFG_OFFSET, MC33771C_ADC_CFG_SOC_MASK | MC33771C_ADC_CFG_AVG_MASK,
+			      MC33771C_ADC_CFG_SOC(MC33771C_ADC_CFG_SOC_ENABLED_ENUM_VAL) | MC33771C_ADC_CFG_AVG(avg));
 }
 
 /*FUNCTION**********************************************************************
@@ -874,8 +874,8 @@ bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_
 		measurements[BCC_MSR_CELL_VOLT8] = 0x0000;
 		measurements[BCC_MSR_CELL_VOLT7] = 0x0000;
 
-		status = BCC_Reg_Read(
-		    drvConfig, cid, MC33772C_MEAS_CELL6_OFFSET, (MC33772C_MEAS_VBG_DIAG_ADC1B_OFFSET - MC33772C_MEAS_CELL6_OFFSET) + 1, (uint16_t *)(measurements + ((uint8_t)BCC_MSR_CELL_VOLT6)));
+		status = BCC_Reg_Read(drvConfig, cid, MC33772C_MEAS_CELL6_OFFSET, (MC33772C_MEAS_VBG_DIAG_ADC1B_OFFSET - MC33772C_MEAS_CELL6_OFFSET) + 1,
+				      (uint16_t *)(measurements + ((uint8_t)BCC_MSR_CELL_VOLT6)));
 	}
 
 	/* Mask the read registers.
@@ -1272,8 +1272,8 @@ bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		 */
 		status = BCC_SetGpioCfg(drvConfig, cid, 2U, BCC_PIN_DIGITAL_IN);
 		if (status == BCC_STATUS_SUCCESS) {
-			status = BCC_Reg_Update(
-			    drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO2_SOC_MASK, MC33771C_GPIO_CFG2_GPIO2_SOC(MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_ENABLED_ENUM_VAL));
+			status = BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO2_SOC_MASK,
+						MC33771C_GPIO_CFG2_GPIO2_SOC(MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_ENABLED_ENUM_VAL));
 		}
 	} else if (mode <= BCC_PIN_DIGITAL_OUT) {
 		status = BCC_STATUS_SUCCESS;
@@ -1283,8 +1283,8 @@ bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 			    BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO0_WU_MASK, MC33771C_GPIO_CFG2_GPIO0_WU(MC33771C_GPIO_CFG2_GPIO0_WU_NO_WAKEUP_ENUM_VAL));
 		} else if (gpioSel == 2U) {
 			/* Disable the conversion trigger. */
-			status = BCC_Reg_Update(
-			    drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO2_SOC_MASK, MC33771C_GPIO_CFG2_GPIO2_SOC(MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_DISABLED_ENUM_VAL));
+			status = BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO2_SOC_MASK,
+						MC33771C_GPIO_CFG2_GPIO2_SOC(MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_DISABLED_ENUM_VAL));
 		}
 
 		if (status == BCC_STATUS_SUCCESS) {
@@ -1353,10 +1353,7 @@ bcc_status_t BCC_CB_Enable(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	return BCC_Reg_Update(drvConfig,
-			      cid,
-			      MC33771C_SYS_CFG1_OFFSET,
-			      MC33771C_SYS_CFG1_CB_DRVEN_MASK,
+	return BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_CB_DRVEN_MASK,
 			      enable ? MC33771C_SYS_CFG1_CB_DRVEN(MC33771C_SYS_CFG1_CB_DRVEN_ENABLED_ENUM_VAL) : MC33771C_SYS_CFG1_CB_DRVEN(MC33771C_SYS_CFG1_CB_DRVEN_DISABLED_ENUM_VAL));
 }
 
@@ -1404,10 +1401,7 @@ bcc_status_t BCC_CB_Pause(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	return BCC_Reg_Update(drvConfig,
-			      cid,
-			      MC33771C_SYS_CFG1_OFFSET,
-			      MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_MASK,
+	return BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_MASK,
 			      (pause) ? MC33771C_SYS_CFG1_CB_MANUAL_PAUSE(MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_ENABLED_ENUM_VAL)
 				      : MC33771C_SYS_CFG1_CB_MANUAL_PAUSE(MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_DISABLED_ENUM_VAL));
 }
@@ -1434,9 +1428,7 @@ bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig, const bcc_ci
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	status = BCC_Reg_Write(drvConfig,
-			       cid,
-			       MC33771C_FUSE_MIRROR_CNTL_OFFSET,
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			       MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(fuseAddr) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_LOCKED_ENUM_VAL) |
 				   MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
@@ -1468,9 +1460,7 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_c
 	}
 
 	/* FUSE_MIRROR_CNTL to enable writing. */
-	status = BCC_Reg_Write(drvConfig,
-			       cid,
-			       MC33771C_FUSE_MIRROR_CNTL_OFFSET,
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			       MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(0U) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_UNLOCKED_ENUM_VAL) |
 				   MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
@@ -1478,9 +1468,7 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_c
 	}
 
 	/* Send the fuse address. */
-	status = BCC_Reg_Write(drvConfig,
-			       cid,
-			       MC33771C_FUSE_MIRROR_CNTL_OFFSET,
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			       MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(fuseAddr) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_UNLOCKED_ENUM_VAL) |
 				   MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
@@ -1493,9 +1481,7 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_c
 	}
 
 	/* FUSE_MIRROR_CNTL to low power. */
-	return BCC_Reg_Write(drvConfig,
-			     cid,
-			     MC33771C_FUSE_MIRROR_CNTL_OFFSET,
+	return BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			     MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(0U) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_UNLOCKED_ENUM_VAL) |
 				 MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_LP_ENUM_VAL));
 }

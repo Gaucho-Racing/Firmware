@@ -237,8 +237,7 @@ ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx, const LL_COMP_InitTypeDef *COMP_In
 		/*  - InputHysteresis */
 		/*  - OutputPolarity */
 		/*  - OutputBlankingSource */
-		MODIFY_REG(COMPx->CSR,
-			   COMP_CSR_INPSEL | COMP_CSR_SCALEN | COMP_CSR_BRGEN | COMP_CSR_INMSEL | COMP_CSR_HYST | COMP_CSR_POLARITY | COMP_CSR_BLANKING,
+		MODIFY_REG(COMPx->CSR, COMP_CSR_INPSEL | COMP_CSR_SCALEN | COMP_CSR_BRGEN | COMP_CSR_INMSEL | COMP_CSR_HYST | COMP_CSR_POLARITY | COMP_CSR_BLANKING,
 			   COMP_InitStruct->InputPlus | COMP_InitStruct->InputMinus | COMP_InitStruct->InputHysteresis | COMP_InitStruct->OutputPolarity | COMP_InitStruct->OutputBlankingSource);
 	} else {
 		/* Initialization error: COMP instance is locked. */

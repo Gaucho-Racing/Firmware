@@ -3,7 +3,12 @@
 
 #include <stdint.h>
 
-typedef enum { SOFTWARE_OK_CONTROL_GPIO_Port, TSSI_R_CONTROL_GPIO_Port, TSSI_G_CONTROL_GPIO_Port, RTD_CONTROL_GPIO_Port } GPIO_TypeDef;
+typedef enum {
+	SOFTWARE_OK_CONTROL_GPIO_Port,
+	TSSI_R_CONTROL_GPIO_Port,
+	TSSI_G_CONTROL_GPIO_Port,
+	RTD_CONTROL_GPIO_Port
+} GPIO_TypeDef;
 
 typedef struct {
 	uint32_t Pin; /*!< Specifies the GPIO pins to be configured.

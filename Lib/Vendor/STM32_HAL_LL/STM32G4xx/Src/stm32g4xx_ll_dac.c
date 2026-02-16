@@ -245,8 +245,7 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 
 				MODIFY_REG(DACx->CR, DAC_CR_WAVE1 << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK), DAC_InitStruct->WaveAutoGeneration << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 
-				MODIFY_REG(DACx->STMODR,
-					   (DAC_STMODR_STINCTRIGSEL1 | DAC_STMODR_STRSTTRIGSEL1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+				MODIFY_REG(DACx->STMODR, (DAC_STMODR_STINCTRIGSEL1 | DAC_STMODR_STRSTTRIGSEL1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 					   (((DAC_InitStruct->TriggerSource >> DAC_CR_TSEL1_Pos) << DAC_STMODR_STRSTTRIGSEL1_Pos) |
 					    ((DAC_InitStruct->TriggerSource2 >> DAC_CR_TSEL1_Pos) << DAC_STMODR_STINCTRIGSEL1_Pos))
 					       << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
@@ -254,18 +253,15 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 				WRITE_REG(*(__DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0)),
 					  DAC_InitStruct->WaveAutoGenerationConfig);
 			} else {
-				MODIFY_REG(DACx->CR,
-					   (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+				MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 					   (DAC_InitStruct->TriggerSource | DAC_InitStruct->WaveAutoGeneration | DAC_InitStruct->WaveAutoGenerationConfig)
 					       << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 			}
 		} else {
-			MODIFY_REG(DACx->CR,
-				   (DAC_CR_TSEL1 | DAC_CR_WAVE1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | LL_DAC_WAVE_AUTO_GENERATION_NONE) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 		}
-		MODIFY_REG(DACx->MCR,
-			   (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+		MODIFY_REG(DACx->MCR, (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 			   (DAC_InitStruct->OutputBuffer | DAC_InitStruct->OutputConnection | DAC_InitStruct->OutputMode) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 	} else {
 		/* Initialization error: DAC instance is not disabled. */

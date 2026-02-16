@@ -116,12 +116,23 @@ typedef struct {
 /**
  * @brief  FLASH Procedure structure definition
  */
-typedef enum { FLASH_PROC_NONE = 0, FLASH_PROC_PAGE_ERASE, FLASH_PROC_MASS_ERASE, FLASH_PROC_PROGRAM, FLASH_PROC_PROGRAM_LAST } FLASH_ProcedureTypeDef;
+typedef enum {
+	FLASH_PROC_NONE = 0,
+	FLASH_PROC_PAGE_ERASE,
+	FLASH_PROC_MASS_ERASE,
+	FLASH_PROC_PROGRAM,
+	FLASH_PROC_PROGRAM_LAST
+} FLASH_ProcedureTypeDef;
 
 /**
  * @brief  FLASH Cache structure definition
  */
-typedef enum { FLASH_CACHE_DISABLED = 0, FLASH_CACHE_ICACHE_ENABLED, FLASH_CACHE_DCACHE_ENABLED, FLASH_CACHE_ICACHE_DCACHE_ENABLED } FLASH_CacheTypeDef;
+typedef enum {
+	FLASH_CACHE_DISABLED = 0,
+	FLASH_CACHE_ICACHE_ENABLED,
+	FLASH_CACHE_DCACHE_ENABLED,
+	FLASH_CACHE_ICACHE_DCACHE_ENABLED
+} FLASH_CacheTypeDef;
 
 /**
  * @brief  FLASH handle Structure definition

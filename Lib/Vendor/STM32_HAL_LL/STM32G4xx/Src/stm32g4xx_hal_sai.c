@@ -252,7 +252,10 @@
 /** @defgroup SAI_Private_Typedefs  SAI Private Typedefs
  * @{
  */
-typedef enum { SAI_MODE_DMA, SAI_MODE_IT } SAI_ModeTypedef;
+typedef enum {
+	SAI_MODE_DMA,
+	SAI_MODE_IT
+} SAI_ModeTypedef;
 /**
  * @}
  */

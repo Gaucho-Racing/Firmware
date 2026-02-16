@@ -279,10 +279,7 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 		if (RTC_Format != LL_RTC_FORMAT_BIN) {
 			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, RTC_TimeStruct->Hours, RTC_TimeStruct->Minutes, RTC_TimeStruct->Seconds);
 		} else {
-			LL_RTC_TIME_Config(RTCx,
-					   RTC_TimeStruct->TimeFormat,
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Hours),
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Minutes),
+			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Hours), __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Minutes),
 					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Seconds));
 		}
 
@@ -363,10 +360,7 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 		if (RTC_Format != LL_RTC_FORMAT_BIN) {
 			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, RTC_DateStruct->Day, RTC_DateStruct->Month, RTC_DateStruct->Year);
 		} else {
-			LL_RTC_DATE_Config(RTCx,
-					   RTC_DateStruct->WeekDay,
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Day),
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Month),
+			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Day), __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Month),
 					   __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Year));
 		}
 
@@ -482,11 +476,8 @@ ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 	if (RTC_Format != LL_RTC_FORMAT_BIN) {
 		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours, RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
 	} else {
-		LL_RTC_ALMA_ConfigTime(RTCx,
-				       RTC_AlarmStruct->AlarmTime.TimeFormat,
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
+		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
+				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes), __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
 	}
 	/* Set ALARM mask */
 	LL_RTC_ALMA_SetMask(RTCx, RTC_AlarmStruct->AlarmMask);
@@ -576,11 +567,8 @@ ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 	if (RTC_Format != LL_RTC_FORMAT_BIN) {
 		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours, RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
 	} else {
-		LL_RTC_ALMB_ConfigTime(RTCx,
-				       RTC_AlarmStruct->AlarmTime.TimeFormat,
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
+		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
+				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes), __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
 	}
 	/* Set ALARM mask */
 	LL_RTC_ALMB_SetMask(RTCx, RTC_AlarmStruct->AlarmMask);

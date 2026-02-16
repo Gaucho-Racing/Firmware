@@ -243,12 +243,9 @@ void ADC_Configure(void)
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	ECU_CAN_MessageHandler(&stateLump,
-			       GR_OLD_BUS_PRIMARY,
+	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
 			       (0x000FFF00 & ID) >> 8, // TODO: Double check
-			       (0xFF00000 & ID) >> 20,
-			       data,
-			       size);
+			       (0xFF00000 & ID) >> 20, data, size);
 }
 
 void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)

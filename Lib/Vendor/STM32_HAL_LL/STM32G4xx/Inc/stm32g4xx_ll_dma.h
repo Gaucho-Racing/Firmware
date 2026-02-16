@@ -656,8 +656,7 @@ __STATIC_INLINE void LL_DMA_ConfigTransfer(DMA_TypeDef *DMAx, uint32_t Channel, 
 {
 	uint32_t dma_base_addr = (uint32_t)DMAx;
 	MODIFY_REG(((DMA_Channel_TypeDef *)((uint32_t)(dma_base_addr + CHANNEL_OFFSET_TAB[Channel])))->CCR,
-		   DMA_CCR_DIR | DMA_CCR_MEM2MEM | DMA_CCR_CIRC | DMA_CCR_PINC | DMA_CCR_MINC | DMA_CCR_PSIZE | DMA_CCR_MSIZE | DMA_CCR_PL,
-		   Configuration);
+		   DMA_CCR_DIR | DMA_CCR_MEM2MEM | DMA_CCR_CIRC | DMA_CCR_PINC | DMA_CCR_MINC | DMA_CCR_PSIZE | DMA_CCR_MSIZE | DMA_CCR_PL, Configuration);
 }
 
 /**

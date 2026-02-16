@@ -411,8 +411,7 @@ HAL_StatusTypeDef HAL_OSPI_Init(OSPI_HandleTypeDef *hospi)
 			/* Configure memory type, device size, chip select high
 			   time, delay block bypass, free running clock, clock
 			   mode */
-			MODIFY_REG(hospi->Instance->DCR1,
-				   (OCTOSPI_DCR1_MTYP | OCTOSPI_DCR1_DEVSIZE | OCTOSPI_DCR1_CSHT | OCTOSPI_DCR1_DLYBYP | OCTOSPI_DCR1_FRCK | OCTOSPI_DCR1_CKMODE),
+			MODIFY_REG(hospi->Instance->DCR1, (OCTOSPI_DCR1_MTYP | OCTOSPI_DCR1_DEVSIZE | OCTOSPI_DCR1_CSHT | OCTOSPI_DCR1_DLYBYP | OCTOSPI_DCR1_FRCK | OCTOSPI_DCR1_CKMODE),
 				   (hospi->Init.MemoryType | ((hospi->Init.DeviceSize - 1U) << OCTOSPI_DCR1_DEVSIZE_Pos) | ((hospi->Init.ChipSelectHighTime - 1U) << OCTOSPI_DCR1_CSHT_Pos) |
 				    hospi->Init.DelayBlockBypass | hospi->Init.ClockMode));
 
@@ -2508,24 +2507,20 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 			}
 
 			if ((cfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U) {
-				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)],
-					   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
+				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 					   (OCTOSPIM_PCR_IOLEN | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
 			} else if (cfg->IOLowPort != HAL_OSPIM_IOPORT_NONE) {
-				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)],
-					   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
+				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 					   (OCTOSPIM_PCR_IOHEN | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
 			} else {
 				/* Nothing to do */
 			}
 
 			if ((cfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U) {
-				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)],
-					   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
+				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 					   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC_0 | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
 			} else if (cfg->IOHighPort != HAL_OSPIM_IOPORT_NONE) {
-				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)],
-					   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
+				MODIFY_REG(OCTOSPIM->PCR[((cfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 					   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC_0 | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
 			} else {
 				/* Nothing to do */
@@ -2784,8 +2779,7 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg),
-					   (OCTOSPI_CCR_IMODE | OCTOSPI_CCR_IDTR | OCTOSPI_CCR_ISIZE | OCTOSPI_CCR_ADMODE | OCTOSPI_CCR_ADDTR | OCTOSPI_CCR_ADSIZE),
+				MODIFY_REG((*ccr_reg), (OCTOSPI_CCR_IMODE | OCTOSPI_CCR_IDTR | OCTOSPI_CCR_ISIZE | OCTOSPI_CCR_ADMODE | OCTOSPI_CCR_ADDTR | OCTOSPI_CCR_ADSIZE),
 					   (cmd->InstructionMode | cmd->InstructionDtrMode | cmd->InstructionSize | cmd->AddressMode | cmd->AddressDtrMode | cmd->AddressSize));
 
 				/* The DHQC bit is linked with DDTR bit which
@@ -2808,8 +2802,7 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg),
-					   (OCTOSPI_CCR_IMODE | OCTOSPI_CCR_IDTR | OCTOSPI_CCR_ISIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
+				MODIFY_REG((*ccr_reg), (OCTOSPI_CCR_IMODE | OCTOSPI_CCR_IDTR | OCTOSPI_CCR_ISIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
 					   (cmd->InstructionMode | cmd->InstructionDtrMode | cmd->InstructionSize | cmd->DataMode | cmd->DataDtrMode));
 			} else {
 				/* ---- Command with only instruction ---- */
@@ -2836,8 +2829,7 @@ static HAL_StatusTypeDef OSPI_ConfigCmd(OSPI_HandleTypeDef *hospi, OSPI_RegularC
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg),
-					   (OCTOSPI_CCR_ADMODE | OCTOSPI_CCR_ADDTR | OCTOSPI_CCR_ADSIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
+				MODIFY_REG((*ccr_reg), (OCTOSPI_CCR_ADMODE | OCTOSPI_CCR_ADDTR | OCTOSPI_CCR_ADSIZE | OCTOSPI_CCR_DMODE | OCTOSPI_CCR_DDTR),
 					   (cmd->AddressMode | cmd->AddressDtrMode | cmd->AddressSize | cmd->DataMode | cmd->DataDtrMode));
 			} else {
 				/* ---- Command with only address ---- */

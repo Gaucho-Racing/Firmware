@@ -1773,8 +1773,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, const
 	if (LL_ADC_INJ_IsConversionOngoing(hadc->Instance) == 0UL) {
 		/* If auto-injected mode is disabled: no constraint */
 		if (pConfigInjected->AutoInjectedConv == DISABLE) {
-			MODIFY_REG(hadc->Instance->CFGR,
-				   ADC_CFGR_JQM | ADC_CFGR_JDISCEN,
+			MODIFY_REG(hadc->Instance->CFGR, ADC_CFGR_JQM | ADC_CFGR_JDISCEN,
 				   ADC_CFGR_INJECT_CONTEXT_QUEUE((uint32_t)pConfigInjected->QueueInjectedContext) |
 				       ADC_CFGR_INJECT_DISCCONTINUOUS((uint32_t)pConfigInjected->InjectedDiscontinuousConvMode));
 		}
@@ -1836,8 +1835,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, const
 			/*  - Right bit shift */
 
 			/* Enable OverSampling mode */
-			MODIFY_REG(hadc->Instance->CFGR2,
-				   ADC_CFGR2_JOVSE | ADC_CFGR2_OVSR | ADC_CFGR2_OVSS,
+			MODIFY_REG(hadc->Instance->CFGR2, ADC_CFGR2_JOVSE | ADC_CFGR2_OVSR | ADC_CFGR2_OVSS,
 				   ADC_CFGR2_JOVSE | pConfigInjected->InjecOversampling.Ratio | pConfigInjected->InjecOversampling.RightBitShift);
 		} else {
 			/* Disable Regular OverSampling */

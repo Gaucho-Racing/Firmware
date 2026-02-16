@@ -388,9 +388,8 @@ HAL_StatusTypeDef HAL_RCC_DeInit(void)
 
 	/* Reset MSIKON, HSECSSON , HSEON, HSEBYP, HSION, HSIKERON, PLL1ON,
 	 * PLL2ON, PLL3ON bits */
-	CLEAR_BIT(RCC->CR,
-		  RCC_CR_MSIKON | RCC_CR_MSIPLLSEL | RCC_CR_MSIPLLFAST | RCC_CR_MSIKERON | RCC_CR_CSSON | RCC_CR_HSION | RCC_CR_HSIKERON | RCC_CR_PLL1ON | RCC_CR_PLL2ON | RCC_CR_PLL3ON |
-		      RCC_CR_HSI48ON | RCC_CR_HSEON | RCC_CR_SHSION);
+	CLEAR_BIT(RCC->CR, RCC_CR_MSIKON | RCC_CR_MSIPLLSEL | RCC_CR_MSIPLLFAST | RCC_CR_MSIKERON | RCC_CR_CSSON | RCC_CR_HSION | RCC_CR_HSIKERON | RCC_CR_PLL1ON | RCC_CR_PLL2ON | RCC_CR_PLL3ON |
+			       RCC_CR_HSI48ON | RCC_CR_HSEON | RCC_CR_SHSION);
 
 	/* Reset HSEBYP & HSEEXT bits */
 	CLEAR_BIT(RCC->CR, RCC_CR_HSEBYP | RCC_CR_HSEEXT);
@@ -1083,13 +1082,8 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *pRCC_OscInitStruct
 
 				/* Configure the main PLL clock source,
 				 * multiplication and division factors */
-				__HAL_RCC_PLL_CONFIG(pRCC_OscInitStruct->PLL.PLLSource,
-						     pRCC_OscInitStruct->PLL.PLLMBOOST,
-						     pRCC_OscInitStruct->PLL.PLLM,
-						     pRCC_OscInitStruct->PLL.PLLN,
-						     pRCC_OscInitStruct->PLL.PLLP,
-						     pRCC_OscInitStruct->PLL.PLLQ,
-						     pRCC_OscInitStruct->PLL.PLLR);
+				__HAL_RCC_PLL_CONFIG(pRCC_OscInitStruct->PLL.PLLSource, pRCC_OscInitStruct->PLL.PLLMBOOST, pRCC_OscInitStruct->PLL.PLLM, pRCC_OscInitStruct->PLL.PLLN,
+						     pRCC_OscInitStruct->PLL.PLLP, pRCC_OscInitStruct->PLL.PLLQ, pRCC_OscInitStruct->PLL.PLLR);
 
 				assert_param(IS_RCC_PLL_FRACN_VALUE(pRCC_OscInitStruct->PLL.PLLFRACN));
 

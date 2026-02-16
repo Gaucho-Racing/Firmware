@@ -403,8 +403,7 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 			/* Update User Trim config first to be able to modify
 			 * trimming value afterwards */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM, hopamp->Init.UserTrimming);
-			MODIFY_REG(hopamp->Instance->CSR,
-				   OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
 				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.NonInvertingInput | ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) |
 				       hopamp->Init.PgaConnect | hopamp->Init.PgaGain | (hopamp->Init.TrimmingValueP << OPAMP_INPUT_NONINVERTING) |
 				       (hopamp->Init.TrimmingValueN << OPAMP_INPUT_INVERTING));
@@ -413,16 +412,14 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 			/* Update User Trim config first to be able to modify
 			 * trimming value afterwards */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM, hopamp->Init.UserTrimming);
-			MODIFY_REG(hopamp->Instance->CSR,
-				   OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
 				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.InvertingInput | hopamp->Init.NonInvertingInput |
 				       ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) | hopamp->Init.PgaConnect | hopamp->Init.PgaGain |
 				       (hopamp->Init.TrimmingValueP << OPAMP_INPUT_NONINVERTING) | (hopamp->Init.TrimmingValueN << OPAMP_INPUT_INVERTING));
 		}
 
 		if ((READ_BIT(hopamp->Instance->TCMR, OPAMP_TCMR_LOCK)) == 0UL) {
-			MODIFY_REG(hopamp->Instance->TCMR,
-				   OPAMP_TCMR_UPDATE_PARAMETERS_INIT_MASK,
+			MODIFY_REG(hopamp->Instance->TCMR, OPAMP_TCMR_UPDATE_PARAMETERS_INIT_MASK,
 				   hopamp->Init.TimerControlledMuxmode | hopamp->Init.InvertingInputSecondary | hopamp->Init.NonInvertingInputSecondary);
 		}
 

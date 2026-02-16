@@ -3285,8 +3285,7 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigEncoderIndex(TIM_HandleTypeDef *htim, TIMEx_En
 	TIM_ETR_SetConfig(htim->Instance, sEncoderIndexConfig->Prescaler, sEncoderIndexConfig->Polarity, sEncoderIndexConfig->Filter);
 
 	/* Configures the encoder index */
-	MODIFY_REG(htim->Instance->ECR,
-		   TIM_ECR_IDIR_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
+	MODIFY_REG(htim->Instance->ECR, TIM_ECR_IDIR_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
 		   (sEncoderIndexConfig->Direction | ((sEncoderIndexConfig->FirstIndexEnable == ENABLE) ? (0x1U << TIM_ECR_FIDX_Pos) : 0U) | sEncoderIndexConfig->Position | TIM_ECR_IE));
 
 	__HAL_UNLOCK(htim);

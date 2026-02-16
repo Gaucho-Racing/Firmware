@@ -393,13 +393,11 @@ HAL_StatusTypeDef HAL_QSPI_Init(QSPI_HandleTypeDef *hqspi)
 
 	if (status == HAL_OK) {
 		/* Configure QSPI Clock Prescaler and Sample Shift */
-		MODIFY_REG(hqspi->Instance->CR,
-			   (QUADSPI_CR_PRESCALER | QUADSPI_CR_SSHIFT | QUADSPI_CR_FSEL | QUADSPI_CR_DFM),
+		MODIFY_REG(hqspi->Instance->CR, (QUADSPI_CR_PRESCALER | QUADSPI_CR_SSHIFT | QUADSPI_CR_FSEL | QUADSPI_CR_DFM),
 			   ((hqspi->Init.ClockPrescaler << QUADSPI_CR_PRESCALER_Pos) | hqspi->Init.SampleShifting | hqspi->Init.FlashID | hqspi->Init.DualFlash));
 
 		/* Configure QSPI Flash Size, CS High Time and Clock Mode */
-		MODIFY_REG(hqspi->Instance->DCR,
-			   (QUADSPI_DCR_FSIZE | QUADSPI_DCR_CSHT | QUADSPI_DCR_CKMODE),
+		MODIFY_REG(hqspi->Instance->DCR, (QUADSPI_DCR_FSIZE | QUADSPI_DCR_CSHT | QUADSPI_DCR_CKMODE),
 			   ((hqspi->Init.FlashSize << QUADSPI_DCR_FSIZE_Pos) | hqspi->Init.ChipSelectHighTime | hqspi->Init.ClockMode));
 
 		/* Enable the QSPI peripheral */
@@ -2587,9 +2585,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				 * bytes ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateBytesSize | cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				/* Clear AR register */
 				CLEAR_REG(hqspi->Instance->AR);
@@ -2600,9 +2597,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				 * ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-					   cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2613,9 +2609,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/*---- Command with only instruction ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-					   cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				/* Clear AR register */
 				CLEAR_REG(hqspi->Instance->AR);
@@ -2632,9 +2627,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				 * ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateBytesSize | cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2645,9 +2639,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/*---- Command with only alternate bytes ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateBytesSize | cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 				/* Clear AR register */
 				CLEAR_REG(hqspi->Instance->AR);
@@ -2657,9 +2650,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/*---- Command with only address ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-					   cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2671,9 +2663,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				if (cmd->DataMode != QSPI_DATA_NONE) {
 					/* Configure QSPI: CCR register with all
 					 * communications parameters */
-					WRITE_REG(hqspi->Instance->CCR,
-						  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-						   cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
+					WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+									 cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 					/* Clear AR register */
 					CLEAR_REG(hqspi->Instance->AR);

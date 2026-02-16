@@ -228,8 +228,7 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
 		 * - Oversampling:       USART_CR1_OVER8 bit according to
 		 * USART_InitStruct->OverSampling value.
 		 */
-		MODIFY_REG(USARTx->CR1,
-			   (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8),
+		MODIFY_REG(USARTx->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8),
 			   (USART_InitStruct->DataWidth | USART_InitStruct->Parity | USART_InitStruct->TransferDirection | USART_InitStruct->OverSampling));
 
 		/*---------------------------- USART CR2 Configuration
@@ -289,13 +288,11 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
 		*/
 		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (USART_InitStruct->BaudRate != 0U)) {
 			status = SUCCESS;
-			LL_USART_SetBaudRate(USARTx,
-					     periphclk,
+			LL_USART_SetBaudRate(USARTx, periphclk,
 #if defined(USART_PRESC_PRESCALER)
 					     USART_InitStruct->PrescalerValue,
 #endif /* USART_PRESC_PRESCALER */
-					     USART_InitStruct->OverSampling,
-					     USART_InitStruct->BaudRate);
+					     USART_InitStruct->OverSampling, USART_InitStruct->BaudRate);
 
 			/* Check BRR is greater than or equal to 16d */
 			assert_param(IS_LL_USART_BRR_MIN(USARTx->BRR));
@@ -386,8 +383,7 @@ ErrorStatus LL_USART_ClockInit(USART_TypeDef *USARTx, const LL_USART_ClockInitTy
 		 * - Last Bit Clock Pulse Output: USART_CR2_LBCL bit according
 		 * to USART_ClockInitStruct->LastBitClockPulse value.
 		 */
-		MODIFY_REG(USARTx->CR2,
-			   USART_CR2_CLKEN | USART_CR2_CPHA | USART_CR2_CPOL | USART_CR2_LBCL,
+		MODIFY_REG(USARTx->CR2, USART_CR2_CLKEN | USART_CR2_CPHA | USART_CR2_CPOL | USART_CR2_LBCL,
 			   USART_ClockInitStruct->ClockOutput | USART_ClockInitStruct->ClockPolarity | USART_ClockInitStruct->ClockPhase | USART_ClockInitStruct->LastBitClockPulse);
 #else
 		/* If USART Clock signal is disabled */
@@ -419,8 +415,7 @@ ErrorStatus LL_USART_ClockInit(USART_TypeDef *USARTx, const LL_USART_ClockInitTy
 			 * according to USART_ClockInitStruct->LastBitClockPulse
 			 * value.
 			 */
-			MODIFY_REG(USARTx->CR2,
-				   USART_CR2_CLKEN | USART_CR2_CPHA | USART_CR2_CPOL | USART_CR2_LBCL,
+			MODIFY_REG(USARTx->CR2, USART_CR2_CLKEN | USART_CR2_CPHA | USART_CR2_CPOL | USART_CR2_LBCL,
 				   USART_CR2_CLKEN | USART_ClockInitStruct->ClockPolarity | USART_ClockInitStruct->ClockPhase | USART_ClockInitStruct->LastBitClockPulse);
 		}
 #endif /* USART_CR2_SLVEN */

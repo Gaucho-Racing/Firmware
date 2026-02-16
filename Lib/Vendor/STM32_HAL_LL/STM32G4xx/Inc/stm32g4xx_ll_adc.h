@@ -3899,8 +3899,7 @@ __STATIC_INLINE uint32_t LL_ADC_GetCommonPathInternalCh(const ADC_Common_TypeDef
  */
 __STATIC_INLINE void LL_ADC_SetCalibrationFactor(ADC_TypeDef *ADCx, uint32_t SingleDiff, uint32_t CalibrationFactor)
 {
-	MODIFY_REG(ADCx->CALFACT,
-		   SingleDiff & ADC_SINGLEDIFF_CALIB_FACTOR_MASK,
+	MODIFY_REG(ADCx->CALFACT, SingleDiff & ADC_SINGLEDIFF_CALIB_FACTOR_MASK,
 		   CalibrationFactor << (((SingleDiff & ADC_SINGLEDIFF_CALIB_F_BIT_D_MASK) >> ADC_SINGLEDIFF_CALIB_F_BIT_D_SHIFT4) & ~(SingleDiff & ADC_CALFACT_CALFACT_S)));
 }
 
@@ -5068,8 +5067,7 @@ __STATIC_INLINE void LL_ADC_REG_SetSequencerRanks(ADC_TypeDef *ADCx, uint32_t Ra
 	/* other bits reserved for other purpose. */
 	__IO uint32_t *preg = __ADC_PTR_REG_OFFSET(ADCx->SQR1, ((Rank & ADC_REG_SQRX_REGOFFSET_MASK) >> ADC_SQRX_REGOFFSET_POS));
 
-	MODIFY_REG(*preg,
-		   ADC_CHANNEL_ID_NUMBER_MASK_POSBIT0 << (Rank & ADC_REG_RANK_ID_SQRX_MASK),
+	MODIFY_REG(*preg, ADC_CHANNEL_ID_NUMBER_MASK_POSBIT0 << (Rank & ADC_REG_RANK_ID_SQRX_MASK),
 		   ((Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_REG_RANK_ID_SQRX_MASK));
 }
 
@@ -5707,8 +5705,7 @@ __STATIC_INLINE void LL_ADC_INJ_SetSequencerRanks(ADC_TypeDef *ADCx, uint32_t Ra
 	/* Parameters "Rank" and "Channel" are used with masks because
 	 * containing   */
 	/* other bits reserved for other purpose. */
-	MODIFY_REG(ADCx->JSQR,
-		   (ADC_CHANNEL_ID_NUMBER_MASK >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_INJ_RANK_ID_JSQR_MASK),
+	MODIFY_REG(ADCx->JSQR, (ADC_CHANNEL_ID_NUMBER_MASK >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_INJ_RANK_ID_JSQR_MASK),
 		   ((Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_INJ_RANK_ID_JSQR_MASK));
 }
 
@@ -6179,8 +6176,8 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetQueueMode(const ADC_TypeDef *ADCx)
  * convert in 12-bit resolution.\n
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(
-    ADC_TypeDef *ADCx, uint32_t TriggerSource, uint32_t ExternalTriggerEdge, uint32_t SequencerNbRanks, uint32_t Rank1_Channel, uint32_t Rank2_Channel, uint32_t Rank3_Channel, uint32_t Rank4_Channel)
+__STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(ADC_TypeDef *ADCx, uint32_t TriggerSource, uint32_t ExternalTriggerEdge, uint32_t SequencerNbRanks, uint32_t Rank1_Channel, uint32_t Rank2_Channel,
+						   uint32_t Rank3_Channel, uint32_t Rank4_Channel)
 {
 	/* Set bits with content of parameter "Rankx_Channel" with bits position
 	 */
@@ -6191,8 +6188,7 @@ __STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(
 	/* If parameter "TriggerSource" is set to SW start, then parameter */
 	/* "ExternalTriggerEdge" is discarded. */
 	uint32_t is_trigger_not_sw = (uint32_t)((TriggerSource != LL_ADC_INJ_TRIG_SOFTWARE) ? 1UL : 0UL);
-	MODIFY_REG(ADCx->JSQR,
-		   ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JSQ4 | ADC_JSQR_JSQ3 | ADC_JSQR_JSQ2 | ADC_JSQR_JSQ1 | ADC_JSQR_JL,
+	MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JSQ4 | ADC_JSQR_JSQ3 | ADC_JSQR_JSQ2 | ADC_JSQR_JSQ1 | ADC_JSQR_JL,
 		   (TriggerSource & ADC_JSQR_JEXTSEL) | (ExternalTriggerEdge * (is_trigger_not_sw)) |
 		       (((Rank4_Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (LL_ADC_INJ_RANK_4 & ADC_INJ_RANK_ID_JSQR_MASK)) |
 		       (((Rank3_Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (LL_ADC_INJ_RANK_3 & ADC_INJ_RANK_ID_JSQR_MASK)) |
@@ -6325,8 +6321,7 @@ __STATIC_INLINE void LL_ADC_SetChannelSamplingTime(ADC_TypeDef *ADCx, uint32_t C
 	/* other bits reserved for other purpose. */
 	__IO uint32_t *preg = __ADC_PTR_REG_OFFSET(ADCx->SMPR1, ((Channel & ADC_CHANNEL_SMPRX_REGOFFSET_MASK) >> ADC_SMPRX_REGOFFSET_POS));
 
-	MODIFY_REG(*preg,
-		   ADC_SMPR1_SMP0 << ((Channel & ADC_CHANNEL_SMPx_BITOFFSET_MASK) >> ADC_CHANNEL_SMPx_BITOFFSET_POS),
+	MODIFY_REG(*preg, ADC_SMPR1_SMP0 << ((Channel & ADC_CHANNEL_SMPx_BITOFFSET_MASK) >> ADC_CHANNEL_SMPx_BITOFFSET_POS),
 		   SamplingTime << ((Channel & ADC_CHANNEL_SMPx_BITOFFSET_MASK) >> ADC_CHANNEL_SMPx_BITOFFSET_POS));
 }
 

@@ -1658,8 +1658,7 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_Filte
 	/* FMAC_X1BUFCFG: Configure the input buffer within the internal memory
 	 * if required */
 	if (pConfig->InputBufferSize != 0U) {
-		MODIFY_REG(hfmac->Instance->X1BUFCFG,
-			   (FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE),
+		MODIFY_REG(hfmac->Instance->X1BUFCFG, (FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE),
 			   (((((uint32_t)(pConfig->InputBaseAddress)) << FMAC_X1BUFCFG_X1_BASE_Pos) & FMAC_X1BUFCFG_X1_BASE) |
 			    ((((uint32_t)(pConfig->InputBufferSize)) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos) & FMAC_X1BUFCFG_X1_BUF_SIZE)));
 	}
@@ -1676,8 +1675,7 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_Filte
 	/* FMAC_X2BUFCFG: Configure the coefficient buffer within the internal
 	 * memory */
 	if (pConfig->CoeffBufferSize != 0U) {
-		MODIFY_REG(hfmac->Instance->X2BUFCFG,
-			   (FMAC_X2BUFCFG_X2_BASE | FMAC_X2BUFCFG_X2_BUF_SIZE),
+		MODIFY_REG(hfmac->Instance->X2BUFCFG, (FMAC_X2BUFCFG_X2_BASE | FMAC_X2BUFCFG_X2_BUF_SIZE),
 			   (((((uint32_t)(pConfig->CoeffBaseAddress)) << FMAC_X2BUFCFG_X2_BASE_Pos) & FMAC_X2BUFCFG_X2_BASE) |
 			    ((((uint32_t)(pConfig->CoeffBufferSize)) << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos) & FMAC_X2BUFCFG_X2_BUF_SIZE)));
 	}
@@ -1685,8 +1683,7 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_Filte
 	/* FMAC_YBUFCFG: Configure the output buffer within the internal memory
 	 * if required */
 	if (pConfig->OutputBufferSize != 0U) {
-		MODIFY_REG(hfmac->Instance->YBUFCFG,
-			   (FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE),
+		MODIFY_REG(hfmac->Instance->YBUFCFG, (FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE),
 			   (((((uint32_t)(pConfig->OutputBaseAddress)) << FMAC_YBUFCFG_Y_BASE_Pos) & FMAC_YBUFCFG_Y_BASE) |
 			    ((((uint32_t)(pConfig->OutputBufferSize)) << FMAC_YBUFCFG_Y_BUF_SIZE_Pos) & FMAC_YBUFCFG_Y_BUF_SIZE)));
 	}

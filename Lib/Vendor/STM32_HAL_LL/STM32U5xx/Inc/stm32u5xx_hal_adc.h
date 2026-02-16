@@ -2935,10 +2935,10 @@ typedef void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to a
  * ADC4.\n
  * @retval Temperature (unit: degree Celsius)
  */
-#define __HAL_ADC_CALC_TEMPERATURE_TYP_PARAMS(                                                                                                                                                         \
-    __ADCx__, __TEMPSENSOR_TYP_AVGSLOPE__, __TEMPSENSOR_TYP_CALX_V__, __TEMPSENSOR_CALX_TEMP__, __VREFANALOG_VOLTAGE__, __TEMPSENSOR_ADC_DATA__, __ADC_RESOLUTION__)                                   \
-	__LL_ADC_CALC_TEMPERATURE_TYP_PARAMS(                                                                                                                                                          \
-	    (__ADCx__), (__TEMPSENSOR_TYP_AVGSLOPE__), (__TEMPSENSOR_TYP_CALX_V__), (__TEMPSENSOR_CALX_TEMP__), (__VREFANALOG_VOLTAGE__), (__TEMPSENSOR_ADC_DATA__), (__ADC_RESOLUTION__))
+#define __HAL_ADC_CALC_TEMPERATURE_TYP_PARAMS(__ADCx__, __TEMPSENSOR_TYP_AVGSLOPE__, __TEMPSENSOR_TYP_CALX_V__, __TEMPSENSOR_CALX_TEMP__, __VREFANALOG_VOLTAGE__, __TEMPSENSOR_ADC_DATA__,             \
+					      __ADC_RESOLUTION__)                                                                                                                                      \
+	__LL_ADC_CALC_TEMPERATURE_TYP_PARAMS((__ADCx__), (__TEMPSENSOR_TYP_AVGSLOPE__), (__TEMPSENSOR_TYP_CALX_V__), (__TEMPSENSOR_CALX_TEMP__), (__VREFANALOG_VOLTAGE__), (__TEMPSENSOR_ADC_DATA__),  \
+					     (__ADC_RESOLUTION__))
 
 /**
  * @}

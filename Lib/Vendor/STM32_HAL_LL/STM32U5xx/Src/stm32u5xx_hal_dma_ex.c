@@ -3218,8 +3218,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma, DMA_Tri
 
 	/* Check DMA channel state */
 	if (hdma->State == HAL_DMA_STATE_READY) {
-		MODIFY_REG(hdma->Instance->CTR2,
-			   (DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM),
+		MODIFY_REG(hdma->Instance->CTR2, (DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM),
 			   (pConfigTrigger->TriggerPolarity | pConfigTrigger->TriggerMode | (pConfigTrigger->TriggerSelection << DMA_CTR2_TRIGSEL_Pos)));
 	} else {
 		/* Update the DMA channel error code */

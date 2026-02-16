@@ -2191,8 +2191,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
 			/*  - Right bit shift */
 
 			/* Enable OverSampling mode */
-			MODIFY_REG(hadc->Instance->CFGR2,
-				   ADC_CFGR2_JOVSE | ADC_CFGR2_OVSR | ADC_CFGR2_OVSS,
+			MODIFY_REG(hadc->Instance->CFGR2, ADC_CFGR2_JOVSE | ADC_CFGR2_OVSR | ADC_CFGR2_OVSS,
 				   ADC_CFGR2_JOVSE | (pConfigInjected->InjecOversampling.Ratio << ADC_CFGR2_OVSR_Pos) | pConfigInjected->InjecOversampling.RightBitShift);
 		} else {
 			/* Disable Regular OverSampling */
@@ -2221,13 +2220,11 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
 			if (pConfigInjected->InjectedOffsetSaturation == ENABLE) {
 				/* Set ADC selected offset unsigned/signed
 				 * saturation */
-				LL_ADC_SetOffsetUnsignedSaturation(hadc->Instance,
-								   pConfigInjected->InjectedOffsetNumber,
+				LL_ADC_SetOffsetUnsignedSaturation(hadc->Instance, pConfigInjected->InjectedOffsetNumber,
 								   (pConfigInjected->InjectedOffsetSignedSaturation == DISABLE) ? LL_ADC_OFFSET_UNSIGNED_SATURATION_ENABLE
 																: LL_ADC_OFFSET_UNSIGNED_SATURATION_DISABLE);
 
-				LL_ADC_SetOffsetSignedSaturation(hadc->Instance,
-								 pConfigInjected->InjectedOffsetNumber,
+				LL_ADC_SetOffsetSignedSaturation(hadc->Instance, pConfigInjected->InjectedOffsetNumber,
 								 (pConfigInjected->InjectedOffsetSignedSaturation == ENABLE) ? LL_ADC_OFFSET_SIGNED_SATURATION_ENABLE
 															     : LL_ADC_OFFSET_SIGNED_SATURATION_DISABLE);
 			} else {

@@ -3365,8 +3365,7 @@ HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
 				   bits. At the same time, ensure MDMAT bit is
 				   cleared. */
 				if (hhash->Init.KeySize > 64U) {
-					MODIFY_REG(HASH->CR,
-						   HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
+					MODIFY_REG(HASH->CR, HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
 						   Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
 				} else {
 					MODIFY_REG(HASH->CR, HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);

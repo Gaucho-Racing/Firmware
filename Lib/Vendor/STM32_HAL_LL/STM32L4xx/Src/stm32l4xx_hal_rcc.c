@@ -892,17 +892,10 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct)
 						 * source, multiplication and
 						 * division factors. */
 #if defined(RCC_PLLP_SUPPORT)
-						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
-								     RCC_OscInitStruct->PLL.PLLM,
-								     RCC_OscInitStruct->PLL.PLLN,
-								     RCC_OscInitStruct->PLL.PLLP,
-								     RCC_OscInitStruct->PLL.PLLQ,
-								     RCC_OscInitStruct->PLL.PLLR);
+						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource, RCC_OscInitStruct->PLL.PLLM, RCC_OscInitStruct->PLL.PLLN, RCC_OscInitStruct->PLL.PLLP,
+								     RCC_OscInitStruct->PLL.PLLQ, RCC_OscInitStruct->PLL.PLLR);
 #else
-						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
-								     RCC_OscInitStruct->PLL.PLLM,
-								     RCC_OscInitStruct->PLL.PLLN,
-								     RCC_OscInitStruct->PLL.PLLQ,
+						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource, RCC_OscInitStruct->PLL.PLLM, RCC_OscInitStruct->PLL.PLLN, RCC_OscInitStruct->PLL.PLLQ,
 								     RCC_OscInitStruct->PLL.PLLR);
 #endif
 

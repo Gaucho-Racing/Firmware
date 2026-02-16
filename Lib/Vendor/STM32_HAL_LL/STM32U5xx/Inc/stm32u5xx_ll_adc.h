@@ -4216,8 +4216,8 @@ typedef struct {
  *         (2): Specific to ADC instance: ADC4
  * @retval Temperature (unit: degree Celsius)
  */
-#define __LL_ADC_CALC_TEMPERATURE_TYP_PARAMS(                                                                                                                                                          \
-    __ADC_INSTANCE__, __TEMPSENSOR_TYP_AVGSLOPE__, __TEMPSENSOR_TYP_CALX_V__, __TEMPSENSOR_CALX_TEMP__, __VREFANALOG_VOLTAGE__, __TEMPSENSOR_ADC_DATA__, __ADC_RESOLUTION__)                           \
+#define __LL_ADC_CALC_TEMPERATURE_TYP_PARAMS(__ADC_INSTANCE__, __TEMPSENSOR_TYP_AVGSLOPE__, __TEMPSENSOR_TYP_CALX_V__, __TEMPSENSOR_CALX_TEMP__, __VREFANALOG_VOLTAGE__, __TEMPSENSOR_ADC_DATA__,      \
+					     __ADC_RESOLUTION__)                                                                                                                                       \
 	(((((int32_t)((((__TEMPSENSOR_ADC_DATA__) * (__VREFANALOG_VOLTAGE__)) / __LL_ADC_DIGITAL_SCALE(__ADC_INSTANCE__, __ADC_RESOLUTION__)) * 1000UL) -                                              \
 	    (int32_t)(((__TEMPSENSOR_TYP_CALX_V__)) * 1000UL))) /                                                                                                                                      \
 	  (int32_t)(__TEMPSENSOR_TYP_AVGSLOPE__)) +                                                                                                                                                    \
@@ -4582,8 +4582,7 @@ __STATIC_INLINE void LL_ADC_SetCalibrationOffsetFactor(ADC_TypeDef *ADCx, uint32
 		   ADC_CALFACT_CAPTURE_COEF have property "wr1", therefore they
 		   are not cleared in this function. */
 		MODIFY_REG(ADCx->CR, ADC_CR_CALINDEX, (0UL << ADC_CR_CALINDEX_Pos)); /* CalibIndex == 0 */
-		MODIFY_REG(ADCx->CALFACT2,
-			   SingleDiff & ADC_SINGLEDIFF_CALIB_FACTOR_MASK,
+		MODIFY_REG(ADCx->CALFACT2, SingleDiff & ADC_SINGLEDIFF_CALIB_FACTOR_MASK,
 			   CalibrationFactor << (((SingleDiff & ADC_SINGLEDIFF_CALIB_F_BIT_D_MASK) >> ADC_SINGLEDIFF_CALIB_F_BIT_D_SHIFT4) & ~(SingleDiff & ADC_CALFACT2_CALFACT_S)));
 		SET_BIT(ADCx->CALFACT, ADC_CALFACT_LATCH_COEF);
 	} else {
@@ -6040,8 +6039,7 @@ __STATIC_INLINE void LL_ADC_REG_SetSequencerRanks(ADC_TypeDef *ADCx, uint32_t Ra
 	{
 		__IO uint32_t *preg = __ADC_PTR_REG_OFFSET(ADCx->SQR1, ((Rank & ADC_REG_SQRX_REGOFFSET_MASK) >> ADC_SQRX_REGOFFSET_POS));
 
-		MODIFY_REG(*preg,
-			   ADC_CHANNEL_ID_NUMBER_MASK_POSBIT0 << (Rank & ADC_REG_RANK_ID_SQRX_MASK),
+		MODIFY_REG(*preg, ADC_CHANNEL_ID_NUMBER_MASK_POSBIT0 << (Rank & ADC_REG_RANK_ID_SQRX_MASK),
 			   ((Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_REG_RANK_ID_SQRX_MASK));
 	} else {
 		MODIFY_REG(ADCx->CHSELR, ADC_CHSELR_SQ1 << (Rank & ADC_REG_RANK_ID_SQRX_MASK), (__LL_ADC_CHANNEL_TO_DECIMAL_NB(Channel) << (Rank & ADC_REG_RANK_ID_SQRX_MASK)));
@@ -7227,8 +7225,7 @@ __STATIC_INLINE void LL_ADC_INJ_SetSequencerRanks(ADC_TypeDef *ADCx, uint32_t Ra
 	/* Parameters "Rank" and "Channel" are used with masks because
 	 * containing   */
 	/* other bits reserved for other purpose. */
-	MODIFY_REG(ADCx->JSQR,
-		   (ADC_CHANNEL_ID_NUMBER_MASK >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_INJ_RANK_ID_JSQR_MASK),
+	MODIFY_REG(ADCx->JSQR, (ADC_CHANNEL_ID_NUMBER_MASK >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_INJ_RANK_ID_JSQR_MASK),
 		   ((Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (Rank & ADC_INJ_RANK_ID_JSQR_MASK));
 }
 
@@ -7521,8 +7518,8 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetTrigAuto(const ADC_TypeDef *ADCx)
  * rate: refer to reference manual).
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(
-    ADC_TypeDef *ADCx, uint32_t TriggerSource, uint32_t ExternalTriggerEdge, uint32_t SequencerNbRanks, uint32_t Rank1_Channel, uint32_t Rank2_Channel, uint32_t Rank3_Channel, uint32_t Rank4_Channel)
+__STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(ADC_TypeDef *ADCx, uint32_t TriggerSource, uint32_t ExternalTriggerEdge, uint32_t SequencerNbRanks, uint32_t Rank1_Channel, uint32_t Rank2_Channel,
+						   uint32_t Rank3_Channel, uint32_t Rank4_Channel)
 {
 	/* Set bits with content of parameter "Rankx_Channel" with bits position
 	 */
@@ -7536,8 +7533,7 @@ __STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(
 	/* So we need to discard the default edge else the edge will not as
 	 * expected*/
 	uint32_t is_trigger_not_sw = (uint32_t)((TriggerSource != LL_ADC_INJ_TRIG_SOFTWARE) ? 1UL : 0UL);
-	MODIFY_REG(ADCx->JSQR,
-		   ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JSQ4 | ADC_JSQR_JSQ3 | ADC_JSQR_JSQ2 | ADC_JSQR_JSQ1 | ADC_JSQR_JL,
+	MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JSQ4 | ADC_JSQR_JSQ3 | ADC_JSQR_JSQ2 | ADC_JSQR_JSQ1 | ADC_JSQR_JL,
 		   (TriggerSource & ADC_JSQR_JEXTSEL) | (ExternalTriggerEdge * (is_trigger_not_sw)) |
 		       (((Rank4_Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (LL_ADC_INJ_RANK_4 & ADC_INJ_RANK_ID_JSQR_MASK)) |
 		       (((Rank3_Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (LL_ADC_INJ_RANK_3 & ADC_INJ_RANK_ID_JSQR_MASK)) |
@@ -7670,8 +7666,7 @@ __STATIC_INLINE void LL_ADC_SetChannelSamplingTime(ADC_TypeDef *ADCx, uint32_t C
 		/* other bits reserved for other purpose. It needs to be
 		 * converted to decimal */
 		/* to select the bit position */
-		MODIFY_REG(ADCx->SMPR1,
-			   ((Channel & ADC_CHANNEL_ID_BITFIELD_MASK) << ADC4_SMPR_SMPSEL0_BITOFFSET_POS),
+		MODIFY_REG(ADCx->SMPR1, ((Channel & ADC_CHANNEL_ID_BITFIELD_MASK) << ADC4_SMPR_SMPSEL0_BITOFFSET_POS),
 			   ((Channel & ADC_CHANNEL_ID_BITFIELD_MASK) << ADC4_SMPR_SMPSEL0_BITOFFSET_POS) & (SamplingTime & ADC4_SAMPLING_TIME_CH_MASK));
 	}
 }
@@ -8327,8 +8322,7 @@ __STATIC_INLINE void LL_ADC_SetAnalogWDThresholds(ADC_TypeDef *ADCx, uint32_t AW
 						    (((AWDy & ADC_AWD_TRX_REGOFFSET_MASK)) >> (ADC_AWD_TRX_REGOFFSET_POS)) + ((ADC_AWD_CR3_REGOFFSET & AWDy) >> (ADC_AWD_CRX_REGOFFSET_POS + 1UL)));
 		}
 
-		MODIFY_REG(*preg,
-			   ADC_AWD1TR_LT1 << (AWDThresholdsHighLow * ADC_AWD1TR_HT1_Pos),
+		MODIFY_REG(*preg, ADC_AWD1TR_LT1 << (AWDThresholdsHighLow * ADC_AWD1TR_HT1_Pos),
 			   AWDThresholdValue << (((AWDThresholdsHighLow << ADC_AWD1TR_HT1_Pos) & ADC_AWD_TRX_BIT_HIGH_MASK) >> ADC_AWD_TRX_BIT_HIGH_SHIFT4));
 	}
 }

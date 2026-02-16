@@ -644,8 +644,7 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
 				/*  - Right bit shift */
 				/*  - Triggered mode */
 				/*  - Oversampling mode (continued/resumed) */
-				MODIFY_REG(hadc->Instance->CFGR2,
-					   ADC_CFGR2_OVSR | ADC_CFGR2_OVSS | ADC_CFGR2_TROVS | ADC_CFGR2_ROVSM,
+				MODIFY_REG(hadc->Instance->CFGR2, ADC_CFGR2_OVSR | ADC_CFGR2_OVSS | ADC_CFGR2_TROVS | ADC_CFGR2_ROVSM,
 					   ADC_CFGR2_ROVSE | hadc->Init.Oversampling.Ratio | hadc->Init.Oversampling.RightBitShift | hadc->Init.Oversampling.TriggeredMode |
 					       hadc->Init.Oversampling.OversamplingStopReset);
 			} else {
@@ -2814,8 +2813,8 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, const ADC_Chann
 				assert_param(IS_FUNCTIONAL_STATE(pConfig->OffsetSaturation));
 				/* Set ADC selected offset sign & saturation */
 				LL_ADC_SetOffsetSign(hadc->Instance, pConfig->OffsetNumber, pConfig->OffsetSign);
-				LL_ADC_SetOffsetSaturation(
-				    hadc->Instance, pConfig->OffsetNumber, (pConfig->OffsetSaturation == ENABLE) ? LL_ADC_OFFSET_SATURATION_ENABLE : LL_ADC_OFFSET_SATURATION_DISABLE);
+				LL_ADC_SetOffsetSaturation(hadc->Instance, pConfig->OffsetNumber,
+							   (pConfig->OffsetSaturation == ENABLE) ? LL_ADC_OFFSET_SATURATION_ENABLE : LL_ADC_OFFSET_SATURATION_DISABLE);
 			} else {
 				/* Scan each offset register to check if the
 				 * selected channel is targeted. */
@@ -2851,8 +2850,8 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, const ADC_Chann
 				/* Note: ADC channel number masked with value
 				 * "0x1F" to ensure shift value within 32 bits
 				 * range */
-				LL_ADC_SetChannelSamplingTime(
-				    hadc->Instance, (uint32_t)(__LL_ADC_DECIMAL_NB_TO_CHANNEL((__LL_ADC_CHANNEL_TO_DECIMAL_NB((uint32_t)pConfig->Channel) + 1UL) & 0x1FUL)), pConfig->SamplingTime);
+				LL_ADC_SetChannelSamplingTime(hadc->Instance, (uint32_t)(__LL_ADC_DECIMAL_NB_TO_CHANNEL((__LL_ADC_CHANNEL_TO_DECIMAL_NB((uint32_t)pConfig->Channel) + 1UL) & 0x1FUL)),
+							      pConfig->SamplingTime);
 			}
 		}
 

@@ -5278,8 +5278,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim, u
  * @{
  */
 /* Simple one pulse related functions *****************************************/
-HAL_StatusTypeDef
-HAL_HRTIM_SimpleOnePulseChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel, const HRTIM_SimpleOnePulseChannelCfgTypeDef *pSimpleOnePulseChannelCfg);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel,
+							const HRTIM_SimpleOnePulseChannelCfgTypeDef *pSimpleOnePulseChannelCfg);
 
 HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
 

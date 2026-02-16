@@ -4682,11 +4682,9 @@ typedef struct {
  */
 #define __HAL_RCC_PLL_CONFIG(__PLL1SOURCE__, __PLL1MBOOST__, __PLL1M__, __PLL1N__, __PLL1P__, __PLL1Q__, __PLL1R__)                                                                                    \
 	do {                                                                                                                                                                                           \
-		MODIFY_REG(RCC->PLL1CFGR,                                                                                                                                                              \
-			   (RCC_PLL1CFGR_PLL1SRC | RCC_PLL1CFGR_PLL1M | RCC_PLL1CFGR_PLL1MBOOST),                                                                                                      \
+		MODIFY_REG(RCC->PLL1CFGR, (RCC_PLL1CFGR_PLL1SRC | RCC_PLL1CFGR_PLL1M | RCC_PLL1CFGR_PLL1MBOOST),                                                                                       \
 			   ((__PLL1SOURCE__) << RCC_PLL1CFGR_PLL1SRC_Pos) | (((__PLL1M__) - 1U) << RCC_PLL1CFGR_PLL1M_Pos) | (__PLL1MBOOST__));                                                        \
-		MODIFY_REG(RCC->PLL1DIVR,                                                                                                                                                              \
-			   (RCC_PLL1DIVR_PLL1N | RCC_PLL1DIVR_PLL1P | RCC_PLL1DIVR_PLL1Q | RCC_PLL1DIVR_PLL1R),                                                                                        \
+		MODIFY_REG(RCC->PLL1DIVR, (RCC_PLL1DIVR_PLL1N | RCC_PLL1DIVR_PLL1P | RCC_PLL1DIVR_PLL1Q | RCC_PLL1DIVR_PLL1R),                                                                         \
 			   ((((__PLL1N__) - 1U) & RCC_PLL1DIVR_PLL1N) | ((((__PLL1P__) - 1U) << RCC_PLL1DIVR_PLL1P_Pos) & RCC_PLL1DIVR_PLL1P) |                                                        \
 			    ((((__PLL1Q__) - 1U) << RCC_PLL1DIVR_PLL1Q_Pos) & RCC_PLL1DIVR_PLL1Q) | ((((__PLL1R__) - 1U) << RCC_PLL1DIVR_PLL1R_Pos) & RCC_PLL1DIVR_PLL1R)));                           \
 	} while (0)

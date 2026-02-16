@@ -117,8 +117,7 @@ int main(void)
 
 	uint8_t TX_Buffer[] = {"hello"};
 	// printf("%s\n",TX_Buffer); Don't uncomment this.
-	HAL_GPIO_WritePin(GPIOB,
-			  GPIO_PIN_12,
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12,
 			  GPIO_PIN_RESET); // Set the CS line to active low to
 					   // enable the slave
 	while (1) {

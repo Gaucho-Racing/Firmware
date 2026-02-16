@@ -309,8 +309,7 @@ void LL_DMA2D_ConfigLayer(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_LayerCfgTypeDef *DMA2D
 
 		/* Configure the background Alpha value, Alpha mode, RB swap,
 		   Alpha inversion CLUT size, CLUT Color mode and Color mode */
-		MODIFY_REG(DMA2Dx->BGPFCCR,
-			   (DMA2D_BGPFCCR_ALPHA | DMA2D_BGPFCCR_RBS | DMA2D_BGPFCCR_AI | DMA2D_BGPFCCR_AM | DMA2D_BGPFCCR_CS | DMA2D_BGPFCCR_CCM | DMA2D_BGPFCCR_CM),
+		MODIFY_REG(DMA2Dx->BGPFCCR, (DMA2D_BGPFCCR_ALPHA | DMA2D_BGPFCCR_RBS | DMA2D_BGPFCCR_AI | DMA2D_BGPFCCR_AM | DMA2D_BGPFCCR_CS | DMA2D_BGPFCCR_CCM | DMA2D_BGPFCCR_CM),
 			   ((DMA2D_LayerCfg->Alpha << DMA2D_BGPFCCR_ALPHA_Pos) | DMA2D_LayerCfg->RBSwapMode | DMA2D_LayerCfg->AlphaInversionMode | DMA2D_LayerCfg->AlphaMode |
 			    (DMA2D_LayerCfg->CLUTSize << DMA2D_BGPFCCR_CS_Pos) | DMA2D_LayerCfg->CLUTColorMode | DMA2D_LayerCfg->ColorMode));
 
@@ -328,8 +327,7 @@ void LL_DMA2D_ConfigLayer(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_LayerCfgTypeDef *DMA2D
 
 		/* Configure the foreground Alpha value, Alpha mode, RB swap,
 		   Alpha inversion CLUT size, CLUT Color mode and Color mode */
-		MODIFY_REG(DMA2Dx->FGPFCCR,
-			   (DMA2D_FGPFCCR_ALPHA | DMA2D_FGPFCCR_RBS | DMA2D_FGPFCCR_AI | DMA2D_FGPFCCR_AM | DMA2D_FGPFCCR_CS | DMA2D_FGPFCCR_CCM | DMA2D_FGPFCCR_CM),
+		MODIFY_REG(DMA2Dx->FGPFCCR, (DMA2D_FGPFCCR_ALPHA | DMA2D_FGPFCCR_RBS | DMA2D_FGPFCCR_AI | DMA2D_FGPFCCR_AM | DMA2D_FGPFCCR_CS | DMA2D_FGPFCCR_CCM | DMA2D_FGPFCCR_CM),
 			   ((DMA2D_LayerCfg->Alpha << DMA2D_FGPFCCR_ALPHA_Pos) | DMA2D_LayerCfg->RBSwapMode | DMA2D_LayerCfg->AlphaInversionMode | DMA2D_LayerCfg->AlphaMode |
 			    (DMA2D_LayerCfg->CLUTSize << DMA2D_FGPFCCR_CS_Pos) | DMA2D_LayerCfg->CLUTColorMode | DMA2D_LayerCfg->ColorMode));
 

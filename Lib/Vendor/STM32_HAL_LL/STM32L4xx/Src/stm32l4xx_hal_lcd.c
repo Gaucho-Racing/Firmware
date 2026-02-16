@@ -198,8 +198,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	   Set PON[2:0] bits according to hlcd->Init.PulseOnDuration value
 	   Set CC[2:0] bits according to hlcd->Init.Contrast value
 	   Set HD bit according to hlcd->Init.HighDrive value */
-	MODIFY_REG(hlcd->Instance->FCR,
-		   (LCD_FCR_PS | LCD_FCR_DIV | LCD_FCR_BLINK | LCD_FCR_BLINKF | LCD_FCR_DEAD | LCD_FCR_PON | LCD_FCR_CC | LCD_FCR_HD),
+	MODIFY_REG(hlcd->Instance->FCR, (LCD_FCR_PS | LCD_FCR_DIV | LCD_FCR_BLINK | LCD_FCR_BLINKF | LCD_FCR_DEAD | LCD_FCR_PON | LCD_FCR_CC | LCD_FCR_HD),
 		   (hlcd->Init.Prescaler | hlcd->Init.Divider | hlcd->Init.BlinkMode | hlcd->Init.BlinkFrequency | hlcd->Init.DeadTime | hlcd->Init.PulseOnDuration | hlcd->Init.Contrast |
 		    hlcd->Init.HighDrive));
 

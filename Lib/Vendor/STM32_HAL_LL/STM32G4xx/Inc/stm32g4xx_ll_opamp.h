@@ -1039,8 +1039,8 @@ __STATIC_INLINE uint32_t LL_OPAMP_IsCalibrationOutputSet(OPAMP_TypeDef *OPAMPx)
  */
 __STATIC_INLINE void LL_OPAMP_SetTrimmingValue(OPAMP_TypeDef *OPAMPx, uint32_t TransistorsDiffPair, uint32_t TrimmingValue)
 {
-	MODIFY_REG(
-	    OPAMPx->CSR, (TransistorsDiffPair & OPAMP_TRIMMING_VALUE_MASK), TrimmingValue << ((TransistorsDiffPair == LL_OPAMP_TRIMMING_NMOS) ? OPAMP_CSR_TRIMOFFSETN_Pos : OPAMP_CSR_TRIMOFFSETP_Pos));
+	MODIFY_REG(OPAMPx->CSR, (TransistorsDiffPair & OPAMP_TRIMMING_VALUE_MASK),
+		   TrimmingValue << ((TransistorsDiffPair == LL_OPAMP_TRIMMING_NMOS) ? OPAMP_CSR_TRIMOFFSETN_Pos : OPAMP_CSR_TRIMOFFSETP_Pos));
 }
 
 /**

@@ -809,8 +809,8 @@ __STATIC_INLINE void LL_OPAMP_SetTrimmingValue(OPAMP_TypeDef *OPAMPx, uint32_t P
 	/* "TransistorsDiffPair". */
 	/* Parameter used with mask "OPAMP_TRIMMING_VALUE_MASK" because */
 	/* containing other bits reserved for other purpose. */
-	MODIFY_REG(
-	    *preg, (TransistorsDiffPair & OPAMP_TRIMMING_VALUE_MASK), TrimmingValue << ((TransistorsDiffPair == LL_OPAMP_TRIMMING_NMOS) ? OPAMP_OTR_TRIMOFFSETN_Pos : OPAMP_OTR_TRIMOFFSETP_Pos));
+	MODIFY_REG(*preg, (TransistorsDiffPair & OPAMP_TRIMMING_VALUE_MASK),
+		   TrimmingValue << ((TransistorsDiffPair == LL_OPAMP_TRIMMING_NMOS) ? OPAMP_OTR_TRIMOFFSETN_Pos : OPAMP_OTR_TRIMOFFSETP_Pos));
 }
 
 /**

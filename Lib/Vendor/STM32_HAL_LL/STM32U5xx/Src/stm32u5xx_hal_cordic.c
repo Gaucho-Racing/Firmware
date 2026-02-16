@@ -562,8 +562,7 @@ HAL_StatusTypeDef HAL_CORDIC_Configure(CORDIC_HandleTypeDef *hcordic, const CORD
 	if (hcordic->State == HAL_CORDIC_STATE_READY) {
 		/* Apply all configuration parameters in CORDIC control register
 		 */
-		MODIFY_REG(hcordic->Instance->CSR,
-			   (CORDIC_CSR_FUNC | CORDIC_CSR_PRECISION | CORDIC_CSR_SCALE | CORDIC_CSR_NARGS | CORDIC_CSR_NRES | CORDIC_CSR_ARGSIZE | CORDIC_CSR_RESSIZE),
+		MODIFY_REG(hcordic->Instance->CSR, (CORDIC_CSR_FUNC | CORDIC_CSR_PRECISION | CORDIC_CSR_SCALE | CORDIC_CSR_NARGS | CORDIC_CSR_NRES | CORDIC_CSR_ARGSIZE | CORDIC_CSR_RESSIZE),
 			   (sConfig->Function | sConfig->Precision | sConfig->Scale | sConfig->NbWrite | sConfig->NbRead | sConfig->InSize | sConfig->OutSize));
 	} else {
 		/* Set CORDIC error code */

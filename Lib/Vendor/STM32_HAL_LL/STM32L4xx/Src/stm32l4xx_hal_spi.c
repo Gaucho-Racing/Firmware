@@ -447,10 +447,9 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
 	/* Configure : SPI Mode, Communication Mode, Clock polarity and phase,
 	NSS management, Communication speed, First bit and CRC calculation state
       */
-	WRITE_REG(hspi->Instance->CR1,
-		  ((hspi->Init.Mode & (SPI_CR1_MSTR | SPI_CR1_SSI)) | (hspi->Init.Direction & (SPI_CR1_RXONLY | SPI_CR1_BIDIMODE)) | (hspi->Init.CLKPolarity & SPI_CR1_CPOL) |
-		   (hspi->Init.CLKPhase & SPI_CR1_CPHA) | (hspi->Init.NSS & SPI_CR1_SSM) | (hspi->Init.BaudRatePrescaler & SPI_CR1_BR_Msk) | (hspi->Init.FirstBit & SPI_CR1_LSBFIRST) |
-		   (hspi->Init.CRCCalculation & SPI_CR1_CRCEN)));
+	WRITE_REG(hspi->Instance->CR1, ((hspi->Init.Mode & (SPI_CR1_MSTR | SPI_CR1_SSI)) | (hspi->Init.Direction & (SPI_CR1_RXONLY | SPI_CR1_BIDIMODE)) | (hspi->Init.CLKPolarity & SPI_CR1_CPOL) |
+					(hspi->Init.CLKPhase & SPI_CR1_CPHA) | (hspi->Init.NSS & SPI_CR1_SSM) | (hspi->Init.BaudRatePrescaler & SPI_CR1_BR_Msk) |
+					(hspi->Init.FirstBit & SPI_CR1_LSBFIRST) | (hspi->Init.CRCCalculation & SPI_CR1_CRCEN)));
 #if (USE_SPI_CRC != 0U)
 	/*---------------------------- SPIx CRCL Configuration
 	 * -------------------*/
@@ -475,9 +474,8 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
 
 	/* Configure : NSS management, TI Mode, NSS Pulse, Data size and Rx Fifo
 	 * threshold */
-	WRITE_REG(
-	    hspi->Instance->CR2,
-	    (((hspi->Init.NSS >> 16U) & SPI_CR2_SSOE) | (hspi->Init.TIMode & SPI_CR2_FRF) | (hspi->Init.NSSPMode & SPI_CR2_NSSP) | (hspi->Init.DataSize & SPI_CR2_DS_Msk) | (frxth & SPI_CR2_FRXTH)));
+	WRITE_REG(hspi->Instance->CR2, (((hspi->Init.NSS >> 16U) & SPI_CR2_SSOE) | (hspi->Init.TIMode & SPI_CR2_FRF) | (hspi->Init.NSSPMode & SPI_CR2_NSSP) | (hspi->Init.DataSize & SPI_CR2_DS_Msk) |
+					(frxth & SPI_CR2_FRXTH)));
 
 #if (USE_SPI_CRC != 0U)
 	/*---------------------------- SPIx CRCPOLY Configuration

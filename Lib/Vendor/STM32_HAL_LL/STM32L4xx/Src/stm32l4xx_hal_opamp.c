@@ -339,8 +339,7 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 		CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_CALON);
 
 		if (hopamp->Init.Mode == OPAMP_PGA_MODE) {
-			MODIFY_REG(hopamp->Instance->CSR,
-				   OPAMP_CSR_INIT_MASK_PGA,
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_INIT_MASK_PGA,
 				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.PgaGain | hopamp->Init.InvertingInput | hopamp->Init.NonInvertingInput | hopamp->Init.UserTrimming);
 		}
 
@@ -350,8 +349,7 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 		}
 
 		if (hopamp->Init.Mode == OPAMP_STANDALONE_MODE) {
-			MODIFY_REG(hopamp->Instance->CSR,
-				   OPAMP_CSR_INIT_MASK_STANDALONE,
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_INIT_MASK_STANDALONE,
 				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.InvertingInput | hopamp->Init.NonInvertingInput | hopamp->Init.UserTrimming);
 		}
 

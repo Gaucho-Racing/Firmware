@@ -2765,9 +2765,8 @@ HAL_StatusTypeDef HAL_RTCEx_SecureModeSet(RTC_HandleTypeDef *hrtc, RTC_SecureSta
 	/* Tamper + Backup register + Monotonic counter
 	   Warning : Backup register start zone are Shared with privilege
 	   configuration */
-	WRITE_REG(TAMP->SECCFGR,
-		  secureState->tampSecureFull | secureState->MonotonicCounterSecure | (TAMP_SECCFGR_BKPRWSEC & (secureState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos)) |
-		      (TAMP_SECCFGR_BKPWSEC & (secureState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
+	WRITE_REG(TAMP->SECCFGR, secureState->tampSecureFull | secureState->MonotonicCounterSecure | (TAMP_SECCFGR_BKPRWSEC & (secureState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos)) |
+				     (TAMP_SECCFGR_BKPWSEC & (secureState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
 
 	return HAL_OK;
 }
@@ -2827,8 +2826,7 @@ HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeSet(RTC_HandleTypeDef *hrtc, RTC_Privil
 	   generated through a flag/interrupt in the TZIC (TrustZone interrupt
 	   controller). The bits are not written. Warning : Backup register
 	   start zones are shared with secure configuration */
-	MODIFY_REG(TAMP->SECCFGR,
-		   (TAMP_SECCFGR_BKPRWSEC | TAMP_SECCFGR_BKPWSEC),
+	MODIFY_REG(TAMP->SECCFGR, (TAMP_SECCFGR_BKPRWSEC | TAMP_SECCFGR_BKPWSEC),
 		   ((privilegeState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos) | (privilegeState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
 
 	return HAL_OK;

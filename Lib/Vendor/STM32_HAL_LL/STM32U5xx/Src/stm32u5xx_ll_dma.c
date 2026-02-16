@@ -428,8 +428,7 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	 * - DestBurstLength:                           DMA_CTR1_DBL_1 [25:20]
 	 * bits DestBurstLength field is not supported by LPDMA channels.
 	 */
-	LL_DMA_ConfigTransfer(DMAx,
-			      Channel,
+	LL_DMA_ConfigTransfer(DMAx, Channel,
 			      DMA_InitStruct->DestAllocatedPort | DMA_InitStruct->DestHWordExchange | DMA_InitStruct->DestByteExchange | DMA_InitStruct->DestIncMode | DMA_InitStruct->DestDataWidth |
 				  DMA_InitStruct->SrcAllocatedPort | DMA_InitStruct->SrcByteExchange | DMA_InitStruct->DataAlignment | DMA_InitStruct->SrcIncMode | DMA_InitStruct->SrcDataWidth);
 	/* Check DMA instance */

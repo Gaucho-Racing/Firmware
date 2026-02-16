@@ -971,8 +971,7 @@ __STATIC_INLINE uint16_t LL_FMAC_ReadData(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE void LL_FMAC_ConfigX1(FMAC_TypeDef *FMACx, uint32_t Watermark, uint8_t Base, uint8_t BufferSize)
 {
-	MODIFY_REG(FMACx->X1BUFCFG,
-		   FMAC_X1BUFCFG_FULL_WM | FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE,
+	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_FULL_WM | FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE,
 		   Watermark | (((uint32_t)Base) << FMAC_X1BUFCFG_X1_BASE_Pos) | (((uint32_t)BufferSize) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos));
 }
 
@@ -1015,8 +1014,7 @@ __STATIC_INLINE void LL_FMAC_ConfigX2(FMAC_TypeDef *FMACx, uint8_t Base, uint8_t
  */
 __STATIC_INLINE void LL_FMAC_ConfigY(FMAC_TypeDef *FMACx, uint32_t Watermark, uint8_t Base, uint8_t BufferSize)
 {
-	MODIFY_REG(FMACx->YBUFCFG,
-		   FMAC_YBUFCFG_EMPTY_WM | FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE,
+	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_EMPTY_WM | FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE,
 		   Watermark | (((uint32_t)Base) << FMAC_YBUFCFG_Y_BASE_Pos) | (((uint32_t)BufferSize) << FMAC_YBUFCFG_Y_BUF_SIZE_Pos));
 }
 
@@ -1050,8 +1048,7 @@ __STATIC_INLINE void LL_FMAC_ConfigY(FMAC_TypeDef *FMACx, uint32_t Watermark, ui
  */
 __STATIC_INLINE void LL_FMAC_ConfigFunc(FMAC_TypeDef *FMACx, uint8_t Start, uint32_t Function, uint8_t ParamP, uint8_t ParamQ, uint8_t ParamR)
 {
-	MODIFY_REG(FMACx->PARAM,
-		   FMAC_PARAM_START | FMAC_PARAM_FUNC | FMAC_PARAM_P | FMAC_PARAM_Q | FMAC_PARAM_R,
+	MODIFY_REG(FMACx->PARAM, FMAC_PARAM_START | FMAC_PARAM_FUNC | FMAC_PARAM_P | FMAC_PARAM_Q | FMAC_PARAM_R,
 		   (((uint32_t)Start) << FMAC_PARAM_START_Pos) | Function | (((uint32_t)ParamP) << FMAC_PARAM_P_Pos) | (((uint32_t)ParamQ) << FMAC_PARAM_Q_Pos) |
 		       (((uint32_t)ParamR) << FMAC_PARAM_R_Pos));
 }
