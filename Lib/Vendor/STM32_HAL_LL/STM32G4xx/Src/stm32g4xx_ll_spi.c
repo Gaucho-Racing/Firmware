@@ -336,7 +336,10 @@ void LL_SPI_StructInit(LL_SPI_InitTypeDef *SPI_InitStruct)
  *          - SUCCESS: SPI registers are de-initialized
  *          - ERROR: SPI registers are not de-initialized
  */
-ErrorStatus LL_I2S_DeInit(const SPI_TypeDef *SPIx) { return LL_SPI_DeInit(SPIx); }
+ErrorStatus LL_I2S_DeInit(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_DeInit(SPIx);
+}
 
 /**
  * @brief  Initializes the SPI/I2S registers according to the specified

@@ -141,12 +141,21 @@ extern "C" {
 /** @addtogroup Exported_types
  * @{
  */
-typedef enum { RESET = 0, SET = !RESET } FlagStatus, ITStatus;
+typedef enum {
+	RESET = 0,
+	SET = !RESET
+} FlagStatus, ITStatus;
 
-typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+typedef enum {
+	DISABLE = 0,
+	ENABLE = !DISABLE
+} FunctionalState;
 #define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
 
-typedef enum { SUCCESS = 0, ERROR = !SUCCESS } ErrorStatus;
+typedef enum {
+	SUCCESS = 0,
+	ERROR = !SUCCESS
+} ErrorStatus;
 
 /**
  * @}

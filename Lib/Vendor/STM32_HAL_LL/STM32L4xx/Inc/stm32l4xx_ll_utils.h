@@ -210,19 +210,28 @@ typedef struct {
  * @brief  Get Word0 of the unique device identifier (UID based on 96 bits)
  * @retval UID[31:0]: X and Y coordinates on the wafer expressed in BCD format
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word0(void) { return (uint32_t)(READ_REG(*((uint32_t *)UID_BASE_ADDRESS))); }
+__STATIC_INLINE uint32_t LL_GetUID_Word0(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)UID_BASE_ADDRESS)));
+}
 
 /**
  * @brief  Get Word1 of the unique device identifier (UID based on 96 bits)
  * @retval UID[63:32]: Wafer number (UID[39:32]) & LOT_NUM[23:0] (UID[63:40])
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word1(void) { return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 4U)))); }
+__STATIC_INLINE uint32_t LL_GetUID_Word1(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 4U))));
+}
 
 /**
  * @brief  Get Word2 of the unique device identifier (UID based on 96 bits)
  * @retval UID[95:64]: Lot number (ASCII encoded) - LOT_NUM[55:24]
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word2(void) { return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U)))); }
+__STATIC_INLINE uint32_t LL_GetUID_Word2(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U))));
+}
 
 /**
  * @brief  Get Flash memory size
@@ -230,7 +239,10 @@ __STATIC_INLINE uint32_t LL_GetUID_Word2(void) { return (uint32_t)(READ_REG(*((u
  * in Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
  * @retval FLASH_SIZE[15:0]: Flash memory size
  */
-__STATIC_INLINE uint32_t LL_GetFlashSize(void) { return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU); }
+__STATIC_INLINE uint32_t LL_GetFlashSize(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU);
+}
 
 /**
  * @brief  Get Package type
@@ -254,7 +266,10 @@ __STATIC_INLINE uint32_t LL_GetFlashSize(void) { return (uint32_t)(READ_REG(*((u
  *
  *         (*) value not defined in all devices.
  */
-__STATIC_INLINE uint32_t LL_GetPackageType(void) { return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU); }
+__STATIC_INLINE uint32_t LL_GetPackageType(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU);
+}
 
 /**
  * @}

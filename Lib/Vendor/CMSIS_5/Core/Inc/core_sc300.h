@@ -1671,7 +1671,10 @@ __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP
   field).
  */
-__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void) { return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos)); }
+__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void)
+{
+	return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
+}
 
 /**
   \brief   Enable Interrupt
@@ -1930,7 +1933,10 @@ __NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
    - \b  1: Single precision FPU
    - \b  2: Double + Single precision FPU
  */
-__STATIC_INLINE uint32_t SCB_GetFPUType(void) { return 0U; /* No FPU */ }
+__STATIC_INLINE uint32_t SCB_GetFPUType(void)
+{
+	return 0U; /* No FPU */
+}
 
 /*@} end of CMSIS_Core_FpuFunctions */
 

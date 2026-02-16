@@ -44,7 +44,13 @@ extern "C" {
 /** @defgroup HCD_Exported_Types_Group1 HCD State Structure definition
  * @{
  */
-typedef enum { HAL_HCD_STATE_RESET = 0x00, HAL_HCD_STATE_READY = 0x01, HAL_HCD_STATE_ERROR = 0x02, HAL_HCD_STATE_BUSY = 0x03, HAL_HCD_STATE_TIMEOUT = 0x04 } HCD_StateTypeDef;
+typedef enum {
+	HAL_HCD_STATE_RESET = 0x00,
+	HAL_HCD_STATE_READY = 0x01,
+	HAL_HCD_STATE_ERROR = 0x02,
+	HAL_HCD_STATE_BUSY = 0x03,
+	HAL_HCD_STATE_TIMEOUT = 0x04
+} HCD_StateTypeDef;
 
 typedef USB_OTG_GlobalTypeDef HCD_TypeDef;
 typedef USB_OTG_CfgTypeDef HCD_InitTypeDef;

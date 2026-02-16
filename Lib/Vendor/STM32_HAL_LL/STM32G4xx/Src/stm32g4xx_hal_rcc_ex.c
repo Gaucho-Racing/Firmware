@@ -1214,7 +1214,10 @@ functions
  * selected as RTC clock with HAL_RCCEx_PeriphCLKConfig().
  * @retval None
  */
-void HAL_RCCEx_EnableLSECSS(void) { SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON); }
+void HAL_RCCEx_EnableLSECSS(void)
+{
+	SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON);
+}
 
 /**
  * @brief  Disable the LSE Clock Security System.
@@ -1483,7 +1486,10 @@ void HAL_RCCEx_CRSConfig(RCC_CRSInitTypeDef *pInit)
  * @brief  Generate the software synchronization event
  * @retval None
  */
-void HAL_RCCEx_CRSSoftwareSynchronizationGenerate(void) { SET_BIT(CRS->CR, CRS_CR_SWSYNC); }
+void HAL_RCCEx_CRSSoftwareSynchronizationGenerate(void)
+{
+	SET_BIT(CRS->CR, CRS_CR_SWSYNC);
+}
 
 /**
  * @brief  Return synchronization info

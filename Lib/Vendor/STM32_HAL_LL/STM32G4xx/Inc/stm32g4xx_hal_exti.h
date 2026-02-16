@@ -41,7 +41,9 @@ extern "C" {
 /** @defgroup EXTI_Exported_Types EXTI Exported Types
  * @{
  */
-typedef enum { HAL_EXTI_COMMON_CB_ID = 0x00UL } EXTI_CallbackIDTypeDef;
+typedef enum {
+	HAL_EXTI_COMMON_CB_ID = 0x00UL
+} EXTI_CallbackIDTypeDef;
 
 /**
  * @brief  EXTI Handle structure definition

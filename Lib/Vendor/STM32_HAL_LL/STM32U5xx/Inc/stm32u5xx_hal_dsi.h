@@ -354,7 +354,13 @@ typedef struct {
 /**
  * @brief  DSI States Structure definition
  */
-typedef enum { HAL_DSI_STATE_RESET = 0x00U, HAL_DSI_STATE_READY = 0x01U, HAL_DSI_STATE_ERROR = 0x02U, HAL_DSI_STATE_BUSY = 0x03U, HAL_DSI_STATE_TIMEOUT = 0x04U } HAL_DSI_StateTypeDef;
+typedef enum {
+	HAL_DSI_STATE_RESET = 0x00U,
+	HAL_DSI_STATE_READY = 0x01U,
+	HAL_DSI_STATE_ERROR = 0x02U,
+	HAL_DSI_STATE_BUSY = 0x03U,
+	HAL_DSI_STATE_TIMEOUT = 0x04U
+} HAL_DSI_StateTypeDef;
 
 /**
  * @brief  DSI Handle Structure definition

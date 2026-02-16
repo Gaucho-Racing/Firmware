@@ -1689,7 +1689,10 @@ void HAL_MMC_IRQHandler(MMC_HandleTypeDef *hmmc)
  * @param hmmc: Pointer to mmc handle
  * @retval HAL state
  */
-HAL_MMC_StateTypeDef HAL_MMC_GetState(const MMC_HandleTypeDef *hmmc) { return hmmc->State; }
+HAL_MMC_StateTypeDef HAL_MMC_GetState(const MMC_HandleTypeDef *hmmc)
+{
+	return hmmc->State;
+}
 
 /**
  * @brief  Return the MMC error code
@@ -1697,7 +1700,10 @@ HAL_MMC_StateTypeDef HAL_MMC_GetState(const MMC_HandleTypeDef *hmmc) { return hm
  *              the configuration information.
  * @retval MMC Error Code
  */
-uint32_t HAL_MMC_GetError(const MMC_HandleTypeDef *hmmc) { return hmmc->ErrorCode; }
+uint32_t HAL_MMC_GetError(const MMC_HandleTypeDef *hmmc)
+{
+	return hmmc->ErrorCode;
+}
 
 /**
  * @brief Tx Transfer completed callbacks

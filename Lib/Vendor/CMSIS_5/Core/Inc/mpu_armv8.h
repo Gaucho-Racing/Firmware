@@ -200,14 +200,20 @@ __STATIC_INLINE void ARM_MPU_SetMemAttrEx(MPU_Type *mpu, uint8_t idx, uint8_t at
  * \param idx The attribute index to be set [0-7]
  * \param attr The attribute value to be set.
  */
-__STATIC_INLINE void ARM_MPU_SetMemAttr(uint8_t idx, uint8_t attr) { ARM_MPU_SetMemAttrEx(MPU, idx, attr); }
+__STATIC_INLINE void ARM_MPU_SetMemAttr(uint8_t idx, uint8_t attr)
+{
+	ARM_MPU_SetMemAttrEx(MPU, idx, attr);
+}
 
 #ifdef MPU_NS
 /** Set the memory attribute encoding to the Non-secure MPU.
  * \param idx The attribute index to be set [0-7]
  * \param attr The attribute value to be set.
  */
-__STATIC_INLINE void ARM_MPU_SetMemAttr_NS(uint8_t idx, uint8_t attr) { ARM_MPU_SetMemAttrEx(MPU_NS, idx, attr); }
+__STATIC_INLINE void ARM_MPU_SetMemAttr_NS(uint8_t idx, uint8_t attr)
+{
+	ARM_MPU_SetMemAttrEx(MPU_NS, idx, attr);
+}
 #endif
 
 /** Clear and disable the given MPU region of the given MPU.
@@ -223,13 +229,19 @@ __STATIC_INLINE void ARM_MPU_ClrRegionEx(MPU_Type *mpu, uint32_t rnr)
 /** Clear and disable the given MPU region.
  * \param rnr Region number to be cleared.
  */
-__STATIC_INLINE void ARM_MPU_ClrRegion(uint32_t rnr) { ARM_MPU_ClrRegionEx(MPU, rnr); }
+__STATIC_INLINE void ARM_MPU_ClrRegion(uint32_t rnr)
+{
+	ARM_MPU_ClrRegionEx(MPU, rnr);
+}
 
 #ifdef MPU_NS
 /** Clear and disable the given Non-secure MPU region.
  * \param rnr Region number to be cleared.
  */
-__STATIC_INLINE void ARM_MPU_ClrRegion_NS(uint32_t rnr) { ARM_MPU_ClrRegionEx(MPU_NS, rnr); }
+__STATIC_INLINE void ARM_MPU_ClrRegion_NS(uint32_t rnr)
+{
+	ARM_MPU_ClrRegionEx(MPU_NS, rnr);
+}
 #endif
 
 /** Configure the given MPU region of the given MPU.
@@ -250,7 +262,10 @@ __STATIC_INLINE void ARM_MPU_SetRegionEx(MPU_Type *mpu, uint32_t rnr, uint32_t r
  * \param rbar Value for RBAR register.
  * \param rlar Value for RLAR register.
  */
-__STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rlar) { ARM_MPU_SetRegionEx(MPU, rnr, rbar, rlar); }
+__STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rlar)
+{
+	ARM_MPU_SetRegionEx(MPU, rnr, rbar, rlar);
+}
 
 #ifdef MPU_NS
 /** Configure the given Non-secure MPU region.
@@ -258,7 +273,10 @@ __STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rla
  * \param rbar Value for RBAR register.
  * \param rlar Value for RLAR register.
  */
-__STATIC_INLINE void ARM_MPU_SetRegion_NS(uint32_t rnr, uint32_t rbar, uint32_t rlar) { ARM_MPU_SetRegionEx(MPU_NS, rnr, rbar, rlar); }
+__STATIC_INLINE void ARM_MPU_SetRegion_NS(uint32_t rnr, uint32_t rbar, uint32_t rlar)
+{
+	ARM_MPU_SetRegionEx(MPU_NS, rnr, rbar, rlar);
+}
 #endif
 
 /** Memcpy with strictly ordered memory access, e.g. used by code in
@@ -309,7 +327,10 @@ __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type *mpu, uint32_t rnr, ARM_MPU_Region_
  * \param table Pointer to the MPU configuration table.
  * \param cnt Amount of regions to be configured.
  */
-__STATIC_INLINE void ARM_MPU_Load(uint32_t rnr, ARM_MPU_Region_t const *table, uint32_t cnt) { ARM_MPU_LoadEx(MPU, rnr, table, cnt); }
+__STATIC_INLINE void ARM_MPU_Load(uint32_t rnr, ARM_MPU_Region_t const *table, uint32_t cnt)
+{
+	ARM_MPU_LoadEx(MPU, rnr, table, cnt);
+}
 
 #ifdef MPU_NS
 /** Load the given number of MPU regions from a table to the Non-secure MPU.
@@ -317,7 +338,10 @@ __STATIC_INLINE void ARM_MPU_Load(uint32_t rnr, ARM_MPU_Region_t const *table, u
  * \param table Pointer to the MPU configuration table.
  * \param cnt Amount of regions to be configured.
  */
-__STATIC_INLINE void ARM_MPU_Load_NS(uint32_t rnr, ARM_MPU_Region_t const *table, uint32_t cnt) { ARM_MPU_LoadEx(MPU_NS, rnr, table, cnt); }
+__STATIC_INLINE void ARM_MPU_Load_NS(uint32_t rnr, ARM_MPU_Region_t const *table, uint32_t cnt)
+{
+	ARM_MPU_LoadEx(MPU_NS, rnr, table, cnt);
+}
 #endif
 
 #endif

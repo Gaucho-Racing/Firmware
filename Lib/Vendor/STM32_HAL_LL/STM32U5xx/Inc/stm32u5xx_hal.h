@@ -44,7 +44,12 @@ extern "C" {
 /** @defgroup HAL_TICK_FREQ Tick Frequency
  * @{
  */
-typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FREQ_1KHZ = 1U, HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ } HAL_TickFreqTypeDef;
+typedef enum {
+	HAL_TICK_FREQ_10HZ = 100U,
+	HAL_TICK_FREQ_100HZ = 10U,
+	HAL_TICK_FREQ_1KHZ = 1U,
+	HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
+} HAL_TickFreqTypeDef;
 /**
  * @}
  */

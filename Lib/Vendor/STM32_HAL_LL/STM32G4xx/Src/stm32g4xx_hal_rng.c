@@ -699,7 +699,10 @@ void HAL_RNG_IRQHandler(RNG_HandleTypeDef *hrng)
  *                the configuration information for RNG.
  * @retval random value
  */
-uint32_t HAL_RNG_ReadLastRandomNumber(const RNG_HandleTypeDef *hrng) { return (hrng->RandomNumber); }
+uint32_t HAL_RNG_ReadLastRandomNumber(const RNG_HandleTypeDef *hrng)
+{
+	return (hrng->RandomNumber);
+}
 
 /**
  * @brief  Data Ready callback in non-blocking mode.
@@ -764,7 +767,10 @@ __weak void HAL_RNG_ErrorCallback(RNG_HandleTypeDef *hrng)
  *                the configuration information for RNG.
  * @retval HAL state
  */
-HAL_RNG_StateTypeDef HAL_RNG_GetState(const RNG_HandleTypeDef *hrng) { return hrng->State; }
+HAL_RNG_StateTypeDef HAL_RNG_GetState(const RNG_HandleTypeDef *hrng)
+{
+	return hrng->State;
+}
 
 /**
  * @brief  Return the RNG handle error code.

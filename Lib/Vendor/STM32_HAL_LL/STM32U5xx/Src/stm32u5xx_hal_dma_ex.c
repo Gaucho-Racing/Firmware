@@ -3519,7 +3519,10 @@ FIFO.
  * configuration information for the specified DMA Channel.
  * @retval Returns the number of available beats in FIFO.
  */
-uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma) { return ((hdma->Instance->CSR & DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos); }
+uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma)
+{
+	return ((hdma->Instance->CSR & DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos);
+}
 /**
  * @}
  */

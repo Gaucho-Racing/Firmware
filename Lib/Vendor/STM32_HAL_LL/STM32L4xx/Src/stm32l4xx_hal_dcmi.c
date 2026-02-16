@@ -1033,7 +1033,10 @@ HAL_StatusTypeDef HAL_DCMI_ConfigSyncUnmask(DCMI_HandleTypeDef *hdcmi, DCMI_Sync
  *               the configuration information for DCMI.
  * @retval HAL state
  */
-HAL_DCMI_StateTypeDef HAL_DCMI_GetState(DCMI_HandleTypeDef *hdcmi) { return hdcmi->State; }
+HAL_DCMI_StateTypeDef HAL_DCMI_GetState(DCMI_HandleTypeDef *hdcmi)
+{
+	return hdcmi->State;
+}
 
 /**
  * @brief  Return the DCMI error code.
@@ -1041,7 +1044,10 @@ HAL_DCMI_StateTypeDef HAL_DCMI_GetState(DCMI_HandleTypeDef *hdcmi) { return hdcm
  *               the configuration information for DCMI.
  * @retval DCMI Error Code
  */
-uint32_t HAL_DCMI_GetError(DCMI_HandleTypeDef *hdcmi) { return hdcmi->ErrorCode; }
+uint32_t HAL_DCMI_GetError(DCMI_HandleTypeDef *hdcmi)
+{
+	return hdcmi->ErrorCode;
+}
 
 /**
  * @}
