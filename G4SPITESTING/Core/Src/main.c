@@ -19,13 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "adc.h"
-#include "dma.h"
-#include "fdcan.h"
-#include "gpio.h"
-#include "i2c.h"
-#include "tim.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
@@ -113,13 +106,6 @@ int main(void)
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
-	MX_GPIO_Init();
-	MX_DMA_Init();
-	MX_FDCAN2_Init();
-	MX_ADC1_Init();
-	MX_I2C2_Init();
-	// MX_SPI3_Init();
-	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 	LL_mDelay(1000); // Wait for peripherals to stabilize
 	LOGOMATIC("Booted!\n");
