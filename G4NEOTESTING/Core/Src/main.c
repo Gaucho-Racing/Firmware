@@ -20,15 +20,8 @@
 #include "main.h"
 
 #include "Logomatic.h"
-#include "adc.h"
-#include "dma.h"
-#include "fdcan.h"
-#include "gpio.h"
 #include "gr_neopixel.h"
-#include "i2c.h"
 #include "spi.h"
-#include "tim.h"
-#include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -164,7 +157,6 @@ int main(void)
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
-	MX_GPIO_Init();
 	MX_SPI1_Init();
 	/* USER CODE BEGIN 2 */
 

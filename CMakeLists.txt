@@ -64,22 +64,22 @@ message(
 )
 
 # Projects
-#add_gr_project(STM32G474xE ECU)
-#add_gr_project(STM32G474xE CCU)
-#add_gr_project(STM32G474xE AnalogCalibration)
+add_gr_project(STM32G474xE ECU)
+add_gr_project(STM32G474xE CCU)
+add_gr_project(STM32G474xE AnalogCalibration)
 
 # Development
-#add_gr_project(STM32G474xE G4ADCTESTING)
-#add_gr_project(STM32G474xE G4PERTESTING)
-#add_gr_project(STM32G474xE G4CANTESTING)
+add_gr_project(STM32G474xE G4ADCTESTING)
+add_gr_project(STM32G474xE G4PERTESTING)
+add_gr_project(STM32G474xE G4CANTESTING)
 add_gr_project(STM32G474xE G4NEOTESTING)
 
 # BLINKY Demos
-#add_gr_project(STM32G474xE BLINKY G4HELLO)
-#add_gr_project(STM32G474xE BLINKY G4BLINKY)
-#add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
-#add_gr_project(STM32L476xG BLINKY L4BLINKY)
+add_gr_project(STM32G474xE BLINKY G4HELLO)
+add_gr_project(STM32G474xE BLINKY G4BLINKY)
+add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
+add_gr_project(STM32L476xG BLINKY L4BLINKY)
 
 # Onboarding Workshops
-#add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
-#add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
+add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
+add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
