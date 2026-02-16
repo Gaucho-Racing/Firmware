@@ -117,7 +117,7 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@v1.33.0
+        uses: shogo82148/actions-setup-perl@v1
         with:
           install-modules: 'Perl::Tidy'
 
