@@ -1,6 +1,6 @@
-#include <stdint.h>
-
 #include "ComparatorMacros.h"
+
+#include <stdint.h>
 
 int getValue(int a)
 {
