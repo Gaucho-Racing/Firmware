@@ -83,7 +83,7 @@ void MX_SPI1_Init(void)
 	LL_SPI_InitTypeDef SPI_InitStruct = {0};
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-	LL_APB1_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
 
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
@@ -91,7 +91,7 @@ void MX_SPI1_Init(void)
 	// mosi
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
@@ -100,7 +100,7 @@ void MX_SPI1_Init(void)
 	// miso
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	GPIO_InitStruct.Alternate = LL_GPIO_AF_6; //?
@@ -109,15 +109,15 @@ void MX_SPI1_Init(void)
 	// sck (move off PB3/SWO to PA5)
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	SPI_InitStruct.TransferDirection = LL_SPI_FULL_DUPLEX;
+	SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_TX;
 	SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
-	SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_4BIT;
+	SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
 	SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
 	SPI_InitStruct.ClockPhase = LL_SPI_PHASE_1EDGE;
 	SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
@@ -128,6 +128,7 @@ void MX_SPI1_Init(void)
 	LL_SPI_Init(SPI1, &SPI_InitStruct);
 	LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
 	LL_SPI_EnableNSSPulseMgt(SPI1);
+	LL_SPI_Enable(SPI1);
 }
 
 int main(void)

@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #include "main.h"
 
 #ifndef GR_NEOPIXEL_H
@@ -27,4 +29,4 @@ void Neopixel_update();
 // create a function to initialize SPI
 // initialize spi in gr_neopixel.c
 
-#endif // GR_NEOPIXEL_H
+#endif
