@@ -3697,7 +3697,10 @@ __STATIC_INLINE uint32_t LL_ADC_DMA_GetRegAddr(const ADC_TypeDef *ADCx, uint32_t
  *         @arg @ref LL_ADC_CLOCK_ASYNC_DIV256
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetCommonClock(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t CommonClock) { MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_CKMODE | ADC_CCR_PRESC, CommonClock); }
+__STATIC_INLINE void LL_ADC_SetCommonClock(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t CommonClock)
+{
+	MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_CKMODE | ADC_CCR_PRESC, CommonClock);
+}
 
 /**
  * @brief  Get parameter common to several ADC: Clock source and prescaler.
@@ -3723,7 +3726,10 @@ __STATIC_INLINE void LL_ADC_SetCommonClock(ADC_Common_TypeDef *ADCxy_COMMON, uin
  *         @arg @ref LL_ADC_CLOCK_ASYNC_DIV128
  *         @arg @ref LL_ADC_CLOCK_ASYNC_DIV256
  */
-__STATIC_INLINE uint32_t LL_ADC_GetCommonClock(const ADC_Common_TypeDef *ADCxy_COMMON) { return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_CKMODE | ADC_CCR_PRESC)); }
+__STATIC_INLINE uint32_t LL_ADC_GetCommonClock(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_CKMODE | ADC_CCR_PRESC));
+}
 
 /**
  * @brief  Set parameter common to several ADC: measurement path to
@@ -3797,7 +3803,10 @@ __STATIC_INLINE void LL_ADC_SetCommonPathInternalCh(ADC_Common_TypeDef *ADCxy_CO
  *         @arg @ref LL_ADC_PATH_INTERNAL_VBAT
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetCommonPathInternalChAdd(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t PathInternal) { SET_BIT(ADCxy_COMMON->CCR, PathInternal); }
+__STATIC_INLINE void LL_ADC_SetCommonPathInternalChAdd(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t PathInternal)
+{
+	SET_BIT(ADCxy_COMMON->CCR, PathInternal);
+}
 
 /**
  * @brief  Set parameter common to several ADC: measurement path to
@@ -3820,7 +3829,10 @@ __STATIC_INLINE void LL_ADC_SetCommonPathInternalChAdd(ADC_Common_TypeDef *ADCxy
  *         @arg @ref LL_ADC_PATH_INTERNAL_VBAT
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetCommonPathInternalChRem(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t PathInternal) { CLEAR_BIT(ADCxy_COMMON->CCR, PathInternal); }
+__STATIC_INLINE void LL_ADC_SetCommonPathInternalChRem(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t PathInternal)
+{
+	CLEAR_BIT(ADCxy_COMMON->CCR, PathInternal);
+}
 
 /**
  * @brief  Get parameter common to several ADC: measurement path to internal
@@ -3934,7 +3946,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibrationFactor(const ADC_TypeDef *ADCx, ui
  *         @arg @ref LL_ADC_RESOLUTION_6B
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetResolution(ADC_TypeDef *ADCx, uint32_t Resolution) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_RES, Resolution); }
+__STATIC_INLINE void LL_ADC_SetResolution(ADC_TypeDef *ADCx, uint32_t Resolution)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_RES, Resolution);
+}
 
 /**
  * @brief  Get ADC resolution.
@@ -3948,7 +3963,10 @@ __STATIC_INLINE void LL_ADC_SetResolution(ADC_TypeDef *ADCx, uint32_t Resolution
  *         @arg @ref LL_ADC_RESOLUTION_8B
  *         @arg @ref LL_ADC_RESOLUTION_6B
  */
-__STATIC_INLINE uint32_t LL_ADC_GetResolution(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_RES)); }
+__STATIC_INLINE uint32_t LL_ADC_GetResolution(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_RES));
+}
 
 /**
  * @brief  Set ADC conversion data alignment.
@@ -3965,7 +3983,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetResolution(const ADC_TypeDef *ADCx) { return 
  *         @arg @ref LL_ADC_DATA_ALIGN_LEFT
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetDataAlignment(ADC_TypeDef *ADCx, uint32_t DataAlignment) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_ALIGN, DataAlignment); }
+__STATIC_INLINE void LL_ADC_SetDataAlignment(ADC_TypeDef *ADCx, uint32_t DataAlignment)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_ALIGN, DataAlignment);
+}
 
 /**
  * @brief  Get ADC conversion data alignment.
@@ -3977,7 +3998,10 @@ __STATIC_INLINE void LL_ADC_SetDataAlignment(ADC_TypeDef *ADCx, uint32_t DataAli
  *         @arg @ref LL_ADC_DATA_ALIGN_RIGHT
  *         @arg @ref LL_ADC_DATA_ALIGN_LEFT
  */
-__STATIC_INLINE uint32_t LL_ADC_GetDataAlignment(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_ALIGN)); }
+__STATIC_INLINE uint32_t LL_ADC_GetDataAlignment(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_ALIGN));
+}
 
 /**
  * @brief  Set ADC low power mode.
@@ -4024,7 +4048,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetDataAlignment(const ADC_TypeDef *ADCx) { retu
  *         @arg @ref LL_ADC_LP_AUTOWAIT
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetLowPowerMode(ADC_TypeDef *ADCx, uint32_t LowPowerMode) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_AUTDLY, LowPowerMode); }
+__STATIC_INLINE void LL_ADC_SetLowPowerMode(ADC_TypeDef *ADCx, uint32_t LowPowerMode)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_AUTDLY, LowPowerMode);
+}
 
 /**
  * @brief  Get ADC low power mode:
@@ -4066,7 +4093,10 @@ __STATIC_INLINE void LL_ADC_SetLowPowerMode(ADC_TypeDef *ADCx, uint32_t LowPower
  *         @arg @ref LL_ADC_LP_MODE_NONE
  *         @arg @ref LL_ADC_LP_AUTOWAIT
  */
-__STATIC_INLINE uint32_t LL_ADC_GetLowPowerMode(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_AUTDLY)); }
+__STATIC_INLINE uint32_t LL_ADC_GetLowPowerMode(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_AUTDLY));
+}
 
 /**
  * @brief  Set ADC selected offset instance 1, 2, 3 or 4.
@@ -4491,7 +4521,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetGainCompensation(const ADC_TypeDef *ADCx)
  *         @arg @ref LL_ADC_SAMPLINGTIME_COMMON_3C5_REPL_2C5
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetSamplingTimeCommonConfig(ADC_TypeDef *ADCx, uint32_t SamplingTimeCommonConfig) { MODIFY_REG(ADCx->SMPR1, ADC_SMPR1_SMPPLUS, SamplingTimeCommonConfig); }
+__STATIC_INLINE void LL_ADC_SetSamplingTimeCommonConfig(ADC_TypeDef *ADCx, uint32_t SamplingTimeCommonConfig)
+{
+	MODIFY_REG(ADCx->SMPR1, ADC_SMPR1_SMPPLUS, SamplingTimeCommonConfig);
+}
 
 /**
  * @brief  Get ADC sampling time common configuration impacting
@@ -4502,7 +4535,10 @@ __STATIC_INLINE void LL_ADC_SetSamplingTimeCommonConfig(ADC_TypeDef *ADCx, uint3
  *         @arg @ref LL_ADC_SAMPLINGTIME_COMMON_DEFAULT
  *         @arg @ref LL_ADC_SAMPLINGTIME_COMMON_3C5_REPL_2C5
  */
-__STATIC_INLINE uint32_t LL_ADC_GetSamplingTimeCommonConfig(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->SMPR1, ADC_SMPR1_SMPPLUS)); }
+__STATIC_INLINE uint32_t LL_ADC_GetSamplingTimeCommonConfig(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->SMPR1, ADC_SMPR1_SMPPLUS));
+}
 #endif /* ADC_SMPR1_SMPPLUS */
 
 /**
@@ -4581,7 +4617,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetSamplingTimeCommonConfig(const ADC_TypeDef *A
  * on all devices. Refer to device datasheet for more details.
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetTriggerSource(ADC_TypeDef *ADCx, uint32_t TriggerSource) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_EXTEN | ADC_CFGR_EXTSEL, TriggerSource); }
+__STATIC_INLINE void LL_ADC_REG_SetTriggerSource(ADC_TypeDef *ADCx, uint32_t TriggerSource)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_EXTEN | ADC_CFGR_EXTSEL, TriggerSource);
+}
 
 /**
  * @brief  Get ADC group regular conversion trigger source:
@@ -4669,7 +4708,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetTriggerSource(const ADC_TypeDef *ADCx)
  * @retval Value "0" if trigger source external trigger
  *         Value "1" if trigger source SW start.
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_IsTriggerSourceSWStart(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CFGR, ADC_CFGR_EXTEN) == (LL_ADC_REG_TRIG_SOFTWARE & ADC_CFGR_EXTEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_REG_IsTriggerSourceSWStart(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CFGR, ADC_CFGR_EXTEN) == (LL_ADC_REG_TRIG_SOFTWARE & ADC_CFGR_EXTEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set ADC group regular conversion trigger polarity.
@@ -4687,7 +4729,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_IsTriggerSourceSWStart(const ADC_TypeDef *AD
  *         @arg @ref LL_ADC_REG_TRIG_EXT_RISINGFALLING
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetTriggerEdge(ADC_TypeDef *ADCx, uint32_t ExternalTriggerEdge) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_EXTEN, ExternalTriggerEdge); }
+__STATIC_INLINE void LL_ADC_REG_SetTriggerEdge(ADC_TypeDef *ADCx, uint32_t ExternalTriggerEdge)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_EXTEN, ExternalTriggerEdge);
+}
 
 /**
  * @brief  Get ADC group regular conversion trigger polarity.
@@ -4699,7 +4744,10 @@ __STATIC_INLINE void LL_ADC_REG_SetTriggerEdge(ADC_TypeDef *ADCx, uint32_t Exter
  *         @arg @ref LL_ADC_REG_TRIG_EXT_FALLING
  *         @arg @ref LL_ADC_REG_TRIG_EXT_RISINGFALLING
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetTriggerEdge(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_EXTEN)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetTriggerEdge(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_EXTEN));
+}
 
 /**
  * @brief  Set ADC sampling mode.
@@ -4719,7 +4767,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetTriggerEdge(const ADC_TypeDef *ADCx) { re
  *         @arg @ref LL_ADC_REG_SAMPLING_MODE_TRIGGER_CONTROLED
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetSamplingMode(ADC_TypeDef *ADCx, uint32_t SamplingMode) { MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_BULB | ADC_CFGR2_SMPTRIG, SamplingMode); }
+__STATIC_INLINE void LL_ADC_REG_SetSamplingMode(ADC_TypeDef *ADCx, uint32_t SamplingMode)
+{
+	MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_BULB | ADC_CFGR2_SMPTRIG, SamplingMode);
+}
 
 /**
  * @brief  Get the ADC sampling mode
@@ -4731,7 +4782,10 @@ __STATIC_INLINE void LL_ADC_REG_SetSamplingMode(ADC_TypeDef *ADCx, uint32_t Samp
  *         @arg @ref LL_ADC_REG_SAMPLING_MODE_BULB
  *         @arg @ref LL_ADC_REG_SAMPLING_MODE_TRIGGER_CONTROLED
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetSamplingMode(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_BULB | ADC_CFGR2_SMPTRIG)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetSamplingMode(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_BULB | ADC_CFGR2_SMPTRIG));
+}
 
 /**
  * @brief  Set ADC group regular sequencer length and scan direction.
@@ -4787,7 +4841,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetSamplingMode(const ADC_TypeDef *ADCx) { r
  *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetSequencerLength(ADC_TypeDef *ADCx, uint32_t SequencerNbRanks) { MODIFY_REG(ADCx->SQR1, ADC_SQR1_L, SequencerNbRanks); }
+__STATIC_INLINE void LL_ADC_REG_SetSequencerLength(ADC_TypeDef *ADCx, uint32_t SequencerNbRanks)
+{
+	MODIFY_REG(ADCx->SQR1, ADC_SQR1_L, SequencerNbRanks);
+}
 
 /**
  * @brief  Get ADC group regular sequencer length and scan direction.
@@ -4838,7 +4895,10 @@ __STATIC_INLINE void LL_ADC_REG_SetSequencerLength(ADC_TypeDef *ADCx, uint32_t S
  *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS
  *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetSequencerLength(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->SQR1, ADC_SQR1_L)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetSequencerLength(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->SQR1, ADC_SQR1_L));
+}
 
 /**
  * @brief  Set ADC group regular sequencer discontinuous mode:
@@ -4867,7 +4927,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetSequencerLength(const ADC_TypeDef *ADCx) 
  *         @arg @ref LL_ADC_REG_SEQ_DISCONT_8RANKS
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetSequencerDiscont(ADC_TypeDef *ADCx, uint32_t SeqDiscont) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_DISCEN | ADC_CFGR_DISCNUM, SeqDiscont); }
+__STATIC_INLINE void LL_ADC_REG_SetSequencerDiscont(ADC_TypeDef *ADCx, uint32_t SeqDiscont)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_DISCEN | ADC_CFGR_DISCNUM, SeqDiscont);
+}
 
 /**
  * @brief  Get ADC group regular sequencer discontinuous mode:
@@ -4887,7 +4950,10 @@ __STATIC_INLINE void LL_ADC_REG_SetSequencerDiscont(ADC_TypeDef *ADCx, uint32_t 
  *         @arg @ref LL_ADC_REG_SEQ_DISCONT_7RANKS
  *         @arg @ref LL_ADC_REG_SEQ_DISCONT_8RANKS
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetSequencerDiscont(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_DISCEN | ADC_CFGR_DISCNUM)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetSequencerDiscont(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_DISCEN | ADC_CFGR_DISCNUM));
+}
 
 /**
  * @brief  Set ADC group regular sequence: channel on the selected
@@ -5135,7 +5201,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetSequencerRanks(const ADC_TypeDef *ADCx, u
  *         @arg @ref LL_ADC_REG_CONV_CONTINUOUS
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetContinuousMode(ADC_TypeDef *ADCx, uint32_t Continuous) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_CONT, Continuous); }
+__STATIC_INLINE void LL_ADC_REG_SetContinuousMode(ADC_TypeDef *ADCx, uint32_t Continuous)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_CONT, Continuous);
+}
 
 /**
  * @brief  Get ADC continuous conversion mode on ADC group regular.
@@ -5149,7 +5218,10 @@ __STATIC_INLINE void LL_ADC_REG_SetContinuousMode(ADC_TypeDef *ADCx, uint32_t Co
  *         @arg @ref LL_ADC_REG_CONV_SINGLE
  *         @arg @ref LL_ADC_REG_CONV_CONTINUOUS
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetContinuousMode(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_CONT)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetContinuousMode(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_CONT));
+}
 
 /**
  * @brief  Set ADC group regular conversion data transfer: no transfer or
@@ -5187,7 +5259,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetContinuousMode(const ADC_TypeDef *ADCx) {
  *         @arg @ref LL_ADC_REG_DMA_TRANSFER_UNLIMITED
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetDMATransfer(ADC_TypeDef *ADCx, uint32_t DMATransfer) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_DMAEN | ADC_CFGR_DMACFG, DMATransfer); }
+__STATIC_INLINE void LL_ADC_REG_SetDMATransfer(ADC_TypeDef *ADCx, uint32_t DMATransfer)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_DMAEN | ADC_CFGR_DMACFG, DMATransfer);
+}
 
 /**
  * @brief  Get ADC group regular conversion data transfer: no transfer or
@@ -5220,7 +5295,10 @@ __STATIC_INLINE void LL_ADC_REG_SetDMATransfer(ADC_TypeDef *ADCx, uint32_t DMATr
  *         @arg @ref LL_ADC_REG_DMA_TRANSFER_LIMITED
  *         @arg @ref LL_ADC_REG_DMA_TRANSFER_UNLIMITED
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetDMATransfer(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_DMAEN | ADC_CFGR_DMACFG)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetDMATransfer(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_DMAEN | ADC_CFGR_DMACFG));
+}
 
 /**
  * @brief  Set ADC group regular behavior in case of overrun:
@@ -5242,7 +5320,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetDMATransfer(const ADC_TypeDef *ADCx) { re
  *         @arg @ref LL_ADC_REG_OVR_DATA_OVERWRITTEN
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_SetOverrun(ADC_TypeDef *ADCx, uint32_t Overrun) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_OVRMOD, Overrun); }
+__STATIC_INLINE void LL_ADC_REG_SetOverrun(ADC_TypeDef *ADCx, uint32_t Overrun)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_OVRMOD, Overrun);
+}
 
 /**
  * @brief  Get ADC group regular behavior in case of overrun:
@@ -5253,7 +5334,10 @@ __STATIC_INLINE void LL_ADC_REG_SetOverrun(ADC_TypeDef *ADCx, uint32_t Overrun) 
  *         @arg @ref LL_ADC_REG_OVR_DATA_PRESERVED
  *         @arg @ref LL_ADC_REG_OVR_DATA_OVERWRITTEN
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_GetOverrun(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_OVRMOD)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_GetOverrun(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_OVRMOD));
+}
 
 /**
  * @}
@@ -5330,7 +5414,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_GetOverrun(const ADC_TypeDef *ADCx) { return
  * on all devices. Refer to device datasheet for more details.
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_SetTriggerSource(ADC_TypeDef *ADCx, uint32_t TriggerSource) { MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN, TriggerSource); }
+__STATIC_INLINE void LL_ADC_INJ_SetTriggerSource(ADC_TypeDef *ADCx, uint32_t TriggerSource)
+{
+	MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN, TriggerSource);
+}
 
 /**
  * @brief  Get ADC group injected conversion trigger source:
@@ -5417,7 +5504,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetTriggerSource(const ADC_TypeDef *ADCx)
   * @retval Value "0" if trigger source external trigger
   *         Value "1" if trigger source SW start.
   */
-__STATIC_INLINE uint32_t LL_ADC_INJ_IsTriggerSourceSWStart(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->JSQR, ADC_JSQR_JEXTEN) == (LL_ADC_INJ_TRIG_SOFTWARE & ADC_JSQR_JEXTEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_IsTriggerSourceSWStart(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->JSQR, ADC_JSQR_JEXTEN) == (LL_ADC_INJ_TRIG_SOFTWARE & ADC_JSQR_JEXTEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set ADC group injected conversion trigger polarity.
@@ -5435,7 +5525,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_IsTriggerSourceSWStart(const ADC_TypeDef *AD
  *         @arg @ref LL_ADC_INJ_TRIG_EXT_RISINGFALLING
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_SetTriggerEdge(ADC_TypeDef *ADCx, uint32_t ExternalTriggerEdge) { MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTEN, ExternalTriggerEdge); }
+__STATIC_INLINE void LL_ADC_INJ_SetTriggerEdge(ADC_TypeDef *ADCx, uint32_t ExternalTriggerEdge)
+{
+	MODIFY_REG(ADCx->JSQR, ADC_JSQR_JEXTEN, ExternalTriggerEdge);
+}
 
 /**
  * @brief  Get ADC group injected conversion trigger polarity.
@@ -5447,7 +5540,10 @@ __STATIC_INLINE void LL_ADC_INJ_SetTriggerEdge(ADC_TypeDef *ADCx, uint32_t Exter
  *         @arg @ref LL_ADC_INJ_TRIG_EXT_FALLING
  *         @arg @ref LL_ADC_INJ_TRIG_EXT_RISINGFALLING
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_GetTriggerEdge(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->JSQR, ADC_JSQR_JEXTEN)); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_GetTriggerEdge(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->JSQR, ADC_JSQR_JEXTEN));
+}
 
 /**
  * @brief  Set ADC group injected sequencer length and scan direction.
@@ -5470,7 +5566,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetTriggerEdge(const ADC_TypeDef *ADCx) { re
  *         @arg @ref LL_ADC_INJ_SEQ_SCAN_ENABLE_4RANKS
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_SetSequencerLength(ADC_TypeDef *ADCx, uint32_t SequencerNbRanks) { MODIFY_REG(ADCx->JSQR, ADC_JSQR_JL, SequencerNbRanks); }
+__STATIC_INLINE void LL_ADC_INJ_SetSequencerLength(ADC_TypeDef *ADCx, uint32_t SequencerNbRanks)
+{
+	MODIFY_REG(ADCx->JSQR, ADC_JSQR_JL, SequencerNbRanks);
+}
 
 /**
  * @brief  Get ADC group injected sequencer length and scan direction.
@@ -5488,7 +5587,10 @@ __STATIC_INLINE void LL_ADC_INJ_SetSequencerLength(ADC_TypeDef *ADCx, uint32_t S
  *         @arg @ref LL_ADC_INJ_SEQ_SCAN_ENABLE_3RANKS
  *         @arg @ref LL_ADC_INJ_SEQ_SCAN_ENABLE_4RANKS
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_GetSequencerLength(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->JSQR, ADC_JSQR_JL)); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_GetSequencerLength(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->JSQR, ADC_JSQR_JL));
+}
 
 /**
  * @brief  Set ADC group injected sequencer discontinuous mode:
@@ -5503,7 +5605,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetSequencerLength(const ADC_TypeDef *ADCx) 
  *         @arg @ref LL_ADC_INJ_SEQ_DISCONT_1RANK
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_SetSequencerDiscont(ADC_TypeDef *ADCx, uint32_t SeqDiscont) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_JDISCEN, SeqDiscont); }
+__STATIC_INLINE void LL_ADC_INJ_SetSequencerDiscont(ADC_TypeDef *ADCx, uint32_t SeqDiscont)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_JDISCEN, SeqDiscont);
+}
 
 /**
  * @brief  Get ADC group injected sequencer discontinuous mode:
@@ -5515,7 +5620,10 @@ __STATIC_INLINE void LL_ADC_INJ_SetSequencerDiscont(ADC_TypeDef *ADCx, uint32_t 
  *         @arg @ref LL_ADC_INJ_SEQ_DISCONT_DISABLE
  *         @arg @ref LL_ADC_INJ_SEQ_DISCONT_1RANK
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_GetSequencerDiscont(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_JDISCEN)); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_GetSequencerDiscont(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_JDISCEN));
+}
 
 /**
  * @brief  Set ADC group injected sequence: channel on the selected
@@ -5712,7 +5820,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetSequencerRanks(const ADC_TypeDef *ADCx, u
  *         @arg @ref LL_ADC_INJ_TRIG_FROM_GRP_REGULAR
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_SetTrigAuto(ADC_TypeDef *ADCx, uint32_t TrigAuto) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_JAUTO, TrigAuto); }
+__STATIC_INLINE void LL_ADC_INJ_SetTrigAuto(ADC_TypeDef *ADCx, uint32_t TrigAuto)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_JAUTO, TrigAuto);
+}
 
 /**
  * @brief  Get ADC group injected conversion trigger:
@@ -5723,7 +5834,10 @@ __STATIC_INLINE void LL_ADC_INJ_SetTrigAuto(ADC_TypeDef *ADCx, uint32_t TrigAuto
  *         @arg @ref LL_ADC_INJ_TRIG_INDEPENDENT
  *         @arg @ref LL_ADC_INJ_TRIG_FROM_GRP_REGULAR
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_GetTrigAuto(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_JAUTO)); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_GetTrigAuto(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_JAUTO));
+}
 
 /**
  * @brief  Set ADC group injected contexts queue mode.
@@ -5766,7 +5880,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_GetTrigAuto(const ADC_TypeDef *ADCx) { retur
  *         @arg @ref LL_ADC_INJ_QUEUE_2CONTEXTS_END_EMPTY
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_INJ_SetQueueMode(ADC_TypeDef *ADCx, uint32_t QueueMode) { MODIFY_REG(ADCx->CFGR, ADC_CFGR_JQM | ADC_CFGR_JQDIS, QueueMode); }
+__STATIC_INLINE void LL_ADC_INJ_SetQueueMode(ADC_TypeDef *ADCx, uint32_t QueueMode)
+{
+	MODIFY_REG(ADCx->CFGR, ADC_CFGR_JQM | ADC_CFGR_JQDIS, QueueMode);
+}
 
 /**
  * @brief  Get ADC group injected context queue mode.
@@ -5778,7 +5895,10 @@ __STATIC_INLINE void LL_ADC_INJ_SetQueueMode(ADC_TypeDef *ADCx, uint32_t QueueMo
  *         @arg @ref LL_ADC_INJ_QUEUE_2CONTEXTS_LAST_ACTIVE
  *         @arg @ref LL_ADC_INJ_QUEUE_2CONTEXTS_END_EMPTY
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_GetQueueMode(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_JQM | ADC_CFGR_JQDIS)); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_GetQueueMode(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR, ADC_CFGR_JQM | ADC_CFGR_JQDIS));
+}
 
 /**
  * @brief  Set one context on ADC group injected that will be checked in
@@ -6416,7 +6536,10 @@ __STATIC_INLINE void LL_ADC_SetChannelSingleDiff(ADC_TypeDef *ADCx, uint32_t Cha
  *         @arg @ref LL_ADC_CHANNEL_15
  * @retval 0: channel in single-ended mode, else: channel in differential mode
  */
-__STATIC_INLINE uint32_t LL_ADC_GetChannelSingleDiff(const ADC_TypeDef *ADCx, uint32_t Channel) { return (uint32_t)(READ_BIT(ADCx->DIFSEL, (Channel & ADC_SINGLEDIFF_CHANNEL_MASK))); }
+__STATIC_INLINE uint32_t LL_ADC_GetChannelSingleDiff(const ADC_TypeDef *ADCx, uint32_t Channel)
+{
+	return (uint32_t)(READ_BIT(ADCx->DIFSEL, (Channel & ADC_SINGLEDIFF_CHANNEL_MASK)));
+}
 
 /**
  * @}
@@ -7030,7 +7153,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetAWDFilteringConfiguration(const ADC_TypeDef *
  *         @arg @ref LL_ADC_OVS_GRP_INJ_REG_RESUMED
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetOverSamplingScope(ADC_TypeDef *ADCx, uint32_t OvsScope) { MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_ROVSE | ADC_CFGR2_JOVSE | ADC_CFGR2_ROVSM, OvsScope); }
+__STATIC_INLINE void LL_ADC_SetOverSamplingScope(ADC_TypeDef *ADCx, uint32_t OvsScope)
+{
+	MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_ROVSE | ADC_CFGR2_JOVSE | ADC_CFGR2_ROVSM, OvsScope);
+}
 
 /**
  * @brief  Get ADC oversampling scope: ADC groups regular and-or injected
@@ -7052,7 +7178,10 @@ __STATIC_INLINE void LL_ADC_SetOverSamplingScope(ADC_TypeDef *ADCx, uint32_t Ovs
  *         @arg @ref LL_ADC_OVS_GRP_INJECTED
  *         @arg @ref LL_ADC_OVS_GRP_INJ_REG_RESUMED
  */
-__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingScope(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_ROVSE | ADC_CFGR2_JOVSE | ADC_CFGR2_ROVSM)); }
+__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingScope(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_ROVSE | ADC_CFGR2_JOVSE | ADC_CFGR2_ROVSM));
+}
 
 /**
  * @brief  Set ADC oversampling discontinuous mode (triggered mode)
@@ -7077,7 +7206,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetOverSamplingScope(const ADC_TypeDef *ADCx) { 
  *         @arg @ref LL_ADC_OVS_REG_DISCONT
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetOverSamplingDiscont(ADC_TypeDef *ADCx, uint32_t OverSamplingDiscont) { MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_TROVS, OverSamplingDiscont); }
+__STATIC_INLINE void LL_ADC_SetOverSamplingDiscont(ADC_TypeDef *ADCx, uint32_t OverSamplingDiscont)
+{
+	MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_TROVS, OverSamplingDiscont);
+}
 
 /**
  * @brief  Get ADC oversampling discontinuous mode (triggered mode)
@@ -7093,7 +7225,10 @@ __STATIC_INLINE void LL_ADC_SetOverSamplingDiscont(ADC_TypeDef *ADCx, uint32_t O
  *         @arg @ref LL_ADC_OVS_REG_CONT
  *         @arg @ref LL_ADC_OVS_REG_DISCONT
  */
-__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingDiscont(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_TROVS)); }
+__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingDiscont(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_TROVS));
+}
 
 /**
  * @brief  Set ADC oversampling
@@ -7129,7 +7264,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetOverSamplingDiscont(const ADC_TypeDef *ADCx) 
  *         @arg @ref LL_ADC_OVS_SHIFT_RIGHT_8
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ConfigOverSamplingRatioShift(ADC_TypeDef *ADCx, uint32_t Ratio, uint32_t Shift) { MODIFY_REG(ADCx->CFGR2, (ADC_CFGR2_OVSS | ADC_CFGR2_OVSR), (Shift | Ratio)); }
+__STATIC_INLINE void LL_ADC_ConfigOverSamplingRatioShift(ADC_TypeDef *ADCx, uint32_t Ratio, uint32_t Shift)
+{
+	MODIFY_REG(ADCx->CFGR2, (ADC_CFGR2_OVSS | ADC_CFGR2_OVSR), (Shift | Ratio));
+}
 
 /**
  * @brief  Get ADC oversampling ratio
@@ -7146,7 +7284,10 @@ __STATIC_INLINE void LL_ADC_ConfigOverSamplingRatioShift(ADC_TypeDef *ADCx, uint
  *         @arg @ref LL_ADC_OVS_RATIO_128
  *         @arg @ref LL_ADC_OVS_RATIO_256
  */
-__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingRatio(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_OVSR)); }
+__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingRatio(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_OVSR));
+}
 
 /**
  * @brief  Get ADC oversampling shift
@@ -7164,7 +7305,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetOverSamplingRatio(const ADC_TypeDef *ADCx) { 
  *         @arg @ref LL_ADC_OVS_SHIFT_RIGHT_7
  *         @arg @ref LL_ADC_OVS_SHIFT_RIGHT_8
  */
-__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingShift(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_OVSS)); }
+__STATIC_INLINE uint32_t LL_ADC_GetOverSamplingShift(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->CFGR2, ADC_CFGR2_OVSS));
+}
 
 /**
  * @}
@@ -7203,7 +7347,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetOverSamplingShift(const ADC_TypeDef *ADCx) { 
  *         @arg @ref LL_ADC_MULTI_DUAL_REG_INT_INJ_SIM
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetMultimode(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t Multimode) { MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_DUAL, Multimode); }
+__STATIC_INLINE void LL_ADC_SetMultimode(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t Multimode)
+{
+	MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_DUAL, Multimode);
+}
 
 /**
  * @brief  Get ADC multimode configuration to operate in independent mode
@@ -7225,7 +7372,10 @@ __STATIC_INLINE void LL_ADC_SetMultimode(ADC_Common_TypeDef *ADCxy_COMMON, uint3
  *         @arg @ref LL_ADC_MULTI_DUAL_REG_SIM_INJ_ALT
  *         @arg @ref LL_ADC_MULTI_DUAL_REG_INT_INJ_SIM
  */
-__STATIC_INLINE uint32_t LL_ADC_GetMultimode(const ADC_Common_TypeDef *ADCxy_COMMON) { return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_DUAL)); }
+__STATIC_INLINE uint32_t LL_ADC_GetMultimode(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_DUAL));
+}
 
 /**
  * @brief  Set ADC multimode conversion data transfer: no transfer
@@ -7274,7 +7424,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetMultimode(const ADC_Common_TypeDef *ADCxy_COM
  *         @arg @ref LL_ADC_MULTI_REG_DMA_UNLMT_RES8_6B
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetMultiDMATransfer(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t MultiDMATransfer) { MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_MDMA | ADC_CCR_DMACFG, MultiDMATransfer); }
+__STATIC_INLINE void LL_ADC_SetMultiDMATransfer(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t MultiDMATransfer)
+{
+	MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_MDMA | ADC_CCR_DMACFG, MultiDMATransfer);
+}
 
 /**
  * @brief  Get ADC multimode conversion data transfer: no transfer
@@ -7318,7 +7471,10 @@ __STATIC_INLINE void LL_ADC_SetMultiDMATransfer(ADC_Common_TypeDef *ADCxy_COMMON
  *         @arg @ref LL_ADC_MULTI_REG_DMA_UNLMT_RES12_10B
  *         @arg @ref LL_ADC_MULTI_REG_DMA_UNLMT_RES8_6B
  */
-__STATIC_INLINE uint32_t LL_ADC_GetMultiDMATransfer(const ADC_Common_TypeDef *ADCxy_COMMON) { return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_MDMA | ADC_CCR_DMACFG)); }
+__STATIC_INLINE uint32_t LL_ADC_GetMultiDMATransfer(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_MDMA | ADC_CCR_DMACFG));
+}
 
 /**
  * @brief  Set ADC multimode delay between 2 sampling phases.
@@ -7357,7 +7513,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetMultiDMATransfer(const ADC_Common_TypeDef *AD
  *         (3) Parameter available only if ADC resolution is 12 bits.
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_SetMultiTwoSamplingDelay(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t MultiTwoSamplingDelay) { MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_DELAY, MultiTwoSamplingDelay); }
+__STATIC_INLINE void LL_ADC_SetMultiTwoSamplingDelay(ADC_Common_TypeDef *ADCxy_COMMON, uint32_t MultiTwoSamplingDelay)
+{
+	MODIFY_REG(ADCxy_COMMON->CCR, ADC_CCR_DELAY, MultiTwoSamplingDelay);
+}
 
 /**
  * @brief  Get ADC multimode delay between 2 sampling phases.
@@ -7383,7 +7542,10 @@ __STATIC_INLINE void LL_ADC_SetMultiTwoSamplingDelay(ADC_Common_TypeDef *ADCxy_C
  *         (2) Parameter available only if ADC resolution is 12 or 10 bits.\n
  *         (3) Parameter available only if ADC resolution is 12 bits.
  */
-__STATIC_INLINE uint32_t LL_ADC_GetMultiTwoSamplingDelay(const ADC_Common_TypeDef *ADCxy_COMMON) { return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_DELAY)); }
+__STATIC_INLINE uint32_t LL_ADC_GetMultiTwoSamplingDelay(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return (uint32_t)(READ_BIT(ADCxy_COMMON->CCR, ADC_CCR_DELAY));
+}
 #endif /* ADC_MULTIMODE_SUPPORT */
 
 /**
@@ -7446,7 +7608,10 @@ __STATIC_INLINE void LL_ADC_DisableDeepPowerDown(ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval 0: deep power down is disabled, 1: deep power down is enabled.
  */
-__STATIC_INLINE uint32_t LL_ADC_IsDeepPowerDownEnabled(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_DEEPPWD) == (ADC_CR_DEEPPWD)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsDeepPowerDownEnabled(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_DEEPPWD) == (ADC_CR_DEEPPWD)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable ADC instance internal voltage regulator.
@@ -7481,7 +7646,10 @@ __STATIC_INLINE void LL_ADC_EnableInternalRegulator(ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableInternalRegulator(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->CR, (ADC_CR_ADVREGEN | ADC_CR_BITS_PROPERTY_RS)); }
+__STATIC_INLINE void LL_ADC_DisableInternalRegulator(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->CR, (ADC_CR_ADVREGEN | ADC_CR_BITS_PROPERTY_RS));
+}
 
 /**
  * @brief  Get the selected ADC instance internal voltage regulator state.
@@ -7489,7 +7657,10 @@ __STATIC_INLINE void LL_ADC_DisableInternalRegulator(ADC_TypeDef *ADCx) { CLEAR_
  * @param  ADCx ADC instance
  * @retval 0: internal regulator is disabled, 1: internal regulator is enabled.
  */
-__STATIC_INLINE uint32_t LL_ADC_IsInternalRegulatorEnabled(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_ADVREGEN) == (ADC_CR_ADVREGEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsInternalRegulatorEnabled(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_ADVREGEN) == (ADC_CR_ADVREGEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the selected ADC instance.
@@ -7546,7 +7717,10 @@ __STATIC_INLINE void LL_ADC_Disable(ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval 0: ADC is disabled, 1: ADC is enabled.
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabled(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_ADEN) == (ADC_CR_ADEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabled(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_ADEN) == (ADC_CR_ADEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get the selected ADC instance disable state.
@@ -7554,7 +7728,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabled(const ADC_TypeDef *ADCx) { return ((RE
  * @param  ADCx ADC instance
  * @retval 0: no ADC disable command on going.
  */
-__STATIC_INLINE uint32_t LL_ADC_IsDisableOngoing(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_ADDIS) == (ADC_CR_ADDIS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsDisableOngoing(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_ADDIS) == (ADC_CR_ADDIS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Start ADC calibration in the mode single-ended
@@ -7595,7 +7772,10 @@ __STATIC_INLINE void LL_ADC_StartCalibration(ADC_TypeDef *ADCx, uint32_t SingleD
  * @param  ADCx ADC instance
  * @retval 0: calibration complete, 1: calibration in progress.
  */
-__STATIC_INLINE uint32_t LL_ADC_IsCalibrationOnGoing(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_ADCAL) == (ADC_CR_ADCAL)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsCalibrationOnGoing(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_ADCAL) == (ADC_CR_ADCAL)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -7660,7 +7840,10 @@ __STATIC_INLINE void LL_ADC_REG_StopConversion(ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval 0: no conversion is on going on ADC group regular.
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_IsConversionOngoing(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_ADSTART) == (ADC_CR_ADSTART)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_REG_IsConversionOngoing(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_ADSTART) == (ADC_CR_ADSTART)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get ADC group regular command of conversion stop state
@@ -7668,7 +7851,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_IsConversionOngoing(const ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval 0: no command of conversion stop is on going on ADC group regular.
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_IsStopConversionOngoing(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_ADSTP) == (ADC_CR_ADSTP)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_REG_IsStopConversionOngoing(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_ADSTP) == (ADC_CR_ADSTP)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Start ADC sampling phase for sampling time trigger mode
@@ -7685,7 +7871,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_IsStopConversionOngoing(const ADC_TypeDef *A
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_StartSamplingPhase(ADC_TypeDef *ADCx) { SET_BIT(ADCx->CFGR2, ADC_CFGR2_SWTRIG); }
+__STATIC_INLINE void LL_ADC_REG_StartSamplingPhase(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->CFGR2, ADC_CFGR2_SWTRIG);
+}
 
 /**
  * @brief  Stop ADC sampling phase for sampling time trigger mode and start
@@ -7705,7 +7894,10 @@ __STATIC_INLINE void LL_ADC_REG_StartSamplingPhase(ADC_TypeDef *ADCx) { SET_BIT(
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_REG_StopSamplingPhase(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->CFGR2, ADC_CFGR2_SWTRIG); }
+__STATIC_INLINE void LL_ADC_REG_StopSamplingPhase(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->CFGR2, ADC_CFGR2_SWTRIG);
+}
 
 /**
  * @brief  Get ADC group regular conversion data, range fit for
@@ -7716,7 +7908,10 @@ __STATIC_INLINE void LL_ADC_REG_StopSamplingPhase(ADC_TypeDef *ADCx) { CLEAR_BIT
  * @param  ADCx ADC instance
  * @retval Value between Min_Data=0x00000000 and Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_ADC_REG_ReadConversionData32(const ADC_TypeDef *ADCx) { return (uint32_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA)); }
+__STATIC_INLINE uint32_t LL_ADC_REG_ReadConversionData32(const ADC_TypeDef *ADCx)
+{
+	return (uint32_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA));
+}
 
 /**
  * @brief  Get ADC group regular conversion data, range fit for
@@ -7728,7 +7923,10 @@ __STATIC_INLINE uint32_t LL_ADC_REG_ReadConversionData32(const ADC_TypeDef *ADCx
  * @param  ADCx ADC instance
  * @retval Value between Min_Data=0x000 and Max_Data=0xFFF
  */
-__STATIC_INLINE uint16_t LL_ADC_REG_ReadConversionData12(const ADC_TypeDef *ADCx) { return (uint16_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA)); }
+__STATIC_INLINE uint16_t LL_ADC_REG_ReadConversionData12(const ADC_TypeDef *ADCx)
+{
+	return (uint16_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA));
+}
 
 /**
  * @brief  Get ADC group regular conversion data, range fit for
@@ -7740,7 +7938,10 @@ __STATIC_INLINE uint16_t LL_ADC_REG_ReadConversionData12(const ADC_TypeDef *ADCx
  * @param  ADCx ADC instance
  * @retval Value between Min_Data=0x000 and Max_Data=0x3FF
  */
-__STATIC_INLINE uint16_t LL_ADC_REG_ReadConversionData10(const ADC_TypeDef *ADCx) { return (uint16_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA)); }
+__STATIC_INLINE uint16_t LL_ADC_REG_ReadConversionData10(const ADC_TypeDef *ADCx)
+{
+	return (uint16_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA));
+}
 
 /**
  * @brief  Get ADC group regular conversion data, range fit for
@@ -7752,7 +7953,10 @@ __STATIC_INLINE uint16_t LL_ADC_REG_ReadConversionData10(const ADC_TypeDef *ADCx
  * @param  ADCx ADC instance
  * @retval Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint8_t LL_ADC_REG_ReadConversionData8(const ADC_TypeDef *ADCx) { return (uint8_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA)); }
+__STATIC_INLINE uint8_t LL_ADC_REG_ReadConversionData8(const ADC_TypeDef *ADCx)
+{
+	return (uint8_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA));
+}
 
 /**
  * @brief  Get ADC group regular conversion data, range fit for
@@ -7764,7 +7968,10 @@ __STATIC_INLINE uint8_t LL_ADC_REG_ReadConversionData8(const ADC_TypeDef *ADCx) 
  * @param  ADCx ADC instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x3F
  */
-__STATIC_INLINE uint8_t LL_ADC_REG_ReadConversionData6(const ADC_TypeDef *ADCx) { return (uint8_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA)); }
+__STATIC_INLINE uint8_t LL_ADC_REG_ReadConversionData6(const ADC_TypeDef *ADCx)
+{
+	return (uint8_t)(READ_BIT(ADCx->DR, ADC_DR_RDATA));
+}
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /**
@@ -7858,7 +8065,10 @@ __STATIC_INLINE void LL_ADC_INJ_StopConversion(ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval 0: no conversion is on going on ADC group injected.
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_IsConversionOngoing(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_JADSTART) == (ADC_CR_JADSTART)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_IsConversionOngoing(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_JADSTART) == (ADC_CR_JADSTART)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get ADC group injected command of conversion stop state
@@ -7866,7 +8076,10 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_IsConversionOngoing(const ADC_TypeDef *ADCx)
  * @param  ADCx ADC instance
  * @retval 0: no command of conversion stop is on going on ADC group injected.
  */
-__STATIC_INLINE uint32_t LL_ADC_INJ_IsStopConversionOngoing(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->CR, ADC_CR_JADSTP) == (ADC_CR_JADSTP)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_INJ_IsStopConversionOngoing(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->CR, ADC_CR_JADSTP) == (ADC_CR_JADSTP)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get ADC group injected conversion data, range fit for
@@ -8009,7 +8222,10 @@ __STATIC_INLINE uint8_t LL_ADC_INJ_ReadConversionData6(const ADC_TypeDef *ADCx, 
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_ADRDY(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_ADRDY) == (LL_ADC_FLAG_ADRDY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_ADRDY(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_ADRDY) == (LL_ADC_FLAG_ADRDY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group regular end of unitary conversion.
@@ -8017,7 +8233,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_ADRDY(const ADC_TypeDef *ADCx) { re
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOC(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, ADC_ISR_EOC) == (ADC_ISR_EOC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOC(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, ADC_ISR_EOC) == (ADC_ISR_EOC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group regular end of sequence conversions.
@@ -8025,7 +8244,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOC(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOS(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_EOS) == (LL_ADC_FLAG_EOS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOS(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_EOS) == (LL_ADC_FLAG_EOS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group regular overrun.
@@ -8033,7 +8255,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOS(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_OVR(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_OVR) == (LL_ADC_FLAG_OVR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_OVR(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_OVR) == (LL_ADC_FLAG_OVR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group regular end of sampling phase.
@@ -8041,7 +8266,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_OVR(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOSMP(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_EOSMP) == (LL_ADC_FLAG_EOSMP)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOSMP(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_EOSMP) == (LL_ADC_FLAG_EOSMP)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group injected end of unitary conversion.
@@ -8049,7 +8277,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_EOSMP(const ADC_TypeDef *ADCx) { re
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JEOC(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_JEOC) == (LL_ADC_FLAG_JEOC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JEOC(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_JEOC) == (LL_ADC_FLAG_JEOC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group injected end of sequence conversions.
@@ -8057,7 +8288,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JEOC(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JEOS(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_JEOS) == (LL_ADC_FLAG_JEOS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JEOS(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_JEOS) == (LL_ADC_FLAG_JEOS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC group injected contexts queue overflow.
@@ -8065,7 +8299,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JEOS(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JQOVF(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_JQOVF) == (LL_ADC_FLAG_JQOVF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JQOVF(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_JQOVF) == (LL_ADC_FLAG_JQOVF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC analog watchdog 1 flag
@@ -8073,7 +8310,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_JQOVF(const ADC_TypeDef *ADCx) { re
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD1(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_AWD1) == (LL_ADC_FLAG_AWD1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD1(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_AWD1) == (LL_ADC_FLAG_AWD1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC analog watchdog 2.
@@ -8081,7 +8321,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD1(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD2(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_AWD2) == (LL_ADC_FLAG_AWD2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD2(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_AWD2) == (LL_ADC_FLAG_AWD2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag ADC analog watchdog 3.
@@ -8089,7 +8332,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD2(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD3(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_AWD3) == (LL_ADC_FLAG_AWD3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD3(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->ISR, LL_ADC_FLAG_AWD3) == (LL_ADC_FLAG_AWD3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear flag ADC ready.
@@ -8100,7 +8346,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_AWD3(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_ADRDY(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_ADRDY); }
+__STATIC_INLINE void LL_ADC_ClearFlag_ADRDY(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_ADRDY);
+}
 
 /**
  * @brief  Clear flag ADC group regular end of unitary conversion.
@@ -8108,7 +8357,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_ADRDY(ADC_TypeDef *ADCx) { WRITE_REG(ADCx-
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_EOC(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOC); }
+__STATIC_INLINE void LL_ADC_ClearFlag_EOC(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOC);
+}
 
 /**
  * @brief  Clear flag ADC group regular end of sequence conversions.
@@ -8116,7 +8368,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_EOC(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->I
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_EOS(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOS); }
+__STATIC_INLINE void LL_ADC_ClearFlag_EOS(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOS);
+}
 
 /**
  * @brief  Clear flag ADC group regular overrun.
@@ -8124,7 +8379,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_EOS(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->I
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_OVR(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_OVR); }
+__STATIC_INLINE void LL_ADC_ClearFlag_OVR(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_OVR);
+}
 
 /**
  * @brief  Clear flag ADC group regular end of sampling phase.
@@ -8132,7 +8390,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_OVR(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->I
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_EOSMP(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOSMP); }
+__STATIC_INLINE void LL_ADC_ClearFlag_EOSMP(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOSMP);
+}
 
 /**
  * @brief  Clear flag ADC group injected end of unitary conversion.
@@ -8140,7 +8401,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_EOSMP(ADC_TypeDef *ADCx) { WRITE_REG(ADCx-
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_JEOC(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_JEOC); }
+__STATIC_INLINE void LL_ADC_ClearFlag_JEOC(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_JEOC);
+}
 
 /**
  * @brief  Clear flag ADC group injected end of sequence conversions.
@@ -8148,7 +8412,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_JEOC(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_JEOS(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_JEOS); }
+__STATIC_INLINE void LL_ADC_ClearFlag_JEOS(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_JEOS);
+}
 
 /**
  * @brief  Clear flag ADC group injected contexts queue overflow.
@@ -8156,7 +8423,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_JEOS(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_JQOVF(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_JQOVF); }
+__STATIC_INLINE void LL_ADC_ClearFlag_JQOVF(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_JQOVF);
+}
 
 /**
  * @brief  Clear flag ADC analog watchdog 1.
@@ -8164,7 +8434,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_JQOVF(ADC_TypeDef *ADCx) { WRITE_REG(ADCx-
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_AWD1(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_AWD1); }
+__STATIC_INLINE void LL_ADC_ClearFlag_AWD1(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_AWD1);
+}
 
 /**
  * @brief  Clear flag ADC analog watchdog 2.
@@ -8172,7 +8445,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_AWD1(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_AWD2(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_AWD2); }
+__STATIC_INLINE void LL_ADC_ClearFlag_AWD2(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_AWD2);
+}
 
 /**
  * @brief  Clear flag ADC analog watchdog 3.
@@ -8180,7 +8456,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_AWD2(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_ClearFlag_AWD3(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->ISR, LL_ADC_FLAG_AWD3); }
+__STATIC_INLINE void LL_ADC_ClearFlag_AWD3(ADC_TypeDef *ADCx)
+{
+	WRITE_REG(ADCx->ISR, LL_ADC_FLAG_AWD3);
+}
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /**
@@ -8191,7 +8470,10 @@ __STATIC_INLINE void LL_ADC_ClearFlag_AWD3(ADC_TypeDef *ADCx) { WRITE_REG(ADCx->
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_ADRDY(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_ADRDY_MST) == (LL_ADC_FLAG_ADRDY_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_ADRDY(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_ADRDY_MST) == (LL_ADC_FLAG_ADRDY_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC ready of the ADC slave.
@@ -8201,7 +8483,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_ADRDY(const ADC_Common_TypeDef 
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_ADRDY(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_ADRDY_SLV) == (LL_ADC_FLAG_ADRDY_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_ADRDY(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_ADRDY_SLV) == (LL_ADC_FLAG_ADRDY_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular end of unitary conversion of the
@@ -8212,7 +8497,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_ADRDY(const ADC_Common_TypeDef 
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOC(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOC_SLV) == (LL_ADC_FLAG_EOC_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOC(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOC_SLV) == (LL_ADC_FLAG_EOC_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular end of unitary conversion of the
@@ -8223,7 +8511,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOC(const ADC_Common_TypeDef *A
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOC(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOC_SLV) == (LL_ADC_FLAG_EOC_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOC(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOC_SLV) == (LL_ADC_FLAG_EOC_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular end of sequence conversions of
@@ -8234,7 +8525,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOC(const ADC_Common_TypeDef *A
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOS(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOS_MST) == (LL_ADC_FLAG_EOS_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOS(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOS_MST) == (LL_ADC_FLAG_EOS_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular end of sequence conversions of
@@ -8245,7 +8539,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOS(const ADC_Common_TypeDef *A
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOS(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOS_SLV) == (LL_ADC_FLAG_EOS_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOS(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOS_SLV) == (LL_ADC_FLAG_EOS_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular overrun of the ADC master.
@@ -8255,7 +8552,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOS(const ADC_Common_TypeDef *A
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_OVR(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_OVR_MST) == (LL_ADC_FLAG_OVR_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_OVR(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_OVR_MST) == (LL_ADC_FLAG_OVR_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular overrun of the ADC slave.
@@ -8265,7 +8565,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_OVR(const ADC_Common_TypeDef *A
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_OVR(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_OVR_SLV) == (LL_ADC_FLAG_OVR_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_OVR(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_OVR_SLV) == (LL_ADC_FLAG_OVR_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular end of sampling of the ADC
@@ -8276,7 +8579,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_OVR(const ADC_Common_TypeDef *A
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOSMP(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOSMP_MST) == (LL_ADC_FLAG_EOSMP_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOSMP(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOSMP_MST) == (LL_ADC_FLAG_EOSMP_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group regular end of sampling of the ADC
@@ -8287,7 +8593,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_EOSMP(const ADC_Common_TypeDef 
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOSMP(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOSMP_SLV) == (LL_ADC_FLAG_EOSMP_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOSMP(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_EOSMP_SLV) == (LL_ADC_FLAG_EOSMP_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group injected end of unitary conversion of
@@ -8298,7 +8607,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_EOSMP(const ADC_Common_TypeDef 
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JEOC(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOC_MST) == (LL_ADC_FLAG_JEOC_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JEOC(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOC_MST) == (LL_ADC_FLAG_JEOC_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group injected end of unitary conversion of
@@ -8309,7 +8621,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JEOC(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JEOC(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOC_SLV) == (LL_ADC_FLAG_JEOC_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JEOC(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOC_SLV) == (LL_ADC_FLAG_JEOC_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group injected end of sequence conversions of
@@ -8320,7 +8635,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JEOC(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JEOS(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOS_MST) == (LL_ADC_FLAG_JEOS_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JEOS(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOS_MST) == (LL_ADC_FLAG_JEOS_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group injected end of sequence conversions of
@@ -8331,7 +8649,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JEOS(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JEOS(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOS_SLV) == (LL_ADC_FLAG_JEOS_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JEOS(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JEOS_SLV) == (LL_ADC_FLAG_JEOS_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group injected context queue overflow of the
@@ -8342,7 +8663,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JEOS(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JQOVF(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JQOVF_MST) == (LL_ADC_FLAG_JQOVF_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JQOVF(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JQOVF_MST) == (LL_ADC_FLAG_JQOVF_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC group injected context queue overflow of the
@@ -8353,7 +8677,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_JQOVF(const ADC_Common_TypeDef 
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JQOVF(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JQOVF_SLV) == (LL_ADC_FLAG_JQOVF_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JQOVF(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_JQOVF_SLV) == (LL_ADC_FLAG_JQOVF_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC analog watchdog 1 of the ADC master.
@@ -8363,7 +8690,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_JQOVF(const ADC_Common_TypeDef 
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD1(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD1_MST) == (LL_ADC_FLAG_AWD1_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD1(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD1_MST) == (LL_ADC_FLAG_AWD1_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode analog watchdog 1 of the ADC slave.
@@ -8373,7 +8703,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD1(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD1(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD1_SLV) == (LL_ADC_FLAG_AWD1_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD1(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD1_SLV) == (LL_ADC_FLAG_AWD1_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC analog watchdog 2 of the ADC master.
@@ -8383,7 +8716,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD1(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD2(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD2_MST) == (LL_ADC_FLAG_AWD2_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD2(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD2_MST) == (LL_ADC_FLAG_AWD2_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC analog watchdog 2 of the ADC slave.
@@ -8393,7 +8729,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD2(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD2(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD2_SLV) == (LL_ADC_FLAG_AWD2_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD2(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD2_SLV) == (LL_ADC_FLAG_AWD2_SLV)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC analog watchdog 3 of the ADC master.
@@ -8403,7 +8742,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD2(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD3(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD3_MST) == (LL_ADC_FLAG_AWD3_MST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD3(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD3_MST) == (LL_ADC_FLAG_AWD3_MST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get flag multimode ADC analog watchdog 3 of the ADC slave.
@@ -8413,7 +8755,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_MST_AWD3(const ADC_Common_TypeDef *
  * @ref __LL_ADC_COMMON_INSTANCE() )
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD3(const ADC_Common_TypeDef *ADCxy_COMMON) { return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD3_SLV) == (LL_ADC_FLAG_AWD3_SLV)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD3(const ADC_Common_TypeDef *ADCxy_COMMON)
+{
+	return ((READ_BIT(ADCxy_COMMON->CSR, LL_ADC_FLAG_AWD3_SLV) == (LL_ADC_FLAG_AWD3_SLV)) ? 1UL : 0UL);
+}
 #endif /* ADC_MULTIMODE_SUPPORT */
 
 /**
@@ -8430,7 +8775,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag_SLV_AWD3(const ADC_Common_TypeDef *
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_ADRDY(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_ADRDY); }
+__STATIC_INLINE void LL_ADC_EnableIT_ADRDY(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_ADRDY);
+}
 
 /**
  * @brief  Enable interruption ADC group regular end of unitary conversion.
@@ -8438,7 +8786,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_ADRDY(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IE
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_EOC(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_EOC); }
+__STATIC_INLINE void LL_ADC_EnableIT_EOC(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_EOC);
+}
 
 /**
  * @brief  Enable interruption ADC group regular end of sequence conversions.
@@ -8446,7 +8797,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_EOC(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER,
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_EOS(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_EOS); }
+__STATIC_INLINE void LL_ADC_EnableIT_EOS(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_EOS);
+}
 
 /**
  * @brief  Enable ADC group regular interruption overrun.
@@ -8454,7 +8808,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_EOS(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER,
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_OVR(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_OVR); }
+__STATIC_INLINE void LL_ADC_EnableIT_OVR(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_OVR);
+}
 
 /**
  * @brief  Enable interruption ADC group regular end of sampling.
@@ -8462,7 +8819,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_OVR(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER,
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_EOSMP(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_EOSMP); }
+__STATIC_INLINE void LL_ADC_EnableIT_EOSMP(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_EOSMP);
+}
 
 /**
  * @brief  Enable interruption ADC group injected end of unitary conversion.
@@ -8470,7 +8830,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_EOSMP(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IE
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_JEOC(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_JEOC); }
+__STATIC_INLINE void LL_ADC_EnableIT_JEOC(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_JEOC);
+}
 
 /**
  * @brief  Enable interruption ADC group injected end of sequence conversions.
@@ -8478,7 +8841,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_JEOC(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_JEOS(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_JEOS); }
+__STATIC_INLINE void LL_ADC_EnableIT_JEOS(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_JEOS);
+}
 
 /**
  * @brief  Enable interruption ADC group injected context queue overflow.
@@ -8486,7 +8852,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_JEOS(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_JQOVF(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_JQOVF); }
+__STATIC_INLINE void LL_ADC_EnableIT_JQOVF(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_JQOVF);
+}
 
 /**
  * @brief  Enable interruption ADC analog watchdog 1.
@@ -8494,7 +8863,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_JQOVF(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IE
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_AWD1(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_AWD1); }
+__STATIC_INLINE void LL_ADC_EnableIT_AWD1(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_AWD1);
+}
 
 /**
  * @brief  Enable interruption ADC analog watchdog 2.
@@ -8502,7 +8874,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_AWD1(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_AWD2(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_AWD2); }
+__STATIC_INLINE void LL_ADC_EnableIT_AWD2(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_AWD2);
+}
 
 /**
  * @brief  Enable interruption ADC analog watchdog 3.
@@ -8510,7 +8885,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_AWD2(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_EnableIT_AWD3(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER, LL_ADC_IT_AWD3); }
+__STATIC_INLINE void LL_ADC_EnableIT_AWD3(ADC_TypeDef *ADCx)
+{
+	SET_BIT(ADCx->IER, LL_ADC_IT_AWD3);
+}
 
 /**
  * @brief  Disable interruption ADC ready.
@@ -8518,7 +8896,10 @@ __STATIC_INLINE void LL_ADC_EnableIT_AWD3(ADC_TypeDef *ADCx) { SET_BIT(ADCx->IER
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_ADRDY(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_ADRDY); }
+__STATIC_INLINE void LL_ADC_DisableIT_ADRDY(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_ADRDY);
+}
 
 /**
  * @brief  Disable interruption ADC group regular end of unitary conversion.
@@ -8526,7 +8907,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_ADRDY(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx-
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_EOC(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOC); }
+__STATIC_INLINE void LL_ADC_DisableIT_EOC(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOC);
+}
 
 /**
  * @brief  Disable interruption ADC group regular end of sequence conversions.
@@ -8534,7 +8918,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_EOC(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->I
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_EOS(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOS); }
+__STATIC_INLINE void LL_ADC_DisableIT_EOS(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOS);
+}
 
 /**
  * @brief  Disable interruption ADC group regular overrun.
@@ -8542,7 +8929,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_EOS(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->I
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_OVR(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_OVR); }
+__STATIC_INLINE void LL_ADC_DisableIT_OVR(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_OVR);
+}
 
 /**
  * @brief  Disable interruption ADC group regular end of sampling.
@@ -8550,7 +8940,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_OVR(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->I
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_EOSMP(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOSMP); }
+__STATIC_INLINE void LL_ADC_DisableIT_EOSMP(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOSMP);
+}
 
 /**
  * @brief  Disable interruption ADC group regular end of unitary conversion.
@@ -8558,7 +8951,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_EOSMP(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx-
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_JEOC(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_JEOC); }
+__STATIC_INLINE void LL_ADC_DisableIT_JEOC(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_JEOC);
+}
 
 /**
  * @brief  Disable interruption ADC group injected end of sequence conversions.
@@ -8566,7 +8962,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_JEOC(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_JEOS(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_JEOS); }
+__STATIC_INLINE void LL_ADC_DisableIT_JEOS(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_JEOS);
+}
 
 /**
  * @brief  Disable interruption ADC group injected context queue overflow.
@@ -8574,7 +8973,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_JEOS(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_JQOVF(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_JQOVF); }
+__STATIC_INLINE void LL_ADC_DisableIT_JQOVF(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_JQOVF);
+}
 
 /**
  * @brief  Disable interruption ADC analog watchdog 1.
@@ -8582,7 +8984,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_JQOVF(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx-
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_AWD1(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_AWD1); }
+__STATIC_INLINE void LL_ADC_DisableIT_AWD1(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_AWD1);
+}
 
 /**
  * @brief  Disable interruption ADC analog watchdog 2.
@@ -8590,7 +8995,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_AWD1(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_AWD2(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_AWD2); }
+__STATIC_INLINE void LL_ADC_DisableIT_AWD2(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_AWD2);
+}
 
 /**
  * @brief  Disable interruption ADC analog watchdog 3.
@@ -8598,7 +9006,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_AWD2(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->
  * @param  ADCx ADC instance
  * @retval None
  */
-__STATIC_INLINE void LL_ADC_DisableIT_AWD3(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->IER, LL_ADC_IT_AWD3); }
+__STATIC_INLINE void LL_ADC_DisableIT_AWD3(ADC_TypeDef *ADCx)
+{
+	CLEAR_BIT(ADCx->IER, LL_ADC_IT_AWD3);
+}
 
 /**
  * @brief  Get state of interruption ADC ready
@@ -8607,7 +9018,10 @@ __STATIC_INLINE void LL_ADC_DisableIT_AWD3(ADC_TypeDef *ADCx) { CLEAR_BIT(ADCx->
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_ADRDY(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_ADRDY) == (LL_ADC_IT_ADRDY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_ADRDY(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_ADRDY) == (LL_ADC_IT_ADRDY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group regular end of unitary conversion
@@ -8616,7 +9030,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_ADRDY(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOC(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_EOC) == (LL_ADC_IT_EOC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOC(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_EOC) == (LL_ADC_IT_EOC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group regular end of sequence
@@ -8625,7 +9042,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOC(const ADC_TypeDef *ADCx) { retur
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOS(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_EOS) == (LL_ADC_IT_EOS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOS(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_EOS) == (LL_ADC_IT_EOS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group regular overrun
@@ -8634,7 +9054,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOS(const ADC_TypeDef *ADCx) { retur
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_OVR(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_OVR) == (LL_ADC_IT_OVR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_OVR(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_OVR) == (LL_ADC_IT_OVR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group regular end of sampling
@@ -8643,7 +9066,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_OVR(const ADC_TypeDef *ADCx) { retur
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOSMP(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_EOSMP) == (LL_ADC_IT_EOSMP)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOSMP(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_EOSMP) == (LL_ADC_IT_EOSMP)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group injected end of unitary
@@ -8652,7 +9078,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_EOSMP(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JEOC(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_JEOC) == (LL_ADC_IT_JEOC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JEOC(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_JEOC) == (LL_ADC_IT_JEOC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group injected end of sequence
@@ -8661,7 +9090,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JEOC(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JEOS(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_JEOS) == (LL_ADC_IT_JEOS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JEOS(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_JEOS) == (LL_ADC_IT_JEOS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC group injected context queue overflow
@@ -8670,7 +9102,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JEOS(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JQOVF(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_JQOVF) == (LL_ADC_IT_JQOVF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JQOVF(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_JQOVF) == (LL_ADC_IT_JQOVF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption ADC analog watchdog 1
@@ -8679,7 +9114,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_JQOVF(const ADC_TypeDef *ADCx) { ret
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD1(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_AWD1) == (LL_ADC_IT_AWD1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD1(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_AWD1) == (LL_ADC_IT_AWD1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption Get ADC analog watchdog 2
@@ -8688,7 +9126,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD1(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD2(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_AWD2) == (LL_ADC_IT_AWD2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD2(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_AWD2) == (LL_ADC_IT_AWD2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get state of interruption Get ADC analog watchdog 3
@@ -8697,7 +9138,10 @@ __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD2(const ADC_TypeDef *ADCx) { retu
  * @param  ADCx ADC instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD3(const ADC_TypeDef *ADCx) { return ((READ_BIT(ADCx->IER, LL_ADC_IT_AWD3) == (LL_ADC_IT_AWD3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ADC_IsEnabledIT_AWD3(const ADC_TypeDef *ADCx)
+{
+	return ((READ_BIT(ADCx->IER, LL_ADC_IT_AWD3) == (LL_ADC_IT_AWD3)) ? 1UL : 0UL);
+}
 
 /**
  * @}

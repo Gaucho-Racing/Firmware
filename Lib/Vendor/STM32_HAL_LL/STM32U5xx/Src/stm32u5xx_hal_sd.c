@@ -1581,7 +1581,10 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
  * @param hsd: Pointer to sd handle
  * @retval HAL state
  */
-HAL_SD_StateTypeDef HAL_SD_GetState(const SD_HandleTypeDef *hsd) { return hsd->State; }
+HAL_SD_StateTypeDef HAL_SD_GetState(const SD_HandleTypeDef *hsd)
+{
+	return hsd->State;
+}
 
 /**
  * @brief  Return the SD error code
@@ -1589,7 +1592,10 @@ HAL_SD_StateTypeDef HAL_SD_GetState(const SD_HandleTypeDef *hsd) { return hsd->S
  *              the configuration information.
  * @retval SD Error Code
  */
-uint32_t HAL_SD_GetError(const SD_HandleTypeDef *hsd) { return hsd->ErrorCode; }
+uint32_t HAL_SD_GetError(const SD_HandleTypeDef *hsd)
+{
+	return hsd->ErrorCode;
+}
 
 /**
  * @brief Tx Transfer completed callbacks

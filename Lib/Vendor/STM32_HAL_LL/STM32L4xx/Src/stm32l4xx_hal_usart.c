@@ -2473,7 +2473,10 @@ functions
  *              the configuration information for the specified USART.
  * @retval USART handle state
  */
-HAL_USART_StateTypeDef HAL_USART_GetState(const USART_HandleTypeDef *husart) { return husart->State; }
+HAL_USART_StateTypeDef HAL_USART_GetState(const USART_HandleTypeDef *husart)
+{
+	return husart->State;
+}
 
 /**
  * @brief Return the USART error code.
@@ -2481,7 +2484,10 @@ HAL_USART_StateTypeDef HAL_USART_GetState(const USART_HandleTypeDef *husart) { r
  *              the configuration information for the specified USART.
  * @retval USART handle Error Code
  */
-uint32_t HAL_USART_GetError(const USART_HandleTypeDef *husart) { return husart->ErrorCode; }
+uint32_t HAL_USART_GetError(const USART_HandleTypeDef *husart)
+{
+	return husart->ErrorCode;
+}
 
 /**
  * @}

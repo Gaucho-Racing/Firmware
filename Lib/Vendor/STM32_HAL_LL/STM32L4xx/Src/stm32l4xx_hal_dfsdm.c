@@ -1126,7 +1126,10 @@ HAL_StatusTypeDef HAL_DFSDM_ChannelScdStop_IT(DFSDM_Channel_HandleTypeDef *hdfsd
  * @param  hdfsdm_channel DFSDM channel handle.
  * @retval Channel analog watchdog value.
  */
-int16_t HAL_DFSDM_ChannelGetAwdValue(const DFSDM_Channel_HandleTypeDef *hdfsdm_channel) { return (int16_t)hdfsdm_channel->Instance->CHWDATAR; }
+int16_t HAL_DFSDM_ChannelGetAwdValue(const DFSDM_Channel_HandleTypeDef *hdfsdm_channel)
+{
+	return (int16_t)hdfsdm_channel->Instance->CHWDATAR;
+}
 
 /**
  * @brief  This function allows to modify channel offset value.
@@ -2941,7 +2944,10 @@ HAL_DFSDM_Filter_StateTypeDef HAL_DFSDM_FilterGetState(const DFSDM_Filter_Handle
  * @param  hdfsdm_filter DFSDM filter handle.
  * @retval DFSDM filter error code.
  */
-uint32_t HAL_DFSDM_FilterGetError(const DFSDM_Filter_HandleTypeDef *hdfsdm_filter) { return hdfsdm_filter->ErrorCode; }
+uint32_t HAL_DFSDM_FilterGetError(const DFSDM_Filter_HandleTypeDef *hdfsdm_filter)
+{
+	return hdfsdm_filter->ErrorCode;
+}
 
 /**
  * @}

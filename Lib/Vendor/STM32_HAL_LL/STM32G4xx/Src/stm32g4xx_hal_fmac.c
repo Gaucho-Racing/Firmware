@@ -795,7 +795,10 @@ IT, DMA).
  *         contains the FMAC configuration information.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig) { return (FMAC_FilterConfig(hfmac, pConfig, PRELOAD_ACCESS_POLLING)); }
+HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig)
+{
+	return (FMAC_FilterConfig(hfmac, pConfig, PRELOAD_ACCESS_POLLING));
+}
 
 /**
  * @brief  Configure the FMAC filter.
@@ -808,7 +811,10 @@ HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterCo
  *         contains the FMAC configuration information.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig) { return (FMAC_FilterConfig(hfmac, pConfig, PRELOAD_ACCESS_DMA)); }
+HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig)
+{
+	return (FMAC_FilterConfig(hfmac, pConfig, PRELOAD_ACCESS_DMA));
+}
 
 /**
  * @brief  Preload the input (FIR, IIR) and output data (IIR) of the FMAC

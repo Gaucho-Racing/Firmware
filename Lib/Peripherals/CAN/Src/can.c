@@ -233,7 +233,10 @@ CANHandle *can_init(const CANConfig *config)
 	return canHandle;
 }
 
-inline void can_set_clksource(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
+inline void can_set_clksource(uint32_t clksource)
+{
+	LL_RCC_SetFDCANClockSource(clksource);
+}
 
 // only valid for #STM32G474x, must redefine for each family
 static int can_msp_init(CANHandle *canHandle, CANConfig *config)
@@ -339,14 +342,32 @@ static void can_tx_buffer_helper(CANHandle *handle)
 	}
 }
 
-void FDCAN1_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
-void FDCAN1_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
+void FDCAN1_IT0_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan1);
+}
+void FDCAN1_IT1_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan1);
+}
 
-void FDCAN2_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
-void FDCAN2_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
+void FDCAN2_IT0_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan2);
+}
+void FDCAN2_IT1_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan2);
+}
 
-void FDCAN3_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
-void FDCAN3_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
+void FDCAN3_IT0_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan3);
+}
+void FDCAN3_IT1_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan3);
+}
 
 void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
 {

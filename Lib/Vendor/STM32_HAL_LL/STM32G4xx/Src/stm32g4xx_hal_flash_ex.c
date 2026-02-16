@@ -469,7 +469,10 @@ HAL_StatusTypeDef HAL_FLASHEx_EnableSecMemProtection(uint32_t Bank)
  * @note   After calling this API, flash interface allow debugger intrusion.
  * @retval None
  */
-void HAL_FLASHEx_EnableDebugger(void) { FLASH->ACR |= FLASH_ACR_DBG_SWEN; }
+void HAL_FLASHEx_EnableDebugger(void)
+{
+	FLASH->ACR |= FLASH_ACR_DBG_SWEN;
+}
 
 /**
  * @brief  Disable Debugger.
@@ -477,7 +480,10 @@ void HAL_FLASHEx_EnableDebugger(void) { FLASH->ACR |= FLASH_ACR_DBG_SWEN; }
  * to break, see CPU register, etc...
  * @retval None
  */
-void HAL_FLASHEx_DisableDebugger(void) { FLASH->ACR &= ~FLASH_ACR_DBG_SWEN; }
+void HAL_FLASHEx_DisableDebugger(void)
+{
+	FLASH->ACR &= ~FLASH_ACR_DBG_SWEN;
+}
 
 /**
  * @}
@@ -1157,7 +1163,10 @@ static void FLASH_OB_GetSecMem(uint32_t SecBank, uint32_t *SecSize)
  *            @arg OB_BOOT_LOCK_ENABLE: Boot lock enabled
  *            @arg OB_BOOT_LOCK_DISABLE: Boot lock disabled
  */
-static uint32_t FLASH_OB_GetBootLock(void) { return (READ_REG(FLASH->SEC1R) & FLASH_SEC1R_BOOT_LOCK); }
+static uint32_t FLASH_OB_GetBootLock(void)
+{
+	return (READ_REG(FLASH->SEC1R) & FLASH_SEC1R_BOOT_LOCK);
+}
 
 /**
  * @brief  Return the Write Protection configuration into Option Bytes.

@@ -1075,7 +1075,10 @@ HAL_StatusTypeDef HAL_PKA_ECDSAVerif_IT(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifI
  * @param  hpka PKA handle
  * @retval 1 if signature is verified, 0 in other case
  */
-uint32_t HAL_PKA_ECDSAVerif_IsValidSignature(PKA_HandleTypeDef const *const hpka) { return (hpka->Instance->RAM[PKA_ECDSA_VERIF_OUT_RESULT] == 0xD60DU) ? 1UL : 0UL; }
+uint32_t HAL_PKA_ECDSAVerif_IsValidSignature(PKA_HandleTypeDef const *const hpka)
+{
+	return (hpka->Instance->RAM[PKA_ECDSA_VERIF_OUT_RESULT] == 0xD60DU) ? 1UL : 0UL;
+}
 
 /**
  * @brief  RSA CRT exponentiation in blocking mode.

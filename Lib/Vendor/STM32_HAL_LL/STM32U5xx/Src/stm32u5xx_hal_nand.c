@@ -2002,7 +2002,10 @@ HAL_StatusTypeDef HAL_NAND_GetECC(NAND_HandleTypeDef *hnand, uint32_t *ECCval, u
  *                the configuration information for NAND module.
  * @retval HAL state
  */
-HAL_NAND_StateTypeDef HAL_NAND_GetState(const NAND_HandleTypeDef *hnand) { return hnand->State; }
+HAL_NAND_StateTypeDef HAL_NAND_GetState(const NAND_HandleTypeDef *hnand)
+{
+	return hnand->State;
+}
 
 /**
  * @brief  NAND memory read status

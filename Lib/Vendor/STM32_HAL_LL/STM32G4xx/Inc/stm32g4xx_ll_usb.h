@@ -42,7 +42,9 @@ extern "C" {
  * @brief  USB Mode definition
  */
 
-typedef enum { USB_DEVICE_MODE = 0 } USB_ModeTypeDef;
+typedef enum {
+	USB_DEVICE_MODE = 0
+} USB_ModeTypeDef;
 
 /**
  * @brief  USB Instance Initialization Structure definition

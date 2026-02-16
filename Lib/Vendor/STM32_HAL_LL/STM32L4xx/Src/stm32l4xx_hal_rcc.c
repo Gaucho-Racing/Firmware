@@ -1414,7 +1414,10 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  * Frequency.
  * @retval HCLK frequency in Hz
  */
-uint32_t HAL_RCC_GetHCLKFreq(void) { return SystemCoreClock; }
+uint32_t HAL_RCC_GetHCLKFreq(void)
+{
+	return SystemCoreClock;
+}
 
 /**
  * @brief  Return the PCLK1 frequency.
@@ -1623,7 +1626,10 @@ void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t *pFL
  * @note   The Clock Security System can only be cleared by reset.
  * @retval None
  */
-void HAL_RCC_EnableCSS(void) { SET_BIT(RCC->CR, RCC_CR_CSSON); }
+void HAL_RCC_EnableCSS(void)
+{
+	SET_BIT(RCC->CR, RCC_CR_CSSON);
+}
 
 /**
  * @brief Handle the RCC Clock Security System interrupt request.

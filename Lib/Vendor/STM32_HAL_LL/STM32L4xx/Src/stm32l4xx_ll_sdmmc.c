@@ -377,7 +377,10 @@ HAL_StatusTypeDef SDMMC_PowerState_OFF(SDMMC_TypeDef *SDMMCx)
  *            - 0x02: Power UP
  *            - 0x03: Power ON
  */
-uint32_t SDMMC_GetPowerState(SDMMC_TypeDef *SDMMCx) { return (SDMMCx->POWER & SDMMC_POWER_PWRCTRL); }
+uint32_t SDMMC_GetPowerState(SDMMC_TypeDef *SDMMCx)
+{
+	return (SDMMCx->POWER & SDMMC_POWER_PWRCTRL);
+}
 
 /**
  * @brief  Configure the SDMMC command path according to the specified
@@ -414,7 +417,10 @@ HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx, SDMMC_CmdInitTypeDef 
  * @param  SDMMCx Pointer to SDMMC register base
  * @retval Command index of the last command response received
  */
-uint8_t SDMMC_GetCommandResponse(SDMMC_TypeDef *SDMMCx) { return (uint8_t)(SDMMCx->RESPCMD); }
+uint8_t SDMMC_GetCommandResponse(SDMMC_TypeDef *SDMMCx)
+{
+	return (uint8_t)(SDMMCx->RESPCMD);
+}
 
 /**
  * @brief  Return the response received from the card for the last command
@@ -479,14 +485,20 @@ HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx, SDMMC_DataInitTypeDef 
  * @param  SDMMCx Pointer to SDMMC register base
  * @retval Number of remaining data bytes to be transferred
  */
-uint32_t SDMMC_GetDataCounter(SDMMC_TypeDef *SDMMCx) { return (SDMMCx->DCOUNT); }
+uint32_t SDMMC_GetDataCounter(SDMMC_TypeDef *SDMMCx)
+{
+	return (SDMMCx->DCOUNT);
+}
 
 /**
  * @brief  Get the FIFO data
  * @param  SDMMCx Pointer to SDMMC register base
  * @retval Data received
  */
-uint32_t SDMMC_GetFIFOCount(SDMMC_TypeDef *SDMMCx) { return (SDMMCx->FIFO); }
+uint32_t SDMMC_GetFIFOCount(SDMMC_TypeDef *SDMMCx)
+{
+	return (SDMMCx->FIFO);
+}
 
 /**
  * @brief  Sets one of the two options of inserting read wait interval.

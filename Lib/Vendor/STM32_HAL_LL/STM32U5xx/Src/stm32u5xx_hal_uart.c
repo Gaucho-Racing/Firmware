@@ -2929,7 +2929,10 @@ HAL_StatusTypeDef HAL_MultiProcessor_DisableMuteMode(UART_HandleTypeDef *huart)
  * @param huart UART handle.
  * @retval None
  */
-void HAL_MultiProcessor_EnterMuteMode(UART_HandleTypeDef *huart) { __HAL_UART_SEND_REQ(huart, UART_MUTE_MODE_REQUEST); }
+void HAL_MultiProcessor_EnterMuteMode(UART_HandleTypeDef *huart)
+{
+	__HAL_UART_SEND_REQ(huart, UART_MUTE_MODE_REQUEST);
+}
 
 /**
  * @brief  Enable the UART transmitter and disable the UART receiver.
@@ -3046,7 +3049,10 @@ HAL_UART_StateTypeDef HAL_UART_GetState(const UART_HandleTypeDef *huart)
  *               the configuration information for the specified UART.
  * @retval UART Error Code
  */
-uint32_t HAL_UART_GetError(const UART_HandleTypeDef *huart) { return huart->ErrorCode; }
+uint32_t HAL_UART_GetError(const UART_HandleTypeDef *huart)
+{
+	return huart->ErrorCode;
+}
 /**
  * @}
  */

@@ -109,14 +109,20 @@ void HAL_PWR_DeInit(void)
  * the back-up domain.
  * @retval None
  */
-void HAL_PWR_EnableBkUpAccess(void) { SET_BIT(PWR->CR1, PWR_CR1_DBP); }
+void HAL_PWR_EnableBkUpAccess(void)
+{
+	SET_BIT(PWR->CR1, PWR_CR1_DBP);
+}
 
 /**
  * @brief Disable access to the backup domain
  *        (RTC registers, RTC backup data registers).
  * @retval None
  */
-void HAL_PWR_DisableBkUpAccess(void) { CLEAR_BIT(PWR->CR1, PWR_CR1_DBP); }
+void HAL_PWR_DisableBkUpAccess(void)
+{
+	CLEAR_BIT(PWR->CR1, PWR_CR1_DBP);
+}
 
 /**
  * @}
@@ -374,13 +380,19 @@ HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD)
  * @brief Enable the Power Voltage Detector (PVD).
  * @retval None
  */
-void HAL_PWR_EnablePVD(void) { SET_BIT(PWR->CR2, PWR_CR2_PVDE); }
+void HAL_PWR_EnablePVD(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_PVDE);
+}
 
 /**
  * @brief Disable the Power Voltage Detector (PVD).
  * @retval None
  */
-void HAL_PWR_DisablePVD(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_PVDE); }
+void HAL_PWR_DisablePVD(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_PVDE);
+}
 
 /**
  * @brief Enable the WakeUp PINx functionality.

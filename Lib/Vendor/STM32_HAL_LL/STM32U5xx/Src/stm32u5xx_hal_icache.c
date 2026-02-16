@@ -259,7 +259,10 @@ HAL_StatusTypeDef HAL_ICACHE_Disable(void)
  * @brief  Check whether the Instruction Cache is enabled or not.
  * @retval Status (0: disabled, 1: enabled)
  */
-uint32_t HAL_ICACHE_IsEnabled(void) { return ((READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) ? 1UL : 0UL); }
+uint32_t HAL_ICACHE_IsEnabled(void)
+{
+	return ((READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Invalidate the Instruction Cache.
@@ -411,14 +414,20 @@ HAL_StatusTypeDef HAL_ICACHE_Monitor_Reset(uint32_t MonitorType)
  * @note   Upon reaching the 32-bit maximum value, monitor does not wrap.
  * @retval Hit monitoring value
  */
-uint32_t HAL_ICACHE_Monitor_GetHitValue(void) { return (ICACHE->HMONR); }
+uint32_t HAL_ICACHE_Monitor_GetHitValue(void)
+{
+	return (ICACHE->HMONR);
+}
 
 /**
  * @brief  Get the Instruction Cache performance Miss monitoring value.
  * @note   Upon reaching the 32-bit maximum value, monitor does not wrap.
  * @retval Miss monitoring value
  */
-uint32_t HAL_ICACHE_Monitor_GetMissValue(void) { return (ICACHE->MMONR); }
+uint32_t HAL_ICACHE_Monitor_GetMissValue(void)
+{
+	return (ICACHE->MMONR);
+}
 
 /**
  * @}

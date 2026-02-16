@@ -2288,7 +2288,10 @@ HAL_StatusTypeDef HAL_OSPI_SetFifoThreshold(OSPI_HandleTypeDef *hospi, uint32_t 
  * @param  hospi : OSPI handle.
  * @retval Fifo threshold
  */
-uint32_t HAL_OSPI_GetFifoThreshold(const OSPI_HandleTypeDef *hospi) { return ((READ_BIT(hospi->Instance->CR, OCTOSPI_CR_FTHRES) >> OCTOSPI_CR_FTHRES_Pos) + 1U); }
+uint32_t HAL_OSPI_GetFifoThreshold(const OSPI_HandleTypeDef *hospi)
+{
+	return ((READ_BIT(hospi->Instance->CR, OCTOSPI_CR_FTHRES) >> OCTOSPI_CR_FTHRES_Pos) + 1U);
+}
 
 /** @brief Set OSPI timeout.
  * @param  hospi   : OSPI handle.
@@ -2306,7 +2309,10 @@ HAL_StatusTypeDef HAL_OSPI_SetTimeout(OSPI_HandleTypeDef *hospi, uint32_t Timeou
  * @param  hospi : OSPI handle
  * @retval OSPI Error Code
  */
-uint32_t HAL_OSPI_GetError(const OSPI_HandleTypeDef *hospi) { return hospi->ErrorCode; }
+uint32_t HAL_OSPI_GetError(const OSPI_HandleTypeDef *hospi)
+{
+	return hospi->ErrorCode;
+}
 
 /**
  * @brief  Return the OSPI handle state.
