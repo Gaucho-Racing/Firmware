@@ -3,6 +3,7 @@ IndentWidth: 8
 ColumnLimit: 200
 UseTab: Always
 BreakBeforeBraces: Linux
+BreakConstructorInitializers: BeforeComma
 AllowShortIfStatementsOnASingleLine: false
 AllowShortBlocksOnASingleLine: Empty
 IndentCaseLabels: true
