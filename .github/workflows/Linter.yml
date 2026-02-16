@@ -101,6 +101,8 @@ jobs:
     permissions:
       contents: read
       checks: write
+      id-token: write
+      attestations: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
