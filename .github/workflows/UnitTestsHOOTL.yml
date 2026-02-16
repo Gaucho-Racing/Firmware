@@ -83,7 +83,7 @@ jobs:
           echo "<details><summary>CMake Build</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          cmake --build --preset ${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -95,7 +95,7 @@ jobs:
           echo "<details><summary>CMake Build</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          cmake --build build/${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --build --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
@@ -232,7 +232,7 @@ jobs:
             echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cmake --build build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+            cmake --build --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -244,7 +244,7 @@ jobs:
             echo "<details><summary>CMake Build (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            cmake --build build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            cmake --build --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
