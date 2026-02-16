@@ -35,6 +35,70 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define NEOPIXEL_LED_COUNT 60U
+
+static Neopixel_Color neopixelColors[NEOPIXEL_LED_COUNT] = {
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE,
+	COLOR_PURPLE,
+	COLOR_WHITE,
+	COLOR_OFF,
+	COLOR_RED,
+	COLOR_ORANGE,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+};
 
 /* USER CODE END PD */
 
@@ -59,6 +123,8 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+NeopixelConfig neopixelConfig = {.SPI_Instance = SPI1, .SPI_FrequencyHz = 2656250U, .LatchTimeUs = 80U, .NumberOfNeopixels = 60U}; // TODO Expand with select configurable contents of MX_SPI1_Init
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -160,19 +226,20 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_SPI1_Init();
 	/* USER CODE BEGIN 2 */
-
+	NeopixelContext *neopixel_context = Neopixel_Setup(&neopixelConfig);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-
+		LOGOMATIC("Rotating colors...\n");
 		/* USER CODE BEGIN 3 */
 		LL_mDelay(500);
-		Neopixel_update();
-
-		LOGOMATIC("Hello world! \n");
+		Neopixel_WriteAll(neopixel_context, neopixelColors, sizeof(neopixelColors));
+		for (uint32_t i = 0; i < NEOPIXEL_LED_COUNT; i++) {
+			neopixelColors[i] = neopixelColors[(i + 1) % NEOPIXEL_LED_COUNT];
+		}
 	}
 }
 
