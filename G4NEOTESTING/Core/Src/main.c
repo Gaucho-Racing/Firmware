@@ -21,7 +21,6 @@
 
 #include "Logomatic.h"
 #include "gr_neopixel.h"
-#include "spi.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

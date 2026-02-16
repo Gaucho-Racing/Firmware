@@ -30,7 +30,6 @@ target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Core/Src/main.c
-		Core/Src/spi.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/syscalls.c
