@@ -108,6 +108,8 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     steps:
       - name: Checkout Pull Request
         uses: actions/checkout@v6
