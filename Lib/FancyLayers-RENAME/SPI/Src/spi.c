@@ -170,11 +170,20 @@ void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg)
 	}
 }
 
-void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]); }
+void SPI1_IRQHandler(void)
+{
+	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]);
+}
 
-void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]); }
+void SPI2_IRQHandler(void)
+{
+	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]);
+}
 
-void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
+void SPI3_IRQHandler(void)
+{
+	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]);
+}
 
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 {
@@ -410,4 +419,7 @@ void GR_SPI_Msg_Free(GR_SPI_Message *msg)
 	}
 }
 
-bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle) { return GR_CircularBuffer_IsEmpty(handle->rx_buffer); }
+bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle)
+{
+	return GR_CircularBuffer_IsEmpty(handle->rx_buffer);
+}
