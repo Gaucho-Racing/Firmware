@@ -6,7 +6,7 @@ endif
 
 define cmake_build
 	cmake --preset $(1)
-	cmake --build build/$(1)
+	cmake --build --preset $(1)
 endef
 
 .PHONY: clean Debug Release RelWithDebInfo MinSizeRel HOOTLTest sanitizer valgrind
