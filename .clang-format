@@ -3,7 +3,7 @@ IndentWidth: 8
 ColumnLimit: 200
 UseTab: Always
 BreakBeforeBraces: Linux
-BinPackLongBracedList: false
+AllowShortCompoundLiteralsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
 AllowShortBlocksOnASingleLine: Empty
 IndentCaseLabels: true
