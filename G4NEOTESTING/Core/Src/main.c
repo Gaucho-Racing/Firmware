@@ -90,7 +90,7 @@ void SystemClock_Config(void);
 void MX_SPI1_Init(void)
 {
 	LL_GPIO_InitTypeDef copi_pin = {
-	    .Pin = LL_GPIO_PIN_5,
+	    .Pin = NEOPIXEL_DIN_Pin,
 	    .Mode = LL_GPIO_MODE_ALTERNATE,
 	    .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
 	    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
@@ -98,7 +98,7 @@ void MX_SPI1_Init(void)
 	    .Alternate = LL_GPIO_AF_5,
 	};
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-	LL_GPIO_Init(GPIOB, &copi_pin);
+	LL_GPIO_Init(NEOPIXEL_DIN_GPIO_Port, &copi_pin);
 
 	LL_SPI_InitTypeDef sp1 = {
 	    .TransferDirection = LL_SPI_HALF_DUPLEX_TX,
