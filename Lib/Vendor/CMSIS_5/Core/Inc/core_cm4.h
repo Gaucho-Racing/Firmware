@@ -1902,7 +1902,10 @@ __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP
   field).
  */
-__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void) { return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos)); }
+__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void)
+{
+	return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
+}
 
 /**
   \brief   Enable Interrupt

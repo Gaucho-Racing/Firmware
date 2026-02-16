@@ -24,7 +24,12 @@ typedef enum {
 } Pre_Scaler_Values;
 
 /// @brief Number of bits used to store the converted data, defines range/resolution of data
-typedef enum { RESOLUTION_12 = LL_ADC_RESOLUTION_12B, RESOLUTION_10 = LL_ADC_RESOLUTION_10B, RESOLUTION_8 = LL_ADC_RESOLUTION_8B, RESOLUTION_6 = LL_ADC_RESOLUTION_6B } Resolution;
+typedef enum {
+	RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
+	RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
+	RESOLUTION_8 = LL_ADC_RESOLUTION_8B,
+	RESOLUTION_6 = LL_ADC_RESOLUTION_6B
+} Resolution;
 
 /// @brief Struct for pin initialization
 typedef struct {
@@ -103,7 +108,12 @@ void ADC_Init(ADC_Init_Values *Init_Values);
 
 //--------------------------------------DMA Initialization-------------------------------------
 /// @brief Priority of DMA transfer
-typedef enum { LOW = LL_DMA_PRIORITY_LOW, MEDIUM = LL_DMA_PRIORITY_MEDIUM, HIGH = LL_DMA_PRIORITY_HIGH, VERYHIGH = LL_DMA_PRIORITY_VERYHIGH } DMA_Priority;
+typedef enum {
+	LOW = LL_DMA_PRIORITY_LOW,
+	MEDIUM = LL_DMA_PRIORITY_MEDIUM,
+	HIGH = LL_DMA_PRIORITY_HIGH,
+	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
+} DMA_Priority;
 
 /// @brief DMA channels
 typedef enum {
@@ -118,7 +128,11 @@ typedef enum {
 } DMA_Channel;
 
 /// @brief The data size of the data to be transfered by DMA
-typedef enum { Byte, Half_Word, Word } DMA_Data_Size;
+typedef enum {
+	Byte,
+	Half_Word,
+	Word
+} DMA_Data_Size;
 
 /// @brief The struct used to initialize each DMA
 ///

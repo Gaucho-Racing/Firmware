@@ -220,21 +220,30 @@ typedef struct {
  * @rmtoll CR           EN            LL_ICACHE_Enable
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_Enable(void) { SET_BIT(ICACHE->CR, ICACHE_CR_EN); }
+__STATIC_INLINE void LL_ICACHE_Enable(void)
+{
+	SET_BIT(ICACHE->CR, ICACHE_CR_EN);
+}
 
 /**
  * @brief  Disable the ICACHE.
  * @rmtoll CR           EN            LL_ICACHE_Disable
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_Disable(void) { CLEAR_BIT(ICACHE->CR, ICACHE_CR_EN); }
+__STATIC_INLINE void LL_ICACHE_Disable(void)
+{
+	CLEAR_BIT(ICACHE->CR, ICACHE_CR_EN);
+}
 
 /**
  * @brief  Return if ICACHE is enabled or not.
  * @rmtoll CR           EN            LL_ICACHE_IsEnabled
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsEnabled(void) { return ((READ_BIT(ICACHE->CR, ICACHE_CR_EN) == (ICACHE_CR_EN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsEnabled(void)
+{
+	return ((READ_BIT(ICACHE->CR, ICACHE_CR_EN) == (ICACHE_CR_EN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Select the ICACHE operating mode.
@@ -244,7 +253,10 @@ __STATIC_INLINE uint32_t LL_ICACHE_IsEnabled(void) { return ((READ_BIT(ICACHE->C
  *         @arg @ref LL_ICACHE_2WAYS
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_SetMode(uint32_t Mode) { MODIFY_REG(ICACHE->CR, ICACHE_CR_WAYSEL, Mode); }
+__STATIC_INLINE void LL_ICACHE_SetMode(uint32_t Mode)
+{
+	MODIFY_REG(ICACHE->CR, ICACHE_CR_WAYSEL, Mode);
+}
 
 /**
  * @brief  Get the selected ICACHE operating mode.
@@ -253,7 +265,10 @@ __STATIC_INLINE void LL_ICACHE_SetMode(uint32_t Mode) { MODIFY_REG(ICACHE->CR, I
  *         @arg @ref LL_ICACHE_1WAY
  *         @arg @ref LL_ICACHE_2WAYS
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetMode(void) { return (READ_BIT(ICACHE->CR, ICACHE_CR_WAYSEL)); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetMode(void)
+{
+	return (READ_BIT(ICACHE->CR, ICACHE_CR_WAYSEL));
+}
 
 /**
  * @brief  Invalidate the ICACHE.
@@ -261,7 +276,10 @@ __STATIC_INLINE uint32_t LL_ICACHE_GetMode(void) { return (READ_BIT(ICACHE->CR, 
  * @rmtoll CR           CACHEINV      LL_ICACHE_Invalidate
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_Invalidate(void) { SET_BIT(ICACHE->CR, ICACHE_CR_CACHEINV); }
+__STATIC_INLINE void LL_ICACHE_Invalidate(void)
+{
+	SET_BIT(ICACHE->CR, ICACHE_CR_CACHEINV);
+}
 
 /**
  * @}
@@ -282,7 +300,10 @@ __STATIC_INLINE void LL_ICACHE_Invalidate(void) { SET_BIT(ICACHE->CR, ICACHE_CR_
  *         @arg @ref LL_ICACHE_MONITOR_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_EnableMonitors(uint32_t Monitors) { SET_BIT(ICACHE->CR, Monitors); }
+__STATIC_INLINE void LL_ICACHE_EnableMonitors(uint32_t Monitors)
+{
+	SET_BIT(ICACHE->CR, Monitors);
+}
 
 /**
  * @brief  Disable the hit/miss monitor(s).
@@ -295,7 +316,10 @@ __STATIC_INLINE void LL_ICACHE_EnableMonitors(uint32_t Monitors) { SET_BIT(ICACH
  *         @arg @ref LL_ICACHE_MONITOR_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_DisableMonitors(uint32_t Monitors) { CLEAR_BIT(ICACHE->CR, Monitors); }
+__STATIC_INLINE void LL_ICACHE_DisableMonitors(uint32_t Monitors)
+{
+	CLEAR_BIT(ICACHE->CR, Monitors);
+}
 
 /**
  * @brief  Check if the monitor(s) is(are) enabled or disabled.
@@ -308,7 +332,10 @@ __STATIC_INLINE void LL_ICACHE_DisableMonitors(uint32_t Monitors) { CLEAR_BIT(IC
  *         @arg @ref LL_ICACHE_MONITOR_ALL
  * @retval State of parameter value (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledMonitors(uint32_t Monitors) { return ((READ_BIT(ICACHE->CR, Monitors) == (Monitors)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledMonitors(uint32_t Monitors)
+{
+	return ((READ_BIT(ICACHE->CR, Monitors) == (Monitors)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Reset the hit/miss monitor(s).
@@ -335,7 +362,10 @@ __STATIC_INLINE void LL_ICACHE_ResetMonitors(uint32_t Monitors)
  * @rmtoll HMONR        HITMON        LL_ICACHE_GetHitMonitor
  * @retval Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetHitMonitor(void) { return (ICACHE->HMONR); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetHitMonitor(void)
+{
+	return (ICACHE->HMONR);
+}
 
 /**
  * @brief  Get the Miss monitor.
@@ -343,7 +373,10 @@ __STATIC_INLINE uint32_t LL_ICACHE_GetHitMonitor(void) { return (ICACHE->HMONR);
  * @rmtoll MMONR        MISSMON       LL_ICACHE_GetMissMonitor
  * @retval Value between Min_Data=0 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetMissMonitor(void) { return (ICACHE->MMONR); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetMissMonitor(void)
+{
+	return (ICACHE->MMONR);
+}
 
 /**
  * @}
@@ -358,42 +391,60 @@ __STATIC_INLINE uint32_t LL_ICACHE_GetMissMonitor(void) { return (ICACHE->MMONR)
  * @rmtoll IER          BSYENDIE      LL_ICACHE_EnableIT_BSYEND
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_EnableIT_BSYEND(void) { SET_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE); }
+__STATIC_INLINE void LL_ICACHE_EnableIT_BSYEND(void)
+{
+	SET_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE);
+}
 
 /**
  * @brief  Disable BSYEND interrupt.
  * @rmtoll IER          BSYENDIE      LL_ICACHE_DisableIT_BSYEND
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_DisableIT_BSYEND(void) { CLEAR_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE); }
+__STATIC_INLINE void LL_ICACHE_DisableIT_BSYEND(void)
+{
+	CLEAR_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE);
+}
 
 /**
  * @brief  Check if the BSYEND Interrupt is enabled or disabled.
  * @rmtoll IER          BSYENDIE      LL_ICACHE_IsEnabledIT_BSYEND
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledIT_BSYEND(void) { return ((READ_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE) == (ICACHE_IER_BSYENDIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledIT_BSYEND(void)
+{
+	return ((READ_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE) == (ICACHE_IER_BSYENDIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable ERR interrupt.
  * @rmtoll IER          ERRIE         LL_ICACHE_EnableIT_ERR
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_EnableIT_ERR(void) { SET_BIT(ICACHE->IER, ICACHE_IER_ERRIE); }
+__STATIC_INLINE void LL_ICACHE_EnableIT_ERR(void)
+{
+	SET_BIT(ICACHE->IER, ICACHE_IER_ERRIE);
+}
 
 /**
  * @brief  Disable ERR interrupt.
  * @rmtoll IER          ERRIE        LL_ICACHE_DisableIT_ERR
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_DisableIT_ERR(void) { CLEAR_BIT(ICACHE->IER, ICACHE_IER_ERRIE); }
+__STATIC_INLINE void LL_ICACHE_DisableIT_ERR(void)
+{
+	CLEAR_BIT(ICACHE->IER, ICACHE_IER_ERRIE);
+}
 
 /**
  * @brief  Check if the ERR Interrupt is enabled or disabled.
  * @rmtoll IER          ERRIE         LL_ICACHE_IsEnabledIT_ERR
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledIT_ERR(void) { return ((READ_BIT(ICACHE->IER, ICACHE_IER_ERRIE) == (ICACHE_IER_ERRIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledIT_ERR(void)
+{
+	return ((READ_BIT(ICACHE->IER, ICACHE_IER_ERRIE) == (ICACHE_IER_ERRIE)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -408,35 +459,50 @@ __STATIC_INLINE uint32_t LL_ICACHE_IsEnabledIT_ERR(void) { return ((READ_BIT(ICA
  * @rmtoll SR           BUSYF         LL_ICACHE_IsActiveFlag_BUSY
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsActiveFlag_BUSY(void) { return ((READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) == (ICACHE_SR_BUSYF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsActiveFlag_BUSY(void)
+{
+	return ((READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) == (ICACHE_SR_BUSYF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of an operation end flag.
  * @rmtoll SR           BSYEND       LL_ICACHE_IsActiveFlag_BSYEND
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsActiveFlag_BSYEND(void) { return ((READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == (ICACHE_SR_BSYENDF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsActiveFlag_BSYEND(void)
+{
+	return ((READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == (ICACHE_SR_BSYENDF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of an error flag.
  * @rmtoll SR           ERRF          LL_ICACHE_IsActiveFlag_ERR
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsActiveFlag_ERR(void) { return ((READ_BIT(ICACHE->SR, ICACHE_SR_ERRF) == (ICACHE_SR_ERRF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsActiveFlag_ERR(void)
+{
+	return ((READ_BIT(ICACHE->SR, ICACHE_SR_ERRF) == (ICACHE_SR_ERRF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear busy end of operation flag.
  * @rmtoll FCR          CBSYENDF      LL_ICACHE_ClearFlag_BSYEND
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_ClearFlag_BSYEND(void) { WRITE_REG(ICACHE->FCR, ICACHE_FCR_CBSYENDF); }
+__STATIC_INLINE void LL_ICACHE_ClearFlag_BSYEND(void)
+{
+	WRITE_REG(ICACHE->FCR, ICACHE_FCR_CBSYENDF);
+}
 
 /**
  * @brief  Clear error flag.
  * @rmtoll FCR          ERRF          LL_ICACHE_ClearFlag_ERR
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_ClearFlag_ERR(void) { WRITE_REG(ICACHE->FCR, ICACHE_FCR_CERRF); }
+__STATIC_INLINE void LL_ICACHE_ClearFlag_ERR(void)
+{
+	WRITE_REG(ICACHE->FCR, ICACHE_FCR_CERRF);
+}
 
 /**
  * @}
@@ -457,7 +523,10 @@ __STATIC_INLINE void LL_ICACHE_ClearFlag_ERR(void) { WRITE_REG(ICACHE->FCR, ICAC
  *         @arg @ref LL_ICACHE_REGION_3
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_EnableRegion(uint32_t Region) { SET_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_REN); }
+__STATIC_INLINE void LL_ICACHE_EnableRegion(uint32_t Region)
+{
+	SET_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_REN);
+}
 
 /**
  * @brief  Disable the remapped memory region.
@@ -469,7 +538,10 @@ __STATIC_INLINE void LL_ICACHE_EnableRegion(uint32_t Region) { SET_BIT(*((__IO u
  *         @arg @ref LL_ICACHE_REGION_3
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_DisableRegion(uint32_t Region) { CLEAR_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_REN); }
+__STATIC_INLINE void LL_ICACHE_DisableRegion(uint32_t Region)
+{
+	CLEAR_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_REN);
+}
 
 /**
  * @brief  Return if remapped memory region is enabled or not.
@@ -481,7 +553,10 @@ __STATIC_INLINE void LL_ICACHE_DisableRegion(uint32_t Region) { CLEAR_BIT(*((__I
  *         @arg @ref LL_ICACHE_REGION_3
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledRegion(uint32_t Region) { return ((READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_REN) == (ICACHE_CRRx_REN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_ICACHE_IsEnabledRegion(uint32_t Region)
+{
+	return ((READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_REN) == (ICACHE_CRRx_REN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Select the memory remapped region base address.
@@ -514,7 +589,10 @@ __STATIC_INLINE void LL_ICACHE_SetRegionBaseAddress(uint32_t Region, uint32_t Ad
  *         @arg @ref LL_ICACHE_REGION_3
  * @retval Address  Alias address in the Code region
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetRegionBaseAddress(uint32_t Region) { return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_BASEADDR) << 21U); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetRegionBaseAddress(uint32_t Region)
+{
+	return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_BASEADDR) << 21U);
+}
 
 /**
  * @brief  Select the memory remapped region address.
@@ -569,7 +647,10 @@ __STATIC_INLINE uint32_t LL_ICACHE_GetRegionRemapAddress(uint32_t Region)
  *         @arg @ref LL_ICACHE_REGIONSIZE_128MB
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_SetRegionSize(uint32_t Region, uint32_t Size) { MODIFY_REG(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_RSIZE, (Size << ICACHE_CRRx_RSIZE_Pos)); }
+__STATIC_INLINE void LL_ICACHE_SetRegionSize(uint32_t Region, uint32_t Size)
+{
+	MODIFY_REG(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_RSIZE, (Size << ICACHE_CRRx_RSIZE_Pos));
+}
 
 /**
  * @brief  Get the selected the memory remapped region size.
@@ -588,7 +669,10 @@ __STATIC_INLINE void LL_ICACHE_SetRegionSize(uint32_t Region, uint32_t Size) { M
  *         @arg @ref LL_ICACHE_REGIONSIZE_64MB
  *         @arg @ref LL_ICACHE_REGIONSIZE_128MB
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetRegionSize(uint32_t Region) { return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_RSIZE) >> ICACHE_CRRx_RSIZE_Pos); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetRegionSize(uint32_t Region)
+{
+	return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_RSIZE) >> ICACHE_CRRx_RSIZE_Pos);
+}
 
 /**
  * @brief  Select the memory remapped region output burst type.
@@ -603,7 +687,10 @@ __STATIC_INLINE uint32_t LL_ICACHE_GetRegionSize(uint32_t Region) { return (READ
  *         @arg @ref LL_ICACHE_OUTPUT_BURST_INCR
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_SetRegionOutputBurstType(uint32_t Region, uint32_t Type) { MODIFY_REG(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_HBURST, Type); }
+__STATIC_INLINE void LL_ICACHE_SetRegionOutputBurstType(uint32_t Region, uint32_t Type)
+{
+	MODIFY_REG(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_HBURST, Type);
+}
 
 /**
  * @brief  Get the selected the memory remapped region output burst type.
@@ -617,7 +704,10 @@ __STATIC_INLINE void LL_ICACHE_SetRegionOutputBurstType(uint32_t Region, uint32_
  *         @arg @ref LL_ICACHE_OUTPUT_BURST_WRAP
  *         @arg @ref LL_ICACHE_OUTPUT_BURST_INCR
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetRegionOutputBurstType(uint32_t Region) { return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_HBURST)); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetRegionOutputBurstType(uint32_t Region)
+{
+	return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_HBURST));
+}
 
 /**
  * @brief  Select the memory remapped region cache master port.
@@ -632,7 +722,10 @@ __STATIC_INLINE uint32_t LL_ICACHE_GetRegionOutputBurstType(uint32_t Region) { r
  *         @arg @ref LL_ICACHE_MASTER2_PORT
  * @retval None
  */
-__STATIC_INLINE void LL_ICACHE_SetRegionMasterPort(uint32_t Region, uint32_t Port) { MODIFY_REG(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_MSTSEL, Port); }
+__STATIC_INLINE void LL_ICACHE_SetRegionMasterPort(uint32_t Region, uint32_t Port)
+{
+	MODIFY_REG(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_MSTSEL, Port);
+}
 
 /**
  * @brief  Get the selected the memory remapped region cache master port.
@@ -646,7 +739,10 @@ __STATIC_INLINE void LL_ICACHE_SetRegionMasterPort(uint32_t Region, uint32_t Por
  *         @arg @ref LL_ICACHE_MASTER1_PORT
  *         @arg @ref LL_ICACHE_MASTER2_PORT
  */
-__STATIC_INLINE uint32_t LL_ICACHE_GetRegionMasterPort(uint32_t Region) { return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_MSTSEL)); }
+__STATIC_INLINE uint32_t LL_ICACHE_GetRegionMasterPort(uint32_t Region)
+{
+	return (READ_BIT(*((__IO uint32_t *)(&(ICACHE->CRR0) + (1U * Region))), ICACHE_CRRx_MSTSEL));
+}
 
 /**
  * @}

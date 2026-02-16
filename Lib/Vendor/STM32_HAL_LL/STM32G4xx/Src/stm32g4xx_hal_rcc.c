@@ -1058,7 +1058,10 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  * Frequency.
  * @retval HCLK frequency in Hz
  */
-uint32_t HAL_RCC_GetHCLKFreq(void) { return SystemCoreClock; }
+uint32_t HAL_RCC_GetHCLKFreq(void)
+{
+	return SystemCoreClock;
+}
 
 /**
  * @brief  Return the PCLK1 frequency.
@@ -1214,7 +1217,10 @@ void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t *pFL
  * @note   The Clock Security System can only be cleared by reset.
  * @retval None
  */
-void HAL_RCC_EnableCSS(void) { SET_BIT(RCC->CR, RCC_CR_CSSON); }
+void HAL_RCC_EnableCSS(void)
+{
+	SET_BIT(RCC->CR, RCC_CR_CSSON);
+}
 
 /**
  * @brief  Enable the LSE Clock Security System.
@@ -1226,7 +1232,10 @@ void HAL_RCC_EnableCSS(void) { SET_BIT(RCC->CR, RCC_CR_CSSON); }
  * failure detection.
  * @retval None
  */
-void HAL_RCC_EnableLSECSS(void) { SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON); }
+void HAL_RCC_EnableLSECSS(void)
+{
+	SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON);
+}
 
 /**
  * @brief  Disable the LSE Clock Security System.
@@ -1234,7 +1243,10 @@ void HAL_RCC_EnableLSECSS(void) { SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON); }
  * @note   The Clock Security System can only be cleared by reset otherwise.
  * @retval None
  */
-void HAL_RCC_DisableLSECSS(void) { CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSECSSON); }
+void HAL_RCC_DisableLSECSS(void)
+{
+	CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSECSSON);
+}
 
 /**
  * @brief Handle the RCC Clock Security System interrupt request.

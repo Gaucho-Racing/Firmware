@@ -587,7 +587,10 @@ functions
  *            @arg FLASH_FLAG_PEMPTY : FLASH Boot from not programmed flash
  * (apply only for STM32L43x/STM32L44x devices)
  */
-uint32_t HAL_FLASH_GetError(void) { return pFlash.ErrorCode; }
+uint32_t HAL_FLASH_GetError(void)
+{
+	return pFlash.ErrorCode;
+}
 
 /**
  * @}

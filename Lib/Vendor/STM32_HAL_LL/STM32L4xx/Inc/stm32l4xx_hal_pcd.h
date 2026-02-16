@@ -45,7 +45,13 @@ extern "C" {
 /**
  * @brief  PCD State structure definition
  */
-typedef enum { HAL_PCD_STATE_RESET = 0x00, HAL_PCD_STATE_READY = 0x01, HAL_PCD_STATE_ERROR = 0x02, HAL_PCD_STATE_BUSY = 0x03, HAL_PCD_STATE_TIMEOUT = 0x04 } PCD_StateTypeDef;
+typedef enum {
+	HAL_PCD_STATE_RESET = 0x00,
+	HAL_PCD_STATE_READY = 0x01,
+	HAL_PCD_STATE_ERROR = 0x02,
+	HAL_PCD_STATE_BUSY = 0x03,
+	HAL_PCD_STATE_TIMEOUT = 0x04
+} PCD_StateTypeDef;
 
 /* Device LPM suspend state */
 typedef enum {

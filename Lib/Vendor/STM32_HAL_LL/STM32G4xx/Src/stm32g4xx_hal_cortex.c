@@ -264,7 +264,10 @@ void HAL_NVIC_SystemReset(void)
  * @retval status:  - 0  Function succeeded.
  *                  - 1  Function failed.
  */
-uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb) { return SysTick_Config(TicksNumb); }
+uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
+{
+	return SysTick_Config(TicksNumb);
+}
 /**
  * @}
  */
@@ -420,7 +423,10 @@ void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource)
  * @brief  Handle SYSTICK interrupt request.
  * @retval None
  */
-void HAL_SYSTICK_IRQHandler(void) { HAL_SYSTICK_Callback(); }
+void HAL_SYSTICK_IRQHandler(void)
+{
+	HAL_SYSTICK_Callback();
+}
 
 /**
  * @brief  SYSTICK callback.

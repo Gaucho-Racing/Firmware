@@ -561,7 +561,10 @@ functions
  *            @arg HAL_FLASH_ERROR_PGS: FLASH Programming sequence error
  *            @arg HAL_FLASH_ERROR_OPTW: FLASH Option modification error
  */
-uint32_t HAL_FLASH_GetError(void) { return pFlash.ErrorCode; }
+uint32_t HAL_FLASH_GetError(void)
+{
+	return pFlash.ErrorCode;
+}
 
 /**
  * @}

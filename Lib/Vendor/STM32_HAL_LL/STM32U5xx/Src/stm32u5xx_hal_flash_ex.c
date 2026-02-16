@@ -630,7 +630,10 @@ void HAL_FLASHEx_ConfigPrivMode(uint32_t PrivMode)
  *            @arg FLASH_NSPRIV_DENIED:  access to Flash registers is denied
  *                                       to unprivilege accessP
  */
-uint32_t HAL_FLASHEx_GetPrivMode(void) { return (FLASH->PRIVCFGR & (FLASH_PRIVCFGR_SPRIV | FLASH_PRIVCFGR_NSPRIV)); }
+uint32_t HAL_FLASHEx_GetPrivMode(void)
+{
+	return (FLASH->PRIVCFGR & (FLASH_PRIVCFGR_SPRIV | FLASH_PRIVCFGR_NSPRIV));
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -676,7 +679,10 @@ HAL_StatusTypeDef HAL_FLASHEx_ConfigSecInversion(uint32_t SecInvState)
  * inverted
  *            @arg FLASH_SEC_INV_ENABLE: Security state of Flash is inverted
  */
-uint32_t HAL_FLASHEx_GetSecInversion(void) { return (FLASH->SECCR & FLASH_SECCR_INV); }
+uint32_t HAL_FLASHEx_GetSecInversion(void)
+{
+	return (FLASH->SECCR & FLASH_SECCR_INV);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**
@@ -787,7 +793,10 @@ HAL_StatusTypeDef HAL_FLASHEx_ConfigLowPowerRead(uint32_t ConfigLPM)
  *            @arg FLASH_LPM_ENABLE: Flash is in low-power read mode
  *            @arg FLASH_LPM_DISABLE: Flash is in normal read mode
  */
-uint32_t HAL_FLASHEx_GetLowPowerRead(void) { return (FLASH->ACR & FLASH_ACR_LPM); }
+uint32_t HAL_FLASHEx_GetLowPowerRead(void)
+{
+	return (FLASH->ACR & FLASH_ACR_LPM);
+}
 
 /**
  * @brief  Return the on-going Flash Operation. After a system reset, return
@@ -1513,7 +1522,10 @@ static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, u
  *            @arg OB_BOOT_LOCK_DISABLE: Boot Lock mode deactivated
  *            @arg OB_BOOT_LOCK_ENABLE: Boot Lock mode activated
  */
-static uint32_t FLASH_OB_GetBootLock(void) { return (FLASH->SECBOOTADD0R & FLASH_SECBOOTADD0R_BOOT_LOCK); }
+static uint32_t FLASH_OB_GetBootLock(void)
+{
+	return (FLASH->SECBOOTADD0R & FLASH_SECBOOTADD0R_BOOT_LOCK);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**

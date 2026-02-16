@@ -310,7 +310,10 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
  *      implementations in user file.
  * @retval None
  */
-__weak void HAL_IncTick(void) { uwTick += uwTickFreq; }
+__weak void HAL_IncTick(void)
+{
+	uwTick += uwTickFreq;
+}
 
 /**
  * @brief Provides a tick value in millisecond.
@@ -318,13 +321,19 @@ __weak void HAL_IncTick(void) { uwTick += uwTickFreq; }
  *       implementations in user file.
  * @retval tick value
  */
-__weak uint32_t HAL_GetTick(void) { return uwTick; }
+__weak uint32_t HAL_GetTick(void)
+{
+	return uwTick;
+}
 
 /**
  * @brief This function returns a tick priority.
  * @retval tick priority
  */
-uint32_t HAL_GetTickPrio(void) { return uwTickPrio; }
+uint32_t HAL_GetTickPrio(void)
+{
+	return uwTickPrio;
+}
 
 /**
  * @brief Set new tick Freq.
@@ -361,7 +370,10 @@ HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq)
  * @retval Tick frequency.
  *         Value of @ref HAL_TickFreqTypeDef.
  */
-uint32_t HAL_GetTickFreq(void) { return uwTickFreq; }
+uint32_t HAL_GetTickFreq(void)
+{
+	return uwTickFreq;
+}
 
 /**
  * @brief This function provides minimum delay (in milliseconds) based
@@ -423,40 +435,58 @@ __weak void HAL_ResumeTick(void)
  * @brief  Returns the HAL revision.
  * @retval version : 0xXYZR (8bits for each decimal, R for RC)
  */
-uint32_t HAL_GetHalVersion(void) { return __STM32G4xx_HAL_VERSION; }
+uint32_t HAL_GetHalVersion(void)
+{
+	return __STM32G4xx_HAL_VERSION;
+}
 
 /**
  * @brief  Returns the device revision identifier.
  * @retval Device revision identifier
  */
-uint32_t HAL_GetREVID(void) { return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16U); }
+uint32_t HAL_GetREVID(void)
+{
+	return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16U);
+}
 
 /**
  * @brief  Returns the device identifier.
  * @retval Device identifier
  */
-uint32_t HAL_GetDEVID(void) { return (DBGMCU->IDCODE & DBGMCU_IDCODE_DEV_ID); }
+uint32_t HAL_GetDEVID(void)
+{
+	return (DBGMCU->IDCODE & DBGMCU_IDCODE_DEV_ID);
+}
 
 /**
  * @brief  Return the first word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw0(void) { return (READ_REG(*((uint32_t *)UID_BASE))); }
+uint32_t HAL_GetUIDw0(void)
+{
+	return (READ_REG(*((uint32_t *)UID_BASE)));
+}
 
 /**
  * @brief  Return the second word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw1(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 4U)))); }
+uint32_t HAL_GetUIDw1(void)
+{
+	return (READ_REG(*((uint32_t *)(UID_BASE + 4U))));
+}
 
 /**
  * @brief  Return the third word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw2(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 8U)))); }
+uint32_t HAL_GetUIDw2(void)
+{
+	return (READ_REG(*((uint32_t *)(UID_BASE + 8U))));
+}
 
 /**
  * @}
@@ -482,37 +512,55 @@ uint32_t HAL_GetUIDw2(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 8U))));
  * @brief  Enable the Debug Module during SLEEP mode.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGSleepMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP); }
+void HAL_DBGMCU_EnableDBGSleepMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+}
 
 /**
  * @brief  Disable the Debug Module during SLEEP mode.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGSleepMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP); }
+void HAL_DBGMCU_DisableDBGSleepMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+}
 
 /**
  * @brief  Enable the Debug Module during STOP0/STOP1/STOP2 modes.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGStopMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+void HAL_DBGMCU_EnableDBGStopMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Disable the Debug Module during STOP0/STOP1/STOP2 modes.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGStopMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+void HAL_DBGMCU_DisableDBGStopMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Enable the Debug Module during STANDBY mode.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGStandbyMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+void HAL_DBGMCU_EnableDBGStandbyMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @brief  Disable the Debug Module during STANDBY mode.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+void HAL_DBGMCU_DisableDBGStandbyMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @}
@@ -561,7 +609,10 @@ void HAL_SYSCFG_CCMSRAMErase(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableMemorySwappingBank(void) { SET_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE); }
+void HAL_SYSCFG_EnableMemorySwappingBank(void)
+{
+	SET_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE);
+}
 
 /**
  * @brief  Disable the Internal FLASH Bank Swapping.
@@ -574,7 +625,10 @@ void HAL_SYSCFG_EnableMemorySwappingBank(void) { SET_BIT(SYSCFG->MEMRMP, SYSCFG_
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableMemorySwappingBank(void) { CLEAR_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE); }
+void HAL_SYSCFG_DisableMemorySwappingBank(void)
+{
+	CLEAR_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE);
+}
 
 #if defined(VREFBUF)
 /**
@@ -661,7 +715,10 @@ HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableVREFBUF(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
+void HAL_SYSCFG_DisableVREFBUF(void)
+{
+	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+}
 #endif /* VREFBUF */
 
 /**
@@ -669,28 +726,40 @@ void HAL_SYSCFG_DisableVREFBUF(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR)
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableIOSwitchBooster(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+void HAL_SYSCFG_EnableIOSwitchBooster(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Disable the I/O analog switch voltage booster
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableIOSwitchBooster(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+void HAL_SYSCFG_DisableIOSwitchBooster(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Enable the I/O analog switch voltage by VDD
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableIOSwitchVDD(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD); }
+void HAL_SYSCFG_EnableIOSwitchVDD(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD);
+}
 
 /**
  * @brief  Disable the I/O analog switch voltage by VDD
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableIOSwitchVDD(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD); }
+void HAL_SYSCFG_DisableIOSwitchVDD(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD);
+}
 
 /** @brief  CCMSRAM page write protection enable
  * @param Page: This parameter is a long 32bit value and can be a value of @ref

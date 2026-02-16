@@ -91,14 +91,20 @@ typedef struct {
  * @retval None
  */
 
-__STATIC_INLINE void LL_DLYB_Enable(DLYB_TypeDef *DLYBx) { SET_BIT(DLYBx->CR, DLYB_CR_DEN); }
+__STATIC_INLINE void LL_DLYB_Enable(DLYB_TypeDef *DLYBx)
+{
+	SET_BIT(DLYBx->CR, DLYB_CR_DEN);
+}
 
 /** @brief  Disable the DLYB.
  * @param  DLYBx DLYB Instance.
  * @retval None
  */
 
-__STATIC_INLINE void LL_DLYB_Disable(DLYB_TypeDef *DLYBx) { CLEAR_BIT(DLYBx->CR, DLYB_CR_DEN); }
+__STATIC_INLINE void LL_DLYB_Disable(DLYB_TypeDef *DLYBx)
+{
+	CLEAR_BIT(DLYBx->CR, DLYB_CR_DEN);
+}
 
 /**
  * @}

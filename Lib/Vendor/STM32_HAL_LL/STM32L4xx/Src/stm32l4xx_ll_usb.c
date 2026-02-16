@@ -1043,7 +1043,10 @@ uint32_t USB_ReadDevInEPInterrupt(const USB_OTG_GlobalTypeDef *USBx, uint8_t epn
  * @param  interrupt  flag
  * @retval None
  */
-void USB_ClearInterrupts(USB_OTG_GlobalTypeDef *USBx, uint32_t interrupt) { USBx->GINTSTS &= interrupt; }
+void USB_ClearInterrupts(USB_OTG_GlobalTypeDef *USBx, uint32_t interrupt)
+{
+	USBx->GINTSTS &= interrupt;
+}
 
 /**
  * @brief  Returns USB core mode
@@ -1053,7 +1056,10 @@ void USB_ClearInterrupts(USB_OTG_GlobalTypeDef *USBx, uint32_t interrupt) { USBx
  *           0 : Host
  *           1 : Device
  */
-uint32_t USB_GetMode(const USB_OTG_GlobalTypeDef *USBx) { return ((USBx->GINTSTS) & 0x1U); }
+uint32_t USB_GetMode(const USB_OTG_GlobalTypeDef *USBx)
+{
+	return ((USBx->GINTSTS) & 0x1U);
+}
 
 /**
  * @brief  Activate EP0 for Setup transactions

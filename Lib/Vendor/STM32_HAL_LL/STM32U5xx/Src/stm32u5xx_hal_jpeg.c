@@ -2323,7 +2323,10 @@ void HAL_JPEG_IRQHandler(JPEG_HandleTypeDef *hjpeg)
  *         the configuration information for JPEG module
  * @retval JPEG state
  */
-HAL_JPEG_STATETypeDef HAL_JPEG_GetState(const JPEG_HandleTypeDef *hjpeg) { return hjpeg->State; }
+HAL_JPEG_STATETypeDef HAL_JPEG_GetState(const JPEG_HandleTypeDef *hjpeg)
+{
+	return hjpeg->State;
+}
 
 /**
  * @brief  Return the JPEG error code
@@ -2331,7 +2334,10 @@ HAL_JPEG_STATETypeDef HAL_JPEG_GetState(const JPEG_HandleTypeDef *hjpeg) { retur
  *              the configuration information for the specified JPEG.
  * @retval JPEG Error Code
  */
-uint32_t HAL_JPEG_GetError(const JPEG_HandleTypeDef *hjpeg) { return hjpeg->ErrorCode; }
+uint32_t HAL_JPEG_GetError(const JPEG_HandleTypeDef *hjpeg)
+{
+	return hjpeg->ErrorCode;
+}
 
 /**
  * @}

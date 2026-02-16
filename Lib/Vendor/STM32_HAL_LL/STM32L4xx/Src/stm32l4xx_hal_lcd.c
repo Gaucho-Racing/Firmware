@@ -531,7 +531,10 @@ HAL_LCD_StateTypeDef HAL_LCD_GetState(LCD_HandleTypeDef *hlcd)
  * @param hlcd LCD handle
  * @retval LCD Error Code
  */
-uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd) { return hlcd->ErrorCode; }
+uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd)
+{
+	return hlcd->ErrorCode;
+}
 
 /**
  * @}

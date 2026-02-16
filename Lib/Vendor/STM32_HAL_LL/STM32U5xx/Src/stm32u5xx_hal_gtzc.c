@@ -714,14 +714,20 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAdd
  * TZSC_PRIVCFGRx registers until next reset
  * @param  TZSC_Instance TZSC sub-block instance.
  */
-void HAL_GTZC_TZSC_Lock(GTZC_TZSC_TypeDef *TZSC_Instance) { SET_BIT(TZSC_Instance->CR, GTZC_TZSC_CR_LCK_Msk); }
+void HAL_GTZC_TZSC_Lock(GTZC_TZSC_TypeDef *TZSC_Instance)
+{
+	SET_BIT(TZSC_Instance->CR, GTZC_TZSC_CR_LCK_Msk);
+}
 
 /**
  * @brief  Get TZSC configuration lock state.
  * @param  TZSC_Instance TZSC sub-block instance.
  * @retval Lock State (GTZC_TZSC_LOCK_OFF or GTZC_TZSC_LOCK_ON)
  */
-uint32_t HAL_GTZC_TZSC_GetLock(const GTZC_TZSC_TypeDef *TZSC_Instance) { return READ_BIT(TZSC_Instance->CR, GTZC_TZSC_CR_LCK_Msk); }
+uint32_t HAL_GTZC_TZSC_GetLock(const GTZC_TZSC_TypeDef *TZSC_Instance)
+{
+	return READ_BIT(TZSC_Instance->CR, GTZC_TZSC_CR_LCK_Msk);
+}
 
 /**
  * @}

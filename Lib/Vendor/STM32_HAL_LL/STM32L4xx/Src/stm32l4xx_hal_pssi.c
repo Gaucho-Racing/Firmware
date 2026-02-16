@@ -1428,7 +1428,10 @@ HAL_PSSI_StateTypeDef HAL_PSSI_GetState(const PSSI_HandleTypeDef *hpssi)
  *              the configuration information for the specified PSSI.
  * @retval PSSI Error Code
  */
-uint32_t HAL_PSSI_GetError(const PSSI_HandleTypeDef *hpssi) { return hpssi->ErrorCode; }
+uint32_t HAL_PSSI_GetError(const PSSI_HandleTypeDef *hpssi)
+{
+	return hpssi->ErrorCode;
+}
 
 /**
  * @}
