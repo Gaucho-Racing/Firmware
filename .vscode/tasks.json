@@ -70,7 +70,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4NEOTESTING"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4NEOTESTING"
 		},
 		{
 			"label": "CMake: configure and build G4BLINKY",
