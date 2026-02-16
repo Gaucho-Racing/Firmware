@@ -34,7 +34,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target DashPanel"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target DashPanel"
 		},
 		{
 			"label": "CMake: configure and build G4HELLO",
