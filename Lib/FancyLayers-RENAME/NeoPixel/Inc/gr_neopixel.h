@@ -40,8 +40,6 @@ typedef enum {
 	COLOR_WHITE = (uint32_t)0xFFFFFF,
 } Neopixel_Color;
 
-typedef struct NeopixelContext NeopixelContext;
-
 /**
  * @brief Initializes the Neopixel library with the provided configuration. This must be called before any other functions in this library.
  * @note This function will allocate memory for the NeopixelContext struct. There is no corresponding de-initialization function, this is not an issue in practice since this is only expected to be
