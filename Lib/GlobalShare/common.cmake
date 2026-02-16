@@ -42,4 +42,13 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_sources(unused PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/unused.c)
 	target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
 	add_test(unused_test unused)
+
+	add_executable(verify_min_max)
+	target_sources(
+		verify_min_max
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/comparatormacros.c
+	)
+	target_link_libraries(verify_min_max PRIVATE GLOBALSHARE_LIB)
+	add_test(verify_min_max_test verify_min_max)
 endif()
