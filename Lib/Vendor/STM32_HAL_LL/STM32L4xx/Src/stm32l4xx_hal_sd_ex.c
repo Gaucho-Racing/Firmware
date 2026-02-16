@@ -85,7 +85,10 @@ mode.
  * @param  hsd SD handle
  * @retval SD Card error state
  */
-uint32_t HAL_SDEx_HighSpeed(SD_HandleTypeDef *hsd) { return SD_HighSpeed(hsd); }
+uint32_t HAL_SDEx_HighSpeed(SD_HandleTypeDef *hsd)
+{
+	return SD_HighSpeed(hsd);
+}
 
 /**
  * @brief  Enable/Disable the SD Transceiver 1.8V Mode Callback.

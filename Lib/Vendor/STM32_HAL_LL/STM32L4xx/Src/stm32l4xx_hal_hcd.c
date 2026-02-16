@@ -972,7 +972,10 @@ HAL_StatusTypeDef HAL_HCD_Stop(HCD_HandleTypeDef *hhcd)
  * @param  hhcd HCD handle
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HCD_ResetPort(HCD_HandleTypeDef *hhcd) { return (USB_ResetPort(hhcd->Instance)); }
+HAL_StatusTypeDef HAL_HCD_ResetPort(HCD_HandleTypeDef *hhcd)
+{
+	return (USB_ResetPort(hhcd->Instance));
+}
 
 /**
  * @}
@@ -998,7 +1001,10 @@ HAL_StatusTypeDef HAL_HCD_ResetPort(HCD_HandleTypeDef *hhcd) { return (USB_Reset
  * @param  hhcd HCD handle
  * @retval HAL state
  */
-HCD_StateTypeDef HAL_HCD_GetState(HCD_HandleTypeDef const *hhcd) { return hhcd->State; }
+HCD_StateTypeDef HAL_HCD_GetState(HCD_HandleTypeDef const *hhcd)
+{
+	return hhcd->State;
+}
 
 /**
  * @brief  Return  URB state for a channel.
@@ -1014,7 +1020,10 @@ HCD_StateTypeDef HAL_HCD_GetState(HCD_HandleTypeDef const *hhcd) { return hhcd->
  *            URB_ERROR/
  *            URB_STALL
  */
-HCD_URBStateTypeDef HAL_HCD_HC_GetURBState(HCD_HandleTypeDef const *hhcd, uint8_t chnum) { return hhcd->hc[chnum].urb_state; }
+HCD_URBStateTypeDef HAL_HCD_HC_GetURBState(HCD_HandleTypeDef const *hhcd, uint8_t chnum)
+{
+	return hhcd->hc[chnum].urb_state;
+}
 
 /**
  * @brief  Return the last host transfer size.
@@ -1023,7 +1032,10 @@ HCD_URBStateTypeDef HAL_HCD_HC_GetURBState(HCD_HandleTypeDef const *hhcd, uint8_
  *         This parameter can be a value from 1 to 15
  * @retval last transfer size in byte
  */
-uint32_t HAL_HCD_HC_GetXferCount(HCD_HandleTypeDef const *hhcd, uint8_t chnum) { return hhcd->hc[chnum].xfer_count; }
+uint32_t HAL_HCD_HC_GetXferCount(HCD_HandleTypeDef const *hhcd, uint8_t chnum)
+{
+	return hhcd->hc[chnum].xfer_count;
+}
 
 /**
  * @brief  Return the Host Channel state.
@@ -1042,21 +1054,30 @@ uint32_t HAL_HCD_HC_GetXferCount(HCD_HandleTypeDef const *hhcd, uint8_t chnum) {
  *            HC_BBLERR/
  *            HC_DATATGLERR
  */
-HCD_HCStateTypeDef HAL_HCD_HC_GetState(HCD_HandleTypeDef const *hhcd, uint8_t chnum) { return hhcd->hc[chnum].state; }
+HCD_HCStateTypeDef HAL_HCD_HC_GetState(HCD_HandleTypeDef const *hhcd, uint8_t chnum)
+{
+	return hhcd->hc[chnum].state;
+}
 
 /**
  * @brief  Return the current Host frame number.
  * @param  hhcd HCD handle
  * @retval Current Host frame number
  */
-uint32_t HAL_HCD_GetCurrentFrame(HCD_HandleTypeDef *hhcd) { return (USB_GetCurrentFrame(hhcd->Instance)); }
+uint32_t HAL_HCD_GetCurrentFrame(HCD_HandleTypeDef *hhcd)
+{
+	return (USB_GetCurrentFrame(hhcd->Instance));
+}
 
 /**
  * @brief  Return the Host enumeration speed.
  * @param  hhcd HCD handle
  * @retval Enumeration speed
  */
-uint32_t HAL_HCD_GetCurrentSpeed(HCD_HandleTypeDef *hhcd) { return (USB_GetHostSpeed(hhcd->Instance)); }
+uint32_t HAL_HCD_GetCurrentSpeed(HCD_HandleTypeDef *hhcd)
+{
+	return (USB_GetHostSpeed(hhcd->Instance));
+}
 
 /**
  * @brief  Set host channel Hub information.

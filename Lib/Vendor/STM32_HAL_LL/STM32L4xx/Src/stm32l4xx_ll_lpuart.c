@@ -184,7 +184,8 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 		 * - TransferDirection:  USART_CR1_TE, USART_CR1_RE bits
 		 * according to LPUART_InitStruct->TransferDirection value
 		 */
-		MODIFY_REG(LPUARTx->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
+		MODIFY_REG(LPUARTx->CR1,
+			   (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
 			   (LPUART_InitStruct->DataWidth | LPUART_InitStruct->Parity | LPUART_InitStruct->TransferDirection));
 
 		/*---------------------------- LPUART CR2 Configuration
@@ -219,7 +220,8 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 		*/
 		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (LPUART_InitStruct->BaudRate != 0U)) {
 			status = SUCCESS;
-			LL_LPUART_SetBaudRate(LPUARTx, periphclk,
+			LL_LPUART_SetBaudRate(LPUARTx,
+					      periphclk,
 #if defined(USART_PRESC_PRESCALER)
 					      LPUART_InitStruct->PrescalerValue,
 #endif /* USART_PRESC_PRESCALER */

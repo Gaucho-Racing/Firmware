@@ -176,7 +176,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Start(HASH_HandleTypeDef *hhash, const uint8
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size) { return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224); }
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
+{
+	return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
+}
 
 /**
  * @brief  End computation of a single HASH signature after several calls to
@@ -232,7 +235,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Start(HASH_HandleTypeDef *hhash, const uint8
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size) { return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256); }
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
+{
+	return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
+}
 
 /**
  * @brief  End computation of a single HASH signature after several calls to
@@ -429,7 +435,10 @@ finally retrieved thanks to HAL_HASHEx_xxx_Finish().
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size) { return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224); }
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
+{
+	return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
+}
 
 /**
  * @brief  Return the computed digest in SHA224 mode.
@@ -441,7 +450,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const u
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout) { return HASH_Finish(hhash, pOutBuffer, Timeout); }
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout)
+{
+	return HASH_Finish(hhash, pOutBuffer, Timeout);
+}
 
 /**
  * @brief  Initialize the HASH peripheral in SHA256 mode then initiate a DMA
@@ -453,7 +465,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash, uint8_t *p
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size) { return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256); }
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
+{
+	return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
+}
 
 /**
  * @brief  Return the computed digest in SHA256 mode.
@@ -465,7 +480,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const u
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout) { return HASH_Finish(hhash, pOutBuffer, Timeout); }
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout)
+{
+	return HASH_Finish(hhash, pOutBuffer, Timeout);
+}
 
 /**
  * @}
@@ -636,7 +654,10 @@ resulting digest with HAL_HASHEx_xxx_Finish().
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size) { return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224); }
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
+{
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
+}
 
 /**
  * @brief  Initialize the HASH peripheral in HMAC SHA224 mode then initiate the
@@ -659,7 +680,10 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const u
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size) { return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256); }
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
+{
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
+}
 
 /**
  * @}

@@ -4644,7 +4644,10 @@ HAL_I2C_StateTypeDef HAL_I2C_GetState(const I2C_HandleTypeDef *hi2c)
  *         the configuration information for I2C module
  * @retval HAL mode
  */
-HAL_I2C_ModeTypeDef HAL_I2C_GetMode(const I2C_HandleTypeDef *hi2c) { return hi2c->Mode; }
+HAL_I2C_ModeTypeDef HAL_I2C_GetMode(const I2C_HandleTypeDef *hi2c)
+{
+	return hi2c->Mode;
+}
 
 /**
  * @brief  Return the I2C error code.
@@ -4652,7 +4655,10 @@ HAL_I2C_ModeTypeDef HAL_I2C_GetMode(const I2C_HandleTypeDef *hi2c) { return hi2c
  *              the configuration information for the specified I2C.
  * @retval I2C Error Code
  */
-uint32_t HAL_I2C_GetError(const I2C_HandleTypeDef *hi2c) { return hi2c->ErrorCode; }
+uint32_t HAL_I2C_GetError(const I2C_HandleTypeDef *hi2c)
+{
+	return hi2c->ErrorCode;
+}
 
 /**
  * @}
@@ -6703,7 +6709,8 @@ static void I2C_TransferConfig(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uin
 
 	/* update CR2 register */
 	MODIFY_REG(hi2c->Instance->CR2,
-		   ((I2C_CR2_SADD | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_AUTOEND | (I2C_CR2_RD_WRN & (uint32_t)(Request >> (31U - I2C_CR2_RD_WRN_Pos))) | I2C_CR2_START | I2C_CR2_STOP)), tmp);
+		   ((I2C_CR2_SADD | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_AUTOEND | (I2C_CR2_RD_WRN & (uint32_t)(Request >> (31U - I2C_CR2_RD_WRN_Pos))) | I2C_CR2_START | I2C_CR2_STOP)),
+		   tmp);
 }
 
 /**

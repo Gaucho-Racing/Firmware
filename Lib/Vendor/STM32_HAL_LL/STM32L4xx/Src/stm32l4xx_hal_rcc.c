@@ -892,10 +892,17 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct)
 						 * source, multiplication and
 						 * division factors. */
 #if defined(RCC_PLLP_SUPPORT)
-						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource, RCC_OscInitStruct->PLL.PLLM, RCC_OscInitStruct->PLL.PLLN, RCC_OscInitStruct->PLL.PLLP,
-								     RCC_OscInitStruct->PLL.PLLQ, RCC_OscInitStruct->PLL.PLLR);
+						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
+								     RCC_OscInitStruct->PLL.PLLM,
+								     RCC_OscInitStruct->PLL.PLLN,
+								     RCC_OscInitStruct->PLL.PLLP,
+								     RCC_OscInitStruct->PLL.PLLQ,
+								     RCC_OscInitStruct->PLL.PLLR);
 #else
-						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource, RCC_OscInitStruct->PLL.PLLM, RCC_OscInitStruct->PLL.PLLN, RCC_OscInitStruct->PLL.PLLQ,
+						__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
+								     RCC_OscInitStruct->PLL.PLLM,
+								     RCC_OscInitStruct->PLL.PLLN,
+								     RCC_OscInitStruct->PLL.PLLQ,
 								     RCC_OscInitStruct->PLL.PLLR);
 #endif
 
@@ -1414,7 +1421,10 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  * Frequency.
  * @retval HCLK frequency in Hz
  */
-uint32_t HAL_RCC_GetHCLKFreq(void) { return SystemCoreClock; }
+uint32_t HAL_RCC_GetHCLKFreq(void)
+{
+	return SystemCoreClock;
+}
 
 /**
  * @brief  Return the PCLK1 frequency.
@@ -1623,7 +1633,10 @@ void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t *pFL
  * @note   The Clock Security System can only be cleared by reset.
  * @retval None
  */
-void HAL_RCC_EnableCSS(void) { SET_BIT(RCC->CR, RCC_CR_CSSON); }
+void HAL_RCC_EnableCSS(void)
+{
+	SET_BIT(RCC->CR, RCC_CR_CSSON);
+}
 
 /**
  * @brief Handle the RCC Clock Security System interrupt request.

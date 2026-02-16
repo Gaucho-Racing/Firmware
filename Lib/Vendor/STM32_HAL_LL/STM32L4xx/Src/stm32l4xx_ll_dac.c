@@ -186,13 +186,16 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, LL_DAC_InitType
 		/*  - OutputConnection */
 		/*  - OutputMode */
 		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
-			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+			MODIFY_REG(DACx->CR,
+				   (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | DAC_InitStruct->WaveAutoGeneration | DAC_InitStruct->WaveAutoGenerationConfig) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 		} else {
-			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+			MODIFY_REG(DACx->CR,
+				   (DAC_CR_TSEL1 | DAC_CR_WAVE1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | LL_DAC_WAVE_AUTO_GENERATION_NONE) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 		}
-		MODIFY_REG(DACx->MCR, (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
+		MODIFY_REG(DACx->MCR,
+			   (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 			   (DAC_InitStruct->OutputBuffer | DAC_InitStruct->OutputConnection | DAC_InitStruct->OutputMode) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 	} else {
 		/* Initialization error: DAC instance is not disabled. */

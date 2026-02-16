@@ -995,7 +995,10 @@ functions
  *         the configuration information for OTFDEC module
  * @retval HAL state
  */
-HAL_OTFDEC_StateTypeDef HAL_OTFDEC_GetState(const OTFDEC_HandleTypeDef *hotfdec) { return hotfdec->State; }
+HAL_OTFDEC_StateTypeDef HAL_OTFDEC_GetState(const OTFDEC_HandleTypeDef *hotfdec)
+{
+	return hotfdec->State;
+}
 
 /**
  * @brief  Get OTFDEC configuration attributes.

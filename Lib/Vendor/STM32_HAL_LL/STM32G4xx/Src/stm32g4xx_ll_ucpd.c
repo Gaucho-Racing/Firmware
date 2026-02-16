@@ -126,7 +126,8 @@ ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, const LL_UCPD_InitTypeDef *UCPD_In
 
 	/*---------------------------- UCPDx CFG1 Configuration
 	 * ------------------------*/
-	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_PSC_UCPDCLK | UCPD_CFG1_TRANSWIN | UCPD_CFG1_IFRGAP | UCPD_CFG1_HBITCLKDIV,
+	MODIFY_REG(UCPDx->CFG1,
+		   UCPD_CFG1_PSC_UCPDCLK | UCPD_CFG1_TRANSWIN | UCPD_CFG1_IFRGAP | UCPD_CFG1_HBITCLKDIV,
 		   UCPD_InitStruct->psc_ucpdclk | (UCPD_InitStruct->transwin << UCPD_CFG1_TRANSWIN_Pos) | (UCPD_InitStruct->IfrGap << UCPD_CFG1_IFRGAP_Pos) | UCPD_InitStruct->HbitClockDiv);
 
 	return SUCCESS;

@@ -428,7 +428,8 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	 * - DestBurstLength:                           DMA_CTR1_DBL_1 [25:20]
 	 * bits DestBurstLength field is not supported by LPDMA channels.
 	 */
-	LL_DMA_ConfigTransfer(DMAx, Channel,
+	LL_DMA_ConfigTransfer(DMAx,
+			      Channel,
 			      DMA_InitStruct->DestAllocatedPort | DMA_InitStruct->DestHWordExchange | DMA_InitStruct->DestByteExchange | DMA_InitStruct->DestIncMode | DMA_InitStruct->DestDataWidth |
 				  DMA_InitStruct->SrcAllocatedPort | DMA_InitStruct->SrcByteExchange | DMA_InitStruct->DataAlignment | DMA_InitStruct->SrcIncMode | DMA_InitStruct->SrcDataWidth);
 	/* Check DMA instance */
@@ -626,7 +627,10 @@ void LL_DMA_ListStructInit(LL_DMA_InitLinkedListTypeDef *DMA_InitLinkedListStruc
  *          - SUCCESS : DMA registers are de-initialized.
  *          - ERROR   : DMA registers are not de-initialized.
  */
-uint32_t LL_DMA_List_DeInit(DMA_TypeDef *DMAx, uint32_t Channel) { return LL_DMA_DeInit(DMAx, Channel); }
+uint32_t LL_DMA_List_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
+{
+	return LL_DMA_DeInit(DMAx, Channel);
+}
 
 /**
  * @brief Initialize the DMA linked list according to the specified parameters
@@ -1064,7 +1068,10 @@ void LL_DMA_ConnectLinkNode(LL_DMA_LinkNodeTypeDef *pPrevLinkNode, uint32_t Prev
  * @param  LinkNodeCLLRIdx Offset of Link Node CLLR register.
  * @retval None.
  */
-void LL_DMA_DisconnectNextLinkNode(LL_DMA_LinkNodeTypeDef *pLinkNode, uint32_t LinkNodeCLLRIdx) { pLinkNode->LinkRegisters[LinkNodeCLLRIdx] = 0; }
+void LL_DMA_DisconnectNextLinkNode(LL_DMA_LinkNodeTypeDef *pLinkNode, uint32_t LinkNodeCLLRIdx)
+{
+	pLinkNode->LinkRegisters[LinkNodeCLLRIdx] = 0;
+}
 
 /**
  * @}

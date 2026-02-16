@@ -233,7 +233,10 @@ CANHandle *can_init(const CANConfig *config)
 	return canHandle;
 }
 
-inline void can_set_clksource(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
+inline void can_set_clksource(uint32_t clksource)
+{
+	LL_RCC_SetFDCANClockSource(clksource);
+}
 
 // only valid for #STM32G474x, must redefine for each family
 static int can_msp_init(CANHandle *canHandle, CANConfig *config)
@@ -339,14 +342,32 @@ static void can_tx_buffer_helper(CANHandle *handle)
 	}
 }
 
-void FDCAN1_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
-void FDCAN1_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
+void FDCAN1_IT0_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan1);
+}
+void FDCAN1_IT1_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan1);
+}
 
-void FDCAN2_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
-void FDCAN2_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
+void FDCAN2_IT0_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan2);
+}
+void FDCAN2_IT1_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan2);
+}
 
-void FDCAN3_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
-void FDCAN3_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
+void FDCAN3_IT0_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan3);
+}
+void FDCAN3_IT1_IRQHandler(void)
+{
+	HAL_FDCAN_IRQHandler(&hal_fdcan3);
+}
 
 void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
 {
@@ -510,8 +531,9 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 	// Optionally reset FIFOs / buffers
 
 	// Disable interrupts
-	__HAL_FDCAN_DISABLE_IT(hfdcan, FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | FDCAN_IT_LIST_BIT_LINE_ERROR |
-					   FDCAN_IT_LIST_PROTOCOL_ERROR);
+	__HAL_FDCAN_DISABLE_IT(hfdcan,
+			       FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | FDCAN_IT_LIST_BIT_LINE_ERROR |
+				   FDCAN_IT_LIST_PROTOCOL_ERROR);
 
 	// Exit INIT mode
 	hfdcan->Instance->CCCR &= ~FDCAN_CCCR_INIT;
@@ -588,7 +610,8 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	uint32_t free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP);
 
 	if (free > 0) {
-		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header),
+		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP,
+									 &(message->tx_header),
 									 message->data // Not &message->data if data is array
 		);
 

@@ -126,7 +126,10 @@ extern "C" {
  * @param  WWDGx WWDG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_WWDG_Enable(WWDG_TypeDef *WWDGx) { SET_BIT(WWDGx->CR, WWDG_CR_WDGA); }
+__STATIC_INLINE void LL_WWDG_Enable(WWDG_TypeDef *WWDGx)
+{
+	SET_BIT(WWDGx->CR, WWDG_CR_WDGA);
+}
 
 /**
  * @brief  Checks if Window Watchdog is enabled
@@ -134,7 +137,10 @@ __STATIC_INLINE void LL_WWDG_Enable(WWDG_TypeDef *WWDGx) { SET_BIT(WWDGx->CR, WW
  * @param  WWDGx WWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_WWDG_IsEnabled(const WWDG_TypeDef *WWDGx) { return ((READ_BIT(WWDGx->CR, WWDG_CR_WDGA) == (WWDG_CR_WDGA)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_WWDG_IsEnabled(const WWDG_TypeDef *WWDGx)
+{
+	return ((READ_BIT(WWDGx->CR, WWDG_CR_WDGA) == (WWDG_CR_WDGA)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set the Watchdog counter value to provided value (7-bits T[6:0])
@@ -148,7 +154,10 @@ __STATIC_INLINE uint32_t LL_WWDG_IsEnabled(const WWDG_TypeDef *WWDGx) { return (
  * @param  Counter 0..0x7F (7 bit counter value)
  * @retval None
  */
-__STATIC_INLINE void LL_WWDG_SetCounter(WWDG_TypeDef *WWDGx, uint32_t Counter) { MODIFY_REG(WWDGx->CR, WWDG_CR_T, Counter); }
+__STATIC_INLINE void LL_WWDG_SetCounter(WWDG_TypeDef *WWDGx, uint32_t Counter)
+{
+	MODIFY_REG(WWDGx->CR, WWDG_CR_T, Counter);
+}
 
 /**
  * @brief  Return current Watchdog Counter Value (7 bits counter value)
@@ -156,7 +165,10 @@ __STATIC_INLINE void LL_WWDG_SetCounter(WWDG_TypeDef *WWDGx, uint32_t Counter) {
  * @param  WWDGx WWDG Instance
  * @retval 7 bit Watchdog Counter value
  */
-__STATIC_INLINE uint32_t LL_WWDG_GetCounter(const WWDG_TypeDef *WWDGx) { return (READ_BIT(WWDGx->CR, WWDG_CR_T)); }
+__STATIC_INLINE uint32_t LL_WWDG_GetCounter(const WWDG_TypeDef *WWDGx)
+{
+	return (READ_BIT(WWDGx->CR, WWDG_CR_T));
+}
 
 /**
  * @brief  Set the time base of the prescaler (WDGTB).
@@ -175,7 +187,10 @@ __STATIC_INLINE uint32_t LL_WWDG_GetCounter(const WWDG_TypeDef *WWDGx) { return 
  *         @arg @ref LL_WWDG_PRESCALER_128
  * @retval None
  */
-__STATIC_INLINE void LL_WWDG_SetPrescaler(WWDG_TypeDef *WWDGx, uint32_t Prescaler) { MODIFY_REG(WWDGx->CFR, WWDG_CFR_WDGTB, Prescaler); }
+__STATIC_INLINE void LL_WWDG_SetPrescaler(WWDG_TypeDef *WWDGx, uint32_t Prescaler)
+{
+	MODIFY_REG(WWDGx->CFR, WWDG_CFR_WDGTB, Prescaler);
+}
 
 /**
  * @brief  Return current Watchdog Prescaler Value
@@ -191,7 +206,10 @@ __STATIC_INLINE void LL_WWDG_SetPrescaler(WWDG_TypeDef *WWDGx, uint32_t Prescale
  *         @arg @ref LL_WWDG_PRESCALER_64
  *         @arg @ref LL_WWDG_PRESCALER_128
  */
-__STATIC_INLINE uint32_t LL_WWDG_GetPrescaler(const WWDG_TypeDef *WWDGx) { return (READ_BIT(WWDGx->CFR, WWDG_CFR_WDGTB)); }
+__STATIC_INLINE uint32_t LL_WWDG_GetPrescaler(const WWDG_TypeDef *WWDGx)
+{
+	return (READ_BIT(WWDGx->CFR, WWDG_CFR_WDGTB));
+}
 
 /**
  * @brief  Set the Watchdog Window value to be compared to the downcounter
@@ -210,7 +228,10 @@ __STATIC_INLINE uint32_t LL_WWDG_GetPrescaler(const WWDG_TypeDef *WWDGx) { retur
  * @param  Window 0x00..0x7F (7 bit Window value)
  * @retval None
  */
-__STATIC_INLINE void LL_WWDG_SetWindow(WWDG_TypeDef *WWDGx, uint32_t Window) { MODIFY_REG(WWDGx->CFR, WWDG_CFR_W, Window); }
+__STATIC_INLINE void LL_WWDG_SetWindow(WWDG_TypeDef *WWDGx, uint32_t Window)
+{
+	MODIFY_REG(WWDGx->CFR, WWDG_CFR_W, Window);
+}
 
 /**
  * @brief  Return current Watchdog Window Value (7 bits value)
@@ -218,7 +239,10 @@ __STATIC_INLINE void LL_WWDG_SetWindow(WWDG_TypeDef *WWDGx, uint32_t Window) { M
  * @param  WWDGx WWDG Instance
  * @retval 7 bit Watchdog Window value
  */
-__STATIC_INLINE uint32_t LL_WWDG_GetWindow(const WWDG_TypeDef *WWDGx) { return (READ_BIT(WWDGx->CFR, WWDG_CFR_W)); }
+__STATIC_INLINE uint32_t LL_WWDG_GetWindow(const WWDG_TypeDef *WWDGx)
+{
+	return (READ_BIT(WWDGx->CFR, WWDG_CFR_W));
+}
 
 /**
  * @}
@@ -236,7 +260,10 @@ __STATIC_INLINE uint32_t LL_WWDG_GetWindow(const WWDG_TypeDef *WWDGx) { return (
  * @param  WWDGx WWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_WWDG_IsActiveFlag_EWKUP(const WWDG_TypeDef *WWDGx) { return ((READ_BIT(WWDGx->SR, WWDG_SR_EWIF) == (WWDG_SR_EWIF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_WWDG_IsActiveFlag_EWKUP(const WWDG_TypeDef *WWDGx)
+{
+	return ((READ_BIT(WWDGx->SR, WWDG_SR_EWIF) == (WWDG_SR_EWIF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear WWDG Early Wakeup Interrupt Flag (EWIF)
@@ -244,7 +271,10 @@ __STATIC_INLINE uint32_t LL_WWDG_IsActiveFlag_EWKUP(const WWDG_TypeDef *WWDGx) {
  * @param  WWDGx WWDG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_WWDG_ClearFlag_EWKUP(WWDG_TypeDef *WWDGx) { WRITE_REG(WWDGx->SR, ~WWDG_SR_EWIF); }
+__STATIC_INLINE void LL_WWDG_ClearFlag_EWKUP(WWDG_TypeDef *WWDGx)
+{
+	WRITE_REG(WWDGx->SR, ~WWDG_SR_EWIF);
+}
 
 /**
  * @}
@@ -261,7 +291,10 @@ __STATIC_INLINE void LL_WWDG_ClearFlag_EWKUP(WWDG_TypeDef *WWDGx) { WRITE_REG(WW
  * @param  WWDGx WWDG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_WWDG_EnableIT_EWKUP(WWDG_TypeDef *WWDGx) { SET_BIT(WWDGx->CFR, WWDG_CFR_EWI); }
+__STATIC_INLINE void LL_WWDG_EnableIT_EWKUP(WWDG_TypeDef *WWDGx)
+{
+	SET_BIT(WWDGx->CFR, WWDG_CFR_EWI);
+}
 
 /**
  * @brief  Check if Early Wakeup Interrupt is enabled
@@ -269,7 +302,10 @@ __STATIC_INLINE void LL_WWDG_EnableIT_EWKUP(WWDG_TypeDef *WWDGx) { SET_BIT(WWDGx
  * @param  WWDGx WWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_WWDG_IsEnabledIT_EWKUP(const WWDG_TypeDef *WWDGx) { return ((READ_BIT(WWDGx->CFR, WWDG_CFR_EWI) == (WWDG_CFR_EWI)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_WWDG_IsEnabledIT_EWKUP(const WWDG_TypeDef *WWDGx)
+{
+	return ((READ_BIT(WWDGx->CFR, WWDG_CFR_EWI) == (WWDG_CFR_EWI)) ? 1UL : 0UL);
+}
 
 /**
  * @}

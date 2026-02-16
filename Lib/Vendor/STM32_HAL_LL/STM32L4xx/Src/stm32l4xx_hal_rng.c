@@ -227,8 +227,8 @@ HAL_StatusTypeDef HAL_RNG_Init(RNG_HandleTypeDef *hrng)
 	   - Clock Error Detection
 	   - CONFIG1, CONFIG2, CONFIG3 fields
 	   when CONDRT bit is set to 1 */
-	MODIFY_REG(hrng->Instance->CR, RNG_CR_CED | RNG_CR_CONDRST | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3,
-		   (uint32_t)(RNG_CR_CONDRST | hrng->Init.ClockErrorDetection | cr_value));
+	MODIFY_REG(
+	    hrng->Instance->CR, RNG_CR_CED | RNG_CR_CONDRST | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3, (uint32_t)(RNG_CR_CONDRST | hrng->Init.ClockErrorDetection | cr_value));
 #if defined(RNG_VER_3_2) || defined(RNG_VER_3_1) || defined(RNG_VER_3_0)
 	/*!< magic number must be written immediately before to RNG_HTCRG */
 	WRITE_REG(hrng->Instance->HTCR, RNG_HTCFG_1);
@@ -900,7 +900,10 @@ void HAL_RNG_IRQHandler(RNG_HandleTypeDef *hrng)
  *                the configuration information for RNG.
  * @retval random value
  */
-uint32_t HAL_RNG_ReadLastRandomNumber(const RNG_HandleTypeDef *hrng) { return (hrng->RandomNumber); }
+uint32_t HAL_RNG_ReadLastRandomNumber(const RNG_HandleTypeDef *hrng)
+{
+	return (hrng->RandomNumber);
+}
 
 /**
  * @brief  Data Ready callback in non-blocking mode.
@@ -966,7 +969,10 @@ __weak void HAL_RNG_ErrorCallback(RNG_HandleTypeDef *hrng)
  *                the configuration information for RNG.
  * @retval HAL state
  */
-HAL_RNG_StateTypeDef HAL_RNG_GetState(const RNG_HandleTypeDef *hrng) { return hrng->State; }
+HAL_RNG_StateTypeDef HAL_RNG_GetState(const RNG_HandleTypeDef *hrng)
+{
+	return hrng->State;
+}
 
 /**
  * @brief  Return the RNG handle error code.

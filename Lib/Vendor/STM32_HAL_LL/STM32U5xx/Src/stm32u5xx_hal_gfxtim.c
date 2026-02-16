@@ -218,8 +218,8 @@ HAL_StatusTypeDef HAL_GFXTIM_Init(GFXTIM_HandleTypeDef *hgfxtim)
 
 			/* Set Synchronization signals sources (HSYNC and
 			 * VSYNC), Tearing Effect source and polarity,  */
-			MODIFY_REG(hgfxtim->Instance->CR, GFXTIM_CR_SYNCS | GFXTIM_CR_TES | GFXTIM_CR_TEPOL,
-				   hgfxtim->Init.SynchroSrc | hgfxtim->Init.TearingEffectSrc | hgfxtim->Init.TearingEffectPolarity);
+			MODIFY_REG(
+			    hgfxtim->Instance->CR, GFXTIM_CR_SYNCS | GFXTIM_CR_TES | GFXTIM_CR_TEPOL, hgfxtim->Init.SynchroSrc | hgfxtim->Init.TearingEffectSrc | hgfxtim->Init.TearingEffectPolarity);
 
 			/* Set tearing effect interrupt */
 			MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_TEIE, (hgfxtim->Init.TearingEffectInterrupt << GFXTIM_IER_TEIE_Pos));
@@ -624,7 +624,8 @@ HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim
 			MODIFY_REG(hgfxtim->Instance->FCCRR, GFXTIM_FCCRR_RELOAD, (pClockGeneratorConfig->FCCReloadValue << GFXTIM_FCCRR_RELOAD_Pos));
 
 			/* Set line and frame config */
-			MODIFY_REG(hgfxtim->Instance->CGCR, GFXTIM_CGCR_LCCHRS | GFXTIM_CGCR_LCCCS | GFXTIM_CGCR_LCS | GFXTIM_CGCR_FCCHRS | GFXTIM_CGCR_FCCCS | GFXTIM_CGCR_FCS,
+			MODIFY_REG(hgfxtim->Instance->CGCR,
+				   GFXTIM_CGCR_LCCHRS | GFXTIM_CGCR_LCCCS | GFXTIM_CGCR_LCS | GFXTIM_CGCR_FCCHRS | GFXTIM_CGCR_FCCCS | GFXTIM_CGCR_FCS,
 				   pClockGeneratorConfig->LCCHwReloadSrc | pClockGeneratorConfig->LCCClockSrc | pClockGeneratorConfig->LineClockSrc | pClockGeneratorConfig->FCCHwReloadSrc |
 				       pClockGeneratorConfig->FCCClockSrc | pClockGeneratorConfig->FrameClockSrc);
 
@@ -750,7 +751,8 @@ HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
 
 			/* Set ALC compare 1, compare 2, overflow interrupts,
 			 * AFC compare 1 and overflow interrupts */
-			MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_ALCC1IE | GFXTIM_IER_ALCC2IE | GFXTIM_IER_ALCOIE | GFXTIM_IER_AFCC1IE | GFXTIM_IER_AFCOIE,
+			MODIFY_REG(hgfxtim->Instance->IER,
+				   GFXTIM_IER_ALCC1IE | GFXTIM_IER_ALCC2IE | GFXTIM_IER_ALCOIE | GFXTIM_IER_AFCC1IE | GFXTIM_IER_AFCOIE,
 				   (pAbsoluteTimerConfig->FrameOverflowInterrupt << GFXTIM_IER_AFCOIE_Pos) | (pAbsoluteTimerConfig->FrameCompare1Interrupt << GFXTIM_IER_AFCC1IE_Pos) |
 				       (pAbsoluteTimerConfig->LineOverflowInterrupt << GFXTIM_IER_ALCOIE_Pos) | (pAbsoluteTimerConfig->LineCompare1Interrupt << GFXTIM_IER_ALCC1IE_Pos) |
 				       (pAbsoluteTimerConfig->LineCompare2Interrupt << GFXTIM_IER_ALCC2IE_Pos));
@@ -1523,7 +1525,8 @@ HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
 			MODIFY_REG(hgfxtim->Instance->WDGTCR, (GFXTIM_WDGTCR_WDGCS | GFXTIM_WDGTCR_WDGHRC), (pWatchdogConfig->ClockSrc | pWatchdogConfig->HwReloadConfig));
 
 			/* Set watchdog interrupts */
-			MODIFY_REG(hgfxtim->Instance->IER, (GFXTIM_IER_WDGAIE | GFXTIM_IER_WDGPIE),
+			MODIFY_REG(hgfxtim->Instance->IER,
+				   (GFXTIM_IER_WDGAIE | GFXTIM_IER_WDGPIE),
 				   ((pWatchdogConfig->AlarmInterrupt << GFXTIM_IER_WDGAIE_Pos) | (pWatchdogConfig->PreAlarmInterrupt << GFXTIM_IER_WDGPIE_Pos)));
 		} else {
 			status = HAL_ERROR;

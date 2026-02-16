@@ -144,7 +144,8 @@ ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPT
 		/* Set PRESC bitfield according to Prescaler value */
 		/* Set WAVE bitfield according to Waveform value */
 		/* Set WAVEPOL bitfield according to Polarity value */
-		MODIFY_REG(LPTIMx->CFGR, (LPTIM_CFGR_CKSEL | LPTIM_CFGR_PRESC | LPTIM_CFGR_WAVE | LPTIM_CFGR_WAVPOL),
+		MODIFY_REG(LPTIMx->CFGR,
+			   (LPTIM_CFGR_CKSEL | LPTIM_CFGR_PRESC | LPTIM_CFGR_WAVE | LPTIM_CFGR_WAVPOL),
 			   LPTIM_InitStruct->ClockSource | LPTIM_InitStruct->Prescaler | LPTIM_InitStruct->Waveform | LPTIM_InitStruct->Polarity);
 	}
 

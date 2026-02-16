@@ -636,15 +636,15 @@ HAL_StatusTypeDef HAL_SDIO_SetSpeedMode(SDIO_HandleTypeDef *hsdio, uint32_t Data
 
 		case HAL_SDIOS_DATA_RATE_SDR50:
 			data = SDIO_BUS_SPEED_SDR50;
-			errorstate = SDIO_WriteDirect(hsdio, ((SDIO_FUNCTION_0 << 2U) | (SDIO_FUNCTION_0 << 1U) | (SDIO_FUNCTION_0 << 14U) | SDMMC_SDIO_CCCR16_SD_BYTE3), HAL_SDIO_WRITE_ONLY,
-						      SDIO_FUNCTION_0, &data);
+			errorstate = SDIO_WriteDirect(
+			    hsdio, ((SDIO_FUNCTION_0 << 2U) | (SDIO_FUNCTION_0 << 1U) | (SDIO_FUNCTION_0 << 14U) | SDMMC_SDIO_CCCR16_SD_BYTE3), HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
 			MODIFY_REG(hsdio->Instance->CLKCR, SDMMC_CLKCR_BUSSPEED, SDMMC_CLKCR_BUSSPEED);
 			break;
 
 		case HAL_SDIOS_DATA_RATE_DDR50:
 			data = SDIO_BUS_SPEED_DDR50;
-			errorstate = SDIO_WriteDirect(hsdio, ((SDIO_FUNCTION_0 << 2) | (SDIO_FUNCTION_0 << 1) | (SDIO_FUNCTION_0 << 14) | SDMMC_SDIO_CCCR16_SD_BYTE3), HAL_SDIO_WRITE_ONLY,
-						      SDIO_FUNCTION_0, &data);
+			errorstate = SDIO_WriteDirect(
+			    hsdio, ((SDIO_FUNCTION_0 << 2) | (SDIO_FUNCTION_0 << 1) | (SDIO_FUNCTION_0 << 14) | SDMMC_SDIO_CCCR16_SD_BYTE3), HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
 			MODIFY_REG(hsdio->Instance->CLKCR, SDMMC_CLKCR_DDR | SDMMC_CLKCR_BUSSPEED, SDMMC_CLKCR_DDR | SDMMC_CLKCR_BUSSPEED);
 			break;
 		default: /* SDR12 */
@@ -1893,7 +1893,10 @@ card operations.
  * @param hsdio: Pointer to SDIO handle
  * @retval HAL state
  */
-HAL_SDIO_StateTypeDef HAL_SDIO_GetState(const SDIO_HandleTypeDef *hsdio) { return hsdio->State; }
+HAL_SDIO_StateTypeDef HAL_SDIO_GetState(const SDIO_HandleTypeDef *hsdio)
+{
+	return hsdio->State;
+}
 
 /**
  * @brief  Return the SDIO error code
@@ -1901,7 +1904,10 @@ HAL_SDIO_StateTypeDef HAL_SDIO_GetState(const SDIO_HandleTypeDef *hsdio) { retur
  * configuration information.
  * @retval SDIO Error Code
  */
-uint32_t HAL_SDIO_GetError(const SDIO_HandleTypeDef *hsdio) { return hsdio->ErrorCode; }
+uint32_t HAL_SDIO_GetError(const SDIO_HandleTypeDef *hsdio)
+{
+	return hsdio->ErrorCode;
+}
 
 /**
  * @}

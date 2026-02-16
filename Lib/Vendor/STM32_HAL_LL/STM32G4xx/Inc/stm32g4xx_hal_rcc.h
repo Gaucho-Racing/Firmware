@@ -3121,7 +3121,8 @@ typedef struct {
  * @retval None
  */
 #define __HAL_RCC_PLL_CONFIG(__PLLSOURCE__, __PLLM__, __PLLN__, __PLLP__, __PLLQ__, __PLLR__)                                                                                                          \
-	MODIFY_REG(RCC->PLLCFGR, (RCC_PLLCFGR_PLLSRC | RCC_PLLCFGR_PLLM | RCC_PLLCFGR_PLLN | RCC_PLLCFGR_PLLQ | RCC_PLLCFGR_PLLR | RCC_PLLCFGR_PLLPDIV),                                               \
+	MODIFY_REG(RCC->PLLCFGR,                                                                                                                                                                       \
+		   (RCC_PLLCFGR_PLLSRC | RCC_PLLCFGR_PLLM | RCC_PLLCFGR_PLLN | RCC_PLLCFGR_PLLQ | RCC_PLLCFGR_PLLR | RCC_PLLCFGR_PLLPDIV),                                                             \
 		   ((__PLLSOURCE__) | (((__PLLM__) - 1U) << RCC_PLLCFGR_PLLM_Pos) | ((__PLLN__) << RCC_PLLCFGR_PLLN_Pos) | ((((__PLLQ__) >> 1U) - 1U) << RCC_PLLCFGR_PLLQ_Pos) |                       \
 		    ((((__PLLR__) >> 1U) - 1U) << RCC_PLLCFGR_PLLR_Pos) | ((__PLLP__) << RCC_PLLCFGR_PLLPDIV_Pos)))
 

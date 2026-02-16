@@ -471,7 +471,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetCommonPowerRange(OPAMP_Common_TypeDef *OPAM
  *         @arg @ref LL_OPAMP_POWERMODE_LOWPOWER
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_SetPowerMode(OPAMP_TypeDef *OPAMPx, uint32_t PowerMode) { MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_OPALPM, (PowerMode & OPAMP_POWERMODE_CSR_BIT_MASK)); }
+__STATIC_INLINE void LL_OPAMP_SetPowerMode(OPAMP_TypeDef *OPAMPx, uint32_t PowerMode)
+{
+	MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_OPALPM, (PowerMode & OPAMP_POWERMODE_CSR_BIT_MASK));
+}
 
 /**
  * @brief  Get OPAMP power mode.
@@ -508,7 +511,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetPowerMode(OPAMP_TypeDef *OPAMPx)
  *         @arg @ref LL_OPAMP_MODE_CALIBRATION
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_SetMode(OPAMP_TypeDef *OPAMPx, uint32_t Mode) { MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_CALON, Mode); }
+__STATIC_INLINE void LL_OPAMP_SetMode(OPAMP_TypeDef *OPAMPx, uint32_t Mode)
+{
+	MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_CALON, Mode);
+}
 
 /**
  * @brief  Get OPAMP mode calibration or functional.
@@ -524,7 +530,10 @@ __STATIC_INLINE void LL_OPAMP_SetMode(OPAMP_TypeDef *OPAMPx, uint32_t Mode) { MO
  *         @arg @ref LL_OPAMP_MODE_FUNCTIONAL
  *         @arg @ref LL_OPAMP_MODE_CALIBRATION
  */
-__STATIC_INLINE uint32_t LL_OPAMP_GetMode(OPAMP_TypeDef *OPAMPx) { return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_CALON)); }
+__STATIC_INLINE uint32_t LL_OPAMP_GetMode(OPAMP_TypeDef *OPAMPx)
+{
+	return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_CALON));
+}
 
 /**
  * @brief  Set OPAMP functional mode by setting internal connections.
@@ -557,7 +566,10 @@ __STATIC_INLINE void LL_OPAMP_SetFunctionalMode(OPAMP_TypeDef *OPAMPx, uint32_t 
  *         @arg @ref LL_OPAMP_MODE_FOLLOWER
  *         @arg @ref LL_OPAMP_MODE_PGA
  */
-__STATIC_INLINE uint32_t LL_OPAMP_GetFunctionalMode(OPAMP_TypeDef *OPAMPx) { return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMODE)); }
+__STATIC_INLINE uint32_t LL_OPAMP_GetFunctionalMode(OPAMP_TypeDef *OPAMPx)
+{
+	return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMODE));
+}
 
 /**
  * @brief  Set OPAMP PGA gain.
@@ -572,7 +584,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetFunctionalMode(OPAMP_TypeDef *OPAMPx) { ret
  *         @arg @ref LL_OPAMP_PGA_GAIN_16
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_SetPGAGain(OPAMP_TypeDef *OPAMPx, uint32_t PGAGain) { MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_PGGAIN, PGAGain); }
+__STATIC_INLINE void LL_OPAMP_SetPGAGain(OPAMP_TypeDef *OPAMPx, uint32_t PGAGain)
+{
+	MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_PGGAIN, PGAGain);
+}
 
 /**
  * @brief  Get OPAMP PGA gain.
@@ -586,7 +601,10 @@ __STATIC_INLINE void LL_OPAMP_SetPGAGain(OPAMP_TypeDef *OPAMPx, uint32_t PGAGain
  *         @arg @ref LL_OPAMP_PGA_GAIN_8
  *         @arg @ref LL_OPAMP_PGA_GAIN_16
  */
-__STATIC_INLINE uint32_t LL_OPAMP_GetPGAGain(OPAMP_TypeDef *OPAMPx) { return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_PGGAIN)); }
+__STATIC_INLINE uint32_t LL_OPAMP_GetPGAGain(OPAMP_TypeDef *OPAMPx)
+{
+	return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_PGGAIN));
+}
 
 /**
  * @}
@@ -605,7 +623,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetPGAGain(OPAMP_TypeDef *OPAMPx) { return (ui
  *         @arg @ref LL_OPAMP_INPUT_NONINV_DAC1_CH1
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_SetInputNonInverting(OPAMP_TypeDef *OPAMPx, uint32_t InputNonInverting) { MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_VPSEL, InputNonInverting); }
+__STATIC_INLINE void LL_OPAMP_SetInputNonInverting(OPAMP_TypeDef *OPAMPx, uint32_t InputNonInverting)
+{
+	MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_VPSEL, InputNonInverting);
+}
 
 /**
  * @brief  Get OPAMP non-inverting input connection.
@@ -615,7 +636,10 @@ __STATIC_INLINE void LL_OPAMP_SetInputNonInverting(OPAMP_TypeDef *OPAMPx, uint32
  *         @arg @ref LL_OPAMP_INPUT_NONINVERT_IO0
  *         @arg @ref LL_OPAMP_INPUT_NONINV_DAC1_CH1
  */
-__STATIC_INLINE uint32_t LL_OPAMP_GetInputNonInverting(OPAMP_TypeDef *OPAMPx) { return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_VPSEL)); }
+__STATIC_INLINE uint32_t LL_OPAMP_GetInputNonInverting(OPAMP_TypeDef *OPAMPx)
+{
+	return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_VPSEL));
+}
 
 /**
  * @brief  Set OPAMP inverting input connection.
@@ -631,7 +655,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetInputNonInverting(OPAMP_TypeDef *OPAMPx) { 
  *         @arg @ref LL_OPAMP_INPUT_INVERT_CONNECT_NO
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_SetInputInverting(OPAMP_TypeDef *OPAMPx, uint32_t InputInverting) { MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_VMSEL, InputInverting); }
+__STATIC_INLINE void LL_OPAMP_SetInputInverting(OPAMP_TypeDef *OPAMPx, uint32_t InputInverting)
+{
+	MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_VMSEL, InputInverting);
+}
 
 /**
  * @brief  Get OPAMP inverting input connection.
@@ -642,7 +669,10 @@ __STATIC_INLINE void LL_OPAMP_SetInputInverting(OPAMP_TypeDef *OPAMPx, uint32_t 
  *         @arg @ref LL_OPAMP_INPUT_INVERT_IO1
  *         @arg @ref LL_OPAMP_INPUT_INVERT_CONNECT_NO
  */
-__STATIC_INLINE uint32_t LL_OPAMP_GetInputInverting(OPAMP_TypeDef *OPAMPx) { return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_VMSEL)); }
+__STATIC_INLINE uint32_t LL_OPAMP_GetInputInverting(OPAMP_TypeDef *OPAMPx)
+{
+	return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_VMSEL));
+}
 
 /**
  * @}
@@ -654,9 +684,15 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetInputInverting(OPAMP_TypeDef *OPAMPx) { ret
  */
 /* Old functions name kept for legacy purpose, to be replaced by the          */
 /* current functions name.                                                    */
-__STATIC_INLINE void LL_OPAMP_SetNonInvertingInput(OPAMP_TypeDef *OPAMPx, uint32_t NonInvertingInput) { LL_OPAMP_SetInputNonInverting(OPAMPx, NonInvertingInput); }
+__STATIC_INLINE void LL_OPAMP_SetNonInvertingInput(OPAMP_TypeDef *OPAMPx, uint32_t NonInvertingInput)
+{
+	LL_OPAMP_SetInputNonInverting(OPAMPx, NonInvertingInput);
+}
 
-__STATIC_INLINE void LL_OPAMP_SetInvertingInput(OPAMP_TypeDef *OPAMPx, uint32_t InvertingInput) { LL_OPAMP_SetInputInverting(OPAMPx, InvertingInput); }
+__STATIC_INLINE void LL_OPAMP_SetInvertingInput(OPAMP_TypeDef *OPAMPx, uint32_t InvertingInput)
+{
+	LL_OPAMP_SetInputInverting(OPAMPx, InvertingInput);
+}
 
 /**
  * @}
@@ -676,7 +712,10 @@ __STATIC_INLINE void LL_OPAMP_SetInvertingInput(OPAMP_TypeDef *OPAMPx, uint32_t 
  *         @arg @ref LL_OPAMP_TRIMMING_USER
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_SetTrimmingMode(OPAMP_TypeDef *OPAMPx, uint32_t TrimmingMode) { MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_USERTRIM, TrimmingMode); }
+__STATIC_INLINE void LL_OPAMP_SetTrimmingMode(OPAMP_TypeDef *OPAMPx, uint32_t TrimmingMode)
+{
+	MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_USERTRIM, TrimmingMode);
+}
 
 /**
  * @brief  Get OPAMP trimming mode.
@@ -686,7 +725,10 @@ __STATIC_INLINE void LL_OPAMP_SetTrimmingMode(OPAMP_TypeDef *OPAMPx, uint32_t Tr
  *         @arg @ref LL_OPAMP_TRIMMING_FACTORY
  *         @arg @ref LL_OPAMP_TRIMMING_USER
  */
-__STATIC_INLINE uint32_t LL_OPAMP_GetTrimmingMode(OPAMP_TypeDef *OPAMPx) { return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_USERTRIM)); }
+__STATIC_INLINE uint32_t LL_OPAMP_GetTrimmingMode(OPAMP_TypeDef *OPAMPx)
+{
+	return (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_USERTRIM));
+}
 
 /**
  * @brief  Set OPAMP offset to calibrate the selected transistors
@@ -735,7 +777,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetCalibrationSelection(OPAMP_TypeDef *OPAMPx)
  * @param  OPAMPx OPAMP instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_OPAMP_IsCalibrationOutputSet(OPAMP_TypeDef *OPAMPx) { return ((READ_BIT(OPAMPx->CSR, OPAMP_CSR_CALOUT) == OPAMP_CSR_CALOUT) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_OPAMP_IsCalibrationOutputSet(OPAMP_TypeDef *OPAMPx)
+{
+	return ((READ_BIT(OPAMPx->CSR, OPAMP_CSR_CALOUT) == OPAMP_CSR_CALOUT) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set OPAMP trimming factor for the selected transistors
@@ -764,8 +809,8 @@ __STATIC_INLINE void LL_OPAMP_SetTrimmingValue(OPAMP_TypeDef *OPAMPx, uint32_t P
 	/* "TransistorsDiffPair". */
 	/* Parameter used with mask "OPAMP_TRIMMING_VALUE_MASK" because */
 	/* containing other bits reserved for other purpose. */
-	MODIFY_REG(*preg, (TransistorsDiffPair & OPAMP_TRIMMING_VALUE_MASK),
-		   TrimmingValue << ((TransistorsDiffPair == LL_OPAMP_TRIMMING_NMOS) ? OPAMP_OTR_TRIMOFFSETN_Pos : OPAMP_OTR_TRIMOFFSETP_Pos));
+	MODIFY_REG(
+	    *preg, (TransistorsDiffPair & OPAMP_TRIMMING_VALUE_MASK), TrimmingValue << ((TransistorsDiffPair == LL_OPAMP_TRIMMING_NMOS) ? OPAMP_OTR_TRIMOFFSETN_Pos : OPAMP_OTR_TRIMOFFSETP_Pos));
 }
 
 /**
@@ -814,7 +859,10 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetTrimmingValue(OPAMP_TypeDef *OPAMPx, uint32
  * @param  OPAMPx OPAMP instance
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_Enable(OPAMP_TypeDef *OPAMPx) { SET_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMPxEN); }
+__STATIC_INLINE void LL_OPAMP_Enable(OPAMP_TypeDef *OPAMPx)
+{
+	SET_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMPxEN);
+}
 
 /**
  * @brief  Disable OPAMP instance.
@@ -822,7 +870,10 @@ __STATIC_INLINE void LL_OPAMP_Enable(OPAMP_TypeDef *OPAMPx) { SET_BIT(OPAMPx->CS
  * @param  OPAMPx OPAMP instance
  * @retval None
  */
-__STATIC_INLINE void LL_OPAMP_Disable(OPAMP_TypeDef *OPAMPx) { CLEAR_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMPxEN); }
+__STATIC_INLINE void LL_OPAMP_Disable(OPAMP_TypeDef *OPAMPx)
+{
+	CLEAR_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMPxEN);
+}
 
 /**
  * @brief  Get OPAMP instance enable state
@@ -831,7 +882,10 @@ __STATIC_INLINE void LL_OPAMP_Disable(OPAMP_TypeDef *OPAMPx) { CLEAR_BIT(OPAMPx-
  * @param  OPAMPx OPAMP instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_OPAMP_IsEnabled(OPAMP_TypeDef *OPAMPx) { return ((READ_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMPxEN) == (OPAMP_CSR_OPAMPxEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_OPAMP_IsEnabled(OPAMP_TypeDef *OPAMPx)
+{
+	return ((READ_BIT(OPAMPx->CSR, OPAMP_CSR_OPAMPxEN) == (OPAMP_CSR_OPAMPxEN)) ? 1UL : 0UL);
+}
 
 /**
  * @}

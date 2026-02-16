@@ -463,7 +463,8 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 
 			/* Configure memory type, device size, chip select high
 			 * time, free running clock, clock mode */
-			MODIFY_REG(hxspi->Instance->DCR1, (XSPI_DCR1_MTYP | XSPI_DCR1_DEVSIZE | XSPI_DCR1_CSHT | XSPI_DCR1_FRCK | XSPI_DCR1_CKMODE),
+			MODIFY_REG(hxspi->Instance->DCR1,
+				   (XSPI_DCR1_MTYP | XSPI_DCR1_DEVSIZE | XSPI_DCR1_CSHT | XSPI_DCR1_FRCK | XSPI_DCR1_CKMODE),
 				   (hxspi->Init.MemoryType | ((hxspi->Init.MemorySize) << XSPI_DCR1_DEVSIZE_Pos) | ((hxspi->Init.ChipSelectHighTimeCycle - 1U) << XSPI_DCR1_CSHT_Pos) |
 				    hxspi->Init.ClockMode));
 
@@ -2572,7 +2573,10 @@ HAL_StatusTypeDef HAL_XSPI_SetFifoThreshold(XSPI_HandleTypeDef *hxspi, uint32_t 
  * @param  hxspi : XSPI handle.
  * @retval Fifo threshold
  */
-uint32_t HAL_XSPI_GetFifoThreshold(const XSPI_HandleTypeDef *hxspi) { return ((READ_BIT(hxspi->Instance->CR, XSPI_CR_FTHRES) >> XSPI_CR_FTHRES_Pos) + 1U); }
+uint32_t HAL_XSPI_GetFifoThreshold(const XSPI_HandleTypeDef *hxspi)
+{
+	return ((READ_BIT(hxspi->Instance->CR, XSPI_CR_FTHRES) >> XSPI_CR_FTHRES_Pos) + 1U);
+}
 
 /** @brief  Set XSPI Memory Type.
  * @param  hxspi     : XSPI handle.
@@ -2670,7 +2674,10 @@ HAL_StatusTypeDef HAL_XSPI_SetTimeout(XSPI_HandleTypeDef *hxspi, uint32_t Timeou
  * @param  hxspi : XSPI handle
  * @retval XSPI Error Code
  */
-uint32_t HAL_XSPI_GetError(const XSPI_HandleTypeDef *hxspi) { return hxspi->ErrorCode; }
+uint32_t HAL_XSPI_GetError(const XSPI_HandleTypeDef *hxspi)
+{
+	return hxspi->ErrorCode;
+}
 
 /**
  * @brief  Return the XSPI handle state.
@@ -2852,20 +2859,24 @@ HAL_StatusTypeDef HAL_XSPIM_Config(XSPI_HandleTypeDef *hxspi, const XSPIM_CfgTyp
 		}
 
 		if ((pCfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U) {
-			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
+			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)],
+				   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 				   (OCTOSPIM_PCR_IOLEN | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
 		} else if (pCfg->IOLowPort != HAL_XSPIM_IOPORT_NONE) {
-			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
+			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)],
+				   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 				   (OCTOSPIM_PCR_IOHEN | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
 		} else {
 			/* Nothing to do */
 		}
 
 		if ((pCfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U) {
-			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
+			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)],
+				   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 				   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC_0 | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
 		} else if (pCfg->IOHighPort != HAL_XSPIM_IOPORT_NONE) {
-			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
+			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)],
+				   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 				   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC_0 | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
 		} else {
 			/* Nothing to do */
@@ -3126,12 +3137,12 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 					MODIFY_REG(hxspi->Instance->CALMR, (HSPI_CALMR_COARSE | HSPI_CALMR_FINE), (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << HSPI_CALMR_COARSE_Pos)));
 					break;
 				case HAL_XSPI_CAL_DATA_OUTPUT_DELAY:
-					MODIFY_REG(hxspi->Instance->CALSOR, (HSPI_CALSOR_COARSE | HSPI_CALSOR_FINE),
-						   (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << HSPI_CALSOR_COARSE_Pos)));
+					MODIFY_REG(
+					    hxspi->Instance->CALSOR, (HSPI_CALSOR_COARSE | HSPI_CALSOR_FINE), (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << HSPI_CALSOR_COARSE_Pos)));
 					break;
 				case HAL_XSPI_CAL_DQS_INPUT_DELAY:
-					MODIFY_REG(hxspi->Instance->CALSIR, (HSPI_CALSIR_COARSE | HSPI_CALSIR_FINE),
-						   (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << HSPI_CALSIR_COARSE_Pos)));
+					MODIFY_REG(
+					    hxspi->Instance->CALSIR, (HSPI_CALSIR_COARSE | HSPI_CALSIR_FINE), (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << HSPI_CALSIR_COARSE_Pos)));
 					break;
 				default:
 					status = HAL_ERROR;
@@ -3413,7 +3424,8 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg), (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
+				MODIFY_REG((*ccr_reg),
+					   (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
 					   (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth | pCmd->AddressMode | pCmd->AddressDTRMode | pCmd->AddressWidth | pCmd->DataMode |
 					    pCmd->DataDTRMode));
 			} else {
@@ -3422,7 +3434,8 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg), (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE),
+				MODIFY_REG((*ccr_reg),
+					   (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE),
 					   (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth | pCmd->AddressMode | pCmd->AddressDTRMode | pCmd->AddressWidth));
 
 				/* The DHQC bit is linked with DDTR bit which
@@ -3451,7 +3464,8 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg), (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
+				MODIFY_REG((*ccr_reg),
+					   (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
 					   (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth | pCmd->DataMode | pCmd->DataDTRMode));
 			} else {
 				/* ---- Command with only instruction ---- */
@@ -3478,7 +3492,8 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 				/* Configure the CCR register with all
 				 * communication parameters */
-				MODIFY_REG((*ccr_reg), (XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
+				MODIFY_REG((*ccr_reg),
+					   (XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
 					   (pCmd->AddressMode | pCmd->AddressDTRMode | pCmd->AddressWidth | pCmd->DataMode | pCmd->DataDTRMode));
 			} else {
 				/* ---- Command with only address ---- */

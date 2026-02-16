@@ -791,7 +791,8 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
 					/*  - Oversampling mode
 					 * (continued/resumed) */
 					/*  - trigger frequency mode */
-					MODIFY_REG(hadc->Instance->CFGR2, ADC_CFGR2_FIELDS,
+					MODIFY_REG(hadc->Instance->CFGR2,
+						   ADC_CFGR2_FIELDS,
 						   ADC_CFGR2_ROVSE | (hadc->Init.Oversampling.Ratio << ADC_CFGR2_OVSR_Pos) | hadc->Init.Oversampling.RightBitShift |
 						       hadc->Init.Oversampling.TriggeredMode | hadc->Init.Oversampling.OversamplingStopReset | (hadc->Init.TriggerFrequencyMode >> 2UL));
 				} else {
@@ -890,7 +891,8 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
 				/*  - Set sequencer scan length by clearing
 				 * ranks above maximum rank  */
 				/*    and do not modify other ranks value. */
-				MODIFY_REG(hadc->Instance->CHSELR, ADC_CHSELR_SQ_ALL,
+				MODIFY_REG(hadc->Instance->CHSELR,
+					   ADC_CHSELR_SQ_ALL,
 					   (ADC_CHSELR_SQ2_TO_SQ8 << (((hadc->Init.NbrOfConversion - 1UL) * ADC4_REGULAR_RANK_2) & 0x1FUL)) | (hadc->ADCGroupRegularSequencerRanks));
 			} else {
 				/* Nothing to do */
@@ -1006,8 +1008,9 @@ HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc)
 		SET_BIT(hadc->Instance->CR, ADC_CR_DEEPPWD);
 
 		/* Reset register CFGR */
-		CLEAR_BIT(hadc->Instance->CFGR1, ADC_CFGR1_AWD1CH | ADC_CFGR1_JAUTO | ADC_CFGR1_JAWD1EN | ADC_CFGR1_AWD1EN | ADC_CFGR1_AWD1SGL | ADC_CFGR1_JDISCEN | ADC_CFGR1_DISCNUM |
-						     ADC_CFGR1_DISCEN | ADC_CFGR1_AUTDLY | ADC_CFGR1_CONT | ADC_CFGR1_OVRMOD | ADC_CFGR1_EXTEN | ADC_CFGR1_EXTSEL | ADC_CFGR1_RES | ADC_CFGR1_DMNGT);
+		CLEAR_BIT(hadc->Instance->CFGR1,
+			  ADC_CFGR1_AWD1CH | ADC_CFGR1_JAUTO | ADC_CFGR1_JAWD1EN | ADC_CFGR1_AWD1EN | ADC_CFGR1_AWD1SGL | ADC_CFGR1_JDISCEN | ADC_CFGR1_DISCNUM | ADC_CFGR1_DISCEN | ADC_CFGR1_AUTDLY |
+			      ADC_CFGR1_CONT | ADC_CFGR1_OVRMOD | ADC_CFGR1_EXTEN | ADC_CFGR1_EXTSEL | ADC_CFGR1_RES | ADC_CFGR1_DMNGT);
 
 		/* Reset register CFGR2 */
 		CLEAR_BIT(hadc->Instance->CFGR2, ADC_CFGR2_ROVSM | ADC_CFGR2_TROVS | ADC_CFGR2_OVSS | ADC_CFGR2_OVSR | ADC_CFGR2_JOVSE | ADC_CFGR2_ROVSE);
@@ -3347,11 +3350,13 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConf
 					if (pConfig->OffsetSaturation == ENABLE) {
 						/* Set ADC selected offset
 						 * unsigned/signed saturation */
-						LL_ADC_SetOffsetUnsignedSaturation(hadc->Instance, pConfig->OffsetNumber,
+						LL_ADC_SetOffsetUnsignedSaturation(hadc->Instance,
+										   pConfig->OffsetNumber,
 										   (pConfig->OffsetSignedSaturation == DISABLE) ? LL_ADC_OFFSET_UNSIGNED_SATURATION_ENABLE
 																: LL_ADC_OFFSET_UNSIGNED_SATURATION_DISABLE);
 
-						LL_ADC_SetOffsetSignedSaturation(hadc->Instance, pConfig->OffsetNumber,
+						LL_ADC_SetOffsetSignedSaturation(hadc->Instance,
+										 pConfig->OffsetNumber,
 										 (pConfig->OffsetSignedSaturation == ENABLE) ? LL_ADC_OFFSET_SIGNED_SATURATION_ENABLE
 															     : LL_ADC_OFFSET_SIGNED_SATURATION_DISABLE);
 					} else {
@@ -3548,8 +3553,8 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConf
 
 					/* Memorize the channel set into
 					 * variable in HAL ADC handle */
-					MODIFY_REG(hadc->ADCGroupRegularSequencerRanks, ADC_CHSELR_SQ1 << (pConfig->Rank & 0x1FUL),
-						   __LL_ADC_CHANNEL_TO_DECIMAL_NB(tmp_channel) << (pConfig->Rank & 0x1FUL));
+					MODIFY_REG(
+					    hadc->ADCGroupRegularSequencerRanks, ADC_CHSELR_SQ1 << (pConfig->Rank & 0x1FUL), __LL_ADC_CHANNEL_TO_DECIMAL_NB(tmp_channel) << (pConfig->Rank & 0x1FUL));
 
 					/* If the selected rank is below ADC
 					 * group regular sequencer length,  */

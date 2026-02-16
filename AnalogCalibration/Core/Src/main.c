@@ -171,8 +171,8 @@ int main(void)
 		max_vals[i] = 0;
 	}
 
-	char *pin_names[] = {"BSE_SIGNAL", "BSPD_SIGNAL",	    "APPS1_SIGNAL", "APPS2_SIGNAL", "BRAKE_F_SIGNAL", "BRAKE_R_SIGNAL",
-			     "AUX_SIGNAL", "STEERING_ANGLE_SIGNAL", "BSPD_SENSE",   "IMD_SENSE",    "AMS_SENSE"};
+	char *pin_names[] = {
+	    "BSE_SIGNAL", "BSPD_SIGNAL", "APPS1_SIGNAL", "APPS2_SIGNAL", "BRAKE_F_SIGNAL", "BRAKE_R_SIGNAL", "AUX_SIGNAL", "STEERING_ANGLE_SIGNAL", "BSPD_SENSE", "IMD_SENSE", "AMS_SENSE"};
 
 	while (1) {
 		/* USER CODE END WHILE */

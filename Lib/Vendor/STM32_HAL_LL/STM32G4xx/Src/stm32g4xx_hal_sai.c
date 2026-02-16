@@ -1946,7 +1946,10 @@ __weak void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai)
  *              the configuration information for SAI module.
  * @retval HAL state
  */
-HAL_SAI_StateTypeDef HAL_SAI_GetState(const SAI_HandleTypeDef *hsai) { return hsai->State; }
+HAL_SAI_StateTypeDef HAL_SAI_GetState(const SAI_HandleTypeDef *hsai)
+{
+	return hsai->State;
+}
 
 /**
  * @brief  Return the SAI error code.
@@ -1954,7 +1957,10 @@ HAL_SAI_StateTypeDef HAL_SAI_GetState(const SAI_HandleTypeDef *hsai) { return hs
  *              the configuration information for the specified SAI Block.
  * @retval SAI Error Code
  */
-uint32_t HAL_SAI_GetError(const SAI_HandleTypeDef *hsai) { return hsai->ErrorCode; }
+uint32_t HAL_SAI_GetError(const SAI_HandleTypeDef *hsai)
+{
+	return hsai->ErrorCode;
+}
 
 /**
  * @}

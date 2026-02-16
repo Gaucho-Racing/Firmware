@@ -2194,7 +2194,10 @@ void HAL_RTC_DST_ClearStoreOperation(RTC_HandleTypeDef *hrtc)
  * @param  hrtc RTC handle
  * @retval operation see RTC_StoreOperation_Definitions
  */
-uint32_t HAL_RTC_DST_ReadStoreOperation(RTC_HandleTypeDef *hrtc) { return READ_BIT(hrtc->Instance->CR, RTC_CR_BKP); }
+uint32_t HAL_RTC_DST_ReadStoreOperation(RTC_HandleTypeDef *hrtc)
+{
+	return READ_BIT(hrtc->Instance->CR, RTC_CR_BKP);
+}
 
 /**
  * @brief  Handle Alarm interrupt request.

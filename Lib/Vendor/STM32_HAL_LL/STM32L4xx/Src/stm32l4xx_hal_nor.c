@@ -1261,7 +1261,10 @@ HAL_StatusTypeDef HAL_NOR_WriteOperation_Disable(NOR_HandleTypeDef *hnor)
  *                the configuration information for NOR module.
  * @retval NOR controller state
  */
-HAL_NOR_StateTypeDef HAL_NOR_GetState(const NOR_HandleTypeDef *hnor) { return hnor->State; }
+HAL_NOR_StateTypeDef HAL_NOR_GetState(const NOR_HandleTypeDef *hnor)
+{
+	return hnor->State;
+}
 
 /**
  * @brief  Returns the NOR operation status.

@@ -475,7 +475,10 @@ extern "C" {
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory) { MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory); }
+__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
+{
+	MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory);
+}
 
 /**
  * @brief  Get memory mapping at address 0x00000000
@@ -489,7 +492,10 @@ __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory) { MODIFY_REG(SYSC
  *
  *         (*) value not defined in all devices
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void) { return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE));
+}
 
 #if defined(SYSCFG_MEMRMP_FB_MODE)
 /**
@@ -500,7 +506,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void) { return (uint32_t)(READ
  *         @arg @ref LL_SYSCFG_BANKMODE_BANK2
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetFlashBankMode(uint32_t Bank) { MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE, Bank); }
+__STATIC_INLINE void LL_SYSCFG_SetFlashBankMode(uint32_t Bank)
+{
+	MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE, Bank);
+}
 
 /**
  * @brief  Get Flash bank mode (Bank flashed at 0x08000000)
@@ -509,7 +518,10 @@ __STATIC_INLINE void LL_SYSCFG_SetFlashBankMode(uint32_t Bank) { MODIFY_REG(SYSC
  *         @arg @ref LL_SYSCFG_BANKMODE_BANK1
  *         @arg @ref LL_SYSCFG_BANKMODE_BANK2
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetFlashBankMode(void) { return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetFlashBankMode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE));
+}
 #endif /* SYSCFG_MEMRMP_FB_MODE */
 
 /**
@@ -517,14 +529,20 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetFlashBankMode(void) { return (uint32_t)(RE
  * @rmtoll SYSCFG_CFGR1 FWDIS         LL_SYSCFG_EnableFirewall
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableFirewall(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FWDIS); }
+__STATIC_INLINE void LL_SYSCFG_EnableFirewall(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FWDIS);
+}
 
 /**
  * @brief  Check if Firewall protection is enabled or not
  * @rmtoll SYSCFG_CFGR1 FWDIS         LL_SYSCFG_IsEnabledFirewall
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledFirewall(void) { return !(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FWDIS) == SYSCFG_CFGR1_FWDIS); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledFirewall(void)
+{
+	return !(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FWDIS) == SYSCFG_CFGR1_FWDIS);
+}
 
 /**
  * @brief  Enable I/O analog switch voltage booster.
@@ -540,7 +558,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledFirewall(void) { return !(READ_BIT(S
  * @rmtoll SYSCFG_CFGR1 BOOSTEN       LL_SYSCFG_EnableAnalogBooster
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+__STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Disable I/O analog switch voltage booster.
@@ -556,7 +577,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void) { SET_BIT(SYSCFG->CFGR1
  * @rmtoll SYSCFG_CFGR1 BOOSTEN       LL_SYSCFG_DisableAnalogBooster
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+__STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Enable the I2C fast mode plus driving capability.
@@ -576,7 +600,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void) { CLEAR_BIT(SYSCFG->CF
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus) { SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus); }
+__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
+{
+	SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
+}
 
 /**
  * @brief  Disable the I2C fast mode plus driving capability.
@@ -596,91 +623,130 @@ __STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus) {
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus) { CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus); }
+__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
+}
 
 /**
  * @brief  Enable Floating Point Unit Invalid operation Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_0      LL_SYSCFG_EnableIT_FPU_IOC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IOC(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IOC(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0);
+}
 
 /**
  * @brief  Enable Floating Point Unit Divide-by-zero Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_1      LL_SYSCFG_EnableIT_FPU_DZC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_DZC(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_DZC(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1);
+}
 
 /**
  * @brief  Enable Floating Point Unit Underflow Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_2      LL_SYSCFG_EnableIT_FPU_UFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_UFC(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_UFC(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2);
+}
 
 /**
  * @brief  Enable Floating Point Unit Overflow Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_3      LL_SYSCFG_EnableIT_FPU_OFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_OFC(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_OFC(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3);
+}
 
 /**
  * @brief  Enable Floating Point Unit Input denormal Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_4      LL_SYSCFG_EnableIT_FPU_IDC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IDC(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IDC(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4);
+}
 
 /**
  * @brief  Enable Floating Point Unit Inexact Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_5      LL_SYSCFG_EnableIT_FPU_IXC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IXC(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IXC(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5);
+}
 
 /**
  * @brief  Disable Floating Point Unit Invalid operation Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_0      LL_SYSCFG_DisableIT_FPU_IOC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IOC(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IOC(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0);
+}
 
 /**
  * @brief  Disable Floating Point Unit Divide-by-zero Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_1      LL_SYSCFG_DisableIT_FPU_DZC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_DZC(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_DZC(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1);
+}
 
 /**
  * @brief  Disable Floating Point Unit Underflow Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_2      LL_SYSCFG_DisableIT_FPU_UFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_UFC(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_UFC(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2);
+}
 
 /**
  * @brief  Disable Floating Point Unit Overflow Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_3      LL_SYSCFG_DisableIT_FPU_OFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_OFC(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_OFC(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3);
+}
 
 /**
  * @brief  Disable Floating Point Unit Input denormal Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_4      LL_SYSCFG_DisableIT_FPU_IDC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IDC(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IDC(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4);
+}
 
 /**
  * @brief  Disable Floating Point Unit Inexact Interrupt
  * @rmtoll SYSCFG_CFGR1 FPU_IE_5      LL_SYSCFG_DisableIT_FPU_IXC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5);
+}
 
 /**
  * @brief  Check if Floating Point Unit Invalid operation Interrupt source is
@@ -688,7 +754,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void) { CLEAR_BIT(SYSCFG->CFGR1
  * @rmtoll SYSCFG_CFGR1 FPU_IE_0      LL_SYSCFG_IsEnabledIT_FPU_IOC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0) == (SYSCFG_CFGR1_FPU_IE_0)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void)
+{
+	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0) == (SYSCFG_CFGR1_FPU_IE_0));
+}
 
 /**
  * @brief  Check if Floating Point Unit Divide-by-zero Interrupt source is
@@ -696,7 +765,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void) { return (READ_BIT(
  * @rmtoll SYSCFG_CFGR1 FPU_IE_1      LL_SYSCFG_IsEnabledIT_FPU_DZC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1) == (SYSCFG_CFGR1_FPU_IE_1)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void)
+{
+	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1) == (SYSCFG_CFGR1_FPU_IE_1));
+}
 
 /**
  * @brief  Check if Floating Point Unit Underflow Interrupt source is enabled or
@@ -704,7 +776,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void) { return (READ_BIT(
  * @rmtoll SYSCFG_CFGR1 FPU_IE_2      LL_SYSCFG_IsEnabledIT_FPU_UFC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2) == (SYSCFG_CFGR1_FPU_IE_2)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void)
+{
+	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2) == (SYSCFG_CFGR1_FPU_IE_2));
+}
 
 /**
  * @brief  Check if Floating Point Unit Overflow Interrupt source is enabled or
@@ -712,7 +787,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void) { return (READ_BIT(
  * @rmtoll SYSCFG_CFGR1 FPU_IE_3      LL_SYSCFG_IsEnabledIT_FPU_OFC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3) == (SYSCFG_CFGR1_FPU_IE_3)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void)
+{
+	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3) == (SYSCFG_CFGR1_FPU_IE_3));
+}
 
 /**
  * @brief  Check if Floating Point Unit Input denormal Interrupt source is
@@ -720,7 +798,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void) { return (READ_BIT(
  * @rmtoll SYSCFG_CFGR1 FPU_IE_4      LL_SYSCFG_IsEnabledIT_FPU_IDC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4) == (SYSCFG_CFGR1_FPU_IE_4)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void)
+{
+	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4) == (SYSCFG_CFGR1_FPU_IE_4));
+}
 
 /**
  * @brief  Check if Floating Point Unit Inexact Interrupt source is enabled or
@@ -728,7 +809,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void) { return (READ_BIT(
  * @rmtoll SYSCFG_CFGR1 FPU_IE_5      LL_SYSCFG_IsEnabledIT_FPU_IXC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5) == (SYSCFG_CFGR1_FPU_IE_5)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void)
+{
+	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5) == (SYSCFG_CFGR1_FPU_IE_5));
+}
 
 /**
  * @brief  Configure source input for the EXTI external interrupt.
@@ -833,7 +917,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableSRAM2Erase(void)
  * @rmtoll SYSCFG_SCSR  SRAM2BSY      LL_SYSCFG_IsSRAM2EraseOngoing
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsSRAM2EraseOngoing(void) { return (READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2BSY) == (SYSCFG_SCSR_SRAM2BSY)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsSRAM2EraseOngoing(void)
+{
+	return (READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2BSY) == (SYSCFG_SCSR_SRAM2BSY));
+}
 
 /**
  * @brief  Set connections to TIM1/8/15/16/17 Break inputs
@@ -848,7 +935,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsSRAM2EraseOngoing(void) { return (READ_BIT(
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break) { MODIFY_REG(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL, Break); }
+__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break)
+{
+	MODIFY_REG(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL, Break);
+}
 
 /**
  * @brief  Get connections to TIM1/8/15/16/17 Break inputs
@@ -862,21 +952,30 @@ __STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break) { MODIFY_REG(SY
  *         @arg @ref LL_SYSCFG_TIMBREAK_SRAM2_PARITY
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void) { return (uint32_t)(READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL));
+}
 
 /**
  * @brief  Check if SRAM2 parity error detected
  * @rmtoll SYSCFG_CFGR2 SPF           LL_SYSCFG_IsActiveFlag_SP
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void) { return (READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF) == (SYSCFG_CFGR2_SPF)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void)
+{
+	return (READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF) == (SYSCFG_CFGR2_SPF));
+}
 
 /**
  * @brief  Clear SRAM2 parity error flag
  * @rmtoll SYSCFG_CFGR2 SPF           LL_SYSCFG_ClearFlag_SP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_ClearFlag_SP(void) { SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF); }
+__STATIC_INLINE void LL_SYSCFG_ClearFlag_SP(void)
+{
+	SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF);
+}
 
 /**
  * @brief  Enable SRAM2 page write protection for Pages in range 0 to 31
@@ -921,7 +1020,10 @@ __STATIC_INLINE void LL_SYSCFG_ClearFlag_SP(void) { SET_BIT(SYSCFG->CFGR2, SYSCF
  */
 /* Legacy define */
 #define LL_SYSCFG_EnableSRAM2PageWRP LL_SYSCFG_EnableSRAM2PageWRP_0_31
-__STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_0_31(uint32_t SRAM2WRP) { SET_BIT(SYSCFG->SWPR, SRAM2WRP); }
+__STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_0_31(uint32_t SRAM2WRP)
+{
+	SET_BIT(SYSCFG->SWPR, SRAM2WRP);
+}
 
 #if defined(SYSCFG_SWPR2_PAGE63)
 /**
@@ -965,7 +1067,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_0_31(uint32_t SRAM2WRP) { SET_
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_32_63(uint32_t SRAM2WRP) { SET_BIT(SYSCFG->SWPR2, SRAM2WRP); }
+__STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_32_63(uint32_t SRAM2WRP)
+{
+	SET_BIT(SYSCFG->SWPR2, SRAM2WRP);
+}
 #endif /* SYSCFG_SWPR2_PAGE63 */
 
 /**
@@ -1005,7 +1110,10 @@ __STATIC_INLINE void LL_SYSCFG_UnlockSRAM2WRP(void)
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF (ex: device ID is
  * 0x6415)
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void) { return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID)); }
+__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
+{
+	return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID));
+}
 
 /**
  * @brief  Return the device revision identifier
@@ -1013,49 +1121,70 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void) { return (uint32_t)(READ_BI
  * @rmtoll DBGMCU_IDCODE REV_ID        LL_DBGMCU_GetRevisionID
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void) { return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos); }
+__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
+{
+	return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos);
+}
 
 /**
  * @brief  Enable the Debug Module during SLEEP mode
  * @rmtoll DBGMCU_CR    DBG_SLEEP     LL_DBGMCU_EnableDBGSleepMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP); }
+__STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+}
 
 /**
  * @brief  Disable the Debug Module during SLEEP mode
  * @rmtoll DBGMCU_CR    DBG_SLEEP     LL_DBGMCU_DisableDBGSleepMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP); }
+__STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+}
 
 /**
  * @brief  Enable the Debug Module during STOP mode
  * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_EnableDBGStopMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Disable the Debug Module during STOP mode
  * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_DisableDBGStopMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Enable the Debug Module during STANDBY mode
  * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_EnableDBGStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @brief  Disable the Debug Module during STANDBY mode
  * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_DisableDBGStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @brief  Set Trace pin assignment control
@@ -1069,7 +1198,10 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->C
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment) { MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment); }
+__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment)
+{
+	MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment);
+}
 
 /**
  * @brief  Get Trace pin assignment control
@@ -1082,7 +1214,10 @@ __STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment) { M
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE2
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void) { return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE)); }
+__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void)
+{
+	return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE));
+}
 
 /**
  * @brief  Freeze APB1 peripherals (group1 peripherals)
@@ -1107,7 +1242,10 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void) { return (uint32_
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB1FZR1, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB1FZR1, Periphs);
+}
 
 /**
  * @brief  Freeze APB1 peripherals (group2 peripherals)
@@ -1119,7 +1257,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB1FZR2, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB1FZR2, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB1 peripherals (group1 peripherals)
@@ -1144,7 +1285,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs) { SET_BI
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB1FZR1, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB1FZR1, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB1 peripherals (group2 peripherals)
@@ -1156,7 +1300,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB1FZR2, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB1FZR2, Periphs);
+}
 
 /**
  * @brief  Freeze APB2 peripherals
@@ -1171,7 +1318,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB2FZ, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB2FZ, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB2 peripherals
@@ -1186,7 +1336,10 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB2FZ, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB2FZ, Periphs);
+}
 
 /**
  * @}
@@ -1202,21 +1355,30 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  * @rmtoll VREFBUF_CSR  ENVR          LL_VREFBUF_Enable
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_Enable(void) { SET_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
+__STATIC_INLINE void LL_VREFBUF_Enable(void)
+{
+	SET_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+}
 
 /**
  * @brief  Disable Internal voltage reference
  * @rmtoll VREFBUF_CSR  ENVR          LL_VREFBUF_Disable
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_Disable(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
+__STATIC_INLINE void LL_VREFBUF_Disable(void)
+{
+	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+}
 
 /**
  * @brief  Enable high impedance (VREF+pin is high impedance)
  * @rmtoll VREFBUF_CSR  HIZ           LL_VREFBUF_EnableHIZ
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_EnableHIZ(void) { SET_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ); }
+__STATIC_INLINE void LL_VREFBUF_EnableHIZ(void)
+{
+	SET_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
+}
 
 /**
  * @brief  Disable high impedance (VREF+pin is internally connected to the
@@ -1224,7 +1386,10 @@ __STATIC_INLINE void LL_VREFBUF_EnableHIZ(void) { SET_BIT(VREFBUF->CSR, VREFBUF_
  * @rmtoll VREFBUF_CSR  HIZ           LL_VREFBUF_DisableHIZ
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_DisableHIZ(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ); }
+__STATIC_INLINE void LL_VREFBUF_DisableHIZ(void)
+{
+	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
+}
 
 /**
  * @brief  Set the Voltage reference scale
@@ -1234,7 +1399,10 @@ __STATIC_INLINE void LL_VREFBUF_DisableHIZ(void) { CLEAR_BIT(VREFBUF->CSR, VREFB
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE1
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale) { MODIFY_REG(VREFBUF->CSR, VREFBUF_CSR_VRS, Scale); }
+__STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale)
+{
+	MODIFY_REG(VREFBUF->CSR, VREFBUF_CSR_VRS, Scale);
+}
 
 /**
  * @brief  Get the Voltage reference scale
@@ -1243,21 +1411,30 @@ __STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale) { MODIFY_REG(V
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE0
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE1
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void) { return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS)); }
+__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void)
+{
+	return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS));
+}
 
 /**
  * @brief  Check if Voltage reference buffer is ready
  * @rmtoll VREFBUF_CSR  VRR           LL_VREFBUF_IsVREFReady
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void) { return (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == (VREFBUF_CSR_VRR)); }
+__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void)
+{
+	return (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == (VREFBUF_CSR_VRR));
+}
 
 /**
  * @brief  Get the trimming code for VREFBUF calibration
  * @rmtoll VREFBUF_CCR  TRIM          LL_VREFBUF_GetTrimming
  * @retval Between 0 and 0x3F
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void) { return (uint32_t)(READ_BIT(VREFBUF->CCR, VREFBUF_CCR_TRIM)); }
+__STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void)
+{
+	return (uint32_t)(READ_BIT(VREFBUF->CCR, VREFBUF_CCR_TRIM));
+}
 
 /**
  * @brief  Set the trimming code for VREFBUF calibration (Tune the internal
@@ -1266,7 +1443,10 @@ __STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void) { return (uint32_t)(READ_B
  * @param  Value Between 0 and 0x3F
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value) { WRITE_REG(VREFBUF->CCR, Value); }
+__STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value)
+{
+	WRITE_REG(VREFBUF->CCR, Value);
+}
 
 /**
  * @}
@@ -1301,7 +1481,10 @@ __STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value) { WRITE_REG(VREFBUF-
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency) { MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency); }
+__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
+{
+	MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency);
+}
 
 /**
  * @brief  Get FLASH Latency
@@ -1326,56 +1509,80 @@ __STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency) { MODIFY_REG(FLASH->A
  *
  *         (*) value not defined in all devices.
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void) { return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY)); }
+__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
+{
+	return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY));
+}
 
 /**
  * @brief  Enable Prefetch
  * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_EnablePrefetch
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnablePrefetch(void) { SET_BIT(FLASH->ACR, FLASH_ACR_PRFTEN); }
+__STATIC_INLINE void LL_FLASH_EnablePrefetch(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
+}
 
 /**
  * @brief  Disable Prefetch
  * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_DisablePrefetch
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisablePrefetch(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_PRFTEN); }
+__STATIC_INLINE void LL_FLASH_DisablePrefetch(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
+}
 
 /**
  * @brief  Check if Prefetch buffer is enabled
  * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_IsPrefetchEnabled
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void) { return (READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == (FLASH_ACR_PRFTEN)); }
+__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void)
+{
+	return (READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == (FLASH_ACR_PRFTEN));
+}
 
 /**
  * @brief  Enable Instruction cache
  * @rmtoll FLASH_ACR    ICEN          LL_FLASH_EnableInstCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableInstCache(void) { SET_BIT(FLASH->ACR, FLASH_ACR_ICEN); }
+__STATIC_INLINE void LL_FLASH_EnableInstCache(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_ICEN);
+}
 
 /**
  * @brief  Disable Instruction cache
  * @rmtoll FLASH_ACR    ICEN          LL_FLASH_DisableInstCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableInstCache(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICEN); }
+__STATIC_INLINE void LL_FLASH_DisableInstCache(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICEN);
+}
 
 /**
  * @brief  Enable Data cache
  * @rmtoll FLASH_ACR    DCEN          LL_FLASH_EnableDataCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableDataCache(void) { SET_BIT(FLASH->ACR, FLASH_ACR_DCEN); }
+__STATIC_INLINE void LL_FLASH_EnableDataCache(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_DCEN);
+}
 
 /**
  * @brief  Disable Data cache
  * @rmtoll FLASH_ACR    DCEN          LL_FLASH_DisableDataCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableDataCache(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCEN); }
+__STATIC_INLINE void LL_FLASH_DisableDataCache(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCEN);
+}
 
 /**
  * @brief  Enable Instruction cache reset
@@ -1383,14 +1590,20 @@ __STATIC_INLINE void LL_FLASH_DisableDataCache(void) { CLEAR_BIT(FLASH->ACR, FLA
  * @rmtoll FLASH_ACR    ICRST         LL_FLASH_EnableInstCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableInstCacheReset(void) { SET_BIT(FLASH->ACR, FLASH_ACR_ICRST); }
+__STATIC_INLINE void LL_FLASH_EnableInstCacheReset(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_ICRST);
+}
 
 /**
  * @brief  Disable Instruction cache reset
  * @rmtoll FLASH_ACR    ICRST         LL_FLASH_DisableInstCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableInstCacheReset(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST); }
+__STATIC_INLINE void LL_FLASH_DisableInstCacheReset(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST);
+}
 
 /**
  * @brief  Enable Data cache reset
@@ -1398,14 +1611,20 @@ __STATIC_INLINE void LL_FLASH_DisableInstCacheReset(void) { CLEAR_BIT(FLASH->ACR
  * @rmtoll FLASH_ACR    DCRST         LL_FLASH_EnableDataCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableDataCacheReset(void) { SET_BIT(FLASH->ACR, FLASH_ACR_DCRST); }
+__STATIC_INLINE void LL_FLASH_EnableDataCacheReset(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_DCRST);
+}
 
 /**
  * @brief  Disable Data cache reset
  * @rmtoll FLASH_ACR    DCRST         LL_FLASH_DisableDataCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableDataCacheReset(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST); }
+__STATIC_INLINE void LL_FLASH_DisableDataCacheReset(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST);
+}
 
 /**
  * @brief  Enable Flash Power-down mode during run mode or Low-power run mode
@@ -1451,14 +1670,20 @@ __STATIC_INLINE void LL_FLASH_DisableRunPowerDown(void)
  * @rmtoll FLASH_ACR    SLEEP_PD      LL_FLASH_EnableSleepPowerDown
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableSleepPowerDown(void) { SET_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD); }
+__STATIC_INLINE void LL_FLASH_EnableSleepPowerDown(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD);
+}
 
 /**
  * @brief  Disable Flash Power-down mode during Sleep or Low-power sleep mode
  * @rmtoll FLASH_ACR    SLEEP_PD      LL_FLASH_DisableSleepPowerDown
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableSleepPowerDown(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD); }
+__STATIC_INLINE void LL_FLASH_DisableSleepPowerDown(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD);
+}
 
 /**
  * @}

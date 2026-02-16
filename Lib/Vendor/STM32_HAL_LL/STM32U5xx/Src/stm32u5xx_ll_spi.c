@@ -286,7 +286,8 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 		 * - Master/Slave Mode      : SPI_CFG2_MASTER bit
 		 * - SPI Mode               : SPI_CFG2_COMM[1:0] bits
 		 */
-		MODIFY_REG(SPIx->CFG2, SPI_CFG2_SSM | SPI_CFG2_SSOE | SPI_CFG2_CPOL | SPI_CFG2_CPHA | SPI_CFG2_LSBFRST | SPI_CFG2_MASTER | SPI_CFG2_COMM,
+		MODIFY_REG(SPIx->CFG2,
+			   SPI_CFG2_SSM | SPI_CFG2_SSOE | SPI_CFG2_CPOL | SPI_CFG2_CPHA | SPI_CFG2_LSBFRST | SPI_CFG2_MASTER | SPI_CFG2_COMM,
 			   SPI_InitStruct->NSS | SPI_InitStruct->ClockPolarity | SPI_InitStruct->ClockPhase | SPI_InitStruct->BitOrder | SPI_InitStruct->Mode |
 			       (SPI_InitStruct->TransferDirection & SPI_CFG2_COMM));
 

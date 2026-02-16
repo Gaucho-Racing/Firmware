@@ -1507,7 +1507,10 @@ HAL_CRYP_STATETypeDef HAL_CRYP_GetState(CRYP_HandleTypeDef *hcryp)
  * @note   The returned error is a bit-map combination of possible errors
  * @retval Error bit-map
  */
-uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp) { return hcryp->ErrorCode; }
+uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp)
+{
+	return hcryp->ErrorCode;
+}
 
 /**
  * @}

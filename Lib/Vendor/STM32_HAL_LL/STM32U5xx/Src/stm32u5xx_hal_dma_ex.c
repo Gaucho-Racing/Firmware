@@ -3218,7 +3218,8 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma, DMA_Tri
 
 	/* Check DMA channel state */
 	if (hdma->State == HAL_DMA_STATE_READY) {
-		MODIFY_REG(hdma->Instance->CTR2, (DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM),
+		MODIFY_REG(hdma->Instance->CTR2,
+			   (DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM),
 			   (pConfigTrigger->TriggerPolarity | pConfigTrigger->TriggerMode | (pConfigTrigger->TriggerSelection << DMA_CTR2_TRIGSEL_Pos)));
 	} else {
 		/* Update the DMA channel error code */
@@ -3519,7 +3520,10 @@ FIFO.
  * configuration information for the specified DMA Channel.
  * @retval Returns the number of available beats in FIFO.
  */
-uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma) { return ((hdma->Instance->CSR & DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos); }
+uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma)
+{
+	return ((hdma->Instance->CSR & DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos);
+}
 /**
  * @}
  */

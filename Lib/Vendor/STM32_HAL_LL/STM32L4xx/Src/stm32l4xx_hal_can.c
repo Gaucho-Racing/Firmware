@@ -1216,10 +1216,12 @@ HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHead
 			}
 
 			/* Set up the data field */
-			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDHR, ((uint32_t)aData[7] << CAN_TDH0R_DATA7_Pos) | ((uint32_t)aData[6] << CAN_TDH0R_DATA6_Pos) |
-											((uint32_t)aData[5] << CAN_TDH0R_DATA5_Pos) | ((uint32_t)aData[4] << CAN_TDH0R_DATA4_Pos));
-			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDLR, ((uint32_t)aData[3] << CAN_TDL0R_DATA3_Pos) | ((uint32_t)aData[2] << CAN_TDL0R_DATA2_Pos) |
-											((uint32_t)aData[1] << CAN_TDL0R_DATA1_Pos) | ((uint32_t)aData[0] << CAN_TDL0R_DATA0_Pos));
+			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDHR,
+				  ((uint32_t)aData[7] << CAN_TDH0R_DATA7_Pos) | ((uint32_t)aData[6] << CAN_TDH0R_DATA6_Pos) | ((uint32_t)aData[5] << CAN_TDH0R_DATA5_Pos) |
+				      ((uint32_t)aData[4] << CAN_TDH0R_DATA4_Pos));
+			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDLR,
+				  ((uint32_t)aData[3] << CAN_TDL0R_DATA3_Pos) | ((uint32_t)aData[2] << CAN_TDL0R_DATA2_Pos) | ((uint32_t)aData[1] << CAN_TDL0R_DATA1_Pos) |
+				      ((uint32_t)aData[0] << CAN_TDL0R_DATA0_Pos));
 
 			/* Request transmission */
 			SET_BIT(hcan->Instance->sTxMailBox[transmitmailbox].TIR, CAN_TI0R_TXRQ);

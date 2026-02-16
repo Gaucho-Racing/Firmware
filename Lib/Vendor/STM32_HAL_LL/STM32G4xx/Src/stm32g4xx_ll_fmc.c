@@ -392,7 +392,8 @@ HAL_StatusTypeDef FMC_NORSRAM_Extended_Timing_Init(FMC_NORSRAM_EXTENDED_TypeDef 
 
 		/* Set NORSRAM device timing register for write configuration,
 		 * if extended mode is used */
-		MODIFY_REG(Device->BWTR[Bank], BWTR_CLEAR_MASK,
+		MODIFY_REG(Device->BWTR[Bank],
+			   BWTR_CLEAR_MASK,
 			   (Timing->AddressSetupTime | ((Timing->AddressHoldTime) << FMC_BWTRx_ADDHLD_Pos) | ((Timing->DataSetupTime) << FMC_BWTRx_DATAST_Pos) |
 			    ((Timing->DataHoldTime) << FMC_BWTRx_DATAHLD_Pos) | Timing->AccessMode | ((Timing->BusTurnAroundDuration) << FMC_BWTRx_BUSTURN_Pos)));
 	} else {
@@ -532,7 +533,8 @@ HAL_StatusTypeDef FMC_NAND_Init(FMC_NAND_TypeDef *Device, const FMC_NAND_InitTyp
 	assert_param(IS_FMC_TAR_TIME(Init->TARSetupTime));
 
 	/* NAND bank 3 registers configuration */
-	MODIFY_REG(Device->PCR, PCR_CLEAR_MASK,
+	MODIFY_REG(Device->PCR,
+		   PCR_CLEAR_MASK,
 		   (Init->Waitfeature | FMC_PCR_MEMORY_TYPE_NAND | Init->MemoryDataWidth | Init->EccComputation | Init->ECCPageSize | ((Init->TCLRSetupTime) << FMC_PCR_TCLR_Pos) |
 		    ((Init->TARSetupTime) << FMC_PCR_TAR_Pos)));
 

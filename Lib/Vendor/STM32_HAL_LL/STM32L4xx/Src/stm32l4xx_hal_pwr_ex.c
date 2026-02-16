@@ -292,7 +292,10 @@ void HAL_PWREx_EnableBatteryCharging(uint32_t ResistorSelection)
  * @brief Disable battery charging.
  * @retval None
  */
-void HAL_PWREx_DisableBatteryCharging(void) { CLEAR_BIT(PWR->CR4, PWR_CR4_VBE); }
+void HAL_PWREx_DisableBatteryCharging(void)
+{
+	CLEAR_BIT(PWR->CR4, PWR_CR4_VBE);
+}
 
 #if defined(PWR_CR2_USV)
 /**
@@ -301,13 +304,19 @@ void HAL_PWREx_DisableBatteryCharging(void) { CLEAR_BIT(PWR->CR4, PWR_CR4_VBE); 
  * present.
  * @retval None
  */
-void HAL_PWREx_EnableVddUSB(void) { SET_BIT(PWR->CR2, PWR_CR2_USV); }
+void HAL_PWREx_EnableVddUSB(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_USV);
+}
 
 /**
  * @brief Disable VDDUSB supply.
  * @retval None
  */
-void HAL_PWREx_DisableVddUSB(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_USV); }
+void HAL_PWREx_DisableVddUSB(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_USV);
+}
 #endif /* PWR_CR2_USV */
 
 #if defined(PWR_CR2_IOSV)
@@ -317,26 +326,38 @@ void HAL_PWREx_DisableVddUSB(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_USV); }
  * present.
  * @retval None
  */
-void HAL_PWREx_EnableVddIO2(void) { SET_BIT(PWR->CR2, PWR_CR2_IOSV); }
+void HAL_PWREx_EnableVddIO2(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_IOSV);
+}
 
 /**
  * @brief Disable VDDIO2 supply.
  * @retval None
  */
-void HAL_PWREx_DisableVddIO2(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_IOSV); }
+void HAL_PWREx_DisableVddIO2(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_IOSV);
+}
 #endif /* PWR_CR2_IOSV */
 
 /**
  * @brief Enable Internal Wake-up Line.
  * @retval None
  */
-void HAL_PWREx_EnableInternalWakeUpLine(void) { SET_BIT(PWR->CR3, PWR_CR3_EIWF); }
+void HAL_PWREx_EnableInternalWakeUpLine(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_EIWF);
+}
 
 /**
  * @brief Disable Internal Wake-up Line.
  * @retval None
  */
-void HAL_PWREx_DisableInternalWakeUpLine(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_EIWF); }
+void HAL_PWREx_DisableInternalWakeUpLine(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_EIWF);
+}
 
 /**
  * @brief Enable GPIO pull-up state in Standby and Shutdown modes.
@@ -668,7 +689,10 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumb
  * PUy or PDy bit.
  * @retval None
  */
-void HAL_PWREx_EnablePullUpPullDownConfig(void) { SET_BIT(PWR->CR3, PWR_CR3_APC); }
+void HAL_PWREx_EnablePullUpPullDownConfig(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_APC);
+}
 
 /**
  * @brief Disable pull-up and pull-down configuration.
@@ -677,19 +701,28 @@ void HAL_PWREx_EnablePullUpPullDownConfig(void) { SET_BIT(PWR->CR3, PWR_CR3_APC)
  * Shutdown modes.
  * @retval None
  */
-void HAL_PWREx_DisablePullUpPullDownConfig(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_APC); }
+void HAL_PWREx_DisablePullUpPullDownConfig(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_APC);
+}
 
 /**
  * @brief Enable Full SRAM2 content retention in Standby mode.
  * @retval None
  */
-void HAL_PWREx_EnableSRAM2ContentRetention(void) { (void)HAL_PWREx_SetSRAM2ContentRetention(PWR_FULL_SRAM2_RETENTION); }
+void HAL_PWREx_EnableSRAM2ContentRetention(void)
+{
+	(void)HAL_PWREx_SetSRAM2ContentRetention(PWR_FULL_SRAM2_RETENTION);
+}
 
 /**
  * @brief Disable SRAM2 content retention in Standby mode.
  * @retval None
  */
-void HAL_PWREx_DisableSRAM2ContentRetention(void) { (void)HAL_PWREx_SetSRAM2ContentRetention(PWR_NO_SRAM2_RETENTION); }
+void HAL_PWREx_DisableSRAM2ContentRetention(void)
+{
+	(void)HAL_PWREx_SetSRAM2ContentRetention(PWR_NO_SRAM2_RETENTION);
+}
 
 /**
  * @brief Enable SRAM2 content retention in Standby mode.
@@ -731,7 +764,10 @@ HAL_StatusTypeDef HAL_PWREx_SetSRAM2ContentRetention(uint32_t SRAM2Size)
  * @note  All the other modes are not affected by this bit.
  * @retval None
  */
-void HAL_PWREx_EnableBORPVD_ULP(void) { SET_BIT(PWR->CR3, PWR_CR3_ENULP); }
+void HAL_PWREx_EnableBORPVD_ULP(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_ENULP);
+}
 
 /**
  * @brief Disable Ultra Low Power BORL, BORH and PVD for STOP2 and Standby
@@ -739,7 +775,10 @@ void HAL_PWREx_EnableBORPVD_ULP(void) { SET_BIT(PWR->CR3, PWR_CR3_ENULP); }
  * @note  All the other modes are not affected by this bit
  * @retval None
  */
-void HAL_PWREx_DisableBORPVD_ULP(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_ENULP); }
+void HAL_PWREx_DisableBORPVD_ULP(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_ENULP);
+}
 #endif /* PWR_CR3_ENULP */
 
 #if defined(PWR_CR4_EXT_SMPS_ON)
@@ -749,7 +788,10 @@ void HAL_PWREx_DisableBORPVD_ULP(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_ENULP); }
  * voltage of the internal CFLDO can be reduced to 0.95V.
  * @retval None
  */
-void HAL_PWREx_EnableExtSMPS_0V95(void) { SET_BIT(PWR->CR4, PWR_CR4_EXT_SMPS_ON); }
+void HAL_PWREx_EnableExtSMPS_0V95(void)
+{
+	SET_BIT(PWR->CR4, PWR_CR4_EXT_SMPS_ON);
+}
 
 /**
  * @brief Disable the CFLDO working @ 0.95V
@@ -758,7 +800,10 @@ void HAL_PWREx_EnableExtSMPS_0V95(void) { SET_BIT(PWR->CR4, PWR_CR4_EXT_SMPS_ON)
  *        1.00V. is also default operating Range 2 voltage.
  * @retval None
  */
-void HAL_PWREx_DisableExtSMPS_0V95(void) { CLEAR_BIT(PWR->CR4, PWR_CR4_EXT_SMPS_ON); }
+void HAL_PWREx_DisableExtSMPS_0V95(void)
+{
+	CLEAR_BIT(PWR->CR4, PWR_CR4_EXT_SMPS_ON);
+}
 #endif /* PWR_CR4_EXT_SMPS_ON */
 
 #if defined(PWR_CR1_RRSTP)
@@ -768,7 +813,10 @@ void HAL_PWREx_DisableExtSMPS_0V95(void) { CLEAR_BIT(PWR->CR4, PWR_CR4_EXT_SMPS_
  *        Stop 2 mode and its content is kept.
  * @retval None
  */
-void HAL_PWREx_EnableSRAM3ContentRetention(void) { SET_BIT(PWR->CR1, PWR_CR1_RRSTP); }
+void HAL_PWREx_EnableSRAM3ContentRetention(void)
+{
+	SET_BIT(PWR->CR1, PWR_CR1_RRSTP);
+}
 
 /**
  * @brief Disable SRAM3 content retention in Stop 2 mode.
@@ -776,7 +824,10 @@ void HAL_PWREx_EnableSRAM3ContentRetention(void) { SET_BIT(PWR->CR1, PWR_CR1_RRS
  *        and its content is lost.
  * @retval None
  */
-void HAL_PWREx_DisableSRAM3ContentRetention(void) { CLEAR_BIT(PWR->CR1, PWR_CR1_RRSTP); }
+void HAL_PWREx_DisableSRAM3ContentRetention(void)
+{
+	CLEAR_BIT(PWR->CR1, PWR_CR1_RRSTP);
+}
 #endif /* PWR_CR1_RRSTP */
 
 #if defined(PWR_CR3_DSIPDEN)
@@ -784,13 +835,19 @@ void HAL_PWREx_DisableSRAM3ContentRetention(void) { CLEAR_BIT(PWR->CR1, PWR_CR1_
  * @brief Enable pull-down activation on DSI pins.
  * @retval None
  */
-void HAL_PWREx_EnableDSIPinsPDActivation(void) { SET_BIT(PWR->CR3, PWR_CR3_DSIPDEN); }
+void HAL_PWREx_EnableDSIPinsPDActivation(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_DSIPDEN);
+}
 
 /**
  * @brief Disable pull-down activation on DSI pins.
  * @retval None
  */
-void HAL_PWREx_DisableDSIPinsPDActivation(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_DSIPDEN); }
+void HAL_PWREx_DisableDSIPinsPDActivation(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_DSIPDEN);
+}
 #endif /* PWR_CR3_DSIPDEN */
 
 #if defined(PWR_CR2_PVME1)
@@ -798,13 +855,19 @@ void HAL_PWREx_DisableDSIPinsPDActivation(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_DS
  * @brief Enable the Power Voltage Monitoring 1: VDDUSB versus 1.2V.
  * @retval None
  */
-void HAL_PWREx_EnablePVM1(void) { SET_BIT(PWR->CR2, PWR_PVM_1); }
+void HAL_PWREx_EnablePVM1(void)
+{
+	SET_BIT(PWR->CR2, PWR_PVM_1);
+}
 
 /**
  * @brief Disable the Power Voltage Monitoring 1: VDDUSB versus 1.2V.
  * @retval None
  */
-void HAL_PWREx_DisablePVM1(void) { CLEAR_BIT(PWR->CR2, PWR_PVM_1); }
+void HAL_PWREx_DisablePVM1(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_PVM_1);
+}
 #endif /* PWR_CR2_PVME1 */
 
 #if defined(PWR_CR2_PVME2)
@@ -812,38 +875,56 @@ void HAL_PWREx_DisablePVM1(void) { CLEAR_BIT(PWR->CR2, PWR_PVM_1); }
  * @brief Enable the Power Voltage Monitoring 2: VDDIO2 versus 0.9V.
  * @retval None
  */
-void HAL_PWREx_EnablePVM2(void) { SET_BIT(PWR->CR2, PWR_PVM_2); }
+void HAL_PWREx_EnablePVM2(void)
+{
+	SET_BIT(PWR->CR2, PWR_PVM_2);
+}
 
 /**
  * @brief Disable the Power Voltage Monitoring 2: VDDIO2 versus 0.9V.
  * @retval None
  */
-void HAL_PWREx_DisablePVM2(void) { CLEAR_BIT(PWR->CR2, PWR_PVM_2); }
+void HAL_PWREx_DisablePVM2(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_PVM_2);
+}
 #endif /* PWR_CR2_PVME2 */
 
 /**
  * @brief Enable the Power Voltage Monitoring 3: VDDA versus 1.62V.
  * @retval None
  */
-void HAL_PWREx_EnablePVM3(void) { SET_BIT(PWR->CR2, PWR_PVM_3); }
+void HAL_PWREx_EnablePVM3(void)
+{
+	SET_BIT(PWR->CR2, PWR_PVM_3);
+}
 
 /**
  * @brief Disable the Power Voltage Monitoring 3: VDDA versus 1.62V.
  * @retval None
  */
-void HAL_PWREx_DisablePVM3(void) { CLEAR_BIT(PWR->CR2, PWR_PVM_3); }
+void HAL_PWREx_DisablePVM3(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_PVM_3);
+}
 
 /**
  * @brief Enable the Power Voltage Monitoring 4:  VDDA versus 2.2V.
  * @retval None
  */
-void HAL_PWREx_EnablePVM4(void) { SET_BIT(PWR->CR2, PWR_PVM_4); }
+void HAL_PWREx_EnablePVM4(void)
+{
+	SET_BIT(PWR->CR2, PWR_PVM_4);
+}
 
 /**
  * @brief Disable the Power Voltage Monitoring 4:  VDDA versus 2.2V.
  * @retval None
  */
-void HAL_PWREx_DisablePVM4(void) { CLEAR_BIT(PWR->CR2, PWR_PVM_4); }
+void HAL_PWREx_DisablePVM4(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_PVM_4);
+}
 
 /**
  * @brief Configure the Peripheral Voltage Monitoring (PVM).

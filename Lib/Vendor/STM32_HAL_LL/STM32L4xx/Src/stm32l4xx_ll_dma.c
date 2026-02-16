@@ -254,7 +254,8 @@ ErrorStatus LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef 
 	 * - MemoryOrM2MDstDataSize: DMA_CCR_MSIZE[1:0] bits
 	 * - Priority:               DMA_CCR_PL[1:0] bits
 	 */
-	LL_DMA_ConfigTransfer(DMAx, Channel,
+	LL_DMA_ConfigTransfer(DMAx,
+			      Channel,
 			      DMA_InitStruct->Direction | DMA_InitStruct->Mode | DMA_InitStruct->PeriphOrM2MSrcIncMode | DMA_InitStruct->MemoryOrM2MDstIncMode |
 				  DMA_InitStruct->PeriphOrM2MSrcDataSize | DMA_InitStruct->MemoryOrM2MDstDataSize | DMA_InitStruct->Priority);
 
