@@ -73,36 +73,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
-#define BSPD_SIGNAL_GPIO_Port GPIOC
-#define APPS1_SIGNAL_Pin LL_GPIO_PIN_2
-#define APPS1_SIGNAL_GPIO_Port GPIOC
-#define APPS2_SIGNAL_Pin LL_GPIO_PIN_3
-#define APPS2_SIGNAL_GPIO_Port GPIOC
-#define BLINKY_Pin LL_GPIO_PIN_5
-#define BLINKY_GPIO_Port GPIOA
-#define IMD_SENSE_Pin LL_GPIO_PIN_6
-#define IMD_SENSE_GPIO_Port GPIOA
-#define AMS_SENSE_Pin LL_GPIO_PIN_7
-#define AMS_SENSE_GPIO_Port GPIOA
-#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0
-#define BRAKE_F_SIGNAL_GPIO_Port GPIOB
-#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_1
-#define BRAKE_R_SIGNAL_GPIO_Port GPIOB
-#define LED_TEST_Pin LL_GPIO_PIN_11
-#define LED_TEST_GPIO_Port GPIOB
-#define AUX_SIGNAL_Pin LL_GPIO_PIN_14
-#define AUX_SIGNAL_GPIO_Port GPIOB
-#define STEERING_ANGLE_Pin LL_GPIO_PIN_15
-#define STEERING_ANGLE_GPIO_Port GPIOB
-#define BRAKE_LIGHT_Pin LL_GPIO_PIN_4
-#define BRAKE_LIGHT_GPIO_Port GPIOB
-#define TSSI_G_CONTROL_Pin LL_GPIO_PIN_5
-#define TSSI_G_CONTROL_GPIO_Port GPIOB
-#define AUX_CONTROL_Pin LL_GPIO_PIN_8
-#define AUX_CONTROL_GPIO_Port GPIOB
-#define SOFTWARE_OK_CONTROL_Pin LL_GPIO_PIN_9
-#define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
+#define NEOPIXEL_DIN_Pin LL_GPIO_PIN_5
+#define NEOPIXEL_DIN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
