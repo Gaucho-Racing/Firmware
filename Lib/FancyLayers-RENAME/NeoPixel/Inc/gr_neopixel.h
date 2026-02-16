@@ -8,7 +8,8 @@
 /**
  * @brief Context containing all necessary information for controlling a Neopixel strip.
  * @note Acquired by calling Neopixel_Setup with a NeopixelConfig struct.
- * @note This struct is opaque to users of the library, its contents should not be accessed directly. All interactions with the Neopixel strip should be done through the provided functions in this library.
+ * @note This struct is opaque to users of the library, its contents should not be accessed directly. All interactions with the Neopixel strip should be done through the provided functions in this
+ * library.
  */
 typedef struct NeopixelContext NeopixelContext;
 
@@ -18,7 +19,7 @@ typedef struct NeopixelContext NeopixelContext;
  */
 typedef struct {
 	SPI_TypeDef *SPI_Instance;
-	uint32_t SPI_FrequencyHz;	// FIXME This value should be calculated based off of passed in inputs used in MX_SPI1_Init
+	uint32_t SPI_FrequencyHz; // FIXME This value should be calculated based off of passed in inputs used in MX_SPI1_Init
 	uint32_t LatchTimeUs;
 	uint32_t NumberOfNeopixels;
 	// TODO - Add fields for GPIO pin, SPI settings, etc.
@@ -43,11 +44,12 @@ typedef struct NeopixelContext NeopixelContext;
 
 /**
  * @brief Initializes the Neopixel library with the provided configuration. This must be called before any other functions in this library.
- * @note This function will allocate memory for the NeopixelContext struct. There is no corresponding de-initialization function, this is not an issue in practice since this is only expected to be called once at the beginning of the program.
+ * @note This function will allocate memory for the NeopixelContext struct. There is no corresponding de-initialization function, this is not an issue in practice since this is only expected to be
+ * called once at the beginning of the program.
  * @param neopixelConfiguration A pointer to a NeopixelConfig struct containing the desired configuration for the Neopixel library.
  * @return A pointer to a NeopixelContext struct that can be used for subsequent operations on the Neopixel strip.
  */
-NeopixelContext* Neopixel_Setup(NeopixelConfig *neopixelConfiguration);
+NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration);
 
 /**
  * @brief Writes an array of colors to the Neopixel strip. The number of colors must match the number of Neopixels configured in Neopixel_Setup.

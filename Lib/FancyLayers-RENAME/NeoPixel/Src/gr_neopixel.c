@@ -1,11 +1,11 @@
 #include "gr_neopixel.h"
 
+#include <malloc.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <malloc.h>
 
-#include "main.h"
 #include "Logomatic.h"
+#include "main.h"
 
 #define BITS_PER_BYTE (8U)
 #define MICROSECONDS_PER_SECOND (1000000UL)
@@ -38,7 +38,7 @@ void Neopixel_LatchStrip(NeopixelContext *context)
 	Neopixel_BlockWhileBusy(context);
 }
 
-NeopixelContext* Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
+NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 {
 	// TODO Abstraction
 	// - Add internal enums instead of using provided preprocessor values
