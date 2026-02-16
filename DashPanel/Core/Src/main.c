@@ -19,8 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "dashutils.h"
 #include "CANdler.h"
+#include "dashutils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
