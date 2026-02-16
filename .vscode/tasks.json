@@ -16,7 +16,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target ECU"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ECU"
 		},
 		{
 			"label": "CMake: configure and build CCU",
@@ -25,7 +25,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target CCU"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CCU"
 		},
 		{
 			"label": "CMake: configure and build G4HELLO",
@@ -34,7 +34,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4HELLO"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4HELLO"
 		},
 		{
 			"label": "CMake: configure and build G4PERTESTING",
@@ -43,7 +43,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4PERTESTING"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4PERTESTING"
 		},
 		{
 			"label": "CMake: configure and build G4ADCTESTING",
@@ -52,7 +52,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
 		},
 		{
 			"label": "CMake: configure and build G4CANTESTING",
@@ -61,7 +61,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4CANTESTING"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4CANTESTING"
 		},
 		{
 			"label": "CMake: configure and build G4BLINKY",
@@ -70,7 +70,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4BLINKY"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4BLINKY"
 		},
 		{
 			"label": "CMake: configure and build AnalogCalibration",
@@ -79,7 +79,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target AnalogCalibration"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target AnalogCalibration"
 		},
 		{
 			"label": "CMake: configure and build U5BLINKY",
@@ -88,7 +88,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target U5BLINKY"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target U5BLINKY"
 		},
 		{
 			"label": "CMake: configure and build L4BLINKY",
@@ -97,7 +97,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target L4BLINKY"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4BLINKY"
 		},
 		{
 			"label": "CMake: configure and build W3_G4SPI_Transmit",
@@ -106,7 +106,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target W3_G4SPI_Transmit"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Transmit"
 		},
 		{
 			"label": "CMake: configure and build W3_G4SPI_Receive",
@@ -115,7 +115,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
 		}
 	]
 }
