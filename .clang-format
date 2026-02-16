@@ -6,7 +6,6 @@ BreakBeforeBraces: Linux
 AllowShortIfStatementsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortBlocksOnASingleLine: Empty
-AllowShortCaseExpressionOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortEnumsOnASingleLine: false
 IndentCaseLabels: true
