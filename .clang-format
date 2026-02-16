@@ -7,7 +7,7 @@ AllowShortIfStatementsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortBlocksOnASingleLine: Empty
 BinPackArguments: false
-BinPackParametersStyle: OnePerLine
+BinPackParameters: false
 IndentCaseLabels: true
 InsertBraces: true
 LineEnding: LF
