@@ -6,8 +6,9 @@ BreakBeforeBraces: Linux
 AllowShortIfStatementsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortBlocksOnASingleLine: Empty
-BinPackArguments: false
-BinPackParameters: false
+AllowShortCaseExpressionOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
 IndentCaseLabels: true
 InsertBraces: true
 LineEnding: LF
