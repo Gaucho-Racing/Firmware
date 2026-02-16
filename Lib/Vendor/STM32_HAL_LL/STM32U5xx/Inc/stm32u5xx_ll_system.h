@@ -561,7 +561,10 @@ extern "C" {
  * @rmtoll SYSCFG_CFGR1 ANASWVDD      LL_SYSCFG_EnableAnalogSwitchVdd
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableAnalogSwitchVdd(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD); }
+__STATIC_INLINE void LL_SYSCFG_EnableAnalogSwitchVdd(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD);
+}
 
 /**
  * @brief  Disable I/O analog switches supplied by VDD.
@@ -572,7 +575,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableAnalogSwitchVdd(void) { SET_BIT(SYSCFG->CFG
  * @rmtoll SYSCFG_CFGR1 ANASWVDD      LL_SYSCFG_DisableAnalogSwitchVdd
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableAnalogSwitchVdd(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD); }
+__STATIC_INLINE void LL_SYSCFG_DisableAnalogSwitchVdd(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD);
+}
 
 /**
  * @brief  Enable I/O analog switch voltage booster.
@@ -588,7 +594,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableAnalogSwitchVdd(void) { CLEAR_BIT(SYSCFG->
  * @rmtoll SYSCFG_CFGR1 BOOSTEN       LL_SYSCFG_EnableAnalogBooster
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+__STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Disable I/O analog switch voltage booster.
@@ -604,7 +613,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void) { SET_BIT(SYSCFG->CFGR1
  * @rmtoll SYSCFG_CFGR1 BOOSTEN       LL_SYSCFG_DisableAnalogBooster
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+__STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Enable the fast mode plus driving capability.
@@ -617,7 +629,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void) { CLEAR_BIT(SYSCFG->CF
  *         @arg @ref LL_SYSCFG_FASTMODEPLUS_PB9
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus) { SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus); }
+__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
+{
+	SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
+}
 
 /**
  * @brief  Disable the fast mode plus driving capability.
@@ -630,7 +645,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus) {
  *         @arg @ref LL_SYSCFG_FASTMODEPLUS_PB9
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus) { CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus); }
+__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
+}
 
 #if defined(SYSCFG_CFGR1_ENDCAP)
 /**
@@ -643,7 +661,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus) 
  *         @arg @ref LL_SYSCFG_HSPI_CAPACITANCE_FULL
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetHSPIDecouplingCapacitance(uint32_t Capacitance) { MODIFY_REG(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP, Capacitance); }
+__STATIC_INLINE void LL_SYSCFG_SetHSPIDecouplingCapacitance(uint32_t Capacitance)
+{
+	MODIFY_REG(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP, Capacitance);
+}
 
 /**
  * @brief  Get decoupling capacitance on HSPI supply.
@@ -654,7 +675,10 @@ __STATIC_INLINE void LL_SYSCFG_SetHSPIDecouplingCapacitance(uint32_t Capacitance
  *         @arg @ref LL_SYSCFG_HSPI_CAPACITANCE_2_DIV_3
  *         @arg @ref LL_SYSCFG_HSPI_CAPACITANCE_FULL
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetHSPIDecouplingCapacitance(void) { return (uint32_t)(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetHSPIDecouplingCapacitance(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP));
+}
 #endif /* SYSCFG_CFGR1_ENDCAP */
 
 #if defined(SYSCFG_CFGR1_SRAMCACHED)
@@ -663,14 +687,20 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetHSPIDecouplingCapacitance(void) { return (
  * @rmtoll SYSCFG_CFGR1   SRAMCACHED   LL_SYSCFG_EnableSRAMsCachability
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableSRAMsCachability(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED); }
+__STATIC_INLINE void LL_SYSCFG_EnableSRAMsCachability(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED);
+}
 
 /**
  * @brief  Disable the cachability of internal SRAMs by DCACHE2.
  * @rmtoll SYSCFG_CFGR1   SRAMCACHED   LL_SYSCFG_DisableSRAMsCachability
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableSRAMsCachability(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED); }
+__STATIC_INLINE void LL_SYSCFG_DisableSRAMsCachability(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED);
+}
 
 /**
  * @brief  Check if internal SRAMs cachability by DCACHE2 is enabled or
@@ -678,7 +708,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableSRAMsCachability(void) { CLEAR_BIT(SYSCFG-
  * @rmtoll SYSCFG_CFGR1   SRAMCACHED   LL_SYSCFG_IsEnabledSRAMsCachability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledSRAMsCachability(void) { return ((READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED) == SYSCFG_CFGR1_SRAMCACHED) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledSRAMsCachability(void)
+{
+	return ((READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED) == SYSCFG_CFGR1_SRAMCACHED) ? 1UL : 0UL);
+}
 #endif /* SYSCFG_CFGR1_SRAMCACHED */
 
 /** @defgroup SYSTEM_LL_EF_SYSCFG_FPU_IT_MANAGEMENT FPU interrupt management
@@ -690,84 +723,120 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledSRAMsCachability(void) { return ((RE
  * @rmtoll SYSCFG_FPUIMR FPU_IE_0      LL_SYSCFG_EnableIT_FPU_IOC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IOC(void) { SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_0); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IOC(void)
+{
+	SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_0);
+}
 
 /**
  * @brief  Enable Floating Point Unit Divide-by-zero Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_1      LL_SYSCFG_EnableIT_FPU_DZC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_DZC(void) { SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_1); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_DZC(void)
+{
+	SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_1);
+}
 
 /**
  * @brief  Enable Floating Point Unit Underflow Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_2      LL_SYSCFG_EnableIT_FPU_UFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_UFC(void) { SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_2); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_UFC(void)
+{
+	SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_2);
+}
 
 /**
  * @brief  Enable Floating Point Unit Overflow Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_3      LL_SYSCFG_EnableIT_FPU_OFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_OFC(void) { SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_3); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_OFC(void)
+{
+	SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_3);
+}
 
 /**
  * @brief  Enable Floating Point Unit Input denormal Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_4      LL_SYSCFG_EnableIT_FPU_IDC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IDC(void) { SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_4); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IDC(void)
+{
+	SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_4);
+}
 
 /**
  * @brief  Enable Floating Point Unit Inexact Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_5      LL_SYSCFG_EnableIT_FPU_IXC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IXC(void) { SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_5); }
+__STATIC_INLINE void LL_SYSCFG_EnableIT_FPU_IXC(void)
+{
+	SET_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_5);
+}
 
 /**
  * @brief  Disable Floating Point Unit Invalid operation Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_0      LL_SYSCFG_DisableIT_FPU_IOC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IOC(void) { CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_0); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IOC(void)
+{
+	CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_0);
+}
 
 /**
  * @brief  Disable Floating Point Unit Divide-by-zero Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_1      LL_SYSCFG_DisableIT_FPU_DZC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_DZC(void) { CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_1); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_DZC(void)
+{
+	CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_1);
+}
 
 /**
  * @brief  Disable Floating Point Unit Underflow Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_2      LL_SYSCFG_DisableIT_FPU_UFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_UFC(void) { CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_2); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_UFC(void)
+{
+	CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_2);
+}
 
 /**
  * @brief  Disable Floating Point Unit Overflow Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_3      LL_SYSCFG_DisableIT_FPU_OFC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_OFC(void) { CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_3); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_OFC(void)
+{
+	CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_3);
+}
 
 /**
  * @brief  Disable Floating Point Unit Input denormal Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_4      LL_SYSCFG_DisableIT_FPU_IDC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IDC(void) { CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_4); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IDC(void)
+{
+	CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_4);
+}
 
 /**
  * @brief  Disable Floating Point Unit Inexact Interrupt.
  * @rmtoll SYSCFG_FPUIMR FPU_IE_5      LL_SYSCFG_DisableIT_FPU_IXC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void) { CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_5); }
+__STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void)
+{
+	CLEAR_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_5);
+}
 
 /**
  * @brief  Check if Floating Point Unit Invalid operation Interrupt source is
@@ -775,7 +844,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void) { CLEAR_BIT(SYSCFG->FPUIM
  * @rmtoll SYSCFG_FPUIMR FPU_IE_0      LL_SYSCFG_IsEnabledIT_FPU_IOC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void) { return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_0) == SYSCFG_FPUIMR_FPU_IE_0) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void)
+{
+	return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_0) == SYSCFG_FPUIMR_FPU_IE_0) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Floating Point Unit Divide-by-zero Interrupt source is
@@ -783,7 +855,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void) { return ((READ_BIT
  * @rmtoll SYSCFG_FPUIMR FPU_IE_1      LL_SYSCFG_IsEnabledIT_FPU_DZC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void) { return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_1) == SYSCFG_FPUIMR_FPU_IE_1) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void)
+{
+	return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_1) == SYSCFG_FPUIMR_FPU_IE_1) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Floating Point Unit Underflow Interrupt source is enabled or
@@ -791,7 +866,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void) { return ((READ_BIT
  * @rmtoll SYSCFG_FPUIMR FPU_IE_2      LL_SYSCFG_IsEnabledIT_FPU_UFC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void) { return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_2) == SYSCFG_FPUIMR_FPU_IE_2) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void)
+{
+	return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_2) == SYSCFG_FPUIMR_FPU_IE_2) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Floating Point Unit Overflow Interrupt source is enabled or
@@ -799,7 +877,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void) { return ((READ_BIT
  * @rmtoll SYSCFG_FPUIMR FPU_IE_3      LL_SYSCFG_IsEnabledIT_FPU_OFC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void) { return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_3) == SYSCFG_FPUIMR_FPU_IE_3) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void)
+{
+	return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_3) == SYSCFG_FPUIMR_FPU_IE_3) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Floating Point Unit Input denormal Interrupt source is
@@ -807,7 +888,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void) { return ((READ_BIT
  * @rmtoll SYSCFG_FPUIMR FPU_IE_4      LL_SYSCFG_IsEnabledIT_FPU_IDC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void) { return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_4) == SYSCFG_FPUIMR_FPU_IE_4) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void)
+{
+	return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_4) == SYSCFG_FPUIMR_FPU_IE_4) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Floating Point Unit Inexact Interrupt source is enabled or
@@ -815,7 +899,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void) { return ((READ_BIT
  * @rmtoll SYSCFG_FPUIMR FPU_IE_5      LL_SYSCFG_IsEnabledIT_FPU_IXC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void) { return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_5) == SYSCFG_FPUIMR_FPU_IE_5) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void)
+{
+	return ((READ_BIT(SYSCFG->FPUIMR, SYSCFG_FPUIMR_FPU_IE_5) == SYSCFG_FPUIMR_FPU_IE_5) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -859,14 +946,20 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsLockedVTOR(void)
  * @rmtoll CNSLCKR   LOCKNSVTOR   LL_SYSCFG_LockVTOR_NS
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_LockVTOR_NS(void) { SET_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSVTOR); }
+__STATIC_INLINE void LL_SYSCFG_LockVTOR_NS(void)
+{
+	SET_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSVTOR);
+}
 
 /**
  * @brief  Check the lock state of non-secure VTOR registers.
  * @rmtoll CNSLCKR   LOCKNSVTOR   LL_SYSCFG_IsLockedVTOR_NS
  * @retval None
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsLockedVTOR_NS(void) { return ((READ_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSVTOR) == SYSCFG_CNSLCKR_LOCKNSVTOR) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsLockedVTOR_NS(void)
+{
+	return ((READ_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSVTOR) == SYSCFG_CNSLCKR_LOCKNSVTOR) ? 1UL : 0UL);
+}
 #endif /* __ARM_FEATURE_CMSE && (__ARM_FEATURE_CMSE == 3U) */
 
 /**
@@ -903,28 +996,40 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsLockedMPU(void)
  * @rmtoll CNSLCKR   LOCKNSMPU   LL_SYSCFG_LockMPU_NS
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_LockMPU_NS(void) { SET_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSMPU); }
+__STATIC_INLINE void LL_SYSCFG_LockMPU_NS(void)
+{
+	SET_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSMPU);
+}
 
 /**
  * @brief  Check the lock state of non-secure MPU registers.
  * @rmtoll CNSLCKR   LOCKNSMPU   LL_SYSCFG_IsLockedMPU_NS
  * @retval None
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsLockedMPU_NS(void) { return ((READ_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSMPU) == SYSCFG_CNSLCKR_LOCKNSMPU) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsLockedMPU_NS(void)
+{
+	return ((READ_BIT(SYSCFG->CNSLCKR, SYSCFG_CNSLCKR_LOCKNSMPU) == SYSCFG_CNSLCKR_LOCKNSMPU) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Lock the secure SAU registers.
  * @rmtoll CSLCKR   LOCKSAU   LL_SYSCFG_LockSAU
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_LockSAU(void) { SET_BIT(SYSCFG->CSLCKR, SYSCFG_CSLCKR_LOCKSAU); }
+__STATIC_INLINE void LL_SYSCFG_LockSAU(void)
+{
+	SET_BIT(SYSCFG->CSLCKR, SYSCFG_CSLCKR_LOCKSAU);
+}
 
 /**
  * @brief  Check the lock state of secure SAU registers.
  * @rmtoll CSLCKR   LOCKSAU   LL_SYSCFG_IsLockedSAU
  * @retval None
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsLockedSAU(void) { return ((READ_BIT(SYSCFG->CSLCKR, SYSCFG_CSLCKR_LOCKSAU) == SYSCFG_CSLCKR_LOCKSAU) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsLockedSAU(void)
+{
+	return ((READ_BIT(SYSCFG->CSLCKR, SYSCFG_CSLCKR_LOCKSAU) == SYSCFG_CSLCKR_LOCKSAU) ? 1UL : 0UL);
+}
 #endif /* __ARM_FEATURE_CMSE && (__ARM_FEATURE_CMSE == 3U) */
 
 /**
@@ -960,7 +1065,10 @@ __STATIC_INLINE void LL_SYSCFG_LockConfig(uint32_t Item)
  *         @arg @ref LL_SYSCFG_LOCK_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_LockConfig_NS(uint32_t Item) { MODIFY_REG(SYSCFG->CNSLCKR, (SYSCFG_CNSLCKR_LOCKNSVTOR | SYSCFG_CNSLCKR_LOCKNSMPU), Item); }
+__STATIC_INLINE void LL_SYSCFG_LockConfig_NS(uint32_t Item)
+{
+	MODIFY_REG(SYSCFG->CNSLCKR, (SYSCFG_CNSLCKR_LOCKNSVTOR | SYSCFG_CNSLCKR_LOCKNSMPU), Item);
+}
 #endif /* __ARM_FEATURE_CMSE && (__ARM_FEATURE_CMSE == 3U) */
 
 /**
@@ -984,7 +1092,10 @@ __STATIC_INLINE void LL_SYSCFG_LockConfig_NS(uint32_t Item) { MODIFY_REG(SYSCFG-
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break) { MODIFY_REG(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL, Break); }
+__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break)
+{
+	MODIFY_REG(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL, Break);
+}
 
 /**
  * @brief  Get connections to TIM1/8/15/16/17 Break inputs.
@@ -998,7 +1109,10 @@ __STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break) { MODIFY_REG(SY
  *         @arg @ref LL_SYSCFG_TIMBREAK_SRAM_ECC_LOCK
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void) { return (uint32_t)(READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL));
+}
 
 /**
  * @}
@@ -1013,7 +1127,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void) { return (uint32_t)(R
  * @rmtoll MESR   IPMEE    LL_SYSCFG_ClearEraseEndStatus
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_ClearEraseEndStatus(void) { SET_BIT(SYSCFG->MESR, SYSCFG_MESR_IPMEE); }
+__STATIC_INLINE void LL_SYSCFG_ClearEraseEndStatus(void)
+{
+	SET_BIT(SYSCFG->MESR, SYSCFG_MESR_IPMEE);
+}
 
 /**
  * @brief  Get Status of End of Erase for ICACHE and PKA RAMs
@@ -1022,7 +1139,10 @@ __STATIC_INLINE void LL_SYSCFG_ClearEraseEndStatus(void) { SET_BIT(SYSCFG->MESR,
  *   @arg LL_SYSCFG_MEMORIES_ERASE_ON_GOING : Erase of memories not yet done
  *   @arg LL_SYSCFG_MEMORIES_ERASE_ENDED: Erase of memories ended
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetEraseEndStatus(void) { return (uint32_t)(READ_BIT(SYSCFG->MESR, SYSCFG_MESR_IPMEE)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetEraseEndStatus(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->MESR, SYSCFG_MESR_IPMEE));
+}
 
 /**
  * @brief  Clear Status of End of Erase after reset  for SRAM2, BKPRAM, ICACHE,
@@ -1030,7 +1150,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetEraseEndStatus(void) { return (uint32_t)(R
  * @rmtoll MESR   MCLR    LL_SYSCFG_ClearEraseAfterResetStatus
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_ClearEraseAfterResetStatus(void) { SET_BIT(SYSCFG->MESR, SYSCFG_MESR_MCLR); }
+__STATIC_INLINE void LL_SYSCFG_ClearEraseAfterResetStatus(void)
+{
+	SET_BIT(SYSCFG->MESR, SYSCFG_MESR_MCLR);
+}
 
 /**
  * @brief  Get Status of End of Erase after reset  for SRAM2, BKPRAM, ICACHE,
@@ -1040,7 +1163,10 @@ __STATIC_INLINE void LL_SYSCFG_ClearEraseAfterResetStatus(void) { SET_BIT(SYSCFG
  *   @arg LL_SYSCFG_MEMORIES_ERASE_ON_GOING : Erase of memories not yet done
  *   @arg LL_SYSCFG_MEMORIES_ERASE_ENDED: Erase of memories ended
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetEraseAfterResetStatus(void) { return (uint32_t)(READ_BIT(SYSCFG->MESR, SYSCFG_MESR_MCLR)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetEraseAfterResetStatus(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->MESR, SYSCFG_MESR_MCLR));
+}
 
 /**
  * @}
@@ -1056,7 +1182,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetEraseAfterResetStatus(void) { return (uint
  * @rmtoll CCVR    PCV1   LL_SYSCFG_GetPMOSVddCompensationValue
  * @retval Returned value is the PMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddCompensationValue(void) { return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_PCV1)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddCompensationValue(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_PCV1));
+}
 
 /**
  * @brief  Get the compensation cell value of the GPIO NMOS transistor supplied
@@ -1064,7 +1193,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddCompensationValue(void) { return (u
  * @rmtoll CCVR    NCV1   LL_SYSCFG_GetNMOSVddCompensationValue
  * @retval Returned value is the NMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddCompensationValue(void) { return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_NCV1)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddCompensationValue(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_NCV1));
+}
 
 /**
  * @brief  Get the compensation cell value of the GPIO PMOS transistor supplied
@@ -1072,7 +1204,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddCompensationValue(void) { return (u
  * @rmtoll CCVR    PCV2   LL_SYSCFG_GetPMOSVddIO2CompensationValue
  * @retval Returned value is the PMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddIO2CompensationValue(void) { return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_PCV2)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddIO2CompensationValue(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_PCV2));
+}
 
 /**
  * @brief  Get the compensation cell value of the GPIO NMOS transistor supplied
@@ -1080,7 +1215,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddIO2CompensationValue(void) { return
  * @rmtoll CCVR    NCV2   LL_SYSCFG_GetNMOSVddIO2CompensationValue
  * @retval Returned value is the NMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddIO2CompensationValue(void) { return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_NCV2)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddIO2CompensationValue(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_NCV2));
+}
 
 #if defined(SYSCFG_CCVR_PCV3)
 /**
@@ -1089,7 +1227,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddIO2CompensationValue(void) { return
  * @rmtoll CCVR    PCV3   LL_SYSCFG_GetPMOSVddHSPICompensationValue
  * @retval Returned value is the PMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddHSPICompensationValue(void) { return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_PCV3)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddHSPICompensationValue(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_PCV3));
+}
 
 /**
  * @brief  Get the compensation cell value of the HSPI IO NMOS transistor
@@ -1097,7 +1238,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddHSPICompensationValue(void) { retur
  * @rmtoll CCVR    NCV3   LL_SYSCFG_GetNMOSVddHSPICompensationValue
  * @retval Returned value is the NMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddHSPICompensationValue(void) { return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_NCV3)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddHSPICompensationValue(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCVR, SYSCFG_CCVR_NCV3));
+}
 #endif /* SYSCFG_CCVR_PCV3 */
 
 /**
@@ -1109,7 +1253,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddHSPICompensationValue(void) { retur
  * of the SYSCFG_CCCSR is set
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetPMOSVddCompensationCode(uint32_t PMOSCode) { MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_PCC1, PMOSCode << SYSCFG_CCCR_PCC1_Pos); }
+__STATIC_INLINE void LL_SYSCFG_SetPMOSVddCompensationCode(uint32_t PMOSCode)
+{
+	MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_PCC1, PMOSCode << SYSCFG_CCCR_PCC1_Pos);
+}
 
 /**
  * @brief  Get the compensation cell code of the GPIO PMOS transistor supplied
@@ -1117,7 +1264,10 @@ __STATIC_INLINE void LL_SYSCFG_SetPMOSVddCompensationCode(uint32_t PMOSCode) { M
  * @rmtoll CCCR    PCC1   LL_SYSCFG_GetPMOSVddCompensationCode
  * @retval Returned value is the PMOS compensation cell
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddCompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_PCC1)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddCompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_PCC1));
+}
 
 /**
  * @brief  Set the compensation cell code of the GPIO PMOS transistor supplied
@@ -1128,7 +1278,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddCompensationCode(void) { return (ui
  * of the SYSCFG_CCCSR is set
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetPMOSVddIO2CompensationCode(uint32_t PMOSCode) { MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_PCC2, PMOSCode << SYSCFG_CCCR_PCC2_Pos); }
+__STATIC_INLINE void LL_SYSCFG_SetPMOSVddIO2CompensationCode(uint32_t PMOSCode)
+{
+	MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_PCC2, PMOSCode << SYSCFG_CCCR_PCC2_Pos);
+}
 
 /**
  * @brief  Get the compensation cell code of the GPIO PMOS transistor supplied
@@ -1136,7 +1289,10 @@ __STATIC_INLINE void LL_SYSCFG_SetPMOSVddIO2CompensationCode(uint32_t PMOSCode) 
  * @rmtoll CCCR    PCC2   LL_SYSCFG_GetPMOSVddIO2CompensationCode
  * @retval Returned value is the PMOS compensation
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddIO2CompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_PCC2)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddIO2CompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_PCC2));
+}
 
 #if defined(SYSCFG_CCCR_PCC3)
 /**
@@ -1148,7 +1304,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddIO2CompensationCode(void) { return 
  * of the SYSCFG_CCCSR is set
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetPMOSVddHSPICompensationCode(uint32_t PMOSCode) { MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_PCC3, PMOSCode << SYSCFG_CCCR_PCC3_Pos); }
+__STATIC_INLINE void LL_SYSCFG_SetPMOSVddHSPICompensationCode(uint32_t PMOSCode)
+{
+	MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_PCC3, PMOSCode << SYSCFG_CCCR_PCC3_Pos);
+}
 
 /**
  * @brief  Get the compensation cell code of the HSPI IO PMOS transistor
@@ -1156,7 +1315,10 @@ __STATIC_INLINE void LL_SYSCFG_SetPMOSVddHSPICompensationCode(uint32_t PMOSCode)
  * @rmtoll CCCR    PCC3   LL_SYSCFG_GetPMOSVddHSPICompensationCode
  * @retval Returned value is the PMOS compensation
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddHSPICompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_PCC3)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddHSPICompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_PCC3));
+}
 #endif /* SYSCFG_CCCR_PCC3 */
 
 /**
@@ -1168,7 +1330,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetPMOSVddHSPICompensationCode(void) { return
  * of the SYSCFG_CMPCR is set
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetNMOSVddCompensationCode(uint32_t NMOSCode) { MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_NCC1, NMOSCode << SYSCFG_CCCR_NCC1_Pos); }
+__STATIC_INLINE void LL_SYSCFG_SetNMOSVddCompensationCode(uint32_t NMOSCode)
+{
+	MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_NCC1, NMOSCode << SYSCFG_CCCR_NCC1_Pos);
+}
 
 /**
  * @brief  Get the compensation cell code of the GPIO NMOS transistor supplied
@@ -1176,7 +1341,10 @@ __STATIC_INLINE void LL_SYSCFG_SetNMOSVddCompensationCode(uint32_t NMOSCode) { M
  * @rmtoll CCCR    NCC1   LL_SYSCFG_GetNMOSVddCompensationCode
  * @retval Returned value is the Vdd compensation cell code for NMOS transistors
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddCompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_NCC1)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddCompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_NCC1));
+}
 
 /**
  * @brief  Set the compensation cell code of the GPIO NMOS transistor supplied
@@ -1187,7 +1355,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddCompensationCode(void) { return (ui
  * of the SYSCFG_CMPCR is set Value between 0 and 15
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetNMOSVddIO2CompensationCode(uint32_t NMOSCode) { MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_NCC2, NMOSCode << SYSCFG_CCCR_NCC2_Pos); }
+__STATIC_INLINE void LL_SYSCFG_SetNMOSVddIO2CompensationCode(uint32_t NMOSCode)
+{
+	MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_NCC2, NMOSCode << SYSCFG_CCCR_NCC2_Pos);
+}
 
 /**
  * @brief  Get the compensation cell code of the GPIO NMOS transistor supplied
@@ -1195,7 +1366,10 @@ __STATIC_INLINE void LL_SYSCFG_SetNMOSVddIO2CompensationCode(uint32_t NMOSCode) 
  * @rmtoll CCCR    NCC2   LL_SYSCFG_GetNMOSVddIO2CompensationCode
  * @retval Returned value is the NMOS compensation cell code
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddIO2CompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_NCC2)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddIO2CompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_NCC2));
+}
 
 #if defined(SYSCFG_CCCR_NCC3)
 /**
@@ -1207,7 +1381,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddIO2CompensationCode(void) { return 
  * of the SYSCFG_CCCSR is set Value between 0 and 15
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetNMOSVddHSPICompensationCode(uint32_t NMOSCode) { MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_NCC3, NMOSCode << SYSCFG_CCCR_NCC3_Pos); }
+__STATIC_INLINE void LL_SYSCFG_SetNMOSVddHSPICompensationCode(uint32_t NMOSCode)
+{
+	MODIFY_REG(SYSCFG->CCCR, SYSCFG_CCCR_NCC3, NMOSCode << SYSCFG_CCCR_NCC3_Pos);
+}
 
 /**
  * @brief  Get the compensation cell code of the HSPI IO NMOS transistor
@@ -1215,7 +1392,10 @@ __STATIC_INLINE void LL_SYSCFG_SetNMOSVddHSPICompensationCode(uint32_t NMOSCode)
  * @rmtoll CCCR    NCC3   LL_SYSCFG_GetNMOSVddHSPICompensationCode
  * @retval Returned value is the NMOS compensation cell code
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddHSPICompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_NCC3)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddHSPICompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCR, SYSCFG_CCCR_NCC3));
+}
 #endif /* SYSCFG_CCCR_NCC3 */
 
 /**
@@ -1225,7 +1405,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetNMOSVddHSPICompensationCode(void) { return
  *         voltage ranges from 1.71 to 3.6 V
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableVddCompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1); }
+__STATIC_INLINE void LL_SYSCFG_EnableVddCompensationCell(void)
+{
+	SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1);
+}
 
 /**
  * @brief  Enable the Compensation Cell of GPIO supplied by VDDIO2.
@@ -1234,7 +1417,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableVddCompensationCell(void) { SET_BIT(SYSCFG-
  *         voltage ranges from 1.08 to 3.6 V
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableVddIO2CompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2); }
+__STATIC_INLINE void LL_SYSCFG_EnableVddIO2CompensationCell(void)
+{
+	SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2);
+}
 
 #if defined(SYSCFG_CCCSR_EN3)
 /**
@@ -1242,7 +1428,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableVddIO2CompensationCell(void) { SET_BIT(SYSC
  * @rmtoll CCCSR   EN3    LL_SYSCFG_EnableVddHSPICompensationCell
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableVddHSPICompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3); }
+__STATIC_INLINE void LL_SYSCFG_EnableVddHSPICompensationCell(void)
+{
+	SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3);
+}
 #endif /* SYSCFG_CCCSR_EN3 */
 
 /**
@@ -1252,7 +1441,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableVddHSPICompensationCell(void) { SET_BIT(SYS
  *         voltage ranges from 1.71 to 3.6 V
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableVddCompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1); }
+__STATIC_INLINE void LL_SYSCFG_DisableVddCompensationCell(void)
+{
+	CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1);
+}
 
 /**
  * @brief  Disable the Compensation Cell of GPIO supplied by VDDIO2.
@@ -1261,7 +1453,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableVddCompensationCell(void) { CLEAR_BIT(SYSC
  *         voltage ranges from 1.08 to 3.6 V
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableVddIO2CompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2); }
+__STATIC_INLINE void LL_SYSCFG_DisableVddIO2CompensationCell(void)
+{
+	CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2);
+}
 
 #if defined(SYSCFG_CCCSR_EN3)
 /**
@@ -1269,7 +1464,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableVddIO2CompensationCell(void) { CLEAR_BIT(S
  * @rmtoll CCCSR   EN3    LL_SYSCFG_DisableVddHSPICompensationCell
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableVddHSPICompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3); }
+__STATIC_INLINE void LL_SYSCFG_DisableVddHSPICompensationCell(void)
+{
+	CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3);
+}
 #endif /* SYSCFG_CCCSR_EN3 */
 
 /**
@@ -1277,14 +1475,20 @@ __STATIC_INLINE void LL_SYSCFG_DisableVddHSPICompensationCell(void) { CLEAR_BIT(
  * @rmtoll CCCSR   EN1    LL_SYSCFG_IsEnabled_VddCompensationCell
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddCompensationCell(void) { return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1) == SYSCFG_CCCSR_EN1) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddCompensationCell(void)
+{
+	return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1) == SYSCFG_CCCSR_EN1) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if the Compensation Cell of GPIO supplied by VDDIO2 is enabled.
  * @rmtoll CCCSR   EN2   LL_SYSCFG_IsEnabled_VddIO2CompensationCell
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddIO2CompensationCell(void) { return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2) == SYSCFG_CCCSR_EN2) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddIO2CompensationCell(void)
+{
+	return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2) == SYSCFG_CCCSR_EN2) ? 1UL : 0UL);
+}
 
 #if defined(SYSCFG_CCCSR_EN3)
 /**
@@ -1292,7 +1496,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddIO2CompensationCell(void) { retu
  * @rmtoll CCCSR   EN3   LL_SYSCFG_IsEnabled_VddHSPICompensationCell
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddHSPICompensationCell(void) { return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3) == SYSCFG_CCCSR_EN3) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddHSPICompensationCell(void)
+{
+	return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3) == SYSCFG_CCCSR_EN3) ? 1UL : 0UL);
+}
 #endif /* SYSCFG_CCCSR_EN3 */
 
 /**
@@ -1300,14 +1507,20 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabled_VddHSPICompensationCell(void) { ret
  * @rmtoll CCCSR   RDY1   LL_SYSCFG_IsActiveFlag_VddCMPCR
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddCMPCR(void) { return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_RDY1) == (SYSCFG_CCCSR_RDY1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddCMPCR(void)
+{
+	return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_RDY1) == (SYSCFG_CCCSR_RDY1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Compensation Cell ready Flag of GPIO supplied by VDDIO2.
  * @rmtoll CCCSR   RDY2   LL_SYSCFG_IsActiveFlag_VddIO2CMPCR
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddIO2CMPCR(void) { return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_RDY2) == (SYSCFG_CCCSR_RDY2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddIO2CMPCR(void)
+{
+	return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_RDY2) == (SYSCFG_CCCSR_RDY2)) ? 1UL : 0UL);
+}
 
 #if defined(SYSCFG_CCCSR_RDY3)
 /**
@@ -1315,7 +1528,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddIO2CMPCR(void) { return ((REA
  * @rmtoll CCCSR   RDY3   LL_SYSCFG_IsActiveFlag_VddHSPICMPCR
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddHSPICMPCR(void) { return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_RDY3) == (SYSCFG_CCCSR_RDY3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddHSPICMPCR(void)
+{
+	return ((READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_RDY3) == (SYSCFG_CCCSR_RDY3)) ? 1UL : 0UL);
+}
 #endif /* SYSCFG_CCCSR_RDY3 */
 
 /**
@@ -1329,7 +1545,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_VddHSPICMPCR(void) { return ((RE
  * cell code register (SYSCFG_CCCR)
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetVddCellCompensationCode(uint32_t CompCode) { SET_BIT(SYSCFG->CCCSR, CompCode); }
+__STATIC_INLINE void LL_SYSCFG_SetVddCellCompensationCode(uint32_t CompCode)
+{
+	SET_BIT(SYSCFG->CCCSR, CompCode);
+}
 
 /**
  * @brief  Set the compensation cell code selection of GPIO supplied by VDDIO2.
@@ -1342,7 +1561,10 @@ __STATIC_INLINE void LL_SYSCFG_SetVddCellCompensationCode(uint32_t CompCode) { S
  * compensation cell code register (SYSCFG_CCCR)
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetVddIO2CellCompensationCode(uint32_t CompCode) { SET_BIT(SYSCFG->CCCSR, CompCode); }
+__STATIC_INLINE void LL_SYSCFG_SetVddIO2CellCompensationCode(uint32_t CompCode)
+{
+	SET_BIT(SYSCFG->CCCSR, CompCode);
+}
 
 #if defined(SYSCFG_CCCSR_CS3)
 /**
@@ -1356,7 +1578,10 @@ __STATIC_INLINE void LL_SYSCFG_SetVddIO2CellCompensationCode(uint32_t CompCode) 
  * compensation cell code register (SYSCFG_CCCR)
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetVddHSPICellCompensationCode(uint32_t CompCode) { SET_BIT(SYSCFG->CCCSR, CompCode); }
+__STATIC_INLINE void LL_SYSCFG_SetVddHSPICellCompensationCode(uint32_t CompCode)
+{
+	SET_BIT(SYSCFG->CCCSR, CompCode);
+}
 #endif /* SYSCFG_CCCSR_CS3 */
 
 /**
@@ -1368,7 +1593,10 @@ __STATIC_INLINE void LL_SYSCFG_SetVddHSPICellCompensationCode(uint32_t CompCode)
  *   @arg LL_SYSCFG_VDD_REGISTER_CODE: Selected Code is from the SYSCFG
  * compensation cell code register (SYSCFG_CCCR)
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetVddCellCompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_CS1)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetVddCellCompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_CS1));
+}
 
 /**
   * @brief  Get the compensation cell code selection of GPIO supplied by VDDIO2.
@@ -1379,7 +1607,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetVddCellCompensationCode(void) { return (ui
   *   @arg LL_SYSCFG_VDDIO2_REGISTER_CODE: Selected Code is from the SYSCFG
   compensation cell code register (SYSCFG_CCCR)
   */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetVddIO2CellCompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_CS2)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetVddIO2CellCompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_CS2));
+}
 
 #if defined(SYSCFG_CCCSR_CS3)
 /**
@@ -1391,7 +1622,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetVddIO2CellCompensationCode(void) { return 
   *   @arg LL_SYSCFG_VDDHSPI_REGISTER_CODE: Selected Code is from the SYSCFG
   compensation cell code register (SYSCFG_CCCR)
   */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetVddHSPICellCompensationCode(void) { return (uint32_t)(READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_CS3)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetVddHSPICellCompensationCode(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_CS3));
+}
 #endif /* SYSCFG_CCCSR_CS3 */
 
 /**
@@ -1408,21 +1642,30 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetVddHSPICellCompensationCode(void) { return
  * @rmtoll SYSCFG_OTGHSPHYCR   EN   LL_SYSCFG_EnableOTGPHY
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableOTGPHY(void) { SET_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_EN); }
+__STATIC_INLINE void LL_SYSCFG_EnableOTGPHY(void)
+{
+	SET_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_EN);
+}
 
 /**
  * @brief  Disable the OTG high-speed PHY.
  * @rmtoll SYSCFG_OTGHSPHYCR   EN   LL_SYSCFG_DisableOTGPHY
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableOTGPHY(void) { CLEAR_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_EN); }
+__STATIC_INLINE void LL_SYSCFG_DisableOTGPHY(void)
+{
+	CLEAR_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_EN);
+}
 
 /**
  * @brief  Check if the OTG high-speed PHY is enabled or disabled.
  * @rmtoll SYSCFG_OTGHSPHYCR   EN   LL_SYSCFG_IsEnabledOTGPHY
  * @retval None
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledOTGPHY(void) { return ((READ_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_EN) == SYSCFG_OTGHSPHYCR_EN) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledOTGPHY(void)
+{
+	return ((READ_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_EN) == SYSCFG_OTGHSPHYCR_EN) ? 1UL : 0UL);
+}
 #endif /* SYSCFG_OTGHSPHYCR_EN */
 
 #if defined(SYSCFG_OTGHSPHYCR_PDCTRL)
@@ -1431,14 +1674,20 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledOTGPHY(void) { return ((READ_BIT(SYS
  * @rmtoll SYSCFG_OTGHSPHYCR   PDCTRL   LL_SYSCFG_EnableOTGPHYPowerDown
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableOTGPHYPowerDown(void) { SET_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_PDCTRL); }
+__STATIC_INLINE void LL_SYSCFG_EnableOTGPHYPowerDown(void)
+{
+	SET_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_PDCTRL);
+}
 
 /**
  * @brief  Disable the OTG high-speed PHY common block power-down control.
  * @rmtoll SYSCFG_OTGHSPHYCR   PDCTRL   LL_SYSCFG_DisableOTGPHYPowerDown
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableOTGPHYPowerDown(void) { CLEAR_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_PDCTRL); }
+__STATIC_INLINE void LL_SYSCFG_DisableOTGPHYPowerDown(void)
+{
+	CLEAR_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_PDCTRL);
+}
 
 /**
  * @brief  Check if the OTG high-speed PHY common block power-down is enabled or
@@ -1446,7 +1695,10 @@ __STATIC_INLINE void LL_SYSCFG_DisableOTGPHYPowerDown(void) { CLEAR_BIT(SYSCFG->
  * @rmtoll SYSCFG_OTGHSPHYCR   PDCTRL   LL_SYSCFG_IsEnabledOTGPHYPowerDown
  * @retval None
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledOTGPHYPowerDown(void) { return ((READ_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_PDCTRL) == SYSCFG_OTGHSPHYCR_PDCTRL) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledOTGPHYPowerDown(void)
+{
+	return ((READ_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_PDCTRL) == SYSCFG_OTGHSPHYCR_PDCTRL) ? 1UL : 0UL);
+}
 #endif /* SYSCFG_OTGHSPHYCR_PDCTRL */
 
 #if defined(SYSCFG_OTGHSPHYCR_CLKSEL)
@@ -1462,7 +1714,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledOTGPHYPowerDown(void) { return ((REA
  *         @arg @ref LL_SYSCFG_OTGHSPHY_CLK_32MHZ
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetOTGPHYReferenceClockFrequency(uint32_t ClockFrequency) { MODIFY_REG(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_CLKSEL, ClockFrequency); }
+__STATIC_INLINE void LL_SYSCFG_SetOTGPHYReferenceClockFrequency(uint32_t ClockFrequency)
+{
+	MODIFY_REG(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_CLKSEL, ClockFrequency);
+}
 
 /**
  * @brief  Get the OTG high-speed PHY reference clock frequency selection.
@@ -1475,7 +1730,10 @@ __STATIC_INLINE void LL_SYSCFG_SetOTGPHYReferenceClockFrequency(uint32_t ClockFr
  *         @arg @ref LL_SYSCFG_OTGHSPHY_CLK_26MHZ
  *         @arg @ref LL_SYSCFG_OTGHSPHY_CLK_32MHZ
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYReferenceClockFrequency(void) { return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_CLKSEL)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYReferenceClockFrequency(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYCR, SYSCFG_OTGHSPHYCR_CLKSEL));
+}
 #endif /* SYSCFG_OTGHSPHYCR_CLKSEL */
 
 #if defined(SYSCFG_OTGHSPHYTUNER2_COMPDISTUNE)
@@ -1489,7 +1747,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYReferenceClockFrequency(void) { retu
  *         @arg @ref LL_SYSCFG_OTGHSPHY_DISCONNECT_0PERCENT
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetOTGPHYDisconnectThresholdAdjustment(uint32_t DisconnectThreshold) { MODIFY_REG(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_COMPDISTUNE, DisconnectThreshold); }
+__STATIC_INLINE void LL_SYSCFG_SetOTGPHYDisconnectThresholdAdjustment(uint32_t DisconnectThreshold)
+{
+	MODIFY_REG(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_COMPDISTUNE, DisconnectThreshold);
+}
 
 /**
  * @brief  Get the OTG high-speed PHY disconnect threshold adjustment.
@@ -1499,7 +1760,10 @@ __STATIC_INLINE void LL_SYSCFG_SetOTGPHYDisconnectThresholdAdjustment(uint32_t D
  *         @arg @ref LL_SYSCFG_OTGHSPHY_DISCONNECT_5_9PERCENT
  *         @arg @ref LL_SYSCFG_OTGHSPHY_DISCONNECT_0PERCENT
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYDisconnectThresholdAdjustment(void) { return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_COMPDISTUNE)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYDisconnectThresholdAdjustment(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_COMPDISTUNE));
+}
 #endif /* SYSCFG_OTGHSPHYTUNER2_COMPDISTUNE */
 
 #if defined(SYSCFG_OTGHSPHYTUNER2_SQRXTUNE)
@@ -1513,7 +1777,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYDisconnectThresholdAdjustment(void) 
  *         @arg @ref LL_SYSCFG_OTGHSPHY_SQUELCH_0PERCENT
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetOTGPHYSquelchThresholdAdjustment(uint32_t SquelchThreshold) { MODIFY_REG(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_SQRXTUNE, SquelchThreshold); }
+__STATIC_INLINE void LL_SYSCFG_SetOTGPHYSquelchThresholdAdjustment(uint32_t SquelchThreshold)
+{
+	MODIFY_REG(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_SQRXTUNE, SquelchThreshold);
+}
 
 /**
  * @brief  Get the voltage level for the threshold used to detect valid
@@ -1524,7 +1791,10 @@ __STATIC_INLINE void LL_SYSCFG_SetOTGPHYSquelchThresholdAdjustment(uint32_t Sque
  *         @arg @ref LL_SYSCFG_OTGHSPHY_SQUELCH_15PERCENT
  *         @arg @ref LL_SYSCFG_OTGHSPHY_SQUELCH_0PERCENT
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYSquelchThresholdAdjustment(void) { return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_SQRXTUNE)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYSquelchThresholdAdjustment(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_SQRXTUNE));
+}
 #endif /* SYSCFG_OTGHSPHYTUNER2_SQRXTUNE */
 
 #if defined(SYSCFG_OTGHSPHYTUNER2_TXPREEMPAMPTUNE)
@@ -1539,7 +1809,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYSquelchThresholdAdjustment(void) { r
  *         @arg @ref LL_SYSCFG_OTGHSPHY_PREEMP_3X
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetOTGPHYTransmitterPreemphasisCurrent(uint32_t PreemphasisCurrent) { MODIFY_REG(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_TXPREEMPAMPTUNE, PreemphasisCurrent); }
+__STATIC_INLINE void LL_SYSCFG_SetOTGPHYTransmitterPreemphasisCurrent(uint32_t PreemphasisCurrent)
+{
+	MODIFY_REG(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_TXPREEMPAMPTUNE, PreemphasisCurrent);
+}
 
 /**
  * @brief  Get the OTG high-speed PHY transmitter preemphasis current control.
@@ -1551,7 +1824,10 @@ __STATIC_INLINE void LL_SYSCFG_SetOTGPHYTransmitterPreemphasisCurrent(uint32_t P
  *         @arg @ref LL_SYSCFG_OTGHSPHY_PREEMP_2X
  *         @arg @ref LL_SYSCFG_OTGHSPHY_PREEMP_3X
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYTransmitterPreemphasisCurrent(void) { return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_TXPREEMPAMPTUNE)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYTransmitterPreemphasisCurrent(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->OTGHSPHYTUNER2, SYSCFG_OTGHSPHYTUNER2_TXPREEMPAMPTUNE));
+}
 #endif /* SYSCFG_OTGHSPHYTUNER2_TXPREEMPAMPTUNE */
 
 /**
@@ -1577,7 +1853,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetOTGPHYTransmitterPreemphasisCurrent(void) 
  *         @arg @ref LL_SYSCFG_FPU_SEC or LL_SYSCFG_FPU_NSEC
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_ConfigSecure(uint32_t Configuration) { WRITE_REG(SYSCFG->SECCFGR, Configuration); }
+__STATIC_INLINE void LL_SYSCFG_ConfigSecure(uint32_t Configuration)
+{
+	WRITE_REG(SYSCFG->SECCFGR, Configuration);
+}
 #endif /* __ARM_FEATURE_CMSE && (__ARM_FEATURE_CMSE == 3U) */
 
 /**
@@ -1591,7 +1870,10 @@ __STATIC_INLINE void LL_SYSCFG_ConfigSecure(uint32_t Configuration) { WRITE_REG(
  *         @arg @ref LL_SYSCFG_CLASSB_SEC or LL_SYSCFG_CLASSB_NSEC
  *         @arg @ref LL_SYSCFG_FPU_SEC or LL_SYSCFG_FPU_NSEC
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetConfigSecure(void) { return (uint32_t)(READ_BIT(SYSCFG->SECCFGR, 0xBU)); }
+__STATIC_INLINE uint32_t LL_SYSCFG_GetConfigSecure(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->SECCFGR, 0xBU));
+}
 
 /**
  * @}
@@ -1611,7 +1893,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetConfigSecure(void) { return (uint32_t)(REA
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF (ex: device ID is
  * 0x6415)
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void) { return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID)); }
+__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
+{
+	return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID));
+}
 
 /**
  * @brief  Return the device revision identifier
@@ -1619,56 +1904,80 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void) { return (uint32_t)(READ_BI
  * @rmtoll DBGMCU_IDCODE REV_ID        LL_DBGMCU_GetRevisionID
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void) { return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos); }
+__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
+{
+	return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos);
+}
 
 /**
  * @brief  Enable the Debug Module during STOP mode
  * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_EnableDBGStopMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Disable the Debug Module during STOP mode
  * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_DisableDBGStopMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Enable the Debug Module during STANDBY mode
  * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_EnableDBGStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @brief  Disable the Debug Module during STANDBY mode
  * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_DisableDBGStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @brief  Enable the Debug Clock Trace
  * @rmtoll DBGMCU_CR    TRACE_CLKEN   LL_DBGMCU_EnableTraceClock
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableTraceClock(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_CLKEN); }
+__STATIC_INLINE void LL_DBGMCU_EnableTraceClock(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_CLKEN);
+}
 
 /**
  * @brief  Disable the Debug Clock Trace
  * @rmtoll DBGMCU_CR    TRACE_CLKEN   LL_DBGMCU_DisableTraceClock
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableTraceClock(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_CLKEN); }
+__STATIC_INLINE void LL_DBGMCU_DisableTraceClock(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_CLKEN);
+}
 
 /**
  * @brief  Check if clock trace is enabled or disabled.
  * @rmtoll DBGMCU_CR_TRACE_CLKEN      LL_DBGMCU_IsEnabledTraceClock
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_IsEnabledTraceClock(void) { return ((READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_CLKEN) == DBGMCU_CR_TRACE_CLKEN) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DBGMCU_IsEnabledTraceClock(void)
+{
+	return ((READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_CLKEN) == DBGMCU_CR_TRACE_CLKEN) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set Trace pin assignment control
@@ -1682,7 +1991,10 @@ __STATIC_INLINE uint32_t LL_DBGMCU_IsEnabledTraceClock(void) { return ((READ_BIT
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment) { MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment); }
+__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment)
+{
+	MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment);
+}
 
 /**
  * @brief  Get Trace pin assignment control
@@ -1695,7 +2007,10 @@ __STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment) { M
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE2
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void) { return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE)); }
+__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void)
+{
+	return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE));
+}
 
 /**
  * @brief  Freeze APB1 peripherals (group1 peripherals)
@@ -1713,7 +2028,10 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void) { return (uint32_
  *         @arg @ref LL_DBGMCU_APB1_GRP1_I2C2_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB1FZR1, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB1FZR1, Periphs);
+}
 
 /**
  * @brief  Freeze APB1 peripherals (group2 peripherals)
@@ -1726,7 +2044,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  * @retval None
  * @note   (*) Availability depends on devices.
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB1FZR2, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB1FZR2, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB1 peripherals (group1 peripherals)
@@ -1744,7 +2065,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs) { SET_BI
  *         @arg @ref LL_DBGMCU_APB1_GRP1_I2C2_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB1FZR1, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB1FZR1, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB1 peripherals (group2 peripherals)
@@ -1754,7 +2078,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         @arg @ref LL_DBGMCU_APB1_GRP2_LPTIM2_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB1FZR2, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB1FZR2, Periphs);
+}
 
 /**
  * @brief  Freeze APB2 peripherals
@@ -1767,7 +2094,10 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         @arg @ref LL_DBGMCU_APB2_GRP1_TIM17_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB2FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB2FZR, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB2 peripherals
@@ -1780,7 +2110,10 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  *         @arg @ref LL_DBGMCU_APB2_GRP1_TIM17_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB2FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB2FZR, Periphs);
+}
 
 /**
  * @brief  Freeze APB3 peripherals
@@ -1793,7 +2126,10 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         @arg @ref LL_DBGMCU_APB3_GRP1_RTC_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB3_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->APB3FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB3_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->APB3FZR, Periphs);
+}
 
 /**
  * @brief  Unfreeze APB3 peripherals
@@ -1806,7 +2142,10 @@ __STATIC_INLINE void LL_DBGMCU_APB3_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  *         @arg @ref LL_DBGMCU_APB3_GRP1_RTC_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB3_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->APB3FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_APB3_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->APB3FZR, Periphs);
+}
 
 /**
  * @brief  Freeze AHB1 peripherals
@@ -1830,7 +2169,10 @@ __STATIC_INLINE void LL_DBGMCU_APB3_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         @arg @ref LL_DBGMCU_AHB1_GRP1_GPDMA15_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_AHB1_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->AHB1FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_AHB1_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->AHB1FZR, Periphs);
+}
 
 /**
  * @brief  Unfreeze AHB1 peripherals
@@ -1854,7 +2196,10 @@ __STATIC_INLINE void LL_DBGMCU_AHB1_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  *         @arg @ref LL_DBGMCU_AHB1_GRP1_GPDMA15_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_AHB1_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->AHB1FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_AHB1_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->AHB1FZR, Periphs);
+}
 
 /**
  * @brief  Freeze AHB3 peripherals
@@ -1866,7 +2211,10 @@ __STATIC_INLINE void LL_DBGMCU_AHB1_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  *         @arg @ref LL_DBGMCU_AHB3_GRP1_LPDMA3_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_AHB3_GRP1_FreezePeriph(uint32_t Periphs) { SET_BIT(DBGMCU->AHB3FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_AHB3_GRP1_FreezePeriph(uint32_t Periphs)
+{
+	SET_BIT(DBGMCU->AHB3FZR, Periphs);
+}
 
 /**
  * @brief  Unfreeze AHB3 peripherals
@@ -1878,7 +2226,10 @@ __STATIC_INLINE void LL_DBGMCU_AHB3_GRP1_FreezePeriph(uint32_t Periphs) { SET_BI
  *         @arg @ref LL_DBGMCU_AHB3_GRP1_LPDMA3_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_AHB3_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEAR_BIT(DBGMCU->AHB3FZR, Periphs); }
+__STATIC_INLINE void LL_DBGMCU_AHB3_GRP1_UnFreezePeriph(uint32_t Periphs)
+{
+	CLEAR_BIT(DBGMCU->AHB3FZR, Periphs);
+}
 
 /**
  * @}
@@ -1894,21 +2245,30 @@ __STATIC_INLINE void LL_DBGMCU_AHB3_GRP1_UnFreezePeriph(uint32_t Periphs) { CLEA
  * @rmtoll VREFBUF_CSR  ENVR          LL_VREFBUF_Enable
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_Enable(void) { SET_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
+__STATIC_INLINE void LL_VREFBUF_Enable(void)
+{
+	SET_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+}
 
 /**
  * @brief  Disable Internal voltage reference
  * @rmtoll VREFBUF_CSR  ENVR          LL_VREFBUF_Disable
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_Disable(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
+__STATIC_INLINE void LL_VREFBUF_Disable(void)
+{
+	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+}
 
 /**
  * @brief  Enable high impedance (VREF+pin is high impedance)
  * @rmtoll VREFBUF_CSR  HIZ           LL_VREFBUF_EnableHIZ
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_EnableHIZ(void) { SET_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ); }
+__STATIC_INLINE void LL_VREFBUF_EnableHIZ(void)
+{
+	SET_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
+}
 
 /**
  * @brief  Disable high impedance (VREF+pin is internally connected to the
@@ -1916,7 +2276,10 @@ __STATIC_INLINE void LL_VREFBUF_EnableHIZ(void) { SET_BIT(VREFBUF->CSR, VREFBUF_
  * @rmtoll VREFBUF_CSR  HIZ           LL_VREFBUF_DisableHIZ
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_DisableHIZ(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ); }
+__STATIC_INLINE void LL_VREFBUF_DisableHIZ(void)
+{
+	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
+}
 
 /**
  * @brief  Set the Voltage reference scale
@@ -1928,7 +2291,10 @@ __STATIC_INLINE void LL_VREFBUF_DisableHIZ(void) { CLEAR_BIT(VREFBUF->CSR, VREFB
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE3
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale) { MODIFY_REG(VREFBUF->CSR, VREFBUF_CSR_VRS, Scale); }
+__STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale)
+{
+	MODIFY_REG(VREFBUF->CSR, VREFBUF_CSR_VRS, Scale);
+}
 
 /**
  * @brief  Get the Voltage reference scale
@@ -1939,21 +2305,30 @@ __STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale) { MODIFY_REG(V
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE2
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE3
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void) { return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS)); }
+__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void)
+{
+	return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS));
+}
 
 /**
  * @brief  Check if Voltage reference buffer is ready
  * @rmtoll VREFBUF_CSR  VRR           LL_VREFBUF_IsVREFReady
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void) { return ((READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == VREFBUF_CSR_VRR) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void)
+{
+	return ((READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == VREFBUF_CSR_VRR) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get the trimming code for VREFBUF calibration
  * @rmtoll VREFBUF_CCR  TRIM          LL_VREFBUF_GetTrimming
  * @retval Between 0 and 0x3F
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void) { return (uint32_t)(READ_BIT(VREFBUF->CCR, VREFBUF_CCR_TRIM)); }
+__STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void)
+{
+	return (uint32_t)(READ_BIT(VREFBUF->CCR, VREFBUF_CCR_TRIM));
+}
 
 /**
  * @brief  Set the trimming code for VREFBUF calibration (Tune the internal
@@ -1962,7 +2337,10 @@ __STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void) { return (uint32_t)(READ_B
  * @param  Value Between 0 and 0x3F
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value) { WRITE_REG(VREFBUF->CCR, Value); }
+__STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value)
+{
+	WRITE_REG(VREFBUF->CCR, Value);
+}
 
 /**
  * @}
@@ -1995,7 +2373,10 @@ __STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value) { WRITE_REG(VREFBUF-
  *         @arg @ref LL_FLASH_LATENCY_15
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency) { MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency); }
+__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
+{
+	MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency);
+}
 
 /**
  * @brief  Get FLASH Latency
@@ -2018,7 +2399,10 @@ __STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency) { MODIFY_REG(FLASH->A
  *         @arg @ref LL_FLASH_LATENCY_14
  *         @arg @ref LL_FLASH_LATENCY_15
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void) { return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY)); }
+__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
+{
+	return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY));
+}
 
 /**
  * @brief  Enable Flash Power-down mode during run mode or Low-power run mode
@@ -2102,14 +2486,20 @@ __STATIC_INLINE void LL_FLASH_EnableRunPowerDownBank2(void)
  * @rmtoll FLASH_ACR    SLEEP_PD      LL_FLASH_EnableSleepPowerDown
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableSleepPowerDown(void) { SET_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD); }
+__STATIC_INLINE void LL_FLASH_EnableSleepPowerDown(void)
+{
+	SET_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD);
+}
 
 /**
  * @brief  Disable Flash Power-down mode during Sleep or Low-power sleep mode
  * @rmtoll FLASH_ACR    SLEEP_PD      LL_FLASH_DisableSleepPowerDown
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableSleepPowerDown(void) { CLEAR_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD); }
+__STATIC_INLINE void LL_FLASH_DisableSleepPowerDown(void)
+{
+	CLEAR_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD);
+}
 /**
  * @}
  */

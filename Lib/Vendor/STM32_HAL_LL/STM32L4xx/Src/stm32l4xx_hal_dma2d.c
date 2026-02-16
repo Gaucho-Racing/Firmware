@@ -2006,7 +2006,10 @@ functions
  *                 the configuration information for the DMA2D.
  * @retval HAL state
  */
-HAL_DMA2D_StateTypeDef HAL_DMA2D_GetState(const DMA2D_HandleTypeDef *hdma2d) { return hdma2d->State; }
+HAL_DMA2D_StateTypeDef HAL_DMA2D_GetState(const DMA2D_HandleTypeDef *hdma2d)
+{
+	return hdma2d->State;
+}
 
 /**
  * @brief  Return the DMA2D error code
@@ -2014,7 +2017,10 @@ HAL_DMA2D_StateTypeDef HAL_DMA2D_GetState(const DMA2D_HandleTypeDef *hdma2d) { r
  *               the configuration information for DMA2D.
  * @retval DMA2D Error Code
  */
-uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d) { return hdma2d->ErrorCode; }
+uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d)
+{
+	return hdma2d->ErrorCode;
+}
 
 /**
  * @}

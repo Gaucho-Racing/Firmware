@@ -618,7 +618,10 @@ functions
  *            @arg HAL_FLASH_ERROR_RD: FLASH PCROP read error
  *            @arg HAL_FLASH_ERROR_OPTV: FLASH Option validity error
  */
-uint32_t HAL_FLASH_GetError(void) { return pFlash.ErrorCode; }
+uint32_t HAL_FLASH_GetError(void)
+{
+	return pFlash.ErrorCode;
+}
 
 /**
  * @}

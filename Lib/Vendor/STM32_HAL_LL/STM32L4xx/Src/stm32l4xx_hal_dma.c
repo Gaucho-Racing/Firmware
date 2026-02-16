@@ -993,7 +993,10 @@ HAL_DMA_StateTypeDef HAL_DMA_GetState(DMA_HandleTypeDef *hdma)
  *              the configuration information for the specified DMA Channel.
  * @retval DMA Error Code
  */
-uint32_t HAL_DMA_GetError(DMA_HandleTypeDef *hdma) { return hdma->ErrorCode; }
+uint32_t HAL_DMA_GetError(DMA_HandleTypeDef *hdma)
+{
+	return hdma->ErrorCode;
+}
 
 /**
  * @}

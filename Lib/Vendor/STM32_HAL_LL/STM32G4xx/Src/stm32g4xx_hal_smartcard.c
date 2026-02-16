@@ -2272,7 +2272,10 @@ HAL_SMARTCARD_StateTypeDef HAL_SMARTCARD_GetState(const SMARTCARD_HandleTypeDef 
  * contains the configuration information for the specified SMARTCARD module.
  * @retval SMARTCARD handle Error Code
  */
-uint32_t HAL_SMARTCARD_GetError(const SMARTCARD_HandleTypeDef *hsmartcard) { return hsmartcard->ErrorCode; }
+uint32_t HAL_SMARTCARD_GetError(const SMARTCARD_HandleTypeDef *hsmartcard)
+{
+	return hsmartcard->ErrorCode;
+}
 
 /**
  * @}

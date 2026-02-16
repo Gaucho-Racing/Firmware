@@ -1884,7 +1884,10 @@ HAL_StatusTypeDef HAL_PCD_EP_Receive(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, u
  * @param  ep_addr endpoint address
  * @retval Data Size
  */
-uint32_t HAL_PCD_EP_GetRxCount(PCD_HandleTypeDef const *hpcd, uint8_t ep_addr) { return hpcd->OUT_ep[ep_addr & EP_ADDR_MSK].xfer_count; }
+uint32_t HAL_PCD_EP_GetRxCount(PCD_HandleTypeDef const *hpcd, uint8_t ep_addr)
+{
+	return hpcd->OUT_ep[ep_addr & EP_ADDR_MSK].xfer_count;
+}
 /**
  * @brief  Send an amount of data
  * @param  hpcd PCD handle
@@ -2034,14 +2037,20 @@ HAL_StatusTypeDef HAL_PCD_EP_Flush(PCD_HandleTypeDef *hpcd, uint8_t ep_addr)
  * @param  hpcd PCD handle
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_ActivateRemoteWakeup(PCD_HandleTypeDef *hpcd) { return (USB_ActivateRemoteWakeup(hpcd->Instance)); }
+HAL_StatusTypeDef HAL_PCD_ActivateRemoteWakeup(PCD_HandleTypeDef *hpcd)
+{
+	return (USB_ActivateRemoteWakeup(hpcd->Instance));
+}
 
 /**
  * @brief  De-activate remote wakeup signalling.
  * @param  hpcd PCD handle
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_DeActivateRemoteWakeup(PCD_HandleTypeDef *hpcd) { return (USB_DeActivateRemoteWakeup(hpcd->Instance)); }
+HAL_StatusTypeDef HAL_PCD_DeActivateRemoteWakeup(PCD_HandleTypeDef *hpcd)
+{
+	return (USB_DeActivateRemoteWakeup(hpcd->Instance));
+}
 
 /**
  * @}
@@ -2067,7 +2076,10 @@ HAL_StatusTypeDef HAL_PCD_DeActivateRemoteWakeup(PCD_HandleTypeDef *hpcd) { retu
  * @param  hpcd PCD handle
  * @retval HAL state
  */
-PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd) { return hpcd->State; }
+PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd)
+{
+	return hpcd->State;
+}
 
 /**
  * @}

@@ -1932,7 +1932,10 @@ void HAL_CRYPEx_Write_KeyRegisters(CRYP_HandleTypeDef *hcryp, uint8_t *Input, ui
  * register as soon as the interrupted processing has to be resumed.
  * @retval None
  */
-void HAL_CRYPEx_Read_ControlRegister(CRYP_HandleTypeDef *hcryp, uint8_t *Output) { *(uint32_t *)(void *)(Output) = hcryp->Instance->CR; /* Derogation MisraC2012 R.11.5 */ }
+void HAL_CRYPEx_Read_ControlRegister(CRYP_HandleTypeDef *hcryp, uint8_t *Output)
+{
+	*(uint32_t *)(void *)(Output) = hcryp->Instance->CR; /* Derogation MisraC2012 R.11.5 */
+}
 
 /**
  * @brief  In case of message GCM/GMAC (CCM/CMAC when applicable) processing

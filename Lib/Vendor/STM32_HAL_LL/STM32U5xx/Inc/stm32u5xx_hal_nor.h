@@ -56,7 +56,12 @@ typedef enum {
 /**
  * @brief  FMC NOR Status typedef
  */
-typedef enum { HAL_NOR_STATUS_SUCCESS = 0U, HAL_NOR_STATUS_ONGOING, HAL_NOR_STATUS_ERROR, HAL_NOR_STATUS_TIMEOUT } HAL_NOR_StatusTypeDef;
+typedef enum {
+	HAL_NOR_STATUS_SUCCESS = 0U,
+	HAL_NOR_STATUS_ONGOING,
+	HAL_NOR_STATUS_ERROR,
+	HAL_NOR_STATUS_TIMEOUT
+} HAL_NOR_StatusTypeDef;
 
 /**
  * @brief  FMC NOR ID typedef

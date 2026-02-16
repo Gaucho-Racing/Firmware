@@ -191,7 +191,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
  * @param  None
  * @retval None
  */
-void TIM6_IRQHandler(void) { HAL_TIM_IRQHandler(&TimHandle); }
+void TIM6_IRQHandler(void)
+{
+	HAL_TIM_IRQHandler(&TimHandle);
+}
 
 /**
  * @}

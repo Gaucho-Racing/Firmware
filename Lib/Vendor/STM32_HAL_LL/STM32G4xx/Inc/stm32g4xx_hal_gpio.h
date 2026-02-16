@@ -66,7 +66,10 @@ typedef struct {
 /**
  * @brief  GPIO Bit SET and Bit RESET enumeration
  */
-typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
+typedef enum {
+	GPIO_PIN_RESET = 0U,
+	GPIO_PIN_SET
+} GPIO_PinState;
 /**
  * @}
  */

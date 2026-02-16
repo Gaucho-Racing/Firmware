@@ -2200,7 +2200,10 @@ HAL_QSPI_StateTypeDef HAL_QSPI_GetState(const QSPI_HandleTypeDef *hqspi)
  * @param  hqspi QSPI handle
  * @retval QSPI Error Code
  */
-uint32_t HAL_QSPI_GetError(const QSPI_HandleTypeDef *hqspi) { return hqspi->ErrorCode; }
+uint32_t HAL_QSPI_GetError(const QSPI_HandleTypeDef *hqspi)
+{
+	return hqspi->ErrorCode;
+}
 
 /**
  * @brief  Abort the current transmission.
@@ -2324,7 +2327,10 @@ HAL_StatusTypeDef HAL_QSPI_Abort_IT(QSPI_HandleTypeDef *hqspi)
  * @param  Timeout Timeout for the QSPI memory access.
  * @retval None
  */
-void HAL_QSPI_SetTimeout(QSPI_HandleTypeDef *hqspi, uint32_t Timeout) { hqspi->Timeout = Timeout; }
+void HAL_QSPI_SetTimeout(QSPI_HandleTypeDef *hqspi, uint32_t Timeout)
+{
+	hqspi->Timeout = Timeout;
+}
 
 /** @brief Set QSPI Fifo threshold.
  * @param  hqspi QSPI handle.
@@ -2359,7 +2365,10 @@ HAL_StatusTypeDef HAL_QSPI_SetFifoThreshold(QSPI_HandleTypeDef *hqspi, uint32_t 
  * @param  hqspi QSPI handle.
  * @retval Fifo threshold (value between 1 and 16)
  */
-uint32_t HAL_QSPI_GetFifoThreshold(const QSPI_HandleTypeDef *hqspi) { return ((READ_BIT(hqspi->Instance->CR, QUADSPI_CR_FTHRES) >> QUADSPI_CR_FTHRES_Pos) + 1U); }
+uint32_t HAL_QSPI_GetFifoThreshold(const QSPI_HandleTypeDef *hqspi)
+{
+	return ((READ_BIT(hqspi->Instance->CR, QUADSPI_CR_FTHRES) >> QUADSPI_CR_FTHRES_Pos) + 1U);
+}
 
 #if defined(QUADSPI_CR_DFM)
 /** @brief  Set FlashID.

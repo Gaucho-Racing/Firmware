@@ -1542,7 +1542,10 @@ functions
  *         the configuration information for I2S module
  * @retval HAL state
  */
-HAL_I2S_StateTypeDef HAL_I2S_GetState(I2S_HandleTypeDef *hi2s) { return hi2s->State; }
+HAL_I2S_StateTypeDef HAL_I2S_GetState(I2S_HandleTypeDef *hi2s)
+{
+	return hi2s->State;
+}
 
 /**
  * @brief  Return the I2S error code
@@ -1550,7 +1553,10 @@ HAL_I2S_StateTypeDef HAL_I2S_GetState(I2S_HandleTypeDef *hi2s) { return hi2s->St
  *         the configuration information for I2S module
  * @retval I2S Error Code
  */
-uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s) { return hi2s->ErrorCode; }
+uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s)
+{
+	return hi2s->ErrorCode;
+}
 /**
  * @}
  */

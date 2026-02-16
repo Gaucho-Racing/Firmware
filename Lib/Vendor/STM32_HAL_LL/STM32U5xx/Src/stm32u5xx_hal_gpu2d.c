@@ -620,7 +620,10 @@ void HAL_GPU2D_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
  *                the configuration information for the GPU2D.
  * @retval None
  */
-void HAL_GPU2D_ER_IRQHandler(GPU2D_HandleTypeDef *hgpu2d) { HAL_GPU2D_ErrorCallback(hgpu2d); }
+void HAL_GPU2D_ER_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
+{
+	HAL_GPU2D_ErrorCallback(hgpu2d);
+}
 
 /**
  * @brief  Command List Complete callback.
@@ -690,7 +693,10 @@ functions
  *                the configuration information for the GPU2D.
  * @retval GPU2D state
  */
-HAL_GPU2D_StateTypeDef HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d) { return hgpu2d->State; }
+HAL_GPU2D_StateTypeDef HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d)
+{
+	return hgpu2d->State;
+}
 
 /**
  * @brief  Return the GPU2D error code
@@ -698,7 +704,10 @@ HAL_GPU2D_StateTypeDef HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2
  *                 the configuration information for GPU2D.
  * @retval GPU2D Error Code
  */
-uint32_t HAL_GPU2D_GetError(GPU2D_HandleTypeDef const *const hgpu2d) { return hgpu2d->ErrorCode; }
+uint32_t HAL_GPU2D_GetError(GPU2D_HandleTypeDef const *const hgpu2d)
+{
+	return hgpu2d->ErrorCode;
+}
 
 /**
  * @}

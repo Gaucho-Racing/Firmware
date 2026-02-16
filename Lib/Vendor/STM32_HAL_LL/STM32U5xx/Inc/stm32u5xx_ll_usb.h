@@ -49,18 +49,41 @@ extern "C" {
  * @brief  USB Mode definition
  */
 
-typedef enum { USB_DEVICE_MODE = 0, USB_HOST_MODE = 1, USB_DRD_MODE = 2 } USB_ModeTypeDef;
+typedef enum {
+	USB_DEVICE_MODE = 0,
+	USB_HOST_MODE = 1,
+	USB_DRD_MODE = 2
+} USB_ModeTypeDef;
 
 #if defined(HAL_HCD_MODULE_ENABLED)
 /**
  * @brief  URB States definition
  */
-typedef enum { URB_IDLE = 0, URB_DONE, URB_NOTREADY, URB_NYET, URB_ERROR, URB_STALL, URB_NAK_WAIT } USB_URBStateTypeDef;
+typedef enum {
+	URB_IDLE = 0,
+	URB_DONE,
+	URB_NOTREADY,
+	URB_NYET,
+	URB_ERROR,
+	URB_STALL,
+	URB_NAK_WAIT
+} USB_URBStateTypeDef;
 
 /**
  * @brief  Host channel States  definition
  */
-typedef enum { HC_IDLE = 0, HC_XFRC, HC_HALTED, HC_ACK, HC_NAK, HC_NYET, HC_STALL, HC_XACTERR, HC_BBLERR, HC_DATATGLERR } USB_HCStateTypeDef;
+typedef enum {
+	HC_IDLE = 0,
+	HC_XFRC,
+	HC_HALTED,
+	HC_ACK,
+	HC_NAK,
+	HC_NYET,
+	HC_STALL,
+	HC_XACTERR,
+	HC_BBLERR,
+	HC_DATATGLERR
+} USB_HCStateTypeDef;
 #endif /* defined (HAL_HCD_MODULE_ENABLED) */
 
 /**

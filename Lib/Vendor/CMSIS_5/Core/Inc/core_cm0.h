@@ -868,7 +868,10 @@ __NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
    - \b  1: Single precision FPU
    - \b  2: Double + Single precision FPU
  */
-__STATIC_INLINE uint32_t SCB_GetFPUType(void) { return 0U; /* No FPU */ }
+__STATIC_INLINE uint32_t SCB_GetFPUType(void)
+{
+	return 0U; /* No FPU */
+}
 
 /*@} end of CMSIS_Core_FpuFunctions */
 

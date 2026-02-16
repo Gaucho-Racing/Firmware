@@ -76,7 +76,10 @@ struct __attribute__((packed)) T_UINT32 {
 #pragma clang diagnostic ignored "-Wpacked"
 /*lint -esym(9058, T_UINT16_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for
 					T_UINT16_WRITE */
-__PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+__PACKED_STRUCT T_UINT16_WRITE
+{
+	uint16_t v;
+};
 #pragma clang diagnostic pop
 #define __UNALIGNED_UINT16_WRITE(addr, val) (void)((((struct T_UINT16_WRITE *)(void *)(addr))->v) = (val))
 #endif
@@ -85,7 +88,10 @@ __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
 #pragma clang diagnostic ignored "-Wpacked"
 /*lint -esym(9058, T_UINT16_READ)*/ /* disable MISRA 2012 Rule 2.4 for
 				       T_UINT16_READ */
-__PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+__PACKED_STRUCT T_UINT16_READ
+{
+	uint16_t v;
+};
 #pragma clang diagnostic pop
 #define __UNALIGNED_UINT16_READ(addr) (((const struct T_UINT16_READ *)(const void *)(addr))->v)
 #endif
@@ -94,7 +100,10 @@ __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
 #pragma clang diagnostic ignored "-Wpacked"
 /*lint -esym(9058, T_UINT32_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for
 					T_UINT32_WRITE */
-__PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+__PACKED_STRUCT T_UINT32_WRITE
+{
+	uint32_t v;
+};
 #pragma clang diagnostic pop
 #define __UNALIGNED_UINT32_WRITE(addr, val) (void)((((struct T_UINT32_WRITE *)(void *)(addr))->v) = (val))
 #endif
@@ -103,7 +112,10 @@ __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
 #pragma clang diagnostic ignored "-Wpacked"
 /*lint -esym(9058, T_UINT32_READ)*/ /* disable MISRA 2012 Rule 2.4 for
 				       T_UINT32_READ */
-__PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+__PACKED_STRUCT T_UINT32_READ
+{
+	uint32_t v;
+};
 #pragma clang diagnostic pop
 #define __UNALIGNED_UINT32_READ(addr) (((const struct T_UINT32_READ *)(const void *)(addr))->v)
 #endif
@@ -153,7 +165,10 @@ __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
 #define __TZ_STACK_SEAL_VALUE 0xFEF5EDA5FEF5EDA5ULL
 #endif
 
-__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S(uint32_t *stackTop) { *((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE; }
+__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S(uint32_t *stackTop)
+{
+	*((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE;
+}
 #endif
 
 /* ##########################  Core Instruction Access #########################
@@ -461,7 +476,10 @@ __STATIC_FORCEINLINE uint32_t __LDRT(volatile uint32_t *ptr)
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__STATIC_FORCEINLINE void __STRBT(uint8_t value, volatile uint8_t *ptr) { __ASM volatile("strbt %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value)); }
+__STATIC_FORCEINLINE void __STRBT(uint8_t value, volatile uint8_t *ptr)
+{
+	__ASM volatile("strbt %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value));
+}
 
 /**
   \brief   STRT Unprivileged (16 bit)
@@ -469,7 +487,10 @@ __STATIC_FORCEINLINE void __STRBT(uint8_t value, volatile uint8_t *ptr) { __ASM 
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__STATIC_FORCEINLINE void __STRHT(uint16_t value, volatile uint16_t *ptr) { __ASM volatile("strht %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value)); }
+__STATIC_FORCEINLINE void __STRHT(uint16_t value, volatile uint16_t *ptr)
+{
+	__ASM volatile("strht %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value));
+}
 
 /**
   \brief   STRT Unprivileged (32 bit)
@@ -477,7 +498,10 @@ __STATIC_FORCEINLINE void __STRHT(uint16_t value, volatile uint16_t *ptr) { __AS
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr) { __ASM volatile("strt %1, %0" : "=Q"(*ptr) : "r"(value)); }
+__STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr)
+{
+	__ASM volatile("strt %1, %0" : "=Q"(*ptr) : "r"(value));
+}
 
 #else /* ((defined (__ARM_ARCH_7M__       ) && (__ARM_ARCH_7M__        == 1))                                                                                                                          \
 	 || (defined (__ARM_ARCH_7EM__      ) && (__ARM_ARCH_7EM__       ==                                                                                                                            \
@@ -583,7 +607,10 @@ __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr) { __ASM volatile("stlb %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value) : "memory"); }
+__STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr)
+{
+	__ASM volatile("stlb %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value) : "memory");
+}
 
 /**
   \brief   Store-Release (16 bit)
@@ -591,7 +618,10 @@ __STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr) { __ASM v
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr) { __ASM volatile("stlh %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value) : "memory"); }
+__STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr)
+{
+	__ASM volatile("stlh %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value) : "memory");
+}
 
 /**
   \brief   Store-Release (32 bit)
@@ -599,7 +629,10 @@ __STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr) { __ASM
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr) { __ASM volatile("stl %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value) : "memory"); }
+__STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
+{
+	__ASM volatile("stl %1, %0" : "=Q"(*ptr) : "r"((uint32_t)value) : "memory");
+}
 
 /**
   \brief   Load-Acquire Exclusive (8 bit)
@@ -675,7 +708,10 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr) { __ASM 
 	   Can only be executed in Privileged modes.
  */
 #ifndef __ARM_COMPAT_H
-__STATIC_FORCEINLINE void __enable_irq(void) { __ASM volatile("cpsie i" : : : "memory"); }
+__STATIC_FORCEINLINE void __enable_irq(void)
+{
+	__ASM volatile("cpsie i" : : : "memory");
+}
 #endif
 
 /**
@@ -684,7 +720,10 @@ __STATIC_FORCEINLINE void __enable_irq(void) { __ASM volatile("cpsie i" : : : "m
 	   Can only be executed in Privileged modes.
  */
 #ifndef __ARM_COMPAT_H
-__STATIC_FORCEINLINE void __disable_irq(void) { __ASM volatile("cpsid i" : : : "memory"); }
+__STATIC_FORCEINLINE void __disable_irq(void)
+{
+	__ASM volatile("cpsid i" : : : "memory");
+}
 #endif
 
 /**
@@ -811,7 +850,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSP_NS(void)
   \details Assigns the given value to the Process Stack Pointer (PSP).
   \param [in]    topOfProcStack  Process Stack Pointer value to set
  */
-__STATIC_FORCEINLINE void __set_PSP(uint32_t topOfProcStack) { __ASM volatile("MSR psp, %0" : : "r"(topOfProcStack) :); }
+__STATIC_FORCEINLINE void __set_PSP(uint32_t topOfProcStack)
+{
+	__ASM volatile("MSR psp, %0" : : "r"(topOfProcStack) :);
+}
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
 /**
@@ -820,7 +862,10 @@ __STATIC_FORCEINLINE void __set_PSP(uint32_t topOfProcStack) { __ASM volatile("M
   when in secure state. \param [in]    topOfProcStack  Process Stack Pointer
   value to set
  */
-__STATIC_FORCEINLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack) { __ASM volatile("MSR psp_ns, %0" : : "r"(topOfProcStack) :); }
+__STATIC_FORCEINLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
+{
+	__ASM volatile("MSR psp_ns, %0" : : "r"(topOfProcStack) :);
+}
 #endif
 
 /**
@@ -856,7 +901,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSP_NS(void)
   \details Assigns the given value to the Main Stack Pointer (MSP).
   \param [in]    topOfMainStack  Main Stack Pointer value to set
  */
-__STATIC_FORCEINLINE void __set_MSP(uint32_t topOfMainStack) { __ASM volatile("MSR msp, %0" : : "r"(topOfMainStack) :); }
+__STATIC_FORCEINLINE void __set_MSP(uint32_t topOfMainStack)
+{
+	__ASM volatile("MSR msp, %0" : : "r"(topOfMainStack) :);
+}
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
 /**
@@ -865,7 +913,10 @@ __STATIC_FORCEINLINE void __set_MSP(uint32_t topOfMainStack) { __ASM volatile("M
   when in secure state. \param [in]    topOfMainStack  Main Stack Pointer value
   to set
  */
-__STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack) { __ASM volatile("MSR msp_ns, %0" : : "r"(topOfMainStack) :); }
+__STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
+{
+	__ASM volatile("MSR msp_ns, %0" : : "r"(topOfMainStack) :);
+}
 #endif
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
@@ -887,7 +938,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_SP_NS(void)
   \details Assigns the given value to the non-secure Stack Pointer (SP) when in
   secure state. \param [in]    topOfStack  Stack Pointer value to set
  */
-__STATIC_FORCEINLINE void __TZ_set_SP_NS(uint32_t topOfStack) { __ASM volatile("MSR sp_ns, %0" : : "r"(topOfStack) :); }
+__STATIC_FORCEINLINE void __TZ_set_SP_NS(uint32_t topOfStack)
+{
+	__ASM volatile("MSR sp_ns, %0" : : "r"(topOfStack) :);
+}
 #endif
 
 /**
@@ -923,7 +977,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PRIMASK_NS(void)
   \details Assigns the given value to the Priority Mask Register.
   \param [in]    priMask  Priority Mask
  */
-__STATIC_FORCEINLINE void __set_PRIMASK(uint32_t priMask) { __ASM volatile("MSR primask, %0" : : "r"(priMask) : "memory"); }
+__STATIC_FORCEINLINE void __set_PRIMASK(uint32_t priMask)
+{
+	__ASM volatile("MSR primask, %0" : : "r"(priMask) : "memory");
+}
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
 /**
@@ -931,7 +988,10 @@ __STATIC_FORCEINLINE void __set_PRIMASK(uint32_t priMask) { __ASM volatile("MSR 
   \details Assigns the given value to the non-secure Priority Mask Register when
   in secure state. \param [in]    priMask  Priority Mask
  */
-__STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask) { __ASM volatile("MSR primask_ns, %0" : : "r"(priMask) : "memory"); }
+__STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
+{
+	__ASM volatile("MSR primask_ns, %0" : : "r"(priMask) : "memory");
+}
 #endif
 
 #if ((defined(__ARM_ARCH_7M__) && (__ARM_ARCH_7M__ == 1)) || (defined(__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1)) || (defined(__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1)) ||               \
@@ -941,14 +1001,20 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask) { __ASM volatile
   \details Enables FIQ interrupts by clearing special-purpose register
   FAULTMASK. Can only be executed in Privileged modes.
  */
-__STATIC_FORCEINLINE void __enable_fault_irq(void) { __ASM volatile("cpsie f" : : : "memory"); }
+__STATIC_FORCEINLINE void __enable_fault_irq(void)
+{
+	__ASM volatile("cpsie f" : : : "memory");
+}
 
 /**
   \brief   Disable FIQ
   \details Disables FIQ interrupts by setting special-purpose register
   FAULTMASK. Can only be executed in Privileged modes.
  */
-__STATIC_FORCEINLINE void __disable_fault_irq(void) { __ASM volatile("cpsid f" : : : "memory"); }
+__STATIC_FORCEINLINE void __disable_fault_irq(void)
+{
+	__ASM volatile("cpsid f" : : : "memory");
+}
 
 /**
   \brief   Get Base Priority
@@ -983,7 +1049,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_BASEPRI_NS(void)
   \details Assigns the given value to the Base Priority register.
   \param [in]    basePri  Base Priority value to set
  */
-__STATIC_FORCEINLINE void __set_BASEPRI(uint32_t basePri) { __ASM volatile("MSR basepri, %0" : : "r"(basePri) : "memory"); }
+__STATIC_FORCEINLINE void __set_BASEPRI(uint32_t basePri)
+{
+	__ASM volatile("MSR basepri, %0" : : "r"(basePri) : "memory");
+}
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
 /**
@@ -991,7 +1060,10 @@ __STATIC_FORCEINLINE void __set_BASEPRI(uint32_t basePri) { __ASM volatile("MSR 
   \details Assigns the given value to the non-secure Base Priority register when
   in secure state. \param [in]    basePri  Base Priority value to set
  */
-__STATIC_FORCEINLINE void __TZ_set_BASEPRI_NS(uint32_t basePri) { __ASM volatile("MSR basepri_ns, %0" : : "r"(basePri) : "memory"); }
+__STATIC_FORCEINLINE void __TZ_set_BASEPRI_NS(uint32_t basePri)
+{
+	__ASM volatile("MSR basepri_ns, %0" : : "r"(basePri) : "memory");
+}
 #endif
 
 /**
@@ -1000,7 +1072,10 @@ __STATIC_FORCEINLINE void __TZ_set_BASEPRI_NS(uint32_t basePri) { __ASM volatile
   masking is disabled, or the new value increases the BASEPRI priority level.
   \param [in]    basePri  Base Priority value to set
  */
-__STATIC_FORCEINLINE void __set_BASEPRI_MAX(uint32_t basePri) { __ASM volatile("MSR basepri_max, %0" : : "r"(basePri) : "memory"); }
+__STATIC_FORCEINLINE void __set_BASEPRI_MAX(uint32_t basePri)
+{
+	__ASM volatile("MSR basepri_max, %0" : : "r"(basePri) : "memory");
+}
 
 /**
   \brief   Get Fault Mask
@@ -1035,7 +1110,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_FAULTMASK_NS(void)
   \details Assigns the given value to the Fault Mask register.
   \param [in]    faultMask  Fault Mask value to set
  */
-__STATIC_FORCEINLINE void __set_FAULTMASK(uint32_t faultMask) { __ASM volatile("MSR faultmask, %0" : : "r"(faultMask) : "memory"); }
+__STATIC_FORCEINLINE void __set_FAULTMASK(uint32_t faultMask)
+{
+	__ASM volatile("MSR faultmask, %0" : : "r"(faultMask) : "memory");
+}
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
 /**
@@ -1043,7 +1121,10 @@ __STATIC_FORCEINLINE void __set_FAULTMASK(uint32_t faultMask) { __ASM volatile("
   \details Assigns the given value to the non-secure Fault Mask register when in
   secure state. \param [in]    faultMask  Fault Mask value to set
  */
-__STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask) { __ASM volatile("MSR faultmask_ns, %0" : : "r"(faultMask) : "memory"); }
+__STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
+{
+	__ASM volatile("MSR faultmask_ns, %0" : : "r"(faultMask) : "memory");
+}
 #endif
 
 #endif /* ((defined (__ARM_ARCH_7M__       ) && (__ARM_ARCH_7M__        == 1))                                                                                                                         \

@@ -401,7 +401,10 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
  * @brief  Return Voltage Scaling Range.
  * @retval Applied voltage scaling value.
  */
-uint32_t HAL_PWREx_GetVoltageRange(void) { return (PWR->SVMSR & PWR_SVMSR_ACTVOS); }
+uint32_t HAL_PWREx_GetVoltageRange(void)
+{
+	return (PWR->SVMSR & PWR_SVMSR_ACTVOS);
+}
 
 /**
  * @brief  Configure the system Power Supply.
@@ -457,19 +460,28 @@ HAL_StatusTypeDef HAL_PWREx_ConfigSupply(uint32_t SupplySource)
  * @brief  Get the power supply configuration.
  * @retval The supply configured.
  */
-uint32_t HAL_PWREx_GetSupplyConfig(void) { return (PWR->SVMSR & PWR_SVMSR_REGS); }
+uint32_t HAL_PWREx_GetSupplyConfig(void)
+{
+	return (PWR->SVMSR & PWR_SVMSR_REGS);
+}
 
 /**
  * @brief  Enable fast soft start for the current regulator.
  * @retval None.
  */
-void HAL_PWREx_EnableFastSoftStart(void) { SET_BIT(PWR->CR3, PWR_CR3_FSTEN); }
+void HAL_PWREx_EnableFastSoftStart(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_FSTEN);
+}
 
 /**
  * @brief  Disable fast soft start for the current regulator.
  * @retval None.
  */
-void HAL_PWREx_DisableFastSoftStart(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_FSTEN); }
+void HAL_PWREx_DisableFastSoftStart(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_FSTEN);
+}
 /**
  * @}
  */
@@ -802,13 +814,19 @@ void HAL_PWREx_ConfigSRDDomain(uint32_t SRDState)
  *         in Range 4 (Run, Sleep or Stop 0 mode).
  * @retval None.
  */
-void HAL_PWREx_EnableUltraLowPowerMode(void) { SET_BIT(PWR->CR1, PWR_CR1_ULPMEN); }
+void HAL_PWREx_EnableUltraLowPowerMode(void)
+{
+	SET_BIT(PWR->CR1, PWR_CR1_ULPMEN);
+}
 
 /**
  * @brief  Disable BOR ultra-low power mode.
  * @retval None.
  */
-void HAL_PWREx_DisableUltraLowPowerMode(void) { CLEAR_BIT(PWR->CR1, PWR_CR1_ULPMEN); }
+void HAL_PWREx_DisableUltraLowPowerMode(void)
+{
+	CLEAR_BIT(PWR->CR1, PWR_CR1_ULPMEN);
+}
 
 /**
  * @brief  This function handles the PWR Wake up from Stop 3 interrupt request.
@@ -1171,13 +1189,19 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *pConfigPVM)
  *         is present for consumption saving.
  * @retval None.
  */
-void HAL_PWREx_EnableVddUSB(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_USV); }
+void HAL_PWREx_EnableVddUSB(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_USV);
+}
 
 /**
  * @brief  Disable VDDUSB supply.
  * @retval None.
  */
-void HAL_PWREx_DisableVddUSB(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_USV); }
+void HAL_PWREx_DisableVddUSB(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_USV);
+}
 
 /**
  * @brief  Enable VDDIO2 supply.
@@ -1185,13 +1209,19 @@ void HAL_PWREx_DisableVddUSB(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_USV); }
  *         is present for consumption saving.
  * @retval None.
  */
-void HAL_PWREx_EnableVddIO2(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV); }
+void HAL_PWREx_EnableVddIO2(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV);
+}
 
 /**
  * @brief  Disable VDDIO2 supply.
  * @retval None.
  */
-void HAL_PWREx_DisableVddIO2(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV); }
+void HAL_PWREx_DisableVddIO2(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV);
+}
 
 /**
  * @brief  Enable VDDA supply.
@@ -1199,73 +1229,109 @@ void HAL_PWREx_DisableVddIO2(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV); }
  *         present for consumption saving.
  * @retval None.
  */
-void HAL_PWREx_EnableVddA(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_ASV); }
+void HAL_PWREx_EnableVddA(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_ASV);
+}
 
 /**
  * @brief  Disable VDDA supply.
  * @retval None.
  */
-void HAL_PWREx_DisableVddA(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_ASV); }
+void HAL_PWREx_DisableVddA(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_ASV);
+}
 
 /**
  * @brief  Enable the UVM Voltage Monitoring : VDDUSB versus 1.2 V.
  * @retval None.
  */
-void HAL_PWREx_EnableUVM(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_UVMEN); }
+void HAL_PWREx_EnableUVM(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_UVMEN);
+}
 
 /**
  * @brief  Disable the UVM Voltage Monitoring : VDDUSB versus 1.2 V.
  * @retval None.
  */
-void HAL_PWREx_DisableUVM(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_UVMEN); }
+void HAL_PWREx_DisableUVM(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_UVMEN);
+}
 
 /**
  * @brief  Enable the IO2VM Voltage Monitoring : VDDIO2 versus 0.9 V.
  * @retval None.
  */
-void HAL_PWREx_EnableIO2VM(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_IO2VMEN); }
+void HAL_PWREx_EnableIO2VM(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_IO2VMEN);
+}
 
 /**
  * @brief  Disable the IO2VM Voltage Monitoring : VDDIO2 versus 0.9 V.
  * @retval None.
  */
-void HAL_PWREx_DisableIO2VM(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2VMEN); }
+void HAL_PWREx_DisableIO2VM(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2VMEN);
+}
 
 /**
  * @brief  Enable the AVM1 Voltage Monitoring : VDDA versus 1.6 V.
  * @retval None.
  */
-void HAL_PWREx_EnableAVM1(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_AVM1EN); }
+void HAL_PWREx_EnableAVM1(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_AVM1EN);
+}
 
 /**
  * @brief  Disable the AVM1 Voltage Monitoring : VDDA versus 1.6 V.
  * @retval None.
  */
-void HAL_PWREx_DisableAVM1(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_AVM1EN); }
+void HAL_PWREx_DisableAVM1(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_AVM1EN);
+}
 
 /**
  * @brief  Enable the AVM2 Voltage Monitoring : VDDA versus 1.8 V.
  * @retval None.
  */
-void HAL_PWREx_EnableAVM2(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_AVM2EN); }
+void HAL_PWREx_EnableAVM2(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_AVM2EN);
+}
 
 /**
  * @brief  Disable the AVM2 Voltage Monitoring : VDDA versus 1.8 V.
  * @retval None.
  */
-void HAL_PWREx_DisableAVM2(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_AVM2EN); }
+void HAL_PWREx_DisableAVM2(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_AVM2EN);
+}
 
 /**
  * @brief  Enable the VBAT and temperature monitoring.
  * @retval None.
  */
-void HAL_PWREx_EnableMonitoring(void) { SET_BIT(PWR->BDCR1, PWR_BDCR1_MONEN); }
+void HAL_PWREx_EnableMonitoring(void)
+{
+	SET_BIT(PWR->BDCR1, PWR_BDCR1_MONEN);
+}
 
 /**
  * @brief  Disable the VBAT and temperature monitoring.
  * @retval None.
  */
-void HAL_PWREx_DisableMonitoring(void) { CLEAR_BIT(PWR->BDCR1, PWR_BDCR1_MONEN); }
+void HAL_PWREx_DisableMonitoring(void)
+{
+	CLEAR_BIT(PWR->BDCR1, PWR_BDCR1_MONEN);
+}
 
 #if defined(PWR_VOSR_USBPWREN)
 /**
@@ -1293,7 +1359,10 @@ HAL_StatusTypeDef HAL_PWREx_EnableUSBHSTranceiverSupply(void)
  * @brief  Disable the internal USB HS transceiver supply.
  * @retval HAL status.
  */
-void HAL_PWREx_DisableUSBHSTranceiverSupply(void) { CLEAR_BIT(PWR->VOSR, (PWR_VOSR_USBPWREN | PWR_VOSR_USBBOOSTEN)); }
+void HAL_PWREx_DisableUSBHSTranceiverSupply(void)
+{
+	CLEAR_BIT(PWR->VOSR, (PWR_VOSR_USBPWREN | PWR_VOSR_USBBOOSTEN));
+}
 #endif /* defined (PWR_VOSR_USBPWREN) */
 
 #if defined(PWR_CR1_FORCE_USBPWR)
@@ -1347,7 +1416,10 @@ void HAL_PWREx_DisableVDD11USB(void)
  * @brief  Enable UCPD configuration memorization in Standby mode.
  * @retval None.
  */
-void HAL_PWREx_EnableUCPDStandbyMode(void) { SET_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_STDBY); }
+void HAL_PWREx_EnableUCPDStandbyMode(void)
+{
+	SET_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_STDBY);
+}
 
 /**
  * @brief  Disable UCPD configuration memorization in Standby mode.
@@ -1355,7 +1427,10 @@ void HAL_PWREx_EnableUCPDStandbyMode(void) { SET_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_
  *         any UCPD configuration update.
  * @retval None.
  */
-void HAL_PWREx_DisableUCPDStandbyMode(void) { CLEAR_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_STDBY); }
+void HAL_PWREx_DisableUCPDStandbyMode(void)
+{
+	CLEAR_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_STDBY);
+}
 
 /**
  * @brief  Enable dead battery behavior.
@@ -1366,7 +1441,10 @@ void HAL_PWREx_DisableUCPDStandbyMode(void) { CLEAR_BIT(PWR->UCPDR, PWR_UCPDR_UC
  *         initialized before doing the disable).
  * @retval None.
  */
-void HAL_PWREx_EnableUCPDDeadBattery(void) { CLEAR_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_DBDIS); }
+void HAL_PWREx_EnableUCPDDeadBattery(void)
+{
+	CLEAR_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_DBDIS);
+}
 
 /**
  * @brief  Disable dead battery behavior.
@@ -1377,7 +1455,10 @@ void HAL_PWREx_EnableUCPDDeadBattery(void) { CLEAR_BIT(PWR->UCPDR, PWR_UCPDR_UCP
  *         initialized before doing the disable).
  * @retval None.
  */
-void HAL_PWREx_DisableUCPDDeadBattery(void) { SET_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_DBDIS); }
+void HAL_PWREx_DisableUCPDDeadBattery(void)
+{
+	SET_BIT(PWR->UCPDR, PWR_UCPDR_UCPD_DBDIS);
+}
 #endif /* UCPD1 */
 
 /**
@@ -1408,7 +1489,10 @@ void HAL_PWREx_EnableBatteryCharging(uint32_t ResistorValue)
  * @brief  Disable the Battery charging.
  * @retval None.
  */
-void HAL_PWREx_DisableBatteryCharging(void) { CLEAR_BIT(PWR->BDCR2, PWR_BDCR2_VBE); }
+void HAL_PWREx_DisableBatteryCharging(void)
+{
+	CLEAR_BIT(PWR->BDCR2, PWR_BDCR2_VBE);
+}
 
 /**
  * @brief  This function handles the PWR PVD/PVM interrupt request.
@@ -2181,7 +2265,10 @@ HAL_StatusTypeDef HAL_PWREx_EnableBkupRAMRetention(void)
  *         VBAT modes. This bit can be writte
  * @retval None.
  */
-void HAL_PWREx_DisableBkupRAMRetention(void) { CLEAR_BIT(PWR->BDCR1, PWR_BDCR1_BREN); }
+void HAL_PWREx_DisableBkupRAMRetention(void)
+{
+	CLEAR_BIT(PWR->BDCR1, PWR_BDCR1_BREN);
+}
 
 /**
  * @brief  Enable the flash memory fast wakeup from Stop 0 and Stop 1 modes.
@@ -2192,7 +2279,10 @@ void HAL_PWREx_DisableBkupRAMRetention(void) { CLEAR_BIT(PWR->BDCR1, PWR_BDCR1_B
  *         with higher consumption.
  * @retval None.
  */
-void HAL_PWREx_EnableFlashFastWakeUp(void) { SET_BIT(PWR->CR2, PWR_CR2_FLASHFWU); }
+void HAL_PWREx_EnableFlashFastWakeUp(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_FLASHFWU);
+}
 
 /**
  * @brief  Disable the Flash Power Down in Stop mode.
@@ -2203,7 +2293,10 @@ void HAL_PWREx_EnableFlashFastWakeUp(void) { SET_BIT(PWR->CR2, PWR_CR2_FLASHFWU)
  *         with lower consumption.
  * @retval None.
  */
-void HAL_PWREx_DisableFlashFastWakeUp(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_FLASHFWU); }
+void HAL_PWREx_DisableFlashFastWakeUp(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_FLASHFWU);
+}
 
 /**
  * @brief  Enable the SRAM4 memory fast wakeup from Stop 0, Stop 1 and Stop 2
@@ -2214,7 +2307,10 @@ void HAL_PWREx_DisableFlashFastWakeUp(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_FLASHF
  * time to SRAM4 during Stop modes.
  * @retval None.
  */
-void HAL_PWREx_EnableSRAM4FastWakeUp(void) { SET_BIT(PWR->CR2, PWR_CR2_SRAM4FWU); }
+void HAL_PWREx_EnableSRAM4FastWakeUp(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_SRAM4FWU);
+}
 
 /**
  * @brief  Disable the SRAM4 memory fast wakeup from Stop 0, Stop 1 and Stop 2
@@ -2225,7 +2321,10 @@ void HAL_PWREx_EnableSRAM4FastWakeUp(void) { SET_BIT(PWR->CR2, PWR_CR2_SRAM4FWU)
  * time to SRAM4 during Stop modes.
  * @retval None.
  */
-void HAL_PWREx_DisableSRAM4FastWakeUp(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_SRAM4FWU); }
+void HAL_PWREx_DisableSRAM4FastWakeUp(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_SRAM4FWU);
+}
 /**
  * @}
  */
@@ -2271,7 +2370,10 @@ state if none of the PWR_PUCRx or PWR_PDCRx register is set.
  *         when setting PUy or PDy bit.
  * @retval None.
  */
-void HAL_PWREx_EnablePullUpPullDownConfig(void) { SET_BIT(PWR->APCR, PWR_APCR_APC); }
+void HAL_PWREx_EnablePullUpPullDownConfig(void)
+{
+	SET_BIT(PWR->APCR, PWR_APCR_APC);
+}
 
 /**
  * @brief  Disable pull-up and pull-down configuration.
@@ -2280,7 +2382,10 @@ void HAL_PWREx_EnablePullUpPullDownConfig(void) { SET_BIT(PWR->APCR, PWR_APCR_AP
  *         Standby and Shutdown modes.
  * @retval None.
  */
-void HAL_PWREx_DisablePullUpPullDownConfig(void) { CLEAR_BIT(PWR->APCR, PWR_APCR_APC); }
+void HAL_PWREx_DisablePullUpPullDownConfig(void)
+{
+	CLEAR_BIT(PWR->APCR, PWR_APCR_APC);
+}
 
 /**
  * @brief  Enable GPIO pull-up state in Standby and Shutdown modes.
