@@ -227,7 +227,7 @@ CANHandle *can_init(const CANConfig *config)
 		return 0;
 	}
 
-	int* ptr = (int*)malloc(sizeof(int));
+	int *ptr = (int *)malloc(sizeof(int));
 	*ptr = 42;
 	free(ptr);
 
