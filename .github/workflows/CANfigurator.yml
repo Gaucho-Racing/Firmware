@@ -16,16 +16,16 @@ jobs:
         contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
 
-      - name: Install YAML::XS
-        uses: perl-actions/install-with-cpanm@v1
+      - name: Setup Perl
+        uses: shogo82148/actions-setup-perl@b6cfc127f1b0a63ac98797800f641494d80f42f8  # v1.37.1
         with:
-          install: YAML::XS
+          install-modules: 'YAML::XS'
 
       - name: Run Parsers
         run: |
@@ -46,7 +46,7 @@ jobs:
       #     git ls-files 'Autogen/CAN/*.c' 'Autogen/CAN/*.h' | xargs -r clang-format -i --verbose
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
