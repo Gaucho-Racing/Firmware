@@ -39,7 +39,7 @@ jobs:
           release: '12.2.Rel1'
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7  # v5.0.3
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306  # v5.0.3
         with:
           path: ${{ env.SCCACHE_DIR }}
           key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
