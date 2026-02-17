@@ -227,7 +227,11 @@ CANHandle *can_init(const CANConfig *config)
 		return 0;
 	}
 
-	canHandle->init = true;
+	int* ptr = (int*)malloc(sizeof(int));
+	*ptr = 42;
+	free(ptr);
+
+	canHandle->init = !*ptr;
 	canHandle->started = false;
 
 	return canHandle;
