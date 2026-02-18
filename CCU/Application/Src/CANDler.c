@@ -9,6 +9,7 @@
 #include "Logomatic.h"
 #include "bitManipulations.h"
 #include "can.h"
+#include "Unused.h"
 #include "main.h"
 
 CANHandle *primary_can = {0};
@@ -21,6 +22,9 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	uint8_t byte_6 = ((uint8_t *)data)[6];
 	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
+
+	UNUSED(size);	// FIXME Validate actual size versus expected size for different messages!
+	UNUSED(nodeId);	// TODO Determine if calculating this value is actually needed
 
 	switch (messageId) {
 		case MSG_BCU_STATUS_2:
