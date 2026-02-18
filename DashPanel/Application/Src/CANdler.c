@@ -5,6 +5,7 @@
 #include "can.h"
 #include "dashutils.h"
 #include "main.h"
+#include "Unused.h"
 #include "stm32g4xx_hal_fdcan.h"
 
 #define ECU_ID GR_ECU	 // ID of correct ECU message - TODO: change with correct ID
@@ -93,6 +94,8 @@ void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg)
 
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
+	UNUSED(size)	# FIXME Validate actual size versus expected size for different messages!
+	
 	// Process data
 	if (ID == ECU_ID) {
 		CAN_RECEIVE_ECU *ecu_data = (CAN_RECEIVE_ECU *)data;
