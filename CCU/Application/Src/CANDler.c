@@ -7,9 +7,9 @@
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
+#include "Unused.h"
 #include "bitManipulations.h"
 #include "can.h"
-#include "Unused.h"
 #include "main.h"
 
 CANHandle *primary_can = {0};
@@ -24,7 +24,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
 	UNUSED(size);	// FIXME Validate actual size versus expected size for different messages!
-	UNUSED(nodeId);	// TODO Determine if calculating this value is actually needed
+	UNUSED(nodeId); // TODO Determine if calculating this value is actually needed
 
 	switch (messageId) {
 		case MSG_BCU_STATUS_2:
