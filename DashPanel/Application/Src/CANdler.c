@@ -94,7 +94,7 @@ void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg)
 
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
-	UNUSED(size);	// FIXME Validate actual size versus expected size for different messages!
+	UNUSED(size); // FIXME Validate actual size versus expected size for different messages!
 
 	// Process data
 	if (ID == ECU_ID) {
