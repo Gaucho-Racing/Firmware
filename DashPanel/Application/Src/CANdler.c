@@ -2,10 +2,10 @@
 
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
+#include "Unused.h"
 #include "can.h"
 #include "dashutils.h"
 #include "main.h"
-#include "Unused.h"
 #include "stm32g4xx_hal_fdcan.h"
 
 #define ECU_ID GR_ECU	 // ID of correct ECU message - TODO: change with correct ID
@@ -97,12 +97,15 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 	UNUSED(size)	# FIXME Validate actual size versus expected size for different messages!
 	
 	// Process data
-	if (ID == ECU_ID) {
+	if (ID == ECU_ID)
+	{
 		CAN_RECEIVE_ECU *ecu_data = (CAN_RECEIVE_ECU *)data;
 		dashStatus.vehicleSpeed = ecu_data->vehicleSpeed;
 		dashStatus.ECUState = ecu_data->ECUState;
 		// Process data
-	} else if (ID == PING_ID) {
+	}
+	else if (ID == PING_ID)
+	{
 		// process ping
 		// TODO: fix ping
 		// CAN_sendPing();
