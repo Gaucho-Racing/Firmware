@@ -265,7 +265,7 @@ int can_release(CANHandle *canHandle)
 
     // free circular buffer contents
     //GR_CircularBuffer_Free(&(canHandle->tx_buffer));
-    memset(canHandle->tx_buffer, 0, canHandle->tx_capacity*sizeof(FDCANTxMessage));
+    memset( (void*) canHandle->tx_buffer, 0, canHandle->tx_capacity*sizeof(FDCANTxMessage));
     canHandle->tx_elements = 0;
     canHandle->tx_tail = 0;
 
@@ -380,7 +380,7 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
             return 0;
         }*/
     } else {
-        LOGOMATIC("CAN_send: all buffers full\n");
+        LOGOMATIC("CAN_send: all buffers full\n"); //p
     }
     __set_BASEPRI(basepri);
     // Both buffers full
@@ -441,7 +441,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 		handle->rx_callback(rx_header.Identifier, rx_data, rx_header.DataLength);
 	}
-
+    /*
         if (GR_CircularBuffer_IsEmpty(handle->rx_buffer)) handle->rx_callback(rx_data, rx_header.DataLength);
         else {
         GR_CircularBuffer_Push(handle->rx_buffer, rx_data, rx_header.DataLength);
