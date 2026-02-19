@@ -52,7 +52,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 1;
-		LOGOMATIC("CCU Current State: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
 		SendPrechargeStatus();
 	}
@@ -70,7 +70,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	if (anyErrors || !(state_data->Button_Status)) {
 		state_data->state = CCU_STATE_IDLE;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		LOGOMATIC("CCU Current State: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
 		SendPrechargeStatus();
 	}
