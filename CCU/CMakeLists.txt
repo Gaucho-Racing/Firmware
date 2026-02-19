@@ -33,7 +33,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		#	Application/Src/CANutils.c
 	)
 	target_link_libraries(
-		StateTicksTest
+		StateTicksTests
 		PRIVATE
 			GLOBALSHARE_LIB
 			GR_OLD_CAN_MESSAGES

@@ -1,20 +1,18 @@
-#include "StateTicks.h"
-
 #include <string.h>
 
 #include "CANDler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
+#include "StateTicks.h"
 #include "StateUtils.h"
 #include "Unused.h"
 #include "bitManipulations.h"
 
+static void CCU_PSUEDO_STATE_TICK(CCU_StateData *state_data)
+{
 
-static void CCU_PSUEDO_STATE_TICK(CCU_StateData* state_data){
-
-
-    LOGOMATIC("CCU Current State: %d\n", state_data->state);
+	LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
 	// FIXME:
 	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
@@ -34,84 +32,79 @@ static void CCU_PSUEDO_STATE_TICK(CCU_StateData* state_data){
 			state_data->state = CCU_STATE_IDLE;
 			break;
 	};
-
 }
 
+int main(void)
+{
 
-int main(void){
+	// #########
+	// No Errors + No Button Pressed (0)
+	// #########
+	LOGOMATIC("State Tick Started \n");
+	CCU_StateData state_dataTest = {0};
+	LOGOMATIC("No Errors Occurs=, button is not pressed");
 
+	state_dataTest.state = CCU_STATE_IDLE;
+	state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 
-    //#########
-    //No Errors + No Button Pressed (0)
-    //#########
-    LOGOMATIC("State Tick Started \n");
-    CCU_StateData state_dataTest = {0};
-    LOGOMATIC("No Errors Occurs=, button is not pressed");
+	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-    state_dataTest.state = CCU_STATE_IDLE;
-    state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
+	// #########
+	// No Errors + Button Pressed (1)
+	// #########
+	LOGOMATIC("No Errors Occurs, button is pressed");
+	CCU_StateData state_dataTest = {0};
 
-    CCU_PSUEDO_STATE_TICK(&state_dataTest);
+	state_dataTest.state = CCU_STATE_IDLE;
+	state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
+	state_dataTest.Button_Status = 1;
 
-    //#########
-    //No Errors + Button Pressed (1)
-    //#########
-    LOGOMATIC("No Errors Occurs, button is pressed");
-    CCU_StateData state_dataTest = {0};
+	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-    state_dataTest.state = CCU_STATE_IDLE;
-    state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-    state_dataTest.Button_Status = 1;
+	if (state_dataTest.state != CCU_STATE_CHARGING) {
+		LOGOMATIC("CCU STATE did not switch to CHARGING");
+		return 1;
+	}
 
-    CCU_PSUEDO_STATE_TICK(&state_dataTest);
+	if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1) {
+		LOGOMATIC("PRECHARGE Message did not send correct message");
+		return 1;
+	}
 
-    if (state_dataTest.state != CCU_STATE_CHARGING){
-        LOGOMATIC("CCU STATE did not switch to CHARGING");
-        return 1;
-    }
+	// #########
+	// 1 Error + No Button Pressed (2)
+	// #########
+	LOGOMATIC("1 Errors Occurs, button is not pressed");
+	CCU_StateData state_dataTest = {0};
 
+	state_dataTest.state = CCU_STATE_IDLE;
+	state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 
-    if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1){
-        LOGOMATIC("PRECHARGE Message did not send correct message");
-        return 1;
-    }
+	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-    //#########
-    //1 Error + No Button Pressed (2)
-    //#########
-    LOGOMATIC("1 Errors Occurs, button is not pressed");
-    CCU_StateData state_dataTest = {0};
+	if (state_dataTest.state != CCU_STATE_IDLE) {
+		LOGOMATIC("CCU STATE did not stay IDLE");
+		return 2;
+	}
 
-    state_dataTest.state = CCU_STATE_IDLE;
-    state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
+	if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
+		LOGOMATIC("PRECHARGE Message did not send correct message");
+		return 2;
+	}
 
+	// #########
+	// 1 Error + Button Pressed (3)
+	// #########
 
-    CCU_PSUEDO_STATE_TICK(&state_dataTest);
+	// #########
+	// Some Errors + Button Pressed (4)
+	// #########
 
-    if (state_dataTest.state != CCU_STATE_IDLE){
-        LOGOMATIC("CCU STATE did not stay IDLE");
-        return 2;
-    }
+	// #########
+	// Every Error + Button Pressed (5)
+	// #########
 
-
-    if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0){
-        LOGOMATIC("PRECHARGE Message did not send correct message");
-        return 2;
-    }
-
-    //#########
-    //1 Error + Button Pressed (3)
-    //#########
-
-    //#########
-    //Some Errors + Button Pressed (4)
-    //#########
-
-    //#########
-    //Every Error + Button Pressed (5)
-    //#########
-
-    //#########
-    //No Error + Button Pressed ON then OFF (6)
-    //#########
+	// #########
+	// No Error + Button Pressed ON then OFF (6)
+	// #########
 }
