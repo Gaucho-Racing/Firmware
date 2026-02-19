@@ -35,7 +35,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		PRIVATE
 			${TARGET_FLAGS}
 			-T
-			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32G474RETx_FLASH.ld"
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32G474XX_FLASH.ld"
 	)
 
 	target_link_libraries(
