@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 #include "CANDler.h"
 #include "CCUStateData.h"
 #include "StateMachine.h"
@@ -117,9 +118,9 @@ int main(void)
 	MX_ADC2_Init();
 	/* USER CODE BEGIN 2 */
 
-	//Initialize CAN
+	// Initialize CAN
 	CAN_Configure();
-	
+
 	LOGOMATIC("Initialization complete\n");
 
 	/* USER CODE END 2 */
@@ -131,7 +132,7 @@ int main(void)
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 		LL_mDelay(100);
 
-		//Initialize SoftwareLatch High
+		// Initialize SoftwareLatch High
 		setSoftwareLatch(1);
 
 		Check_Button(&state_data);

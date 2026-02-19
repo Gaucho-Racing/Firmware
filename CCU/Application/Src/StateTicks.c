@@ -42,12 +42,11 @@ void CCU_State_Tick(CCU_StateData *state_data)
 void STATE_IDLE(CCU_StateData *state_data)
 {
 	bool anyErrors = 0;
-	if (CriticalError(state_data)){
+	if (CriticalError(state_data)) {
 		anyErrors = 1;
 		setSoftwareLatch(0);
 		LOGOMATIC("ERROR: EXPLODE NOW");
 	};
-
 
 	if (!anyErrors && state_data->Button_Status) {
 
@@ -62,11 +61,10 @@ void STATE_IDLE(CCU_StateData *state_data)
 void STATE_CHARGING(CCU_StateData *state_data)
 {
 	bool anyErrors = 0;
-	if (CriticalError(state_data)){
+	if (CriticalError(state_data)) {
 		anyErrors = 1;
 		setSoftwareLatch(0);
 		LOGOMATIC("ERROR: EXPLODE NOW");
-
 	}
 
 	if (anyErrors || !(state_data->Button_Status)) {
