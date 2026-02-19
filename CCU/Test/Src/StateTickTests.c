@@ -50,7 +50,6 @@ int main(void)
 
 	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-
 	// #########
 	// No Errors + Button Pressed (1)
 	// #########
@@ -74,12 +73,10 @@ int main(void)
 		return 1;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
 		LOGOMATIC("SOftware Latch tripped when it shouldn't");
 		return 1;
 	}
-
-
 
 	// ######### FIXME: Double check valid test
 	// 1 Error + No Button Pressed (2)
@@ -90,7 +87,6 @@ int main(void)
 	state_dataTest.state = CCU_STATE_IDLE;
 	state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 	state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-
 
 	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -104,7 +100,7 @@ int main(void)
 		return 2;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
 	}
 
@@ -133,7 +129,7 @@ int main(void)
 		return 3;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
 		return 3;
 	}
@@ -154,7 +150,6 @@ int main(void)
 	state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
 	state_dataTest.BCU_S2_OVERVOLT_ERROR = 1;
 
-
 	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 	if (state_dataTest.state != CCU_STATE_IDLE) {
@@ -167,7 +162,7 @@ int main(void)
 		return 4;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
 		return 4;
 	}
@@ -202,11 +197,10 @@ int main(void)
 		return 5;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
 		return 5;
 	}
-
 
 	// ######### FIXME: Double check valid test
 	// No Error + Button Pressed ON then OFF (6)
@@ -220,7 +214,6 @@ int main(void)
 	state_dataTest.Button_Status = 1;
 	state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
-
 	CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 	if (state_dataTest.state != CCU_STATE_CHARGING) {
@@ -233,10 +226,9 @@ int main(void)
 		return 2;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
 	}
-
 
 	state_dataTest.Button_Status = 0;
 	CCU_PSUEDO_STATE_TICK(&state_dataTest);
@@ -251,9 +243,7 @@ int main(void)
 		return 2;
 	}
 
-	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0){
+	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
 	}
-
-
 }

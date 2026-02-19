@@ -28,7 +28,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 		case MSG_BCU_STATUS_2:
 			// FIXME: if bad message do a thing
 
-			if (size != sizeof(GR_OLD_BCU_STATUS_2_MSG)){
+			if (size != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu", ID, size);
 				break;
 			}
@@ -54,11 +54,10 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			 * break;
 			 */
 
-			//uint8_t byte_S2_3 = ((uint8_t *)data)[3];
+			// uint8_t byte_S2_3 = ((uint8_t *)data)[3];
 			uint8_t byte_S2_4 = ((uint8_t *)data)[4];
 			uint8_t byte_S2_5 = ((uint8_t *)data)[5];
-			//uint8_t byte_6 = ((uint8_t *)data)[6];
-
+			// uint8_t byte_6 = ((uint8_t *)data)[6];
 
 			// BCU_STATUS_2 MIN CELL Volt (3)
 			state_data.BCU_S2_MIN_CELL_Volt = GETBITS(((uint8_t *)data)[3], 0, 8);
@@ -80,7 +79,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 		case MSG_BCU_STATUS_3:
 
-			if (size != sizeof(GR_OLD_BCU_STATUS_3_MSG)){
+			if (size != sizeof(GR_OLD_BCU_STATUS_3_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu", ID, size);
 				break;
 			}
@@ -103,12 +102,12 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			uint8_t byte_S3_3 = ((uint8_t *)data)[4];
 			uint8_t byte_S3_4 = ((uint8_t *)data)[6];
 
-			//FIXME: The GETBITS might be wrong
-			//BCU_STATUS_3 HV_Curr Input & Output(1-2)
+			// FIXME: The GETBITS might be wrong
+			// BCU_STATUS_3 HV_Curr Input & Output(1-2)
 			state_data.BCU_S3_HV_INPUTCurr = GETBITS(byte_S3_1, 0, 16);
 			state_data.BCU_S3_HV_OUTPUTCurr = GETBITS(byte_S3_2, 0, 16);
 
-			//BCU_STATUS_3 HV_Curr Input & Output(3-4)
+			// BCU_STATUS_3 HV_Curr Input & Output(3-4)
 			state_data.BCU_S3_HV_INPUTVolt = GETBITS(byte_S3_3, 0, 16);
 			state_data.BCU_S3_HV_OUTPUTVolt = GETBITS(byte_S3_4, 0, 16);
 
