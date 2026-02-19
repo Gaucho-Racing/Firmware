@@ -3297,7 +3297,10 @@ functions
  * @param  htim TIM Hall Sensor handle
  * @retval HAL state
  */
-HAL_TIM_StateTypeDef HAL_TIMEx_HallSensor_GetState(const TIM_HandleTypeDef *htim) { return htim->State; }
+HAL_TIM_StateTypeDef HAL_TIMEx_HallSensor_GetState(const TIM_HandleTypeDef *htim)
+{
+	return htim->State;
+}
 
 /**
  * @brief  Return actual state of the TIM complementary channel.

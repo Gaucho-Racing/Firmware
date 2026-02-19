@@ -11,38 +11,38 @@ typedef struct {
 	// name lwk might be too long
 	bool Button_Status;
 
-	// ACU_STATUS_2
-	uint8_t ACU_S2_20Volt;
-	uint8_t ACU_S2_12Volt;
-	uint8_t ACU_S2_SDC_Volt;
-	uint8_t ACU_S2_MIN_CELL_Volt;
-	uint8_t ACU_S2_MAX_CELL_TEMP;
+	// BCU_STATUS_2
+	uint8_t BCU_S2_20Volt;
+	uint8_t BCU_S2_12Volt;
+	uint8_t BCU_S2_SDC_Volt;
+	uint8_t BCU_S2_MIN_CELL_Volt;
+	uint8_t BCU_S2_MAX_CELL_TEMP;
 	// Error & Warnings
-	// uint8_t ACU_S2_ERROR_BITS;
-	bool ACU_S2_OVERTEMP_ERROR;
-	bool ACU_S2_OVERVOLT_ERROR;
-	bool ACU_S2_UNDERVOLT_ERROR;
-	bool ACU_S2_OVERCURR_ERROR;
-	bool ACU_S2_UNDERCURR_ERROR;
-	// bool ACU_S2_UNDER20v_WARNING;
-	// bool ACU_S2_UNDER12v_WARNING;
-	// bool ACU_S2_UNDERVOLTSDC_WARNING;
-	// bool ACU_S2_PRECHARGE_ERROR;
+	// uint8_t BCU_S2_ERROR_BITS;
+	bool BCU_S2_OVERTEMP_ERROR;
+	bool BCU_S2_OVERVOLT_ERROR;
+	bool BCU_S2_UNDERVOLT_ERROR;
+	bool BCU_S2_OVERCURR_ERROR;
+	bool BCU_S2_UNDERCURR_ERROR;
+	// bool BCU_S2_UNDER20v_WARNING;
+	// bool BCU_S2_UNDER12v_WARNING;
+	// bool BCU_S2_UNDERVOLTSDC_WARNING;
+	// bool BCU_S2_PRECHARGE_ERROR;
 
 	// State
-	uint8_t ACU_S2_PRECHARGE_BITS;
-	// bool ACU_S2_PRECHARGE_STATE;
-	// bool ACU_S2_IR_STATE;
-	bool ACU_S2_SOFTWARE_LATCH;
+	uint8_t BCU_S2_PRECHARGE_BITS;
+	// bool BCU_S2_PRECHARGE_STATE;
+	// bool BCU_S2_IR_STATE;
+	bool BCU_S2_SOFTWARE_LATCH;
 
-	// ACU_STATUS_3
-	uint16_t ACU_S3_HV_INPUTVolt;
-	uint16_t ACU_S3_HV_OUTPUTVolt;
-	uint16_t ACU_S3_HV_INPUTCurr;
-	uint16_t ACU_S3_HV_OUTPUTCurr;
+	// BCU_STATUS_3
+	uint16_t BCU_S3_HV_INPUTVolt;
+	uint16_t BCU_S3_HV_OUTPUTVolt;
+	uint16_t BCU_S3_HV_INPUTCurr;
+	uint16_t BCU_S3_HV_OUTPUTCurr;
 
-	// ACU_PRECHARGE
-	bool ACU_PRECHARGE_SET_TS_ACTIVE;
+	// BCU_PRECHARGE
+	bool BCU_PRECHARGE_SET_TS_ACTIVE;
 
 } CCU_StateData;
 

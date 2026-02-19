@@ -1893,7 +1893,10 @@ card operations.
  * @param hsdio: Pointer to SDIO handle
  * @retval HAL state
  */
-HAL_SDIO_StateTypeDef HAL_SDIO_GetState(const SDIO_HandleTypeDef *hsdio) { return hsdio->State; }
+HAL_SDIO_StateTypeDef HAL_SDIO_GetState(const SDIO_HandleTypeDef *hsdio)
+{
+	return hsdio->State;
+}
 
 /**
  * @brief  Return the SDIO error code
@@ -1901,7 +1904,10 @@ HAL_SDIO_StateTypeDef HAL_SDIO_GetState(const SDIO_HandleTypeDef *hsdio) { retur
  * configuration information.
  * @retval SDIO Error Code
  */
-uint32_t HAL_SDIO_GetError(const SDIO_HandleTypeDef *hsdio) { return hsdio->ErrorCode; }
+uint32_t HAL_SDIO_GetError(const SDIO_HandleTypeDef *hsdio)
+{
+	return hsdio->ErrorCode;
+}
 
 /**
  * @}

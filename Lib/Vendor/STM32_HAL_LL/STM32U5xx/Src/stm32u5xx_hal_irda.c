@@ -2272,7 +2272,10 @@ HAL_IRDA_StateTypeDef HAL_IRDA_GetState(const IRDA_HandleTypeDef *hirda)
  *               the configuration information for the specified IRDA module.
  * @retval IRDA Error Code
  */
-uint32_t HAL_IRDA_GetError(const IRDA_HandleTypeDef *hirda) { return hirda->ErrorCode; }
+uint32_t HAL_IRDA_GetError(const IRDA_HandleTypeDef *hirda)
+{
+	return hirda->ErrorCode;
+}
 
 /**
  * @}

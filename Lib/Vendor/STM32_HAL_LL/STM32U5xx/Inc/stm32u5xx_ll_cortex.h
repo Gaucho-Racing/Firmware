@@ -255,7 +255,10 @@ extern "C" {
  * @rmtoll STK_CTRL     COUNTFLAG     LL_SYSTICK_IsActiveCounterFlag
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSTICK_IsActiveCounterFlag(void) { return (((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == (SysTick_CTRL_COUNTFLAG_Msk)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSTICK_IsActiveCounterFlag(void)
+{
+	return (((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == (SysTick_CTRL_COUNTFLAG_Msk)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configures the SysTick clock source
@@ -281,28 +284,40 @@ __STATIC_INLINE void LL_SYSTICK_SetClkSource(uint32_t Source)
  *         @arg @ref LL_SYSTICK_CLKSOURCE_EXTERNAL
  *         @arg @ref LL_SYSTICK_CLKSOURCE_HCLK
  */
-__STATIC_INLINE uint32_t LL_SYSTICK_GetClkSource(void) { return READ_BIT(SysTick->CTRL, LL_SYSTICK_CLKSOURCE_HCLK); }
+__STATIC_INLINE uint32_t LL_SYSTICK_GetClkSource(void)
+{
+	return READ_BIT(SysTick->CTRL, LL_SYSTICK_CLKSOURCE_HCLK);
+}
 
 /**
  * @brief  Enable SysTick exception request
  * @rmtoll STK_CTRL     TICKINT       LL_SYSTICK_EnableIT
  * @retval None
  */
-__STATIC_INLINE void LL_SYSTICK_EnableIT(void) { SET_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk); }
+__STATIC_INLINE void LL_SYSTICK_EnableIT(void)
+{
+	SET_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk);
+}
 
 /**
  * @brief  Disable SysTick exception request
  * @rmtoll STK_CTRL     TICKINT       LL_SYSTICK_DisableIT
  * @retval None
  */
-__STATIC_INLINE void LL_SYSTICK_DisableIT(void) { CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk); }
+__STATIC_INLINE void LL_SYSTICK_DisableIT(void)
+{
+	CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk);
+}
 
 /**
  * @brief  Checks if the SYSTICK interrupt is enabled or disabled.
  * @rmtoll STK_CTRL     TICKINT       LL_SYSTICK_IsEnabledIT
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSTICK_IsEnabledIT(void) { return ((READ_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk) == (SysTick_CTRL_TICKINT_Msk)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SYSTICK_IsEnabledIT(void)
+{
+	return ((READ_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk) == (SysTick_CTRL_TICKINT_Msk)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -448,7 +463,10 @@ __STATIC_INLINE void LL_HANDLER_DisableFault(uint32_t Fault)
  * @rmtoll SCB_CPUID    IMPLEMENTER   LL_CPUID_GetImplementer
  * @retval Value should be equal to 0x41 for ARM
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_IMPLEMENTER_Msk) >> SCB_CPUID_IMPLEMENTER_Pos); }
+__STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void)
+{
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_IMPLEMENTER_Msk) >> SCB_CPUID_IMPLEMENTER_Pos);
+}
 
 /**
  * @brief  Get Variant number (The r value in the rnpn product revision
@@ -456,7 +474,10 @@ __STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void) { return (uint32_t)(READ_
  * @rmtoll SCB_CPUID    VARIANT       LL_CPUID_GetVariant
  * @retval Value between 0 and 255 (0x0: revision 0)
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetVariant(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_VARIANT_Msk) >> SCB_CPUID_VARIANT_Pos); }
+__STATIC_INLINE uint32_t LL_CPUID_GetVariant(void)
+{
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_VARIANT_Msk) >> SCB_CPUID_VARIANT_Pos);
+}
 
 /**
  * @brief  Get Architecture version
@@ -464,14 +485,20 @@ __STATIC_INLINE uint32_t LL_CPUID_GetVariant(void) { return (uint32_t)(READ_BIT(
  * @retval Value should be equal to 0xF for Cortex-M33 ("ARMv8-M with Main
  * Extension")
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetArchitecture(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_ARCHITECTURE_Msk) >> SCB_CPUID_ARCHITECTURE_Pos); }
+__STATIC_INLINE uint32_t LL_CPUID_GetArchitecture(void)
+{
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_ARCHITECTURE_Msk) >> SCB_CPUID_ARCHITECTURE_Pos);
+}
 
 /**
  * @brief  Get Part number
  * @rmtoll SCB_CPUID    PARTNO        LL_CPUID_GetParNo
  * @retval Value should be equal to 0xD21 for Cortex-M33
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetParNo(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_PARTNO_Msk) >> SCB_CPUID_PARTNO_Pos); }
+__STATIC_INLINE uint32_t LL_CPUID_GetParNo(void)
+{
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_PARTNO_Msk) >> SCB_CPUID_PARTNO_Pos);
+}
 
 /**
  * @brief  Get Revision number (The p value in the rnpn product revision
@@ -479,7 +506,10 @@ __STATIC_INLINE uint32_t LL_CPUID_GetParNo(void) { return (uint32_t)(READ_BIT(SC
  * @rmtoll SCB_CPUID    REVISION      LL_CPUID_GetRevision
  * @retval Value between 0 and 255 (0x1: patch 1)
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetRevision(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_REVISION_Msk) >> SCB_CPUID_REVISION_Pos); }
+__STATIC_INLINE uint32_t LL_CPUID_GetRevision(void)
+{
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_REVISION_Msk) >> SCB_CPUID_REVISION_Pos);
+}
 
 /**
  * @}
@@ -596,7 +626,10 @@ __STATIC_INLINE void LL_MPU_Disable_NS(void)
  * @rmtoll MPU_CTRL     ENABLE        LL_MPU_IsEnabled
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_MPU_IsEnabled(void) { return ((READ_BIT(MPU->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_MPU_IsEnabled(void)
+{
+	return ((READ_BIT(MPU->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL);
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -604,7 +637,10 @@ __STATIC_INLINE uint32_t LL_MPU_IsEnabled(void) { return ((READ_BIT(MPU->CTRL, M
  * @rmtoll MPU_CTRL     ENABLE        LL_MPU_IsEnabled_NS
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_MPU_IsEnabled_NS(void) { return ((READ_BIT(MPU_NS->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_MPU_IsEnabled_NS(void)
+{
+	return ((READ_BIT(MPU_NS->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**

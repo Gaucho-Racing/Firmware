@@ -439,7 +439,10 @@ HAL_StatusTypeDef HAL_DCACHE_Disable(DCACHE_HandleTypeDef *hdcache)
  * peripheral.
  * @retval Status (0: disabled, 1: enabled)
  */
-uint32_t HAL_DCACHE_IsEnabled(const DCACHE_HandleTypeDef *hdcache) { return ((READ_BIT(hdcache->Instance->CR, DCACHE_CR_EN) != 0U) ? 1UL : 0UL); }
+uint32_t HAL_DCACHE_IsEnabled(const DCACHE_HandleTypeDef *hdcache)
+{
+	return ((READ_BIT(hdcache->Instance->CR, DCACHE_CR_EN) != 0U) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set Read Burst Type.

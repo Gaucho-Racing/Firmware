@@ -750,14 +750,20 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine, uint32_t *
  * @brief  Lock the secure and privilege configuration registers.
  * @retval None
  */
-void HAL_EXTI_LockAttributes(void) { SET_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK); }
+void HAL_EXTI_LockAttributes(void)
+{
+	SET_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK);
+}
 
 /**
  * @brief  Return the secure and privilege configuration registers LOCK status
  * @retval 1 if the secure and privilege configuration registers have been
  * locked else 0.
  */
-uint32_t HAL_EXTI_GetLockAttributes(void) { return READ_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK); }
+uint32_t HAL_EXTI_GetLockAttributes(void)
+{
+	return READ_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**

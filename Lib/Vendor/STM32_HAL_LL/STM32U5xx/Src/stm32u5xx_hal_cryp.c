@@ -2080,7 +2080,10 @@ void HAL_CRYP_IRQHandler(CRYP_HandleTypeDef *hcryp)
  *                 the configuration information for the  CRYP peripheral
  * @retval CRYP error code
  */
-uint32_t HAL_CRYP_GetError(const CRYP_HandleTypeDef *hcryp) { return hcryp->ErrorCode; }
+uint32_t HAL_CRYP_GetError(const CRYP_HandleTypeDef *hcryp)
+{
+	return hcryp->ErrorCode;
+}
 
 /**
  * @brief  Returns the CRYP state.
@@ -2088,7 +2091,10 @@ uint32_t HAL_CRYP_GetError(const CRYP_HandleTypeDef *hcryp) { return hcryp->Erro
  *         the configuration information for CRYP module.
  * @retval HAL state
  */
-HAL_CRYP_STATETypeDef HAL_CRYP_GetState(const CRYP_HandleTypeDef *hcryp) { return hcryp->State; }
+HAL_CRYP_STATETypeDef HAL_CRYP_GetState(const CRYP_HandleTypeDef *hcryp)
+{
+	return hcryp->State;
+}
 
 /**
  * @brief  Input FIFO transfer completed callback.

@@ -11,7 +11,7 @@ typedef enum {
 	GR_OLD_BUS_PRIMARY = 1,
 	/** Data Bus */
 	GR_OLD_BUS_DATA = 2,
-	/** Charging Cart and ACU Bus */
+	/** Charger and BCU Bus */
 	GR_OLD_BUS_CHARGING = 3,
 } GR_OLD_BUS_ID;
 

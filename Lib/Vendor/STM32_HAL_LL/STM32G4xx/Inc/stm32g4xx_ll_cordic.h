@@ -321,7 +321,10 @@ __STATIC_INLINE void LL_CORDIC_Config(CORDIC_TypeDef *CORDICx, uint32_t Function
  *         @arg @ref LL_CORDIC_FUNCTION_SQUAREROOT
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetFunction(CORDIC_TypeDef *CORDICx, uint32_t Function) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_FUNC, Function); }
+__STATIC_INLINE void LL_CORDIC_SetFunction(CORDIC_TypeDef *CORDICx, uint32_t Function)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_FUNC, Function);
+}
 
 /**
  * @brief  Return function.
@@ -339,7 +342,10 @@ __STATIC_INLINE void LL_CORDIC_SetFunction(CORDIC_TypeDef *CORDICx, uint32_t Fun
  *         @arg @ref LL_CORDIC_FUNCTION_NATURALLOG
  *         @arg @ref LL_CORDIC_FUNCTION_SQUAREROOT
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetFunction(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_FUNC)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetFunction(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_FUNC));
+}
 
 /**
  * @brief  Configure precision in cycles number.
@@ -363,7 +369,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetFunction(const CORDIC_TypeDef *CORDICx) { 
  *         @arg @ref LL_CORDIC_PRECISION_15CYCLES
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetPrecision(CORDIC_TypeDef *CORDICx, uint32_t Precision) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_PRECISION, Precision); }
+__STATIC_INLINE void LL_CORDIC_SetPrecision(CORDIC_TypeDef *CORDICx, uint32_t Precision)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_PRECISION, Precision);
+}
 
 /**
  * @brief  Return precision in cycles number.
@@ -386,7 +395,10 @@ __STATIC_INLINE void LL_CORDIC_SetPrecision(CORDIC_TypeDef *CORDICx, uint32_t Pr
  *         @arg @ref LL_CORDIC_PRECISION_14CYCLES
  *         @arg @ref LL_CORDIC_PRECISION_15CYCLES
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetPrecision(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_PRECISION)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetPrecision(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_PRECISION));
+}
 
 /**
  * @brief  Configure scaling factor.
@@ -403,7 +415,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetPrecision(const CORDIC_TypeDef *CORDICx) {
  *         @arg @ref LL_CORDIC_SCALE_7
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetScale(CORDIC_TypeDef *CORDICx, uint32_t Scale) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_SCALE, Scale); }
+__STATIC_INLINE void LL_CORDIC_SetScale(CORDIC_TypeDef *CORDICx, uint32_t Scale)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_SCALE, Scale);
+}
 
 /**
  * @brief  Return scaling factor.
@@ -419,7 +434,10 @@ __STATIC_INLINE void LL_CORDIC_SetScale(CORDIC_TypeDef *CORDICx, uint32_t Scale)
  *         @arg @ref LL_CORDIC_SCALE_6
  *         @arg @ref LL_CORDIC_SCALE_7
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetScale(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_SCALE)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetScale(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_SCALE));
+}
 
 /**
  * @brief  Configure number of 32-bit write expected for one calculation.
@@ -430,7 +448,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetScale(const CORDIC_TypeDef *CORDICx) { ret
  *         @arg @ref LL_CORDIC_NBWRITE_2
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetNbWrite(CORDIC_TypeDef *CORDICx, uint32_t NbWrite) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_NARGS, NbWrite); }
+__STATIC_INLINE void LL_CORDIC_SetNbWrite(CORDIC_TypeDef *CORDICx, uint32_t NbWrite)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_NARGS, NbWrite);
+}
 
 /**
  * @brief  Return number of 32-bit write expected for one calculation.
@@ -440,7 +461,10 @@ __STATIC_INLINE void LL_CORDIC_SetNbWrite(CORDIC_TypeDef *CORDICx, uint32_t NbWr
  *         @arg @ref LL_CORDIC_NBWRITE_1
  *         @arg @ref LL_CORDIC_NBWRITE_2
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetNbWrite(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_NARGS)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetNbWrite(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_NARGS));
+}
 
 /**
  * @brief  Configure number of 32-bit read expected after one calculation.
@@ -451,7 +475,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetNbWrite(const CORDIC_TypeDef *CORDICx) { r
  *         @arg @ref LL_CORDIC_NBREAD_2
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetNbRead(CORDIC_TypeDef *CORDICx, uint32_t NbRead) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_NRES, NbRead); }
+__STATIC_INLINE void LL_CORDIC_SetNbRead(CORDIC_TypeDef *CORDICx, uint32_t NbRead)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_NRES, NbRead);
+}
 
 /**
  * @brief  Return number of 32-bit read expected after one calculation.
@@ -461,7 +488,10 @@ __STATIC_INLINE void LL_CORDIC_SetNbRead(CORDIC_TypeDef *CORDICx, uint32_t NbRea
  *         @arg @ref LL_CORDIC_NBREAD_1
  *         @arg @ref LL_CORDIC_NBREAD_2
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetNbRead(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_NRES)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetNbRead(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_NRES));
+}
 
 /**
  * @brief  Configure width of input data.
@@ -472,7 +502,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetNbRead(const CORDIC_TypeDef *CORDICx) { re
  *         @arg @ref LL_CORDIC_INSIZE_16BITS
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetInSize(CORDIC_TypeDef *CORDICx, uint32_t InSize) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_ARGSIZE, InSize); }
+__STATIC_INLINE void LL_CORDIC_SetInSize(CORDIC_TypeDef *CORDICx, uint32_t InSize)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_ARGSIZE, InSize);
+}
 
 /**
  * @brief  Return width of input data.
@@ -482,7 +515,10 @@ __STATIC_INLINE void LL_CORDIC_SetInSize(CORDIC_TypeDef *CORDICx, uint32_t InSiz
  *         @arg @ref LL_CORDIC_INSIZE_32BITS
  *         @arg @ref LL_CORDIC_INSIZE_16BITS
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetInSize(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_ARGSIZE)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetInSize(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_ARGSIZE));
+}
 
 /**
  * @brief  Configure width of output data.
@@ -493,7 +529,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetInSize(const CORDIC_TypeDef *CORDICx) { re
  *         @arg @ref LL_CORDIC_OUTSIZE_16BITS
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_SetOutSize(CORDIC_TypeDef *CORDICx, uint32_t OutSize) { MODIFY_REG(CORDICx->CSR, CORDIC_CSR_RESSIZE, OutSize); }
+__STATIC_INLINE void LL_CORDIC_SetOutSize(CORDIC_TypeDef *CORDICx, uint32_t OutSize)
+{
+	MODIFY_REG(CORDICx->CSR, CORDIC_CSR_RESSIZE, OutSize);
+}
 
 /**
  * @brief  Return width of output data.
@@ -503,7 +542,10 @@ __STATIC_INLINE void LL_CORDIC_SetOutSize(CORDIC_TypeDef *CORDICx, uint32_t OutS
  *         @arg @ref LL_CORDIC_OUTSIZE_32BITS
  *         @arg @ref LL_CORDIC_OUTSIZE_16BITS
  */
-__STATIC_INLINE uint32_t LL_CORDIC_GetOutSize(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_RESSIZE)); }
+__STATIC_INLINE uint32_t LL_CORDIC_GetOutSize(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_BIT(CORDICx->CSR, CORDIC_CSR_RESSIZE));
+}
 
 /**
  * @}
@@ -519,7 +561,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_GetOutSize(const CORDIC_TypeDef *CORDICx) { r
  * @param  CORDICx CORDIC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_EnableIT(CORDIC_TypeDef *CORDICx) { SET_BIT(CORDICx->CSR, CORDIC_CSR_IEN); }
+__STATIC_INLINE void LL_CORDIC_EnableIT(CORDIC_TypeDef *CORDICx)
+{
+	SET_BIT(CORDICx->CSR, CORDIC_CSR_IEN);
+}
 
 /**
  * @brief  Disable CORDIC result ready interrupt
@@ -527,7 +572,10 @@ __STATIC_INLINE void LL_CORDIC_EnableIT(CORDIC_TypeDef *CORDICx) { SET_BIT(CORDI
  * @param  CORDICx CORDIC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_DisableIT(CORDIC_TypeDef *CORDICx) { CLEAR_BIT(CORDICx->CSR, CORDIC_CSR_IEN); }
+__STATIC_INLINE void LL_CORDIC_DisableIT(CORDIC_TypeDef *CORDICx)
+{
+	CLEAR_BIT(CORDICx->CSR, CORDIC_CSR_IEN);
+}
 
 /**
  * @brief  Check CORDIC result ready interrupt state.
@@ -535,7 +583,10 @@ __STATIC_INLINE void LL_CORDIC_DisableIT(CORDIC_TypeDef *CORDICx) { CLEAR_BIT(CO
  * @param  CORDICx CORDIC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_CORDIC_IsEnabledIT(const CORDIC_TypeDef *CORDICx) { return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_IEN) == (CORDIC_CSR_IEN)) ? 1U : 0U); }
+__STATIC_INLINE uint32_t LL_CORDIC_IsEnabledIT(const CORDIC_TypeDef *CORDICx)
+{
+	return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_IEN) == (CORDIC_CSR_IEN)) ? 1U : 0U);
+}
 
 /**
  * @}
@@ -551,7 +602,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_IsEnabledIT(const CORDIC_TypeDef *CORDICx) { 
  * @param  CORDICx CORDIC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_EnableDMAReq_RD(CORDIC_TypeDef *CORDICx) { SET_BIT(CORDICx->CSR, CORDIC_CSR_DMAREN); }
+__STATIC_INLINE void LL_CORDIC_EnableDMAReq_RD(CORDIC_TypeDef *CORDICx)
+{
+	SET_BIT(CORDICx->CSR, CORDIC_CSR_DMAREN);
+}
 
 /**
  * @brief  Disable CORDIC DMA read channel request.
@@ -559,7 +613,10 @@ __STATIC_INLINE void LL_CORDIC_EnableDMAReq_RD(CORDIC_TypeDef *CORDICx) { SET_BI
  * @param  CORDICx CORDIC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_DisableDMAReq_RD(CORDIC_TypeDef *CORDICx) { CLEAR_BIT(CORDICx->CSR, CORDIC_CSR_DMAREN); }
+__STATIC_INLINE void LL_CORDIC_DisableDMAReq_RD(CORDIC_TypeDef *CORDICx)
+{
+	CLEAR_BIT(CORDICx->CSR, CORDIC_CSR_DMAREN);
+}
 
 /**
  * @brief  Check CORDIC DMA read channel request state.
@@ -567,7 +624,10 @@ __STATIC_INLINE void LL_CORDIC_DisableDMAReq_RD(CORDIC_TypeDef *CORDICx) { CLEAR
  * @param  CORDICx CORDIC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_CORDIC_IsEnabledDMAReq_RD(const CORDIC_TypeDef *CORDICx) { return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_DMAREN) == (CORDIC_CSR_DMAREN)) ? 1U : 0U); }
+__STATIC_INLINE uint32_t LL_CORDIC_IsEnabledDMAReq_RD(const CORDIC_TypeDef *CORDICx)
+{
+	return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_DMAREN) == (CORDIC_CSR_DMAREN)) ? 1U : 0U);
+}
 
 /**
  * @brief  Enable CORDIC DMA write channel request.
@@ -575,7 +635,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_IsEnabledDMAReq_RD(const CORDIC_TypeDef *CORD
  * @param  CORDICx CORDIC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_EnableDMAReq_WR(CORDIC_TypeDef *CORDICx) { SET_BIT(CORDICx->CSR, CORDIC_CSR_DMAWEN); }
+__STATIC_INLINE void LL_CORDIC_EnableDMAReq_WR(CORDIC_TypeDef *CORDICx)
+{
+	SET_BIT(CORDICx->CSR, CORDIC_CSR_DMAWEN);
+}
 
 /**
  * @brief  Disable CORDIC DMA write channel request.
@@ -583,7 +646,10 @@ __STATIC_INLINE void LL_CORDIC_EnableDMAReq_WR(CORDIC_TypeDef *CORDICx) { SET_BI
  * @param  CORDICx CORDIC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_DisableDMAReq_WR(CORDIC_TypeDef *CORDICx) { CLEAR_BIT(CORDICx->CSR, CORDIC_CSR_DMAWEN); }
+__STATIC_INLINE void LL_CORDIC_DisableDMAReq_WR(CORDIC_TypeDef *CORDICx)
+{
+	CLEAR_BIT(CORDICx->CSR, CORDIC_CSR_DMAWEN);
+}
 
 /**
  * @brief  Check CORDIC DMA write channel request state.
@@ -591,7 +657,10 @@ __STATIC_INLINE void LL_CORDIC_DisableDMAReq_WR(CORDIC_TypeDef *CORDICx) { CLEAR
  * @param  CORDICx CORDIC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_CORDIC_IsEnabledDMAReq_WR(const CORDIC_TypeDef *CORDICx) { return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_DMAWEN) == (CORDIC_CSR_DMAWEN)) ? 1U : 0U); }
+__STATIC_INLINE uint32_t LL_CORDIC_IsEnabledDMAReq_WR(const CORDIC_TypeDef *CORDICx)
+{
+	return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_DMAWEN) == (CORDIC_CSR_DMAWEN)) ? 1U : 0U);
+}
 
 /**
  * @brief  Get the CORDIC data register address used for DMA transfer.
@@ -632,7 +701,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_DMA_GetRegAddr(const CORDIC_TypeDef *CORDICx,
  * @param  CORDICx CORDIC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_CORDIC_IsActiveFlag_RRDY(const CORDIC_TypeDef *CORDICx) { return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_RRDY) == (CORDIC_CSR_RRDY)) ? 1U : 0U); }
+__STATIC_INLINE uint32_t LL_CORDIC_IsActiveFlag_RRDY(const CORDIC_TypeDef *CORDICx)
+{
+	return ((READ_BIT(CORDICx->CSR, CORDIC_CSR_RRDY) == (CORDIC_CSR_RRDY)) ? 1U : 0U);
+}
 
 /**
  * @}
@@ -650,7 +722,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_IsActiveFlag_RRDY(const CORDIC_TypeDef *CORDI
  * for CORDIC processing.
  * @retval None
  */
-__STATIC_INLINE void LL_CORDIC_WriteData(CORDIC_TypeDef *CORDICx, uint32_t InData) { WRITE_REG(CORDICx->WDATA, InData); }
+__STATIC_INLINE void LL_CORDIC_WriteData(CORDIC_TypeDef *CORDICx, uint32_t InData)
+{
+	WRITE_REG(CORDICx->WDATA, InData);
+}
 
 /**
  * @brief  Return 32-bit output data of CORDIC processing.
@@ -658,7 +733,10 @@ __STATIC_INLINE void LL_CORDIC_WriteData(CORDIC_TypeDef *CORDICx, uint32_t InDat
  * @param  CORDICx CORDIC Instance
  * @retval 32-bit output data of CORDIC processing.
  */
-__STATIC_INLINE uint32_t LL_CORDIC_ReadData(const CORDIC_TypeDef *CORDICx) { return (uint32_t)(READ_REG(CORDICx->RDATA)); }
+__STATIC_INLINE uint32_t LL_CORDIC_ReadData(const CORDIC_TypeDef *CORDICx)
+{
+	return (uint32_t)(READ_REG(CORDICx->RDATA));
+}
 
 /**
  * @}

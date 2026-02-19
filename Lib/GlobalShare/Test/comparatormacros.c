@@ -1,8 +1,11 @@
+#include "ComparatorMacros.h"
+
 #include <stdint.h>
 
-#include "ConvenienceMacros.h"
-
-int getValue(int a) { return a; }
+int getValue(int a)
+{
+	return a;
+}
 
 int main(void)
 {

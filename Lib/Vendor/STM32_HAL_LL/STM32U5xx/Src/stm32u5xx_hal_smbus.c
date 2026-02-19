@@ -1626,7 +1626,10 @@ void HAL_SMBUS_EV_IRQHandler(SMBUS_HandleTypeDef *hsmbus)
  *                the configuration information for the specified SMBUS.
  * @retval None
  */
-void HAL_SMBUS_ER_IRQHandler(SMBUS_HandleTypeDef *hsmbus) { SMBUS_ITErrorHandler(hsmbus); }
+void HAL_SMBUS_ER_IRQHandler(SMBUS_HandleTypeDef *hsmbus)
+{
+	SMBUS_ITErrorHandler(hsmbus);
+}
 
 /**
  * @brief  Master Tx Transfer completed callback.
@@ -1788,7 +1791,10 @@ uint32_t HAL_SMBUS_GetState(const SMBUS_HandleTypeDef *hsmbus)
  *              the configuration information for the specified SMBUS.
  * @retval SMBUS Error Code
  */
-uint32_t HAL_SMBUS_GetError(const SMBUS_HandleTypeDef *hsmbus) { return hsmbus->ErrorCode; }
+uint32_t HAL_SMBUS_GetError(const SMBUS_HandleTypeDef *hsmbus)
+{
+	return hsmbus->ErrorCode;
+}
 
 /**
  * @}

@@ -7,6 +7,7 @@
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
+#include "Unused.h"
 #include "bitManipulations.h"
 #include "can.h"
 #include "main.h"
@@ -22,33 +23,36 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
+	UNUSED(size);	// FIXME Validate actual size versus expected size for different messages!
+	UNUSED(nodeId); // TODO Determine if calculating this value is actually needed
+
 	switch (messageId) {
-		case MSG_ACU_STATUS_2:
+		case MSG_BCU_STATUS_2:
 			// FIXME: if bad message do a thing
-			LOGOMATIC("Received a ACU STATUS 2 msg");
+			LOGOMATIC("Received a BCU STATUS 2 msg");
 
 			// cast *data to whatever msg dti control 10 struct there is
 			// copy data from that struct into the ccu state data struct (eg GETBIT)
-			// ACU_STATUS_2 MIN CELL Volt (3)
-			state_data.ACU_S2_MIN_CELL_Volt = GETBITS(byte_3, 0, 8);
+			// BCU_STATUS_2 MIN CELL Volt (3)
+			state_data.BCU_S2_MIN_CELL_Volt = GETBITS(byte_3, 0, 8);
 
-			/// ACU_STATUS_2 MAX CELL TEMP(4)
-			state_data.ACU_S2_MAX_CELL_TEMP = GETBITS(byte_4, 0, 8);
+			/// BCU_STATUS_2 MAX CELL TEMP(4)
+			state_data.BCU_S2_MAX_CELL_TEMP = GETBITS(byte_4, 0, 8);
 
-			/// ACU_STATUS_2 Error Byte (5)
-			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(byte_5, 0);
-			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(byte_5, 1);
-			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(byte_5, 2);
-			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(byte_5, 3);
-			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(byte_5, 4);
+			/// BCU_STATUS_2 Error Byte (5)
+			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(byte_5, 0);
+			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(byte_5, 1);
+			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(byte_5, 2);
+			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(byte_5, 3);
+			state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(byte_5, 4);
 
-			// ACU_STATUS_2 PRECHARGE + SOFTWARE LATCH (6)
-			state_data.ACU_S2_SOFTWARE_LATCH = GETBIT(byte_6, 3);
+			// BCU_STATUS_2 PRECHARGE + SOFTWARE LATCH (6)
+			state_data.BCU_S2_SOFTWARE_LATCH = GETBIT(byte_6, 3);
 
 			break;
 
-		case MSG_ACU_STATUS_3:
-			LOGOMATIC("Received a ACU STATUS 3 msg");
+		case MSG_BCU_STATUS_3:
+			LOGOMATIC("Received a BCU STATUS 3 msg");
 			break;
 	}
 }
@@ -150,7 +154,7 @@ void CAN_Configure()
 void SendPrechargeStatus()
 {
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) & ((0xFFF & MSG_ACU_PRECHARGE) << 8) & (0xFF & GR_ACU);
+	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) & ((0xFFF & MSG_BCU_PRECHARGE) << 8) & (0xFF & GR_BCU);
 	msg.tx_header.IdType = FDCAN_STANDARD_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
@@ -159,7 +163,7 @@ void SendPrechargeStatus()
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
 
-	msg.data[0] = (state_data.ACU_PRECHARGE_SET_TS_ACTIVE);
+	msg.data[0] = (state_data.BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);
 

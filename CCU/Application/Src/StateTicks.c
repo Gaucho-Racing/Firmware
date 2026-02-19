@@ -1,6 +1,7 @@
 #include "StateTicks.h"
 
 #include <string.h>
+
 #include "CANDler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
@@ -50,8 +51,8 @@ void STATE_IDLE(CCU_StateData *state_data)
 	if (!anyErrors && state_data->Button_Status) {
 
 		state_data->state = CCU_STATE_CHARGING;
-		state_data->ACU_PRECHARGE_SET_TS_ACTIVE = 1;
-		LOGOMATIC("CCU Current State: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
+		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 1;
+		LOGOMATIC("CCU Current State: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 		SendPrechargeStatus();
 	}
@@ -68,8 +69,8 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 	if (anyErrors || !(state_data->Button_Status)) {
 		state_data->state = CCU_STATE_IDLE;
-		state_data->ACU_PRECHARGE_SET_TS_ACTIVE = 0;
-		LOGOMATIC("CCU Current State: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
+		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		LOGOMATIC("CCU Current State: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 		SendPrechargeStatus();
 	}

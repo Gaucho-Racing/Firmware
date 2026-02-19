@@ -45,7 +45,6 @@ target_sources(
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-		Core/Src/usart.c
 		# Application
 		Application/Src/CANDler.c
 		Application/Src/StateTicks.c

@@ -29,24 +29,6 @@ endif()
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
-	add_executable(logomatic_simple)
-	target_sources(
-		logomatic_simple
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_simple_print.c
-	)
-	target_link_libraries(logomatic_simple PRIVATE GLOBALSHARE_LIB)
-	add_test(logomatic_simple_test logomatic_simple)
-
-	add_executable(logomatic_float)
-	target_sources(
-		logomatic_float
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_float_print.c
-	)
-	target_link_libraries(logomatic_float PRIVATE GLOBALSHARE_LIB)
-	add_test(logomatic_float_test logomatic_float)
-
 	add_executable(stringification)
 	target_sources(
 		stringification
@@ -60,4 +42,13 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_sources(unused PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/unused.c)
 	target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
 	add_test(unused_test unused)
+
+	add_executable(verify_min_max)
+	target_sources(
+		verify_min_max
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/comparatormacros.c
+	)
+	target_link_libraries(verify_min_max PRIVATE GLOBALSHARE_LIB)
+	add_test(verify_min_max_test verify_min_max)
 endif()

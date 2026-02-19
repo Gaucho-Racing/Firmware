@@ -3086,7 +3086,10 @@ roll-over event only if no fault occurred during last counting period. */
  *         @arg @ref LL_HRTIM_SYNCIN_SRC_EXTERNAL_EVENT
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_SetSyncInSrc(HRTIM_TypeDef *HRTIMx, uint32_t SyncInSrc) { MODIFY_REG(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_IN, SyncInSrc); }
+__STATIC_INLINE void LL_HRTIM_SetSyncInSrc(HRTIM_TypeDef *HRTIMx, uint32_t SyncInSrc)
+{
+	MODIFY_REG(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_IN, SyncInSrc);
+}
 
 /**
  * @brief  Get actual HRTIM synchronization input source.
@@ -3097,7 +3100,10 @@ __STATIC_INLINE void LL_HRTIM_SetSyncInSrc(HRTIM_TypeDef *HRTIMx, uint32_t SyncI
  *         @arg @ref LL_HRTIM_SYNCIN_SRC_TIM_EVENT
  *         @arg @ref LL_HRTIM_SYNCIN_SRC_EXTERNAL_EVENT
  */
-__STATIC_INLINE uint32_t LL_HRTIM_GetSyncInSrc(const HRTIM_TypeDef *HRTIMx) { return (READ_BIT(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_IN)); }
+__STATIC_INLINE uint32_t LL_HRTIM_GetSyncInSrc(const HRTIM_TypeDef *HRTIMx)
+{
+	return (READ_BIT(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_IN));
+}
 
 /**
  * @brief  Configure the HRTIM synchronization output.
@@ -3115,7 +3121,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_GetSyncInSrc(const HRTIM_TypeDef *HRTIMx) { re
  *         @arg @ref LL_HRTIM_SYNCOUT_SRC_TIMA_CMP1
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ConfigSyncOut(HRTIM_TypeDef *HRTIMx, uint32_t Config, uint32_t Src) { MODIFY_REG(HRTIMx->sMasterRegs.MCR, (HRTIM_MCR_SYNC_OUT | HRTIM_MCR_SYNC_SRC), (Config | Src)); }
+__STATIC_INLINE void LL_HRTIM_ConfigSyncOut(HRTIM_TypeDef *HRTIMx, uint32_t Config, uint32_t Src)
+{
+	MODIFY_REG(HRTIMx->sMasterRegs.MCR, (HRTIM_MCR_SYNC_OUT | HRTIM_MCR_SYNC_SRC), (Config | Src));
+}
 
 /**
  * @brief  Set the routing and conditioning of the synchronization output event.
@@ -3128,7 +3137,10 @@ __STATIC_INLINE void LL_HRTIM_ConfigSyncOut(HRTIM_TypeDef *HRTIMx, uint32_t Conf
  *         @arg @ref LL_HRTIM_SYNCOUT_NEGATIVE_PULSE
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_SetSyncOutConfig(HRTIM_TypeDef *HRTIMx, uint32_t SyncOutConfig) { MODIFY_REG(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_OUT, SyncOutConfig); }
+__STATIC_INLINE void LL_HRTIM_SetSyncOutConfig(HRTIM_TypeDef *HRTIMx, uint32_t SyncOutConfig)
+{
+	MODIFY_REG(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_OUT, SyncOutConfig);
+}
 
 /**
  * @brief  Get actual routing and conditioning of the synchronization output
@@ -3140,7 +3152,10 @@ __STATIC_INLINE void LL_HRTIM_SetSyncOutConfig(HRTIM_TypeDef *HRTIMx, uint32_t S
  *         @arg @ref LL_HRTIM_SYNCOUT_POSITIVE_PULSE
  *         @arg @ref LL_HRTIM_SYNCOUT_NEGATIVE_PULSE
  */
-__STATIC_INLINE uint32_t LL_HRTIM_GetSyncOutConfig(const HRTIM_TypeDef *HRTIMx) { return (READ_BIT(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_OUT)); }
+__STATIC_INLINE uint32_t LL_HRTIM_GetSyncOutConfig(const HRTIM_TypeDef *HRTIMx)
+{
+	return (READ_BIT(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_OUT));
+}
 
 /**
  * @brief  Set the source and event to be sent on the HRTIM synchronization
@@ -3154,7 +3169,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_GetSyncOutConfig(const HRTIM_TypeDef *HRTIMx) 
  *         @arg @ref LL_HRTIM_SYNCOUT_SRC_TIMA_CMP1
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_SetSyncOutSrc(HRTIM_TypeDef *HRTIMx, uint32_t SyncOutSrc) { MODIFY_REG(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_SRC, SyncOutSrc); }
+__STATIC_INLINE void LL_HRTIM_SetSyncOutSrc(HRTIM_TypeDef *HRTIMx, uint32_t SyncOutSrc)
+{
+	MODIFY_REG(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_SRC, SyncOutSrc);
+}
 
 /**
  * @brief  Get actual  source and event sent on the HRTIM synchronization
@@ -3167,7 +3185,10 @@ __STATIC_INLINE void LL_HRTIM_SetSyncOutSrc(HRTIM_TypeDef *HRTIMx, uint32_t Sync
  *         @arg @ref LL_HRTIM_SYNCOUT_SRC_TIMA_START
  *         @arg @ref LL_HRTIM_SYNCOUT_SRC_TIMA_CMP1
  */
-__STATIC_INLINE uint32_t LL_HRTIM_GetSyncOutSrc(const HRTIM_TypeDef *HRTIMx) { return (READ_BIT(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_SRC)); }
+__STATIC_INLINE uint32_t LL_HRTIM_GetSyncOutSrc(const HRTIM_TypeDef *HRTIMx)
+{
+	return (READ_BIT(HRTIMx->sMasterRegs.MCR, HRTIM_MCR_SYNC_SRC));
+}
 
 /**
  * @brief  Disable (temporarily) update event generation.
@@ -3220,7 +3241,10 @@ __STATIC_INLINE void LL_HRTIM_SuspendUpdate(HRTIM_TypeDef *HRTIMx, uint32_t Time
  *         @arg @ref LL_HRTIM_TIMER_F
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ResumeUpdate(HRTIM_TypeDef *HRTIMx, uint32_t Timers) { CLEAR_BIT(HRTIMx->sCommonRegs.CR1, ((Timers >> HRTIM_MCR_MCEN_Pos) & HRTIM_CR1_UDIS_MASK)); }
+__STATIC_INLINE void LL_HRTIM_ResumeUpdate(HRTIM_TypeDef *HRTIMx, uint32_t Timers)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.CR1, ((Timers >> HRTIM_MCR_MCEN_Pos) & HRTIM_CR1_UDIS_MASK));
+}
 
 /**
  * @brief  Force an immediate transfer from the preload to the active register .
@@ -3243,7 +3267,10 @@ __STATIC_INLINE void LL_HRTIM_ResumeUpdate(HRTIM_TypeDef *HRTIMx, uint32_t Timer
  *         @arg @ref LL_HRTIM_TIMER_F
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ForceUpdate(HRTIM_TypeDef *HRTIMx, uint32_t Timers) { SET_BIT(HRTIMx->sCommonRegs.CR2, ((Timers >> HRTIM_MCR_MCEN_Pos) & HRTIM_CR2_SWUPD_MASK)); }
+__STATIC_INLINE void LL_HRTIM_ForceUpdate(HRTIM_TypeDef *HRTIMx, uint32_t Timers)
+{
+	SET_BIT(HRTIMx->sCommonRegs.CR2, ((Timers >> HRTIM_MCR_MCEN_Pos) & HRTIM_CR2_SWUPD_MASK));
+}
 
 /**
  * @brief  Reset the HRTIM timer(s) counter.
@@ -3389,7 +3416,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledSwapOutputs(const HRTIM_TypeDef *HRTI
  *         @arg @ref LL_HRTIM_OUTPUT_TF2
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableOutput(HRTIM_TypeDef *HRTIMx, uint32_t Outputs) { SET_BIT(HRTIMx->sCommonRegs.OENR, (Outputs & HRTIM_OENR_OEN_MASK)); }
+__STATIC_INLINE void LL_HRTIM_EnableOutput(HRTIM_TypeDef *HRTIMx, uint32_t Outputs)
+{
+	SET_BIT(HRTIMx->sCommonRegs.OENR, (Outputs & HRTIM_OENR_OEN_MASK));
+}
 
 /**
  * @brief  Disable the HRTIM timer(s) output(s) .
@@ -3421,7 +3451,10 @@ __STATIC_INLINE void LL_HRTIM_EnableOutput(HRTIM_TypeDef *HRTIMx, uint32_t Outpu
  *         @arg @ref LL_HRTIM_OUTPUT_TF2
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableOutput(HRTIM_TypeDef *HRTIMx, uint32_t Outputs) { SET_BIT(HRTIMx->sCommonRegs.ODISR, (Outputs & HRTIM_OENR_ODIS_MASK)); }
+__STATIC_INLINE void LL_HRTIM_DisableOutput(HRTIM_TypeDef *HRTIMx, uint32_t Outputs)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ODISR, (Outputs & HRTIM_OENR_ODIS_MASK));
+}
 
 /**
  * @brief  Indicates whether the HRTIM timer output is enabled.
@@ -3453,7 +3486,10 @@ __STATIC_INLINE void LL_HRTIM_DisableOutput(HRTIM_TypeDef *HRTIMx, uint32_t Outp
  *         @arg @ref LL_HRTIM_OUTPUT_TF2
  * @retval State of TxyOEN bit in HRTIM_OENR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledOutput(const HRTIM_TypeDef *HRTIMx, uint32_t Output) { return ((READ_BIT(HRTIMx->sCommonRegs.OENR, Output) == Output) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledOutput(const HRTIM_TypeDef *HRTIMx, uint32_t Output)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.OENR, Output) == Output) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicates whether the HRTIM timer output is disabled.
@@ -3485,7 +3521,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledOutput(const HRTIM_TypeDef *HRTIMx, u
  *         @arg @ref LL_HRTIM_OUTPUT_TF2
  * @retval State of TxyODS bit in HRTIM_OENR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsDisabledOutput(const HRTIM_TypeDef *HRTIMx, uint32_t Output) { return ((READ_BIT(HRTIMx->sCommonRegs.OENR, Output) == 0U) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsDisabledOutput(const HRTIM_TypeDef *HRTIMx, uint32_t Output)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.OENR, Output) == 0U) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configure an ADC trigger.
@@ -4576,7 +4615,10 @@ __STATIC_INLINE void LL_HRTIM_ConfigDLLCalibration(HRTIM_TypeDef *HRTIMx, uint32
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_StartDLLCalibration(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.DLLCR, HRTIM_DLLCR_CAL); }
+__STATIC_INLINE void LL_HRTIM_StartDLLCalibration(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.DLLCR, HRTIM_DLLCR_CAL);
+}
 
 /**
  * @}
@@ -4606,7 +4648,10 @@ __STATIC_INLINE void LL_HRTIM_StartDLLCalibration(HRTIM_TypeDef *HRTIMx) { SET_B
  *         @arg @ref LL_HRTIM_TIMER_F
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_TIM_CounterEnable(HRTIM_TypeDef *HRTIMx, uint32_t Timers) { SET_BIT(HRTIMx->sMasterRegs.MCR, Timers); }
+__STATIC_INLINE void LL_HRTIM_TIM_CounterEnable(HRTIM_TypeDef *HRTIMx, uint32_t Timers)
+{
+	SET_BIT(HRTIMx->sMasterRegs.MCR, Timers);
+}
 
 /**
  * @brief  Disable timer(s) counter.
@@ -4628,7 +4673,10 @@ __STATIC_INLINE void LL_HRTIM_TIM_CounterEnable(HRTIM_TypeDef *HRTIMx, uint32_t 
  *         @arg @ref LL_HRTIM_TIMER_F
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_TIM_CounterDisable(HRTIM_TypeDef *HRTIMx, uint32_t Timers) { CLEAR_BIT(HRTIMx->sMasterRegs.MCR, Timers); }
+__STATIC_INLINE void LL_HRTIM_TIM_CounterDisable(HRTIM_TypeDef *HRTIMx, uint32_t Timers)
+{
+	CLEAR_BIT(HRTIMx->sMasterRegs.MCR, Timers);
+}
 
 /**
  * @brief  Indicate whether the timer counter is enabled.
@@ -4650,7 +4698,10 @@ __STATIC_INLINE void LL_HRTIM_TIM_CounterDisable(HRTIM_TypeDef *HRTIMx, uint32_t
  *         @arg @ref LL_HRTIM_TIMER_F
  * @retval State of MCEN or TxCEN bit HRTIM_MCR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_TIM_IsCounterEnabled(const HRTIM_TypeDef *HRTIMx, uint32_t Timer) { return ((READ_BIT(HRTIMx->sMasterRegs.MCR, Timer) == (Timer)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_TIM_IsCounterEnabled(const HRTIM_TypeDef *HRTIMx, uint32_t Timer)
+{
+	return ((READ_BIT(HRTIMx->sMasterRegs.MCR, Timer) == (Timer)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set the timer clock prescaler ratio.
@@ -10414,7 +10465,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_EE_GetFilter(const HRTIM_TypeDef *HRTIMx, uint
  * @retval None
  */
 
-__STATIC_INLINE void LL_HRTIM_EE_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Prescaler) { MODIFY_REG(HRTIMx->sCommonRegs.EECR3, HRTIM_EECR3_EEVSD, Prescaler); }
+__STATIC_INLINE void LL_HRTIM_EE_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Prescaler)
+{
+	MODIFY_REG(HRTIMx->sCommonRegs.EECR3, HRTIM_EECR3_EEVSD, Prescaler);
+}
 
 /**
  * @brief  Get actual external event prescaler setting.
@@ -10427,7 +10481,10 @@ __STATIC_INLINE void LL_HRTIM_EE_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Pr
  *         @arg @ref LL_HRTIM_EE_PRESCALER_DIV8
  */
 
-__STATIC_INLINE uint32_t LL_HRTIM_EE_GetPrescaler(const HRTIM_TypeDef *HRTIMx) { return (READ_BIT(HRTIMx->sCommonRegs.EECR3, HRTIM_EECR3_EEVSD)); }
+__STATIC_INLINE uint32_t LL_HRTIM_EE_GetPrescaler(const HRTIM_TypeDef *HRTIMx)
+{
+	return (READ_BIT(HRTIMx->sCommonRegs.EECR3, HRTIM_EECR3_EEVSD));
+}
 
 /**
  * @}
@@ -10753,7 +10810,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_FLT_GetFilter(const HRTIM_TypeDef *HRTIMx, uin
  *         @arg @ref LL_HRTIM_FLT_PRESCALER_DIV8
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_FLT_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Prescaler) { MODIFY_REG(HRTIMx->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLTSD, Prescaler); }
+__STATIC_INLINE void LL_HRTIM_FLT_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Prescaler)
+{
+	MODIFY_REG(HRTIMx->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLTSD, Prescaler);
+}
 
 /**
  * @brief  Get actual fault circuitry prescaler setting.
@@ -10765,7 +10825,10 @@ __STATIC_INLINE void LL_HRTIM_FLT_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t P
  *         @arg @ref LL_HRTIM_FLT_PRESCALER_DIV4
  *         @arg @ref LL_HRTIM_FLT_PRESCALER_DIV8
  */
-__STATIC_INLINE uint32_t LL_HRTIM_FLT_GetPrescaler(const HRTIM_TypeDef *HRTIMx) { return (READ_BIT(HRTIMx->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLTSD)); }
+__STATIC_INLINE uint32_t LL_HRTIM_FLT_GetPrescaler(const HRTIM_TypeDef *HRTIMx)
+{
+	return (READ_BIT(HRTIMx->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLTSD));
+}
 
 /**
  * @brief  Lock the fault signal conditioning settings.
@@ -11165,7 +11228,10 @@ __STATIC_INLINE void LL_HRTIM_FLT_ResetCounter(HRTIM_TypeDef *HRTIMx, uint32_t F
  * LL_HRTIM_BM_PRESCALER_DIV32768
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_Config(HRTIM_TypeDef *HRTIMx, uint32_t Configuration) { MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BM_CONFIG_MASK, Configuration); }
+__STATIC_INLINE void LL_HRTIM_BM_Config(HRTIM_TypeDef *HRTIMx, uint32_t Configuration)
+{
+	MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BM_CONFIG_MASK, Configuration);
+}
 
 /**
  * @brief  Set the burst mode controller operating mode.
@@ -11176,7 +11242,10 @@ __STATIC_INLINE void LL_HRTIM_BM_Config(HRTIM_TypeDef *HRTIMx, uint32_t Configur
  *         @arg @ref LL_HRTIM_BM_MODE_CONTINOUS
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_SetMode(HRTIM_TypeDef *HRTIMx, uint32_t Mode) { MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMOM, Mode); }
+__STATIC_INLINE void LL_HRTIM_BM_SetMode(HRTIM_TypeDef *HRTIMx, uint32_t Mode)
+{
+	MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMOM, Mode);
+}
 
 /**
  * @brief  Get actual burst mode controller operating mode.
@@ -11186,7 +11255,10 @@ __STATIC_INLINE void LL_HRTIM_BM_SetMode(HRTIM_TypeDef *HRTIMx, uint32_t Mode) {
  *         @arg @ref LL_HRTIM_BM_MODE_SINGLESHOT
  *         @arg @ref LL_HRTIM_BM_MODE_CONTINOUS
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetMode(const HRTIM_TypeDef *HRTIMx) { return (uint32_t)READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMOM); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetMode(const HRTIM_TypeDef *HRTIMx)
+{
+	return (uint32_t)READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMOM);
+}
 
 /**
  * @brief  Set the burst mode controller clock source.
@@ -11206,7 +11278,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetMode(const HRTIM_TypeDef *HRTIMx) { retu
  *         @arg @ref LL_HRTIM_BM_CLKSRC_TIMER_F
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_SetClockSrc(HRTIM_TypeDef *HRTIMx, uint32_t ClockSrc) { MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMCLK, ClockSrc); }
+__STATIC_INLINE void LL_HRTIM_BM_SetClockSrc(HRTIM_TypeDef *HRTIMx, uint32_t ClockSrc)
+{
+	MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMCLK, ClockSrc);
+}
 
 /**
  * @brief  Get actual burst mode controller clock source.
@@ -11236,7 +11311,10 @@ __STATIC_INLINE void LL_HRTIM_BM_SetClockSrc(HRTIM_TypeDef *HRTIMx, uint32_t Clo
  *         @arg @ref LL_HRTIM_BM_CLKSRC_TIM7_TRGO
  *         @arg @ref LL_HRTIM_BM_CLKSRC_FHRTIM
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetClockSrc(const HRTIM_TypeDef *HRTIMx) { return (uint32_t)READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMCLK); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetClockSrc(const HRTIM_TypeDef *HRTIMx)
+{
+	return (uint32_t)READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMCLK);
+}
 
 /**
  * @brief  Set the burst mode controller prescaler.
@@ -11261,7 +11339,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetClockSrc(const HRTIM_TypeDef *HRTIMx) { 
  *         @arg @ref LL_HRTIM_BM_PRESCALER_DIV32768
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Prescaler) { MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPRSC, Prescaler); }
+__STATIC_INLINE void LL_HRTIM_BM_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Prescaler)
+{
+	MODIFY_REG(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPRSC, Prescaler);
+}
 
 /**
  * @brief  Get actual burst mode controller prescaler setting.
@@ -11285,7 +11366,10 @@ __STATIC_INLINE void LL_HRTIM_BM_SetPrescaler(HRTIM_TypeDef *HRTIMx, uint32_t Pr
  *         @arg @ref LL_HRTIM_BM_PRESCALER_DIV16384
  *         @arg @ref LL_HRTIM_BM_PRESCALER_DIV32768
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetPrescaler(const HRTIM_TypeDef *HRTIMx) { return (uint32_t)READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPRSC); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetPrescaler(const HRTIM_TypeDef *HRTIMx)
+{
+	return (uint32_t)READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPRSC);
+}
 
 /**
  * @brief  Enable burst mode compare and period registers preload.
@@ -11293,7 +11377,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetPrescaler(const HRTIM_TypeDef *HRTIMx) {
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_EnablePreload(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPREN); }
+__STATIC_INLINE void LL_HRTIM_BM_EnablePreload(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPREN);
+}
 
 /**
  * @brief  Disable burst mode compare and period registers preload.
@@ -11301,7 +11388,10 @@ __STATIC_INLINE void LL_HRTIM_BM_EnablePreload(HRTIM_TypeDef *HRTIMx) { SET_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_DisablePreload(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPREN); }
+__STATIC_INLINE void LL_HRTIM_BM_DisablePreload(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMPREN);
+}
 
 /**
  * @brief  Indicate whether burst mode compare and period registers are
@@ -11388,7 +11478,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_IsEnabledPreload(const HRTIM_TypeDef *HRTIM
  *         @arg @ref LL_HRTIM_BM_TRIG_EVENT_ONCHIP
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_SetTrig(HRTIM_TypeDef *HRTIMx, uint32_t Trig) { WRITE_REG(HRTIMx->sCommonRegs.BMTRGR, Trig); }
+__STATIC_INLINE void LL_HRTIM_BM_SetTrig(HRTIM_TypeDef *HRTIMx, uint32_t Trig)
+{
+	WRITE_REG(HRTIMx->sCommonRegs.BMTRGR, Trig);
+}
 
 /**
  * @brief  Get actual burst mode controller trigger.
@@ -11459,7 +11552,10 @@ __STATIC_INLINE void LL_HRTIM_BM_SetTrig(HRTIM_TypeDef *HRTIMx, uint32_t Trig) {
  *         @arg @ref LL_HRTIM_BM_TRIG_EVENT_8
  *         @arg @ref LL_HRTIM_BM_TRIG_EVENT_ONCHIP
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetTrig(const HRTIM_TypeDef *HRTIMx) { return (uint32_t)READ_REG(HRTIMx->sCommonRegs.BMTRGR); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetTrig(const HRTIM_TypeDef *HRTIMx)
+{
+	return (uint32_t)READ_REG(HRTIMx->sCommonRegs.BMTRGR);
+}
 
 /**
  * @brief  Set the burst mode controller compare value.
@@ -11470,7 +11566,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetTrig(const HRTIM_TypeDef *HRTIMx) { retu
  *         0x30 if CKPSC[2:0] = 1, 0x18 if CKPSC[2:0] = 2,...
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_SetCompare(HRTIM_TypeDef *HRTIMx, uint32_t CompareValue) { WRITE_REG(HRTIMx->sCommonRegs.BMCMPR, CompareValue); }
+__STATIC_INLINE void LL_HRTIM_BM_SetCompare(HRTIM_TypeDef *HRTIMx, uint32_t CompareValue)
+{
+	WRITE_REG(HRTIMx->sCommonRegs.BMCMPR, CompareValue);
+}
 
 /**
  * @brief  Get actual burst mode controller compare value.
@@ -11480,7 +11579,10 @@ __STATIC_INLINE void LL_HRTIM_BM_SetCompare(HRTIM_TypeDef *HRTIMx, uint32_t Comp
  *         periods of the fHRTIM clock, that is 0x60 if CKPSC[2:0] = 0,
  *         0x30 if CKPSC[2:0] = 1, 0x18 if CKPSC[2:0] = 2,...
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetCompare(const HRTIM_TypeDef *HRTIMx) { return (uint32_t)READ_REG(HRTIMx->sCommonRegs.BMCMPR); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetCompare(const HRTIM_TypeDef *HRTIMx)
+{
+	return (uint32_t)READ_REG(HRTIMx->sCommonRegs.BMCMPR);
+}
 
 /**
  * @brief  Set the burst mode controller period.
@@ -11491,7 +11593,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetCompare(const HRTIM_TypeDef *HRTIMx) { r
  * CKPSC[2:0] = 2,... The maximum value is 0x0000 FFDF.
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_SetPeriod(HRTIM_TypeDef *HRTIMx, uint32_t Period) { WRITE_REG(HRTIMx->sCommonRegs.BMPER, Period); }
+__STATIC_INLINE void LL_HRTIM_BM_SetPeriod(HRTIM_TypeDef *HRTIMx, uint32_t Period)
+{
+	WRITE_REG(HRTIMx->sCommonRegs.BMPER, Period);
+}
 
 /**
  * @brief  Get actual burst mode controller period.
@@ -11501,7 +11606,10 @@ __STATIC_INLINE void LL_HRTIM_BM_SetPeriod(HRTIM_TypeDef *HRTIMx, uint32_t Perio
  * clock, that is 0x60 if CKPSC[2:0] = 0, 0x30 if CKPSC[2:0] = 1, 0x18 if
  * CKPSC[2:0] = 2,... The maximum value is 0x0000 FFDF.
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetPeriod(const HRTIM_TypeDef *HRTIMx) { return (uint32_t)READ_REG(HRTIMx->sCommonRegs.BMPER); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetPeriod(const HRTIM_TypeDef *HRTIMx)
+{
+	return (uint32_t)READ_REG(HRTIMx->sCommonRegs.BMPER);
+}
 
 /**
  * @brief  Enable the burst mode controller
@@ -11509,7 +11617,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetPeriod(const HRTIM_TypeDef *HRTIMx) { re
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_Enable(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BME); }
+__STATIC_INLINE void LL_HRTIM_BM_Enable(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BME);
+}
 
 /**
  * @brief  Disable the burst mode controller
@@ -11517,7 +11628,10 @@ __STATIC_INLINE void LL_HRTIM_BM_Enable(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx-
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_Disable(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BME); }
+__STATIC_INLINE void LL_HRTIM_BM_Disable(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BME);
+}
 
 /**
  * @brief  Indicate whether the burst mode controller is enabled.
@@ -11525,7 +11639,10 @@ __STATIC_INLINE void LL_HRTIM_BM_Disable(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTI
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of BME bit in HRTIM_BMCR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_IsEnabled(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BME) == (HRTIM_BMCR_BME)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_IsEnabled(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BME) == (HRTIM_BMCR_BME)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Trigger the burst operation (software trigger)
@@ -11533,7 +11650,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_IsEnabled(const HRTIM_TypeDef *HRTIMx) { re
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_Start(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.BMTRGR, HRTIM_BMTRGR_SW); }
+__STATIC_INLINE void LL_HRTIM_BM_Start(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.BMTRGR, HRTIM_BMTRGR_SW);
+}
 
 /**
  * @brief  Stop the burst mode operation.
@@ -11542,7 +11662,10 @@ __STATIC_INLINE void LL_HRTIM_BM_Start(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_BM_Stop(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMSTAT); }
+__STATIC_INLINE void LL_HRTIM_BM_Stop(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMSTAT);
+}
 
 /**
  * @brief  Get actual burst mode status
@@ -11552,7 +11675,10 @@ __STATIC_INLINE void LL_HRTIM_BM_Stop(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx-
  *         @arg @ref LL_HRTIM_BM_STATUS_NORMAL
  *         @arg @ref LL_HRTIM_BM_STATUS_BURST_ONGOING
  */
-__STATIC_INLINE uint32_t LL_HRTIM_BM_GetStatus(const HRTIM_TypeDef *HRTIMx) { return (READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMSTAT)); }
+__STATIC_INLINE uint32_t LL_HRTIM_BM_GetStatus(const HRTIM_TypeDef *HRTIMx)
+{
+	return (READ_BIT(HRTIMx->sCommonRegs.BMCR, HRTIM_BMCR_BMSTAT));
+}
 
 /**
  * @}
@@ -11568,7 +11694,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_BM_GetStatus(const HRTIM_TypeDef *HRTIMx) { re
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT1(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT1C); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT1(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT1C);
+}
 
 /**
  * @brief  Indicate whether Fault 1 interrupt occurred.
@@ -11576,7 +11705,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_FLT1(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT1 bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT1(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT1) == (HRTIM_ISR_FLT1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT1(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT1) == (HRTIM_ISR_FLT1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Fault 2 interrupt flag.
@@ -11584,7 +11716,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT1(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT2(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT2C); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT2(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT2C);
+}
 
 /**
  * @brief  Indicate whether Fault 2 interrupt occurred.
@@ -11592,7 +11727,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_FLT2(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT2 bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT2(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT2) == (HRTIM_ISR_FLT2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT2(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT2) == (HRTIM_ISR_FLT2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Fault 3 interrupt flag.
@@ -11600,7 +11738,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT2(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT3(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT3C); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT3(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT3C);
+}
 
 /**
  * @brief  Indicate whether Fault 3 interrupt occurred.
@@ -11608,7 +11749,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_FLT3(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT3 bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT3(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT3) == (HRTIM_ISR_FLT3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT3(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT3) == (HRTIM_ISR_FLT3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Fault 4 interrupt flag.
@@ -11616,7 +11760,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT3(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT4(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT4C); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT4(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT4C);
+}
 
 /**
  * @brief  Indicate whether Fault 4 interrupt occurred.
@@ -11624,7 +11771,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_FLT4(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT4 bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT4(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT4) == (HRTIM_ISR_FLT4)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT4(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT4) == (HRTIM_ISR_FLT4)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Fault 5 interrupt flag.
@@ -11632,7 +11782,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT4(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT5(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT5C); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT5(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT5C);
+}
 
 /**
  * @brief  Indicate whether Fault 5 interrupt occurred.
@@ -11640,7 +11793,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_FLT5(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT5 bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT5(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT5) == (HRTIM_ISR_FLT5)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT5(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT5) == (HRTIM_ISR_FLT5)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Fault 6 interrupt flag.
@@ -11648,7 +11804,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT5(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT6(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT6C); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_FLT6(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_FLT6C);
+}
 
 /**
  * @brief  Indicate whether Fault 6 interrupt occurred.
@@ -11656,7 +11815,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_FLT6(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT6 bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT6(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT6) == (HRTIM_ISR_FLT6)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT6(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_FLT6) == (HRTIM_ISR_FLT6)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the System Fault interrupt flag.
@@ -11664,7 +11826,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_FLT6(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_SYSFLT(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_SYSFLTC); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_SYSFLT(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_SYSFLTC);
+}
 
 /**
  * @brief  Indicate whether System Fault interrupt occurred.
@@ -11672,7 +11837,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_SYSFLT(HRTIM_TypeDef *HRTIMx) { SET_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of SYSFLT bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_SYSFLT(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_SYSFLT) == (HRTIM_ISR_SYSFLT)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_SYSFLT(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_SYSFLT) == (HRTIM_ISR_SYSFLT)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the DLL ready interrupt flag.
@@ -11680,7 +11848,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_SYSFLT(const HRTIM_TypeDef *HRTIM
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_DLLRDY(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_DLLRDYC); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_DLLRDY(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_DLLRDYC);
+}
 
 /**
  * @brief  Indicate whether DLL ready  interrupt occurred.
@@ -11688,7 +11859,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_DLLRDY(HRTIM_TypeDef *HRTIMx) { SET_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of DLLRDY bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_DLLRDY(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_DLLRDY) == (HRTIM_ISR_DLLRDY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_DLLRDY(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_DLLRDY) == (HRTIM_ISR_DLLRDY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Burst Mode period interrupt flag.
@@ -11696,7 +11870,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_DLLRDY(const HRTIM_TypeDef *HRTIM
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_BMPER(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_BMPERC); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_BMPER(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.ICR, HRTIM_ICR_BMPERC);
+}
 
 /**
  * @brief  Indicate whether Burst Mode period interrupt occurred.
@@ -11704,7 +11881,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_BMPER(HRTIM_TypeDef *HRTIMx) { SET_BIT(H
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of BMPER bit in HRTIM_ISR register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_BMPER(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_BMPER) == (HRTIM_ISR_BMPER)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_BMPER(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.ISR, HRTIM_ISR_BMPER) == (HRTIM_ISR_BMPER)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the Synchronization Input interrupt flag.
@@ -11712,7 +11892,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_BMPER(const HRTIM_TypeDef *HRTIMx
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_ClearFlag_SYNC(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sMasterRegs.MICR, HRTIM_MICR_SYNC); }
+__STATIC_INLINE void LL_HRTIM_ClearFlag_SYNC(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sMasterRegs.MICR, HRTIM_MICR_SYNC);
+}
 
 /**
  * @brief  Indicate whether the Synchronization Input interrupt occurred.
@@ -11720,7 +11903,10 @@ __STATIC_INLINE void LL_HRTIM_ClearFlag_SYNC(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of SYNC bit in HRTIM_MISR register  (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_SYNC(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sMasterRegs.MISR, HRTIM_MISR_SYNC) == (HRTIM_MISR_SYNC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_SYNC(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sMasterRegs.MISR, HRTIM_MISR_SYNC) == (HRTIM_MISR_SYNC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear the update interrupt flag for a given timer (including the
@@ -12356,7 +12542,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsActiveFlag_DLYPRT(const HRTIM_TypeDef *HRTIM
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_FLT1(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT1); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_FLT1(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT1);
+}
 
 /**
  * @brief  Disable the fault 1 interrupt.
@@ -12364,7 +12553,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_FLT1(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_FLT1(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT1); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_FLT1(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT1);
+}
 
 /**
  * @brief  Indicate whether the fault 1 interrupt is enabled.
@@ -12372,7 +12564,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_FLT1(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT1IE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT1(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT1) == (HRTIM_IER_FLT1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT1(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT1) == (HRTIM_IER_FLT1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the fault 2 interrupt.
@@ -12380,7 +12575,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT1(const HRTIM_TypeDef *HRTIMx) 
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_FLT2(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT2); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_FLT2(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT2);
+}
 
 /**
  * @brief  Disable the fault 2 interrupt.
@@ -12388,7 +12586,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_FLT2(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_FLT2(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT2); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_FLT2(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT2);
+}
 
 /**
  * @brief  Indicate whether the fault 2 interrupt is enabled.
@@ -12396,7 +12597,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_FLT2(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT2IE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT2(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT2) == (HRTIM_IER_FLT2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT2(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT2) == (HRTIM_IER_FLT2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the fault 3 interrupt.
@@ -12404,7 +12608,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT2(const HRTIM_TypeDef *HRTIMx) 
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_FLT3(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT3); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_FLT3(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT3);
+}
 
 /**
  * @brief  Disable the fault 3 interrupt.
@@ -12412,7 +12619,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_FLT3(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_FLT3(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT3); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_FLT3(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT3);
+}
 
 /**
  * @brief  Indicate whether the fault 3 interrupt is enabled.
@@ -12420,7 +12630,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_FLT3(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT3IE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT3(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT3) == (HRTIM_IER_FLT3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT3(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT3) == (HRTIM_IER_FLT3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the fault 4 interrupt.
@@ -12428,7 +12641,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT3(const HRTIM_TypeDef *HRTIMx) 
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_FLT4(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT4); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_FLT4(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT4);
+}
 
 /**
  * @brief  Disable the fault 4 interrupt.
@@ -12436,7 +12652,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_FLT4(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_FLT4(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT4); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_FLT4(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT4);
+}
 
 /**
  * @brief  Indicate whether the fault 4 interrupt is enabled.
@@ -12444,7 +12663,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_FLT4(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT4IE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT4(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT4) == (HRTIM_IER_FLT4)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT4(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT4) == (HRTIM_IER_FLT4)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the fault 5 interrupt.
@@ -12452,7 +12674,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT4(const HRTIM_TypeDef *HRTIMx) 
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_FLT5(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT5); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_FLT5(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT5);
+}
 
 /**
  * @brief  Disable the fault 5 interrupt.
@@ -12460,7 +12685,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_FLT5(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_FLT5(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT5); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_FLT5(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT5);
+}
 
 /**
  * @brief  Indicate whether the fault 5 interrupt is enabled.
@@ -12468,7 +12696,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_FLT5(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT5IE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT5(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT5) == (HRTIM_IER_FLT5)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT5(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT5) == (HRTIM_IER_FLT5)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the fault 6 interrupt.
@@ -12476,7 +12707,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT5(const HRTIM_TypeDef *HRTIMx) 
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_FLT6(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT6); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_FLT6(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT6);
+}
 
 /**
  * @brief  Disable the fault 6 interrupt.
@@ -12484,7 +12718,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_FLT6(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_FLT6(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT6); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_FLT6(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT6);
+}
 
 /**
  * @brief  Indicate whether the fault 6 interrupt is enabled.
@@ -12492,7 +12729,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_FLT6(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of FLT6IE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT6(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT6) == (HRTIM_IER_FLT6)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT6(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_FLT6) == (HRTIM_IER_FLT6)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the system fault interrupt.
@@ -12500,7 +12740,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_FLT6(const HRTIM_TypeDef *HRTIMx) 
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_SYSFLT(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_SYSFLT); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_SYSFLT(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_SYSFLT);
+}
 
 /**
  * @brief  Disable the system fault interrupt.
@@ -12508,7 +12751,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_SYSFLT(HRTIM_TypeDef *HRTIMx) { SET_BIT(H
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_SYSFLT(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_SYSFLT); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_SYSFLT(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_SYSFLT);
+}
 
 /**
  * @brief  Indicate whether the system fault interrupt is enabled.
@@ -12516,7 +12762,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_SYSFLT(HRTIM_TypeDef *HRTIMx) { CLEAR_BI
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of SYSFLTIE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_SYSFLT(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_SYSFLT) == (HRTIM_IER_SYSFLT)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_SYSFLT(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_SYSFLT) == (HRTIM_IER_SYSFLT)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the DLL ready interrupt.
@@ -12524,7 +12773,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_SYSFLT(const HRTIM_TypeDef *HRTIMx
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_DLLRDY(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_DLLRDY); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_DLLRDY(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_DLLRDY);
+}
 
 /**
  * @brief  Disable the DLL ready interrupt.
@@ -12532,7 +12784,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_DLLRDY(HRTIM_TypeDef *HRTIMx) { SET_BIT(H
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_DLLRDY(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_DLLRDY); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_DLLRDY(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_DLLRDY);
+}
 
 /**
  * @brief  Indicate whether the DLL ready interrupt is enabled.
@@ -12540,7 +12795,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_DLLRDY(HRTIM_TypeDef *HRTIMx) { CLEAR_BI
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of DLLRDYIE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_DLLRDY(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_DLLRDY) == (HRTIM_IER_DLLRDY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_DLLRDY(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_DLLRDY) == (HRTIM_IER_DLLRDY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the burst mode period interrupt.
@@ -12548,7 +12806,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_DLLRDY(const HRTIM_TypeDef *HRTIMx
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_BMPER(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_BMPER); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_BMPER(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_BMPER);
+}
 
 /**
  * @brief  Disable the burst mode period interrupt.
@@ -12556,7 +12817,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_BMPER(HRTIM_TypeDef *HRTIMx) { SET_BIT(HR
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_BMPER(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_BMPER); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_BMPER(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_BMPER);
+}
 
 /**
  * @brief  Indicate whether the burst mode period interrupt is enabled.
@@ -12564,7 +12828,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_BMPER(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of BMPERIE bit in HRTIM_IER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_BMPER(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_BMPER) == (HRTIM_IER_BMPER)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_BMPER(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sCommonRegs.IER, HRTIM_IER_BMPER) == (HRTIM_IER_BMPER)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the synchronization input interrupt.
@@ -12572,7 +12839,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_BMPER(const HRTIM_TypeDef *HRTIMx)
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableIT_SYNC(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCIE); }
+__STATIC_INLINE void LL_HRTIM_EnableIT_SYNC(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCIE);
+}
 
 /**
  * @brief  Disable the synchronization input interrupt.
@@ -12580,7 +12850,10 @@ __STATIC_INLINE void LL_HRTIM_EnableIT_SYNC(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableIT_SYNC(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCIE); }
+__STATIC_INLINE void LL_HRTIM_DisableIT_SYNC(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCIE);
+}
 
 /**
  * @brief  Indicate whether the synchronization input interrupt is enabled.
@@ -12588,7 +12861,10 @@ __STATIC_INLINE void LL_HRTIM_DisableIT_SYNC(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of SYNCIE bit in HRTIM_MDIER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_SYNC(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCIE) == (HRTIM_MDIER_SYNCIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_SYNC(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCIE) == (HRTIM_MDIER_SYNCIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the update interrupt for a given timer.
@@ -13513,7 +13789,10 @@ __STATIC_INLINE uint32_t LL_HRTIM_IsEnabledIT_DLYPRT(const HRTIM_TypeDef *HRTIMx
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_EnableDMAReq_SYNC(HRTIM_TypeDef *HRTIMx) { SET_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCDE); }
+__STATIC_INLINE void LL_HRTIM_EnableDMAReq_SYNC(HRTIM_TypeDef *HRTIMx)
+{
+	SET_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCDE);
+}
 
 /**
  * @brief  Disable the synchronization input DMA request
@@ -13521,7 +13800,10 @@ __STATIC_INLINE void LL_HRTIM_EnableDMAReq_SYNC(HRTIM_TypeDef *HRTIMx) { SET_BIT
  * @param  HRTIMx High Resolution Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_HRTIM_DisableDMAReq_SYNC(HRTIM_TypeDef *HRTIMx) { CLEAR_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCDE); }
+__STATIC_INLINE void LL_HRTIM_DisableDMAReq_SYNC(HRTIM_TypeDef *HRTIMx)
+{
+	CLEAR_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCDE);
+}
 
 /**
  * @brief  Indicate whether the synchronization input DMA request is enabled.
@@ -13529,7 +13811,10 @@ __STATIC_INLINE void LL_HRTIM_DisableDMAReq_SYNC(HRTIM_TypeDef *HRTIMx) { CLEAR_
  * @param  HRTIMx High Resolution Timer instance
  * @retval State of SYNCDE bit in HRTIM_MDIER register (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledDMAReq_SYNC(const HRTIM_TypeDef *HRTIMx) { return ((READ_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCDE) == (HRTIM_MDIER_SYNCDE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_HRTIM_IsEnabledDMAReq_SYNC(const HRTIM_TypeDef *HRTIMx)
+{
+	return ((READ_BIT(HRTIMx->sMasterRegs.MDIER, HRTIM_MDIER_SYNCDE) == (HRTIM_MDIER_SYNCDE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable the update DMA request for a given timer.

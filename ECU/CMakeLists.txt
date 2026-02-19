@@ -14,26 +14,35 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-	add_executable(state_machine_tick_returns)
+	add_executable(StateTicksTest)
 	target_include_directories(
-		state_machine_tick_returns
+		StateTicksTest
 		PRIVATE
 			Application/Inc
-			Core/Inc
+			Test/Inc
 	)
 	target_sources(
-		state_machine_tick_returns
+		StateTicksTest
 		PRIVATE
-			Test/state_machine_tick_returns.c
+			Test/Src/can.c
+			Test/Src/StateTicksTest.c
+			Test/Src/stm32g4xx_hal.c
+			Test/Src/stm32g4xx_ll_gpio.c
 			Application/Src/StateTicks.c
+			Application/Src/StateUtils.c
+			Application/Src/CANutils.c
 	)
 	target_link_libraries(
-		state_machine_tick_returns
+		StateTicksTest
 		PRIVATE
 			GLOBALSHARE_LIB
 			GR_OLD_CAN_MESSAGES
+			LOGOMATIC_LIB
+			# GR_ADC
+			# PERIPHERAL_CAN_LIB
+			BitManipulations_Lib
 	)
-	add_test(state_machine_tick_returns state_machine_tick_returns)
+	add_test(StateTicksTest StateTicksTest)
 
 	# FIXME Add more HOOTL tests
 endif()
@@ -66,17 +75,20 @@ target_sources(
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-		Core/Src/usart.c
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
+		Application/Src/CANutils.c
 )
 
 target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
+		GR_ADC
+		PERIPHERAL_CAN_LIB
+		BitManipulations_Lib
 )
 
 target_include_directories(

@@ -42,18 +42,21 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* Enable ITM for SWO output */
-static void ITM_Enable(void)
-{
-	/* Enable TRC (Trace) */
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-
-	/* Enable stimulus port 0 */
-	ITM->TER |= (1UL << 0);
-
-	/* Set trace control register */
-	ITM->TCR |= ITM_TCR_ITMENA_Msk;
-}
+LogomaticConfig logomatic_config = {
+    .baud_rate = 115200,
+    .clock_source = LOGOMATIC_PCLK1,
+    .data_width = LOGOMATIC_DATAWIDTH_8B,
+    .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+    .gpio_port = LOGOMATIC_GPIOA,
+    .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+    .parity = LOGOMATIC_PARITY_NONE,
+    .prescaler = LOGOMATIC_PRESCALER_DIV1,
+    .stop_bits = LOGOMATIC_STOPBITS_1,
+    .transfer_direction = LOGOMATIC_DIRECTION_TX,
+    .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+    .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+    .bus = LOGOMATIC_BUS,
+};
 
 void ADC_Configure(void)
 {
@@ -147,7 +150,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	ITM_Enable();
+	Setup_Logomatic(&logomatic_config);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -156,6 +159,7 @@ int main(void)
 	ADC_Configure();
 
 	/* USER CODE END 2 */
+	LOGOMATIC("Starting Analog Calibration...\n");
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
@@ -166,6 +170,7 @@ int main(void)
 		min_vals[i] = UINT16_MAX;
 		max_vals[i] = 0;
 	}
+
 	char *pin_names[] = {"BSE_SIGNAL", "BSPD_SIGNAL",	    "APPS1_SIGNAL", "APPS2_SIGNAL", "BRAKE_F_SIGNAL", "BRAKE_R_SIGNAL",
 			     "AUX_SIGNAL", "STEERING_ANGLE_SIGNAL", "BSPD_SENSE",   "IMD_SENSE",    "AMS_SENSE"};
 

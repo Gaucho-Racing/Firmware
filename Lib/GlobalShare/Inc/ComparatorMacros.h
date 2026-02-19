@@ -1,5 +1,5 @@
-#ifndef _CONVENIENCE_MACROS_H_
-#define _CONVENIENCE_MACROS_H_
+#ifndef _COMPARATOR_MACROS_H_
+#define _COMPARATOR_MACROS_H_
 
 /**
  * @brief Macro to compute the maximum of two values.

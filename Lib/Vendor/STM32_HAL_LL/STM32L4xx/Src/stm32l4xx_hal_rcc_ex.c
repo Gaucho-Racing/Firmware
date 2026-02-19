@@ -2402,7 +2402,10 @@ void HAL_RCCEx_StandbyMSIRangeConfig(uint32_t MSIRange)
  * selected as RTC clock with HAL_RCCEx_PeriphCLKConfig().
  * @retval None
  */
-void HAL_RCCEx_EnableLSECSS(void) { SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON); }
+void HAL_RCCEx_EnableLSECSS(void)
+{
+	SET_BIT(RCC->BDCR, RCC_BDCR_LSECSSON);
+}
 
 /**
  * @brief  Disable the LSE Clock Security System.
@@ -2550,7 +2553,10 @@ void HAL_RCCEx_DisableLSCO(void)
  *         calibration LSE oscillator is to be enabled with HAL_RCC_OscConfig().
  * @retval None
  */
-void HAL_RCCEx_EnableMSIPLLMode(void) { SET_BIT(RCC->CR, RCC_CR_MSIPLLEN); }
+void HAL_RCCEx_EnableMSIPLLMode(void)
+{
+	SET_BIT(RCC->CR, RCC_CR_MSIPLLEN);
+}
 
 /**
  * @brief  Disable the PLL-mode of the MSI.
@@ -2558,7 +2564,10 @@ void HAL_RCCEx_EnableMSIPLLMode(void) { SET_BIT(RCC->CR, RCC_CR_MSIPLLEN); }
  * disabled.
  * @retval None
  */
-void HAL_RCCEx_DisableMSIPLLMode(void) { CLEAR_BIT(RCC->CR, RCC_CR_MSIPLLEN); }
+void HAL_RCCEx_DisableMSIPLLMode(void)
+{
+	CLEAR_BIT(RCC->CR, RCC_CR_MSIPLLEN);
+}
 
 #if defined(OCTOSPI1) && defined(OCTOSPI2)
 /**
@@ -2705,7 +2714,10 @@ void HAL_RCCEx_CRSConfig(RCC_CRSInitTypeDef *pInit)
  * @brief  Generate the software synchronization event
  * @retval None
  */
-void HAL_RCCEx_CRSSoftwareSynchronizationGenerate(void) { SET_BIT(CRS->CR, CRS_CR_SWSYNC); }
+void HAL_RCCEx_CRSSoftwareSynchronizationGenerate(void)
+{
+	SET_BIT(CRS->CR, CRS_CR_SWSYNC);
+}
 
 /**
  * @brief  Return synchronization info

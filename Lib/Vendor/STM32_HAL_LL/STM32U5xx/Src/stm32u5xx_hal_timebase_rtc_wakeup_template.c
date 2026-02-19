@@ -247,7 +247,10 @@ void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
  * @brief  This function handles  WAKE UP TIMER  interrupt request.
  * @retval None
  */
-void RTC_IRQHandler(void) { HAL_RTCEx_WakeUpTimerIRQHandler(&hRTC_Handle); }
+void RTC_IRQHandler(void)
+{
+	HAL_RTCEx_WakeUpTimerIRQHandler(&hRTC_Handle);
+}
 
 /**
  * @}

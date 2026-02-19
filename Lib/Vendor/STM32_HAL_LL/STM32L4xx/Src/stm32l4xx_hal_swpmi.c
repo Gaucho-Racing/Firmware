@@ -1478,7 +1478,10 @@ HAL_SWPMI_StateTypeDef HAL_SWPMI_GetState(const SWPMI_HandleTypeDef *hswpmi)
  *              the configuration information for the specified SWPMI.
  * @retval SWPMI Error Code
  */
-uint32_t HAL_SWPMI_GetError(const SWPMI_HandleTypeDef *hswpmi) { return hswpmi->ErrorCode; }
+uint32_t HAL_SWPMI_GetError(const SWPMI_HandleTypeDef *hswpmi)
+{
+	return hswpmi->ErrorCode;
+}
 
 /**
  * @}

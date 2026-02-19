@@ -15,7 +15,6 @@ enum CCU_STATE { // State Machine
 	 * The CCU has been told to charge and checks have passed, starts charging
 	 */
 	CCU_STATE_CHARGING // Transition: Told to stop OR fault
-
 };
 
 #endif

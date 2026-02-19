@@ -27,7 +27,6 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
-#include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -53,6 +52,19 @@
 
 /* USER CODE BEGIN PV */
 CCU_StateData state_data = {0};
+LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
+				   .bus = LOGOMATIC_BUS,
+				   .gpio_port = LOGOMATIC_GPIOA,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .baud_rate = 115200,
+				   .data_width = LOGOMATIC_DATAWIDTH_8B,
+				   .stop_bits = LOGOMATIC_STOPBITS_1,
+				   .parity = LOGOMATIC_PARITY_NONE,
+				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
+				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
+				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,18 +75,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* Enable ITM for SWO output */
-static void ITM_Enable(void)
-{
-	/* Enable TRC (Trace) */
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
-	/* Enable stimulus port 0 */
-	ITM->TER |= (1UL << 0);
-
-	/* Set trace control register */
-	ITM->TCR |= ITM_TCR_ITMENA_Msk;
-}
 /* USER CODE END 0 */
 
 /**
@@ -96,7 +97,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	ITM_Enable();
+	Setup_Logomatic(&logomaticConfig);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -108,14 +109,13 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	// MX_DMA_Init();
-	// MX_FDCAN1_Init();
-	// MX_FDCAN2_Init();
-	// MX_ADC1_Init();
-	// MX_ADC2_Init();
-	MX_LPUART1_UART_Init();
+	MX_DMA_Init();
+	MX_FDCAN1_Init();
+	MX_FDCAN2_Init();
+	MX_ADC1_Init();
+	MX_ADC2_Init();
 	/* USER CODE BEGIN 2 */
-
+	LOGOMATIC("Initialization complete\n");
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
