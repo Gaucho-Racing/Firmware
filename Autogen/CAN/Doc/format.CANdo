@@ -320,7 +320,7 @@ routing:
         ECU:
           - msg: Ping
           - msg: Fan Status
-   Fan Controller 6:
+    Fan Controller 6:
       CAN1:
         Debugger:
           - msg: Debug 2.0
