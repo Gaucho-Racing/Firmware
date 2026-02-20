@@ -1,1 +1,13 @@
-{"name":"B::Keywords","provides":{"B::Keywords":{"version":"1.29","file":"lib/B/Keywords.pm"}},"pathname":"R/RU/RURBAN/B-Keywords-1.29.tar.gz","target":"B::Keywords","dist":"B-Keywords-1.29","version":"1.29"}
+{
+	"name": "B::Keywords",
+	"provides": {
+		"B::Keywords": {
+			"version": "1.29",
+			"file": "lib/B/Keywords.pm"
+		}
+	},
+	"pathname": "R/RU/RURBAN/B-Keywords-1.29.tar.gz",
+	"target": "B::Keywords",
+	"dist": "B-Keywords-1.29",
+	"version": "1.29"
+}
