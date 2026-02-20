@@ -12,6 +12,6 @@
  *
  * @return void
  */
-void lightControl(ECU_StateData* stateData);
+void lightControl(ECU_StateData *stateData);
 
 #endif

@@ -7,13 +7,13 @@
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 
-void BrakeLightControl(ECU_StateData* stateLump) {
-    if (PressingBrake(stateLump)) {
-        LL_GPIO_SetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
-    }
-    else {
-        LL_GPIO_ResetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
-    }
+void BrakeLightControl(ECU_StateData *stateLump)
+{
+	if (PressingBrake(stateLump)) {
+		LL_GPIO_SetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
+	} else {
+		LL_GPIO_ResetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
+	}
 }
 
 void TSSILightControl(ECU_StateData *stateLump)
@@ -64,10 +64,11 @@ void SoftwareOKLightControl(ECU_StateData *stateLump)
 	}
 }
 
-void lightControl(ECU_StateData* stateData) {
-    BrakeLightControl(stateData);
-    TSSILightControl(stateData);
-    RTDButtonLightControl(stateData);
-    TSActiveButtonLightControl(stateData);
-    SoftwareOKLightControl(stateData);
+void lightControl(ECU_StateData *stateData)
+{
+	BrakeLightControl(stateData);
+	TSSILightControl(stateData);
+	RTDButtonLightControl(stateData);
+	TSActiveButtonLightControl(stateData);
+	SoftwareOKLightControl(stateData);
 }
