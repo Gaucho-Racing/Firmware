@@ -1,1 +1,17 @@
-{"version":"1.45","dist":"Exception-Class-1.45","target":"Exception::Class","pathname":"D/DR/DROLSKY/Exception-Class-1.45.tar.gz","provides":{"Exception::Class::Base":{"file":"lib/Exception/Class/Base.pm","version":"1.45"},"Exception::Class":{"version":"1.45","file":"lib/Exception/Class.pm"}},"name":"Exception::Class"}
+{
+	"version": "1.45",
+	"dist": "Exception-Class-1.45",
+	"target": "Exception::Class",
+	"pathname": "D/DR/DROLSKY/Exception-Class-1.45.tar.gz",
+	"provides": {
+		"Exception::Class::Base": {
+			"file": "lib/Exception/Class/Base.pm",
+			"version": "1.45"
+		},
+		"Exception::Class": {
+			"version": "1.45",
+			"file": "lib/Exception/Class.pm"
+		}
+	},
+	"name": "Exception::Class"
+}
