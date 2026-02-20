@@ -34,6 +34,7 @@
 #include "CANdler.h"
 #include "CANutils.h"
 #include "Logomatic.h"
+#include "Lights.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "adc.h"
@@ -436,6 +437,7 @@ int main(void)
 		SendECUStateDataOverCAN(&stateLump);
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
+		lightControl(&stateLump);
 		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}

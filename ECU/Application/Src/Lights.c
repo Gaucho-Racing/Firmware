@@ -1,12 +1,12 @@
 #include "Lights.h"
 #include "StateData.h"
+#include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "main.h"
 
-
-void brakeLights(ECU_StateData* stateLump) {
+void BrakeLightControl(ECU_StateData* stateLump) {
     if (stateLump->Brake_F_Signal > 0 || stateLump->Brake_R_Signal > 0) { // TODO: dummy values, fine tune l8r
         LL_GPIO_SetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
     }
@@ -15,7 +15,7 @@ void brakeLights(ECU_StateData* stateLump) {
     }
 }
 
-void TSSILight(ECU_StateData* stateLump) {
+void TSSILightControl(ECU_StateData* stateLump) {
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
 	if (stateLump->tssi_fault) {
@@ -30,7 +30,7 @@ void TSSILight(ECU_StateData* stateLump) {
 	}
 }
 
-void RTDButtonLight(ECU_StateData* stateLump) {
+void RTDButtonLightControl(ECU_StateData* stateLump) {
     if (stateLump->ecu_state == GR_DRIVE_ACTIVE) {
         LL_GPIO_SetOutputPin(RTD_BTN_LED_CONTROL_GPIO_Port, RTD_BTN_LED_CONTROL_Pin);
     } else {
@@ -38,7 +38,7 @@ void RTDButtonLight(ECU_StateData* stateLump) {
     }
 }
 
-void TSActiveButtonLight(ECU_StateData* stateLump) {
+void TSActiveButtonLightControl(ECU_StateData* stateLump) {
     if(stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
         LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
     } else {
@@ -46,7 +46,7 @@ void TSActiveButtonLight(ECU_StateData* stateLump) {
     }
 }
 
-void SoftwareOKLight(ECU_StateData* stateLump) {
+void SoftwareOKLightControl(ECU_StateData* stateLump) {
     if (stateLump->ecu_state == GR_GLV_ON) {
         LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
     }
@@ -56,4 +56,12 @@ void SoftwareOKLight(ECU_StateData* stateLump) {
     if (stateLump->ecu_state == GR_DRIVE_ACTIVE && (!stateLump->ts_active_button_active || CriticalError(stateLump))) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	}
+}
+
+void lightControl(ECU_StateData* stateLump) {
+    BrakeLightControl(stateLump);
+    TSSILightControl(stateLump);
+    RTDButtonLightControl(stateLump);
+    TSActiveButtonLightControl(stateLump);
+    SoftwareOKLightControl(stateLump);
 }
