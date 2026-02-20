@@ -52,14 +52,34 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	// Remove the call to MX_SPI1_Init from main.c, setup the SPI peripheral with the settings being determined by the NeopixelConfig struct passed in.
 	// NeopixelConfig should have the minimum necessary information to fully initialize the SPI peripheral for Neopixel control.
 
-	// SETUP GPIO
+	LL_GPIO_InitTypeDef copi_pin = {
+	    .Pin = neopixelConfiguration->gpio_pin,
+	    .Mode = LL_GPIO_MODE_ALTERNATE,
+	    .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
+	    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
+	    .Pull = LL_GPIO_PULL_NO,
+	    .Alternate = neopixelConfiguration->alternate_function,
+	};
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB); //Only SPI1 takes AHB2, SPI2 and 3 take AHB1
+	LL_GPIO_Init(neopixelConfiguration->gpio_port, &copi_pin);
 
-	// SETUP SPI
-
-	// ENABLE CLOCKS
-
-	// ENABLE SPI PERIPHERAL
-
+	LL_SPI_InitTypeDef spi = {
+	    .TransferDirection = LL_SPI_HALF_DUPLEX_TX,
+	    .Mode = LL_SPI_MODE_MASTER,
+	    .DataWidth = LL_SPI_DATAWIDTH_8BIT,
+	    .ClockPolarity = LL_SPI_POLARITY_LOW,
+	    .ClockPhase = LL_SPI_PHASE_1EDGE,
+	    .NSS = LL_SPI_NSS_SOFT,
+	    .BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV64,
+	    .BitOrder = LL_SPI_MSB_FIRST,
+	    .CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE,
+	    .CRCPoly = 7,
+	};
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);//Enable clock twice (see line 64)
+	LL_SPI_Init(neopixelConfiguration->SPI_Instance, &spi);
+	LL_SPI_SetStandard(neopixelConfiguration->SPI_Instance, LL_SPI_PROTOCOL_MOTOROLA);
+	LL_SPI_EnableNSSPulseMgt(neopixelConfiguration->SPI_Instance);
+	LL_SPI_Enable(neopixelConfiguration->SPI_Instance);
 	if (neopixelConfiguration == NULL) {
 		LOGOMATIC("Neopixel configuration is NULL!\n");
 		return NULL;

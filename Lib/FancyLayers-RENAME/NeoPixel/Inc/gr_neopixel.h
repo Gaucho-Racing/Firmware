@@ -25,6 +25,8 @@ typedef enum {
 	GPIO_PIN_15 = LL_GPIO_PIN_15
 } GPIO_Pins;
 
+typedef enum {GPIOA, GPIOB, GPIOC, GPIOD} GPIO_Port;
+
 /// @brief Alternate function for a specific pin and specific port
 // Technically can be set for AF 0-15 for low and high registers separately
 typedef enum {
@@ -46,6 +48,8 @@ typedef enum {
 	GPIO_AF_15 = LL_GPIO_AF_15
 } GPIO_Alternate_Function;
 
+// TODO: enum for GPIO ports
+
 /**
  * @brief Context containing all necessary information for controlling a Neopixel strip.
  * @note Acquired by calling Neopixel_Setup with a NeopixelConfig struct.
@@ -63,6 +67,9 @@ typedef struct {
 	uint32_t SPI_FrequencyHz; // FIXME This value should be calculated based off of passed in inputs used in MX_SPI1_Init
 	uint32_t LatchTimeUs;
 	uint32_t NumberOfNeopixels;
+	GPIO_Pins gpio_pin;
+	GPIO_Alternate_Function alternate_function;
+GPIO_Port gpio_port;
 	// TODO - Add fields for GPIO pin, SPI settings, etc.
 	//
 } NeopixelConfig;
