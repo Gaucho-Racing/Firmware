@@ -1001,10 +1001,12 @@ typedef void (*pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim, /*!< HRT
 #define HRTIM_TIMER_D_E_DELAYEDPROTECTION_BALANCED_EEV8 (HRTIM_OUTR_DLYPRT_1 | HRTIM_OUTR_DLYPRT_0 | HRTIM_OUTR_DLYPRTEN) /*!< Timers D, E: Balanced Idle on external Event 6U */
 #define HRTIM_TIMER_D_E_DELAYEDPROTECTION_DELAYEDOUT1_DEEV9 (HRTIM_OUTR_DLYPRT_2 | HRTIM_OUTR_DLYPRTEN)			  /*!< Timers D, E: Output 1 delayed Idle on external Event 7U */
 #define HRTIM_TIMER_D_E_DELAYEDPROTECTION_DELAYEDOUT2_DEEV9 (HRTIM_OUTR_DLYPRT_2 | HRTIM_OUTR_DLYPRT_0 | HRTIM_OUTR_DLYPRTEN) /*!< Timers D, E: Output 2 delayed Idle on external Event 7U */
-#define HRTIM_TIMER_D_E_DELAYEDPROTECTION_DELAYEDBOTH_EEV9 (HRTIM_OUTR_DLYPRT_2 | HRTIM_OUTR_DLYPRT_1 | HRTIM_OUTR_DLYPRTEN)  /*!< Timers D, E: Output 1 and output2 delayed Idle on external Event 7U \
-															       */
-#define HRTIM_TIMER_D_E_DELAYEDPROTECTION_BALANCED_EEV9 (HRTIM_OUTR_DLYPRT_2 | HRTIM_OUTR_DLYPRT_1 | HRTIM_OUTR_DLYPRT_0 | HRTIM_OUTR_DLYPRTEN) /*!< Timers D, E: Balanced Idle on external Event 7U   \
-																		 */
+#define HRTIM_TIMER_D_E_DELAYEDPROTECTION_DELAYEDBOTH_EEV9                                                                                                                                             \
+	(HRTIM_OUTR_DLYPRT_2 | HRTIM_OUTR_DLYPRT_1 | HRTIM_OUTR_DLYPRTEN) /*!< Timers D, E: Output 1 and output2 delayed Idle on external Event 7U                                                     \
+									   */
+#define HRTIM_TIMER_D_E_DELAYEDPROTECTION_BALANCED_EEV9                                                                                                                                                \
+	(HRTIM_OUTR_DLYPRT_2 | HRTIM_OUTR_DLYPRT_1 | HRTIM_OUTR_DLYPRT_0 | HRTIM_OUTR_DLYPRTEN) /*!< Timers D, E: Balanced Idle on external Event 7U                                                   \
+												 */
 
 #define HRTIM_TIMER_F_DELAYEDPROTECTION_DISABLED (0x00000000U)								    /*!< No action */
 #define HRTIM_TIMER_F_DELAYEDPROTECTION_DELAYEDOUT1_EEV8 (HRTIM_OUTR_DLYPRTEN)						    /*!< Timers F: Output 1 delayed Idle on external Event 6U */
@@ -1128,10 +1130,11 @@ typedef void (*pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim, /*!< HRT
  *        regular mode (compare match issued as soon as counter equal compare),
  *        or in auto-delayed mode
  */
-#define HRTIM_AUTODELAYEDMODE_REGULAR (0x00000000U)			      /*!< standard compare mode */
-#define HRTIM_AUTODELAYEDMODE_AUTODELAYED_NOTIMEOUT (HRTIM_TIMCR_DELCMP2_0)   /*!< Compare event generated only if a capture has occurred */
-#define HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1 (HRTIM_TIMCR_DELCMP2_1) /*!< Compare event generated if a capture has occurred or after a Compare 1 match (timeout if capture event is missing)  \
-									       */
+#define HRTIM_AUTODELAYEDMODE_REGULAR (0x00000000U)			    /*!< standard compare mode */
+#define HRTIM_AUTODELAYEDMODE_AUTODELAYED_NOTIMEOUT (HRTIM_TIMCR_DELCMP2_0) /*!< Compare event generated only if a capture has occurred */
+#define HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1                                                                                                                                                  \
+	(HRTIM_TIMCR_DELCMP2_1) /*!< Compare event generated if a capture has occurred or after a Compare 1 match (timeout if capture event is missing)                                                \
+				 */
 #define HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3                                                                                                                                                  \
 	(HRTIM_TIMCR_DELCMP2_1 | HRTIM_TIMCR_DELCMP2_0) /*!< Compare event generated if a capture has occurred or after a Compare 3 match (timeout if capture event is missing) */
 /**

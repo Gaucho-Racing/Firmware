@@ -1125,8 +1125,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pIn
 			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
 				headerlength = hcryp->Init.HeaderSize * 8U; /* Header length in bits */
 				inputlength = Size * 8U;		    /* Input length in bits */
-				/* Write the number of bits in the header on 64 bits followed by the number
-				   of bits in the payload on 64 bits as well */
+									    /* Write the number of bits in the header on 64 bits followed by the number
+									       of bits in the payload on 64 bits as well */
 
 #if !defined(AES_CR_NPBLB)
 				if (hcryp->Init.DataType == CRYP_DATATYPE_1B) {
@@ -1484,8 +1484,8 @@ HAL_StatusTypeDef HAL_CRYPEx_AES_Auth_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pI
 			if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
 				headerlength = hcryp->Init.HeaderSize * 8U; /* Header length in bits */
 				inputlength = Size * 8U;		    /* input length in bits */
-				/* Write the number of bits in the header on 64 bits followed by the number
-				   of bits in the payload on 64 bits as well */
+									    /* Write the number of bits in the header on 64 bits followed by the number
+									       of bits in the payload on 64 bits as well */
 #if !defined(AES_CR_NPBLB)
 				if (hcryp->Init.DataType == CRYP_DATATYPE_1B) {
 					hcryp->Instance->DINR = __RBIT((uint32_t)(headerlength >> 32));

@@ -206,9 +206,10 @@
 	((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8 |                                                                                       \
 		    USART_CR1_FIFOEN)) /*!< USART CR1 fields of parameters set by SMARTCARD_SetConfig API */
 #else
-#define USART_CR1_FIELDS ((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8)) /*!< USART CR1 fields of parameters set by SMARTCARD_SetConfig API   \
-																   */
-#endif																  /* USART_CR1_FIFOEN */
+#define USART_CR1_FIELDS                                                                                                                                                                               \
+	((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8)) /*!< USART CR1 fields of parameters set by SMARTCARD_SetConfig API                    \
+														  */
+#endif														 /* USART_CR1_FIFOEN */
 
 #define USART_CR2_CLK_FIELDS ((uint32_t)(USART_CR2_CLKEN | USART_CR2_CPOL | USART_CR2_CPHA | USART_CR2_LBCL)) /*!< SMARTCARD clock-related USART CR2 fields of parameters */
 

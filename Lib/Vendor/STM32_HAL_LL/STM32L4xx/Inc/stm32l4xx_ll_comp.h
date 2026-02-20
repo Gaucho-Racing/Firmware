@@ -159,10 +159,12 @@ typedef struct {
 #define LL_COMP_INPUT_MINUS_IO1 (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1)			      /*!< Comparator input minus connected to IO1 (pin PB1 for COMP1, pin PB3 for COMP2) */
 #define LL_COMP_INPUT_MINUS_IO2 (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0)   /*!< Comparator input minus connected to IO2 (pin PC4 for COMP1, pin PB7 for COMP2) */
 #if defined(COMP_CSR_INMESEL_1)
-#define LL_COMP_INPUT_MINUS_IO3 (COMP_CSR_INMESEL_0 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO3 (pin PA0 for COMP1, pin PA2 for COMP2)   \
-														  */
-#define LL_COMP_INPUT_MINUS_IO4 (COMP_CSR_INMESEL_1 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO4 (pin PA4 for COMP1, pin PA4 for COMP2)   \
-														  */
+#define LL_COMP_INPUT_MINUS_IO3                                                                                                                                                                        \
+	(COMP_CSR_INMESEL_0 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO3 (pin PA0 for COMP1, pin PA2 for COMP2)                           \
+											  */
+#define LL_COMP_INPUT_MINUS_IO4                                                                                                                                                                        \
+	(COMP_CSR_INMESEL_1 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO4 (pin PA4 for COMP1, pin PA4 for COMP2)                           \
+											  */
 #define LL_COMP_INPUT_MINUS_IO5                                                                                                                                                                        \
 	(COMP_CSR_INMESEL_1 | COMP_CSR_INMESEL_0 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO5 (pin PA5 for COMP1, pin PA5 for COMP2) */
 #endif
