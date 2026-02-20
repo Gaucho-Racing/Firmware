@@ -3708,88 +3708,88 @@ Message ID:
   TCM Resource Utilization:
     MSG ID: 0x02A
     MSG LENGTH: 44
-    CPU 0 Freq: # bit start
+    CPU 0 Freq: # bit start 0
       # core 0 frequency in MHz
       data type: u16
       units: '%'
-    CPU 0 Util: # bit start
+    CPU 0 Util: # bit start 16
       # core 0 utilization in %
       data type: u8
       units: '%'
-    CPU 1 Freq: # bit start
+    CPU 1 Freq: # bit start 24
       # core 1 frequency in MHz
       data type: u16
       units: '%'
-    CPU 1 Util: # bit start
+    CPU 1 Util: # bit start 40
       # core 1 utilization in %
       data type: u8
-    CPU 2 Freq: # bit start
+    CPU 2 Freq: # bit start 48
       # core 2 frequency in MHz
       data type: u16
       units: '%'
-    CPU 2 Util: # bit start
+    CPU 2 Util: # bit start 64
       # core 2 utilization in %
       data type: u8
-    CPU 3 Freq: # bit start
+    CPU 3 Freq: # bit start 72
       # core 3 frequency in MHz
       data type: u16
-    CPU 3 Util: # bit start
+    CPU 3 Util: # bit start 88
       # core 3 utilization in %
       data type: u8
-    CPU 4 Freq: # bit start
+    CPU 4 Freq: # bit start 96
       # core 4 frequency in MHz
       data type: u16
-    CPU 4 Util: # bit start
+    CPU 4 Util: # bit start 112
       # core 4 utilization in %
       data type: u8
-    CPU 5 Freq: # bit start
+    CPU 5 Freq: # bit start 120
       # core 5 frequency in MHz
       data type: u16
-    CPU 5 Util: # bit start
+    CPU 5 Util: # bit start 136
       # core 5 utilization in %
       data type: u8
       units: Watts
-    CPU Total Util: # bit start
+    CPU Total Util: # bit start 144
       # total cpu utilization in %
       data type: u8
-    RAM Total: # bit start
+    RAM Total: # bit start 152
       # total memory in MB
       data type: u16
-    RAM Used: # bit start
+    RAM Used: # bit start 168
       # used memory in MB
       data type: u16
-    RAM Util: # bit start
+    RAM Util: # bit start 184
       # memory utilization in %
       data type: u8
-    GPU Util: # bit start
+    GPU Util: # bit start 192
       # gpu utilization in %
       data type: u8
-    GPU Freq: # bit start
+    GPU Freq: # bit start 200
       # gpu frequency in MHz
       data type: u16
-    Disk Total: # bit start
+    Disk Total: # bit start 216
       # total disk space in MB
       data type: u32
-    Disk Used: # bit start
+    Disk Used: # bit start 248
       # used disk space in MB
       data type: u32
-    Disk Util: # bit start
+    Disk Util: # bit start 280
       # disk utilization in %
       data type: u8
       units: Celsius
-    CPU Temp: # bit start
+    CPU Temp: # bit start 288
       # cpu temp in ˚C
       data type: u8
-    GPU Temp: # bit start
+    GPU Temp: # bit start 296
       # gpu temp in ˚C
       data type: u8
-    Voltage Draw: # bit start
+    Voltage Draw: # bit start 304
       # voltage draw in mV
       data type: u16
-    Current Draw: # bit start
+    Current Draw: # bit start 320
       # current draw in mA
       data type: u16
-    Power Draw: # bit start
+    Power Draw: # bit start 336
       # power draw in mW
       data type: u16
       units: Celsius
