@@ -140,7 +140,7 @@ int main(void)
 				dashStatus.RTDButton = 0;
 			}
 
-			CAN_sendECU(can_handler, &msg_struct);
+			CAN_sendECU(can_handler, &msg_struct, GR_ECU);
 
 			canReadyToSend = false;
 		}

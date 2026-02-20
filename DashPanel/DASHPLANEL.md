@@ -2,19 +2,15 @@
 
 ## CAN
 
-1. Set up CANdler with help of CAN team
-2. Export button inputs
-3. Import ECU CAN messages
+1. Test CAN
 
 - Torque, Current, Speed, or put battery before drive
 - Probably need to figure out what we're putting on the board for now
-- We should set up the ECU send too...
 - Also update the README
 
 ## Buttons
 
 1. Test button interrupts
-2. Actually set up CAN send and ping
 
 ## LED
 

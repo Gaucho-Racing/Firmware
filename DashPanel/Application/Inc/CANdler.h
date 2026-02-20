@@ -27,6 +27,6 @@ extern bool canReadyToSend;
 void CANInitialize();
 void CAN_sendPing(GR_OLD_NODE_ID to);
 void CAN_callback(uint32_t ID, void *data, uint32_t size);
-void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg);
+void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg, GR_OLD_NODE_ID to);
 
 #endif
