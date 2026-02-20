@@ -22,6 +22,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
 
+      - name: Ensure header files exist
+        run: |
+          touch Autogen/CAN/Inc/Struct_ID.h
+          touch Autogen/CAN/Inc/Custom_CAN_ID.h
+          touch Autogen/CAN/Inc/GR_IDS.h
+          touch Autogen/CAN/Inc/CAN_msg_ID.h
+          touch Autogen/CAN/Doc/output.dbc
+
       - name: Setup Perl
         uses: shogo82148/actions-setup-perl@b6cfc127f1b0a63ac98797800f641494d80f42f8  # v1.37.1
         with:
