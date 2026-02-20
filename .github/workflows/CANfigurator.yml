@@ -62,7 +62,7 @@ jobs:
           default_author: github_actions
           message: 'Automatic CANfigurator: Updated&Formatted CAN files automatically'
           fetch: 'false'
-          add: '. --force'
+          add: 'Autogen/CAN/Inc/*.h --force'
 
       # - name: FAIL JOB
       #   run: exit 1
