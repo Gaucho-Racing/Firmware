@@ -33,6 +33,7 @@
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
 #include "CANutils.h"
+#include "Lights.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
@@ -422,6 +423,7 @@ int main(void)
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
+	LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -444,6 +446,7 @@ int main(void)
 
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
+		lightControl(&stateLump);
 		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */

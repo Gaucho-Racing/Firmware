@@ -81,6 +81,7 @@ target_sources(
 		Application/Src/StateUtils.c
 		Application/Src/CANutils.c
 		Application/Src/Pinging.c
+		Application/Src/Lights.c
 )
 
 target_link_libraries(
