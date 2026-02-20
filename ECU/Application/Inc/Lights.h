@@ -8,7 +8,7 @@
  *
  * Controls all lights managed by ECU; calls light helper functions.
  *
- * @param stateData Pointer to the ECU state data structure.
+ * @param stateData Pointer to the ECU_StateData structure.
  *
  * @return void
  */
