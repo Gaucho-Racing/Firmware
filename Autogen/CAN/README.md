@@ -1,6 +1,5 @@
 # CANfigurator
 #### By Aarnav, Caroline, Kartik, Nandini
-#### special shout out to claude opus 4.6, gemini 1.5 pro, github copilot, cursor, chatgpt 5.2 and grok premium
 
 ## Workflow: How to Apply Changes
 
@@ -189,4 +188,3 @@ Add a single line with the device name and a unique hex ID string:
 ```yaml
   My New Board: "0x2A"
 ```
-
