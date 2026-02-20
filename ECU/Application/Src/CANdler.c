@@ -6,9 +6,9 @@
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
+#include "Pinging.h"
 #include "StateData.h"
 #include "bitManipulations.h"
-#include "Pinging.h"
 
 extern ECU_StateData stateLump;
 
