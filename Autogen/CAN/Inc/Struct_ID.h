@@ -390,6 +390,58 @@ typedef struct {
 
 /** TCM Resource Utilization */
 typedef struct {
+	/** core 0 frequency in MHz (Byte 0) */
+	uint16_t cpu_0_freq;
+	/** core 0 utilization in % (Byte 2) */
+	uint8_t cpu_0_util;
+	/** core 1 frequency in MHz (Byte 3) */
+	uint16_t cpu_1_freq;
+	/** core 1 utilization in % (Byte 5) */
+	uint8_t cpu_1_util;
+	/** core 2 frequency in MHz (Byte 6) */
+	uint16_t cpu_2_freq;
+	/** core 2 utilization in % (Byte 8) */
+	uint8_t cpu_2_util;
+	/** core 3 frequency in MHz (Byte 9) */
+	uint16_t cpu_3_freq;
+	/** core 3 utilization in % (Byte 11) */
+	uint8_t cpu_3_util;
+	/** core 4 frequency in MHz (Byte 12) */
+	uint16_t cpu_4_freq;
+	/** core 4 utilization in % (Byte 14) */
+	uint8_t cpu_4_util;
+	/** core 5 frequency in MHz (Byte 15) */
+	uint16_t cpu_5_freq;
+	/** core 5 utilization in % (Byte 17) */
+	uint8_t cpu_5_util;
+	/** total cpu utilization in % (Byte 18) */
+	uint8_t cpu_total_util;
+	/** total memory in MB (Byte 19) */
+	uint16_t ram_total;
+	/** used memory in MB (Byte 21) */
+	uint16_t ram_used;
+	/** memory utilization in % (Byte 23) */
+	uint8_t ram_util;
+	/** gpu utilization in % (Byte 24) */
+	uint8_t gpu_util;
+	/** gpu frequency in MHz (Byte 25) */
+	uint16_t gpu_freq;
+	/** total disk space in MB (Byte 27) */
+	uint32_t disk_total;
+	/** used disk space in MB (Byte 31) */
+	uint32_t disk_used;
+	/** disk utilization in % (Byte 35) */
+	uint8_t disk_util;
+	/** cpu temp in ˚C (Byte 36) */
+	uint8_t cpu_temp;
+	/** gpu temp in ˚C (Byte 37) */
+	uint8_t gpu_temp;
+	/** voltage draw in mV (Byte 38) */
+	uint16_t voltage_draw;
+	/** current draw in mA (Byte 40) */
+	uint16_t current_draw;
+	/** power draw in mW (Byte 42) */
+	uint16_t power_draw;
 } GR_OLD_TCM_R_U_MSG;
 
 /** Dash Warning Flags */

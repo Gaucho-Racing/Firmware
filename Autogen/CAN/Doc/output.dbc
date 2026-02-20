@@ -1254,6 +1254,32 @@ BO_ 2147756294 TCM_TCM_Status_to_Steering_Wheel: 8 TCM
  SG_ Cache_Size : 24|32@1+ (1,0) [0|0] "#" Steering_Wheel
 
 BO_ 2147756550 TCM_TCM_Resource_Utilization_to_Steering_Wheel: 44 TCM
+ SG_ CPU_0_Freq : 0|16@1+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ CPU_0_Util : 16|8@1+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ CPU_1_Freq : 24|16@1+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ CPU_1_Util : 40|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_2_Freq : 48|16@1+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ CPU_2_Util : 64|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_3_Freq : 72|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_3_Util : 88|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_4_Freq : 96|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_4_Util : 112|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_5_Freq : 120|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_5_Util : 136|8@1+ (1,0) [0|0] "Watts" Steering_Wheel
+ SG_ CPU_Total_Util : 144|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ RAM_Total : 152|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ RAM_Used : 168|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ RAM_Util : 184|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ GPU_Util : 192|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ GPU_Freq : 200|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Disk_Total : 216|32@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Disk_Used : 248|32@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Disk_Util : 280|8@1+ (1,0) [0|0] "Celsius" Steering_Wheel
+ SG_ CPU_Temp : 288|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ GPU_Temp : 296|8@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Voltage_Draw : 304|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Current_Draw : 320|16@1+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Power_Draw : 336|16@1+ (1,0) [0|0] "Celsius" Steering_Wheel
 
 BO_ 2150641666 DGPS_UVW_DGPS_to_ECU: 6 DGPS
  SG_ DGPS_U : 0|16@1- (0.01,0) [0|0] "" ECU
