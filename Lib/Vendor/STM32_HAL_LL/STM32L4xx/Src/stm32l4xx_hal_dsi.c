@@ -27,59 +27,50 @@
   [..]
     The DSI HAL driver can be used as follows:
 
-    (#) Declare a DSI_HandleTypeDef handle structure, for example:
-  DSI_HandleTypeDef  hdsi;
+    (#) Declare a DSI_HandleTypeDef handle structure, for example: DSI_HandleTypeDef  hdsi;
 
-    (#) Initialize the DSI low level resources by implementing the
-  HAL_DSI_MspInit() API:
+    (#) Initialize the DSI low level resources by implementing the HAL_DSI_MspInit() API:
 	(##) Enable the DSI interface clock
 	(##) NVIC configuration if you need to use interrupt process
 	    (+++) Configure the DSI interrupt priority
 	    (+++) Enable the NVIC DSI IRQ Channel
 
-    (#) Initialize the DSI Host peripheral, the required PLL parameters, number
-  of lances and TX Escape clock divider by calling the HAL_DSI_Init() API which
-  calls HAL_DSI_MspInit().
+    (#) Initialize the DSI Host peripheral, the required PLL parameters, number of lances and
+	TX Escape clock divider by calling the HAL_DSI_Init() API which calls HAL_DSI_MspInit().
 
     *** Configuration ***
     =========================
     [..]
-    (#) Use HAL_DSI_ConfigAdaptedCommandMode() function to configure the DSI
-  host in adapted command mode.
+    (#) Use HAL_DSI_ConfigAdaptedCommandMode() function to configure the DSI host in adapted
+	command mode.
 
-    (#) When operating in video mode , use HAL_DSI_ConfigVideoMode() to
-  configure the DSI host.
+    (#) When operating in video mode , use HAL_DSI_ConfigVideoMode() to configure the DSI host.
 
-    (#) Function HAL_DSI_ConfigCommand() is used to configure the DSI commands
-  behavior in low power mode.
+    (#) Function HAL_DSI_ConfigCommand() is used to configure the DSI commands behavior in low power mode.
 
-    (#) To configure the DSI PHY timings parameters, use function
-  HAL_DSI_ConfigPhyTimer().
+    (#) To configure the DSI PHY timings parameters, use function HAL_DSI_ConfigPhyTimer().
 
-    (#) The DSI Host can be started/stopped using respectively functions
-  HAL_DSI_Start() and HAL_DSI_Stop(). Functions HAL_DSI_ShortWrite(),
-  HAL_DSI_LongWrite() and HAL_DSI_Read() allows respectively to write DSI short
-  packets, long packets and to read DSI packets.
+    (#) The DSI Host can be started/stopped using respectively functions HAL_DSI_Start() and HAL_DSI_Stop().
+	Functions HAL_DSI_ShortWrite(), HAL_DSI_LongWrite() and HAL_DSI_Read() allows respectively
+	to write DSI short packets, long packets and to read DSI packets.
 
     (#) The DSI Host Offers two Low power modes :
-	(++) Low Power Mode on data lanes only: Only DSI data lanes are shut
-  down. It is possible to enter/exit from this mode using respectively functions
-  HAL_DSI_EnterULPMData() and HAL_DSI_ExitULPMData()
+	(++) Low Power Mode on data lanes only: Only DSI data lanes are shut down.
+	    It is possible to enter/exit from this mode using respectively functions HAL_DSI_EnterULPMData()
+	    and HAL_DSI_ExitULPMData()
 
-	(++) Low Power Mode on data and clock lanes : All DSI lanes are shut
-  down including data and clock lanes. It is possible to enter/exit from this
-  mode using respectively functions HAL_DSI_EnterULPM() and HAL_DSI_ExitULPM()
+	(++) Low Power Mode on data and clock lanes : All DSI lanes are shut down including data and clock lanes.
+	    It is possible to enter/exit from this mode using respectively functions HAL_DSI_EnterULPM()
+	    and HAL_DSI_ExitULPM()
 
-    (#) To control DSI state you can use the following function:
-  HAL_DSI_GetState()
+    (#) To control DSI state you can use the following function: HAL_DSI_GetState()
 
     *** Error management ***
     ========================
     [..]
-    (#) User can select the DSI errors to be reported/monitored using function
-  HAL_DSI_ConfigErrorMonitor() When an error occurs, the callback
-  HAL_DSI_ErrorCallback() is asserted and then user can retrieve the error code
-  by calling function HAL_DSI_GetError()
+    (#) User can select the DSI errors to be reported/monitored using function HAL_DSI_ConfigErrorMonitor()
+	When an error occurs, the callback HAL_DSI_ErrorCallback() is asserted and then user can retrieve
+	the error code by calling function HAL_DSI_GetError()
 
     *** DSI HAL driver macros list ***
     =============================================
@@ -98,8 +89,7 @@
       (+) __HAL_DSI_CLEAR_FLAG: Clears the DSI pending flags.
       (+) __HAL_DSI_ENABLE_IT: Enables the specified DSI interrupts.
       (+) __HAL_DSI_DISABLE_IT: Disables the specified DSI interrupts.
-      (+) __HAL_DSI_GET_IT_SOURCE: Checks whether the specified DSI interrupt
-  source is enabled or not.
+      (+) __HAL_DSI_GET_IT_SOURCE: Checks whether the specified DSI interrupt source is enabled or not.
 
     [..]
       (@) You can refer to the DSI HAL driver header file for more useful macros
@@ -141,24 +131,23 @@
     examples HAL_DSI_TearingEffectCallback(), HAL_DSI_EndOfRefreshCallback().
     Exception done for MspInit and MspDeInit functions that are respectively
     reset to the legacy weak (overridden) functions in the HAL_DSI_Init()
-    and HAL_DSI_DeInit() only when these callbacks are null (not registered
-  beforehand). If not, MspInit or MspDeInit are not null, the HAL_DSI_Init() and
-  HAL_DSI_DeInit() keep and use the user MspInit/MspDeInit callbacks (registered
-  beforehand).
+    and HAL_DSI_DeInit() only when these callbacks are null (not registered beforehand).
+    If not, MspInit or MspDeInit are not null, the HAL_DSI_Init() and HAL_DSI_DeInit()
+    keep and use the user MspInit/MspDeInit callbacks (registered beforehand).
 
     [..]
     Callbacks can be registered/unregistered in HAL_DSI_STATE_READY state only.
     Exception done MspInit/MspDeInit that can be registered/unregistered
     in HAL_DSI_STATE_READY or HAL_DSI_STATE_RESET state,
-    thus registered (user) MspInit/DeInit callbacks can be used during the
-  Init/DeInit. In that case first register the MspInit/MspDeInit user callbacks
+    thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
+    In that case first register the MspInit/MspDeInit user callbacks
     using HAL_DSI_RegisterCallback() before calling HAL_DSI_DeInit()
     or HAL_DSI_Init() function.
 
     [..]
     When The compilation define USE_HAL_DSI_REGISTER_CALLBACKS is set to 0 or
-    not defined, the callback registration feature is not available and all
-  callbacks are set to the corresponding weak functions.
+    not defined, the callback registration feature is not available and all callbacks
+    are set to the corresponding weak functions.
 
   @endverbatim
   ******************************************************************************
@@ -239,8 +228,7 @@ static void DSI_ConfigPacketHeader(DSI_TypeDef *DSIx, uint32_t ChannelID, uint32
  *               the configuration information for the DSI.
  * @param  ChannelID  Virtual channel ID.
  * @param  Mode  DSI short packet data type.
- *               This parameter can be any value of @arg
- * DSI_SHORT_WRITE_PKT_Data_Type.
+ *               This parameter can be any value of @arg DSI_SHORT_WRITE_PKT_Data_Type.
  * @param  Param1  DSC command or first generic parameter.
  *                 This parameter can be any value of @arg DSI_DCS_Command or a
  *                 generic command code.
@@ -262,8 +250,7 @@ static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t Channe
 		}
 	}
 
-	/* Configure the packet to send a short DCS command with 0 or 1
-	 * parameter */
+	/* Configure the packet to send a short DCS command with 0 or 1 parameter */
 	/* Update the DSI packet header with new information */
 	hdsi->Instance->GHCR = (Mode | (ChannelID << 6U) | (Param1 << 8U) | (Param2 << 16U));
 
@@ -324,11 +311,9 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
 	if (hdsi->State == HAL_DSI_STATE_RESET) {
 		/* Reset the DSI callback to the legacy weak callbacks */
-		hdsi->TearingEffectCallback = HAL_DSI_TearingEffectCallback; /* Legacy weak
-										TearingEffectCallback */
-		hdsi->EndOfRefreshCallback = HAL_DSI_EndOfRefreshCallback;   /* Legacy weak
-										EndOfRefreshCallback  */
-		hdsi->ErrorCallback = HAL_DSI_ErrorCallback;		     /* Legacy weak ErrorCallback */
+		hdsi->TearingEffectCallback = HAL_DSI_TearingEffectCallback; /* Legacy weak TearingEffectCallback */
+		hdsi->EndOfRefreshCallback = HAL_DSI_EndOfRefreshCallback;   /* Legacy weak EndOfRefreshCallback  */
+		hdsi->ErrorCallback = HAL_DSI_ErrorCallback;		     /* Legacy weak ErrorCallback         */
 
 		if (hdsi->MspInitCallback == NULL) {
 			hdsi->MspInitCallback = HAL_DSI_MspInit;
@@ -346,8 +331,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
 	/* Change DSI peripheral state */
 	hdsi->State = HAL_DSI_STATE_BUSY;
 
-	/**************** Turn on the regulator and enable the DSI PLL
-	 * ****************/
+	/**************** Turn on the regulator and enable the DSI PLL ****************/
 
 	/* Enable the regulator */
 	__HAL_DSI_REG_ENABLE(hdsi);
@@ -387,14 +371,12 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
 
 	__HAL_DSI_ENABLE(hdsi);
 
-	/************************ Set the DSI clock parameters
-	 * ************************/
+	/************************ Set the DSI clock parameters ************************/
 	/* Set the TX escape clock division factor */
 	hdsi->Instance->CCR &= ~DSI_CCR_TXECKDIV;
 	hdsi->Instance->CCR |= hdsi->Init.TXEscapeCkdiv;
 
-	/*************************** Set the PHY parameters
-	 * ***************************/
+	/*************************** Set the PHY parameters ***************************/
 	/* D-PHY clock and digital enable*/
 	hdsi->Instance->PCTLR |= DSI_PCTLR_DEN;
 
@@ -426,10 +408,9 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
 		}
 	}
 
-	/* Calculate the bit period in high-speed mode in unit of 0.25 ns (UIX4)
-	 */
-	/* The equation is : UIX4 = IntegerPart( (1000/F_PHY_Mhz) * 4 ) */
-	/* Where : F_PHY_Mhz = (NDIV * HSE_Mhz) / (IDF * ODF) */
+	/* Calculate the bit period in high-speed mode in unit of 0.25 ns (UIX4) */
+	/* The equation is : UIX4 = IntegerPart( (1000/F_PHY_Mhz) * 4 )          */
+	/* Where : F_PHY_Mhz = (NDIV * HSE_Mhz) / (IDF * ODF)                    */
 	tempIDF = (PLLInit->PLLIDF > 0U) ? PLLInit->PLLIDF : 1U;
 	unitIntervalx4 = (4000000U * tempIDF * ((1UL << (0x3U & PLLInit->PLLODF)))) / ((HSE_VALUE / 1000U) * PLLInit->PLLNDIV);
 
@@ -437,8 +418,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
 	hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_UIX4;
 	hdsi->Instance->WPCR[0U] |= unitIntervalx4;
 
-	/****************************** Error management
-	 * *****************************/
+	/****************************** Error management *****************************/
 
 	/* Disable all error interrupts and reset the Error Mask */
 	hdsi->Instance->IER[0U] = 0U;
@@ -520,8 +500,7 @@ HAL_StatusTypeDef HAL_DSI_DeInit(DSI_HandleTypeDef *hdsi)
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  ActiveErrors  indicates which error interrupts will be enabled.
- *                      This parameter can be any combination of @arg
- * DSI_Error_Data_Type.
+ *                      This parameter can be any combination of @arg DSI_Error_Data_Type.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DSI_ConfigErrorMonitor(DSI_HandleTypeDef *hdsi, uint32_t ActiveErrors)
@@ -601,8 +580,8 @@ __weak void HAL_DSI_MspInit(DSI_HandleTypeDef *hdsi)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdsi);
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_DSI_MspInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_DSI_MspInit could be implemented in the user file
 	 */
 }
 
@@ -616,8 +595,8 @@ __weak void HAL_DSI_MspDeInit(DSI_HandleTypeDef *hdsi)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdsi);
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_DSI_MspDeInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_DSI_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -731,33 +710,23 @@ HAL_StatusTypeDef HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_Ca
 	if (hdsi->State == HAL_DSI_STATE_READY) {
 		switch (CallbackID) {
 			case HAL_DSI_TEARING_EFFECT_CB_ID:
-				hdsi->TearingEffectCallback = HAL_DSI_TearingEffectCallback; /* Legacy
-												weak
-												TearingEffectCallback
-											      */
+				hdsi->TearingEffectCallback = HAL_DSI_TearingEffectCallback; /* Legacy weak TearingEffectCallback */
 				break;
 
 			case HAL_DSI_ENDOF_REFRESH_CB_ID:
-				hdsi->EndOfRefreshCallback = HAL_DSI_EndOfRefreshCallback; /* Legacy weak
-											      EndOfRefreshCallback
-											    */
+				hdsi->EndOfRefreshCallback = HAL_DSI_EndOfRefreshCallback; /* Legacy weak EndOfRefreshCallback  */
 				break;
 
 			case HAL_DSI_ERROR_CB_ID:
-				hdsi->ErrorCallback = HAL_DSI_ErrorCallback; /* Legacy weak
-									      * ErrorCallback
-									      */
+				hdsi->ErrorCallback = HAL_DSI_ErrorCallback; /* Legacy weak ErrorCallback        */
 				break;
 
 			case HAL_DSI_MSPINIT_CB_ID:
-				hdsi->MspInitCallback = HAL_DSI_MspInit; /* Legacy weak MspInit
-									    Callback */
+				hdsi->MspInitCallback = HAL_DSI_MspInit; /* Legacy weak MspInit Callback     */
 				break;
 
 			case HAL_DSI_MSPDEINIT_CB_ID:
-				hdsi->MspDeInitCallback = HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
-									      * Callback
-									      */
+				hdsi->MspDeInitCallback = HAL_DSI_MspDeInit; /* Legacy weak MspDeInit Callback   */
 				break;
 
 			default:
@@ -770,14 +739,11 @@ HAL_StatusTypeDef HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_Ca
 	} else if (hdsi->State == HAL_DSI_STATE_RESET) {
 		switch (CallbackID) {
 			case HAL_DSI_MSPINIT_CB_ID:
-				hdsi->MspInitCallback = HAL_DSI_MspInit; /* Legacy weak MspInit
-									    Callback */
+				hdsi->MspInitCallback = HAL_DSI_MspInit; /* Legacy weak MspInit Callback   */
 				break;
 
 			case HAL_DSI_MSPDEINIT_CB_ID:
-				hdsi->MspDeInitCallback = HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
-									      * Callback
-									      */
+				hdsi->MspDeInitCallback = HAL_DSI_MspDeInit; /* Legacy weak MspDeInit Callback */
 				break;
 
 			default:
@@ -829,8 +795,7 @@ void HAL_DSI_IRQHandler(DSI_HandleTypeDef *hdsi)
 	uint32_t ErrorStatus0;
 	uint32_t ErrorStatus1;
 
-	/* Tearing Effect Interrupt management
-	 * ***************************************/
+	/* Tearing Effect Interrupt management ***************************************/
 	if (__HAL_DSI_GET_FLAG(hdsi, DSI_FLAG_TE) != 0U) {
 		if (__HAL_DSI_GET_IT_SOURCE(hdsi, DSI_IT_TE) != 0U) {
 			/* Clear the Tearing Effect Interrupt Flag */
@@ -847,8 +812,7 @@ void HAL_DSI_IRQHandler(DSI_HandleTypeDef *hdsi)
 		}
 	}
 
-	/* End of Refresh Interrupt management
-	 * ***************************************/
+	/* End of Refresh Interrupt management ***************************************/
 	if (__HAL_DSI_GET_FLAG(hdsi, DSI_FLAG_ER) != 0U) {
 		if (__HAL_DSI_GET_IT_SOURCE(hdsi, DSI_IT_ER) != 0U) {
 			/* Clear the End of Refresh Interrupt Flag */
@@ -865,8 +829,7 @@ void HAL_DSI_IRQHandler(DSI_HandleTypeDef *hdsi)
 		}
 	}
 
-	/* Error Interrupts management
-	 * ***********************************************/
+	/* Error Interrupts management ***********************************************/
 	if (hdsi->ErrorMsk != 0U) {
 		ErrorStatus0 = hdsi->Instance->ISR[0U];
 		ErrorStatus0 &= hdsi->Instance->IER[0U];
@@ -937,9 +900,8 @@ __weak void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef *hdsi)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdsi);
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_DSI_TearingEffectCallback could be implemented in the
-	   user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_DSI_TearingEffectCallback could be implemented in the user file
 	 */
 }
 
@@ -953,9 +915,8 @@ __weak void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdsi);
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_DSI_EndOfRefreshCallback could be implemented in the
-	   user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_DSI_EndOfRefreshCallback could be implemented in the user file
 	 */
 }
 
@@ -969,9 +930,8 @@ __weak void HAL_DSI_ErrorCallback(DSI_HandleTypeDef *hdsi)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdsi);
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_DSI_ErrorCallback could be implemented in the user
-	   file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_DSI_ErrorCallback could be implemented in the user file
 	 */
 }
 
@@ -1002,20 +962,17 @@ __weak void HAL_DSI_ErrorCallback(DSI_HandleTypeDef *hdsi)
       (+) write long DCS or long Generic command
       (+) Read command (DCS or generic)
       (+) Enter/Exit the Ultra Low Power Mode on data only (D-PHY PLL running)
-      (+) Enter/Exit the Ultra Low Power Mode on data only and clock (D-PHY PLL
-turned off)
+      (+) Enter/Exit the Ultra Low Power Mode on data only and clock (D-PHY PLL turned off)
       (+) Start/Stop test pattern generation
       (+) Slew-Rate And Delay Tuning
       (+) Low-Power Reception Filter Tuning
-      (+) Activate an additional current path on all lanes to meet the SDDTx
-parameter
+      (+) Activate an additional current path on all lanes to meet the SDDTx parameter
       (+) Custom lane pins configuration
       (+) Set custom timing for the PHY
       (+) Force the Clock/Data Lane in TX Stop Mode
       (+) Force LP Receiver in Low-Power Mode
       (+) Force Data Lanes in RX Mode after a BTA
-      (+) Enable a pull-down on the lanes to prevent from floating states when
-unused
+      (+) Enable a pull-down on the lanes to prevent from floating states when unused
       (+) Switch off the contention detection on data lanes
 
 @endverbatim
@@ -1118,8 +1075,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi, DSI_VidCfgTyp
 		hdsi->Instance->LCOLCR |= VidCfg->LooselyPacked;
 	}
 
-	/* Set the Horizontal Synchronization Active (HSA) in lane byte clock
-	 * cycles */
+	/* Set the Horizontal Synchronization Active (HSA) in lane byte clock cycles */
 	hdsi->Instance->VHSACR &= ~DSI_VHSACR_HSA;
 	hdsi->Instance->VHSACR |= VidCfg->HorizontalSyncActive;
 
@@ -1127,8 +1083,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi, DSI_VidCfgTyp
 	hdsi->Instance->VHBPCR &= ~DSI_VHBPCR_HBP;
 	hdsi->Instance->VHBPCR |= VidCfg->HorizontalBackPorch;
 
-	/* Set the total line time (HLINE=HSA+HBP+HACT+HFP) in lane byte clock
-	 * cycles */
+	/* Set the total line time (HLINE=HSA+HBP+HACT+HFP) in lane byte clock cycles */
 	hdsi->Instance->VLCR &= ~DSI_VLCR_HLINE;
 	hdsi->Instance->VLCR |= VidCfg->HorizontalLine;
 
@@ -1184,8 +1139,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi, DSI_VidCfgTyp
 	hdsi->Instance->VMCR &= ~DSI_VMCR_LPVSAE;
 	hdsi->Instance->VMCR |= VidCfg->LPVerticalSyncActiveEnable;
 
-	/* Enable the request for an acknowledge response at the end of a frame
-	 */
+	/* Enable the request for an acknowledge response at the end of a frame */
 	hdsi->Instance->VMCR &= ~DSI_VMCR_FBTAAE;
 	hdsi->Instance->VMCR |= VidCfg->FrameBTAAcknowledgeEnable;
 
@@ -1196,8 +1150,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi, DSI_VidCfgTyp
 }
 
 /**
- * @brief  Select adapted command mode and configure the corresponding
- * parameters
+ * @brief  Select adapted command mode and configure the corresponding parameters
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  CmdCfg  pointer to a DSI_CmdCfgTypeDef structure that contains
@@ -1245,8 +1198,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi, DSI_
 	hdsi->Instance->LCCR &= ~DSI_LCCR_CMDSIZE;
 	hdsi->Instance->LCCR |= CmdCfg->CommandSize;
 
-	/* Configure the tearing effect source and polarity and select the
-	 * refresh mode */
+	/* Configure the tearing effect source and polarity and select the refresh mode */
 	hdsi->Instance->WCFGR &= ~(DSI_WCFGR_TESRC | DSI_WCFGR_TEPOL | DSI_WCFGR_AR | DSI_WCFGR_VSPOL);
 	hdsi->Instance->WCFGR |= (CmdCfg->TearingEffectSource | CmdCfg->TearingEffectPolarity | CmdCfg->AutomaticRefresh | CmdCfg->VSyncPol);
 
@@ -1316,8 +1268,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi, DSI_LPCmdTypeDe
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  FlowControl  flow control feature(s) to be enabled.
- *                      This parameter can be any combination of @arg
- * DSI_FlowControl.
+ *                      This parameter can be any combination of @arg DSI_FlowControl.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DSI_ConfigFlowControl(DSI_HandleTypeDef *hdsi, uint32_t FlowControl)
@@ -1356,16 +1307,15 @@ HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi, DSI_PHY_TimerT
 
 	/* Clock lane timer configuration */
 
-	/* In Automatic Clock Lane control mode, the DSI Host can turn off the
-	   clock lane between two High-Speed transmission. To do so, the DSI
-	   Host calculates the time required for the clock lane to change from
-	   HighSpeed to Low-Power and from Low-Power to High-Speed. This timings
-	   are configured by the HS2LP_TIME and LP2HS_TIME in the DSI Host Clock
-	   Lane Timer Configuration Register (DSI_CLTCR). But the DSI Host is
-	   not calculating LP2HS_TIME + HS2LP_TIME but 2 x HS2LP_TIME.
+	/* In Automatic Clock Lane control mode, the DSI Host can turn off the clock lane between two
+	   High-Speed transmission.
+	   To do so, the DSI Host calculates the time required for the clock lane to change from HighSpeed
+	   to Low-Power and from Low-Power to High-Speed.
+	   This timings are configured by the HS2LP_TIME and LP2HS_TIME in the DSI Host Clock Lane Timer Configuration
+	   Register (DSI_CLTCR).
+	   But the DSI Host is not calculating LP2HS_TIME + HS2LP_TIME but 2 x HS2LP_TIME.
 
-	   Workaround : Configure HS2LP_TIME and LP2HS_TIME with the same value
-	   being the max of HS2LP_TIME or LP2HS_TIME.
+	   Workaround : Configure HS2LP_TIME and LP2HS_TIME with the same value being the max of HS2LP_TIME or LP2HS_TIME.
 	  */
 	hdsi->Instance->CLTCR &= ~(DSI_CLTCR_LP2HS_TIME | DSI_CLTCR_HS2LP_TIME);
 	hdsi->Instance->CLTCR |= (maxTime | ((maxTime) << 16U));
@@ -1374,8 +1324,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi, DSI_PHY_TimerT
 	hdsi->Instance->DLTCR &= ~(DSI_DLTCR_MRD_TIME | DSI_DLTCR_LP2HS_TIME | DSI_DLTCR_HS2LP_TIME);
 	hdsi->Instance->DLTCR |= (PhyTimers->DataLaneMaxReadTime | ((PhyTimers->DataLaneLP2HSTime) << 16U) | ((PhyTimers->DataLaneHS2LPTime) << 24U));
 
-	/* Configure the wait period to request HS transmission after a stop
-	 * state */
+	/* Configure the wait period to request HS transmission after a stop state */
 	hdsi->Instance->PCONFR &= ~DSI_PCONFR_SW_TIME;
 	hdsi->Instance->PCONFR |= ((PhyTimers->StopWaitTime) << 8U);
 
@@ -1564,8 +1513,7 @@ HAL_StatusTypeDef HAL_DSI_Shutdown(DSI_HandleTypeDef *hdsi, uint32_t Shutdown)
  *               the configuration information for the DSI.
  * @param  ChannelID  Virtual channel ID.
  * @param  Mode  DSI short packet data type.
- *               This parameter can be any value of @arg
- * DSI_SHORT_WRITE_PKT_Data_Type.
+ *               This parameter can be any value of @arg DSI_SHORT_WRITE_PKT_Data_Type.
  * @param  Param1  DSC command or first generic parameter.
  *                 This parameter can be any value of @arg DSI_DCS_Command or a
  *                 generic command code.
@@ -1595,8 +1543,7 @@ HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID
  *               the configuration information for the DSI.
  * @param  ChannelID  Virtual channel ID.
  * @param  Mode  DSI long packet data type.
- *               This parameter can be any value of @arg
- * DSI_LONG_WRITE_PKT_Data_Type.
+ *               This parameter can be any value of @arg DSI_LONG_WRITE_PKT_Data_Type.
  * @param  NbParams  Number of parameters.
  * @param  Param1  DSC command or first generic parameter.
  *                 This parameter can be any value of @arg DSI_DCS_Command or a
@@ -1633,8 +1580,7 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
 		}
 	}
 
-	/* Set the DCS code on payload byte 1, and the other parameters on the
-	 * write FIFO command*/
+	/* Set the DCS code on payload byte 1, and the other parameters on the write FIFO command*/
 	fifoword = Param1;
 	nbBytes = (NbParams < 3U) ? NbParams : 3U;
 
@@ -1672,12 +1618,10 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  ChannelNbr  Virtual channel ID
- * @param  Array pointer to a buffer to store the payload of a read back
- * operation.
+ * @param  Array pointer to a buffer to store the payload of a read back operation.
  * @param  Size  Data size to be read (in byte).
  * @param  Mode  DSI read packet data type.
- *               This parameter can be any value of @arg
- * DSI_SHORT_READ_PKT_Data_Type.
+ *               This parameter can be any value of @arg DSI_SHORT_READ_PKT_Data_Type.
  * @param  DCSCmd  DCS get/read command.
  * @param  ParametersTable  Pointer to parameter values table.
  * @retval HAL status
@@ -1747,13 +1691,10 @@ HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr, uin
 			return HAL_TIMEOUT;
 		}
 
-		/* Software workaround to avoid HAL_TIMEOUT when a DSI read
-		 * command is   */
-		/* issued to the panel and the read data is not captured by the
-		 * DSI Host */
-		/* which returns Packet Size Error. */
-		/* Need to ensure that the Read command has finished before
-		 * checking PSE */
+		/* Software workaround to avoid HAL_TIMEOUT when a DSI read command is   */
+		/* issued to the panel and the read data is not captured by the DSI Host */
+		/* which returns Packet Size Error.                                      */
+		/* Need to ensure that the Read command has finished before checking PSE */
 		if ((hdsi->Instance->GPSR & DSI_GPSR_RCB) == 0U) {
 			if ((hdsi->Instance->ISR[1U] & DSI_ISR1_PSE) == DSI_ISR1_PSE) {
 				/* Process Unlocked */
@@ -1786,8 +1727,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
 
 	/* Verify the initial status of the DSI Host */
 
-	/* Verify that the clock lane and the digital section of the D-PHY are
-	 * enabled */
+	/* Verify that the clock lane and the digital section of the D-PHY are enabled */
 	if ((hdsi->Instance->PCTLR & (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) != (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
@@ -2061,8 +2001,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Verify the initial status of the DSI Host */
 
-	/* Verify that the clock lane and the digital section of the D-PHY are
-	 * enabled */
+	/* Verify that the clock lane and the digital section of the D-PHY are enabled */
 	if ((hdsi->Instance->PCTLR & (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) != (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
@@ -2082,8 +2021,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 		/* Nothing to do */
 	}
 
-	/* Verify that there are no ULPS exit or request on both data and clock
-	 * lanes */
+	/* Verify that there are no ULPS exit or request on both data and clock lanes */
 	if ((hdsi->Instance->PUCR & (DSI_PUCR_UEDL | DSI_PUCR_URDL | DSI_PUCR_UECL | DSI_PUCR_URCL)) != 0U) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
@@ -2136,8 +2074,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 	/* Clock lane configuration: no more HS request */
 	hdsi->Instance->CLCR &= ~DSI_CLCR_DPCC;
 
-	/* Use system PLL as byte lane clock source before stopping DSIPHY clock
-	 * source */
+	/* Use system PLL as byte lane clock source before stopping DSIPHY clock source */
 	__HAL_RCC_DSI_CONFIG(RCC_DSICLKSOURCE_PLLSAI2);
 
 	/* ULPS Request on Clock and Data Lanes */
@@ -2280,8 +2217,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
 	/* De-assert the ULPM requests and the ULPM exit bits */
 	hdsi->Instance->PUCR = 0U;
 
-	/* Switch the lane byte clock source in the RCC from system PLL to D-PHY
-	 */
+	/* Switch the lane byte clock source in the RCC from system PLL to D-PHY */
 	__HAL_RCC_DSI_CONFIG(RCC_DSICLKSOURCE_DSIPHY);
 
 	/* Restore clock lane configuration to HS */
@@ -2395,8 +2331,7 @@ HAL_StatusTypeDef HAL_DSI_PatternGeneratorStop(DSI_HandleTypeDef *hdsi)
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  CommDelay  Communication delay to be adjusted.
- *                    This parameter can be any value of @arg
- * DSI_Communication_Delay
+ *                    This parameter can be any value of @arg DSI_Communication_Delay
  * @param  Lane  select between clock or data lanes.
  *               This parameter can be any value of @arg DSI_Lane_Group
  * @param  Value  Custom value of the slew-rate or delay
@@ -2414,13 +2349,11 @@ HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi, uin
 	switch (CommDelay) {
 		case DSI_SLEW_RATE_HSTX:
 			if (Lane == DSI_CLOCK_LANE) {
-				/* High-Speed Transmission Slew Rate Control on
-				 * Clock Lane */
+				/* High-Speed Transmission Slew Rate Control on Clock Lane */
 				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXSRCCL;
 				hdsi->Instance->WPCR[1U] |= Value << 16U;
 			} else if (Lane == DSI_DATA_LANES) {
-				/* High-Speed Transmission Slew Rate Control on
-				 * Data Lanes */
+				/* High-Speed Transmission Slew Rate Control on Data Lanes */
 				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXSRCDL;
 				hdsi->Instance->WPCR[1U] |= Value << 18U;
 			} else {
@@ -2432,13 +2365,11 @@ HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi, uin
 			break;
 		case DSI_SLEW_RATE_LPTX:
 			if (Lane == DSI_CLOCK_LANE) {
-				/* Low-Power transmission Slew Rate Compensation
-				 * on Clock Lane */
+				/* Low-Power transmission Slew Rate Compensation on Clock Lane */
 				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_LPSRCCL;
 				hdsi->Instance->WPCR[1U] |= Value << 6U;
 			} else if (Lane == DSI_DATA_LANES) {
-				/* Low-Power transmission Slew Rate Compensation
-				 * on Data Lanes */
+				/* Low-Power transmission Slew Rate Compensation on Data Lanes */
 				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_LPSRCDL;
 				hdsi->Instance->WPCR[1U] |= Value << 8U;
 			} else {
@@ -2450,13 +2381,11 @@ HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi, uin
 			break;
 		case DSI_HS_DELAY:
 			if (Lane == DSI_CLOCK_LANE) {
-				/* High-Speed Transmission Delay on Clock Lane
-				 */
+				/* High-Speed Transmission Delay on Clock Lane */
 				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXDCL;
 				hdsi->Instance->WPCR[1U] |= Value;
 			} else if (Lane == DSI_DATA_LANES) {
-				/* High-Speed Transmission Delay on Data Lanes
-				 */
+				/* High-Speed Transmission Delay on Data Lanes */
 				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXDDL;
 				hdsi->Instance->WPCR[1U] |= Value << 2U;
 			} else {
@@ -2499,8 +2428,8 @@ HAL_StatusTypeDef HAL_DSI_SetLowPowerRXFilter(DSI_HandleTypeDef *hdsi, uint32_t 
 }
 
 /**
- * @brief  Activate an additional current path on all lanes to meet the SDDTx
- * parameter defined in the MIPI D-PHY specification
+ * @brief  Activate an additional current path on all lanes to meet the SDDTx parameter
+ *         defined in the MIPI D-PHY specification
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  State  ENABLE or DISABLE
@@ -2824,8 +2753,7 @@ HAL_StatusTypeDef HAL_DSI_ForceDataLanesInRX(DSI_HandleTypeDef *hdsi, Functional
 }
 
 /**
- * @brief  Enable a pull-down on the lanes to prevent from floating states when
- * unused
+ * @brief  Enable a pull-down on the lanes to prevent from floating states when unused
  * @param  hdsi  pointer to a DSI_HandleTypeDef structure that contains
  *               the configuration information for the DSI.
  * @param  State  ENABLE or DISABLE

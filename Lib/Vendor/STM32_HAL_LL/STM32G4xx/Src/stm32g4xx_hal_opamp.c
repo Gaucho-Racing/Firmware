@@ -42,47 +42,49 @@
 	   handled by HAL_OPAMP_SelfCalibrate, HAL_OPAMPEx_SelfCalibrateAll
        (++) HAL_OPAMP_SelfCalibrate:
        (++) Runs automatically the calibration in 2 steps.
-	    (90% of VDDA for NMOS transistors, 10% of VDDA for PMOS
-transistors). (As OPAMP is Rail-to-rail input/output, these 2 steps calibration
-is appropriate and enough in most cases).
+	    (90% of VDDA for NMOS transistors, 10% of VDDA for PMOS transistors).
+	    (As OPAMP is Rail-to-rail input/output, these 2 steps calibration is
+	    appropriate and enough in most cases).
        (++) Enables the user trimming mode
-       (++) Updates the init structure with trimming values with fresh
-calibration results. The user may store the calibration results for larger (ex
-monitoring the trimming as a function of temperature for instance)
+       (++) Updates the init structure with trimming values with fresh calibration
+	    results.
+	    The user may store the calibration results for larger
+	    (ex monitoring the trimming as a function of temperature
+	    for instance)
        (++) for STM32G4 devices having 6 OPAMPs
 	    HAL_OPAMPEx_SelfCalibrateAll
 	    runs calibration of 6 OPAMPs in parallel.
 
-       (#) For any running mode, an additional Timer-controlled Mux
-(multiplexer) mode can be set on top.
+       (#) For any running mode, an additional Timer-controlled Mux (multiplexer)
+	   mode can be set on top.
        (++) Timer-controlled Mux mode allows Automatic switching of inputs
 	   configuration (inverting and non inverting).
-       (++) Hence on top of defaults (primary) inverting and non-inverting
-inputs, the user shall select secondary inverting and non inverting inputs.
+       (++) Hence on top of defaults (primary) inverting and non-inverting inputs,
+	   the user shall select secondary inverting and non inverting inputs.
        (++) TIM1 OC6, TIM8 OC6 and TIM20 OC6 provides the alternate switching
 	   tempo between defaults (primary) and secondary inputs.
-       (++) These 3 timers (TIM1, TIM8 and TIM20) can be combined to design a
-more complex switching scheme. So that any of the selected channel can initiate
+       (++) These 3 timers (TIM1, TIM8 and TIM20) can be combined to design a more
+	   complex switching scheme. So that any of the selected channel can initiate
 	   the configuration switch.
 
        (#) Running mode: Standalone mode
        (++) Gain is set externally (gain depends on external loads).
-       (++) Follower mode also possible externally by connecting the inverting
-input to the output.
+       (++) Follower mode also possible externally by connecting the inverting input to
+	   the output.
 
        (#) Running mode: Follower mode
        (++) Inverting Input is not connected.
 
        (#) Running mode: Programmable Gain Amplifier (PGA) mode
 	   (Resistor feedback output)
-       (++) The OPAMP(s) output(s) can be internally connected to resistor
-feedback output.
-       (++) The OPAMP inverting input can be "not" connected, signal to amplify
-is connected to non inverting input and gain is positive (2,4,8,16,32 or 64)
+       (++) The OPAMP(s) output(s) can be internally connected to resistor feedback
+	   output.
+       (++) The OPAMP inverting input can be "not" connected, signal to amplify is
+	   connected to non inverting input and gain is positive (2,4,8,16,32 or 64)
        (++) The OPAMP inverting input can be connected to VINM0:
-	   If signal is applied to non inverting input, gain is positive
-(2,4,8,16,32 or 64). If signal is applied to inverting input, gain is negative
-(-1,-3,-7,-15-,31 or -63). In both cases, the other input can be used as bias.
+	   If signal is applied to non inverting input, gain is positive (2,4,8,16,32 or 64).
+	   If signal is applied to inverting input, gain is negative (-1,-3,-7,-15-,31 or -63).
+	   In both cases, the other input can be used as bias.
 
 
 	    ##### How to use this driver #####
@@ -113,18 +115,18 @@ is connected to non inverting input and gain is positive (2,4,8,16,32 or 64)
 	  HAL_GPIO_Init() to map the OPAMP output to the GPIO pin.
 
       (#) Registrate Callbacks
-      (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to
-1 allows the user to configure dynamically the driver callbacks.
+      (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to 1
+	   allows the user to configure dynamically the driver callbacks.
 
-      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user
-callback, it allows to register following callbacks:
+      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user callback,
+	   it allows to register following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspDeInit.
-	   This function takes as parameters the HAL peripheral handle, the
-Callback ID and a pointer to the user callback function.
+	   This function takes as parameters the HAL peripheral handle, the Callback ID
+	   and a pointer to the user callback function.
 
-      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to
-the default weak (surcharged) function. It allows to reset following callbacks:
+      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
+	   weak (surcharged) function. It allows to reset following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspDeInit.
       (+++) All Callbacks
@@ -133,30 +135,24 @@ the default weak (surcharged) function. It allows to reset following callbacks:
       (++) Select the mode
       (++) Select the inverting input
       (++) Select the non-inverting input
-      (++) Select if the internal output should be enabled/disabled (if enabled,
-regular I/O output is disabled)
-      (++) Select if the Timer controlled Mux is disabled or enabled and
-controlled by specified timer(s)
-      (++) If the Timer controlled Mux mode is enabled, select the secondary
-inverting input
-      (++) If the Timer controlled Mux mode is enabled, Select the secondary
-non-inverting input
+      (++) Select if the internal output should be enabled/disabled (if enabled, regular I/O output is disabled)
+      (++) Select if the Timer controlled Mux is disabled or enabled and controlled by specified timer(s)
+      (++) If the Timer controlled Mux mode is enabled, select the secondary inverting input
+      (++) If the Timer controlled Mux mode is enabled, Select the secondary non-inverting input
       (++) If PGA mode is enabled, Select if inverting input is connected.
       (++) If PGA mode is enabled, Select PGA gain to be used.
       (++) Select either factory or user defined trimming mode.
-      (++) If the user defined trimming mode is enabled, select PMOS & NMOS
-trimming values (typ. settings returned by HAL_OPAMP_SelfCalibrate function).
+      (++) If the user defined trimming mode is enabled, select PMOS & NMOS trimming values
+	  (typ. settings returned by HAL_OPAMP_SelfCalibrate function).
 
       (#) Enable the OPAMP using HAL_OPAMP_Start() function.
 
       (#) Disable the OPAMP using HAL_OPAMP_Stop() function.
 
-      (#) Lock the OPAMP in running mode using HAL_OPAMP_Lock() &
-HAL_OPAMP_TimerMuxLock functions. From then the configuration can only be
-modified
+      (#) Lock the OPAMP in running mode using HAL_OPAMP_Lock() & HAL_OPAMP_TimerMuxLock functions.
+	  From then the configuration can only be modified
       (++) After HW reset
-      (++) OR thanks to HAL_OPAMP_MspDeInit called (user defined) from
-HAL_OPAMP_DeInit.
+      (++) OR thanks to HAL_OPAMP_MspDeInit called (user defined) from HAL_OPAMP_DeInit.
 
     *** Running mode: change of configuration while OPAMP ON  ***
     ============================================
@@ -165,18 +161,16 @@ HAL_OPAMP_DeInit.
       (++) This is the case for instance if you wish to use new OPAMP I/O
 
       (#) Configure the OPAMP using HAL_OPAMP_Init() function:
-      (++) As in configure case, selects first the parameters you wish to
-modify.
-      (++) If OPAMP control register is locked, it is not possible to modify any
-values on the fly (even the timer controlled mux parameters).
-      (++) If OPAMP timer controlled mux mode register is locked, it is possible
-to modify any values of the control register but none on the timer controlled
-mux mode one.
+      (++) As in configure case, selects first the parameters you wish to modify.
+      (++) If OPAMP control register is locked, it is not possible to modify any values
+	  on the fly (even the timer controlled mux parameters).
+      (++) If OPAMP timer controlled mux mode register is locked, it is possible to modify any values
+	  of the control register but none on the timer controlled mux mode one.
 
-      (#) Change from high speed mode to normal power mode (& vice versa)
-requires first HAL_OPAMP_DeInit() (force OPAMP OFF) and then HAL_OPAMP_Init().
-	  In other words, of OPAMP is ON, HAL_OPAMP_Init can NOT change power
-mode alone.
+      (#) Change from high speed mode to normal power mode (& vice versa) requires
+	  first HAL_OPAMP_DeInit() (force OPAMP OFF) and then HAL_OPAMP_Init().
+	  In other words, of OPAMP is ON, HAL_OPAMP_Init can NOT change power mode
+	  alone.
 
   @endverbatim
   ******************************************************************************
@@ -192,47 +186,42 @@ mode alone.
 
     Table 1.  OPAMPs inverting/non-inverting inputs for the STM32G4 devices:
     +-----------------------------------------------------------------------------------------------+
-    |                 |        | OPAMP1   | OPAMP2   | OPAMP3      | OPAMP4   |
-  OPAMP5   | OPAMP6   |
+    |                 |        | OPAMP1   | OPAMP2   | OPAMP3      | OPAMP4   | OPAMP5   | OPAMP6   |
     |-----------------|--------|----------|----------|-------------|----------|----------|----------|
-    |                 | No conn|  X       |  X       |  X          |  X       |
-  X       |  X       | | Inverting Input | VM0    | PA3      | PA5      | PB2 |
-  PB10     | PB15     | PA1      | | (1)             | VM1    | PC5      | PC5
-  | PB10        | PD8      | PA3      | PB1      |
+    |                 | No conn|  X       |  X       |  X          |  X       |  X       |  X       |
+    | Inverting Input | VM0    | PA3      | PA5      | PB2         | PB10     | PB15     | PA1      |
+    | (1)             | VM1    | PC5      | PC5      | PB10        | PD8      | PA3      | PB1      |
     |-----------------|--------|----------|----------|-------------|----------|----------|----------|
-    |                 | VP0    | PA1      | PA7      | PB0         | PB13     |
-  PB14     | PB12     | |  Non Inverting  | VP1    | PA3      | PB14     | PB13
-  | PD11     | PD12     | PD9      | |    Input        | VP2    | PA7      | PB0
-  | PA1         | PB11     | PC3      | PB13     | |                 | VP3    |
-  DAC3_CH1 | PD14     | DAC3_CH2(2) | DAC4_CH1 | DAC4_CH2 | DAC3_CH1 |
+    |                 | VP0    | PA1      | PA7      | PB0         | PB13     | PB14     | PB12     |
+    |  Non Inverting  | VP1    | PA3      | PB14     | PB13        | PD11     | PD12     | PD9      |
+    |    Input        | VP2    | PA7      | PB0      | PA1         | PB11     | PC3      | PB13     |
+    |                 | VP3    | DAC3_CH1 | PD14     | DAC3_CH2(2) | DAC4_CH1 | DAC4_CH2 | DAC3_CH1 |
     +-----------------------------------------------------------------------------------------------+
     (1): No connection in follower mode.
     (2): Available for STM32G47x/ STM32G48x devices only
 
     Table 2.  OPAMPs outputs for the STM32G4 devices:
     +------------------------------------------------------------------------------------+
-    |                 |        | OPAMP1 | OPAMP2 | OPAMP3   | OPAMP4 | OPAMP5 |
-  OPAMP6   |
+    |                 |        | OPAMP1 | OPAMP2 | OPAMP3   | OPAMP4 | OPAMP5 | OPAMP6   |
     |-----------------|--------|--------|--------|----------|--------|--------|----------|
-    | Output          |        |  PA2   |  PA6   |  PB1     |  PB12  |  PA8   |
-  PB11    |
+    | Output          |        |  PA2   |  PA6   |  PB1     |  PB12  |  PA8   |  PB11    |
     |-----------------|--------|--------|--------|----------|--------|--------|----------+
-    | Internal output |        |  ADC1  |  ADC2  |  ADC2    |  ADC5  |  ADC5  |
-  ADC4    | | to ADCs         |        |  CH13  |  CH16  |  CH18    |  CH5   |
-  CH3   |  CH17(2) | | (1)             |        |        |        |  ADC3    |
-  |        |  ADC3    | |                 |        |        |        |  CH13(2)
-  |        |        |  CH17(3) |
-    |-----------------|--------|--------|--------|----------|------
-  -|--------|----------| | Internal output |        |  ADC1  |  ADC2  |  ADC3 |
-  ADC4  |  ADC5  |  ADC1    | | to ADCs input   |        |  CH3   |  CH3   |
-  CH1(2)  |  CH3   |  CH1   |  CH14    | | on GPIO         |        |        |
-  |  ADC1    |  ADC1  |        |  ADC2    | |                 |        | | |
-  CH12    |  CH11  |        |  CH14    |
+    | Internal output |        |  ADC1  |  ADC2  |  ADC2    |  ADC5  |  ADC5  |  ADC4    |
+    | to ADCs         |        |  CH13  |  CH16  |  CH18    |  CH5   |  CH3   |  CH17(2) |
+    | (1)             |        |        |        |  ADC3    |        |        |  ADC3    |
+    |                 |        |        |        |  CH13(2) |        |        |  CH17(3) |
+    |-----------------|--------|--------|--------|----------|------ -|--------|----------|
+    | Internal output |        |  ADC1  |  ADC2  |  ADC3    |  ADC4  |  ADC5  |  ADC1    |
+    | to ADCs input   |        |  CH3   |  CH3   |  CH1(2)  |  CH3   |  CH1   |  CH14    |
+    | on GPIO         |        |        |        |  ADC1    |  ADC1  |        |  ADC2    |
+    |                 |        |        |        |  CH12    |  CH11  |        |  CH14    |
     +------------------------------------------------------------------------------------+
-    (1): This ADC channel is connected internally to the OPAMPx_VOUT when
-  OPAINTOEN bit is set. In this case, the I/O on which the OPAMPx_VOUT is
-  available, can be used for another purpose. (2): Available for STM32G47x/
-  STM32G48x devices only. (3): Available for STM32G491/STM32G4A1 devices only.
+    (1): This ADC channel is connected internally to the OPAMPx_VOUT when OPAINTOEN
+	 bit is set.
+	 In this case, the I/O on which the OPAMPx_VOUT is available, can be used for
+	 another purpose.
+    (2): Available for STM32G47x/ STM32G48x devices only.
+    (3): Available for STM32G491/STM32G4A1 devices only.
 
 */
 
@@ -257,8 +246,7 @@ mode alone.
  */
 /* CSR register reset value */
 #define OPAMP_CSR_RESET_VALUE (0x00000000UL)
-/* CSR register TRIM value upon reset are factory ones, filter them out from CSR
- * register check */
+/* CSR register TRIM value upon reset are factory ones, filter them out from CSR register check */
 #define OPAMP_CSR_RESET_CHECK_MASK (~(OPAMP_CSR_TRIMOFFSETN | OPAMP_CSR_TRIMOFFSETP))
 /* CSR init register Mask */
 #define OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK                                                                                                                                                          \
@@ -272,15 +260,13 @@ mode alone.
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-/* Exported functions
- * ---------------------------------------------------------*/
+/* Exported functions ---------------------------------------------------------*/
 
 /** @defgroup OPAMP_Exported_Functions OPAMP Exported Functions
  * @{
  */
 
-/** @defgroup OPAMP_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup OPAMP_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -295,8 +281,7 @@ de-initialization functions
 
 /**
  * @brief  Initializes the OPAMP according to the specified
- *         parameters in the OPAMP_InitTypeDef and initialize the associated
- * handle.
+ *         parameters in the OPAMP_InitTypeDef and initialize the associated handle.
  * @note   If the selected opamp is locked, initialization can't be performed.
  *         To unlock the configuration, perform a system reset.
  * @param  hopamp OPAMP handle
@@ -371,37 +356,25 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 #endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
 
 		/* Set OPAMP parameters */
-		/*     Set  bits according to hopamp->hopamp->Init.Mode value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.InvertingInput value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.NonInvertingInput value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.InternalOutput value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.TimerControlledMuxmode value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.InvertingInputSecondary  value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.NonInvertingInputSecondary value */
-		/*     Set  bits according to hopamp->hopamp->Init.PgaConnect
-		 * value                           */
-		/*     Set  bits according to hopamp->hopamp->Init.PgaGain value
-		 */
-		/*     Set  bits according to hopamp->hopamp->Init.UserTrimming
-		 * value                         */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.TrimmingValueP value */
-		/*     Set  bits according to
-		 * hopamp->hopamp->Init.TrimmingValueN value */
+		/*     Set  bits according to hopamp->hopamp->Init.Mode value                                 */
+		/*     Set  bits according to hopamp->hopamp->Init.InvertingInput value                       */
+		/*     Set  bits according to hopamp->hopamp->Init.NonInvertingInput value                    */
+		/*     Set  bits according to hopamp->hopamp->Init.InternalOutput value                       */
+		/*     Set  bits according to hopamp->hopamp->Init.TimerControlledMuxmode value               */
+		/*     Set  bits according to hopamp->hopamp->Init.InvertingInputSecondary  value             */
+		/*     Set  bits according to hopamp->hopamp->Init.NonInvertingInputSecondary value           */
+		/*     Set  bits according to hopamp->hopamp->Init.PgaConnect value                           */
+		/*     Set  bits according to hopamp->hopamp->Init.PgaGain value                              */
+		/*     Set  bits according to hopamp->hopamp->Init.UserTrimming value                         */
+		/*     Set  bits according to hopamp->hopamp->Init.TrimmingValueP value                       */
+		/*     Set  bits according to hopamp->hopamp->Init.TrimmingValueN value                       */
 
 		/* check if OPAMP_PGA_MODE & in Follower mode */
 		/*   - InvertingInput                         */
 		/* is Not Applicable                          */
 
 		if ((hopamp->Init.Mode == OPAMP_PGA_MODE) || (hopamp->Init.Mode == OPAMP_FOLLOWER_MODE)) {
-			/* Update User Trim config first to be able to modify
-			 * trimming value afterwards */
+			/* Update User Trim config first to be able to modify trimming value afterwards */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM, hopamp->Init.UserTrimming);
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
 				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.NonInvertingInput | ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) |
@@ -409,8 +382,7 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 				       (hopamp->Init.TrimmingValueN << OPAMP_INPUT_INVERTING));
 		} else /* OPAMP_STANDALONE_MODE */
 		{
-			/* Update User Trim config first to be able to modify
-			 * trimming value afterwards */
+			/* Update User Trim config first to be able to modify trimming value afterwards */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM, hopamp->Init.UserTrimming);
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
 				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.InvertingInput | hopamp->Init.NonInvertingInput |
@@ -436,8 +408,8 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 
 /**
  * @brief  DeInitializes the OPAMP peripheral
- * @note   Deinitialization can't be performed if the OPAMP configuration is
- * locked. To unlock the configuration, perform a system reset.
+ * @note   Deinitialization can't be performed if the OPAMP configuration is locked.
+ *         To unlock the configuration, perform a system reset.
  * @param  hopamp OPAMP handle
  * @retval HAL status
  */
@@ -460,10 +432,8 @@ HAL_StatusTypeDef HAL_OPAMP_DeInit(OPAMP_HandleTypeDef *hopamp)
 
 		/* DeInit the low level hardware: GPIO, CLOCK and NVIC */
 		/* When OPAMP is locked, unlocking can be achieved thanks to */
-		/* __HAL_RCC_SYSCFG_CLK_DISABLE() call within
-		 * HAL_OPAMP_MspDeInit */
-		/* Note that __HAL_RCC_SYSCFG_CLK_DISABLE() also disables
-		 * comparator */
+		/* __HAL_RCC_SYSCFG_CLK_DISABLE() call within HAL_OPAMP_MspDeInit */
+		/* Note that __HAL_RCC_SYSCFG_CLK_DISABLE() also disables comparator */
 
 #if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
 		if (hopamp->MspDeInitCallback == NULL) {
@@ -504,8 +474,8 @@ __weak void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef *hopamp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hopamp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_OPAMP_MspInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_OPAMP_MspInit could be implemented in the user file
 	 */
 
 	/* Example */
@@ -521,8 +491,8 @@ __weak void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef *hopamp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hopamp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_OPAMP_MspDeInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_OPAMP_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -530,8 +500,7 @@ __weak void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef *hopamp)
  * @}
  */
 
-/** @defgroup OPAMP_Exported_Functions_Group2 Input and Output operation
-functions
+/** @defgroup OPAMP_Exported_Functions_Group2 Input and Output operation functions
   *  @brief   Data transfers functions
   *
 @verbatim
@@ -539,8 +508,8 @@ functions
 		      ##### IO operation functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to manage the OPAMP
-data transfers.
+    This subsection provides a set of functions allowing to manage the OPAMP data
+    transfers.
 
 @endverbatim
   * @{
@@ -621,11 +590,10 @@ HAL_StatusTypeDef HAL_OPAMP_Stop(OPAMP_HandleTypeDef *hopamp)
  * @note   Calibration is performed in the mode specified in OPAMP init
  *         structure (mode normal or high-speed).
  * @note   If `OPAINTOEN` is enabled, disable it before calling this function
- *         or perform the calibration procedure using HAL ADC in your
- * application code (refer to the reference manual).
+ *         or perform the calibration procedure using HAL ADC in your application
+ *         code (refer to the reference manual).
  * @param  hopamp handle
- * @retval Updated offset trimming values (PMOS & NMOS), user trimming is
- * enabled
+ * @retval Updated offset trimming values (PMOS & NMOS), user trimming is enabled
  * @retval HAL status
  * @note   Calibration runs about 25 ms.
  */
@@ -638,6 +606,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 	uint32_t trimmingvaluen;
 	uint32_t trimmingvaluep;
 	uint32_t delta;
+	uint32_t opampinten;
 
 	/* Check the OPAMP handle allocation */
 	/* Check if OPAMP locked */
@@ -647,19 +616,17 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 		status = HAL_ERROR;
 	} else {
 
-		/* Check if OPAMP is in calibration mode, calibration is not yet
-		 * enabled and the OPAINTOEN bit is not set */
-		if (hopamp->State == HAL_OPAMP_STATE_READY && (READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPINTEN) == 0UL)) {
+		opampinten = READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPINTEN);
+		/* Check if OPAMP is in calibration mode, calibration is not yet enabled and the OPAINTOEN bit is not set */
+		if ((hopamp->State == HAL_OPAMP_STATE_READY) && (opampinten == 0UL)) {
 			/* Check the parameter */
 			assert_param(IS_OPAMP_ALL_INSTANCE(hopamp->Instance));
 
 			/* Set Calibration mode */
-			/* Non-inverting input connected to calibration
-			 * reference voltage. */
+			/* Non-inverting input connected to calibration reference voltage. */
 			SET_BIT(hopamp->Instance->CSR, OPAMP_CSR_FORCEVP);
 
-			/*  user trimming values are used for offset calibration
-			 */
+			/*  user trimming values are used for offset calibration */
 			SET_BIT(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM);
 
 			/* Enable calibration */
@@ -681,42 +648,33 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				/* Set candidate trimming */
 				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 
-				/* OFFTRIMmax delay 2 ms as per datasheet
-				 * (electrical characteristics */
-				/* Offset trim time: during calibration, minimum
-				 * time needed between */
+				/* OFFTRIMmax delay 2 ms as per datasheet (electrical characteristics */
+				/* Offset trim time: during calibration, minimum time needed between */
 				/* two steps to have 1 mV accuracy */
 				HAL_Delay(2);
 
 				if ((hopamp->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
-					/* OPAMP_CSR_OUTCAL is HIGH try higher
-					 * trimming */
+					/* OPAMP_CSR_OUTCAL is HIGH try higher trimming */
 					trimmingvaluen += delta;
 				} else {
-					/* OPAMP_CSR_OUTCAL is LOW try lower
-					 * trimming */
+					/* OPAMP_CSR_OUTCAL is LOW try lower trimming */
 					trimmingvaluen -= delta;
 				}
 
 				delta >>= 1;
 			}
 
-			/* Still need to check if righ calibration is current
-			 * value or un step below */
-			/* Indeed the first value that causes the OUTCAL bit to
-			 * change from 1 to 0  */
+			/* Still need to check if righ calibration is current value or un step below */
+			/* Indeed the first value that causes the OUTCAL bit to change from 1 to 0  */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 
-			/* OFFTRIMmax delay 2 ms as per datasheet (electrical
-			 * characteristics */
-			/* Offset trim time: during calibration, minimum time
-			 * needed between */
+			/* OFFTRIMmax delay 2 ms as per datasheet (electrical characteristics */
+			/* Offset trim time: during calibration, minimum time needed between */
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(2);
 
 			if ((hopamp->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
-				/* OPAMP_CSR_OUTCAL is actually one value more
-				 */
+				/* OPAMP_CSR_OUTCAL is actually one value more */
 				trimmingvaluen++;
 				/* Set right trimming */
 				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
@@ -735,16 +693,13 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				/* Set candidate trimming */
 				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
 
-				/* OFFTRIMmax delay 2 ms as per datasheet
-				 * (electrical characteristics */
-				/* Offset trim time: during calibration, minimum
-				 * time needed between */
+				/* OFFTRIMmax delay 2 ms as per datasheet (electrical characteristics */
+				/* Offset trim time: during calibration, minimum time needed between */
 				/* two steps to have 1 mV accuracy */
 				HAL_Delay(2);
 
 				if ((hopamp->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
-					/* OPAMP_CSR_OUTCAL is HIGH try higher
-					 * trimming */
+					/* OPAMP_CSR_OUTCAL is HIGH try higher trimming */
 					trimmingvaluep += delta;
 				} else {
 					trimmingvaluep -= delta;
@@ -753,23 +708,18 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				delta >>= 1;
 			}
 
-			/* Still need to check if righ calibration is current
-			 * value or un step below */
-			/* Indeed the first value that causes the OUTCAL bit to
-			 * change from 1 to 0U */
+			/* Still need to check if righ calibration is current value or un step below */
+			/* Indeed the first value that causes the OUTCAL bit to change from 1 to 0U */
 			/* Set candidate trimming */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
 
-			/* OFFTRIMmax delay 2 ms as per datasheet (electrical
-			 * characteristics */
-			/* Offset trim time: during calibration, minimum time
-			 * needed between */
+			/* OFFTRIMmax delay 2 ms as per datasheet (electrical characteristics */
+			/* Offset trim time: during calibration, minimum time needed between */
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(2);
 
 			if ((hopamp->Instance->CSR & OPAMP_CSR_OUTCAL) != 0UL) {
-				/* OPAMP_CSR_OUTCAL is actually one value more
-				 */
+				/* OPAMP_CSR_OUTCAL is actually one value more */
 				trimmingvaluep++;
 				/* Set right trimming */
 				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
@@ -782,13 +732,11 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 			CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 
 			/* Set operating mode  */
-			/* Non-inverting input connected to calibration
-			 * reference voltage. */
+			/* Non-inverting input connected to calibration reference voltage. */
 			CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_FORCEVP);
 
 			/* Self calibration is successful  */
-			/* Store calibration(user timing) results in init
-			 * structure. */
+			/* Store calibration(user timing) results in init structure. */
 
 			/* Write calibration result N */
 			hopamp->Init.TrimmingValueN = trimmingvaluen;
@@ -823,8 +771,8 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 		      ##### Peripheral Control functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to control the OPAMP
-data transfers.
+    This subsection provides a set of functions allowing to control the OPAMP data
+    transfers.
 
 
 
@@ -1053,15 +1001,12 @@ HAL_StatusTypeDef HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_OP
 
 /**
  * @brief  Unregister a User OPAMP Callback
- *         OPAMP Callback is redirected to the weak (surcharged) predefined
- * callback
+ *         OPAMP Callback is redirected to the weak (surcharged) predefined callback
  * @param hopamp : OPAMP handle
  * @param CallbackID : ID of the callback to be unregistered
  *        This parameter can be one of the following values:
- *          @arg @ref HAL_OPAMP_MSPINIT_CB_ID              OPAMP MSP Init
- * Callback ID
- *          @arg @ref HAL_OPAMP_MSPDEINIT_CB_ID            OPAMP MSP DeInit
- * Callback ID
+ *          @arg @ref HAL_OPAMP_MSPINIT_CB_ID              OPAMP MSP Init Callback ID
+ *          @arg @ref HAL_OPAMP_MSPDEINIT_CB_ID            OPAMP MSP DeInit Callback ID
  *          @arg @ref HAL_OPAMP_ALL_CB_ID                   OPAMP All Callbacks
  * @retval status
  */

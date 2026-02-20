@@ -46,8 +46,7 @@ extern "C" {
  * @{
  */
 
-/** @addtogroup DFSDMEx_Exported_Functions_Group1_Channel Extended channel
- * operation functions
+/** @addtogroup DFSDMEx_Exported_Functions_Group1_Channel Extended channel operation functions
  * @{
  */
 
@@ -82,8 +81,7 @@ HAL_StatusTypeDef HAL_DFDSMEx_ChannelGetPulsesSkipping(const DFSDM_Channel_Handl
  * @}
  */
 
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
-	  STM32L4S7xx || STM32L4S9xx || STM32L4P5xx || STM32L4Q5xx */
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx || STM32L4P5xx || STM32L4Q5xx */
 
 #ifdef __cplusplus
 }

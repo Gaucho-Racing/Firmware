@@ -68,6 +68,8 @@ void Error_Handler(void);
 
 /* USER CODE END EFP */
 
+/* USER CODE BEGIN Private defines */
+
 /* Private defines -----------------------------------------------------------*/
 // GPIOC
 #define BSE_SIGNAL_Pin LL_GPIO_PIN_0
@@ -106,14 +108,16 @@ void Error_Handler(void);
 #define TSSI_G_CONTROL_GPIO_Port GPIOB
 #define TSSI_R_CONTROL_Pin LL_GPIO_PIN_6
 #define TSSI_R_CONTROL_GPIO_Port GPIOB
+#define TS_ACTIVE_BTN_LED_CONTROL_Pin LL_GPIO_PIN_9
+#define TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port GPIOA
+#define RTD_BTN_LED_CONTROL_Pin LL_GPIO_PIN_8
+#define RTD_BTN_LED_CONTROL_GPIO_Port GPIOA
 #define RTD_CONTROL_Pin LL_GPIO_PIN_7
 #define RTD_CONTROL_GPIO_Port GPIOB
 #define AUX_CONTROL_Pin LL_GPIO_PIN_8
 #define AUX_CONTROL_GPIO_Port GPIOB
 #define SOFTWARE_OK_CONTROL_Pin LL_GPIO_PIN_9
 #define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
-
-/* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 

@@ -45,9 +45,8 @@ extern "C" {
  * @brief  PWR PVM configuration structure definition
  */
 typedef struct {
-	uint32_t PVMType; /*!< PVMType: Specifies which voltage is monitored and
-			     against which threshold. This parameter can be a
-			     value of @ref PWREx_PVM_Type. */
+	uint32_t PVMType; /*!< PVMType: Specifies which voltage is monitored and against which threshold.
+			       This parameter can be a value of @ref PWREx_PVM_Type. */
 	uint32_t Mode;	  /*!< Mode: Specifies the operating mode for the selected pins.
 			       This parameter can be a value of @ref PWREx_PVM_Mode. */
 } PWR_PVMTypeDef;
@@ -62,8 +61,7 @@ typedef struct {
  * @{
  */
 
-/** @defgroup PWREx_WUP_Polarity Shift to apply to retrieve polarity information
- * from PWR_WAKEUP_PINy_xxx constants
+/** @defgroup PWREx_WUP_Polarity Shift to apply to retrieve polarity information from PWR_WAKEUP_PINy_xxx constants
  * @{
  */
 #define PWR_WUP_POLARITY_SHIFT 0x05U /*!< Internal constant used to retrieve wakeup pin polariry */
@@ -97,23 +95,13 @@ typedef struct {
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_PVM_1                                                                                                                                                                                      \
-	PWR_CR2_PVME1 /*!< Peripheral Voltage Monitoring 1 enable: VDDUSB                                                                                                                              \
-			 versus 1.2 V (applicable when USB feature is                                                                                                                                  \
-			 supported) */
-#endif		      /* PWR_CR2_PVME1 */
+#define PWR_PVM_1 PWR_CR2_PVME1 /*!< Peripheral Voltage Monitoring 1 enable: VDDUSB versus 1.2 V (applicable when USB feature is supported) */
+#endif				/* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_PVM_2                                                                                                                                                                                      \
-	PWR_CR2_PVME2 /*!< Peripheral Voltage Monitoring 2 enable: VDDIO2                                                                                                                              \
-			 versus 0.9 V (applicable when VDDIO2 is present on                                                                                                                            \
-			 device) */
-#endif		      /* PWR_CR2_PVME2 */
-#define PWR_PVM_3                                                                                                                                                                                      \
-	PWR_CR2_PVME3 /*!< Peripheral Voltage Monitoring 3 enable: VDDA                                                                                                                                \
-			 versus 1.62 V */
-#define PWR_PVM_4                                                                                                                                                                                      \
-	PWR_CR2_PVME4 /*!< Peripheral Voltage Monitoring 4 enable: VDDA                                                                                                                                \
-			 versus 2.2 V  */
+#define PWR_PVM_2 PWR_CR2_PVME2 /*!< Peripheral Voltage Monitoring 2 enable: VDDIO2 versus 0.9 V (applicable when VDDIO2 is present on device) */
+#endif				/* PWR_CR2_PVME2 */
+#define PWR_PVM_3 PWR_CR2_PVME3 /*!< Peripheral Voltage Monitoring 3 enable: VDDA versus 1.62 V */
+#define PWR_PVM_4 PWR_CR2_PVME4 /*!< Peripheral Voltage Monitoring 4 enable: VDDA versus 2.2 V  */
 /**
  * @}
  */
@@ -121,21 +109,13 @@ typedef struct {
 /** @defgroup PWREx_PVM_Mode  PWR PVM interrupt and event mode
  * @{
  */
-#define PWR_PVM_MODE_NORMAL 0x00000000U /*!< basic mode is used */
-#define PWR_PVM_MODE_IT_RISING                                                                                                                                                                         \
-	0x00010001U /*!< External Interrupt Mode with Rising edge trigger                                                                                                                              \
-		       detection */
-#define PWR_PVM_MODE_IT_FALLING                                                                                                                                                                        \
-	0x00010002U /*!< External Interrupt Mode with Falling edge trigger                                                                                                                             \
-		       detection */
-#define PWR_PVM_MODE_IT_RISING_FALLING                                                                                                                                                                 \
-	0x00010003U			       /*!< External Interrupt Mode with Rising/Falling edge                                                                                                   \
-						  trigger detection */
-#define PWR_PVM_MODE_EVENT_RISING 0x00020001U  /*!< Event Mode with Rising edge trigger detection */
-#define PWR_PVM_MODE_EVENT_FALLING 0x00020002U /*!< Event Mode with Falling edge trigger detection */
-#define PWR_PVM_MODE_EVENT_RISING_FALLING                                                                                                                                                              \
-	0x00020003U /*!< Event Mode with Rising/Falling edge trigger detection                                                                                                                         \
-		     */
+#define PWR_PVM_MODE_NORMAL 0x00000000U		      /*!< basic mode is used */
+#define PWR_PVM_MODE_IT_RISING 0x00010001U	      /*!< External Interrupt Mode with Rising edge trigger detection */
+#define PWR_PVM_MODE_IT_FALLING 0x00010002U	      /*!< External Interrupt Mode with Falling edge trigger detection */
+#define PWR_PVM_MODE_IT_RISING_FALLING 0x00010003U    /*!< External Interrupt Mode with Rising/Falling edge trigger detection */
+#define PWR_PVM_MODE_EVENT_RISING 0x00020001U	      /*!< Event Mode with Rising edge trigger detection */
+#define PWR_PVM_MODE_EVENT_FALLING 0x00020002U	      /*!< Event Mode with Falling edge trigger detection */
+#define PWR_PVM_MODE_EVENT_RISING_FALLING 0x00020003U /*!< Event Mode with Rising/Falling edge trigger detection */
 /**
  * @}
  */
@@ -152,8 +132,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup PWREx_VBAT_Battery_Charging_Selection PWR battery charging
- * resistor selection
+/** @defgroup PWREx_VBAT_Battery_Charging_Selection PWR battery charging resistor selection
  * @{
  */
 #define PWR_BATTERY_CHARGING_RESISTOR_5 0x00000000U    /*!< VBAT charging through a 5 kOhms resistor   */
@@ -171,8 +150,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup PWREx_GPIO_Bit_Number GPIO bit number for I/O setting in
- * standby/shutdown mode
+/** @defgroup PWREx_GPIO_Bit_Number GPIO bit number for I/O setting in standby/shutdown mode
  * @{
  */
 #define PWR_GPIO_BIT_0 PWR_PUCRA_PA0   /*!< GPIO port I/O pin 0  */
@@ -213,21 +191,13 @@ typedef struct {
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_EXTI_LINE_PVM1                                                                                                                                                                             \
-	0x00000008U /*!< External interrupt line 35 Connected to the PVM1 EXTI                                                                                                                         \
-		       Line   */
-#endif		    /* PWR_CR2_PVME1 */
+#define PWR_EXTI_LINE_PVM1 0x00000008U /*!< External interrupt line 35 Connected to the PVM1 EXTI Line   */
+#endif				       /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_EXTI_LINE_PVM2                                                                                                                                                                             \
-	0x00000010U /*!< External interrupt line 36 Connected to the PVM2 EXTI                                                                                                                         \
-		       Line   */
-#endif		    /* PWR_CR2_PVME2 */
-#define PWR_EXTI_LINE_PVM3                                                                                                                                                                             \
-	0x00000020U /*!< External interrupt line 37 Connected to the PVM3 EXTI                                                                                                                         \
-		       Line   */
-#define PWR_EXTI_LINE_PVM4                                                                                                                                                                             \
-	0x00000040U /*!< External interrupt line 38 Connected to the PVM4 EXTI                                                                                                                         \
-		       Line   */
+#define PWR_EXTI_LINE_PVM2 0x00000010U /*!< External interrupt line 36 Connected to the PVM2 EXTI Line   */
+#endif				       /* PWR_CR2_PVME2 */
+#define PWR_EXTI_LINE_PVM3 0x00000020U /*!< External interrupt line 37 Connected to the PVM3 EXTI Line   */
+#define PWR_EXTI_LINE_PVM4 0x00000040U /*!< External interrupt line 38 Connected to the PVM4 EXTI Line   */
 /**
  * @}
  */
@@ -278,9 +248,9 @@ typedef struct {
 #endif			       /* PWR_CR2_PVME2 */
 #define PWR_FLAG_PVMO3 0x004EU /*!< Power Voltage Monitoring 3 output flag */
 #define PWR_FLAG_PVMO4 0x004FU /*!< Power Voltage Monitoring 4 output flag */
-			       /**
-				* @}
-				*/
+/**
+ * @}
+ */
 
 /**
  * @}
@@ -646,18 +616,18 @@ typedef struct {
  * @param  __REGULATOR__: specifies the regulator output voltage to achieve
  *         a tradeoff between performance and power consumption.
  *          This parameter can be one of the following values:
- *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1_BOOST  Regulator voltage
- * output range 1 mode, typical output voltage at 1.28 V, system frequency up to
- * 170 MHz.
- *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1  Regulator voltage output
- * range 1 mode, typical output voltage at 1.2 V, system frequency up to 150
- * MHz.
- *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE2  Regulator voltage output
- * range 2 mode, typical output voltage at 1.0 V, system frequency up to 26 MHz.
- * @note  This macro is similar to HAL_PWREx_ControlVoltageScaling() API but
- * doesn't check whether or not VOSF flag is cleared when moving from range 2 to
- * range 1. User may resort to __HAL_PWR_GET_FLAG() macro to check VOSF bit
- * resetting.
+ *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1_BOOST  Regulator voltage output range 1 mode,
+ *                                                typical output voltage at 1.28 V,
+ *                                                system frequency up to 170 MHz.
+ *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1  Regulator voltage output range 1 mode,
+ *                                                typical output voltage at 1.2 V,
+ *                                                system frequency up to 150 MHz.
+ *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE2  Regulator voltage output range 2 mode,
+ *                                                typical output voltage at 1.0 V,
+ *                                                system frequency up to 26 MHz.
+ * @note  This macro is similar to HAL_PWREx_ControlVoltageScaling() API but doesn't check
+ *        whether or not VOSF flag is cleared when moving from range 2 to range 1. User
+ *        may resort to __HAL_PWR_GET_FLAG() macro to check VOSF bit resetting.
  * @retval None
  */
 #define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                                                                                                                                                 \
@@ -711,8 +681,7 @@ typedef struct {
  * @{
  */
 
-/** @addtogroup PWREx_Exported_Functions_Group1 Extended Peripheral Control
- * functions
+/** @addtogroup PWREx_Exported_Functions_Group1 Extended Peripheral Control functions
  * @{
  */
 
@@ -743,7 +712,7 @@ void HAL_PWREx_EnablePVM3(void);
 void HAL_PWREx_DisablePVM3(void);
 void HAL_PWREx_EnablePVM4(void);
 void HAL_PWREx_DisablePVM4(void);
-HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM);
+HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef const *sConfigPVM);
 
 /* Low Power modes configuration functions ************************************/
 void HAL_PWREx_EnableLowPowerRunMode(void);

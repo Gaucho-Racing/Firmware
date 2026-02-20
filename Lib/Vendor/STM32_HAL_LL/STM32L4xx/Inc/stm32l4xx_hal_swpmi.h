@@ -47,8 +47,7 @@ extern "C" {
  */
 typedef struct {
 	uint32_t VoltageClass; /*!< Specifies the SWP Voltage Class.
-				    This parameter can be a value of @ref
-				  SWPMI_Voltage_Class */
+				    This parameter can be a value of @ref SWPMI_Voltage_Class */
 
 	uint32_t BitRate; /*!< Specifies the SWPMI Bitrate.
 			       This parameter must be a number between 0 and 63U.
@@ -56,13 +55,11 @@ typedef struct {
 			       SWPMI_freq = SWPMI_clk / (((BitRate) + 1)  * 4)
 			       */
 
-	uint32_t TxBufferingMode; /*!< Specifies the transmission buffering
-				     mode. This parameter can be a value of @ref
-				     SWPMI_Tx_Buffering_Mode */
+	uint32_t TxBufferingMode; /*!< Specifies the transmission buffering mode.
+				       This parameter can be a value of @ref SWPMI_Tx_Buffering_Mode */
 
 	uint32_t RxBufferingMode; /*!< Specifies the reception buffering mode.
-				       This parameter can be a value of @ref
-				     SWPMI_Rx_Buffering_Mode */
+				       This parameter can be a value of @ref SWPMI_Rx_Buffering_Mode */
 
 } SWPMI_InitTypeDef;
 
@@ -70,14 +67,14 @@ typedef struct {
  * @brief HAL SWPMI State structures definition
  */
 typedef enum {
-	HAL_SWPMI_STATE_RESET = 0x00,	   /*!< Peripheral Reset state */
+	HAL_SWPMI_STATE_RESET = 0x00,	   /*!< Peripheral Reset state                             */
 	HAL_SWPMI_STATE_READY = 0x01,	   /*!< Peripheral Initialized and ready for use           */
-	HAL_SWPMI_STATE_BUSY = 0x02,	   /*!< an internal process is ongoing */
+	HAL_SWPMI_STATE_BUSY = 0x02,	   /*!< an internal process is ongoing                     */
 	HAL_SWPMI_STATE_BUSY_TX = 0x12,	   /*!< Data Transmission process is ongoing               */
 	HAL_SWPMI_STATE_BUSY_RX = 0x22,	   /*!< Data Reception process is ongoing                  */
 	HAL_SWPMI_STATE_BUSY_TX_RX = 0x32, /*!< Data Transmission and Reception process is ongoing */
-	HAL_SWPMI_STATE_TIMEOUT = 0x03,	   /*!< Timeout state */
-	HAL_SWPMI_STATE_ERROR = 0x04	   /*!< Error    */
+	HAL_SWPMI_STATE_TIMEOUT = 0x03,	   /*!< Timeout state                                      */
+	HAL_SWPMI_STATE_ERROR = 0x04	   /*!< Error                                              */
 } HAL_SWPMI_StateTypeDef;
 
 /**
@@ -111,7 +108,7 @@ typedef struct
 
 	HAL_LockTypeDef Lock; /*!< SWPMI object                         */
 
-	__IO HAL_SWPMI_StateTypeDef State; /*!< SWPMI communication state */
+	__IO HAL_SWPMI_StateTypeDef State; /*!< SWPMI communication state            */
 
 	__IO uint32_t ErrorCode; /*!< SWPMI Error code                     */
 
@@ -123,7 +120,7 @@ typedef struct
 	void (*ErrorCallback)(struct __SWPMI_HandleTypeDef *hswpmi);	  /*!< SWPMI error callback */
 	void (*MspInitCallback)(struct __SWPMI_HandleTypeDef *hswpmi);	  /*!< SWPMI MSP init callback */
 	void (*MspDeInitCallback)(struct __SWPMI_HandleTypeDef *hswpmi);  /*!< SWPMI MSP de-init callback */
-#endif
+#endif									  /* USE_HAL_SWPMI_REGISTER_CALLBACKS */
 
 } SWPMI_HandleTypeDef;
 
@@ -145,7 +142,7 @@ typedef enum {
  * @brief  SWPMI callback pointer definition
  */
 typedef void (*pSWPMI_CallbackTypeDef)(SWPMI_HandleTypeDef *hswpmi);
-#endif
+#endif /* USE_HAL_SWPMI_REGISTER_CALLBACKS */
 
 /**
  * @}
@@ -161,15 +158,15 @@ typedef void (*pSWPMI_CallbackTypeDef)(SWPMI_HandleTypeDef *hswpmi);
  * @{
  */
 #define HAL_SWPMI_ERROR_NONE ((uint32_t)0x00000000)	     /*!< No error              */
-#define HAL_SWPMI_ERROR_CRC ((uint32_t)0x00000004)	     /*!< frame error */
-#define HAL_SWPMI_ERROR_OVR ((uint32_t)0x00000008)	     /*!< Overrun error */
-#define HAL_SWPMI_ERROR_UDR ((uint32_t)0x0000000C)	     /*!< Underrun error */
-#define HAL_SWPMI_ERROR_DMA ((uint32_t)0x00000010)	     /*!< DMA transfer error */
+#define HAL_SWPMI_ERROR_CRC ((uint32_t)0x00000004)	     /*!< frame error           */
+#define HAL_SWPMI_ERROR_OVR ((uint32_t)0x00000008)	     /*!< Overrun error         */
+#define HAL_SWPMI_ERROR_UDR ((uint32_t)0x0000000C)	     /*!< Underrun error        */
+#define HAL_SWPMI_ERROR_DMA ((uint32_t)0x00000010)	     /*!< DMA transfer error    */
 #define HAL_SWPMI_ERROR_TIMEOUT ((uint32_t)0x00000020)	     /*!< Transfer timeout      */
 #define HAL_SWPMI_ERROR_TXBEF_TIMEOUT ((uint32_t)0x00000040) /*!< End Tx buffer timeout */
 #if (USE_HAL_SWPMI_REGISTER_CALLBACKS == 1)
 #define HAL_SWPMI_ERROR_INVALID_CALLBACK ((uint32_t)0x00000100) /*!< Invalid callback error */
-#endif
+#endif								/* USE_HAL_SWPMI_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -263,7 +260,7 @@ typedef void (*pSWPMI_CallbackTypeDef)(SWPMI_HandleTypeDef *hswpmi);
 	} while (0)
 #else
 #define __HAL_SWPMI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_SWPMI_STATE_RESET)
-#endif
+#endif /* USE_HAL_SWPMI_REGISTER_CALLBACKS */
 
 /**
  * @brief  Enable the SWPMI peripheral.
@@ -364,8 +361,7 @@ typedef void (*pSWPMI_CallbackTypeDef)(SWPMI_HandleTypeDef *hswpmi);
  */
 #define __HAL_SWPMI_GET_IT(__HANDLE__, __IT__) (READ_BIT((__HANDLE__)->Instance->ISR, (__IT__)) == (__IT__))
 
-/** @brief  Check whether the specified SWPMI interrupt source is enabled or
- * not.
+/** @brief  Check whether the specified SWPMI interrupt source is enabled or not.
  * @param  __HANDLE__ specifies the SWPMI Handle.
  * @param  __IT__ specifies the SWPMI interrupt source to check.
  *          This parameter can be one of the following values:
@@ -397,11 +393,10 @@ void HAL_SWPMI_MspInit(SWPMI_HandleTypeDef *hswpmi);
 void HAL_SWPMI_MspDeInit(SWPMI_HandleTypeDef *hswpmi);
 
 #if (USE_HAL_SWPMI_REGISTER_CALLBACKS == 1)
-/* SWPMI callbacks register/unregister functions
- * ********************************/
+/* SWPMI callbacks register/unregister functions ********************************/
 HAL_StatusTypeDef HAL_SWPMI_RegisterCallback(SWPMI_HandleTypeDef *hswpmi, HAL_SWPMI_CallbackIDTypeDef CallbackID, pSWPMI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_SWPMI_UnRegisterCallback(SWPMI_HandleTypeDef *hswpmi, HAL_SWPMI_CallbackIDTypeDef CallbackID);
-#endif
+#endif /* USE_HAL_SWPMI_REGISTER_CALLBACKS */
 
 /* IO operation functions *****************************************************/
 HAL_StatusTypeDef HAL_SWPMI_Transmit(SWPMI_HandleTypeDef *hswpmi, const uint32_t *pData, uint16_t Size, uint32_t Timeout);

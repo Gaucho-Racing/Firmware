@@ -77,12 +77,10 @@ typedef enum {
 #if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||    \
     defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define SYSCFG_BOOT_FMC SYSCFG_MEMRMP_MEM_MODE_1
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
-	  STM32L486xx || */
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx || STM32L486xx || */
        /* STM32L496xx || STM32L4A6xx || */
        /* STM32L4P5xx || STM32L4Q5xx || */
-       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
-	* STM32L4S9xx */
+       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 #define SYSCFG_BOOT_SRAM (SYSCFG_MEMRMP_MEM_MODE_1 | SYSCFG_MEMRMP_MEM_MODE_0)
 
@@ -91,8 +89,7 @@ typedef enum {
 #define SYSCFG_BOOT_OCTOPSPI2 (SYSCFG_MEMRMP_MEM_MODE_2 | SYSCFG_MEMRMP_MEM_MODE_0)
 #else
 #define SYSCFG_BOOT_QUADSPI (SYSCFG_MEMRMP_MEM_MODE_2 | SYSCFG_MEMRMP_MEM_MODE_1)
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 /**
  * @}
@@ -101,17 +98,11 @@ typedef enum {
 /** @defgroup SYSCFG_FPU_Interrupts FPU Interrupts
  * @{
  */
-#define SYSCFG_IT_FPU_IOC                                                                                                                                                                              \
-	SYSCFG_CFGR1_FPU_IE_0 /*!< Floating Point Unit Invalid operation                                                                                                                               \
-				 Interrupt */
-#define SYSCFG_IT_FPU_DZC                                                                                                                                                                              \
-	SYSCFG_CFGR1_FPU_IE_1			/*!< Floating Point Unit Divide-by-zero                                                                                                                \
-						   Interrupt */
+#define SYSCFG_IT_FPU_IOC SYSCFG_CFGR1_FPU_IE_0 /*!< Floating Point Unit Invalid operation Interrupt */
+#define SYSCFG_IT_FPU_DZC SYSCFG_CFGR1_FPU_IE_1 /*!< Floating Point Unit Divide-by-zero Interrupt */
 #define SYSCFG_IT_FPU_UFC SYSCFG_CFGR1_FPU_IE_2 /*!< Floating Point Unit Underflow Interrupt */
 #define SYSCFG_IT_FPU_OFC SYSCFG_CFGR1_FPU_IE_3 /*!< Floating Point Unit Overflow Interrupt */
-#define SYSCFG_IT_FPU_IDC                                                                                                                                                                              \
-	SYSCFG_CFGR1_FPU_IE_4			/*!< Floating Point Unit Input denormal                                                                                                                \
-						   Interrupt */
+#define SYSCFG_IT_FPU_IDC SYSCFG_CFGR1_FPU_IE_4 /*!< Floating Point Unit Input denormal Interrupt */
 #define SYSCFG_IT_FPU_IXC SYSCFG_CFGR1_FPU_IE_5 /*!< Floating Point Unit Inexact Interrupt */
 
 /**
@@ -216,9 +207,7 @@ typedef enum {
 /** @defgroup SYSCFG_VREFBUF_HighImpedance VREFBUF High Impedance
  * @{
  */
-#define SYSCFG_VREFBUF_HIGH_IMPEDANCE_DISABLE                                                                                                                                                          \
-	0U						     /*!< VREF_plus pin is internally connected to Voltage reference                                                                           \
-								buffer output */
+#define SYSCFG_VREFBUF_HIGH_IMPEDANCE_DISABLE 0U	     /*!< VREF_plus pin is internally connected to Voltage reference buffer output */
 #define SYSCFG_VREFBUF_HIGH_IMPEDANCE_ENABLE VREFBUF_CSR_HIZ /*!< VREF_plus pin is high impedance */
 
 /**
@@ -412,12 +401,10 @@ typedef enum {
  */
 #define __HAL_SYSCFG_REMAPMEMORY_FMC() MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, SYSCFG_MEMRMP_MEM_MODE_1)
 
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
-	  STM32L486xx || */
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx || STM32L486xx || */
        /* STM32L496xx || STM32L4A6xx || */
        /* STM32L4P5xx || STM32L4Q5xx || */
-       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
-	* STM32L4S9xx */
+       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
@@ -432,8 +419,7 @@ typedef enum {
  */
 #define __HAL_SYSCFG_REMAPMEMORY_QUADSPI() MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, (SYSCFG_MEMRMP_MEM_MODE_2 | SYSCFG_MEMRMP_MEM_MODE_1))
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 /**
   * @brief  Return the boot mode as configured by user.
@@ -461,8 +447,7 @@ typedef enum {
 #define __HAL_SYSCFG_GET_BOOT_MODE() READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE)
 
 /** @brief  SRAM2 page 0 to 31 write protection enable macro
- * @param  __SRAM2WRP__  This parameter can be a combination of values of @ref
- * SYSCFG_SRAM2WRP
+ * @param  __SRAM2WRP__  This parameter can be a combination of values of @ref SYSCFG_SRAM2WRP
  * @note   Write protection can only be disabled by a system reset
  */
 #define __HAL_SYSCFG_SRAM2_WRP_1_31_ENABLE(__SRAM2WRP__)                                                                                                                                               \
@@ -473,8 +458,7 @@ typedef enum {
 
 #if defined(SYSCFG_SWPR2_PAGE63)
 /** @brief  SRAM2 page 32 to 63 write protection enable macro
- * @param  __SRAM2WRP__  This parameter can be a combination of values of @ref
- * SYSCFG_SRAM2WRP_32_63
+ * @param  __SRAM2WRP__  This parameter can be a combination of values of @ref SYSCFG_SRAM2WRP_32_63
  * @note   Write protection can only be disabled by a system reset
  */
 #define __HAL_SYSCFG_SRAM2_WRP_32_63_ENABLE(__SRAM2WRP__)                                                                                                                                              \
@@ -494,14 +478,12 @@ typedef enum {
 	} while (0)
 
 /** @brief  SRAM2 erase
- * @note   __SYSCFG_GET_FLAG(SYSCFG_FLAG_SRAM2_BUSY) may be used to check end of
- * erase
+ * @note   __SYSCFG_GET_FLAG(SYSCFG_FLAG_SRAM2_BUSY) may be used to check end of erase
  */
 #define __HAL_SYSCFG_SRAM2_ERASE() SET_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2ER)
 
 /** @brief  Floating Point Unit interrupt enable/disable macros
- * @param __INTERRUPT__  This parameter can be a value of @ref
- * SYSCFG_FPU_Interrupts
+ * @param __INTERRUPT__  This parameter can be a value of @ref SYSCFG_FPU_Interrupts
  */
 #define __HAL_SYSCFG_FPU_INTERRUPT_ENABLE(__INTERRUPT__)                                                                                                                                               \
 	do {                                                                                                                                                                                           \
@@ -516,34 +498,26 @@ typedef enum {
 	} while (0)
 
 /** @brief  SYSCFG Break ECC lock.
- *         Enable and lock the connection of Flash ECC error connection to
- * TIM1/8/15/16/17 Break input.
- * @note   The selected configuration is locked and can be unlocked only by
- * system reset.
+ *         Enable and lock the connection of Flash ECC error connection to TIM1/8/15/16/17 Break input.
+ * @note   The selected configuration is locked and can be unlocked only by system reset.
  */
 #define __HAL_SYSCFG_BREAK_ECC_LOCK() SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_ECCL)
 
 /** @brief  SYSCFG Break Cortex-M4 Lockup lock.
- *         Enable and lock the connection of Cortex-M4 LOCKUP (Hardfault) output
- * to TIM1/8/15/16/17 Break input.
- * @note   The selected configuration is locked and can be unlocked only by
- * system reset.
+ *         Enable and lock the connection of Cortex-M4 LOCKUP (Hardfault) output to TIM1/8/15/16/17 Break input.
+ * @note   The selected configuration is locked and can be unlocked only by system reset.
  */
 #define __HAL_SYSCFG_BREAK_LOCKUP_LOCK() SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL)
 
 /** @brief  SYSCFG Break PVD lock.
- *         Enable and lock the PVD connection to Timer1/8/15/16/17 Break input,
- * as well as the PVDE and PLS[2:0] in the PWR_CR2 register.
- * @note   The selected configuration is locked and can be unlocked only by
- * system reset.
+ *         Enable and lock the PVD connection to Timer1/8/15/16/17 Break input, as well as the PVDE and PLS[2:0] in the PWR_CR2 register.
+ * @note   The selected configuration is locked and can be unlocked only by system reset.
  */
 #define __HAL_SYSCFG_BREAK_PVD_LOCK() SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_PVDL)
 
 /** @brief  SYSCFG Break SRAM2 parity lock.
- *         Enable and lock the SRAM2 parity error signal connection to
- * TIM1/8/15/16/17 Break input.
- * @note   The selected configuration is locked and can be unlocked by system
- * reset.
+ *         Enable and lock the SRAM2 parity error signal connection to TIM1/8/15/16/17 Break input.
+ * @note   The selected configuration is locked and can be unlocked by system reset.
  */
 #define __HAL_SYSCFG_BREAK_SRAM2PARITY_LOCK() SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPL)
 
@@ -562,14 +536,10 @@ typedef enum {
 
 /** @brief  Fast-mode Plus driving capability enable/disable macros
  * @param __FASTMODEPLUS__  This parameter can be a value of :
- *     @arg @ref SYSCFG_FASTMODEPLUS_PB6 Fast-mode Plus driving capability
- * activation on PB6
- *     @arg @ref SYSCFG_FASTMODEPLUS_PB7 Fast-mode Plus driving capability
- * activation on PB7
- *     @arg @ref SYSCFG_FASTMODEPLUS_PB8 Fast-mode Plus driving capability
- * activation on PB8
- *     @arg @ref SYSCFG_FASTMODEPLUS_PB9 Fast-mode Plus driving capability
- * activation on PB9
+ *     @arg @ref SYSCFG_FASTMODEPLUS_PB6 Fast-mode Plus driving capability activation on PB6
+ *     @arg @ref SYSCFG_FASTMODEPLUS_PB7 Fast-mode Plus driving capability activation on PB7
+ *     @arg @ref SYSCFG_FASTMODEPLUS_PB8 Fast-mode Plus driving capability activation on PB8
+ *     @arg @ref SYSCFG_FASTMODEPLUS_PB9 Fast-mode Plus driving capability activation on PB9
  */
 #define __HAL_SYSCFG_FASTMODEPLUS_ENABLE(__FASTMODEPLUS__)                                                                                                                                             \
 	do {                                                                                                                                                                                           \
@@ -663,8 +633,7 @@ extern HAL_TickFreqTypeDef uwTickFreq;
  * @{
  */
 
-/* Initialization and de-initialization functions
- * ******************************/
+/* Initialization and de-initialization functions  ******************************/
 HAL_StatusTypeDef HAL_Init(void);
 HAL_StatusTypeDef HAL_DeInit(void);
 void HAL_MspInit(void);
@@ -679,8 +648,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
  * @{
  */
 
-/* Peripheral Control functions
- * ************************************************/
+/* Peripheral Control functions  ************************************************/
 void HAL_IncTick(void);
 void HAL_Delay(uint32_t Delay);
 uint32_t HAL_GetTick(void);
@@ -704,8 +672,7 @@ uint32_t HAL_GetUIDw2(void);
  * @{
  */
 
-/* DBGMCU Peripheral Control functions
- * *****************************************/
+/* DBGMCU Peripheral Control functions  *****************************************/
 void HAL_DBGMCU_EnableDBGSleepMode(void);
 void HAL_DBGMCU_DisableDBGSleepMode(void);
 void HAL_DBGMCU_EnableDBGStopMode(void);
@@ -721,8 +688,7 @@ void HAL_DBGMCU_DisableDBGStandbyMode(void);
  * @{
  */
 
-/* SYSCFG Control functions
- * ****************************************************/
+/* SYSCFG Control functions  ****************************************************/
 void HAL_SYSCFG_SRAM2Erase(void);
 void HAL_SYSCFG_EnableMemorySwappingBank(void);
 void HAL_SYSCFG_DisableMemorySwappingBank(void);

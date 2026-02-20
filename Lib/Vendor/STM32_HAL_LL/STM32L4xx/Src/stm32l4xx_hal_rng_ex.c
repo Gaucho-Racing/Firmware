@@ -43,10 +43,8 @@
 /** @addtogroup RNGEx_Private_Defines
  * @{
  */
-/*  Health test control register information to use in CCM algorithm are defined
-   in CMSIS Device file.
-    - RNG_HTCFG : Default HTCR register value for best latency and NIST
-   Compliance
+/*  Health test control register information to use in CCM algorithm are defined in CMSIS Device file.
+    - RNG_HTCFG : Default HTCR register value for best latency and NIST Compliance
     - RNG_HTCFG_1 : Magic number value that must be written to RNG_HTCR register
       immediately before reading or writing RNG_HTCR register */
 /**
@@ -79,10 +77,8 @@
 	  ##### Configuration and lock functions #####
  ===============================================================================
     [..]  This section provides functions allowing to:
-      (+) Configure the RNG with the specified parameters in the
-RNG_ConfigTypeDef
-      (+) Lock RNG configuration Allows user to lock a configuration until next
-reset.
+      (+) Configure the RNG with the specified parameters in the RNG_ConfigTypeDef
+      (+) Lock RNG configuration Allows user to lock a configuration until next reset.
 
 @endverbatim
   * @{
@@ -136,11 +132,9 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 		MODIFY_REG(hrng->Instance->CR, RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3, (uint32_t)(RNG_CR_CONDRST | cr_value));
 
 #if defined(RNG_VER_3_2) || defined(RNG_VER_3_1) || defined(RNG_VER_3_0)
-		/*!< magic number must be written immediately before to
-		 * RNG_HTCRG */
+		/*!< magic number must be written immediately before to RNG_HTCRG */
 		WRITE_REG(hrng->Instance->HTCR, RNG_HTCFG_1);
-		/* Recommended value for NIST compliance, refer to application
-		 * note AN4230 */
+		/* Recommended value for NIST compliance, refer to application note AN4230 */
 		WRITE_REG(hrng->Instance->HTCR, RNG_HTCFG);
 #endif /* RNG_VER_3_2 || RNG_VER_3_1 || RNG_VER_3_0 */
 
@@ -152,8 +146,7 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 		/* Wait for conditioning reset process to be completed */
 		while (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST)) {
 			if ((HAL_GetTick() - tickstart) > RNG_TIMEOUT_VALUE) {
-				/* New check to avoid false timeout detection in
-				 * case of prememption */
+				/* New check to avoid false timeout detection in case of prememption */
 				if (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST)) {
 					hrng->State = HAL_RNG_STATE_READY;
 					hrng->ErrorCode = HAL_RNG_ERROR_TIMEOUT;
@@ -304,6 +297,10 @@ HAL_StatusTypeDef HAL_RNGEx_RecoverSeedError(RNG_HandleTypeDef *hrng)
 
 		/* sequence to fully recover from a seed error */
 		status = RNG_RecoverSeedError(hrng);
+		if (status == HAL_ERROR) {
+			/* Update the error code */
+			hrng->ErrorCode = HAL_RNG_ERROR_RECOVERSEED;
+		}
 	} else {
 		hrng->ErrorCode = HAL_RNG_ERROR_BUSY;
 		status = HAL_ERROR;

@@ -586,8 +586,7 @@ typedef struct {
 #define EXTI_LINE_39 (EXTI_RESERVED | EXTI_REG2 | 0x07u)
 #define EXTI_LINE_40 (EXTI_DIRECT | EXTI_REG2 | EXTI_EVENT | 0x08u)
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 /**
  * @}
@@ -742,8 +741,7 @@ typedef struct {
 	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) || ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||           \
 	 ((__PORT__) == EXTI_GPIOG) || ((__PORT__) == EXTI_GPIOH))
 
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
-	  STM32L486xx */
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx || STM32L486xx */
 
 #if defined(STM32L496xx) || defined(STM32L4A6xx)
 
@@ -759,8 +757,7 @@ typedef struct {
 	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) || ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||           \
 	 ((__PORT__) == EXTI_GPIOG) || ((__PORT__) == EXTI_GPIOH) || ((__PORT__) == EXTI_GPIOI))
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 #define IS_EXTI_GPIO_PIN(__PIN__) ((__PIN__) < 16u)
 /**
