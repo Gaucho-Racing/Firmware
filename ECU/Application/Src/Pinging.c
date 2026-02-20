@@ -13,8 +13,8 @@ const uint8_t IDsToBePinged[] = {
 
 const uint8_t PingsToBeIDed[] = {[GR_BCU] = 0, [GR_DASH_PANEL] = 1};
 
-static uint32_t sentTimestamps[sizeof(IDsToBePinged)];
-static uint32_t receivedTimestamps[sizeof(IDsToBePinged)];
+static volatile uint32_t sentTimestamps[sizeof(IDsToBePinged)];
+static volatile uint32_t receivedTimestamps[sizeof(IDsToBePinged)];
 static uint8_t RTTs[sizeof(IDsToBePinged)];
 
 void pingAll(void)

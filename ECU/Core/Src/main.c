@@ -440,7 +440,7 @@ int main(void)
 		static uint32_t nextPing;
 		if (MillisecondsSinceBoot() >= nextPing) {
 			pingAll();
-			nextPing += PINGTIMEOUT;
+			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT;
 		}
 
 		write_adc_values_to_state_data();
