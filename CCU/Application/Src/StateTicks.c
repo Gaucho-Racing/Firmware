@@ -44,8 +44,8 @@ void STATE_IDLE(CCU_StateData *state_data)
 	bool anyErrors = 0;
 	if (CriticalError(state_data)) {
 		anyErrors = 1;
-		setSoftwareLatch(0);
-		LOGOMATIC("ERROR: EXPLODE NOW");
+		setSoftwareLatch(0, state_data);
+		LOGOMATIC("ERROR: EXPLODE NOW\n");
 	};
 
 	if (!anyErrors && state_data->Button_Status) {
@@ -63,8 +63,8 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	bool anyErrors = 0;
 	if (CriticalError(state_data)) {
 		anyErrors = 1;
-		setSoftwareLatch(0);
-		LOGOMATIC("ERROR: EXPLODE NOW");
+		setSoftwareLatch(0, state_data);
+		LOGOMATIC("ERROR: EXPLODE NOW\n");
 	}
 
 	if (anyErrors || !(state_data->Button_Status)) {

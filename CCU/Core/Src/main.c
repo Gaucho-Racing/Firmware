@@ -133,7 +133,7 @@ int main(void)
 		LL_mDelay(100);
 
 		// Initialize SoftwareLatch High
-		setSoftwareLatch(1);
+		setSoftwareLatch(1, &state_data);
 
 		Check_Button(&state_data);
 		CCU_State_Tick(&state_data);
