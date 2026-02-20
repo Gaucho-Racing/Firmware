@@ -46,8 +46,6 @@ typedef enum {
 	GPIO_AF_15 = LL_GPIO_AF_15
 } GPIO_Alternate_Function;
 
-
-
 /**
  * @brief Context containing all necessary information for controlling a Neopixel strip.
  * @note Acquired by calling Neopixel_Setup with a NeopixelConfig struct.
@@ -106,7 +104,6 @@ void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, u
 // create initialization structs (one for GPIO, one for SPI)
 // create a function to initialize SPI
 // initialize spi in gr_neopixel.c
-
 
 #endif
 
