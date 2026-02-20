@@ -49,19 +49,6 @@ void ECU_State_Tick(void)
 		stateLump.tssi_fault = true;
 	}
 
-	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
-	//     Here we chose a period of 350ms
-	if (stateLump.tssi_fault) {
-		if (stateLump.millisSinceBoot % 350 < 175) {
-			LL_GPIO_SetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
-		} else {
-			LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
-		}
-	} else {
-		LL_GPIO_SetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
-		LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
-	}
-
 	switch (stateLump.ecu_state) {
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
@@ -141,15 +128,12 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
 	if (!stateData->ts_active_button_active) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
 		return;
 	}
 	if (CriticalError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.\n");
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-
 		return;
 	}
 
@@ -174,7 +158,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	if (!stateData->ts_active_button_active || CriticalError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.\n");
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		return;
 	}
 

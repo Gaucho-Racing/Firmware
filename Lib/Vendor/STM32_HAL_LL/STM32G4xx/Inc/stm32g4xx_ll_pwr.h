@@ -145,9 +145,7 @@ extern "C" {
 #define LL_PWR_PVDLEVEL_4 (PWR_CR2_PLS_LEV4) /* VPVD4 around 2.6 V */
 #define LL_PWR_PVDLEVEL_5 (PWR_CR2_PLS_LEV5) /* VPVD5 around 2.8 V */
 #define LL_PWR_PVDLEVEL_6 (PWR_CR2_PLS_LEV6) /* VPVD6 around 2.9 V */
-#define LL_PWR_PVDLEVEL_7                                                                                                                                                                              \
-	(PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare                                                                                                                                 \
-			      internally to VREFINT) */
+#define LL_PWR_PVDLEVEL_7 (PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare internally to VREFINT) */
 /**
  * @}
  */
@@ -431,8 +429,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetPowerMode(void)
 
 #if defined(PWR_CR3_UCPD_STDBY)
 /**
- * @brief  Enable the USB Type-C and Power Delivery memorization in Standby
- * mode.
+ * @brief  Enable the USB Type-C and Power Delivery memorization in Standby mode.
  * @note   This function must be called just before entering Standby mode.
  * @rmtoll CR3          UCPD_STDBY    LL_PWR_EnableUCPDStandbyMode
  * @retval None
@@ -443,10 +440,9 @@ __STATIC_INLINE void LL_PWR_EnableUCPDStandbyMode(void)
 }
 
 /**
- * @brief  Disable the USB Type-C and Power Delivery memorization in Standby
- * mode.
- * @note   This function must be called after exiting Standby mode and before
- * any UCPD configuration update.
+ * @brief  Disable the USB Type-C and Power Delivery memorization in Standby mode.
+ * @note   This function must be called after exiting Standby mode and before any
+ *         UCPD configuration update.
  * @rmtoll CR3          UCPD_STDBY     LL_PWR_DisableUCPDStandbyMode
  * @retval None
  */
@@ -456,26 +452,25 @@ __STATIC_INLINE void LL_PWR_DisableUCPDStandbyMode(void)
 }
 
 /**
- * @brief  Check the USB Type-C and Power Delivery Standby mode memorization
- * state.
+ * @brief  Check the USB Type-C and Power Delivery Standby mode memorization state.
  * @rmtoll CR3          UCPD_STDBY           LL_PWR_IsEnabledUCPDStandbyMode
  * @retval State of bit (1 or 0).
  */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDStandbyMode(void)
 {
+
 	return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY) == (PWR_CR3_UCPD_STDBY)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR3_UCPD_STDBY */
 
 #if defined(PWR_CR3_UCPD_DBDIS)
 /**
- * @brief  Enable the USB Type-C and power delivery dead battery pull-down
- * behavior on UCPD CC1 and CC2 pins.
+ * @brief  Enable the USB Type-C and power delivery dead battery pull-down behavior
+ *         on UCPD CC1 and CC2 pins.
  * @note   After exiting reset, the USB Type-C dead battery behavior is enabled,
- *         which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ *         which may have a pull-down effect on CC1 and CC2 pins. It is recommended
+ *         to disable it in all cases, either to stop this pull-down or to hand over
+ *         control to the UCPD (which should therefore be initialized before doing the disable).
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_EnableUCPDDeadBattery
  * @retval None
  */
@@ -485,13 +480,12 @@ __STATIC_INLINE void LL_PWR_EnableUCPDDeadBattery(void)
 }
 
 /**
- * @brief  Disable the USB Type-C and power delivery dead battery pull-down
- * behavior on UCPD CC1 and CC2 pins.
+ * @brief  Disable the USB Type-C and power delivery dead battery pull-down behavior
+ *         on UCPD CC1 and CC2 pins.
  * @note   After exiting reset, the USB Type-C dead battery behavior is enabled,
- *         which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ *         which may have a pull-down effect on CC1 and CC2 pins. It is recommended
+ *         to disable it in all cases, either to stop this pull-down or to hand over
+ *         control to the UCPD (which should therefore be initialized before doing the disable).
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_DisableUCPDDeadBattery
  * @retval None
  */
@@ -501,13 +495,12 @@ __STATIC_INLINE void LL_PWR_DisableUCPDDeadBattery(void)
 }
 
 /**
- * @brief  Check the USB Type-C and power delivery dead battery pull-down
- * behavior on UCPD CC1 and CC2 pins.
+ * @brief  Check the USB Type-C and power delivery dead battery pull-down behavior
+ *         on UCPD CC1 and CC2 pins.
  * @note   After exiting reset, the USB Type-C dead battery behavior is enabled,
- *         which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ *         which may have a pull-down effect on CC1 and CC2 pins. It is recommended
+ *         to disable it in all cases, either to stop this pull-down or to hand over
+ *         control to the UCPD (which should therefore be initialized before doing the disable).
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_IsEnabledUCPDDeadBattery
  * @retval State of feature (1 : enabled; 0 : disabled).
  */
@@ -651,8 +644,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVM(uint32_t PeriphVoltage)
 }
 
 /**
- * @brief  Configure the voltage threshold detected by the Power Voltage
- * Detector
+ * @brief  Configure the voltage threshold detected by the Power Voltage Detector
  * @rmtoll CR2          PLS           LL_PWR_SetPVDLevel
  * @param  PVDLevel This parameter can be one of the following values:
  *         @arg @ref LL_PWR_PVDLEVEL_0
@@ -1487,8 +1479,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVMO1(void)
 #endif /* PWR_SR2_PVMO1 */
 
 /**
- * @brief  Indicate whether VDD voltage is below or above the selected PVD
- * threshold
+ * @brief  Indicate whether VDD voltage is below or above the selected PVD threshold
  * @rmtoll SR2          PVDO          LL_PWR_IsActiveFlag_PVDO
  * @retval State of bit (1 or 0).
  */
@@ -1501,8 +1492,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVDO(void)
 }
 
 /**
- * @brief  Indicate whether the regulator is ready in the selected voltage range
- * or if its output voltage is still changing to the required voltage level
+ * @brief  Indicate whether the regulator is ready in the selected voltage range or if its output voltage is still changing to the required voltage level
  * @rmtoll SR2          VOSF          LL_PWR_IsActiveFlag_VOS
  * @retval State of bit (1 or 0).
  */
@@ -1515,10 +1505,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VOS(void)
 }
 
 /**
- * @brief  Indicate whether the regulator is ready in main mode or is in
- * low-power mode
- * @note: Take care, return value "0" means the regulator is ready.  Return
- * value "1" means the output voltage range is still changing.
+ * @brief  Indicate whether the regulator is ready in main mode or is in low-power mode
+ * @note: Take care, return value "0" means the regulator is ready.  Return value "1" means the output voltage range is still changing.
  * @rmtoll SR2          REGLPF        LL_PWR_IsActiveFlag_REGLPF
  * @retval State of bit (1 or 0).
  */

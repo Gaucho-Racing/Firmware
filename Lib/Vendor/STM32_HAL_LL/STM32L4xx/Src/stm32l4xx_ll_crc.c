@@ -54,8 +54,7 @@
  */
 
 /**
- * @brief  De-initialize CRC registers (Registers restored to their default
- * values).
+ * @brief  De-initialize CRC registers (Registers restored to their default values).
  * @param  CRCx CRC Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: CRC registers are de-initialized

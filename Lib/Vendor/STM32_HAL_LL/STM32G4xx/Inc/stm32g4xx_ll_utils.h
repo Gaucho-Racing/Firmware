@@ -95,54 +95,42 @@ typedef struct {
 	uint32_t PLLM; /*!< Division factor for PLL VCO input clock.
 			    This parameter can be a value of @ref RCC_LL_EC_PLLM_DIV
 
-			    This feature can be modified afterwards using unitary
-			  function
+			    This feature can be modified afterwards using unitary function
 			    @ref LL_RCC_PLL_ConfigDomain_SYS(). */
 
 	uint32_t PLLN; /*!< Multiplication factor for PLL VCO output clock.
-			    This parameter must be a number between Min_Data = 8
-			  and Max_Data = 86
+			    This parameter must be a number between Min_Data = 8 and Max_Data = 86
 
-			    This feature can be modified afterwards using
-			  unitary function
+			    This feature can be modified afterwards using unitary function
 			    @ref LL_RCC_PLL_ConfigDomain_SYS(). */
 
 	uint32_t PLLR; /*!< Division for the main system clock.
 			    This parameter can be a value of @ref RCC_LL_EC_PLLR_DIV
 
-			    This feature can be modified afterwards using unitary
-			  function
+			    This feature can be modified afterwards using unitary function
 			    @ref LL_RCC_PLL_ConfigDomain_SYS(). */
 } LL_UTILS_PLLInitTypeDef;
 
 /**
- * @brief  UTILS System, AHB and APB buses clock configuration structure
- * definition
+ * @brief  UTILS System, AHB and APB buses clock configuration structure definition
  */
 typedef struct {
-	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is
-				   derived from the system clock (SYSCLK). This
-				   parameter can be a value of @ref
-				   RCC_LL_EC_SYSCLK_DIV
+	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
+				     This parameter can be a value of @ref RCC_LL_EC_SYSCLK_DIV
 
-				     This feature can be modified afterwards
-				   using unitary function
+				     This feature can be modified afterwards using unitary function
 				     @ref LL_RCC_SetAHBPrescaler(). */
 
-	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is
-				    derived from the AHB clock (HCLK). This parameter
-				    can be a value of @ref RCC_LL_EC_APB1_DIV
+	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+				      This parameter can be a value of @ref RCC_LL_EC_APB1_DIV
 
-				      This feature can be modified afterwards using
-				    unitary function
+				      This feature can be modified afterwards using unitary function
 				      @ref LL_RCC_SetAPB1Prescaler(). */
 
-	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is
-				    derived from the AHB clock (HCLK). This parameter
-				    can be a value of @ref RCC_LL_EC_APB2_DIV
+	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
+				      This parameter can be a value of @ref RCC_LL_EC_APB2_DIV
 
-				      This feature can be modified afterwards using
-				    unitary function
+				      This feature can be modified afterwards using unitary function
 				      @ref LL_RCC_SetAPB2Prescaler(). */
 
 } LL_UTILS_ClkInitTypeDef;
@@ -173,26 +161,22 @@ typedef struct {
 #if defined(STM32G411xB) || defined(STM32G411xC) || defined(STM32G431xx) || defined(STM32G414xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G483xx) ||    \
     defined(STM32G474xx) || defined(STM32G484xx)
 #define LL_UTILS_PACKAGETYPE_LQFP100_LQFP80 0x00000002U			 /*!< LQFP100 \ LQFP80 package type             */
-#define LL_UTILS_PACKAGETYPE_LQFP100 LL_UTILS_PACKAGETYPE_LQFP100_LQFP80 /*!< For backward compatibility */
+#define LL_UTILS_PACKAGETYPE_LQFP100 LL_UTILS_PACKAGETYPE_LQFP100_LQFP80 /*!< For backward compatibility  */
 #else
-#define LL_UTILS_PACKAGETYPE_LQFP100 0x00000002U	  /*!< LQFP100 package type                      */
-#endif							  /* STM32G411xB || STM32G411xC || STM32G431xx || STM32G414xx ||                                                                               \
-							     STM32G441xx || STM32G471xx || STM32G473xx || STM32G483xx ||                                                                               \
-							     STM32G474xx || STM32G484xx */
-#define LL_UTILS_PACKAGETYPE_WLCSP81 0x00000005U	  /*!< WLCSP81 package type                      */
-#define LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121 0x00000007U /*!< LQFP128 \ UFBGA121 package type           */
-#define LL_UTILS_PACKAGETYPE_LQFP128                                                                                                                                                                   \
-	LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121			    /*!< For backward compatibility                                                                                                    \
-								     */
-#define LL_UTILS_PACKAGETYPE_UFQFPN32 0x00000008U		    /*!< UFQFPN32 package type                     */
-#define LL_UTILS_PACKAGETYPE_LQFP32 0x00000009U			    /*!< LQFP32 package type                       */
-#define LL_UTILS_PACKAGETYPE_UFQFPN48 0x0000000AU		    /*!< UFQFPN48 package type                     */
-#define LL_UTILS_PACKAGETYPE_LQFP48 0x0000000BU			    /*!< LQFP48 package type                       */
-#define LL_UTILS_PACKAGETYPE_WLCSP49 0x0000000CU		    /*!< WLCSP49 package type                      */
-#define LL_UTILS_PACKAGETYPE_UFBGA64 0x0000000DU		    /*!< UFBGA64 package type                      */
-#define LL_UTILS_PACKAGETYPE_TFBGA100 0x0000000EU		    /*!< TFBGA100 package type                     */
-#define LL_UTILS_PACKAGETYPE_UFBGA100 LL_UTILS_PACKAGETYPE_TFBGA100 /*!< For backward compatibility       */
-#define LL_UTILS_PACKAGETYPE_LQFP48_EBIKE 0x00000010U		    /*!< LQFP48 EBIKE package type                 */
+#define LL_UTILS_PACKAGETYPE_LQFP100 0x00000002U /*!< LQFP100 package type                      */
+#endif /* STM32G411xB || STM32G411xC || STM32G431xx || STM32G414xx || STM32G441xx || STM32G471xx || STM32G473xx || STM32G483xx || STM32G474xx || STM32G484xx */
+#define LL_UTILS_PACKAGETYPE_WLCSP81 0x00000005U			   /*!< WLCSP81 package type                      */
+#define LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121 0x00000007U		   /*!< LQFP128 \ UFBGA121 package type           */
+#define LL_UTILS_PACKAGETYPE_LQFP128 LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121 /*!< For backward compatibility */
+#define LL_UTILS_PACKAGETYPE_UFQFPN32 0x00000008U			   /*!< UFQFPN32 package type                     */
+#define LL_UTILS_PACKAGETYPE_LQFP32 0x00000009U				   /*!< LQFP32 package type                       */
+#define LL_UTILS_PACKAGETYPE_UFQFPN48 0x0000000AU			   /*!< UFQFPN48 package type                     */
+#define LL_UTILS_PACKAGETYPE_LQFP48 0x0000000BU				   /*!< LQFP48 package type                       */
+#define LL_UTILS_PACKAGETYPE_WLCSP49 0x0000000CU			   /*!< WLCSP49 package type                      */
+#define LL_UTILS_PACKAGETYPE_UFBGA64 0x0000000DU			   /*!< UFBGA64 package type                      */
+#define LL_UTILS_PACKAGETYPE_TFBGA100 0x0000000EU			   /*!< TFBGA100 package type                     */
+#define LL_UTILS_PACKAGETYPE_UFBGA100 LL_UTILS_PACKAGETYPE_TFBGA100	   /*!< For backward compatibility       */
+#define LL_UTILS_PACKAGETYPE_LQFP48_EBIKE 0x00000010U			   /*!< LQFP48 EBIKE package type                 */
 #if defined(STM32G491xx) || defined(STM32G4A1xx)
 #define LL_UTILS_PACKAGETYPE_LQFP80 0x00000011U /*!< LQFP80 package type                       */
 #endif						/* STM32G491xx || STM32G4A1xx */
@@ -245,8 +229,8 @@ __STATIC_INLINE uint32_t LL_GetUID_Word2(void)
 
 /**
  * @brief  Get Flash memory size
- * @note   This bitfield indicates the size of the device Flash memory expressed
- * in Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
+ * @note   This bitfield indicates the size of the device Flash memory expressed in
+ *         Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
  * @retval FLASH_SIZE[15:0]: Flash memory size
  */
 __STATIC_INLINE uint32_t LL_GetFlashSize(void)
@@ -285,13 +269,10 @@ __STATIC_INLINE uint32_t LL_GetPackageType(void)
  */
 
 /**
- * @brief  This function configures the Cortex-M SysTick source of the time
- * base.
- * @param  HCLKFrequency HCLK frequency in Hz (can be calculated thanks to RCC
- * helper macro)
+ * @brief  This function configures the Cortex-M SysTick source of the time base.
+ * @param  HCLKFrequency HCLK frequency in Hz (can be calculated thanks to RCC helper macro)
  * @note   When a RTOS is used, it is recommended to avoid changing the SysTick
- *         configuration by calling this function, for a delay use rather
- * osDelay RTOS service.
+ *         configuration by calling this function, for a delay use rather osDelay RTOS service.
  * @param  Ticks Frequency of Ticks (Hz)
  * @retval None
  */

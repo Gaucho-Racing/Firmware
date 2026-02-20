@@ -17,15 +17,14 @@
     --------------------
     [..] RAM functions are defined using the toolchain options.
 	 Functions that are executed in RAM should reside in a separate
-	 source module. Using the 'Options for File' dialog you can simply
-  change the 'Code / Const' area of a module to a memory space in physical RAM.
+	 source module. Using the 'Options for File' dialog you can simply change
+	 the 'Code / Const' area of a module to a memory space in physical RAM.
 	 Available memory areas are declared in the 'Target' tab of the
 	 Options for Target' dialog.
 
     *** ICCARM Compiler ***
     -----------------------
-    [..] RAM functions are defined using a specific toolchain keyword
-  "__ramfunc".
+    [..] RAM functions are defined using a specific toolchain keyword "__ramfunc".
 
     *** GNU Compiler ***
     --------------------
@@ -39,8 +38,7 @@
   * Copyright (c) 2017 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  in
+  * This software is licensed under terms that can be found in the LICENSE file in
   * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
@@ -67,13 +65,11 @@
 /* Private function prototypes -----------------------------------------------*/
 /* Exported functions -------------------------------------------------------*/
 
-/** @defgroup FLASH_RAMFUNC_Exported_Functions FLASH in RAM function Exported
- * Functions
+/** @defgroup FLASH_RAMFUNC_Exported_Functions FLASH in RAM function Exported Functions
  * @{
  */
 
-/** @defgroup FLASH_RAMFUNC_Exported_Functions_Group1 Peripheral features
-functions
+/** @defgroup FLASH_RAMFUNC_Exported_Functions_Group1 Peripheral features functions
  *  @brief   Data transfers functions
  *
 @verbatim
@@ -81,8 +77,7 @@ functions
 		      ##### ramfunc functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions that should be executed from
-RAM.
+    This subsection provides a set of functions that should be executed from RAM.
 
 @endverbatim
   * @{
@@ -193,8 +188,7 @@ __RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_OB_DBankConfig(uint32_t DBankConfig)
 			SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 			/* Wait for last operation to be completed */
-			/* 8 is the number of required instruction cycles for
-			 * the below loop statement (timeout expressed in ms) */
+			/* 8 is the number of required instruction cycles for the below loop statement (timeout expressed in ms) */
 			count = FLASH_TIMEOUT_VALUE * (SystemCoreClock / 8U / 1000U);
 			do {
 				if (count == 0U) {
@@ -203,8 +197,7 @@ __RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_OB_DBankConfig(uint32_t DBankConfig)
 				count--;
 			} while (__HAL_FLASH_GET_FLAG(FLASH_FLAG_BSY) != RESET);
 
-			/* If the option byte program operation is completed,
-			 * disable the OPTSTRT Bit */
+			/* If the option byte program operation is completed, disable the OPTSTRT Bit */
 			CLEAR_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 			/* Set the bit to force the option byte reloading */

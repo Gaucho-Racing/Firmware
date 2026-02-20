@@ -9,9 +9,9 @@
  * Copyright (c) 2017 STMicroelectronics.
  * All rights reserved.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- *in the root directory of this software component. If no LICENSE file comes
- *with this software, it is provided AS-IS.
+ * This software is licensed under terms that can be found in the LICENSE file in
+ * the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  ******************************************************************************
  */
 
@@ -44,10 +44,8 @@ extern "C" {
 /** @defgroup FLASHEx_LVE_PIN_CFG FLASHEx LVE pin configuration
  * @{
  */
-#define FLASH_LVE_PIN_CTRL 0x00000000U /*!< LVE FLASH pin controlled by power controller       */
-#define FLASH_LVE_PIN_FORCED                                                                                                                                                                           \
-	FLASH_CFGR_LVEN /*!< LVE FLASH pin enforced to low (external SMPS                                                                                                                              \
-			   used) */
+#define FLASH_LVE_PIN_CTRL 0x00000000U	     /*!< LVE FLASH pin controlled by power controller       */
+#define FLASH_LVE_PIN_FORCED FLASH_CFGR_LVEN /*!< LVE FLASH pin enforced to low (external SMPS used) */
 /**
  * @}
  */
@@ -107,9 +105,9 @@ void FLASH_FlushCaches(void);
 #if defined(FLASH_CFGR_LVEN)
 #define IS_FLASH_LVE_PIN(CFG) (((CFG) == FLASH_LVE_PIN_CTRL) || ((CFG) == FLASH_LVE_PIN_FORCED))
 #endif /* FLASH_CFGR_LVEN */
-       /**
-	 @endcond
-	 */
+/**
+  @endcond
+  */
 
 /**
  * @}

@@ -44,15 +44,13 @@ extern "C" {
  * @brief  UART wake up from stop mode parameters
  */
 typedef struct {
-	uint32_t WakeUpEvent; /*!< Specifies which event will activate the Wakeup
-				 from Stop mode flag (WUF). This parameter can be a
-				 value of @ref UART_WakeUp_from_Stop_Selection. If
-				 set to UART_WAKEUP_ON_ADDRESS, the two other fields
-				 below must be filled up. */
+	uint32_t WakeUpEvent; /*!< Specifies which event will activate the Wakeup from Stop mode flag (WUF).
+				   This parameter can be a value of @ref UART_WakeUp_from_Stop_Selection.
+				   If set to UART_WAKEUP_ON_ADDRESS, the two other fields below must
+				   be filled up. */
 
-	uint16_t AddressLength; /*!< Specifies whether the address is 4 or 7-bit
-				   long. This parameter can be a value of @ref
-				   UARTEx_WakeUp_Address_Length.  */
+	uint16_t AddressLength; /*!< Specifies whether the address is 4 or 7-bit long.
+				     This parameter can be a value of @ref UARTEx_WakeUp_Address_Length.  */
 
 	uint8_t Address; /*!< UART/USART node address (7-bit long max). */
 } UART_WakeUpTypeDef;
@@ -734,8 +732,7 @@ HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(const UART_HandleTypeDef *
  *         This masking operation is not carried out in the case of
  *         DMA transfers.
  * @param  __HANDLE__ specifies the UART Handle.
- * @retval None, the mask to apply to UART RDR register is stored in
- * (__HANDLE__)->Mask field.
+ * @retval None, the mask to apply to UART RDR register is stored in (__HANDLE__)->Mask field.
  */
 #define UART_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                              \
 	do {                                                                                                                                                                                           \

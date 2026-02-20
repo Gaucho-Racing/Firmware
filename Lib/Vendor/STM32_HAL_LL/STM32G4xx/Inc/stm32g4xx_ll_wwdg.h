@@ -48,8 +48,7 @@ extern "C" {
  */
 
 /** @defgroup WWDG_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_WWDG_ReadReg and
- * LL_WWDG_WriteReg functions
+ * @brief    IT defines which can be used with LL_WWDG_ReadReg and  LL_WWDG_WriteReg functions
  * @{
  */
 #define LL_WWDG_CFR_EWI WWDG_CFR_EWI
@@ -116,12 +115,11 @@ extern "C" {
  * @{
  */
 /**
- * @brief  Enable Window Watchdog. The watchdog is always disabled after a
- * reset.
+ * @brief  Enable Window Watchdog. The watchdog is always disabled after a reset.
  * @note   It is enabled by setting the WDGA bit in the WWDG_CR register,
  *         then it cannot be disabled again except by a reset.
- *         This bit is set by software and only cleared by hardware after a
- * reset. When WDGA = 1, the watchdog can generate a reset.
+ *         This bit is set by software and only cleared by hardware after a reset.
+ *         When WDGA = 1, the watchdog can generate a reset.
  * @rmtoll CR           WDGA          LL_WWDG_Enable
  * @param  WWDGx WWDG Instance
  * @retval None
@@ -144,11 +142,10 @@ __STATIC_INLINE uint32_t LL_WWDG_IsEnabled(const WWDG_TypeDef *WWDGx)
 
 /**
  * @brief  Set the Watchdog counter value to provided value (7-bits T[6:0])
- * @note   When writing to the WWDG_CR register, always write 1 in the MSB b6 to
- * avoid generating an immediate reset This counter is decremented every (4096 x
- * 2expWDGTB) PCLK cycles A reset is produced when it rolls over from 0x40 to
- * 0x3F (bit T6 becomes cleared) Setting the counter lower then 0x40 causes an
- * immediate reset (if WWDG enabled)
+ * @note   When writing to the WWDG_CR register, always write 1 in the MSB b6 to avoid generating an immediate reset
+ *         This counter is decremented every (4096 x 2expWDGTB) PCLK cycles
+ *         A reset is produced when it rolls over from 0x40 to 0x3F (bit T6 becomes cleared)
+ *         Setting the counter lower then 0x40 causes an immediate reset (if WWDG enabled)
  * @rmtoll CR           T             LL_WWDG_SetCounter
  * @param  WWDGx WWDG Instance
  * @param  Counter 0..0x7F (7 bit counter value)
@@ -172,8 +169,8 @@ __STATIC_INLINE uint32_t LL_WWDG_GetCounter(const WWDG_TypeDef *WWDGx)
 
 /**
  * @brief  Set the time base of the prescaler (WDGTB).
- * @note   Prescaler is used to apply ratio on PCLK clock, so that Watchdog
- * counter is decremented every (4096 x 2expWDGTB) PCLK cycles
+ * @note   Prescaler is used to apply ratio on PCLK clock, so that Watchdog counter
+ *         is decremented every (4096 x 2expWDGTB) PCLK cycles
  * @rmtoll CFR          WDGTB         LL_WWDG_SetPrescaler
  * @param  WWDGx WWDG Instance
  * @param  Prescaler This parameter can be one of the following values:
@@ -212,17 +209,16 @@ __STATIC_INLINE uint32_t LL_WWDG_GetPrescaler(const WWDG_TypeDef *WWDGx)
 }
 
 /**
- * @brief  Set the Watchdog Window value to be compared to the downcounter
- * (7-bits W[6:0]).
+ * @brief  Set the Watchdog Window value to be compared to the downcounter (7-bits W[6:0]).
  * @note   This window value defines when write in the WWDG_CR register
  *         to program Watchdog counter is allowed.
  *         Watchdog counter value update must occur only when the counter value
  *         is lower than the Watchdog window register value.
- *         Otherwise, a MCU reset is generated if the 7-bit Watchdog counter
- * value (in the control register) is refreshed before the downcounter has
- * reached the watchdog window register value. Physically is possible to set the
- * Window lower then 0x40 but it is not recommended. To generate an immediate
- * reset, it is possible to set the Counter lower than 0x40.
+ *         Otherwise, a MCU reset is generated if the 7-bit Watchdog counter value
+ *         (in the control register) is refreshed before the downcounter has reached
+ *         the watchdog window register value.
+ *         Physically is possible to set the Window lower then 0x40 but it is not recommended.
+ *         To generate an immediate reset, it is possible to set the Counter lower than 0x40.
  * @rmtoll CFR          W             LL_WWDG_SetWindow
  * @param  WWDGx WWDG Instance
  * @param  Window 0x00..0x7F (7 bit Window value)
@@ -253,9 +249,9 @@ __STATIC_INLINE uint32_t LL_WWDG_GetWindow(const WWDG_TypeDef *WWDGx)
  */
 /**
  * @brief  Indicates if the WWDG Early Wakeup Interrupt Flag is set or not.
- * @note   This bit is set by hardware when the counter has reached the value
- * 0x40. It must be cleared by software by writing 0. A write of 1 has no
- * effect. This bit is also set if the interrupt is not enabled.
+ * @note   This bit is set by hardware when the counter has reached the value 0x40.
+ *         It must be cleared by software by writing 0.
+ *         A write of 1 has no effect. This bit is also set if the interrupt is not enabled.
  * @rmtoll SR           EWIF          LL_WWDG_IsActiveFlag_EWKUP
  * @param  WWDGx WWDG Instance
  * @retval State of bit (1 or 0).
@@ -285,8 +281,8 @@ __STATIC_INLINE void LL_WWDG_ClearFlag_EWKUP(WWDG_TypeDef *WWDGx)
  */
 /**
  * @brief  Enable the Early Wakeup Interrupt.
- * @note   When set, an interrupt occurs whenever the counter reaches value
- * 0x40. This interrupt is only cleared by hardware after a reset
+ * @note   When set, an interrupt occurs whenever the counter reaches value 0x40.
+ *         This interrupt is only cleared by hardware after a reset
  * @rmtoll CFR          EWI           LL_WWDG_EnableIT_EWKUP
  * @param  WWDGx WWDG Instance
  * @retval None

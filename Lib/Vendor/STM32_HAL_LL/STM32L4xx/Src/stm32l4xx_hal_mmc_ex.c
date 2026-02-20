@@ -24,12 +24,9 @@
   ==============================================================================
   [..]
    The MMC Extension HAL driver can be used as follows:
-   (+) Configure Buffer0 and Buffer1 start address and Buffer size using
-  HAL_MMCEx_ConfigDMAMultiBuffer() function.
+   (+) Configure Buffer0 and Buffer1 start address and Buffer size using HAL_MMCEx_ConfigDMAMultiBuffer() function.
 
-   (+) Start Read and Write for multibuffer mode using
-  HAL_MMCEx_ReadBlocksDMAMultiBuffer() and HAL_MMCEx_WriteBlocksDMAMultiBuffer()
-  functions.
+   (+) Start Read and Write for multibuffer mode using HAL_MMCEx_ReadBlocksDMAMultiBuffer() and HAL_MMCEx_WriteBlocksDMAMultiBuffer() functions.
 
   @endverbatim
   ******************************************************************************
@@ -63,30 +60,26 @@
  */
 
 /** @defgroup MMCEx_Exported_Types_Group1 MMC Internal DMA Buffer structure
- *  @brief   Multibuffer functions
- *
+  *  @brief   Multibuffer functions
+  *
 @verbatim
   ==============================================================================
 	  ##### Multibuffer functions #####
   ==============================================================================
   [..]
-    This section provides functions allowing to configure the multibuffer mode
-and start read and write multibuffer mode for MMC HAL driver.
+    This section provides functions allowing to configure the multibuffer mode and start read and write
+    multibuffer mode for MMC HAL driver.
 
 @endverbatim
   * @{
   */
 
 /**
- * @brief  Configure DMA Dual Buffer mode. The Data transfer is managed by an
- * Internal DMA.
+ * @brief  Configure DMA Dual Buffer mode. The Data transfer is managed by an Internal DMA.
  * @param  hmmc MMC handle
- * @param  pDataBuffer0 Pointer to the buffer0 that will contain/receive the
- * transferred data
- * @param  pDataBuffer1 Pointer to the buffer1 that will contain/receive the
- * transferred data
- * @param  BufferSize Size of Buffer0 in Blocks. Buffer0 and Buffer1 must have
- * the same size.
+ * @param  pDataBuffer0 Pointer to the buffer0 that will contain/receive the transferred data
+ * @param  pDataBuffer1 Pointer to the buffer1 that will contain/receive the transferred data
+ * @param  BufferSize Size of Buffer0 in Blocks. Buffer0 and Buffer1 must have the same size.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_MMCEx_ConfigDMAMultiBuffer(MMC_HandleTypeDef *hmmc, uint32_t *pDataBuffer0, uint32_t *pDataBuffer1, uint32_t BufferSize)
@@ -103,10 +96,8 @@ HAL_StatusTypeDef HAL_MMCEx_ConfigDMAMultiBuffer(MMC_HandleTypeDef *hmmc, uint32
 }
 
 /**
- * @brief  Reads block(s) from a specified address in a card. The received Data
- * will be stored in Buffer0 and Buffer1. Buffer0, Buffer1 and BufferSize need
- * to be configured by function HAL_MMCEx_ConfigDMAMultiBuffer before call this
- * function.
+ * @brief  Reads block(s) from a specified address in a card. The received Data will be stored in Buffer0 and Buffer1.
+ *         Buffer0, Buffer1 and BufferSize need to be configured by function HAL_MMCEx_ConfigDMAMultiBuffer before call this function.
  * @param  hmmc MMC handle
  * @param  BlockAdd Block Address from where data is to be read
  * @param  NumberOfBlocks Total number of blocks to read
@@ -177,10 +168,8 @@ HAL_StatusTypeDef HAL_MMCEx_ReadBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, ui
 }
 
 /**
- * @brief  Write block(s) to a specified address in a card. The transferred Data
- * are stored in Buffer0 and Buffer1. Buffer0, Buffer1 and BufferSize need to be
- * configured by function HAL_MMCEx_ConfigDMAMultiBuffer before call this
- * function.
+ * @brief  Write block(s) to a specified address in a card. The transferred Data are stored in Buffer0 and Buffer1.
+ *         Buffer0, Buffer1 and BufferSize need to be configured by function HAL_MMCEx_ConfigDMAMultiBuffer before call this function.
  * @param  hmmc MMC handle
  * @param  BlockAdd Block Address from where data is to be read
  * @param  NumberOfBlocks Total number of blocks to read
@@ -253,8 +242,7 @@ HAL_StatusTypeDef HAL_MMCEx_WriteBlocksDMAMultiBuffer(MMC_HandleTypeDef *hmmc, u
  * @brief  Change the DMA Buffer0 or Buffer1 address on the fly.
  * @param  hmmc           pointer to a MMC_HandleTypeDef structure.
  * @param  Buffer         the buffer to be changed, This parameter can be one of
- *                        the following values: MMC_DMA_BUFFER0 or
- * MMC_DMA_BUFFER1
+ *                        the following values: MMC_DMA_BUFFER0 or MMC_DMA_BUFFER1
  * @param  pDataBuffer    The new address
  * @note   The BUFFER0 address can be changed only when the current transfer use
  *         BUFFER1 and the BUFFER1 address can be changed only when the current
@@ -284,9 +272,8 @@ __weak void HAL_MMCEx_Read_DMADoubleBuffer0CpltCallback(MMC_HandleTypeDef *hmmc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hmmc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_MMCEx_Read_DMADoubleBuffer0CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_MMCEx_Read_DMADoubleBuffer0CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -300,9 +287,8 @@ __weak void HAL_MMCEx_Read_DMADoubleBuffer1CpltCallback(MMC_HandleTypeDef *hmmc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hmmc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_MMCEx_Read_DMADoubleBuffer1CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_MMCEx_Read_DMADoubleBuffer1CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -316,9 +302,8 @@ __weak void HAL_MMCEx_Write_DMADoubleBuffer0CpltCallback(MMC_HandleTypeDef *hmmc
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hmmc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_MMCEx_Write_DMADoubleBuffer0CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_MMCEx_Write_DMADoubleBuffer0CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -332,9 +317,8 @@ __weak void HAL_MMCEx_Write_DMADoubleBuffer1CpltCallback(MMC_HandleTypeDef *hmmc
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hmmc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_MMCEx_Write_DMADoubleBuffer0CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_MMCEx_Write_DMADoubleBuffer0CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -356,5 +340,4 @@ __weak void HAL_MMCEx_Write_DMADoubleBuffer1CpltCallback(MMC_HandleTypeDef *hmmc
  * @}
  */
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */

@@ -4,13 +4,10 @@
   * @author  MCD Application Team
   * @brief   HAL time base based on the hardware TIM Template.
   *
-  *          This file overrides the native HAL time base functions (defined as
-  weak)
+  *          This file overrides the native HAL time base functions (defined as weak)
   *          the TIM time base:
-  *           + Initializes the TIM peripheral to generate a Period elapsed
-  Event each 1ms
-  *           + HAL_IncTick is called inside HAL_TIM_PeriodElapsedCallback ie
-  each 1ms
+  *           + Initializes the TIM peripheral to generate a Period elapsed Event each 1ms
+  *           + HAL_IncTick is called inside HAL_TIM_PeriodElapsedCallback ie each 1ms
   *
   ******************************************************************************
   * @attention
@@ -34,8 +31,8 @@
        HAL_TIM_MODULE_ENABLED is defined in stm32l4xx_hal_conf.h
 
     [..]
-    (@) The application needs to ensure that the time base is always set to 1
-  millisecond to have correct HAL operation.
+    (@) The application needs to ensure that the time base is always set to 1 millisecond
+       to have correct HAL operation.
 
   @endverbatim
   ******************************************************************************
@@ -65,9 +62,8 @@ void TIM6_DAC_IRQHandler(void);
  * @brief  This function configures the TIM6 as a time base source.
  *         The time source is configured  to have 1ms time base with a dedicated
  *         Tick interrupt priority.
- * @note   This function is called  automatically at the beginning of program
- * after reset by HAL_Init() or at any time when clock is configured, by
- * HAL_RCC_ClockConfig().
+ * @note   This function is called  automatically at the beginning of program after
+ *         reset by HAL_Init() or at any time when clock is configured, by HAL_RCC_ClockConfig().
  * @param  TickPriority Tick interrupt priority.
  * @retval HAL status
  */
@@ -79,8 +75,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	uint32_t pFLatency;
 	HAL_StatusTypeDef status = HAL_OK;
 
-	/* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type
-	 * that don't take the value zero)*/
+	/* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type that don't take the value zero)*/
 	if ((uint32_t)uwTickFreq != 0U) {
 		/* Enable TIM6 clock */
 		__HAL_RCC_TIM6_CLK_ENABLE();
@@ -98,8 +93,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 			uwTimclock = 2U * HAL_RCC_GetPCLK1Freq();
 		}
 
-		/* Compute the prescaler value to have TIM6 counter clock equal
-		 * to 1MHz */
+		/* Compute the prescaler value to have TIM6 counter clock equal to 1MHz */
 		uwPrescalerValue = (uint32_t)((uwTimclock / 1000000U) - 1U);
 
 		/* Initialize TIM6 */
@@ -107,8 +101,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 
 		/* Initialize TIMx peripheral as follows:
 		+ Period = [(TIM6CLK/1000) - 1]. to have a (1/1000) s time base.
-		+ Prescaler = (uwTimclock/1000000 - 1) to have a 1MHz counter
-		clock.
+		+ Prescaler = (uwTimclock/1000000 - 1) to have a 1MHz counter clock.
 		+ ClockDivision = 0
 		+ Counter direction = Up
 		*/
@@ -118,8 +111,12 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
 		TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 		if (HAL_TIM_Base_Init(&TimHandle) == HAL_OK) {
-			/* Start the TIM time Base generation in interrupt mode
-			 */
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
+			/* Register callback */
+			HAL_TIM_RegisterCallback(&TimHandle, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
+
+			/* Start the TIM time Base generation in interrupt mode */
 			if (HAL_TIM_Base_Start_IT(&TimHandle) == HAL_OK) {
 				/* Enable the TIM6_DAC global Interrupt */
 				HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);

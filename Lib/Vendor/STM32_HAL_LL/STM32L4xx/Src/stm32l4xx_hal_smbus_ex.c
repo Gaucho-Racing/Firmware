@@ -33,12 +33,10 @@
 
 		     ##### How to use this driver #####
   ==============================================================================
-    (#) Configure the enable or disable of SMBUS Wake Up Mode using the
-  functions :
+    (#) Configure the enable or disable of SMBUS Wake Up Mode using the functions :
 	  (++) HAL_SMBUSEx_EnableWakeUp()
 	  (++) HAL_SMBUSEx_DisableWakeUp()
-    (#) Configure the enable or disable of fast mode plus driving capability
-  using the functions :
+    (#) Configure the enable or disable of fast mode plus driving capability using the functions :
 	  (++) HAL_SMBUSEx_EnableFastModePlus()
 	  (++) HAL_SMBUSEx_DisableFastModePlus()
   @endverbatim
@@ -86,8 +84,7 @@
 /**
  * @brief  Enable SMBUS wakeup from Stop mode(s).
  * @param  hsmbus Pointer to a SMBUS_HandleTypeDef structure that contains
- *                the configuration information for the specified SMBUSx
- * peripheral.
+ *                the configuration information for the specified SMBUSx peripheral.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus)
@@ -123,8 +120,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 /**
  * @brief  Disable SMBUS wakeup from Stop mode(s).
  * @param  hsmbus Pointer to a SMBUS_HandleTypeDef structure that contains
- *                the configuration information for the specified SMBUSx
- * peripheral.
+ *                the configuration information for the specified SMBUSx peripheral.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
@@ -178,11 +174,11 @@ HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
  * @brief Enable the SMBUS fast mode plus driving capability.
  * @param ConfigFastModePlus Selects the pin.
  *   This parameter can be one of the @ref SMBUSEx_FastModePlus values
- * @note  For I2C1, fast mode plus driving capability can be enabled on all
- * selected I2C1 pins using SMBUS_FASTMODEPLUS_I2C1 parameter or independently
+ * @note  For I2C1, fast mode plus driving capability can be enabled on all selected
+ *        I2C1 pins using SMBUS_FASTMODEPLUS_I2C1 parameter or independently
  *        on each one of the following pins PB6, PB7, PB8 and PB9.
- * @note  For remaining I2C1 pins (PA14, PA15...) fast mode plus driving
- * capability can be enabled only by using SMBUS_FASTMODEPLUS_I2C1 parameter.
+ * @note  For remaining I2C1 pins (PA14, PA15...) fast mode plus driving capability
+ *        can be enabled only by using SMBUS_FASTMODEPLUS_I2C1 parameter.
  * @note  For all I2C2 pins fast mode plus driving capability can be enabled
  *        only by using SMBUS_FASTMODEPLUS_I2C2 parameter.
  * @note  For all I2C3 pins fast mode plus driving capability can be enabled
@@ -207,11 +203,11 @@ void HAL_SMBUSEx_EnableFastModePlus(uint32_t ConfigFastModePlus)
  * @brief Disable the SMBUS fast mode plus driving capability.
  * @param ConfigFastModePlus Selects the pin.
  *   This parameter can be one of the @ref SMBUSEx_FastModePlus values
- * @note  For I2C1, fast mode plus driving capability can be disabled on all
- * selected I2C1 pins using SMBUS_FASTMODEPLUS_I2C1 parameter or independently
+ * @note  For I2C1, fast mode plus driving capability can be disabled on all selected
+ *        I2C1 pins using SMBUS_FASTMODEPLUS_I2C1 parameter or independently
  *        on each one of the following pins PB6, PB7, PB8 and PB9.
- * @note  For remaining I2C1 pins (PA14, PA15...) fast mode plus driving
- * capability can be disabled only by using SMBUS_FASTMODEPLUS_I2C1 parameter.
+ * @note  For remaining I2C1 pins (PA14, PA15...) fast mode plus driving capability
+ *        can be disabled only by using SMBUS_FASTMODEPLUS_I2C1 parameter.
  * @note  For all I2C2 pins fast mode plus driving capability can be disabled
  *        only by using SMBUS_FASTMODEPLUS_I2C2 parameter.
  * @note  For all I2C3 pins fast mode plus driving capability can be disabled

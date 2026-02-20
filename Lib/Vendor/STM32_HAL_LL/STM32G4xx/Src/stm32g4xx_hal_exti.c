@@ -4,10 +4,8 @@
   * @author  MCD Application Team
   * @brief   EXTI HAL module driver.
   *          This file provides firmware functions to manage the following
-  *          functionalities of the Extended Interrupts and events controller
-  (EXTI) peripheral:
-  *          functionalities of the General Purpose Input/Output (EXTI)
-  peripheral:
+  *          functionalities of the Extended Interrupts and events controller (EXTI) peripheral:
+  *          functionalities of the General Purpose Input/Output (EXTI) peripheral:
   *           + Initialization and de-initialization functions
   *           + IO operation functions
   *
@@ -65,15 +63,12 @@
     (#) Get current Exti configuration of a dedicated line using
 	HAL_EXTI_GetConfigLine().
 	(++) Provide exiting handle as parameter.
-	(++) Provide pointer on EXTI_ConfigTypeDef structure as second
-  parameter.
+	(++) Provide pointer on EXTI_ConfigTypeDef structure as second parameter.
 
-    (#) Clear Exti configuration of a dedicated line using
-  HAL_EXTI_ClearConfigLine().
+    (#) Clear Exti configuration of a dedicated line using HAL_EXTI_ClearConfigLine().
 	(++) Provide exiting handle as parameter.
 
-    (#) Register callback to treat Exti interrupts using
-  HAL_EXTI_RegisterCallback().
+    (#) Register callback to treat Exti interrupts using HAL_EXTI_RegisterCallback().
 	(++) Provide exiting handle as first parameter.
 	(++) Provide which callback will be registered using one value from
 	     EXTI_CallbackIDTypeDef.
@@ -109,17 +104,12 @@
 #ifdef HAL_EXTI_MODULE_ENABLED
 
 /* Private typedef -----------------------------------------------------------*/
-/* Private defines
- * ------------------------------------------------------------*/
+/* Private defines ------------------------------------------------------------*/
 /** @defgroup EXTI_Private_Constants EXTI Private Constants
  * @{
  */
-#define EXTI_MODE_OFFSET                                                                                                                                                                               \
-	0x08U /* 0x20: offset between MCU IMR/EMR registers                                                                                                                                            \
-	       */
-#define EXTI_CONFIG_OFFSET                                                                                                                                                                             \
-	0x08U /* 0x20: offset between MCU Rising/Falling configuration                                                                                                                                 \
-		 registers */
+#define EXTI_MODE_OFFSET 0x08U	 /* 0x20: offset between MCU IMR/EMR registers */
+#define EXTI_CONFIG_OFFSET 0x08U /* 0x20: offset between MCU Rising/Falling configuration registers */
 /**
  * @}
  */
@@ -151,7 +141,7 @@
  * @param  pExtiConfig Pointer on EXTI configuration to be set.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig)
+HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef const *pExtiConfig)
 {
 	__IO uint32_t *regaddr;
 	uint32_t regval;
@@ -259,9 +249,9 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigT
  * @param  pExtiConfig Pointer on structure to store Exti configuration.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig)
+HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef const *hexti, EXTI_ConfigTypeDef *pExtiConfig)
 {
-	__IO uint32_t *regaddr;
+	const __IO uint32_t *regaddr;
 	uint32_t regval;
 	uint32_t linepos;
 	uint32_t maskline;
@@ -345,7 +335,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigT
  * @param  hexti Exti handle.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(EXTI_HandleTypeDef *hexti)
+HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(EXTI_HandleTypeDef const *hexti)
 {
 	__IO uint32_t *regaddr;
 	uint32_t regval;
@@ -475,7 +465,7 @@ HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLin
  * @param  hexti Exti handle.
  * @retval none.
  */
-void HAL_EXTI_IRQHandler(EXTI_HandleTypeDef *hexti)
+void HAL_EXTI_IRQHandler(EXTI_HandleTypeDef const *hexti)
 {
 	__IO uint32_t *regaddr;
 	uint32_t regval;
@@ -508,9 +498,9 @@ void HAL_EXTI_IRQHandler(EXTI_HandleTypeDef *hexti)
  * @param  Edge unused
  * @retval 1 if interrupt is pending else 0.
  */
-uint32_t HAL_EXTI_GetPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
+uint32_t HAL_EXTI_GetPending(EXTI_HandleTypeDef const *hexti, uint32_t Edge)
 {
-	__IO uint32_t *regaddr;
+	const __IO uint32_t *regaddr;
 	uint32_t regval;
 	uint32_t linepos;
 	uint32_t maskline;
@@ -542,7 +532,7 @@ uint32_t HAL_EXTI_GetPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
  * @param  Edge unused
  * @retval None.
  */
-void HAL_EXTI_ClearPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
+void HAL_EXTI_ClearPending(EXTI_HandleTypeDef const *hexti, uint32_t Edge)
 {
 	__IO uint32_t *regaddr;
 	uint32_t maskline;
@@ -570,7 +560,7 @@ void HAL_EXTI_ClearPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
  * @param  hexti Exti handle.
  * @retval None.
  */
-void HAL_EXTI_GenerateSWI(EXTI_HandleTypeDef *hexti)
+void HAL_EXTI_GenerateSWI(EXTI_HandleTypeDef const *hexti)
 {
 	__IO uint32_t *regaddr;
 	uint32_t maskline;

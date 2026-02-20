@@ -31,12 +31,10 @@
 
       (#) Call USB_CoreInit() API to initialize the USB Core peripheral.
 
-      (#) The upper HAL HCD/PCD driver will call the right routines for its
-  internal processes.
+      (#) The upper HAL HCD/PCD driver will call the right routines for its internal processes.
 
       (#)NOTE: For applications not using double buffer mode, define the symbol
-		'USE_USB_DOUBLE_BUFFER' as 0 to reduce the driver's memory
-  footprint.
+		'USE_USB_DOUBLE_BUFFER' as 0 to reduce the driver's memory footprint.
 
   @endverbatim
 
@@ -66,16 +64,15 @@
  *         the configuration information for the specified USBx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef USB_CoreInit(USB_TypeDef *USBx, USB_CfgTypeDef cfg)
+HAL_StatusTypeDef USB_CoreInit(USB_TypeDef const *USBx, USB_CfgTypeDef cfg)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(USBx);
 	UNUSED(cfg);
 
-	/* NOTE : - This function is not required by USB Device FS peripheral,
-	   it is used only by USB OTG FS peripheral.
-		  - This function is added to ensure compatibility across
-	   platforms.
+	/* NOTE : - This function is not required by USB Device FS peripheral, it is used
+		    only by USB OTG FS peripheral.
+		  - This function is added to ensure compatibility across platforms.
 	 */
 
 	return HAL_OK;
@@ -130,16 +127,15 @@ HAL_StatusTypeDef USB_DisableGlobalInt(USB_TypeDef *USBx)
  *            @arg USB_DEVICE_MODE Peripheral mode
  * @retval HAL status
  */
-HAL_StatusTypeDef USB_SetCurrentMode(USB_TypeDef *USBx, USB_ModeTypeDef mode)
+HAL_StatusTypeDef USB_SetCurrentMode(USB_TypeDef const *USBx, USB_ModeTypeDef mode)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(USBx);
 	UNUSED(mode);
 
-	/* NOTE : - This function is not required by USB Device FS peripheral,
-	   it is used only by USB OTG FS peripheral.
-		  - This function is added to ensure compatibility across
-	   platforms.
+	/* NOTE : - This function is not required by USB Device FS peripheral, it is used
+		    only by USB OTG FS peripheral.
+		  - This function is added to ensure compatibility across platforms.
 	 */
 	return HAL_OK;
 }
@@ -187,10 +183,9 @@ HAL_StatusTypeDef USB_FlushTxFifo(USB_TypeDef const *USBx, uint32_t num)
 	UNUSED(USBx);
 	UNUSED(num);
 
-	/* NOTE : - This function is not required by USB Device FS peripheral,
-	   it is used only by USB OTG FS peripheral.
-		  - This function is added to ensure compatibility across
-	   platforms.
+	/* NOTE : - This function is not required by USB Device FS peripheral, it is used
+		    only by USB OTG FS peripheral.
+		  - This function is added to ensure compatibility across platforms.
 	 */
 
 	return HAL_OK;
@@ -206,10 +201,9 @@ HAL_StatusTypeDef USB_FlushRxFifo(USB_TypeDef const *USBx)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(USBx);
 
-	/* NOTE : - This function is not required by USB Device FS peripheral,
-	   it is used only by USB OTG FS peripheral.
-		  - This function is added to ensure compatibility across
-	   platforms.
+	/* NOTE : - This function is not required by USB Device FS peripheral, it is used
+		    only by USB OTG FS peripheral.
+		  - This function is added to ensure compatibility across platforms.
 	 */
 
 	return HAL_OK;
@@ -363,8 +357,7 @@ HAL_StatusTypeDef USB_DeactivateEndpoint(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 			PCD_CLEAR_RX_DTOG(USBx, ep->num);
 			PCD_CLEAR_TX_DTOG(USBx, ep->num);
 
-			/* Reset value of the data toggle bits for the endpoint
-			 * out*/
+			/* Reset value of the data toggle bits for the endpoint out*/
 			PCD_TX_DTOG(USBx, ep->num);
 
 			PCD_SET_EP_RX_STATUS(USBx, ep->num, USB_EP_RX_DIS);
@@ -421,20 +414,16 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 					/* enable double buffer */
 					PCD_SET_BULK_EP_DBUF(USBx, ep->num);
 
-					/* each Time to write in PMA xfer_len_db
-					 * will */
+					/* each Time to write in PMA xfer_len_db will */
 					ep->xfer_len_db -= len;
 
-					/* Fill the two first buffer in the
-					 * Buffer0 & Buffer1 */
+					/* Fill the two first buffer in the Buffer0 & Buffer1 */
 					if ((PCD_GET_ENDPOINT(USBx, ep->num) & USB_EP_DTOG_TX) != 0U) {
-						/* Set the Double buffer counter
-						 * for pmabuffer1 */
+						/* Set the Double buffer counter for pmabuffer1 */
 						PCD_SET_EP_DBUF1_CNT(USBx, ep->num, ep->is_in, len);
 						pmabuffer = ep->pmaaddr1;
 
-						/* Write the user buffer to USB
-						 * PMA */
+						/* Write the user buffer to USB PMA */
 						USB_WritePMA(USBx, ep->xfer_buff, pmabuffer, (uint16_t)len);
 						ep->xfer_buff += len;
 
@@ -445,22 +434,18 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 							ep->xfer_len_db = 0U;
 						}
 
-						/* Set the Double buffer counter
-						 * for pmabuffer0 */
+						/* Set the Double buffer counter for pmabuffer0 */
 						PCD_SET_EP_DBUF0_CNT(USBx, ep->num, ep->is_in, len);
 						pmabuffer = ep->pmaaddr0;
 
-						/* Write the user buffer to USB
-						 * PMA */
+						/* Write the user buffer to USB PMA */
 						USB_WritePMA(USBx, ep->xfer_buff, pmabuffer, (uint16_t)len);
 					} else {
-						/* Set the Double buffer counter
-						 * for pmabuffer0 */
+						/* Set the Double buffer counter for pmabuffer0 */
 						PCD_SET_EP_DBUF0_CNT(USBx, ep->num, ep->is_in, len);
 						pmabuffer = ep->pmaaddr0;
 
-						/* Write the user buffer to USB
-						 * PMA */
+						/* Write the user buffer to USB PMA */
 						USB_WritePMA(USBx, ep->xfer_buff, pmabuffer, (uint16_t)len);
 						ep->xfer_buff += len;
 
@@ -471,28 +456,22 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 							ep->xfer_len_db = 0U;
 						}
 
-						/* Set the Double buffer counter
-						 * for pmabuffer1 */
+						/* Set the Double buffer counter for pmabuffer1 */
 						PCD_SET_EP_DBUF1_CNT(USBx, ep->num, ep->is_in, len);
 						pmabuffer = ep->pmaaddr1;
 
-						/* Write the user buffer to USB
-						 * PMA */
+						/* Write the user buffer to USB PMA */
 						USB_WritePMA(USBx, ep->xfer_buff, pmabuffer, (uint16_t)len);
 					}
 				}
-				/* auto Switch to single buffer mode when
-				   transfer <Mps no need to manage in double
-				   buffer */
+				/* auto Switch to single buffer mode when transfer <Mps no need to manage in double buffer */
 				else {
 					len = ep->xfer_len_db;
 
-					/* disable double buffer mode for Bulk
-					 * endpoint */
+					/* disable double buffer mode for Bulk endpoint */
 					PCD_CLEAR_BULK_EP_DBUF(USBx, ep->num);
 
-					/* Set Tx count with nbre of byte to be
-					 * transmitted */
+					/* Set Tx count with nbre of byte to be transmitted */
 					PCD_SET_EP_TX_CNT(USBx, ep->num, len);
 					pmabuffer = ep->pmaaddr0;
 
@@ -506,16 +485,14 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 
 				/* Fill the data buffer */
 				if ((PCD_GET_ENDPOINT(USBx, ep->num) & USB_EP_DTOG_TX) != 0U) {
-					/* Set the Double buffer counter for
-					 * pmabuffer1 */
+					/* Set the Double buffer counter for pmabuffer1 */
 					PCD_SET_EP_DBUF1_CNT(USBx, ep->num, ep->is_in, len);
 					pmabuffer = ep->pmaaddr1;
 
 					/* Write the user buffer to USB PMA */
 					USB_WritePMA(USBx, ep->xfer_buff, pmabuffer, (uint16_t)len);
 				} else {
-					/* Set the Double buffer counter for
-					 * pmabuffer0 */
+					/* Set the Double buffer counter for pmabuffer0 */
 					PCD_SET_EP_DBUF0_CNT(USBx, ep->num, ep->is_in, len);
 					pmabuffer = ep->pmaaddr0;
 
@@ -531,8 +508,7 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 	{
 		if (ep->doublebuffer == 0U) {
 			if ((ep->xfer_len == 0U) && (ep->type == EP_TYPE_CTRL)) {
-				/* This is a status out stage set the OUT_STATUS
-				 */
+				/* This is a status out stage set the OUT_STATUS */
 				PCD_SET_OUT_STATUS(USBx, ep->num);
 			} else {
 				PCD_CLEAR_OUT_STATUS(USBx, ep->num);
@@ -547,14 +523,12 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 		}
 #if (USE_USB_DOUBLE_BUFFER == 1U)
 		else {
-			/* First Transfer Coming From HAL_PCD_EP_Receive & From
-			 * ISR */
+			/* First Transfer Coming From HAL_PCD_EP_Receive & From ISR */
 			/* Set the Double buffer counter */
 			if (ep->type == EP_TYPE_BULK) {
 				/* Coming from ISR */
 				if (ep->xfer_count != 0U) {
-					/* Update last value to check if there
-					 * is blocking state */
+					/* Update last value to check if there is blocking state */
 					wEPVal = PCD_GET_ENDPOINT(USBx, ep->num);
 
 					/* Blocking State */
@@ -565,8 +539,7 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 			}
 			/* iso out double */
 			else if (ep->type == EP_TYPE_ISOC) {
-				/* Only single packet transfer supported in FS
-				 */
+				/* Only single packet transfer supported in FS */
 				ep->xfer_len = 0U;
 			} else {
 				return HAL_ERROR;
@@ -695,30 +668,26 @@ HAL_StatusTypeDef USB_SetDevAddress(USB_TypeDef *USBx, uint8_t address)
 }
 
 /**
- * @brief  USB_DevConnect Connect the USB device by enabling the
- * pull-up/pull-down
+ * @brief  USB_DevConnect Connect the USB device by enabling the pull-up/pull-down
  * @param  USBx Selected device
  * @retval HAL status
  */
 HAL_StatusTypeDef USB_DevConnect(USB_TypeDef *USBx)
 {
-	/* Enabling DP Pull-UP bit to Connect internal PU resistor on USB DP
-	 * line */
+	/* Enabling DP Pull-UP bit to Connect internal PU resistor on USB DP line */
 	USBx->BCDR |= (uint16_t)USB_BCDR_DPPU;
 
 	return HAL_OK;
 }
 
 /**
- * @brief  USB_DevDisconnect Disconnect the USB device by disabling the
- * pull-up/pull-down
+ * @brief  USB_DevDisconnect Disconnect the USB device by disabling the pull-up/pull-down
  * @param  USBx Selected device
  * @retval HAL status
  */
 HAL_StatusTypeDef USB_DevDisconnect(USB_TypeDef *USBx)
 {
-	/* Disable DP Pull-Up bit to disconnect the Internal PU resistor on USB
-	 * DP line */
+	/* Disable DP Pull-Up bit to disconnect the Internal PU resistor on USB DP line */
 	USBx->BCDR &= (uint16_t)(~(USB_BCDR_DPPU));
 
 	return HAL_OK;
@@ -841,8 +810,7 @@ void USB_ReadPMA(USB_TypeDef const *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAdd
  * @}
  */
 #endif /* defined (USB) */
-#endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED)                                                                                                                         \
-	*/
+#endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED) */
 
 /**
  * @}

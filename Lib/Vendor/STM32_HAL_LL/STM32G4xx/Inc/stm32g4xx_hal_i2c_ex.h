@@ -63,17 +63,13 @@ extern "C" {
 #if defined(SYSCFG_CFGR1_I2C3_FMP)
 #define I2C_FASTMODEPLUS_I2C3 SYSCFG_CFGR1_I2C3_FMP /*!< Enable Fast Mode Plus on I2C3 pins */
 #else
-#define I2C_FASTMODEPLUS_I2C3                                                                                                                                                                          \
-	(uint32_t)(0x00000400U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C3 not supported                                                                                                         \
-							 */
-#endif							/* SYSCFG_CFGR1_I2C3_FMP */
+#define I2C_FASTMODEPLUS_I2C3 (uint32_t)(0x00000400U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C3 not supported  */
+#endif									      /* SYSCFG_CFGR1_I2C3_FMP */
 #if defined(SYSCFG_CFGR1_I2C4_FMP)
 #define I2C_FASTMODEPLUS_I2C4 SYSCFG_CFGR1_I2C4_FMP /*!< Enable Fast Mode Plus on I2C4 pins */
 #else
-#define I2C_FASTMODEPLUS_I2C4                                                                                                                                                                          \
-	(uint32_t)(0x00000800U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C4 not supported                                                                                                         \
-							 */
-#endif							/* SYSCFG_CFGR1_I2C4_FMP */
+#define I2C_FASTMODEPLUS_I2C4 (uint32_t)(0x00000800U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C4 not supported  */
+#endif									      /* SYSCFG_CFGR1_I2C4_FMP */
 /**
  * @}
  */
@@ -99,8 +95,7 @@ extern "C" {
 /** @addtogroup I2CEx_Exported_Functions_Group1 Filter Mode Functions
  * @{
  */
-/* Peripheral Control functions
- * ************************************************/
+/* Peripheral Control functions  ************************************************/
 HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
 HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
 /**
@@ -161,9 +156,9 @@ void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C1)) == I2C_FASTMODEPLUS_I2C1) || (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C2)) == I2C_FASTMODEPLUS_I2C2) ||                                                \
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C4)) == I2C_FASTMODEPLUS_I2C4)))
 #endif /* I2C3 */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 /* Private Functions ---------------------------------------------------------*/
 /** @defgroup I2CEx_Private_Functions I2C Extended Private Functions

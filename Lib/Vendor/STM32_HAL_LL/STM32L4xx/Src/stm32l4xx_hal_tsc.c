@@ -30,8 +30,8 @@
 
   (#) Supports up to 3 capacitive sensing channels per group
 
-  (#) Capacitive sensing channels can be acquired in parallel offering a very
-good response time
+  (#) Capacitive sensing channels can be acquired in parallel offering a very good
+      response time
 
   (#) Spread spectrum feature to improve system robustness in noisy environments
 
@@ -43,17 +43,14 @@ good response time
 
   (#) Programmable channel I/O pin
 
-  (#) Programmable max count value to avoid long acquisition when a channel is
-faulty
+  (#) Programmable max count value to avoid long acquisition when a channel is faulty
 
-  (#) Dedicated end of acquisition and max count error flags with interrupt
-capability
+  (#) Dedicated end of acquisition and max count error flags with interrupt capability
 
-  (#) One sampling capacitor for up to 3 capacitive sensing channels to reduce
-the system components
+  (#) One sampling capacitor for up to 3 capacitive sensing channels to reduce the system
+      components
 
-  (#) Compatible with proximity, touchkey, linear and rotary touch sensor
-implementation
+  (#) Compatible with proximity, touchkey, linear and rotary touch sensor implementation
 
 			  ##### How to use this driver #####
 ================================================================================
@@ -61,19 +58,17 @@ implementation
     (#) Enable the TSC interface clock using __HAL_RCC_TSC_CLK_ENABLE() macro.
 
     (#) GPIO pins configuration
-      (++) Enable the clock for the TSC GPIOs using __HAL_RCC_GPIOx_CLK_ENABLE()
-macro.
-      (++) Configure the TSC pins used as sampling IOs in alternate function
-output Open-Drain mode, and TSC pins used as channel/shield IOs in alternate
-function output Push-Pull mode using HAL_GPIO_Init() function.
+      (++) Enable the clock for the TSC GPIOs using __HAL_RCC_GPIOx_CLK_ENABLE() macro.
+      (++) Configure the TSC pins used as sampling IOs in alternate function output Open-Drain mode,
+	   and TSC pins used as channel/shield IOs in alternate function output Push-Pull mode
+	   using HAL_GPIO_Init() function.
 
     (#) Interrupts configuration
-      (++) Configure the NVIC (if the interrupt model is used) using
-HAL_NVIC_SetPriority() and HAL_NVIC_EnableIRQ() and function.
+      (++) Configure the NVIC (if the interrupt model is used) using HAL_NVIC_SetPriority()
+	   and HAL_NVIC_EnableIRQ() and function.
 
     (#) TSC configuration
-      (++) Configure all TSC parameters and used TSC IOs using HAL_TSC_Init()
-function.
+      (++) Configure all TSC parameters and used TSC IOs using HAL_TSC_Init() function.
 
  [..]   TSC peripheral alternate functions are mapped on AF9.
 
@@ -81,16 +76,15 @@ function.
   ===================================
   [..]
     (+) Discharge all IOs using HAL_TSC_IODischarge() function.
-    (+) Wait a certain time allowing a good discharge of all capacitors. This
-delay depends of the sampling capacitor and electrodes design.
+    (+) Wait a certain time allowing a good discharge of all capacitors. This delay depends
+	of the sampling capacitor and electrodes design.
     (+) Select the channel IOs to be acquired using HAL_TSC_IOConfig() function.
-    (+) Launch the acquisition using either HAL_TSC_Start() or
-HAL_TSC_Start_IT() function. If the synchronized mode is selected, the
-acquisition will start as soon as the signal is received on the synchro pin.
+    (+) Launch the acquisition using either HAL_TSC_Start() or HAL_TSC_Start_IT() function.
+	If the synchronized mode is selected, the acquisition will start as soon as the signal
+	is received on the synchro pin.
     (+) Wait the end of acquisition using either HAL_TSC_PollForAcquisition() or
 	HAL_TSC_GetState() function or using WFI instruction for example.
-    (+) Check the group acquisition status using HAL_TSC_GroupGetStatus()
-function.
+    (+) Check the group acquisition status using HAL_TSC_GroupGetStatus() function.
     (+) Read the acquisition value using HAL_TSC_GroupGetValue() function.
 
      *** Callback registration ***
@@ -108,8 +102,8 @@ function.
        (+) MspInitCallback    : callback for Msp Init.
        (+) MspDeInitCallback  : callback for Msp DeInit.
   [..]
-     This function takes as parameters the HAL peripheral handle, the Callback
-ID and a pointer to the user callback function.
+     This function takes as parameters the HAL peripheral handle, the Callback ID
+     and a pointer to the user callback function.
 
   [..]
      Use function HAL_TSC_UnRegisterCallback to reset a callback to the default
@@ -124,28 +118,28 @@ ID and a pointer to the user callback function.
        (+) MspDeInitCallback  : callback for Msp DeInit.
 
   [..]
-     By default, after the HAL_TSC_Init() and when the state is
-HAL_TSC_STATE_RESET all callbacks are set to the corresponding weak functions:
+     By default, after the HAL_TSC_Init() and when the state is HAL_TSC_STATE_RESET
+     all callbacks are set to the corresponding weak functions:
      examples HAL_TSC_ConvCpltCallback(), HAL_TSC_ErrorCallback().
      Exception done for MspInit and MspDeInit functions that are
-     reset to the legacy weak functions in the HAL_TSC_Init()/ HAL_TSC_DeInit()
-only when these callbacks are null (not registered beforehand). If MspInit or
-MspDeInit are not null, the HAL_TSC_Init()/ HAL_TSC_DeInit() keep and use the
-user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
+     reset to the legacy weak functions in the HAL_TSC_Init()/ HAL_TSC_DeInit() only when
+     these callbacks are null (not registered beforehand).
+     If MspInit or MspDeInit are not null, the HAL_TSC_Init()/ HAL_TSC_DeInit()
+     keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
 
   [..]
      Callbacks can be registered/unregistered in HAL_TSC_STATE_READY state only.
-     Exception done MspInit/MspDeInit functions that can be
-registered/unregistered in HAL_TSC_STATE_READY or HAL_TSC_STATE_RESET state,
-     thus registered (user) MspInit/DeInit callbacks can be used during the
-Init/DeInit. Then, the user first registers the MspInit/MspDeInit user callbacks
+     Exception done MspInit/MspDeInit functions that can be registered/unregistered
+     in HAL_TSC_STATE_READY or HAL_TSC_STATE_RESET state,
+     thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
+     Then, the user first registers the MspInit/MspDeInit user callbacks
      using HAL_TSC_RegisterCallback() before calling HAL_TSC_DeInit()
      or HAL_TSC_Init() function.
 
   [..]
      When the compilation flag USE_HAL_TSC_REGISTER_CALLBACKS is set to 0 or
-     not defined, the callback registration feature is not available and all
-callbacks are set to the corresponding weak functions.
+     not defined, the callback registration feature is not available and all callbacks
+     are set to the corresponding weak functions.
 
   @endverbatim
   ******************************************************************************
@@ -228,8 +222,7 @@ static uint32_t TSC_extract_groups(uint32_t iomask);
  * @{
  */
 
-/** @defgroup TSC_Exported_Functions_Group1 Initialization and de-initialization
-functions
+/** @defgroup TSC_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -245,8 +238,7 @@ functions
 
 /**
  * @brief  Initialize the TSC peripheral according to the specified parameters
- *         in the TSC_InitTypeDef structure and initialize the associated
- * handle.
+ *         in the TSC_InitTypeDef structure and initialize the associated handle.
  * @param  htsc TSC handle
  * @retval HAL status
  */
@@ -281,8 +273,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
 		/* Init the TSC Callback settings */
-		htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak ConvCpltCallback */
-		htsc->ErrorCallback = HAL_TSC_ErrorCallback;	   /* Legacy weak ErrorCallback */
+		htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak ConvCpltCallback     */
+		htsc->ErrorCallback = HAL_TSC_ErrorCallback;	   /* Legacy weak ErrorCallback        */
 
 		if (htsc->MspInitCallback == NULL) {
 			htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit  */
@@ -342,8 +334,7 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 }
 
 /**
- * @brief  Deinitialize the TSC peripheral registers to their default reset
- * values.
+ * @brief  Deinitialize the TSC peripheral registers to their default reset values.
  * @param  htsc TSC handle
  * @retval HAL status
  */
@@ -393,8 +384,8 @@ __weak void HAL_TSC_MspInit(TSC_HandleTypeDef *htsc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(htsc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_TSC_MspInit could be implemented in the user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_TSC_MspInit could be implemented in the user file.
 	 */
 }
 
@@ -409,8 +400,8 @@ __weak void HAL_TSC_MspDeInit(TSC_HandleTypeDef *htsc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(htsc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_TSC_MspDeInit could be implemented in the user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_TSC_MspDeInit could be implemented in the user file.
 	 */
 }
 
@@ -422,8 +413,7 @@ __weak void HAL_TSC_MspDeInit(TSC_HandleTypeDef *htsc)
  *                the configuration information for the specified TSC.
  * @param  CallbackID ID of the callback to be registered
  *         This parameter can be one of the following values:
- *          @arg @ref HAL_TSC_CONV_COMPLETE_CB_ID Conversion completed callback
- * ID
+ *          @arg @ref HAL_TSC_CONV_COMPLETE_CB_ID Conversion completed callback ID
  *          @arg @ref HAL_TSC_ERROR_CB_ID Error callback ID
  *          @arg @ref HAL_TSC_MSPINIT_CB_ID MspInit callback ID
  *          @arg @ref HAL_TSC_MSPDEINIT_CB_ID MspDeInit callback ID
@@ -508,8 +498,7 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Call
  * @param  CallbackID ID of the callback to be unregistered
  *         This parameter can be one of the following values:
  *         This parameter can be one of the following values:
- *          @arg @ref HAL_TSC_CONV_COMPLETE_CB_ID Conversion completed callback
- * ID
+ *          @arg @ref HAL_TSC_CONV_COMPLETE_CB_ID Conversion completed callback ID
  *          @arg @ref HAL_TSC_ERROR_CB_ID Error callback ID
  *          @arg @ref HAL_TSC_MSPINIT_CB_ID MspInit callback ID
  *          @arg @ref HAL_TSC_MSPDEINIT_CB_ID MspDeInit callback ID
@@ -525,24 +514,19 @@ HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Ca
 	if (HAL_TSC_STATE_READY == htsc->State) {
 		switch (CallbackID) {
 			case HAL_TSC_CONV_COMPLETE_CB_ID:
-				htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak
-										      ConvCpltCallback
-										    */
+				htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak ConvCpltCallback      */
 				break;
 
 			case HAL_TSC_ERROR_CB_ID:
-				htsc->ErrorCallback = HAL_TSC_ErrorCallback; /* Legacy weak
-									      * ErrorCallback
-									      */
+				htsc->ErrorCallback = HAL_TSC_ErrorCallback; /* Legacy weak ErrorCallback        */
 				break;
 
 			case HAL_TSC_MSPINIT_CB_ID:
-				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit */
+				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit              */
 				break;
 
 			case HAL_TSC_MSPDEINIT_CB_ID:
-				htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
-									      */
+				htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit            */
 				break;
 
 			default:
@@ -556,12 +540,11 @@ HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Ca
 	} else if (HAL_TSC_STATE_RESET == htsc->State) {
 		switch (CallbackID) {
 			case HAL_TSC_MSPINIT_CB_ID:
-				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit */
+				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit              */
 				break;
 
 			case HAL_TSC_MSPDEINIT_CB_ID:
-				htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
-									      */
+				htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit            */
 				break;
 
 			default:
@@ -769,8 +752,8 @@ HAL_StatusTypeDef HAL_TSC_Stop_IT(TSC_HandleTypeDef *htsc)
 
 /**
  * @brief  Start acquisition and wait until completion.
- * @note   There is no need of a timeout parameter as the max count error is
- * already managed by the TSC peripheral.
+ * @note   There is no need of a timeout parameter as the max count error is already
+ *         managed by the TSC peripheral.
  * @param  htsc Pointer to a TSC_HandleTypeDef structure that contains
  *         the configuration information for the specified TSC.
  * @retval HAL state
@@ -785,8 +768,7 @@ HAL_StatusTypeDef HAL_TSC_PollForAcquisition(TSC_HandleTypeDef *htsc)
 
 	/* Check end of acquisition */
 	while (HAL_TSC_GetState(htsc) == HAL_TSC_STATE_BUSY) {
-		/* The timeout (max count error) is managed by the TSC
-		 * peripheral itself. */
+		/* The timeout (max count error) is managed by the TSC peripheral itself. */
 	}
 
 	/* Process unlocked */
@@ -919,8 +901,7 @@ HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc, FunctionalState c
  * @}
  */
 
-/** @defgroup TSC_Exported_Functions_Group4 Peripheral State and Errors
-functions
+/** @defgroup TSC_Exported_Functions_Group4 Peripheral State and Errors functions
   *  @brief   Peripheral State and Errors functions
   *
 @verbatim
@@ -1024,9 +1005,8 @@ __weak void HAL_TSC_ConvCpltCallback(TSC_HandleTypeDef *htsc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(htsc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_TSC_ConvCpltCallback could be implemented in the user
-	   file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_TSC_ConvCpltCallback could be implemented in the user file.
 	 */
 }
 
@@ -1041,9 +1021,8 @@ __weak void HAL_TSC_ErrorCallback(TSC_HandleTypeDef *htsc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(htsc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_TSC_ErrorCallback could be implemented in the user
-	   file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_TSC_ErrorCallback could be implemented in the user file.
 	 */
 }
 

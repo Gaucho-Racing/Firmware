@@ -25,20 +25,16 @@
   [..]
   The DMA Extension HAL driver can be used as follows:
 
-   (+) Configure the DMA_MUX Synchronization Block using HAL_DMAEx_ConfigMuxSync
-  function.
-   (+) Configure the DMA_MUX Request Generator Block using
-  HAL_DMAEx_ConfigMuxRequestGenerator function. Functions
-  HAL_DMAEx_EnableMuxRequestGenerator and HAL_DMAEx_DisableMuxRequestGenerator
-  can then be used to respectively enable/disable the request generator.
+   (+) Configure the DMA_MUX Synchronization Block using HAL_DMAEx_ConfigMuxSync function.
+   (+) Configure the DMA_MUX Request Generator Block using HAL_DMAEx_ConfigMuxRequestGenerator function.
+       Functions HAL_DMAEx_EnableMuxRequestGenerator and HAL_DMAEx_DisableMuxRequestGenerator can then be used
+       to respectively enable/disable the request generator.
 
-   (+) To handle the DMAMUX Interrupts, the function  HAL_DMAEx_MUX_IRQHandler
-  should be called from the DMAMUX IRQ handler i.e DMAMUX1_OVR_IRQHandler. As
-  only one interrupt line is available for all DMAMUX channels and request
-  generators , HAL_DMAEx_MUX_IRQHandler should be called with, as parameter, the
-  appropriate DMA handle as many as used DMAs in the user project (exception
-  done if a given DMA is not using the DMAMUX SYNC block neither a request
-  generator)
+   (+) To handle the DMAMUX Interrupts, the function  HAL_DMAEx_MUX_IRQHandler should be called from
+       the DMAMUX IRQ handler i.e DMAMUX1_OVR_IRQHandler.
+       As only one interrupt line is available for all DMAMUX channels and request generators , HAL_DMAEx_MUX_IRQHandler should be
+       called with, as parameter, the appropriate DMA handle as many as used DMAs in the user project
+      (exception done if a given DMA is not using the DMAMUX SYNC block neither a request generator)
 
   @endverbatim
   */
@@ -78,28 +74,23 @@
  ===============================================================================
     [..]  This section provides functions allowing to:
 
-    (+) Configure the DMAMUX Synchronization Block using HAL_DMAEx_ConfigMuxSync
-function.
-    (+) Configure the DMAMUX Request Generator Block using
-HAL_DMAEx_ConfigMuxRequestGenerator function. Functions
-HAL_DMAEx_EnableMuxRequestGenerator and HAL_DMAEx_DisableMuxRequestGenerator can
-then be used to respectively enable/disable the request generator.
+    (+) Configure the DMAMUX Synchronization Block using HAL_DMAEx_ConfigMuxSync function.
+    (+) Configure the DMAMUX Request Generator Block using HAL_DMAEx_ConfigMuxRequestGenerator function.
+       Functions HAL_DMAEx_EnableMuxRequestGenerator and HAL_DMAEx_DisableMuxRequestGenerator can then be used
+       to respectively enable/disable the request generator.
 
 @endverbatim
   * @{
   */
 
 /**
- * @brief  Configure the DMAMUX synchronization parameters for a given DMA
- * channel (instance).
+ * @brief  Configure the DMAMUX synchronization parameters for a given DMA channel (instance).
  * @param  hdma:       pointer to a DMA_HandleTypeDef structure that contains
- *                     the configuration information for the specified DMA
- * channel.
- * @param  pSyncConfig : pointer to HAL_DMA_MuxSyncConfigTypeDef : contains the
- * DMAMUX synchronization parameters
+ *                     the configuration information for the specified DMA channel.
+ * @param  pSyncConfig : pointer to HAL_DMA_MuxSyncConfigTypeDef : contains the DMAMUX synchronization parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, HAL_DMA_MuxSyncConfigTypeDef *pSyncConfig)
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, const HAL_DMA_MuxSyncConfigTypeDef *pSyncConfig)
 {
 	/* Check the parameters */
 	assert_param(IS_DMA_ALL_INSTANCE(hdma->Instance));
@@ -116,8 +107,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, HAL_DMA_MuxSy
 		/* Process Locked */
 		__HAL_LOCK(hdma);
 
-		/* Set the new synchronization parameters (and keep the request
-		 * ID filled during the Init)*/
+		/* Set the new synchronization parameters (and keep the request ID filled during the Init)*/
 		MODIFY_REG(hdma->DMAmuxChannel->CCR, (~DMAMUX_CxCR_DMAREQ_ID),
 			   ((pSyncConfig->SyncSignalID) << DMAMUX_CxCR_SYNC_ID_Pos) | ((pSyncConfig->RequestNumber - 1U) << DMAMUX_CxCR_NBREQ_Pos) | pSyncConfig->SyncPolarity |
 			       ((uint32_t)pSyncConfig->SyncEnable << DMAMUX_CxCR_SE_Pos) | ((uint32_t)pSyncConfig->EventEnable << DMAMUX_CxCR_EGE_Pos));
@@ -133,18 +123,15 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, HAL_DMA_MuxSy
 }
 
 /**
- * @brief  Configure the DMAMUX request generator block used by the given DMA
- * channel (instance).
+ * @brief  Configure the DMAMUX request generator block used by the given DMA channel (instance).
  * @param  hdma:       pointer to a DMA_HandleTypeDef structure that contains
- *                     the configuration information for the specified DMA
- * channel.
- * @param  pRequestGeneratorConfig : pointer to
- * HAL_DMA_MuxRequestGeneratorConfigTypeDef : contains the request generator
- * parameters.
+ *                     the configuration information for the specified DMA channel.
+ * @param  pRequestGeneratorConfig : pointer to HAL_DMA_MuxRequestGeneratorConfigTypeDef :
+ *         contains the request generator parameters.
  *
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma, HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig)
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma, const HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig)
 {
 	/* Check the parameters */
 	assert_param(IS_DMA_ALL_INSTANCE(hdma->Instance));
@@ -174,11 +161,9 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma, H
 }
 
 /**
- * @brief  Enable the DMAMUX request generator block used by the given DMA
- * channel (instance).
+ * @brief  Enable the DMAMUX request generator block used by the given DMA channel (instance).
  * @param  hdma:       pointer to a DMA_HandleTypeDef structure that contains
- *                     the configuration information for the specified DMA
- * channel.
+ *                     the configuration information for the specified DMA channel.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMAEx_EnableMuxRequestGenerator(DMA_HandleTypeDef *hdma)
@@ -201,11 +186,9 @@ HAL_StatusTypeDef HAL_DMAEx_EnableMuxRequestGenerator(DMA_HandleTypeDef *hdma)
 }
 
 /**
- * @brief  Disable the DMAMUX request generator block used by the given DMA
- * channel (instance).
+ * @brief  Disable the DMAMUX request generator block used by the given DMA channel (instance).
  * @param  hdma:       pointer to a DMA_HandleTypeDef structure that contains
- *                     the configuration information for the specified DMA
- * channel.
+ *                     the configuration information for the specified DMA channel.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMAEx_DisableMuxRequestGenerator(DMA_HandleTypeDef *hdma)
@@ -253,8 +236,7 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma)
 	}
 
 	if (hdma->DMAmuxRequestGen != 0) {
-		/* if using a DMAMUX request generator block Check for DMAMUX
-		 * request generator overrun */
+		/* if using a DMAMUX request generator block Check for DMAMUX request generator overrun */
 		if ((hdma->DMAmuxRequestGenStatus->RGSR & hdma->DMAmuxRequestGenStatusMask) != 0U) {
 			/* Disable the request gen overrun interrupt */
 			hdma->DMAmuxRequestGen->RGCR &= ~DMAMUX_RGxCR_OIE;

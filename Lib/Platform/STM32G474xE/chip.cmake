@@ -28,6 +28,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		${TARGET_NAME}
 		PRIVATE
 			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/startup_stm32g474xx.s"
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/system_stm32g4xx.c"
 	)
 
 	target_link_options(

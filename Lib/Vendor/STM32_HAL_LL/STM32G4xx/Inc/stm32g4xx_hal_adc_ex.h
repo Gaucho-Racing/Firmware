@@ -45,308 +45,229 @@ extern "C" {
  */
 typedef struct {
 	uint32_t Ratio; /*!< Configures the oversampling ratio.
-			     This parameter can be a value of @ref
-			   ADC_HAL_EC_OVS_RATIO */
+			     This parameter can be a value of @ref ADC_HAL_EC_OVS_RATIO */
 
-	uint32_t RightBitShift; /*!< Configures the division coefficient for the
-				   Oversampler. This parameter can be a value of
-				   @ref ADC_HAL_EC_OVS_SHIFT */
+	uint32_t RightBitShift; /*!< Configures the division coefficient for the Oversampler.
+				     This parameter can be a value of @ref ADC_HAL_EC_OVS_SHIFT */
 } ADC_InjOversamplingTypeDef;
 
 /**
- * @brief  Structure definition of ADC group injected and ADC channel affected
- * to ADC group injected
+ * @brief  Structure definition of ADC group injected and ADC channel affected to ADC group injected
  * @note   Parameters of this structure are shared within 2 scopes:
- *          - Scope channel: InjectedChannel, InjectedRank, InjectedSamplingTime
- * , InjectedSingleDiff, InjectedOffsetNumber, InjectedOffset,
- * InjectedOffsetSign, InjectedOffsetSaturation
- *          - Scope ADC group injected (affects all channels of injected group):
- * InjectedNbrOfConversion, InjectedDiscontinuousConvMode, AutoInjectedConv,
- * QueueInjectedContext, ExternalTrigInjecConv, ExternalTrigInjecConvEdge,
+ *          - Scope channel: InjectedChannel, InjectedRank, InjectedSamplingTime , InjectedSingleDiff,
+ *            InjectedOffsetNumber, InjectedOffset, InjectedOffsetSign, InjectedOffsetSaturation
+ *          - Scope ADC group injected (affects all channels of injected group): InjectedNbrOfConversion,
+ *            InjectedDiscontinuousConvMode,
+ *            AutoInjectedConv, QueueInjectedContext, ExternalTrigInjecConv, ExternalTrigInjecConvEdge,
  *            InjecOversamplingMode, InjecOversampling.
- * @note   The setting of these parameters by function
- * HAL_ADCEx_InjectedConfigChannel() is conditioned to ADC state. ADC state can
- * be either:
- *          - For all parameters: ADC disabled (this is the only possible ADC
- * state to modify parameter 'InjectedSingleDiff')
- *          - For parameters 'InjectedDiscontinuousConvMode',
- * 'QueueInjectedContext', 'InjecOversampling': ADC enabled without conversion
- * on going on injected group.
- *          - For parameters 'InjectedSamplingTime', 'InjectedOffset',
- * 'InjectedOffsetNumber', 'InjectedOffsetSign', 'InjectedOffsetSaturation',
- * 'AutoInjectedConv': ADC enabled without conversion on going on regular and
+ * @note   The setting of these parameters by function HAL_ADCEx_InjectedConfigChannel() is conditioned to ADC state.
+ *         ADC state can be either:
+ *          - For all parameters: ADC disabled (this is the only possible ADC state to modify parameter
+ *            'InjectedSingleDiff')
+ *          - For parameters 'InjectedDiscontinuousConvMode', 'QueueInjectedContext', 'InjecOversampling': ADC enabled
+ *            without conversion on going on injected group.
+ *          - For parameters 'InjectedSamplingTime', 'InjectedOffset', 'InjectedOffsetNumber', 'InjectedOffsetSign',
+ *            'InjectedOffsetSaturation', 'AutoInjectedConv': ADC enabled without conversion on going on regular and
  *            injected groups.
- *          - For parameters 'InjectedChannel', 'InjectedRank',
- * 'InjectedNbrOfConversion', 'ExternalTrigInjecConv',
- *            'ExternalTrigInjecConvEdge': ADC enabled and while conversion on
- * going on ADC groups regular and injected. If ADC is not in the appropriate
- * state to modify some parameters, these parameters setting is bypassed without
- * error reporting (as it can be the expected behavior in case of intended
- * action to update another parameter (which fulfills the ADC state condition)
- * on the fly).
+ *          - For parameters 'InjectedChannel', 'InjectedRank', 'InjectedNbrOfConversion', 'ExternalTrigInjecConv',
+ *            'ExternalTrigInjecConvEdge': ADC enabled and while conversion on going
+ *            on ADC groups regular and injected.
+ *         If ADC is not in the appropriate state to modify some parameters, these parameters setting is bypassed
+ *         without error reporting (as it can be the expected behavior in case of intended action to update another
+ *         parameter (which fulfills the ADC state condition) on the fly).
  */
 typedef struct {
-	uint32_t InjectedChannel; /*!< Specifies the channel to configure into ADC
-				     group injected. This parameter can be a value of
-				     @ref ADC_HAL_EC_CHANNEL Note: Depending on
-				     devices and ADC instances, some channels may not
-				     be available on device package pins. Refer to
-				     device datasheet for channels availability. */
+	uint32_t InjectedChannel; /*!< Specifies the channel to configure into ADC group injected.
+				       This parameter can be a value of @ref ADC_HAL_EC_CHANNEL
+				       Note: Depending on devices and ADC instances, some channels may not be
+					     available on device package pins. Refer to device datasheet for
+					     channels availability. */
 
-	uint32_t InjectedRank; /*!< Specifies the rank in the ADC group injected
-				  sequencer. This parameter must be a value of @ref
-				  ADC_INJ_SEQ_RANKS. Note: to disable a channel or
-				  change order of conversion sequencer, rank
-				  containing a previous channel setting can be
-				  overwritten by the new channel setting (or
-				  parameter number of conversions adjusted) */
+	uint32_t InjectedRank; /*!< Specifies the rank in the ADC group injected sequencer.
+				    This parameter must be a value of @ref ADC_INJ_SEQ_RANKS.
+				    Note: to disable a channel or change order of conversion sequencer,
+					  rank containing a previous channel setting can be overwritten by
+					  the new channel setting (or parameter number of conversions
+					  adjusted) */
 
-	uint32_t InjectedSamplingTime; /*!< Sampling time value to be set for the
-					  selected channel. Unit: ADC clock cycles.
-					    Conversion time is the addition of
-					  sampling time and processing time (12.5 ADC
-					  clock cycles at ADC resolution 12
-					  bits, 10.5 cycles at 10 bits, 8.5 cycles at
-					  8 bits, 6.5 cycles at 6 bits). This
-					  parameter can be a value of @ref
-					  ADC_HAL_EC_CHANNEL_SAMPLINGTIME. Caution:
-					  This parameter applies to a channel that
-					  can be used in a regular and/or injected
-					  group. It overwrites the last setting.
-					    Note: In case of usage of internal
-					  measurement channels (VrefInt, ...),
-						  sampling time constraints must be
-					  respected (sampling time can be adjusted in
-					  function of ADC clock frequency and
-					  sampling time setting). Refer to device
-					  datasheet for timings values. */
+	uint32_t InjectedSamplingTime; /*!< Sampling time value to be set for the selected channel.
+					    Unit: ADC clock cycles.
+					    Conversion time is the addition of sampling time and processing time
+					    (12.5 ADC clock cycles at ADC resolution 12 bits, 10.5 cycles at 10 bits,
+					    8.5 cycles at 8 bits, 6.5 cycles at 6 bits).
+					    This parameter can be a value of @ref ADC_HAL_EC_CHANNEL_SAMPLINGTIME.
+					    Caution: This parameter applies to a channel that can be used in a
+						     regular and/or injected group. It overwrites the last setting.
+					    Note: In case of usage of internal measurement channels (VrefInt, ...),
+						  sampling time constraints must be respected (sampling time can be
+						  adjusted in function of ADC clock frequency and sampling time
+						  setting). Refer to device datasheet for timings values. */
 
-	uint32_t InjectedSingleDiff; /*!< Selection of single-ended or differential
-					input. In differential mode: Differential
-					measurement is between the selected channel
-					'i' (positive input) and channel 'i+1'
-					(negative input). Only channel 'i' has to be
-					configured, channel 'i+1' is configured
+	uint32_t InjectedSingleDiff; /*!< Selection of single-ended or differential input.
+					  In differential mode: Differential measurement is between the selected
+					  channel 'i' (positive input) and channel 'i+1' (negative input).
+					  Only channel 'i' has to be configured, channel 'i+1' is configured
 					  automatically.
 					  This parameter must be a value of
 					  @ref ADC_HAL_EC_CHANNEL_SINGLE_DIFF_ENDING.
-					  Caution: This parameter applies to a
-					channel that can be used in a regular and/or
-					injected group. It overwrites the last
-					setting. Note: Refer to Reference Manual to
-					ensure the selected channel is available in
-					differential mode. Note: When configuring a
-					channel 'i' in differential mode, the channel
+					  Caution: This parameter applies to a channel that can be used in a
+					  regular and/or injected group. It overwrites the last setting.
+					  Note: Refer to Reference Manual to ensure the selected channel is
+						available in differential mode.
+					  Note: When configuring a channel 'i' in differential mode, the channel
 						'i+1' is not usable separately.
-					  Note: This parameter must be modified when
-					ADC is disabled (before ADC start conversion
-					or after ADC stop conversion). If ADC is
-					enabled, this parameter setting is bypassed
-					without error reporting (as it can be the
-					expected behavior in case of another
+					  Note: This parameter must be modified when ADC is disabled (before ADC
+						start conversion or after ADC stop conversion).
+					  If ADC is enabled, this parameter setting is bypassed without error
+					  reporting (as it can be the expected behavior in case of another
 					  parameter update on the fly) */
 
 	uint32_t InjectedOffsetNumber; /*!< Selects the offset number.
-					    This parameter can be a value of @ref
-					  ADC_HAL_EC_OFFSET_NB. Caution: Only one
-					  offset is allowed per channel. This
-					  parameter overwrites the last setting. */
+					    This parameter can be a value of @ref ADC_HAL_EC_OFFSET_NB.
+					    Caution: Only one offset is allowed per channel. This parameter
+						     overwrites the last setting. */
 
-	uint32_t InjectedOffset; /*!< Defines the offset to be applied on the raw
-				    converted data. Offset value must be a positive
-				    number. Depending of ADC resolution selected (12,
-				    10, 8 or 6 bits), this parameter must be a number
-				    between Min_Data = 0x000 and Max_Data = 0xFFF,
+	uint32_t InjectedOffset; /*!< Defines the offset to be applied on the raw converted data.
+				      Offset value must be a positive number.
+				      Depending of ADC resolution selected (12, 10, 8 or 6 bits), this
+				      parameter must be a number between Min_Data = 0x000 and Max_Data = 0xFFF,
 				      0x3FF, 0xFF or 0x3F respectively.
-				      Note: This parameter must be modified when no
-				    conversion is on going on both regular and
-				    injected groups (ADC disabled, or ADC enabled
-					    without continuous mode or external
-				    trigger that could launch a conversion). */
+				      Note: This parameter must be modified when no conversion is on going
+					    on both regular and injected groups (ADC disabled, or ADC enabled
+					    without continuous mode or external trigger that could launch a
+					    conversion). */
 
-	uint32_t InjectedOffsetSign;		  /*!< Define if the offset should be subtracted
-						     (negative sign) or added (positive sign) from
-						     or to the raw converted data. This parameter
-						     can be a value of @ref ADCEx_OffsetSign.
-						      Note: This parameter must be modified when
-						     no conversion is on going on both regular and
-						     injected groups (ADC disabled, or ADC enabled
-						     without continuous mode or external trigger
-						     that could launch a conversion). */
-	FunctionalState InjectedOffsetSaturation; /*!< Define if the offset should be
-						   saturated upon under or over flow. This
-						   parameter value can be ENABLE or DISABLE.
-						   Note: This parameter must be modified
-						   when no conversion is on going on both
-						   regular and injected groups (ADC
-						   disabled, or ADC enabled without
-						   continuous mode or external trigger that
-						   could launch a conversion). */
+	uint32_t InjectedOffsetSign;		  /*!< Define if the offset should be subtracted (negative sign) or added
+						      (positive sign) from or to the raw converted data.
+						      This parameter can be a value of @ref ADCEx_OffsetSign.
+						      Note: This parameter must be modified when no conversion is on going
+							    on both regular and injected groups (ADC disabled, or ADC
+							    enabled without continuous mode or external trigger that could
+							    launch a conversion). */
+	FunctionalState InjectedOffsetSaturation; /*!< Define if the offset should be saturated upon under or over flow.
+						   This parameter value can be ENABLE or DISABLE.
+						   Note: This parameter must be modified when no conversion is on going
+							 on both regular and injected groups (ADC disabled, or ADC enabled
+							 without continuous mode or external trigger that could launch a
+							 conversion). */
 
-	uint32_t InjectedNbrOfConversion; /*!< Specifies the number of ranks that
-					     will be converted within the ADC group
+	uint32_t InjectedNbrOfConversion; /*!< Specifies the number of ranks that will be converted within the ADC group
 					       injected sequencer.
-					       To use the injected group sequencer
-					     and convert several ranks, parameter
+					       To use the injected group sequencer and convert several ranks, parameter
 					       'ScanConvMode' must be enabled.
-					       This parameter must be a number
-					     between Min_Data = 1 and Max_Data = 4.
-					       Caution: this setting impacts the
-					     entire injected group. Therefore, call
-					     of HAL_ADCEx_InjectedConfigChannel() to
-					     configure a channel on injected group
-					     can impact the configuration of other
-					     channels previously set. */
+					       This parameter must be a number between Min_Data = 1 and Max_Data = 4.
+					       Caution: this setting impacts the entire injected group. Therefore,
+					       call of HAL_ADCEx_InjectedConfigChannel() to configure a channel on
+					       injected group can impact the configuration of other channels previously
+					       set. */
 
-	FunctionalState InjectedDiscontinuousConvMode; /*!< Specifies whether the
-						     conversions sequence of ADC group
-						     injected is performed in
-						     Complete-sequence/Discontinuous-sequence
-						     (main sequence subdivided in successive
-						     parts). Discontinuous mode is used only
-						     if sequencer is enabled (parameter
-						     'ScanConvMode'). If sequencer is
-						     disabled, this parameter is discarded.
-						     Discontinuous mode can be enabled only
-						     if continuous mode is disabled. This
-						     parameter can be set to ENABLE or
-						     DISABLE. Note: This parameter must be
-						     modified when ADC is disabled (before
-						     ADC start conversion or after ADC stop
-						     conversion). Note: For injected group,
-						     discontinuous mode converts the
-						     sequence channel by channel
-						     (discontinuous length fixed to 1 rank).
-						     Caution: this setting impacts the
-						     entire injected group. Therefore, call
-						     of HAL_ADCEx_InjectedConfigChannel() to
-							      configure a channel on
-						     injected group can impact the
-							      configuration of other
-						     channels previously set. */
+	FunctionalState InjectedDiscontinuousConvMode; /*!< Specifies whether the conversions sequence of ADC group injected
+						     is performed in Complete-sequence/Discontinuous-sequence
+						     (main sequence subdivided in successive parts).
+						     Discontinuous mode is used only if sequencer is enabled (parameter
+						     'ScanConvMode'). If sequencer is disabled, this parameter is discarded.
+						     Discontinuous mode can be enabled only if continuous mode is disabled.
+						     This parameter can be set to ENABLE or DISABLE.
+						     Note: This parameter must be modified when ADC is disabled (before ADC
+						     start conversion or after ADC stop conversion).
+						     Note: For injected group, discontinuous mode converts the sequence
+						     channel by channel (discontinuous length fixed to 1 rank).
+						     Caution: this setting impacts the entire injected group. Therefore,
+							      call of HAL_ADCEx_InjectedConfigChannel() to
+							      configure a channel on injected group can impact the
+							      configuration of other channels previously set. */
 
-	FunctionalState AutoInjectedConv; /*!< Enables or disables the selected ADC group
-					     injected automatic conversion after regular one
-					       This parameter can be set to ENABLE or
-					     DISABLE. Note: To use Automatic injected
-					     conversion, discontinuous mode must be disabled
-					     ('DiscontinuousConvMode' and
-						     'InjectedDiscontinuousConvMode' set to
-					     DISABLE) Note: To use Automatic injected
-					     conversion, injected group external triggers
-					     must be disabled ('ExternalTrigInjecConv' set
-					     to ADC_INJECTED_SOFTWARE_START) Note: In case
-					     of DMA used with regular group: if DMA
-					     configured in normal mode (single shot) JAUTO
-					     will be stopped upon DMA transfer complete. To
-					     maintain JAUTO always enabled, DMA must be
-					     configured in circular mode. Caution: this
-					     setting impacts the entire injected group.
-					     Therefore, call of
-					     HAL_ADCEx_InjectedConfigChannel() to configure
-					     a channel on injected group can impact the
-					     configuration of other channels previously set.
-					   */
+	FunctionalState AutoInjectedConv; /*!< Enables or disables the selected ADC group injected automatic conversion
+					       after regular one
+					       This parameter can be set to ENABLE or DISABLE.
+					       Note: To use Automatic injected conversion, discontinuous mode must
+						     be disabled ('DiscontinuousConvMode' and
+						     'InjectedDiscontinuousConvMode' set to DISABLE)
+					       Note: To use Automatic injected conversion, injected group external
+						     triggers must be disabled ('ExternalTrigInjecConv' set to
+						     ADC_INJECTED_SOFTWARE_START)
+					       Note: In case of DMA used with regular group: if DMA configured in
+						     normal mode (single shot) JAUTO will be stopped upon DMA transfer
+						     complete.
+						     To maintain JAUTO always enabled, DMA must be configured in
+						     circular mode.
+					       Caution: this setting impacts the entire injected group. Therefore,
+							call of HAL_ADCEx_InjectedConfigChannel() to configure a channel
+							on injected group can impact the configuration of other channels
+							previously set. */
 
-	FunctionalState QueueInjectedContext; /*!< Specifies whether the context queue
-						 feature is enabled. This parameter can be
-						 set to ENABLE or DISABLE. If context queue
-						 is enabled, injected sequencer&channels
-						 configurations are queued on up to 2
-						 contexts. If a new injected context is set
-						 when queue is full, error is triggered by
+	FunctionalState QueueInjectedContext; /*!< Specifies whether the context queue feature is enabled.
+						   This parameter can be set to ENABLE or DISABLE.
+						   If context queue is enabled, injected sequencer&channels configurations
+						   are queued on up to 2 contexts. If a
+						   new injected context is set when queue is full, error is triggered by
 						   interruption and through function
 						   'HAL_ADCEx_InjectedQueueOverflowCallback'.
-						   Caution: This feature request that the
-						 sequence is fully configured before
-						 injected conversion start. Therefore,
-						 configure channels with as many calls to
-							    HAL_ADCEx_InjectedConfigChannel()
-						 as the 'InjectedNbrOfConversion' parameter.
-						   Caution: this setting impacts the entire
-						 injected group. Therefore, call of
-						 HAL_ADCEx_InjectedConfigChannel() to
-							    configure a channel on injected
-						 group can impact the configuration of other
-						 channels previously set. Note: This
-						 parameter must be modified when ADC is
-						 disabled (before ADC start conversion or
-						 after ADC stop conversion). */
+						   Caution: This feature request that the sequence is fully configured
+							    before injected conversion start.
+							    Therefore, configure channels with as many calls to
+							    HAL_ADCEx_InjectedConfigChannel() as the
+							    'InjectedNbrOfConversion' parameter.
+						   Caution: this setting impacts the entire injected group. Therefore,
+							    call of HAL_ADCEx_InjectedConfigChannel() to
+							    configure a channel on injected group can impact the
+							    configuration of other channels previously set.
+						   Note: This parameter must be modified when ADC is disabled (before ADC
+							 start conversion or after ADC stop conversion). */
 
-	uint32_t ExternalTrigInjecConv; /*!< Selects the external event used to
-					   trigger the conversion start of injected
-					   group. If set to
-					   ADC_INJECTED_SOFTWARE_START, external
-					   triggers are disabled and software trigger
-					   is used instead. This parameter can be a
-					   value of
-					     @ref
-					   ADC_injected_external_trigger_source.
-					     Caution: this setting impacts the entire
-					   injected group. Therefore, call of
-					   HAL_ADCEx_InjectedConfigChannel() to
-					   configure a channel on injected group can
-					   impact the configuration of other channels
+	uint32_t ExternalTrigInjecConv; /*!< Selects the external event used to trigger the conversion start of
+					     injected group.
+					     If set to ADC_INJECTED_SOFTWARE_START, external triggers are disabled
+					     and software trigger is used instead.
+					     This parameter can be a value of
+					     @ref ADC_injected_external_trigger_source.
+					     Caution: this setting impacts the entire injected group. Therefore,
+						      call of HAL_ADCEx_InjectedConfigChannel() to configure a channel
+						      on injected group can impact the configuration of other channels
 						      previously set. */
 
-	uint32_t ExternalTrigInjecConvEdge; /*!< Selects the external trigger edge of
-					       injected group. This parameter can be
-					       a value of @ref
-					       ADC_injected_external_trigger_edge. If
-					       trigger source is set to
-					       ADC_INJECTED_SOFTWARE_START, this
-					       parameter is discarded. Caution: this
-					       setting impacts the entire injected
-					       group. Therefore, call of
-					       HAL_ADCEx_InjectedConfigChannel() to
-							  configure a channel on
-					       injected group can impact the
-							  configuration of other
-					       channels previously set. */
+	uint32_t ExternalTrigInjecConvEdge; /*!< Selects the external trigger edge of injected group.
+						 This parameter can be a value of @ref ADC_injected_external_trigger_edge.
+						 If trigger source is set to ADC_INJECTED_SOFTWARE_START, this parameter
+						 is discarded.
+						 Caution: this setting impacts the entire injected group. Therefore,
+							  call of HAL_ADCEx_InjectedConfigChannel() to
+							  configure a channel on injected group can impact the
+							  configuration of other channels previously set. */
 
-	FunctionalState InjecOversamplingMode; /*!< Specifies whether the oversampling
-						  feature is enabled or disabled. This
-						  parameter can be set to ENABLE or DISABLE.
-						    Note: This parameter can be modified
-						  only if there is no conversion is ongoing
-						  (both ADSTART and JADSTART cleared). */
+	FunctionalState InjecOversamplingMode; /*!< Specifies whether the oversampling feature is enabled or disabled.
+						    This parameter can be set to ENABLE or DISABLE.
+						    Note: This parameter can be modified only if there is no
+						    conversion is ongoing (both ADSTART and JADSTART cleared). */
 
 	ADC_InjOversamplingTypeDef InjecOversampling; /*!< Specifies the Oversampling parameters.
-							   Caution: this setting overwrites the
-							 previous oversampling configuration if
-							 oversampling already enabled. Note: This
-							 parameter can be modified only if there is no
-								 conversion is ongoing (both ADSTART
-							 and JADSTART cleared).*/
+							   Caution: this setting overwrites the previous oversampling
+								    configuration if oversampling already enabled.
+							   Note: This parameter can be modified only if there is no
+								 conversion is ongoing (both ADSTART and JADSTART cleared).*/
 } ADC_InjectionConfTypeDef;
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /**
  * @brief  Structure definition of ADC multimode
- * @note   The setting of these parameters by function
- * HAL_ADCEx_MultiModeConfigChannel() is conditioned by ADCs state (both Master
- * and Slave ADCs). Both Master and Slave ADCs must be disabled.
+ * @note   The setting of these parameters by function HAL_ADCEx_MultiModeConfigChannel() is conditioned by ADCs state
+ *         (both Master and Slave ADCs).
+ *         Both Master and Slave ADCs must be disabled.
  */
 typedef struct {
-	uint32_t Mode; /*!< Configures the ADC to operate in independent or
-			  multimode. This parameter can be a value of @ref
-			  ADC_HAL_EC_MULTI_MODE. */
+	uint32_t Mode; /*!< Configures the ADC to operate in independent or multimode.
+			    This parameter can be a value of @ref ADC_HAL_EC_MULTI_MODE. */
 
 	uint32_t DMAAccessMode; /*!< Configures the DMA mode for multimode ADC:
-				     selection whether 2 DMA channels (each ADC uses
-				   its own DMA channel) or 1 DMA channel (one DMA
-				   channel for both ADC, DMA of ADC master). This
-				   parameter can be a value of @ref
-				   ADC_HAL_EC_MULTI_DMA_TRANSFER_RESOLUTION. */
+				     selection whether 2 DMA channels (each ADC uses its own DMA channel) or 1 DMA channel
+				     (one DMA channel for both ADC, DMA of ADC master).
+				     This parameter can be a value of @ref ADC_HAL_EC_MULTI_DMA_TRANSFER_RESOLUTION. */
 
-	uint32_t TwoSamplingDelay; /*!< Configures the Delay between 2 sampling
-				      phases. This parameter can be a value of
-				      @ref ADC_HAL_EC_MULTI_TWOSMP_DELAY. Delay
-				      range depends on selected resolution: from
-				      1 to 12 clock cycles for 12 bits, from 1
-				      to 10 clock cycles for 10 bits, from 1 to
-				      8 clock cycles for 8 bits, from 1 to 6
-				      clock cycles for 6 bits.     */
+	uint32_t TwoSamplingDelay; /*!< Configures the Delay between 2 sampling phases.
+					This parameter can be a value of @ref ADC_HAL_EC_MULTI_TWOSMP_DELAY.
+					Delay range depends on selected resolution:
+					 from 1 to 12 clock cycles for 12 bits, from 1 to 10 clock cycles for 10 bits,
+					 from 1 to 8 clock cycles for 8 bits, from 1 to 6 clock cycles for 6 bits.     */
 } ADC_MultiModeTypeDef;
 #endif /* ADC_MULTIMODE_SUPPORT */
 
@@ -360,8 +281,7 @@ typedef struct {
  * @{
  */
 
-/** @defgroup ADC_injected_external_trigger_source ADC group injected trigger
- * source
+/** @defgroup ADC_injected_external_trigger_source ADC group injected trigger source
  * @{
  */
 /* ADC group regular trigger sources for all ADC instances */
@@ -439,12 +359,10 @@ trigger software start */
     trigger from external peripheral: TIM20 TRGO2. */
 #define ADC_EXTERNALTRIGINJEC_T20_CC2                                                                                                                                                                  \
 	(LL_ADC_INJ_TRIG_EXT_TIM20_CH2) /*!< ADC group injected conversion                                                                                                                             \
-  trigger from external peripheral: TIM20 channel 2 event (capture compare).                                                                                                                           \
-*/
+  trigger from external peripheral: TIM20 channel 2 event (capture compare). */
 #define ADC_EXTERNALTRIGINJEC_T20_CC4                                                                                                                                                                  \
 	(LL_ADC_INJ_TRIG_EXT_TIM20_CH4) /*!< ADC group injected conversion                                                                                                                             \
-  trigger from external peripheral: TIM20 channel 4 event (capture compare).                                                                                                                           \
-*/
+  trigger from external peripheral: TIM20 channel 4 event (capture compare). */
 #define ADC_EXTERNALTRIGINJEC_HRTIM_TRG1                                                                                                                                                               \
 	(LL_ADC_INJ_TRIG_EXT_HRTIM_TRG1) /*!< ADC group injected conversion                                                                                                                            \
    trigger from external peripheral: HRTIMER ADC trigger 1 event. */
@@ -488,8 +406,7 @@ trigger software start */
  * @}
  */
 
-/** @defgroup ADC_injected_external_trigger_edge ADC group injected trigger edge
- * (when external trigger is selected)
+/** @defgroup ADC_injected_external_trigger_edge ADC group injected trigger edge (when external trigger is selected)
  * @{
  */
 #define ADC_EXTERNALTRIGINJECCONV_EDGE_NONE                                                                                                                                                            \
@@ -508,14 +425,11 @@ trigger software start */
  * @}
  */
 
-/** @defgroup ADC_HAL_EC_CHANNEL_SINGLE_DIFF_ENDING  Channel - Single or
- * differential ending
+/** @defgroup ADC_HAL_EC_CHANNEL_SINGLE_DIFF_ENDING  Channel - Single or differential ending
  * @{
  */
-#define ADC_SINGLE_ENDED (LL_ADC_SINGLE_ENDED) /*!< ADC channel ending set to single ended */
-#define ADC_DIFFERENTIAL_ENDED                                                                                                                                                                         \
-	(LL_ADC_DIFFERENTIAL_ENDED) /*!< ADC channel ending set to                                                                                                                                     \
-				       differential */
+#define ADC_SINGLE_ENDED (LL_ADC_SINGLE_ENDED)		   /*!< ADC channel ending set to single ended */
+#define ADC_DIFFERENTIAL_ENDED (LL_ADC_DIFFERENTIAL_ENDED) /*!< ADC channel ending set to differential */
 /**
  * @}
  */
@@ -524,24 +438,24 @@ trigger software start */
  * @{
  */
 #define ADC_OFFSET_NONE                                                                                                                                                                                \
-	(ADC_OFFSET_4 + 1U) /*!< ADC offset disabled: no offset correction for                                                                                                                         \
-	the selected ADC channel */
+	(ADC_OFFSET_4 + 1U) /*!< ADC offset disabled: no offset correction for the selected                                                                                                            \
+	ADC channel */
 #define ADC_OFFSET_1                                                                                                                                                                                   \
-	(LL_ADC_OFFSET_1) /*!< ADC offset number 1: ADC channel and offset                                                                                                                             \
-	level to which the offset programmed will be applied (independently of                                                                                                                         \
-	channel mapped on ADC group regular or group injected) */
+	(LL_ADC_OFFSET_1) /*!< ADC offset number 1: ADC channel and offset level to which                                                                                                              \
+	the offset programmed will be applied (independently of channel mapped                                                                                                                         \
+	on ADC group regular or group injected) */
 #define ADC_OFFSET_2                                                                                                                                                                                   \
-	(LL_ADC_OFFSET_2) /*!< ADC offset number 2: ADC channel and offset                                                                                                                             \
-	level to which the offset programmed will be applied (independently of                                                                                                                         \
-	channel mapped on ADC group regular or group injected) */
+	(LL_ADC_OFFSET_2) /*!< ADC offset number 2: ADC channel and offset level to which                                                                                                              \
+	the offset programmed will be applied (independently of channel mapped                                                                                                                         \
+	on ADC group regular or group injected) */
 #define ADC_OFFSET_3                                                                                                                                                                                   \
-	(LL_ADC_OFFSET_3) /*!< ADC offset number 3: ADC channel and offset                                                                                                                             \
-	level to which the offset programmed will be applied (independently of                                                                                                                         \
-	channel mapped on ADC group regular or group injected) */
+	(LL_ADC_OFFSET_3) /*!< ADC offset number 3: ADC channel and offset level to which                                                                                                              \
+	the offset programmed will be applied (independently of channel mapped                                                                                                                         \
+	on ADC group regular or group injected) */
 #define ADC_OFFSET_4                                                                                                                                                                                   \
-	(LL_ADC_OFFSET_4) /*!< ADC offset number 4: ADC channel and offset                                                                                                                             \
-	level to which the offset programmed will be applied (independently of                                                                                                                         \
-	channel mapped on ADC group regular or group injected) */
+	(LL_ADC_OFFSET_4) /*!< ADC offset number 4: ADC channel and offset level to which                                                                                                              \
+	the offset programmed will be applied (independently of channel mapped                                                                                                                         \
+	on ADC group regular or group injected) */
 /**
  * @}
  */
@@ -562,9 +476,9 @@ trigger software start */
 #define ADC_INJECTED_RANK_2 (LL_ADC_INJ_RANK_2) /*!< ADC group injected sequencer rank 2 */
 #define ADC_INJECTED_RANK_3 (LL_ADC_INJ_RANK_3) /*!< ADC group injected sequencer rank 3 */
 #define ADC_INJECTED_RANK_4 (LL_ADC_INJ_RANK_4) /*!< ADC group injected sequencer rank 4 */
-						/**
-						 * @}
-						 */
+/**
+ * @}
+ */
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /** @defgroup ADC_HAL_EC_MULTI_MODE  Multimode - Mode
@@ -574,8 +488,8 @@ trigger software start */
 	(LL_ADC_MULTI_INDEPENDENT) /*!< ADC dual mode disabled                                                                                                                                         \
 (ADC independent mode) */
 #define ADC_DUALMODE_REGSIMULT                                                                                                                                                                         \
-	(LL_ADC_MULTI_DUAL_REG_SIMULT) /*!< ADC dual mode enabled: group                                                                                                                               \
-   regular simultaneous */
+	(LL_ADC_MULTI_DUAL_REG_SIMULT) /*!< ADC dual mode enabled: group regular                                                                                                                       \
+   simultaneous */
 #define ADC_DUALMODE_INTERL                                                                                                                                                                            \
 	(LL_ADC_MULTI_DUAL_REG_INTERL) /*!< ADC dual mode enabled: Combined                                                                                                                            \
    group regular interleaved */
@@ -587,73 +501,70 @@ trigger software start */
    injected alternate trigger. Works only with external triggers (not internal                                                                                                                         \
    SW start) */
 #define ADC_DUALMODE_REGSIMULT_INJECSIMULT                                                                                                                                                             \
-	(LL_ADC_MULTI_DUAL_REG_SIM_INJ_SIM) /*!< ADC dual mode enabled:                                                                                                                                \
-	Combined group regular simultaneous + group injected simultaneous */
+	(LL_ADC_MULTI_DUAL_REG_SIM_INJ_SIM) /*!< ADC dual mode enabled: Combined                                                                                                                       \
+	group regular simultaneous + group injected simultaneous */
 #define ADC_DUALMODE_REGSIMULT_ALTERTRIG                                                                                                                                                               \
-	(LL_ADC_MULTI_DUAL_REG_SIM_INJ_ALT) /*!< ADC dual mode enabled:                                                                                                                                \
-	Combined group regular simultaneous + group injected alternate trigger                                                                                                                         \
-      */
+	(LL_ADC_MULTI_DUAL_REG_SIM_INJ_ALT) /*!< ADC dual mode enabled: Combined                                                                                                                       \
+	group regular simultaneous + group injected alternate trigger */
 #define ADC_DUALMODE_REGINTERL_INJECSIMULT                                                                                                                                                             \
-	(LL_ADC_MULTI_DUAL_REG_INT_INJ_SIM) /*!< ADC dual mode enabled:                                                                                                                                \
-	Combined group regular interleaved + group injected simultaneous */
+	(LL_ADC_MULTI_DUAL_REG_INT_INJ_SIM) /*!< ADC dual mode enabled: Combined                                                                                                                       \
+	group regular interleaved + group injected simultaneous */
 
-/** @defgroup ADC_HAL_EC_MULTI_DMA_TRANSFER_RESOLUTION  Multimode - DMA transfer
- * mode depending on ADC resolution
+/** @defgroup ADC_HAL_EC_MULTI_DMA_TRANSFER_RESOLUTION  Multimode - DMA transfer mode depending on ADC resolution
  * @{
  */
 #define ADC_DMAACCESSMODE_DISABLED                                                                                                                                                                     \
 	(0x00000000UL) /*!< DMA multimode disabled: each ADC uses its own                                                                                                                              \
     DMA channel */
 #define ADC_DMAACCESSMODE_12_10_BITS                                                                                                                                                                   \
-	(ADC_CCR_MDMA_1) /*!< DMA multimode enabled (one DMA channel for both                                                                                                                          \
-      ADC, DMA of ADC master) for 12 and 10 bits resolution */
+	(ADC_CCR_MDMA_1) /*!< DMA multimode enabled (one DMA channel for both ADC,                                                                                                                     \
+      DMA of ADC master) for 12 and 10 bits resolution */
 #define ADC_DMAACCESSMODE_8_6_BITS                                                                                                                                                                     \
-	(ADC_CCR_MDMA) /*!< DMA multimode enabled (one DMA channel for both                                                                                                                            \
-    ADC, DMA of ADC master) for 8 and 6 bits resolution */
+	(ADC_CCR_MDMA) /*!< DMA multimode enabled (one DMA channel for both ADC,                                                                                                                       \
+    DMA of ADC master) for 8 and 6 bits resolution */
 /**
  * @}
  */
 
-/** @defgroup ADC_HAL_EC_MULTI_TWOSMP_DELAY  Multimode - Delay between two
- * sampling phases
+/** @defgroup ADC_HAL_EC_MULTI_TWOSMP_DELAY  Multimode - Delay between two sampling phases
  * @{
  */
 #define ADC_TWOSAMPLINGDELAY_1CYCLE                                                                                                                                                                    \
-	(LL_ADC_MULTI_TWOSMP_DELAY_1CYCLE) /*!< ADC multimode delay between                                                                                                                            \
-     two sampling phases: 1 ADC clock cycle */
+	(LL_ADC_MULTI_TWOSMP_DELAY_1CYCLE) /*!< ADC multimode delay between two                                                                                                                        \
+     sampling phases: 1 ADC clock cycle */
 #define ADC_TWOSAMPLINGDELAY_2CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_2CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 2 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_2CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 2 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_3CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_3CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 3 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_3CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 3 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_4CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_4CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 4 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_4CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 4 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_5CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_5CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 5 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_5CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 5 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_6CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_6CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 6 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_6CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 6 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_7CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_7CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 7 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_7CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 7 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_8CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_8CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 8 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_8CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 8 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_9CYCLES                                                                                                                                                                   \
-	(LL_ADC_MULTI_TWOSMP_DELAY_9CYCLES) /*!< ADC multimode delay between                                                                                                                           \
-      two sampling phases: 9 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_9CYCLES) /*!< ADC multimode delay between two                                                                                                                       \
+      sampling phases: 9 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_10CYCLES                                                                                                                                                                  \
-	(LL_ADC_MULTI_TWOSMP_DELAY_10CYCLES) /*!< ADC multimode delay between                                                                                                                          \
-       two sampling phases: 10 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_10CYCLES) /*!< ADC multimode delay between two                                                                                                                      \
+       sampling phases: 10 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_11CYCLES                                                                                                                                                                  \
-	(LL_ADC_MULTI_TWOSMP_DELAY_11CYCLES) /*!< ADC multimode delay between                                                                                                                          \
-       two sampling phases: 11 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_11CYCLES) /*!< ADC multimode delay between two                                                                                                                      \
+       sampling phases: 11 ADC clock cycles */
 #define ADC_TWOSAMPLINGDELAY_12CYCLES                                                                                                                                                                  \
-	(LL_ADC_MULTI_TWOSMP_DELAY_12CYCLES) /*!< ADC multimode delay between                                                                                                                          \
-       two sampling phases: 12 ADC clock cycles */
+	(LL_ADC_MULTI_TWOSMP_DELAY_12CYCLES) /*!< ADC multimode delay between two                                                                                                                      \
+       sampling phases: 12 ADC clock cycles */
 /**
  * @}
  */
@@ -670,11 +581,9 @@ trigger software start */
 	(LL_ADC_GROUP_REGULAR) /*!< ADC group regular (available on                                                                                                                                    \
 				    all STM32 devices) */
 #define ADC_INJECTED_GROUP                                                                                                                                                                             \
-	(LL_ADC_GROUP_INJECTED) /*!< ADC group injected (not available on                                                                                                                              \
-				     all STM32 devices) */
-#define ADC_REGULAR_INJECTED_GROUP                                                                                                                                                                     \
-	(LL_ADC_GROUP_REGULAR_INJECTED) /*!< ADC both groups regular and                                                                                                                               \
-					   injected */
+	(LL_ADC_GROUP_INJECTED)					   /*!< ADC group injected (not available on                                                                                           \
+									all STM32 devices) */
+#define ADC_REGULAR_INJECTED_GROUP (LL_ADC_GROUP_REGULAR_INJECTED) /*!< ADC both groups regular and injected */
 /**
  * @}
  */
@@ -723,8 +632,7 @@ trigger software start */
  * @{
  */
 
-/** @brief  Force ADC instance in multimode mode independent (multimode
- * disable).
+/** @brief  Force ADC instance in multimode mode independent (multimode disable).
  * @note   This macro must be used only in case of transition from multimode
  *         to mode independent and in case of unknown previous state,
  *         to ensure ADC configuration is in mode independent.
@@ -747,8 +655,7 @@ trigger software start */
 
 /* Private macros ------------------------------------------------------------*/
 
-/** @defgroup ADCEx_Private_Macro_internal_HAL_driver ADC Extended Private
- * Macros
+/** @defgroup ADCEx_Private_Macro_internal_HAL_driver ADC Extended Private Macros
  * @{
  */
 /* Macro reserved for internal HAL driver usage, not intended to be used in   */
@@ -774,8 +681,7 @@ trigger software start */
 #define ADC_IS_INDEPENDENT(__HANDLE__) (((((__HANDLE__)->Instance) == ADC3)) ? SET : RESET)
 #elif defined(STM32G411xB) || defined(STM32G414xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
 #define ADC_IS_INDEPENDENT(__HANDLE__) (RESET)
-#endif /* defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)                                                                                                                         \
-	  || defined(STM32G483xx) */
+#endif /* defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx) */
 
 /**
  * @brief Set the selected injected Channel rank.
@@ -845,11 +751,12 @@ trigger software start */
 
 /**
  * @brief Shift the offset with respect to the selected ADC resolution.
- * @note   Offset has to be left-aligned on bit 11, the LSB (right bits) are set
- * to 0. If resolution 12 bits, no shift. If resolution 10 bits, shift of 2
- * ranks on the left. If resolution 8 bits, shift of 4 ranks on the left. If
- * resolution 6 bits, shift of 6 ranks on the left. Therefore, shift = (12 -
- * resolution) = 12 - (12- (((RES[1:0]) >> 3)*2)).
+ * @note   Offset has to be left-aligned on bit 11, the LSB (right bits) are set to 0.
+ *         If resolution 12 bits, no shift.
+ *         If resolution 10 bits, shift of 2 ranks on the left.
+ *         If resolution 8 bits, shift of 4 ranks on the left.
+ *         If resolution 6 bits, shift of 6 ranks on the left.
+ *         Therefore, shift = (12 - resolution) = 12 - (12- (((RES[1:0]) >> 3)*2)).
  * @param __HANDLE__ ADC handle
  * @param __OFFSET__ Value to be shifted
  * @retval None
@@ -858,11 +765,12 @@ trigger software start */
 
 /**
  * @brief Shift the AWD1 threshold with respect to the selected ADC resolution.
- * @note  Thresholds have to be left-aligned on bit 11, the LSB (right bits) are
- * set to 0. If resolution 12 bits, no shift. If resolution 10 bits, shift of 2
- * ranks on the left. If resolution 8 bits, shift of 4 ranks on the left. If
- * resolution 6 bits, shift of 6 ranks on the left. Therefore, shift = (12 -
- * resolution) = 12 - (12- (((RES[1:0]) >> 3)*2)).
+ * @note  Thresholds have to be left-aligned on bit 11, the LSB (right bits) are set to 0.
+ *        If resolution 12 bits, no shift.
+ *        If resolution 10 bits, shift of 2 ranks on the left.
+ *        If resolution 8 bits, shift of 4 ranks on the left.
+ *        If resolution 6 bits, shift of 6 ranks on the left.
+ *        Therefore, shift = (12 - resolution) = 12 - (12- (((RES[1:0]) >> 3)*2)).
  * @param __HANDLE__ ADC handle
  * @param __THRESHOLD__ Value to be shifted
  * @retval None
@@ -870,13 +778,12 @@ trigger software start */
 #define ADC_AWD1THRESHOLD_SHIFT_RESOLUTION(__HANDLE__, __THRESHOLD__) ((__THRESHOLD__) << ((((__HANDLE__)->Instance->CFGR & ADC_CFGR_RES) >> 3UL) * 2UL))
 
 /**
- * @brief Shift the AWD2 and AWD3 threshold with respect to the selected ADC
- * resolution.
+ * @brief Shift the AWD2 and AWD3 threshold with respect to the selected ADC resolution.
  * @note  Thresholds have to be left-aligned on bit 7.
- *        If resolution 12 bits, shift of 4 ranks on the right (the 4 LSB are
- * discarded). If resolution 10 bits, shift of 2 ranks on the right (the 2 LSB
- * are discarded). If resolution 8 bits, no shift. If resolution 6 bits, shift
- * of 2 ranks on the left (the 2 LSB are set to 0).
+ *        If resolution 12 bits, shift of 4 ranks on the right (the 4 LSB are discarded).
+ *        If resolution 10 bits, shift of 2 ranks on the right (the 2 LSB are discarded).
+ *        If resolution 8 bits, no shift.
+ *        If resolution 6 bits, shift of 2 ranks on the left (the 2 LSB are set to 0).
  * @param __HANDLE__ ADC handle
  * @param __THRESHOLD__ Value to be shifted
  * @retval None
@@ -901,8 +808,8 @@ trigger software start */
  * @brief Set handle instance of the ADC slave associated to the ADC master.
  * @param __HANDLE_MASTER__ ADC master handle.
  * @param __HANDLE_SLAVE__ ADC slave handle.
- * @note if __HANDLE_MASTER__ is the handle of a slave ADC or an independent
- * ADC, __HANDLE_SLAVE__ instance is set to NULL.
+ * @note if __HANDLE_MASTER__ is the handle of a slave ADC or an independent ADC, __HANDLE_SLAVE__ instance is
+ *       set to NULL.
  * @retval None
  */
 #define ADC_MULTI_SLAVE(__HANDLE_MASTER__, __HANDLE_SLAVE__)                                                                                                                                           \
@@ -915,8 +822,8 @@ trigger software start */
  * @brief Set handle instance of the ADC slave associated to the ADC master.
  * @param __HANDLE_MASTER__ ADC master handle.
  * @param __HANDLE_SLAVE__ ADC slave handle.
- * @note if __HANDLE_MASTER__ is the handle of a slave ADC or an independent
- * ADC, __HANDLE_SLAVE__ instance is set to NULL.
+ * @note if __HANDLE_MASTER__ is the handle of a slave ADC or an independent ADC, __HANDLE_SLAVE__ instance is set
+ *       to NULL.
  * @retval None
  */
 #define ADC_MULTI_SLAVE(__HANDLE_MASTER__, __HANDLE_SLAVE__) (((__HANDLE_MASTER__)->Instance == ADC1) ? ((__HANDLE_SLAVE__)->Instance = ADC2) : ((__HANDLE_SLAVE__)->Instance = NULL))
@@ -932,8 +839,7 @@ trigger software start */
 #elif defined(STM32G411xB) || defined(STM32G411xC) || defined(STM32G414xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G491xx) ||  \
     defined(STM32G4A1xx)
 #define ADC_TEMPERATURE_SENSOR_INSTANCE(__HANDLE__) (((__HANDLE__)->Instance) == ADC1)
-#endif /* defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)                                                                                                                         \
-	  || defined(STM32G483xx) */
+#endif /* defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx) */
 
 /**
  * @brief Verify the ADC instance connected to the battery voltage VBAT.
@@ -941,7 +847,7 @@ trigger software start */
  * @retval SET (ADC instance is valid) or RESET (ADC instance is invalid)
  */
 #if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
-#define ADC_BATTERY_VOLTAGE_INSTANCE(__HANDLE__) ((((__HANDLE__)->Instance) != ADC2) || (((__HANDLE__)->Instance) != ADC4))
+#define ADC_BATTERY_VOLTAGE_INSTANCE(__HANDLE__) ((((__HANDLE__)->Instance) != ADC2) && (((__HANDLE__)->Instance) != ADC4))
 #elif defined(STM32G411xB) || defined(STM32G411xC) || defined(STM32G414xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
 #define ADC_BATTERY_VOLTAGE_INSTANCE(__HANDLE__) (((__HANDLE__)->Instance) != ADC2)
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
@@ -949,8 +855,7 @@ trigger software start */
 #endif /* STM32G4xx */
 
 /**
- * @brief Verify the ADC instance connected to the internal voltage reference
- * VREFINT.
+ * @brief Verify the ADC instance connected to the internal voltage reference VREFINT.
  * @param __HANDLE__ ADC handle.
  * @retval SET (ADC instance is valid) or RESET (ADC instance is invalid)
  */
@@ -959,16 +864,15 @@ trigger software start */
 /**
  * @brief Verify the length of scheduled injected conversions group.
  * @param __LENGTH__ number of programmed conversions.
- * @retval SET (__LENGTH__ is within the maximum number of possible programmable
- * injected conversions) or RESET (__LENGTH__ is null or too large)
+ * @retval SET (__LENGTH__ is within the maximum number of possible programmable injected conversions)
+ *         or RESET (__LENGTH__ is null or too large)
  */
 #define IS_ADC_INJECTED_NB_CONV(__LENGTH__) (((__LENGTH__) >= (1U)) && ((__LENGTH__) <= (4U)))
 
 /**
  * @brief Calibration factor size verification (7 bits maximum).
  * @param __CALIBRATION_FACTOR__ Calibration factor value.
- * @retval SET (__CALIBRATION_FACTOR__ is within the authorized size) or RESET
- * (__CALIBRATION_FACTOR__ is too large)
+ * @retval SET (__CALIBRATION_FACTOR__ is within the authorized size) or RESET (__CALIBRATION_FACTOR__ is too large)
  */
 #define IS_ADC_CALFACT(__CALIBRATION_FACTOR__) ((__CALIBRATION_FACTOR__) <= (0x7FU))
 
@@ -1026,8 +930,7 @@ trigger software start */
 	  (((__CHANNEL__) == ADC_CHANNEL_13) || ((__CHANNEL__) == ADC_CHANNEL_VOPAMP2) || ((__CHANNEL__) == ADC_CHANNEL_17) || ((__CHANNEL__) == ADC_CHANNEL_VOPAMP3_ADC2))) ||                        \
 	 ((((__HANDLE__)->Instance) == ADC3) &&                                                                                                                                                        \
 	  (((__CHANNEL__) == ADC_CHANNEL_VOPAMP3_ADC3) || ((__CHANNEL__) == ADC_CHANNEL_16) || ((__CHANNEL__) == ADC_CHANNEL_VOPAMP6) || ((__CHANNEL__) == ADC_CHANNEL_VREFINT))))
-#endif /* defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)                                                                                                                         \
-	  || defined(STM32G483xx) */
+#endif /* defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx) */
 
 /**
  * @brief Verify the ADC channel setting in differential mode.
@@ -1073,8 +976,7 @@ trigger software start */
 /**
  * @brief Verify the ADC offset management setting.
  * @param __OFFSET_NUMBER__ ADC offset management.
- * @retval SET (__OFFSET_NUMBER__ is valid) or RESET (__OFFSET_NUMBER__ is
- * invalid)
+ * @retval SET (__OFFSET_NUMBER__ is valid) or RESET (__OFFSET_NUMBER__ is invalid)
  */
 #define IS_ADC_OFFSET_NUMBER(__OFFSET_NUMBER__)                                                                                                                                                        \
 	(((__OFFSET_NUMBER__) == ADC_OFFSET_NONE) || ((__OFFSET_NUMBER__) == ADC_OFFSET_1) || ((__OFFSET_NUMBER__) == ADC_OFFSET_2) || ((__OFFSET_NUMBER__) == ADC_OFFSET_3) ||                        \
@@ -1224,8 +1126,7 @@ trigger software start */
 /**
  * @brief Verify the ADC analog watchdog mode setting.
  * @param __WATCHDOG_MODE__ programmed ADC analog watchdog mode setting.
- * @retval SET (__WATCHDOG_MODE__ is valid) or RESET (__WATCHDOG_MODE__ is
- * invalid)
+ * @retval SET (__WATCHDOG_MODE__ is valid) or RESET (__WATCHDOG_MODE__ is invalid)
  */
 #define IS_ADC_ANALOG_WATCHDOG_MODE(__WATCHDOG_MODE__)                                                                                                                                                 \
 	(((__WATCHDOG_MODE__) == ADC_ANALOGWATCHDOG_NONE) || ((__WATCHDOG_MODE__) == ADC_ANALOGWATCHDOG_SINGLE_REG) || ((__WATCHDOG_MODE__) == ADC_ANALOGWATCHDOG_SINGLE_INJEC) ||                     \
@@ -1235,8 +1136,7 @@ trigger software start */
 /**
  * @brief Verify the ADC analog watchdog filtering setting.
  * @param __FILTERING_MODE__ programmed ADC analog watchdog mode setting.
- * @retval SET (__FILTERING_MODE__ is valid) or RESET (__FILTERING_MODE__ is
- * invalid)
+ * @retval SET (__FILTERING_MODE__ is valid) or RESET (__FILTERING_MODE__ is invalid)
  */
 #define IS_ADC_ANALOG_WATCHDOG_FILTERING_MODE(__FILTERING_MODE__)                                                                                                                                      \
 	(((__FILTERING_MODE__) == ADC_AWD_FILTERING_NONE) || ((__FILTERING_MODE__) == ADC_AWD_FILTERING_2SAMPLES) || ((__FILTERING_MODE__) == ADC_AWD_FILTERING_3SAMPLES) ||                           \
@@ -1286,10 +1186,8 @@ trigger software start */
 #define IS_ADC_TRIGGERED_OVERSAMPLING_MODE(__MODE__) (((__MODE__) == ADC_TRIGGEREDMODE_SINGLE_TRIGGER) || ((__MODE__) == ADC_TRIGGEREDMODE_MULTI_TRIGGER))
 
 /**
- * @brief Verify the ADC oversampling regular conversion resumed or continued
- * mode.
- * @param __MODE__ programmed ADC oversampling regular conversion resumed or
- * continued mode.
+ * @brief Verify the ADC oversampling regular conversion resumed or continued mode.
+ * @param __MODE__ programmed ADC oversampling regular conversion resumed or continued mode.
  * @retval SET (__MODE__ is valid) or RESET (__MODE__ is invalid)
  */
 #define IS_ADC_REGOVERSAMPLING_MODE(__MODE__) (((__MODE__) == ADC_REGOVERSAMPLING_CONTINUED_MODE) || ((__MODE__) == ADC_REGOVERSAMPLING_RESUMED_MODE))
@@ -1297,20 +1195,19 @@ trigger software start */
 /**
  * @brief Verify the DFSDM mode configuration.
  * @param __HANDLE__ ADC handle.
- * @note When DMSDFM configuration is not supported, the macro systematically
- * reports SET. For this reason, the input parameter is the ADC handle and not
- * the configuration parameter directly.
- * @retval SET (DFSDM mode configuration is valid) or RESET (DFSDM mode
- * configuration is invalid)
+ * @note When DMSDFM configuration is not supported, the macro systematically reports SET. For
+ *      this reason, the input parameter is the ADC handle and not the configuration parameter
+ *      directly.
+ * @retval SET (DFSDM mode configuration is valid) or RESET (DFSDM mode configuration is invalid)
  */
 #define IS_ADC_DFSDMCFG_MODE(__HANDLE__) (SET)
 
 /**
  * @brief Return the DFSDM configuration mode.
  * @param __HANDLE__ ADC handle.
- * @note When DMSDFM configuration is not supported, the macro systematically
- * reports 0x0 (i.e disabled). For this reason, the input parameter is the ADC
- * handle and not the configuration parameter directly.
+ * @note When DMSDFM configuration is not supported, the macro systematically reports 0x0 (i.e disabled).
+ *       For this reason, the input parameter is the ADC handle and not the configuration parameter
+ *       directly.
  * @retval DFSDM configuration mode
  */
 #define ADC_CFGR_DFSDM(__HANDLE__) (0x0UL)
@@ -1350,8 +1247,7 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
 uint32_t HAL_ADCEx_MultiModeGetValue(const ADC_HandleTypeDef *hadc);
 #endif /* ADC_MULTIMODE_SUPPORT */
 
-/* ADC retrieve conversion value intended to be used with polling or
- * interruption */
+/* ADC retrieve conversion value intended to be used with polling or interruption */
 uint32_t HAL_ADCEx_InjectedGetValue(const ADC_HandleTypeDef *hadc, uint32_t InjectedRank);
 
 /* ADC IRQHandler and Callbacks used in non-blocking modes (Interruption) */
