@@ -86,8 +86,16 @@ void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg)
 {
 
 	FDCANTxMessage sendECUMsg;
+	sendECUMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to; // TODO: replace identifier with correct values
+	sendECUMsg.tx_header.IdType = FDCAN_STANDARD_ID;
+	sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+	sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	sendECUMsg.tx_header.DataLength = sizeof(CAN_SEND_ECU);
+	sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	sendECUMsg.tx_header.MessageMarker = 0;
 
-	// TODO: set up the message
+	((uint32_t *)(sendECUMsg.data))[0] = *msg;
 
 	can_send(c, &sendECUMsg);
 }
