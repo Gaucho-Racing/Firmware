@@ -218,12 +218,12 @@ int main(void)
 
 	if (state_dataTest.state != CCU_STATE_CHARGING) {
 		LOGOMATIC("CCU STATE did not stay CHARGING");
-		return 2;
+		return 6;
 	}
 
 	if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1) {
 		LOGOMATIC("PRECHARGE Message did not send correct message");
-		return 2;
+		return 6;
 	}
 
 	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
@@ -235,15 +235,16 @@ int main(void)
 
 	if (state_dataTest.state != CCU_STATE_IDLE) {
 		LOGOMATIC("CCU STATE did not stay IDLE");
-		return 2;
+		return 6;
 	}
 
 	if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
 		LOGOMATIC("PRECHARGE Message did not send correct message");
-		return 2;
+		return 6;
 	}
 
 	if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 		LOGOMATIC("Software Latch was not tripped and set to low");
+		return 6;
 	}
 }
