@@ -110,7 +110,8 @@ int main(void)
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
+	LL_mDelay(50);
+	LOGOMATIC("\nBoot completed at %lu ms\n", MillisecondsSinceBoot());
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
@@ -276,8 +277,8 @@ static void GPIO_Interrupt_Init(void)
 
 	LL_EXTI_EnableIT_0_31(LL_SYSCFG_EXTI_LINE3);
 	LL_EXTI_EnableIT_0_31(LL_SYSCFG_EXTI_LINE4);
-	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_0);
-	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_0);
+	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_3);
+	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_4);
 
 	NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 	NVIC_SetPriority(EXTI4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
