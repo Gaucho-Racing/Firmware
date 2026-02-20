@@ -4,12 +4,16 @@
 #define SUCCESS 1
 #define FAIL 0
 
-void GR_MsgBuffer_Initialize(GR_MsgBuffer* msg_buffer, uint8_t* buffer, uint32_t size) {
-    msg_buffer->buffer = buffer;
+void GR_MsgBuffer_Create(GR_MsgBuffer* msg_buffer, uint32_t size) {
+    msg_buffer->buffer = (uint8_t*)malloc(size * sizeof(uint8_t));
     msg_buffer->max_size = size;
     msg_buffer->free_space = size;
     msg_buffer->head = 0;
     msg_buffer->tail = 0;
+}
+
+void GR_MsgBuffer_Free(GR_MsgBuffer* msg_buffer) {
+    free(msg_buffer->buffer);
 }
 
 int8_t GR_MsgBuffer_Push(GR_MsgBuffer* msg_buffer, uint8_t* byte_array, uint8_t size) {

@@ -11,7 +11,9 @@ typedef struct msg_buffer_stc {
     uint32_t max_size;
 } GR_MsgBuffer;
 
-void GR_MsgBuffer_Initialize(GR_MsgBuffer* msg_buffer, uint8_t* buffer, uint32_t size);
+void GR_MsgBuffer_Create(GR_MsgBuffer* msg_buffer, uint32_t size);
+
+void GR_MsgBuffer_Free(GR_MsgBuffer* msg_buffer);
 
 // Returns 0 on FAIL and 1 on SUCCESS
 int8_t GR_MsgBuffer_Push(GR_MsgBuffer* msg_buffer, uint8_t* byte_array, uint8_t size);
