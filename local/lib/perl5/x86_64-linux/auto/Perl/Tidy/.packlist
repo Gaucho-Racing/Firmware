@@ -1,0 +1,16 @@
+/home/runner/work/Firmware/Firmware/local/bin/perltidy
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy.pod
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/Debugger.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/Diagnostics.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/FileWriter.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/Formatter.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/HtmlWriter.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/IOScalar.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/IOScalarArray.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/IndentationItem.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/Logger.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/Tokenizer.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/VerticalAligner.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/VerticalAligner/Alignment.pm
+/home/runner/work/Firmware/Firmware/local/lib/perl5/Perl/Tidy/VerticalAligner/Line.pm
