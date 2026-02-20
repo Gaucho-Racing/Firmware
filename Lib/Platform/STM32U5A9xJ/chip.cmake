@@ -33,6 +33,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		${TARGET_NAME}
 		PRIVATE
 			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/startup_stm32u5a9xx.s"
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/system_stm32u5xx.c"
 	)
 
 	target_link_options(

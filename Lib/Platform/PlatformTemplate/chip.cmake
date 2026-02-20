@@ -33,6 +33,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		${TARGET_NAME}
 		PRIVATE
 			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STARTUP_ASSEMBLY_SCRIPT.s" # FIXME Replace with real startup assembly script
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/SYSTEM_C_FILE.c" # FIXME Replace with real system C file
 	)
 
 	target_link_libraries(
