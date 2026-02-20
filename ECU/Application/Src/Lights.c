@@ -7,7 +7,7 @@
 #include "main.h"
 
 void BrakeLightControl(ECU_StateData* stateLump) {
-    if (stateLump->Brake_F_Signal > 0 || stateLump->Brake_R_Signal > 0) { // TODO: dummy values, fine tune l8r
+    if (PressingBrake(stateLump)) {
         LL_GPIO_SetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
     }
     else {
@@ -19,6 +19,7 @@ void TSSILightControl(ECU_StateData* stateLump) {
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
 	if (stateLump->tssi_fault) {
+		LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 		if (stateLump->millisSinceBoot % 350 < 175) {
 			LL_GPIO_SetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
 		} else {
@@ -58,10 +59,10 @@ void SoftwareOKLightControl(ECU_StateData* stateLump) {
 	}
 }
 
-void lightControl(ECU_StateData* stateLump) {
-    BrakeLightControl(stateLump);
-    TSSILightControl(stateLump);
-    RTDButtonLightControl(stateLump);
-    TSActiveButtonLightControl(stateLump);
-    SoftwareOKLightControl(stateLump);
+void lightControl(ECU_StateData* stateData) {
+    BrakeLightControl(stateData);
+    TSSILightControl(stateData);
+    RTDButtonLightControl(stateData);
+    TSActiveButtonLightControl(stateData);
+    SoftwareOKLightControl(stateData);
 }

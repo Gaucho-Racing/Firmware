@@ -3,6 +3,15 @@
 
 #include "StateData.h"
 
-void lightControl(ECU_StateData* stateLump);
+/**
+ * @brief Event handler for hardware lights.
+ *
+ * Controls all lights managed by ECU; calls light helper functions.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
+void lightControl(ECU_StateData* stateData);
 
 #endif
