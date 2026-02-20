@@ -1,1 +1,21 @@
-{"pathname":"S/SI/SIMONW/Module-Pluggable-6.3.tar.gz","target":"Module::Pluggable","provides":{"Module::Pluggable::Object":{"version":"5.2","file":"lib/Module/Pluggable/Object.pm"},"Devel::InnerPackage":{"version":"0.4","file":"lib/Devel/InnerPackage.pm"},"Module::Pluggable":{"file":"lib/Module/Pluggable.pm","version":"6.3"}},"name":"Module::Pluggable","dist":"Module-Pluggable-6.3","version":"6.3"}
+{
+	"pathname": "S/SI/SIMONW/Module-Pluggable-6.3.tar.gz",
+	"target": "Module::Pluggable",
+	"provides": {
+		"Module::Pluggable::Object": {
+			"version": "5.2",
+			"file": "lib/Module/Pluggable/Object.pm"
+		},
+		"Devel::InnerPackage": {
+			"version": "0.4",
+			"file": "lib/Devel/InnerPackage.pm"
+		},
+		"Module::Pluggable": {
+			"file": "lib/Module/Pluggable.pm",
+			"version": "6.3"
+		}
+	},
+	"name": "Module::Pluggable",
+	"dist": "Module-Pluggable-6.3",
+	"version": "6.3"
+}
