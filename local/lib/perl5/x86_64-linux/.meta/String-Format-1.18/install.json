@@ -1,1 +1,13 @@
-{"version":"1.18","dist":"String-Format-1.18","name":"String::Format","provides":{"String::Format":{"version":"1.18","file":"Format.pm"}},"target":"String::Format","pathname":"S/SR/SREZIC/String-Format-1.18.tar.gz"}
+{
+	"version": "1.18",
+	"dist": "String-Format-1.18",
+	"name": "String::Format",
+	"provides": {
+		"String::Format": {
+			"version": "1.18",
+			"file": "Format.pm"
+		}
+	},
+	"target": "String::Format",
+	"pathname": "S/SR/SREZIC/String-Format-1.18.tar.gz"
+}
