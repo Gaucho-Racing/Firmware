@@ -103,7 +103,7 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 
-    HAL_Delay(1000);
+		HAL_Delay(1000);
 
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
 
