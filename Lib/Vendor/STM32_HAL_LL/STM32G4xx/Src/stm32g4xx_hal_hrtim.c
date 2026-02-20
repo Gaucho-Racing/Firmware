@@ -79,8 +79,8 @@
 	 (++)Input capture mode,
 	 (++)One pulse mode.
     (#)Waveform functions: These functions allow taking advantage of the HRTIM
-       flexibility to produce numerous types of control signal. When a HRTIM
-timer operates in waveform mode, all the HRTIM features are accessible without
+       flexibility to produce numerous types of control signal. When a HRTIM timer
+       operates in waveform mode, all the HRTIM features are accessible without
        any restriction. HRTIM waveform modes are managed through the set of
        functions named HAL_HRTIM_Waveform<Function>
 
@@ -95,20 +95,18 @@ timer operates in waveform mode, all the HRTIM features are accessible without
 		  function: __HAL_RCC_GPIOx_CLK_ENABLE()
 	    (+++) Configure these GPIO pins in Alternate Function mode using
 		  HAL_GPIO_Init()
-	(##)When using DMA to control data transfer (e.g
-HAL_HRTIM_SimpleBaseStart_DMA())
+	(##)When using DMA to control data transfer (e.g HAL_HRTIM_SimpleBaseStart_DMA())
 	    (+++)Enable the DMAx interface clock using __DMAx_CLK_ENABLE()
 	    (+++)Initialize the DMA handle
 	    (+++)Associate the initialized DMA handle to the appropriate DMA
 		 handle of the HRTIM handle using __HAL_LINKDMA()
 	    (+++)Initialize the DMA channel using HAL_DMA_Init()
 	    (+++)Configure the priority and enable the NVIC for the transfer
-		 complete interrupt on the DMA channel using
-HAL_NVIC_SetPriority() and HAL_NVIC_EnableIRQ()
+		 complete interrupt on the DMA channel using HAL_NVIC_SetPriority()
+		 and HAL_NVIC_EnableIRQ()
 	(##)In case of using interrupt mode (e.g HAL_HRTIM_SimpleBaseStart_IT())
 	    (+++)Configure the priority and enable the NVIC for the concerned
-		 HRTIM interrupt using HAL_NVIC_SetPriority() and
-HAL_NVIC_EnableIRQ()
+		 HRTIM interrupt using HAL_NVIC_SetPriority() and HAL_NVIC_EnableIRQ()
 
     (#)Initialize the HRTIM HAL using HAL_HRTIM_Init(). The HRTIM configuration
        structure (field of the HRTIM handle) specifies which global interrupt of
@@ -123,20 +121,20 @@ HAL_NVIC_EnableIRQ()
        CalibrationRate argument.
 
     (#)HRTIM timers cannot be used until the high resolution unit is ready. This
-       can be checked using HAL_HRTIM_PollForDLLCalibration(): this function
-returns HAL_OK if DLL calibration is completed or HAL_TIMEOUT if the DLL
-calibration is still going on when timeout given as argument expires. DLL
-calibration can also be started in interrupt mode using
-HAL_HRTIM_DLLCalibrationStart_IT(). In that case an interrupt is generated when
-the DLL calibration is completed. Note that as DLL calibration is executed on a
-periodic basis an interrupt will be generated at the end of every DLL
-calibration operation (worst case: one interrupt every 14 micro seconds !).
+       can be checked using HAL_HRTIM_PollForDLLCalibration(): this function returns
+       HAL_OK if DLL calibration is completed or HAL_TIMEOUT if the DLL calibration
+       is still going on when timeout given as argument expires. DLL calibration
+       can also be started in interrupt mode using HAL_HRTIM_DLLCalibrationStart_IT().
+       In that case an interrupt is generated when the DLL calibration is completed.
+       Note that as DLL calibration is executed on a periodic basis an interrupt
+       will be generated at the end of every DLL calibration operation
+      (worst case: one interrupt every 14 micro seconds !).
 
      (#) Configure HRTIM resources shared by all HRTIM timers
 	(##)Burst Mode Controller:
-		(+++)HAL_HRTIM_BurstModeConfig(): configures the HRTIM burst
-mode controller: operating mode (continuous or one-shot mode), clock (source,
-prescaler) , trigger(s), period, idle duration.
+		(+++)HAL_HRTIM_BurstModeConfig(): configures the HRTIM burst mode
+		     controller: operating mode (continuous or one-shot mode), clock
+		     (source, prescaler) , trigger(s), period, idle duration.
 	(##)External Events Conditioning:
 		(+++)HAL_HRTIM_EventConfig(): configures the conditioning of an
 		     external event channel: source, polarity, edge-sensitivity.
@@ -153,13 +151,13 @@ prescaler) , trigger(s), period, idle duration.
 		     abnormal operation. Up to 6 fault channels are available.
 		(+++)HAL_HRTIM_FaultPrescalerConfig(): configures the fault
 		     sampling clock (used for digital filtering).
-		(+++)HAL_HRTIM_FaultModeCtl(): Enables or disables fault
-input(s) circuitry. By default all fault inputs are disabled.
+		(+++)HAL_HRTIM_FaultModeCtl(): Enables or disables fault input(s)
+		     circuitry. By default all fault inputs are disabled.
 	(##)ADC trigger:
-		(+++)HAL_HRTIM_ADCTriggerConfig(): configures the source
-triggering the update of the ADC trigger register and the ADC trigger. 4
-independent triggers are available to start both the regular and the injected
-sequencers of the 2 ADCs
+		(+++)HAL_HRTIM_ADCTriggerConfig(): configures the source triggering
+		     the update of the ADC trigger register and the ADC trigger.
+		     4 independent triggers are available to start both the regular
+		     and the injected sequencers of the 2 ADCs
 
      (#) Configure HRTIM timer time base using HAL_HRTIM_TimeBaseConfig(). This
 	 function must be called whatever the HRTIM timer operating mode is
@@ -173,8 +171,7 @@ sequencers of the 2 ADCs
      ===================================================
      [..]
      (#) Start or Stop simple timers
-	      (++)Simple time base:
-HAL_HRTIM_SimpleBaseStart(),HAL_HRTIM_SimpleBaseStop(),
+	      (++)Simple time base: HAL_HRTIM_SimpleBaseStart(),HAL_HRTIM_SimpleBaseStop(),
 		  HAL_HRTIM_SimpleBaseStart_IT(),HAL_HRTIM_SimpleBaseStop_IT(),
 		  HAL_HRTIM_SimpleBaseStart_DMA(),HAL_HRTIM_SimpleBaseStop_DMA().
 	      (++)Simple output compare: HAL_HRTIM_SimpleOCChannelConfig(),
@@ -197,26 +194,22 @@ HAL_HRTIM_SimpleBaseStart(),HAL_HRTIM_SimpleBaseStop(),
      ====================================================
      [..]
      (#) Completes waveform timer configuration
-	      (++)HAL_HRTIM_WaveformTimerConfig(): configuration of a HRTIM
-timer operating in wave form mode mainly consists in:
+	      (++)HAL_HRTIM_WaveformTimerConfig(): configuration of a HRTIM timer
+		  operating in wave form mode mainly consists in:
 		(+++)Enabling the HRTIM timer interrupts and DMA requests.
 		(+++)Enabling the half mode for the HRTIM timer.
-		(+++)Defining how the HRTIM timer reacts to external
-synchronization input.
+		(+++)Defining how the HRTIM timer reacts to external synchronization input.
 		(+++)Enabling the push-pull mode for the HRTIM timer.
 		(+++)Enabling the fault channels for the HRTIM timer.
 		(+++)Enabling the dead-time insertion for the HRTIM timer.
-		(+++)Setting the delayed protection mode for the HRTIM timer
-(source and outputs on which the delayed protection are applied).
+		(+++)Setting the delayed protection mode for the HRTIM timer (source and outputs
+		     on which the delayed protection are applied).
 		(+++)Specifying the HRTIM timer update and reset triggers.
-		(+++)Specifying the HRTIM timer registers update policy (e.g.
-pre-load enabling).
+		(+++)Specifying the HRTIM timer registers update policy (e.g. pre-load enabling).
 	      (++)HAL_HRTIM_TimerEventFilteringConfig(): configures external
 		  event blanking and windowing circuitry of a HRTIM timer:
-		(+++)Blanking:  to mask external events during a defined  time
-period a defined time period
-		(+++)Windowing, to enable external events only during a defined
-time period
+		(+++)Blanking:  to mask external events during a defined  time period a defined time period
+		(+++)Windowing, to enable external events only during a defined time period
 	      (++)HAL_HRTIM_DeadTimeConfig(): configures the dead-time insertion
 		  unit for a HRTIM timer. Allows to generate a couple of
 		  complementary signals from a single reference waveform,
@@ -224,8 +217,7 @@ time period
 	      (++)HAL_HRTIM_ChopperModeConfig(): configures the parameters of
 		  the high-frequency carrier signal added on top of the timing
 		  unit output. Chopper mode can be enabled or disabled for each
-		   timer output separately (see
-HAL_HRTIM_WaveformOutputConfig()).
+		   timer output separately (see  HAL_HRTIM_WaveformOutputConfig()).
 	      (++)HAL_HRTIM_BurstDMAConfig(): configures the burst DMA burst
 		  controller. Allows having multiple HRTIM registers updated
 		  with a single DMA request. The burst DMA operation is started
@@ -239,22 +231,20 @@ HAL_HRTIM_WaveformOutputConfig()).
 		  compare unit must be configured separately.
 	      (++)HAL_HRTIM_WaveformCaptureConfig(): configures the capture unit
 		  of a HRTIM timer. This operation consists in specifying the
-		  source(s)  triggering the capture (timer register update
-event, external event, timer output set/reset event, other HRTIM timer related
-events).
-	      (++)HAL_HRTIM_WaveformOutputConfig(): configuration of a HRTIM
-timer output mainly consists in:
+		  source(s)  triggering the capture (timer register update event,
+		  external event, timer output set/reset event, other HRTIM
+		  timer related events).
+	      (++)HAL_HRTIM_WaveformOutputConfig(): configuration of a HRTIM timer
+		  output mainly consists in:
 		(+++)Setting the output polarity (active high or active low),
 		(+++)Defining the set/reset crossbar for the output,
-		(+++)Specifying the fault level (active or inactive) in IDLE and
-FAULT states.,
+		(+++)Specifying the fault level (active or inactive) in IDLE and FAULT states.,
 
      (#) Set waveform timer output(s) level
 	      (++)HAL_HRTIM_WaveformSetOutputLevel(): forces the output to its
 		  active or inactive level. For example, when deadtime insertion
-		  is enabled it is necessary to force the output level by
-software to have the outputs in a complementary state as soon as the RUN mode is
-entered.
+		  is enabled it is necessary to force the output level by software
+		  to have the outputs in a complementary state as soon as the RUN mode is entered.
 
      (#) Enable or Disable waveform timer output(s)
 	      (++)HAL_HRTIM_WaveformOutputStart(),HAL_HRTIM_WaveformOutputStop().
@@ -291,14 +281,14 @@ entered.
 	      (++)HAL_HRTIM_GetBurstStatus(): returns the actual status
 		 (ACTIVE/INACTIVE) of the burst mode controller.
 	      (++)HAL_HRTIM_GetCurrentPushPullStatus(): when the push-pull mode
-		 is enabled for the HRTIM timer (see
-HAL_HRTIM_WaveformTimerConfig()), the push-pull status indicates on which output
-the signal is currently active (e.g signal applied on output 1 and output 2
-forced inactive or vice versa).
+		 is enabled for the HRTIM timer (see HAL_HRTIM_WaveformTimerConfig()),
+		 the push-pull status indicates on which output the signal is currently
+		 active (e.g signal applied on output 1 and output 2 forced
+		 inactive or vice versa).
 	     (++)HAL_HRTIM_GetIdlePushPullStatus(): when the push-pull mode
-		 is enabled for the HRTIM timer (see
-HAL_HRTIM_WaveformTimerConfig()), the idle push-pull status indicates during
-which period the delayed protection request occurred (e.g. protection occurred
+		 is enabled for the HRTIM timer (see HAL_HRTIM_WaveformTimerConfig()),
+		 the idle push-pull status indicates during which period the
+		 delayed protection request occurred (e.g. protection occurred
 		 when the output 1 was active and output 2 forced inactive or
 		 vice versa).
 
@@ -310,88 +300,67 @@ which period the delayed protection request occurred (e.g. protection occurred
      [..]
      The compilation flag USE_HAL_HRTIM_REGISTER_CALLBACKS when set to 1
      allows the user to configure dynamically the driver callbacks.
-     Use Functions HAL_HRTIM_RegisterCallback() or
-HAL_HRTIM_TIMxRegisterCallback() to register an interrupt callback.
+     Use Functions HAL_HRTIM_RegisterCallback() or HAL_HRTIM_TIMxRegisterCallback()
+     to register an interrupt callback.
 
      [..]
-     Function HAL_HRTIM_RegisterCallback() allows to register following
-callbacks:
+     Function HAL_HRTIM_RegisterCallback() allows to register following callbacks:
        (+) Fault1Callback               : Fault 1 interrupt callback function
        (+) Fault2Callback               : Fault 2 interrupt callback function
        (+) Fault3Callback               : Fault 3 interrupt callback function
        (+) Fault4Callback               : Fault 4 interrupt callback function
        (+) Fault5Callback               : Fault 5 interrupt callback function
        (+) Fault6Callback               : Fault 6 interrupt callback function
-       (+) SystemFaultCallback          : System fault interrupt callback
-function
+       (+) SystemFaultCallback          : System fault interrupt callback function
        (+) DLLCalibrationReadyCallback  : DLL Ready interrupt callback function
-       (+) BurstModePeriodCallback      : Burst mode period interrupt callback
-function
+       (+) BurstModePeriodCallback      : Burst mode period interrupt callback function
        (+) SynchronizationEventCallback : Sync Input interrupt callback function
        (+) ErrorCallback                : DMA error callback function
        (+) MspInitCallback              : HRTIM MspInit callback function
        (+) MspDeInitCallback            : HRTIM MspInit callback function
 
      [..]
-     Function HAL_HRTIM_TIMxRegisterCallback() allows to register following
-callbacks:
-       (+) RegistersUpdateCallback   : Timer x Update interrupt callback
-function
-       (+) RepetitionEventCallback   : Timer x Repetition interrupt callback
-function
-       (+) Compare1EventCallback     : Timer x Compare 1 match interrupt
-callback function
-       (+) Compare2EventCallback     : Timer x Compare 2 match interrupt
-callback function
-       (+) Compare3EventCallback     : Timer x Compare 3 match interrupt
-callback function
-       (+) Compare4EventCallback     : Timer x Compare 4 match interrupt
-callback function
-       (+) Capture1EventCallback     : Timer x Capture 1 interrupts callback
-function
-       (+) Capture2EventCallback     : Timer x Capture 2 interrupts callback
-function
-       (+) DelayedProtectionCallback : Timer x Delayed protection interrupt
-callback function
-       (+) CounterResetCallback      : Timer x counter reset/roll-over interrupt
-callback function
-       (+) Output1SetCallback        : Timer x output 1 set interrupt callback
-function
-       (+) Output1ResetCallback      : Timer x output 1 reset interrupt callback
-function
-       (+) Output2SetCallback        : Timer x output 2 set interrupt callback
-function
-       (+) Output2ResetCallback      : Timer x output 2 reset interrupt callback
-function
-       (+) BurstDMATransferCallback  : Timer x Burst DMA completed interrupt
-callback function
+     Function HAL_HRTIM_TIMxRegisterCallback() allows to register following callbacks:
+       (+) RegistersUpdateCallback   : Timer x Update interrupt callback function
+       (+) RepetitionEventCallback   : Timer x Repetition interrupt callback function
+       (+) Compare1EventCallback     : Timer x Compare 1 match interrupt callback function
+       (+) Compare2EventCallback     : Timer x Compare 2 match interrupt callback function
+       (+) Compare3EventCallback     : Timer x Compare 3 match interrupt callback function
+       (+) Compare4EventCallback     : Timer x Compare 4 match interrupt callback function
+       (+) Capture1EventCallback     : Timer x Capture 1 interrupts callback function
+       (+) Capture2EventCallback     : Timer x Capture 2 interrupts callback function
+       (+) DelayedProtectionCallback : Timer x Delayed protection interrupt callback function
+       (+) CounterResetCallback      : Timer x counter reset/roll-over interrupt callback function
+       (+) Output1SetCallback        : Timer x output 1 set interrupt callback function
+       (+) Output1ResetCallback      : Timer x output 1 reset interrupt callback function
+       (+) Output2SetCallback        : Timer x output 2 set interrupt callback function
+       (+) Output2ResetCallback      : Timer x output 2 reset interrupt callback function
+       (+) BurstDMATransferCallback  : Timer x Burst DMA completed interrupt callback function
 
      [..]
-     Both functions take as parameters the HAL peripheral handle, the Callback
-ID and a pointer to the user callback function.
+     Both functions take as parameters the HAL peripheral handle, the Callback ID
+     and a pointer to the user callback function.
 
      [..]
-     Use function HAL_HRTIM_UnRegisterCallback or
-HAL_HRTIM_TIMxUnRegisterCallback to reset a callback to the default weak
-function. Both functions take  as parameters the HAL peripheral handle and the
-Callback ID.
+     Use function HAL_HRTIM_UnRegisterCallback or HAL_HRTIM_TIMxUnRegisterCallback
+     to reset a callback to the default weak function. Both functions take  as parameters
+     the HAL peripheral handle and the Callback ID.
 
      [..]
-     By default, after the HAL_HRTIM_Init() and when the state is
-HAL_HRTIM_STATE_RESET all callbacks are set to the corresponding weak functions
-(e.g HAL_HRTIM_Fault1Callback) Exception done for MspInit and MspDeInit
-functions that are reset to the legacy weak functions in the HAL_HRTIM_Init()/
-HAL_HRTIM_DeInit() only when these callbacks are null (not registered
-beforehand). If MspInit or MspDeInit are not null, the HAL_HRTIM_Init()/
-HAL_HRTIM_DeInit() keep and use the user MspInit/MspDeInit callbacks (registered
-beforehand) whatever the state.
+     By default, after the HAL_HRTIM_Init() and when the state is HAL_HRTIM_STATE_RESET
+     all callbacks are set to the corresponding weak functions (e.g HAL_HRTIM_Fault1Callback)
+     Exception done for MspInit and MspDeInit functions that are reset to the legacy
+     weak functions in the HAL_HRTIM_Init()/ HAL_HRTIM_DeInit() only when these
+     callbacks are null (not registered beforehand). If MspInit or MspDeInit are
+     not null, the HAL_HRTIM_Init()/ HAL_HRTIM_DeInit() keep and use the user
+     MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
 
      [..]
-     Callbacks can be registered/unregistered in HAL_HRTIM_STATE_READY state
-only. Exception done MspInit/MspDeInit functions that can be
-registered/unregistered in HAL_HRTIM_STATE_READY or HAL_HRTIM_STATE_RESET
-states, thus registered (user) MspInit/DeInit callbacks can be used during the
-Init/DeInit. Then, the user first registers the MspInit/MspDeInit user callbacks
+     Callbacks can be registered/unregistered in HAL_HRTIM_STATE_READY state only.
+     Exception done MspInit/MspDeInit functions that can be registered/unregistered
+     in HAL_HRTIM_STATE_READY or HAL_HRTIM_STATE_RESET states, thus registered
+     (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
+     Then, the user first registers the MspInit/MspDeInit user callbacks
      using HAL_HRTIM_RegisterCallback() before calling HAL_HRTIM_DeInit()
      or HAL_HRTIM_Init() function.
 
@@ -501,14 +470,12 @@ static void HRTIM_BurstDMACplt(DMA_HandleTypeDef *hdma);
  * @}
  */
 
-/* Exported functions
- * ---------------------------------------------------------*/
+/* Exported functions ---------------------------------------------------------*/
 /** @defgroup HRTIM_Exported_Functions HRTIM Exported Functions
  * @{
  */
 
-/** @defgroup HRTIM_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup HRTIM_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief    Initialization and Configuration functions
 @verbatim
  ===============================================================================
@@ -548,8 +515,7 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 	if (hhrtim->State == HAL_HRTIM_STATE_RESET) {
-		/* Initialize callback function pointers to their default values
-		 */
+		/* Initialize callback function pointers to their default values */
 		hhrtim->Fault1Callback = HAL_HRTIM_Fault1Callback;
 		hhrtim->Fault2Callback = HAL_HRTIM_Fault2Callback;
 		hhrtim->Fault3Callback = HAL_HRTIM_Fault3Callback;
@@ -601,9 +567,8 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 		assert_param(IS_HRTIM_SYNCOUTPUTSOURCE(hhrtim->Init.SyncOutputSource));
 		assert_param(IS_HRTIM_SYNCOUTPUTPOLARITY(hhrtim->Init.SyncOutputPolarity));
 
-		/* The synchronization output initialization procedure must be
-		   done prior to the configuration of the MCU outputs (done
-		   within HAL_HRTIM_MspInit)
+		/* The synchronization output initialization procedure must be done prior
+		   to the configuration of the MCU outputs (done within HAL_HRTIM_MspInit)
 		*/
 		if (hhrtim->Instance == HRTIM1) {
 			/* Enable the HRTIM peripheral clock */
@@ -709,8 +674,8 @@ __weak void HAL_HRTIM_MspInit(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE: This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_MspInit could be implemented in the user file
+	/* NOTE: This function should not be modified, when the callback is needed,
+		 the HAL_HRTIM_MspInit could be implemented in the user file
 	 */
 }
 
@@ -724,8 +689,8 @@ __weak void HAL_HRTIM_MspDeInit(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE: This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_MspDeInit could be implemented in the user file
+	/* NOTE: This function should not be modified, when the callback is needed,
+		 the HAL_HRTIM_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -735,14 +700,10 @@ __weak void HAL_HRTIM_MspDeInit(HRTIM_HandleTypeDef *hhrtim)
  * @param  CalibrationRate DLL calibration period
  *                    This parameter can be one of the following values:
  *                    @arg HRTIM_SINGLE_CALIBRATION: One shot DLL calibration
- *                    @arg HRTIM_CALIBRATIONRATE_0: Periodic DLL calibration.
- * T=6.168 ms
- *                    @arg HRTIM_CALIBRATIONRATE_1: Periodic DLL calibration.
- * T=0.771 ms
- *                    @arg HRTIM_CALIBRATIONRATE_2: Periodic DLL calibration.
- * T=0.096 ms
- *                    @arg HRTIM_CALIBRATIONRATE_3: Periodic DLL calibration.
- * T=0.012 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_0: Periodic DLL calibration. T=6.168 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_1: Periodic DLL calibration. T=0.771 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_2: Periodic DLL calibration. T=0.096 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_3: Periodic DLL calibration. T=0.012 ms
  * @retval HAL status
  * @note This function locks the HRTIM instance. HRTIM instance is unlocked
  *       within the HAL_HRTIM_PollForDLLCalibration function, just before
@@ -782,14 +743,10 @@ HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim, uin
  * @param  CalibrationRate DLL calibration period
  *                    This parameter can be one of the following values:
  *                    @arg HRTIM_SINGLE_CALIBRATION: One shot DLL calibration
- *                    @arg HRTIM_CALIBRATIONRATE_0: Periodic DLL calibration.
- * T=6.168 ms
- *                    @arg HRTIM_CALIBRATIONRATE_1: Periodic DLL calibration.
- * T=0.771 ms
- *                    @arg HRTIM_CALIBRATIONRATE_2: Periodic DLL calibration.
- * T=0.096 ms
- *                    @arg HRTIM_CALIBRATIONRATE_3: Periodic DLL calibration.
- * T=0.012 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_0: Periodic DLL calibration. T=6.168 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_1: Periodic DLL calibration. T=0.771 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_2: Periodic DLL calibration. T=0.096 ms
+ *                    @arg HRTIM_CALIBRATIONRATE_3: Periodic DLL calibration. T=0.012 ms
  * @retval HAL status
  * @note This function locks the HRTIM instance. HRTIM instance is unlocked
  *       within the IRQ processing function when processing the DLL ready
@@ -1248,8 +1205,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint
  * @}
  */
 
-/** @defgroup HRTIM_Exported_Functions_Group3 Simple output compare mode
-functions
+/** @defgroup HRTIM_Exported_Functions_Group3 Simple output compare mode functions
   *  @brief    Simple output compare functions
 @verbatim
  ===============================================================================
@@ -1297,14 +1253,14 @@ functions
  *                    @arg HRTIM_OUTPUT_TE2: Timer E - Output 2
  *                    @arg HRTIM_OUTPUT_TF1: Timer F - Output 1
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
- * @param  pSimpleOCChannelCfg pointer to the simple output compare output
- * configuration structure
+ * @param  pSimpleOCChannelCfg pointer to the simple output compare output configuration structure
  * @note When the timer operates in simple output compare mode:
  *         Output 1 is implicitly controlled by the compare unit 1
  *         Output 2 is implicitly controlled by the compare unit 2
- *       Output Set/Reset crossbar is set according to the selected output
- * compare mode: Toggle: SETxyR = RSTxyR = CMPy Active: SETxyR = CMPy, RSTxyR =
- * 0 Inactive: SETxy =0, RSTxy = CMPy
+ *       Output Set/Reset crossbar is set according to the selected output compare mode:
+ *         Toggle: SETxyR = RSTxyR = CMPy
+ *         Active: SETxyR = CMPy, RSTxyR = 0
+ *         Inactive: SETxy =0, RSTxy = CMPy
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, const HRTIM_SimpleOCChannelCfgTypeDef *pSimpleOCChannelCfg)
@@ -1433,8 +1389,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(HRTIM_HandleTypeDef *hhrtim, u
 }
 
 /**
- * @brief  Start the output compare signal generation on the designed timer
- * output
+ * @brief  Start the output compare signal generation on the designed timer output
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -1485,8 +1440,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart(HRTIM_HandleTypeDef *hhrtim, uint32_t 
 }
 
 /**
- * @brief  Stop the output compare signal generation on the designed timer
- * output
+ * @brief  Stop the output compare signal generation on the designed timer output
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -1537,8 +1491,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop(HRTIM_HandleTypeDef *hhrtim, uint32_t T
 }
 
 /**
- * @brief  Start the output compare signal generation on the designed timer
- * output (Interrupt is enabled (see note note below)).
+ * @brief  Start the output compare signal generation on the designed timer output
+ *         (Interrupt is enabled (see note note below)).
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -1601,8 +1555,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32
 }
 
 /**
- * @brief  Stop the output compare signal generation on the designed timer
- * output (Interrupt is disabled).
+ * @brief  Stop the output compare signal generation on the designed timer output
+ *         (Interrupt is disabled).
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -1661,8 +1615,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_
 }
 
 /**
- * @brief  Start the output compare signal generation on the designed timer
- * output (DMA request is enabled (see note below)).
+ * @brief  Start the output compare signal generation on the designed timer output
+ *         (DMA request is enabled (see note below)).
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -1767,8 +1721,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint3
 }
 
 /**
- * @brief  Stop the output compare signal generation on the designed timer
- * output (DMA request is disabled).
+ * @brief  Stop the output compare signal generation on the designed timer output
+ *         (DMA request is disabled).
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -1891,8 +1845,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32
  *                    @arg HRTIM_OUTPUT_TE2: Timer E - Output 2
  *                    @arg HRTIM_OUTPUT_TF1: Timer F - Output 1
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
- * @param  pSimplePWMChannelCfg pointer to the simple PWM output configuration
- * structure
+ * @param  pSimplePWMChannelCfg pointer to the simple PWM output configuration structure
  * @note When the timer operates in simple PWM output mode:
  *         Output 1 is implicitly controlled by the compare unit 1
  *         Output 2 is implicitly controlled by the compare unit 2
@@ -2536,12 +2489,11 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint3
  *                    This parameter can be one of the following values:
  *                    @arg HRTIM_CAPTUREUNIT_1: Capture unit 1
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
- * @param  pSimpleCaptureChannelCfg pointer to the simple capture configuration
- * structure
+ * @param  pSimpleCaptureChannelCfg pointer to the simple capture configuration structure
  * @note When the timer operates in simple capture mode the capture is triggered
- *       by the designated external event and GPIO input is implicitly used as
- * event source. The cature can be triggered by a rising edge, a falling edge or
- * both edges on event channel.
+ *       by the designated external event and GPIO input is implicitly used as event source.
+ *       The cature can be triggered by a rising edge, a falling edge or both
+ *       edges on event channel.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel, const HRTIM_SimpleCaptureChannelCfgTypeDef *pSimpleCaptureChannelCfg)
@@ -2574,8 +2526,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(HRTIM_HandleTypeDef *hhrt
 
 	HRTIM_EventConfig(hhrtim, pSimpleCaptureChannelCfg->Event, &EventCfg);
 
-	/* Memorize capture trigger (will be configured when the capture is
-	 * started */
+	/* Memorize capture trigger (will be configured when the capture is started */
 	HRTIM_CaptureUnitConfig(hhrtim, TimerIdx, CaptureChannel, pSimpleCaptureChannelCfg->Event);
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
@@ -3128,16 +3079,16 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim, u
  *                    @arg HRTIM_OUTPUT_TE2: Timer E - Output 2
  *                    @arg HRTIM_OUTPUT_TF1: Timer F - Output 1
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
- * @param  pSimpleOnePulseChannelCfg pointer to the simple one pulse output
- * configuration structure
+ * @param  pSimpleOnePulseChannelCfg pointer to the simple one pulse output configuration structure
  * @note When the timer operates in simple one pulse mode:
  *         the timer counter is implicitly started by the reset event,
- *         the reset of the timer counter is triggered by the designated
- * external event GPIO input is implicitly used as event source, Output 1 is
- * implicitly controlled by the compare unit 1, Output 2 is implicitly
- * controlled by the compare unit 2. Output Set/Reset crossbar is set as
- * follows: Output 1: SETx1R = CMP1, RSTx1R = PER Output 2: SETx2R = CMP2, RST2R
- * = PER
+ *         the reset of the timer counter is triggered by the designated external event
+ *         GPIO input is implicitly used as event source,
+ *         Output 1 is implicitly controlled by the compare unit 1,
+ *         Output 2 is implicitly controlled by the compare unit 2.
+ *       Output Set/Reset crossbar is set as follows:
+ *         Output 1: SETx1R = CMP1, RSTx1R = PER
+ *         Output 2: SETx2R = CMP2, RST2R = PER
  * @retval HAL status
  * @note If HAL_HRTIM_SimpleOnePulseChannelConfig is called for both timer
  *       outputs, the reset event related configuration data provided in the
@@ -3887,8 +3838,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, ui
  *                    @arg HRTIM_FAULT_4: Fault input 4
  *                    @arg HRTIM_FAULT_5: Fault input 5
  *                    @arg HRTIM_FAULT_6: Fault input 6
- * @param  pFaultBlkCfg: pointer to the fault conditioning configuration
- * structure
+ * @param  pFaultBlkCfg: pointer to the fault conditioning configuration structure
  * @note This function automatically enables the Blanking on Fault
  * @note This function must be called when fault is not enabled
  * @retval HAL status
@@ -3973,8 +3923,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(HRTIM_HandleTypeDef *hh
  *                    @arg HRTIM_FAULT_4: Fault input 4
  *                    @arg HRTIM_FAULT_5: Fault input 5
  *                    @arg HRTIM_FAULT_6: Fault input 6
- * @param  pFaultBlkCfg: pointer to the fault conditioning configuration
- * structure
+ * @param  pFaultBlkCfg: pointer to the fault conditioning configuration structure
  * @retval HAL status
  * @note  A fault is considered valid when the number of
  *        events is equal to the (FLTxCNT[3:0]+1) value
@@ -4130,8 +4079,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim, uint3
  * @brief  Enable or disables the HRTIMx Fault mode.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Faults fault input(s) to enable or disable
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                    @arg HRTIM_FAULT_1: Fault input 1
  *                    @arg HRTIM_FAULT_2: Fault input 2
  *                    @arg HRTIM_FAULT_3: Fault input 3
@@ -4465,18 +4413,12 @@ HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim, uin
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  RollOverCfg This parameter can be a combination of all the following
- * values:
- *                   @arg HRTIM_TIM_FEROM_BOTH  or HRTIM_TIM_FEROM_CREST  or
- * HRTIM_TIM_FEROM_VALLEY
- *                   @arg HRTIM_TIM_BMROM_BOTH  or HRTIM_TIM_BMROM_CREST  or
- * HRTIM_TIM_BMROM_VALLEY
- *                   @arg HRTIM_TIM_ADROM_BOTH  or HRTIM_TIM_ADROM_CREST  or
- * HRTIM_TIM_ADROM_VALLEY
- *                   @arg HRTIM_TIM_OUTROM_BOTH or HRTIM_TIM_OUTROM_CREST or
- * HRTIM_TIM_OUTROM_VALLEY
- *                   @arg HRTIM_TIM_ROM_BOTH    or HRTIM_TIM_ROM_CREST    or
- * HRTIM_TIM_ROM_VALLEY
+ * @param  RollOverCfg This parameter can be a combination of all the following values:
+ *                   @arg HRTIM_TIM_FEROM_BOTH  or HRTIM_TIM_FEROM_CREST  or HRTIM_TIM_FEROM_VALLEY
+ *                   @arg HRTIM_TIM_BMROM_BOTH  or HRTIM_TIM_BMROM_CREST  or HRTIM_TIM_BMROM_VALLEY
+ *                   @arg HRTIM_TIM_ADROM_BOTH  or HRTIM_TIM_ADROM_CREST  or HRTIM_TIM_ADROM_VALLEY
+ *                   @arg HRTIM_TIM_OUTROM_BOTH or HRTIM_TIM_OUTROM_CREST or HRTIM_TIM_OUTROM_VALLEY
+ *                   @arg HRTIM_TIM_ROM_BOTH    or HRTIM_TIM_ROM_CREST    or HRTIM_TIM_ROM_VALLEY
  * @note This function must be called before starting the timer
  */
 HAL_StatusTypeDef HAL_HRTIM_RollOverModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RollOverCfg)
@@ -4508,8 +4450,7 @@ HAL_StatusTypeDef HAL_HRTIM_RollOverModeConfig(HRTIM_HandleTypeDef *hhrtim, uint
  * @}
  */
 
-/** @defgroup HRTIM_Exported_Functions_Group8 Timer waveform configuration and
-functions
+/** @defgroup HRTIM_Exported_Functions_Group8 Timer waveform configuration and functions
   *  @brief    HRTIM timer configuration and control functions
 @verbatim
  ===============================================================================
@@ -4682,9 +4623,6 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, ui
 	/* Configure timing unit */
 	HRTIM_TimingUnitWaveform_Control(hhrtim, TimerIdx, pTimerCtl);
 
-	/* Force a software update */
-	HRTIM_ForceRegistersUpdate(hhrtim, TimerIdx);
-
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
 	/* Process Unlocked */
@@ -4694,8 +4632,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, ui
 }
 
 /**
- * @brief  Configure the Dual Channel Dac behavior of a timer operating in
- * waveform mode
+ * @brief  Configure the Dual Channel Dac behavior of a timer operating in waveform mode
  * @param  hhrtim: pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -4705,8 +4642,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, ui
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  pTimerCtl pointer to the timer DualChannel Dac configuration
- * structure
+ * @param  pTimerCtl pointer to the timer DualChannel Dac configuration structure
  * @note When the timer operates in waveform mode, all the features supported by
  *       the HRTIM are available without any limitation.
  * @retval HAL status
@@ -4741,8 +4677,7 @@ HAL_StatusTypeDef HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrti
 }
 
 /**
- * @brief  Configure the event filtering capabilities of a timer (blanking,
- * windowing)
+ * @brief  Configure the event filtering capabilities of a timer (blanking, windowing)
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -4752,8 +4687,8 @@ HAL_StatusTypeDef HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrti
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  Event external event for which timer event filtering must be
- * configured This parameter can be one of the following values:
+ * @param  Event external event for which timer event filtering must be configured
+ *                    This parameter can be one of the following values:
  *                    @arg HRTIM_EVENT_1: External event 1
  *                    @arg HRTIM_EVENT_2: External event 2
  *                    @arg HRTIM_EVENT_3: External event 3
@@ -4764,8 +4699,7 @@ HAL_StatusTypeDef HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrti
  *                    @arg HRTIM_EVENT_8: External event 8
  *                    @arg HRTIM_EVENT_9: External event 9
  *                    @arg HRTIM_EVENT_10: External event 10
- * @param  pTimerEventFilteringCfg pointer to the timer event filtering
- * configuration structure
+ * @param  pTimerEventFilteringCfg pointer to the timer event filtering configuration structure
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
@@ -4876,9 +4810,8 @@ HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(HRTIM_HandleTypeDef *hhrti
 }
 
 /**
- * @brief  Configure the external Event Counter A or B of a timer (source,
- * threshold, reset mode) but does not enable : call
- * HAL_HRTIM_ExternalEventCounterEnable afterwards
+ * @brief  Configure the external Event Counter A or B of a timer (source, threshold, reset mode)
+ *         but does not enable : call HAL_HRTIM_ExternalEventCounterEnable afterwards
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -4888,12 +4821,11 @@ HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(HRTIM_HandleTypeDef *hhrti
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  EventCounter external event Counter A or B for which timer event must
- * be configured This parameter can be one of the following values:
+ * @param  EventCounter external event Counter A or B for which timer event must be configured
+ *                    This parameter can be one of the following values:
  *                    @arg HRTIM_EVENTCOUNTER_A
  *                    @arg HRTIM_EVENTCOUNTER_B
- * @param  pTimerExternalEventCfg: pointer to the timer external event
- * configuration structure
+ * @param  pTimerExternalEventCfg: pointer to the timer external event configuration structure
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
@@ -4926,8 +4858,7 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(HRTIM_HandleTypeDef *hhrtim, u
 			hrtim_eefr3 = (pTimerExternalEventCfg->ResetMode) << HRTIM_EEFR3_EEVARSTM_Pos;
 			hrtim_eefr3 |= ((pTimerExternalEventCfg->Source - 1U)) << HRTIM_EEFR3_EEVASEL_Pos;
 			hrtim_eefr3 |= (pTimerExternalEventCfg->Counter) << HRTIM_EEFR3_EEVACNT_Pos;
-			/* do not enable, use HAL_HRTIM_TimerExternalEventEnable
-			 * function */
+			/* do not enable, use HAL_HRTIM_TimerExternalEventEnable function */
 
 			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, (HRTIM_EEFR3_EEVARSTM | HRTIM_EEFR3_EEVASEL | HRTIM_EEFR3_EEVACNT), hrtim_eefr3);
 		}
@@ -4942,8 +4873,7 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(HRTIM_HandleTypeDef *hhrtim, u
 			hrtim_eefr3 = (pTimerExternalEventCfg->ResetMode) << HRTIM_EEFR3_EEVBRSTM_Pos;
 			hrtim_eefr3 |= ((pTimerExternalEventCfg->Source - 1U)) << HRTIM_EEFR3_EEVBSEL_Pos;
 			hrtim_eefr3 |= (pTimerExternalEventCfg->Counter) << HRTIM_EEFR3_EEVBCNT_Pos;
-			/* do not enable, use HAL_HRTIM_TimerExternalEventEnable
-			 * function */
+			/* do not enable, use HAL_HRTIM_TimerExternalEventEnable function */
 
 			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, (HRTIM_EEFR3_EEVBRSTM | HRTIM_EEFR3_EEVBSEL | HRTIM_EEFR3_EEVBCNT), hrtim_eefr3);
 		}
@@ -4967,8 +4897,8 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(HRTIM_HandleTypeDef *hhrtim, u
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  EventCounter external Event Counter A or B for which timer event must
- * be configured This parameter can be a one of the following values:
+ * @param  EventCounter external Event Counter A or B for which timer event must be configured
+ *                    This parameter can be a one of the following values:
  *                    @arg HRTIM_EVENTCOUNTER_A
  *                    @arg HRTIM_EVENTCOUNTER_B
  * @note This function must be called before starting the timer
@@ -5015,8 +4945,8 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim, u
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  EventCounter external event Counter A or B for which timer event must
- * be configured This parameter can be a one of the following values:
+ * @param  EventCounter external event Counter A or B for which timer event must be configured
+ *                    This parameter can be a one of the following values:
  *                    @arg HRTIM_EVENTCOUNTER_A
  *                    @arg HRTIM_EVENTCOUNTER_B
  * @retval HAL status
@@ -5063,8 +4993,8 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim, 
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  EventCounter external event Counter A or B for which timer event must
- * be configured This parameter can be one of the following values:
+ * @param  EventCounter external event Counter A or B for which timer event must be configured
+ *                    This parameter can be one of the following values:
  *                    @arg HRTIM_EVENTCOUNTER_A
  *                    @arg HRTIM_EVENTCOUNTER_B
  * @note This function must be called before starting the timer
@@ -5111,8 +5041,7 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim, ui
  *                   @arg HRTIM_TIMERINDEX_TIMER_D for timer D
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
- * @param  pDeadTimeCfg pointer to the deadtime insertion configuration
- * structure
+ * @param  pDeadTimeCfg pointer to the deadtime insertion configuration structure
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
@@ -5225,8 +5154,7 @@ HAL_StatusTypeDef HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint3
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @param  RegistersToUpdate registers to be written by DMA
- *                    This parameter can be any combination of the following
- * values:
+ *                    This parameter can be any combination of the following values:
  *                    @arg HRTIM_BURSTDMA_CR: HRTIM_MCR or HRTIM_TIMxCR
  *                    @arg HRTIM_BURSTDMA_ICR: HRTIM_MICR or HRTIM_TIMxICR
  *                    @arg HRTIM_BURSTDMA_DIER: HRTIM_MDIER or HRTIM_TIMxDIER
@@ -5343,12 +5271,12 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t
  *                    @arg HRTIM_COMPAREUNIT_3: Compare unit 3
  *                    @arg HRTIM_COMPAREUNIT_4: Compare unit 4
  * @param  pCompareCfg pointer to the compare unit configuration structure
- * @note When auto delayed mode is required for compare unit 2 or compare unit
- * 4, application has to configure separately the capture unit. Capture unit to
- * configure in that case depends on the compare unit auto delayed mode is
- * applied to (see below): Auto delayed on output compare 2: capture unit 1 must
- * be configured Auto delayed on output compare 4: capture unit 2 must be
- * configured
+ * @note When auto delayed mode is required for compare unit 2 or compare unit 4,
+ *       application has to configure separately the capture unit. Capture unit
+ *       to configure in that case depends on the compare unit auto delayed mode
+ *       is applied to (see below):
+ *         Auto delayed on output compare 2: capture unit 1 must be configured
+ *         Auto delayed on output compare 4: capture unit 2 must be configured
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
@@ -5402,6 +5330,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, u
 		if (hhrtim->State == HAL_HRTIM_STATE_ERROR) {
 			return HAL_ERROR;
 		}
+
 	} else {
 		switch (CompareUnit) {
 			case HRTIM_COMPAREUNIT_1: {
@@ -5419,15 +5348,12 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, u
 
 				if (pCompareCfg->AutoDelayedMode != HRTIM_AUTODELAYEDMODE_REGULAR) {
 					/* Configure auto-delayed mode */
-					/* DELCMP2 bitfield must be reset when
-					 * reprogrammed from one value */
-					/* to the other to reinitialize properly
-					 * the auto-delayed mechanism */
+					/* DELCMP2 bitfield must be reset when reprogrammed from one value */
+					/* to the other to reinitialize properly the auto-delayed mechanism */
 					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR &= ~HRTIM_TIMCR_DELCMP2;
 					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR |= pCompareCfg->AutoDelayedMode;
 
-					/* Set the compare value for timeout
-					 * compare unit (if any) */
+					/* Set the compare value for timeout compare unit (if any) */
 					if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1) {
 						hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pCompareCfg->AutoDelayedTimeout;
 					} else if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3) {
@@ -5436,8 +5362,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, u
 						/* nothing to do */
 					}
 				} else {
-					/* Clear HRTIM_TIMxCR.DELCMP2 bitfield
-					 */
+					/* Clear HRTIM_TIMxCR.DELCMP2 bitfield */
 					MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR, HRTIM_TIMCR_DELCMP2, 0U);
 				}
 				break;
@@ -5458,15 +5383,12 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, u
 
 				if (pCompareCfg->AutoDelayedMode != HRTIM_AUTODELAYEDMODE_REGULAR) {
 					/* Configure auto-delayed mode */
-					/* DELCMP4 bitfield must be reset when
-					 * reprogrammed from one value */
-					/* to the other to reinitialize properly
-					 * the auto-delayed mechanism */
+					/* DELCMP4 bitfield must be reset when reprogrammed from one value */
+					/* to the other to reinitialize properly the auto-delayed mechanism */
 					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR &= ~HRTIM_TIMCR_DELCMP4;
 					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR |= (pCompareCfg->AutoDelayedMode << 2U);
 
-					/* Set the compare value for timeout
-					 * compare unit (if any) */
+					/* Set the compare value for timeout compare unit (if any) */
 					if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1) {
 						hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pCompareCfg->AutoDelayedTimeout;
 					} else if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3) {
@@ -5475,8 +5397,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, u
 						/* nothing to do */
 					}
 				} else {
-					/* Clear HRTIM_TIMxCR.DELCMP4 bitfield
-					 */
+					/* Clear HRTIM_TIMxCR.DELCMP4 bitfield */
 					MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR, HRTIM_TIMCR_DELCMP4, 0U);
 				}
 				break;
@@ -5556,8 +5477,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, u
 	} else {
 		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFFFFFFFFU);
 	}
-	/* for setting source capture on Timer F, use Trigger only (all bits are
-	 * valid then) */
+	/* for setting source capture on Timer F, use Trigger only (all bits are valid then) */
 
 	/* Configure the capture unit */
 
@@ -5680,12 +5600,10 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, ui
  *                    @arg HRTIM_OUTPUT_TE2: Timer E - Output 2
  *                    @arg HRTIM_OUTPUT_TF1: Timer F - Output 1
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
- * @param OutputLevel indicates whether the output is forced to its active or
- * inactive level This parameter can be one of the following values:
- *                    @arg HRTIM_OUTPUTLEVEL_ACTIVE: output is forced to its
- * active level
- *                    @arg HRTIM_OUTPUTLEVEL_INACTIVE: output is forced to its
- * inactive level
+ * @param OutputLevel indicates whether the output is forced to its active or inactive level
+ *                    This parameter can be one of the following values:
+ *                    @arg HRTIM_OUTPUTLEVEL_ACTIVE: output is forced to its active level
+ *                    @arg HRTIM_OUTPUTLEVEL_INACTIVE: output is forced to its inactive level
  * @retval HAL status
  * @note The 'software set/reset trigger' bit in the output set/reset registers
  *       is automatically reset by hardware
@@ -5762,13 +5680,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim, 
 }
 
 /**
- * @brief  Enable the generation of the waveform signal on the designated
- * output(s) Outputs can be combined (ORed) to allow for simultaneous output
- * enabling.
+ * @brief  Enable the generation of the waveform signal on the designated output(s)
+ *         Outputs can be combined (ORed) to allow for simultaneous output enabling.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  OutputsToStart Timer output(s) to enable
- *                    This parameter can be any combination of the following
- * values:
+ *                    This parameter can be any combination of the following values:
  *                    @arg HRTIM_OUTPUT_TA1: Timer A - Output 1
  *                    @arg HRTIM_OUTPUT_TA2: Timer A - Output 2
  *                    @arg HRTIM_OUTPUT_TB1: Timer B - Output 1
@@ -5805,13 +5721,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStart(HRTIM_HandleTypeDef *hhrtim, uin
 }
 
 /**
- * @brief  Disable the generation of the waveform signal on the designated
- * output(s) Outputs can be combined (ORed) to allow for simultaneous output
- * disabling.
+ * @brief  Disable the generation of the waveform signal on the designated output(s)
+ *         Outputs can be combined (ORed) to allow for simultaneous output disabling.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  OutputsToStop Timer output(s) to disable
- *                    This parameter can be any combination of the following
- * values:
+ *                    This parameter can be any combination of the following values:
  *                    @arg HRTIM_OUTPUT_TA1: Timer A - Output 1
  *                    @arg HRTIM_OUTPUT_TA2: Timer A - Output 2
  *                    @arg HRTIM_OUTPUT_TB1: Timer B - Output 1
@@ -5848,12 +5762,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStop(HRTIM_HandleTypeDef *hhrtim, uint
 }
 
 /**
- * @brief  Start the counter of the designated timer(s) operating in waveform
- * mode Timers can be combined (ORed) to allow for simultaneous counter start.
+ * @brief  Start the counter of the designated timer(s) operating in waveform mode
+ *         Timers can be combined (ORed) to allow for simultaneous counter start.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer counter(s) to start
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERID_MASTER
  *                   @arg HRTIM_TIMERID_TIMER_A
  *                   @arg HRTIM_TIMERID_TIMER_B
@@ -5885,12 +5798,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim, uint
 }
 
 /**
- * @brief  Stop the counter of the designated timer(s) operating in waveform
- * mode Timers can be combined (ORed) to allow for simultaneous counter stop.
+ * @brief  Stop the counter of the designated timer(s) operating in waveform mode
+ *         Timers can be combined (ORed) to allow for simultaneous counter stop.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer counter(s) to stop
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERID_MASTER
  *                   @arg HRTIM_TIMERID_TIMER_A
  *                   @arg HRTIM_TIMERID_TIMER_B
@@ -5899,8 +5811,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim, uint
  *                   @arg HRTIM_TIMERID_TIMER_E
  *                   @arg HRTIM_TIMERID_TIMER_F
  * @retval HAL status
- * @note The counter of a timer is stopped only if all timer outputs are
- * disabled
+ * @note The counter of a timer is stopped only if all timer outputs are disabled
  */
 HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
@@ -5924,12 +5835,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim, uint3
 }
 
 /**
- * @brief  Start the counter of the designated timer(s) operating in waveform
- * mode Timers can be combined (ORed) to allow for simultaneous counter start.
+ * @brief  Start the counter of the designated timer(s) operating in waveform mode
+ *         Timers can be combined (ORed) to allow for simultaneous counter start.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer counter(s) to start
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERID_MASTER
  *                   @arg HRTIM_TIMERID_TIMER_A
  *                   @arg HRTIM_TIMERID_TIMER_B
@@ -5982,12 +5892,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim, u
 }
 
 /**
- * @brief  Stop the counter of the designated timer(s) operating in waveform
- * mode Timers can be combined (ORed) to allow for simultaneous counter stop.
+ * @brief  Stop the counter of the designated timer(s) operating in waveform mode
+ *         Timers can be combined (ORed) to allow for simultaneous counter stop.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer counter(s) to stop
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERID_MASTER
  *                   @arg HRTIM_TIMERID_TIMER_A
  *                   @arg HRTIM_TIMERID_TIMER_B
@@ -5996,8 +5905,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim, u
  *                   @arg HRTIM_TIMERID_TIMER_E
  *                   @arg HRTIM_TIMERID_TIMER_F
  * @retval HAL status
- * @note The counter of a timer is stopped only if all timer outputs are
- * disabled
+ * @note The counter of a timer is stopped only if all timer outputs are disabled
  * @note All enabled timer related interrupts are disabled.
  */
 HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
@@ -6050,12 +5958,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim, ui
 }
 
 /**
- * @brief  Start the counter of the designated timer(s) operating in waveform
- * mode Timers can be combined (ORed) to allow for simultaneous counter start.
+ * @brief  Start the counter of the designated timer(s) operating in waveform mode
+ *         Timers can be combined (ORed) to allow for simultaneous counter start.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer counter(s) to start
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERID_MASTER
  *                   @arg HRTIM_TIMERID_TIMER_A
  *                   @arg HRTIM_TIMERID_TIMER_B
@@ -6156,12 +6063,11 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim, 
 }
 
 /**
- * @brief  Stop the counter of the designated timer(s) operating in waveform
- * mode Timers can be combined (ORed) to allow for simultaneous counter stop.
+ * @brief  Stop the counter of the designated timer(s) operating in waveform mode
+ *         Timers can be combined (ORed) to allow for simultaneous counter stop.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer counter(s) to stop
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERID_MASTER
  *                   @arg HRTIM_TIMERID_TIMER_A
  *                   @arg HRTIM_TIMERID_TIMER_B
@@ -6170,8 +6076,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim, 
  *                   @arg HRTIM_TIMERID_TIMER_E
  *                   @arg HRTIM_TIMERID_TIMER_F
  * @retval HAL status
- * @note  The counter of a timer is stopped only if all timer outputs are
- * disabled
+ * @note  The counter of a timer is stopped only if all timer outputs are disabled
  * @note  All enabled timer related DMA requests are disabled.
  */
 HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
@@ -6353,8 +6258,7 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim, uint32_
  * @brief  Trig the update of the registers of one or several timers
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers timers concerned with the software register update
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERUPDATE_MASTER
  *                   @arg HRTIM_TIMERUPDATE_A
  *                   @arg HRTIM_TIMERUPDATE_B
@@ -6395,8 +6299,7 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t
  * @brief  Swap the Timer  outputs
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers timers concerned with the software register update
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERSWAP_A
  *                   @arg HRTIM_TIMERSWAP_B
  *                   @arg HRTIM_TIMERSWAP_C
@@ -6404,8 +6307,7 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t
  *                   @arg HRTIM_TIMERSWAP_E
  *                   @arg HRTIM_TIMERSWAP_F
  * @retval HAL status
- * @note The function is not significant when the Push-pull mode is enabled
- * (PSHPLL = 1)
+ * @note The function is not significant when the Push-pull mode is enabled (PSHPLL = 1)
  */
 HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
@@ -6436,8 +6338,7 @@ HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim, uint32_
  * @brief  Trig the reset of one or several timers
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers timers concerned with the software counter reset
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERRESET_MASTER
  *                   @arg HRTIM_TIMERRESET_TIMER_A
  *                   @arg HRTIM_TIMERRESET_TIMER_B
@@ -6568,14 +6469,13 @@ HAL_StatusTypeDef HAL_HRTIM_OutputSwapDisable(HRTIM_HandleTypeDef *hhrtim, uint3
  * @retval HAL status
  * @note The TimerIdx parameter determines the dma channel to be used by the
  *       DMA burst controller (see below)
- *       HRTIM_TIMERINDEX_MASTER: DMA channel 2 is used by the DMA burst
- * controller HRTIM_TIMERINDEX_TIMER_A: DMA channel 3 is used by the DMA burst
- * controller HRTIM_TIMERINDEX_TIMER_B: DMA channel 4 is used by the DMA burst
- * controller HRTIM_TIMERINDEX_TIMER_C: DMA channel 5 is used by the DMA burst
- * controller HRTIM_TIMERINDEX_TIMER_D: DMA channel 6 is used by the DMA burst
- * controller HRTIM_TIMERINDEX_TIMER_E: DMA channel 7 is used by the DMA burst
- * controller HRTIM_TIMERINDEX_TIMER_F: DMA channel 8 is used by the DMA burst
- * controller
+ *       HRTIM_TIMERINDEX_MASTER: DMA channel 2 is used by the DMA burst controller
+ *       HRTIM_TIMERINDEX_TIMER_A: DMA channel 3 is used by the DMA burst controller
+ *       HRTIM_TIMERINDEX_TIMER_B: DMA channel 4 is used by the DMA burst controller
+ *       HRTIM_TIMERINDEX_TIMER_C: DMA channel 5 is used by the DMA burst controller
+ *       HRTIM_TIMERINDEX_TIMER_D: DMA channel 6 is used by the DMA burst controller
+ *       HRTIM_TIMERINDEX_TIMER_E: DMA channel 7 is used by the DMA burst controller
+ *       HRTIM_TIMERINDEX_TIMER_F: DMA channel 8 is used by the DMA burst controller
  */
 HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t BurstBufferAddress, uint32_t BurstBufferLength)
 {
@@ -6639,8 +6539,7 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim, uint32
  *         or several timing units (including master timer).
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer(s) concerned by the register preload enabling command
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERUPDATE_MASTER
  *                   @arg HRTIM_TIMERUPDATE_A
  *                   @arg HRTIM_TIMERUPDATE_B
@@ -6676,8 +6575,7 @@ HAL_StatusTypeDef HAL_HRTIM_UpdateEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t T
  *         or several timing units (including master timer).
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  Timers Timer(s) concerned by the register preload disabling command
- *                   This parameter can be any combination of the following
- * values:
+ *                   This parameter can be any combination of the following values:
  *                   @arg HRTIM_TIMERUPDATE_MASTER
  *                   @arg HRTIM_TIMERUPDATE_A
  *                   @arg HRTIM_TIMERUPDATE_B
@@ -6745,8 +6643,7 @@ HAL_HRTIM_StateTypeDef HAL_HRTIM_GetState(const HRTIM_HandleTypeDef *hhrtim)
 }
 
 /**
- * @brief  Return actual value of the capture register of the designated capture
- * unit
+ * @brief  Return actual value of the capture register of the designated capture unit
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -6792,8 +6689,7 @@ uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim, uint32_t 
 }
 
 /**
- * @brief  Return actual value and direction of the capture register of the
- * designated capture unit
+ * @brief  Return actual value and direction of the capture register of the designated capture unit
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -6840,8 +6736,7 @@ HRTIM_CaptureValueTypeDef HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrti
 }
 
 /**
- * @brief  Return actual direction of the capture register of the designated
- * capture unit
+ * @brief  Return actual direction of the capture register of the designated capture unit
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -6997,8 +6892,7 @@ uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim, uin
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(TimerIdx);
 
-	/* Set output state according to output control status and output
-	 * disable status */
+	/* Set output state according to output control status and output disable status */
 	switch (Output) {
 		case HRTIM_OUTPUT_TA1: {
 			output_bit = HRTIM_OENR_TA1OEN;
@@ -7067,8 +6961,7 @@ uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim, uin
 	}
 
 	if ((hhrtim->Instance->sCommonRegs.OENR & output_bit) != (uint32_t)RESET) {
-		/* Output is enabled: output in RUN state (whatever output
-		 * disable status is)*/
+		/* Output is enabled: output in RUN state (whatever output disable status is)*/
 		output_state = HRTIM_OUTPUTSTATE_RUN;
 	} else {
 		if ((hhrtim->Instance->sCommonRegs.ODSR & output_bit) != (uint32_t)RESET) {
@@ -7127,12 +7020,10 @@ uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
 			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_O1STAT) != (uint32_t)RESET) {
-				/* Output 1 was active when the delayed idle
-				 * protection was triggered */
+				/* Output 1 was active when the delayed idle protection was triggered */
 				delayed_protection_status = HRTIM_OUTPUTLEVEL_ACTIVE;
 			} else {
-				/* Output 1 was inactive when the delayed idle
-				 * protection was triggered */
+				/* Output 1 was inactive when the delayed idle protection was triggered */
 				delayed_protection_status = HRTIM_OUTPUTLEVEL_INACTIVE;
 			}
 			break;
@@ -7145,12 +7036,10 @@ uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
 			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_O2STAT) != (uint32_t)RESET) {
-				/* Output 2 was active when the delayed idle
-				 * protection was triggered */
+				/* Output 2 was active when the delayed idle protection was triggered */
 				delayed_protection_status = HRTIM_OUTPUTLEVEL_ACTIVE;
 			} else {
-				/* Output 2 was inactive when the delayed idle
-				 * protection was triggered */
+				/* Output 2 was inactive when the delayed idle protection was triggered */
 				delayed_protection_status = HRTIM_OUTPUTLEVEL_INACTIVE;
 			}
 			break;
@@ -7166,8 +7055,7 @@ uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim,
 }
 
 /**
- * @brief  Return the actual status (active or inactive) of the burst mode
- * controller
+ * @brief  Return the actual status (active or inactive) of the burst mode controller
  * @param  hhrtim pointer to HAL HRTIM handle
  * @retval Burst mode controller status
  */
@@ -7210,8 +7098,7 @@ uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim, u
 
 /**
   * @brief  Indicate on which output the signal was applied, in push-pull mode,
-	    balanced fault mode or delayed idle mode, when the protection was
-  triggered.
+	    balanced fault mode or delayed idle mode, when the protection was triggered.
   * @param  hhrtim pointer to HAL HRTIM handle
   * @param  TimerIdx Timer index
   *                   This parameter can be one of the following values:
@@ -7257,8 +7144,7 @@ uint32_t HAL_HRTIM_GetIdlePushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint
   *            - Repetition event
   *            - Compare 1 to 4 event
   *          8 global interrupts are generated for the whole HRTIM:
-  *            - System fault and Fault 1 to 5 (regardless of the timing unit
-attribution)
+  *            - System fault and Fault 1 to 5 (regardless of the timing unit attribution)
   *            - DLL calibration done
   *            - Burst mode period completed
 @verbatim
@@ -7279,8 +7165,7 @@ attribution)
       (+)  Callback function called when DLL ready interrupt occurs
       (+)  Callback function called when burst mode period interrupt occurs
       (+)  Callback function called when synchronization input interrupt occurs
-      (+)  Callback function called when a timer register update interrupt
-occurs
+      (+)  Callback function called when a timer register update interrupt occurs
       (+)  Callback function called when a timer repetition interrupt occurs
       (+)  Callback function called when a compare 1 match interrupt occurs
       (+)  Callback function called when a compare 2 match interrupt occurs
@@ -7336,9 +7221,8 @@ __weak void HAL_HRTIM_Fault1Callback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Fault1Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Fault1Callback could be implemented in the user file
 	 */
 }
 
@@ -7352,9 +7236,8 @@ __weak void HAL_HRTIM_Fault2Callback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Fault2Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Fault2Callback could be implemented in the user file
 	 */
 }
 
@@ -7368,9 +7251,8 @@ __weak void HAL_HRTIM_Fault3Callback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Fault3Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Fault3Callback could be implemented in the user file
 	 */
 }
 
@@ -7384,9 +7266,8 @@ __weak void HAL_HRTIM_Fault4Callback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Fault4Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Fault4Callback could be implemented in the user file
 	 */
 }
 
@@ -7400,9 +7281,8 @@ __weak void HAL_HRTIM_Fault5Callback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Fault5Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Fault5Callback could be implemented in the user file
 	 */
 }
 
@@ -7416,9 +7296,8 @@ __weak void HAL_HRTIM_Fault6Callback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Fault6Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Fault6Callback could be implemented in the user file
 	 */
 }
 
@@ -7432,9 +7311,8 @@ __weak void HAL_HRTIM_SystemFaultCallback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_SystemFaultCallback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_SystemFaultCallback could be implemented in the user file
 	 */
 }
 
@@ -7448,15 +7326,13 @@ __weak void HAL_HRTIM_DLLCalibrationReadyCallback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_DLLCalibrationCallback could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_DLLCalibrationCallback could be implemented in the user file
 	 */
 }
 
 /**
- * @brief  Callback function invoked when the end of the burst mode period is
- * reached
+ * @brief  Callback function invoked when the end of the burst mode period is reached
  * @param  hhrtim pointer to HAL HRTIM handle
  * @retval None
  */
@@ -7465,15 +7341,13 @@ __weak void HAL_HRTIM_BurstModePeriodCallback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_BurstModeCallback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_BurstModeCallback could be implemented in the user file
 	 */
 }
 
 /**
- * @brief  Callback function invoked when a synchronization input event is
- * received
+ * @brief  Callback function invoked when a synchronization input event is received
  * @param  hhrtim pointer to HAL HRTIM handle
  * @retval None
  */
@@ -7482,9 +7356,8 @@ __weak void HAL_HRTIM_SynchronizationEventCallback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_SynchronizationEventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_SynchronizationEventCallback could be implemented in the user file
 	 */
 }
 
@@ -7508,9 +7381,8 @@ __weak void HAL_HRTIM_RegistersUpdateCallback(HRTIM_HandleTypeDef *hhrtim, uint3
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Master_RegistersUpdateCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Master_RegistersUpdateCallback could be implemented in the user file
 	 */
 }
 
@@ -7534,9 +7406,8 @@ __weak void HAL_HRTIM_RepetitionEventCallback(HRTIM_HandleTypeDef *hhrtim, uint3
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Master_RepetitionEventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Master_RepetitionEventCallback could be implemented in the user file
 	 */
 }
 
@@ -7561,9 +7432,8 @@ __weak void HAL_HRTIM_Compare1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Master_Compare1EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Master_Compare1EventCallback could be implemented in the user file
 	 */
 }
 
@@ -7588,9 +7458,8 @@ __weak void HAL_HRTIM_Compare2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Master_Compare2EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Master_Compare2EventCallback could be implemented in the user file
 	 */
 }
 
@@ -7615,9 +7484,8 @@ __weak void HAL_HRTIM_Compare3EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Master_Compare3EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Master_Compare3EventCallback could be implemented in the user file
 	 */
 }
 
@@ -7642,9 +7510,8 @@ __weak void HAL_HRTIM_Compare4EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Master_Compare4EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Master_Compare4EventCallback could be implemented in the user file
 	 */
 }
 
@@ -7667,9 +7534,8 @@ __weak void HAL_HRTIM_Capture1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_Capture1EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_Capture1EventCallback could be implemented in the user file
 	 */
 }
 
@@ -7692,15 +7558,14 @@ __weak void HAL_HRTIM_Capture2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_Capture2EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_Capture2EventCallback could be implemented in the user file
 	 */
 }
 
 /**
- * @brief  Callback function invoked when the delayed idle or balanced idle mode
- * is entered.
+ * @brief  Callback function invoked when the delayed idle or balanced idle mode is
+ *         entered.
  * @param  hhrtim pointer to HAL HRTIM handle
  * @param  TimerIdx Timer index
  *                   This parameter can be one of the following values:
@@ -7718,9 +7583,8 @@ __weak void HAL_HRTIM_DelayedProtectionCallback(HRTIM_HandleTypeDef *hhrtim, uin
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_DelayedProtectionCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_DelayedProtectionCallback could be implemented in the user file
 	 */
 }
 
@@ -7744,9 +7608,8 @@ __weak void HAL_HRTIM_CounterResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_CounterResetCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_CounterResetCallback could be implemented in the user file
 	 */
 }
 
@@ -7769,9 +7632,8 @@ __weak void HAL_HRTIM_Output1SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t T
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_Output1SetCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_Output1SetCallback could be implemented in the user file
 	 */
 }
 
@@ -7794,9 +7656,8 @@ __weak void HAL_HRTIM_Output1ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_Output1ResetCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_Output1ResetCallback could be implemented in the user file
 	 */
 }
 
@@ -7819,9 +7680,8 @@ __weak void HAL_HRTIM_Output2SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t T
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_Output2SetCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_Output2SetCallback could be implemented in the user file
 	 */
 }
 
@@ -7844,9 +7704,8 @@ __weak void HAL_HRTIM_Output2ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_Timer_Output2ResetCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_Timer_Output2ResetCallback could be implemented in the user file
 	 */
 }
 
@@ -7870,9 +7729,8 @@ __weak void HAL_HRTIM_BurstDMATransferCallback(HRTIM_HandleTypeDef *hhrtim, uint
 	UNUSED(hhrtim);
 	UNUSED(TimerIdx);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_BurstDMATransferCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_BurstDMATransferCallback could be implemented in the user file
 	 */
 }
 
@@ -7886,9 +7744,8 @@ __weak void HAL_HRTIM_ErrorCallback(HRTIM_HandleTypeDef *hhrtim)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HRTIM_ErrorCallback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HRTIM_ErrorCallback could be implemented in the user file
 	 */
 }
 
@@ -8480,13 +8337,11 @@ static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim, const HRTIM
 		hrtim_mcr &= ~(HRTIM_MCR_INTLVD);
 	}
 
-	/* Enable/Disable the timer start upon synchronization event reception
-	 */
+	/* Enable/Disable the timer start upon synchronization event reception */
 	hrtim_mcr &= ~(HRTIM_MCR_SYNCSTRTM);
 	hrtim_mcr |= pTimerCfg->StartOnSync;
 
-	/* Enable/Disable the timer reset upon synchronization event reception
-	 */
+	/* Enable/Disable the timer reset upon synchronization event reception */
 	hrtim_mcr &= ~(HRTIM_MCR_SYNCRSTM);
 	hrtim_mcr |= pTimerCfg->ResetOnSync;
 
@@ -8558,13 +8413,11 @@ static void HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_
 		hrtim_timcr &= ~(HRTIM_TIMCR_INTLVD);
 	}
 
-	/* Enable/Disable the timer start upon synchronization event reception
-	 */
+	/* Enable/Disable the timer start upon synchronization event reception */
 	hrtim_timcr &= ~(HRTIM_TIMCR_SYNCSTRT);
 	hrtim_timcr |= pTimerCfg->StartOnSync;
 
-	/* Enable/Disable the timer reset upon synchronization event reception
-	 */
+	/* Enable/Disable the timer reset upon synchronization event reception */
 	hrtim_timcr &= ~(HRTIM_TIMCR_SYNCRST);
 	hrtim_timcr |= pTimerCfg->ResetOnSync;
 
@@ -8606,13 +8459,16 @@ static void HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_
 	hrtim_timfltr &= ~(HRTIM_FLTR_FLTLCK);
 	hrtim_timfltr |= pTimerCfg->FaultLock;
 
-	/* Enable/Disable dead time insertion at timer level */
-	hrtim_timoutr &= ~(HRTIM_OUTR_DTEN);
-	hrtim_timoutr |= pTimerCfg->DeadTimeInsertion;
+	/* The deadtime cannot be used simultaneously with the push-pull mode */
+	if (pTimerCfg->PushPull == HRTIM_TIMPUSHPULLMODE_DISABLED) {
+		/* Enable/Disable dead time insertion at timer level */
+		hrtim_timoutr &= ~(HRTIM_OUTR_DTEN);
+		hrtim_timoutr |= pTimerCfg->DeadTimeInsertion;
+	}
 
 	/* Enable/Disable delayed protection at timer level
-	   Delayed Idle is available whatever the timer operating mode (regular,
-	   push-pull) Balanced Idle is only available in push-pull mode
+	   Delayed Idle is available whatever the timer operating mode (regular, push-pull)
+	   Balanced Idle is only available in push-pull mode
 	*/
 	if (((pTimerCfg->DelayedProtectionMode != HRTIM_TIMER_A_B_C_DELAYEDPROTECTION_BALANCED_EEV6) && (pTimerCfg->DelayedProtectionMode != HRTIM_TIMER_A_B_C_DELAYEDPROTECTION_BALANCED_EEV7)) ||
 	    (pTimerCfg->PushPull == HRTIM_TIMPUSHPULLMODE_ENABLED)) {
@@ -8708,13 +8564,11 @@ static void HRTIM_TimingUnitWaveform_Control(HRTIM_HandleTypeDef *hhrtim, uint32
 	hrtim_timcr2 |= pTimerCtl->GreaterCMP3;
 
 	if (pTimerCtl->DualChannelDacEnable == HRTIM_TIMER_DCDE_ENABLED) {
-		/* Set the DualChannel DAC Reset trigger : requires DCDE enabled
-		 */
+		/* Set the DualChannel DAC Reset trigger : requires DCDE enabled */
 		hrtim_timcr2 &= ~(HRTIM_TIMCR2_DCDR);
 		hrtim_timcr2 |= pTimerCtl->DualChannelDacReset;
 
-		/* Set the DualChannel DAC Step trigger : requires DCDE enabled
-		 */
+		/* Set the DualChannel DAC Step trigger : requires DCDE enabled */
 		hrtim_timcr2 &= ~(HRTIM_TIMCR2_DCDS);
 		hrtim_timcr2 |= pTimerCtl->DualChannelDacStep;
 
@@ -8741,8 +8595,7 @@ static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim, uint32_
 	hrtim_timcr2 = hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR2;
 
 	if ((hrtim_timcr2 & HRTIM_TIMCR2_UDM) != 0U) {
-		/* xxROM bitfield must be reset before programming a new value
-		 */
+		/* xxROM bitfield must be reset before programming a new value */
 		hrtim_timcr2 &= ~(HRTIM_TIMCR2_ROM | HRTIM_TIMCR2_OUTROM | HRTIM_TIMCR2_ADROM | HRTIM_TIMCR2_BMROM | HRTIM_TIMCR2_FEROM);
 
 		/* Update the HRTIM TIMxCR2 register */
@@ -8901,9 +8754,9 @@ static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, u
 	/* Set the chopper mode */
 	hrtim_outr |= (pOutputCfg->ChopperModeEnable << shift);
 
-	/* Set the burst mode entry mode : deadtime insertion when entering the
-	   idle state during a burst mode operation is allowed only under the
-	   following conditions:
+	/* Set the burst mode entry mode : deadtime insertion when entering the idle
+	   state during a burst mode operation is allowed only under the following
+	   conditions:
 	   - the outputs is active during the burst mode (IDLES=1U)
 	   - positive deadtimes (SDTR/SDTF set to 0U)
 	*/
@@ -8947,8 +8800,7 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const
 			hrtim_eecr1 |= (pEventCfg->Source & HRTIM_EECR1_EE1SRC);
 			hrtim_eecr1 |= (pEventCfg->Polarity & HRTIM_EECR1_EE1POL);
 			hrtim_eecr1 |= (pEventCfg->Sensitivity & HRTIM_EECR1_EE1SNS);
-			/* Update the HRTIM registers (all bitfields but EE1FAST
-			 * bit) */
+			/* Update the HRTIM registers (all bitfields but EE1FAST bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE1FAST bit) */
 			hrtim_eecr1 |= (pEventCfg->FastMode & HRTIM_EECR1_EE1FAST);
@@ -8961,8 +8813,7 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const
 			hrtim_eecr1 |= ((pEventCfg->Source << 6U) & HRTIM_EECR1_EE2SRC);
 			hrtim_eecr1 |= ((pEventCfg->Polarity << 6U) & HRTIM_EECR1_EE2POL);
 			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 6U) & HRTIM_EECR1_EE2SNS);
-			/* Update the HRTIM registers (all bitfields but EE2FAST
-			 * bit) */
+			/* Update the HRTIM registers (all bitfields but EE2FAST bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE2FAST bit) */
 			hrtim_eecr1 |= ((pEventCfg->FastMode << 6U) & HRTIM_EECR1_EE2FAST);
@@ -8975,8 +8826,7 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const
 			hrtim_eecr1 |= ((pEventCfg->Source << 12U) & HRTIM_EECR1_EE3SRC);
 			hrtim_eecr1 |= ((pEventCfg->Polarity << 12U) & HRTIM_EECR1_EE3POL);
 			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 12U) & HRTIM_EECR1_EE3SNS);
-			/* Update the HRTIM registers (all bitfields but EE3FAST
-			 * bit) */
+			/* Update the HRTIM registers (all bitfields but EE3FAST bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE3FAST bit) */
 			hrtim_eecr1 |= ((pEventCfg->FastMode << 12U) & HRTIM_EECR1_EE3FAST);
@@ -8989,8 +8839,7 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const
 			hrtim_eecr1 |= ((pEventCfg->Source << 18U) & HRTIM_EECR1_EE4SRC);
 			hrtim_eecr1 |= ((pEventCfg->Polarity << 18U) & HRTIM_EECR1_EE4POL);
 			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 18U) & HRTIM_EECR1_EE4SNS);
-			/* Update the HRTIM registers (all bitfields but EE4FAST
-			 * bit) */
+			/* Update the HRTIM registers (all bitfields but EE4FAST bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE4FAST bit) */
 			hrtim_eecr1 |= ((pEventCfg->FastMode << 18U) & HRTIM_EECR1_EE4FAST);
@@ -9003,8 +8852,7 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const
 			hrtim_eecr1 |= ((pEventCfg->Source << 24U) & HRTIM_EECR1_EE5SRC);
 			hrtim_eecr1 |= ((pEventCfg->Polarity << 24U) & HRTIM_EECR1_EE5POL);
 			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 24U) & HRTIM_EECR1_EE5SNS);
-			/* Update the HRTIM registers (all bitfields but EE5FAST
-			 * bit) */
+			/* Update the HRTIM registers (all bitfields but EE5FAST bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE5FAST bit) */
 			hrtim_eecr1 |= ((pEventCfg->FastMode << 24U) & HRTIM_EECR1_EE5FAST);
@@ -9181,8 +9029,7 @@ static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32_
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			/* Retrieves actual OC mode and set interrupt
-			 * accordingly */
+			/* Retrieves actual OC mode and set interrupt accordingly */
 			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R;
 			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R;
 
@@ -9207,8 +9054,7 @@ static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32_
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			/* Retrieves actual OC mode and set interrupt
-			 * accordingly */
+			/* Retrieves actual OC mode and set interrupt accordingly */
 			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R;
 			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R;
 
@@ -9268,8 +9114,7 @@ static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			/* Retrieves actual OC mode and set dma_request
-			 * accordingly */
+			/* Retrieves actual OC mode and set dma_request accordingly */
 			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R;
 			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R;
 
@@ -9294,8 +9139,7 @@ static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			/* Retrieves actual OC mode and set dma_request
-			 * accordingly */
+			/* Retrieves actual OC mode and set dma_request accordingly */
 			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R;
 			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R;
 

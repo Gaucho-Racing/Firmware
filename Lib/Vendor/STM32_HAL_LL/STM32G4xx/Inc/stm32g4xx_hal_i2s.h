@@ -48,38 +48,33 @@ typedef struct {
 	uint32_t Mode; /*!< Specifies the I2S operating mode.
 			    This parameter can be a value of @ref I2S_Mode */
 
-	uint32_t Standard; /*!< Specifies the standard used for the I2S
-			      communication. This parameter can be a value of
-			      @ref I2S_Standard */
+	uint32_t Standard; /*!< Specifies the standard used for the I2S communication.
+				This parameter can be a value of @ref I2S_Standard */
 
-	uint32_t DataFormat; /*!< Specifies the data format for the I2S
-				communication. This parameter can be a value of
-				@ref I2S_Data_Format */
+	uint32_t DataFormat; /*!< Specifies the data format for the I2S communication.
+				  This parameter can be a value of @ref I2S_Data_Format */
 
-	uint32_t MCLKOutput; /*!< Specifies whether the I2S MCLK output is
-				enabled or not. This parameter can be a value of
-				@ref I2S_MCLK_Output */
+	uint32_t MCLKOutput; /*!< Specifies whether the I2S MCLK output is enabled or not.
+				  This parameter can be a value of @ref I2S_MCLK_Output */
 
-	uint32_t AudioFreq; /*!< Specifies the frequency selected for the I2S
-			       communication. This parameter can be a value of
-			       @ref I2S_Audio_Frequency */
+	uint32_t AudioFreq; /*!< Specifies the frequency selected for the I2S communication.
+				 This parameter can be a value of @ref I2S_Audio_Frequency */
 
 	uint32_t CPOL; /*!< Specifies the idle state of the I2S clock.
-			    This parameter can be a value of @ref
-			  I2S_Clock_Polarity */
+			    This parameter can be a value of @ref I2S_Clock_Polarity */
 } I2S_InitTypeDef;
 
 /**
  * @brief  HAL State structures definition
  */
 typedef enum {
-	HAL_I2S_STATE_RESET = 0x00U,   /*!< I2S not yet initialized or disabled */
-	HAL_I2S_STATE_READY = 0x01U,   /*!< I2S initialized and ready for use */
-	HAL_I2S_STATE_BUSY = 0x02U,    /*!< I2S internal process is ongoing  */
+	HAL_I2S_STATE_RESET = 0x00U,   /*!< I2S not yet initialized or disabled                */
+	HAL_I2S_STATE_READY = 0x01U,   /*!< I2S initialized and ready for use                  */
+	HAL_I2S_STATE_BUSY = 0x02U,    /*!< I2S internal process is ongoing                    */
 	HAL_I2S_STATE_BUSY_TX = 0x03U, /*!< Data Transmission process is ongoing               */
-	HAL_I2S_STATE_BUSY_RX = 0x04U, /*!< Data Reception process is ongoing */
-	HAL_I2S_STATE_TIMEOUT = 0x06U, /*!< I2S timeout state */
-	HAL_I2S_STATE_ERROR = 0x07U    /*!< I2S error state    */
+	HAL_I2S_STATE_BUSY_RX = 0x04U, /*!< Data Reception process is ongoing                  */
+	HAL_I2S_STATE_TIMEOUT = 0x06U, /*!< I2S timeout state                                  */
+	HAL_I2S_STATE_ERROR = 0x07U    /*!< I2S error state                                    */
 } HAL_I2S_StateTypeDef;
 
 /**
@@ -123,13 +118,13 @@ typedef struct
 				      This parameter can be a value of @ref I2S_Error */
 
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
-	void (*TxCpltCallback)(struct __I2S_HandleTypeDef *hi2s);     /*!< I2S Tx Completed callback */
-	void (*RxCpltCallback)(struct __I2S_HandleTypeDef *hi2s);     /*!< I2S Rx Completed callback */
+	void (*TxCpltCallback)(struct __I2S_HandleTypeDef *hi2s);     /*!< I2S Tx Completed callback          */
+	void (*RxCpltCallback)(struct __I2S_HandleTypeDef *hi2s);     /*!< I2S Rx Completed callback          */
 	void (*TxHalfCpltCallback)(struct __I2S_HandleTypeDef *hi2s); /*!< I2S Tx Half Completed callback     */
 	void (*RxHalfCpltCallback)(struct __I2S_HandleTypeDef *hi2s); /*!< I2S Rx Half Completed callback     */
-	void (*ErrorCallback)(struct __I2S_HandleTypeDef *hi2s);      /*!< I2S Error callback */
-	void (*MspInitCallback)(struct __I2S_HandleTypeDef *hi2s);    /*!< I2S Msp Init callback */
-	void (*MspDeInitCallback)(struct __I2S_HandleTypeDef *hi2s);  /*!< I2S Msp DeInit callback */
+	void (*ErrorCallback)(struct __I2S_HandleTypeDef *hi2s);      /*!< I2S Error callback                 */
+	void (*MspInitCallback)(struct __I2S_HandleTypeDef *hi2s);    /*!< I2S Msp Init callback              */
+	void (*MspDeInitCallback)(struct __I2S_HandleTypeDef *hi2s);  /*!< I2S Msp DeInit callback            */
 
 #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */
 } I2S_HandleTypeDef;
@@ -139,13 +134,13 @@ typedef struct
  * @brief  HAL I2S Callback ID enumeration definition
  */
 typedef enum {
-	HAL_I2S_TX_COMPLETE_CB_ID = 0x00U,	/*!< I2S Tx Completed callback ID */
-	HAL_I2S_RX_COMPLETE_CB_ID = 0x01U,	/*!< I2S Rx Completed callback ID */
+	HAL_I2S_TX_COMPLETE_CB_ID = 0x00U,	/*!< I2S Tx Completed callback ID         */
+	HAL_I2S_RX_COMPLETE_CB_ID = 0x01U,	/*!< I2S Rx Completed callback ID         */
 	HAL_I2S_TX_HALF_COMPLETE_CB_ID = 0x03U, /*!< I2S Tx Half Completed callback ID    */
 	HAL_I2S_RX_HALF_COMPLETE_CB_ID = 0x04U, /*!< I2S Rx Half Completed callback ID    */
-	HAL_I2S_ERROR_CB_ID = 0x06U,		/*!< I2S Error callback ID    */
-	HAL_I2S_MSPINIT_CB_ID = 0x07U,		/*!< I2S Msp Init callback ID  */
-	HAL_I2S_MSPDEINIT_CB_ID = 0x08U		/*!< I2S Msp DeInit callback ID */
+	HAL_I2S_ERROR_CB_ID = 0x06U,		/*!< I2S Error callback ID                */
+	HAL_I2S_MSPINIT_CB_ID = 0x07U,		/*!< I2S Msp Init callback ID             */
+	HAL_I2S_MSPDEINIT_CB_ID = 0x08U		/*!< I2S Msp DeInit callback ID           */
 
 } HAL_I2S_CallbackIDTypeDef;
 
@@ -167,7 +162,7 @@ typedef void (*pI2S_CallbackTypeDef)(I2S_HandleTypeDef *hi2s); /*!< pointer to a
  * @{
  */
 #define HAL_I2S_ERROR_NONE (0x00000000U)      /*!< No error                    */
-#define HAL_I2S_ERROR_TIMEOUT (0x00000001U)   /*!< Timeout error */
+#define HAL_I2S_ERROR_TIMEOUT (0x00000001U)   /*!< Timeout error               */
 #define HAL_I2S_ERROR_OVR (0x00000002U)	      /*!< OVR error                   */
 #define HAL_I2S_ERROR_UDR (0x00000004U)	      /*!< UDR error                   */
 #define HAL_I2S_ERROR_DMA (0x00000008U)	      /*!< DMA transfer error          */
@@ -337,8 +332,7 @@ typedef void (*pI2S_CallbackTypeDef)(I2S_HandleTypeDef *hi2s); /*!< pointer to a
 
 /** @brief  Checks if the specified I2S interrupt source is enabled or disabled.
  * @param  __HANDLE__ specifies the I2S Handle.
- *         This parameter can be I2S where x: 1, 2, or 3 to select the I2S
- * peripheral.
+ *         This parameter can be I2S where x: 1, 2, or 3 to select the I2S peripheral.
  * @param  __INTERRUPT__ specifies the I2S interrupt source to check.
  *          This parameter can be one of the following values:
  *            @arg I2S_IT_TXE: Tx buffer empty interrupt enable
@@ -456,8 +450,8 @@ void HAL_I2S_ErrorCallback(I2S_HandleTypeDef *hi2s);
  * @{
  */
 /* Peripheral Control and State functions  ************************************/
-HAL_I2S_StateTypeDef HAL_I2S_GetState(I2S_HandleTypeDef *hi2s);
-uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
+HAL_I2S_StateTypeDef HAL_I2S_GetState(const I2S_HandleTypeDef *hi2s);
+uint32_t HAL_I2S_GetError(const I2S_HandleTypeDef *hi2s);
 /**
  * @}
  */
@@ -517,8 +511,7 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
 
 #define IS_I2S_AUDIO_FREQ(__FREQ__) ((((__FREQ__) >= I2S_AUDIOFREQ_8K) && ((__FREQ__) <= I2S_AUDIOFREQ_192K)) || ((__FREQ__) == I2S_AUDIOFREQ_DEFAULT))
 
-/** @brief  Checks if I2S Serial clock steady state parameter is in allowed
- * range.
+/** @brief  Checks if I2S Serial clock steady state parameter is in allowed range.
  * @param  __CPOL__ specifies the I2S serial clock steady state.
  *         This parameter can be a value of @ref I2S_Clock_Polarity
  * @retval None

@@ -184,26 +184,26 @@
     (+) MspInitCallback              : CAN MspInit.
     (+) MspDeInitCallback            : CAN MspDeInit.
 
-  By default, after the HAL_CAN_Init() and when the state is
-  HAL_CAN_STATE_RESET, all callbacks are set to the corresponding weak
-  functions: example HAL_CAN_ErrorCallback(). Exception done for MspInit and
-  MspDeInit functions that are reset to the legacy weak function in the
-  HAL_CAN_Init()/ HAL_CAN_DeInit() only when these callbacks are null (not
-  registered beforehand). if not, MspInit or MspDeInit are not null, the
-  HAL_CAN_Init()/ HAL_CAN_DeInit() keep and use the user MspInit/MspDeInit
-  callbacks (registered beforehand)
+  By default, after the HAL_CAN_Init() and when the state is HAL_CAN_STATE_RESET,
+  all callbacks are set to the corresponding weak functions:
+  example HAL_CAN_ErrorCallback().
+  Exception done for MspInit and MspDeInit functions that are
+  reset to the legacy weak function in the HAL_CAN_Init()/ HAL_CAN_DeInit() only when
+  these callbacks are null (not registered beforehand).
+  if not, MspInit or MspDeInit are not null, the HAL_CAN_Init()/ HAL_CAN_DeInit()
+  keep and use the user MspInit/MspDeInit callbacks (registered beforehand)
 
   Callbacks can be registered/unregistered in HAL_CAN_STATE_READY state only.
   Exception done MspInit/MspDeInit that can be registered/unregistered
   in HAL_CAN_STATE_READY or HAL_CAN_STATE_RESET state,
-  thus registered (user) MspInit/DeInit callbacks can be used during the
-  Init/DeInit. In that case first register the MspInit/MspDeInit user callbacks
+  thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
+  In that case first register the MspInit/MspDeInit user callbacks
   using HAL_CAN_RegisterCallback() before calling HAL_CAN_DeInit()
   or HAL_CAN_Init() function.
 
   When The compilation define USE_HAL_CAN_REGISTER_CALLBACKS is set to 0 or
-  not defined, the callback registration feature is not available and all
-  callbacks are set to the corresponding weak functions.
+  not defined, the callback registration feature is not available and all callbacks
+  are set to the corresponding weak functions.
 
   @endverbatim
   ******************************************************************************
@@ -248,8 +248,7 @@
  * @{
  */
 
-/** @defgroup CAN_Exported_Functions_Group1 Initialization and de-initialization
-functions
+/** @defgroup CAN_Exported_Functions_Group1 Initialization and de-initialization functions
   * @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -299,39 +298,19 @@ HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan)
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 	if (hcan->State == HAL_CAN_STATE_RESET) {
 		/* Reset callbacks to legacy functions */
-		hcan->RxFifo0MsgPendingCallback = HAL_CAN_RxFifo0MsgPendingCallback;   /* Legacy weak
-											  RxFifo0MsgPendingCallback
-											*/
-		hcan->RxFifo0FullCallback = HAL_CAN_RxFifo0FullCallback;	       /* Legacy weak
-											  RxFifo0FullCallback */
-		hcan->RxFifo1MsgPendingCallback = HAL_CAN_RxFifo1MsgPendingCallback;   /* Legacy weak
-											  RxFifo1MsgPendingCallback
-											*/
-		hcan->RxFifo1FullCallback = HAL_CAN_RxFifo1FullCallback;	       /* Legacy weak
-											  RxFifo1FullCallback */
-		hcan->TxMailbox0CompleteCallback = HAL_CAN_TxMailbox0CompleteCallback; /* Legacy weak
-											  TxMailbox0CompleteCallback
-											*/
-		hcan->TxMailbox1CompleteCallback = HAL_CAN_TxMailbox1CompleteCallback; /* Legacy weak
-											  TxMailbox1CompleteCallback
-											*/
-		hcan->TxMailbox2CompleteCallback = HAL_CAN_TxMailbox2CompleteCallback; /* Legacy weak
-											  TxMailbox2CompleteCallback
-											*/
-		hcan->TxMailbox0AbortCallback = HAL_CAN_TxMailbox0AbortCallback;       /* Legacy weak
-											  TxMailbox0AbortCallback
-											*/
-		hcan->TxMailbox1AbortCallback = HAL_CAN_TxMailbox1AbortCallback;       /* Legacy weak
-											  TxMailbox1AbortCallback
-											*/
-		hcan->TxMailbox2AbortCallback = HAL_CAN_TxMailbox2AbortCallback;       /* Legacy weak
-											  TxMailbox2AbortCallback
-											*/
-		hcan->SleepCallback = HAL_CAN_SleepCallback;			       /* Legacy weak SleepCallback */
-		hcan->WakeUpFromRxMsgCallback = HAL_CAN_WakeUpFromRxMsgCallback;       /* Legacy weak
-											  WakeUpFromRxMsgCallback
-											*/
-		hcan->ErrorCallback = HAL_CAN_ErrorCallback;			       /* Legacy weak ErrorCallback */
+		hcan->RxFifo0MsgPendingCallback = HAL_CAN_RxFifo0MsgPendingCallback;   /* Legacy weak RxFifo0MsgPendingCallback  */
+		hcan->RxFifo0FullCallback = HAL_CAN_RxFifo0FullCallback;	       /* Legacy weak RxFifo0FullCallback        */
+		hcan->RxFifo1MsgPendingCallback = HAL_CAN_RxFifo1MsgPendingCallback;   /* Legacy weak RxFifo1MsgPendingCallback  */
+		hcan->RxFifo1FullCallback = HAL_CAN_RxFifo1FullCallback;	       /* Legacy weak RxFifo1FullCallback        */
+		hcan->TxMailbox0CompleteCallback = HAL_CAN_TxMailbox0CompleteCallback; /* Legacy weak TxMailbox0CompleteCallback */
+		hcan->TxMailbox1CompleteCallback = HAL_CAN_TxMailbox1CompleteCallback; /* Legacy weak TxMailbox1CompleteCallback */
+		hcan->TxMailbox2CompleteCallback = HAL_CAN_TxMailbox2CompleteCallback; /* Legacy weak TxMailbox2CompleteCallback */
+		hcan->TxMailbox0AbortCallback = HAL_CAN_TxMailbox0AbortCallback;       /* Legacy weak TxMailbox0AbortCallback    */
+		hcan->TxMailbox1AbortCallback = HAL_CAN_TxMailbox1AbortCallback;       /* Legacy weak TxMailbox1AbortCallback    */
+		hcan->TxMailbox2AbortCallback = HAL_CAN_TxMailbox2AbortCallback;       /* Legacy weak TxMailbox2AbortCallback    */
+		hcan->SleepCallback = HAL_CAN_SleepCallback;			       /* Legacy weak SleepCallback              */
+		hcan->WakeUpFromRxMsgCallback = HAL_CAN_WakeUpFromRxMsgCallback;       /* Legacy weak WakeUpFromRxMsgCallback    */
+		hcan->ErrorCallback = HAL_CAN_ErrorCallback;			       /* Legacy weak ErrorCallback              */
 
 		if (hcan->MspInitCallback == NULL) {
 			hcan->MspInitCallback = HAL_CAN_MspInit; /* Legacy weak MspInit */
@@ -498,8 +477,8 @@ __weak void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_MspInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_MspInit could be implemented in the user file
 	 */
 }
 
@@ -514,8 +493,8 @@ __weak void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_MspDeInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -527,27 +506,18 @@ __weak void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan)
  *         the configuration information for CAN module
  * @param  CallbackID ID of the callback to be registered
  *         This parameter can be one of the following values:
- *           @arg @ref HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID Tx Mailbox 0 Complete
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID Tx Mailbox 1 Complete
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID Tx Mailbox 2 Complete
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX0_ABORT_CB_ID Tx Mailbox 0 Abort
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX1_ABORT_CB_ID Tx Mailbox 1 Abort
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX2_ABORT_CB_ID Tx Mailbox 2 Abort
- * callback ID
- *           @arg @ref HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID Rx Fifo 0 message
- * pending callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID Tx Mailbox 0 Complete callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID Tx Mailbox 1 Complete callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID Tx Mailbox 2 Complete callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX0_ABORT_CB_ID Tx Mailbox 0 Abort callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX1_ABORT_CB_ID Tx Mailbox 1 Abort callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX2_ABORT_CB_ID Tx Mailbox 2 Abort callback ID
+ *           @arg @ref HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID Rx Fifo 0 message pending callback ID
  *           @arg @ref HAL_CAN_RX_FIFO0_FULL_CB_ID Rx Fifo 0 full callback ID
- *           @arg @ref HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID Rx Fifo 1 message
- * pending callback ID
+ *           @arg @ref HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID Rx Fifo 1 message pending callback ID
  *           @arg @ref HAL_CAN_RX_FIFO1_FULL_CB_ID Rx Fifo 1 full callback ID
  *           @arg @ref HAL_CAN_SLEEP_CB_ID Sleep callback ID
- *           @arg @ref HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID Wake Up from Rx message
- * callback ID
+ *           @arg @ref HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID Wake Up from Rx message callback ID
  *           @arg @ref HAL_CAN_ERROR_CB_ID Error callback ID
  *           @arg @ref HAL_CAN_MSPINIT_CB_ID MspInit callback ID
  *           @arg @ref HAL_CAN_MSPDEINIT_CB_ID MspDeInit callback ID
@@ -671,27 +641,18 @@ HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_Call
  *         the configuration information for CAN module
  * @param  CallbackID ID of the callback to be unregistered
  *         This parameter can be one of the following values:
- *           @arg @ref HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID Tx Mailbox 0 Complete
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID Tx Mailbox 1 Complete
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID Tx Mailbox 2 Complete
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX0_ABORT_CB_ID Tx Mailbox 0 Abort
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX1_ABORT_CB_ID Tx Mailbox 1 Abort
- * callback ID
- *           @arg @ref HAL_CAN_TX_MAILBOX2_ABORT_CB_ID Tx Mailbox 2 Abort
- * callback ID
- *           @arg @ref HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID Rx Fifo 0 message
- * pending callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID Tx Mailbox 0 Complete callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID Tx Mailbox 1 Complete callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID Tx Mailbox 2 Complete callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX0_ABORT_CB_ID Tx Mailbox 0 Abort callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX1_ABORT_CB_ID Tx Mailbox 1 Abort callback ID
+ *           @arg @ref HAL_CAN_TX_MAILBOX2_ABORT_CB_ID Tx Mailbox 2 Abort callback ID
+ *           @arg @ref HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID Rx Fifo 0 message pending callback ID
  *           @arg @ref HAL_CAN_RX_FIFO0_FULL_CB_ID Rx Fifo 0 full callback ID
- *           @arg @ref HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID Rx Fifo 1 message
- * pending callback ID
+ *           @arg @ref HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID Rx Fifo 1 message pending callback ID
  *           @arg @ref HAL_CAN_RX_FIFO1_FULL_CB_ID Rx Fifo 1 full callback ID
  *           @arg @ref HAL_CAN_SLEEP_CB_ID Sleep callback ID
- *           @arg @ref HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID Wake Up from Rx message
- * callback ID
+ *           @arg @ref HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID Wake Up from Rx message callback ID
  *           @arg @ref HAL_CAN_ERROR_CB_ID Error callback ID
  *           @arg @ref HAL_CAN_MSPINIT_CB_ID MspInit callback ID
  *           @arg @ref HAL_CAN_MSPDEINIT_CB_ID MspDeInit callback ID
@@ -831,7 +792,7 @@ HAL_StatusTypeDef HAL_CAN_UnRegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_Ca
 HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_FilterTypeDef *sFilterConfig)
 {
 	uint32_t filternbrbitpos;
-	CAN_TypeDef *can_ip = hcan->Instance;
+	CAN_TypeDef *can_ip;
 	HAL_CAN_StateTypeDef state = hcan->State;
 
 	if ((state == HAL_CAN_STATE_READY) || (state == HAL_CAN_STATE_LISTENING)) {
@@ -846,8 +807,7 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_Filter
 		assert_param(IS_CAN_FILTER_ACTIVATION(sFilterConfig->FilterActivation));
 
 #if defined(CAN2)
-		/* CAN1 and CAN2 are dual instances with 28 common filters banks
-		 */
+		/* CAN1 and CAN2 are dual instances with 28 common filters banks */
 		/* Select master instance to access the filter banks */
 		can_ip = CAN1;
 
@@ -856,6 +816,7 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_Filter
 		assert_param(IS_CAN_FILTER_BANK_DUAL(sFilterConfig->SlaveStartFilterBank));
 #else
 		/* CAN1 is single instance with 14 dedicated filters banks */
+		can_ip = hcan->Instance;
 
 		/* Check the parameters */
 		assert_param(IS_CAN_FILTER_BANK_SINGLE(sFilterConfig->FilterBank));
@@ -882,14 +843,12 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_Filter
 			CLEAR_BIT(can_ip->FS1R, filternbrbitpos);
 
 			/* First 16-bit identifier and First 16-bit mask */
-			/* Or First 16-bit identifier and Second 16-bit
-			 * identifier */
+			/* Or First 16-bit identifier and Second 16-bit identifier */
 			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR1 =
 			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdLow) << 16U) | (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdLow);
 
 			/* Second 16-bit identifier and Second 16-bit mask */
-			/* Or Third 16-bit identifier and Fourth 16-bit
-			 * identifier */
+			/* Or Third 16-bit identifier and Fourth 16-bit identifier */
 			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR2 =
 			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdHigh) << 16U) | (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdHigh);
 		}
@@ -910,8 +869,7 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_Filter
 		if (sFilterConfig->FilterMode == CAN_FILTERMODE_IDMASK) {
 			/* Id/Mask mode for the filter*/
 			CLEAR_BIT(can_ip->FM1R, filternbrbitpos);
-		} else /* CAN_FilterInitStruct->CAN_FilterMode ==
-			  CAN_FilterMode_IdList */
+		} else /* CAN_FilterInitStruct->CAN_FilterMode == CAN_FilterMode_IdList */
 		{
 			/* Identifier list mode for the filter*/
 			SET_BIT(can_ip->FM1R, filternbrbitpos);
@@ -1337,8 +1295,7 @@ uint32_t HAL_CAN_IsTxMessagePending(const CAN_HandleTypeDef *hcan, uint32_t TxMa
 	assert_param(IS_CAN_TX_MAILBOX_LIST(TxMailboxes));
 
 	if ((state == HAL_CAN_STATE_READY) || (state == HAL_CAN_STATE_LISTENING)) {
-		/* Check pending transmission request on the selected Tx
-		 * Mailboxes */
+		/* Check pending transmission request on the selected Tx Mailboxes */
 		if ((hcan->Instance->TSR & (TxMailboxes << CAN_TSR_TME0_Pos)) != (TxMailboxes << CAN_TSR_TME0_Pos)) {
 			status = 1U;
 		}
@@ -1589,14 +1546,11 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 	uint32_t rf1rflags = READ_REG(hcan->Instance->RF1R);
 	uint32_t esrflags = READ_REG(hcan->Instance->ESR);
 
-	/* Transmit Mailbox empty interrupt management
-	 * *****************************/
+	/* Transmit Mailbox empty interrupt management *****************************/
 	if ((interrupts & CAN_IT_TX_MAILBOX_EMPTY) != 0U) {
-		/* Transmit Mailbox 0 management
-		 * *****************************************/
+		/* Transmit Mailbox 0 management *****************************************/
 		if ((tsrflags & CAN_TSR_RQCP0) != 0U) {
-			/* Clear the Transmission Complete flag (and
-			 * TXOK0,ALST0,TERR0 bits) */
+			/* Clear the Transmission Complete flag (and TXOK0,ALST0,TERR0 bits) */
 			__HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_RQCP0);
 
 			if ((tsrflags & CAN_TSR_TXOK0) != 0U) {
@@ -1616,8 +1570,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 					/* Update error code */
 					errorcode |= HAL_CAN_ERROR_TX_TERR0;
 				} else {
-					/* Transmission Mailbox 0 abort callback
-					 */
+					/* Transmission Mailbox 0 abort callback */
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 					/* Call registered callback*/
 					hcan->TxMailbox0AbortCallback(hcan);
@@ -1629,11 +1582,9 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 			}
 		}
 
-		/* Transmit Mailbox 1 management
-		 * *****************************************/
+		/* Transmit Mailbox 1 management *****************************************/
 		if ((tsrflags & CAN_TSR_RQCP1) != 0U) {
-			/* Clear the Transmission Complete flag (and
-			 * TXOK1,ALST1,TERR1 bits) */
+			/* Clear the Transmission Complete flag (and TXOK1,ALST1,TERR1 bits) */
 			__HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_RQCP1);
 
 			if ((tsrflags & CAN_TSR_TXOK1) != 0U) {
@@ -1653,8 +1604,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 					/* Update error code */
 					errorcode |= HAL_CAN_ERROR_TX_TERR1;
 				} else {
-					/* Transmission Mailbox 1 abort callback
-					 */
+					/* Transmission Mailbox 1 abort callback */
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 					/* Call registered callback*/
 					hcan->TxMailbox1AbortCallback(hcan);
@@ -1666,11 +1616,9 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 			}
 		}
 
-		/* Transmit Mailbox 2 management
-		 * *****************************************/
+		/* Transmit Mailbox 2 management *****************************************/
 		if ((tsrflags & CAN_TSR_RQCP2) != 0U) {
-			/* Clear the Transmission Complete flag (and
-			 * TXOK2,ALST2,TERR2 bits) */
+			/* Clear the Transmission Complete flag (and TXOK2,ALST2,TERR2 bits) */
 			__HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_RQCP2);
 
 			if ((tsrflags & CAN_TSR_TXOK2) != 0U) {
@@ -1690,8 +1638,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 					/* Update error code */
 					errorcode |= HAL_CAN_ERROR_TX_TERR2;
 				} else {
-					/* Transmission Mailbox 2 abort callback
-					 */
+					/* Transmission Mailbox 2 abort callback */
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 					/* Call registered callback*/
 					hcan->TxMailbox2AbortCallback(hcan);
@@ -1704,8 +1651,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Receive FIFO 0 overrun interrupt management
-	 * *****************************/
+	/* Receive FIFO 0 overrun interrupt management *****************************/
 	if ((interrupts & CAN_IT_RX_FIFO0_OVERRUN) != 0U) {
 		if ((rf0rflags & CAN_RF0R_FOVR0) != 0U) {
 			/* Set CAN error code to Rx Fifo 0 overrun error */
@@ -1716,8 +1662,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Receive FIFO 0 full interrupt management
-	 * ********************************/
+	/* Receive FIFO 0 full interrupt management ********************************/
 	if ((interrupts & CAN_IT_RX_FIFO0_FULL) != 0U) {
 		if ((rf0rflags & CAN_RF0R_FULL0) != 0U) {
 			/* Clear FIFO 0 full Flag */
@@ -1734,8 +1679,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Receive FIFO 0 message pending interrupt management
-	 * *********************/
+	/* Receive FIFO 0 message pending interrupt management *********************/
 	if ((interrupts & CAN_IT_RX_FIFO0_MSG_PENDING) != 0U) {
 		/* Check if message is still pending */
 		if ((hcan->Instance->RF0R & CAN_RF0R_FMP0) != 0U) {
@@ -1750,8 +1694,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Receive FIFO 1 overrun interrupt management
-	 * *****************************/
+	/* Receive FIFO 1 overrun interrupt management *****************************/
 	if ((interrupts & CAN_IT_RX_FIFO1_OVERRUN) != 0U) {
 		if ((rf1rflags & CAN_RF1R_FOVR1) != 0U) {
 			/* Set CAN error code to Rx Fifo 1 overrun error */
@@ -1762,8 +1705,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Receive FIFO 1 full interrupt management
-	 * ********************************/
+	/* Receive FIFO 1 full interrupt management ********************************/
 	if ((interrupts & CAN_IT_RX_FIFO1_FULL) != 0U) {
 		if ((rf1rflags & CAN_RF1R_FULL1) != 0U) {
 			/* Clear FIFO 1 full Flag */
@@ -1780,8 +1722,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Receive FIFO 1 message pending interrupt management
-	 * *********************/
+	/* Receive FIFO 1 message pending interrupt management *********************/
 	if ((interrupts & CAN_IT_RX_FIFO1_MSG_PENDING) != 0U) {
 		/* Check if message is still pending */
 		if ((hcan->Instance->RF1R & CAN_RF1R_FMP1) != 0U) {
@@ -1796,8 +1737,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Sleep interrupt management
-	 * *********************************************/
+	/* Sleep interrupt management *********************************************/
 	if ((interrupts & CAN_IT_SLEEP_ACK) != 0U) {
 		if ((msrflags & CAN_MSR_SLAKI) != 0U) {
 			/* Clear Sleep interrupt Flag */
@@ -1814,8 +1754,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* WakeUp interrupt management
-	 * *********************************************/
+	/* WakeUp interrupt management *********************************************/
 	if ((interrupts & CAN_IT_WAKEUP) != 0U) {
 		if ((msrflags & CAN_MSR_WKUI) != 0U) {
 			/* Clear WakeUp Flag */
@@ -1832,8 +1771,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 		}
 	}
 
-	/* Error interrupts management
-	 * *********************************************/
+	/* Error interrupts management *********************************************/
 	if ((interrupts & CAN_IT_ERROR) != 0U) {
 		if ((msrflags & CAN_MSR_ERRI) != 0U) {
 			/* Check Error Warning Flag */
@@ -1841,8 +1779,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 				/* Set CAN error code to Error Warning */
 				errorcode |= HAL_CAN_ERROR_EWG;
 
-				/* No need for clear of Error Warning Flag as
-				 * read-only */
+				/* No need for clear of Error Warning Flag as read-only */
 			}
 
 			/* Check Error Passive Flag */
@@ -1850,8 +1787,7 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 				/* Set CAN error code to Error Passive */
 				errorcode |= HAL_CAN_ERROR_EPV;
 
-				/* No need for clear of Error Passive Flag as
-				 * read-only */
+				/* No need for clear of Error Passive Flag as read-only */
 			}
 
 			/* Check Bus-off Flag */
@@ -1859,41 +1795,34 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 				/* Set CAN error code to Bus-Off */
 				errorcode |= HAL_CAN_ERROR_BOF;
 
-				/* No need for clear of Error Bus-Off as
-				 * read-only */
+				/* No need for clear of Error Bus-Off as read-only */
 			}
 
 			/* Check Last Error Code Flag */
 			if (((interrupts & CAN_IT_LAST_ERROR_CODE) != 0U) && ((esrflags & CAN_ESR_LEC) != 0U)) {
 				switch (esrflags & CAN_ESR_LEC) {
 					case (CAN_ESR_LEC_0):
-						/* Set CAN error code to Stuff
-						 * error */
+						/* Set CAN error code to Stuff error */
 						errorcode |= HAL_CAN_ERROR_STF;
 						break;
 					case (CAN_ESR_LEC_1):
-						/* Set CAN error code to Form
-						 * error */
+						/* Set CAN error code to Form error */
 						errorcode |= HAL_CAN_ERROR_FOR;
 						break;
 					case (CAN_ESR_LEC_1 | CAN_ESR_LEC_0):
-						/* Set CAN error code to
-						 * Acknowledgement error */
+						/* Set CAN error code to Acknowledgement error */
 						errorcode |= HAL_CAN_ERROR_ACK;
 						break;
 					case (CAN_ESR_LEC_2):
-						/* Set CAN error code to Bit
-						 * recessive error */
+						/* Set CAN error code to Bit recessive error */
 						errorcode |= HAL_CAN_ERROR_BR;
 						break;
 					case (CAN_ESR_LEC_2 | CAN_ESR_LEC_0):
-						/* Set CAN error code to Bit
-						 * Dominant error */
+						/* Set CAN error code to Bit Dominant error */
 						errorcode |= HAL_CAN_ERROR_BD;
 						break;
 					case (CAN_ESR_LEC_2 | CAN_ESR_LEC_1):
-						/* Set CAN error code to CRC
-						 * error */
+						/* Set CAN error code to CRC error */
 						errorcode |= HAL_CAN_ERROR_CRC;
 						break;
 					default:
@@ -1967,9 +1896,9 @@ __weak void HAL_CAN_TxMailbox0CompleteCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_TxMailbox0CompleteCallback could be implemented
-	   in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_TxMailbox0CompleteCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -1984,9 +1913,9 @@ __weak void HAL_CAN_TxMailbox1CompleteCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_TxMailbox1CompleteCallback could be implemented
-	   in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_TxMailbox1CompleteCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2001,9 +1930,9 @@ __weak void HAL_CAN_TxMailbox2CompleteCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_TxMailbox2CompleteCallback could be implemented
-	   in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_TxMailbox2CompleteCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2018,9 +1947,9 @@ __weak void HAL_CAN_TxMailbox0AbortCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_TxMailbox0AbortCallback could be implemented in
-	   the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_TxMailbox0AbortCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2035,9 +1964,9 @@ __weak void HAL_CAN_TxMailbox1AbortCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_TxMailbox1AbortCallback could be implemented in
-	   the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_TxMailbox1AbortCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2052,9 +1981,9 @@ __weak void HAL_CAN_TxMailbox2AbortCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_TxMailbox2AbortCallback could be implemented in
-	   the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_TxMailbox2AbortCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2069,9 +1998,9 @@ __weak void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_RxFifo0MsgPendingCallback could be implemented in
-	   the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_RxFifo0MsgPendingCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2086,9 +2015,9 @@ __weak void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_RxFifo0FullCallback could be implemented in the
-	   user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_RxFifo0FullCallback could be implemented in the user
+		  file
 	 */
 }
 
@@ -2103,9 +2032,9 @@ __weak void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_RxFifo1MsgPendingCallback could be implemented in
-	   the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_RxFifo1MsgPendingCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2120,9 +2049,9 @@ __weak void HAL_CAN_RxFifo1FullCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_RxFifo1FullCallback could be implemented in the
-	   user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_RxFifo1FullCallback could be implemented in the user
+		  file
 	 */
 }
 
@@ -2137,9 +2066,8 @@ __weak void HAL_CAN_SleepCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_SleepCallback could be implemented in the user
-	   file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_SleepCallback could be implemented in the user file
 	 */
 }
 
@@ -2154,9 +2082,9 @@ __weak void HAL_CAN_WakeUpFromRxMsgCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_WakeUpFromRxMsgCallback could be implemented in
-	   the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_WakeUpFromRxMsgCallback could be implemented in the
+		  user file
 	 */
 }
 
@@ -2171,9 +2099,8 @@ __weak void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcan);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_CAN_ErrorCallback could be implemented in the user
-	   file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_CAN_ErrorCallback could be implemented in the user file
 	 */
 }
 
@@ -2219,8 +2146,7 @@ HAL_CAN_StateTypeDef HAL_CAN_GetState(const CAN_HandleTypeDef *hcan)
 			/* Sleep mode request is pending */
 			state = HAL_CAN_STATE_SLEEP_PENDING;
 		} else {
-			/* Neither sleep mode request nor sleep mode acknowledge
-			 */
+			/* Neither sleep mode request nor sleep mode acknowledge */
 		}
 	}
 

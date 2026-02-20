@@ -49,13 +49,9 @@
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_LL_DAC_CHANNEL(__DACX__, __DAC_CHANNEL__)                                                                                                                                                   \
 	(((__DACX__) == DAC2) ? ((__DAC_CHANNEL__) == LL_DAC_CHANNEL_1) : (((__DAC_CHANNEL__) == LL_DAC_CHANNEL_1) || ((__DAC_CHANNEL__) == LL_DAC_CHANNEL_2)))
-#elif defined(STM32G411xB) || defined(STM32G411xC)
-#define IS_LL_DAC_CHANNEL(__DACX__, __DAC_CHANNEL__)                                                                                                                                                   \
-	(((__DACX__) == DAC1) ? ((__DAC_CHANNEL__) == LL_DAC_CHANNEL_1) : (((__DAC_CHANNEL__) == LL_DAC_CHANNEL_1) || ((__DAC_CHANNEL__) == LL_DAC_CHANNEL_2)))
 #else
 #define IS_LL_DAC_CHANNEL(__DACX__, __DAC_CHANNEL__) (((__DAC_CHANNEL__) == LL_DAC_CHANNEL_1) || ((__DAC_CHANNEL__) == LL_DAC_CHANNEL_2))
-#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                                                  \
-	  STM32G483xx */
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
 
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx)
 #define IS_LL_DAC_TRIGGER_SOURCE(__DACX__, __TRIGGER_SOURCE__)                                                                                                                                         \
@@ -230,15 +226,15 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 		assert_param(IS_LL_DAC_WAVE_AUTO_GENER_CONFIG(DAC_InitStruct->WaveAutoGeneration, DAC_InitStruct->WaveAutoGenerationConfig));
 	}
 
-	/* Note: Hardware constraint (refer to description of this function) */
-	/*       DAC instance must be disabled. */
+	/* Note: Hardware constraint (refer to description of this function)        */
+	/*       DAC instance must be disabled.                                     */
 	if (LL_DAC_IsEnabled(DACx, DAC_Channel) == 0UL) {
-		/* Configuration of DAC channel: */
-		/*  - TriggerSource */
-		/*  - WaveAutoGeneration */
-		/*  - OutputBuffer */
-		/*  - OutputConnection */
-		/*  - OutputMode */
+		/* Configuration of DAC channel:                                          */
+		/*  - TriggerSource                                                       */
+		/*  - WaveAutoGeneration                                                  */
+		/*  - OutputBuffer                                                        */
+		/*  - OutputConnection                                                    */
+		/*  - OutputMode                                                          */
 		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
 			if (DAC_InitStruct->WaveAutoGeneration == LL_DAC_WAVE_AUTO_GENERATION_SAWTOOTH) {
 				assert_param(IS_LL_DAC_TRIGGER_SOURCE2(DACx, DAC_InitStruct->TriggerSource2));
@@ -264,7 +260,7 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 		MODIFY_REG(DACx->MCR, (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 			   (DAC_InitStruct->OutputBuffer | DAC_InitStruct->OutputConnection | DAC_InitStruct->OutputMode) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 	} else {
-		/* Initialization error: DAC instance is not disabled. */
+		/* Initialization error: DAC instance is not disabled.                    */
 		status = ERROR;
 	}
 	return status;
@@ -282,8 +278,8 @@ void LL_DAC_StructInit(LL_DAC_InitTypeDef *DAC_InitStruct)
 	DAC_InitStruct->TriggerSource = LL_DAC_TRIG_SOFTWARE;
 	DAC_InitStruct->TriggerSource2 = LL_DAC_TRIG_SOFTWARE;
 	DAC_InitStruct->WaveAutoGeneration = LL_DAC_WAVE_AUTO_GENERATION_NONE;
-	/* Note: Parameter discarded if wave auto generation is disabled, */
-	/*       set anyway to its default value. */
+	/* Note: Parameter discarded if wave auto generation is disabled,           */
+	/*       set anyway to its default value.                                   */
 	DAC_InitStruct->WaveAutoGenerationConfig = LL_DAC_NOISE_LFSR_UNMASK_BIT0;
 	DAC_InitStruct->OutputBuffer = LL_DAC_OUTPUT_BUFFER_ENABLE;
 	DAC_InitStruct->OutputConnection = LL_DAC_OUTPUT_CONNECT_GPIO;

@@ -124,14 +124,10 @@ extern "C" {
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define LL_PWR_PVM_VDDUSB_1_2V                                                                                                                                                                         \
-	(PWR_CR2_PVME1) /* Monitoring VDDUSB vs. 1.2V                                                                                                                                                  \
-			 */
+#define LL_PWR_PVM_VDDUSB_1_2V (PWR_CR2_PVME1) /* Monitoring VDDUSB vs. 1.2V */
 #endif
 #if defined(PWR_CR2_PVME2)
-#define LL_PWR_PVM_VDDIO2_0_9V                                                                                                                                                                         \
-	(PWR_CR2_PVME2) /* Monitoring VDDIO2 vs. 0.9V                                                                                                                                                  \
-			 */
+#define LL_PWR_PVM_VDDIO2_0_9V (PWR_CR2_PVME2) /* Monitoring VDDIO2 vs. 0.9V */
 #endif
 #if defined(PWR_CR2_PVME3)
 #define LL_PWR_PVM_VDDA_1_62V (PWR_CR2_PVME3) /* Monitoring VDDA vs. 1.62V  */
@@ -153,9 +149,7 @@ extern "C" {
 #define LL_PWR_PVDLEVEL_4 (PWR_CR2_PLS_LEV4) /* VPVD4 around 2.6 V */
 #define LL_PWR_PVDLEVEL_5 (PWR_CR2_PLS_LEV5) /* VPVD5 around 2.8 V */
 #define LL_PWR_PVDLEVEL_6 (PWR_CR2_PLS_LEV6) /* VPVD6 around 2.9 V */
-#define LL_PWR_PVDLEVEL_7                                                                                                                                                                              \
-	(PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare                                                                                                                                 \
-			      internally to VREFINT) */
+#define LL_PWR_PVDLEVEL_7 (PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare internally to VREFINT) */
 /**
  * @}
  */
@@ -338,8 +332,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledLowPowerRunMode(void)
 
 /**
  * @brief  Set the main internal regulator output voltage
- * @note   This configuration may be completed with
- * LL_PWR_EnableRange1BoostMode() on STM32L4Rx/STM32L4Sx devices.
+ * @note   This configuration may be completed with LL_PWR_EnableRange1BoostMode() on STM32L4Rx/STM32L4Sx devices.
  * @rmtoll CR1          VOS           LL_PWR_SetRegulVoltageScaling
  * @param  VoltageScaling This parameter can be one of the following values:
  *         @arg @ref LL_PWR_REGU_VOLTAGE_SCALE1
@@ -645,8 +638,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVM(uint32_t PeriphVoltage)
 }
 
 /**
- * @brief  Configure the voltage threshold detected by the Power Voltage
- * Detector
+ * @brief  Configure the voltage threshold detected by the Power Voltage Detector
  * @rmtoll CR2          PLS           LL_PWR_SetPVDLevel
  * @param  PVDLevel This parameter can be one of the following values:
  *         @arg @ref LL_PWR_PVDLEVEL_0
@@ -816,8 +808,7 @@ __STATIC_INLINE void LL_PWR_EnableBORPVD_ULP(void)
 }
 
 /**
- * @brief  Disable Ultra Low Power BORL, BORH and PVD for STOP2 and Standby
- * modes
+ * @brief  Disable Ultra Low Power BORL, BORH and PVD for STOP2 and Standby modes
  * @rmtoll CR3          ENULP        LL_PWR_DisableBORPVD_ULP
  * @retval None
  */
@@ -827,8 +818,7 @@ __STATIC_INLINE void LL_PWR_DisableBORPVD_ULP(void)
 }
 
 /**
- * @brief  Check if Ultra Low Power BORL, BORH and PVD for STOP2 and Standby
- * modes is enabled
+ * @brief  Check if Ultra Low Power BORL, BORH and PVD for STOP2 and Standby modes is enabled
  * @rmtoll CR3          ENULP        LL_PWR_IsEnabledBORPVD_ULP
  * @retval State of bit (1 or 0).
  */
@@ -875,12 +865,9 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledSRAM2Retention(void)
  *         @arg @ref LL_PWR_NO_SRAM2_RETENTION
  *         @arg @ref LL_PWR_FULL_SRAM2_RETENTION
  *         @arg @ref LL_PWR_4KBYTES_SRAM2_RETENTION
- * @note  LL_PWR_4KBYTES_SRAM2_RETENTION parameter is not available on all
- * devices
- * @note  Setting LL_PWR_NO_SRAM2_RETENTION is same as calling
- * LL_PWR_DisableSRAM2Retention()
- * @note  Setting LL_PWR_FULL_SRAM2_RETENTION is same as calling
- * LL_PWR_EnableSRAM2Retention()
+ * @note  LL_PWR_4KBYTES_SRAM2_RETENTION parameter is not available on all devices
+ * @note  Setting LL_PWR_NO_SRAM2_RETENTION is same as calling LL_PWR_DisableSRAM2Retention()
+ * @note  Setting LL_PWR_FULL_SRAM2_RETENTION is same as calling LL_PWR_EnableSRAM2Retention()
  * @retval None
  */
 __STATIC_INLINE void LL_PWR_SetSRAM2ContentRetention(uint32_t SRAM2Size)
@@ -895,8 +882,7 @@ __STATIC_INLINE void LL_PWR_SetSRAM2ContentRetention(uint32_t SRAM2Size)
  *         @arg @ref LL_PWR_NO_SRAM2_RETENTION
  *         @arg @ref LL_PWR_FULL_SRAM2_RETENTION
  *         @arg @ref LL_PWR_4KBYTES_SRAM2_RETENTION
- * @note  LL_PWR_4KBYTES_SRAM2_RETENTION parameter is not available on all
- * devices
+ * @note  LL_PWR_4KBYTES_SRAM2_RETENTION parameter is not available on all devices
  */
 __STATIC_INLINE uint32_t LL_PWR_GetSRAM2ContentRetention(void)
 {
@@ -966,8 +952,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeUpPin(uint32_t WakeUpPin)
 #if defined(PWR_CR4_EXT_SMPS_ON)
 /**
  * @brief Enable the CFLDO working @ 0.95V
- * @note  When external SMPS is used & CFLDO operating in Range 2, the regulated
- * voltage of the internal CFLDO can be reduced to 0.95V.
+ * @note  When external SMPS is used & CFLDO operating in Range 2, the regulated voltage of the
+ *        internal CFLDO can be reduced to 0.95V.
  * @rmtoll CR4          EXT_SMPS_ON   LL_PWR_EnableExtSMPS_0V95
  * @retval None
  */
@@ -978,8 +964,8 @@ __STATIC_INLINE void LL_PWR_EnableExtSMPS_0V95(void)
 
 /**
  * @brief  Disable the CFLDO working @ 0.95V
- * @note  When external SMPS is used & CFLDO operating in Range 2, the regulated
- * voltage of the internal CFLDO can be reduced to 0.95V.
+ * @note  When external SMPS is used & CFLDO operating in Range 2, the regulated voltage of the
+ *        internal CFLDO can be reduced to 0.95V.
  * @rmtoll CR4          EXT_SMPS_ON   LL_PWR_DisableExtSMPS_0V95
  * @retval None
  */
@@ -990,8 +976,8 @@ __STATIC_INLINE void LL_PWR_DisableExtSMPS_0V95(void)
 
 /**
  * @brief  Check if CFLDO is working @ 0.95V
- * @note  When external SMPS is used & CFLDO operating in Range 2, the regulated
- * voltage of the internal CFLDO can be reduced to 0.95V.
+ * @note  When external SMPS is used & CFLDO operating in Range 2, the regulated voltage of the
+ *        internal CFLDO can be reduced to 0.95V.
  * @rmtoll CR4          EXT_SMPS_ON   LL_PWR_IsEnabledExtSMPS_0V95
  * @retval State of bit (1 or 0).
  */
@@ -1603,8 +1589,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVMO1(void)
 #endif /* PWR_SR2_PVMO1 */
 
 /**
- * @brief  Indicate whether VDD voltage is below or above the selected PVD
- * threshold
+ * @brief  Indicate whether VDD voltage is below or above the selected PVD threshold
  * @rmtoll SR2          PVDO          LL_PWR_IsActiveFlag_PVDO
  * @retval State of bit (1 or 0).
  */
@@ -1614,8 +1599,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVDO(void)
 }
 
 /**
- * @brief  Indicate whether the regulator is ready in the selected voltage range
- * or if its output voltage is still changing to the required voltage level
+ * @brief  Indicate whether the regulator is ready in the selected voltage range or if its output voltage is still changing to the required voltage level
  * @rmtoll SR2          VOSF          LL_PWR_IsActiveFlag_VOS
  * @retval State of bit (1 or 0).
  */
@@ -1625,10 +1609,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VOS(void)
 }
 
 /**
- * @brief  Indicate whether the regulator is ready in main mode or is in
- * low-power mode
- * @note   Take care, return value "0" means the regulator is ready. Return
- * value "1" means the output voltage range is still changing.
+ * @brief  Indicate whether the regulator is ready in main mode or is in low-power mode
+ * @note   Take care, return value "0" means the regulator is ready. Return value "1" means the output voltage range is still changing.
  * @rmtoll SR2          REGLPF        LL_PWR_IsActiveFlag_REGLPF
  * @retval State of bit (1 or 0).
  */

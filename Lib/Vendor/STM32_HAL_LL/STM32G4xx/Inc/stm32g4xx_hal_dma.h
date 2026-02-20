@@ -44,50 +44,42 @@ extern "C" {
  * @brief  DMA Configuration Structure definition
  */
 typedef struct {
-	uint32_t Request; /*!< Specifies the request selected for the specified
-			     channel. This parameter can be a value of @ref
-			     DMA_request */
+	uint32_t Request; /*!< Specifies the request selected for the specified channel.
+			       This parameter can be a value of @ref DMA_request */
 
-	uint32_t Direction; /*!< Specifies if the data will be transferred from
-			       memory to peripheral, from memory to memory or
-			       from peripheral to memory. This parameter can be
-			       a value of @ref DMA_Data_transfer_direction */
+	uint32_t Direction; /*!< Specifies if the data will be transferred from memory to peripheral,
+				 from memory to memory or from peripheral to memory.
+				 This parameter can be a value of @ref DMA_Data_transfer_direction */
 
-	uint32_t PeriphInc; /*!< Specifies whether the Peripheral address register
-			       should be incremented or not. This parameter can be a
-			       value of @ref DMA_Peripheral_incremented_mode */
+	uint32_t PeriphInc; /*!< Specifies whether the Peripheral address register should be incremented or not.
+				 This parameter can be a value of @ref DMA_Peripheral_incremented_mode */
 
-	uint32_t MemInc; /*!< Specifies whether the memory address register
-			    should be incremented or not. This parameter can be
-			    a value of @ref DMA_Memory_incremented_mode */
+	uint32_t MemInc; /*!< Specifies whether the memory address register should be incremented or not.
+			      This parameter can be a value of @ref DMA_Memory_incremented_mode */
 
 	uint32_t PeriphDataAlignment; /*!< Specifies the Peripheral data width.
-					   This parameter can be a value of @ref
-					 DMA_Peripheral_data_size */
+					   This parameter can be a value of @ref DMA_Peripheral_data_size */
 
 	uint32_t MemDataAlignment; /*!< Specifies the Memory data width.
-					This parameter can be a value of @ref
-				      DMA_Memory_data_size */
+					This parameter can be a value of @ref DMA_Memory_data_size */
 
 	uint32_t Mode; /*!< Specifies the operation mode of the DMAy Channelx.
 			    This parameter can be a value of @ref DMA_mode
-			    @note The circular buffer mode cannot be used if the
-			  memory-to-memory data transfer is configured on the
-			  selected Channel */
+			    @note The circular buffer mode cannot be used if the memory-to-memory
+				  data transfer is configured on the selected Channel */
 
-	uint32_t Priority; /*!< Specifies the software priority for the DMAy
-			      Channelx. This parameter can be a value of @ref
-			      DMA_Priority_level */
+	uint32_t Priority; /*!< Specifies the software priority for the DMAy Channelx.
+				This parameter can be a value of @ref DMA_Priority_level */
 } DMA_InitTypeDef;
 
 /**
  * @brief  HAL DMA State structures definition
  */
 typedef enum {
-	HAL_DMA_STATE_RESET = 0x00U,   /*!< DMA not yet initialized or disabled */
-	HAL_DMA_STATE_READY = 0x01U,   /*!< DMA initialized and ready for use */
-	HAL_DMA_STATE_BUSY = 0x02U,    /*!< DMA process is ongoing  */
-	HAL_DMA_STATE_TIMEOUT = 0x03U, /*!< DMA timeout state */
+	HAL_DMA_STATE_RESET = 0x00U,   /*!< DMA not yet initialized or disabled    */
+	HAL_DMA_STATE_READY = 0x01U,   /*!< DMA initialized and ready for use      */
+	HAL_DMA_STATE_BUSY = 0x02U,    /*!< DMA process is ongoing                 */
+	HAL_DMA_STATE_TIMEOUT = 0x03U, /*!< DMA timeout state                     */
 } HAL_DMA_StateTypeDef;
 
 /**
@@ -114,13 +106,13 @@ typedef enum {
  * @brief  DMA handle Structure definition
  */
 typedef struct __DMA_HandleTypeDef {
-	DMA_Channel_TypeDef *Instance; /*!< Register base address */
+	DMA_Channel_TypeDef *Instance; /*!< Register base address                */
 
 	DMA_InitTypeDef Init; /*!< DMA communication parameters         */
 
 	HAL_LockTypeDef Lock; /*!< DMA locking object                   */
 
-	__IO HAL_DMA_StateTypeDef State; /*!< DMA transfer state */
+	__IO HAL_DMA_StateTypeDef State; /*!< DMA transfer state                   */
 
 	void *Parent; /*!< Parent object state                  */
 
@@ -128,28 +120,27 @@ typedef struct __DMA_HandleTypeDef {
 
 	void (*XferHalfCpltCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA Half transfer complete callback  */
 
-	void (*XferErrorCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer error callback */
+	void (*XferErrorCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer error callback          */
 
-	void (*XferAbortCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer abort callback */
+	void (*XferAbortCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer abort callback          */
 
 	__IO uint32_t ErrorCode; /*!< DMA Error code                       */
 
-	DMA_TypeDef *DmaBaseAddress; /*!< DMA Channel Base Address */
+	DMA_TypeDef *DmaBaseAddress; /*!< DMA Channel Base Address             */
 
 	uint32_t ChannelIndex; /*!< DMA Channel Index                    */
 
-	DMAMUX_Channel_TypeDef *DMAmuxChannel; /*!< Register base address */
+	DMAMUX_Channel_TypeDef *DMAmuxChannel; /*!< Register base address                */
 
 	DMAMUX_ChannelStatus_TypeDef *DMAmuxChannelStatus; /*!< DMAMUX Channels Status Base Address  */
 
-	uint32_t DMAmuxChannelStatusMask; /*!< DMAMUX Channel Status Mask */
+	uint32_t DMAmuxChannelStatusMask; /*!< DMAMUX Channel Status Mask           */
 
 	DMAMUX_RequestGen_TypeDef *DMAmuxRequestGen; /*!< DMAMUX request generator Base Address */
 
-	DMAMUX_RequestGenStatus_TypeDef *DMAmuxRequestGenStatus; /*!< DMAMUX request generator Address */
+	DMAMUX_RequestGenStatus_TypeDef *DMAmuxRequestGenStatus; /*!< DMAMUX request generator Address     */
 
-	uint32_t DMAmuxRequestGenStatusMask; /*!< DMAMUX request generator
-						Status mask */
+	uint32_t DMAmuxRequestGenStatusMask; /*!< DMAMUX request generator Status mask */
 
 } DMA_HandleTypeDef;
 /**
@@ -359,12 +350,8 @@ typedef struct __DMA_HandleTypeDef {
 /** @defgroup DMA_Data_transfer_direction DMA Data transfer direction
  * @{
  */
-#define DMA_PERIPH_TO_MEMORY                                                                                                                                                                           \
-	0x00000000U /*!< Peripheral to memory direction                                                                                                                                                \
-		     */
-#define DMA_MEMORY_TO_PERIPH                                                                                                                                                                           \
-	DMA_CCR_DIR			     /*!< Memory to peripheral direction                                                                                                                       \
-					      */
+#define DMA_PERIPH_TO_MEMORY 0x00000000U     /*!< Peripheral to memory direction */
+#define DMA_MEMORY_TO_PERIPH DMA_CCR_DIR     /*!< Memory to peripheral direction */
 #define DMA_MEMORY_TO_MEMORY DMA_CCR_MEM2MEM /*!< Memory to memory direction     */
 /**
  * @}
@@ -401,7 +388,7 @@ typedef struct __DMA_HandleTypeDef {
 /** @defgroup DMA_Memory_data_size DMA Memory data size
  * @{
  */
-#define DMA_MDATAALIGN_BYTE 0x00000000U		/*!< Memory data alignment : Byte */
+#define DMA_MDATAALIGN_BYTE 0x00000000U		/*!< Memory data alignment : Byte     */
 #define DMA_MDATAALIGN_HALFWORD DMA_CCR_MSIZE_0 /*!< Memory data alignment : HalfWord */
 #define DMA_MDATAALIGN_WORD DMA_CCR_MSIZE_1	/*!< Memory data alignment : Word     */
 /**
@@ -700,8 +687,8 @@ typedef struct __DMA_HandleTypeDef {
 /**
  * @brief  Enable the specified DMA Channel interrupts.
  * @param  __HANDLE__ DMA handle
- * @param __INTERRUPT__ specifies the DMA interrupt sources to be enabled or
- * disabled. This parameter can be any combination of the following values:
+ * @param __INTERRUPT__ specifies the DMA interrupt sources to be enabled or disabled.
+ *          This parameter can be any combination of the following values:
  *            @arg DMA_IT_TC  Transfer complete interrupt mask
  *            @arg DMA_IT_HT  Half transfer complete interrupt mask
  *            @arg DMA_IT_TE  Transfer error interrupt mask
@@ -712,8 +699,8 @@ typedef struct __DMA_HandleTypeDef {
 /**
  * @brief  Disable the specified DMA Channel interrupts.
  * @param  __HANDLE__ DMA handle
- * @param __INTERRUPT__ specifies the DMA interrupt sources to be enabled or
- * disabled. This parameter can be any combination of the following values:
+ * @param __INTERRUPT__ specifies the DMA interrupt sources to be enabled or disabled.
+ *          This parameter can be any combination of the following values:
  *            @arg DMA_IT_TC  Transfer complete interrupt mask
  *            @arg DMA_IT_HT  Half transfer complete interrupt mask
  *            @arg DMA_IT_TE  Transfer error interrupt mask
@@ -734,11 +721,9 @@ typedef struct __DMA_HandleTypeDef {
 #define __HAL_DMA_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (((__HANDLE__)->Instance->CCR & (__INTERRUPT__)))
 
 /**
- * @brief  Return the number of remaining data units in the current DMA Channel
- * transfer.
+ * @brief  Return the number of remaining data units in the current DMA Channel transfer.
  * @param  __HANDLE__ DMA handle
- * @retval The number of remaining data units in the current DMA Channel
- * transfer.
+ * @retval The number of remaining data units in the current DMA Channel transfer.
  */
 #define __HAL_DMA_GET_COUNTER(__HANDLE__) ((__HANDLE__)->Instance->CNDTR)
 

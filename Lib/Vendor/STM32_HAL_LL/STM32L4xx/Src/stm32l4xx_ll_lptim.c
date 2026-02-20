@@ -123,8 +123,7 @@ void LL_LPTIM_StructInit(LL_LPTIM_InitTypeDef *LPTIM_InitStruct)
 }
 
 /**
- * @brief  Configure the LPTIMx peripheral according to the specified
- * parameters.
+ * @brief  Configure the LPTIMx peripheral according to the specified parameters.
  * @note LL_LPTIM_Init can only be called when the LPTIM instance is disabled.
  * @note LPTIMx can be disabled using unitary function @ref LL_LPTIM_Disable().
  * @param  LPTIMx LP Timer Instance
@@ -143,8 +142,8 @@ ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPT
 	assert_param(IS_LL_LPTIM_WAVEFORM(LPTIM_InitStruct->Waveform));
 	assert_param(IS_LL_LPTIM_OUTPUT_POLARITY(LPTIM_InitStruct->Polarity));
 
-	/* The LPTIMx_CFGR register must only be modified when the LPTIM is
-	   disabled (ENABLE bit is reset to 0).
+	/* The LPTIMx_CFGR register must only be modified when the LPTIM is disabled
+	   (ENABLE bit is reset to 0).
 	*/
 	if (LL_LPTIM_IsEnabled(LPTIMx) == 1UL) {
 		result = ERROR;
@@ -164,9 +163,9 @@ ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPT
  * @brief  Disable the LPTIM instance
  * @rmtoll CR           ENABLE        LL_LPTIM_Disable
  * @param  LPTIMx Low-Power Timer instance
- * @note   The following sequence is required to solve LPTIM disable HW
- * limitation. Please check Errata Sheet ES0335 for more details under "MCU may
- * remain stuck in LPTIM interrupt when entering Stop mode" section.
+ * @note   The following sequence is required to solve LPTIM disable HW limitation.
+ *         Please check Errata Sheet ES0335 for more details under "MCU may remain
+ *         stuck in LPTIM interrupt when entering Stop mode" section.
  * @retval None
  */
 void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
@@ -242,13 +241,11 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 		}
 
 		if (tmpCMP != 0UL) {
-			/* Restore CMP and ARR registers (LPTIM should be
-			 * enabled first) */
+			/* Restore CMP and ARR registers (LPTIM should be enabled first) */
 			LPTIMx->CR |= LPTIM_CR_ENABLE;
 			LPTIMx->CMP = tmpCMP;
 
-			/* Polling on CMP write ok status after above restore
-			 * operation */
+			/* Polling on CMP write ok status after above restore operation */
 			do {
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
 			} while (((LL_LPTIM_IsActiveFlag_CMPOK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
@@ -261,8 +258,7 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 			LPTIMx->ARR = tmpARR;
 
 			LL_RCC_GetSystemClocksFreq(&rcc_clock);
-			/* Polling on ARR write ok status after above restore
-			 * operation */
+			/* Polling on ARR write ok status after above restore operation */
 			do {
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
 			} while (((LL_LPTIM_IsActiveFlag_ARROK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
@@ -276,8 +272,7 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 			LPTIMx->RCR = tmpRCR;
 
 			LL_RCC_GetSystemClocksFreq(&rcc_clock);
-			/* Polling on RCR write ok status after above restore
-			 * operation */
+			/* Polling on RCR write ok status after above restore operation */
 			do {
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
 			} while (((LL_LPTIM_IsActiveFlag_REPOK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));

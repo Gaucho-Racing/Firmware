@@ -9,9 +9,9 @@
  * Copyright (c) 2017 STMicroelectronics.
  * All rights reserved.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- *in the root directory of this software component. If no LICENSE file comes
- *with this software, it is provided AS-IS.
+ * This software is licensed under terms that can be found in the LICENSE file in
+ * the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -42,45 +42,32 @@ extern "C" {
  */
 
 #if (__MPU_PRESENT == 1)
-/** @defgroup CORTEX_MPU_Region_Initialization_Structure_definition MPU Region
- * Initialization Structure Definition
+/** @defgroup CORTEX_MPU_Region_Initialization_Structure_definition MPU Region Initialization Structure Definition
  * @brief  MPU Region initialization structure
  * @{
  */
 typedef struct {
 	uint8_t Enable;		  /*!< Specifies the status of the region.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Enable                 */
+				       This parameter can be a value of @ref CORTEX_MPU_Region_Enable                 */
 	uint8_t Number;		  /*!< Specifies the number of the region to protect.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Number                 */
-	uint32_t BaseAddress;	  /*!< Specifies the base address of the region to
-				     protect.                           */
+				       This parameter can be a value of @ref CORTEX_MPU_Region_Number                 */
+	uint32_t BaseAddress;	  /*!< Specifies the base address of the region to protect.                           */
 	uint8_t Size;		  /*!< Specifies the size of the region to protect.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Size                   */
-	uint8_t SubRegionDisable; /*!< Specifies the number of the subregion
-				     protection to disable. This parameter must
-				     be a number between Min_Data = 0x00 and
-				     Max_Data = 0xFF    */
+				       This parameter can be a value of @ref CORTEX_MPU_Region_Size                   */
+	uint8_t SubRegionDisable; /*!< Specifies the number of the subregion protection to disable.
+				       This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF    */
 	uint8_t TypeExtField;	  /*!< Specifies the TEX field level.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_TEX_Levels                    */
-	uint8_t AccessPermission; /*!< Specifies the region access permission
-				     type. This parameter can be a value of @ref
-				     CORTEX_MPU_Region_Permission_Attributes  */
+				       This parameter can be a value of @ref CORTEX_MPU_TEX_Levels                    */
+	uint8_t AccessPermission; /*!< Specifies the region access permission type.
+				       This parameter can be a value of @ref CORTEX_MPU_Region_Permission_Attributes  */
 	uint8_t DisableExec;	  /*!< Specifies the instruction access status.
-				       This parameter can be a value of @ref
-				     CORTEX_MPU_Instruction_Access            */
-	uint8_t IsShareable;	  /*!< Specifies the shareability status of the
-				     protected region.      This parameter can be a
-				     value      of @ref CORTEX_MPU_Access_Shareable      */
-	uint8_t IsCacheable;	  /*!< Specifies the cacheable status of the region
-				     protected.  This parameter can be a value of
-				     @ref  CORTEX_MPU_Access_Cacheable  */
-	uint8_t IsBufferable;	  /*!< Specifies the bufferable status of the
-				     protected region. This parameter can be a value
-				     of @ref CORTEX_MPU_Access_Bufferable */
+				       This parameter can be a value of @ref CORTEX_MPU_Instruction_Access            */
+	uint8_t IsShareable;	  /*!< Specifies the shareability status of the protected region.
+				       This parameter can be a value of @ref CORTEX_MPU_Access_Shareable              */
+	uint8_t IsCacheable;	  /*!< Specifies the cacheable status of the region protected.
+				       This parameter can be a value of @ref CORTEX_MPU_Access_Cacheable              */
+	uint8_t IsBufferable;	  /*!< Specifies the bufferable status of the protected region.
+				       This parameter can be a value of @ref CORTEX_MPU_Access_Bufferable             */
 } MPU_Region_InitTypeDef;
 /**
  * @}
@@ -130,8 +117,7 @@ typedef struct {
  */
 
 #if (__MPU_PRESENT == 1)
-/** @defgroup CORTEX_MPU_HFNMI_PRIVDEF_Control CORTEX MPU HFNMI and PRIVILEGED
- * Access control
+/** @defgroup CORTEX_MPU_HFNMI_PRIVDEF_Control CORTEX MPU HFNMI and PRIVILEGED Access control
  * @{
  */
 #define MPU_HFNMI_PRIVDEF_NONE 0x00000000U
@@ -160,8 +146,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Access_Shareable CORTEX MPU Instruction Access
- * Shareable
+/** @defgroup CORTEX_MPU_Access_Shareable CORTEX MPU Instruction Access Shareable
  * @{
  */
 #define MPU_ACCESS_SHAREABLE ((uint8_t)0x01)
@@ -170,8 +155,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Access_Cacheable CORTEX MPU Instruction Access
- * Cacheable
+/** @defgroup CORTEX_MPU_Access_Cacheable CORTEX MPU Instruction Access Cacheable
  * @{
  */
 #define MPU_ACCESS_CACHEABLE ((uint8_t)0x01)
@@ -180,8 +164,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Access_Bufferable CORTEX MPU Instruction Access
- * Bufferable
+/** @defgroup CORTEX_MPU_Access_Bufferable CORTEX MPU Instruction Access Bufferable
  * @{
  */
 #define MPU_ACCESS_BUFFERABLE ((uint8_t)0x01)
@@ -236,8 +219,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Region_Permission_Attributes CORTEX MPU Region
- * Permission Attributes
+/** @defgroup CORTEX_MPU_Region_Permission_Attributes CORTEX MPU Region Permission Attributes
  * @{
  */
 #define MPU_REGION_NO_ACCESS ((uint8_t)0x00)
@@ -284,8 +266,7 @@ typedef struct {
  * @{
  */
 
-/** @defgroup CORTEX_Exported_Functions_Group1 Initialization and Configuration
- * functions
+/** @defgroup CORTEX_Exported_Functions_Group1 Initialization and Configuration functions
  * @brief    Initialization and Configuration functions
  * @{
  */

@@ -28,9 +28,9 @@
   [..]
       The STM32G4xx device family integrates seven analog comparators instances:
       COMP1, COMP2, COMP3, COMP4, COMP5, COMP6 and COMP7.
-      (#) Comparators input minus (inverting input) and input plus (non
-  inverting input) can be set to internal references or to GPIO pins (refer to
-  GPIO list in reference manual).
+      (#) Comparators input minus (inverting input) and input plus (non inverting input)
+	  can be set to internal references or to GPIO pins
+	  (refer to GPIO list in reference manual).
 
       (#) Comparators output level is available using HAL_COMP_GetOutputLevel()
 	  and can be redirected to other peripherals: GPIO pins (in mode
@@ -40,27 +40,25 @@
       (#) The comparators have interrupt capability through the EXTI controller
 	  with wake-up from sleep and stop modes.
 
-	  From the corresponding IRQ handler, the right interrupt source can be
-  retrieved using macro __HAL_COMP_COMPx_EXTI_GET_FLAG().
+	  From the corresponding IRQ handler, the right interrupt source can be retrieved
+	  using macro __HAL_COMP_COMPx_EXTI_GET_FLAG().
 
 	    ##### How to use this driver #####
   ==============================================================================
   [..]
-      This driver provides functions to configure and program the comparator
-  instances of STM32G4xx devices.
+      This driver provides functions to configure and program the comparator instances
+      of STM32G4xx devices.
 
       To use the comparator, perform the following steps:
 
-      (#)  Initialize the COMP low level resources by implementing the
-  HAL_COMP_MspInit():
-      (++) Configure the GPIO connected to comparator inputs plus and minus in
-  analog mode using HAL_GPIO_Init().
-      (++) If needed, configure the GPIO connected to comparator output in
-  alternate function mode using HAL_GPIO_Init().
-      (++) If required enable the COMP interrupt by configuring and enabling
-  EXTI line in Interrupt mode and selecting the desired sensitivity level using
-  HAL_GPIO_Init() function. After that enable the comparator interrupt vector
-  using HAL_NVIC_EnableIRQ() function.
+      (#)  Initialize the COMP low level resources by implementing the HAL_COMP_MspInit():
+      (++) Configure the GPIO connected to comparator inputs plus and minus in analog mode
+	   using HAL_GPIO_Init().
+      (++) If needed, configure the GPIO connected to comparator output in alternate function mode
+	   using HAL_GPIO_Init().
+      (++) If required enable the COMP interrupt by configuring and enabling EXTI line in Interrupt mode and
+	   selecting the desired sensitivity level using HAL_GPIO_Init() function. After that enable the comparator
+	   interrupt vector using HAL_NVIC_EnableIRQ() function.
 
       (#) Configure the comparator using HAL_COMP_Init() function:
       (++) Select the input minus (inverting input)
@@ -88,9 +86,8 @@
 
       (#) De-initialize the comparator using HAL_COMP_DeInit() function.
 
-      (#) For safety purpose, comparator configuration can be locked using
-  HAL_COMP_Lock() function. The only way to unlock the comparator is a device
-  hardware reset.
+      (#) For safety purpose, comparator configuration can be locked using HAL_COMP_Lock() function.
+	  The only way to unlock the comparator is a device hardware reset.
 
     *** Callback registration ***
     =============================================
@@ -102,13 +99,12 @@
      to register an interrupt callback.
     [..]
 
-     Function HAL_COMP_RegisterCallback() allows to register following
-  callbacks:
+     Function HAL_COMP_RegisterCallback() allows to register following callbacks:
        (+) TriggerCallback       : callback for COMP trigger.
        (+) MspInitCallback       : callback for Msp Init.
        (+) MspDeInitCallback     : callback for Msp DeInit.
-     This function takes as parameters the HAL peripheral handle, the Callback
-  ID and a pointer to the user callback function.
+     This function takes as parameters the HAL peripheral handle, the Callback ID
+     and a pointer to the user callback function.
     [..]
 
      Use function HAL_COMP_UnRegisterCallback to reset a callback to the default
@@ -123,24 +119,22 @@
        (+) MspDeInitCallback     : callback for Msp DeInit.
      [..]
 
-     By default, after the HAL_COMP_Init() and when the state is
-  HAL_COMP_STATE_RESET all callbacks are set to the corresponding weak
-  functions: example HAL_COMP_TriggerCallback(). Exception done for MspInit and
-  MspDeInit functions that are reset to the legacy weak functions in the
-  HAL_COMP_Init()/ HAL_COMP_DeInit() only when these callbacks are null (not
-  registered beforehand).
+     By default, after the HAL_COMP_Init() and when the state is HAL_COMP_STATE_RESET
+     all callbacks are set to the corresponding weak functions:
+     example HAL_COMP_TriggerCallback().
+     Exception done for MspInit and MspDeInit functions that are
+     reset to the legacy weak functions in the HAL_COMP_Init()/ HAL_COMP_DeInit() only when
+     these callbacks are null (not registered beforehand).
     [..]
 
-     If MspInit or MspDeInit are not null, the HAL_COMP_Init()/
-  HAL_COMP_DeInit() keep and use the user MspInit/MspDeInit callbacks
-  (registered beforehand) whatever the state.
+     If MspInit or MspDeInit are not null, the HAL_COMP_Init()/ HAL_COMP_DeInit()
+     keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
      [..]
 
-     Callbacks can be registered/unregistered in HAL_COMP_STATE_READY state
-  only. Exception done MspInit/MspDeInit functions that can be
-  registered/unregistered in HAL_COMP_STATE_READY or HAL_COMP_STATE_RESET state,
-     thus registered (user) MspInit/DeInit callbacks can be used during the
-  Init/DeInit.
+     Callbacks can be registered/unregistered in HAL_COMP_STATE_READY state only.
+     Exception done MspInit/MspDeInit functions that can be registered/unregistered
+     in HAL_COMP_STATE_READY or HAL_COMP_STATE_RESET state,
+     thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
     [..]
 
      Then, the user first registers the MspInit/MspDeInit user callbacks
@@ -149,8 +143,8 @@
      [..]
 
      When the compilation flag USE_HAL_COMP_REGISTER_CALLBACKS is set to 0 or
-     not defined, the callback registration feature is not available and all
-  callbacks are set to the corresponding weak functions.
+     not defined, the callback registration feature is not available and all callbacks
+     are set to the corresponding weak functions.
 
   @endverbatim
   ******************************************************************************
@@ -204,16 +198,14 @@
  * @{
  */
 
-/** @defgroup COMP_Exported_Functions_Group1 Initialization/de-initialization
-functions
+/** @defgroup COMP_Exported_Functions_Group1 Initialization/de-initialization functions
   *  @brief    Initialization and de-initialization functions.
   *
 @verbatim
  ===============================================================================
 	      ##### Initialization and de-initialization functions #####
  ===============================================================================
-    [..]  This section provides functions to initialize and de-initialize
-comparators
+    [..]  This section provides functions to initialize and de-initialize comparators
 
 @endverbatim
   * @{
@@ -221,10 +213,9 @@ comparators
 
 /**
  * @brief  Initialize the COMP according to the specified
- *         parameters in the COMP_InitTypeDef and initialize the associated
- * handle.
- * @note   If the selected comparator is locked, initialization can't be
- * performed. To unlock the configuration, perform a system reset.
+ *         parameters in the COMP_InitTypeDef and initialize the associated handle.
+ * @note   If the selected comparator is locked, initialization can't be performed.
+ *         To unlock the configuration, perform a system reset.
  * @param  hcomp  COMP handle
  * @retval HAL status
  */
@@ -232,8 +223,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 {
 	uint32_t tmp_csr;
 	uint32_t exti_line;
-	uint32_t comp_voltage_scaler_initialized; /* Value "0" if comparator voltage
-						     scaler is not initialized */
+	uint32_t comp_voltage_scaler_initialized; /* Value "0" if comparator voltage scaler is not initialized */
 	__IO uint32_t wait_loop_index = 0UL;
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -268,17 +258,15 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			}
 
 			/* Init the low level hardware */
-			/* Note: Internal control clock of the comparators must
-			 */
-			/*       be enabled in "HAL_COMP_MspInit()" */
-			/*       using "__HAL_RCC_SYSCFG_CLK_ENABLE()". */
+			/* Note: Internal control clock of the comparators must                 */
+			/*       be enabled in "HAL_COMP_MspInit()"                             */
+			/*       using "__HAL_RCC_SYSCFG_CLK_ENABLE()".                         */
 			hcomp->MspInitCallback(hcomp);
 #else
 			/* Init the low level hardware */
-			/* Note: Internal control clock of the comparators must
-			 */
-			/*       be enabled in "HAL_COMP_MspInit()" */
-			/*       using "__HAL_RCC_SYSCFG_CLK_ENABLE()". */
+			/* Note: Internal control clock of the comparators must                 */
+			/*       be enabled in "HAL_COMP_MspInit()"                             */
+			/*       using "__HAL_RCC_SYSCFG_CLK_ENABLE()".                         */
 			HAL_COMP_MspInit(hcomp);
 #endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
 		}
@@ -290,29 +278,23 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		tmp_csr = (hcomp->Init.InputMinus | hcomp->Init.InputPlus | hcomp->Init.BlankingSrce | hcomp->Init.Hysteresis | hcomp->Init.OutputPol);
 
 		/* Set parameters in COMP register */
-		/* Note: Update all bits except read-only, lock and enable bits
-		 */
+		/* Note: Update all bits except read-only, lock and enable bits */
 		MODIFY_REG(hcomp->Instance->CSR, COMP_CSR_INMSEL | COMP_CSR_INPSEL | COMP_CSR_POLARITY | COMP_CSR_HYST | COMP_CSR_BLANKING | COMP_CSR_BRGEN | COMP_CSR_SCALEN, tmp_csr);
 
 		/* Delay for COMP scaler bridge voltage stabilization */
-		/* Apply the delay if voltage scaler bridge is required and not
-		 * already enabled */
+		/* Apply the delay if voltage scaler bridge is required and not already enabled */
 		if ((READ_BIT(hcomp->Instance->CSR, COMP_CSR_SCALEN) != 0UL) && (comp_voltage_scaler_initialized == 0UL)) {
 			/* Wait loop initialization and execution */
-			/* Note: Variable divided by 2 to compensate partially
-			 */
-			/*       CPU processing cycles, scaling in us split to
-			 * not          */
-			/*       exceed 32 bits register capacity and handle low
-			 * frequency. */
+			/* Note: Variable divided by 2 to compensate partially              */
+			/*       CPU processing cycles, scaling in us split to not          */
+			/*       exceed 32 bits register capacity and handle low frequency. */
 			wait_loop_index = ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
 		}
 
-		/* Get the EXTI line corresponding to the selected COMP instance
-		 */
+		/* Get the EXTI line corresponding to the selected COMP instance */
 		exti_line = COMP_GET_EXTI_LINE(hcomp->Instance);
 
 		/* Manage EXTI settings */
@@ -444,9 +426,8 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		}
 
 		/* Set HAL COMP handle state */
-		/* Note: Transition from state reset to state ready, */
-		/*       otherwise (coming from state ready or busy) no state
-		 * update.     */
+		/* Note: Transition from state reset to state ready,                      */
+		/*       otherwise (coming from state ready or busy) no state update.     */
 		if (hcomp->State == HAL_COMP_STATE_RESET) {
 			hcomp->State = HAL_COMP_STATE_READY;
 		}
@@ -457,8 +438,8 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 
 /**
  * @brief  DeInitialize the COMP peripheral.
- * @note   Deinitialization cannot be performed if the COMP configuration is
- * locked. To unlock the configuration, perform a system reset.
+ * @note   Deinitialization cannot be performed if the COMP configuration is locked.
+ *         To unlock the configuration, perform a system reset.
  * @param  hcomp  COMP handle
  * @retval HAL status
  */
@@ -510,8 +491,8 @@ __weak void HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcomp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_COMP_MspInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_COMP_MspInit could be implemented in the user file
 	 */
 }
 
@@ -525,8 +506,8 @@ __weak void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcomp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_COMP_MspDeInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_COMP_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -625,8 +606,7 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
 	if (HAL_COMP_STATE_READY == hcomp->State) {
 		switch (CallbackID) {
 			case HAL_COMP_TRIGGER_CB_ID:
-				hcomp->TriggerCallback = HAL_COMP_TriggerCallback; /* Legacy weak
-										      callback */
+				hcomp->TriggerCallback = HAL_COMP_TriggerCallback; /* Legacy weak callback */
 				break;
 
 			case HAL_COMP_MSPINIT_CB_ID:
@@ -634,8 +614,7 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
 				break;
 
 			case HAL_COMP_MSPDEINIT_CB_ID:
-				hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
-										*/
+				hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit */
 				break;
 
 			default:
@@ -653,8 +632,7 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
 				break;
 
 			case HAL_COMP_MSPDEINIT_CB_ID:
-				hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
-										*/
+				hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit */
 				break;
 
 			default:
@@ -725,14 +703,11 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 
 			/* Delay for COMP startup time */
 			/* Wait loop initialization and execution */
-			/* Note: Variable divided by 2 to compensate partially
-			 */
-			/*       CPU processing cycles. */
-			/* Note: In case of system low frequency (below 1Mhz),
-			 * short delay      */
-			/*       of startup time (few us) is within CPU
-			 * processing cycles       */
-			/*       of following instructions. */
+			/* Note: Variable divided by 2 to compensate partially                  */
+			/*       CPU processing cycles.                                         */
+			/* Note: In case of system low frequency (below 1Mhz), short delay      */
+			/*       of startup time (few us) is within CPU processing cycles       */
+			/*       of following instructions.                                     */
 			wait_loop_index = (COMP_DELAY_STARTUP_US * (SystemCoreClock / (1000000UL * 2UL)));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
@@ -763,10 +738,8 @@ HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp)
 		/* Check the parameter */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 
-		/* Check compliant states: HAL_COMP_STATE_READY or
-		 * HAL_COMP_STATE_BUSY    */
-		/* (all states except HAL_COMP_STATE_RESET and except locked
-		 * status.      */
+		/* Check compliant states: HAL_COMP_STATE_READY or HAL_COMP_STATE_BUSY    */
+		/* (all states except HAL_COMP_STATE_RESET and except locked status.      */
 		if (hcomp->State != HAL_COMP_STATE_RESET) {
 			/* Disable the selected comparator */
 			CLEAR_BIT(hcomp->Instance->CSR, COMP_CSR_EN);
@@ -842,8 +815,7 @@ void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp)
 		      ##### Peripheral Control functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to control the
-comparators.
+    This subsection provides a set of functions allowing to control the comparators.
 
 @endverbatim
   * @{
@@ -922,9 +894,8 @@ __weak void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hcomp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_COMP_TriggerCallback should be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_COMP_TriggerCallback should be implemented in the user file
 	 */
 }
 

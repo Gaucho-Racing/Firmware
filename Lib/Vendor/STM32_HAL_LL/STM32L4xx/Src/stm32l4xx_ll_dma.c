@@ -25,7 +25,7 @@
 #include "stm32_assert.h"
 #else
 #define assert_param(expr) ((void)0U)
-#endif
+#endif /* USE_FULL_ASSERT */
 
 /** @addtogroup STM32L4xx_LL_Driver
  * @{
@@ -59,35 +59,21 @@
 #define IS_LL_DMA_NBDATA(__VALUE__) ((__VALUE__) <= 0x0000FFFFU)
 
 #if defined(DMAMUX1)
-#define IS_LL_DMA_PERIPHREQUEST(__VALUE__) ((__VALUE__) <= 93U)
+#define IS_LL_DMA_PERIPHREQUEST(__VALUE__) ((__VALUE__) <= LL_DMAMUX_MAX_REQ)
 #else
 #define IS_LL_DMA_PERIPHREQUEST(__VALUE__)                                                                                                                                                             \
 	(((__VALUE__) == LL_DMA_REQUEST_0) || ((__VALUE__) == LL_DMA_REQUEST_1) || ((__VALUE__) == LL_DMA_REQUEST_2) || ((__VALUE__) == LL_DMA_REQUEST_3) || ((__VALUE__) == LL_DMA_REQUEST_4) ||      \
 	 ((__VALUE__) == LL_DMA_REQUEST_5) || ((__VALUE__) == LL_DMA_REQUEST_6) || ((__VALUE__) == LL_DMA_REQUEST_7))
-#endif /* DMAMUX1 */
+#endif /* DMAMUX 1*/
 
 #define IS_LL_DMA_PRIORITY(__VALUE__)                                                                                                                                                                  \
 	(((__VALUE__) == LL_DMA_PRIORITY_LOW) || ((__VALUE__) == LL_DMA_PRIORITY_MEDIUM) || ((__VALUE__) == LL_DMA_PRIORITY_HIGH) || ((__VALUE__) == LL_DMA_PRIORITY_VERYHIGH))
 
-#if defined(DMA2)
-#if defined(DMA2_Channel6) && defined(DMA2_Channel7)
 #define IS_LL_DMA_ALL_CHANNEL_INSTANCE(INSTANCE, CHANNEL)                                                                                                                                              \
 	((((INSTANCE) == DMA1) && (((CHANNEL) == LL_DMA_CHANNEL_1) || ((CHANNEL) == LL_DMA_CHANNEL_2) || ((CHANNEL) == LL_DMA_CHANNEL_3) || ((CHANNEL) == LL_DMA_CHANNEL_4) ||                         \
 				   ((CHANNEL) == LL_DMA_CHANNEL_5) || ((CHANNEL) == LL_DMA_CHANNEL_6) || ((CHANNEL) == LL_DMA_CHANNEL_7))) ||                                                          \
 	 (((INSTANCE) == DMA2) && (((CHANNEL) == LL_DMA_CHANNEL_1) || ((CHANNEL) == LL_DMA_CHANNEL_2) || ((CHANNEL) == LL_DMA_CHANNEL_3) || ((CHANNEL) == LL_DMA_CHANNEL_4) ||                         \
 				   ((CHANNEL) == LL_DMA_CHANNEL_5) || ((CHANNEL) == LL_DMA_CHANNEL_6) || ((CHANNEL) == LL_DMA_CHANNEL_7))))
-#else
-#define IS_LL_DMA_ALL_CHANNEL_INSTANCE(INSTANCE, CHANNEL)                                                                                                                                              \
-	((((INSTANCE) == DMA1) && (((CHANNEL) == LL_DMA_CHANNEL_1) || ((CHANNEL) == LL_DMA_CHANNEL_2) || ((CHANNEL) == LL_DMA_CHANNEL_3) || ((CHANNEL) == LL_DMA_CHANNEL_4) ||                         \
-				   ((CHANNEL) == LL_DMA_CHANNEL_5) || ((CHANNEL) == LL_DMA_CHANNEL_6) || ((CHANNEL) == LL_DMA_CHANNEL_7))) ||                                                          \
-	 (((INSTANCE) == DMA2) &&                                                                                                                                                                      \
-	  (((CHANNEL) == LL_DMA_CHANNEL_1) || ((CHANNEL) == LL_DMA_CHANNEL_2) || ((CHANNEL) == LL_DMA_CHANNEL_3) || ((CHANNEL) == LL_DMA_CHANNEL_4) || ((CHANNEL) == LL_DMA_CHANNEL_5))))
-#endif
-#else
-#define IS_LL_DMA_ALL_CHANNEL_INSTANCE(INSTANCE, CHANNEL)                                                                                                                                              \
-	((((INSTANCE) == DMA1) && (((CHANNEL) == LL_DMA_CHANNEL_1) || ((CHANNEL) == LL_DMA_CHANNEL_2) || ((CHANNEL) == LL_DMA_CHANNEL_3) || ((CHANNEL) == LL_DMA_CHANNEL_4) ||                         \
-				   ((CHANNEL) == LL_DMA_CHANNEL_5) || ((CHANNEL) == LL_DMA_CHANNEL_6) || ((CHANNEL) == LL_DMA_CHANNEL_7))))
-#endif
 /**
  * @}
  */
@@ -122,7 +108,6 @@
 ErrorStatus LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 {
 	ErrorStatus status = SUCCESS;
-	DMA_Channel_TypeDef *tmp;
 
 	/* Check the DMA Instance DMAx and Channel parameters*/
 	assert_param(IS_LL_DMA_ALL_CHANNEL_INSTANCE(DMAx, Channel) || (Channel == LL_DMA_CHANNEL_ALL));
@@ -143,11 +128,13 @@ ErrorStatus LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 			/* Release reset of DMA clock */
 			LL_AHB1_GRP1_ReleaseReset(LL_AHB1_GRP1_PERIPH_DMA2);
 		}
-#endif
+#endif /* DMA2 */
 		else {
 			status = ERROR;
 		}
 	} else {
+		DMA_Channel_TypeDef *tmp;
+
 		tmp = (DMA_Channel_TypeDef *)(__LL_DMA_GET_CHANNEL_INSTANCE(DMAx, Channel));
 
 		/* Disable the selected DMAx_Channely */
@@ -162,7 +149,7 @@ ErrorStatus LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 		/* Reset DMAx_Channely peripheral address register */
 		WRITE_REG(tmp->CPAR, 0U);
 
-		/* Reset DMAx_Channely memory 0 address register */
+		/* Reset DMAx_Channely memory address register */
 		WRITE_REG(tmp->CMAR, 0U);
 
 #if defined(DMAMUX1)
@@ -188,9 +175,7 @@ ErrorStatus LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 		} else if (Channel == LL_DMA_CHANNEL_5) {
 			/* Reset interrupt pending bits for DMAx Channel5 */
 			LL_DMA_ClearFlag_GI5(DMAx);
-		}
-
-		else if (Channel == LL_DMA_CHANNEL_6) {
+		} else if (Channel == LL_DMA_CHANNEL_6) {
 			/* Reset interrupt pending bits for DMAx Channel6 */
 			LL_DMA_ClearFlag_GI6(DMAx);
 		} else if (Channel == LL_DMA_CHANNEL_7) {
@@ -205,10 +190,8 @@ ErrorStatus LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 }
 
 /**
- * @brief  Initialize the DMA registers according to the specified parameters in
- * DMA_InitStruct.
- * @note   To convert DMAx_Channely Instance to DMAx Instance and Channely, use
- * helper macros :
+ * @brief  Initialize the DMA registers according to the specified parameters in DMA_InitStruct.
+ * @note   To convert DMAx_Channely Instance to DMAx Instance and Channely, use helper macros :
  *         @arg @ref __LL_DMA_GET_INSTANCE
  *         @arg @ref __LL_DMA_GET_CHANNEL
  * @param  DMAx DMAx Instance
@@ -241,11 +224,10 @@ ErrorStatus LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef 
 	assert_param(IS_LL_DMA_PERIPHREQUEST(DMA_InitStruct->PeriphRequest));
 	assert_param(IS_LL_DMA_PRIORITY(DMA_InitStruct->Priority));
 
-	/*---------------------------- DMAx CCR Configuration
-	 * ------------------------ Configure DMAx_Channely: data transfer
-	 * direction, data transfer mode, peripheral and memory increment mode,
-	 *                          data size alignment and  priority level with
-	 * parameters :
+	/*---------------------------- DMAx CCR Configuration ------------------------
+	 * Configure DMAx_Channely: data transfer direction, data transfer mode,
+	 *                          peripheral and memory increment mode,
+	 *                          data size alignment and  priority level with parameters :
 	 * - Direction:      DMA_CCR_DIR and DMA_CCR_MEM2MEM bits
 	 * - Mode:           DMA_CCR_CIRC bit
 	 * - PeriphOrM2MSrcIncMode:  DMA_CCR_PINC bit
@@ -258,38 +240,33 @@ ErrorStatus LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef 
 			      DMA_InitStruct->Direction | DMA_InitStruct->Mode | DMA_InitStruct->PeriphOrM2MSrcIncMode | DMA_InitStruct->MemoryOrM2MDstIncMode |
 				  DMA_InitStruct->PeriphOrM2MSrcDataSize | DMA_InitStruct->MemoryOrM2MDstDataSize | DMA_InitStruct->Priority);
 
-	/*-------------------------- DMAx CMAR Configuration
-	 * ------------------------- Configure the memory or destination base
-	 * address with parameter :
+	/*-------------------------- DMAx CMAR Configuration -------------------------
+	 * Configure the memory or destination base address with parameter :
 	 * - MemoryOrM2MDstAddress: DMA_CMAR_MA[31:0] bits
 	 */
 	LL_DMA_SetMemoryAddress(DMAx, Channel, DMA_InitStruct->MemoryOrM2MDstAddress);
 
-	/*-------------------------- DMAx CPAR Configuration
-	 * ------------------------- Configure the peripheral or source base
-	 * address with parameter :
+	/*-------------------------- DMAx CPAR Configuration -------------------------
+	 * Configure the peripheral or source base address with parameter :
 	 * - PeriphOrM2MSrcAddress: DMA_CPAR_PA[31:0] bits
 	 */
 	LL_DMA_SetPeriphAddress(DMAx, Channel, DMA_InitStruct->PeriphOrM2MSrcAddress);
 
-	/*--------------------------- DMAx CNDTR Configuration
-	 * ----------------------- Configure the peripheral base address with
-	 * parameter :
+	/*--------------------------- DMAx CNDTR Configuration -----------------------
+	 * Configure the peripheral base address with parameter :
 	 * - NbData: DMA_CNDTR_NDT[15:0] bits
 	 */
 	LL_DMA_SetDataLength(DMAx, Channel, DMA_InitStruct->NbData);
 
 #if defined(DMAMUX1)
-	/*--------------------------- DMAMUXx CCR Configuration
-	 * ---------------------- Configure the DMA request for DMA Channels on
-	 * DMAMUX Channel x with parameter :
+	/*--------------------------- DMAMUXx CCR Configuration ----------------------
+	 * Configure the DMA request for DMA Channels on DMAMUX Channel x with parameter :
 	 * - PeriphRequest: DMA_CxCR[7:0] bits
 	 */
 	LL_DMA_SetPeriphRequest(DMAx, Channel, DMA_InitStruct->PeriphRequest);
 #else
-	/*--------------------------- DMAx CSELR Configuration
-	 * ----------------------- Configure the DMA request for DMA instance on
-	 * Channel x with parameter :
+	/*--------------------------- DMAx CSELR Configuration -----------------------
+	 * Configure the DMA request for DMA instance on Channel x with parameter :
 	 * - PeriphRequest: DMA_CSELR[31:0] bits
 	 */
 	LL_DMA_SetPeriphRequest(DMAx, Channel, DMA_InitStruct->PeriphRequest);

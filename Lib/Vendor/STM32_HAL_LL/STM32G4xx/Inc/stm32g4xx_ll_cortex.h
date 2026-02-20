@@ -66,12 +66,8 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_CLKSOURCE_HCLK SYSTICK Clock Source
  * @{
  */
-#define LL_SYSTICK_CLKSOURCE_HCLK_DIV8                                                                                                                                                                 \
-	0x00000000U /*!< AHB clock divided by 8 selected as SysTick clock                                                                                                                              \
-		       source.*/
-#define LL_SYSTICK_CLKSOURCE_HCLK                                                                                                                                                                      \
-	SysTick_CTRL_CLKSOURCE_Msk /*!< AHB clock selected as SysTick clock                                                                                                                            \
-				      source. */
+#define LL_SYSTICK_CLKSOURCE_HCLK_DIV8 0x00000000U	     /*!< AHB clock divided by 8 selected as SysTick clock source.*/
+#define LL_SYSTICK_CLKSOURCE_HCLK SysTick_CTRL_CLKSOURCE_Msk /*!< AHB clock selected as SysTick clock source. */
 /**
  * @}
  */
@@ -82,22 +78,18 @@ extern "C" {
 #define LL_HANDLER_FAULT_USG SCB_SHCSR_USGFAULTENA_Msk /*!< Usage fault */
 #define LL_HANDLER_FAULT_BUS SCB_SHCSR_BUSFAULTENA_Msk /*!< Bus fault */
 #define LL_HANDLER_FAULT_MEM SCB_SHCSR_MEMFAULTENA_Msk /*!< Memory management fault */
-						       /**
-							* @}
-							*/
+/**
+ * @}
+ */
 
 #if __MPU_PRESENT
 
 /** @defgroup CORTEX_LL_EC_CTRL_HFNMI_PRIVDEF MPU Control
  * @{
  */
-#define LL_MPU_CTRL_HFNMI_PRIVDEF_NONE 0x00000000U /*!< Disable NMI and privileged SW access */
-#define LL_MPU_CTRL_HARDFAULT_NMI                                                                                                                                                                      \
-	MPU_CTRL_HFNMIENA_Msk /*!< Enables the operation of MPU during hard                                                                                                                            \
-				 fault, NMI, and FAULTMASK handlers */
-#define LL_MPU_CTRL_PRIVILEGED_DEFAULT                                                                                                                                                                 \
-	MPU_CTRL_PRIVDEFENA_Msk							    /*!< Enable privileged software access to                                                                          \
-										       default memory map */
+#define LL_MPU_CTRL_HFNMI_PRIVDEF_NONE 0x00000000U				    /*!< Disable NMI and privileged SW access */
+#define LL_MPU_CTRL_HARDFAULT_NMI MPU_CTRL_HFNMIENA_Msk				    /*!< Enables the operation of MPU during hard fault, NMI, and FAULTMASK handlers */
+#define LL_MPU_CTRL_PRIVILEGED_DEFAULT MPU_CTRL_PRIVDEFENA_Msk			    /*!< Enable privileged software access to default memory map */
 #define LL_MPU_CTRL_HFNMI_PRIVDEF (MPU_CTRL_HFNMIENA_Msk | MPU_CTRL_PRIVDEFENA_Msk) /*!< Enable NMI and privileged SW access */
 /**
  * @}
@@ -156,13 +148,9 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_REGION_PRIVILEDGES MPU Region Privileges
  * @{
  */
-#define LL_MPU_REGION_NO_ACCESS (0x00U << MPU_RASR_AP_Pos) /*!< No access*/
-#define LL_MPU_REGION_PRIV_RW                                                                                                                                                                          \
-	(0x01U << MPU_RASR_AP_Pos) /*!< RW privileged (privileged access                                                                                                                               \
-				      only)*/
-#define LL_MPU_REGION_PRIV_RW_URO                                                                                                                                                                      \
-	(0x02U << MPU_RASR_AP_Pos)			     /*!< RW privileged - RO user (Write in a                                                                                                  \
-								user program generates a fault) */
+#define LL_MPU_REGION_NO_ACCESS (0x00U << MPU_RASR_AP_Pos)   /*!< No access*/
+#define LL_MPU_REGION_PRIV_RW (0x01U << MPU_RASR_AP_Pos)     /*!< RW privileged (privileged access only)*/
+#define LL_MPU_REGION_PRIV_RW_URO (0x02U << MPU_RASR_AP_Pos) /*!< RW privileged - RO user (Write in a user program generates a fault) */
 #define LL_MPU_REGION_FULL_ACCESS (0x03U << MPU_RASR_AP_Pos) /*!< RW privileged & user (Full access) */
 #define LL_MPU_REGION_PRIV_RO (0x05U << MPU_RASR_AP_Pos)     /*!< RO privileged (privileged read only)*/
 #define LL_MPU_REGION_PRIV_RO_URO (0x06U << MPU_RASR_AP_Pos) /*!< RO privileged & user (read only) */
@@ -173,18 +161,10 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_TEX MPU TEX Level
  * @{
  */
-#define LL_MPU_TEX_LEVEL0                                                                                                                                                                              \
-	(0x00U << MPU_RASR_TEX_Pos) /*!< b000 for TEX bits                                                                                                                                             \
-				     */
-#define LL_MPU_TEX_LEVEL1                                                                                                                                                                              \
-	(0x01U << MPU_RASR_TEX_Pos) /*!< b001 for TEX bits                                                                                                                                             \
-				     */
-#define LL_MPU_TEX_LEVEL2                                                                                                                                                                              \
-	(0x02U << MPU_RASR_TEX_Pos) /*!< b010 for TEX bits                                                                                                                                             \
-				     */
-#define LL_MPU_TEX_LEVEL4                                                                                                                                                                              \
-	(0x04U << MPU_RASR_TEX_Pos) /*!< b100 for TEX bits                                                                                                                                             \
-				     */
+#define LL_MPU_TEX_LEVEL0 (0x00U << MPU_RASR_TEX_Pos) /*!< b000 for TEX bits */
+#define LL_MPU_TEX_LEVEL1 (0x01U << MPU_RASR_TEX_Pos) /*!< b001 for TEX bits */
+#define LL_MPU_TEX_LEVEL2 (0x02U << MPU_RASR_TEX_Pos) /*!< b010 for TEX bits */
+#define LL_MPU_TEX_LEVEL4 (0x04U << MPU_RASR_TEX_Pos) /*!< b100 for TEX bits */
 /**
  * @}
  */
@@ -202,9 +182,7 @@ extern "C" {
  * @{
  */
 #define LL_MPU_ACCESS_SHAREABLE MPU_RASR_S_Msk /*!< Shareable memory attribute */
-#define LL_MPU_ACCESS_NOT_SHAREABLE                                                                                                                                                                    \
-	0x00U /*!< Not Shareable memory attribute                                                                                                                                                      \
-	       */
+#define LL_MPU_ACCESS_NOT_SHAREABLE 0x00U      /*!< Not Shareable memory attribute */
 /**
  * @}
  */
@@ -213,9 +191,7 @@ extern "C" {
  * @{
  */
 #define LL_MPU_ACCESS_CACHEABLE MPU_RASR_C_Msk /*!< Cacheable memory attribute */
-#define LL_MPU_ACCESS_NOT_CACHEABLE                                                                                                                                                                    \
-	0x00U /*!< Not Cacheable memory attribute                                                                                                                                                      \
-	       */
+#define LL_MPU_ACCESS_NOT_CACHEABLE 0x00U      /*!< Not Cacheable memory attribute */
 /**
  * @}
  */
@@ -345,10 +321,9 @@ __STATIC_INLINE void LL_LPM_EnableDeepSleep(void)
 }
 
 /**
- * @brief  Configures sleep-on-exit when returning from Handler mode to Thread
- * mode.
- * @note   Setting this bit to 1 enables an interrupt-driven application to
- * avoid returning to an empty main application.
+ * @brief  Configures sleep-on-exit when returning from Handler mode to Thread mode.
+ * @note   Setting this bit to 1 enables an interrupt-driven application to avoid returning to an
+ *         empty main application.
  * @rmtoll SCB_SCR      SLEEPONEXIT   LL_LPM_EnableSleepOnExit
  * @retval None
  */
@@ -370,8 +345,8 @@ __STATIC_INLINE void LL_LPM_DisableSleepOnExit(void)
 }
 
 /**
- * @brief  Enabled events and all interrupts, including disabled interrupts, can
- * wakeup the processor.
+ * @brief  Enabled events and all interrupts, including disabled interrupts, can wakeup the
+ *         processor.
  * @rmtoll SCB_SCR      SEVEONPEND    LL_LPM_EnableEventOnPend
  * @retval None
  */
@@ -382,8 +357,8 @@ __STATIC_INLINE void LL_LPM_EnableEventOnPend(void)
 }
 
 /**
- * @brief  Only enabled interrupts or events can wakeup the processor, disabled
- * interrupts are excluded
+ * @brief  Only enabled interrupts or events can wakeup the processor, disabled interrupts are
+ *         excluded
  * @rmtoll SCB_SCR      SEVEONPEND    LL_LPM_DisableEventOnPend
  * @retval None
  */
@@ -450,8 +425,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void)
 }
 
 /**
- * @brief  Get Variant number (The r value in the rnpn product revision
- * identifier)
+ * @brief  Get Variant number (The r value in the rnpn product revision identifier)
  * @rmtoll SCB_CPUID    VARIANT       LL_CPUID_GetVariant
  * @retval Value between 0 and 255 (0x0: revision 0)
  */
@@ -481,8 +455,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetParNo(void)
 }
 
 /**
- * @brief  Get Revision number (The p value in the rnpn product revision
- * identifier, indicates patch release)
+ * @brief  Get Revision number (The p value in the rnpn product revision identifier, indicates patch release)
  * @rmtoll SCB_CPUID    REVISION      LL_CPUID_GetRevision
  * @retval Value between 0 and 255 (0x1: patch 1)
  */
@@ -586,35 +559,21 @@ __STATIC_INLINE void LL_MPU_EnableRegion(uint32_t Region)
  *         @arg @ref LL_MPU_REGION_NUMBER6
  *         @arg @ref LL_MPU_REGION_NUMBER7
  * @param  Address Value of region base address
- * @param  SubRegionDisable Sub-region disable value between Min_Data = 0x00 and
- * Max_Data = 0xFF
- * @param  Attributes This parameter can be a combination of the following
- * values:
- *         @arg @ref LL_MPU_REGION_SIZE_32B or @ref LL_MPU_REGION_SIZE_64B or
- * @ref LL_MPU_REGION_SIZE_128B or @ref LL_MPU_REGION_SIZE_256B or @ref
- * LL_MPU_REGION_SIZE_512B or @ref LL_MPU_REGION_SIZE_1KB or @ref
- * LL_MPU_REGION_SIZE_2KB or @ref LL_MPU_REGION_SIZE_4KB or @ref
- * LL_MPU_REGION_SIZE_8KB or @ref LL_MPU_REGION_SIZE_16KB or @ref
- * LL_MPU_REGION_SIZE_32KB or @ref LL_MPU_REGION_SIZE_64KB or @ref
- * LL_MPU_REGION_SIZE_128KB or @ref LL_MPU_REGION_SIZE_256KB or @ref
- * LL_MPU_REGION_SIZE_512KB or @ref LL_MPU_REGION_SIZE_1MB or @ref
- * LL_MPU_REGION_SIZE_2MB or @ref LL_MPU_REGION_SIZE_4MB or @ref
- * LL_MPU_REGION_SIZE_8MB or @ref LL_MPU_REGION_SIZE_16MB or @ref
- * LL_MPU_REGION_SIZE_32MB or @ref LL_MPU_REGION_SIZE_64MB or @ref
- * LL_MPU_REGION_SIZE_128MB or @ref LL_MPU_REGION_SIZE_256MB or @ref
- * LL_MPU_REGION_SIZE_512MB or @ref LL_MPU_REGION_SIZE_1GB or @ref
- * LL_MPU_REGION_SIZE_2GB or @ref LL_MPU_REGION_SIZE_4GB
- *         @arg @ref LL_MPU_REGION_NO_ACCESS or @ref LL_MPU_REGION_PRIV_RW or
- * @ref LL_MPU_REGION_PRIV_RW_URO or @ref LL_MPU_REGION_FULL_ACCESS or @ref
- * LL_MPU_REGION_PRIV_RO or @ref LL_MPU_REGION_PRIV_RO_URO
- *         @arg @ref LL_MPU_TEX_LEVEL0 or @ref LL_MPU_TEX_LEVEL1 or @ref
- * LL_MPU_TEX_LEVEL2 or @ref LL_MPU_TEX_LEVEL4
- *         @arg @ref LL_MPU_INSTRUCTION_ACCESS_ENABLE or  @ref
- * LL_MPU_INSTRUCTION_ACCESS_DISABLE
+ * @param  SubRegionDisable Sub-region disable value between Min_Data = 0x00 and Max_Data = 0xFF
+ * @param  Attributes This parameter can be a combination of the following values:
+ *         @arg @ref LL_MPU_REGION_SIZE_32B or @ref LL_MPU_REGION_SIZE_64B or @ref LL_MPU_REGION_SIZE_128B or @ref LL_MPU_REGION_SIZE_256B or @ref LL_MPU_REGION_SIZE_512B
+ *           or @ref LL_MPU_REGION_SIZE_1KB or @ref LL_MPU_REGION_SIZE_2KB or @ref LL_MPU_REGION_SIZE_4KB or @ref LL_MPU_REGION_SIZE_8KB or @ref LL_MPU_REGION_SIZE_16KB
+ *           or @ref LL_MPU_REGION_SIZE_32KB or @ref LL_MPU_REGION_SIZE_64KB or @ref LL_MPU_REGION_SIZE_128KB or @ref LL_MPU_REGION_SIZE_256KB or @ref LL_MPU_REGION_SIZE_512KB
+ *           or @ref LL_MPU_REGION_SIZE_1MB or @ref LL_MPU_REGION_SIZE_2MB or @ref LL_MPU_REGION_SIZE_4MB or @ref LL_MPU_REGION_SIZE_8MB or @ref LL_MPU_REGION_SIZE_16MB
+ *           or @ref LL_MPU_REGION_SIZE_32MB or @ref LL_MPU_REGION_SIZE_64MB or @ref LL_MPU_REGION_SIZE_128MB or @ref LL_MPU_REGION_SIZE_256MB or @ref LL_MPU_REGION_SIZE_512MB
+ *           or @ref LL_MPU_REGION_SIZE_1GB or @ref LL_MPU_REGION_SIZE_2GB or @ref LL_MPU_REGION_SIZE_4GB
+ *         @arg @ref LL_MPU_REGION_NO_ACCESS or @ref LL_MPU_REGION_PRIV_RW or @ref LL_MPU_REGION_PRIV_RW_URO or @ref LL_MPU_REGION_FULL_ACCESS
+ *           or @ref LL_MPU_REGION_PRIV_RO or @ref LL_MPU_REGION_PRIV_RO_URO
+ *         @arg @ref LL_MPU_TEX_LEVEL0 or @ref LL_MPU_TEX_LEVEL1 or @ref LL_MPU_TEX_LEVEL2 or @ref LL_MPU_TEX_LEVEL4
+ *         @arg @ref LL_MPU_INSTRUCTION_ACCESS_ENABLE or  @ref LL_MPU_INSTRUCTION_ACCESS_DISABLE
  *         @arg @ref LL_MPU_ACCESS_SHAREABLE or @ref LL_MPU_ACCESS_NOT_SHAREABLE
  *         @arg @ref LL_MPU_ACCESS_CACHEABLE or @ref LL_MPU_ACCESS_NOT_CACHEABLE
- *         @arg @ref LL_MPU_ACCESS_BUFFERABLE or @ref
- * LL_MPU_ACCESS_NOT_BUFFERABLE
+ *         @arg @ref LL_MPU_ACCESS_BUFFERABLE or @ref LL_MPU_ACCESS_NOT_BUFFERABLE
  * @retval None
  */
 __STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t SubRegionDisable, uint32_t Address, uint32_t Attributes)
@@ -655,9 +614,9 @@ __STATIC_INLINE void LL_MPU_DisableRegion(uint32_t Region)
  */
 
 #endif /* __MPU_PRESENT */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 /**
  * @}

@@ -72,8 +72,7 @@
     Use functions HAL_GFXMMU_RegisterCallback() to register a user callback.
 
     [..]
-    Function HAL_GFXMMU_RegisterCallback() allows to register following
-  callbacks:
+    Function HAL_GFXMMU_RegisterCallback() allows to register following callbacks:
       (+) ErrorCallback      : GFXMMU error.
       (+) MspInitCallback    : GFXMMU MspInit.
       (+) MspDeInitCallback  : GFXMMU MspDeInit.
@@ -82,9 +81,10 @@
     and a pointer to the user callback function.
 
     [..]
-    Use function HAL_GFXMMU_UnRegisterCallback() to reset a callback to the
-  default weak (surcharged) function. HAL_GFXMMU_UnRegisterCallback() takes as
-  parameters the HAL peripheral handle, and the callback ID.
+    Use function HAL_GFXMMU_UnRegisterCallback() to reset a callback to the default
+    weak (surcharged) function.
+    HAL_GFXMMU_UnRegisterCallback() takes as parameters the HAL peripheral handle,
+    and the callback ID.
     [..]
     This function allows to reset following callbacks:
       (+) ErrorCallback      : GFXMMU error.
@@ -92,24 +92,23 @@
       (+) MspDeInitCallback  : GFXMMU MspDeInit.
 
     [..]
-    By default, after the HAL_GFXMMU_Init and if the state is
-  HAL_GFXMMU_STATE_RESET all callbacks are reset to the corresponding legacy
-  weak (surcharged) functions: examples HAL_GFXMMU_ErrorCallback(). Exception
-  done for MspInit and MspDeInit callbacks that are respectively reset to the
-  legacy weak (surcharged) functions in the HAL_GFXMMU_Init and
-  HAL_GFXMMU_DeInit only when these callbacks are null (not registered
-  beforehand). If not, MspInit or MspDeInit are not null, the HAL_GFXMMU_Init
-  and HAL_GFXMMU_DeInit keep and use the user MspInit/MspDeInit callbacks
-  (registered beforehand).
+    By default, after the HAL_GFXMMU_Init and if the state is HAL_GFXMMU_STATE_RESET
+    all callbacks are reset to the corresponding legacy weak (surcharged) functions:
+    examples HAL_GFXMMU_ErrorCallback().
+    Exception done for MspInit and MspDeInit callbacks that are respectively
+    reset to the legacy weak (surcharged) functions in the HAL_GFXMMU_Init
+    and HAL_GFXMMU_DeInit only when these callbacks are null (not registered beforehand).
+    If not, MspInit or MspDeInit are not null, the HAL_GFXMMU_Init and HAL_GFXMMU_DeInit
+    keep and use the user MspInit/MspDeInit callbacks (registered beforehand).
 
     [..]
     Callbacks can be registered/unregistered in READY state only.
-    Exception done for MspInit/MspDeInit callbacks that can be
-  registered/unregistered in READY or RESET state, thus registered (user)
-  MspInit/DeInit callbacks can be used during the Init/DeInit. In that case
-  first register the MspInit/MspDeInit user callbacks using
-  HAL_GFXMMU_RegisterCallback before calling HAL_GFXMMU_DeInit or
-  HAL_GFXMMU_Init function.
+    Exception done for MspInit/MspDeInit callbacks that can be registered/unregistered
+    in READY or RESET state, thus registered (user) MspInit/DeInit callbacks can be used
+    during the Init/DeInit.
+    In that case first register the MspInit/MspDeInit user callbacks
+    using HAL_GFXMMU_RegisterCallback before calling HAL_GFXMMU_DeInit
+    or HAL_GFXMMU_Init function.
 
     [..]
     When the compilation define USE_HAL_GFXMMU_REGISTER_CALLBACKS is set to 0 or
@@ -146,8 +145,7 @@
  * @{
  */
 
-/** @defgroup GFXMMU_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup GFXMMU_Exported_Functions_Group1 Initialization and de-initialization functions
  *  @brief    Initialization and de-initialization functions
  *
 @verbatim
@@ -198,8 +196,7 @@ HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu)
 		HAL_GFXMMU_MspInit(hgfxmmu);
 #endif
 
-		/* Configure blocks per line and interrupts parameters on
-		 * GFXMMU_CR register */
+		/* Configure blocks per line and interrupts parameters on GFXMMU_CR register */
 		hgfxmmu->Instance->CR &= ~(GFXMMU_CR_B0OIE | GFXMMU_CR_B1OIE | GFXMMU_CR_B2OIE | GFXMMU_CR_B3OIE | GFXMMU_CR_AMEIE | GFXMMU_CR_192BM);
 		hgfxmmu->Instance->CR |= (hgfxmmu->Init.BlocksPerLine);
 		if (hgfxmmu->Init.Interrupts.Activation == ENABLE) {
@@ -210,8 +207,7 @@ HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu)
 		/* Configure default value on GFXMMU_DVR register */
 		hgfxmmu->Instance->DVR = hgfxmmu->Init.DefaultValue;
 
-		/* Configure physical buffer addresses on GFXMMU_BxCR registers
-		 */
+		/* Configure physical buffer addresses on GFXMMU_BxCR registers */
 		hgfxmmu->Instance->B0CR = hgfxmmu->Init.Buffers.Buf0Address;
 		hgfxmmu->Instance->B1CR = hgfxmmu->Init.Buffers.Buf1Address;
 		hgfxmmu->Instance->B2CR = hgfxmmu->Init.Buffers.Buf2Address;
@@ -273,8 +269,8 @@ __weak void HAL_GFXMMU_MspInit(GFXMMU_HandleTypeDef *hgfxmmu)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hgfxmmu);
 
-	/* NOTE : This function should not be modified, when the function is
-	   needed, the HAL_GFXMMU_MspInit could be implemented in the user file.
+	/* NOTE : This function should not be modified, when the function is needed,
+		  the HAL_GFXMMU_MspInit could be implemented in the user file.
 	 */
 }
 
@@ -288,9 +284,8 @@ __weak void HAL_GFXMMU_MspDeInit(GFXMMU_HandleTypeDef *hgfxmmu)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hgfxmmu);
 
-	/* NOTE : This function should not be modified, when the function is
-	   needed, the HAL_GFXMMU_MspDeInit could be implemented in the user
-	   file.
+	/* NOTE : This function should not be modified, when the function is needed,
+		  the HAL_GFXMMU_MspDeInit could be implemented in the user file.
 	 */
 }
 
@@ -441,11 +436,9 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
  * @brief  This function allows to copy LUT from flash to look up RAM.
  * @param  hgfxmmu GFXMMU handle.
  * @param  FirstLine First line enabled on LUT.
- *         This parameter must be a number between Min_Data = 0 and Max_Data =
- * 1023.
+ *         This parameter must be a number between Min_Data = 0 and Max_Data = 1023.
  * @param  LinesNumber Number of lines enabled on LUT.
- *         This parameter must be a number between Min_Data = 1 and Max_Data =
- * 1024.
+ *         This parameter must be a number between Min_Data = 1 and Max_Data = 1024.
  * @param  Address Start address of LUT in flash.
  * @retval HAL status.
  */
@@ -489,11 +482,9 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t F
  * @brief  This function allows to disable a range of LUT lines.
  * @param  hgfxmmu GFXMMU handle.
  * @param  FirstLine First line to disable on LUT.
- *         This parameter must be a number between Min_Data = 0 and Max_Data =
- * 1023.
+ *         This parameter must be a number between Min_Data = 0 and Max_Data = 1023.
  * @param  LinesNumber Number of lines to disable on LUT.
- *         This parameter must be a number between Min_Data = 1 and Max_Data =
- * 1024.
+ *         This parameter must be a number between Min_Data = 1 and Max_Data = 1024.
  * @retval HAL status.
  */
 HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber)
@@ -643,9 +634,8 @@ __weak void HAL_GFXMMU_ErrorCallback(GFXMMU_HandleTypeDef *hgfxmmu)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hgfxmmu);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_GFXMMU_ErrorCallback could be implemented in the user
-	   file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_GFXMMU_ErrorCallback could be implemented in the user file.
 	 */
 }
 

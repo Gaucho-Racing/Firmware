@@ -46,64 +46,50 @@ extern "C" {
  * @brief OSPI Init structure definition
  */
 typedef struct {
-	uint32_t FifoThreshold;		/*!< This is the threshold used by the Peripheral to
-					   generate the interrupt indicating that data are
-					   available in reception or free place is available
-					   in transmission. This parameter can be a value
-					   between 1 and 32 */
-	uint32_t DualQuad;		/*!< It enables or not the dual-quad mode which allow
-					   to access up to quad mode on two different devices
-					   to increase the throughput. This parameter can be
-					   a value of @ref OSPI_DualQuad */
-	uint32_t MemoryType;		/*!< It indicates the external device type
-					   connected to the OSPI. This parameter can be a
-					   value of @ref OSPI_MemoryType */
-	uint32_t DeviceSize;		/*!< It defines the size of the external device
-					   connected to the OSPI, it corresponds to the
-					   number of address bits required to access the
-					   external device. This parameter can be a value
-					   between 1 and 32 */
-	uint32_t ChipSelectHighTime;	/*!< It defines the minimum number of
-					   clocks which the chip select must remain
-					   high between commands. This parameter
-					   can be a value between 1 and 8 */
-	uint32_t FreeRunningClock;	/*!< It enables or not the free running
-					   clock.   This parameter can be a value of
-					   @ref OSPI_FreeRunningClock */
-	uint32_t ClockMode;		/*!< It indicates the level of clock when the chip
-					   select is released. This parameter can be a value
-					   of @ref OSPI_ClockMode */
-	uint32_t ClockPrescaler;	/*!< It specifies the prescaler factor used for
-					   generating the external clock based on the
-					   AHB clock. This parameter can be a value
-					   between 1 and 256 */
-	uint32_t SampleShifting;	/*!< It allows to delay to 1/2 cycle the data
-					   sampling in order to take in account
-					   external signal delays. This parameter can
-					   be a value of @ref OSPI_SampleShifting */
-	uint32_t DelayHoldQuarterCycle; /*!< It allows to hold to 1/4 cycle the
-					   data. This parameter can be a value
-					   of @ref OSPI_DelayHoldQuarterCycle */
-	uint32_t ChipSelectBoundary;	/*!< It enables the transaction boundary feature
-					   and defines the boundary of bytes to release
-					   the chip select. This parameter can be a
-					   value between 0 and 31 */
-	uint32_t DelayBlockBypass;	/*!< It enables the delay block bypass, so
-					   the sampling is not affected by the delay
-					   block. This parameter can be a value of
-					   @ref OSPI_DelayBlockBypass */
+	uint32_t FifoThreshold;		/*!< This is the threshold used by the Peripheral to generate the interrupt
+					     indicating that data are available in reception or free place
+					     is available in transmission.
+					     This parameter can be a value between 1 and 32 */
+	uint32_t DualQuad;		/*!< It enables or not the dual-quad mode which allow to access up to
+					     quad mode on two different devices to increase the throughput.
+					     This parameter can be a value of @ref OSPI_DualQuad */
+	uint32_t MemoryType;		/*!< It indicates the external device type connected to the OSPI.
+					     This parameter can be a value of @ref OSPI_MemoryType */
+	uint32_t DeviceSize;		/*!< It defines the size of the external device connected to the OSPI,
+					     it corresponds to the number of address bits required to access
+					     the external device.
+					     This parameter can be a value between 1 and 32 */
+	uint32_t ChipSelectHighTime;	/*!< It defines the minimum number of clocks which the chip select
+					     must remain high between commands.
+					     This parameter can be a value between 1 and 8 */
+	uint32_t FreeRunningClock;	/*!< It enables or not the free running clock.
+					     This parameter can be a value of @ref OSPI_FreeRunningClock */
+	uint32_t ClockMode;		/*!< It indicates the level of clock when the chip select is released.
+					     This parameter can be a value of @ref OSPI_ClockMode */
+	uint32_t ClockPrescaler;	/*!< It specifies the prescaler factor used for generating
+					     the external clock based on the AHB clock.
+					     This parameter can be a value between 1 and 256 */
+	uint32_t SampleShifting;	/*!< It allows to delay to 1/2 cycle the data sampling in order
+					     to take in account external signal delays.
+					     This parameter can be a value of @ref OSPI_SampleShifting */
+	uint32_t DelayHoldQuarterCycle; /*!< It allows to hold to 1/4 cycle the data.
+					     This parameter can be a value of @ref OSPI_DelayHoldQuarterCycle */
+	uint32_t ChipSelectBoundary;	/*!< It enables the transaction boundary feature and
+					     defines the boundary of bytes to release the chip select.
+					     This parameter can be a value between 0 and 31 */
+	uint32_t DelayBlockBypass;	/*!< It enables the delay block bypass, so the sampling is not affected
+					     by the delay block.
+					     This parameter can be a value of @ref OSPI_DelayBlockBypass */
 #if defined(OCTOSPI_DCR3_MAXTRAN)
-	uint32_t MaxTran; /*!< It enables the communication regulation feature.
-			     The chip select is released every MaxTran+1 bytes
-			     when the other OctoSPI request the access to the
-			     bus. This parameter can be a value between 0 and
-			     255 */
+	uint32_t MaxTran; /*!< It enables the communication regulation feature. The chip select is
+			       released every MaxTran+1 bytes when the other OctoSPI request the access
+			       to the bus.
+			       This parameter can be a value between 0 and 255 */
 #endif
 #if defined(OCTOSPI_DCR4_REFRESH)
-	uint32_t Refresh; /*!< It enables the refresh rate feature. The chip
-			     select is released every Refresh+1 clock cycles.
-			       This parameter can be a value between 0 and
-			     0xFFFFFFFF */
+	uint32_t Refresh; /*!< It enables the refresh rate feature. The chip select is released every
+			       Refresh+1 clock cycles.
+			       This parameter can be a value between 0 and 0xFFFFFFFF */
 #endif
 } OSPI_InitTypeDef;
 
@@ -114,16 +100,15 @@ typedef struct {
 typedef struct __OSPI_HandleTypeDef
 #else
 typedef struct
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
-	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 {
-	OCTOSPI_TypeDef *Instance; /*!< OSPI registers base address */
-	OSPI_InitTypeDef Init;	   /*!< OSPI initialization parameters     */
-	uint8_t *pBuffPtr;	   /*!< Address of the OSPI buffer for transfer       */
-	__IO uint32_t XferSize;	   /*!< Number of data to transfer  */
-	__IO uint32_t XferCount;   /*!< Counter of data transferred */
+	OCTOSPI_TypeDef *Instance; /*!< OSPI registers base address                      */
+	OSPI_InitTypeDef Init;	   /*!< OSPI initialization parameters                   */
+	uint8_t *pBuffPtr;	   /*!< Address of the OSPI buffer for transfer          */
+	__IO uint32_t XferSize;	   /*!< Number of data to transfer                       */
+	__IO uint32_t XferCount;   /*!< Counter of data transferred                      */
 	DMA_HandleTypeDef *hdma;   /*!< Handle of the DMA channel used for the transfer  */
-	__IO uint32_t State;	   /*!< Internal state of the OSPI HAL driver */
+	__IO uint32_t State;	   /*!< Internal state of the OSPI HAL driver            */
 	__IO uint32_t ErrorCode;   /*!< Error code in case of HAL driver internal error  */
 	uint32_t Timeout;	   /*!< Timeout used for the OSPI external device access */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
@@ -140,116 +125,87 @@ typedef struct
 
 	void (*MspInitCallback)(struct __OSPI_HandleTypeDef *hospi);
 	void (*MspDeInitCallback)(struct __OSPI_HandleTypeDef *hospi);
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
-	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 } OSPI_HandleTypeDef;
 
 /**
  * @brief  HAL OSPI Regular Command Structure definition
  */
 typedef struct {
-	uint32_t OperationType;		/*!< It indicates if the configuration applies to the
-					   common registers or to the registers for the write
-					   operation (these registers are only used for
-					   memory-mapped mode). This parameter can be a value
-					   of @ref OSPI_OperationType */
-	uint32_t FlashId;		/*!< It indicates which external device is selected
-					   for this command (it  applies only if Dualquad is
-					   disabled in the initialization structure).  This
-					   parameter can be a value of @ref OSPI_FlashID */
-	uint32_t Instruction;		/*!< It contains the instruction to be sent to the
-					   device. This parameter can be a value between 0
-					   and 0xFFFFFFFF */
+	uint32_t OperationType;		/*!< It indicates if the configuration applies to the common registers or
+					     to the registers for the write operation (these registers are only
+					     used for memory-mapped mode).
+					     This parameter can be a value of @ref OSPI_OperationType */
+	uint32_t FlashId;		/*!< It indicates which external device is selected for this command (it
+					     applies only if Dualquad is disabled in the initialization structure).
+					     This parameter can be a value of @ref OSPI_FlashID */
+	uint32_t Instruction;		/*!< It contains the instruction to be sent to the device.
+					     This parameter can be a value between 0 and 0xFFFFFFFF */
 	uint32_t InstructionMode;	/*!< It indicates the mode of the instruction.
-					     This parameter can be a value of @ref
-					   OSPI_InstructionMode */
+					     This parameter can be a value of @ref OSPI_InstructionMode */
 	uint32_t InstructionSize;	/*!< It indicates the size of the instruction.
-					     This parameter can be a value of @ref
-					   OSPI_InstructionSize */
-	uint32_t InstructionDtrMode;	/*!< It enables or not the DTR mode for the
-					   instruction phase. This parameter can be a
-					   value of @ref OSPI_InstructionDtrMode */
+					     This parameter can be a value of @ref OSPI_InstructionSize */
+	uint32_t InstructionDtrMode;	/*!< It enables or not the DTR mode for the instruction phase.
+					     This parameter can be a value of @ref OSPI_InstructionDtrMode */
 	uint32_t Address;		/*!< It contains the address to be sent to the device.
-					     This parameter can be a value between 0 and
-					   0xFFFFFFFF */
+					     This parameter can be a value between 0 and 0xFFFFFFFF */
 	uint32_t AddressMode;		/*!< It indicates the mode of the address.
-					     This parameter can be a value of @ref
-					   OSPI_AddressMode */
+					     This parameter can be a value of @ref OSPI_AddressMode */
 	uint32_t AddressSize;		/*!< It indicates the size of the address.
-					     This parameter can be a value of @ref
-					   OSPI_AddressSize */
-	uint32_t AddressDtrMode;	/*!< It enables or not the DTR mode for the
-					   address phase. This parameter can be a value
-					   of @ref OSPI_AddressDtrMode */
-	uint32_t AlternateBytes;	/*!< It contains the alternate bytes to be sent
-					   to the device. This parameter can be a value
-					   between 0 and 0xFFFFFFFF */
-	uint32_t AlternateBytesMode;	/*!< It indicates the mode of the alternate
-					   bytes. This parameter can be a value of
-					   @ref OSPI_AlternateBytesMode */
-	uint32_t AlternateBytesSize;	/*!< It indicates the size of the alternate
-					   bytes. This parameter can be a value of
-					   @ref OSPI_AlternateBytesSize */
-	uint32_t AlternateBytesDtrMode; /*!< It enables or not the DTR mode for
-					   the alternate bytes phase. This
-					   parameter can be a value of @ref
-					   OSPI_AlternateBytesDtrMode */
+					     This parameter can be a value of @ref OSPI_AddressSize */
+	uint32_t AddressDtrMode;	/*!< It enables or not the DTR mode for the address phase.
+					     This parameter can be a value of @ref OSPI_AddressDtrMode */
+	uint32_t AlternateBytes;	/*!< It contains the alternate bytes to be sent to the device.
+					     This parameter can be a value between 0 and 0xFFFFFFFF */
+	uint32_t AlternateBytesMode;	/*!< It indicates the mode of the alternate bytes.
+					     This parameter can be a value of @ref OSPI_AlternateBytesMode */
+	uint32_t AlternateBytesSize;	/*!< It indicates the size of the alternate bytes.
+					     This parameter can be a value of @ref OSPI_AlternateBytesSize */
+	uint32_t AlternateBytesDtrMode; /*!< It enables or not the DTR mode for the alternate bytes phase.
+					     This parameter can be a value of @ref OSPI_AlternateBytesDtrMode */
 	uint32_t DataMode;		/*!< It indicates the mode of the data.
-					     This parameter can be a value of @ref
-					   OSPI_DataMode */
-	uint32_t NbData;		/*!< It indicates the number of data transferred with
-					   this command. This field is only used for indirect
-					   mode. This parameter can be a value between 1 and
-					   0xFFFFFFFF */
-	uint32_t DataDtrMode;		/*!< It enables or not the DTR mode for the data
-					   phase. This parameter can be a value of @ref
-					   OSPI_DataDtrMode */
-	uint32_t DummyCycles;		/*!< It indicates the number of dummy cycles
-					   inserted before data phase. This parameter can
-					   be a value between 0 and 31 */
+					     This parameter can be a value of @ref OSPI_DataMode */
+	uint32_t NbData;		/*!< It indicates the number of data transferred with this command.
+					     This field is only used for indirect mode.
+					     This parameter can be a value between 1 and 0xFFFFFFFF */
+	uint32_t DataDtrMode;		/*!< It enables or not the DTR mode for the data phase.
+					     This parameter can be a value of @ref OSPI_DataDtrMode */
+	uint32_t DummyCycles;		/*!< It indicates the number of dummy cycles inserted before data phase.
+					     This parameter can be a value between 0 and 31 */
 	uint32_t DQSMode;		/*!< It enables or not the data strobe management.
 					     This parameter can be a value of @ref OSPI_DQSMode */
 	uint32_t SIOOMode;		/*!< It enables or not the SIOO mode.
-					     This parameter can be a value of @ref
-					   OSPI_SIOOMode */
+					     This parameter can be a value of @ref OSPI_SIOOMode */
 } OSPI_RegularCmdTypeDef;
 
 /**
  * @brief  HAL OSPI Hyperbus Configuration Structure definition
  */
 typedef struct {
-	uint32_t RWRecoveryTime;   /*!< It indicates the number of cycles for the
-				      device read write recovery time.  This parameter
-				      can be a value between 0 and 255 */
-	uint32_t AccessTime;	   /*!< It indicates the number of cycles for the
-				      device access time. This parameter can be a
-				      value between 0 and 255 */
-	uint32_t WriteZeroLatency; /*!< It enables or not the latency for the
-				      write access. This parameter can be a
-				      value of @ref OSPI_WriteZeroLatency */
+	uint32_t RWRecoveryTime;   /*!< It indicates the number of cycles for the device read write recovery time.
+					This parameter can be a value between 0 and 255 */
+	uint32_t AccessTime;	   /*!< It indicates the number of cycles for the device access time.
+					This parameter can be a value between 0 and 255 */
+	uint32_t WriteZeroLatency; /*!< It enables or not the latency for the write access.
+					This parameter can be a value of @ref OSPI_WriteZeroLatency */
 	uint32_t LatencyMode;	   /*!< It configures the latency mode.
-					This parameter can be a value of @ref
-				      OSPI_LatencyMode */
+					This parameter can be a value of @ref OSPI_LatencyMode */
 } OSPI_HyperbusCfgTypeDef;
 
 /**
  * @brief  HAL OSPI Hyperbus Command Structure definition
  */
 typedef struct {
-	uint32_t AddressSpace; /*!< It indicates the address space accessed by
-				  the command. This parameter can be a value of
-				  @ref OSPI_AddressSpace */
+	uint32_t AddressSpace; /*!< It indicates the address space accessed by the command.
+				    This parameter can be a value of @ref OSPI_AddressSpace */
 	uint32_t Address;      /*!< It contains the address to be sent tot he device.
-				    This parameter can be a value between 0 and
-				  0xFFFFFFFF */
+				    This parameter can be a value between 0 and 0xFFFFFFFF */
 	uint32_t AddressSize;  /*!< It indicates the size of the address.
-				    This parameter can be a value of @ref
-				  OSPI_AddressSize */
-	uint32_t NbData;       /*!< It indicates the number of data transferred with
-				  this command. This field is only used for indirect
-				  mode. This parameter can be a value between 1 and
-				  0xFFFFFFFF In case of autopolling mode, this
-				  parameter can be any value between 1 and 4 */
+				    This parameter can be a value of @ref OSPI_AddressSize */
+	uint32_t NbData;       /*!< It indicates the number of data transferred with this command.
+				    This field is only used for indirect mode.
+				    This parameter can be a value between 1 and 0xFFFFFFFF
+				    In case of autopolling mode, this parameter can be any value between 1 and 4 */
 	uint32_t DQSMode;      /*!< It enables or not the data strobe management.
 				    This parameter can be a value of @ref OSPI_DQSMode */
 } OSPI_HyperbusCmdTypeDef;
@@ -258,62 +214,46 @@ typedef struct {
  * @brief  HAL OSPI Auto Polling mode configuration structure definition
  */
 typedef struct {
-	uint32_t Match;		/*!< Specifies the value to be compared with the masked
-				   status register to get a match. This parameter can be
-				   any value between 0 and 0xFFFFFFFF */
-	uint32_t Mask;		/*!< Specifies the mask to be applied to the status bytes
-				   received. This parameter can be any value between 0
-				   and 0xFFFFFFFF */
-	uint32_t MatchMode;	/*!< Specifies the method used for determining a
-				   match.     This parameter can be a value of @ref
-				   OSPI_MatchMode */
-	uint32_t AutomaticStop; /*!< Specifies if automatic polling is stopped
-				   after a match. This parameter can be a value
-				   of @ref OSPI_AutomaticStop */
-	uint32_t Interval;	/*!< Specifies the number of clock cycles between two
-				   read during automatic polling phases. This
-				   parameter can be any value between 0 and 0xFFFF */
+	uint32_t Match;		/*!< Specifies the value to be compared with the masked status register to get a match.
+				     This parameter can be any value between 0 and 0xFFFFFFFF */
+	uint32_t Mask;		/*!< Specifies the mask to be applied to the status bytes received.
+				     This parameter can be any value between 0 and 0xFFFFFFFF */
+	uint32_t MatchMode;	/*!< Specifies the method used for determining a match.
+				     This parameter can be a value of @ref OSPI_MatchMode */
+	uint32_t AutomaticStop; /*!< Specifies if automatic polling is stopped after a match.
+				     This parameter can be a value of @ref OSPI_AutomaticStop */
+	uint32_t Interval;	/*!< Specifies the number of clock cycles between two read during automatic polling phases.
+				     This parameter can be any value between 0 and 0xFFFF */
 } OSPI_AutoPollingTypeDef;
 
 /**
  * @brief  HAL OSPI Memory Mapped mode configuration structure definition
  */
 typedef struct {
-	uint32_t TimeOutActivation; /*!< Specifies if the timeout counter is
-				       enabled to release the chip select.  This
-				       parameter can be a value of @ref
-				       OSPI_TimeOutActivation */
-	uint32_t TimeOutPeriod;	    /*!< Specifies the number of clock to wait when
-				       the FIFO is full before to release the chip
-				       select. This parameter can be any value
-				       between 0 and 0xFFFF */
+	uint32_t TimeOutActivation; /*!< Specifies if the timeout counter is enabled to release the chip select.
+					 This parameter can be a value of @ref OSPI_TimeOutActivation */
+	uint32_t TimeOutPeriod;	    /*!< Specifies the number of clock to wait when the FIFO is full before to release the chip select.
+					 This parameter can be any value between 0 and 0xFFFF */
 } OSPI_MemoryMappedTypeDef;
 
 /**
  * @brief HAL OSPI IO Manager Configuration structure definition
  */
 typedef struct {
-	uint32_t ClkPort;    /*!< It indicates which port of the OSPI IO Manager is
-				used for the CLK pins. This parameter can be a
-				value between 1 and 8 */
-	uint32_t DQSPort;    /*!< It indicates which port of the OSPI IO Manager is
-				used for the DQS pin. This parameter can be a value
-				between 0 and 8, 0 means that signal not used */
-	uint32_t NCSPort;    /*!< It indicates which port of the OSPI IO Manager is
-				used for the NCS pin. This parameter can be a value
-				between 1 and 8 */
-	uint32_t IOLowPort;  /*!< It indicates which port of the OSPI IO Manager
-				is used for the IO[3:0] pins.  This parameter can
-				be a value of @ref OSPIM_IOPort */
-	uint32_t IOHighPort; /*!< It indicates which port of the OSPI IO Manager
-				is used for the IO[7:4] pins. This parameter can
-				be a value of @ref OSPIM_IOPort */
+	uint32_t ClkPort;    /*!< It indicates which port of the OSPI IO Manager is used for the CLK pins.
+				  This parameter can be a value between 1 and 8 */
+	uint32_t DQSPort;    /*!< It indicates which port of the OSPI IO Manager is used for the DQS pin.
+				  This parameter can be a value between 0 and 8, 0 means that signal not used */
+	uint32_t NCSPort;    /*!< It indicates which port of the OSPI IO Manager is used for the NCS pin.
+				  This parameter can be a value between 1 and 8 */
+	uint32_t IOLowPort;  /*!< It indicates which port of the OSPI IO Manager is used for the IO[3:0] pins.
+				  This parameter can be a value of @ref OSPIM_IOPort */
+	uint32_t IOHighPort; /*!< It indicates which port of the OSPI IO Manager is used for the IO[7:4] pins.
+				  This parameter can be a value of @ref OSPIM_IOPort */
 #if defined(OCTOSPIM_CR_MUXEN)
-	uint32_t Req2AckTime; /*!< It indicates the minimum switching duration
-				 (in number of clock cycles) expected if some
-				 signals are multiplexed in the OSPI IO Manager
-				 with the other OSPI. This parameter can be a
-				 value between 1 and 256 */
+	uint32_t Req2AckTime; /*!< It indicates the minimum switching duration (in number of clock cycles) expected
+				   if some signals are multiplexed in the OSPI IO Manager with the other OSPI.
+				   This parameter can be a value between 1 and 256 */
 #endif
 } OSPIM_CfgTypeDef;
 
@@ -326,23 +266,22 @@ typedef enum {
 	HAL_OSPI_ABORT_CB_ID = 0x01U,	       /*!< OSPI Abort Callback ID            */
 	HAL_OSPI_FIFO_THRESHOLD_CB_ID = 0x02U, /*!< OSPI FIFO Threshold Callback ID   */
 	HAL_OSPI_CMD_CPLT_CB_ID = 0x03U,       /*!< OSPI Command Complete Callback ID */
-	HAL_OSPI_RX_CPLT_CB_ID = 0x04U,	       /*!< OSPI Rx Complete Callback ID */
-	HAL_OSPI_TX_CPLT_CB_ID = 0x05U,	       /*!< OSPI Tx Complete Callback ID */
+	HAL_OSPI_RX_CPLT_CB_ID = 0x04U,	       /*!< OSPI Rx Complete Callback ID      */
+	HAL_OSPI_TX_CPLT_CB_ID = 0x05U,	       /*!< OSPI Tx Complete Callback ID      */
 	HAL_OSPI_RX_HALF_CPLT_CB_ID = 0x06U,   /*!< OSPI Rx Half Complete Callback ID */
 	HAL_OSPI_TX_HALF_CPLT_CB_ID = 0x07U,   /*!< OSPI Tx Half Complete Callback ID */
 	HAL_OSPI_STATUS_MATCH_CB_ID = 0x08U,   /*!< OSPI Status Match Callback ID     */
-	HAL_OSPI_TIMEOUT_CB_ID = 0x09U,	       /*!< OSPI Timeout Callback ID */
+	HAL_OSPI_TIMEOUT_CB_ID = 0x09U,	       /*!< OSPI Timeout Callback ID          */
 
-	HAL_OSPI_MSP_INIT_CB_ID = 0x0AU,  /*!< OSPI MspInit Callback ID  */
-	HAL_OSPI_MSP_DEINIT_CB_ID = 0x0BU /*!< OSPI MspDeInit Callback ID */
+	HAL_OSPI_MSP_INIT_CB_ID = 0x0AU,  /*!< OSPI MspInit Callback ID          */
+	HAL_OSPI_MSP_DEINIT_CB_ID = 0x0BU /*!< OSPI MspDeInit Callback ID        */
 } HAL_OSPI_CallbackIDTypeDef;
 
 /**
  * @brief  HAL OSPI Callback pointer definition
  */
 typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
-	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 /**
  * @}
  */
@@ -355,29 +294,19 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_State OSPI State
  * @{
  */
-#define HAL_OSPI_STATE_RESET ((uint32_t)0x00000000U) /*!< Initial state */
-#define HAL_OSPI_STATE_HYPERBUS_INIT                                                                                                                                                                   \
-	((uint32_t)0x00000001U)			     /*!< Initialization done in hyperbus mode but                                                                                                     \
-							timing configuration not done */
-#define HAL_OSPI_STATE_READY ((uint32_t)0x00000002U) /*!< Driver ready to be used */
-#define HAL_OSPI_STATE_CMD_CFG                                                                                                                                                                         \
-	((uint32_t)0x00000004U) /*!< Command (regular or hyperbus) configured,                                                                                                                         \
-				   ready for an action          */
-#define HAL_OSPI_STATE_READ_CMD_CFG                                                                                                                                                                    \
-	((uint32_t)0x00000014U) /*!< Read command configuration done, not the                                                                                                                          \
-				   write command configuration   */
-#define HAL_OSPI_STATE_WRITE_CMD_CFG                                                                                                                                                                   \
-	((uint32_t)0x00000024U)					 /*!< Write command configuration done, not the                                                                                        \
-								    read command configuration   */
-#define HAL_OSPI_STATE_BUSY_CMD ((uint32_t)0x00000008U)		 /*!< Command without data on-going */
-#define HAL_OSPI_STATE_BUSY_TX ((uint32_t)0x00000018U)		 /*!< Indirect Tx on-going */
-#define HAL_OSPI_STATE_BUSY_RX ((uint32_t)0x00000028U)		 /*!< Indirect Rx on-going */
-#define HAL_OSPI_STATE_BUSY_AUTO_POLLING ((uint32_t)0x00000048U) /*!< Auto-polling on-going */
-#define HAL_OSPI_STATE_BUSY_MEM_MAPPED ((uint32_t)0x00000088U)	 /*!< Memory-mapped on-going */
-#define HAL_OSPI_STATE_ABORT ((uint32_t)0x00000100U)		 /*!< Abort on-going */
-#define HAL_OSPI_STATE_ERROR                                                                                                                                                                           \
-	((uint32_t)0x00000200U) /*!< Blocking error, driver should be                                                                                                                                  \
-				   re-initialized                        */
+#define HAL_OSPI_STATE_RESET ((uint32_t)0x00000000U)		 /*!< Initial state                                                          */
+#define HAL_OSPI_STATE_HYPERBUS_INIT ((uint32_t)0x00000001U)	 /*!< Initialization done in hyperbus mode but timing configuration not done */
+#define HAL_OSPI_STATE_READY ((uint32_t)0x00000002U)		 /*!< Driver ready to be used                                                */
+#define HAL_OSPI_STATE_CMD_CFG ((uint32_t)0x00000004U)		 /*!< Command (regular or hyperbus) configured, ready for an action          */
+#define HAL_OSPI_STATE_READ_CMD_CFG ((uint32_t)0x00000014U)	 /*!< Read command configuration done, not the write command configuration   */
+#define HAL_OSPI_STATE_WRITE_CMD_CFG ((uint32_t)0x00000024U)	 /*!< Write command configuration done, not the read command configuration   */
+#define HAL_OSPI_STATE_BUSY_CMD ((uint32_t)0x00000008U)		 /*!< Command without data on-going                                          */
+#define HAL_OSPI_STATE_BUSY_TX ((uint32_t)0x00000018U)		 /*!< Indirect Tx on-going                                                   */
+#define HAL_OSPI_STATE_BUSY_RX ((uint32_t)0x00000028U)		 /*!< Indirect Rx on-going                                                   */
+#define HAL_OSPI_STATE_BUSY_AUTO_POLLING ((uint32_t)0x00000048U) /*!< Auto-polling on-going                                                  */
+#define HAL_OSPI_STATE_BUSY_MEM_MAPPED ((uint32_t)0x00000088U)	 /*!< Memory-mapped on-going                                                 */
+#define HAL_OSPI_STATE_ABORT ((uint32_t)0x00000100U)		 /*!< Abort on-going                                                         */
+#define HAL_OSPI_STATE_ERROR ((uint32_t)0x00000200U)		 /*!< Blocking error, driver should be re-initialized                        */
 /**
  * @}
  */
@@ -385,18 +314,15 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_ErrorCode OSPI Error Code
  * @{
  */
-#define HAL_OSPI_ERROR_NONE ((uint32_t)0x00000000U)	     /*!< No error */
-#define HAL_OSPI_ERROR_TIMEOUT ((uint32_t)0x00000001U)	     /*!< Timeout error */
-#define HAL_OSPI_ERROR_TRANSFER ((uint32_t)0x00000002U)	     /*!< Transfer error */
-#define HAL_OSPI_ERROR_DMA ((uint32_t)0x00000004U)	     /*!< DMA transfer error */
-#define HAL_OSPI_ERROR_INVALID_PARAM ((uint32_t)0x00000008U) /*!< Invalid parameters error */
-#define HAL_OSPI_ERROR_INVALID_SEQUENCE                                                                                                                                                                \
-	((uint32_t)0x00000010U) /*!< Sequence of the state machine is                                                                                                                                  \
-				   incorrect */
+#define HAL_OSPI_ERROR_NONE ((uint32_t)0x00000000U)		/*!< No error                                   */
+#define HAL_OSPI_ERROR_TIMEOUT ((uint32_t)0x00000001U)		/*!< Timeout error                              */
+#define HAL_OSPI_ERROR_TRANSFER ((uint32_t)0x00000002U)		/*!< Transfer error                             */
+#define HAL_OSPI_ERROR_DMA ((uint32_t)0x00000004U)		/*!< DMA transfer error                         */
+#define HAL_OSPI_ERROR_INVALID_PARAM ((uint32_t)0x00000008U)	/*!< Invalid parameters error                   */
+#define HAL_OSPI_ERROR_INVALID_SEQUENCE ((uint32_t)0x00000010U) /*!< Sequence of the state machine is incorrect */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
-#define HAL_OSPI_ERROR_INVALID_CALLBACK ((uint32_t)0x00000020U) /*!< Invalid callback error */
-#endif								/* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                \
-								   (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)*/
+#define HAL_OSPI_ERROR_INVALID_CALLBACK ((uint32_t)0x00000020U) /*!< Invalid callback error                     */
+#endif								/* (USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)*/
 /**
  * @}
  */
@@ -418,10 +344,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 #if !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 #define HAL_OSPI_MEMTYPE_APMEMORY ((uint32_t)OCTOSPI_DCR1_MTYP_1) /*!< AP Memory mode    */
 #endif
-#define HAL_OSPI_MEMTYPE_MACRONIX_RAM                                                                                                                                                                  \
-	((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0))	  /*!< Macronix RAM mode                                                                                                               \
-								   */
-#define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2) /*!< Hyperbus mode     */
+#define HAL_OSPI_MEMTYPE_MACRONIX_RAM ((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0)) /*!< Macronix RAM mode */
+#define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2)			      /*!< Hyperbus mode     */
 /**
  * @}
  */
@@ -465,10 +389,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_DelayBlockBypass OSPI Delay Block Bypaas
  * @{
  */
-#define HAL_OSPI_DELAY_BLOCK_USED                                                                                                                                                                      \
-	((uint32_t)0x00000000U)					      /*!< Sampling clock is delayed by the delay                                                                                      \
-									 block */
-#define HAL_OSPI_DELAY_BLOCK_BYPASSED ((uint32_t)OCTOSPI_DCR1_DLYBYP) /*!< Delay block is bypassed */
+#define HAL_OSPI_DELAY_BLOCK_USED ((uint32_t)0x00000000U)	      /*!< Sampling clock is delayed by the delay block */
+#define HAL_OSPI_DELAY_BLOCK_BYPASSED ((uint32_t)OCTOSPI_DCR1_DLYBYP) /*!< Delay block is bypassed                      */
 /**
  * @}
  */
@@ -476,15 +398,9 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_OperationType OSPI Operation Type
  * @{
  */
-#define HAL_OSPI_OPTYPE_COMMON_CFG                                                                                                                                                                     \
-	((uint32_t)0x00000000U) /*!< Common configuration (indirect or                                                                                                                                 \
-				   auto-polling mode) */
-#define HAL_OSPI_OPTYPE_READ_CFG                                                                                                                                                                       \
-	((uint32_t)0x00000001U) /*!< Read configuration (memory-mapped mode)                                                                                                                           \
-				 */
-#define HAL_OSPI_OPTYPE_WRITE_CFG                                                                                                                                                                      \
-	((uint32_t)0x00000002U) /*!< Write configuration (memory-mapped mode)                                                                                                                          \
-				 */
+#define HAL_OSPI_OPTYPE_COMMON_CFG ((uint32_t)0x00000000U) /*!< Common configuration (indirect or auto-polling mode) */
+#define HAL_OSPI_OPTYPE_READ_CFG ((uint32_t)0x00000001U)   /*!< Read configuration (memory-mapped mode)              */
+#define HAL_OSPI_OPTYPE_WRITE_CFG ((uint32_t)0x00000002U)  /*!< Write configuration (memory-mapped mode)             */
 /**
  * @}
  */
@@ -492,10 +408,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_FlashID OSPI Flash Id
  * @{
  */
-#define HAL_OSPI_FLASH_ID_1 ((uint32_t)0x00000000U) /*!< FLASH 1 selected */
-#define HAL_OSPI_FLASH_ID_2                                                                                                                                                                            \
-	((uint32_t)OCTOSPI_CR_FSEL) /*!< FLASH 2 selected                                                                                                                                              \
-				     */
+#define HAL_OSPI_FLASH_ID_1 ((uint32_t)0x00000000U)	/*!< FLASH 1 selected */
+#define HAL_OSPI_FLASH_ID_2 ((uint32_t)OCTOSPI_CR_FSEL) /*!< FLASH 2 selected */
 /**
  * @}
  */
@@ -526,9 +440,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_InstructionDtrMode OSPI Instruction DTR Mode
  * @{
  */
-#define HAL_OSPI_INSTRUCTION_DTR_DISABLE                                                                                                                                                               \
-	((uint32_t)0x00000000U)					     /*!< DTR mode disabled for instruction phase                                                                                      \
-								      */
+#define HAL_OSPI_INSTRUCTION_DTR_DISABLE ((uint32_t)0x00000000U)     /*!< DTR mode disabled for instruction phase */
 #define HAL_OSPI_INSTRUCTION_DTR_ENABLE ((uint32_t)OCTOSPI_CCR_IDTR) /*!< DTR mode enabled for instruction phase  */
 /**
  * @}
@@ -569,13 +481,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_AlternateBytesMode OSPI Alternate Bytes Mode
  * @{
  */
-#define HAL_OSPI_ALTERNATE_BYTES_NONE ((uint32_t)0x00000000U)		  /*!< No alternate bytes               */
-#define HAL_OSPI_ALTERNATE_BYTES_1_LINE ((uint32_t)OCTOSPI_CCR_ABMODE_0)  /*!< Alternate bytes on a single line */
-#define HAL_OSPI_ALTERNATE_BYTES_2_LINES ((uint32_t)OCTOSPI_CCR_ABMODE_1) /*!< Alternate bytes on two lines */
-#define HAL_OSPI_ALTERNATE_BYTES_4_LINES                                                                                                                                                               \
-	((uint32_t)(OCTOSPI_CCR_ABMODE_0 | OCTOSPI_CCR_ABMODE_1))	  /*!< Alternate bytes on four lines                                                                                           \
-									   */
-#define HAL_OSPI_ALTERNATE_BYTES_8_LINES ((uint32_t)OCTOSPI_CCR_ABMODE_2) /*!< Alternate bytes on eight lines   */
+#define HAL_OSPI_ALTERNATE_BYTES_NONE ((uint32_t)0x00000000U)					   /*!< No alternate bytes               */
+#define HAL_OSPI_ALTERNATE_BYTES_1_LINE ((uint32_t)OCTOSPI_CCR_ABMODE_0)			   /*!< Alternate bytes on a single line */
+#define HAL_OSPI_ALTERNATE_BYTES_2_LINES ((uint32_t)OCTOSPI_CCR_ABMODE_1)			   /*!< Alternate bytes on two lines     */
+#define HAL_OSPI_ALTERNATE_BYTES_4_LINES ((uint32_t)(OCTOSPI_CCR_ABMODE_0 | OCTOSPI_CCR_ABMODE_1)) /*!< Alternate bytes on four lines    */
+#define HAL_OSPI_ALTERNATE_BYTES_8_LINES ((uint32_t)OCTOSPI_CCR_ABMODE_2)			   /*!< Alternate bytes on eight lines   */
 /**
  * @}
  */
@@ -594,12 +504,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_AlternateBytesDtrMode OSPI Alternate Bytes DTR Mode
  * @{
  */
-#define HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE                                                                                                                                                           \
-	((uint32_t)0x00000000U) /*!< DTR mode disabled for alternate bytes                                                                                                                             \
-				   phase */
-#define HAL_OSPI_ALTERNATE_BYTES_DTR_ENABLE                                                                                                                                                            \
-	((uint32_t)OCTOSPI_CCR_ABDTR) /*!< DTR mode enabled for alternate                                                                                                                              \
-					 bytes phase  */
+#define HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE ((uint32_t)0x00000000U)	  /*!< DTR mode disabled for alternate bytes phase */
+#define HAL_OSPI_ALTERNATE_BYTES_DTR_ENABLE ((uint32_t)OCTOSPI_CCR_ABDTR) /*!< DTR mode enabled for alternate bytes phase  */
 /**
  * @}
  */
@@ -607,7 +513,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_DataMode OSPI Data Mode
  * @{
  */
-#define HAL_OSPI_DATA_NONE ((uint32_t)0x00000000U)				      /*!< No data */
+#define HAL_OSPI_DATA_NONE ((uint32_t)0x00000000U)				      /*!< No data               */
 #define HAL_OSPI_DATA_1_LINE ((uint32_t)OCTOSPI_CCR_DMODE_0)			      /*!< Data on a single line */
 #define HAL_OSPI_DATA_2_LINES ((uint32_t)OCTOSPI_CCR_DMODE_1)			      /*!< Data on two lines     */
 #define HAL_OSPI_DATA_4_LINES ((uint32_t)(OCTOSPI_CCR_DMODE_0 | OCTOSPI_CCR_DMODE_1)) /*!< Data on four lines    */
@@ -637,10 +543,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_SIOOMode OSPI SIOO Mode
  * @{
  */
-#define HAL_OSPI_SIOO_INST_EVERY_CMD ((uint32_t)0x00000000U) /*!< Send instruction on every transaction */
-#define HAL_OSPI_SIOO_INST_ONLY_FIRST_CMD                                                                                                                                                              \
-	((uint32_t)OCTOSPI_CCR_SIOO) /*!< Send instruction only for the first                                                                                                                          \
-					command */
+#define HAL_OSPI_SIOO_INST_EVERY_CMD ((uint32_t)0x00000000U)	       /*!< Send instruction on every transaction       */
+#define HAL_OSPI_SIOO_INST_ONLY_FIRST_CMD ((uint32_t)OCTOSPI_CCR_SIOO) /*!< Send instruction only for the first command */
 /**
  * @}
  */
@@ -676,7 +580,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  * @{
  */
 #define HAL_OSPI_MATCH_MODE_AND ((uint32_t)0x00000000U)	  /*!< AND match mode between unmasked bits */
-#define HAL_OSPI_MATCH_MODE_OR ((uint32_t)OCTOSPI_CR_PMM) /*!< OR match mode between unmasked bits */
+#define HAL_OSPI_MATCH_MODE_OR ((uint32_t)OCTOSPI_CR_PMM) /*!< OR match mode between unmasked bits  */
 /**
  * @}
  */
@@ -684,12 +588,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_AutomaticStop OSPI Automatic Stop
  * @{
  */
-#define HAL_OSPI_AUTOMATIC_STOP_DISABLE                                                                                                                                                                \
-	((uint32_t)0x00000000U) /*!< AutoPolling stops only with abort or OSPI                                                                                                                         \
-				   disabling */
-#define HAL_OSPI_AUTOMATIC_STOP_ENABLE                                                                                                                                                                 \
-	((uint32_t)OCTOSPI_CR_APMS) /*!< AutoPolling stops as soon as there is                                                                                                                         \
-				       a match       */
+#define HAL_OSPI_AUTOMATIC_STOP_DISABLE ((uint32_t)0x00000000U)	   /*!< AutoPolling stops only with abort or OSPI disabling */
+#define HAL_OSPI_AUTOMATIC_STOP_ENABLE ((uint32_t)OCTOSPI_CR_APMS) /*!< AutoPolling stops as soon as there is a match       */
 /**
  * @}
  */
@@ -697,12 +597,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_TimeOutActivation OSPI Timeout Activation
  * @{
  */
-#define HAL_OSPI_TIMEOUT_COUNTER_DISABLE                                                                                                                                                               \
-	((uint32_t)0x00000000U) /*!< Timeout counter disabled, nCS remains                                                                                                                             \
-				   active               */
-#define HAL_OSPI_TIMEOUT_COUNTER_ENABLE                                                                                                                                                                \
-	((uint32_t)OCTOSPI_CR_TCEN) /*!< Timeout counter enabled, nCS released                                                                                                                         \
-				       when timeout expires */
+#define HAL_OSPI_TIMEOUT_COUNTER_DISABLE ((uint32_t)0x00000000U)    /*!< Timeout counter disabled, nCS remains active               */
+#define HAL_OSPI_TIMEOUT_COUNTER_ENABLE ((uint32_t)OCTOSPI_CR_TCEN) /*!< Timeout counter enabled, nCS released when timeout expires */
 /**
  * @}
  */
@@ -710,23 +606,12 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_Flags OSPI Flags
  * @{
  */
-#define HAL_OSPI_FLAG_BUSY OCTOSPI_SR_BUSY /*!< Busy flag: operation is ongoing */
-#define HAL_OSPI_FLAG_TO                                                                                                                                                                               \
-	OCTOSPI_SR_TOF /*!< Timeout flag: timeout occurs in memory-mapped mode                                                                                                                         \
-			*/
-#define HAL_OSPI_FLAG_SM                                                                                                                                                                               \
-	OCTOSPI_SR_SMF /*!< Status match flag: received data matches in                                                                                                                                \
-			  autopolling mode */
-#define HAL_OSPI_FLAG_FT                                                                                                                                                                               \
-	OCTOSPI_SR_FTF /*!< Fifo threshold flag: Fifo threshold reached or                                                                                                                             \
-			  data left after read from memory is complete */
-#define HAL_OSPI_FLAG_TC                                                                                                                                                                               \
-	OCTOSPI_SR_TCF /*!< Transfer complete flag: programmed number of data                                                                                                                          \
-			  have been transferred or the transfer has been                                                                                                                               \
-			  aborted */
-#define HAL_OSPI_FLAG_TE                                                                                                                                                                               \
-	OCTOSPI_SR_TEF /*!< Transfer error flag: invalid address is being                                                                                                                              \
-			  accessed */
+#define HAL_OSPI_FLAG_BUSY OCTOSPI_SR_BUSY /*!< Busy flag: operation is ongoing                                                                          */
+#define HAL_OSPI_FLAG_TO OCTOSPI_SR_TOF	   /*!< Timeout flag: timeout occurs in memory-mapped mode                                                       */
+#define HAL_OSPI_FLAG_SM OCTOSPI_SR_SMF	   /*!< Status match flag: received data matches in autopolling mode                                             */
+#define HAL_OSPI_FLAG_FT OCTOSPI_SR_FTF	   /*!< Fifo threshold flag: Fifo threshold reached or data left after read from memory is complete              */
+#define HAL_OSPI_FLAG_TC OCTOSPI_SR_TCF	   /*!< Transfer complete flag: programmed number of data have been transferred or the transfer has been aborted */
+#define HAL_OSPI_FLAG_TE OCTOSPI_SR_TEF	   /*!< Transfer error flag: invalid address is being accessed                                                   */
 /**
  * @}
  */
@@ -783,8 +668,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 	} while (0)
 #else
 #define __HAL_OSPI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_OSPI_STATE_RESET)
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
-	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 
 /** @brief  Enable the OSPI peripheral.
  * @param  __HANDLE__ specifies the OSPI Handle.
@@ -913,6 +797,7 @@ HAL_StatusTypeDef HAL_OSPI_AutoPolling_IT(OSPI_HandleTypeDef *hospi, OSPI_AutoPo
 
 /* OSPI memory-mapped mode functions */
 HAL_StatusTypeDef HAL_OSPI_MemoryMapped(OSPI_HandleTypeDef *hospi, OSPI_MemoryMappedTypeDef *cfg);
+uint32_t HAL_OSPI_IsMemoryMapped(OSPI_HandleTypeDef *hospi);
 
 /* Callback functions in non-blocking modes ***********************************/
 void HAL_OSPI_ErrorCallback(OSPI_HandleTypeDef *hospi);
@@ -936,8 +821,7 @@ void HAL_OSPI_TimeOutCallback(OSPI_HandleTypeDef *hospi);
 /* OSPI callback registering/unregistering */
 HAL_StatusTypeDef HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_CallbackIDTypeDef CallbackID, pOSPI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_OSPI_UnRegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_CallbackIDTypeDef CallbackID);
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
-	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 /**
  * @}
  */
@@ -991,7 +875,7 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 
 #define IS_OSPI_DEVICE_SIZE(SIZE) (((SIZE) >= 1U) && ((SIZE) <= 32U))
 
-#define IS_OSPI_CS_HIGH_TIME(TIME) (((TIME) >= 1U) && ((TIME) <= 8U))
+#define IS_OSPI_CS_HIGH_TIME(TIME) (((TIME) >= 1U) && ((TIME) <= 64U))
 
 #define IS_OSPI_FREE_RUN_CLK(CLK) (((CLK) == HAL_OSPI_FREERUNCLK_DISABLE) || ((CLK) == HAL_OSPI_FREERUNCLK_ENABLE))
 
@@ -1086,9 +970,9 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 #if defined(OCTOSPIM_CR_MUXEN)
 #define IS_OSPIM_REQ2ACKTIME(TIME) (((TIME) >= 1U) && ((TIME) <= 256U))
 #endif /*(OCTOSPIM_CR_MUXEN)*/
-       /**
-	 @endcond
-	 */
+/**
+  @endcond
+  */
 
 /* End of private macros -----------------------------------------------------*/
 
