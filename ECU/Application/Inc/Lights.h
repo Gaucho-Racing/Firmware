@@ -3,6 +3,6 @@
 
 #include "StateData.h"
 
-void lightControl(ECU_StateData* stateLump);
+void lightControl(ECU_StateData *stateLump);
 
 #endif
