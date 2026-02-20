@@ -66,10 +66,8 @@ typedef struct {
 typedef struct {
 	FunctionalState Activation; /*!< Interrupts enable/disable */
 	uint32_t UsedInterrupts;    /*!< Interrupts used.
-					 This parameter can be a values combination
-				       of @ref GFXMMU_Interrupts.
-					 @note: Useful only when interrupts are
-				       enabled. */
+					 This parameter can be a values combination of @ref GFXMMU_Interrupts.
+					 @note: Useful only when interrupts are enabled. */
 } GFXMMU_InterruptsTypeDef;
 
 /**
@@ -77,10 +75,8 @@ typedef struct {
  */
 typedef struct {
 	uint32_t BlocksPerLine;		     /*!< Number of blocks of 16 bytes per line.
-						  This parameter can be a value of @ref
-						GFXMMU_BlocksPerLine. */
-	uint32_t DefaultValue;		     /*!< Value returned when virtual memory location
-						not physically mapped. */
+						  This parameter can be a value of @ref GFXMMU_BlocksPerLine. */
+	uint32_t DefaultValue;		     /*!< Value returned when virtual memory location not physically mapped. */
 	GFXMMU_BuffersTypeDef Buffers;	     /*!< Physical buffers addresses. */
 	GFXMMU_InterruptsTypeDef Interrupts; /*!< Interrupts parameters. */
 } GFXMMU_InitTypeDef;
@@ -110,23 +106,17 @@ typedef struct
  */
 typedef struct {
 	uint32_t LineNumber;	    /*!< LUT line number.
-					 This parameter must be a number between
-				       Min_Data = 0 and Max_Data = 1023. */
+					 This parameter must be a number between Min_Data = 0 and Max_Data = 1023. */
 	uint32_t LineStatus;	    /*!< LUT line enable/disable.
-					 This parameter can be a value of @ref
-				       GFXMMU_LutLineStatus. */
+					 This parameter can be a value of @ref GFXMMU_LutLineStatus. */
 	uint32_t FirstVisibleBlock; /*!< First visible block on this line.
-					 This parameter must be a number between
-				       Min_Data = 0 and Max_Data = 255. */
+					 This parameter must be a number between Min_Data = 0 and Max_Data = 255. */
 	uint32_t LastVisibleBlock;  /*!< Last visible block on this line.
-					 This parameter must be a number between
-				       Min_Data = 0 and Max_Data = 255. */
-	int32_t LineOffset;	    /*!< Offset of block 0 of the current line in
-				       physical buffer. This parameter must be a number
-				       between Min_Data = -4080 and Max_Data = 4190208.
-					 @note: Line offset has to be computed with the
-				       following formula: LineOffset = [(Blocks already
-				       used) - (1st visible block)]*BlockSize. */
+					 This parameter must be a number between Min_Data = 0 and Max_Data = 255. */
+	int32_t LineOffset;	    /*!< Offset of block 0 of the current line in physical buffer.
+					 This parameter must be a number between Min_Data = -4080 and Max_Data = 4190208.
+					 @note: Line offset has to be computed with the following formula:
+						LineOffset = [(Blocks already used) - (1st visible block)]*BlockSize. */
 } GFXMMU_LutLineTypeDef;
 
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
@@ -158,10 +148,8 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 /** @defgroup GFXMMU_BlocksPerLine GFXMMU blocks per line
  * @{
  */
-#define GFXMMU_256BLOCKS 0x00000000U /*!< 256 blocks of 16 bytes per line */
-#define GFXMMU_192BLOCKS                                                                                                                                                                               \
-	GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line                                                                                                                                           \
-			 */
+#define GFXMMU_256BLOCKS 0x00000000U	 /*!< 256 blocks of 16 bytes per line */
+#define GFXMMU_192BLOCKS GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line */
 /**
  * @}
  */
@@ -188,9 +176,7 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 #define GFXMMU_ERROR_BUFFER3_OVERFLOW GFXMMU_SR_B3OF /*!< Buffer 3 overflow */
 #define GFXMMU_ERROR_AHB_MASTER GFXMMU_SR_AMEF	     /*!< AHB master error */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-#define GFXMMU_ERROR_INVALID_CALLBACK                                                                                                                                                                  \
-	0x00000100U /*!< Invalid callback error                                                                                                                                                        \
-		     */
+#define GFXMMU_ERROR_INVALID_CALLBACK 0x00000100U /*!< Invalid callback error */
 #endif
 /**
  * @}
@@ -240,8 +226,7 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  * @{
  */
 
-/** @addtogroup GFXMMU_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup GFXMMU_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 /* Initialization and de-initialization functions *****************************/

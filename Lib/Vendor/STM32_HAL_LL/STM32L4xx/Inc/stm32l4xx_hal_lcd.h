@@ -9,9 +9,9 @@
  * Copyright (c) 2017 STMicroelectronics.
  * All rights reserved.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- *in the root directory of this software component. If no LICENSE file comes
- *with this software, it is provided AS-IS.
+ * This software is licensed under terms that can be found in the LICENSE file in
+ * the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  ******************************************************************************
  */
 
@@ -47,8 +47,7 @@ extern "C" {
 
 typedef struct {
 	uint32_t Prescaler;	  /*!< Configures the LCD Prescaler.
-				       This parameter can be one value of @ref
-				     LCD_Prescaler */
+				       This parameter can be one value of @ref LCD_Prescaler */
 	uint32_t Divider;	  /*!< Configures the LCD Divider.
 				       This parameter can be one value of @ref LCD_Divider */
 	uint32_t Duty;		  /*!< Configures the LCD Duty.
@@ -56,29 +55,21 @@ typedef struct {
 	uint32_t Bias;		  /*!< Configures the LCD Bias.
 				       This parameter can be one value of @ref LCD_Bias */
 	uint32_t VoltageSource;	  /*!< Selects the LCD Voltage source.
-				       This parameter can be one value of @ref
-				     LCD_Voltage_Source */
+				       This parameter can be one value of @ref LCD_Voltage_Source */
 	uint32_t Contrast;	  /*!< Configures the LCD Contrast.
-				       This parameter can be one value of @ref
-				     LCD_Contrast */
+				       This parameter can be one value of @ref LCD_Contrast */
 	uint32_t DeadTime;	  /*!< Configures the LCD Dead Time.
-				       This parameter can be one value of @ref
-				     LCD_DeadTime */
+				       This parameter can be one value of @ref LCD_DeadTime */
 	uint32_t PulseOnDuration; /*!< Configures the LCD Pulse On Duration.
-				       This parameter can be one value of @ref
-				     LCD_PulseOnDuration */
+				       This parameter can be one value of @ref LCD_PulseOnDuration */
 	uint32_t HighDrive;	  /*!< Enable or disable the low resistance divider.
-				       This parameter can be one value of @ref
-				     LCD_HighDrive */
+				       This parameter can be one value of @ref LCD_HighDrive */
 	uint32_t BlinkMode;	  /*!< Configures the LCD Blink Mode.
-				       This parameter can be one value of @ref
-				     LCD_BlinkMode */
+				       This parameter can be one value of @ref LCD_BlinkMode */
 	uint32_t BlinkFrequency;  /*!< Configures the LCD Blink frequency.
-				       This parameter can be one value of @ref
-				     LCD_BlinkFrequency */
+				       This parameter can be one value of @ref LCD_BlinkFrequency */
 	uint32_t MuxSegment;	  /*!< Enable or disable mux segment.
-				       This parameter can be one value of @ref
-				     LCD_MuxSegment */
+				       This parameter can be one value of @ref LCD_MuxSegment */
 } LCD_InitTypeDef;
 
 /**
@@ -124,9 +115,7 @@ typedef struct {
 #define HAL_LCD_ERROR_UDR (0x00000002U)	  /*!< Update display request flag timeout error */
 #define HAL_LCD_ERROR_UDD (0x00000004U)	  /*!< Update display done flag timeout error */
 #define HAL_LCD_ERROR_ENS (0x00000008U)	  /*!< LCD enabled status flag timeout error */
-#define HAL_LCD_ERROR_RDY                                                                                                                                                                              \
-	(0x00000010U) /*!< LCD Booster ready timeout error                                                                                                                                             \
-		       */
+#define HAL_LCD_ERROR_RDY (0x00000010U)	  /*!< LCD Booster ready timeout error */
 /**
  * @}
  */
@@ -220,18 +209,14 @@ typedef struct {
 /** @defgroup LCD_PulseOnDuration LCD Pulse On Duration
  * @{
  */
-#define LCD_PULSEONDURATION_0                                                                                                                                                                          \
-	(0x00000000U)					      /*!< Pulse ON duration = 0 pulse                                                                                                         \
-							       */
+#define LCD_PULSEONDURATION_0 (0x00000000U)		      /*!< Pulse ON duration = 0 pulse  */
 #define LCD_PULSEONDURATION_1 (LCD_FCR_PON_0)		      /*!< Pulse ON duration = 1/CK_PS  */
 #define LCD_PULSEONDURATION_2 (LCD_FCR_PON_1)		      /*!< Pulse ON duration = 2/CK_PS  */
 #define LCD_PULSEONDURATION_3 (LCD_FCR_PON_1 | LCD_FCR_PON_0) /*!< Pulse ON duration = 3/CK_PS  */
 #define LCD_PULSEONDURATION_4 (LCD_FCR_PON_2)		      /*!< Pulse ON duration = 4/CK_PS  */
 #define LCD_PULSEONDURATION_5 (LCD_FCR_PON_2 | LCD_FCR_PON_0) /*!< Pulse ON duration = 5/CK_PS  */
 #define LCD_PULSEONDURATION_6 (LCD_FCR_PON_2 | LCD_FCR_PON_1) /*!< Pulse ON duration = 6/CK_PS  */
-#define LCD_PULSEONDURATION_7                                                                                                                                                                          \
-	(LCD_FCR_PON) /*!< Pulse ON duration = 7/CK_PS                                                                                                                                                 \
-		       */
+#define LCD_PULSEONDURATION_7 (LCD_FCR_PON)		      /*!< Pulse ON duration = 7/CK_PS  */
 /**
  * @}
  */
@@ -254,14 +239,12 @@ typedef struct {
 /** @defgroup LCD_BlinkMode LCD Blink Mode
  * @{
  */
-#define LCD_BLINKMODE_OFF (0x00000000U)		  /*!< Blink disabled */
-#define LCD_BLINKMODE_SEG0_COM0 (LCD_FCR_BLINK_0) /*!< Blink enabled on SEG[0], COM[0] (1 pixel) */
+#define LCD_BLINKMODE_OFF (0x00000000U)		  /*!< Blink disabled                                     */
+#define LCD_BLINKMODE_SEG0_COM0 (LCD_FCR_BLINK_0) /*!< Blink enabled on SEG[0], COM[0] (1 pixel)          */
 #define LCD_BLINKMODE_SEG0_ALLCOM                                                                                                                                                                      \
-	(LCD_FCR_BLINK_1) /*!< Blink enabled on SEG[0], all COM (up to                                                                                                                                 \
-			      8 pixels according to the programmed duty) */
-#define LCD_BLINKMODE_ALLSEG_ALLCOM                                                                                                                                                                    \
-	(LCD_FCR_BLINK) /*!< Blink enabled on all SEG and all COM (all pixels)                                                                                                                         \
-			 */
+	(LCD_FCR_BLINK_1)			    /*!< Blink enabled on SEG[0], all COM (up to                                                                                                       \
+							8 pixels according to the programmed duty)          */
+#define LCD_BLINKMODE_ALLSEG_ALLCOM (LCD_FCR_BLINK) /*!< Blink enabled on all SEG and all COM (all pixels)  */
 /**
  * @}
  */
@@ -315,21 +298,19 @@ typedef struct {
 #define LCD_RAM_REGISTER13 (0x0000000DU) /*!< LCD RAM Register 13 */
 #define LCD_RAM_REGISTER14 (0x0000000EU) /*!< LCD RAM Register 14 */
 #define LCD_RAM_REGISTER15 (0x0000000FU) /*!< LCD RAM Register 15 */
-					 /**
-					  * @}
-					  */
+/**
+ * @}
+ */
 
 /** @defgroup LCD_HighDrive LCD High Drive
  * @{
  */
 
-#define LCD_HIGHDRIVE_DISABLE                                                                                                                                                                          \
-	((uint32_t)0x00000000)		  /*!< High drive disabled                                                                                                                                     \
-					   */
-#define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD) /*!< High drive enabled  */
-					  /**
-					   * @}
-					   */
+#define LCD_HIGHDRIVE_DISABLE ((uint32_t)0x00000000) /*!< High drive disabled */
+#define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD)	     /*!< High drive enabled  */
+/**
+ * @}
+ */
 
 /** @defgroup LCD_MuxSegment LCD Mux Segment
  * @{
@@ -383,8 +364,8 @@ typedef struct {
 
 /** @brief  Enable the low resistance divider.
  * @param __HANDLE__ specifies the LCD Handle.
- * @note   Displays with high internal resistance may need a longer drive time
- * to achieve satisfactory contrast. This function is useful in this case if
+ * @note   Displays with high internal resistance may need a longer drive time to
+ *         achieve satisfactory contrast. This function is useful in this case if
  *         some additional power consumption can be tolerated.
  * @note   When this mode is enabled, the PulseOn Duration (PON) have to be
  *         programmed to 1/CK_PS (LCD_PULSEONDURATION_1).
@@ -488,10 +469,9 @@ typedef struct {
  * @param __BLINKMODE__ specifies the LCD blink mode.
  *   This parameter can be one of the following values:
  *     @arg LCD_BLINKMODE_OFF:           Blink disabled
- *     @arg LCD_BLINKMODE_SEG0_COM0:     Blink enabled on SEG[0], COM[0] (1
- * pixel)
- *     @arg LCD_BLINKMODE_SEG0_ALLCOM:   Blink enabled on SEG[0], all COM (up to
- * 8 pixels according to the programmed duty)
+ *     @arg LCD_BLINKMODE_SEG0_COM0:     Blink enabled on SEG[0], COM[0] (1 pixel)
+ *     @arg LCD_BLINKMODE_SEG0_ALLCOM:   Blink enabled on SEG[0], all COM (up to 8
+ *                                       pixels according to the programmed duty)
  *     @arg LCD_BLINKMODE_ALLSEG_ALLCOM: Blink enabled on all SEG and all COM
  *                                       (all pixels)
  * @param __BLINKFREQUENCY__ specifies the LCD blink frequency.
@@ -556,21 +536,20 @@ typedef struct {
  * @param __HANDLE__ specifies the LCD Handle.
  * @param __FLAG__ specifies the flag to check.
  *        This parameter can be one of the following values:
- *        @arg LCD_FLAG_ENS: LCD Enabled flag. It indicates the LCD controller
- * status.
+ *        @arg LCD_FLAG_ENS: LCD Enabled flag. It indicates the LCD controller status.
  * @note  The ENS bit is set immediately when the LCDEN bit in the LCD_CR
  *             goes from 0 to 1. On deactivation it reflects the real status of
  *             LCD so it becomes 0 at the end of the last displayed frame.
- *        @arg LCD_FLAG_SOF: Start of Frame flag. This flag is set by hardware
- * at the beginning of a new frame, at the same time as the display data is
+ *        @arg LCD_FLAG_SOF: Start of Frame flag. This flag is set by hardware at
+ *             the beginning of a new frame, at the same time as the display data is
  *             updated.
  *        @arg LCD_FLAG_UDR: Update Display Request flag.
  *        @arg LCD_FLAG_UDD: Update Display Done flag.
- *        @arg LCD_FLAG_RDY: Step_up converter Ready flag. It indicates the
- * status of the step-up converter.
+ *        @arg LCD_FLAG_RDY: Step_up converter Ready flag. It indicates the status
+ *             of the step-up converter.
  *        @arg LCD_FLAG_FCRSF: LCD Frame Control Register Synchronization Flag.
- *             This flag is set by hardware each time the LCD_FCR register is
- * updated in the LCDCLK domain.
+ *             This flag is set by hardware each time the LCD_FCR register is updated
+ *             in the LCDCLK domain.
  * @retval The new state of __FLAG__ (TRUE or FALSE).
  */
 #define __HAL_LCD_GET_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->SR & (__FLAG__)) == (__FLAG__))
@@ -710,8 +689,7 @@ HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd);
  * @}
  */
 
-#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||                                                                                                                                  \
-	  STM32L496xx || STM32L4A6xx */
+#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx || STM32L496xx || STM32L4A6xx */
 
 #ifdef __cplusplus
 }

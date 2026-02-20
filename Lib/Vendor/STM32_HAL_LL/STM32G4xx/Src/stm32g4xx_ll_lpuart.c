@@ -106,8 +106,7 @@
  */
 
 /**
- * @brief  De-initialize LPUART registers (Registers restored to their default
- * values).
+ * @brief  De-initialize LPUART registers (Registers restored to their default values).
  * @param  LPUARTx LPUART Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: LPUART registers are de-initialized
@@ -136,19 +135,16 @@ ErrorStatus LL_LPUART_DeInit(const USART_TypeDef *LPUARTx)
 /**
  * @brief  Initialize LPUART registers according to the specified
  *         parameters in LPUART_InitStruct.
- * @note   As some bits in LPUART configuration registers can only be written
- * when the LPUART is disabled (USART_CR1_UE bit =0), LPUART Peripheral should
- * be in disabled state prior calling this function. Otherwise, ERROR result
- * will be returned.
- * @note   Baud rate value stored in LPUART_InitStruct BaudRate field, should be
- * valid (different from 0).
+ * @note   As some bits in LPUART configuration registers can only be written when
+ *         the LPUART is disabled (USART_CR1_UE bit =0),
+ *         LPUART Peripheral should be in disabled state prior calling this function.
+ *         Otherwise, ERROR result will be returned.
+ * @note   Baud rate value stored in LPUART_InitStruct BaudRate field, should be valid (different from 0).
  * @param  LPUARTx LPUART Instance
  * @param  LPUART_InitStruct pointer to a @ref LL_LPUART_InitTypeDef structure
- *         that contains the configuration information for the specified LPUART
- * peripheral.
+ *         that contains the configuration information for the specified LPUART peripheral.
  * @retval An ErrorStatus enumeration value:
- *          - SUCCESS: LPUART registers are initialized according to
- * LPUART_InitStruct content
+ *          - SUCCESS: LPUART registers are initialized according to LPUART_InitStruct content
  *          - ERROR: Problem occurred during LPUART Registers initialization
  */
 ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *LPUART_InitStruct)
@@ -166,50 +162,40 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 	assert_param(IS_LL_LPUART_DIRECTION(LPUART_InitStruct->TransferDirection));
 	assert_param(IS_LL_LPUART_HWCONTROL(LPUART_InitStruct->HardwareFlowControl));
 
-	/* LPUART needs to be in disabled state, in order to be able to
-	   configure some bits in CRx registers. Otherwise (LPUART not in
-	   Disabled state) => return ERROR */
+	/* LPUART needs to be in disabled state, in order to be able to configure some bits in
+	   CRx registers. Otherwise (LPUART not in Disabled state) => return ERROR */
 	if (LL_LPUART_IsEnabled(LPUARTx) == 0U) {
-		/*---------------------------- LPUART CR1 Configuration
-		 * ----------------------- Configure LPUARTx CR1 (LPUART Word
-		 * Length, Parity and Transfer Direction bits) with parameters:
-		 * - DataWidth:          USART_CR1_M bits according to
-		 * LPUART_InitStruct->DataWidth value
-		 * - Parity:             USART_CR1_PCE, USART_CR1_PS bits
-		 * according to LPUART_InitStruct->Parity value
-		 * - TransferDirection:  USART_CR1_TE, USART_CR1_RE bits
-		 * according to LPUART_InitStruct->TransferDirection value
+		/*---------------------------- LPUART CR1 Configuration -----------------------
+		 * Configure LPUARTx CR1 (LPUART Word Length, Parity and Transfer Direction bits) with parameters:
+		 * - DataWidth:          USART_CR1_M bits according to LPUART_InitStruct->DataWidth value
+		 * - Parity:             USART_CR1_PCE, USART_CR1_PS bits according to LPUART_InitStruct->Parity value
+		 * - TransferDirection:  USART_CR1_TE, USART_CR1_RE bits according to LPUART_InitStruct->TransferDirection value
 		 */
 		MODIFY_REG(LPUARTx->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
 			   (LPUART_InitStruct->DataWidth | LPUART_InitStruct->Parity | LPUART_InitStruct->TransferDirection));
 
-		/*---------------------------- LPUART CR2 Configuration
-		 * ----------------------- Configure LPUARTx CR2 (Stop bits)
-		 * with parameters:
-		 * - Stop Bits:          USART_CR2_STOP bits according to
-		 * LPUART_InitStruct->StopBits value.
+		/*---------------------------- LPUART CR2 Configuration -----------------------
+		 * Configure LPUARTx CR2 (Stop bits) with parameters:
+		 * - Stop Bits:          USART_CR2_STOP bits according to LPUART_InitStruct->StopBits value.
 		 */
 		LL_LPUART_SetStopBitsLength(LPUARTx, LPUART_InitStruct->StopBits);
 
-		/*---------------------------- LPUART CR3 Configuration
-		 * ----------------------- Configure LPUARTx CR3 (Hardware Flow
-		 * Control) with parameters:
-		 * - HardwareFlowControl: USART_CR3_RTSE, USART_CR3_CTSE bits
-		 * according to LPUART_InitStruct->HardwareFlowControl value.
+		/*---------------------------- LPUART CR3 Configuration -----------------------
+		 * Configure LPUARTx CR3 (Hardware Flow Control) with parameters:
+		 * - HardwareFlowControl: USART_CR3_RTSE, USART_CR3_CTSE bits according
+		 *   to LPUART_InitStruct->HardwareFlowControl value.
 		 */
 		LL_LPUART_SetHWFlowCtrl(LPUARTx, LPUART_InitStruct->HardwareFlowControl);
 
-		/*---------------------------- LPUART BRR Configuration
-		 * ----------------------- Retrieve Clock frequency used for
-		 * LPUART Peripheral
+		/*---------------------------- LPUART BRR Configuration -----------------------
+		 * Retrieve Clock frequency used for LPUART Peripheral
 		 */
 		periphclk = LL_RCC_GetLPUARTClockFreq(LL_RCC_LPUART1_CLKSOURCE);
 
 		/* Configure the LPUART Baud Rate :
 		   - prescaler value is required
 		   - valid baud rate value (different from 0) is required
-		   - Peripheral clock as returned by RCC service, should be
-		   valid (different from 0).
+		   - Peripheral clock as returned by RCC service, should be valid (different from 0).
 		*/
 		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (LPUART_InitStruct->BaudRate != 0U)) {
 			status = SUCCESS;
@@ -222,11 +208,9 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 			assert_param(IS_LL_LPUART_BRR_MAX(LPUARTx->BRR));
 		}
 
-		/*---------------------------- LPUART PRESC Configuration
-		 * ----------------------- Configure LPUARTx PRESC (Prescaler)
-		 * with parameters:
-		 * - PrescalerValue: LPUART_PRESC_PRESCALER bits according to
-		 * LPUART_InitStruct->PrescalerValue value.
+		/*---------------------------- LPUART PRESC Configuration -----------------------
+		 * Configure LPUARTx PRESC (Prescaler) with parameters:
+		 * - PrescalerValue: LPUART_PRESC_PRESCALER bits according to LPUART_InitStruct->PrescalerValue value.
 		 */
 		LL_LPUART_SetPrescaler(LPUARTx, LPUART_InitStruct->PrescalerValue);
 	}

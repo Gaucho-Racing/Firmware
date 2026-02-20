@@ -55,7 +55,6 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
 }
 
-// TODO: move this out of state machine because the brake light will need to be driven at all times
 // TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {

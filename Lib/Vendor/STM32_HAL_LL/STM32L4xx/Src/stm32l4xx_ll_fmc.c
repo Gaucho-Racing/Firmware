@@ -5,8 +5,7 @@
   * @brief   FMC Low Layer HAL module driver.
   *
   *          This file provides firmware functions to manage the following
-  *          functionalities of the Flexible Memory Controller (FMC) peripheral
-  memories:
+  *          functionalities of the Flexible Memory Controller (FMC) peripheral memories:
   *           + Initialization/de-initialization functions
   *           + Peripheral Control functions
   *           + Peripheral State functions
@@ -26,28 +25,26 @@
   ==============================================================================
 			##### FMC peripheral features #####
   ==============================================================================
-  [..] The Flexible memory controller (FMC) includes following memory
-  controllers:
+  [..] The Flexible memory controller (FMC) includes following memory controllers:
        (+) The NOR/PSRAM memory controller
      (+) The NAND memory controller
 
-  [..] The FMC functional block makes the interface with synchronous and
-  asynchronous static memories. Its main purposes are:
-       (+) to translate AHB transactions into the appropriate external device
-  protocol
+  [..] The FMC functional block makes the interface with synchronous and asynchronous static
+       memories. Its main purposes are:
+       (+) to translate AHB transactions into the appropriate external device protocol
        (+) to meet the access time requirements of the external memory devices
 
-  [..] All external memories share the addresses, data and control signals with
-  the controller. Each external device is accessed by means of a unique Chip
-  Select. The FMC performs only one access at a time to an external device. The
-  main features of the FMC controller are the following:
+  [..] All external memories share the addresses, data and control signals with the controller.
+       Each external device is accessed by means of a unique Chip Select. The FMC performs
+       only one access at a time to an external device.
+       The main features of the FMC controller are the following:
 	(+) Interface with static-memory mapped devices including:
 	   (++) Static random access memory (SRAM)
 	   (++) Read-only memory (ROM)
 	   (++) NOR Flash memory/OneNAND Flash memory
 	   (++) PSRAM (4 memory banks)
-	   (++) Two banks of NAND Flash memory with ECC hardware to check up to
-  8 Kbytes of data
+	   (++) Two banks of NAND Flash memory with ECC hardware to check up to 8 Kbytes of
+		data
 	(+) Independent Chip Select control for each memory bank
 	(+) Independent configuration for each memory bank
 
@@ -127,8 +124,7 @@
 
 #if defined(FMC_BANK1)
 
-/** @defgroup FMC_LL_Exported_Functions_NORSRAM FMC Low Layer NOR SRAM Exported
-Functions
+/** @defgroup FMC_LL_Exported_Functions_NORSRAM FMC Low Layer NOR SRAM Exported Functions
   * @brief  NORSRAM Controller functions
   *
   @verbatim
@@ -137,14 +133,12 @@ Functions
   ==============================================================================
 
   [..]
-    This driver contains a set of APIs to interface with the FMC NORSRAM banks
-in order to run the NORSRAM external devices.
+    This driver contains a set of APIs to interface with the FMC NORSRAM banks in order
+    to run the NORSRAM external devices.
 
     (+) FMC NORSRAM bank reset using the function FMC_NORSRAM_DeInit()
-    (+) FMC NORSRAM bank control configuration using the function
-FMC_NORSRAM_Init()
-    (+) FMC NORSRAM bank timing configuration using the function
-FMC_NORSRAM_Timing_Init()
+    (+) FMC NORSRAM bank control configuration using the function FMC_NORSRAM_Init()
+    (+) FMC NORSRAM bank timing configuration using the function FMC_NORSRAM_Timing_Init()
     (+) FMC NORSRAM bank extended timing configuration using the function
 	FMC_NORSRAM_Extended_Timing_Init()
     (+) FMC NORSRAM bank enable/disable write operation using the functions
@@ -154,8 +148,7 @@ FMC_NORSRAM_Timing_Init()
   * @{
   */
 
-/** @defgroup FMC_LL_NORSRAM_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup FMC_LL_NORSRAM_Exported_Functions_Group1 Initialization and de-initialization functions
   * @brief    Initialization and Configuration functions
   *
   @verbatim
@@ -247,16 +240,14 @@ HAL_StatusTypeDef FMC_NORSRAM_Init(FMC_NORSRAM_TypeDef *Device, const FMC_NORSRA
 
 	MODIFY_REG(Device->BTCR[Init->NSBank], mask, btcr_reg);
 
-	/* Configure synchronous mode when Continuous clock is enabled for
-	 * bank2..4 */
+	/* Configure synchronous mode when Continuous clock is enabled for bank2..4 */
 	if ((Init->ContinuousClock == FMC_CONTINUOUS_CLOCK_SYNC_ASYNC) && (Init->NSBank != FMC_NORSRAM_BANK1)) {
 		MODIFY_REG(Device->BTCR[FMC_NORSRAM_BANK1], FMC_BCR1_CCLKEN, Init->ContinuousClock);
 	}
 #if defined(FMC_BCR1_WFDIS)
 
 	if (Init->NSBank != FMC_NORSRAM_BANK1) {
-		/* Configure Write FIFO mode when Write Fifo is enabled for
-		 * bank2..4 */
+		/* Configure Write FIFO mode when Write Fifo is enabled for bank2..4 */
 		SET_BIT(Device->BTCR[FMC_NORSRAM_BANK1], (uint32_t)(Init->WriteFifo));
 	}
 #endif /* FMC_BCR1_WFDIS */
@@ -385,10 +376,9 @@ HAL_StatusTypeDef FMC_NORSRAM_Timing_Init(FMC_NORSRAM_TypeDef *Device, const FMC
 				  Timing->AccessMode;
 #endif /* FMC_BTRx_DATAHLD */
 
-	/* Configure Clock division value (in NORSRAM bank 1) when continuous
-	 * clock is enabled */
+	/* Configure Clock division value (in NORSRAM bank 1) when continuous clock is enabled */
 	if (HAL_IS_BIT_SET(Device->BTCR[FMC_NORSRAM_BANK1], FMC_BCR1_CCLKEN)) {
-		tmpr = (uint32_t)(Device->BTCR[FMC_NORSRAM_BANK1 + 1U] & ~((0x0FU) << FMC_BTRx_CLKDIV_Pos));
+		tmpr = (uint32_t)(Device->BTCR[FMC_NORSRAM_BANK1 + 1U] & ~((0x0FUL) << FMC_BTRx_CLKDIV_Pos));
 		tmpr |= (uint32_t)(((Timing->CLKDivision) - 1U) << FMC_BTRx_CLKDIV_Pos);
 		MODIFY_REG(Device->BTCR[FMC_NORSRAM_BANK1 + 1U], FMC_BTRx_CLKDIV, tmpr);
 	}
@@ -397,8 +387,8 @@ HAL_StatusTypeDef FMC_NORSRAM_Timing_Init(FMC_NORSRAM_TypeDef *Device, const FMC
 }
 
 /**
- * @brief  Initialize the FMC_NORSRAM Extended mode Timing according to the
- * specified parameters in the FMC_NORSRAM_TimingTypeDef
+ * @brief  Initialize the FMC_NORSRAM Extended mode Timing according to the specified
+ *         parameters in the FMC_NORSRAM_TimingTypeDef
  * @param  Device Pointer to NORSRAM device instance
  * @param  Timing Pointer to NORSRAM Timing structure
  * @param  Bank NORSRAM bank number
@@ -413,8 +403,7 @@ HAL_StatusTypeDef FMC_NORSRAM_Extended_Timing_Init(FMC_NORSRAM_EXTENDED_TypeDef 
 	/* Check the parameters */
 	assert_param(IS_FMC_EXTENDED_MODE(ExtendedMode));
 
-	/* Set NORSRAM device timing register for write configuration, if
-	 * extended mode is used */
+	/* Set NORSRAM device timing register for write configuration, if extended mode is used */
 	if (ExtendedMode == FMC_EXTENDED_MODE_ENABLE) {
 		/* Check the parameters */
 		assert_param(IS_FMC_NORSRAM_EXTENDED_DEVICE(Device));
@@ -428,8 +417,7 @@ HAL_StatusTypeDef FMC_NORSRAM_Extended_Timing_Init(FMC_NORSRAM_EXTENDED_TypeDef 
 		assert_param(IS_FMC_ACCESS_MODE(Timing->AccessMode));
 		assert_param(IS_FMC_NORSRAM_BANK(Bank));
 
-		/* Set NORSRAM device timing register for write configuration,
-		 * if extended mode is used */
+		/* Set NORSRAM device timing register for write configuration, if extended mode is used */
 #if defined(FMC_BTRx_DATAHLD)
 		MODIFY_REG(Device->BWTR[Bank], BWTR_CLEAR_MASK,
 			   (Timing->AddressSetupTime | ((Timing->AddressHoldTime) << FMC_BWTRx_ADDHLD_Pos) | ((Timing->DataSetupTime) << FMC_BWTRx_DATAST_Pos) |
@@ -508,11 +496,9 @@ HAL_StatusTypeDef FMC_NORSRAM_WriteOperation_Disable(FMC_NORSRAM_TypeDef *Device
  * @}
  */
 #endif /* FMC_BANK1 */
-
 #if defined(FMC_BANK3)
 
-/** @defgroup FMC_LL_Exported_Functions_NAND FMC Low Layer NAND Exported
-Functions
+/** @defgroup FMC_LL_Exported_Functions_NAND FMC Low Layer NAND Exported Functions
   * @brief    NAND Controller functions
   *
   @verbatim
@@ -520,8 +506,8 @@ Functions
 		    ##### How to use NAND device driver #####
   ==============================================================================
   [..]
-    This driver contains a set of APIs to interface with the FMC NAND banks in
-order to run the NAND external devices.
+    This driver contains a set of APIs to interface with the FMC NAND banks in order
+    to run the NAND external devices.
 
     (+) FMC NAND bank reset using the function FMC_NAND_DeInit()
     (+) FMC NAND bank control configuration using the function FMC_NAND_Init()
@@ -531,15 +517,13 @@ order to run the NAND external devices.
 	FMC_NAND_AttributeSpace_Timing_Init()
     (+) FMC NAND bank enable/disable ECC correction feature using the functions
 	FMC_NAND_ECC_Enable()/FMC_NAND_ECC_Disable()
-    (+) FMC NAND bank get ECC correction code using the function
-FMC_NAND_GetECC()
+    (+) FMC NAND bank get ECC correction code using the function FMC_NAND_GetECC()
 
 @endverbatim
   * @{
   */
 
-/** @defgroup FMC_LL_NAND_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup FMC_LL_NAND_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -584,8 +568,8 @@ HAL_StatusTypeDef FMC_NAND_Init(FMC_NAND_TypeDef *Device, const FMC_NAND_InitTyp
 }
 
 /**
- * @brief  Initializes the FMC_NAND Common space Timing according to the
- * specified parameters in the FMC_NAND_PCC_TimingTypeDef
+ * @brief  Initializes the FMC_NAND Common space Timing according to the specified
+ *         parameters in the FMC_NAND_PCC_TimingTypeDef
  * @param  Device Pointer to NAND device instance
  * @param  Timing Pointer to NAND timing structure
  * @param  Bank NAND bank number
@@ -601,8 +585,7 @@ HAL_StatusTypeDef FMC_NAND_CommonSpace_Timing_Init(FMC_NAND_TypeDef *Device, con
 	assert_param(IS_FMC_HIZ_TIME(Timing->HiZSetupTime));
 	assert_param(IS_FMC_NAND_BANK(Bank));
 
-	/* Prevent unused argument(s) compilation warning if no assert_param
-	 * check */
+	/* Prevent unused argument(s) compilation warning if no assert_param check */
 	UNUSED(Bank);
 
 	/* NAND bank 3 registers configuration */
@@ -612,8 +595,8 @@ HAL_StatusTypeDef FMC_NAND_CommonSpace_Timing_Init(FMC_NAND_TypeDef *Device, con
 }
 
 /**
- * @brief  Initializes the FMC_NAND Attribute space Timing according to the
- * specified parameters in the FMC_NAND_PCC_TimingTypeDef
+ * @brief  Initializes the FMC_NAND Attribute space Timing according to the specified
+ *         parameters in the FMC_NAND_PCC_TimingTypeDef
  * @param  Device Pointer to NAND device instance
  * @param  Timing Pointer to NAND timing structure
  * @param  Bank NAND bank number
@@ -629,8 +612,7 @@ HAL_StatusTypeDef FMC_NAND_AttributeSpace_Timing_Init(FMC_NAND_TypeDef *Device, 
 	assert_param(IS_FMC_HIZ_TIME(Timing->HiZSetupTime));
 	assert_param(IS_FMC_NAND_BANK(Bank));
 
-	/* Prevent unused argument(s) compilation warning if no assert_param
-	 * check */
+	/* Prevent unused argument(s) compilation warning if no assert_param check */
 	UNUSED(Bank);
 
 	/* NAND bank 3 registers configuration */
@@ -655,8 +637,7 @@ HAL_StatusTypeDef FMC_NAND_DeInit(FMC_NAND_TypeDef *Device, uint32_t Bank)
 	__FMC_NAND_DISABLE(Device, Bank);
 
 	/* De-initialize the NAND Bank */
-	/* Prevent unused argument(s) compilation warning if no assert_param
-	 * check */
+	/* Prevent unused argument(s) compilation warning if no assert_param check */
 	UNUSED(Bank);
 
 	/* Set the FMC_NAND_BANK3 registers to their reset values */
@@ -700,8 +681,7 @@ HAL_StatusTypeDef FMC_NAND_ECC_Enable(FMC_NAND_TypeDef *Device, uint32_t Bank)
 	assert_param(IS_FMC_NAND_BANK(Bank));
 
 	/* Enable ECC feature */
-	/* Prevent unused argument(s) compilation warning if no assert_param
-	 * check */
+	/* Prevent unused argument(s) compilation warning if no assert_param check */
 	UNUSED(Bank);
 
 	SET_BIT(Device->PCR, FMC_PCR_ECCEN);
@@ -722,8 +702,7 @@ HAL_StatusTypeDef FMC_NAND_ECC_Disable(FMC_NAND_TypeDef *Device, uint32_t Bank)
 	assert_param(IS_FMC_NAND_BANK(Bank));
 
 	/* Disable ECC feature */
-	/* Prevent unused argument(s) compilation warning if no assert_param
-	 * check */
+	/* Prevent unused argument(s) compilation warning if no assert_param check */
 	UNUSED(Bank);
 
 	CLEAR_BIT(Device->PCR, FMC_PCR_ECCEN);
@@ -760,8 +739,7 @@ HAL_StatusTypeDef FMC_NAND_GetECC(const FMC_NAND_TypeDef *Device, uint32_t *ECCv
 		}
 	}
 
-	/* Prevent unused argument(s) compilation warning if no assert_param
-	 * check */
+	/* Prevent unused argument(s) compilation warning if no assert_param check */
 	UNUSED(Bank);
 
 	/* Get the ECCR register value */

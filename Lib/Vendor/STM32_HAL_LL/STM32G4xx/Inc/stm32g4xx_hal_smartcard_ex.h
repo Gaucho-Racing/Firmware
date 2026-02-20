@@ -38,40 +38,31 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-/** @addtogroup SMARTCARDEx_Exported_Constants  SMARTCARD Extended Exported
- * Constants
+/** @addtogroup SMARTCARDEx_Exported_Constants  SMARTCARD Extended Exported Constants
  * @{
  */
 
-/** @defgroup SMARTCARDEx_Transmission_Completion_Indication SMARTCARD
- * Transmission Completion Indication
+/** @defgroup SMARTCARDEx_Transmission_Completion_Indication SMARTCARD Transmission Completion Indication
  * @{
  */
-#define SMARTCARD_TCBGT                                                                                                                                                                                \
-	SMARTCARD_IT_TCBGT /*!< SMARTCARD transmission complete before guard                                                                                                                           \
-			      time */
-#define SMARTCARD_TC                                                                                                                                                                                   \
-	SMARTCARD_IT_TC /*!< SMARTCARD transmission complete (flag raised when                                                                                                                         \
-			   guard time has elapsed) */
+#define SMARTCARD_TCBGT SMARTCARD_IT_TCBGT /*!< SMARTCARD transmission complete before guard time */
+#define SMARTCARD_TC SMARTCARD_IT_TC	   /*!< SMARTCARD transmission complete (flag raised when guard time has elapsed) */
 /**
  * @}
  */
 
-/** @defgroup SMARTCARDEx_Advanced_Features_Initialization_Type SMARTCARD
- * advanced feature initialization type
+/** @defgroup SMARTCARDEx_Advanced_Features_Initialization_Type SMARTCARD advanced feature initialization type
  * @{
  */
-#define SMARTCARD_ADVFEATURE_NO_INIT 0x00000000U		/*!< No advanced feature initialization */
-#define SMARTCARD_ADVFEATURE_TXINVERT_INIT 0x00000001U		/*!< TX pin active level inversion */
-#define SMARTCARD_ADVFEATURE_RXINVERT_INIT 0x00000002U		/*!< RX pin active level inversion */
-#define SMARTCARD_ADVFEATURE_DATAINVERT_INIT 0x00000004U	/*!< Binary data inversion */
-#define SMARTCARD_ADVFEATURE_SWAP_INIT 0x00000008U		/*!< TX/RX pins swap */
-#define SMARTCARD_ADVFEATURE_RXOVERRUNDISABLE_INIT 0x00000010U	/*!< RX overrun disable */
-#define SMARTCARD_ADVFEATURE_DMADISABLEONERROR_INIT 0x00000020U /*!< DMA disable on Reception Error */
-#define SMARTCARD_ADVFEATURE_MSBFIRST_INIT 0x00000080U		/*!< Most significant bit sent/received first */
-#define SMARTCARD_ADVFEATURE_TXCOMPLETION                                                                                                                                                              \
-	0x00000100U /*!< TX completion indication before of after guard time                                                                                                                           \
-		     */
+#define SMARTCARD_ADVFEATURE_NO_INIT 0x00000000U		/*!< No advanced feature initialization                  */
+#define SMARTCARD_ADVFEATURE_TXINVERT_INIT 0x00000001U		/*!< TX pin active level inversion                       */
+#define SMARTCARD_ADVFEATURE_RXINVERT_INIT 0x00000002U		/*!< RX pin active level inversion                       */
+#define SMARTCARD_ADVFEATURE_DATAINVERT_INIT 0x00000004U	/*!< Binary data inversion                               */
+#define SMARTCARD_ADVFEATURE_SWAP_INIT 0x00000008U		/*!< TX/RX pins swap                                     */
+#define SMARTCARD_ADVFEATURE_RXOVERRUNDISABLE_INIT 0x00000010U	/*!< RX overrun disable                                  */
+#define SMARTCARD_ADVFEATURE_DMADISABLEONERROR_INIT 0x00000020U /*!< DMA disable on Reception Error                      */
+#define SMARTCARD_ADVFEATURE_MSBFIRST_INIT 0x00000080U		/*!< Most significant bit sent/received first            */
+#define SMARTCARD_ADVFEATURE_TXCOMPLETION 0x00000100U		/*!< TX completion indication before of after guard time */
 /**
  * @}
  */
@@ -86,8 +77,7 @@ extern "C" {
  * @}
  */
 
-/** @defgroup SMARTCARDEx_TXFIFO_threshold_level SMARTCARD TXFIFO threshold
- * level
+/** @defgroup SMARTCARDEx_TXFIFO_threshold_level SMARTCARD TXFIFO threshold level
  * @brief    SMARTCARD TXFIFO level
  * @{
  */
@@ -101,8 +91,7 @@ extern "C" {
  * @}
  */
 
-/** @defgroup SMARTCARDEx_RXFIFO_threshold_level SMARTCARD RXFIFO threshold
- * level
+/** @defgroup SMARTCARDEx_RXFIFO_threshold_level SMARTCARD RXFIFO threshold level
  * @brief    SMARTCARD RXFIFO level
  * @{
  */
@@ -121,9 +110,7 @@ extern "C" {
  *           - 0xXXXX  : Flag mask in the ISR register
  * @{
  */
-#define SMARTCARD_FLAG_TCBGT                                                                                                                                                                           \
-	USART_ISR_TCBGT				  /*!< SMARTCARD transmission complete before guard time                                                                                               \
-						     completion */
+#define SMARTCARD_FLAG_TCBGT USART_ISR_TCBGT	  /*!< SMARTCARD transmission complete before guard time completion */
 #define SMARTCARD_FLAG_REACK USART_ISR_REACK	  /*!< SMARTCARD receive enable acknowledge flag  */
 #define SMARTCARD_FLAG_TEACK USART_ISR_TEACK	  /*!< SMARTCARD transmit enable acknowledge flag */
 #define SMARTCARD_FLAG_BUSY USART_ISR_BUSY	  /*!< SMARTCARD busy flag                        */
@@ -132,8 +119,8 @@ extern "C" {
 #define SMARTCARD_FLAG_TXE USART_ISR_TXE_TXFNF	  /*!< SMARTCARD transmit data register empty     */
 #define SMARTCARD_FLAG_TXFNF USART_ISR_TXE_TXFNF  /*!< SMARTCARD TXFIFO not full                  */
 #define SMARTCARD_FLAG_TC USART_ISR_TC		  /*!< SMARTCARD transmission complete            */
-#define SMARTCARD_FLAG_RXNE USART_ISR_RXNE_RXFNE  /*!< SMARTCARD read data register not empty */
-#define SMARTCARD_FLAG_RXFNE USART_ISR_RXNE_RXFNE /*!< SMARTCARD RXFIFO not empty */
+#define SMARTCARD_FLAG_RXNE USART_ISR_RXNE_RXFNE  /*!< SMARTCARD read data register not empty     */
+#define SMARTCARD_FLAG_RXFNE USART_ISR_RXNE_RXFNE /*!< SMARTCARD RXFIFO not empty                 */
 #define SMARTCARD_FLAG_IDLE USART_ISR_IDLE	  /*!< SMARTCARD idle line detection              */
 #define SMARTCARD_FLAG_ORE USART_ISR_ORE	  /*!< SMARTCARD overrun error                    */
 #define SMARTCARD_FLAG_NE USART_ISR_NE		  /*!< SMARTCARD noise error                      */
@@ -170,13 +157,9 @@ extern "C" {
 #define SMARTCARD_IT_NE 0x0200U	 /*!< SMARTCARD noise error interruption   */
 #define SMARTCARD_IT_FE 0x0100U	 /*!< SMARTCARD frame error interruption   */
 
-#define SMARTCARD_IT_EOB 0x0C3BU /*!< SMARTCARD end of block interruption */
-#define SMARTCARD_IT_RTO                                                                                                                                                                               \
-	0x0B3AU /*!< SMARTCARD receiver timeout interruption                                                                                                                                           \
-		 */
-#define SMARTCARD_IT_TCBGT                                                                                                                                                                             \
-	0x1978U /*!< SMARTCARD transmission complete before guard time                                                                                                                                 \
-		   completion interruption */
+#define SMARTCARD_IT_EOB 0x0C3BU   /*!< SMARTCARD end of block interruption     */
+#define SMARTCARD_IT_RTO 0x0B3AU   /*!< SMARTCARD receiver timeout interruption */
+#define SMARTCARD_IT_TCBGT 0x1978U /*!< SMARTCARD transmission complete before guard time completion interruption */
 
 #define SMARTCARD_IT_RXFF 0x183FU /*!< SMARTCARD RXFIFO full interruption                  */
 #define SMARTCARD_IT_TXFE 0x173EU /*!< SMARTCARD TXFIFO empty interruption                 */
@@ -189,18 +172,16 @@ extern "C" {
 /** @defgroup SMARTCARDEx_IT_CLEAR_Flags SMARTCARD Interruption Clear Flags
  * @{
  */
-#define SMARTCARD_CLEAR_PEF USART_ICR_PECF	/*!< SMARTCARD parity error clear flag          */
-#define SMARTCARD_CLEAR_FEF USART_ICR_FECF	/*!< SMARTCARD framing error clear flag         */
-#define SMARTCARD_CLEAR_NEF USART_ICR_NECF	/*!< SMARTCARD noise error detected clear flag  */
-#define SMARTCARD_CLEAR_OREF USART_ICR_ORECF	/*!< SMARTCARD overrun error clear flag         */
-#define SMARTCARD_CLEAR_IDLEF USART_ICR_IDLECF	/*!< SMARTCARD idle line detected clear flag    */
-#define SMARTCARD_CLEAR_TXFECF USART_ICR_TXFECF /*!< TXFIFO empty Clear Flag                    */
-#define SMARTCARD_CLEAR_TCF USART_ICR_TCCF	/*!< SMARTCARD transmission complete clear flag */
-#define SMARTCARD_CLEAR_TCBGTF                                                                                                                                                                         \
-	USART_ICR_TCBGTCF		     /*!< SMARTCARD transmission complete before guard                                                                                                         \
-						time completion clear flag */
-#define SMARTCARD_CLEAR_RTOF USART_ICR_RTOCF /*!< SMARTCARD receiver time out clear flag     */
-#define SMARTCARD_CLEAR_EOBF USART_ICR_EOBCF /*!< SMARTCARD end of block clear flag          */
+#define SMARTCARD_CLEAR_PEF USART_ICR_PECF	 /*!< SMARTCARD parity error clear flag          */
+#define SMARTCARD_CLEAR_FEF USART_ICR_FECF	 /*!< SMARTCARD framing error clear flag         */
+#define SMARTCARD_CLEAR_NEF USART_ICR_NECF	 /*!< SMARTCARD noise error detected clear flag  */
+#define SMARTCARD_CLEAR_OREF USART_ICR_ORECF	 /*!< SMARTCARD overrun error clear flag         */
+#define SMARTCARD_CLEAR_IDLEF USART_ICR_IDLECF	 /*!< SMARTCARD idle line detected clear flag    */
+#define SMARTCARD_CLEAR_TXFECF USART_ICR_TXFECF	 /*!< TXFIFO empty Clear Flag                    */
+#define SMARTCARD_CLEAR_TCF USART_ICR_TCCF	 /*!< SMARTCARD transmission complete clear flag */
+#define SMARTCARD_CLEAR_TCBGTF USART_ICR_TCBGTCF /*!< SMARTCARD transmission complete before guard time completion clear flag */
+#define SMARTCARD_CLEAR_RTOF USART_ICR_RTOCF	 /*!< SMARTCARD receiver time out clear flag     */
+#define SMARTCARD_CLEAR_EOBF USART_ICR_EOBCF	 /*!< SMARTCARD end of block clear flag          */
 /**
  * @}
  */
@@ -216,10 +197,9 @@ extern "C" {
 
 /** @brief  Set the Transmission Completion flag
  * @param  __HANDLE__ specifies the SMARTCARD Handle.
- * @note  If TCBGT (Transmission Complete Before Guard Time) flag is not
- * available or if AdvancedInit.TxCompletionIndication is not already filled,
- * the latter is forced to SMARTCARD_TC (transmission completion indication when
- * guard time has elapsed).
+ * @note  If TCBGT (Transmission Complete Before Guard Time) flag is not available or if
+ *        AdvancedInit.TxCompletionIndication is not already filled, the latter is forced
+ *        to SMARTCARD_TC (transmission completion indication when guard time has elapsed).
  * @retval None
  */
 #define SMARTCARD_TRANSMISSION_COMPLETION_SETTING(__HANDLE__)                                                                                                                                          \
@@ -233,15 +213,14 @@ extern "C" {
 
 /** @brief  Return the transmission completion flag.
  * @param  __HANDLE__ specifies the SMARTCARD Handle.
- * @note  Based on AdvancedInit.TxCompletionIndication setting, return TC or
- * TCBGT flag. When TCBGT flag (Transmission Complete Before Guard Time) is not
- * available, TC flag is reported.
+ * @note  Based on AdvancedInit.TxCompletionIndication setting, return TC or TCBGT flag.
+ *        When TCBGT flag (Transmission Complete Before Guard Time) is not available, TC flag is
+ *        reported.
  * @retval Transmission completion flag
  */
 #define SMARTCARD_TRANSMISSION_COMPLETION_FLAG(__HANDLE__) (((__HANDLE__)->AdvancedInit.TxCompletionIndication == SMARTCARD_TC) ? (SMARTCARD_FLAG_TC) : (SMARTCARD_FLAG_TCBGT))
 
-/** @brief Ensure that SMARTCARD frame transmission completion used flag is
- * valid.
+/** @brief Ensure that SMARTCARD frame transmission completion used flag is valid.
  * @param __TXCOMPLETE__ SMARTCARD frame transmission completion used flag.
  * @retval SET (__TXCOMPLETE__ is valid) or RESET (__TXCOMPLETE__ is invalid)
  */

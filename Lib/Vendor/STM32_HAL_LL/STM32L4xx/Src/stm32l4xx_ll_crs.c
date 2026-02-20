@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    stm32l4xx_ll_crs.h
+ * @file    stm32l4xx_ll_crs.c
  * @author  MCD Application Team
  * @brief   CRS LL module driver.
  ******************************************************************************
@@ -15,6 +15,7 @@
  *
  ******************************************************************************
  */
+
 #if defined(USE_FULL_LL_DRIVER)
 
 /* Includes ------------------------------------------------------------------*/
@@ -48,8 +49,7 @@
  */
 
 /**
- * @brief  De-Initializes CRS peripheral registers to their default reset
- * values.
+ * @brief  De-Initializes CRS peripheral registers to their default reset values.
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: CRS registers are de-initialized
  *          - ERROR: not applicable

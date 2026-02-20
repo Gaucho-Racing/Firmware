@@ -44,8 +44,7 @@
 #elif defined(STM32G411xB) || defined(STM32G411xC) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32GBK1CB) || defined(STM32G491xx) || defined(STM32G4A1xx)
 #define PWR_PORTF_AVAILABLE_PINS 0x00000607U /* PF0..PF2 and PF9 and PF10 */
 #define PWR_PORTG_AVAILABLE_PINS 0x00000400U /* PG10 */
-#endif					     /* STM32G471xx || STM32G473xx || STM32G414xx || STM32G474xx ||                                                                                            \
-						STM32G483xx || STM32G484xx */
+#endif					     /* STM32G471xx || STM32G473xx || STM32G414xx || STM32G474xx || STM32G483xx || STM32G484xx */
 
 /** @defgroup PWR_Extended_Private_Defines PWR Extended Private Defines
  * @{
@@ -54,12 +53,10 @@
 /** @defgroup PWREx_PVM_Mode_Mask PWR PVM Mode Mask
  * @{
  */
-#define PVM_MODE_IT                                                                                                                                                                                    \
-	0x00010000U		     /*!< Mask for interruption yielded by PVM threshold                                                                                                               \
-					crossing */
-#define PVM_MODE_EVT 0x00020000U     /*!< Mask for event yielded by PVM threshold crossing */
-#define PVM_RISING_EDGE 0x00000001U  /*!< Mask for rising edge set as PVM trigger */
-#define PVM_FALLING_EDGE 0x00000002U /*!< Mask for falling edge set as PVM trigger */
+#define PVM_MODE_IT 0x00010000U	     /*!< Mask for interruption yielded by PVM threshold crossing */
+#define PVM_MODE_EVT 0x00020000U     /*!< Mask for event yielded by PVM threshold crossing        */
+#define PVM_RISING_EDGE 0x00000001U  /*!< Mask for rising edge set as PVM trigger                 */
+#define PVM_FALLING_EDGE 0x00000002U /*!< Mask for falling edge set as PVM trigger                */
 /**
  * @}
  */
@@ -85,14 +82,12 @@
  * @{
  */
 
-/** @defgroup PWREx_Exported_Functions_Group1 Extended Peripheral Control
-functions
+/** @defgroup PWREx_Exported_Functions_Group1 Extended Peripheral Control functions
   *  @brief   Extended Peripheral Control functions
   *
 @verbatim
  ===============================================================================
-	      ##### Extended Peripheral Initialization and de-initialization
-functions #####
+	      ##### Extended Peripheral Initialization and de-initialization functions #####
  ===============================================================================
     [..]
 
@@ -102,17 +97,15 @@ functions #####
 
 /**
  * @brief Return Voltage Scaling Range.
- * @retval VOS bit field (PWR_REGULATOR_VOLTAGE_SCALE1 or
- * PWR_REGULATOR_VOLTAGE_SCALE2 or PWR_REGULATOR_VOLTAGE_SCALE1_BOOST when
- * applicable)
+ * @retval VOS bit field (PWR_REGULATOR_VOLTAGE_SCALE1 or PWR_REGULATOR_VOLTAGE_SCALE2
+ *         or PWR_REGULATOR_VOLTAGE_SCALE1_BOOST when applicable)
  */
 uint32_t HAL_PWREx_GetVoltageRange(void)
 {
 	if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2) {
 		return PWR_REGULATOR_VOLTAGE_SCALE2;
 	} else if (READ_BIT(PWR->CR5, PWR_CR5_R1MODE) == PWR_CR5_R1MODE) {
-		/* PWR_CR5_R1MODE bit set means that Range 1 Boost is disabled
-		 */
+		/* PWR_CR5_R1MODE bit set means that Range 1 Boost is disabled */
 		return PWR_REGULATOR_VOLTAGE_SCALE1;
 	} else {
 		return PWR_REGULATOR_VOLTAGE_SCALE1_BOOST;
@@ -124,21 +117,21 @@ uint32_t HAL_PWREx_GetVoltageRange(void)
  * @param  VoltageScaling: specifies the regulator output voltage to achieve
  *         a tradeoff between performance and power consumption.
  *          This parameter can be one of the following values:
- *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1_BOOST when available,
- * Regulator voltage output range 1 boost mode, typical output voltage at 1.28
- * V, system frequency up to 170 MHz.
- *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1 Regulator voltage output
- * range 1 mode, typical output voltage at 1.2 V, system frequency up to 150
- * MHz.
- *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE2 Regulator voltage output
- * range 2 mode, typical output voltage at 1.0 V, system frequency up to 26 MHz.
- * @note  When moving from Range 1 to Range 2, the system frequency must be
- * decreased to a value below 26 MHz before calling
- * HAL_PWREx_ControlVoltageScaling() API. When moving from Range 2 to Range 1,
- * the system frequency can be increased to a value up to 150 MHz after calling
- * HAL_PWREx_ControlVoltageScaling() API. When moving from Range 1 to Boost Mode
- * Range 1, the system frequency can be increased to a value up to 170 MHz after
- * calling HAL_PWREx_ControlVoltageScaling() API.
+ *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1_BOOST when available, Regulator voltage output range 1 boost mode,
+ *                                                typical output voltage at 1.28 V,
+ *                                                system frequency up to 170 MHz.
+ *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1 Regulator voltage output range 1 mode,
+ *                                                typical output voltage at 1.2 V,
+ *                                                system frequency up to 150 MHz.
+ *            @arg @ref PWR_REGULATOR_VOLTAGE_SCALE2 Regulator voltage output range 2 mode,
+ *                                                typical output voltage at 1.0 V,
+ *                                                system frequency up to 26 MHz.
+ * @note  When moving from Range 1 to Range 2, the system frequency must be decreased to
+ *        a value below 26 MHz before calling HAL_PWREx_ControlVoltageScaling() API.
+ *        When moving from Range 2 to Range 1, the system frequency can be increased to
+ *        a value up to 150 MHz after calling HAL_PWREx_ControlVoltageScaling() API.
+ *        When moving from Range 1 to Boost Mode Range 1, the system frequency can be increased to
+ *        a value up to 170 MHz after calling HAL_PWREx_ControlVoltageScaling() API.
  * @note  When moving from Range 2 to Range 1, the API waits for VOSF flag to be
  *        cleared before returning the status. If the flag is not cleared within
  *        50 microseconds, HAL_TIMEOUT status is reported.
@@ -170,8 +163,7 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 		}
 		/* If current range is range 1 normal or boost mode */
 		else {
-			/* Enable Range 1 Boost (no issue if bit already reset)
-			 */
+			/* Enable Range 1 Boost (no issue if bit already reset) */
 			CLEAR_BIT(PWR->CR5, PWR_CR5_R1MODE);
 		}
 	} else if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1) {
@@ -194,8 +186,7 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 		}
 		/* If current range is range 1 normal or boost mode */
 		else {
-			/* Disable Range 1 Boost (no issue if bit already set)
-			 */
+			/* Disable Range 1 Boost (no issue if bit already set) */
 			SET_BIT(PWR->CR5, PWR_CR5_R1MODE);
 		}
 	} else {
@@ -210,8 +201,7 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 
 /**
  * @brief Enable battery charging.
- *        When VDD is present, charge the external battery on VBAT through an
- * internal resistor.
+ *        When VDD is present, charge the external battery on VBAT through an internal resistor.
  * @param  ResistorSelection: specifies the resistor impedance.
  *          This parameter can be one of the following values:
  *            @arg @ref PWR_BATTERY_CHARGING_RESISTOR_5     5 kOhms resistor
@@ -258,19 +248,18 @@ void HAL_PWREx_DisableInternalWakeUpLine(void)
 
 /**
  * @brief Enable GPIO pull-up state in Standby and Shutdown modes.
- * @note  Set the relevant PUy bits of PWR_PUCRx register to configure the I/O
- * in pull-up state in Standby and Shutdown modes.
+ * @note  Set the relevant PUy bits of PWR_PUCRx register to configure the I/O in
+ *        pull-up state in Standby and Shutdown modes.
  * @note  This state is effective in Standby and Shutdown modes only if APC bit
  *        is set through HAL_PWREx_EnablePullUpPullDownConfig() API.
  * @note  The configuration is lost when exiting the Shutdown mode due to the
  *        power-on reset, maintained when exiting the Standby mode.
- * @note  To avoid any conflict at Standby and Shutdown modes exits, the
- * corresponding PDy bit of PWR_PDCRx register is cleared unless it is reserved.
- * @note  Even if a PUy bit to set is reserved, the other PUy bits entered as
- * input parameter at the same time are set.
- * @param  GPIO: Specify the IO port. This parameter can be PWR_GPIO_A, ...,
- * PWR_GPIO_G (or PWR_GPIO_I depending on the devices) to select the GPIO
- * peripheral.
+ * @note  To avoid any conflict at Standby and Shutdown modes exits, the corresponding
+ *        PDy bit of PWR_PDCRx register is cleared unless it is reserved.
+ * @note  Even if a PUy bit to set is reserved, the other PUy bits entered as input
+ *        parameter at the same time are set.
+ * @param  GPIO: Specify the IO port. This parameter can be PWR_GPIO_A, ..., PWR_GPIO_G
+ *         (or PWR_GPIO_I depending on the devices) to select the GPIO peripheral.
  * @param  GPIONumber: Specify the I/O pins numbers.
  *         This parameter can be one of the following values:
  *         PWR_GPIO_BIT_0, ..., PWR_GPIO_BIT_15 (except for the port where less
@@ -324,13 +313,12 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
 
 /**
  * @brief Disable GPIO pull-up state in Standby mode and Shutdown modes.
- * @note  Reset the relevant PUy bits of PWR_PUCRx register used to configure
- * the I/O in pull-up state in Standby and Shutdown modes.
- * @note  Even if a PUy bit to reset is reserved, the other PUy bits entered as
- * input parameter at the same time are reset.
- * @param  GPIO: Specifies the IO port. This parameter can be PWR_GPIO_A, ...,
- * PWR_GPIO_G (or PWR_GPIO_I depending on the devices) to select the GPIO
- * peripheral.
+ * @note  Reset the relevant PUy bits of PWR_PUCRx register used to configure the I/O
+ *        in pull-up state in Standby and Shutdown modes.
+ * @note  Even if a PUy bit to reset is reserved, the other PUy bits entered as input
+ *        parameter at the same time are reset.
+ * @param  GPIO: Specifies the IO port. This parameter can be PWR_GPIO_A, ..., PWR_GPIO_G
+ *          (or PWR_GPIO_I depending on the devices) to select the GPIO peripheral.
  * @param  GPIONumber: Specify the I/O pins numbers.
  *         This parameter can be one of the following values:
  *         PWR_GPIO_BIT_0, ..., PWR_GPIO_BIT_15 (except for the port where less
@@ -377,19 +365,18 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber
 
 /**
  * @brief Enable GPIO pull-down state in Standby and Shutdown modes.
- * @note  Set the relevant PDy bits of PWR_PDCRx register to configure the I/O
- * in pull-down state in Standby and Shutdown modes.
+ * @note  Set the relevant PDy bits of PWR_PDCRx register to configure the I/O in
+ *        pull-down state in Standby and Shutdown modes.
  * @note  This state is effective in Standby and Shutdown modes only if APC bit
  *        is set through HAL_PWREx_EnablePullUpPullDownConfig() API.
  * @note  The configuration is lost when exiting the Shutdown mode due to the
  *        power-on reset, maintained when exiting the Standby mode.
- * @note  To avoid any conflict at Standby and Shutdown modes exits, the
- * corresponding PUy bit of PWR_PUCRx register is cleared unless it is reserved.
- * @note  Even if a PDy bit to set is reserved, the other PDy bits entered as
- * input parameter at the same time are set.
- * @param  GPIO: Specify the IO port. This parameter can be
- * PWR_GPIO_A..PWR_GPIO_G (or PWR_GPIO_I depending on the devices) to select the
- * GPIO peripheral.
+ * @note  To avoid any conflict at Standby and Shutdown modes exits, the corresponding
+ *        PUy bit of PWR_PUCRx register is cleared unless it is reserved.
+ * @note  Even if a PDy bit to set is reserved, the other PDy bits entered as input
+ *        parameter at the same time are set.
+ * @param  GPIO: Specify the IO port. This parameter can be PWR_GPIO_A..PWR_GPIO_G
+ *         (or PWR_GPIO_I depending on the devices) to select the GPIO peripheral.
  * @param  GPIONumber: Specify the I/O pins numbers.
  *         This parameter can be one of the following values:
  *         PWR_GPIO_BIT_0, ..., PWR_GPIO_BIT_15 (except for the port where less
@@ -443,13 +430,12 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumbe
 
 /**
  * @brief Disable GPIO pull-down state in Standby and Shutdown modes.
- * @note  Reset the relevant PDy bits of PWR_PDCRx register used to configure
- * the I/O in pull-down state in Standby and Shutdown modes.
- * @note  Even if a PDy bit to reset is reserved, the other PDy bits entered as
- * input parameter at the same time are reset.
- * @param  GPIO: Specifies the IO port. This parameter can be
- * PWR_GPIO_A..PWR_GPIO_G (or PWR_GPIO_I depending on the devices) to select the
- * GPIO peripheral.
+ * @note  Reset the relevant PDy bits of PWR_PDCRx register used to configure the I/O
+ *        in pull-down state in Standby and Shutdown modes.
+ * @note  Even if a PDy bit to reset is reserved, the other PDy bits entered as input
+ *        parameter at the same time are reset.
+ * @param  GPIO: Specifies the IO port. This parameter can be PWR_GPIO_A..PWR_GPIO_G
+ *         (or PWR_GPIO_I depending on the devices) to select the GPIO peripheral.
  * @param  GPIONumber: Specify the I/O pins numbers.
  *         This parameter can be one of the following values:
  *         PWR_GPIO_BIT_0, ..., PWR_GPIO_BIT_15 (except for the port where less
@@ -496,14 +482,12 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumb
 
 /**
  * @brief Enable pull-up and pull-down configuration.
- * @note  When APC bit is set, the I/O pull-up and pull-down configurations
- * defined in PWR_PUCRx and PWR_PDCRx registers are applied in Standby and
- * Shutdown modes.
- * @note  Pull-up set by PUy bit of PWR_PUCRx register is not activated if the
- * corresponding PDy bit of PWR_PDCRx register is also set (pull-down
- * configuration priority is higher). HAL_PWREx_EnableGPIOPullUp() and
- * HAL_PWREx_EnableGPIOPullDown() API's ensure there is no conflict when setting
- * PUy or PDy bit.
+ * @note  When APC bit is set, the I/O pull-up and pull-down configurations defined in
+ *        PWR_PUCRx and PWR_PDCRx registers are applied in Standby and Shutdown modes.
+ * @note  Pull-up set by PUy bit of PWR_PUCRx register is not activated if the corresponding
+ *        PDy bit of PWR_PDCRx register is also set (pull-down configuration priority is higher).
+ *        HAL_PWREx_EnableGPIOPullUp() and HAL_PWREx_EnableGPIOPullDown() API's ensure there
+ *        is no conflict when setting PUy or PDy bit.
  * @retval None
  */
 void HAL_PWREx_EnablePullUpPullDownConfig(void)
@@ -513,9 +497,8 @@ void HAL_PWREx_EnablePullUpPullDownConfig(void)
 
 /**
  * @brief Disable pull-up and pull-down configuration.
- * @note  When APC bit is cleared, the I/O pull-up and pull-down configurations
- * defined in PWR_PUCRx and PWR_PDCRx registers are not applied in Standby and
- * Shutdown modes.
+ * @note  When APC bit is cleared, the I/O pull-up and pull-down configurations defined in
+ *        PWR_PUCRx and PWR_PDCRx registers are not applied in Standby and Shutdown modes.
  * @retval None
  */
 void HAL_PWREx_DisablePullUpPullDownConfig(void)
@@ -549,8 +532,7 @@ void HAL_PWREx_DisableSRAM2ContentRetention(void)
 
 #if defined(PWR_CR2_PVME1)
 /**
- * @brief Enable the Power Voltage Monitoring 1: VDDA versus FASTCOMP minimum
- * voltage.
+ * @brief Enable the Power Voltage Monitoring 1: VDDA versus FASTCOMP minimum voltage.
  * @retval None
  */
 void HAL_PWREx_EnablePVM1(void)
@@ -559,8 +541,7 @@ void HAL_PWREx_EnablePVM1(void)
 }
 
 /**
- * @brief Disable the Power Voltage Monitoring 1: VDDA versus FASTCOMP minimum
- * voltage.
+ * @brief Disable the Power Voltage Monitoring 1: VDDA versus FASTCOMP minimum voltage.
  * @retval None
  */
 void HAL_PWREx_DisablePVM1(void)
@@ -571,8 +552,7 @@ void HAL_PWREx_DisablePVM1(void)
 
 #if defined(PWR_CR2_PVME2)
 /**
- * @brief Enable the Power Voltage Monitoring 2: VDDA versus FASTDAC minimum
- * voltage.
+ * @brief Enable the Power Voltage Monitoring 2: VDDA versus FASTDAC minimum voltage.
  * @retval None
  */
 void HAL_PWREx_EnablePVM2(void)
@@ -581,8 +561,7 @@ void HAL_PWREx_EnablePVM2(void)
 }
 
 /**
- * @brief Disable the Power Voltage Monitoring 2: VDDA versus FASTDAC minimum
- * voltage.
+ * @brief Disable the Power Voltage Monitoring 2: VDDA versus FASTDAC minimum voltage.
  * @retval None
  */
 void HAL_PWREx_DisablePVM2(void)
@@ -592,8 +571,7 @@ void HAL_PWREx_DisablePVM2(void)
 #endif /* PWR_CR2_PVME2 */
 
 /**
- * @brief Enable the Power Voltage Monitoring 3: VDDA versus ADC minimum
- * voltage 1.62V.
+ * @brief Enable the Power Voltage Monitoring 3: VDDA versus ADC minimum voltage 1.62V.
  * @retval None
  */
 void HAL_PWREx_EnablePVM3(void)
@@ -602,8 +580,7 @@ void HAL_PWREx_EnablePVM3(void)
 }
 
 /**
- * @brief Disable the Power Voltage Monitoring 3: VDDA versus ADC minimum
- * voltage 1.62V.
+ * @brief Disable the Power Voltage Monitoring 3: VDDA versus ADC minimum voltage 1.62V.
  * @retval None
  */
 void HAL_PWREx_DisablePVM3(void)
@@ -612,8 +589,7 @@ void HAL_PWREx_DisablePVM3(void)
 }
 
 /**
- * @brief Enable the Power Voltage Monitoring 4: VDDA versus OPAMP/DAC minimum
- * voltage 1.8V.
+ * @brief Enable the Power Voltage Monitoring 4: VDDA versus OPAMP/DAC minimum voltage 1.8V.
  * @retval None
  */
 void HAL_PWREx_EnablePVM4(void)
@@ -622,8 +598,7 @@ void HAL_PWREx_EnablePVM4(void)
 }
 
 /**
- * @brief Disable the Power Voltage Monitoring 4: VDDA versus OPAMP/DAC minimum
- * voltage 1.8V.
+ * @brief Disable the Power Voltage Monitoring 4: VDDA versus OPAMP/DAC minimum voltage 1.8V.
  * @retval None
  */
 void HAL_PWREx_DisablePVM4(void)
@@ -636,14 +611,14 @@ void HAL_PWREx_DisablePVM4(void)
  * @param sConfigPVM: pointer to a PWR_PVMTypeDef structure that contains the
  *        PVM configuration information.
  * @note The API configures a single PVM according to the information contained
- *       in the input structure. To configure several PVMs, the API must be
- * singly called for each PVM used.
+ *       in the input structure. To configure several PVMs, the API must be singly
+ *       called for each PVM used.
  * @note Refer to the electrical characteristics of your device datasheet for
  *         more details about the voltage thresholds corresponding to each
  *         detection level and to each monitored supply.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
+HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef const *sConfigPVM)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -657,8 +632,7 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 	switch (sConfigPVM->PVMType) {
 #if defined(PWR_CR2_PVME1)
 		case PWR_PVM_1:
-			/* Clear any previous config. Keep it clear if no event
-			 * or IT mode is selected */
+			/* Clear any previous config. Keep it clear if no event or IT mode is selected */
 			__HAL_PWR_PVM1_EXTI_DISABLE_EVENT();
 			__HAL_PWR_PVM1_EXTI_DISABLE_IT();
 			__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();
@@ -687,8 +661,7 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 
 #if defined(PWR_CR2_PVME2)
 		case PWR_PVM_2:
-			/* Clear any previous config. Keep it clear if no event
-			 * or IT mode is selected */
+			/* Clear any previous config. Keep it clear if no event or IT mode is selected */
 			__HAL_PWR_PVM2_EXTI_DISABLE_EVENT();
 			__HAL_PWR_PVM2_EXTI_DISABLE_IT();
 			__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();
@@ -716,8 +689,7 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 #endif /* PWR_CR2_PVME2 */
 
 		case PWR_PVM_3:
-			/* Clear any previous config. Keep it clear if no event
-			 * or IT mode is selected */
+			/* Clear any previous config. Keep it clear if no event or IT mode is selected */
 			__HAL_PWR_PVM3_EXTI_DISABLE_EVENT();
 			__HAL_PWR_PVM3_EXTI_DISABLE_IT();
 			__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();
@@ -744,8 +716,7 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 			break;
 
 		case PWR_PVM_4:
-			/* Clear any previous config. Keep it clear if no event
-			 * or IT mode is selected */
+			/* Clear any previous config. Keep it clear if no event or IT mode is selected */
 			__HAL_PWR_PVM4_EXTI_DISABLE_EVENT();
 			__HAL_PWR_PVM4_EXTI_DISABLE_IT();
 			__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();
@@ -781,14 +752,12 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 
 /**
  * @brief Enter Low-power Run mode
- * @note  In Low-power Run mode, all I/O pins keep the same state as in Run
- * mode.
- * @note  When Regulator is set to PWR_LOWPOWERREGULATOR_ON, the user can
- * optionally configure the Flash in power-down monde in setting the RUN_PD bit
- * in FLASH_ACR register. Additionally, the clock frequency must be reduced
- * below 2 MHz. Setting RUN_PD in FLASH_ACR then appropriately reducing the
- * clock frequency must be done before calling HAL_PWREx_EnableLowPowerRunMode()
- * API.
+ * @note  In Low-power Run mode, all I/O pins keep the same state as in Run mode.
+ * @note  When Regulator is set to PWR_LOWPOWERREGULATOR_ON, the user can optionally configure the
+ *        Flash in power-down monde in setting the RUN_PD bit in FLASH_ACR register.
+ *        Additionally, the clock frequency must be reduced below 2 MHz.
+ *        Setting RUN_PD in FLASH_ACR then appropriately reducing the clock frequency must
+ *        be done before calling HAL_PWREx_EnableLowPowerRunMode() API.
  * @retval None
  */
 void HAL_PWREx_EnableLowPowerRunMode(void)
@@ -799,10 +768,10 @@ void HAL_PWREx_EnableLowPowerRunMode(void)
 
 /**
  * @brief Exit Low-power Run mode.
- * @note  Before HAL_PWREx_DisableLowPowerRunMode() completion, the function
- * checks that REGLPF has been properly reset (otherwise,
- * HAL_PWREx_DisableLowPowerRunMode returns HAL_TIMEOUT status). The system
- * clock frequency can then be increased above 2 MHz.
+ * @note  Before HAL_PWREx_DisableLowPowerRunMode() completion, the function checks that
+ *        REGLPF has been properly reset (otherwise, HAL_PWREx_DisableLowPowerRunMode
+ *        returns HAL_TIMEOUT status). The system clock frequency can then be
+ *        increased above 2 MHz.
  * @retval HAL Status
  */
 HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void)
@@ -829,20 +798,19 @@ HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void)
  * @note  In Stop 0 mode, main and low voltage regulators are ON.
  * @note  In Stop 0 mode, all I/O pins keep the same state as in Run mode.
  * @note  All clocks in the VCORE domain are stopped; the PLL, the HSI
- *        and the HSE oscillators are disabled. Some peripherals with the wakeup
- * capability (I2Cx, USARTx and LPUART) can switch on the HSI to receive a
- * frame, and switch off the HSI after receiving the frame if it is not a wakeup
- * frame. In this case, the HSI clock is propagated only to the peripheral
- * requesting it. SRAM1, SRAM2 and register contents are preserved. The BOR is
- * available.
+ *        and the HSE oscillators are disabled. Some peripherals with the wakeup capability
+ *        (I2Cx, USARTx and LPUART) can switch on the HSI to receive a frame, and switch off the HSI
+ *        after receiving the frame if it is not a wakeup frame. In this case, the HSI clock is propagated
+ *        only to the peripheral requesting it.
+ *        SRAM1, SRAM2 and register contents are preserved.
+ *        The BOR is available.
  * @note  When exiting Stop 0 mode by issuing an interrupt or a wakeup event,
- *         the HSI RC oscillator is selected as system clock if STOPWUCK bit in
- * RCC_CFGR register is set; the HSI oscillator is selected if STOPWUCK is
- * cleared.
- * @note  By keeping the internal regulator ON during Stop 0 mode, the
- * consumption is higher although the startup time is reduced.
- * @param STOPEntry  specifies if Stop mode in entered with WFI or WFE
- * instruction. This parameter can be one of the following values:
+ *         the HSI RC oscillator is selected as system clock if STOPWUCK bit in RCC_CFGR register
+ *         is set; the HSI oscillator is selected if STOPWUCK is cleared.
+ * @note  By keeping the internal regulator ON during Stop 0 mode, the consumption
+ *         is higher although the startup time is reduced.
+ * @param STOPEntry  specifies if Stop mode in entered with WFI or WFE instruction.
+ *          This parameter can be one of the following values:
  *            @arg @ref PWR_STOPENTRY_WFI  Enter Stop mode with WFI instruction
  *            @arg @ref PWR_STOPENTRY_WFE  Enter Stop mode with WFE instruction
  * @retval None
@@ -858,8 +826,7 @@ void HAL_PWREx_EnterSTOP0Mode(uint8_t STOPEntry)
 	/* Set SLEEPDEEP bit of Cortex System Control Register */
 	SET_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
 
-	/* Select Stop mode entry
-	 * --------------------------------------------------*/
+	/* Select Stop mode entry --------------------------------------------------*/
 	if (STOPEntry == PWR_STOPENTRY_WFI) {
 		/* Request Wait For Interrupt */
 		__WFI();
@@ -879,19 +846,18 @@ void HAL_PWREx_EnterSTOP0Mode(uint8_t STOPEntry)
  * @note  In Stop 1 mode, only low power voltage regulator is ON.
  * @note  In Stop 1 mode, all I/O pins keep the same state as in Run mode.
  * @note  All clocks in the VCORE domain are stopped; the PLL, the HSI
- *        and the HSE oscillators are disabled. Some peripherals with the wakeup
- * capability (I2Cx, USARTx and LPUART) can switch on the HSI to receive a
- * frame, and switch off the HSI after receiving the frame if it is not a wakeup
- * frame. In this case, the HSI clock is propagated only to the peripheral
- * requesting it. SRAM1, SRAM2 and register contents are preserved. The BOR is
- * available.
+ *        and the HSE oscillators are disabled. Some peripherals with the wakeup capability
+ *        (I2Cx, USARTx and LPUART) can switch on the HSI to receive a frame, and switch off the HSI
+ *        after receiving the frame if it is not a wakeup frame. In this case, the HSI clock is propagated
+ *        only to the peripheral requesting it.
+ *        SRAM1, SRAM2 and register contents are preserved.
+ *        The BOR is available.
  * @note  When exiting Stop 1 mode by issuing an interrupt or a wakeup event,
- *         the HSI RC oscillator is selected as system clock if STOPWUCK bit in
- * RCC_CFGR register is set.
- * @note  Due to low power mode, an additional startup delay is incurred when
- * waking up from Stop 1 mode.
- * @param STOPEntry  specifies if Stop mode in entered with WFI or WFE
- * instruction. This parameter can be one of the following values:
+ *         the HSI RC oscillator is selected as system clock if STOPWUCK bit in RCC_CFGR register
+ *         is set.
+ * @note  Due to low power mode, an additional startup delay is incurred when waking up from Stop 1 mode.
+ * @param STOPEntry  specifies if Stop mode in entered with WFI or WFE instruction.
+ *          This parameter can be one of the following values:
  *            @arg @ref PWR_STOPENTRY_WFI  Enter Stop mode with WFI instruction
  *            @arg @ref PWR_STOPENTRY_WFE  Enter Stop mode with WFE instruction
  * @retval None
@@ -907,8 +873,7 @@ void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry)
 	/* Set SLEEPDEEP bit of Cortex System Control Register */
 	SET_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
 
-	/* Select Stop mode entry
-	 * --------------------------------------------------*/
+	/* Select Stop mode entry --------------------------------------------------*/
 	if (STOPEntry == PWR_STOPENTRY_WFI) {
 		/* Request Wait For Interrupt */
 		__WFI();
@@ -925,12 +890,11 @@ void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry)
 
 /**
  * @brief Enter Shutdown mode.
- * @note  In Shutdown mode, the PLL, the HSI, the LSI and the HSE oscillators
- * are switched off. The voltage regulator is disabled and Vcore domain is
- * powered off. SRAM1, SRAM2 and registers contents are lost except for
- * registers in the Backup domain. The BOR is not available.
- * @note  The I/Os can be configured either with a pull-up or pull-down or can
- * be kept in analog state.
+ * @note  In Shutdown mode, the PLL, the HSI, the LSI and the HSE oscillators are switched
+ *        off. The voltage regulator is disabled and Vcore domain is powered off.
+ *        SRAM1, SRAM2 and registers contents are lost except for registers in the Backup domain.
+ *        The BOR is not available.
+ * @note  The I/Os can be configured either with a pull-up or pull-down or can be kept in analog state.
  * @retval None
  */
 void HAL_PWREx_EnterSHUTDOWNMode(void)
@@ -1007,9 +971,8 @@ void HAL_PWREx_PVD_PVM_IRQHandler(void)
  */
 __weak void HAL_PWREx_PVM1Callback(void)
 {
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, HAL_PWREx_PVM1Callback() API can be implemented in the user
-	   file
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  HAL_PWREx_PVM1Callback() API can be implemented in the user file
 	 */
 }
 #endif /* PWR_CR2_PVME1 */
@@ -1021,9 +984,8 @@ __weak void HAL_PWREx_PVM1Callback(void)
  */
 __weak void HAL_PWREx_PVM2Callback(void)
 {
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, HAL_PWREx_PVM2Callback() API can be implemented in the user
-	   file
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  HAL_PWREx_PVM2Callback() API can be implemented in the user file
 	 */
 }
 #endif /* PWR_CR2_PVME2 */
@@ -1034,9 +996,8 @@ __weak void HAL_PWREx_PVM2Callback(void)
  */
 __weak void HAL_PWREx_PVM3Callback(void)
 {
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, HAL_PWREx_PVM3Callback() API can be implemented in the user
-	   file
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  HAL_PWREx_PVM3Callback() API can be implemented in the user file
 	 */
 }
 
@@ -1046,9 +1007,8 @@ __weak void HAL_PWREx_PVM3Callback(void)
  */
 __weak void HAL_PWREx_PVM4Callback(void)
 {
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, HAL_PWREx_PVM4Callback() API can be implemented in the user
-	   file
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  HAL_PWREx_PVM4Callback() API can be implemented in the user file
 	 */
 }
 
@@ -1065,8 +1025,8 @@ void HAL_PWREx_EnableUCPDStandbyMode(void)
 
 /**
  * @brief Disable UCPD configuration memorization in Standby.
- * @note  This function must be called on exiting the Standby mode and before
- * any UCPD configuration update.
+ * @note  This function must be called on exiting the Standby mode and before any UCPD
+ *        configuration update.
  * @retval None
  */
 void HAL_PWREx_DisableUCPDStandbyMode(void)
@@ -1092,11 +1052,11 @@ void HAL_PWREx_EnableUCPDDeadBattery(void)
 /**
  * @brief Disable the USB Type-C dead battery pull-down behavior
  *        on UCPDx_CC1 and UCPDx_CC2 pins
- * @note After exiting reset, the USB Type-C dead battery behavior will be
- * enabled, which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ * @note After exiting reset, the USB Type-C dead battery behavior will be enabled,
+ *       which may have a pull-down effect on CC1 and CC2 pins.
+ *       It is recommended to disable it in all cases, either to stop this pull-down
+ *       or to hand over control to the UCPD (which should therefore be
+ *       initialized before doing the disable).
  * @retval None
  */
 void HAL_PWREx_DisableUCPDDeadBattery(void)

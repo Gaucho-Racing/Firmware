@@ -9,9 +9,9 @@
  * Copyright (c) 2019 STMicroelectronics.
  * All rights reserved.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- *in the root directory of this software component. If no LICENSE file comes
- *with this software, it is provided AS-IS.
+ * This software is licensed under terms that can be found in the LICENSE file in
+ * the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  ******************************************************************************
  */
 
@@ -44,17 +44,15 @@ extern "C" {
  */
 typedef struct {
 	uint32_t TypeErase; /*!< Mass erase or page erase.
-				 This parameter can be a value of @ref
-			       FLASH_Type_Erase */
+				 This parameter can be a value of @ref FLASH_Type_Erase */
 	uint32_t Banks;	    /*!< Select bank to erase.
 				 This parameter must be a value of @ref FLASH_Banks
 				 (FLASH_BANK_BOTH should be used only for mass erase) */
 	uint32_t Page;	    /*!< Initial Flash page to erase when page erase is disabled.
-				 This parameter must be a value between 0 and (max number
-			       of pages in the bank - 1) (eg : 127 for 512KB dual bank) */
+				 This parameter must be a value between 0 and (max number of pages in the bank - 1)
+				 (eg : 127 for 512KB dual bank) */
 	uint32_t NbPages;   /*!< Number of pages to be erased.
-				 This parameter must be a value between 1 and (max
-			       number of pages in the bank - value of initial page)*/
+				 This parameter must be a value between 1 and (max number of pages in the bank - value of initial page)*/
 } FLASH_EraseInitTypeDef;
 
 /**
@@ -62,69 +60,47 @@ typedef struct {
  */
 typedef struct {
 	uint32_t OptionType;	 /*!< Option byte to be configured.
-				      This parameter can be a combination of the
-				    values of @ref FLASH_OB_Type */
-	uint32_t WRPArea;	 /*!< Write protection area to be programmed (used for
-				    OPTIONBYTE_WRP). Only one WRP area could be
-				    programmed at the same time. This parameter can be
-				    value of @ref FLASH_OB_WRP_Area */
-	uint32_t WRPStartOffset; /*!< Write protection start offset (used for
-				    OPTIONBYTE_WRP). This parameter must be a
-				    value between 0 and (max number of pages in
-				    the bank - 1) */
-	uint32_t WRPEndOffset;	 /*!< Write protection end offset (used for
-				    OPTIONBYTE_WRP).   This parameter must be a
-				    value between WRPStartOffset and (max number
-				    of pages in the bank - 1) */
-	uint32_t RDPLevel;	 /*!< Set the read protection level.. (used for
-				    OPTIONBYTE_RDP).       This parameter can be a value of
-				    @ref FLASH_OB_Read_Protection */
-	uint32_t USERType;	 /*!< User option byte(s) to be configured (used for
-				    OPTIONBYTE_USER).   This parameter can be a
-				    combination of @ref FLASH_OB_USER_Type */
-	uint32_t USERConfig;	 /*!< Value of the user option byte (used for
-				    OPTIONBYTE_USER). This parameter can be a
-				    combination of @ref FLASH_OB_USER_BOR_LEVEL,
-				      @ref FLASH_OB_USER_nRST_STOP, @ref
-				    FLASH_OB_USER_nRST_STANDBY,
-				      @ref FLASH_OB_USER_nRST_SHUTDOWN, @ref
-				    FLASH_OB_USER_IWDG_SW,
-				      @ref FLASH_OB_USER_IWDG_STOP, @ref
-				    FLASH_OB_USER_IWDG_STANDBY,
-				      @ref FLASH_OB_USER_WWDG_SW, @ref
-				    FLASH_OB_USER_BFB2 (*),
-				      @ref FLASH_OB_USER_nBOOT1, @ref
-				    FLASH_OB_USER_SRAM_PE,
+				      This parameter can be a combination of the values of @ref FLASH_OB_Type */
+	uint32_t WRPArea;	 /*!< Write protection area to be programmed (used for OPTIONBYTE_WRP).
+				      Only one WRP area could be programmed at the same time.
+				      This parameter can be value of @ref FLASH_OB_WRP_Area */
+	uint32_t WRPStartOffset; /*!< Write protection start offset (used for OPTIONBYTE_WRP).
+				      This parameter must be a value between 0 and (max number of pages in the bank - 1) */
+	uint32_t WRPEndOffset;	 /*!< Write protection end offset (used for OPTIONBYTE_WRP).
+				      This parameter must be a value between WRPStartOffset and (max number of pages in the bank - 1) */
+	uint32_t RDPLevel;	 /*!< Set the read protection level.. (used for OPTIONBYTE_RDP).
+				      This parameter can be a value of @ref FLASH_OB_Read_Protection */
+	uint32_t USERType;	 /*!< User option byte(s) to be configured (used for OPTIONBYTE_USER).
+				      This parameter can be a combination of @ref FLASH_OB_USER_Type */
+	uint32_t USERConfig;	 /*!< Value of the user option byte (used for OPTIONBYTE_USER).
+				      This parameter can be a combination of @ref FLASH_OB_USER_BOR_LEVEL,
+				      @ref FLASH_OB_USER_nRST_STOP, @ref FLASH_OB_USER_nRST_STANDBY,
+				      @ref FLASH_OB_USER_nRST_SHUTDOWN, @ref FLASH_OB_USER_IWDG_SW,
+				      @ref FLASH_OB_USER_IWDG_STOP, @ref FLASH_OB_USER_IWDG_STANDBY,
+				      @ref FLASH_OB_USER_WWDG_SW, @ref FLASH_OB_USER_BFB2 (*),
+				      @ref FLASH_OB_USER_nBOOT1, @ref FLASH_OB_USER_SRAM_PE,
 				      @ref FLASH_OB_USER_CCMSRAM_RST
 				      @note (*) availability depends on devices */
-	uint32_t PCROPConfig;	 /*!< Configuration of the PCROP (used for
-				    OPTIONBYTE_PCROP).    This parameter must be a
-				    combination of @ref FLASH_Banks (except
-				    FLASH_BANK_BOTH)    and @ref FLASH_OB_PCROP_RDP */
-	uint32_t PCROPStartAddr; /*!< PCROP Start address (used for
-				    OPTIONBYTE_PCROP). This parameter must be a
-				    value between begin and end of bank
-				      => Be careful of the bank swapping for the
-				    address */
+	uint32_t PCROPConfig;	 /*!< Configuration of the PCROP (used for OPTIONBYTE_PCROP).
+				      This parameter must be a combination of @ref FLASH_Banks (except FLASH_BANK_BOTH)
+				      and @ref FLASH_OB_PCROP_RDP */
+	uint32_t PCROPStartAddr; /*!< PCROP Start address (used for OPTIONBYTE_PCROP).
+				      This parameter must be a value between begin and end of bank
+				      => Be careful of the bank swapping for the address */
 	uint32_t PCROPEndAddr;	 /*!< PCROP End address (used for OPTIONBYTE_PCROP).
-				      This parameter must be a value between PCROP
-				    Start address and end of bank */
-	uint32_t BootEntryPoint; /*!< Set the Boot Lock (used for
-				    OPTIONBYTE_BOOT_LOCK). This parameter can be
-				    a value of @ref FLASH_OB_Boot_Lock */
-	uint32_t SecBank;	 /*!< Bank of securable memory area to be programmed (used
-				    for OPTIONBYTE_SEC). Only one securable memory area
-				    could be programmed at the same time. This parameter can
-				    be one of the following values: FLASH_BANK_1: Securable
-				    memory area to be programmed in bank 1 FLASH_BANK_2:
-				    Securable memory area to be programmed in bank 2 (*)
+				      This parameter must be a value between PCROP Start address and end of bank */
+	uint32_t BootEntryPoint; /*!< Set the Boot Lock (used for OPTIONBYTE_BOOT_LOCK).
+				      This parameter can be a value of @ref FLASH_OB_Boot_Lock */
+	uint32_t SecBank;	 /*!< Bank of securable memory area to be programmed (used for OPTIONBYTE_SEC).
+				      Only one securable memory area could be programmed at the same time.
+				      This parameter can be one of the following values:
+				      FLASH_BANK_1: Securable memory area to be programmed in bank 1
+				      FLASH_BANK_2: Securable memory area to be programmed in bank 2 (*)
 				      @note (*) availability depends on devices */
-	uint32_t SecSize;	 /*!< Size of securable memory area to be programmed (used
-				    for OPTIONBYTE_SEC), in number of pages. Securable
-				    memory area is starting from first page of the bank.
-				      Only one securable memory could be programmed at the
-				    same time. This parameter must be a value between 0 and
-				    (max number of pages in the bank - 1) */
+	uint32_t SecSize;	 /*!< Size of securable memory area to be programmed (used for OPTIONBYTE_SEC),
+				      in number of pages. Securable memory area is starting from first page of the bank.
+				      Only one securable memory could be programmed at the same time.
+				      This parameter must be a value between 0 and (max number of pages in the bank - 1) */
 } FLASH_OBProgramInitTypeDef;
 
 /**
@@ -154,18 +130,12 @@ typedef enum {
 typedef struct {
 	HAL_LockTypeDef Lock;			      /* FLASH locking object */
 	__IO uint32_t ErrorCode;		      /* FLASH error code */
-	__IO FLASH_ProcedureTypeDef ProcedureOnGoing; /* Internal variable to indicate which procedure
-							 is ongoing or not in IT context */
-	__IO uint32_t Address;			      /* Internal variable to save address selected for
-							 program in IT context */
-	__IO uint32_t Bank;			      /* Internal variable to save current bank selected
-							 during erase in IT context */
-	__IO uint32_t Page;			      /* Internal variable to define the current page
-							 which is erasing in IT context */
-	__IO uint32_t NbPagesToErase;		      /* Internal variable to save the remaining
-							 pages to erase in IT context */
-	__IO FLASH_CacheTypeDef CacheToReactivate;    /* Internal variable to indicate which caches
-							 should be reactivated */
+	__IO FLASH_ProcedureTypeDef ProcedureOnGoing; /* Internal variable to indicate which procedure is ongoing or not in IT context */
+	__IO uint32_t Address;			      /* Internal variable to save address selected for program in IT context */
+	__IO uint32_t Bank;			      /* Internal variable to save current bank selected during erase in IT context */
+	__IO uint32_t Page;			      /* Internal variable to define the current page which is erasing in IT context */
+	__IO uint32_t NbPagesToErase;		      /* Internal variable to save the remaining pages to erase in IT context */
+	__IO FLASH_CacheTypeDef CacheToReactivate;    /* Internal variable to indicate which caches should be reactivated */
 } FLASH_ProcessTypeDef;
 
 /**
@@ -229,13 +199,11 @@ typedef struct {
  */
 #define FLASH_TYPEPROGRAM_DOUBLEWORD 0x00U /*!< Program a double-word (64-bit) at a specified address.*/
 #define FLASH_TYPEPROGRAM_FAST                                                                                                                                                                         \
-	0x01U /*!< Fast program a 32 row double-word (64-bit) at a specified                                                                                                                           \
-		 address. And another 32 row double-word (64-bit) will be                                                                                                                              \
-		 programmed */
+	0x01U /*!< Fast program a 32 row double-word (64-bit) at a specified address.                                                                                                                  \
+		   And another 32 row double-word (64-bit) will be programmed */
 #define FLASH_TYPEPROGRAM_FAST_AND_LAST                                                                                                                                                                \
-	0x02U /*!< Fast program a 32 row double-word (64-bit) at a specified                                                                                                                           \
-		 address. And this is the last 32 row double-word (64-bit)                                                                                                                             \
-		 programmed */
+	0x02U /*!< Fast program a 32 row double-word (64-bit) at a specified address.                                                                                                                  \
+		   And this is the last 32 row double-word (64-bit) programmed */
 /**
  * @}
  */
@@ -248,9 +216,7 @@ typedef struct {
 #define OPTIONBYTE_USER 0x04U	   /*!< USER option byte configuration */
 #define OPTIONBYTE_PCROP 0x08U	   /*!< PCROP option byte configuration */
 #define OPTIONBYTE_BOOT_LOCK 0x10U /*!< Boot lock option byte configuration */
-#define OPTIONBYTE_SEC                                                                                                                                                                                 \
-	0x20U /*!< Securable memory option byte configuration                                                                                                                                          \
-	       */
+#define OPTIONBYTE_SEC 0x20U	   /*!< Securable memory option byte configuration */
 /**
  * @}
  */
@@ -297,31 +263,23 @@ typedef struct {
 #define OB_USER_nRST_STDBY 0x00000004U /*!< Reset generated when entering the standby mode */
 #define OB_USER_IWDG_SW 0x00000008U    /*!< Independent watchdog selection */
 #define OB_USER_IWDG_STOP 0x00000010U  /*!< Independent watchdog counter freeze in stop mode */
-#define OB_USER_IWDG_STDBY                                                                                                                                                                             \
-	0x00000020U		    /*!< Independent watchdog counter freeze in standby mode                                                                                                           \
-				     */
-#define OB_USER_WWDG_SW 0x00000040U /*!< Window watchdog selection */
+#define OB_USER_IWDG_STDBY 0x00000020U /*!< Independent watchdog counter freeze in standby mode */
+#define OB_USER_WWDG_SW 0x00000040U    /*!< Window watchdog selection */
 #if defined(FLASH_OPTR_DBANK)
-#define OB_USER_BFB2 0x00000080U /*!< Dual-bank boot */
-#define OB_USER_DBANK                                                                                                                                                                                  \
-	0x00000100U /*!< Single bank with 128-bits data or two banks with                                                                                                                              \
-		       64-bits data */
+#define OB_USER_BFB2 0x00000080U  /*!< Dual-bank boot */
+#define OB_USER_DBANK 0x00000100U /*!< Single bank with 128-bits data or two banks with 64-bits data */
 #endif
 #if defined(FLASH_OPTR_PB4_PUPEN)
 #define OB_USER_PB4_PUPEN 0x00000100U /*!< USB power delivery dead-battery/TDI pull-up */
 #endif
-#define OB_USER_nBOOT1 0x00000200U /*!< Boot configuration */
-#define OB_USER_SRAM_PE                                                                                                                                                                                \
-	0x00000400U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM                                                                                                                           \
-		       SRAM) */
-#define OB_USER_CCMSRAM_RST                                                                                                                                                                            \
-	0x00000800U		      /*!< CCMSRAM Erase when system reset                                                                                                                             \
-				       */
-#define OB_USER_nRST_SHDW 0x00001000U /*!< Reset generated when entering the shutdown mode */
-#define OB_USER_nSWBOOT0 0x00002000U  /*!< Software BOOT0 */
-#define OB_USER_nBOOT0 0x00004000U    /*!< nBOOT0 option bit */
-#define OB_USER_NRST_MODE 0x00008000U /*!< Reset pin configuration */
-#define OB_USER_IRHEN 0x00010000U     /*!< Internal Reset Holder enable */
+#define OB_USER_nBOOT1 0x00000200U	/*!< Boot configuration */
+#define OB_USER_SRAM_PE 0x00000400U	/*!< SRAM parity check enable (first 32kB of SRAM1 + CCM SRAM) */
+#define OB_USER_CCMSRAM_RST 0x00000800U /*!< CCMSRAM Erase when system reset */
+#define OB_USER_nRST_SHDW 0x00001000U	/*!< Reset generated when entering the shutdown mode */
+#define OB_USER_nSWBOOT0 0x00002000U	/*!< Software BOOT0 */
+#define OB_USER_nBOOT0 0x00004000U	/*!< nBOOT0 option bit */
+#define OB_USER_NRST_MODE 0x00008000U	/*!< Reset pin configuration */
+#define OB_USER_IRHEN 0x00010000U	/*!< Internal Reset Holder enable */
 /**
  * @}
  */
@@ -341,34 +299,26 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_nRST_STOP FLASH Option Bytes User Reset On Stop
  * @{
  */
-#define OB_STOP_RST 0x00000000U /*!< Reset generated when entering the stop mode */
-#define OB_STOP_NORST                                                                                                                                                                                  \
-	FLASH_OPTR_nRST_STOP /*!< No reset generated when entering the stop                                                                                                                            \
-				mode */
+#define OB_STOP_RST 0x00000000U		   /*!< Reset generated when entering the stop mode */
+#define OB_STOP_NORST FLASH_OPTR_nRST_STOP /*!< No reset generated when entering the stop mode */
 /**
  * @}
  */
 
-/** @defgroup FLASH_OB_USER_nRST_STANDBY FLASH Option Bytes User Reset On
- * Standby
+/** @defgroup FLASH_OB_USER_nRST_STANDBY FLASH Option Bytes User Reset On Standby
  * @{
  */
-#define OB_STANDBY_RST 0x00000000U /*!< Reset generated when entering the standby mode */
-#define OB_STANDBY_NORST                                                                                                                                                                               \
-	FLASH_OPTR_nRST_STDBY /*!< No reset generated when entering the                                                                                                                                \
-				 standby mode */
+#define OB_STANDBY_RST 0x00000000U	       /*!< Reset generated when entering the standby mode */
+#define OB_STANDBY_NORST FLASH_OPTR_nRST_STDBY /*!< No reset generated when entering the standby mode */
 /**
  * @}
  */
 
-/** @defgroup FLASH_OB_USER_nRST_SHUTDOWN FLASH Option Bytes User Reset On
- * Shutdown
+/** @defgroup FLASH_OB_USER_nRST_SHUTDOWN FLASH Option Bytes User Reset On Shutdown
  * @{
  */
-#define OB_SHUTDOWN_RST 0x00000000U /*!< Reset generated when entering the shutdown mode */
-#define OB_SHUTDOWN_NORST                                                                                                                                                                              \
-	FLASH_OPTR_nRST_SHDW /*!< No reset generated when entering the                                                                                                                                 \
-				shutdown mode */
+#define OB_SHUTDOWN_RST 0x00000000U	       /*!< Reset generated when entering the shutdown mode */
+#define OB_SHUTDOWN_NORST FLASH_OPTR_nRST_SHDW /*!< No reset generated when entering the shutdown mode */
 /**
  * @}
  */
@@ -385,26 +335,17 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_IWDG_STOP FLASH Option Bytes User IWDG Mode On Stop
  * @{
  */
-#define OB_IWDG_STOP_FREEZE                                                                                                                                                                            \
-	0x00000000U /*!< Independent watchdog counter is frozen in Stop mode                                                                                                                           \
-		     */
-#define OB_IWDG_STOP_RUN                                                                                                                                                                               \
-	FLASH_OPTR_IWDG_STOP /*!< Independent watchdog counter is running in                                                                                                                           \
-				Stop mode */
+#define OB_IWDG_STOP_FREEZE 0x00000000U	      /*!< Independent watchdog counter is frozen in Stop mode */
+#define OB_IWDG_STOP_RUN FLASH_OPTR_IWDG_STOP /*!< Independent watchdog counter is running in Stop mode */
 /**
  * @}
  */
 
-/** @defgroup FLASH_OB_USER_IWDG_STANDBY FLASH Option Bytes User IWDG Mode On
- * Standby
+/** @defgroup FLASH_OB_USER_IWDG_STANDBY FLASH Option Bytes User IWDG Mode On Standby
  * @{
  */
-#define OB_IWDG_STDBY_FREEZE                                                                                                                                                                           \
-	0x00000000U /*!< Independent watchdog counter is frozen in Standby                                                                                                                             \
-		       mode */
-#define OB_IWDG_STDBY_RUN                                                                                                                                                                              \
-	FLASH_OPTR_IWDG_STDBY /*!< Independent watchdog counter is running in                                                                                                                          \
-				 Standby mode */
+#define OB_IWDG_STDBY_FREEZE 0x00000000U	/*!< Independent watchdog counter is frozen in Standby mode */
+#define OB_IWDG_STDBY_RUN FLASH_OPTR_IWDG_STDBY /*!< Independent watchdog counter is running in Standby mode */
 /**
  * @}
  */
@@ -414,9 +355,9 @@ typedef struct {
  */
 #define OB_WWDG_HW 0x00000000U	      /*!< Hardware window watchdog */
 #define OB_WWDG_SW FLASH_OPTR_WWDG_SW /*!< Software window watchdog */
-				      /**
-				       * @}
-				       */
+/**
+ * @}
+ */
 
 #if defined(FLASH_OPTR_DBANK)
 /** @defgroup FLASH_OB_USER_BFB2 FLASH Option Bytes User BFB2 Mode
@@ -442,12 +383,8 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_PB4_PUPEN FLASH Option Bytes User PB4 PUPEN bit
  * @{
  */
-#define OB_PB4_PUPEN_DISABLE                                                                                                                                                                           \
-	0x00000000U /*!< USB power delivery dead-battery enabled/ TDI pull-up                                                                                                                          \
-		       deactivated */
-#define OB_PB4_PUPEN_ENABLE                                                                                                                                                                            \
-	FLASH_OPTR_PB4_PUPEN /*!< USB power delivery dead-battery disabled/                                                                                                                            \
-				TDI pull-up activated */
+#define OB_PB4_PUPEN_DISABLE 0x00000000U	 /*!< USB power delivery dead-battery enabled/ TDI pull-up deactivated */
+#define OB_PB4_PUPEN_ENABLE FLASH_OPTR_PB4_PUPEN /*!< USB power delivery dead-battery disabled/ TDI pull-up activated */
 /**
  * @}
  */
@@ -456,37 +393,25 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_nBOOT1 FLASH Option Bytes User BOOT1 Type
  * @{
  */
-#define OB_BOOT1_SRAM                                                                                                                                                                                  \
-	0x00000000U /*!< Embedded SRAM1 is selected as boot space (if BOOT0=1)                                                                                                                         \
-		     */
-#define OB_BOOT1_SYSTEM                                                                                                                                                                                \
-	FLASH_OPTR_nBOOT1 /*!< System memory is selected as boot space (if                                                                                                                             \
-			     BOOT0=1) */
+#define OB_BOOT1_SRAM 0x00000000U	  /*!< Embedded SRAM1 is selected as boot space (if BOOT0=1) */
+#define OB_BOOT1_SYSTEM FLASH_OPTR_nBOOT1 /*!< System memory is selected as boot space (if BOOT0=1) */
 /**
  * @}
  */
 
-/** @defgroup FLASH_OB_USER_SRAM_PE FLASH Option Bytes User SRAM Parity Check
- * Type
+/** @defgroup FLASH_OB_USER_SRAM_PE FLASH Option Bytes User SRAM Parity Check Type
  * @{
  */
-#define OB_SRAM_PARITY_ENABLE                                                                                                                                                                          \
-	0x00000000U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM                                                                                                                           \
-		       SRAM) */
-#define OB_SRAM_PARITY_DISABLE                                                                                                                                                                         \
-	FLASH_OPTR_SRAM_PE /*!< SRAM parity check disable (first 32kB of SRAM1                                                                                                                         \
-			      + CCM SRAM) */
+#define OB_SRAM_PARITY_ENABLE 0x00000000U	  /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM SRAM) */
+#define OB_SRAM_PARITY_DISABLE FLASH_OPTR_SRAM_PE /*!< SRAM parity check disable (first 32kB of SRAM1 + CCM SRAM) */
 /**
  * @}
  */
-/** @defgroup FLASH_OB_USER_CCMSRAM_RST FLASH Option Bytes User CCMSRAM Erase On
- * Reset Type
+/** @defgroup FLASH_OB_USER_CCMSRAM_RST FLASH Option Bytes User CCMSRAM Erase On Reset Type
  * @{
  */
-#define OB_CCMSRAM_RST_ERASE 0x00000000U /*!< CCMSRAM erased when a system reset occurs */
-#define OB_CCMSRAM_RST_NOT_ERASE                                                                                                                                                                       \
-	FLASH_OPTR_CCMSRAM_RST /*!< CCMSRAM is not erased when a system reset                                                                                                                          \
-				  occurs */
+#define OB_CCMSRAM_RST_ERASE 0x00000000U		/*!< CCMSRAM erased when a system reset occurs */
+#define OB_CCMSRAM_RST_NOT_ERASE FLASH_OPTR_CCMSRAM_RST /*!< CCMSRAM is not erased when a system reset occurs */
 /**
  * @}
  */
@@ -513,15 +438,12 @@ typedef struct {
  */
 #define OB_NRST_MODE_INPUT_ONLY FLASH_OPTR_NRST_MODE_0 /*!< Reset pin is in Reset input mode only */
 #define OB_NRST_MODE_GPIO FLASH_OPTR_NRST_MODE_1       /*!< Reset pin is in GPIO mode only */
-#define OB_NRST_MODE_INPUT_OUTPUT                                                                                                                                                                      \
-	FLASH_OPTR_NRST_MODE /*!< Reset pin is in reset input and output mode                                                                                                                          \
-			      */
+#define OB_NRST_MODE_INPUT_OUTPUT FLASH_OPTR_NRST_MODE /*!< Reset pin is in reset input and output mode */
 /**
  * @}
  */
 
-/** @defgroup FLASH_OB_USER_INTERNAL_RESET_HOLDER FLASH Option Bytes User
- * internal reset holder bit
+/** @defgroup FLASH_OB_USER_INTERNAL_RESET_HOLDER FLASH Option Bytes User internal reset holder bit
  * @{
  */
 #define OB_IRH_DISABLE 0x00000000U     /*!< Internal Reset holder disable */
@@ -537,9 +459,8 @@ typedef struct {
 	0x00000000U /*!< PCROP area is not erased when the RDP level                                                                                                                                   \
 			 is decreased from Level 1 to Level 0 */
 #define OB_PCROP_RDP_ERASE                                                                                                                                                                             \
-	FLASH_PCROP1ER_PCROP_RDP /*!< PCROP area is erased when the RDP level                                                                                                                          \
-				    is decreased from Level 1 to Level 0 (full                                                                                                                         \
-				    mass erase) */
+	FLASH_PCROP1ER_PCROP_RDP /*!< PCROP area is erased when the RDP level is                                                                                                                       \
+				      decreased from Level 1 to Level 0 (full mass erase) */
 /**
  * @}
  */
@@ -558,12 +479,8 @@ typedef struct {
 #define FLASH_LATENCY_8 FLASH_ACR_LATENCY_8WS	/*!< FLASH Eight wait states */
 #define FLASH_LATENCY_9 FLASH_ACR_LATENCY_9WS	/*!< FLASH Nine wait states */
 #define FLASH_LATENCY_10 FLASH_ACR_LATENCY_10WS /*!< FLASH Ten wait state */
-#define FLASH_LATENCY_11                                                                                                                                                                               \
-	FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state                                                                                                                                            \
-				*/
-#define FLASH_LATENCY_12                                                                                                                                                                               \
-	FLASH_ACR_LATENCY_12WS			/*!< FLASH Twelve wait states                                                                                                                          \
-						 */
+#define FLASH_LATENCY_11 FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state */
+#define FLASH_LATENCY_12 FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states */
 #define FLASH_LATENCY_13 FLASH_ACR_LATENCY_13WS /*!< FLASH Thirteen wait states */
 #define FLASH_LATENCY_14 FLASH_ACR_LATENCY_14WS /*!< FLASH Fourteen wait states */
 #define FLASH_LATENCY_15 FLASH_ACR_LATENCY_15WS /*!< FLASH Fifteen wait states */
@@ -595,11 +512,9 @@ typedef struct {
 /** @defgroup FLASH_Flags FLASH Flags Definition
  * @{
  */
-#define FLASH_FLAG_EOP FLASH_SR_EOP	/*!< FLASH End of operation flag */
-#define FLASH_FLAG_OPERR FLASH_SR_OPERR /*!< FLASH Operation error flag */
-#define FLASH_FLAG_PROGERR                                                                                                                                                                             \
-	FLASH_SR_PROGERR		    /*!< FLASH Programming error flag                                                                                                                          \
-					     */
+#define FLASH_FLAG_EOP FLASH_SR_EOP	    /*!< FLASH End of operation flag */
+#define FLASH_FLAG_OPERR FLASH_SR_OPERR	    /*!< FLASH Operation error flag */
+#define FLASH_FLAG_PROGERR FLASH_SR_PROGERR /*!< FLASH Programming error flag */
 #define FLASH_FLAG_WRPERR FLASH_SR_WRPERR   /*!< FLASH Write protection error flag */
 #define FLASH_FLAG_PGAERR FLASH_SR_PGAERR   /*!< FLASH Programming alignment error flag */
 #define FLASH_FLAG_SIZERR FLASH_SR_SIZERR   /*!< FLASH Size error flag  */
@@ -612,12 +527,8 @@ typedef struct {
 #define FLASH_FLAG_ECCC FLASH_ECCR_ECCC	    /*!< FLASH ECC correction in 64 LSB bits */
 #define FLASH_FLAG_ECCD FLASH_ECCR_ECCD	    /*!< FLASH ECC detection in 64 LSB bits */
 #if defined(FLASH_OPTR_DBANK)
-#define FLASH_FLAG_ECCC2                                                                                                                                                                               \
-	FLASH_ECCR_ECCC2 /*!< FLASH ECC correction in 64 MSB bits (mode 128                                                                                                                            \
-			    bits only) */
-#define FLASH_FLAG_ECCD2                                                                                                                                                                               \
-	FLASH_ECCR_ECCD2 /*!< FLASH ECC detection in 64 MSB bits (mode 128                                                                                                                             \
-			    bits only) */
+#define FLASH_FLAG_ECCC2 FLASH_ECCR_ECCC2 /*!< FLASH ECC correction in 64 MSB bits (mode 128 bits only) */
+#define FLASH_FLAG_ECCD2 FLASH_ECCR_ECCD2 /*!< FLASH ECC detection in 64 MSB bits (mode 128 bits only) */
 #endif
 
 #define FLASH_FLAG_SR_ERRORS                                                                                                                                                                           \
@@ -637,11 +548,9 @@ typedef struct {
  * @brief FLASH Interrupt definition
  * @{
  */
-#define FLASH_IT_EOP FLASH_CR_EOPIE   /*!< End of FLASH Operation Interrupt source */
-#define FLASH_IT_OPERR FLASH_CR_ERRIE /*!< Error Interrupt source */
-#define FLASH_IT_RDERR                                                                                                                                                                                 \
-	FLASH_CR_RDERRIE			/*!< PCROP Read Error Interrupt                                                                                                                        \
-						   source*/
+#define FLASH_IT_EOP FLASH_CR_EOPIE		/*!< End of FLASH Operation Interrupt source */
+#define FLASH_IT_OPERR FLASH_CR_ERRIE		/*!< Error Interrupt source */
+#define FLASH_IT_RDERR FLASH_CR_RDERRIE		/*!< PCROP Read Error Interrupt source*/
 #define FLASH_IT_ECCC (FLASH_ECCR_ECCIE >> 24U) /*!< ECC Correction Interrupt source */
 /**
  * @}
@@ -742,8 +651,7 @@ typedef struct {
 
 /**
  * @brief  Reset the FLASH instruction Cache.
- * @note   This function must be used only when the Instruction Cache is
- * disabled.
+ * @note   This function must be used only when the Instruction Cache is disabled.
  * @retval None
  */
 #define __HAL_FLASH_INSTRUCTION_CACHE_RESET()                                                                                                                                                          \
@@ -864,14 +772,10 @@ typedef struct {
  *     @arg FLASH_FLAG_RDERR: FLASH PCROP read  error flag
  *     @arg FLASH_FLAG_OPTVERR: FLASH Option validity error flag
  *     @arg FLASH_FLAG_BSY: FLASH write/erase operations in progress flag
- *     @arg FLASH_FLAG_ECCC: FLASH one ECC error has been detected and corrected
- * in 64 LSB bits
- *     @arg FLASH_FLAG_ECCD: FLASH two ECC errors have been detected in 64 LSB
- * bits
- *     @arg FLASH_FLAG_ECCC2(*): FLASH one ECC error has been detected and
- * corrected in 64 MSB bits (mode 128 bits only)
- *     @arg FLASH_FLAG_ECCD2(*): FLASH two ECC errors have been detected in 64
- * MSB bits (mode 128 bits only)
+ *     @arg FLASH_FLAG_ECCC: FLASH one ECC error has been detected and corrected in 64 LSB bits
+ *     @arg FLASH_FLAG_ECCD: FLASH two ECC errors have been detected in 64 LSB bits
+ *     @arg FLASH_FLAG_ECCC2(*): FLASH one ECC error has been detected and corrected in 64 MSB bits (mode 128 bits only)
+ *     @arg FLASH_FLAG_ECCD2(*): FLASH two ECC errors have been detected in 64 MSB bits (mode 128 bits only)
  * @note  (*) availability depends on devices
  * @retval The new state of FLASH_FLAG (SET or RESET).
  */
@@ -892,14 +796,10 @@ typedef struct {
  *     @arg FLASH_FLAG_FASTERR: FLASH Fast programming error flag
  *     @arg FLASH_FLAG_RDERR: FLASH PCROP read  error flag
  *     @arg FLASH_FLAG_OPTVERR: FLASH Option validity error flag
- *     @arg FLASH_FLAG_ECCC: FLASH one ECC error has been detected and corrected
- * in 64 LSB bits
- *     @arg FLASH_FLAG_ECCD: FLASH two ECC errors have been detected in 64 LSB
- * bits
- *     @arg FLASH_FLAG_ECCC2(*): FLASH one ECC error has been detected and
- * corrected in 64 MSB bits (mode 128 bits only)
- *     @arg FLASH_FLAG_ECCD2(*): FLASH two ECC errors have been detected in 64
- * MSB bits (mode 128 bits only)
+ *     @arg FLASH_FLAG_ECCC: FLASH one ECC error has been detected and corrected in 64 LSB bits
+ *     @arg FLASH_FLAG_ECCD: FLASH two ECC errors have been detected in 64 LSB bits
+ *     @arg FLASH_FLAG_ECCC2(*): FLASH one ECC error has been detected and corrected in 64 MSB bits (mode 128 bits only)
+ *     @arg FLASH_FLAG_ECCD2(*): FLASH two ECC errors have been detected in 64 MSB bits (mode 128 bits only)
  *     @arg FLASH_FLAG_SR_ERRORS: FLASH All SR errors flags
  *     @arg FLASH_FLAG_ECCR_ERRORS: FLASH All ECCR errors flags
  * @note  (*) availability depends on devices

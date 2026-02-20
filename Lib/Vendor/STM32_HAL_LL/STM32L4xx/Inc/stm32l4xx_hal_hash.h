@@ -44,9 +44,8 @@ extern "C" {
  * @brief  HASH Configuration Structure definition
  */
 typedef struct {
-	uint32_t DataType; /*!< 32-bit data, 16-bit data, 8-bit data or 1-bit
-			      data. This parameter can be a value of @ref
-			      HASH_Data_Type. */
+	uint32_t DataType; /*!< 32-bit data, 16-bit data, 8-bit data or 1-bit data.
+				 This parameter can be a value of @ref HASH_Data_Type. */
 
 	uint32_t KeySize; /*!< The key size is used only in HMAC operation. */
 
@@ -58,19 +57,19 @@ typedef struct {
  * @brief HAL State structures definition
  */
 typedef enum {
-	HAL_HASH_STATE_RESET = 0x00U,	 /*!< Peripheral is not initialized */
+	HAL_HASH_STATE_RESET = 0x00U,	 /*!< Peripheral is not initialized            */
 	HAL_HASH_STATE_READY = 0x01U,	 /*!< Peripheral Initialized and ready for use */
-	HAL_HASH_STATE_BUSY = 0x02U,	 /*!< Processing (hashing) is ongoing     */
-	HAL_HASH_STATE_TIMEOUT = 0x06U,	 /*!< Timeout state  */
-	HAL_HASH_STATE_ERROR = 0x07U,	 /*!< Error state    */
-	HAL_HASH_STATE_SUSPENDED = 0x08U /*!< Suspended state */
+	HAL_HASH_STATE_BUSY = 0x02U,	 /*!< Processing (hashing) is ongoing          */
+	HAL_HASH_STATE_TIMEOUT = 0x06U,	 /*!< Timeout state                            */
+	HAL_HASH_STATE_ERROR = 0x07U,	 /*!< Error state                              */
+	HAL_HASH_STATE_SUSPENDED = 0x08U /*!< Suspended state                          */
 } HAL_HASH_StateTypeDef;
 
 /**
  * @brief HAL phase structures definition
  */
 typedef enum {
-	HAL_HASH_PHASE_READY = 0x01U,	    /*!< HASH peripheral is ready to start */
+	HAL_HASH_PHASE_READY = 0x01U,	    /*!< HASH peripheral is ready to start                    */
 	HAL_HASH_PHASE_PROCESS = 0x02U,	    /*!< HASH peripheral is in HASH processing phase          */
 	HAL_HASH_PHASE_HMAC_STEP_1 = 0x03U, /*!< HASH peripheral is in HMAC step 1 processing phase
 					   (step 1 consists in entering the inner hash function key) */
@@ -85,7 +84,7 @@ typedef enum {
  */
 typedef enum {
 	HAL_HASH_SUSPEND_NONE = 0x00U, /*!< HASH peripheral suspension not requested */
-	HAL_HASH_SUSPEND = 0x01U       /*!< HASH peripheral suspension is requested */
+	HAL_HASH_SUSPEND = 0x01U       /*!< HASH peripheral suspension is requested  */
 } HAL_HASH_SuspendTypeDef;
 
 #if (USE_HAL_HASH_REGISTER_CALLBACKS == 1U)
@@ -112,13 +111,13 @@ typedef struct
 {
 	HASH_InitTypeDef Init; /*!< HASH required parameters */
 
-	uint8_t *pHashInBuffPtr; /*!< Pointer to input buffer */
+	uint8_t const *pHashInBuffPtr; /*!< Pointer to input buffer */
 
 	uint8_t *pHashOutBuffPtr; /*!< Pointer to output buffer (digest) */
 
 	uint8_t *pHashKeyBuffPtr; /*!< Pointer to key buffer (HMAC only) */
 
-	uint8_t *pHashMsgBuffPtr; /*!< Pointer to message buffer (HMAC only) */
+	uint8_t const *pHashMsgBuffPtr; /*!< Pointer to message buffer (HMAC only) */
 
 	uint32_t HashBuffSize; /*!< Size of buffer to be processed */
 
@@ -140,12 +139,9 @@ typedef struct
 
 	HAL_HASH_SuspendTypeDef SuspendRequest; /*!< HASH peripheral suspension request flag */
 
-	FlagStatus DigestCalculationDisable; /*!< Digest calculation phase skip (MDMAT
-						bit control) for multi-buffers
-						DMA-based HMAC computation */
+	FlagStatus DigestCalculationDisable; /*!< Digest calculation phase skip (MDMAT bit control) for multi-buffers DMA-based HMAC computation */
 
-	__IO uint32_t NbWordsAlreadyPushed; /*!< Numbers of words already pushed in FIFO
-					       before inputting new block */
+	__IO uint32_t NbWordsAlreadyPushed; /*!< Numbers of words already pushed in FIFO before inputting new block */
 
 	__IO uint32_t ErrorCode; /*!< HASH Error code */
 
@@ -185,12 +181,10 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @defgroup HASH_Algo_Selection   HASH algorithm selection
  * @{
  */
-#define HASH_ALGOSELECTION_SHA1 0x00000000U   /*!< HASH function is SHA1   */
-#define HASH_ALGOSELECTION_MD5 HASH_CR_ALGO_0 /*!< HASH function is MD5    */
-#define HASH_ALGOSELECTION_SHA224                                                                                                                                                                      \
-	HASH_CR_ALGO_1			       /*!< HASH function is SHA224                                                                                                                            \
-						*/
-#define HASH_ALGOSELECTION_SHA256 HASH_CR_ALGO /*!< HASH function is SHA256 */
+#define HASH_ALGOSELECTION_SHA1 0x00000000U	 /*!< HASH function is SHA1   */
+#define HASH_ALGOSELECTION_MD5 HASH_CR_ALGO_0	 /*!< HASH function is MD5    */
+#define HASH_ALGOSELECTION_SHA224 HASH_CR_ALGO_1 /*!< HASH function is SHA224 */
+#define HASH_ALGOSELECTION_SHA256 HASH_CR_ALGO	 /*!< HASH function is SHA256 */
 /**
  * @}
  */
@@ -208,8 +202,8 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
  * @{
  */
 #define HASH_DATATYPE_32B 0x00000000U	     /*!< 32-bit data. No swapping                     */
-#define HASH_DATATYPE_16B HASH_CR_DATATYPE_0 /*!< 16-bit data. Each half word is swapped */
-#define HASH_DATATYPE_8B HASH_CR_DATATYPE_1  /*!< 8-bit data. All bytes are swapped */
+#define HASH_DATATYPE_16B HASH_CR_DATATYPE_0 /*!< 16-bit data. Each half word is swapped       */
+#define HASH_DATATYPE_8B HASH_CR_DATATYPE_1  /*!< 8-bit data. All bytes are swapped            */
 #define HASH_DATATYPE_1B HASH_CR_DATATYPE    /*!< 1-bit data. In the word all bits are swapped */
 /**
  * @}
@@ -227,17 +221,11 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @defgroup HASH_flags_definition  HASH flags definitions
  * @{
  */
-#define HASH_FLAG_DINIS                                                                                                                                                                                \
-	HASH_SR_DINIS		    /*!< 16 locations are free in the DIN : a new block can                                                                                                            \
-				       be entered in the Peripheral */
-#define HASH_FLAG_DCIS HASH_SR_DCIS /*!< Digest calculation complete */
-#define HASH_FLAG_DMAS                                                                                                                                                                                 \
-	HASH_SR_DMAS		    /*!< DMA interface is enabled (DMAE=1) or a transfer is                                                                                                            \
-				       ongoing                      */
-#define HASH_FLAG_BUSY HASH_SR_BUSY /*!< The hash core is Busy, processing a block of data */
-#define HASH_FLAG_DINNE                                                                                                                                                                                \
-	HASH_CR_DINNE /*!< DIN not empty : the input buffer contains at least                                                                                                                          \
-			 one word of data             */
+#define HASH_FLAG_DINIS HASH_SR_DINIS /*!< 16 locations are free in the DIN : a new block can be entered in the Peripheral */
+#define HASH_FLAG_DCIS HASH_SR_DCIS   /*!< Digest calculation complete                                                     */
+#define HASH_FLAG_DMAS HASH_SR_DMAS   /*!< DMA interface is enabled (DMAE=1) or a transfer is ongoing                      */
+#define HASH_FLAG_BUSY HASH_SR_BUSY   /*!< The hash core is Busy, processing a block of data                               */
+#define HASH_FLAG_DINNE HASH_CR_DINNE /*!< DIN not empty : the input buffer contains at least one word of data             */
 
 /**
  * @}
@@ -246,10 +234,8 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @defgroup HASH_interrupts_definition   HASH interrupts definitions
  * @{
  */
-#define HASH_IT_DINI                                                                                                                                                                                   \
-	HASH_IMR_DINIE		  /*!< A new block can be entered into the input buffer                                                                                                                \
-				     (DIN) */
-#define HASH_IT_DCI HASH_IMR_DCIE /*!< Digest calculation complete */
+#define HASH_IT_DINI HASH_IMR_DINIE /*!< A new block can be entered into the input buffer (DIN) */
+#define HASH_IT_DCI HASH_IMR_DCIE   /*!< Digest calculation complete                            */
 
 /**
  * @}
@@ -280,15 +266,11 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @brief  Check whether or not the specified HASH flag is set.
  * @param  __FLAG__ specifies the flag to check.
  *        This parameter can be one of the following values:
- *            @arg @ref HASH_FLAG_DINIS A new block can be entered into the
- * input buffer.
+ *            @arg @ref HASH_FLAG_DINIS A new block can be entered into the input buffer.
  *            @arg @ref HASH_FLAG_DCIS Digest calculation complete.
- *            @arg @ref HASH_FLAG_DMAS DMA interface is enabled (DMAE=1) or a
- * transfer is ongoing.
- *            @arg @ref HASH_FLAG_BUSY The hash core is Busy : processing a
- * block of data.
- *            @arg @ref HASH_FLAG_DINNE DIN not empty : the input buffer
- * contains at least one word of data.
+ *            @arg @ref HASH_FLAG_DMAS DMA interface is enabled (DMAE=1) or a transfer is ongoing.
+ *            @arg @ref HASH_FLAG_BUSY The hash core is Busy : processing a block of data.
+ *            @arg @ref HASH_FLAG_DINNE DIN not empty : the input buffer contains at least one word of data.
  * @retval The new state of __FLAG__ (TRUE or FALSE).
  */
 #define __HAL_HASH_GET_FLAG(__FLAG__) (((__FLAG__) > 8U) ? ((HASH->CR & (__FLAG__)) == (__FLAG__)) : ((HASH->SR & (__FLAG__)) == (__FLAG__)))
@@ -296,8 +278,7 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @brief  Clear the specified HASH flag.
  * @param  __FLAG__ specifies the flag to clear.
  *        This parameter can be one of the following values:
- *            @arg @ref HASH_FLAG_DINIS A new block can be entered into the
- * input buffer.
+ *            @arg @ref HASH_FLAG_DINIS A new block can be entered into the input buffer.
  *            @arg @ref HASH_FLAG_DCIS Digest calculation complete
  * @retval None
  */
@@ -306,8 +287,7 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @brief  Enable the specified HASH interrupt.
  * @param  __INTERRUPT__ specifies the HASH interrupt source to enable.
  *          This parameter can be one of the following values:
- *            @arg @ref HASH_IT_DINI  A new block can be entered into the input
- * buffer (DIN)
+ *            @arg @ref HASH_IT_DINI  A new block can be entered into the input buffer (DIN)
  *            @arg @ref HASH_IT_DCI   Digest calculation complete
  * @retval None
  */
@@ -316,8 +296,7 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /** @brief  Disable the specified HASH interrupt.
  * @param  __INTERRUPT__ specifies the HASH interrupt source to disable.
  *          This parameter can be one of the following values:
- *            @arg @ref HASH_IT_DINI  A new block can be entered into the input
- * buffer (DIN)
+ *            @arg @ref HASH_IT_DINI  A new block can be entered into the input buffer (DIN)
  *            @arg @ref HASH_IT_DCI   Digest calculation complete
  * @retval None
  */
@@ -347,8 +326,7 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 
 /**
  * @brief  Enable the multi-buffer DMA transfer mode.
- * @note   This bit is set when hashing large files when multiple DMA transfers
- * are needed.
+ * @note   This bit is set when hashing large files when multiple DMA transfers are needed.
  * @retval None
  */
 #define __HAL_HASH_SET_MDMAT() SET_BIT(HASH->CR, HASH_CR_MDMAT)
@@ -366,8 +344,7 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 #define __HAL_HASH_START_DIGEST() SET_BIT(HASH->STR, HASH_STR_DCAL)
 
 /**
- * @brief Set the number of valid bits in the last word written in data register
- * DIN.
+ * @brief Set the number of valid bits in the last word written in data register DIN.
  * @param  __SIZE__ size in bytes of last data written in Data register.
  * @retval None
  */
@@ -429,16 +406,14 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
 /**
  * @brief Ensure that handle phase is set to HASH processing.
  * @param __HANDLE__ HASH handle.
- * @retval SET (handle phase is set to HASH processing) or RESET (handle phase
- * is not set to HASH processing)
+ * @retval SET (handle phase is set to HASH processing) or RESET (handle phase is not set to HASH processing)
  */
 #define IS_HASH_PROCESSING(__HANDLE__) ((__HANDLE__)->Phase == HAL_HASH_PHASE_PROCESS)
 
 /**
  * @brief Ensure that handle phase is set to HMAC processing.
  * @param __HANDLE__ HASH handle.
- * @retval SET (handle phase is set to HMAC processing) or RESET (handle phase
- * is not set to HMAC processing)
+ * @retval SET (handle phase is set to HMAC processing) or RESET (handle phase is not set to HMAC processing)
  */
 #define IS_HMAC_PROCESSING(__HANDLE__)                                                                                                                                                                 \
 	(((__HANDLE__)->Phase == HAL_HASH_PHASE_HMAC_STEP_1) || ((__HANDLE__)->Phase == HAL_HASH_PHASE_HMAC_STEP_2) || ((__HANDLE__)->Phase == HAL_HASH_PHASE_HMAC_STEP_3))
@@ -455,8 +430,7 @@ typedef void (*pHASH_CallbackTypeDef)(HASH_HandleTypeDef *hhash); /*!< pointer t
  * @{
  */
 
-/** @addtogroup HASH_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup HASH_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 
@@ -478,88 +452,82 @@ HAL_StatusTypeDef HAL_HASH_UnRegisterCallback(HASH_HandleTypeDef *hhash, HAL_HAS
  * @}
  */
 
-/** @addtogroup HASH_Exported_Functions_Group2 HASH processing functions in
- * polling mode
+/** @addtogroup HASH_Exported_Functions_Group2 HASH processing functions in polling mode
  * @{
  */
 
 /* HASH processing using polling  *********************************************/
-HAL_StatusTypeDef HAL_HASH_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASH_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASH_SHA1_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASH_MD5_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
 
 /**
  * @}
  */
 
-/** @addtogroup HASH_Exported_Functions_Group3 HASH processing functions in
- * interrupt mode
+/** @addtogroup HASH_Exported_Functions_Group3 HASH processing functions in interrupt mode
  * @{
  */
 
 /* HASH processing using IT  **************************************************/
-HAL_StatusTypeDef HAL_HASH_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HASH_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HASH_SHA1_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HASH_MD5_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
 void HAL_HASH_IRQHandler(HASH_HandleTypeDef *hhash);
 /**
  * @}
  */
 
-/** @addtogroup HASH_Exported_Functions_Group4 HASH processing functions in DMA
- * mode
+/** @addtogroup HASH_Exported_Functions_Group4 HASH processing functions in DMA mode
  * @{
  */
 
 /* HASH processing using DMA  *************************************************/
-HAL_StatusTypeDef HAL_HASH_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASH_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
 HAL_StatusTypeDef HAL_HASH_SHA1_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASH_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASH_MD5_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
 HAL_StatusTypeDef HAL_HASH_MD5_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout);
 
 /**
  * @}
  */
 
-/** @addtogroup HASH_Exported_Functions_Group5 HMAC processing functions in
- * polling mode
+/** @addtogroup HASH_Exported_Functions_Group5 HMAC processing functions in polling mode
  * @{
  */
 
 /* HASH-MAC processing using polling  *****************************************/
-HAL_StatusTypeDef HAL_HMAC_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
-HAL_StatusTypeDef HAL_HMAC_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HMAC_SHA1_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HMAC_MD5_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout);
 
 /**
  * @}
  */
 
-/** @addtogroup HASH_Exported_Functions_Group6 HMAC processing functions in
- * interrupt mode
+/** @addtogroup HASH_Exported_Functions_Group6 HMAC processing functions in interrupt mode
  * @{
  */
 
-HAL_StatusTypeDef HAL_HMAC_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HMAC_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HMAC_MD5_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HMAC_SHA1_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer);
 
 /**
  * @}
  */
 
-/** @addtogroup HASH_Exported_Functions_Group7 HMAC processing functions in DMA
- * mode
+/** @addtogroup HASH_Exported_Functions_Group7 HMAC processing functions in DMA mode
  * @{
  */
 
 /* HASH-HMAC processing using DMA  ********************************************/
-HAL_StatusTypeDef HAL_HMAC_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
-HAL_StatusTypeDef HAL_HMAC_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMAC_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMAC_MD5_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
 
 /**
  * @}
@@ -570,13 +538,13 @@ HAL_StatusTypeDef HAL_HMAC_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pIn
  */
 
 /* Peripheral State methods  **************************************************/
-HAL_HASH_StateTypeDef HAL_HASH_GetState(HASH_HandleTypeDef *hhash);
-HAL_StatusTypeDef HAL_HASH_GetStatus(HASH_HandleTypeDef *hhash);
-void HAL_HASH_ContextSaving(HASH_HandleTypeDef *hhash, uint8_t *pMemBuffer);
-void HAL_HASH_ContextRestoring(HASH_HandleTypeDef *hhash, uint8_t *pMemBuffer);
+HAL_HASH_StateTypeDef HAL_HASH_GetState(const HASH_HandleTypeDef *hhash);
+HAL_StatusTypeDef HAL_HASH_GetStatus(const HASH_HandleTypeDef *hhash);
+void HAL_HASH_ContextSaving(const HASH_HandleTypeDef *hhash, const uint8_t *pMemBuffer);
+void HAL_HASH_ContextRestoring(HASH_HandleTypeDef *hhash, const uint8_t *pMemBuffer);
 void HAL_HASH_SwFeed_ProcessSuspend(HASH_HandleTypeDef *hhash);
 HAL_StatusTypeDef HAL_HASH_DMAFeed_ProcessSuspend(HASH_HandleTypeDef *hhash);
-uint32_t HAL_HASH_GetError(HASH_HandleTypeDef *hhash);
+uint32_t HAL_HASH_GetError(const HASH_HandleTypeDef *hhash);
 
 /**
  * @}
@@ -586,23 +554,22 @@ uint32_t HAL_HASH_GetError(HASH_HandleTypeDef *hhash);
  * @}
  */
 
-/* Private functions
- * -----------------------------------------------------------*/
+/* Private functions -----------------------------------------------------------*/
 
 /** @addtogroup HASH_Private_Functions HASH Private Functions
  * @{
  */
 
 /* Private functions */
-HAL_StatusTypeDef HASH_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout, uint32_t Algorithm);
-HAL_StatusTypeDef HASH_Accumulate(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint32_t Algorithm);
-HAL_StatusTypeDef HASH_Accumulate_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint32_t Algorithm);
-HAL_StatusTypeDef HASH_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Algorithm);
-HAL_StatusTypeDef HASH_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint32_t Algorithm);
+HAL_StatusTypeDef HASH_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout, uint32_t Algorithm);
+HAL_StatusTypeDef HASH_Accumulate(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint32_t Algorithm);
+HAL_StatusTypeDef HASH_Accumulate_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint32_t Algorithm);
+HAL_StatusTypeDef HASH_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Algorithm);
+HAL_StatusTypeDef HASH_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint32_t Algorithm);
 HAL_StatusTypeDef HASH_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout);
-HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout, uint32_t Algorithm);
-HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Algorithm);
-HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint32_t Algorithm);
+HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout, uint32_t Algorithm);
+HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Algorithm);
+HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size, uint32_t Algorithm);
 
 /**
  * @}
@@ -612,9 +579,9 @@ HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
  * @}
  */
 #endif /*  HASH*/
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

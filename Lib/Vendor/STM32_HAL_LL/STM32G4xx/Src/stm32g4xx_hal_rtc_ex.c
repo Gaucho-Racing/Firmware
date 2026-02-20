@@ -34,11 +34,11 @@
   *** RTC Wakeup configuration ***
   ================================
   [..]
-    (+) To configure the RTC Wakeup Clock source and Counter use the
-  HAL_RTCEx_SetWakeUpTimer() function. You can also configure the RTC Wakeup
-  timer with interrupt mode using the HAL_RTCEx_SetWakeUpTimer_IT() function.
-    (+) To read the RTC WakeUp Counter register, use the
-  HAL_RTCEx_GetWakeUpTimer() function.
+    (+) To configure the RTC Wakeup Clock source and Counter use the HAL_RTCEx_SetWakeUpTimer()
+	function. You can also configure the RTC Wakeup timer with interrupt mode
+	using the HAL_RTCEx_SetWakeUpTimer_IT() function.
+    (+) To read the RTC WakeUp Counter register, use the HAL_RTCEx_GetWakeUpTimer()
+	function.
 
   *** Outputs configuration ***
   =============================
@@ -47,8 +47,7 @@
 	and WaKeUp signals.
 	To output the selected RTC signal, use the HAL_RTC_Init() function.
     (+) RTC_CALIB: this output is 512Hz signal or 1Hz.
-	To enable the RTC_CALIB, use the HAL_RTCEx_SetCalibrationOutPut()
-  function.
+	To enable the RTC_CALIB, use the HAL_RTCEx_SetCalibrationOutPut() function.
     (+) Two pins can be used as RTC_ALARM or RTC_CALIB (PC13, PB2) managed on
 	the RTC_OR register.
     (+) When the RTC_CALIB or RTC_ALARM output is selected, the RTC_OUT pin is
@@ -57,9 +56,9 @@
   *** Smooth digital Calibration configuration ***
   ================================================
   [..]
-    (+) Configure the RTC Original Digital Calibration Value and the
-  corresponding calibration cycle period (32s,16s and 8s) using the
-  HAL_RTCEx_SetSmoothCalib() function.
+    (+) Configure the RTC Original Digital Calibration Value and the corresponding
+	calibration cycle period (32s,16s and 8s) using the HAL_RTCEx_SetSmoothCalib()
+	function.
 
   *** TimeStamp configuration ***
   ===============================
@@ -67,38 +66,37 @@
     (+) Enable the RTC TimeStamp using the HAL_RTCEx_SetTimeStamp() function.
 	You can also configure the RTC TimeStamp with interrupt mode using the
 	HAL_RTCEx_SetTimeStamp_IT() function.
-    (+) To read the RTC TimeStamp Time and Date register, use the
-  HAL_RTCEx_GetTimeStamp() function.
+    (+) To read the RTC TimeStamp Time and Date register, use the HAL_RTCEx_GetTimeStamp()
+	function.
 
   *** Internal TimeStamp configuration ***
   ===============================
   [..]
-    (+) Enable the RTC internal TimeStamp using the
-  HAL_RTCEx_SetInternalTimeStamp() function. User has to check internal
-  timestamp occurrence using __HAL_RTC_INTERNAL_TIMESTAMP_GET_FLAG.
-    (+) To read the RTC TimeStamp Time and Date register, use the
-  HAL_RTCEx_GetTimeStamp() function.
+    (+) Enable the RTC internal TimeStamp using the HAL_RTCEx_SetInternalTimeStamp() function.
+	User has to check internal timestamp occurrence using __HAL_RTC_INTERNAL_TIMESTAMP_GET_FLAG.
+    (+) To read the RTC TimeStamp Time and Date register, use the HAL_RTCEx_GetTimeStamp()
+	function.
 
    *** Tamper configuration ***
    ============================
    [..]
-     (+) Enable the RTC Tamper and configure the Tamper filter count, trigger
-  Edge or Level according to the Tamper filter (if equal to 0 Edge else Level)
-	 value, sampling frequency, NoErase, MaskFlag,  precharge or discharge
-  and Pull-UP using the HAL_RTCEx_SetTamper() function. You can configure RTC
-  Tamper with interrupt mode using HAL_RTCEx_SetTamper_IT() function.
-     (+) The default configuration of the Tamper erases the backup registers. To
-  avoid erase, enable the NoErase field on the RTC_TAMPCR register.
-     (+) If you do not intend to have tamper using RTC clock, you can bypass its
-  initialization by setting ClockEnable init field to RTC_CLOCK_DISABLE.
-     (+) Enable Internal tamper using HAL_RTCEx_SetInternalTamper. IT mode can
-  be chosen using setting Interrupt field.
+     (+) Enable the RTC Tamper and configure the Tamper filter count, trigger Edge
+	 or Level according to the Tamper filter (if equal to 0 Edge else Level)
+	 value, sampling frequency, NoErase, MaskFlag,  precharge or discharge and
+	 Pull-UP using the HAL_RTCEx_SetTamper() function. You can configure RTC Tamper
+	 with interrupt mode using HAL_RTCEx_SetTamper_IT() function.
+     (+) The default configuration of the Tamper erases the backup registers. To avoid
+	 erase, enable the NoErase field on the RTC_TAMPCR register.
+     (+) If you do not intend to have tamper using RTC clock, you can bypass its initialization
+	 by setting ClockEnable init field to RTC_CLOCK_DISABLE.
+     (+) Enable Internal tamper using HAL_RTCEx_SetInternalTamper. IT mode can be chosen using
+	 setting Interrupt field.
 
    *** Backup Data Registers configuration ***
    ===========================================
    [..]
-     (+) To write to the RTC Backup Data registers, use the
-  HAL_RTCEx_BKUPWrite() function.
+     (+) To write to the RTC Backup Data registers, use the HAL_RTCEx_BKUPWrite()
+	 function.
      (+) To read the RTC Backup Data registers, use the HAL_RTCEx_BKUPRead()
 	 function.
 
@@ -155,12 +153,12 @@
  *          This parameter can be one of the following values:
  *             @arg RTC_TIMESTAMPEDGE_RISING: the Time stamp event occurs on the
  *                                        rising edge of the related pin.
- *             @arg RTC_TIMESTAMPEDGE_FALLING: the Time stamp event occurs on
- * the falling edge of the related pin.
+ *             @arg RTC_TIMESTAMPEDGE_FALLING: the Time stamp event occurs on the
+ *                                         falling edge of the related pin.
  * @param  RTC_TimeStampPin specifies the RTC TimeStamp Pin.
  *          This parameter can be one of the following values:
- *             @arg RTC_TIMESTAMPPIN_DEFAULT: PC13 is selected as RTC TimeStamp
- * Pin. The RTC TimeStamp Pin is per default PC13, but for reasons of
+ *             @arg RTC_TIMESTAMPPIN_DEFAULT: PC13 is selected as RTC TimeStamp Pin.
+ *               The RTC TimeStamp Pin is per default PC13, but for reasons of
  *               compatibility, this parameter is required.
  * @retval HAL status
  */
@@ -206,12 +204,12 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeS
  *          This parameter can be one of the following values:
  *             @arg RTC_TIMESTAMPEDGE_RISING: the Time stamp event occurs on the
  *                                        rising edge of the related pin.
- *             @arg RTC_TIMESTAMPEDGE_FALLING: the Time stamp event occurs on
- * the falling edge of the related pin.
+ *             @arg RTC_TIMESTAMPEDGE_FALLING: the Time stamp event occurs on the
+ *                                         falling edge of the related pin.
  * @param  RTC_TimeStampPin Specifies the RTC TimeStamp Pin.
  *          This parameter can be one of the following values:
- *             @arg RTC_TIMESTAMPPIN_DEFAULT: PC13 is selected as RTC TimeStamp
- * Pin. The RTC TimeStamp Pin is per default PC13, but for reasons of
+ *             @arg RTC_TIMESTAMPPIN_DEFAULT: PC13 is selected as RTC TimeStamp Pin.
+ *               The RTC TimeStamp Pin is per default PC13, but for reasons of
  *               compatibility, this parameter is required.
  * @retval HAL status
  */
@@ -233,8 +231,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t Ti
 	/* Get the RTC_CR register and clear the bits to be configured */
 	CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_TSEDGE | RTC_CR_TSE | RTC_CR_TSIE));
 
-	/* Configure the Time Stamp TSEDGE before Enable bit to avoid unwanted
-	 * TSF setting. */
+	/* Configure the Time Stamp TSEDGE before Enable bit to avoid unwanted TSF setting. */
 	SET_BIT(hrtc->Instance->CR, (uint32_t)TimeStampEdge);
 
 	/* clear interrupt flag if any */
@@ -246,8 +243,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t Ti
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
-	/* RTC timestamp Interrupt Configuration: EXTI configuration (always
-	 * rising edge)*/
+	/* RTC timestamp Interrupt Configuration: EXTI configuration (always rising edge)*/
 	__HAL_RTC_TIMESTAMP_EXTI_RISING_IT();
 	__HAL_RTC_TIMESTAMP_EXTI_ENABLE_IT();
 
@@ -277,8 +273,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc)
 	/* clear event or interrupt flag */
 	WRITE_REG(hrtc->Instance->SCR, (RTC_SCR_CITSF | RTC_SCR_CTSF));
 
-	/* In case of interrupt mode is used, the interrupt source must disabled
-	 */
+	/* In case of interrupt mode is used, the interrupt source must disabled */
 	CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_TSEDGE | RTC_CR_TSE | RTC_CR_TSIE));
 
 	__HAL_RTC_TIMESTAMP_EXTI_CLEAR_IT();
@@ -296,8 +291,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc)
 
 /**
  * @brief  Set Internal TimeStamp.
- * @note   This API must be called before enabling the internal TimeStamp
- * feature.
+ * @note   This API must be called before enabling the internal TimeStamp feature.
  * @param  hrtc RTC handle
  * @retval HAL status
  */
@@ -392,14 +386,12 @@ HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDe
 
 	/* Check the input parameters format */
 	if (Format == RTC_FORMAT_BIN) {
-		/* Convert the TimeStamp structure parameters to Binary format
-		 */
+		/* Convert the TimeStamp structure parameters to Binary format */
 		sTimeStamp->Hours = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Hours);
 		sTimeStamp->Minutes = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Minutes);
 		sTimeStamp->Seconds = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Seconds);
 
-		/* Convert the DateTimeStamp structure parameters to Binary
-		 * format */
+		/* Convert the DateTimeStamp structure parameters to Binary format */
 		sTimeStampDate->Month = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Month);
 		sTimeStampDate->Date = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Date);
 		sTimeStampDate->WeekDay = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->WeekDay);
@@ -421,9 +413,8 @@ __weak void HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_TimeStampEventCallback could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_TimeStampEventCallback could be implemented in the user file
 	*/
 }
 
@@ -448,17 +439,13 @@ void HAL_RTCEx_TimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
 		/* TIMESTAMP callback */
 		HAL_RTCEx_TimeStampEventCallback(hrtc);
 #endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
-		/* check if TimeStamp is Internal, since ITSE bit is set in the
-		 * CR */
+		/* check if TimeStamp is Internal, since ITSE bit is set in the CR */
 		if ((misr & RTC_MISR_ITSMF) != 0U) {
 			/* internal Timestamp interrupt */
-			/* ITSF flag is set, TSF must be cleared together with
-			 * ITSF (this will clear timestamp time and date
-			 * registers) */
+			/* ITSF flag is set, TSF must be cleared together with ITSF (this will clear timestamp time and date registers) */
 			WRITE_REG(hrtc->Instance->SCR, (RTC_SCR_CITSF | RTC_SCR_CTSF));
 		} else {
-			/* Clear the TIMESTAMP interrupt pending bit (this will
-			 * clear timestamp time and date registers) */
+			/* Clear the TIMESTAMP interrupt pending bit (this will clear timestamp time and date registers) */
 			WRITE_REG(hrtc->Instance->SCR, RTC_SCR_CTSF);
 		}
 	}
@@ -550,18 +537,16 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t Wak
 	/* Clear WUTE in RTC_CR to disable the wakeup timer */
 	CLEAR_BIT(hrtc->Instance->CR, RTC_CR_WUTE);
 
-	/* Poll WUTWF until it is set in RTC_ICSR to make sure the access to
-	   wakeup autoreload counter and to WUCKSEL[2:0] bits is allowed. This
-	   step must be skipped in calendar initialization mode. */
+	/* Poll WUTWF until it is set in RTC_ICSR to make sure the access to wakeup autoreload
+	   counter and to WUCKSEL[2:0] bits is allowed. This step must be skipped in
+	   calendar initialization mode. */
 	if (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) {
 		tickstart = HAL_GetTick();
 
-		/* Wait till RTC WUTWF flag is reset and if Time out is reached
-		 * exit */
+		/* Wait till RTC WUTWF flag is reset and if Time out is reached exit */
 		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_WUTWF) == 0U) {
 			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
-				/* Enable the write protection for RTC registers
-				 */
+				/* Enable the write protection for RTC registers */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
@@ -623,18 +608,16 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
 	/* Clear flag Wake-Up */
 	__HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(hrtc, RTC_FLAG_WUTF);
 
-	/* Poll WUTWF until it is set in RTC_ICSR to make sure the access to
-	   wakeup autoreload counter and to WUCKSEL[2:0] bits is allowed. This
-	   step must be skipped in calendar initialization mode. */
+	/* Poll WUTWF until it is set in RTC_ICSR to make sure the access to wakeup autoreload
+	   counter and to WUCKSEL[2:0] bits is allowed. This step must be skipped in
+	   calendar initialization mode. */
 	if (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) {
 		tickstart = HAL_GetTick();
 
-		/* Wait till RTC WUTWF flag is reset and if Time out is reached
-		 * exit */
+		/* Wait till RTC WUTWF flag is reset and if Time out is reached exit */
 		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_WUTWF) == 0U) {
 			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
-				/* Enable the write protection for RTC registers
-				 */
+				/* Enable the write protection for RTC registers */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
@@ -656,8 +639,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
 	__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT();
 	__HAL_RTC_WAKEUPTIMER_EXTI_RISING_IT();
 
-	/* Configure the Interrupt in the RTC_CR register and Enable the Wakeup
-	 * Timer */
+	/* Configure the Interrupt in the RTC_CR register and Enable the Wakeup Timer */
 	SET_BIT(hrtc->Instance->CR, (RTC_CR_WUTIE | RTC_CR_WUTE));
 
 	/* Enable the write protection for RTC registers */
@@ -689,8 +671,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer(RTC_HandleTypeDef *hrtc)
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
 	/* Disable the Wakeup Timer */
-	/* In case of interrupt mode is used, the interrupt source must disabled
-	 */
+	/* In case of interrupt mode is used, the interrupt source must disabled */
 	CLEAR_BIT(hrtc->Instance->CR, RTC_CR_WUTE | RTC_CR_WUTIE);
 
 	__HAL_RTC_WAKEUPTIMER_EXTI_CLEAR_IT();
@@ -769,9 +750,8 @@ __weak void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_WakeUpTimerEventCallback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_WakeUpTimerEventCallback could be implemented in the user file
 	 */
 }
 
@@ -827,8 +807,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uin
       (+) Set the Smooth calibration parameters.
       (+) Configure the Synchronization Shift Control Settings.
       (+) Configure the Calibration Pinout (RTC_CALIB) Selection (1Hz or 512Hz).
-      (+) Deactivate the Calibration Pinout (RTC_CALIB) Selection (1Hz or
-512Hz).
+      (+) Deactivate the Calibration Pinout (RTC_CALIB) Selection (1Hz or 512Hz).
       (+) Enable the RTC reference clock detection.
       (+) Disable the RTC reference clock detection.
       (+) Enable the Bypass Shadow feature.
@@ -846,18 +825,13 @@ HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uin
  * @param  hrtc RTC handle
  * @param  SmoothCalibPeriod Select the Smooth Calibration Period.
  *          This parameter can be can be one of the following values :
- *             @arg RTC_SMOOTHCALIB_PERIOD_32SEC: The smooth calibration period
- * is 32s.
- *             @arg RTC_SMOOTHCALIB_PERIOD_16SEC: The smooth calibration period
- * is 16s.
- *             @arg RTC_SMOOTHCALIB_PERIOD_8SEC: The smooth calibration period
- * is 8s.
+ *             @arg RTC_SMOOTHCALIB_PERIOD_32SEC: The smooth calibration period is 32s.
+ *             @arg RTC_SMOOTHCALIB_PERIOD_16SEC: The smooth calibration period is 16s.
+ *             @arg RTC_SMOOTHCALIB_PERIOD_8SEC: The smooth calibration period is 8s.
  * @param  SmoothCalibPlusPulses Select to Set or reset the CALP bit.
  *          This parameter can be one of the following values:
- *             @arg RTC_SMOOTHCALIB_PLUSPULSES_SET: Add one RTCCLK pulse every
- * 2*11 pulses.
- *             @arg RTC_SMOOTHCALIB_PLUSPULSES_RESET: No RTCCLK pulses are
- * added.
+ *             @arg RTC_SMOOTHCALIB_PLUSPULSES_SET: Add one RTCCLK pulse every 2*11 pulses.
+ *             @arg RTC_SMOOTHCALIB_PLUSPULSES_RESET: No RTCCLK pulses are added.
  * @param  SmoothCalibMinusPulsesValue Select the value of CALM[8:0] bits.
  *          This parameter can be one any value from 0 to 0x000001FF.
  * @retval HAL status
@@ -886,8 +860,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t Smo
 		/* check if a calibration is pending*/
 		while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_RECALPF) != 0U) {
 			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
-				/* Enable the write protection for RTC registers
-				 */
+				/* Enable the write protection for RTC registers */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
 				/* Change RTC state */
@@ -918,8 +891,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t Smo
 
 /**
  * @brief  Configure the Synchronization Shift Control Settings.
- * @note   When REFCKON is set, firmware must not write to Shift control
- * register.
+ * @note   When REFCKON is set, firmware must not write to Shift control register.
  * @param  hrtc RTC handle
  * @param  ShiftAdd1S Select to add or not 1 second to the time calendar.
  *          This parameter can be one of the following values:
@@ -967,12 +939,10 @@ HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t Sh
 		/* Configure the Shift settings */
 		MODIFY_REG(hrtc->Instance->SHIFTR, RTC_SHIFTR_SUBFS, (uint32_t)(ShiftSubFS) | (uint32_t)(ShiftAdd1S));
 
-		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check
-		 * is not needed */
+		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check is not needed */
 		if (READ_BIT(hrtc->Instance->CR, RTC_CR_BYPSHAD) == 0U) {
 			if (HAL_RTC_WaitForSynchro(hrtc) != HAL_OK) {
-				/* Enable the write protection for RTC registers
-				 */
+				/* Enable the write protection for RTC registers */
 				__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
 				hrtc->State = HAL_RTC_STATE_ERROR;
@@ -1009,13 +979,11 @@ HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t Sh
 }
 
 /**
- * @brief  Configure the Calibration Pinout (RTC_CALIB) Selection (1Hz or
- * 512Hz).
+ * @brief  Configure the Calibration Pinout (RTC_CALIB) Selection (1Hz or 512Hz).
  * @param  hrtc RTC handle
  * @param  CalibOutput Select the Calibration output Selection .
  *          This parameter can be one of the following values:
- *             @arg RTC_CALIBOUTPUT_512HZ: A signal has a regular waveform at
- * 512Hz.
+ *             @arg RTC_CALIBOUTPUT_512HZ: A signal has a regular waveform at 512Hz.
  *             @arg RTC_CALIBOUTPUT_1HZ: A signal has a regular waveform at 1Hz.
  * @retval HAL status
  */
@@ -1051,8 +1019,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32
 }
 
 /**
- * @brief  Deactivate the Calibration Pinout (RTC_CALIB) Selection (1Hz or
- * 512Hz).
+ * @brief  Deactivate the Calibration Pinout (RTC_CALIB) Selection (1Hz or 512Hz).
  * @param  hrtc RTC handle
  * @retval HAL status
  */
@@ -1254,9 +1221,8 @@ __weak void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_AlarmBEventCallback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_AlarmBEventCallback could be implemented in the user file
 	 */
 }
 
@@ -1304,18 +1270,17 @@ HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t
 			 ##### Tamper functions #####
   ==============================================================================
   [..]
-   (+) Before calling any tamper or internal tamper function, you have to call
-first HAL_RTC_Init() function.
+   (+) Before calling any tamper or internal tamper function, you have to call first
+       HAL_RTC_Init() function.
    (+) In that ine you can select to output tamper event on RTC pin.
   [..]
    (+) Enable the Tamper and configure the Tamper filter count, trigger Edge
        or Level according to the Tamper filter (if equal to 0 Edge else Level)
        value, sampling frequency, NoErase, MaskFlag, precharge or discharge and
        Pull-UP, timestamp using the HAL_RTCEx_SetTamper() function.
-       You can configure Tamper with interrupt mode using
-HAL_RTCEx_SetTamper_IT() function.
-   (+) The default configuration of the Tamper erases the backup registers. To
-avoid erase, enable the NoErase field on the TAMP_TAMPCR register.
+       You can configure Tamper with interrupt mode using HAL_RTCEx_SetTamper_IT() function.
+   (+) The default configuration of the Tamper erases the backup registers. To avoid
+       erase, enable the NoErase field on the TAMP_TAMPCR register.
   [..]
    (+) Enable Internal Tamper and configure it with interrupt, timestamp using
        the HAL_RTCEx_SetInternalTamper() function.
@@ -1470,8 +1435,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 	/* Clear tamper interrupt and event flags (WO register) */
 	WRITE_REG(TAMP->SCR, Tamper);
 
-	/* In case of interrupt mode is used, the interrupt source must disabled
-	 */
+	/* In case of interrupt mode is used, the interrupt source must disabled */
 	__HAL_RTC_TAMPER_EXTI_CLEAR_IT();
 
 	return HAL_OK;
@@ -1590,8 +1554,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTamper(RTC_HandleTypeDef *hrtc, ui
 	/* Clear internal tamper interrupt */
 	WRITE_REG(TAMP->SCR, IntTamper);
 
-	/* In case of interrupt mode is used, the interrupt source must disabled
-	 */
+	/* In case of interrupt mode is used, the interrupt source must disabled */
 	__HAL_RTC_TAMPER_EXTI_CLEAR_IT();
 
 	return HAL_OK;
@@ -1646,8 +1609,7 @@ void HAL_RTCEx_TamperIRQHandler(RTC_HandleTypeDef *hrtc)
 	/* Immediately clear flags */
 	WRITE_REG(TAMP->SCR, tmp);
 
-	/* In case of interrupt mode is used, the interrupt source must disabled
-	 */
+	/* In case of interrupt mode is used, the interrupt source must disabled */
 	__HAL_RTC_TAMPER_EXTI_CLEAR_IT();
 
 	/* Check Tamper1 status */
@@ -1782,9 +1744,8 @@ __weak void HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_Tamper1EventCallback could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_Tamper1EventCallback could be implemented in the user file
 	 */
 }
 
@@ -1798,9 +1759,8 @@ __weak void HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_Tamper2EventCallback could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_Tamper2EventCallback could be implemented in the user file
 	 */
 }
 #if (RTC_TAMP_NB == 3)
@@ -1815,9 +1775,8 @@ __weak void HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_Tamper3EventCallback could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_Tamper3EventCallback could be implemented in the user file
 	 */
 }
 #endif /* RTC_TAMP_NB */
@@ -1833,9 +1792,8 @@ __weak void HAL_RTCEx_InternalTamper1EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper1EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper1EventCallback could be implemented in the user file
 	 */
 }
 #endif /* RTC_TAMP_INT_1_SUPPORT */
@@ -1851,9 +1809,8 @@ __weak void HAL_RTCEx_InternalTamper2EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper2EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper2EventCallback could be implemented in the user file
 	 */
 }
 #endif /* RTC_TAMP_INT_2_SUPPORT */
@@ -1868,9 +1825,8 @@ __weak void HAL_RTCEx_InternalTamper3EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper3EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper3EventCallback could be implemented in the user file
 	 */
 }
 
@@ -1884,9 +1840,8 @@ __weak void HAL_RTCEx_InternalTamper4EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper4EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper4EventCallback could be implemented in the user file
 	 */
 }
 
@@ -1900,9 +1855,8 @@ __weak void HAL_RTCEx_InternalTamper5EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper5EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper5EventCallback could be implemented in the user file
 	 */
 }
 
@@ -1918,9 +1872,8 @@ __weak void HAL_RTCEx_InternalTamper6EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper6EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper6EventCallback could be implemented in the user file
 	 */
 }
 
@@ -1936,9 +1889,8 @@ __weak void HAL_RTCEx_InternalTamper7EventCallback(RTC_HandleTypeDef *hrtc)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hrtc);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_RTCEx_InternalTamper7EventCallback could be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_RTCEx_InternalTamper7EventCallback could be implemented in the user file
 	 */
 }
 #endif /* RTC_TAMP_INT_7_SUPPORT */
@@ -1955,8 +1907,8 @@ __weak void HAL_RTCEx_InternalTamper7EventCallback(RTC_HandleTypeDef *hrtc)
 	     ##### Extended RTC Backup register functions #####
   ===============================================================================
   [..]
-   (+) Before calling any tamper or internal tamper function, you have to call
-first HAL_RTC_Init() function.
+   (+) Before calling any tamper or internal tamper function, you have to call first
+       HAL_RTC_Init() function.
    (+) In that ine you can select to output tamper event on RTC pin.
   [..]
    This subsection provides functions allowing to
@@ -1994,8 +1946,8 @@ void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint3
  * @brief  Reads data from the specified TAMP Backup data Register.
  * @param  hrtc RTC handle
  * @param  BackupRegister RTC Backup data Register number.
- *          This parameter can be: RTC_BKP_DRx where x can be from 0 to
- * RTC_BACKUP_NB to specify the register.
+ *          This parameter can be: RTC_BKP_DRx where x can be from 0 to RTC_BACKUP_NB to
+ *          specify the register.
  * @retval Read value
  */
 uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister)

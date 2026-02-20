@@ -81,14 +81,13 @@
  */
 
 /**
- * @brief  De-initialize GPIO registers (Registers restored to their default
- * values).
+ * @brief  De-initialize GPIO registers (Registers restored to their default values).
  * @param  GPIOx GPIO Port
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: GPIO registers are de-initialized
  *          - ERROR:   Wrong GPIO Port
  */
-ErrorStatus LL_GPIO_DeInit(GPIO_TypeDef *GPIOx)
+ErrorStatus LL_GPIO_DeInit(GPIO_TypeDef const *GPIOx)
 {
 	ErrorStatus status = SUCCESS;
 
@@ -125,15 +124,12 @@ ErrorStatus LL_GPIO_DeInit(GPIO_TypeDef *GPIOx)
 }
 
 /**
- * @brief  Initialize GPIO registers according to the specified parameters in
- * GPIO_InitStruct.
+ * @brief  Initialize GPIO registers according to the specified parameters in GPIO_InitStruct.
  * @param  GPIOx GPIO Port
  * @param  GPIO_InitStruct pointer to a @ref LL_GPIO_InitTypeDef structure
- *         that contains the configuration information for the specified GPIO
- * peripheral.
+ *         that contains the configuration information for the specified GPIO peripheral.
  * @retval An ErrorStatus enumeration value:
- *          - SUCCESS: GPIO registers are initialized according to
- * GPIO_InitStruct content
+ *          - SUCCESS: GPIO registers are initialized according to GPIO_InitStruct content
  *          - ERROR:   Not applicable
  */
 ErrorStatus LL_GPIO_Init(GPIO_TypeDef *GPIOx, LL_GPIO_InitTypeDef *GPIO_InitStruct)
@@ -224,8 +220,7 @@ void LL_GPIO_StructInit(LL_GPIO_InitTypeDef *GPIO_InitStruct)
  * @}
  */
 
-#endif /* defined (GPIOA) || defined (GPIOB) || defined (GPIOC) || defined                                                                                                                             \
-	  (GPIOD) || defined (GPIOE) || defined (GPIOF) || defined (GPIOG) */
+#endif /* defined (GPIOA) || defined (GPIOB) || defined (GPIOC) || defined (GPIOD) || defined (GPIOE) || defined (GPIOF) || defined (GPIOG) */
 
 /**
  * @}

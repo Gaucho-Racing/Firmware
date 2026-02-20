@@ -152,12 +152,10 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 }
 
 /**
- * @brief  Initialize the SPI registers according to the specified parameters in
- * SPI_InitStruct.
- * @note   As some bits in SPI configuration registers can only be written when
- * the SPI is disabled (SPI_CR1_SPE bit = 0), SPI peripheral should be in
- * disabled state prior calling this function. Otherwise, ERROR result will be
- * returned.
+ * @brief  Initialize the SPI registers according to the specified parameters in SPI_InitStruct.
+ * @note   As some bits in SPI configuration registers can only be written when the
+ *         SPI is disabled (SPI_CR1_SPE bit = 0), SPI peripheral should be in disabled state prior
+ *         calling this function. Otherwise, ERROR result will be returned.
  * @param  SPIx SPI Instance
  * @param  SPI_InitStruct pointer to a @ref LL_SPI_InitTypeDef structure
  * @retval An ErrorStatus enumeration value. (Return always SUCCESS)
@@ -181,10 +179,9 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 	assert_param(IS_LL_SPI_CRCCALCULATION(SPI_InitStruct->CRCCalculation));
 
 	if (LL_SPI_IsEnabled(SPIx) == 0x00000000U) {
-		/*---------------------------- SPIx CR1 Configuration
-		 * ------------------------ Configure SPIx CR1 with parameters:
-		 * - TransferDirection:  SPI_CR1_BIDIMODE, SPI_CR1_BIDIOE and
-		 * SPI_CR1_RXONLY bits
+		/*---------------------------- SPIx CR1 Configuration ------------------------
+		 * Configure SPIx CR1 with parameters:
+		 * - TransferDirection:  SPI_CR1_BIDIMODE, SPI_CR1_BIDIOE and SPI_CR1_RXONLY bits
 		 * - Master/Slave Mode:  SPI_CR1_MSTR bit
 		 * - ClockPolarity:      SPI_CR1_CPOL bit
 		 * - ClockPhase:         SPI_CR1_CPHA bit
@@ -197,21 +194,20 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 			   SPI_InitStruct->TransferDirection | SPI_InitStruct->Mode | SPI_InitStruct->ClockPolarity | SPI_InitStruct->ClockPhase | SPI_InitStruct->NSS | SPI_InitStruct->BaudRate |
 			       SPI_InitStruct->BitOrder | SPI_InitStruct->CRCCalculation);
 
-		/*---------------------------- SPIx CR2 Configuration
-		 * ------------------------ Configure SPIx CR2 with parameters:
+		/*---------------------------- SPIx CR2 Configuration ------------------------
+		 * Configure SPIx CR2 with parameters:
 		 * - DataWidth:          DS[3:0] bits
 		 * - NSS management:     SSOE bit
 		 */
 		MODIFY_REG(SPIx->CR2, SPI_CR2_DS | SPI_CR2_SSOE, SPI_InitStruct->DataWidth | (SPI_InitStruct->NSS >> 16U));
 
-		/* Set Rx FIFO to Quarter (1 Byte) in case of 8 Bits mode. No
-		 * DataPacking by default */
+		/* Set Rx FIFO to Quarter (1 Byte) in case of 8 Bits mode. No DataPacking by default */
 		if (SPI_InitStruct->DataWidth < LL_SPI_DATAWIDTH_9BIT) {
 			LL_SPI_SetRxFIFOThreshold(SPIx, LL_SPI_RX_FIFO_TH_QUARTER);
 		}
 
-		/*---------------------------- SPIx CRCPR Configuration
-		 * ---------------------- Configure SPIx CRCPR with parameters:
+		/*---------------------------- SPIx CRCPR Configuration ----------------------
+		 * Configure SPIx CRCPR with parameters:
 		 * - CRCPoly:            CRCPOLY[15:0] bits
 		 */
 		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE) {

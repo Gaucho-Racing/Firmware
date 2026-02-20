@@ -27,32 +27,28 @@
     [..]
     The PKA HAL driver can be used as follows:
 
-    (#) Declare a PKA_HandleTypeDef handle structure, for example:
-  PKA_HandleTypeDef  hpka;
+    (#) Declare a PKA_HandleTypeDef handle structure, for example: PKA_HandleTypeDef  hpka;
 
-    (#) Initialize the PKA low level resources by implementing the
-  HAL_PKA_MspInit() API:
+    (#) Initialize the PKA low level resources by implementing the HAL_PKA_MspInit() API:
 	(##) Enable the PKA interface clock
 	(##) NVIC configuration if you need to use interrupt process
 	    (+++) Configure the PKA interrupt priority
 	    (+++) Enable the NVIC PKA IRQ Channel
 
-    (#) Initialize the PKA registers by calling the HAL_PKA_Init() API which
-  trig HAL_PKA_MspInit().
+    (#) Initialize the PKA registers by calling the HAL_PKA_Init() API which trig
+	HAL_PKA_MspInit().
 
     (#) Fill entirely the input structure corresponding to your operation:
 	For instance: PKA_ModExpInTypeDef for HAL_PKA_ModExp().
 
-    (#) Execute the operation (in polling or interrupt) and check the returned
-  value.
+    (#) Execute the operation (in polling or interrupt) and check the returned value.
 
-    (#) Retrieve the result of the operation (For instance,
-  HAL_PKA_ModExp_GetResult for HAL_PKA_ModExp operation). The function to gather
-  the result is different for each kind of operation. The correspondence can be
-  found in the following section.
+    (#) Retrieve the result of the operation (For instance, HAL_PKA_ModExp_GetResult for
+	HAL_PKA_ModExp operation). The function to gather the result is different for each
+	kind of operation. The correspondence can be found in the following section.
 
-    (#) Call the function HAL_PKA_DeInit() to restore the default configuration
-  which trig HAL_PKA_MspDeInit().
+    (#) Call the function HAL_PKA_DeInit() to restore the default configuration which trig
+	HAL_PKA_MspDeInit().
 
     *** High level operation ***
     =================================
@@ -71,26 +67,22 @@
       (+) RSA Chinese Remainder Theorem (CRT) using:
       (++) HAL_PKA_RSACRTExp().
       (++) HAL_PKA_RSACRTExp_IT().
-      (++) HAL_PKA_RSACRTExp_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_RSACRTExp_GetResult() to retrieve the result of the operation.
 
       (+) ECC Point Check using:
       (++) HAL_PKA_PointCheck().
       (++) HAL_PKA_PointCheck_IT().
-      (++) HAL_PKA_PointCheck_IsOnCurve() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_PointCheck_IsOnCurve() to retrieve the result of the operation.
 
       (+) ECDSA Sign
       (++) HAL_PKA_ECDSASign().
       (++) HAL_PKA_ECDSASign_IT().
-      (++) HAL_PKA_ECDSASign_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_ECDSASign_GetResult() to retrieve the result of the operation.
 
       (+) ECDSA Verify
       (++) HAL_PKA_ECDSAVerif().
       (++) HAL_PKA_ECDSAVerif_IT().
-      (++) HAL_PKA_ECDSAVerif_IsValidSignature() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_ECDSAVerif_IsValidSignature() to retrieve the result of the operation.
 
       (+) ECC Scalar Multiplication using:
       (++) HAL_PKA_ECCMul().
@@ -110,76 +102,63 @@
       (+) Arithmetic addition using:
       (++) HAL_PKA_Add().
       (++) HAL_PKA_Add_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation. The resulting size can be the input parameter or the input
-  parameter size + 1 (overflow).
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
+	    The resulting size can be the input parameter or the input parameter size + 1 (overflow).
 
       (+) Arithmetic subtraction using:
       (++) HAL_PKA_Sub().
       (++) HAL_PKA_Sub_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Arithmetic multiplication using:
       (++) HAL_PKA_Mul().
       (++) HAL_PKA_Mul_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Comparison using:
       (++) HAL_PKA_Cmp().
       (++) HAL_PKA_Cmp_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Modular addition using:
       (++) HAL_PKA_ModAdd().
       (++) HAL_PKA_ModAdd_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Modular subtraction using:
       (++) HAL_PKA_ModSub().
       (++) HAL_PKA_ModSub_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Modular inversion using:
       (++) HAL_PKA_ModInv().
       (++) HAL_PKA_ModInv_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Modular reduction using:
       (++) HAL_PKA_ModRed().
       (++) HAL_PKA_ModRed_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
       (+) Montgomery multiplication using:
       (++) HAL_PKA_MontgomeryMul().
       (++) HAL_PKA_MontgomeryMul_IT().
-      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_Arithmetic_GetResult() to retrieve the result of the operation.
 
     *** Montgomery parameter ***
     =================================
-      (+) For some operation, the computation of the Montgomery parameter is a
-  prerequisite.
+      (+) For some operation, the computation of the Montgomery parameter is a prerequisite.
       (+) Input structure requires buffers as uint8_t array.
-      (+) Output structure requires buffers as uint32_t array.(Only used inside
-  PKA).
+      (+) Output structure requires buffers as uint32_t array.(Only used inside PKA).
       (+) You can compute the Montgomery parameter using:
       (++) HAL_PKA_MontgomeryParam().
       (++) HAL_PKA_MontgomeryParam_IT().
-      (++) HAL_PKA_MontgomeryParam_GetResult() to retrieve the result of the
-  operation.
+      (++) HAL_PKA_MontgomeryParam_GetResult() to retrieve the result of the operation.
 
     *** Polling mode operation ***
     ===================================
     [..]
-      (+) When an operation is started in polling mode, the function returns
-  when:
+      (+) When an operation is started in polling mode, the function returns when:
       (++) A timeout is encounter.
       (++) The operation is completed.
 
@@ -188,12 +167,9 @@
     [..]
       (+) Add HAL_PKA_IRQHandler to the IRQHandler of PKA.
       (+) Enable the IRQ using HAL_NVIC_EnableIRQ().
-      (+) When an operation is started in interrupt mode, the function returns
-  immediately.
-      (+) When the operation is completed, the callback
-  HAL_PKA_OperationCpltCallback is called.
-      (+) When an error is encountered, the callback HAL_PKA_ErrorCallback is
-  called.
+      (+) When an operation is started in interrupt mode, the function returns immediately.
+      (+) When the operation is completed, the callback HAL_PKA_OperationCpltCallback is called.
+      (+) When an error is encountered, the callback HAL_PKA_ErrorCallback is called.
       (+) To stop any operation in interrupt mode, use HAL_PKA_Abort().
 
     *** Utilities ***
@@ -218,8 +194,8 @@
        (+) ErrorCallback         : callback for error detection.
        (+) MspInitCallback       : callback for Msp Init.
        (+) MspDeInitCallback     : callback for Msp DeInit.
-     This function takes as parameters the HAL peripheral handle, the Callback
-  ID and a pointer to the user callback function.
+     This function takes as parameters the HAL peripheral handle, the Callback ID
+     and a pointer to the user callback function.
     [..]
 
      Use function HAL_PKA_UnRegisterCallback to reset a callback to the default
@@ -235,24 +211,22 @@
        (+) MspDeInitCallback     : callback for Msp DeInit.
      [..]
 
-     By default, after the HAL_PKA_Init() and when the state is
-  HAL_PKA_STATE_RESET all callbacks are set to the corresponding weak functions:
+     By default, after the HAL_PKA_Init() and when the state is HAL_PKA_STATE_RESET
+     all callbacks are set to the corresponding weak functions:
      examples HAL_PKA_OperationCpltCallback(), HAL_PKA_ErrorCallback().
      Exception done for MspInit and MspDeInit functions that are
-     reset to the legacy weak functions in the HAL_PKA_Init()/ HAL_PKA_DeInit()
-  only when these callbacks are null (not registered beforehand).
+     reset to the legacy weak functions in the HAL_PKA_Init()/ HAL_PKA_DeInit() only when
+     these callbacks are null (not registered beforehand).
     [..]
 
      If MspInit or MspDeInit are not null, the HAL_PKA_Init()/ HAL_PKA_DeInit()
-     keep and use the user MspInit/MspDeInit callbacks (registered beforehand)
-  whatever the state.
+     keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
      [..]
 
      Callbacks can be registered/unregistered in HAL_PKA_STATE_READY state only.
-     Exception done MspInit/MspDeInit functions that can be
-  registered/unregistered in HAL_PKA_STATE_READY or HAL_PKA_STATE_RESET state,
-     thus registered (user) MspInit/DeInit callbacks can be used during the
-  Init/DeInit.
+     Exception done MspInit/MspDeInit functions that can be registered/unregistered
+     in HAL_PKA_STATE_READY or HAL_PKA_STATE_RESET state,
+     thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
     [..]
 
      Then, the user first registers the MspInit/MspDeInit user callbacks
@@ -261,8 +235,8 @@
      [..]
 
      When the compilation flag USE_HAL_PKA_REGISTER_CALLBACKS is set to 0 or
-     not defined, the callback registration feature is not available and all
-  callbacks are set to the corresponding weak functions.
+     not defined, the callback registration feature is not available and all callbacks
+     are set to the corresponding weak functions.
 
   @endverbatim
   ******************************************************************************
@@ -338,8 +312,7 @@ void PKA_ARI_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const uint32_t *p
  * @{
  */
 
-/** @defgroup PKA_Exported_Functions_Group1 Initialization and de-initialization
-functions
+/** @defgroup PKA_Exported_Functions_Group1 Initialization and de-initialization functions
   * @brief    Initialization and de-initialization functions
   *
 @verbatim
@@ -354,8 +327,8 @@ functions
 
       (+) Call the function HAL_PKA_Init() to configure the device.
 
-      (+) Call the function HAL_PKA_DeInit() to restore the default
-configuration of the selected PKAx peripheral.
+      (+) Call the function HAL_PKA_DeInit() to restore the default configuration
+	  of the selected PKAx peripheral.
 
 @endverbatim
   * @{
@@ -363,8 +336,7 @@ configuration of the selected PKAx peripheral.
 
 /**
  * @brief  Initialize the PKA according to the specified
- *         parameters in the PKA_InitTypeDef and initialize the associated
- * handle.
+ *         parameters in the PKA_InitTypeDef and initialize the associated handle.
  * @param  hpka PKA handle
  * @retval HAL status
  */
@@ -382,11 +354,8 @@ HAL_StatusTypeDef HAL_PKA_Init(PKA_HandleTypeDef *hpka)
 
 #if (USE_HAL_PKA_REGISTER_CALLBACKS == 1)
 			/* Init the PKA Callback settings */
-			hpka->OperationCpltCallback = HAL_PKA_OperationCpltCallback; /* Legacy weak
-											OperationCpltCallback
-										      */
-			hpka->ErrorCallback = HAL_PKA_ErrorCallback;		     /* Legacy weak ErrorCallback
-										      */
+			hpka->OperationCpltCallback = HAL_PKA_OperationCpltCallback; /* Legacy weak OperationCpltCallback */
+			hpka->ErrorCallback = HAL_PKA_ErrorCallback;		     /* Legacy weak ErrorCallback         */
 
 			if (hpka->MspInitCallback == NULL) {
 				hpka->MspInitCallback = HAL_PKA_MspInit; /* Legacy weak MspInit  */
@@ -406,8 +375,7 @@ HAL_StatusTypeDef HAL_PKA_Init(PKA_HandleTypeDef *hpka)
 		/* Get current tick */
 		tickstart = HAL_GetTick();
 
-		/* Reset the control register and enable the PKA (wait the end
-		 * of PKA RAM erase) */
+		/* Reset the control register and enable the PKA (wait the end of PKA RAM erase) */
 		while ((hpka->Instance->CR & PKA_CR_EN) != PKA_CR_EN) {
 			hpka->Instance->CR = PKA_CR_EN;
 
@@ -460,8 +428,7 @@ HAL_StatusTypeDef HAL_PKA_DeInit(PKA_HandleTypeDef *hpka)
 		hpka->State = HAL_PKA_STATE_BUSY;
 
 		/* Reset the control register */
-		/* This abort any operation in progress (PKA RAM content is not
-		 * guaranteed in this case) */
+		/* This abort any operation in progress (PKA RAM content is not guaranteed in this case) */
 		hpka->Instance->CR = 0;
 
 		/* Reset any pending flag */
@@ -501,8 +468,8 @@ __weak void HAL_PKA_MspInit(PKA_HandleTypeDef *hpka)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpka);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PKA_MspInit can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PKA_MspInit can be implemented in the user file
 	 */
 }
 
@@ -516,8 +483,8 @@ __weak void HAL_PKA_MspDeInit(PKA_HandleTypeDef *hpka)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpka);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PKA_MspDeInit can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PKA_MspDeInit can be implemented in the user file
 	 */
 }
 
@@ -529,8 +496,7 @@ __weak void HAL_PKA_MspDeInit(PKA_HandleTypeDef *hpka)
  *                the configuration information for the specified PKA.
  * @param  CallbackID ID of the callback to be registered
  *         This parameter can be one of the following values:
- *          @arg @ref HAL_PKA_OPERATION_COMPLETE_CB_ID End of operation callback
- * ID
+ *          @arg @ref HAL_PKA_OPERATION_COMPLETE_CB_ID End of operation callback ID
  *          @arg @ref HAL_PKA_ERROR_CB_ID Error callback ID
  *          @arg @ref HAL_PKA_MSPINIT_CB_ID MspInit callback ID
  *          @arg @ref HAL_PKA_MSPDEINIT_CB_ID MspDeInit callback ID
@@ -610,8 +576,7 @@ HAL_StatusTypeDef HAL_PKA_RegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_Call
  *                the configuration information for the specified PKA.
  * @param  CallbackID ID of the callback to be unregistered
  *         This parameter can be one of the following values:
- *          @arg @ref HAL_PKA_OPERATION_COMPLETE_CB_ID End of operation callback
- * ID
+ *          @arg @ref HAL_PKA_OPERATION_COMPLETE_CB_ID End of operation callback ID
  *          @arg @ref HAL_PKA_ERROR_CB_ID Error callback ID
  *          @arg @ref HAL_PKA_MSPINIT_CB_ID MspInit callback ID
  *          @arg @ref HAL_PKA_MSPDEINIT_CB_ID MspDeInit callback ID
@@ -624,25 +589,19 @@ HAL_StatusTypeDef HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_Ca
 	if (HAL_PKA_STATE_READY == hpka->State) {
 		switch (CallbackID) {
 			case HAL_PKA_OPERATION_COMPLETE_CB_ID:
-				hpka->OperationCpltCallback = HAL_PKA_OperationCpltCallback; /* Legacy
-												weak
-												OperationCpltCallback
-											      */
+				hpka->OperationCpltCallback = HAL_PKA_OperationCpltCallback; /* Legacy weak OperationCpltCallback */
 				break;
 
 			case HAL_PKA_ERROR_CB_ID:
-				hpka->ErrorCallback = HAL_PKA_ErrorCallback; /* Legacy weak
-									      * ErrorCallback
-									      */
+				hpka->ErrorCallback = HAL_PKA_ErrorCallback; /* Legacy weak ErrorCallback        */
 				break;
 
 			case HAL_PKA_MSPINIT_CB_ID:
-				hpka->MspInitCallback = HAL_PKA_MspInit; /* Legacy weak MspInit */
+				hpka->MspInitCallback = HAL_PKA_MspInit; /* Legacy weak MspInit              */
 				break;
 
 			case HAL_PKA_MSPDEINIT_CB_ID:
-				hpka->MspDeInitCallback = HAL_PKA_MspDeInit; /* Legacy weak MspDeInit
-									      */
+				hpka->MspDeInitCallback = HAL_PKA_MspDeInit; /* Legacy weak MspDeInit            */
 				break;
 
 			default:
@@ -656,12 +615,11 @@ HAL_StatusTypeDef HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_Ca
 	} else if (HAL_PKA_STATE_RESET == hpka->State) {
 		switch (CallbackID) {
 			case HAL_PKA_MSPINIT_CB_ID:
-				hpka->MspInitCallback = HAL_PKA_MspInit; /* Legacy weak MspInit */
+				hpka->MspInitCallback = HAL_PKA_MspInit; /* Legacy weak MspInit              */
 				break;
 
 			case HAL_PKA_MSPDEINIT_CB_ID:
-				hpka->MspDeInitCallback = HAL_PKA_MspDeInit; /* Legacy weak MspDeInit
-									      */
+				hpka->MspDeInitCallback = HAL_PKA_MspDeInit; /* Legacy weak MspDeInit            */
 				break;
 
 			default:
@@ -697,8 +655,7 @@ HAL_StatusTypeDef HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_Ca
 		      ##### IO operation functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to manage the PKA
-operations.
+    This subsection provides a set of functions allowing to manage the PKA operations.
 
     (#) There are two modes of operation:
 
@@ -706,10 +663,9 @@ operations.
 	    These functions return when data operation is completed.
        (++) No-Blocking mode : The operation is performed using Interrupts.
 	    These functions return immediately.
-	    The end of the operation is indicated by HAL_PKA_ErrorCallback in
-case of error. The end of the operation is indicated by
-HAL_PKA_OperationCpltCallback in case of success. To stop any operation in
-interrupt mode, use HAL_PKA_Abort().
+	    The end of the operation is indicated by HAL_PKA_ErrorCallback in case of error.
+	    The end of the operation is indicated by HAL_PKA_OperationCpltCallback in case of success.
+	    To stop any operation in interrupt mode, use HAL_PKA_Abort().
 
     (#) Blocking mode functions are :
 
@@ -861,14 +817,12 @@ void HAL_PKA_ModExp_GetResult(PKA_HandleTypeDef *hpka, uint8_t *pRes)
 	/* Indicate to the user the final size */
 	size = (hpka->Instance->RAM[PKA_MODULAR_EXP_IN_OP_NB_BITS] + 7UL) / 8UL;
 
-	/* Move the result to appropriate location (indicated in out parameter)
-	 */
+	/* Move the result to appropriate location (indicated in out parameter) */
 	PKA_Memcpy_u32_to_u8(pRes, &hpka->Instance->RAM[PKA_MODULAR_EXP_OUT_SM_ALGO_ACC1], size);
 }
 
 /**
- * @brief  Sign a message using elliptic curves over prime fields in blocking
- * mode.
+ * @brief  Sign a message using elliptic curves over prime fields in blocking mode.
  * @param  hpka PKA handle
  * @param  in Input information
  * @param  Timeout Timeout duration
@@ -883,8 +837,7 @@ HAL_StatusTypeDef HAL_PKA_ECDSASign(PKA_HandleTypeDef *hpka, PKA_ECDSASignInType
 }
 
 /**
- * @brief  Sign a message using elliptic curves over prime fields in
- * non-blocking mode with Interrupt.
+ * @brief  Sign a message using elliptic curves over prime fields in non-blocking mode with Interrupt.
  * @param  hpka PKA handle
  * @param  in Input information
  * @retval HAL status
@@ -916,16 +869,14 @@ void HAL_PKA_ECDSASign_GetResult(PKA_HandleTypeDef *hpka, PKA_ECDSASignOutTypeDe
 
 	/* If user requires the additional information */
 	if (outExt != NULL) {
-		/* Move the result to appropriate location (indicated in outExt
-		 * parameter) */
+		/* Move the result to appropriate location (indicated in outExt parameter) */
 		PKA_Memcpy_u32_to_u8(outExt->ptX, &hpka->Instance->RAM[PKA_ECDSA_SIGN_OUT_FINAL_POINT_X], size);
 		PKA_Memcpy_u32_to_u8(outExt->ptY, &hpka->Instance->RAM[PKA_ECDSA_SIGN_OUT_FINAL_POINT_Y], size);
 	}
 }
 
 /**
- * @brief  Verify the validity of a signature using elliptic curves over prime
- * fields in blocking mode.
+ * @brief  Verify the validity of a signature using elliptic curves over prime fields in blocking mode.
  * @param  hpka PKA handle
  * @param  in Input information
  * @param  Timeout Timeout duration
@@ -963,8 +914,7 @@ HAL_StatusTypeDef HAL_PKA_ECDSAVerif_IT(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifI
  */
 uint32_t HAL_PKA_ECDSAVerif_IsValidSignature(PKA_HandleTypeDef const *const hpka)
 {
-	/* Invert the state of the PKA RAM bit containing the result of the
-	 * operation */
+	/* Invert the state of the PKA RAM bit containing the result of the operation */
 	return (hpka->Instance->RAM[PKA_ECDSA_VERIF_OUT_RESULT] == 0UL) ? 1UL : 0UL;
 }
 
@@ -1002,16 +952,14 @@ HAL_StatusTypeDef HAL_PKA_RSACRTExp_IT(PKA_HandleTypeDef *hpka, PKA_RSACRTExpInT
 /**
  * @brief  Retrieve operation result.
  * @param  hpka PKA handle
- * @param  pRes Pointer to memory location to receive the result of the
- * operation
+ * @param  pRes Pointer to memory location to receive the result of the operation
  * @retval HAL status
  */
 void HAL_PKA_RSACRTExp_GetResult(PKA_HandleTypeDef *hpka, uint8_t *pRes)
 {
 	uint32_t size;
 
-	/* Move the result to appropriate location (indicated in out parameter)
-	 */
+	/* Move the result to appropriate location (indicated in out parameter) */
 	size = (hpka->Instance->RAM[PKA_RSA_CRT_EXP_IN_MOD_NB_BITS] + 7UL) / 8UL;
 
 	PKA_Memcpy_u32_to_u8(pRes, &hpka->Instance->RAM[PKA_RSA_CRT_EXP_OUT_RESULT], size);
@@ -1056,8 +1004,7 @@ HAL_StatusTypeDef HAL_PKA_PointCheck_IT(PKA_HandleTypeDef *hpka, PKA_PointCheckI
 uint32_t HAL_PKA_PointCheck_IsOnCurve(PKA_HandleTypeDef const *const hpka)
 {
 #define PKA_POINT_IS_ON_CURVE 0UL
-	/* Invert the value of the PKA RAM containing the result of the
-	 * operation */
+	/* Invert the value of the PKA RAM containing the result of the operation */
 	return (hpka->Instance->RAM[PKA_POINT_CHECK_OUT_ERROR] == PKA_POINT_IS_ON_CURVE) ? 1UL : 0UL;
 }
 
@@ -1134,8 +1081,7 @@ void HAL_PKA_ECCMul_GetResult(PKA_HandleTypeDef *hpka, PKA_ECCMulOutTypeDef *out
 
 	/* If a destination buffer is provided */
 	if (out != NULL) {
-		/* Move the result to appropriate location (indicated in out
-		 * parameter) */
+		/* Move the result to appropriate location (indicated in out parameter) */
 		PKA_Memcpy_u32_to_u8(out->ptX, &hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_OUT_RESULT_X], size);
 		PKA_Memcpy_u32_to_u8(out->ptY, &hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_OUT_RESULT_Y], size);
 	}
@@ -1423,16 +1369,14 @@ HAL_StatusTypeDef HAL_PKA_MontgomeryMul_IT(PKA_HandleTypeDef *hpka, PKA_Montgome
 /**
  * @brief  Retrieve operation result.
  * @param  hpka PKA handle
- * @param  pRes Pointer to memory location to receive the result of the
- * operation
+ * @param  pRes Pointer to memory location to receive the result of the operation
  */
 void HAL_PKA_Arithmetic_GetResult(PKA_HandleTypeDef *hpka, uint32_t *pRes)
 {
 	uint32_t mode = (hpka->Instance->CR & PKA_CR_MODE_Msk) >> PKA_CR_MODE_Pos;
 	uint32_t size = 0;
 
-	/* Move the result to appropriate location (indicated in pRes parameter)
-	 */
+	/* Move the result to appropriate location (indicated in pRes parameter) */
 	switch (mode) {
 		case PKA_MODE_ARITHMETIC_SUB:
 		case PKA_MODE_MODULAR_ADD:
@@ -1524,8 +1468,7 @@ void HAL_PKA_MontgomeryParam_GetResult(PKA_HandleTypeDef *hpka, uint32_t *pRes)
 	/* Retrieve the size of the buffer from the PKA RAM */
 	size = (hpka->Instance->RAM[PKA_MONTGOMERY_PARAM_IN_MOD_NB_BITS] + 31UL) / 32UL;
 
-	/* Move the result to appropriate location (indicated in out parameter)
-	 */
+	/* Move the result to appropriate location (indicated in out parameter) */
 	PKA_Memcpy_u32_to_u32(pRes, &hpka->Instance->RAM[PKA_MONTGOMERY_PARAM_OUT_PARAMETER], size);
 }
 
@@ -1539,8 +1482,7 @@ HAL_StatusTypeDef HAL_PKA_Abort(PKA_HandleTypeDef *hpka)
 	HAL_StatusTypeDef err = HAL_OK;
 
 	/* Clear EN bit */
-	/* This abort any operation in progress (PKA RAM content is not
-	 * guaranteed in this case) */
+	/* This abort any operation in progress (PKA RAM content is not guaranteed in this case) */
 	CLEAR_BIT(hpka->Instance->CR, PKA_CR_EN);
 	SET_BIT(hpka->Instance->CR, PKA_CR_EN);
 
@@ -1601,8 +1543,7 @@ void HAL_PKA_IRQHandler(PKA_HandleTypeDef *hpka)
 
 	/* Check the operation success in case of ECDSA signature */
 	if (mode == PKA_MODE_ECDSA_SIGNATURE) {
-		/* If error output result is different from 0, ecdsa sign
-		 * operation need to be repeated */
+		/* If error output result is different from 0, ecdsa sign operation need to be repeated */
 		if (hpka->Instance->RAM[PKA_ECDSA_SIGN_OUT_ERROR] != 0UL) {
 			hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
 		}
@@ -1642,9 +1583,8 @@ __weak void HAL_PKA_OperationCpltCallback(PKA_HandleTypeDef *hpka)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpka);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PKA_OperationCpltCallback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PKA_OperationCpltCallback could be implemented in the user file
 	 */
 }
 
@@ -1658,9 +1598,8 @@ __weak void HAL_PKA_ErrorCallback(PKA_HandleTypeDef *hpka)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpka);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PKA_ErrorCallback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PKA_ErrorCallback could be implemented in the user file
 	 */
 }
 
@@ -1771,8 +1710,7 @@ uint32_t PKA_CheckError(const PKA_HandleTypeDef *hpka, uint32_t mode)
 	/* Check the operation success in case of ECDSA signature */
 	if (mode == PKA_MODE_ECDSA_SIGNATURE) {
 #define EDCSA_SIGN_NOERROR 0UL
-		/* If error output result is different from no error, ecsa sign
-		 * operation need to be repeated */
+		/* If error output result is different from no error, ecsa sign operation need to be repeated */
 		if (hpka->Instance->RAM[PKA_ECDSA_SIGN_OUT_ERROR] != EDCSA_SIGN_NOERROR) {
 			err |= HAL_PKA_ERROR_OPERATION;
 		}
@@ -1787,8 +1725,7 @@ uint32_t PKA_CheckError(const PKA_HandleTypeDef *hpka, uint32_t mode)
  */
 uint32_t PKA_GetBitSize_u8(uint32_t byteNumber)
 {
-	/* Convert from number of uint8_t in an array to the associated number
-	 * of bits in this array */
+	/* Convert from number of uint8_t in an array to the associated number of bits in this array */
 	return byteNumber * 8UL;
 }
 
@@ -1812,8 +1749,7 @@ uint32_t PKA_GetOptBitSize_u8(uint32_t byteNumber, uint8_t msb)
  */
 uint32_t PKA_GetBitSize_u32(uint32_t wordNumber)
 {
-	/* Convert from number of uint32_t in an array to the associated number
-	 * of bits in this array */
+	/* Convert from number of uint32_t in an array to the associated number of bits in this array */
 	return wordNumber * 32UL;
 }
 
@@ -1830,8 +1766,7 @@ uint32_t PKA_GetArraySize_u8(uint32_t bitSize)
 }
 
 /**
- * @brief  Copy uint32_t array to uint8_t array to fit PKA number
- * representation.
+ * @brief  Copy uint32_t array to uint8_t array to fit PKA number representation.
  * @param  dst Pointer to destination
  * @param  src Pointer to source
  * @param  n Number of uint8_t to copy
@@ -1844,8 +1779,7 @@ void PKA_Memcpy_u32_to_u8(uint8_t dst[], __IO const uint32_t src[], size_t n)
 			uint32_t index_uint32_t = 0UL; /* This index is used outside of the loop */
 
 			for (; index_uint32_t < (n / 4UL); index_uint32_t++) {
-				/* Avoid casting from uint8_t* to uint32_t* by
-				 * copying 4 uint8_t in a row */
+				/* Avoid casting from uint8_t* to uint32_t* by copying 4 uint8_t in a row */
 				/* Apply __REV equivalent */
 				uint32_t index_uint8_t = n - 4UL - (index_uint32_t * 4UL);
 				dst[index_uint8_t + 3UL] = (uint8_t)((src[index_uint32_t] & 0x000000FFU));
@@ -1865,16 +1799,14 @@ void PKA_Memcpy_u32_to_u8(uint8_t dst[], __IO const uint32_t src[], size_t n)
 				dst[1UL] = (uint8_t)((src[index_uint32_t] & 0x0000FF00U) >> 8UL);
 				dst[0UL] = (uint8_t)((src[index_uint32_t] & 0x00FF0000U) >> 16UL);
 			} else {
-				/* The last element is already handle in the
-				 * loop */
+				/* The last element is already handle in the loop */
 			}
 		}
 	}
 }
 
 /**
- * @brief  Copy uint8_t array to uint32_t array to fit PKA number
- * representation.
+ * @brief  Copy uint8_t array to uint32_t array to fit PKA number representation.
  * @param  dst Pointer to destination
  * @param  src Pointer to source
  * @param  n Number of uint8_t to copy (must be multiple of 4)
@@ -1887,8 +1819,7 @@ void PKA_Memcpy_u8_to_u32(__IO uint32_t dst[], const uint8_t src[], size_t n)
 			uint32_t index = 0UL; /* This index is used outside of the loop */
 
 			for (; index < (n / 4UL); index++) {
-				/* Apply the equivalent of __REV from uint8_t to
-				 * uint32_t */
+				/* Apply the equivalent of __REV from uint8_t to uint32_t */
 				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) | ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL) | ((uint32_t)src[(n - (index * 4UL) - 3UL)] << 16UL) |
 					     ((uint32_t)src[(n - (index * 4UL) - 4UL)] << 24UL);
 			}
@@ -1901,8 +1832,7 @@ void PKA_Memcpy_u8_to_u32(__IO uint32_t dst[], const uint8_t src[], size_t n)
 			} else if ((n % 4UL) == 3UL) {
 				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) | ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL) | ((uint32_t)src[(n - (index * 4UL) - 3UL)] << 16UL);
 			} else {
-				/* The last element is already handle in the
-				 * loop */
+				/* The last element is already handle in the loop */
 			}
 		}
 	}
@@ -1989,8 +1919,7 @@ HAL_StatusTypeDef PKA_Process(PKA_HandleTypeDef *hpka, uint32_t mode, uint32_t T
 }
 
 /**
- * @brief  Generic function to start a PKA operation in non-blocking mode with
- * Interrupt.
+ * @brief  Generic function to start a PKA operation in non-blocking mode with Interrupt.
  * @param  hpka PKA handle
  * @param  mode PKA operation
  * @retval HAL status
@@ -2058,28 +1987,27 @@ void PKA_ModExpFastMode_Set(PKA_HandleTypeDef *hpka, PKA_ModExpFastModeInTypeDef
 
 	/* Move the input parameters pOp1 to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_MODULAR_EXP_IN_EXPONENT_BASE], in->pOp1, in->OpSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_EXPONENT_BASE + (in->OpSize / 4UL));
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_EXPONENT_BASE + ((in->OpSize + 3UL) / 4UL));
 
 	/* Move the exponent to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_MODULAR_EXP_IN_EXPONENT], in->pExp, in->expSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_EXPONENT + (in->expSize / 4UL));
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_EXPONENT + ((in->expSize + 3UL) / 4UL));
 
 	/* Move the modulus to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_MODULAR_EXP_IN_MODULUS], in->pMod, in->OpSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_MODULUS + (in->OpSize / 4UL));
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_MODULUS + ((in->OpSize + 3UL) / 4UL));
 
 	/* Move the Montgomery parameter to PKA RAM */
 	PKA_Memcpy_u32_to_u32(&hpka->Instance->RAM[PKA_MODULAR_EXP_IN_MONTGOMERY_PARAM], in->pMontgomeryParam, in->OpSize / 4UL);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_MONTGOMERY_PARAM + (in->OpSize / 4UL));
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_MONTGOMERY_PARAM + ((in->OpSize + 3UL) / 4UL));
 }
 
 /**
  * @brief  Set input parameters.
  * @param  hpka PKA handle
  * @param  in Input information
- * @note   If the modulus size is bigger than the hash size (with a curve
- * SECP521R1 when using a SHA256 hash for example)the hash value should be
- * written at the end of the buffer with zeros padding at beginning.
+ * @note   If the modulus size is bigger than the hash size (with a curve SECP521R1 when using a SHA256 hash
+ *         for example)the hash value should be written at the end of the buffer with zeros padding at beginning.
  */
 void PKA_ECDSASign_Set(PKA_HandleTypeDef *hpka, PKA_ECDSASignInTypeDef *in)
 {
@@ -2157,13 +2085,11 @@ void PKA_ECDSAVerif_Set(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifInTypeDef *in)
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_INITIAL_POINT_Y], in->basePointY, in->modulusSize);
 	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECDSA_VERIF_IN_INITIAL_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
 
-	/* Move the input parameters public-key curve point Q coordinate xQ to
-	 * PKA RAM */
+	/* Move the input parameters public-key curve point Q coordinate xQ to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X], in->pPubKeyCurvePtX, in->modulusSize);
 	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X + ((in->modulusSize + 3UL) / 4UL));
 
-	/* Move the input parameters public-key curve point Q coordinate xQ to
-	 * PKA RAM */
+	/* Move the input parameters public-key curve point Q coordinate xQ to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y], in->pPubKeyCurvePtY, in->modulusSize);
 	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
 
