@@ -100,6 +100,8 @@ static void Neopixel_EncodeColor(uint8_t *buffer, uint32_t color)
 void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, uint32_t sizeofColors)
 {
 	// TODO Add null checks for all parameters
+		if(context == NULL) return; //possiblty works
+		if(colors == NULL) return; //possiblty works
 
 	if (context->config.NumberOfNeopixels * sizeof(Neopixel_Color) != sizeofColors) {
 		LOGOMATIC("Number of colors provided does not match number of Neopixels configured!\n");
