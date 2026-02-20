@@ -47,16 +47,13 @@ extern "C" {
  */
 typedef struct {
 	uint32_t MicPair; /*!< Specifies which pair of microphones is selected.
-			       This parameter must be a number between Min_Data
-			     = 1 and Max_Data = 3. */
+			       This parameter must be a number between Min_Data = 1 and Max_Data = 3. */
 
-	uint32_t LeftDelay; /*!< Specifies the delay in PDM clock unit to apply
-			       on left microphone. This parameter must be a
-			       number between Min_Data = 0 and Max_Data = 7. */
+	uint32_t LeftDelay; /*!< Specifies the delay in PDM clock unit to apply on left microphone.
+				 This parameter must be a number between Min_Data = 0 and Max_Data = 7. */
 
-	uint32_t RightDelay; /*!< Specifies the delay in PDM clock unit to apply
-				on right microphone. This parameter must be a
-				number between Min_Data = 0 and Max_Data = 7. */
+	uint32_t RightDelay; /*!< Specifies the delay in PDM clock unit to apply on right microphone.
+				  This parameter must be a number between Min_Data = 0 and Max_Data = 7. */
 } SAIEx_PdmMicDelayParamTypeDef;
 
 /**
@@ -99,9 +96,8 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai, con
  * @}
  */
 
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
-	  STM32L4S7xx || STM32L4S9xx || */
-       /* STM32L4P5xx || STM32L4Q5xx */
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx || */
+/* STM32L4P5xx || STM32L4Q5xx */
 
 #ifdef __cplusplus
 }

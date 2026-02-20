@@ -48,9 +48,9 @@ extern "C" {
  */
 typedef enum {
 	HAL_NAND_STATE_RESET = 0x00U, /*!< NAND not yet initialized or disabled */
-	HAL_NAND_STATE_READY = 0x01U, /*!< NAND initialized and ready for use */
-	HAL_NAND_STATE_BUSY = 0x02U,  /*!< NAND internal process is ongoing  */
-	HAL_NAND_STATE_ERROR = 0x03U  /*!< NAND error state  */
+	HAL_NAND_STATE_READY = 0x01U, /*!< NAND initialized and ready for use   */
+	HAL_NAND_STATE_BUSY = 0x02U,  /*!< NAND internal process is ongoing     */
+	HAL_NAND_STATE_ERROR = 0x03U  /*!< NAND error state                     */
 } HAL_NAND_StateTypeDef;
 
 /**
@@ -84,31 +84,25 @@ typedef struct {
  * @brief  NAND Memory info Structure definition
  */
 typedef struct {
-	uint32_t PageSize; /*!< NAND memory page (without spare area) size
-			      measured in bytes for 8 bits addressing or words
-			      for 16 bits addressing             */
+	uint32_t PageSize; /*!< NAND memory page (without spare area) size measured in bytes
+				for 8 bits addressing or words for 16 bits addressing             */
 
-	uint32_t SpareAreaSize; /*!< NAND memory spare area size measured in
-				   bytes for 8 bits addressing or words for 16
-				   bits addressing             */
+	uint32_t SpareAreaSize; /*!< NAND memory spare area size measured in bytes
+				     for 8 bits addressing or words for 16 bits addressing             */
 
-	uint32_t BlockSize; /*!< NAND memory block size measured in number of
-			       pages               */
+	uint32_t BlockSize; /*!< NAND memory block size measured in number of pages               */
 
-	uint32_t BlockNbr; /*!< NAND memory number of total blocks */
+	uint32_t BlockNbr; /*!< NAND memory number of total blocks                               */
 
-	uint32_t PlaneNbr; /*!< NAND memory number of planes */
+	uint32_t PlaneNbr; /*!< NAND memory number of planes                                     */
 
-	uint32_t PlaneSize; /*!< NAND memory zone size measured in number of
-			       blocks               */
+	uint32_t PlaneSize; /*!< NAND memory zone size measured in number of blocks               */
 
-	FunctionalState ExtraCommandEnable; /*!< NAND extra command needed for Page reading
-					       mode. This parameter is mandatory for some
-					       NAND parts after the read command
-					       (NAND_CMD_AREA_TRUE1) and before DATA reading
-					       sequence. This parameter could be ENABLE or
-					       DISABLE Please check the Read Mode sequence
-					       in the NAND device datasheet */
+	FunctionalState ExtraCommandEnable; /*!< NAND extra command needed for Page reading mode. This
+						 parameter is mandatory for some NAND parts after the read
+						 command (NAND_CMD_AREA_TRUE1) and before DATA reading sequence.
+						 This parameter could be ENABLE or DISABLE
+						 Please check the Read Mode sequence in the NAND device datasheet */
 } NAND_DeviceConfigTypeDef;
 
 /**
@@ -120,20 +114,20 @@ typedef struct __NAND_HandleTypeDef
 typedef struct
 #endif /* USE_HAL_NAND_REGISTER_CALLBACKS  */
 {
-	FMC_NAND_TypeDef *Instance; /*!< Register base address */
+	FMC_NAND_TypeDef *Instance; /*!< Register base address                                 */
 
 	FMC_NAND_InitTypeDef Init; /*!< NAND device control configuration parameters          */
 
-	HAL_LockTypeDef Lock; /*!< NAND locking object */
+	HAL_LockTypeDef Lock; /*!< NAND locking object                                   */
 
-	__IO HAL_NAND_StateTypeDef State; /*!< NAND device access state */
+	__IO HAL_NAND_StateTypeDef State; /*!< NAND device access state                              */
 
-	NAND_DeviceConfigTypeDef Config; /*!< NAND physical characteristic information structure */
+	NAND_DeviceConfigTypeDef Config; /*!< NAND physical characteristic information structure    */
 
 #if (USE_HAL_NAND_REGISTER_CALLBACKS == 1)
-	void (*MspInitCallback)(struct __NAND_HandleTypeDef *hnand);   /*!< NAND Msp Init callback */
-	void (*MspDeInitCallback)(struct __NAND_HandleTypeDef *hnand); /*!< NAND Msp DeInit callback */
-	void (*ItCallback)(struct __NAND_HandleTypeDef *hnand);	       /*!< NAND IT callback */
+	void (*MspInitCallback)(struct __NAND_HandleTypeDef *hnand);   /*!< NAND Msp Init callback              */
+	void (*MspDeInitCallback)(struct __NAND_HandleTypeDef *hnand); /*!< NAND Msp DeInit callback            */
+	void (*ItCallback)(struct __NAND_HandleTypeDef *hnand);	       /*!< NAND IT callback                    */
 #endif								       /* USE_HAL_NAND_REGISTER_CALLBACKS */
 } NAND_HandleTypeDef;
 
@@ -142,8 +136,8 @@ typedef struct
  * @brief  HAL NAND Callback ID enumeration definition
  */
 typedef enum {
-	HAL_NAND_MSP_INIT_CB_ID = 0x00U,   /*!< NAND MspInit Callback ID   */
-	HAL_NAND_MSP_DEINIT_CB_ID = 0x01U, /*!< NAND MspDeInit Callback ID */
+	HAL_NAND_MSP_INIT_CB_ID = 0x00U,   /*!< NAND MspInit Callback ID          */
+	HAL_NAND_MSP_DEINIT_CB_ID = 0x01U, /*!< NAND MspDeInit Callback ID        */
 	HAL_NAND_IT_CB_ID = 0x02U	   /*!< NAND IT Callback ID               */
 } HAL_NAND_CallbackIDTypeDef;
 
@@ -187,8 +181,7 @@ typedef void (*pNAND_CallbackTypeDef)(NAND_HandleTypeDef *hnand);
  * @{
  */
 
-/** @addtogroup NAND_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup NAND_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 

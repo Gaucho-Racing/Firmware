@@ -62,33 +62,29 @@ extern "C" {
  * @brief  LPTIM Init structure definition
  */
 typedef struct {
-	uint32_t ClockSource; /*!< Specifies the source of the clock used by the
-				 LPTIM instance. This parameter can be a value of
-				 @ref LPTIM_LL_EC_CLK_SOURCE.
+	uint32_t ClockSource; /*!< Specifies the source of the clock used by the LPTIM instance.
+				   This parameter can be a value of @ref LPTIM_LL_EC_CLK_SOURCE.
 
-				   This feature can be modified afterwards using
-				 unitary function @ref LL_LPTIM_SetClockSource().*/
+				   This feature can be modified afterwards using unitary
+				   function @ref LL_LPTIM_SetClockSource().*/
 
 	uint32_t Prescaler; /*!< Specifies the prescaler division ratio.
-				 This parameter can be a value of @ref
-			       LPTIM_LL_EC_PRESCALER.
+				 This parameter can be a value of @ref LPTIM_LL_EC_PRESCALER.
 
-				 This feature can be modified afterwards using using
-			       unitary function @ref LL_LPTIM_SetPrescaler().*/
+				 This feature can be modified afterwards using using unitary
+				 function @ref LL_LPTIM_SetPrescaler().*/
 
 	uint32_t Waveform; /*!< Specifies the waveform shape.
-				This parameter can be a value of @ref
-			      LPTIM_LL_EC_OUTPUT_WAVEFORM.
+				This parameter can be a value of @ref LPTIM_LL_EC_OUTPUT_WAVEFORM.
 
-				This feature can be modified afterwards using
-			      unitary function @ref LL_LPTIM_ConfigOutput().*/
+				This feature can be modified afterwards using unitary
+				function @ref LL_LPTIM_ConfigOutput().*/
 
 	uint32_t Polarity; /*!< Specifies waveform polarity.
-				This parameter can be a value of @ref
-			      LPTIM_LL_EC_OUTPUT_POLARITY.
+				This parameter can be a value of @ref LPTIM_LL_EC_OUTPUT_POLARITY.
 
-				This feature can be modified afterwards using
-			      unitary function @ref LL_LPTIM_ConfigOutput().*/
+				This feature can be modified afterwards using unitary
+				function @ref LL_LPTIM_ConfigOutput().*/
 } LL_LPTIM_InitTypeDef;
 
 /**
@@ -109,26 +105,19 @@ typedef struct {
 #define LL_LPTIM_ISR_CMPOK LPTIM_ISR_CMPOK     /*!< Compare register update OK */
 #define LL_LPTIM_ISR_ARRM LPTIM_ISR_ARRM       /*!< Autoreload match */
 #define LL_LPTIM_ISR_EXTTRIG LPTIM_ISR_EXTTRIG /*!< External trigger edge event */
-#define LL_LPTIM_ISR_ARROK                                                                                                                                                                             \
-	LPTIM_ISR_ARROK /*!< Autoreload register update OK                                                                                                                                             \
-			 */
-#define LL_LPTIM_ISR_UP                                                                                                                                                                                \
-	LPTIM_ISR_UP			 /*!< Counter direction change down to up                                                                                                                      \
-					  */
-#define LL_LPTIM_ISR_DOWN LPTIM_ISR_DOWN /*!< Counter direction change up to down */
+#define LL_LPTIM_ISR_ARROK LPTIM_ISR_ARROK     /*!< Autoreload register update OK */
+#define LL_LPTIM_ISR_UP LPTIM_ISR_UP	       /*!< Counter direction change down to up */
+#define LL_LPTIM_ISR_DOWN LPTIM_ISR_DOWN       /*!< Counter direction change up to down */
 #if defined(LPTIM_RCR_REP)
-#define LL_LPTIM_ISR_UE LPTIM_ISR_UE /*!< Update event */
-#define LL_LPTIM_ISR_REPOK                                                                                                                                                                             \
-	LPTIM_ISR_REPOK /*!< Repetition register update OK                                                                                                                                             \
-			 */
+#define LL_LPTIM_ISR_UE LPTIM_ISR_UE	   /*!< Update event */
+#define LL_LPTIM_ISR_REPOK LPTIM_ISR_REPOK /*!< Repetition register update OK */
 #endif
 /**
  * @}
  */
 
 /** @defgroup LPTIM_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_LPTIM_ReadReg and
- * LL_LPTIM_WriteReg functions
+ * @brief    IT defines which can be used with LL_LPTIM_ReadReg and  LL_LPTIM_WriteReg functions
  * @{
  */
 #define LL_LPTIM_IER_CMPMIE LPTIM_IER_CMPMIE	   /*!< Compare match */
@@ -158,12 +147,8 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_UPDATE_MODE Update Mode
  * @{
  */
-#define LL_LPTIM_UPDATE_MODE_IMMEDIATE                                                                                                                                                                 \
-	0x00000000U /*!<Preload is disabled: registers are updated after each                                                                                                                          \
-		       APB bus write access*/
-#define LL_LPTIM_UPDATE_MODE_ENDOFPERIOD                                                                                                                                                               \
-	LPTIM_CFGR_PRELOAD /*!<preload is enabled: registers are updated at                                                                                                                            \
-			      the end of the current LPTIM period*/
+#define LL_LPTIM_UPDATE_MODE_IMMEDIATE 0x00000000U	    /*!<Preload is disabled: registers are updated after each APB bus write access*/
+#define LL_LPTIM_UPDATE_MODE_ENDOFPERIOD LPTIM_CFGR_PRELOAD /*!<preload is enabled: registers are updated at the end of the current LPTIM period*/
 /**
  * @}
  */
@@ -171,13 +156,8 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_COUNTER_MODE Counter Mode
  * @{
  */
-#define LL_LPTIM_COUNTER_MODE_INTERNAL                                                                                                                                                                 \
-	0x00000000U /*!<The counter is incremented following each internal                                                                                                                             \
-		       clock pulse*/
-#define LL_LPTIM_COUNTER_MODE_EXTERNAL                                                                                                                                                                 \
-	LPTIM_CFGR_COUNTMODE /*!<The counter is incremented following each                                                                                                                             \
-				valid clock pulse on the LPTIM external                                                                                                                                \
-				Input1*/
+#define LL_LPTIM_COUNTER_MODE_INTERNAL 0x00000000U	    /*!<The counter is incremented following each internal clock pulse*/
+#define LL_LPTIM_COUNTER_MODE_EXTERNAL LPTIM_CFGR_COUNTMODE /*!<The counter is incremented following each valid clock pulse on the LPTIM external Input1*/
 /**
  * @}
  */
@@ -185,10 +165,7 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_OUTPUT_WAVEFORM Output Waveform Type
  * @{
  */
-#define LL_LPTIM_OUTPUT_WAVEFORM_PWM                                                                                                                                                                   \
-	0x00000000U					 /*!<LPTIM  generates either a PWM waveform or a One pulse                                                                                     \
-							    waveform depending on chosen operating mode CONTINUOUS                                                                                     \
-							    or SINGLE*/
+#define LL_LPTIM_OUTPUT_WAVEFORM_PWM 0x00000000U	 /*!<LPTIM  generates either a PWM waveform or a One pulse waveform depending on chosen operating mode CONTINUOUS or SINGLE*/
 #define LL_LPTIM_OUTPUT_WAVEFORM_SETONCE LPTIM_CFGR_WAVE /*!<LPTIM  generates a Set Once waveform*/
 /**
  * @}
@@ -197,13 +174,8 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_OUTPUT_POLARITY Output Polarity
  * @{
  */
-#define LL_LPTIM_OUTPUT_POLARITY_REGULAR                                                                                                                                                               \
-	0x00000000U /*!<The LPTIM output reflects the compare results between                                                                                                                          \
-		       LPTIMx_ARR and LPTIMx_CMP registers*/
-#define LL_LPTIM_OUTPUT_POLARITY_INVERSE                                                                                                                                                               \
-	LPTIM_CFGR_WAVPOL /*!<The LPTIM output reflects the inverse of the                                                                                                                             \
-			     compare results between LPTIMx_ARR and LPTIMx_CMP                                                                                                                         \
-			     registers*/
+#define LL_LPTIM_OUTPUT_POLARITY_REGULAR 0x00000000U	   /*!<The LPTIM output reflects the compare results between LPTIMx_ARR and LPTIMx_CMP registers*/
+#define LL_LPTIM_OUTPUT_POLARITY_INVERSE LPTIM_CFGR_WAVPOL /*!<The LPTIM output reflects the inverse of the compare results between LPTIMx_ARR and LPTIMx_CMP registers*/
 /**
  * @}
  */
@@ -211,18 +183,14 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_PRESCALER Prescaler Value
  * @{
  */
-#define LL_LPTIM_PRESCALER_DIV1 0x00000000U				  /*!<Prescaler division factor is set to 1*/
-#define LL_LPTIM_PRESCALER_DIV2 LPTIM_CFGR_PRESC_0			  /*!<Prescaler division factor is set to 2*/
-#define LL_LPTIM_PRESCALER_DIV4 LPTIM_CFGR_PRESC_1			  /*!<Prescaler division factor is set to 4*/
-#define LL_LPTIM_PRESCALER_DIV8 (LPTIM_CFGR_PRESC_1 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to 8*/
-#define LL_LPTIM_PRESCALER_DIV16 LPTIM_CFGR_PRESC_2			  /*!<Prescaler division factor is set to 16*/
-#define LL_LPTIM_PRESCALER_DIV32                                                                                                                                                                       \
-	(LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to                                                                                                              \
-						     32*/
-#define LL_LPTIM_PRESCALER_DIV64                                                                                                                                                                       \
-	(LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_1)  /*!<Prescaler division factor is set to                                                                                                             \
-						      64*/
-#define LL_LPTIM_PRESCALER_DIV128 LPTIM_CFGR_PRESC /*!<Prescaler division factor is set to 128*/
+#define LL_LPTIM_PRESCALER_DIV1 0x00000000U				   /*!<Prescaler division factor is set to 1*/
+#define LL_LPTIM_PRESCALER_DIV2 LPTIM_CFGR_PRESC_0			   /*!<Prescaler division factor is set to 2*/
+#define LL_LPTIM_PRESCALER_DIV4 LPTIM_CFGR_PRESC_1			   /*!<Prescaler division factor is set to 4*/
+#define LL_LPTIM_PRESCALER_DIV8 (LPTIM_CFGR_PRESC_1 | LPTIM_CFGR_PRESC_0)  /*!<Prescaler division factor is set to 8*/
+#define LL_LPTIM_PRESCALER_DIV16 LPTIM_CFGR_PRESC_2			   /*!<Prescaler division factor is set to 16*/
+#define LL_LPTIM_PRESCALER_DIV32 (LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to 32*/
+#define LL_LPTIM_PRESCALER_DIV64 (LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_1) /*!<Prescaler division factor is set to 64*/
+#define LL_LPTIM_PRESCALER_DIV128 LPTIM_CFGR_PRESC			   /*!<Prescaler division factor is set to 128*/
 /**
  * @}
  */
@@ -230,30 +198,14 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_TRIG_SOURCE Trigger Source
  * @{
  */
-#define LL_LPTIM_TRIG_SOURCE_GPIO                                                                                                                                                                      \
-	0x00000000U /*!<External input trigger is connected to TIMx_ETR                                                                                                                                \
-		       input*/
-#define LL_LPTIM_TRIG_SOURCE_RTCALARMA                                                                                                                                                                 \
-	LPTIM_CFGR_TRIGSEL_0 /*!<External input trigger is connected to RTC                                                                                                                            \
-				Alarm A*/
-#define LL_LPTIM_TRIG_SOURCE_RTCALARMB                                                                                                                                                                 \
-	LPTIM_CFGR_TRIGSEL_1 /*!<External input trigger is connected to RTC                                                                                                                            \
-				Alarm B*/
-#define LL_LPTIM_TRIG_SOURCE_RTCTAMP1                                                                                                                                                                  \
-	(LPTIM_CFGR_TRIGSEL_1 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is connected to RTC                                                                                                   \
-							 Tamper 1*/
-#define LL_LPTIM_TRIG_SOURCE_RTCTAMP2                                                                                                                                                                  \
-	LPTIM_CFGR_TRIGSEL_2 /*!<External input trigger is connected to RTC                                                                                                                            \
-				Tamper 2*/
-#define LL_LPTIM_TRIG_SOURCE_RTCTAMP3                                                                                                                                                                  \
-	(LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is connected to RTC                                                                                                   \
-							 Tamper 3*/
-#define LL_LPTIM_TRIG_SOURCE_COMP1                                                                                                                                                                     \
-	(LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_1) /*!<External input trigger is connected to                                                                                                       \
-							 COMP1 output*/
-#define LL_LPTIM_TRIG_SOURCE_COMP2                                                                                                                                                                     \
-	LPTIM_CFGR_TRIGSEL /*!<External input trigger is connected to COMP2                                                                                                                            \
-			      output*/
+#define LL_LPTIM_TRIG_SOURCE_GPIO 0x00000000U					    /*!<External input trigger is connected to TIMx_ETR input*/
+#define LL_LPTIM_TRIG_SOURCE_RTCALARMA LPTIM_CFGR_TRIGSEL_0			    /*!<External input trigger is connected to RTC Alarm A*/
+#define LL_LPTIM_TRIG_SOURCE_RTCALARMB LPTIM_CFGR_TRIGSEL_1			    /*!<External input trigger is connected to RTC Alarm B*/
+#define LL_LPTIM_TRIG_SOURCE_RTCTAMP1 (LPTIM_CFGR_TRIGSEL_1 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is connected to RTC Tamper 1*/
+#define LL_LPTIM_TRIG_SOURCE_RTCTAMP2 LPTIM_CFGR_TRIGSEL_2			    /*!<External input trigger is connected to RTC Tamper 2*/
+#define LL_LPTIM_TRIG_SOURCE_RTCTAMP3 (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is connected to RTC Tamper 3*/
+#define LL_LPTIM_TRIG_SOURCE_COMP1 (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_1)    /*!<External input trigger is connected to COMP1 output*/
+#define LL_LPTIM_TRIG_SOURCE_COMP2 LPTIM_CFGR_TRIGSEL				    /*!<External input trigger is connected to COMP2 output*/
 /**
  * @}
  */
@@ -261,21 +213,10 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_TRIG_FILTER Trigger Filter
  * @{
  */
-#define LL_LPTIM_TRIG_FILTER_NONE                                                                                                                                                                      \
-	0x00000000U /*!<Any trigger active level change is considered as a                                                                                                                             \
-		       valid trigger*/
-#define LL_LPTIM_TRIG_FILTER_2                                                                                                                                                                         \
-	LPTIM_CFGR_TRGFLT_0 /*!<Trigger active level change must be stable for                                                                                                                         \
-			       at least 2 clock periods before it is                                                                                                                                   \
-			       considered as valid trigger*/
-#define LL_LPTIM_TRIG_FILTER_4                                                                                                                                                                         \
-	LPTIM_CFGR_TRGFLT_1 /*!<Trigger active level change must be stable for                                                                                                                         \
-			       at least 4 clock periods before it is                                                                                                                                   \
-			       considered as valid trigger*/
-#define LL_LPTIM_TRIG_FILTER_8                                                                                                                                                                         \
-	LPTIM_CFGR_TRGFLT /*!<Trigger active level change must be stable for                                                                                                                           \
-			     at least 8 clock periods before it is considered                                                                                                                          \
-			     as valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_NONE 0x00000000U	   /*!<Any trigger active level change is considered as a valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_2 LPTIM_CFGR_TRGFLT_0 /*!<Trigger active level change must be stable for at least 2 clock periods before it is considered as valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_4 LPTIM_CFGR_TRGFLT_1 /*!<Trigger active level change must be stable for at least 4 clock periods before it is considered as valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_8 LPTIM_CFGR_TRGFLT   /*!<Trigger active level change must be stable for at least 8 clock periods before it is considered as valid trigger*/
 /**
  * @}
  */
@@ -283,15 +224,9 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_TRIG_POLARITY Trigger Polarity
  * @{
  */
-#define LL_LPTIM_TRIG_POLARITY_RISING                                                                                                                                                                  \
-	LPTIM_CFGR_TRIGEN_0 /*!<LPTIM counter starts when a rising edge is                                                                                                                             \
-			       detected*/
-#define LL_LPTIM_TRIG_POLARITY_FALLING                                                                                                                                                                 \
-	LPTIM_CFGR_TRIGEN_1 /*!<LPTIM counter starts when a falling edge is                                                                                                                            \
-			       detected*/
-#define LL_LPTIM_TRIG_POLARITY_RISING_FALLING                                                                                                                                                          \
-	LPTIM_CFGR_TRIGEN /*!<LPTIM counter starts when a rising or a falling                                                                                                                          \
-			     edge is detected*/
+#define LL_LPTIM_TRIG_POLARITY_RISING LPTIM_CFGR_TRIGEN_0	/*!<LPTIM counter starts when a rising edge is detected*/
+#define LL_LPTIM_TRIG_POLARITY_FALLING LPTIM_CFGR_TRIGEN_1	/*!<LPTIM counter starts when a falling edge is detected*/
+#define LL_LPTIM_TRIG_POLARITY_RISING_FALLING LPTIM_CFGR_TRIGEN /*!<LPTIM counter starts when a rising or a falling edge is detected*/
 /**
  * @}
  */
@@ -299,12 +234,8 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_CLK_SOURCE Clock Source
  * @{
  */
-#define LL_LPTIM_CLK_SOURCE_INTERNAL                                                                                                                                                                   \
-	0x00000000U /*!<LPTIM is clocked by internal clock source (APB clock                                                                                                                           \
-		       or any of the embedded oscillators)*/
-#define LL_LPTIM_CLK_SOURCE_EXTERNAL                                                                                                                                                                   \
-	LPTIM_CFGR_CKSEL /*!<LPTIM is clocked by an external clock source                                                                                                                              \
-			    through the LPTIM external Input1*/
+#define LL_LPTIM_CLK_SOURCE_INTERNAL 0x00000000U      /*!<LPTIM is clocked by internal clock source (APB clock or any of the embedded oscillators)*/
+#define LL_LPTIM_CLK_SOURCE_EXTERNAL LPTIM_CFGR_CKSEL /*!<LPTIM is clocked by an external clock source through the LPTIM external Input1*/
 /**
  * @}
  */
@@ -312,21 +243,10 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_CLK_FILTER Clock Filter
  * @{
  */
-#define LL_LPTIM_CLK_FILTER_NONE                                                                                                                                                                       \
-	0x00000000U /*!<Any external clock signal level change is considered                                                                                                                           \
-		       as a valid transition*/
-#define LL_LPTIM_CLK_FILTER_2                                                                                                                                                                          \
-	LPTIM_CFGR_CKFLT_0 /*!<External clock signal level change must be                                                                                                                              \
-			      stable for at least 2 clock periods before it is                                                                                                                         \
-			      considered as valid transition*/
-#define LL_LPTIM_CLK_FILTER_4                                                                                                                                                                          \
-	LPTIM_CFGR_CKFLT_1 /*!<External clock signal level change must be                                                                                                                              \
-			      stable for at least 4 clock periods before it is                                                                                                                         \
-			      considered as valid transition*/
-#define LL_LPTIM_CLK_FILTER_8                                                                                                                                                                          \
-	LPTIM_CFGR_CKFLT /*!<External clock signal level change must be stable                                                                                                                         \
-			    for at least 8 clock periods before it is                                                                                                                                  \
-			    considered as valid transition*/
+#define LL_LPTIM_CLK_FILTER_NONE 0x00000000U	 /*!<Any external clock signal level change is considered as a valid transition*/
+#define LL_LPTIM_CLK_FILTER_2 LPTIM_CFGR_CKFLT_0 /*!<External clock signal level change must be stable for at least 2 clock periods before it is considered as valid transition*/
+#define LL_LPTIM_CLK_FILTER_4 LPTIM_CFGR_CKFLT_1 /*!<External clock signal level change must be stable for at least 4 clock periods before it is considered as valid transition*/
+#define LL_LPTIM_CLK_FILTER_8 LPTIM_CFGR_CKFLT	 /*!<External clock signal level change must be stable for at least 8 clock periods before it is considered as valid transition*/
 /**
  * @}
  */
@@ -334,12 +254,8 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_CLK_POLARITY Clock Polarity
  * @{
  */
-#define LL_LPTIM_CLK_POLARITY_RISING                                                                                                                                                                   \
-	0x00000000U /*!< The rising edge is the active edge used for                                                                                                                                   \
-		       counting*/
-#define LL_LPTIM_CLK_POLARITY_FALLING                                                                                                                                                                  \
-	LPTIM_CFGR_CKPOL_0					/*!< The falling edge is the active edge used for                                                                                      \
-								   counting*/
+#define LL_LPTIM_CLK_POLARITY_RISING 0x00000000U		/*!< The rising edge is the active edge used for counting*/
+#define LL_LPTIM_CLK_POLARITY_FALLING LPTIM_CFGR_CKPOL_0	/*!< The falling edge is the active edge used for counting*/
 #define LL_LPTIM_CLK_POLARITY_RISING_FALLING LPTIM_CFGR_CKPOL_1 /*!< Both edges are active edges*/
 /**
  * @}
@@ -348,12 +264,8 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_ENCODER_MODE Encoder Mode
  * @{
  */
-#define LL_LPTIM_ENCODER_MODE_RISING                                                                                                                                                                   \
-	0x00000000U /*!< The rising edge is the active edge used for                                                                                                                                   \
-		       counting*/
-#define LL_LPTIM_ENCODER_MODE_FALLING                                                                                                                                                                  \
-	LPTIM_CFGR_CKPOL_0					/*!< The falling edge is the active edge used for                                                                                      \
-								   counting*/
+#define LL_LPTIM_ENCODER_MODE_RISING 0x00000000U		/*!< The rising edge is the active edge used for counting*/
+#define LL_LPTIM_ENCODER_MODE_FALLING LPTIM_CFGR_CKPOL_0	/*!< The falling edge is the active edge used for counting*/
 #define LL_LPTIM_ENCODER_MODE_RISING_FALLING LPTIM_CFGR_CKPOL_1 /*!< Both edges are active edges*/
 /**
  * @}
@@ -578,8 +490,7 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetUpdateMode(const LPTIM_TypeDef *LPTIMx)
 
 /**
  * @brief  Set the auto reload value
- * @note The LPTIMx_ARR register content must only be modified when the LPTIM is
- * enabled
+ * @note The LPTIMx_ARR register content must only be modified when the LPTIM is enabled
  * @note After a write to the LPTIMx_ARR register a new write operation to the
  *       same register can only be performed when the previous write operation
  *       is completed. Any successive write before  the ARROK flag is set, will
@@ -609,8 +520,7 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetAutoReload(const LPTIM_TypeDef *LPTIMx)
 #if defined(LPTIM_RCR_REP)
 /**
  * @brief  Set the repetition value
- * @note The LPTIMx_RCR register content must only be modified when the LPTIM is
- * enabled
+ * @note The LPTIMx_RCR register content must only be modified when the LPTIM is enabled
  * @rmtoll RCR          REP           LL_LPTIM_SetRepetition
  * @param  LPTIMx Low-Power Timer instance
  * @param  Repetition Value between Min_Data=0x00 and Max_Data=0xFF
@@ -1231,8 +1141,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_EXTTRIG(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Inform application whether a valid edge on the selected external
- * trigger input has occurred.
+ * @brief  Inform application whether a valid edge on the selected external trigger input has occurred.
  * @rmtoll ISR          EXTTRIG       LL_LPTIM_IsActiveFlag_EXTTRIG
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
@@ -1254,9 +1163,8 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_CMPOK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
-  * @brief  Informs application whether the APB bus write operation to the
-  LPTIMx_CMP register has been successfully completed. If so, a new one can be
-  initiated.
+  * @brief  Informs application whether the APB bus write operation to the LPTIMx_CMP register has been successfully
+	    completed. If so, a new one can be initiated.
   * @rmtoll ISR          CMPOK         LL_LPTIM_IsActiveFlag_CMPOK
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
@@ -1278,9 +1186,8 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_ARROK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
-  * @brief  Informs application whether the APB bus write operation to the
-  LPTIMx_ARR register has been successfully completed. If so, a new one can be
-  initiated.
+  * @brief  Informs application whether the APB bus write operation to the LPTIMx_ARR register has been successfully
+	    completed. If so, a new one can be initiated.
   * @rmtoll ISR          ARROK         LL_LPTIM_IsActiveFlag_ARROK
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
@@ -1302,8 +1209,8 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_UP(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
-  * @brief  Informs the application whether the counter direction has changed
-  from down to up (when the LPTIM instance operates in encoder mode).
+  * @brief  Informs the application whether the counter direction has changed from down to up (when the LPTIM instance
+	    operates in encoder mode).
   * @rmtoll ISR          UP            LL_LPTIM_IsActiveFlag_UP
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
@@ -1325,8 +1232,8 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_DOWN(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
-  * @brief  Informs the application whether the counter direction has changed
-  from up to down (when the LPTIM instance operates in encoder mode).
+  * @brief  Informs the application whether the counter direction has changed from up to down (when the LPTIM instance
+	    operates in encoder mode).
   * @rmtoll ISR          DOWN          LL_LPTIM_IsActiveFlag_DOWN
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
@@ -1349,9 +1256,8 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_REPOK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
-  * @brief  Informs application whether the APB bus write operation to the
-  LPTIMx_RCR register has been successfully completed; If so, a new one can be
-  initiated.
+  * @brief  Informs application whether the APB bus write operation to the LPTIMx_RCR register has been successfully
+	    completed; If so, a new one can be initiated.
   * @rmtoll ISR          REPOK         LL_LPTIM_IsActiveFlag_REPOK
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
@@ -1481,8 +1387,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Indicates external trigger valid edge interrupt (EXTTRIGIE) is
- * enabled.
+ * @brief  Indicates external trigger valid edge interrupt (EXTTRIGIE) is enabled.
  * @rmtoll IER          EXTTRIGIE     LL_LPTIM_IsEnabledIT_EXTTRIG
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
@@ -1515,8 +1420,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_CMPOK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Indicates whether the compare register write completed interrupt
- * (CMPOKIE) is enabled.
+ * @brief  Indicates whether the compare register write completed interrupt (CMPOKIE) is enabled.
  * @rmtoll IER          CMPOKIE       LL_LPTIM_IsEnabledIT_CMPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
@@ -1549,8 +1453,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_ARROK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Indicates whether the autoreload register write completed interrupt
- * (ARROKIE) is enabled.
+ * @brief  Indicates whether the autoreload register write completed interrupt (ARROKIE) is enabled.
  * @rmtoll IER         ARROKIE       LL_LPTIM_IsEnabledIT_ARROK
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
@@ -1583,8 +1486,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_UP(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Indicates whether the direction change to up interrupt (UPIE) is
- * enabled.
+ * @brief  Indicates whether the direction change to up interrupt (UPIE) is enabled.
  * @rmtoll IER         UPIE          LL_LPTIM_IsEnabledIT_UP
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
@@ -1617,8 +1519,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_DOWN(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Indicates whether the direction change to down interrupt (DOWNIE) is
- * enabled.
+ * @brief  Indicates whether the direction change to down interrupt (DOWNIE) is enabled.
  * @rmtoll IER         DOWNIE        LL_LPTIM_IsEnabledIT_DOWN
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
@@ -1630,8 +1531,7 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_DOWN(const LPTIM_TypeDef *LPTIMx)
 
 #if defined(LPTIM_RCR_REP)
 /**
- * @brief  Enable repetition register update successfully completed interrupt
- * (REPOKIE).
+ * @brief  Enable repetition register update successfully completed interrupt (REPOKIE).
  * @rmtoll IER         REPOKIE       LL_LPTIM_EnableIT_REPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
@@ -1642,8 +1542,7 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_REPOK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Disable repetition register update successfully completed interrupt
- * (REPOKIE).
+ * @brief  Disable repetition register update successfully completed interrupt (REPOKIE).
  * @rmtoll IER         REPOKIE       LL_LPTIM_DisableIT_REPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
@@ -1654,8 +1553,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_REPOK(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
- * @brief  Indicates whether the repetition register update successfully
- * completed interrupt (REPOKIE) is enabled.
+ * @brief  Indicates whether the repetition register update successfully completed interrupt (REPOKIE) is enabled.
  * @rmtoll IER         REPOKIE       LL_LPTIM_IsEnabledIT_REPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).

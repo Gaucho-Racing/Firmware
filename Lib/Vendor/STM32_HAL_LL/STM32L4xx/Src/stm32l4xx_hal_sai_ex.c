@@ -40,7 +40,7 @@
 /** @defgroup SAIEx_Private_Defines SAIEx Extended Private Defines
  * @{
  */
-#define SAI_PDM_DELAY_MASK 0x77U
+#define SAI_PDM_DELAY_MASK 0x77UL
 #define SAI_PDM_DELAY_OFFSET 8U
 #define SAI_PDM_RIGHT_DELAY_OFFSET 4U
 /**
@@ -88,8 +88,7 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai, con
 		assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->LeftDelay));
 		assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->RightDelay));
 
-		/* Compute offset on PDMDLY register according mic pair number
-		 */
+		/* Compute offset on PDMDLY register according mic pair number */
 		offset = SAI_PDM_DELAY_OFFSET * (pdmMicDelay->MicPair - 1U);
 
 		/* Check SAI state and offset */
@@ -118,8 +117,7 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai, con
  * @}
  */
 
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
-	  STM32L4S7xx || STM32L4S9xx || */
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx || */
 /* STM32L4P5xx || STM32L4Q5xx */
 #endif /* HAL_SAI_MODULE_ENABLED */
 /**

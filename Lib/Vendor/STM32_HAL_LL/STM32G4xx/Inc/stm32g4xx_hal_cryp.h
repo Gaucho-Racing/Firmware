@@ -51,33 +51,25 @@ extern "C" {
 typedef struct {
 	uint32_t DataType;	  /*!< 32-bit data, 16-bit data, 8-bit data or 1-bit string.
 				   This parameter can be a value of @ref CRYP_Data_Type */
-	uint32_t KeySize;	  /*!< Used only in AES mode : 128, 192 or 256 bit key
-				   length in CRYP1. 128 or 256 bit key length in TinyAES
-				   This parameter can be a value of @ref CRYP_Key_Size
-				 */
+	uint32_t KeySize;	  /*!< Used only in AES mode : 128, 192 or 256 bit key length in CRYP1.
+				   128 or 256 bit key length in TinyAES
+				   This parameter can be a value of @ref CRYP_Key_Size */
 	uint32_t *pKey;		  /*!< The key used for encryption/decryption */
-	uint32_t *pInitVect;	  /*!< The initialization vector used also as
-				    initialization counter in CTR mode */
+	uint32_t *pInitVect;	  /*!< The initialization vector used also as initialization
+				    counter in CTR mode */
 	uint32_t Algorithm;	  /*!<  DES/ TDES Algorithm ECB/CBC
 				   AES Algorithm ECB/CBC/CTR/GCM or CCM
-				   This parameter can be a value of @ref
-				   CRYP_Algorithm_Mode */
-	uint32_t *Header;	  /*!< used only in AES GCM and CCM Algorithm for
-				   authentication,    GCM : also known as Additional
-				   Authentication Data    CCM : named B1 composed of the
-				   associated data length and Associated Data. */
+				   This parameter can be a value of @ref CRYP_Algorithm_Mode */
+	uint32_t *Header;	  /*!< used only in AES GCM and CCM Algorithm for authentication,
+				   GCM : also known as Additional Authentication Data
+				   CCM : named B1 composed of the associated data length and Associated Data. */
 	uint32_t HeaderSize;	  /*!< The size of header buffer */
-	uint32_t *B0;		  /*!< B0 is first authentication block used only  in AES
-				     CCM mode */
-	uint32_t DataWidthUnit;	  /*!< Payload Data Width Unit, this parameter can
-				     be value of @ref CRYP_Data_Width_Unit*/
-	uint32_t HeaderWidthUnit; /*!< Header Width Unit, this parameter can be
-				     value of @ref CRYP_Header_Width_Unit*/
-	uint32_t KeyIVConfigSkip; /*!< CRYP peripheral Key and IV configuration skip,
-				     to config Key and Initialization Vector only
-				     once and to skip configuration for consecutive
-				     processings. This parameter can be a value of
-				     @ref CRYP_Configuration_Skip */
+	uint32_t *B0;		  /*!< B0 is first authentication block used only  in AES CCM mode */
+	uint32_t DataWidthUnit;	  /*!< Payload Data Width Unit, this parameter can be value of @ref CRYP_Data_Width_Unit*/
+	uint32_t HeaderWidthUnit; /*!< Header Width Unit, this parameter can be value of @ref CRYP_Header_Width_Unit*/
+	uint32_t KeyIVConfigSkip; /*!< CRYP peripheral Key and IV configuration skip, to config Key and Initialization
+				      Vector only once and to skip configuration for consecutive processings.
+				      This parameter can be a value of @ref CRYP_Configuration_Skip */
 
 } CRYP_ConfigTypeDef;
 
@@ -87,10 +79,10 @@ typedef struct {
 
 typedef enum {
 	HAL_CRYP_STATE_RESET = 0x00U, /*!< CRYP not yet initialized or disabled  */
-	HAL_CRYP_STATE_READY = 0x01U, /*!< CRYP initialized and ready for use */
+	HAL_CRYP_STATE_READY = 0x01U, /*!< CRYP initialized and ready for use    */
 	HAL_CRYP_STATE_BUSY = 0x02U,  /*!< CRYP BUSY, internal processing is ongoing  */
 #if (USE_HAL_CRYP_SUSPEND_RESUME == 1U)
-	HAL_CRYP_STATE_SUSPENDED = 0x03U, /*!< CRYP suspended */
+	HAL_CRYP_STATE_SUSPENDED = 0x03U, /*!< CRYP suspended                        */
 #endif					  /* USE_HAL_CRYP_SUSPEND_RESUME */
 } HAL_CRYP_STATETypeDef;
 
@@ -100,7 +92,7 @@ typedef enum {
  */
 typedef enum {
 	HAL_CRYP_SUSPEND_NONE = 0x00U, /*!< CRYP processing suspension not requested */
-	HAL_CRYP_SUSPEND = 0x01U       /*!< CRYP processing suspension requested */
+	HAL_CRYP_SUSPEND = 0x01U       /*!< CRYP processing suspension requested     */
 } HAL_SuspendTypeDef;
 #endif /* USE_HAL_CRYP_SUSPEND_RESUME */
 
@@ -117,15 +109,12 @@ typedef struct
 
 	CRYP_ConfigTypeDef Init; /*!< CRYP required parameters */
 
-	FunctionalState AutoKeyDerivation; /*!< Used only in TinyAES to allow to bypass or
-					   not key write-up before decryption. This
-					   parameter can be a value of ENABLE/DISABLE */
+	FunctionalState AutoKeyDerivation; /*!< Used only in TinyAES to allow to bypass or not key write-up before decryption.
+					   This parameter can be a value of ENABLE/DISABLE */
 
-	uint32_t *pCrypInBuffPtr; /*!< Pointer to CRYP processing (encryption,
-				     decryption,...) buffer */
+	uint32_t *pCrypInBuffPtr; /*!< Pointer to CRYP processing (encryption, decryption,...) buffer */
 
-	uint32_t *pCrypOutBuffPtr; /*!< Pointer to CRYP processing (encryption,
-				      decryption,...) buffer */
+	uint32_t *pCrypOutBuffPtr; /*!< Pointer to CRYP processing (encryption, decryption,...) buffer */
 
 	__IO uint16_t CrypHeaderCount; /*!< Counter of header data in words */
 
@@ -147,12 +136,12 @@ typedef struct
 
 	__IO uint32_t ErrorCode; /*!< CRYP peripheral error code */
 
-	uint32_t KeyIVConfig; /*!< CRYP peripheral Key and IV configuration
-				 flag, used when configuration can be skipped */
+	uint32_t KeyIVConfig; /*!< CRYP peripheral Key and IV configuration flag, used when
+				   configuration can be skipped */
 
-	uint32_t SizesSum; /*!< Sum of successive payloads lengths (in bytes),
-			      stored for a single signature computation after
-			      several messages processing */
+	uint32_t SizesSum; /*!< Sum of successive payloads lengths (in bytes), stored
+				for a single signature computation after several
+				messages processing */
 
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1U)
 	void (*InCpltCallback)(struct __CRYP_HandleTypeDef *hcryp);  /*!< CRYP Input FIFO transfer completed callback  */
@@ -168,73 +157,59 @@ typedef struct
 
 	__IO HAL_SuspendTypeDef SuspendRequest; /*!< CRYP peripheral suspension request flag */
 
-	CRYP_ConfigTypeDef Init_saved; /*!< copy of CRYP required parameters
-					  when processing is suspended */
+	CRYP_ConfigTypeDef Init_saved; /*!< copy of CRYP required parameters when processing is suspended */
 
-	uint32_t *pCrypInBuffPtr_saved; /*!< copy of CRYP input pointer when
-					   processing is suspended */
+	uint32_t *pCrypInBuffPtr_saved; /*!< copy of CRYP input pointer when processing is suspended */
 
-	uint32_t *pCrypOutBuffPtr_saved; /*!< copy of CRYP output pointer when
-					    processing is suspended */
+	uint32_t *pCrypOutBuffPtr_saved; /*!< copy of CRYP output pointer when processing is suspended */
 
-	uint32_t CrypInCount_saved; /*!< copy of CRYP input data counter when
-				       processing is suspended */
+	uint32_t CrypInCount_saved; /*!< copy of CRYP input data counter when processing is suspended */
 
-	uint32_t CrypOutCount_saved; /*!< copy of CRYP output data counter when
-					processing is suspended */
+	uint32_t CrypOutCount_saved; /*!< copy of CRYP output data counter when processing is suspended */
 
-	uint32_t Phase_saved; /*!< copy of CRYP authentication phase when
-				 processing is suspended */
+	uint32_t Phase_saved; /*!< copy of CRYP authentication phase when processing is suspended */
 
-	__IO HAL_CRYP_STATETypeDef State_saved; /*!< copy of CRYP peripheral state when processing is
-						   suspended */
+	__IO HAL_CRYP_STATETypeDef State_saved; /*!< copy of CRYP peripheral state when processing is suspended */
 
 	uint32_t IV_saved[4]; /*!< copy of Initialisation Vector registers */
 
 	uint32_t SUSPxR_saved[8]; /*!< copy of suspension registers */
 
-	uint32_t CR_saved; /*!< copy of CRYP control register  when processing
-			      is suspended*/
+	uint32_t CR_saved; /*!< copy of CRYP control register  when processing is suspended*/
 
 	uint32_t Key_saved[8]; /*!< copy of key registers */
 
 	uint16_t Size_saved; /*!< copy of input buffer size */
 
-	uint16_t CrypHeaderCount_saved; /*!< copy of CRYP header data counter
-					   when processing is suspended */
+	uint16_t CrypHeaderCount_saved; /*!< copy of CRYP header data counter when processing is suspended */
 
-	uint32_t SizesSum_saved; /*!< copy of SizesSum when processing is
-				    suspended */
+	uint32_t SizesSum_saved; /*!< copy of SizesSum when processing is suspended */
 
-	uint32_t ResumingFlag; /*!< resumption flag to bypass steps already
-				  carried out */
+	uint32_t ResumingFlag; /*!< resumption flag to bypass steps already carried out */
 
-	FunctionalState AutoKeyDerivation_saved; /*!< copy of CRYP handle auto
-						    key derivation parameter */
+	FunctionalState AutoKeyDerivation_saved; /*!< copy of CRYP handle auto key derivation parameter */
 
 #endif /* USE_HAL_CRYP_SUSPEND_RESUME */
 
 } CRYP_HandleTypeDef;
 
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1U)
-/** @defgroup HAL_CRYP_Callback_ID_enumeration_definition HAL CRYP Callback ID
- * enumeration definition
+/** @defgroup HAL_CRYP_Callback_ID_enumeration_definition HAL CRYP Callback ID enumeration definition
  * @brief  HAL CRYP Callback ID enumeration definition
  * @{
  */
 typedef enum {
-	HAL_CRYP_MSPINIT_CB_ID = 0x00U,		/*!< CRYP MspInit callback ID   */
-	HAL_CRYP_MSPDEINIT_CB_ID = 0x01U,	/*!< CRYP MspDeInit callback ID */
+	HAL_CRYP_MSPINIT_CB_ID = 0x00U,		/*!< CRYP MspInit callback ID                        */
+	HAL_CRYP_MSPDEINIT_CB_ID = 0x01U,	/*!< CRYP MspDeInit callback ID                      */
 	HAL_CRYP_INPUT_COMPLETE_CB_ID = 0x02U,	/*!< CRYP Input FIFO transfer completed callback ID  */
 	HAL_CRYP_OUTPUT_COMPLETE_CB_ID = 0x03U, /*!< CRYP Output FIFO transfer completed callback ID */
-	HAL_CRYP_ERROR_CB_ID = 0x04U,		/*!< CRYP Error callback ID */
+	HAL_CRYP_ERROR_CB_ID = 0x04U,		/*!< CRYP Error callback ID                          */
 } HAL_CRYP_CallbackIDTypeDef;
 /**
  * @}
  */
 
-/** @defgroup HAL_CRYP_Callback_pointer_definition HAL CRYP Callback pointer
- * definition
+/** @defgroup HAL_CRYP_Callback_pointer_definition HAL CRYP Callback pointer definition
  * @brief  HAL CRYP Callback pointer definition
  * @{
  */
@@ -301,15 +276,11 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_AES_ECB                                                                                                                                                                                   \
-	0x00000000U		    /*!< Electronic codebook chaining algorithm                                                                                                                        \
-				     */
-#define CRYP_AES_CBC AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
-#define CRYP_AES_CTR AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
-#define CRYP_AES_GCM_GMAC                                                                                                                                                                              \
-	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois                                                                                                                            \
-					     message authentication code */
-#define CRYP_AES_CCM AES_CR_CHMOD_2	  /*!< Counter with Cipher Mode */
+#define CRYP_AES_ECB 0x00000000U			    /*!< Electronic codebook chaining algorithm                   */
+#define CRYP_AES_CBC AES_CR_CHMOD_0			    /*!< Cipher block chaining algorithm                          */
+#define CRYP_AES_CTR AES_CR_CHMOD_1			    /*!< Counter mode chaining algorithm                          */
+#define CRYP_AES_GCM_GMAC (AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois message authentication code */
+#define CRYP_AES_CCM AES_CR_CHMOD_2			    /*!< Counter with Cipher Mode                                 */
 
 /**
  * @}
@@ -343,10 +314,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_IT_CCFIE                                                                                                                                                                                  \
-	AES_CR_CCFIE		   /*!< Computation Complete interrupt enable                                                                                                                          \
-				    */
-#define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable */
+#define CRYP_IT_CCFIE AES_CR_CCFIE /*!< Computation Complete interrupt enable */
+#define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable                */
 #define CRYP_IT_WRERR AES_SR_WRERR /*!< Write Error           */
 #define CRYP_IT_RDERR AES_SR_RDERR /*!< Read Error            */
 #define CRYP_IT_CCF AES_SR_CCF	   /*!< Computation completed */
@@ -376,12 +345,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_KEYIVCONFIG_ALWAYS                                                                                                                                                                        \
-	0x00000000U /*!< Peripheral Key and IV configuration to do                                                                                                                                     \
-		       systematically */
-#define CRYP_KEYIVCONFIG_ONCE                                                                                                                                                                          \
-	0x00000001U /*!< Peripheral Key and IV configuration to do only once                                                                                                                           \
-		     */
+#define CRYP_KEYIVCONFIG_ALWAYS 0x00000000U /*!< Peripheral Key and IV configuration to do systematically */
+#define CRYP_KEYIVCONFIG_ONCE 0x00000001U   /*!< Peripheral Key and IV configuration to do only once      */
 
 /**
  * @}
@@ -429,8 +394,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  *            @arg @ref CRYP_IT_RDERR Read Error
  *            @arg @ref CRYP_IT_CCF Computation Complete
  *         This parameter can be one of the following values for CRYP:
- *            @arg CRYP_FLAG_BUSY: The CRYP core is currently processing a block
- * of data or a key preparation (for AES decryption).
+ *            @arg CRYP_FLAG_BUSY: The CRYP core is currently processing a block of data
+ *                                 or a key preparation (for AES decryption).
  *            @arg CRYP_FLAG_IFEM: Input FIFO is empty
  *            @arg CRYP_FLAG_IFNF: Input FIFO is not full
  *            @arg CRYP_FLAG_INRIS: Input FIFO service raw interrupt is pending
@@ -447,8 +412,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @param  __HANDLE__ specifies the CRYP handle.
  * @param  __FLAG__ specifies the flag to clear.
  *         This parameter can be one of the following values:
- *            @arg @ref CRYP_ERR_CLEAR Read (RDERR) or Write Error (WRERR) Flag
- * Clear
+ *            @arg @ref CRYP_ERR_CLEAR Read (RDERR) or Write Error (WRERR) Flag Clear
  *            @arg @ref CRYP_CCF_CLEAR Computation Complete Flag (CCF) Clear
  * @retval None
  */
@@ -490,8 +454,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  *            @arg @ref CRYP_IT_CCFIE Computation Complete interrupt
  *         This parameter can be one of the following values for CRYP:
  *            @ CRYP_IT_INI : Input FIFO service interrupt mask.
- *            @ CRYP_IT_OUTI : Output FIFO service interrupt mask.CRYP
- * interrupt.
+ *            @ CRYP_IT_OUTI : Output FIFO service interrupt mask.CRYP interrupt.
  * @retval None
  */
 
@@ -506,8 +469,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  *            @arg @ref CRYP_IT_CCFIE Computation Complete interrupt
  *         This parameter can be one of the following values for CRYP:
  *            @ CRYP_IT_INI : Input FIFO service interrupt mask.
- *            @ CRYP_IT_OUTI : Output FIFO service interrupt mask.CRYP
- * interrupt.
+ *            @ CRYP_IT_OUTI : Output FIFO service interrupt mask.CRYP interrupt.
  * @retval None
  */
 
@@ -587,8 +549,7 @@ uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp);
  * @{
  */
 
-/** @defgroup CRYP_IS_CRYP_Definitions CRYP Private macros to check input
- * parameters
+/** @defgroup CRYP_IS_CRYP_Definitions CRYP Private macros to check input parameters
  * @{
  */
 
@@ -653,9 +614,9 @@ uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp);
  */
 
 #endif /* AES */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

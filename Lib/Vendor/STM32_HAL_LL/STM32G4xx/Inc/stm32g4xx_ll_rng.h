@@ -54,10 +54,9 @@ extern "C" {
  */
 typedef struct {
 	uint32_t ClockErrorDetection; /*!< Clock error detection.
-				    This parameter can be one value of @ref
-				    RNG_LL_CED. This parameter can be modified
-				    using unitary functions @ref
-				    LL_RNG_EnableClkErrorDetect(). */
+				    This parameter can be one value of @ref RNG_LL_CED.
+				    This parameter can be modified using unitary
+				    functions @ref LL_RNG_EnableClkErrorDetect(). */
 } LL_RNG_InitTypeDef;
 
 /**
@@ -92,8 +91,7 @@ typedef struct {
  */
 
 /** @defgroup RNG_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_RNG_ReadReg and
- * LL_RNG_WriteReg macros
+ * @brief    IT defines which can be used with LL_RNG_ReadReg and  LL_RNG_WriteReg macros
  * @{
  */
 #define LL_RNG_CR_IE RNG_CR_IE /*!< RNG Interrupt enable */

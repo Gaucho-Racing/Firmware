@@ -38,8 +38,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup IRDAEx_Extended_Exported_Constants IRDAEx Extended Exported
- * Constants
+/** @defgroup IRDAEx_Extended_Exported_Constants IRDAEx Extended Exported Constants
  * @{
  */
 
@@ -495,8 +494,7 @@ extern "C" {
 /** @brief  Compute the mask to apply to retrieve the received data
  *         according to the word length and to the parity bits activation.
  * @param  __HANDLE__ specifies the IRDA Handle.
- * @retval None, the mask to apply to the associated UART RDR register is stored
- * in (__HANDLE__)->Mask field.
+ * @retval None, the mask to apply to the associated UART RDR register is stored in (__HANDLE__)->Mask field.
  */
 #define IRDA_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                              \
 	do {                                                                                                                                                                                           \

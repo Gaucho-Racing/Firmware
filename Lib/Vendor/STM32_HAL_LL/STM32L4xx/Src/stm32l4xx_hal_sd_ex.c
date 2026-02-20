@@ -25,11 +25,8 @@
   [..]
    The SD Extension HAL driver can be used as follows:
    (+) Set card in High Speed mode using HAL_SDEx_HighSpeed() function.
-   (+) Configure Buffer0 and Buffer1 start address and Buffer size using
-  HAL_SDEx_ConfigDMAMultiBuffer() function.
-   (+) Start Read and Write for multibuffer mode using
-  HAL_SDEx_ReadBlocksDMAMultiBuffer() and HAL_SDEx_WriteBlocksDMAMultiBuffer()
-  functions.
+   (+) Configure Buffer0 and Buffer1 start address and Buffer size using HAL_SDEx_ConfigDMAMultiBuffer() function.
+   (+) Start Read and Write for multibuffer mode using HAL_SDEx_ReadBlocksDMAMultiBuffer() and HAL_SDEx_WriteBlocksDMAMultiBuffer() functions.
 
   @endverbatim
   ******************************************************************************
@@ -63,15 +60,14 @@
  */
 
 /** @addtogroup SDEx_Exported_Functions_Group1
- *  @brief   High Speed function
- *
+  *  @brief   High Speed function
+  *
 @verbatim
   ==============================================================================
 	  ##### High Speed function #####
   ==============================================================================
   [..]
-    This section provides function allowing to configure the card in High Speed
-mode.
+    This section provides function allowing to configure the card in High Speed mode.
 
 @endverbatim
   * @{
@@ -100,9 +96,8 @@ __weak void HAL_SDEx_DriveTransceiver_1_8V_Callback(FlagStatus status)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(status);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_SD_EnableTransciver could be implemented in the user
-	   file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_SD_EnableTransciver could be implemented in the user file
 	 */
 }
 
@@ -111,30 +106,26 @@ __weak void HAL_SDEx_DriveTransceiver_1_8V_Callback(FlagStatus status)
  */
 
 /** @addtogroup SDEx_Exported_Functions_Group2
- *  @brief   Multibuffer functions
- *
+  *  @brief   Multibuffer functions
+  *
 @verbatim
   ==============================================================================
 	  ##### Multibuffer functions #####
   ==============================================================================
   [..]
-    This section provides functions allowing to configure the multibuffer mode
-and start read and write multibuffer mode for SD HAL driver.
+    This section provides functions allowing to configure the multibuffer mode and start read and write
+    multibuffer mode for SD HAL driver.
 
 @endverbatim
   * @{
   */
 
 /**
- * @brief  Configure DMA Dual Buffer mode. The Data transfer is managed by an
- * Internal DMA.
+ * @brief  Configure DMA Dual Buffer mode. The Data transfer is managed by an Internal DMA.
  * @param  hsd SD handle
- * @param  pDataBuffer0 Pointer to the buffer0 that will contain/receive the
- * transferred data
- * @param  pDataBuffer1 Pointer to the buffer1 that will contain/receive the
- * transferred data
- * @param  BufferSize Size of Buffer0 in Blocks. Buffer0 and Buffer1 must have
- * the same size.
+ * @param  pDataBuffer0 Pointer to the buffer0 that will contain/receive the transferred data
+ * @param  pDataBuffer1 Pointer to the buffer1 that will contain/receive the transferred data
+ * @param  BufferSize Size of Buffer0 in Blocks. Buffer0 and Buffer1 must have the same size.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SDEx_ConfigDMAMultiBuffer(SD_HandleTypeDef *hsd, uint32_t *pDataBuffer0, uint32_t *pDataBuffer1, uint32_t BufferSize)
@@ -151,10 +142,8 @@ HAL_StatusTypeDef HAL_SDEx_ConfigDMAMultiBuffer(SD_HandleTypeDef *hsd, uint32_t 
 }
 
 /**
- * @brief  Reads block(s) from a specified address in a card. The received Data
- * will be stored in Buffer0 and Buffer1. Buffer0, Buffer1 and BufferSize need
- * to be configured by function HAL_SDEx_ConfigDMAMultiBuffer before call this
- * function.
+ * @brief  Reads block(s) from a specified address in a card. The received Data will be stored in Buffer0 and Buffer1.
+ *         Buffer0, Buffer1 and BufferSize need to be configured by function HAL_SDEx_ConfigDMAMultiBuffer before call this function.
  * @param  hsd SD handle
  * @param  BlockAdd Block Address from where data is to be read
  * @param  NumberOfBlocks Total number of blocks to read
@@ -227,10 +216,8 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint3
 }
 
 /**
- * @brief  Write block(s) to a specified address in a card. The transferred Data
- * are stored in Buffer0 and Buffer1. Buffer0, Buffer1 and BufferSize need to be
- * configured by function HAL_SDEx_ConfigDMAMultiBuffer before call this
- * function.
+ * @brief  Write block(s) to a specified address in a card. The transferred Data are stored in Buffer0 and Buffer1.
+ *         Buffer0, Buffer1 and BufferSize need to be configured by function HAL_SDEx_ConfigDMAMultiBuffer before call this function.
  * @param  hsd SD handle
  * @param  BlockAdd Block Address from where data is to be read
  * @param  NumberOfBlocks Total number of blocks to read
@@ -333,9 +320,8 @@ __weak void HAL_SDEx_Read_DMADoubleBuffer0CpltCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SDEx_Read_DMADoubleBuffer0CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SDEx_Read_DMADoubleBuffer0CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -349,9 +335,8 @@ __weak void HAL_SDEx_Read_DMADoubleBuffer1CpltCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SDEx_Read_DMADoubleBuffer1CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SDEx_Read_DMADoubleBuffer1CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -365,9 +350,8 @@ __weak void HAL_SDEx_Write_DMADoubleBuffer0CpltCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SDEx_Write_DMADoubleBuffer0CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SDEx_Write_DMADoubleBuffer0CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -381,9 +365,8 @@ __weak void HAL_SDEx_Write_DMADoubleBuffer1CpltCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SDEx_Write_DMADoubleBuffer0CpltCallback can be
-	   implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SDEx_Write_DMADoubleBuffer0CpltCallback can be implemented in the user file
 	 */
 }
 
@@ -405,5 +388,4 @@ __weak void HAL_SDEx_Write_DMADoubleBuffer1CpltCallback(SD_HandleTypeDef *hsd)
  * @}
  */
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */

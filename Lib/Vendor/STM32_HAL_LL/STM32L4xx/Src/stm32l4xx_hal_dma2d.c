@@ -31,68 +31,62 @@
 	  HAL_DMA2D_Init() function.
 
       (#) Program the required configuration through the following parameters:
-	  the input color mode, the input color, the input alpha value, the
-  alpha mode, the red/blue swap mode, the inverted alpha mode and the input
-  offset using HAL_DMA2D_ConfigLayer() function for foreground or/and background
-  layer.
+	  the input color mode, the input color, the input alpha value, the alpha mode,
+	  the red/blue swap mode, the inverted alpha mode and the input offset using
+	  HAL_DMA2D_ConfigLayer() function for foreground or/and background layer.
 
      *** Polling mode IO operation ***
      =================================
     [..]
-       (#) Configure pdata parameter (explained hereafter), destination and data
-  length and enable the transfer using HAL_DMA2D_Start().
-       (#) Wait for end of transfer using HAL_DMA2D_PollForTransfer(), at this
-  stage user can specify the value of timeout according to his end application.
+       (#) Configure pdata parameter (explained hereafter), destination and data length
+	   and enable the transfer using HAL_DMA2D_Start().
+       (#) Wait for end of transfer using HAL_DMA2D_PollForTransfer(), at this stage
+	   user can specify the value of timeout according to his end application.
 
      *** Interrupt mode IO operation ***
      ===================================
      [..]
        (#) Configure pdata parameter, destination and data length and enable
 	   the transfer using HAL_DMA2D_Start_IT().
-       (#) Use HAL_DMA2D_IRQHandler() called under DMA2D_IRQHandler() interrupt
-  subroutine.
-       (#) At the end of data transfer HAL_DMA2D_IRQHandler() function is
-  executed and user can add his own function by customization of function
-  pointer XferCpltCallback (member of DMA2D handle structure).
-       (#) In case of error, the HAL_DMA2D_IRQHandler() function calls the
-  callback XferErrorCallback.
+       (#) Use HAL_DMA2D_IRQHandler() called under DMA2D_IRQHandler() interrupt subroutine.
+       (#) At the end of data transfer HAL_DMA2D_IRQHandler() function is executed and user can
+	   add his own function by customization of function pointer XferCpltCallback (member
+	   of DMA2D handle structure).
+       (#) In case of error, the HAL_DMA2D_IRQHandler() function calls the callback
+	   XferErrorCallback.
 
-	 -@-   In Register-to-Memory transfer mode, pdata parameter is the
-  register color, in Memory-to-memory or Memory-to-Memory with pixel format
+	 -@-   In Register-to-Memory transfer mode, pdata parameter is the register
+	       color, in Memory-to-memory or Memory-to-Memory with pixel format
 	       conversion pdata is the source address.
 
-	 -@-   Configure the foreground source address, the background source
-  address, the destination and data length then Enable the transfer using
-	       HAL_DMA2D_BlendingStart() in polling mode and
-  HAL_DMA2D_BlendingStart_IT() in interrupt mode.
+	 -@-   Configure the foreground source address, the background source address,
+	       the destination and data length then Enable the transfer using
+	       HAL_DMA2D_BlendingStart() in polling mode and HAL_DMA2D_BlendingStart_IT()
+	       in interrupt mode.
 
-	 -@-   HAL_DMA2D_BlendingStart() and HAL_DMA2D_BlendingStart_IT()
-  functions are used if the memory to memory with blending transfer mode is
-  selected.
+	 -@-   HAL_DMA2D_BlendingStart() and HAL_DMA2D_BlendingStart_IT() functions
+	       are used if the memory to memory with blending transfer mode is selected.
 
-      (#) Optionally, configure and enable the CLUT using HAL_DMA2D_CLUTLoad()
-  in polling mode or HAL_DMA2D_CLUTLoad_IT() in interrupt mode.
+      (#) Optionally, configure and enable the CLUT using HAL_DMA2D_CLUTLoad() in polling
+	  mode or HAL_DMA2D_CLUTLoad_IT() in interrupt mode.
 
-      (#) Optionally, configure the line watermark in using the API
-  HAL_DMA2D_ProgramLineEvent().
+      (#) Optionally, configure the line watermark in using the API HAL_DMA2D_ProgramLineEvent().
 
-      (#) Optionally, configure the dead time value in the AHB clock cycle
-  inserted between two consecutive accesses on the AHB master port in using the
-  API HAL_DMA2D_ConfigDeadTime() and enable/disable the functionality  with the
-  APIs HAL_DMA2D_EnableDeadTime() or HAL_DMA2D_DisableDeadTime().
+      (#) Optionally, configure the dead time value in the AHB clock cycle inserted between two
+	  consecutive accesses on the AHB master port in using the API HAL_DMA2D_ConfigDeadTime()
+	  and enable/disable the functionality  with the APIs HAL_DMA2D_EnableDeadTime() or
+	  HAL_DMA2D_DisableDeadTime().
 
       (#) The transfer can be suspended, resumed and aborted using the following
 	  functions: HAL_DMA2D_Suspend(), HAL_DMA2D_Resume(), HAL_DMA2D_Abort().
 
-      (#) The CLUT loading can be suspended, resumed and aborted using the
-  following functions: HAL_DMA2D_CLUTLoading_Suspend(),
-  HAL_DMA2D_CLUTLoading_Resume(), HAL_DMA2D_CLUTLoading_Abort().
+      (#) The CLUT loading can be suspended, resumed and aborted using the following
+	  functions: HAL_DMA2D_CLUTLoading_Suspend(), HAL_DMA2D_CLUTLoading_Resume(),
+	  HAL_DMA2D_CLUTLoading_Abort().
 
-      (#) To control the DMA2D state, use the following function:
-  HAL_DMA2D_GetState().
+      (#) To control the DMA2D state, use the following function: HAL_DMA2D_GetState().
 
-      (#) To read the DMA2D error code, use the following function:
-  HAL_DMA2D_GetError().
+      (#) To read the DMA2D error code, use the following function: HAL_DMA2D_GetError().
 
      *** DMA2D HAL driver macros list ***
      =============================================
@@ -104,33 +98,30 @@
       (+) __HAL_DMA2D_CLEAR_FLAG: Clear the DMA2D pending flags.
       (+) __HAL_DMA2D_ENABLE_IT: Enable the specified DMA2D interrupts.
       (+) __HAL_DMA2D_DISABLE_IT: Disable the specified DMA2D interrupts.
-      (+) __HAL_DMA2D_GET_IT_SOURCE: Check whether the specified DMA2D interrupt
-  is enabled or not.
+      (+) __HAL_DMA2D_GET_IT_SOURCE: Check whether the specified DMA2D interrupt is enabled or not.
 
      *** Callback registration ***
      ===================================
      [..]
       (#) The compilation define  USE_HAL_DMA2D_REGISTER_CALLBACKS when set to 1
 	  allows the user to configure dynamically the driver callbacks.
-	  Use function @ref HAL_DMA2D_RegisterCallback() to register a user
-  callback.
+	  Use function @ref HAL_DMA2D_RegisterCallback() to register a user callback.
 
-      (#) Function @ref HAL_DMA2D_RegisterCallback() allows to register
-  following callbacks:
+      (#) Function @ref HAL_DMA2D_RegisterCallback() allows to register following callbacks:
 	    (+) XferCpltCallback : callback for transfer complete.
 	    (+) XferErrorCallback : callback for transfer error.
 	    (+) LineEventCallback : callback for line event.
 	    (+) CLUTLoadingCpltCallback : callback for CLUT loading completion.
 	    (+) MspInitCallback    : DMA2D MspInit.
 	    (+) MspDeInitCallback  : DMA2D MspDeInit.
-	  This function takes as parameters the HAL peripheral handle, the
-  Callback ID and a pointer to the user callback function.
+	  This function takes as parameters the HAL peripheral handle, the Callback ID
+	  and a pointer to the user callback function.
 
-      (#) Use function @ref HAL_DMA2D_UnRegisterCallback() to reset a callback
-  to the default weak (surcharged) function.
-	  @ref HAL_DMA2D_UnRegisterCallback() takes as parameters the HAL
-  peripheral handle, and the Callback ID. This function allows to reset
-  following callbacks:
+      (#) Use function @ref HAL_DMA2D_UnRegisterCallback() to reset a callback to the default
+	  weak (surcharged) function.
+	  @ref HAL_DMA2D_UnRegisterCallback() takes as parameters the HAL peripheral handle,
+	  and the Callback ID.
+	  This function allows to reset following callbacks:
 	    (+) XferCpltCallback : callback for transfer complete.
 	    (+) XferErrorCallback : callback for transfer error.
 	    (+) LineEventCallback : callback for line event.
@@ -138,35 +129,32 @@
 	    (+) MspInitCallback    : DMA2D MspInit.
 	    (+) MspDeInitCallback  : DMA2D MspDeInit.
 
-      (#) By default, after the @ref HAL_DMA2D_Init and if the state is
-  HAL_DMA2D_STATE_RESET all callbacks are reset to the corresponding legacy weak
-  (surcharged) functions: examples @ref HAL_DMA2D_LineEventCallback(), @ref
-  HAL_DMA2D_CLUTLoadingCpltCallback() Exception done for MspInit and MspDeInit
-  callbacks that are respectively reset to the legacy weak (surcharged)
-  functions in the @ref HAL_DMA2D_Init and @ref HAL_DMA2D_DeInit only when these
-  callbacks are null (not registered beforehand) If not, MspInit or MspDeInit
-  are not null, the @ref HAL_DMA2D_Init and @ref HAL_DMA2D_DeInit keep and use
-  the user MspInit/MspDeInit callbacks (registered beforehand).
+      (#) By default, after the @ref HAL_DMA2D_Init and if the state is HAL_DMA2D_STATE_RESET
+	  all callbacks are reset to the corresponding legacy weak (surcharged) functions:
+	  examples @ref HAL_DMA2D_LineEventCallback(), @ref HAL_DMA2D_CLUTLoadingCpltCallback()
+	  Exception done for MspInit and MspDeInit callbacks that are respectively
+	  reset to the legacy weak (surcharged) functions in the @ref HAL_DMA2D_Init
+	  and @ref HAL_DMA2D_DeInit only when these callbacks are null (not registered beforehand)
+	  If not, MspInit or MspDeInit are not null, the @ref HAL_DMA2D_Init and @ref HAL_DMA2D_DeInit
+	  keep and use the user MspInit/MspDeInit callbacks (registered beforehand).
 
-	  Exception as well for Transfer Completion and Transfer Error callbacks
-  that are not defined as weak (surcharged) functions. They must be defined by
-  the user to be resorted to.
+	  Exception as well for Transfer Completion and Transfer Error callbacks that are not defined
+	  as weak (surcharged) functions. They must be defined by the user to be resorted to.
 
 	  Callbacks can be registered/unregistered in READY state only.
-	  Exception done for MspInit/MspDeInit callbacks that can be
-  registered/unregistered in READY or RESET state, thus registered (user)
-  MspInit/DeInit callbacks can be used during the Init/DeInit. In that case
-  first register the MspInit/MspDeInit user callbacks using @ref
-  HAL_DMA2D_RegisterCallback before calling @ref HAL_DMA2D_DeInit or @ref
-  HAL_DMA2D_Init function.
+	  Exception done for MspInit/MspDeInit callbacks that can be registered/unregistered
+	  in READY or RESET state, thus registered (user) MspInit/DeInit callbacks can be used
+	  during the Init/DeInit.
+	  In that case first register the MspInit/MspDeInit user callbacks
+	  using @ref HAL_DMA2D_RegisterCallback before calling @ref HAL_DMA2D_DeInit
+	  or @ref HAL_DMA2D_Init function.
 
-	  When The compilation define USE_HAL_DMA2D_REGISTER_CALLBACKS is set to
-  0 or not defined, the callback registering feature is not available and weak
-  (surcharged) callbacks are used.
+	  When The compilation define USE_HAL_DMA2D_REGISTER_CALLBACKS is set to 0 or
+	  not defined, the callback registering feature is not available
+	  and weak (surcharged) callbacks are used.
 
      [..]
-      (@) You can refer to the DMA2D HAL driver header file for more useful
-  macros
+      (@) You can refer to the DMA2D HAL driver header file for more useful macros
 
   @endverbatim
   ******************************************************************************
@@ -224,8 +212,7 @@ static void DMA2D_SetConfig(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_
  * @{
  */
 
-/** @defgroup DMA2D_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup DMA2D_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief   Initialization and Configuration functions
   *
 @verbatim
@@ -292,24 +279,21 @@ HAL_StatusTypeDef HAL_DMA2D_Init(DMA2D_HandleTypeDef *hdma2d)
 	/* Change DMA2D peripheral state */
 	hdma2d->State = HAL_DMA2D_STATE_BUSY;
 
-	/* DMA2D CR register configuration
-	 * -------------------------------------------*/
+	/* DMA2D CR register configuration -------------------------------------------*/
 #if defined(DMA2D_LINE_OFFSET_MODE_SUPPORT)
 	MODIFY_REG(hdma2d->Instance->CR, DMA2D_CR_MODE | DMA2D_CR_LOM, hdma2d->Init.Mode | hdma2d->Init.LineOffsetMode);
 #else
 	MODIFY_REG(hdma2d->Instance->CR, DMA2D_CR_MODE, hdma2d->Init.Mode);
 #endif /* DMA2D_LINE_OFFSET_MODE_SUPPORT */
 
-	/* DMA2D OPFCCR register configuration
-	 * ---------------------------------------*/
+	/* DMA2D OPFCCR register configuration ---------------------------------------*/
 #if defined(DMA2D_OUTPUT_TWO_BY_TWO_SWAP_SUPPORT)
 	MODIFY_REG(hdma2d->Instance->OPFCCR, DMA2D_OPFCCR_CM | DMA2D_OPFCCR_SB, hdma2d->Init.ColorMode | hdma2d->Init.BytesSwap);
 #else
 	MODIFY_REG(hdma2d->Instance->OPFCCR, DMA2D_OPFCCR_CM, hdma2d->Init.ColorMode);
 #endif /* DMA2D_OUTPUT_TWO_BY_TWO_SWAP_SUPPORT */
 
-	/* DMA2D OOR register configuration
-	 * ------------------------------------------*/
+	/* DMA2D OOR register configuration ------------------------------------------*/
 	MODIFY_REG(hdma2d->Instance->OOR, DMA2D_OOR_LO, hdma2d->Init.OutputOffset);
 	/* DMA2D OPFCCR AI and RBS fields setting (Output Alpha Inversion)*/
 	MODIFY_REG(hdma2d->Instance->OPFCCR, (DMA2D_OPFCCR_AI | DMA2D_OPFCCR_RBS), ((hdma2d->Init.AlphaInverted << DMA2D_OPFCCR_AI_Pos) | (hdma2d->Init.RedBlueSwap << DMA2D_OPFCCR_RBS_Pos)));
@@ -352,16 +336,14 @@ HAL_StatusTypeDef HAL_DMA2D_DeInit(DMA2D_HandleTypeDef *hdma2d)
 			/* Abort background CLUT loading if any */
 			if ((hdma2d->Instance->BGPFCCR & DMA2D_BGPFCCR_START) == DMA2D_BGPFCCR_START) {
 				if (HAL_DMA2D_CLUTLoading_Abort(hdma2d, 0U) != HAL_OK) {
-					/* Issue when aborting background CLUT
-					 * loading */
+					/* Issue when aborting background CLUT loading */
 					return HAL_ERROR;
 				}
 			} else {
 				/* Abort foreground CLUT loading if any */
 				if ((hdma2d->Instance->FGPFCCR & DMA2D_FGPFCCR_START) == DMA2D_FGPFCCR_START) {
 					if (HAL_DMA2D_CLUTLoading_Abort(hdma2d, 1U) != HAL_OK) {
-						/* Issue when aborting
-						 * foreground CLUT loading */
+						/* Issue when aborting foreground CLUT loading */
 						return HAL_ERROR;
 					}
 				}
@@ -415,8 +397,8 @@ __weak void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef *hdma2d)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdma2d);
 
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, the HAL_DMA2D_MspInit can be implemented in the user file.
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  the HAL_DMA2D_MspInit can be implemented in the user file.
 	 */
 }
 
@@ -431,8 +413,8 @@ __weak void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef *hdma2d)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdma2d);
 
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, the HAL_DMA2D_MspDeInit can be implemented in the user file.
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  the HAL_DMA2D_MspDeInit can be implemented in the user file.
 	 */
 }
 
@@ -443,18 +425,14 @@ __weak void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef *hdma2d)
  * @param hdma2d DMA2D handle
  * @param CallbackID ID of the callback to be registered
  *        This parameter can be one of the following values:
- *          @arg @ref HAL_DMA2D_TRANSFERCOMPLETE_CB_ID DMA2D transfer complete
- * Callback ID
- *          @arg @ref HAL_DMA2D_TRANSFERERROR_CB_ID DMA2D transfer error
- * Callback ID
+ *          @arg @ref HAL_DMA2D_TRANSFERCOMPLETE_CB_ID DMA2D transfer complete Callback ID
+ *          @arg @ref HAL_DMA2D_TRANSFERERROR_CB_ID DMA2D transfer error Callback ID
  *          @arg @ref HAL_DMA2D_LINEEVENT_CB_ID DMA2D line event Callback ID
- *          @arg @ref HAL_DMA2D_CLUTLOADINGCPLT_CB_ID DMA2D CLUT loading
- * completion Callback ID
+ *          @arg @ref HAL_DMA2D_CLUTLOADINGCPLT_CB_ID DMA2D CLUT loading completion Callback ID
  *          @arg @ref HAL_DMA2D_MSPINIT_CB_ID DMA2D MspInit callback ID
  *          @arg @ref HAL_DMA2D_MSPDEINIT_CB_ID DMA2D MspDeInit callback ID
  * @param pCallback pointer to the Callback function
- * @note No weak predefined callbacks are defined for
- * HAL_DMA2D_TRANSFERCOMPLETE_CB_ID or HAL_DMA2D_TRANSFERERROR_CB_ID
+ * @note No weak predefined callbacks are defined for HAL_DMA2D_TRANSFERCOMPLETE_CB_ID or HAL_DMA2D_TRANSFERERROR_CB_ID
  * @retval status
  */
 HAL_StatusTypeDef HAL_DMA2D_RegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_DMA2D_CallbackIDTypeDef CallbackID, pDMA2D_CallbackTypeDef pCallback)
@@ -533,22 +511,17 @@ HAL_StatusTypeDef HAL_DMA2D_RegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_DM
 
 /**
  * @brief  Unregister a DMA2D Callback
- *         DMA2D Callback is redirected to the weak (surcharged) predefined
- * callback
+ *         DMA2D Callback is redirected to the weak (surcharged) predefined callback
  * @param hdma2d DMA2D handle
  * @param CallbackID ID of the callback to be unregistered
  *        This parameter can be one of the following values:
- *          @arg @ref HAL_DMA2D_TRANSFERCOMPLETE_CB_ID DMA2D transfer complete
- * Callback ID
- *          @arg @ref HAL_DMA2D_TRANSFERERROR_CB_ID DMA2D transfer error
- * Callback ID
+ *          @arg @ref HAL_DMA2D_TRANSFERCOMPLETE_CB_ID DMA2D transfer complete Callback ID
+ *          @arg @ref HAL_DMA2D_TRANSFERERROR_CB_ID DMA2D transfer error Callback ID
  *          @arg @ref HAL_DMA2D_LINEEVENT_CB_ID DMA2D line event Callback ID
- *          @arg @ref HAL_DMA2D_CLUTLOADINGCPLT_CB_ID DMA2D CLUT loading
- * completion Callback ID
+ *          @arg @ref HAL_DMA2D_CLUTLOADINGCPLT_CB_ID DMA2D CLUT loading completion Callback ID
  *          @arg @ref HAL_DMA2D_MSPINIT_CB_ID DMA2D MspInit callback ID
  *          @arg @ref HAL_DMA2D_MSPDEINIT_CB_ID DMA2D MspDeInit callback ID
- * @note No weak predefined callbacks are defined for
- * HAL_DMA2D_TRANSFERCOMPLETE_CB_ID or HAL_DMA2D_TRANSFERERROR_CB_ID
+ * @note No weak predefined callbacks are defined for HAL_DMA2D_TRANSFERCOMPLETE_CB_ID or HAL_DMA2D_TRANSFERERROR_CB_ID
  * @retval status
  */
 HAL_StatusTypeDef HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_DMA2D_CallbackIDTypeDef CallbackID)
@@ -577,15 +550,11 @@ HAL_StatusTypeDef HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_
 				break;
 
 			case HAL_DMA2D_MSPINIT_CB_ID:
-				hdma2d->MspInitCallback = HAL_DMA2D_MspInit; /* Legacy weak
-										(surcharged) Msp Init
-									      */
+				hdma2d->MspInitCallback = HAL_DMA2D_MspInit; /* Legacy weak (surcharged) Msp Init */
 				break;
 
 			case HAL_DMA2D_MSPDEINIT_CB_ID:
-				hdma2d->MspDeInitCallback = HAL_DMA2D_MspDeInit; /* Legacy weak
-										    (surcharged) Msp
-										    DeInit */
+				hdma2d->MspDeInitCallback = HAL_DMA2D_MspDeInit; /* Legacy weak (surcharged) Msp DeInit */
 				break;
 
 			default:
@@ -598,15 +567,11 @@ HAL_StatusTypeDef HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_
 	} else if (HAL_DMA2D_STATE_RESET == hdma2d->State) {
 		switch (CallbackID) {
 			case HAL_DMA2D_MSPINIT_CB_ID:
-				hdma2d->MspInitCallback = HAL_DMA2D_MspInit; /* Legacy weak
-										(surcharged) Msp Init
-									      */
+				hdma2d->MspInitCallback = HAL_DMA2D_MspInit; /* Legacy weak (surcharged) Msp Init */
 				break;
 
 			case HAL_DMA2D_MSPDEINIT_CB_ID:
-				hdma2d->MspDeInitCallback = HAL_DMA2D_MspDeInit; /* Legacy weak
-										    (surcharged) Msp
-										    DeInit */
+				hdma2d->MspDeInitCallback = HAL_DMA2D_MspDeInit; /* Legacy weak (surcharged) Msp DeInit */
 				break;
 
 			default:
@@ -643,12 +608,12 @@ HAL_StatusTypeDef HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_
     [..]  This section provides functions allowing to:
       (+) Configure the pdata, destination address and data size then
 	  start the DMA2D transfer.
-      (+) Configure the source for foreground and background, destination
-address and data size then start a MultiBuffer DMA2D transfer.
+      (+) Configure the source for foreground and background, destination address
+	  and data size then start a MultiBuffer DMA2D transfer.
       (+) Configure the pdata, destination address and data size then
 	  start the DMA2D transfer with interrupt.
-      (+) Configure the source for foreground and background, destination
-address and data size then start a MultiBuffer DMA2D transfer with interrupt.
+      (+) Configure the source for foreground and background, destination address
+	  and data size then start a MultiBuffer DMA2D transfer with interrupt.
       (+) Abort DMA2D transfer.
       (+) Suspend DMA2D transfer.
       (+) Resume DMA2D transfer.
@@ -679,8 +644,7 @@ address and data size then start a MultiBuffer DMA2D transfer with interrupt.
  * @param  DstAddress The destination memory Buffer address.
  * @param  Width      The width of data to be transferred from source
  *                    to destination (expressed in number of pixels per line).
- * @param  Height     The height of data to be transferred from source to
- * destination (expressed in number of lines).
+ * @param  Height     The height of data to be transferred from source to destination (expressed in number of lines).
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMA2D_Start(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width, uint32_t Height)
@@ -709,14 +673,13 @@ HAL_StatusTypeDef HAL_DMA2D_Start(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, u
  * @param  hdma2d     Pointer to a DMA2D_HandleTypeDef structure that contains
  *                     the configuration information for the DMA2D.
  * @param  pdata      Configure the source memory Buffer address if
- *                     the Memory-to-Memory or Memory-to-Memory with pixel
- * format conversion mode is selected, or configure the color value if
- * Register-to-Memory mode is selected.
+ *                     the Memory-to-Memory or Memory-to-Memory with pixel format
+ *                     conversion mode is selected, or configure
+ *                     the color value if Register-to-Memory mode is selected.
  * @param  DstAddress The destination memory Buffer address.
  * @param  Width      The width of data to be transferred from source
  *                    to destination (expressed in number of pixels per line).
- * @param  Height     The height of data to be transferred from source to
- * destination (expressed in number of lines).
+ * @param  Height     The height of data to be transferred from source to destination (expressed in number of lines).
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMA2D_Start_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width, uint32_t Height)
@@ -734,8 +697,7 @@ HAL_StatusTypeDef HAL_DMA2D_Start_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata
 	/* Configure the source, destination address and the data size */
 	DMA2D_SetConfig(hdma2d, pdata, DstAddress, Width, Height);
 
-	/* Enable the transfer complete, transfer error and configuration error
-	 * interrupts */
+	/* Enable the transfer complete, transfer error and configuration error interrupts */
 	__HAL_DMA2D_ENABLE_IT(hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
 
 	/* Enable the Peripheral */
@@ -748,15 +710,12 @@ HAL_StatusTypeDef HAL_DMA2D_Start_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata
  * @brief  Start the multi-source DMA2D Transfer.
  * @param  hdma2d      Pointer to a DMA2D_HandleTypeDef structure that contains
  *                      the configuration information for the DMA2D.
- * @param  SrcAddress1 The source memory Buffer address for the foreground
- * layer.
- * @param  SrcAddress2 The source memory Buffer address for the background
- * layer.
+ * @param  SrcAddress1 The source memory Buffer address for the foreground layer.
+ * @param  SrcAddress2 The source memory Buffer address for the background layer.
  * @param  DstAddress  The destination memory Buffer address.
  * @param  Width       The width of data to be transferred from source
  *                     to destination (expressed in number of pixels per line).
- * @param  Height      The height of data to be transferred from source to
- * destination (expressed in number of lines).
+ * @param  Height      The height of data to be transferred from source to destination (expressed in number of lines).
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMA2D_BlendingStart(DMA2D_HandleTypeDef *hdma2d, uint32_t SrcAddress1, uint32_t SrcAddress2, uint32_t DstAddress, uint32_t Width, uint32_t Height)
@@ -775,21 +734,18 @@ HAL_StatusTypeDef HAL_DMA2D_BlendingStart(DMA2D_HandleTypeDef *hdma2d, uint32_t 
 	if (hdma2d->Init.Mode == DMA2D_M2M_BLEND_FG) {
 		/*blending & fixed FG*/
 		WRITE_REG(hdma2d->Instance->FGCOLR, SrcAddress1);
-		/* Configure the source, destination address and the data size
-		 */
+		/* Configure the source, destination address and the data size */
 		DMA2D_SetConfig(hdma2d, SrcAddress2, DstAddress, Width, Height);
 	} else if (hdma2d->Init.Mode == DMA2D_M2M_BLEND_BG) {
 		/*blending & fixed BG*/
 		WRITE_REG(hdma2d->Instance->BGCOLR, SrcAddress2);
-		/* Configure the source, destination address and the data size
-		 */
+		/* Configure the source, destination address and the data size */
 		DMA2D_SetConfig(hdma2d, SrcAddress1, DstAddress, Width, Height);
 	} else {
 		/* Configure DMA2D Stream source2 address */
 		WRITE_REG(hdma2d->Instance->BGMAR, SrcAddress2);
 
-		/* Configure the source, destination address and the data size
-		 */
+		/* Configure the source, destination address and the data size */
 		DMA2D_SetConfig(hdma2d, SrcAddress1, DstAddress, Width, Height);
 	}
 
@@ -811,15 +767,12 @@ HAL_StatusTypeDef HAL_DMA2D_BlendingStart(DMA2D_HandleTypeDef *hdma2d, uint32_t 
  * @brief  Start the multi-source DMA2D Transfer with interrupt enabled.
  * @param  hdma2d     Pointer to a DMA2D_HandleTypeDef structure that contains
  *                     the configuration information for the DMA2D.
- * @param  SrcAddress1 The source memory Buffer address for the foreground
- * layer.
- * @param  SrcAddress2 The source memory Buffer address for the background
- * layer.
+ * @param  SrcAddress1 The source memory Buffer address for the foreground layer.
+ * @param  SrcAddress2 The source memory Buffer address for the background layer.
  * @param  DstAddress  The destination memory Buffer address.
  * @param  Width       The width of data to be transferred from source
  *                     to destination (expressed in number of pixels per line).
- * @param  Height      The height of data to be transferred from source to
- * destination (expressed in number of lines).
+ * @param  Height      The height of data to be transferred from source to destination (expressed in number of lines).
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMA2D_BlendingStart_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t SrcAddress1, uint32_t SrcAddress2, uint32_t DstAddress, uint32_t Width, uint32_t Height)
@@ -838,20 +791,17 @@ HAL_StatusTypeDef HAL_DMA2D_BlendingStart_IT(DMA2D_HandleTypeDef *hdma2d, uint32
 	if (hdma2d->Init.Mode == DMA2D_M2M_BLEND_FG) {
 		/*blending & fixed FG*/
 		WRITE_REG(hdma2d->Instance->FGCOLR, SrcAddress1);
-		/* Configure the source, destination address and the data size
-		 */
+		/* Configure the source, destination address and the data size */
 		DMA2D_SetConfig(hdma2d, SrcAddress2, DstAddress, Width, Height);
 	} else if (hdma2d->Init.Mode == DMA2D_M2M_BLEND_BG) {
 		/*blending & fixed BG*/
 		WRITE_REG(hdma2d->Instance->BGCOLR, SrcAddress2);
-		/* Configure the source, destination address and the data size
-		 */
+		/* Configure the source, destination address and the data size */
 		DMA2D_SetConfig(hdma2d, SrcAddress1, DstAddress, Width, Height);
 	} else {
 		WRITE_REG(hdma2d->Instance->BGMAR, SrcAddress2);
 
-		/* Configure the source, destination address and the data size
-		 */
+		/* Configure the source, destination address and the data size */
 		DMA2D_SetConfig(hdma2d, SrcAddress1, DstAddress, Width, Height);
 	}
 
@@ -863,8 +813,7 @@ HAL_StatusTypeDef HAL_DMA2D_BlendingStart_IT(DMA2D_HandleTypeDef *hdma2d, uint32
 	DMA2D_SetConfig(hdma2d, SrcAddress1, DstAddress, Width, Height);
 
 #endif /*DMA2D_M2M_BLEND_FIXED_COLOR_FG_BG_SUPPORT*/
-	/* Enable the transfer complete, transfer error and configuration error
-	 * interrupts */
+	/* Enable the transfer complete, transfer error and configuration error interrupts */
 	__HAL_DMA2D_ENABLE_IT(hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
 
 	/* Enable the Peripheral */
@@ -884,9 +833,9 @@ HAL_StatusTypeDef HAL_DMA2D_Abort(DMA2D_HandleTypeDef *hdma2d)
 	uint32_t tickstart;
 
 	/* Abort the DMA2D transfer */
-	/* START bit is reset to make sure not to set it again, in the event the
-	   HW clears it between the register read and the register write by the
-	   CPU (writing 0 has no effect on START bitvalue) */
+	/* START bit is reset to make sure not to set it again, in the event the HW clears it
+	   between the register read and the register write by the CPU (writing 0 has no
+	   effect on START bitvalue) */
 	MODIFY_REG(hdma2d->Instance->CR, DMA2D_CR_ABORT | DMA2D_CR_START, DMA2D_CR_ABORT);
 
 	/* Get tick */
@@ -908,8 +857,7 @@ HAL_StatusTypeDef HAL_DMA2D_Abort(DMA2D_HandleTypeDef *hdma2d)
 		}
 	}
 
-	/* Disable the Transfer Complete, Transfer Error and Configuration Error
-	 * interrupts */
+	/* Disable the Transfer Complete, Transfer Error and Configuration Error interrupts */
 	__HAL_DMA2D_DISABLE_IT(hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
 
 	/* Change the DMA2D state*/
@@ -932,9 +880,9 @@ HAL_StatusTypeDef HAL_DMA2D_Suspend(DMA2D_HandleTypeDef *hdma2d)
 	uint32_t tickstart;
 
 	/* Suspend the DMA2D transfer */
-	/* START bit is reset to make sure not to set it again, in the event the
-	   HW clears it between the register read and the register write by the
-	   CPU (writing 0 has no effect on START bitvalue). */
+	/* START bit is reset to make sure not to set it again, in the event the HW clears it
+	   between the register read and the register write by the CPU (writing 0 has no
+	   effect on START bitvalue). */
 	MODIFY_REG(hdma2d->Instance->CR, DMA2D_CR_SUSP | DMA2D_CR_START, DMA2D_CR_SUSP);
 
 	/* Get tick */
@@ -953,8 +901,7 @@ HAL_StatusTypeDef HAL_DMA2D_Suspend(DMA2D_HandleTypeDef *hdma2d)
 		}
 	}
 
-	/* Check whether or not a transfer is actually suspended and change the
-	 * DMA2D state accordingly */
+	/* Check whether or not a transfer is actually suspended and change the DMA2D state accordingly */
 	if ((hdma2d->Instance->CR & DMA2D_CR_START) != 0U) {
 		hdma2d->State = HAL_DMA2D_STATE_SUSPEND;
 	} else {
@@ -976,15 +923,14 @@ HAL_StatusTypeDef HAL_DMA2D_Resume(DMA2D_HandleTypeDef *hdma2d)
 {
 	/* Check the SUSP and START bits */
 	if ((hdma2d->Instance->CR & (DMA2D_CR_SUSP | DMA2D_CR_START)) == (DMA2D_CR_SUSP | DMA2D_CR_START)) {
-		/* Ongoing transfer is suspended: change the DMA2D state before
-		 * resuming */
+		/* Ongoing transfer is suspended: change the DMA2D state before resuming */
 		hdma2d->State = HAL_DMA2D_STATE_BUSY;
 	}
 
 	/* Resume the DMA2D transfer */
-	/* START bit is reset to make sure not to set it again, in the event the
-	   HW clears it between the register read and the register write by the
-	   CPU (writing 0 has no effect on START bitvalue). */
+	/* START bit is reset to make sure not to set it again, in the event the HW clears it
+	   between the register read and the register write by the CPU (writing 0 has no
+	   effect on START bitvalue). */
 	CLEAR_BIT(hdma2d->Instance->CR, (DMA2D_CR_SUSP | DMA2D_CR_START));
 
 	return HAL_OK;
@@ -1103,8 +1049,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTStartLoad_IT(DMA2D_HandleTypeDef *hdma2d, const 
 		/* Write background CLUT size and CLUT color mode */
 		MODIFY_REG(hdma2d->Instance->BGPFCCR, (DMA2D_BGPFCCR_CS | DMA2D_BGPFCCR_CCM), ((CLUTCfg->Size << DMA2D_BGPFCCR_CS_Pos) | (CLUTCfg->CLUTColorMode << DMA2D_BGPFCCR_CCM_Pos)));
 
-		/* Enable the CLUT Transfer Complete, transfer Error,
-		 * configuration Error and CLUT Access Error interrupts */
+		/* Enable the CLUT Transfer Complete, transfer Error, configuration Error and CLUT Access Error interrupts */
 		__HAL_DMA2D_ENABLE_IT(hdma2d, DMA2D_IT_CTC | DMA2D_IT_TE | DMA2D_IT_CE | DMA2D_IT_CAE);
 
 		/* Enable the CLUT loading for the background */
@@ -1118,8 +1063,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTStartLoad_IT(DMA2D_HandleTypeDef *hdma2d, const 
 		/* Write foreground CLUT size and CLUT color mode */
 		MODIFY_REG(hdma2d->Instance->FGPFCCR, (DMA2D_FGPFCCR_CS | DMA2D_FGPFCCR_CCM), ((CLUTCfg->Size << DMA2D_FGPFCCR_CS_Pos) | (CLUTCfg->CLUTColorMode << DMA2D_FGPFCCR_CCM_Pos)));
 
-		/* Enable the CLUT Transfer Complete, transfer Error,
-		 * configuration Error and CLUT Access Error interrupts */
+		/* Enable the CLUT Transfer Complete, transfer Error, configuration Error and CLUT Access Error interrupts */
 		__HAL_DMA2D_ENABLE_IT(hdma2d, DMA2D_IT_CTC | DMA2D_IT_TE | DMA2D_IT_CE | DMA2D_IT_CAE);
 
 		/* Enable the CLUT loading for the foreground */
@@ -1217,8 +1161,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTLoad_IT(DMA2D_HandleTypeDef *hdma2d, DMA2D_CLUTC
 		/* Write background CLUT size and CLUT color mode */
 		MODIFY_REG(hdma2d->Instance->BGPFCCR, (DMA2D_BGPFCCR_CS | DMA2D_BGPFCCR_CCM), ((CLUTCfg.Size << DMA2D_BGPFCCR_CS_Pos) | (CLUTCfg.CLUTColorMode << DMA2D_BGPFCCR_CCM_Pos)));
 
-		/* Enable the CLUT Transfer Complete, transfer Error,
-		 * configuration Error and CLUT Access Error interrupts */
+		/* Enable the CLUT Transfer Complete, transfer Error, configuration Error and CLUT Access Error interrupts */
 		__HAL_DMA2D_ENABLE_IT(hdma2d, DMA2D_IT_CTC | DMA2D_IT_TE | DMA2D_IT_CE | DMA2D_IT_CAE);
 
 		/* Enable the CLUT loading for the background */
@@ -1232,8 +1175,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTLoad_IT(DMA2D_HandleTypeDef *hdma2d, DMA2D_CLUTC
 		/* Write foreground CLUT size and CLUT color mode */
 		MODIFY_REG(hdma2d->Instance->FGPFCCR, (DMA2D_FGPFCCR_CS | DMA2D_FGPFCCR_CCM), ((CLUTCfg.Size << DMA2D_FGPFCCR_CS_Pos) | (CLUTCfg.CLUTColorMode << DMA2D_FGPFCCR_CCM_Pos)));
 
-		/* Enable the CLUT Transfer Complete, transfer Error,
-		 * configuration Error and CLUT Access Error interrupts */
+		/* Enable the CLUT Transfer Complete, transfer Error, configuration Error and CLUT Access Error interrupts */
 		__HAL_DMA2D_ENABLE_IT(hdma2d, DMA2D_IT_CTC | DMA2D_IT_TE | DMA2D_IT_CE | DMA2D_IT_CAE);
 
 		/* Enable the CLUT loading for the foreground */
@@ -1284,8 +1226,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTLoading_Abort(DMA2D_HandleTypeDef *hdma2d, uint3
 		}
 	}
 
-	/* Disable the CLUT Transfer Complete, Transfer Error, Configuration
-	 * Error and CLUT Access Error interrupts */
+	/* Disable the CLUT Transfer Complete, Transfer Error, Configuration Error and CLUT Access Error interrupts */
 	__HAL_DMA2D_DISABLE_IT(hdma2d, DMA2D_IT_CTC | DMA2D_IT_TE | DMA2D_IT_CE | DMA2D_IT_CAE);
 
 	/* Change the DMA2D state*/
@@ -1344,8 +1285,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTLoading_Suspend(DMA2D_HandleTypeDef *hdma2d, uin
 		loadsuspended |= ((*reg & DMA2D_BGPFCCR_START) != DMA2D_BGPFCCR_START) ? 1UL : 0UL;
 	}
 
-	/* Check whether or not a transfer is actually suspended and change the
-	 * DMA2D state accordingly */
+	/* Check whether or not a transfer is actually suspended and change the DMA2D state accordingly */
 	if ((*reg & DMA2D_BGPFCCR_START) != 0U) {
 		hdma2d->State = HAL_DMA2D_STATE_SUSPEND;
 	} else {
@@ -1368,14 +1308,12 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTLoading_Suspend(DMA2D_HandleTypeDef *hdma2d, uin
  */
 HAL_StatusTypeDef HAL_DMA2D_CLUTLoading_Resume(DMA2D_HandleTypeDef *hdma2d, uint32_t LayerIdx)
 {
-	/* Check the SUSP and START bits for background or foreground CLUT
-	 * loading */
+	/* Check the SUSP and START bits for background or foreground CLUT loading */
 	if (LayerIdx == DMA2D_BACKGROUND_LAYER) {
 		/* Background CLUT loading suspension check */
 		if ((hdma2d->Instance->CR & DMA2D_CR_SUSP) == DMA2D_CR_SUSP) {
 			if ((hdma2d->Instance->BGPFCCR & DMA2D_BGPFCCR_START) == DMA2D_BGPFCCR_START) {
-				/* Ongoing CLUT loading is suspended: change the
-				 * DMA2D state before resuming */
+				/* Ongoing CLUT loading is suspended: change the DMA2D state before resuming */
 				hdma2d->State = HAL_DMA2D_STATE_BUSY;
 			}
 		}
@@ -1383,8 +1321,7 @@ HAL_StatusTypeDef HAL_DMA2D_CLUTLoading_Resume(DMA2D_HandleTypeDef *hdma2d, uint
 		/* Foreground CLUT loading suspension check */
 		if ((hdma2d->Instance->CR & DMA2D_CR_SUSP) == DMA2D_CR_SUSP) {
 			if ((hdma2d->Instance->FGPFCCR & DMA2D_FGPFCCR_START) == DMA2D_FGPFCCR_START) {
-				/* Ongoing CLUT loading is suspended: change the
-				 * DMA2D state before resuming */
+				/* Ongoing CLUT loading is suspended: change the DMA2D state before resuming */
 				hdma2d->State = HAL_DMA2D_STATE_BUSY;
 			}
 		}
@@ -1424,8 +1361,7 @@ HAL_StatusTypeDef HAL_DMA2D_PollForTransfer(DMA2D_HandleTypeDef *hdma2d, uint32_
 				if ((isrflags & DMA2D_FLAG_TE) != 0U) {
 					hdma2d->ErrorCode |= HAL_DMA2D_ERROR_TE;
 				}
-				/* Clear the transfer and configuration error
-				 * flags */
+				/* Clear the transfer and configuration error flags */
 				__HAL_DMA2D_CLEAR_FLAG(hdma2d, DMA2D_FLAG_CE | DMA2D_FLAG_TE);
 
 				/* Change DMA2D state */
@@ -1472,8 +1408,7 @@ HAL_StatusTypeDef HAL_DMA2D_PollForTransfer(DMA2D_HandleTypeDef *hdma2d, uint32_
 				if ((isrflags & DMA2D_FLAG_TE) != 0U) {
 					hdma2d->ErrorCode |= HAL_DMA2D_ERROR_TE;
 				}
-				/* Clear the CLUT Access Error, Configuration
-				 * Error and Transfer Error flags */
+				/* Clear the CLUT Access Error, Configuration Error and Transfer Error flags */
 				__HAL_DMA2D_CLEAR_FLAG(hdma2d, DMA2D_FLAG_CAE | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
 
 				/* Change DMA2D state */
@@ -1524,8 +1459,7 @@ void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d)
 	uint32_t isrflags = READ_REG(hdma2d->Instance->ISR);
 	uint32_t crflags = READ_REG(hdma2d->Instance->CR);
 
-	/* Transfer Error Interrupt management
-	 * ***************************************/
+	/* Transfer Error Interrupt management ***************************************/
 	if ((isrflags & DMA2D_FLAG_TE) != 0U) {
 		if ((crflags & DMA2D_IT_TE) != 0U) {
 			/* Disable the transfer Error interrupt */
@@ -1549,8 +1483,7 @@ void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d)
 			}
 		}
 	}
-	/* Configuration Error Interrupt management
-	 * **********************************/
+	/* Configuration Error Interrupt management **********************************/
 	if ((isrflags & DMA2D_FLAG_CE) != 0U) {
 		if ((crflags & DMA2D_IT_CE) != 0U) {
 			/* Disable the Configuration Error interrupt */
@@ -1574,8 +1507,7 @@ void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d)
 			}
 		}
 	}
-	/* CLUT access Error Interrupt management
-	 * ***********************************/
+	/* CLUT access Error Interrupt management ***********************************/
 	if ((isrflags & DMA2D_FLAG_CAE) != 0U) {
 		if ((crflags & DMA2D_IT_CAE) != 0U) {
 			/* Disable the CLUT access error interrupt */
@@ -1599,8 +1531,7 @@ void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d)
 			}
 		}
 	}
-	/* Transfer watermark Interrupt management
-	 * **********************************/
+	/* Transfer watermark Interrupt management **********************************/
 	if ((isrflags & DMA2D_FLAG_TW) != 0U) {
 		if ((crflags & DMA2D_IT_TW) != 0U) {
 			/* Disable the transfer watermark interrupt */
@@ -1617,8 +1548,7 @@ void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d)
 #endif /* USE_HAL_DMA2D_REGISTER_CALLBACKS */
 		}
 	}
-	/* Transfer Complete Interrupt management
-	 * ************************************/
+	/* Transfer Complete Interrupt management ************************************/
 	if ((isrflags & DMA2D_FLAG_TC) != 0U) {
 		if ((crflags & DMA2D_IT_TC) != 0U) {
 			/* Disable the transfer complete interrupt */
@@ -1642,8 +1572,7 @@ void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d)
 			}
 		}
 	}
-	/* CLUT Transfer Complete Interrupt management
-	 * ******************************/
+	/* CLUT Transfer Complete Interrupt management ******************************/
 	if ((isrflags & DMA2D_FLAG_CTC) != 0U) {
 		if ((crflags & DMA2D_IT_CTC) != 0U) {
 			/* Disable the CLUT transfer complete interrupt */
@@ -1682,9 +1611,8 @@ __weak void HAL_DMA2D_LineEventCallback(DMA2D_HandleTypeDef *hdma2d)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdma2d);
 
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, the HAL_DMA2D_LineEventCallback can be implemented in the
-	   user file.
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  the HAL_DMA2D_LineEventCallback can be implemented in the user file.
 	 */
 }
 
@@ -1699,9 +1627,8 @@ __weak void HAL_DMA2D_CLUTLoadingCpltCallback(DMA2D_HandleTypeDef *hdma2d)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdma2d);
 
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, the HAL_DMA2D_CLUTLoadingCpltCallback can be implemented in
-	   the user file.
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  the HAL_DMA2D_CLUTLoadingCpltCallback can be implemented in the user file.
 	 */
 }
 
@@ -1779,12 +1706,10 @@ HAL_StatusTypeDef HAL_DMA2D_ConfigLayer(DMA2D_HandleTypeDef *hdma2d, uint32_t La
 		/* Write DMA2D BGPFCCR register */
 		MODIFY_REG(hdma2d->Instance->BGPFCCR, regMask, regValue);
 
-		/* DMA2D BGOR register configuration
-		 * -------------------------------------*/
+		/* DMA2D BGOR register configuration -------------------------------------*/
 		WRITE_REG(hdma2d->Instance->BGOR, pLayerCfg->InputOffset);
 
-		/* DMA2D BGCOLR register configuration
-		 * -------------------------------------*/
+		/* DMA2D BGCOLR register configuration -------------------------------------*/
 		if ((pLayerCfg->InputColorMode == DMA2D_INPUT_A4) || (pLayerCfg->InputColorMode == DMA2D_INPUT_A8)) {
 			WRITE_REG(hdma2d->Instance->BGCOLR, pLayerCfg->InputAlpha & (DMA2D_BGCOLR_BLUE | DMA2D_BGCOLR_GREEN | DMA2D_BGCOLR_RED));
 		}
@@ -1795,12 +1720,10 @@ HAL_StatusTypeDef HAL_DMA2D_ConfigLayer(DMA2D_HandleTypeDef *hdma2d, uint32_t La
 		/* Write DMA2D FGPFCCR register */
 		MODIFY_REG(hdma2d->Instance->FGPFCCR, regMask, regValue);
 
-		/* DMA2D FGOR register configuration
-		 * -------------------------------------*/
+		/* DMA2D FGOR register configuration -------------------------------------*/
 		WRITE_REG(hdma2d->Instance->FGOR, pLayerCfg->InputOffset);
 
-		/* DMA2D FGCOLR register configuration
-		 * -------------------------------------*/
+		/* DMA2D FGCOLR register configuration -------------------------------------*/
 		if ((pLayerCfg->InputColorMode == DMA2D_INPUT_A4) || (pLayerCfg->InputColorMode == DMA2D_INPUT_A8)) {
 			WRITE_REG(hdma2d->Instance->FGCOLR, pLayerCfg->InputAlpha & (DMA2D_FGCOLR_BLUE | DMA2D_FGCOLR_GREEN | DMA2D_FGCOLR_RED));
 		}
@@ -1823,9 +1746,9 @@ HAL_StatusTypeDef HAL_DMA2D_ConfigLayer(DMA2D_HandleTypeDef *hdma2d, uint32_t La
  * @param  LayerIdx DMA2D Layer index.
  *                   This parameter can be one of the following values:
  *                   DMA2D_BACKGROUND_LAYER(0) / DMA2D_FOREGROUND_LAYER(1)
- * @note API obsolete and maintained for compatibility with legacy. User is
- * invited to resort to HAL_DMA2D_CLUTStartLoad() instead to benefit from code
- * compactness, code size and improved heap usage.
+ * @note API obsolete and maintained for compatibility with legacy. User is invited
+ *      to resort to HAL_DMA2D_CLUTStartLoad() instead to benefit from code compactness,
+ *      code size and improved heap usage.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DMA2D_ConfigCLUT(DMA2D_HandleTypeDef *hdma2d, DMA2D_CLUTCfgTypeDef CLUTCfg, uint32_t LayerIdx)
@@ -1871,10 +1794,8 @@ HAL_StatusTypeDef HAL_DMA2D_ConfigCLUT(DMA2D_HandleTypeDef *hdma2d, DMA2D_CLUTCf
  * @brief  Configure the line watermark.
  * @param  hdma2d Pointer to a DMA2D_HandleTypeDef structure that contains
  *                 the configuration information for the DMA2D.
- * @param  Line   Line Watermark configuration (maximum 16-bit long value
- * expected).
- * @note   HAL_DMA2D_ProgramLineEvent() API enables the transfer watermark
- * interrupt.
+ * @param  Line   Line Watermark configuration (maximum 16-bit long value expected).
+ * @note   HAL_DMA2D_ProgramLineEvent() API enables the transfer watermark interrupt.
  * @note   The transfer watermark interrupt is disabled once it has occurred.
  * @retval HAL status
  */
@@ -1955,8 +1876,8 @@ HAL_StatusTypeDef HAL_DMA2D_DisableDeadTime(DMA2D_HandleTypeDef *hdma2d)
 
 /**
  * @brief Configure dead time.
- * @note The dead time value represents the guaranteed minimum number of cycles
- * between two consecutive transactions on the AHB bus.
+ * @note The dead time value represents the guaranteed minimum number of cycles between
+ *       two consecutive transactions on the AHB bus.
  * @param hdma2d DMA2D handle.
  * @param DeadTime dead time value.
  * @retval HAL status
@@ -1983,8 +1904,7 @@ HAL_StatusTypeDef HAL_DMA2D_ConfigDeadTime(DMA2D_HandleTypeDef *hdma2d, uint8_t 
  * @}
  */
 
-/** @defgroup DMA2D_Exported_Functions_Group4 Peripheral State and Error
-functions
+/** @defgroup DMA2D_Exported_Functions_Group4 Peripheral State and Error functions
   *  @brief    Peripheral State functions
   *
 @verbatim
@@ -2040,10 +1960,8 @@ uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d)
  *                     the configuration information for the specified DMA2D.
  * @param  pdata      The source memory Buffer address
  * @param  DstAddress The destination memory Buffer address
- * @param  Width      The width of data to be transferred from source to
- * destination.
- * @param  Height     The height of data to be transferred from source to
- * destination.
+ * @param  Width      The width of data to be transferred from source to destination.
+ * @param  Height     The height of data to be transferred from source to destination.
  * @retval HAL status
  */
 static void DMA2D_SetConfig(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width, uint32_t Height)
@@ -2067,8 +1985,7 @@ static void DMA2D_SetConfig(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_
 		tmp3 = pdata & DMA2D_OCOLR_GREEN_1;
 		tmp4 = pdata & DMA2D_OCOLR_BLUE_1;
 
-		/* Prepare the value to be written to the OCOLR register
-		 * according to the color mode */
+		/* Prepare the value to be written to the OCOLR register according to the color mode */
 		if (hdma2d->Init.ColorMode == DMA2D_OUTPUT_ARGB8888) {
 			tmp = (tmp3 | tmp2 | tmp1 | tmp4);
 		} else if (hdma2d->Init.ColorMode == DMA2D_OUTPUT_RGB888) {
@@ -2096,12 +2013,10 @@ static void DMA2D_SetConfig(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_
 		WRITE_REG(hdma2d->Instance->OCOLR, tmp);
 	}
 #if defined(DMA2D_M2M_BLEND_FIXED_COLOR_FG_BG_SUPPORT)
-	else if (hdma2d->Init.Mode == DMA2D_M2M_BLEND_FG) /*M2M_blending with fixed color FG DMA2D
-							     Mode selected*/
+	else if (hdma2d->Init.Mode == DMA2D_M2M_BLEND_FG) /*M2M_blending with fixed color FG DMA2D Mode selected*/
 	{
 		WRITE_REG(hdma2d->Instance->BGMAR, pdata);
-	} else /* M2M, M2M_PFC,M2M_Blending or M2M_blending with fixed color BG
-		  DMA2D Mode */
+	} else /* M2M, M2M_PFC,M2M_Blending or M2M_blending with fixed color BG DMA2D Mode */
 #else
 	else /* M2M, M2M_PFC or M2M_Blending DMA2D Mode */
 #endif /*DMA2D_M2M_BLEND_FIXED_COLOR_FG_BG_SUPPORT*/

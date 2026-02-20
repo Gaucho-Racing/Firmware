@@ -47,8 +47,7 @@
  * @{
  */
 
-/** @defgroup DFSDMEx_Exported_Functions_Group1_Channel Extended channel
-operation functions
+/** @defgroup DFSDMEx_Exported_Functions_Group1_Channel Extended channel operation functions
   * @brief    DFSDM extended channel operation functions
  *
 @verbatim
@@ -66,8 +65,7 @@ operation functions
  * @brief  Set value of pulses skipping.
  * @param  hdfsdm_channel DFSDM channel handle.
  * @param  PulsesValue Value of pulses to be skipped.
- *         This parameter must be a number between Min_Data = 0 and Max_Data
- * = 63.
+ *         This parameter must be a number between Min_Data = 0 and Max_Data = 63.
  * @retval HAL status.
  */
 HAL_StatusTypeDef HAL_DFDSMEx_ChannelSetPulsesSkipping(DFSDM_Channel_HandleTypeDef *hdfsdm_channel, uint32_t PulsesValue)
@@ -119,8 +117,7 @@ HAL_StatusTypeDef HAL_DFDSMEx_ChannelGetPulsesSkipping(const DFSDM_Channel_Handl
  * @}
  */
 
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
-	  STM32L4S7xx || STM32L4S9xx || STM32L4P5xx || STM32L4Q5xx */
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx || STM32L4P5xx || STM32L4Q5xx */
 
 #endif /* HAL_DFSDM_MODULE_ENABLED */
 

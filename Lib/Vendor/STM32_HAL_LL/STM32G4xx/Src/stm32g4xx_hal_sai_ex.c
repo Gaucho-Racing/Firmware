@@ -89,8 +89,7 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai, con
 		assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->LeftDelay));
 		assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->RightDelay));
 
-		/* Compute offset on PDMDLY register according mic pair number
-		 */
+		/* Compute offset on PDMDLY register according mic pair number */
 		offset = SAI_PDM_DELAY_OFFSET * (pdmMicDelay->MicPair - 1U);
 
 		/* Check SAI state and offset */

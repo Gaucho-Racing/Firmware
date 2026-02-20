@@ -1,12 +1,12 @@
 /**
  ******************************************************************************
- * @file    stm32g4xx_ll_crs.h
+ * @file    stm32g4xx_ll_crs.c
  * @author  MCD Application Team
  * @brief   CRS LL module driver.
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2018 STMicroelectronics.
+ * Copyright (c) 2019 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -15,6 +15,7 @@
  *
  ******************************************************************************
  */
+
 #if defined(USE_FULL_LL_DRIVER)
 
 /* Includes ------------------------------------------------------------------*/
@@ -48,8 +49,7 @@
  */
 
 /**
- * @brief  De-Initializes CRS peripheral registers to their default reset
- * values.
+ * @brief  De-Initializes CRS peripheral registers to their default reset values.
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: CRS registers are de-initialized
  *          - ERROR: not applicable

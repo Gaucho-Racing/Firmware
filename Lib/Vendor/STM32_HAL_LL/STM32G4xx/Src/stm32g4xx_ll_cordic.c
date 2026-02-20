@@ -53,8 +53,7 @@
  */
 
 /**
- * @brief  De-Initialize CORDIC peripheral registers to their default reset
- * values.
+ * @brief  De-Initialize CORDIC peripheral registers to their default reset values.
  * @param  CORDICx CORDIC Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: CORDIC registers are de-initialized

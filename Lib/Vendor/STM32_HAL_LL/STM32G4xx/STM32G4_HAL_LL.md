@@ -2,7 +2,7 @@
 
 ## Version
 
-[1.2.5](https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.5)
+[1.2.6](https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.6)
 
 ## History
 

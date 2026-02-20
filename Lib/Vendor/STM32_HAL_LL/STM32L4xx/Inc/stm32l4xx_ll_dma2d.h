@@ -62,178 +62,134 @@ extern "C" {
  */
 typedef struct {
 	uint32_t Mode; /*!< Specifies the DMA2D transfer mode.
-			    - This parameter can be one value of @ref
-			  DMA2D_LL_EC_MODE.
+			    - This parameter can be one value of @ref DMA2D_LL_EC_MODE.
 
 			    This parameter can be modified afterwards,
 			    using unitary function @ref LL_DMA2D_SetMode(). */
 
 	uint32_t ColorMode; /*!< Specifies the color format of the output image.
-				 - This parameter can be one value of @ref
-			       DMA2D_LL_EC_OUTPUT_COLOR_MODE.
+				 - This parameter can be one value of @ref DMA2D_LL_EC_OUTPUT_COLOR_MODE.
 
-				 This parameter can be modified afterwards
-			       using, unitary function @ref
-			       LL_DMA2D_SetOutputColorMode(). */
+				 This parameter can be modified afterwards using,
+				 unitary function @ref LL_DMA2D_SetOutputColorMode(). */
 
 	uint32_t OutputBlue; /*!< Specifies the Blue value of the output image.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0xFF if
-				ARGB8888 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0xFF if
-				RGB888 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0xFF if RGB888 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0x1F if
-				RGB565 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0x1F if RGB565 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0x1F if
-				ARGB1555 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0x0F if
-				ARGB4444 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
 
 				  This parameter can be modified afterwards,
-				  using unitary function @ref
-				LL_DMA2D_SetOutputColor() or configuration
+				  using unitary function @ref LL_DMA2D_SetOutputColor() or configuration
 				  function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputGreen; /*!< Specifies the Green value of the output image.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0xFF if RGB888
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0xFF if RGB888 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x3F if RGB565
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x3F if RGB565 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
 
 				   This parameter can be modified afterwards
-				   using unitary function @ref
-				 LL_DMA2D_SetOutputColor() or configuration function
-				 @ref LL_DMA2D_ConfigOutputColor(). */
+				   using unitary function @ref LL_DMA2D_SetOutputColor() or configuration
+				   function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputRed; /*!< Specifies the Red value of the output image.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0xFF if
-			       ARGB8888 color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0xFF if RGB888
-			       color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0xFF if RGB888 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0x1F if RGB565
-			       color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0x1F if RGB565 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0x1F if
-			       ARGB1555 color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0x0F if
-			       ARGB4444 color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
 
 				 This parameter can be modified afterwards
-				 using unitary function @ref
-			       LL_DMA2D_SetOutputColor() or configuration
+				 using unitary function @ref LL_DMA2D_SetOutputColor() or configuration
 				 function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputAlpha; /*!< Specifies the Alpha channel of the output image.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-				 color mode is selected.
-				   - This parameter is not considered if RGB888 or
-				 RGB565 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
+				   - This parameter is not considered if RGB888 or RGB565 color mode is selected.
 
 				   This parameter can be modified afterwards using,
-				   unitary function @ref LL_DMA2D_SetOutputColor() or
-				 configuration function @ref
-				 LL_DMA2D_ConfigOutputColor(). */
+				   unitary function @ref LL_DMA2D_SetOutputColor() or configuration
+				   function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputMemoryAddress; /*!< Specifies the memory address.
-					   - This parameter must be a number
-					 between: Min_Data = 0x0000 and Max_Data
-					 = 0xFFFFFFFF.
+					   - This parameter must be a number between:
+					     Min_Data = 0x0000 and Max_Data = 0xFFFFFFFF.
 
-					   This parameter can be modified
-					 afterwards, using unitary function @ref
-					 LL_DMA2D_SetOutputMemAddr(). */
+					   This parameter can be modified afterwards,
+					   using unitary function @ref LL_DMA2D_SetOutputMemAddr(). */
 
 #if defined(DMA2D_OUTPUT_TWO_BY_TWO_SWAP_SUPPORT)
-	uint32_t OutputSwapMode; /*!< Specifies the output swap mode color
-				format of the output image.
-				- This parameter can be one value of @ref
-				DMA2D_LL_EC_OUTPUT_SWAP_MODE.
+	uint32_t OutputSwapMode; /*!< Specifies the output swap mode color format of the output image.
+				- This parameter can be one value of @ref DMA2D_LL_EC_OUTPUT_SWAP_MODE.
 
 				This parameter can be modified afterwards,
-				using unitary function @ref
-				LL_DMA2D_SetOutputSwapMode(). */
+				using unitary function @ref LL_DMA2D_SetOutputSwapMode(). */
 #endif				 /* DMA2D_OUTPUT_TWO_BY_TWO_SWAP_SUPPORT */
 
 #if defined(DMA2D_LINE_OFFSET_MODE_SUPPORT)
 	uint32_t LineOffsetMode; /*!< Specifies the output line offset mode.
-				      - This parameter can be one value of @ref
-				    DMA2D_LL_EC_LINE_OFFSET_MODE.
+				      - This parameter can be one value of @ref DMA2D_LL_EC_LINE_OFFSET_MODE.
 
 				      This parameter can be modified afterwards,
-				      using unitary function @ref
-				    LL_DMA2D_SetLineOffsetMode(). */
+				      using unitary function @ref LL_DMA2D_SetLineOffsetMode(). */
 #endif				 /* DMA2D_LINE_OFFSET_MODE_SUPPORT */
 
 	uint32_t LineOffset; /*!< Specifies the output line offset value.
 				  - This parameter must be a number between:
-				  Min_Data = 0x0000 and Max_Data = 0x3FFF on
-				devices where the Line Offset Mode feature is
-				available. else between Min_Data = 0x0000 and
-				Max_Data = 0xFFFF on other devices.
+				  Min_Data = 0x0000 and Max_Data = 0x3FFF on devices
+				  where the Line Offset Mode feature is available.
+				  else between Min_Data = 0x0000 and Max_Data = 0xFFFF on other devices.
 
 				  This parameter can be modified afterwards,
-				  using unitary function @ref
-				LL_DMA2D_SetLineOffset(). */
+				  using unitary function @ref LL_DMA2D_SetLineOffset(). */
 
-	uint32_t NbrOfLines; /*!< Specifies the number of lines of the area to
-				be transferred.
+	uint32_t NbrOfLines; /*!< Specifies the number of lines of the area to be transferred.
 				  - This parameter must be a number between:
 				    Min_Data = 0x0000 and Max_Data = 0xFFFF.
 
 				  This parameter can be modified afterwards,
-				  using unitary function @ref
-				LL_DMA2D_SetNbrOfLines(). */
+				  using unitary function @ref LL_DMA2D_SetNbrOfLines(). */
 
-	uint32_t NbrOfPixelsPerLines; /*!< Specifies the number of pixels per lines
-					 of the area to be transferred.
-					   - This parameter must be a number between
-					 Min_Data = 0x0000 and Max_Data = 0x3FFF.
+	uint32_t NbrOfPixelsPerLines; /*!< Specifies the number of pixels per lines of the area to be transferred.
+					   - This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0x3FFF.
 
-					   This parameter can be modified afterwards
-					 using, unitary function @ref
-					 LL_DMA2D_SetNbrOfPixelsPerLines(). */
+					   This parameter can be modified afterwards using,
+					   unitary function @ref LL_DMA2D_SetNbrOfPixelsPerLines(). */
 
 	uint32_t AlphaInversionMode; /*!< Specifies the output alpha inversion mode.
-					  - This parameter can be one value of @ref
-					DMA2D_LL_EC_ALPHA_INVERSION.
+					  - This parameter can be one value of @ref DMA2D_LL_EC_ALPHA_INVERSION.
 
 					  This parameter can be modified afterwards,
-					  using unitary function @ref
-					LL_DMA2D_SetOutputAlphaInvMode(). */
+					  using unitary function @ref LL_DMA2D_SetOutputAlphaInvMode(). */
 
 	uint32_t RBSwapMode; /*!< Specifies the output Red Blue swap mode.
-				  - This parameter can be one value of @ref
-				DMA2D_LL_EC_RED_BLUE_SWAP.
+				  - This parameter can be one value of @ref DMA2D_LL_EC_RED_BLUE_SWAP.
 
 				  This parameter can be modified afterwards,
-				  using unitary function @ref
-				LL_DMA2D_SetOutputRBSwapMode(). */
+				  using unitary function @ref LL_DMA2D_SetOutputRBSwapMode(). */
 
 } LL_DMA2D_InitTypeDef;
 
@@ -241,151 +197,98 @@ typedef struct {
  * @brief LL DMA2D Layer Configuration Structure Definition
  */
 typedef struct {
-	uint32_t MemoryAddress; /*!< Specifies the foreground or background memory
-				   address.
+	uint32_t MemoryAddress; /*!< Specifies the foreground or background memory address.
 				     - This parameter must be a number between:
 				       Min_Data = 0x0000 and Max_Data = 0xFFFFFFFF.
 
-				     This parameter can be modified afterwards using
-				   unitary functions
-				     - @ref LL_DMA2D_FGND_SetMemAddr() for foreground
-				   layer,
-				     - @ref LL_DMA2D_BGND_SetMemAddr() for background
-				   layer. */
+				     This parameter can be modified afterwards using unitary functions
+				     - @ref LL_DMA2D_FGND_SetMemAddr() for foreground layer,
+				     - @ref LL_DMA2D_BGND_SetMemAddr() for background layer. */
 
-	uint32_t LineOffset; /*!< Specifies the foreground or background line
-				offset value.
-				  - This parameter must be a number between
-				Min_Data = 0x0000 and Max_Data = 0x3FFF.
+	uint32_t LineOffset; /*!< Specifies the foreground or background line offset value.
+				  - This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0x3FFF.
 
-				  This parameter can be modified afterwards
-				using unitary functions
-				  - @ref LL_DMA2D_FGND_SetLineOffset() for
-				foreground layer,
-				  - @ref LL_DMA2D_BGND_SetLineOffset() for
-				background layer. */
+				  This parameter can be modified afterwards using unitary functions
+				  - @ref LL_DMA2D_FGND_SetLineOffset() for foreground layer,
+				  - @ref LL_DMA2D_BGND_SetLineOffset() for background layer. */
 
 	uint32_t ColorMode; /*!< Specifies the foreground or background color mode.
-				 - This parameter can be one value of @ref
-			       DMA2D_LL_EC_INPUT_COLOR_MODE.
+				 - This parameter can be one value of @ref DMA2D_LL_EC_INPUT_COLOR_MODE.
 
-				 This parameter can be modified afterwards using
-			       unitary functions
-				 - @ref LL_DMA2D_FGND_SetColorMode() for foreground
-			       layer,
-				 - @ref LL_DMA2D_BGND_SetColorMode() for background
-			       layer. */
+				 This parameter can be modified afterwards using unitary functions
+				 - @ref LL_DMA2D_FGND_SetColorMode() for foreground layer,
+				 - @ref LL_DMA2D_BGND_SetColorMode() for background layer. */
 
-	uint32_t CLUTColorMode; /*!< Specifies the foreground or background CLUT
-				   color mode.
-				      - This parameter can be one value of @ref
-				   DMA2D_LL_EC_CLUT_COLOR_MODE.
+	uint32_t CLUTColorMode; /*!< Specifies the foreground or background CLUT color mode.
+				      - This parameter can be one value of @ref DMA2D_LL_EC_CLUT_COLOR_MODE.
 
-				     This parameter can be modified afterwards
-				   using unitary functions
-				     - @ref LL_DMA2D_FGND_SetCLUTColorMode() for
-				   foreground layer,
-				     - @ref LL_DMA2D_BGND_SetCLUTColorMode() for
-				   background layer. */
+				     This parameter can be modified afterwards using unitary functions
+				     - @ref LL_DMA2D_FGND_SetCLUTColorMode() for foreground layer,
+				     - @ref LL_DMA2D_BGND_SetCLUTColorMode() for background layer. */
 
 	uint32_t CLUTSize; /*!< Specifies the foreground or background CLUT size.
-				- This parameter must be a number between Min_Data =
-			      0x00 and Max_Data = 0xFF.
+				- This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF.
 
-				This parameter can be modified afterwards using
-			      unitary functions
-				- @ref LL_DMA2D_FGND_SetCLUTSize() for foreground
-			      layer,
-				- @ref LL_DMA2D_BGND_SetCLUTSize() for background
-			      layer. */
+				This parameter can be modified afterwards using unitary functions
+				- @ref LL_DMA2D_FGND_SetCLUTSize() for foreground layer,
+				- @ref LL_DMA2D_BGND_SetCLUTSize() for background layer. */
 
 	uint32_t AlphaMode; /*!< Specifies the foreground or background alpha mode.
-				  - This parameter can be one value of @ref
-			       DMA2D_LL_EC_ALPHA_MODE.
+				  - This parameter can be one value of @ref DMA2D_LL_EC_ALPHA_MODE.
 
-				 This parameter can be modified afterwards using
-			       unitary functions
-				 - @ref LL_DMA2D_FGND_SetAlphaMode() for foreground
-			       layer,
-				 - @ref LL_DMA2D_BGND_SetAlphaMode() for background
-			       layer. */
+				 This parameter can be modified afterwards using unitary functions
+				 - @ref LL_DMA2D_FGND_SetAlphaMode() for foreground layer,
+				 - @ref LL_DMA2D_BGND_SetAlphaMode() for background layer. */
 
 	uint32_t Alpha; /*!< Specifies the foreground or background Alpha value.
-			     - This parameter must be a number between Min_Data =
-			   0x00 and Max_Data = 0xFF.
+			     - This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF.
 
-			     This parameter can be modified afterwards using unitary
-			   functions
+			     This parameter can be modified afterwards using unitary functions
 			     - @ref LL_DMA2D_FGND_SetAlpha() for foreground layer,
 			     - @ref LL_DMA2D_BGND_SetAlpha() for background layer. */
 
 	uint32_t Blue; /*!< Specifies the foreground or background Blue color value.
-			    - This parameter must be a number between Min_Data = 0x00
-			  and Max_Data = 0xFF.
+			    - This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF.
 
-			    This parameter can be modified afterwards using unitary
-			  functions
+			    This parameter can be modified afterwards using unitary functions
 			    - @ref LL_DMA2D_FGND_SetBlueColor() for foreground layer,
-			    - @ref LL_DMA2D_BGND_SetBlueColor() for background layer.
-			*/
+			    - @ref LL_DMA2D_BGND_SetBlueColor() for background layer. */
 
-	uint32_t Green; /*!< Specifies the foreground or background Green color
-			   value.
-			     - This parameter must be a number between Min_Data
-			   = 0x00 and Max_Data = 0xFF.
+	uint32_t Green; /*!< Specifies the foreground or background Green color value.
+			     - This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF.
 
-			     This parameter can be modified afterwards using
-			   unitary functions
-			     - @ref LL_DMA2D_FGND_SetGreenColor() for foreground
-			   layer,
-			     - @ref LL_DMA2D_BGND_SetGreenColor() for background
-			   layer. */
+			     This parameter can be modified afterwards using unitary functions
+			     - @ref LL_DMA2D_FGND_SetGreenColor() for foreground layer,
+			     - @ref LL_DMA2D_BGND_SetGreenColor() for background layer. */
 
 	uint32_t Red; /*!< Specifies the foreground or background Red color value.
-			   - This parameter must be a number between Min_Data = 0x00
-			 and Max_Data = 0xFF.
+			   - This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF.
 
-			   This parameter can be modified afterwards using unitary
-			 functions
+			   This parameter can be modified afterwards using unitary functions
 			   - @ref LL_DMA2D_FGND_SetRedColor() for foreground layer,
-			   - @ref LL_DMA2D_BGND_SetRedColor() for background layer.
-		       */
+			   - @ref LL_DMA2D_BGND_SetRedColor() for background layer. */
 
-	uint32_t CLUTMemoryAddress; /*!< Specifies the foreground or background
-				       CLUT memory address.
-					 - This parameter must be a number
-				       between: Min_Data = 0x0000 and Max_Data =
-				       0xFFFFFFFF.
+	uint32_t CLUTMemoryAddress; /*!< Specifies the foreground or background CLUT memory address.
+					 - This parameter must be a number between:
+					   Min_Data = 0x0000 and Max_Data = 0xFFFFFFFF.
 
-					 This parameter can be modified
-				       afterwards using unitary functions
-					 - @ref LL_DMA2D_FGND_SetCLUTMemAddr()
-				       for foreground layer,
-					 - @ref LL_DMA2D_BGND_SetCLUTMemAddr()
-				       for background layer. */
+					 This parameter can be modified afterwards using unitary functions
+					 - @ref LL_DMA2D_FGND_SetCLUTMemAddr() for foreground layer,
+					 - @ref LL_DMA2D_BGND_SetCLUTMemAddr() for background layer. */
 
-	uint32_t AlphaInversionMode; /*!< Specifies the foreground or background
-					alpha inversion mode.
-					  - This parameter can be one value of
-					@ref DMA2D_LL_EC_ALPHA_INVERSION.
+	uint32_t AlphaInversionMode; /*!< Specifies the foreground or background alpha inversion mode.
+					  - This parameter can be one value of @ref DMA2D_LL_EC_ALPHA_INVERSION.
 
-					  This parameter can be modified
-					afterwards using unitary functions
-					  - @ref LL_DMA2D_FGND_SetAlphaInvMode()
-					for foreground layer,
-					  - @ref LL_DMA2D_BGND_SetAlphaInvMode()
-					for background layer. */
+					  This parameter can be modified afterwards using unitary functions
+					  - @ref LL_DMA2D_FGND_SetAlphaInvMode() for foreground layer,
+					  - @ref LL_DMA2D_BGND_SetAlphaInvMode() for background layer. */
 
-	uint32_t RBSwapMode; /*!< Specifies the foreground or background Red
-				Blue swap mode. This parameter can be one value
-				of @ref DMA2D_LL_EC_RED_BLUE_SWAP .
+	uint32_t RBSwapMode; /*!< Specifies the foreground or background Red Blue swap mode.
+				  This parameter can be one value of @ref DMA2D_LL_EC_RED_BLUE_SWAP .
 
-				  This parameter can be modified afterwards
-				using unitary functions
-				  - @ref LL_DMA2D_FGND_SetRBSwapMode() for
-				foreground layer,
-				  - @ref LL_DMA2D_BGND_SetRBSwapMode() for
-				background layer. */
+				  This parameter can be modified afterwards using unitary functions
+				  - @ref LL_DMA2D_FGND_SetRBSwapMode() for foreground layer,
+				  - @ref LL_DMA2D_BGND_SetRBSwapMode() for background layer. */
 
 } LL_DMA2D_LayerCfgTypeDef;
 
@@ -394,95 +297,71 @@ typedef struct {
  */
 typedef struct {
 	uint32_t ColorMode; /*!< Specifies the color format of the output image.
-				 - This parameter can be one value of @ref
-	       DMA2D_LL_EC_OUTPUT_COLOR_MODE.
+				 - This parameter can be one value of @ref DMA2D_LL_EC_OUTPUT_COLOR_MODE.
 
 				 This parameter can be modified afterwards using
 	       unitary function @ref LL_DMA2D_SetOutputColorMode(). */
 
 	uint32_t OutputBlue; /*!< Specifies the Blue value of the output image.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0xFF if
-				ARGB8888 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0xFF if
-				RGB888 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0xFF if RGB888 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0x1F if
-				RGB565 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0x1F if RGB565 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0x1F if
-				ARGB1555 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555 color mode is selected.
 				  - This parameter must be a number between:
-				    Min_Data = 0x00 and Max_Data = 0x0F if
-				ARGB4444 color mode is selected.
+				    Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
 
-				  This parameter can be modified afterwards
-				using, unitary function @ref
-				LL_DMA2D_SetOutputColor() or configuration
+				  This parameter can be modified afterwards using,
+				  unitary function @ref LL_DMA2D_SetOutputColor() or configuration
 				  function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputGreen; /*!< Specifies the Green value of the output image.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				   - This parameter must be a number between
-				     Min_Data = 0x00 and Max_Data = 0xFF if RGB888
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0xFF if RGB888 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x3F if RGB565
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x3F if RGB565 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
 
 				   This parameter can be modified afterwards,
-				   using unitary function @ref
-				 LL_DMA2D_SetOutputColor() or configuration function
-				 @ref LL_DMA2D_ConfigOutputColor(). */
+				   using unitary function @ref LL_DMA2D_SetOutputColor() or configuration
+				   function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputRed; /*!< Specifies the Red value of the output image.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0xFF if
-			       ARGB8888 color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0xFF if RGB888
-			       color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0xFF if RGB888 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0x1F if RGB565
-			       color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0x1F if RGB565 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0x1F if
-			       ARGB1555 color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555 color mode is selected.
 				 - This parameter must be a number between:
-				   Min_Data = 0x00 and Max_Data = 0x0F if
-			       ARGB4444 color mode is selected.
+				   Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
 
 				 This parameter can be modified afterwards,
-				 using unitary function @ref
-			       LL_DMA2D_SetOutputColor() or configuration
+				 using unitary function @ref LL_DMA2D_SetOutputColor() or configuration
 				 function @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputAlpha; /*!< Specifies the Alpha channel of the output image.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555
-				 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555 color mode is selected.
 				   - This parameter must be a number between:
-				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-				 color mode is selected.
-				   - This parameter is not considered if RGB888 or
-				 RGB565 color mode is selected.
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444 color mode is selected.
+				   - This parameter is not considered if RGB888 or RGB565 color mode is selected.
 
 				   This parameter can be modified afterwards,
-				   using unitary function @ref
-				 LL_DMA2D_SetOutputColor() or configuration function
-				 @ref LL_DMA2D_ConfigOutputColor(). */
+				   using unitary function @ref LL_DMA2D_SetOutputColor() or configuration
+				   function @ref LL_DMA2D_ConfigOutputColor(). */
 
 } LL_DMA2D_ColorTypeDef;
 
@@ -505,16 +384,13 @@ typedef struct {
 #define LL_DMA2D_FLAG_CAEIF DMA2D_ISR_CAEIF /*!< CLUT Access Error Interrupt Flag */
 #define LL_DMA2D_FLAG_TWIF DMA2D_ISR_TWIF   /*!< Transfer Watermark Interrupt Flag */
 #define LL_DMA2D_FLAG_TCIF DMA2D_ISR_TCIF   /*!< Transfer Complete Interrupt Flag */
-#define LL_DMA2D_FLAG_TEIF                                                                                                                                                                             \
-	DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag                                                                                                                                              \
-			*/
+#define LL_DMA2D_FLAG_TEIF DMA2D_ISR_TEIF   /*!< Transfer Error Interrupt Flag */
 /**
  * @}
  */
 
 /** @defgroup DMA2D_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_DMA2D_ReadReg and
- * LL_DMA2D_WriteReg functions
+ * @brief    IT defines which can be used with LL_DMA2D_ReadReg and  LL_DMA2D_WriteReg functions
  * @{
  */
 #define LL_DMA2D_IT_CEIE DMA2D_CR_CEIE	 /*!< Configuration Error Interrupt */
@@ -530,22 +406,14 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_MODE Mode
  * @{
  */
-#define LL_DMA2D_MODE_M2M 0x00000000U /*!< DMA2D memory to memory transfer mode */
-#define LL_DMA2D_MODE_M2M_PFC                                                                                                                                                                          \
-	DMA2D_CR_MODE_0 /*!< DMA2D memory to memory with pixel format                                                                                                                                  \
-			   conversion transfer mode */
-#define LL_DMA2D_MODE_M2M_BLEND                                                                                                                                                                        \
-	DMA2D_CR_MODE_1					      /*!< DMA2D memory to memory with blending transfer                                                                                       \
-								 mode */
+#define LL_DMA2D_MODE_M2M 0x00000000U			      /*!< DMA2D memory to memory transfer mode */
+#define LL_DMA2D_MODE_M2M_PFC DMA2D_CR_MODE_0		      /*!< DMA2D memory to memory with pixel format conversion transfer mode */
+#define LL_DMA2D_MODE_M2M_BLEND DMA2D_CR_MODE_1		      /*!< DMA2D memory to memory with blending transfer mode */
 #define LL_DMA2D_MODE_R2M (DMA2D_CR_MODE_0 | DMA2D_CR_MODE_1) /*!< DMA2D register to memory transfer mode */
 #if defined(DMA2D_M2M_BLEND_FIXED_COLOR_FG_BG_SUPPORT)
-#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_FG                                                                                                                                                         \
-	DMA2D_CR_MODE_2 /*!< DMA2D memory to memory with blending transfer                                                                                                                             \
-			   mode and fixed color foreground */
-#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_BG                                                                                                                                                         \
-	(DMA2D_CR_MODE_0 | DMA2D_CR_MODE_2) /*!< DMA2D memory to memory with blending transfer                                                                                                         \
-					       mode and fixed color background */
-#endif					    /* DMA2D_M2M_BLEND_FIXED_COLOR_FG_BG_SUPPORT */
+#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_FG DMA2D_CR_MODE_2			   /*!< DMA2D memory to memory with blending transfer mode and fixed color foreground */
+#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_BG (DMA2D_CR_MODE_0 | DMA2D_CR_MODE_2) /*!< DMA2D memory to memory with blending transfer mode and fixed color background */
+#endif										   /* DMA2D_M2M_BLEND_FIXED_COLOR_FG_BG_SUPPORT */
 /**
  * @}
  */
@@ -591,9 +459,9 @@ typedef struct {
 	DMA2D_FGPFCCR_AM_1 /*!< Replace original alpha channel value by                                                                                                                                \
 				programmed alpha value with,                                                                                                                                           \
 				original alpha channel value               */
-			   /**
-			    * @}
-			    */
+/**
+ * @}
+ */
 
 #if defined(DMA2D_OUTPUT_TWO_BY_TWO_SWAP_SUPPORT)
 /** @defgroup DMA2D_LL_EC_OUTPUT_SWAP_MODE Swap Mode
@@ -620,9 +488,9 @@ typedef struct {
  */
 #define LL_DMA2D_ALPHA_REGULAR 0x00000000U	 /*!< Regular alpha  */
 #define LL_DMA2D_ALPHA_INVERTED DMA2D_FGPFCCR_AI /*!< Inverted alpha */
-						 /**
-						  * @}
-						  */
+/**
+ * @}
+ */
 
 #if defined(DMA2D_LINE_OFFSET_MODE_SUPPORT)
 /** @defgroup DMA2D_LL_EC_LINE_OFFSET_MODE Line Offset Mode
@@ -714,8 +582,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsTransferOngoing(const DMA2D_TypeDef *DMA2Dx)
 
 /**
  * @brief  Suspend DMA2D transfer.
- * @note   This API can be used to suspend automatic foreground or background
- * CLUT loading.
+ * @note   This API can be used to suspend automatic foreground or background CLUT loading.
  * @rmtoll CR          SUSP            LL_DMA2D_Suspend
  * @param  DMA2Dx DMA2D Instance
  * @retval None
@@ -727,8 +594,7 @@ __STATIC_INLINE void LL_DMA2D_Suspend(DMA2D_TypeDef *DMA2Dx)
 
 /**
  * @brief  Resume DMA2D transfer.
- * @note   This API can be used to resume automatic foreground or background
- * CLUT loading.
+ * @note   This API can be used to resume automatic foreground or background CLUT loading.
  * @rmtoll CR          SUSP            LL_DMA2D_Resume
  * @param  DMA2Dx DMA2D Instance
  * @retval None
@@ -740,8 +606,8 @@ __STATIC_INLINE void LL_DMA2D_Resume(DMA2D_TypeDef *DMA2Dx)
 
 /**
  * @brief  Indicate if DMA2D transfer is suspended.
- * @note   This API can be used to indicate whether or not automatic foreground
- * or background CLUT loading is suspended.
+ * @note   This API can be used to indicate whether or not automatic foreground or
+ *         background CLUT loading is suspended.
  * @rmtoll CR          SUSP            LL_DMA2D_IsSuspended
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -753,8 +619,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsSuspended(const DMA2D_TypeDef *DMA2Dx)
 
 /**
  * @brief  Abort DMA2D transfer.
- * @note   This API can be used to abort automatic foreground or background CLUT
- * loading.
+ * @note   This API can be used to abort automatic foreground or background CLUT loading.
  * @rmtoll CR          ABORT            LL_DMA2D_Abort
  * @param  DMA2Dx DMA2D Instance
  * @retval None
@@ -766,8 +631,8 @@ __STATIC_INLINE void LL_DMA2D_Abort(DMA2D_TypeDef *DMA2Dx)
 
 /**
  * @brief  Indicate if DMA2D transfer is aborted.
- * @note   This API can be used to indicate whether or not automatic foreground
- * or background CLUT loading is aborted.
+ * @note   This API can be used to indicate whether or not automatic foreground or
+ *         background CLUT loading is aborted.
  * @rmtoll CR          ABORT            LL_DMA2D_IsAborted
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -993,8 +858,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Set DMA2D number of pixels per lines, expressed on 14 bits ([13:0]
- * bits).
+ * @brief  Set DMA2D number of pixels per lines, expressed on 14 bits ([13:0] bits).
  * @rmtoll NLR          PL          LL_DMA2D_SetNbrOfPixelsPerLines
  * @param  DMA2Dx DMA2D Instance
  * @param  NbrOfPixelsPerLines Value between Min_Data=0 and Max_Data=0x3FFF
@@ -1006,12 +870,10 @@ __STATIC_INLINE void LL_DMA2D_SetNbrOfPixelsPerLines(DMA2D_TypeDef *DMA2Dx, uint
 }
 
 /**
- * @brief  Return DMA2D number of pixels per lines, expressed on 14 bits ([13:0]
- * bits)
+ * @brief  Return DMA2D number of pixels per lines, expressed on 14 bits ([13:0] bits)
  * @rmtoll NLR          PL          LL_DMA2D_GetNbrOfPixelsPerLines
  * @param  DMA2Dx DMA2D Instance
- * @retval Number of pixels per lines value between Min_Data=0 and
- * Max_Data=0x3FFF
+ * @retval Number of pixels per lines value between Min_Data=0 and Max_Data=0x3FFF
  */
 __STATIC_INLINE uint32_t LL_DMA2D_GetNbrOfPixelsPerLines(const DMA2D_TypeDef *DMA2Dx)
 {
@@ -1057,8 +919,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t O
  * @brief  Get DMA2D output memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll OMAR          MA          LL_DMA2D_GetOutputMemAddr
  * @param  DMA2Dx DMA2D Instance
- * @retval Output memory address value between Min_Data=0 and
- * Max_Data=0xFFFFFFFF
+ * @retval Output memory address value between Min_Data=0 and Max_Data=0xFFFFFFFF
  */
 __STATIC_INLINE uint32_t LL_DMA2D_GetOutputMemAddr(const DMA2D_TypeDef *DMA2Dx)
 {
@@ -1069,8 +930,8 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetOutputMemAddr(const DMA2D_TypeDef *DMA2Dx)
  * @brief  Set DMA2D output color, expressed on 32 bits ([31:0] bits).
  * @note   Output color format depends on output color mode, ARGB8888, RGB888,
  *         RGB565, ARGB1555 or ARGB4444.
- * @note LL_DMA2D_ConfigOutputColor() API may be used instead if colors values
- * formatting with respect to color mode is not done by the user code.
+ * @note LL_DMA2D_ConfigOutputColor() API may be used instead if colors values formatting
+ *       with respect to color mode is not done by the user code.
  * @rmtoll OCOLR        BLUE        LL_DMA2D_SetOutputColor\n
  *         OCOLR        GREEN       LL_DMA2D_SetOutputColor\n
  *         OCOLR        RED         LL_DMA2D_SetOutputColor\n
@@ -1086,9 +947,9 @@ __STATIC_INLINE void LL_DMA2D_SetOutputColor(DMA2D_TypeDef *DMA2Dx, uint32_t Out
 
 /**
  * @brief  Get DMA2D output color, expressed on 32 bits ([31:0] bits).
- * @note   Alpha channel and red, green, blue color values must be retrieved
- * from the returned value based on the output color mode (ARGB8888, RGB888,
- * RGB565, ARGB1555 or ARGB4444) as set by @ref LL_DMA2D_SetOutputColorMode.
+ * @note   Alpha channel and red, green, blue color values must be retrieved from the returned
+ *         value based on the output color mode (ARGB8888, RGB888,  RGB565, ARGB1555 or ARGB4444)
+ *         as set by @ref LL_DMA2D_SetOutputColorMode.
  * @rmtoll OCOLR        BLUE        LL_DMA2D_GetOutputColor\n
  *         OCOLR        GREEN       LL_DMA2D_GetOutputColor\n
  *         OCOLR        RED         LL_DMA2D_GetOutputColor\n
@@ -1185,8 +1046,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledDeadTime(const DMA2D_TypeDef *DMA2Dx)
  */
 
 /**
- * @brief  Set DMA2D foreground memory address, expressed on 32 bits ([31:0]
- * bits).
+ * @brief  Set DMA2D foreground memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll FGMAR          MA          LL_DMA2D_FGND_SetMemAddr
  * @param  DMA2Dx DMA2D Instance
  * @param  MemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
@@ -1198,12 +1058,10 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t Me
 }
 
 /**
- * @brief  Get DMA2D foreground memory address, expressed on 32 bits ([31:0]
- * bits).
+ * @brief  Get DMA2D foreground memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll FGMAR          MA          LL_DMA2D_FGND_GetMemAddr
  * @param  DMA2Dx DMA2D Instance
- * @retval Foreground memory address value between Min_Data=0 and
- * Max_Data=0xFFFFFFFF
+ * @retval Foreground memory address value between Min_Data=0 and Max_Data=0xFFFFFFFF
  */
 __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx)
 {
@@ -1319,8 +1177,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetAlpha(DMA2D_TypeDef *DMA2Dx, uint32_t Alph
 }
 
 /**
- * @brief  Return DMA2D foreground alpha value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D foreground alpha value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGPFCCR          ALPHA         LL_DMA2D_FGND_GetAlpha
  * @param  DMA2Dx DMA2D Instance
  * @retval Alpha value between Min_Data=0 and Max_Data=0xFF
@@ -1397,8 +1254,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx, uint32_t
 }
 
 /**
- * @brief  Return DMA2D foreground line offset, expressed on 14 bits ([13:0]
- * bits).
+ * @brief  Return DMA2D foreground line offset, expressed on 14 bits ([13:0] bits).
  * @rmtoll FGOR          LO         LL_DMA2D_FGND_GetLineOffset
  * @param  DMA2Dx DMA2D Instance
  * @retval Foreground line offset value between Min_Data=0 and Max_Data=0x3FF
@@ -1409,8 +1265,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx
 }
 
 /**
- * @brief  Set DMA2D foreground color values, expressed on 24 bits ([23:0]
- * bits).
+ * @brief  Set DMA2D foreground color values, expressed on 24 bits ([23:0] bits).
  * @rmtoll FGCOLR          RED          LL_DMA2D_FGND_SetColor
  * @rmtoll FGCOLR          GREEN        LL_DMA2D_FGND_SetColor
  * @rmtoll FGCOLR          BLUE         LL_DMA2D_FGND_SetColor
@@ -1426,8 +1281,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red,
 }
 
 /**
- * @brief  Set DMA2D foreground red color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Set DMA2D foreground red color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGCOLR          RED          LL_DMA2D_FGND_SetRedColor
  * @param  DMA2Dx DMA2D Instance
  * @param  Red Value between Min_Data=0 and Max_Data=0xFF
@@ -1439,8 +1293,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetRedColor(DMA2D_TypeDef *DMA2Dx, uint32_t R
 }
 
 /**
- * @brief  Return DMA2D foreground red color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D foreground red color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGCOLR          RED         LL_DMA2D_FGND_GetRedColor
  * @param  DMA2Dx DMA2D Instance
  * @retval Red color value between Min_Data=0 and Max_Data=0xFF
@@ -1451,8 +1304,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Set DMA2D foreground green color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Set DMA2D foreground green color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGCOLR          GREEN          LL_DMA2D_FGND_SetGreenColor
  * @param  DMA2Dx DMA2D Instance
  * @param  Green Value between Min_Data=0 and Max_Data=0xFF
@@ -1464,8 +1316,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx, uint32_t
 }
 
 /**
- * @brief  Return DMA2D foreground green color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D foreground green color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGCOLR          GREEN         LL_DMA2D_FGND_GetGreenColor
  * @param  DMA2Dx DMA2D Instance
  * @retval Green color value between Min_Data=0 and Max_Data=0xFF
@@ -1476,8 +1327,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx
 }
 
 /**
- * @brief  Set DMA2D foreground blue color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Set DMA2D foreground blue color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGCOLR          BLUE          LL_DMA2D_FGND_SetBlueColor
  * @param  DMA2Dx DMA2D Instance
  * @param  Blue Value between Min_Data=0 and Max_Data=0xFF
@@ -1489,8 +1339,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx, uint32_t 
 }
 
 /**
- * @brief  Return DMA2D foreground blue color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D foreground blue color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll FGCOLR          BLUE         LL_DMA2D_FGND_GetBlueColor
  * @param  DMA2Dx DMA2D Instance
  * @retval Blue color value between Min_Data=0 and Max_Data=0xFF
@@ -1501,8 +1350,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Set DMA2D foreground CLUT memory address, expressed on 32 bits
- * ([31:0] bits).
+ * @brief  Set DMA2D foreground CLUT memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll FGCMAR          MA          LL_DMA2D_FGND_SetCLUTMemAddr
  * @param  DMA2Dx DMA2D Instance
  * @param  CLUTMemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
@@ -1514,12 +1362,10 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_
 }
 
 /**
- * @brief  Get DMA2D foreground CLUT memory address, expressed on 32 bits
- * ([31:0] bits).
+ * @brief  Get DMA2D foreground CLUT memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll FGCMAR          MA          LL_DMA2D_FGND_GetCLUTMemAddr
  * @param  DMA2Dx DMA2D Instance
- * @retval Foreground CLUT memory address value between Min_Data=0 and
- * Max_Data=0xFFFFFFFF
+ * @retval Foreground CLUT memory address value between Min_Data=0 and Max_Data=0xFFFFFFFF
  */
 __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx)
 {
@@ -1585,8 +1431,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA
  */
 
 /**
- * @brief  Set DMA2D background memory address, expressed on 32 bits ([31:0]
- * bits).
+ * @brief  Set DMA2D background memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll BGMAR          MA          LL_DMA2D_BGND_SetMemAddr
  * @param  DMA2Dx DMA2D Instance
  * @param  MemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
@@ -1598,12 +1443,10 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t Me
 }
 
 /**
- * @brief  Get DMA2D background memory address, expressed on 32 bits ([31:0]
- * bits).
+ * @brief  Get DMA2D background memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll BGMAR          MA          LL_DMA2D_BGND_GetMemAddr
  * @param  DMA2Dx DMA2D Instance
- * @retval Background memory address value between Min_Data=0 and
- * Max_Data=0xFFFFFFFF
+ * @retval Background memory address value between Min_Data=0 and Max_Data=0xFFFFFFFF
  */
 __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx)
 {
@@ -1719,8 +1562,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetAlpha(DMA2D_TypeDef *DMA2Dx, uint32_t Alph
 }
 
 /**
- * @brief  Return DMA2D background alpha value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D background alpha value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGPFCCR          ALPHA          LL_DMA2D_BGND_GetAlpha
  * @param  DMA2Dx DMA2D Instance
  * @retval Alpha value between Min_Data=0 and Max_Data=0xFF
@@ -1797,8 +1639,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx, uint32_t
 }
 
 /**
- * @brief  Return DMA2D background line offset, expressed on 14 bits ([13:0]
- * bits).
+ * @brief  Return DMA2D background line offset, expressed on 14 bits ([13:0] bits).
  * @rmtoll BGOR          LO          LL_DMA2D_BGND_GetLineOffset
  * @param  DMA2Dx DMA2D Instance
  * @retval Background line offset value between Min_Data=0 and Max_Data=0x3FF
@@ -1809,8 +1650,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx
 }
 
 /**
- * @brief  Set DMA2D background color values, expressed on 24 bits ([23:0]
- * bits).
+ * @brief  Set DMA2D background color values, expressed on 24 bits ([23:0] bits).
  * @rmtoll BGCOLR          RED          LL_DMA2D_BGND_SetColor
  * @rmtoll BGCOLR          GREEN        LL_DMA2D_BGND_SetColor
  * @rmtoll BGCOLR          BLUE         LL_DMA2D_BGND_SetColor
@@ -1826,8 +1666,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red,
 }
 
 /**
- * @brief  Set DMA2D background red color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Set DMA2D background red color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGCOLR          RED         LL_DMA2D_BGND_SetRedColor
  * @param  DMA2Dx DMA2D Instance
  * @param  Red Value between Min_Data=0 and Max_Data=0xFF
@@ -1839,8 +1678,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetRedColor(DMA2D_TypeDef *DMA2Dx, uint32_t R
 }
 
 /**
- * @brief  Return DMA2D background red color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D background red color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGCOLR          RED          LL_DMA2D_BGND_GetRedColor
  * @param  DMA2Dx DMA2D Instance
  * @retval Red color value between Min_Data=0 and Max_Data=0xFF
@@ -1851,8 +1689,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Set DMA2D background green color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Set DMA2D background green color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGCOLR          GREEN         LL_DMA2D_BGND_SetGreenColor
  * @param  DMA2Dx DMA2D Instance
  * @param  Green Value between Min_Data=0 and Max_Data=0xFF
@@ -1864,8 +1701,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx, uint32_t
 }
 
 /**
- * @brief  Return DMA2D background green color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D background green color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGCOLR          GREEN          LL_DMA2D_BGND_GetGreenColor
  * @param  DMA2Dx DMA2D Instance
  * @retval Green color value between Min_Data=0 and Max_Data=0xFF
@@ -1876,8 +1712,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx
 }
 
 /**
- * @brief  Set DMA2D background blue color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Set DMA2D background blue color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGCOLR          BLUE         LL_DMA2D_BGND_SetBlueColor
  * @param  DMA2Dx DMA2D Instance
  * @param  Blue Value between Min_Data=0 and Max_Data=0xFF
@@ -1889,8 +1724,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx, uint32_t 
 }
 
 /**
- * @brief  Return DMA2D background blue color value, expressed on 8 bits ([7:0]
- * bits).
+ * @brief  Return DMA2D background blue color value, expressed on 8 bits ([7:0] bits).
  * @rmtoll BGCOLR          BLUE          LL_DMA2D_BGND_GetBlueColor
  * @param  DMA2Dx DMA2D Instance
  * @retval Blue color value between Min_Data=0 and Max_Data=0xFF
@@ -1901,8 +1735,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Set DMA2D background CLUT memory address, expressed on 32 bits
- * ([31:0] bits).
+ * @brief  Set DMA2D background CLUT memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll BGCMAR          MA         LL_DMA2D_BGND_SetCLUTMemAddr
  * @param  DMA2Dx DMA2D Instance
  * @param  CLUTMemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
@@ -1914,12 +1747,10 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_
 }
 
 /**
- * @brief  Get DMA2D background CLUT memory address, expressed on 32 bits
- * ([31:0] bits).
+ * @brief  Get DMA2D background CLUT memory address, expressed on 32 bits ([31:0] bits).
  * @rmtoll BGCMAR          MA           LL_DMA2D_BGND_GetCLUTMemAddr
  * @param  DMA2Dx DMA2D Instance
- * @retval Background CLUT memory address value between Min_Data=0 and
- * Max_Data=0xFFFFFFFF
+ * @retval Background CLUT memory address value between Min_Data=0 and Max_Data=0xFFFFFFFF
  */
 __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx)
 {
@@ -2000,8 +1831,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CE(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D CLUT Transfer Complete Interrupt Flag is set or
- * not
+ * @brief  Check if the DMA2D CLUT Transfer Complete Interrupt Flag is set or not
  * @rmtoll ISR          CTCIF            LL_DMA2D_IsActiveFlag_CTC
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2262,8 +2092,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_TE(DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D Configuration Error interrupt source is enabled or
- * disabled.
+ * @brief  Check if the DMA2D Configuration Error interrupt source is enabled or disabled.
  * @rmtoll CR          CEIE        LL_DMA2D_IsEnabledIT_CE
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2274,8 +2103,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CE(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D CLUT Transfer Complete interrupt source is enabled
- * or disabled.
+ * @brief  Check if the DMA2D CLUT Transfer Complete interrupt source is enabled or disabled.
  * @rmtoll CR          CTCIE        LL_DMA2D_IsEnabledIT_CTC
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2286,8 +2114,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CTC(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D CLUT Access Error interrupt source is enabled or
- * disabled.
+ * @brief  Check if the DMA2D CLUT Access Error interrupt source is enabled or disabled.
  * @rmtoll CR          CAEIE        LL_DMA2D_IsEnabledIT_CAE
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2298,8 +2125,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CAE(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D Transfer Watermark interrupt source is enabled or
- * disabled.
+ * @brief  Check if the DMA2D Transfer Watermark interrupt source is enabled or disabled.
  * @rmtoll CR          TWIE        LL_DMA2D_IsEnabledIT_TW
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2310,8 +2136,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TW(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D Transfer Complete interrupt source is enabled or
- * disabled.
+ * @brief  Check if the DMA2D Transfer Complete interrupt source is enabled or disabled.
  * @rmtoll CR          TCIE        LL_DMA2D_IsEnabledIT_TC
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2322,8 +2147,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TC(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Check if the DMA2D Transfer Error interrupt source is enabled or
- * disabled.
+ * @brief  Check if the DMA2D Transfer Error interrupt source is enabled or disabled.
  * @rmtoll CR          TEIE        LL_DMA2D_IsEnabledIT_TE
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
@@ -2338,8 +2162,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TE(const DMA2D_TypeDef *DMA2Dx)
  */
 
 #if defined(USE_FULL_LL_DRIVER)
-/** @defgroup DMA2D_LL_EF_Init_Functions Initialization and De-initialization
- * Functions
+/** @defgroup DMA2D_LL_EF_Init_Functions Initialization and De-initialization Functions
  * @{
  */
 

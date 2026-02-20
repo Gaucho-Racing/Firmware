@@ -46,8 +46,7 @@ extern "C" {
  */
 typedef struct {
 	uint32_t PVDLevel; /*!< PVDLevel: Specifies the PVD detection level.
-				This parameter can be a value of @ref
-			      PWR_PVD_detection_level. */
+				This parameter can be a value of @ref PWR_PVD_detection_level. */
 
 	uint32_t Mode; /*!< Mode: Specifies the operating mode for the selected pins.
 			    This parameter can be a value of @ref PWR_PVD_Mode. */
@@ -73,9 +72,7 @@ typedef struct {
 #define PWR_PVDLEVEL_4 PWR_CR2_PLS_LEV4 /*!< PVD threshold around 2.6 V */
 #define PWR_PVDLEVEL_5 PWR_CR2_PLS_LEV5 /*!< PVD threshold around 2.8 V */
 #define PWR_PVDLEVEL_6 PWR_CR2_PLS_LEV6 /*!< PVD threshold around 2.9 V */
-#define PWR_PVDLEVEL_7                                                                                                                                                                                 \
-	PWR_CR2_PLS_LEV7 /*!< External input analog voltage (compared                                                                                                                                  \
-			    internally to VREFINT) */
+#define PWR_PVDLEVEL_7 PWR_CR2_PLS_LEV7 /*!< External input analog voltage (compared internally to VREFINT) */
 /**
  * @}
  */
@@ -83,25 +80,13 @@ typedef struct {
 /** @defgroup PWR_PVD_Mode  PWR PVD interrupt and event mode
  * @{
  */
-#define PWR_PVD_MODE_NORMAL ((uint32_t)0x00000000) /*!< Basic mode is used */
-#define PWR_PVD_MODE_IT_RISING                                                                                                                                                                         \
-	((uint32_t)0x00010001) /*!< External Interrupt Mode with Rising edge                                                                                                                           \
-				  trigger detection */
-#define PWR_PVD_MODE_IT_FALLING                                                                                                                                                                        \
-	((uint32_t)0x00010002) /*!< External Interrupt Mode with Falling edge                                                                                                                          \
-				  trigger detection */
-#define PWR_PVD_MODE_IT_RISING_FALLING                                                                                                                                                                 \
-	((uint32_t)0x00010003) /*!< External Interrupt Mode with                                                                                                                                       \
-				  Rising/Falling edge trigger detection */
-#define PWR_PVD_MODE_EVENT_RISING                                                                                                                                                                      \
-	((uint32_t)0x00020001) /*!< Event Mode with Rising edge trigger                                                                                                                                \
-				  detection */
-#define PWR_PVD_MODE_EVENT_FALLING                                                                                                                                                                     \
-	((uint32_t)0x00020002) /*!< Event Mode with Falling edge trigger                                                                                                                               \
-				  detection */
-#define PWR_PVD_MODE_EVENT_RISING_FALLING                                                                                                                                                              \
-	((uint32_t)0x00020003) /*!< Event Mode with Rising/Falling edge                                                                                                                                \
-				  trigger detection */
+#define PWR_PVD_MODE_NORMAL ((uint32_t)0x00000000)		 /*!< Basic mode is used */
+#define PWR_PVD_MODE_IT_RISING ((uint32_t)0x00010001)		 /*!< External Interrupt Mode with Rising edge trigger detection */
+#define PWR_PVD_MODE_IT_FALLING ((uint32_t)0x00010002)		 /*!< External Interrupt Mode with Falling edge trigger detection */
+#define PWR_PVD_MODE_IT_RISING_FALLING ((uint32_t)0x00010003)	 /*!< External Interrupt Mode with Rising/Falling edge trigger detection */
+#define PWR_PVD_MODE_EVENT_RISING ((uint32_t)0x00020001)	 /*!< Event Mode with Rising edge trigger detection */
+#define PWR_PVD_MODE_EVENT_FALLING ((uint32_t)0x00020002)	 /*!< Event Mode with Falling edge trigger detection */
+#define PWR_PVD_MODE_EVENT_RISING_FALLING ((uint32_t)0x00020003) /*!< Event Mode with Rising/Falling edge trigger detection */
 /**
  * @}
  */
@@ -110,9 +95,7 @@ typedef struct {
  * @{
  */
 #define PWR_MAINREGULATOR_ON ((uint32_t)0x00000000) /*!< Regulator in main mode      */
-#define PWR_LOWPOWERREGULATOR_ON                                                                                                                                                                       \
-	PWR_CR1_LPR /*!< Regulator in low-power mode                                                                                                                                                   \
-		     */
+#define PWR_LOWPOWERREGULATOR_ON PWR_CR1_LPR	    /*!< Regulator in low-power mode */
 /**
  * @}
  */
@@ -120,10 +103,8 @@ typedef struct {
 /** @defgroup PWR_SLEEP_mode_entry  PWR SLEEP mode entry
  * @{
  */
-#define PWR_SLEEPENTRY_WFI                                                                                                                                                                             \
-	((uint8_t)0x01)			   /*!< Wait For Interruption instruction to enter Sleep                                                                                                       \
-					      mode */
-#define PWR_SLEEPENTRY_WFE ((uint8_t)0x02) /*!< Wait For Event instruction to enter Sleep mode */
+#define PWR_SLEEPENTRY_WFI ((uint8_t)0x01) /*!< Wait For Interruption instruction to enter Sleep mode */
+#define PWR_SLEEPENTRY_WFE ((uint8_t)0x02) /*!< Wait For Event instruction to enter Sleep mode        */
 /**
  * @}
  */
@@ -131,10 +112,8 @@ typedef struct {
 /** @defgroup PWR_STOP_mode_entry  PWR STOP mode entry
  * @{
  */
-#define PWR_STOPENTRY_WFI                                                                                                                                                                              \
-	((uint8_t)0x01)			  /*!< Wait For Interruption instruction to enter Stop                                                                                                         \
-					     mode */
-#define PWR_STOPENTRY_WFE ((uint8_t)0x02) /*!< Wait For Event instruction to enter Stop mode */
+#define PWR_STOPENTRY_WFI ((uint8_t)0x01) /*!< Wait For Interruption instruction to enter Stop mode */
+#define PWR_STOPENTRY_WFE ((uint8_t)0x02) /*!< Wait For Event instruction to enter Stop mode        */
 /**
  * @}
  */
@@ -142,9 +121,7 @@ typedef struct {
 /** @defgroup PWR_PVD_EXTI_LINE  PWR PVD external interrupt line
  * @{
  */
-#define PWR_EXTI_LINE_PVD                                                                                                                                                                              \
-	((uint32_t)0x00010000) /*!< External interrupt line 16 Connected to                                                                                                                            \
-				  the PVD EXTI Line */
+#define PWR_EXTI_LINE_PVD ((uint32_t)0x00010000) /*!< External interrupt line 16 Connected to the PVD EXTI Line */
 /**
  * @}
  */
@@ -152,9 +129,7 @@ typedef struct {
 /** @defgroup PWR_PVD_EVENT_LINE  PWR PVD event line
  * @{
  */
-#define PWR_EVENT_LINE_PVD                                                                                                                                                                             \
-	((uint32_t)0x00010000) /*!< Event line 16 Connected to the PVD Event                                                                                                                           \
-				  Line */
+#define PWR_EVENT_LINE_PVD ((uint32_t)0x00010000) /*!< Event line 16 Connected to the PVD Event Line */
 /**
  * @}
  */
@@ -171,59 +146,40 @@ typedef struct {
 /** @brief  Check whether or not a specific PWR flag is set.
   * @param  __FLAG__ specifies the flag to check.
   *           This parameter can be one of the following values:
-  *            @arg @ref PWR_FLAG_WUF1 Wake Up Flag 1. Indicates that a wakeup
-  event
+  *            @arg @ref PWR_FLAG_WUF1 Wake Up Flag 1. Indicates that a wakeup event
   *                  was received from the WKUP pin 1.
-  *            @arg @ref PWR_FLAG_WUF2 Wake Up Flag 2. Indicates that a wakeup
-  event
+  *            @arg @ref PWR_FLAG_WUF2 Wake Up Flag 2. Indicates that a wakeup event
   *                  was received from the WKUP pin 2.
-  *            @arg @ref PWR_FLAG_WUF3 Wake Up Flag 3. Indicates that a wakeup
-  event
+  *            @arg @ref PWR_FLAG_WUF3 Wake Up Flag 3. Indicates that a wakeup event
   *                  was received from the WKUP pin 3.
-  *            @arg @ref PWR_FLAG_WUF4 Wake Up Flag 4. Indicates that a wakeup
-  event
+  *            @arg @ref PWR_FLAG_WUF4 Wake Up Flag 4. Indicates that a wakeup event
   *                  was received from the WKUP pin 4.
-  *            @arg @ref PWR_FLAG_WUF5 Wake Up Flag 5. Indicates that a wakeup
-  event
+  *            @arg @ref PWR_FLAG_WUF5 Wake Up Flag 5. Indicates that a wakeup event
   *                  was received from the WKUP pin 5.
   *            @arg @ref PWR_FLAG_SB StandBy Flag. Indicates that the system
   *                  entered StandBy mode.
-  *            @arg @ref PWR_FLAG_EXT_SMPS External SMPS Ready Flag. When
-  available on device, indicates
-  *                 that external switch can be closed to connect to the
-  external SMPS, when the Range 2
+  *            @arg @ref PWR_FLAG_EXT_SMPS External SMPS Ready Flag. When available on device, indicates
+  *                 that external switch can be closed to connect to the external SMPS, when the Range 2
   *                 of internal regulator is ready.
-  *            @arg @ref PWR_FLAG_WUFI Wake-Up Flag Internal. Set when a wakeup
-  is detected on
+  *            @arg @ref PWR_FLAG_WUFI Wake-Up Flag Internal. Set when a wakeup is detected on
   *                 the internal wakeup line.
-  *            @arg @ref PWR_FLAG_REGLPS Low Power Regulator Started. Indicates
-  whether or not the
+  *            @arg @ref PWR_FLAG_REGLPS Low Power Regulator Started. Indicates whether or not the
   *                 low-power regulator is ready.
-  *            @arg @ref PWR_FLAG_REGLPF Low Power Regulator Flag. Indicates
-  whether the
+  *            @arg @ref PWR_FLAG_REGLPF Low Power Regulator Flag. Indicates whether the
   *                 regulator is ready in main mode or is in low-power mode.
-  *            @arg @ref PWR_FLAG_VOSF Voltage Scaling Flag. Indicates whether
-  the regulator is ready
-  *                 in the selected voltage range or is still changing to the
-  required voltage level.
-  *            @arg @ref PWR_FLAG_PVDO Power Voltage Detector Output. Indicates
-  whether VDD voltage is
+  *            @arg @ref PWR_FLAG_VOSF Voltage Scaling Flag. Indicates whether the regulator is ready
+  *                 in the selected voltage range or is still changing to the required voltage level.
+  *            @arg @ref PWR_FLAG_PVDO Power Voltage Detector Output. Indicates whether VDD voltage is
   *                  below or above the selected PVD threshold.
-  *            @arg @ref PWR_FLAG_PVMO1 Peripheral Voltage Monitoring Output 1.
-  Indicates whether VDDUSB voltage is
-  *                  is below or above PVM1 threshold (applicable when USB
-  feature is supported).
+  *            @arg @ref PWR_FLAG_PVMO1 Peripheral Voltage Monitoring Output 1. Indicates whether VDDUSB voltage is
+  *                  is below or above PVM1 threshold (applicable when USB feature is supported).
   @if STM32L486xx
-  *            @arg @ref PWR_FLAG_PVMO2 Peripheral Voltage Monitoring Output 2.
-  Indicates whether VDDIO2 voltage is
-  *                  is below or above PVM2 threshold (applicable when VDDIO2 is
-  present on device).
+  *            @arg @ref PWR_FLAG_PVMO2 Peripheral Voltage Monitoring Output 2. Indicates whether VDDIO2 voltage is
+  *                  is below or above PVM2 threshold (applicable when VDDIO2 is present on device).
   @endif
-  *            @arg @ref PWR_FLAG_PVMO3 Peripheral Voltage Monitoring Output 3.
-  Indicates whether VDDA voltage is
+  *            @arg @ref PWR_FLAG_PVMO3 Peripheral Voltage Monitoring Output 3. Indicates whether VDDA voltage is
   *                  is below or above PVM3 threshold.
-  *            @arg @ref PWR_FLAG_PVMO4 Peripheral Voltage Monitoring Output 4.
-  Indicates whether VDDA voltage is
+  *            @arg @ref PWR_FLAG_PVMO4 Peripheral Voltage Monitoring Output 4. Indicates whether VDDA voltage is
   *                  is below or above PVM4 threshold.
   *
   * @retval The new state of __FLAG__ (TRUE or FALSE).
@@ -233,16 +189,16 @@ typedef struct {
 /** @brief  Clear a specific PWR flag.
  * @param  __FLAG__ specifies the flag to clear.
  *          This parameter can be one of the following values:
- *            @arg @ref PWR_FLAG_WUF1 Wake Up Flag 1. Indicates that a wakeup
- * event was received from the WKUP pin 1.
- *            @arg @ref PWR_FLAG_WUF2 Wake Up Flag 2. Indicates that a wakeup
- * event was received from the WKUP pin 2.
- *            @arg @ref PWR_FLAG_WUF3 Wake Up Flag 3. Indicates that a wakeup
- * event was received from the WKUP pin 3.
- *            @arg @ref PWR_FLAG_WUF4 Wake Up Flag 4. Indicates that a wakeup
- * event was received from the WKUP pin 4.
- *            @arg @ref PWR_FLAG_WUF5 Wake Up Flag 5. Indicates that a wakeup
- * event was received from the WKUP pin 5.
+ *            @arg @ref PWR_FLAG_WUF1 Wake Up Flag 1. Indicates that a wakeup event
+ *                  was received from the WKUP pin 1.
+ *            @arg @ref PWR_FLAG_WUF2 Wake Up Flag 2. Indicates that a wakeup event
+ *                  was received from the WKUP pin 2.
+ *            @arg @ref PWR_FLAG_WUF3 Wake Up Flag 3. Indicates that a wakeup event
+ *                  was received from the WKUP pin 3.
+ *            @arg @ref PWR_FLAG_WUF4 Wake Up Flag 4. Indicates that a wakeup event
+ *                  was received from the WKUP pin 4.
+ *            @arg @ref PWR_FLAG_WUF5 Wake Up Flag 5. Indicates that a wakeup event
+ *                  was received from the WKUP pin 5.
  *            @arg @ref PWR_FLAG_WU Encompasses all five Wake Up Flags.
  *            @arg @ref PWR_FLAG_SB Standby Flag. Indicates that the system
  *                  entered Standby mode.
@@ -371,13 +327,11 @@ typedef struct {
  * @{
  */
 
-/** @addtogroup PWR_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup PWR_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 
-/* Initialization and de-initialization functions
- * *******************************/
+/* Initialization and de-initialization functions *******************************/
 void HAL_PWR_DeInit(void);
 void HAL_PWR_EnableBkUpAccess(void);
 void HAL_PWR_DisableBkUpAccess(void);
@@ -390,8 +344,7 @@ void HAL_PWR_DisableBkUpAccess(void);
  * @{
  */
 
-/* Peripheral Control functions
- * ************************************************/
+/* Peripheral Control functions  ************************************************/
 HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD);
 void HAL_PWR_EnablePVD(void);
 void HAL_PWR_DisablePVD(void);

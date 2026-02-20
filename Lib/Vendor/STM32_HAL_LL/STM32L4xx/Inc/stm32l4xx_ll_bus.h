@@ -8,16 +8,16 @@
 		      ##### RCC Limitations #####
   ==============================================================================
     [..]
-      A delay between an RCC peripheral clock enable and the effective
-  peripheral enabling should be taken into account in order to manage the
-  peripheral read/write from/to registers.
+      A delay between an RCC peripheral clock enable and the effective peripheral
+      enabling should be taken into account in order to manage the peripheral read/write
+      from/to registers.
       (+) This delay depends on the peripheral mapping.
 	(++) AHB & APB peripherals, 1 dummy read is necessary
 
     [..]
       Workarounds:
-      (#) For AHB & APB peripherals, a dummy read to the peripheral register has
-  been inserted in each LL_{BUS}_GRP{x}_EnableClock() function.
+      (#) For AHB & APB peripherals, a dummy read to the peripheral register has been
+	  inserted in each LL_{BUS}_GRP{x}_EnableClock() function.
 
   @endverbatim
   ******************************************************************************
@@ -26,8 +26,7 @@
   * Copyright (c) 2017 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  in
+  * This software is licensed under terms that can be found in the LICENSE file in
   * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************

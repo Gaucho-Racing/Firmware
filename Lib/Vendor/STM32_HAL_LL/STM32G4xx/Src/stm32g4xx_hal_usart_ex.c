@@ -3,10 +3,8 @@
   * @file    stm32g4xx_hal_usart_ex.c
   * @author  MCD Application Team
   * @brief   Extended USART HAL module driver.
-  *          This file provides firmware functions to manage the following
-  extended
-  *          functionalities of the Universal Synchronous Receiver Transmitter
-  Peripheral (USART).
+  *          This file provides firmware functions to manage the following extended
+  *          functionalities of the Universal Synchronous Receiver Transmitter Peripheral (USART).
   *           + Peripheral Control functions
   *
   *
@@ -113,9 +111,8 @@ __weak void HAL_USARTEx_RxFifoFullCallback(USART_HandleTypeDef *husart)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(husart);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_USARTEx_RxFifoFullCallback can be implemented in the
-	   user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_USARTEx_RxFifoFullCallback can be implemented in the user file.
 	 */
 }
 
@@ -129,9 +126,8 @@ __weak void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(husart);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_USARTEx_TxFifoEmptyCallback can be implemented in the
-	   user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_USARTEx_TxFifoEmptyCallback can be implemented in the user file.
 	 */
 }
 
@@ -166,12 +162,12 @@ __weak void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart)
  *       the serial interface clock derived from the external SCLK signal
  *       provided by the external master SPI device.
  * @note In SPI slave mode, the USART must be enabled before starting the master
- *       communications (or between frames while the clock is stable).
- * Otherwise, if the USART slave is enabled while the master is in the middle of
- * a frame, it will become desynchronized with the master.
+ *       communications (or between frames while the clock is stable). Otherwise,
+ *       if the USART slave is enabled while the master is in the middle of a
+ *       frame, it will become desynchronized with the master.
  * @note The data register of the slave needs to be ready before the first edge
- *       of the communication clock or before the end of the ongoing
- * communication, otherwise the SPI slave will transmit zeros.
+ *       of the communication clock or before the end of the ongoing communication,
+ *       otherwise the SPI slave will transmit zeros.
  * @param husart      USART handle.
  * @retval HAL status
  */
@@ -506,8 +502,7 @@ static void USARTEx_SetNbDataToProcess(USART_HandleTypeDef *husart)
 	uint8_t tx_fifo_depth;
 	uint8_t rx_fifo_threshold;
 	uint8_t tx_fifo_threshold;
-	/* 2 0U/1U added for MISRAC2012-Rule-18.1_b and MISRAC2012-Rule-18.1_d
-	 */
+	/* 2 0U/1U added for MISRAC2012-Rule-18.1_b and MISRAC2012-Rule-18.1_d */
 	static const uint8_t numerator[] = {1U, 1U, 1U, 3U, 7U, 1U, 0U, 0U};
 	static const uint8_t denominator[] = {8U, 4U, 2U, 4U, 8U, 1U, 1U, 1U};
 

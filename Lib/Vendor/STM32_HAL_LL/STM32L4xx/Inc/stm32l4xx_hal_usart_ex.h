@@ -55,10 +55,8 @@ extern "C" {
 /** @defgroup USARTEx_Slave_Select_management USARTEx Slave Select Management
  * @{
  */
-#define USART_NSS_HARD 0x00000000U /*!< SPI slave selection depends on NSS input pin */
-#define USART_NSS_SOFT                                                                                                                                                                                 \
-	USART_CR2_DIS_NSS /*!< SPI slave is always selected and NSS input pin                                                                                                                          \
-			     is ignored */
+#define USART_NSS_HARD 0x00000000U	 /*!< SPI slave selection depends on NSS input pin              */
+#define USART_NSS_SOFT USART_CR2_DIS_NSS /*!< SPI slave is always selected and NSS input pin is ignored */
 /**
  * @}
  */
@@ -67,9 +65,7 @@ extern "C" {
  * @brief    USART SLAVE mode
  * @{
  */
-#define USART_SLAVEMODE_DISABLE                                                                                                                                                                        \
-	0x00000000U			       /*!< USART SPI Slave Mode Enable                                                                                                                        \
-						*/
+#define USART_SLAVEMODE_DISABLE 0x00000000U    /*!< USART SPI Slave Mode Enable  */
 #define USART_SLAVEMODE_ENABLE USART_CR2_SLVEN /*!< USART SPI Slave Mode Disable */
 /**
  * @}
@@ -111,9 +107,9 @@ extern "C" {
 #define USART_RXFIFO_THRESHOLD_3_4 (USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1) /*!< RXFIFO FIFO reaches 3/4 of its depth */
 #define USART_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2			       /*!< RXFIFO FIFO reaches 7/8 of its depth */
 #define USART_RXFIFO_THRESHOLD_8_8 (USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RXFIFO FIFO becomes full             */
-									       /**
-										* @}
-										*/
+/**
+ * @}
+ */
 
 #endif /* USART_CR1_FIFOEN */
 /**
@@ -243,8 +239,7 @@ extern "C" {
  *         This masking operation is not carried out in the case of
  *         DMA transfers.
  * @param  __HANDLE__ specifies the USART Handle.
- * @retval None, the mask to apply to USART RDR register is stored in
- * (__HANDLE__)->Mask field.
+ * @retval None, the mask to apply to USART RDR register is stored in (__HANDLE__)->Mask field.
  */
 #define USART_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                             \
 	do {                                                                                                                                                                                           \

@@ -186,8 +186,8 @@ ErrorStatus LL_RTC_DeInit(RTC_TypeDef *RTCx)
  * @brief  Initializes the RTC registers according to the specified parameters
  *         in RTC_InitStruct.
  * @param  RTCx RTC Instance
- * @param  RTC_InitStruct pointer to a @ref LL_RTC_InitTypeDef structure that
- * contains the configuration information for the RTC peripheral.
+ * @param  RTC_InitStruct pointer to a @ref LL_RTC_InitTypeDef structure that contains
+ *         the configuration information for the RTC peripheral.
  * @note   The RTC Prescaler register is write protected and can be written in
  *         initialization mode only.
  * @retval An ErrorStatus enumeration value:
@@ -230,8 +230,7 @@ ErrorStatus LL_RTC_Init(RTC_TypeDef *RTCx, LL_RTC_InitTypeDef *RTC_InitStruct)
 
 /**
  * @brief  Set each @ref LL_RTC_InitTypeDef field to default value.
- * @param  RTC_InitStruct pointer to a @ref LL_RTC_InitTypeDef structure which
- * will be initialized.
+ * @param  RTC_InitStruct pointer to a @ref LL_RTC_InitTypeDef structure which will be initialized.
  * @retval None
  */
 void LL_RTC_StructInit(LL_RTC_InitTypeDef *RTC_InitStruct)
@@ -300,8 +299,7 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 		/* Exit Initialization mode */
 		LL_RTC_DisableInitMode(RTCx);
 
-		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check
-		 * is not needed */
+		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check is not needed */
 		if (LL_RTC_IsShadowRegBypassEnabled(RTCx) == 0U) {
 			status = LL_RTC_WaitForSynchro(RTCx);
 		} else {
@@ -315,10 +313,8 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 }
 
 /**
- * @brief  Set each @ref LL_RTC_TimeTypeDef field to default value (Time =
- * 00h:00min:00sec).
- * @param  RTC_TimeStruct pointer to a @ref LL_RTC_TimeTypeDef structure which
- * will be initialized.
+ * @brief  Set each @ref LL_RTC_TimeTypeDef field to default value (Time = 00h:00min:00sec).
+ * @param  RTC_TimeStruct pointer to a @ref LL_RTC_TimeTypeDef structure which will be initialized.
  * @retval None
  */
 void LL_RTC_TIME_StructInit(LL_RTC_TimeTypeDef *RTC_TimeStruct)
@@ -380,8 +376,7 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 		/* Exit Initialization mode */
 		LL_RTC_DisableInitMode(RTCx);
 
-		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check
-		 * is not needed */
+		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check is not needed */
 		if (LL_RTC_IsShadowRegBypassEnabled(RTCx) == 0U) {
 			status = LL_RTC_WaitForSynchro(RTCx);
 		} else {
@@ -395,10 +390,8 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 }
 
 /**
- * @brief  Set each @ref LL_RTC_DateTypeDef field to default value (date =
- * Monday, January 01 xx00)
- * @param  RTC_DateStruct pointer to a @ref LL_RTC_DateTypeDef structure which
- * will be initialized.
+ * @brief  Set each @ref LL_RTC_DateTypeDef field to default value (date = Monday, January 01 xx00)
+ * @param  RTC_DateStruct pointer to a @ref LL_RTC_DateTypeDef structure which will be initialized.
  * @retval None
  */
 void LL_RTC_DATE_StructInit(LL_RTC_DateTypeDef *RTC_DateStruct)
@@ -597,11 +590,9 @@ ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 }
 
 /**
- * @brief  Set each @ref LL_RTC_AlarmTypeDef of ALARMA field to default value
- * (Time = 00h:00mn:00sec / Day = 1st day of the month/Mask = all fields are
- * masked).
- * @param  RTC_AlarmStruct pointer to a @ref LL_RTC_AlarmTypeDef structure which
- * will be initialized.
+ * @brief  Set each @ref LL_RTC_AlarmTypeDef of ALARMA field to default value (Time = 00h:00mn:00sec /
+ *         Day = 1st day of the month/Mask = all fields are masked).
+ * @param  RTC_AlarmStruct pointer to a @ref LL_RTC_AlarmTypeDef structure which will be initialized.
  * @retval None
  */
 void LL_RTC_ALMA_StructInit(LL_RTC_AlarmTypeDef *RTC_AlarmStruct)
@@ -621,11 +612,9 @@ void LL_RTC_ALMA_StructInit(LL_RTC_AlarmTypeDef *RTC_AlarmStruct)
 }
 
 /**
- * @brief  Set each @ref LL_RTC_AlarmTypeDef of ALARMB field to default value
- * (Time = 00h:00mn:00sec / Day = 1st day of the month/Mask = all fields are
- * masked).
- * @param  RTC_AlarmStruct pointer to a @ref LL_RTC_AlarmTypeDef structure which
- * will be initialized.
+ * @brief  Set each @ref LL_RTC_AlarmTypeDef of ALARMB field to default value (Time = 00h:00mn:00sec /
+ *         Day = 1st day of the month/Mask = all fields are masked).
+ * @param  RTC_AlarmStruct pointer to a @ref LL_RTC_AlarmTypeDef structure which will be initialized.
  * @retval None
  */
 void LL_RTC_ALMB_StructInit(LL_RTC_AlarmTypeDef *RTC_AlarmStruct)
@@ -667,8 +656,7 @@ ErrorStatus LL_RTC_EnterInitMode(RTC_TypeDef *RTCx)
 		/* Set the Initialization mode */
 		LL_RTC_EnableInitMode(RTCx);
 
-		/* Wait till RTC is in INIT state and if Time out is reached
-		 * exit */
+		/* Wait till RTC is in INIT state and if Time out is reached exit */
 		tmp = LL_RTC_IsActiveFlag_INIT(RTCx);
 		while ((timeout != 0U) && (tmp != 1U)) {
 			if (LL_SYSTICK_IsActiveCounterFlag() == 1U) {
