@@ -32,9 +32,6 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32l4xx_hal_msp.c
 		Core/Src/stm32l4xx_it.c
-		Core/Src/syscalls.c
-		Core/Src/sysmem.c
-		Core/Src/system_stm32l4xx.c
 		Core/Src/usart.c
 )
 

@@ -80,8 +80,7 @@ ErrorStatus LL_FMAC_Init(FMAC_TypeDef *FMACx)
 }
 
 /**
- * @brief  De-Initialize FMAC peripheral registers to their default reset
- * values.
+ * @brief  De-Initialize FMAC peripheral registers to their default reset values.
  * @param  FMACx FMAC Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: FMAC registers are de-initialized

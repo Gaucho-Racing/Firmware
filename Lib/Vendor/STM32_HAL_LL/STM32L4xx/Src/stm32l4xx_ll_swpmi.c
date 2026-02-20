@@ -25,7 +25,7 @@
 #include "stm32_assert.h"
 #else
 #define assert_param(expr) ((void)0U)
-#endif
+#endif /* USE_FULL_ASSERT */
 
 /** @addtogroup STM32L4xx_LL_Driver
  * @{
@@ -69,8 +69,7 @@
  */
 
 /**
- * @brief  De-initialize the SWPMI peripheral registers to their default reset
- * values.
+ * @brief  De-initialize the SWPMI peripheral registers to their default reset values.
  * @param  SWPMIx SWPMI Instance
  * @retval An ErrorStatus enumeration value
  *          - SUCCESS: SWPMI registers are de-initialized
@@ -94,15 +93,13 @@ ErrorStatus LL_SWPMI_DeInit(const SWPMI_TypeDef *SWPMIx)
 }
 
 /**
- * @brief  Initialize the SWPMI peripheral according to the specified parameters
- * in the SWPMI_InitStruct.
- * @note   As some bits in SWPMI configuration registers can only be written
- * when the SWPMI is deactivated (SWPMI_CR_SWPACT bit = 0), the SWPMI peripheral
- * should be in deactivated state prior calling this function. Otherwise, ERROR
- * result will be returned.
+ * @brief  Initialize the SWPMI peripheral according to the specified parameters in the SWPMI_InitStruct.
+ * @note   As some bits in SWPMI configuration registers can only be written when the SWPMI is deactivated
+ *         (SWPMI_CR_SWPACT bit = 0), the SWPMI peripheral should be in deactivated state prior calling
+ *         this function. Otherwise, ERROR result will be returned.
  * @param  SWPMIx           SWPMI Instance
- * @param  SWPMI_InitStruct pointer to a @ref LL_SWPMI_InitTypeDef structure
- * that contains the configuration information for the SWPMI peripheral.
+ * @param  SWPMI_InitStruct pointer to a @ref LL_SWPMI_InitTypeDef structure that contains
+ *                          the configuration information for the SWPMI peripheral.
  * @retval An ErrorStatus enumeration value
  *          - SUCCESS: SWPMI registers are initialized
  *          - ERROR: SWPMI registers are not initialized
@@ -118,8 +115,7 @@ ErrorStatus LL_SWPMI_Init(SWPMI_TypeDef *SWPMIx, const LL_SWPMI_InitTypeDef *SWP
 	assert_param(IS_LL_SWPMI_SW_BUFFER_RX(SWPMI_InitStruct->RxBufferingMode));
 	assert_param(IS_LL_SWPMI_VOLTAGE_CLASS(SWPMI_InitStruct->VoltageClass));
 
-	/* SWPMI needs to be in deactivated state, in order to be able to
-	 * configure some bits */
+	/* SWPMI needs to be in deactivated state, in order to be able to configure some bits */
 	if (LL_SWPMI_IsActivated(SWPMIx) == 0U) {
 		/* Configure the BRR register (Bitrate) */
 		LL_SWPMI_SetBitRatePrescaler(SWPMIx, SWPMI_InitStruct->BitRatePrescaler);
@@ -140,8 +136,8 @@ ErrorStatus LL_SWPMI_Init(SWPMI_TypeDef *SWPMIx, const LL_SWPMI_InitTypeDef *SWP
 
 /**
  * @brief  Set each @ref LL_SWPMI_InitTypeDef field to default value.
- * @param  SWPMI_InitStruct pointer to a @ref LL_SWPMI_InitTypeDef structure
- * that contains the configuration information for the SWPMI peripheral.
+ * @param  SWPMI_InitStruct pointer to a @ref LL_SWPMI_InitTypeDef structure that contains
+ *                          the configuration information for the SWPMI peripheral.
  * @retval None
  */
 void LL_SWPMI_StructInit(LL_SWPMI_InitTypeDef *SWPMI_InitStruct)

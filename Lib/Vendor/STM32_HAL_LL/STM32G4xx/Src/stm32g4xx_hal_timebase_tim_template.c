@@ -4,13 +4,10 @@
   * @author  MCD Application Team
   * @brief   HAL time base based on the hardware TIM Template.
   *
-  *          This file override the native HAL time base functions (defined as
-  weak)
+  *          This file override the native HAL time base functions (defined as weak)
   *          the TIM time base:
-  *           + Initializes the TIM peripheral to generate a Period elapsed
-  Event each 1ms
-  *           + HAL_IncTick is called inside HAL_TIM_PeriodElapsedCallback ie
-  each 1ms
+  *           + Initializes the TIM peripheral to generate a Period elapsed Event each 1ms
+  *           + HAL_IncTick is called inside HAL_TIM_PeriodElapsedCallback ie each 1ms
   ******************************************************************************
   * @attention
   *
@@ -33,8 +30,8 @@
        HAL_TIM_MODULE_ENABLED is defined in stm32g4xx_hal_conf.h
 
     [..]
-    (@) The application needs to ensure that the time base is always set to 1
-  millisecond to have correct HAL operation.
+    (@) The application needs to ensure that the time base is always set to 1 millisecond
+       to have correct HAL operation.
 
   @endverbatim
   ******************************************************************************
@@ -58,15 +55,17 @@
 TIM_HandleTypeDef TimHandle;
 /* Private function prototypes -----------------------------------------------*/
 void TIM6_DAC_IRQHandler(void);
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
+void TimeBase_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 /* Private functions ---------------------------------------------------------*/
 
 /**
  * @brief  This function configures the TIM6 as a time base source.
  *         The time source is configured  to have 1ms time base with a dedicated
  *         Tick interrupt priority.
- * @note   This function is called  automatically at the beginning of program
- * after reset by HAL_Init() or at any time when clock is configured, by
- * HAL_RCC_ClockConfig().
+ * @note   This function is called  automatically at the beginning of program after
+ *         reset by HAL_Init() or at any time when clock is configured, by HAL_RCC_ClockConfig().
  * @param  TickPriority: Tick interrupt priority.
  * @retval HAL status
  */
@@ -101,8 +100,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		uwTimclock = 2U * HAL_RCC_GetPCLK1Freq();
 	}
 
-	/* Compute the prescaler value to have TIM6 counter clock equal to 1MHz
-	 */
+	/* Compute the prescaler value to have TIM6 counter clock equal to 1MHz */
 	uwPrescalerValue = (uint32_t)((uwTimclock / 1000000U) - 1U);
 
 	/* Initialize TIM6 */
@@ -120,6 +118,11 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
 	status = HAL_TIM_Base_Init(&TimHandle);
 	if (status == HAL_OK) {
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
+		/* Register callback */
+		HAL_TIM_RegisterCallback(&TimHandle, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
+
 		/* Start the TIM time Base generation in interrupt mode */
 		status = HAL_TIM_Base_Start_IT(&TimHandle);
 		if (status == HAL_OK) {
@@ -170,8 +173,15 @@ void HAL_ResumeTick(void)
  * @param  htim : TIM handle
  * @retval None
  */
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
+void TimeBase_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+#else
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 {
+	/* Prevent unused argument(s) compilation warning */
+	UNUSED(htim);
+
 	HAL_IncTick();
 }
 

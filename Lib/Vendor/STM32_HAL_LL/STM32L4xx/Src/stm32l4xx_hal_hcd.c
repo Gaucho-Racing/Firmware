@@ -31,12 +31,10 @@
 
     (#)Fill parameters of Init structure in HCD handle
 
-    (#)Call HAL_HCD_Init() API to initialize the HCD peripheral (Core, Host
-  core, ...)
+    (#)Call HAL_HCD_Init() API to initialize the HCD peripheral (Core, Host core, ...)
 
     (#)Initialize the HCD low level resources through the HAL_HCD_MspInit() API:
-	(##) Enable the HCD/USB Low Level interface clock using the following
-  macros
+	(##) Enable the HCD/USB Low Level interface clock using the following macros
 	     (+++) __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
 	(##) Initialize the related GPIO clocks
 	(##) Configure HCD pin-out
@@ -88,8 +86,7 @@ static void HCD_Port_IRQHandler(HCD_HandleTypeDef *hhcd);
  * @{
  */
 
-/** @defgroup HCD_Exported_Functions_Group1 Initialization and de-initialization
-functions
+/** @defgroup HCD_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -286,8 +283,8 @@ __weak void HAL_HCD_MspInit(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_MspInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_MspInit could be implemented in the user file
 	 */
 }
 
@@ -301,8 +298,8 @@ __weak void HAL_HCD_MspDeInit(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_MspDeInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -317,8 +314,8 @@ __weak void HAL_HCD_MspDeInit(HCD_HandleTypeDef *hhcd)
  ===============================================================================
 		      ##### IO operation functions #####
  ===============================================================================
- [..] This subsection provides a set of functions allowing to manage the USB
-Host Data Transfer
+ [..] This subsection provides a set of functions allowing to manage the USB Host Data
+    Transfer
 
 @endverbatim
   * @{
@@ -367,13 +364,11 @@ HAL_StatusTypeDef HAL_HCD_HC_SubmitRequest(HCD_HandleTypeDef *hhcd, uint8_t ch_n
 			{
 				if (direction == 0U) {
 					if (length == 0U) {
-						/* For Status OUT stage, Length
-						 * == 0U, Status Out PID = 1 */
+						/* For Status OUT stage, Length == 0U, Status Out PID = 1 */
 						hhcd->hc[ch_num].toggle_out = 1U;
 					}
 
-					/* Set the Data Toggle bit as per the
-					 * Flag */
+					/* Set the Data Toggle bit as per the Flag */
 					if (hhcd->hc[ch_num].toggle_out == 0U) {
 						/* Put the PID 0 */
 						hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
@@ -555,9 +550,8 @@ __weak void HAL_HCD_SOF_Callback(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_SOF_Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_SOF_Callback could be implemented in the user file
 	 */
 }
 
@@ -571,9 +565,8 @@ __weak void HAL_HCD_Connect_Callback(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_Connect_Callback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_Connect_Callback could be implemented in the user file
 	 */
 }
 
@@ -587,9 +580,8 @@ __weak void HAL_HCD_Disconnect_Callback(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_Disconnect_Callback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_Disconnect_Callback could be implemented in the user file
 	 */
 }
 
@@ -603,9 +595,8 @@ __weak void HAL_HCD_PortEnabled_Callback(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_Disconnect_Callback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_Disconnect_Callback could be implemented in the user file
 	 */
 }
 
@@ -619,9 +610,8 @@ __weak void HAL_HCD_PortDisabled_Callback(HCD_HandleTypeDef *hhcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhcd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_Disconnect_Callback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_Disconnect_Callback could be implemented in the user file
 	 */
 }
 
@@ -647,9 +637,8 @@ __weak void HAL_HCD_HC_NotifyURBChange_Callback(HCD_HandleTypeDef *hhcd, uint8_t
 	UNUSED(chnum);
 	UNUSED(urb_state);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_HCD_HC_NotifyURBChange_Callback could be implemented
-	   in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_HCD_HC_NotifyURBChange_Callback could be implemented in the user file
 	 */
 }
 
@@ -664,8 +653,7 @@ __weak void HAL_HCD_HC_NotifyURBChange_Callback(HCD_HandleTypeDef *hhcd, uint8_t
  *          @arg @ref HAL_HCD_CONNECT_CB_ID USB HCD Connect callback ID
  *          @arg @ref HAL_HCD_DISCONNECT_CB_ID OTG HCD Disconnect callback ID
  *          @arg @ref HAL_HCD_PORT_ENABLED_CB_ID USB HCD Port Enable callback ID
- *          @arg @ref HAL_HCD_PORT_DISABLED_CB_ID USB HCD Port Disable callback
- * ID
+ *          @arg @ref HAL_HCD_PORT_DISABLED_CB_ID USB HCD Port Disable callback ID
  *          @arg @ref HAL_HCD_MSPINIT_CB_ID MspDeInit callback ID
  *          @arg @ref HAL_HCD_MSPDEINIT_CB_ID MspDeInit callback ID
  * @param  pCallback pointer to the Callback function
@@ -758,10 +746,8 @@ HAL_StatusTypeDef HAL_HCD_RegisterCallback(HCD_HandleTypeDef *hhcd, HAL_HCD_Call
  *          @arg @ref HAL_HCD_SOF_CB_ID USB HCD SOF callback ID
  *          @arg @ref HAL_HCD_CONNECT_CB_ID USB HCD Connect callback ID
  *          @arg @ref HAL_HCD_DISCONNECT_CB_ID OTG HCD Disconnect callback ID
- *          @arg @ref HAL_HCD_PORT_ENABLED_CB_ID USB HCD Port Enabled callback
- * ID
- *          @arg @ref HAL_HCD_PORT_DISABLED_CB_ID USB HCD Port Disabled callback
- * ID
+ *          @arg @ref HAL_HCD_PORT_ENABLED_CB_ID USB HCD Port Enabled callback ID
+ *          @arg @ref HAL_HCD_PORT_DISABLED_CB_ID USB HCD Port Disabled callback ID
  *          @arg @ref HAL_HCD_MSPINIT_CB_ID MspDeInit callback ID
  *          @arg @ref HAL_HCD_MSPDEINIT_CB_ID MspDeInit callback ID
  * @retval HAL status
@@ -845,11 +831,9 @@ HAL_StatusTypeDef HAL_HCD_UnRegisterCallback(HCD_HandleTypeDef *hhcd, HAL_HCD_Ca
 
 /**
  * @brief  Register USB HCD Host Channel Notify URB Change Callback
- *         To be used instead of the weak HAL_HCD_HC_NotifyURBChange_Callback()
- * predefined callback
+ *         To be used instead of the weak HAL_HCD_HC_NotifyURBChange_Callback() predefined callback
  * @param  hhcd HCD handle
- * @param  pCallback pointer to the USB HCD Host Channel Notify URB Change
- * Callback function
+ * @param  pCallback pointer to the USB HCD Host Channel Notify URB Change Callback function
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_HCD_RegisterHC_NotifyURBChangeCallback(HCD_HandleTypeDef *hhcd, pHCD_HC_NotifyURBChangeCallbackTypeDef pCallback)
@@ -897,9 +881,7 @@ HAL_StatusTypeDef HAL_HCD_UnRegisterHC_NotifyURBChangeCallback(HCD_HandleTypeDef
 	__HAL_LOCK(hhcd);
 
 	if (hhcd->State == HAL_HCD_STATE_READY) {
-		hhcd->HC_NotifyURBChangeCallback = HAL_HCD_HC_NotifyURBChange_Callback; /* Legacy weak
-											   DataOutStageCallback
-											 */
+		hhcd->HC_NotifyURBChangeCallback = HAL_HCD_HC_NotifyURBChange_Callback; /* Legacy weak DataOutStageCallback  */
 	} else {
 		/* Update the error code */
 		hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
@@ -1110,6 +1092,23 @@ HAL_StatusTypeDef HAL_HCD_HC_ClearHubInfo(HCD_HandleTypeDef *hhcd, uint8_t ch_nu
 
 	return HAL_OK;
 }
+
+/** @brief  Activate a host channel.
+ * @param  hhcd HCD handle
+ * @param  ch_num Channel number.
+ *         This parameter can be a value from 1 to 15
+ * @retval HAL status
+ */
+HAL_StatusTypeDef HAL_HCD_HC_Activate(HCD_HandleTypeDef *hhcd, uint8_t ch_num)
+{
+	HAL_StatusTypeDef status = HAL_OK;
+
+	__HAL_LOCK(hhcd);
+	(void)USB_HC_Activate(hhcd->Instance, (uint8_t)ch_num, hhcd->hc[ch_num].ch_dir);
+	__HAL_UNLOCK(hhcd);
+
+	return status;
+}
 /**
  * @}
  */
@@ -1191,8 +1190,17 @@ static void HCD_HC_IN_IRQHandler(HCD_HandleTypeDef *hhcd, uint8_t chnum)
 		}
 	} else if (__HAL_HCD_GET_CH_FLAG(hhcd, chnum, USB_OTG_HCINT_ACK)) {
 		__HAL_HCD_CLEAR_HC_INT(chnum, USB_OTG_HCINT_ACK);
+
+		hhcd->hc[chnum].NakCnt = 0U;
 	} else if (__HAL_HCD_GET_CH_FLAG(hhcd, chnum, USB_OTG_HCINT_CHH)) {
 		__HAL_HCD_CLEAR_HC_INT(chnum, USB_OTG_HCINT_CHH);
+
+		tmpreg = USBx_HC(chnum)->HCCHAR;
+
+		if ((tmpreg & USB_OTG_HCCHAR_CHDIS) != 0U) {
+			/* Halt received while channel disable still in progress */
+			return;
+		}
 
 		if (hhcd->hc[chnum].state == HC_XFRC) {
 			hhcd->hc[chnum].state = HC_HALTED;
@@ -1203,6 +1211,7 @@ static void HCD_HC_IN_IRQHandler(HCD_HandleTypeDef *hhcd, uint8_t chnum)
 		} else if ((hhcd->hc[chnum].state == HC_XACTERR) || (hhcd->hc[chnum].state == HC_DATATGLERR)) {
 			hhcd->hc[chnum].state = HC_HALTED;
 			hhcd->hc[chnum].ErrCnt++;
+
 			if (hhcd->hc[chnum].ErrCnt > 2U) {
 				hhcd->hc[chnum].ErrCnt = 0U;
 				hhcd->hc[chnum].urb_state = URB_ERROR;
@@ -1226,11 +1235,22 @@ static void HCD_HC_IN_IRQHandler(HCD_HandleTypeDef *hhcd, uint8_t chnum)
 			hhcd->hc[chnum].urb_state = URB_NOTREADY;
 
 			if ((hhcd->hc[chnum].ep_type == EP_TYPE_CTRL) || (hhcd->hc[chnum].ep_type == EP_TYPE_BULK)) {
-				/* re-activate the channel */
-				tmpreg = USBx_HC(chnum)->HCCHAR;
-				tmpreg &= ~USB_OTG_HCCHAR_CHDIS;
-				tmpreg |= USB_OTG_HCCHAR_CHENA;
-				USBx_HC(chnum)->HCCHAR = tmpreg;
+#if defined(USE_HAL_HCD_IN_NAK_AUTO_ACTIVATE_DISABLE) && (USE_HAL_HCD_IN_NAK_AUTO_ACTIVATE_DISABLE == 1)
+				hhcd->hc[chnum].NakCnt++;
+
+				if (hhcd->hc[chnum].NakCnt >= HAL_HCD_CHANNEL_NAK_COUNT) {
+					hhcd->hc[chnum].state = HC_IDLE;
+					hhcd->hc[chnum].urb_state = URB_NAK_WAIT;
+					hhcd->hc[chnum].NakCnt = 0U;
+				} else
+#endif /* defined (USE_HAL_HCD_IN_NAK_AUTO_ACTIVATE_DISABLE) && (USE_HAL_HCD_IN_NAK_AUTO_ACTIVATE_DISABLE == 1) */
+				{
+					/* re-activate the channel */
+					tmpreg = USBx_HC(chnum)->HCCHAR;
+					tmpreg &= ~USB_OTG_HCCHAR_CHDIS;
+					tmpreg |= USB_OTG_HCCHAR_CHENA;
+					USBx_HC(chnum)->HCCHAR = tmpreg;
+				}
 			}
 		} else if (hhcd->hc[chnum].state == HC_BBLERR) {
 			hhcd->hc[chnum].state = HC_HALTED;
@@ -1326,7 +1346,7 @@ static void HCD_HC_OUT_IRQHandler(HCD_HandleTypeDef *hhcd, uint8_t chnum)
 			hhcd->hc[chnum].state = HC_HALTED;
 			hhcd->hc[chnum].urb_state = URB_DONE;
 
-			if ((hhcd->hc[chnum].ep_type == EP_TYPE_BULK) || (hhcd->hc[chnum].ep_type == EP_TYPE_INTR)) {
+			if (hhcd->hc[chnum].ep_type != EP_TYPE_ISOC) {
 				if (hhcd->Init.dma_enable == 0U) {
 					hhcd->hc[chnum].toggle_out ^= 1U;
 				}
@@ -1412,8 +1432,7 @@ static void HCD_RXQLVL_IRQHandler(HCD_HandleTypeDef *hhcd)
 					xferSizePktCnt = (USBx_HC(chnum)->HCTSIZ & USB_OTG_HCTSIZ_PKTCNT) >> 19;
 
 					if ((hhcd->hc[chnum].max_packet == pktcnt) && (xferSizePktCnt > 0U)) {
-						/* re-activate the channel when
-						 * more packets are expected */
+						/* re-activate the channel when more packets are expected */
 						tmpreg = USBx_HC(chnum)->HCCHAR;
 						tmpreg &= ~USB_OTG_HCCHAR_CHDIS;
 						tmpreg |= USB_OTG_HCCHAR_CHENA;
@@ -1487,6 +1506,7 @@ static void HCD_Port_IRQHandler(HCD_HandleTypeDef *hhcd)
 #else
 			HAL_HCD_PortEnabled_Callback(hhcd);
 #endif /* USE_HAL_HCD_REGISTER_CALLBACKS */
+
 		} else {
 #if (USE_HAL_HCD_REGISTER_CALLBACKS == 1U)
 			hhcd->PortDisabledCallback(hhcd);

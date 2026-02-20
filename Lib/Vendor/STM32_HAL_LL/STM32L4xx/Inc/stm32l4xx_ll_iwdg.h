@@ -65,12 +65,8 @@ extern "C" {
  * @{
  */
 #define LL_IWDG_SR_PVU IWDG_SR_PVU /*!< Watchdog prescaler value update */
-#define LL_IWDG_SR_RVU                                                                                                                                                                                 \
-	IWDG_SR_RVU /*!< Watchdog counter reload value update                                                                                                                                          \
-		     */
-#define LL_IWDG_SR_WVU                                                                                                                                                                                 \
-	IWDG_SR_WVU /*!< Watchdog counter window value update                                                                                                                                          \
-		     */
+#define LL_IWDG_SR_RVU IWDG_SR_RVU /*!< Watchdog counter reload value update */
+#define LL_IWDG_SR_WVU IWDG_SR_WVU /*!< Watchdog counter window value update */
 /**
  * @}
  */
@@ -240,8 +236,7 @@ __STATIC_INLINE uint32_t LL_IWDG_GetReloadCounter(const IWDG_TypeDef *IWDGx)
 }
 
 /**
- * @brief  Specify high limit of the window value to be compared to the
- * down-counter.
+ * @brief  Specify high limit of the window value to be compared to the down-counter.
  * @rmtoll WINR         WIN           LL_IWDG_SetWindow
  * @param  IWDGx IWDG Instance
  * @param  Window Value between Min_Data=0 and Max_Data=0x0FFF
@@ -305,8 +300,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_WVU(const IWDG_TypeDef *IWDGx)
 }
 
 /**
- * @brief  Check if all flags Prescaler, Reload & Window Value Update are reset
- * or not
+ * @brief  Check if all flags Prescaler, Reload & Window Value Update are reset or not
  * @rmtoll SR           PVU           LL_IWDG_IsReady\n
  *         SR           RVU           LL_IWDG_IsReady\n
  *         SR           WVU           LL_IWDG_IsReady

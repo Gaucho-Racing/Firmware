@@ -38,8 +38,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup IRDAEx_Extended_Exported_Constants IRDAEx Extended Exported
- * Constants
+/** @defgroup IRDAEx_Extended_Exported_Constants IRDAEx Extended Exported Constants
  * @{
  */
 
@@ -351,17 +350,16 @@ extern "C" {
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0)
-#endif /* STM32L471xx  ||  STM32L475xx  ||  STM32L476xx  ||  STM32L485xx  ||                                                                                                                           \
-	* STM32L486xx  || STM32L496xx  ||  STM32L4A6xx  || STM32L4P5xx  ||                                                                                                                             \
-	* STM32L4Q5xx  || STM32L4R5xx  ||  STM32L4R7xx  ||  STM32L4R9xx  ||                                                                                                                            \
-	* STM32L4S5xx  ||  STM32L4S7xx  ||  STM32L4S9xx                                                                                                                                                \
+#endif /* STM32L471xx  ||  STM32L475xx  ||  STM32L476xx  ||  STM32L485xx  ||  STM32L486xx  ||                                                                                                          \
+	* STM32L496xx  ||  STM32L4A6xx  ||                                                                                                                                                             \
+	* STM32L4P5xx  ||  STM32L4Q5xx  ||                                                                                                                                                             \
+	* STM32L4R5xx  ||  STM32L4R7xx  ||  STM32L4R9xx  ||  STM32L4S5xx  ||  STM32L4S7xx  ||  STM32L4S9xx                                                                                             \
 	*/
 
 /** @brief  Compute the mask to apply to retrieve the received data
  *         according to the word length and to the parity bits activation.
  * @param  __HANDLE__ specifies the IRDA Handle.
- * @retval None, the mask to apply to the associated UART RDR register is stored
- * in (__HANDLE__)->Mask field.
+ * @retval None, the mask to apply to the associated UART RDR register is stored in (__HANDLE__)->Mask field.
  */
 #define IRDA_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                              \
 	do {                                                                                                                                                                                           \

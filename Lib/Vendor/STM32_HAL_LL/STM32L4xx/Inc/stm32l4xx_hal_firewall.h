@@ -44,52 +44,31 @@ extern "C" {
  * @brief FIREWALL Initialization Structure definition
  */
 typedef struct {
-	uint32_t CodeSegmentStartAddress; /*!< Protected code segment start
-					     address. This value is 24-bit long,
-					     the 8 LSB bits are reserved and
-					     forced to 0 in order to allow a
-					     256-byte granularity. */
+	uint32_t CodeSegmentStartAddress; /*!< Protected code segment start address. This value is 24-bit long, the 8 LSB bits are
+					       reserved and forced to 0 in order to allow a 256-byte granularity. */
 
-	uint32_t CodeSegmentLength; /*!< Protected code segment length in bytes.
-				       This value is 22-bit long, the 8 LSB bits
-				       are reserved and forced to 0 for the
-				       length to be a multiple of 256 bytes. */
+	uint32_t CodeSegmentLength; /*!< Protected code segment length in bytes. This value is 22-bit long, the 8 LSB bits are
+					 reserved and forced to 0 for the length to be a multiple of 256 bytes. */
 
-	uint32_t NonVDataSegmentStartAddress; /*!< Protected non-volatile data
-						 segment start address. This value is
-						 24-bit long, the 8 LSB bits are
-						 reserved and forced to 0 in order to
-						 allow a 256-byte granularity. */
+	uint32_t NonVDataSegmentStartAddress; /*!< Protected non-volatile data segment start address. This value is 24-bit long, the 8 LSB
+						   bits are reserved and forced to 0 in order to allow a 256-byte granularity. */
 
-	uint32_t NonVDataSegmentLength; /*!< Protected non-volatile data segment
-					   length in bytes. This value is 22-bit
-					   long, the 8 LSB bits are reserved and
-					   forced to 0 for the length to be a
-					   multiple of 256 bytes. */
+	uint32_t NonVDataSegmentLength; /*!< Protected non-volatile data segment length in bytes. This value is 22-bit long, the 8 LSB
+					     bits are reserved and forced to 0 for the length to be a multiple of 256 bytes. */
 
-	uint32_t VDataSegmentStartAddress; /*!< Protected volatile data segment
-					      start address. This value is
-					      17-bit long, the 6 LSB bits are
-					      reserved and forced to 0 in order
-					      to allow a 64-byte granularity. */
+	uint32_t VDataSegmentStartAddress; /*!< Protected volatile data segment start address. This value is 17-bit long, the 6 LSB bits
+						are reserved and forced to 0 in order to allow a 64-byte granularity. */
 
-	uint32_t VDataSegmentLength; /*!< Protected volatile data segment length in
-					bytes. This value is 17-bit long, the 6 LSB
-					  bits are reserved and forced to 0 for the
-					length to be a multiple of 64 bytes. */
+	uint32_t VDataSegmentLength; /*!< Protected volatile data segment length in bytes. This value is 17-bit long, the 6 LSB
+					  bits are reserved and forced to 0 for the length to be a multiple of 64 bytes. */
 
-	uint32_t VolatileDataExecution; /*!< Set VDE bit specifying whether or not
-					   the volatile data segment can be executed.
-					      When VDS = 1 (set by parameter
-					   VolatileDataShared), VDE bit has no
-					   meaning. This parameter can be a value of
-					   @ref FIREWALL_VolatileData_Executable */
+	uint32_t VolatileDataExecution; /*!< Set VDE bit specifying whether or not the volatile data segment can be executed.
+					      When VDS = 1 (set by parameter VolatileDataShared), VDE bit has no meaning.
+					     This parameter can be a value of @ref FIREWALL_VolatileData_Executable */
 
-	uint32_t VolatileDataShared; /*!< Set VDS bit in specifying whether or
-					not the volatile data segment can be
-					shared with a non-protected application
-					code. This parameter can be a value of
-					@ref FIREWALL_VolatileData_Shared */
+	uint32_t VolatileDataShared; /*!< Set VDS bit in specifying whether or not the volatile data segment can be shared with a
+					  non-protected application code.
+					  This parameter can be a value of @ref FIREWALL_VolatileData_Shared */
 
 } FIREWALL_InitTypeDef;
 
@@ -102,8 +81,7 @@ typedef struct {
  * @{
  */
 
-/** @defgroup FIREWALL_VolatileData_Executable   FIREWALL volatile data segment
- * execution status
+/** @defgroup FIREWALL_VolatileData_Executable   FIREWALL volatile data segment execution status
  * @{
  */
 #define FIREWALL_VOLATILEDATA_NOT_EXECUTABLE ((uint32_t)0x0000)
@@ -112,8 +90,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup FIREWALL_VolatileData_Shared  FIREWALL volatile data segment share
- * status
+/** @defgroup FIREWALL_VolatileData_Shared  FIREWALL volatile data segment share status
  * @{
  */
 #define FIREWALL_VOLATILEDATA_NOT_SHARED ((uint32_t)0x0000)
@@ -169,19 +146,18 @@ typedef struct {
 /** @brief Enable FIREWALL pre arm.
  * @note When FPA bit is set, any code executed outside the protected segment
  *       closes the Firewall, otherwise it generates a system reset.
- * @note This macro provides the same service as HAL_FIREWALL_EnablePreArmFlag()
- * API but can be executed inside a code area protected by the Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note This macro provides the same service as HAL_FIREWALL_EnablePreArmFlag() API
+ *       but can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_PREARM_ENABLE()                                                                                                                                                                 \
 	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(FIREWALL->CR, FW_CR_FPA);                                                                                                                                                      \
-		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
-		 * Peripheral */                                                                                                                                                                       \
+		/* Read bit back to ensure it is taken into account by Peripheral */                                                                                                                   \
 		/* (introduce proper delay inside macro execution) */                                                                                                                                  \
 		tmpreg = READ_BIT(FIREWALL->CR, FW_CR_FPA);                                                                                                                                            \
 		UNUSED(tmpreg);                                                                                                                                                                        \
@@ -190,147 +166,130 @@ typedef struct {
 /** @brief Disable FIREWALL pre arm.
  * @note When FPA bit is set, any code executed outside the protected segment
  *       closes the Firewall, otherwise, it generates a system reset.
- * @note This macro provides the same service as
- * HAL_FIREWALL_DisablePreArmFlag() API but can be executed inside a code area
- * protected by the Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note This macro provides the same service as HAL_FIREWALL_DisablePreArmFlag() API
+ *       but can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_PREARM_DISABLE()                                                                                                                                                                \
 	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(FIREWALL->CR, FW_CR_FPA);                                                                                                                                                    \
-		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
-		 * Peripheral */                                                                                                                                                                       \
+		/* Read bit back to ensure it is taken into account by Peripheral */                                                                                                                   \
 		/* (introduce proper delay inside macro execution) */                                                                                                                                  \
 		tmpreg = READ_BIT(FIREWALL->CR, FW_CR_FPA);                                                                                                                                            \
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
 /** @brief Enable volatile data sharing in setting VDS bit.
- * @note When VDS bit is set, the volatile data segment is shared with
- * non-protected application code. It can be accessed whatever the Firewall
- * state (opened or closed).
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note When VDS bit is set, the volatile data segment is shared with non-protected
+ *       application code. It can be accessed whatever the Firewall state (opened or closed).
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_SHARED_ENABLE()                                                                                                                                                    \
 	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(FIREWALL->CR, FW_CR_VDS);                                                                                                                                                      \
-		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
-		 * Peripheral */                                                                                                                                                                       \
+		/* Read bit back to ensure it is taken into account by Peripheral */                                                                                                                   \
 		/* (introduce proper delay inside macro execution) */                                                                                                                                  \
 		tmpreg = READ_BIT(FIREWALL->CR, FW_CR_VDS);                                                                                                                                            \
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
 /** @brief Disable volatile data sharing in resetting VDS bit.
- * @note When VDS bit is reset, the volatile data segment is not shared and
- * cannot be hit by a non protected executable code when the Firewall is closed.
- * If it is accessed in such a condition, a system reset is generated by the
- * Firewall.
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note When VDS bit is reset, the volatile data segment is not shared and cannot be
+ *       hit by a non protected executable code when the Firewall is closed. If it is
+ *       accessed in such a condition, a system reset is generated by the Firewall.
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_SHARED_DISABLE()                                                                                                                                                   \
 	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(FIREWALL->CR, FW_CR_VDS);                                                                                                                                                    \
-		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
-		 * Peripheral */                                                                                                                                                                       \
+		/* Read bit back to ensure it is taken into account by Peripheral */                                                                                                                   \
 		/* (introduce proper delay inside macro execution) */                                                                                                                                  \
 		tmpreg = READ_BIT(FIREWALL->CR, FW_CR_VDS);                                                                                                                                            \
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
 /** @brief Enable volatile data execution in setting VDE bit.
- * @note VDE bit is ignored when VDS is set. IF VDS = 1, the Volatile data
- * segment can be executed whatever the VDE bit value.
- * @note When VDE bit is set (with VDS = 0), the volatile data segment is
- * executable. When the Firewall call is closed, a "call gate" entry procedure
- * is required to open first the Firewall.
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note VDE bit is ignored when VDS is set. IF VDS = 1, the Volatile data segment can be
+ *       executed whatever the VDE bit value.
+ * @note When VDE bit is set (with VDS = 0), the volatile data segment is executable. When
+ *       the Firewall call is closed, a "call gate" entry procedure is required to open
+ *       first the Firewall.
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_EXECUTION_ENABLE()                                                                                                                                                 \
 	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(FIREWALL->CR, FW_CR_VDE);                                                                                                                                                      \
-		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
-		 * Peripheral */                                                                                                                                                                       \
+		/* Read bit back to ensure it is taken into account by Peripheral */                                                                                                                   \
 		/* (introduce proper delay inside macro execution) */                                                                                                                                  \
 		tmpreg = READ_BIT(FIREWALL->CR, FW_CR_VDE);                                                                                                                                            \
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
 /** @brief Disable volatile data execution in resetting VDE bit.
- * @note VDE bit is ignored when VDS is set. IF VDS = 1, the Volatile data
- * segment can be executed whatever the VDE bit value.
- * @note When VDE bit is reset (with VDS = 0), the volatile data segment cannot
- * be executed.
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note VDE bit is ignored when VDS is set. IF VDS = 1, the Volatile data segment can be
+ *       executed whatever the VDE bit value.
+ * @note When VDE bit is reset (with VDS = 0), the volatile data segment cannot  be executed.
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_EXECUTION_DISABLE()                                                                                                                                                \
 	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(FIREWALL->CR, FW_CR_VDE);                                                                                                                                                    \
-		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
-		 * Peripheral */                                                                                                                                                                       \
+		/* Read bit back to ensure it is taken into account by Peripheral */                                                                                                                   \
 		/* (introduce proper delay inside macro execution) */                                                                                                                                  \
 		tmpreg = READ_BIT(FIREWALL->CR, FW_CR_VDE);                                                                                                                                            \
 		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
 /** @brief Check whether or not the volatile data segment is shared.
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  * @retval VDS bit setting status (TRUE or FALSE).
  */
 #define __HAL_FIREWALL_GET_VOLATILEDATA_SHARED() ((FIREWALL->CR & FW_CR_VDS) == FW_CR_VDS)
 
-/** @brief Check whether or not the volatile data segment is declared
- * executable.
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+/** @brief Check whether or not the volatile data segment is declared executable.
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  * @retval VDE bit setting status (TRUE or FALSE).
  */
 #define __HAL_FIREWALL_GET_VOLATILEDATA_EXECUTION() ((FIREWALL->CR & FW_CR_VDE) == FW_CR_VDE)
 
 /** @brief Check whether or not the Firewall pre arm bit is set.
- * @note This macro can be executed inside a code area protected by the
- * Firewall.
- * @note This macro can be executed whatever the Firewall state (opened or
- * closed) when NVDSL register is equal to 0. Otherwise (when NVDSL register is
- * different from 0, that is, when the non volatile data segment is defined),
- * the macro can be executed only when the Firewall is opened.
+ * @note This macro can be executed inside a code area protected by the Firewall.
+ * @note This macro can be executed whatever the Firewall state (opened or closed) when
+ *       NVDSL register is equal to 0. Otherwise (when NVDSL register is different from
+ *       0, that is, when the non volatile data segment is defined), the macro can be
+ *       executed only when the Firewall is opened.
  * @retval FPA bit setting status (TRUE or FALSE).
  */
 #define __HAL_FIREWALL_GET_PREARM() ((FIREWALL->CR & FW_CR_FPA) == FW_CR_FPA)

@@ -60,8 +60,7 @@ extern "C" {
  */
 
 /** @defgroup CORDIC_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_CORDIC_ReadReg and
- * LL_CORDIC_WriteReg functions.
+ * @brief    IT defines which can be used with LL_CORDIC_ReadReg and LL_CORDIC_WriteReg functions.
  * @{
  */
 #define LL_CORDIC_IT_IEN CORDIC_CSR_IEN /*!< Result Ready interrupt enable */
@@ -81,9 +80,7 @@ extern "C" {
 #define LL_CORDIC_FUNCTION_HSINE ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_1))			       /*!< Hyperbolic Sine */
 #define LL_CORDIC_FUNCTION_HARCTANGENT ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_1 | CORDIC_CSR_FUNC_0)) /*!< Hyperbolic Arctangent */
 #define LL_CORDIC_FUNCTION_NATURALLOG ((uint32_t)(CORDIC_CSR_FUNC_3))					       /*!< Natural Logarithm */
-#define LL_CORDIC_FUNCTION_SQUAREROOT                                                                                                                                                                  \
-	((uint32_t)(CORDIC_CSR_FUNC_3 | CORDIC_CSR_FUNC_0)) /*!< Square Root                                                                                                                           \
-							     */
+#define LL_CORDIC_FUNCTION_SQUAREROOT ((uint32_t)(CORDIC_CSR_FUNC_3 | CORDIC_CSR_FUNC_0))		       /*!< Square Root */
 /**
  * @}
  */
@@ -134,8 +131,8 @@ extern "C" {
 			   16-bits data input (Q1.15 format) packed                                                                                                                                    \
 			   in one 32 bits Data */
 #define LL_CORDIC_NBWRITE_2                                                                                                                                                                            \
-	CORDIC_CSR_NARGS /*!< Two 32-bit write containing two 32-bits data                                                                                                                             \
-			    input (Q1.31 format) */
+	CORDIC_CSR_NARGS /*!< Two 32-bit write containing two 32-bits data input                                                                                                                       \
+			      (Q1.31 format) */
 /**
  * @}
  */
@@ -149,8 +146,8 @@ extern "C" {
 			  16-bits data output (Q1.15 format) packed                                                                                                                                    \
 			  in one 32 bits Data */
 #define LL_CORDIC_NBREAD_2                                                                                                                                                                             \
-	CORDIC_CSR_NRES /*!< Two 32-bit Data containing two 32-bits data                                                                                                                               \
-			   output (Q1.31 format) */
+	CORDIC_CSR_NRES /*!< Two 32-bit Data containing two 32-bits data output                                                                                                                        \
+			     (Q1.31 format) */
 /**
  * @}
  */
@@ -718,8 +715,7 @@ __STATIC_INLINE uint32_t LL_CORDIC_IsActiveFlag_RRDY(const CORDIC_TypeDef *CORDI
  * @brief  Write 32-bit input data for the CORDIC processing.
  * @rmtoll WDATA        ARG           LL_CORDIC_WriteData
  * @param  CORDICx CORDIC Instance
- * @param  InData 0 .. 0xFFFFFFFF : 32-bit value to be provided as input data
- * for CORDIC processing.
+ * @param  InData 0 .. 0xFFFFFFFF : 32-bit value to be provided as input data for CORDIC processing.
  * @retval None
  */
 __STATIC_INLINE void LL_CORDIC_WriteData(CORDIC_TypeDef *CORDICx, uint32_t InData)

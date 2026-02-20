@@ -29,8 +29,7 @@
   [..] The device integrates 1 or 2 operational amplifiers OPAMP1 & OPAMP2
 
        (#) The OPAMP(s) provide(s) several exclusive running modes.
-       (++) 1 OPAMP: STM32L412xx STM32L422xx STM32L431xx STM32L432xx STM32L433xx
-STM32L442xx STM32L443xx
+       (++) 1 OPAMP: STM32L412xx STM32L422xx STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx
        (++) 2 OPAMP: STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx
 
        (#) The OPAMP(s) provide(s) several exclusive running modes.
@@ -53,31 +52,33 @@ STM32L442xx STM32L443xx
        (++) HAL_OPAMP_SelfCalibrate:
        (+++) Runs automatically the calibration.
        (+++) Enables the user trimming mode
-       (+++) Updates the init structure with trimming values with fresh
-calibration results. The user may store the calibration results for larger (ex
-monitoring the trimming as a function of temperature for instance)
+       (+++) Updates the init structure with trimming values with fresh calibration
+	    results.
+	    The user may store the calibration results for larger
+	    (ex monitoring the trimming as a function of temperature
+	    for instance)
        (+++) HAL_OPAMPEx_SelfCalibrateAll
 	    runs calibration of all OPAMPs in parallel to save search time.
 
        (#) Running mode: Standalone mode
        (++) Gain is set externally (gain depends on external loads).
-       (++) Follower mode also possible externally by connecting the inverting
-input to the output.
+       (++) Follower mode also possible externally by connecting the inverting input to
+	   the output.
 
        (#) Running mode: Follower mode
        (++) No Inverting Input is connected.
 
        (#) Running mode: Programmable Gain Amplifier (PGA) mode
 	   (Resistor feedback output)
-       (++) The OPAMP(s) output(s) can be internally connected to resistor
-feedback output.
+       (++) The OPAMP(s) output(s) can be internally connected to resistor feedback
+	   output.
        (++) OPAMP gain is either 2, 4, 8 or 16.
 
-       (#) The OPAMPs inverting input can be selected according to the Reference
-Manual "OPAMP function description" chapter.
+       (#) The OPAMPs inverting input can be selected according to the Reference Manual
+	   "OPAMP function description" chapter.
 
-       (#) The OPAMPs non inverting input can be selected according to the
-Reference Manual "OPAMP function description" chapter.
+       (#) The OPAMPs non inverting input can be selected according to the Reference Manual
+	   "OPAMP function description" chapter.
 
 
 	    ##### How to use this driver #####
@@ -113,24 +114,23 @@ Reference Manual "OPAMP function description" chapter.
     [..] To use the OPAMP, perform the following steps:
 
       (#) Fill in the HAL_OPAMP_MspInit() to
-      (++) Enable the OPAMP Peripheral clock using macro
-__HAL_RCC_OPAMP_CLK_ENABLE()
+      (++) Enable the OPAMP Peripheral clock using macro __HAL_RCC_OPAMP_CLK_ENABLE()
       (++) Configure the OPAMP input AND output in analog mode using
 	   HAL_GPIO_Init() to map the OPAMP output to the GPIO pin.
 
       (#) Registrate Callbacks
-      (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to
-1 allows the user to configure dynamically the driver callbacks.
+      (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to 1
+	   allows the user to configure dynamically the driver callbacks.
 
-      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user
-callback, it allows to register following callbacks:
+      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user callback,
+	   it allows to register following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspFeInit.
-	   This function takes as parameters the HAL peripheral handle, the
-Callback ID and a pointer to the user callback function.
+	   This function takes as parameters the HAL peripheral handle, the Callback ID
+	   and a pointer to the user callback function.
 
-      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to
-the default weak (overridden) function. It allows to reset following callbacks:
+      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
+	   weak (overridden) function. It allows to reset following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspdeInit.
       (+++) All Callbacks
@@ -141,8 +141,8 @@ the default weak (overridden) function. It allows to reset following callbacks:
       (++) Select the non-inverting input
       (++) If PGA mode is enabled, Select if inverting input is connected.
       (++) Select either factory or user defined trimming mode.
-      (++) If the user-defined trimming mode is enabled, select PMOS & NMOS
-trimming values (typically values set by HAL_OPAMP_SelfCalibrate function).
+      (++) If the user-defined trimming mode is enabled, select PMOS & NMOS trimming values
+	  (typically values set by HAL_OPAMP_SelfCalibrate function).
 
       (#) Enable the OPAMP using HAL_OPAMP_Start() function.
 
@@ -163,10 +163,10 @@ trimming values (typically values set by HAL_OPAMP_SelfCalibrate function).
       (#) Configure the OPAMP using HAL_OPAMP_Init() function:
       (++) As in configure case, select first the parameters you wish to modify.
 
-      (#) Change from low power mode to normal power mode (& vice versa)
-requires first HAL_OPAMP_DeInit() (force OPAMP OFF) and then HAL_OPAMP_Init().
-	  In other words, of OPAMP is ON, HAL_OPAMP_Init can NOT change power
-mode alone.
+      (#) Change from low power mode to normal power mode (& vice versa) requires
+	  first HAL_OPAMP_DeInit() (force OPAMP OFF) and then HAL_OPAMP_Init().
+	  In other words, of OPAMP is ON, HAL_OPAMP_Init can NOT change power mode
+	  alone.
 
   @endverbatim
   ******************************************************************************
@@ -247,8 +247,7 @@ mode alone.
  * @{
  */
 
-/** @defgroup OPAMP_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup OPAMP_Exported_Functions_Group1 Initialization and de-initialization functions
  *  @brief    Initialization and Configuration functions
  *
 @verbatim
@@ -262,8 +261,7 @@ de-initialization functions
 
 /**
  * @brief  Initializes the OPAMP according to the specified
- *         parameters in the OPAMP_InitTypeDef and initialize the associated
- * handle.
+ *         parameters in the OPAMP_InitTypeDef and initialize the associated handle.
  * @note   If the selected opamp is locked, initialization can't be performed.
  *         To unlock the configuration, perform a system reset.
  * @param  hopamp OPAMP handle
@@ -354,30 +352,25 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 		}
 
 		if (hopamp->Init.UserTrimming == OPAMP_TRIMMING_USER) {
-			/* Set power mode and associated calibration parameters
-			 */
+			/* Set power mode and associated calibration parameters */
 			if (hopamp->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER) {
 				/* OPAMP_POWERMODE_NORMALPOWER */
-				/* Set calibration mode (factory or user) and
-				 * values for            */
-				/* transistors differential pair high (PMOS) and
-				 * low (NMOS) for     */
-				/* normal mode. */
+				/* Set calibration mode (factory or user) and values for            */
+				/* transistors differential pair high (PMOS) and low (NMOS) for     */
+				/* normal mode.                                                     */
 				updateotrlpotr = (((hopamp->Init.TrimmingValueP) << (OPAMP_INPUT_NONINVERTING)) | (hopamp->Init.TrimmingValueN));
 				MODIFY_REG(hopamp->Instance->OTR, OPAMP_OTR_TRIMOFFSETN | OPAMP_OTR_TRIMOFFSETP, updateotrlpotr);
 			} else {
 				/* OPAMP_POWERMODE_LOWPOWER */
-				/* transistors differential pair high (PMOS) and
-				 * low (NMOS) for     */
-				/* low power mode. */
+				/* transistors differential pair high (PMOS) and low (NMOS) for     */
+				/* low power mode.                                                     */
 				updateotrlpotr = (((hopamp->Init.TrimmingValuePLowPower) << (OPAMP_INPUT_NONINVERTING)) | (hopamp->Init.TrimmingValueNLowPower));
 				MODIFY_REG(hopamp->Instance->LPOTR, OPAMP_OTR_TRIMOFFSETN | OPAMP_OTR_TRIMOFFSETP, updateotrlpotr);
 			}
 		}
 
 		/* Configure the power supply range */
-		/* The OPAMP_CSR_OPARANGE is common configuration for all OPAMPs
-		 */
+		/* The OPAMP_CSR_OPARANGE is common configuration for all OPAMPs */
 		/* bit OPAMP1_CSR_OPARANGE is used for both OPAMPs */
 		MODIFY_REG(OPAMP1->CSR, OPAMP1_CSR_OPARANGE, hopamp->Init.PowerSupplyRange);
 
@@ -393,8 +386,8 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 
 /**
  * @brief  DeInitialize the OPAMP peripheral.
- * @note   Deinitialization can be performed if the OPAMP configuration is
- * locked. (the lock is SW in L4)
+ * @note   Deinitialization can be performed if the OPAMP configuration is locked.
+ *         (the lock is SW in L4)
  * @param  hopamp OPAMP handle
  * @retval HAL status
  */
@@ -413,8 +406,7 @@ HAL_StatusTypeDef HAL_OPAMP_DeInit(OPAMP_HandleTypeDef *hopamp)
 		assert_param(IS_OPAMP_ALL_INSTANCE(hopamp->Instance));
 
 		/* Set OPAMP_CSR register to reset value */
-		/* Mind that OPAMP1_CSR_OPARANGE of CSR of OPAMP1 remains
-		 * unchanged (applies to both OPAMPs) */
+		/* Mind that OPAMP1_CSR_OPARANGE of CSR of OPAMP1 remains unchanged (applies to both OPAMPs) */
 		/* OPAMP shall be disabled first separately */
 		CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 		MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_RESET_BITS, OPAMP_CSR_RESET_VALUE);
@@ -448,9 +440,8 @@ __weak void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef *hopamp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hopamp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the function "HAL_OPAMP_MspInit()" must be implemented in the
-	   user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the function "HAL_OPAMP_MspInit()" must be implemented in the user file.
 	 */
 }
 
@@ -464,9 +455,8 @@ __weak void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef *hopamp)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hopamp);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the function "HAL_OPAMP_MspDeInit()" must be implemented in
-	   the user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the function "HAL_OPAMP_MspDeInit()" must be implemented in the user file.
 	 */
 }
 
@@ -567,8 +557,7 @@ HAL_StatusTypeDef HAL_OPAMP_Stop(OPAMP_HandleTypeDef *hopamp)
   *         accordingly updated.
   * @note   Calibration runs about 10 ms.
   * @param  hopamp handle
-  * @retval Updated offset trimming values (PMOS & NMOS), user trimming is
-  enabled
+  * @retval Updated offset trimming values (PMOS & NMOS), user trimming is enabled
   * @retval HAL status
 
   */
@@ -583,8 +572,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 	uint32_t delta;
 	uint32_t opampmode;
 
-	__IO uint32_t *tmp_opamp_reg_trimming; /* Selection of register of trimming
-						  depending on power mode: OTR or LPOTR */
+	__IO uint32_t *tmp_opamp_reg_trimming; /* Selection of register of trimming depending on power mode: OTR or LPOTR */
 
 	/* Check the OPAMP handle allocation */
 	/* Check if OPAMP locked */
@@ -593,24 +581,21 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 	} else if (hopamp->State == HAL_OPAMP_STATE_BUSYLOCKED) {
 		status = HAL_ERROR;
 	} else {
-		/* Check if OPAMP in calibration mode and calibration not yet
-		 * enable */
+		/* Check if OPAMP in calibration mode and calibration not yet enable */
 		if (hopamp->State == HAL_OPAMP_STATE_READY) {
 			/* Check the parameter */
 			assert_param(IS_OPAMP_ALL_INSTANCE(hopamp->Instance));
 			assert_param(IS_OPAMP_POWERMODE(hopamp->Init.PowerMode));
 
-			/* Save OPAMP mode as in */
-			/* STM32L471xx STM32L475xx STM32L476xx STM32L485xx
-			 * STM32L486xx */
-			/* the calibration is not working in PGA mode */
+			/* Save OPAMP mode as in                                       */
+			/* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx */
+			/* the calibration is not working in PGA mode                  */
 			opampmode = READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMODE);
 
 			/* Use of standalone mode */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_OPAMODE, OPAMP_STANDALONE_MODE);
 
-			/*  user trimming values are used for offset calibration
-			 */
+			/*  user trimming values are used for offset calibration */
 			SET_BIT(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM);
 
 			/* Select trimming settings depending on power mode */
@@ -639,38 +624,29 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				/* OPAMP_POWERMODE_NORMALPOWER */
 				MODIFY_REG(*tmp_opamp_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen);
 
-				/* OFFTRIMmax delay 1 ms as per datasheet
-				 * (electrical characteristics */
-				/* Offset trim time: during calibration, minimum
-				 * time needed between */
+				/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+				/* Offset trim time: during calibration, minimum time needed between */
 				/* two steps to have 1 mV accuracy */
 				HAL_Delay(OPAMP_TRIMMING_DELAY);
 
 				if (READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
-					/* OPAMP_CSR_CALOUT is HIGH try higher
-					 * trimming */
+					/* OPAMP_CSR_CALOUT is HIGH try higher trimming */
 					trimmingvaluen -= delta;
 				} else {
-					/* OPAMP_CSR_CALOUT is LOW try lower
-					 * trimming */
+					/* OPAMP_CSR_CALOUT is LOW try lower trimming */
 					trimmingvaluen += delta;
 				}
-				/* Divide range by 2 to continue dichotomy sweep
-				 */
+				/* Divide range by 2 to continue dichotomy sweep */
 				delta >>= 1U;
 			}
 
-			/* Still need to check if right calibration is current
-			 * value or one step below */
-			/* Indeed the first value that causes the OUTCAL bit to
-			 * change from 0 to 1  */
+			/* Still need to check if right calibration is current value or one step below */
+			/* Indeed the first value that causes the OUTCAL bit to change from 0 to 1  */
 			/* Set candidate trimming */
 			MODIFY_REG(*tmp_opamp_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen);
 
-			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
-			 * characteristics */
-			/* Offset trim time: during calibration, minimum time
-			 * needed between */
+			/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+			/* Offset trim time: during calibration, minimum time needed between */
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(OPAMP_TRIMMING_DELAY);
 
@@ -694,39 +670,30 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				/* OPAMP_POWERMODE_NORMALPOWER */
 				MODIFY_REG(*tmp_opamp_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep << OPAMP_INPUT_NONINVERTING));
 
-				/* OFFTRIMmax delay 1 ms as per datasheet
-				 * (electrical characteristics */
-				/* Offset trim time: during calibration, minimum
-				 * time needed between */
+				/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+				/* Offset trim time: during calibration, minimum time needed between */
 				/* two steps to have 1 mV accuracy */
 				HAL_Delay(OPAMP_TRIMMING_DELAY);
 
 				if (READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
-					/* OPAMP_CSR_CALOUT is HIGH try higher
-					 * trimming */
+					/* OPAMP_CSR_CALOUT is HIGH try higher trimming */
 					trimmingvaluep += delta;
 				} else {
-					/* OPAMP_CSR_CALOUT  is LOW try lower
-					 * trimming */
+					/* OPAMP_CSR_CALOUT  is LOW try lower trimming */
 					trimmingvaluep -= delta;
 				}
 
-				/* Divide range by 2 to continue dichotomy sweep
-				 */
+				/* Divide range by 2 to continue dichotomy sweep */
 				delta >>= 1U;
 			}
 
-			/* Still need to check if right calibration is current
-			 * value or one step below */
-			/* Indeed the first value that causes the OUTCAL bit to
-			 * change from 1 to 0  */
+			/* Still need to check if right calibration is current value or one step below */
+			/* Indeed the first value that causes the OUTCAL bit to change from 1 to 0  */
 			/* Set candidate trimming */
 			MODIFY_REG(*tmp_opamp_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep << OPAMP_INPUT_NONINVERTING));
 
-			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
-			 * characteristics */
-			/* Offset trim time: during calibration, minimum time
-			 * needed between */
+			/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+			/* Offset trim time: during calibration, minimum time needed between */
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(OPAMP_TRIMMING_DELAY);
 
@@ -739,19 +706,16 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 			/* Disable the OPAMP */
 			CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 
-			/* Disable calibration & set normal mode (operating
-			 * mode) */
+			/* Disable calibration & set normal mode (operating mode) */
 			CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_CALON);
 
 			/* Self calibration is successful  */
-			/* Store calibration(user trimming) results in init
-			 * structure. */
+			/* Store calibration(user trimming) results in init structure. */
 
 			/* Set user trimming mode */
 			hopamp->Init.UserTrimming = OPAMP_TRIMMING_USER;
 
-			/* Affect calibration parameters depending on mode
-			 * normal/low power */
+			/* Affect calibration parameters depending on mode normal/low power */
 			if (hopamp->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER) {
 				/* Write calibration result N */
 				hopamp->Init.TrimmingValueN = trimmingvaluen;
@@ -786,8 +750,8 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 		      ##### Peripheral Control functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to control the OPAMP
-data transfers.
+    This subsection provides a set of functions allowing to control the OPAMP data
+    transfers.
 
 
 
@@ -850,8 +814,7 @@ HAL_StatusTypeDef HAL_OPAMP_Lock(OPAMP_HandleTypeDef *hopamp)
 HAL_OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopamp, uint32_t trimmingoffset)
 {
 	HAL_OPAMP_TrimmingValueTypeDef trimmingvalue;
-	__IO uint32_t *tmp_opamp_reg_trimming; /* Selection of register of trimming
-						  depending on power mode: OTR or LPOTR */
+	__IO uint32_t *tmp_opamp_reg_trimming; /* Selection of register of trimming depending on power mode: OTR or LPOTR */
 
 	/* Check the OPAMP handle allocation */
 	/* Value can be retrieved in HAL_OPAMP_STATE_READY state */
@@ -869,14 +832,11 @@ HAL_OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopa
 
 		/* Check the trimming mode */
 		if (READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM) != 0U) {
-			/* This function must called when OPAMP init parameter
-			 * "UserTrimming"   */
-			/* is set to trimming factory, and before OPAMP
-			 * calibration (function   */
-			/* "HAL_OPAMP_SelfCalibrate()"). */
-			/* Otherwise, factory trimming value cannot be retrieved
-			 * and error       */
-			/* status is returned. */
+			/* This function must called when OPAMP init parameter "UserTrimming"   */
+			/* is set to trimming factory, and before OPAMP calibration (function   */
+			/* "HAL_OPAMP_SelfCalibrate()").                                        */
+			/* Otherwise, factory trimming value cannot be retrieved and error       */
+			/* status is returned.                                                  */
 			trimmingvalue = OPAMP_FACTORYTRIMMING_DUMMY;
 		} else {
 			/* Select trimming settings depending on power mode */
@@ -1003,15 +963,12 @@ HAL_StatusTypeDef HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_OP
 
 /**
  * @brief  Unregister a User OPAMP Callback
- *         OPAMP Callback is redirected to the weak (overridden) predefined
- * callback
+ *         OPAMP Callback is redirected to the weak (overridden) predefined callback
  * @param hopamp : OPAMP handle
  * @param CallbackID : ID of the callback to be unregistered
  *        This parameter can be one of the following values:
- *          @arg @ref HAL_OPAMP_MSPINIT_CB_ID              OPAMP MSP Init
- * Callback ID
- *          @arg @ref HAL_OPAMP_MSPDEINIT_CB_ID            OPAMP MSP DeInit
- * Callback ID
+ *          @arg @ref HAL_OPAMP_MSPINIT_CB_ID              OPAMP MSP Init Callback ID
+ *          @arg @ref HAL_OPAMP_MSPDEINIT_CB_ID            OPAMP MSP DeInit Callback ID
  *          @arg @ref HAL_OPAMP_ALL_CB_ID                   OPAMP All Callbacks
  * @retval status
  */

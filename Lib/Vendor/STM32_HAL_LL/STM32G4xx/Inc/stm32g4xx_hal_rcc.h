@@ -9,9 +9,9 @@
  * Copyright (c) 2019 STMicroelectronics.
  * All rights reserved.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- *in the root directory of this software component. If no LICENSE file comes
- *with this software, it is provided AS-IS.
+ * This software is licensed under terms that can be found in the LICENSE file in
+ * the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  ******************************************************************************
  */
 
@@ -44,101 +44,76 @@ extern "C" {
  */
 typedef struct {
 	uint32_t PLLState; /*!< The new state of the PLL.
-				This parameter can be a value of @ref
-			      RCC_PLL_Config                      */
+				This parameter can be a value of @ref RCC_PLL_Config                      */
 
 	uint32_t PLLSource; /*!< RCC_PLLSource: PLL entry clock source.
-				 This parameter must be a value of @ref
-			       RCC_PLL_Clock_Source               */
+				 This parameter must be a value of @ref RCC_PLL_Clock_Source               */
 
 	uint32_t PLLM; /*!< PLLM: Division factor for PLL VCO input clock.
-			    This parameter must be a value of @ref
-			  RCC_PLLM_Clock_Divider             */
+			    This parameter must be a value of @ref RCC_PLLM_Clock_Divider             */
 
-	uint32_t PLLN; /*!< PLLN: Multiplication factor for PLL VCO output
-			  clock. This parameter must be a number between
-			  Min_Data = 8 and Max_Data = 127    */
+	uint32_t PLLN; /*!< PLLN: Multiplication factor for PLL VCO output clock.
+			    This parameter must be a number between Min_Data = 8 and Max_Data = 127    */
 
 	uint32_t PLLP; /*!< PLLP: Division factor for ADC clock.
-			    This parameter must be a value of @ref
-			  RCC_PLLP_Clock_Divider             */
+			    This parameter must be a value of @ref RCC_PLLP_Clock_Divider             */
 
-	uint32_t PLLQ; /*!< PLLQ: Division factor for SAI, I2S, USB, FDCAN and
-			  QUADSPI clocks. This parameter must be a value of @ref
-			  RCC_PLLQ_Clock_Divider             */
+	uint32_t PLLQ; /*!< PLLQ: Division factor for SAI, I2S, USB, FDCAN and QUADSPI clocks.
+			    This parameter must be a value of @ref RCC_PLLQ_Clock_Divider             */
 
 	uint32_t PLLR; /*!< PLLR: Division for the main system clock.
-			    User have to set the PLLR parameter correctly to not
-			  exceed max frequency 170MHZ. This parameter must be a
-			  value of @ref RCC_PLLR_Clock_Divider             */
+			    User have to set the PLLR parameter correctly to not exceed max frequency 170MHZ.
+			    This parameter must be a value of @ref RCC_PLLR_Clock_Divider             */
 
 } RCC_PLLInitTypeDef;
 
 /**
- * @brief  RCC Internal/External Oscillator (HSE, HSI, LSE and LSI)
- * configuration structure definition
+ * @brief  RCC Internal/External Oscillator (HSE, HSI, LSE and LSI) configuration structure definition
  */
 typedef struct {
 	uint32_t OscillatorType; /*!< The oscillators to be configured.
-				      This parameter can be a value of @ref
-				    RCC_Oscillator_Type                   */
+				      This parameter can be a value of @ref RCC_Oscillator_Type                   */
 
 	uint32_t HSEState; /*!< The new state of the HSE.
-				This parameter can be a value of @ref
-			      RCC_HSE_Config                        */
+				This parameter can be a value of @ref RCC_HSE_Config                        */
 
 	uint32_t LSEState; /*!< The new state of the LSE.
-				This parameter can be a value of @ref
-			      RCC_LSE_Config                        */
+				This parameter can be a value of @ref RCC_LSE_Config                        */
 
 	uint32_t HSIState; /*!< The new state of the HSI.
-				This parameter can be a value of @ref
-			      RCC_HSI_Config                        */
+				This parameter can be a value of @ref RCC_HSI_Config                        */
 
-	uint32_t HSICalibrationValue; /*!< The calibration trimming value (default is
-					 RCC_HSICALIBRATION_DEFAULT). This parameter
-					 must be a number between Min_Data = 0x00 and
-					 Max_Data = 0xFF */
+	uint32_t HSICalibrationValue; /*!< The calibration trimming value (default is RCC_HSICALIBRATION_DEFAULT).
+					   This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFF */
 
 	uint32_t LSIState; /*!< The new state of the LSI.
-				This parameter can be a value of @ref
-			      RCC_LSI_Config                        */
+				This parameter can be a value of @ref RCC_LSI_Config                        */
 
 	uint32_t HSI48State; /*!< The new state of the HSI48.
-				  This parameter can be a value of @ref
-				RCC_HSI48_Config */
+				  This parameter can be a value of @ref RCC_HSI48_Config */
 
-	RCC_PLLInitTypeDef PLL; /*!< Main PLL structure parameters */
+	RCC_PLLInitTypeDef PLL; /*!< Main PLL structure parameters                                               */
 
 } RCC_OscInitTypeDef;
 
 /**
- * @brief  RCC System, AHB and APB busses clock configuration structure
- * definition
+ * @brief  RCC System, AHB and APB busses clock configuration structure definition
  */
 typedef struct {
 	uint32_t ClockType; /*!< The clock to be configured.
-				 This parameter can be a value of @ref
-			       RCC_System_Clock_Type      */
+				 This parameter can be a value of @ref RCC_System_Clock_Type      */
 
-	uint32_t SYSCLKSource; /*!< The clock source used as system clock
-				  (SYSCLK). This parameter can be a value of
-				  @ref RCC_System_Clock_Source    */
+	uint32_t SYSCLKSource; /*!< The clock source used as system clock (SYSCLK).
+				    This parameter can be a value of @ref RCC_System_Clock_Source    */
 
-	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is
-				   derived from the system clock (SYSCLK). This
-				   parameter can be a value of @ref
-				   RCC_AHB_Clock_Source       */
+	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
+				     This parameter can be a value of @ref RCC_AHB_Clock_Source       */
 
-	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock
-				    is derived from the AHB clock (HCLK). This
-				    parameter can be a value of @ref
-				    RCC_APB1_APB2_Clock_Source */
+	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+				      This parameter can be a value of @ref RCC_APB1_APB2_Clock_Source */
 
-	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock
-				    is derived from the AHB clock (HCLK). This
-				    parameter can be a value of @ref
-				    RCC_APB1_APB2_Clock_Source */
+	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
+				      This parameter can be a value of @ref RCC_APB1_APB2_Clock_Source */
 
 } RCC_ClkInitTypeDef;
 
@@ -316,13 +291,9 @@ typedef struct {
 /** @defgroup RCC_PLL_Clock_Source PLL Clock Source
  * @{
  */
-#define RCC_PLLSOURCE_NONE 0x00000000U /*!< No clock selected as PLL entry clock source  */
-#define RCC_PLLSOURCE_HSI                                                                                                                                                                              \
-	RCC_PLLCFGR_PLLSRC_HSI /*!< HSI clock selected as PLL entry clock                                                                                                                              \
-				  source */
-#define RCC_PLLSOURCE_HSE                                                                                                                                                                              \
-	RCC_PLLCFGR_PLLSRC_HSE /*!< HSE clock selected as PLL entry clock                                                                                                                              \
-				  source */
+#define RCC_PLLSOURCE_NONE 0x00000000U		 /*!< No clock selected as PLL entry clock source  */
+#define RCC_PLLSOURCE_HSI RCC_PLLCFGR_PLLSRC_HSI /*!< HSI clock selected as PLL entry clock source */
+#define RCC_PLLSOURCE_HSE RCC_PLLCFGR_PLLSRC_HSE /*!< HSE clock selected as PLL entry clock source */
 /**
  * @}
  */
@@ -332,9 +303,7 @@ typedef struct {
  */
 #define RCC_PLL_ADCCLK RCC_PLLCFGR_PLLPEN  /*!< PLLADCCLK selection from main PLL */
 #define RCC_PLL_48M1CLK RCC_PLLCFGR_PLLQEN /*!< PLL48M1CLK selection from main PLL */
-#define RCC_PLL_SYSCLK                                                                                                                                                                                 \
-	RCC_PLLCFGR_PLLREN /*!< PLLCLK selection from main PLL                                                                                                                                         \
-			    */
+#define RCC_PLL_SYSCLK RCC_PLLCFGR_PLLREN  /*!< PLLCLK selection from main PLL */
 /**
  * @}
  */
@@ -401,15 +370,13 @@ typedef struct {
 /** @defgroup RCC_RTC_Clock_Source RTC Clock Source
  * @{
  */
-#define RCC_RTCCLKSOURCE_NONE 0x00000000U      /*!< No clock used as RTC clock */
-#define RCC_RTCCLKSOURCE_LSE RCC_BDCR_RTCSEL_0 /*!< LSE oscillator clock used as RTC clock */
-#define RCC_RTCCLKSOURCE_LSI RCC_BDCR_RTCSEL_1 /*!< LSI oscillator clock used as RTC clock */
-#define RCC_RTCCLKSOURCE_HSE_DIV32                                                                                                                                                                     \
-	RCC_BDCR_RTCSEL /*!< HSE oscillator clock divided by 32 used as RTC                                                                                                                            \
-			   clock */
-			/**
-			 * @}
-			 */
+#define RCC_RTCCLKSOURCE_NONE 0x00000000U	   /*!< No clock used as RTC clock */
+#define RCC_RTCCLKSOURCE_LSE RCC_BDCR_RTCSEL_0	   /*!< LSE oscillator clock used as RTC clock */
+#define RCC_RTCCLKSOURCE_LSI RCC_BDCR_RTCSEL_1	   /*!< LSI oscillator clock used as RTC clock */
+#define RCC_RTCCLKSOURCE_HSE_DIV32 RCC_BDCR_RTCSEL /*!< HSE oscillator clock divided by 32 used as RTC clock */
+/**
+ * @}
+ */
 
 /** @defgroup RCC_MCO_Index MCO Index
  * @{
@@ -495,10 +462,8 @@ typedef struct {
 #define RCC_FLAG_PLLRDY ((CR_REG_INDEX << 5U) | RCC_CR_PLLRDY_Pos) /*!< PLL Ready flag */
 
 /* Flags in the BDCR register */
-#define RCC_FLAG_LSERDY ((BDCR_REG_INDEX << 5U) | RCC_BDCR_LSERDY_Pos) /*!< LSE Ready flag */
-#define RCC_FLAG_LSECSSD                                                                                                                                                                               \
-	((BDCR_REG_INDEX << 5U) | RCC_BDCR_LSECSSD_Pos) /*!< LSE Clock Security System Interrupt flag                                                                                                  \
-							 */
+#define RCC_FLAG_LSERDY ((BDCR_REG_INDEX << 5U) | RCC_BDCR_LSERDY_Pos)	 /*!< LSE Ready flag */
+#define RCC_FLAG_LSECSSD ((BDCR_REG_INDEX << 5U) | RCC_BDCR_LSECSSD_Pos) /*!< LSE Clock Security System Interrupt flag */
 
 /* Flags in the CSR register */
 #define RCC_FLAG_LSIRDY ((CSR_REG_INDEX << 5U) | RCC_CSR_LSIRDY_Pos)	/*!< LSI Ready flag */
@@ -537,12 +502,11 @@ typedef struct {
  * @{
  */
 
-/** @defgroup RCC_AHB1_Peripheral_Clock_Enable_Disable AHB1 Peripheral Clock
- * Enable Disable
+/** @defgroup RCC_AHB1_Peripheral_Clock_Enable_Disable AHB1 Peripheral Clock Enable Disable
  * @brief  Enable or disable the AHB1 peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -627,12 +591,11 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB2_Peripheral_Clock_Enable_Disable AHB2 Peripheral Clock
- * Enable Disable
+/** @defgroup RCC_AHB2_Peripheral_Clock_Enable_Disable AHB2 Peripheral Clock Enable Disable
  * @brief  Enable or disable the AHB2 peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -823,9 +786,9 @@ typedef struct {
 
 /** @defgroup RCC_AHB3_Clock_Enable_Disable AHB3 Peripheral Clock Enable Disable
  * @brief  Enable or disable the AHB3 peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -865,9 +828,9 @@ typedef struct {
 
 /** @defgroup RCC_APB1_Clock_Enable_Disable APB1 Peripheral Clock Enable Disable
  * @brief  Enable or disable the APB1 peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -1172,9 +1135,9 @@ typedef struct {
 
 /** @defgroup RCC_APB2_Clock_Enable_Disable APB2 Peripheral Clock Enable Disable
  * @brief  Enable or disable the APB2 peripheral clock.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -1326,12 +1289,11 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB1_Peripheral_Clock_Enable_Disable_Status AHB1 Peripheral
- * Clock Enabled or Disabled Status
+/** @defgroup RCC_AHB1_Peripheral_Clock_Enable_Disable_Status AHB1 Peripheral Clock Enabled or Disabled Status
  * @brief  Check whether the AHB1 peripheral clock is enabled or not.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -1367,12 +1329,11 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB2_Clock_Enable_Disable_Status AHB2 Peripheral Clock Enabled
- * or Disabled Status
+/** @defgroup RCC_AHB2_Clock_Enable_Disable_Status AHB2 Peripheral Clock Enabled or Disabled Status
  * @brief  Check whether the AHB2 peripheral clock is enabled or not.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -1456,12 +1417,11 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB3_Clock_Enable_Disable_Status AHB3 Peripheral Clock Enabled
- * or Disabled Status
+/** @defgroup RCC_AHB3_Clock_Enable_Disable_Status AHB3 Peripheral Clock Enabled or Disabled Status
  * @brief  Check whether the AHB3 peripheral clock is enabled or not.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -1485,12 +1445,11 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_APB1_Clock_Enable_Disable_Status APB1 Peripheral Clock Enabled
- * or Disabled Status
+/** @defgroup RCC_APB1_Clock_Enable_Disable_Status APB1 Peripheral Clock Enabled or Disabled Status
  * @brief  Check whether the APB1 peripheral clock is enabled or not.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -1620,12 +1579,11 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_APB2_Clock_Enable_Disable_Status APB2 Peripheral Clock Enabled
- * or Disabled Status
+/** @defgroup RCC_APB2_Clock_Enable_Disable_Status APB2 Peripheral Clock Enabled or Disabled Status
  * @brief  Check whether the APB2 peripheral clock is enabled or not.
- * @note   After reset, the peripheral clock (used for registers read/write
- * access) is disabled and the application software has to enable this clock
- * before using it.
+ * @note   After reset, the peripheral clock (used for registers read/write access)
+ *         is disabled and the application software has to enable this clock before
+ *         using it.
  * @{
  */
 
@@ -2045,10 +2003,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB1_Clock_Sleep_Enable_Disable AHB1 Peripheral Clock Sleep
- * Enable Disable
- * @brief  Enable or disable the AHB1 peripheral clock during Low Power (Sleep)
- * mode.
+/** @defgroup RCC_AHB1_Clock_Sleep_Enable_Disable AHB1 Peripheral Clock Sleep Enable Disable
+ * @brief  Enable or disable the AHB1 peripheral clock during Low Power (Sleep) mode.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2092,10 +2048,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB2_Clock_Sleep_Enable_Disable AHB2 Peripheral Clock Sleep
- * Enable Disable
- * @brief  Enable or disable the AHB2 peripheral clock during Low Power (Sleep)
- * mode.
+/** @defgroup RCC_AHB2_Clock_Sleep_Enable_Disable AHB2 Peripheral Clock Sleep Enable Disable
+ * @brief  Enable or disable the AHB2 peripheral clock during Low Power (Sleep) mode.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2191,10 +2145,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB3_Clock_Sleep_Enable_Disable AHB3 Peripheral Clock Sleep
- * Enable Disable
- * @brief  Enable or disable the AHB3 peripheral clock during Low Power (Sleep)
- * mode.
+/** @defgroup RCC_AHB3_Clock_Sleep_Enable_Disable AHB3 Peripheral Clock Sleep Enable Disable
+ * @brief  Enable or disable the AHB3 peripheral clock during Low Power (Sleep) mode.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2222,10 +2174,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_APB1_Clock_Sleep_Enable_Disable APB1 Peripheral Clock Sleep
- * Enable Disable
- * @brief  Enable or disable the APB1 peripheral clock during Low Power (Sleep)
- * mode.
+/** @defgroup RCC_APB1_Clock_Sleep_Enable_Disable APB1 Peripheral Clock Sleep Enable Disable
+ * @brief  Enable or disable the APB1 peripheral clock during Low Power (Sleep) mode.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2361,10 +2311,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_APB2_Clock_Sleep_Enable_Disable APB2 Peripheral Clock Sleep
- * Enable Disable
- * @brief  Enable or disable the APB2 peripheral clock during Low Power (Sleep)
- * mode.
+/** @defgroup RCC_APB2_Clock_Sleep_Enable_Disable APB2 Peripheral Clock Sleep Enable Disable
+ * @brief  Enable or disable the APB2 peripheral clock during Low Power (Sleep) mode.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2436,10 +2384,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB1_Clock_Sleep_Enable_Disable_Status AHB1 Peripheral Clock
- * Sleep Enabled or Disabled Status
- * @brief  Check whether the AHB1 peripheral clock during Low Power (Sleep) mode
- * is enabled or not.
+/** @defgroup RCC_AHB1_Clock_Sleep_Enable_Disable_Status AHB1 Peripheral Clock Sleep Enabled or Disabled Status
+ * @brief  Check whether the AHB1 peripheral clock during Low Power (Sleep) mode is enabled or not.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2483,10 +2429,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB2_Clock_Sleep_Enable_Disable_Status AHB2 Peripheral Clock
- * Sleep Enabled or Disabled Status
- * @brief  Check whether the AHB2 peripheral clock during Low Power (Sleep) mode
- * is enabled or not.
+/** @defgroup RCC_AHB2_Clock_Sleep_Enable_Disable_Status AHB2 Peripheral Clock Sleep Enabled or Disabled Status
+ * @brief  Check whether the AHB2 peripheral clock during Low Power (Sleep) mode is enabled or not.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2582,10 +2526,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_AHB3_Clock_Sleep_Enable_Disable_Status AHB3 Peripheral Clock
- * Sleep Enabled or Disabled Status
- * @brief  Check whether the AHB3 peripheral clock during Low Power (Sleep) mode
- * is enabled or not.
+/** @defgroup RCC_AHB3_Clock_Sleep_Enable_Disable_Status AHB3 Peripheral Clock Sleep Enabled or Disabled Status
+ * @brief  Check whether the AHB3 peripheral clock during Low Power (Sleep) mode is enabled or not.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2613,10 +2555,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_APB1_Clock_Sleep_Enable_Disable_Status APB1 Peripheral Clock
- * Sleep Enabled or Disabled Status
- * @brief  Check whether the APB1 peripheral clock during Low Power (Sleep) mode
- * is enabled or not.
+/** @defgroup RCC_APB1_Clock_Sleep_Enable_Disable_Status APB1 Peripheral Clock Sleep Enabled or Disabled Status
+ * @brief  Check whether the APB1 peripheral clock during Low Power (Sleep) mode is enabled or not.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2748,10 +2688,8 @@ typedef struct {
  * @}
  */
 
-/** @defgroup RCC_APB2_Clock_Sleep_Enable_Disable_Status APB2 Peripheral Clock
- * Sleep Enabled or Disabled Status
- * @brief  Check whether the APB2 peripheral clock during Low Power (Sleep) mode
- * is enabled or not.
+/** @defgroup RCC_APB2_Clock_Sleep_Enable_Disable_Status APB2 Peripheral Clock Sleep Enabled or Disabled Status
+ * @brief  Check whether the APB2 peripheral clock during Low Power (Sleep) mode is enabled or not.
  * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
  *         power consumption.
  * @note   After wakeup from SLEEP mode, the peripheral clock is enabled again.
@@ -2828,8 +2766,8 @@ typedef struct {
  */
 
 /** @brief  Macros to force or release the Backup domain reset.
- * @note   This function resets the RTC peripheral (including the backup
- * registers) and the RTC clock source selection in RCC_CSR register.
+ * @note   This function resets the RTC peripheral (including the backup registers)
+ *         and the RTC clock source selection in RCC_CSR register.
  * @note   The BKPSRAM is not affected by this reset.
  * @retval None
  */
@@ -2861,18 +2799,16 @@ typedef struct {
  * @}
  */
 
-/** @brief  Macros to enable or disable the Internal High Speed 16MHz oscillator
- * (HSI).
+/** @brief  Macros to enable or disable the Internal High Speed 16MHz oscillator (HSI).
  * @note   The HSI is stopped by hardware when entering STOP and STANDBY modes.
  *         It is used (enabled by hardware) as system clock source after startup
  *         from Reset, wakeup from STOP and STANDBY mode, or in case of failure
  *         of the HSE used directly or indirectly as system clock (if the Clock
  *         Security System CSS is enabled).
- * @note   HSI can not be stopped if it is used as system clock source. In this
- * case, you have to select another source of the system clock then stop the
- * HSI.
- * @note   After enabling the HSI, the application software should wait on
- * HSIRDY flag to be set indicating that HSI clock is stable and can be used as
+ * @note   HSI can not be stopped if it is used as system clock source. In this case,
+ *         you have to select another source of the system clock then stop the HSI.
+ * @note   After enabling the HSI, the application software should wait on HSIRDY
+ *         flag to be set indicating that HSI clock is stable and can be used as
  *         system clock source.
  *         This parameter can be: ENABLE or DISABLE.
  * @note   When the HSI is stopped, HSIRDY flag goes low after 6 HSI oscillator
@@ -2883,8 +2819,7 @@ typedef struct {
 
 #define __HAL_RCC_HSI_DISABLE() CLEAR_BIT(RCC->CR, RCC_CR_HSION)
 
-/** @brief  Macro to adjust the Internal High Speed 16MHz oscillator (HSI)
- * calibration value.
+/** @brief  Macro to adjust the Internal High Speed 16MHz oscillator (HSI) calibration value.
  * @note   The calibration is used to compensate for the variations in voltage
  *         and temperature that influence the frequency of the internal HSI RC.
  * @param  __HSICALIBRATIONVALUE__ specifies the calibration trimming value
@@ -2895,11 +2830,10 @@ typedef struct {
 #define __HAL_RCC_HSI_CALIBRATIONVALUE_ADJUST(__HSICALIBRATIONVALUE__) MODIFY_REG(RCC->ICSCR, RCC_ICSCR_HSITRIM, (__HSICALIBRATIONVALUE__) << RCC_ICSCR_HSITRIM_Pos)
 
 /**
- * @brief    Macros to enable or disable the force of the Internal High Speed
- * oscillator (HSI) in STOP mode to be quickly available as kernel clock for
- * USARTs and I2Cs.
- * @note     Keeping the HSI ON in STOP mode allows to avoid slowing down the
- * communication speed because of the HSI startup time.
+ * @brief    Macros to enable or disable the force of the Internal High Speed oscillator (HSI)
+ *           in STOP mode to be quickly available as kernel clock for USARTs and I2Cs.
+ * @note     Keeping the HSI ON in STOP mode allows to avoid slowing down the communication
+ *           speed because of the HSI startup time.
  * @note     The enable of this function has not effect on the HSION bit.
  *           This parameter can be: ENABLE or DISABLE.
  * @retval None
@@ -2926,23 +2860,22 @@ typedef struct {
  * @note   Transition HSE Bypass to HSE On and HSE On to HSE Bypass are not
  *         supported by this macro. User should request a transition to HSE Off
  *         first and then HSE On or HSE Bypass.
- * @note   After enabling the HSE (RCC_HSE_ON or RCC_HSE_Bypass), the
- * application software should wait on HSERDY flag to be set indicating that HSE
- * clock is stable and can be used to clock the PLL and/or system clock.
+ * @note   After enabling the HSE (RCC_HSE_ON or RCC_HSE_Bypass), the application
+ *         software should wait on HSERDY flag to be set indicating that HSE clock
+ *         is stable and can be used to clock the PLL and/or system clock.
  * @note   HSE state can not be changed if it is used directly or through the
  *         PLL as system clock. In this case, you have to select another source
  *         of the system clock then change the HSE state (ex. disable it).
  * @note   The HSE is stopped by hardware when entering STOP and STANDBY modes.
- * @note   This function reset the CSSON bit, so if the clock security
- * system(CSS) was previously enabled you have to enable it again after calling
- * this function.
+ * @note   This function reset the CSSON bit, so if the clock security system(CSS)
+ *         was previously enabled you have to enable it again after calling this
+ *         function.
  * @param  __STATE__ specifies the new state of the HSE.
  *         This parameter can be one of the following values:
- *            @arg @ref RCC_HSE_OFF  Turn OFF the HSE oscillator, HSERDY flag
- * goes low after 6 HSE oscillator clock cycles.
+ *            @arg @ref RCC_HSE_OFF  Turn OFF the HSE oscillator, HSERDY flag goes low after
+ *                                   6 HSE oscillator clock cycles.
  *            @arg @ref RCC_HSE_ON  Turn ON the HSE oscillator.
- *            @arg @ref RCC_HSE_BYPASS  HSE oscillator bypassed with external
- * clock.
+ *            @arg @ref RCC_HSE_BYPASS  HSE oscillator bypassed with external clock.
  * @retval None
  */
 #define __HAL_RCC_HSE_CONFIG(__STATE__)                                                                                                                                                                \
@@ -2967,16 +2900,15 @@ typedef struct {
  *         this domain after reset, you have to enable write access using
  *         HAL_PWR_EnableBkUpAccess() function before to configure the LSE
  *         (to be done once after reset).
- * @note   After enabling the LSE (RCC_LSE_ON or RCC_LSE_BYPASS), the
- * application software should wait on LSERDY flag to be set indicating that LSE
- * clock is stable and can be used to clock the RTC.
+ * @note   After enabling the LSE (RCC_LSE_ON or RCC_LSE_BYPASS), the application
+ *         software should wait on LSERDY flag to be set indicating that LSE clock
+ *         is stable and can be used to clock the RTC.
  * @param  __STATE__ specifies the new state of the LSE.
  *         This parameter can be one of the following values:
- *            @arg @ref RCC_LSE_OFF  Turn OFF the LSE oscillator, LSERDY flag
- * goes low after 6 LSE oscillator clock cycles.
+ *            @arg @ref RCC_LSE_OFF  Turn OFF the LSE oscillator, LSERDY flag goes low after
+ *                                   6 LSE oscillator clock cycles.
  *            @arg @ref RCC_LSE_ON  Turn ON the LSE oscillator.
- *            @arg @ref RCC_LSE_BYPASS  LSE oscillator bypassed with external
- * clock.
+ *            @arg @ref RCC_LSE_BYPASS  LSE oscillator bypassed with external clock.
  * @retval None
  */
 #define __HAL_RCC_LSE_CONFIG(__STATE__)                                                                                                                                                                \
@@ -2992,13 +2924,11 @@ typedef struct {
 		}                                                                                                                                                                                      \
 	} while (0)
 
-/** @brief  Macros to enable or disable the Internal High Speed 48MHz oscillator
- * (HSI48).
- * @note   The HSI48 is stopped by hardware when entering STOP and STANDBY
- * modes.
- * @note   After enabling the HSI48, the application software should wait on
- * HSI48RDY flag to be set indicating that HSI48 clock is stable. This parameter
- * can be: ENABLE or DISABLE.
+/** @brief  Macros to enable or disable the Internal High Speed 48MHz oscillator (HSI48).
+ * @note   The HSI48 is stopped by hardware when entering STOP and STANDBY modes.
+ * @note   After enabling the HSI48, the application software should wait on HSI48RDY
+ *         flag to be set indicating that HSI48 clock is stable.
+ *         This parameter can be: ENABLE or DISABLE.
  * @retval None
  */
 #define __HAL_RCC_HSI48_ENABLE() SET_BIT(RCC->CRRCR, RCC_CRRCR_HSI48ON)
@@ -3006,21 +2936,20 @@ typedef struct {
 #define __HAL_RCC_HSI48_DISABLE() CLEAR_BIT(RCC->CRRCR, RCC_CRRCR_HSI48ON)
 
 /** @brief  Macros to configure the RTC clock (RTCCLK).
- * @note   As the RTC clock configuration bits are in the Backup domain and
- * write access is denied to this domain after reset, you have to enable write
+ * @note   As the RTC clock configuration bits are in the Backup domain and write
+ *         access is denied to this domain after reset, you have to enable write
  *         access using the Power Backup Access macro before to configure
  *         the RTC clock source (to be done once after reset).
  * @note   Once the RTC clock is configured it cannot be changed unless the
- *         Backup domain is reset using __HAL_RCC_BACKUPRESET_FORCE() macro, or
- * by a Power On Reset (POR).
+ *         Backup domain is reset using __HAL_RCC_BACKUPRESET_FORCE() macro, or by
+ *         a Power On Reset (POR).
  *
  * @param  __RTC_CLKSOURCE__ specifies the RTC clock source.
  *         This parameter can be one of the following values:
  *            @arg @ref RCC_RTCCLKSOURCE_NONE  No clock selected as RTC clock.
  *            @arg @ref RCC_RTCCLKSOURCE_LSE  LSE selected as RTC clock.
  *            @arg @ref RCC_RTCCLKSOURCE_LSI  LSI selected as RTC clock.
- *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV32  HSE clock divided by 32
- * selected
+ *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV32  HSE clock divided by 32 selected
  *
  * @note   If the LSE or LSI is used as RTC clock source, the RTC continues to
  *         work in STOP and STANDBY modes, and can be used as wakeup source.
@@ -3037,8 +2966,7 @@ typedef struct {
  *            @arg @ref RCC_RTCCLKSOURCE_NONE  No clock selected as RTC clock.
  *            @arg @ref RCC_RTCCLKSOURCE_LSE  LSE selected as RTC clock.
  *            @arg @ref RCC_RTCCLKSOURCE_LSI  LSI selected as RTC clock.
- *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV32  HSE clock divided by 32
- * selected
+ *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV32  HSE clock divided by 32 selected
  */
 #define __HAL_RCC_GET_RTC_SOURCE() (READ_BIT(RCC->BDCR, RCC_BDCR_RTCSEL))
 
@@ -3047,8 +2975,7 @@ typedef struct {
  *         PLLRDY flag to be set indicating that PLL clock is stable and can
  *         be used as system clock source.
  * @note   The main PLL can not be disabled if it is used as system clock source
- * @note   The main PLL is disabled by hardware when entering STOP and STANDBY
- * modes.
+ * @note   The main PLL is disabled by hardware when entering STOP and STANDBY modes.
  * @retval None
  */
 #define __HAL_RCC_PLL_ENABLE() SET_BIT(RCC->CR, RCC_CR_PLLON)
@@ -3060,10 +2987,8 @@ typedef struct {
  * @param  __PLLSOURCE__ specifies the PLL entry clock source.
  *         This parameter can be one of the following values:
  *            @arg @ref RCC_PLLSOURCE_NONE  No clock selected as PLL clock entry
- *            @arg @ref RCC_PLLSOURCE_HSI  HSI oscillator clock selected as PLL
- * clock entry
- *            @arg @ref RCC_PLLSOURCE_HSE  HSE oscillator clock selected as PLL
- * clock entry
+ *            @arg @ref RCC_PLLSOURCE_HSI  HSI oscillator clock selected as PLL clock entry
+ *            @arg @ref RCC_PLLSOURCE_HSE  HSE oscillator clock selected as PLL clock entry
  * @retval None
  *
  */
@@ -3073,48 +2998,45 @@ typedef struct {
  * @note   This function must be used only when the main PLL is disabled.
  * @param  __PLLM__ specifies the division factor for PLL VCO input clock
  *         This parameter must be a value of @ref RCC_PLLM_Clock_Divider.
- * @note   You have to set the PLLM parameter correctly to ensure that the VCO
- * input frequency ranges from 2.66 to 8 MHz. It is recommended to select a
- * frequency of 8 MHz to limit PLL jitter.
+ * @note   You have to set the PLLM parameter correctly to ensure that the VCO input
+ *         frequency ranges from 2.66 to 8 MHz. It is recommended to select a frequency
+ *         of 8 MHz to limit PLL jitter.
  * @retval None
  *
  */
 #define __HAL_RCC_PLL_PLLM_CONFIG(__PLLM__) MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLM, ((__PLLM__) - 1) << RCC_PLLCFGR_PLLM_Pos)
 
 /**
- * @brief  Macro to configure the main PLL clock source, multiplication and
- * division factors.
+ * @brief  Macro to configure the main PLL clock source, multiplication and division factors.
  * @note   This macro must be used only when the main PLL is disabled.
  * @note   This macro preserves the PLL's output clocks enable state.
  *
  * @param  __PLLSOURCE__ specifies the PLL entry clock source.
  *          This parameter can be one of the following values:
  *            @arg @ref RCC_PLLSOURCE_NONE  No clock selected as PLL clock entry
- *            @arg @ref RCC_PLLSOURCE_HSI  HSI oscillator clock selected as PLL
- * clock entry
- *            @arg @ref RCC_PLLSOURCE_HSE  HSE oscillator clock selected as PLL
- * clock entry
+ *            @arg @ref RCC_PLLSOURCE_HSI  HSI oscillator clock selected as PLL clock entry
+ *            @arg @ref RCC_PLLSOURCE_HSE  HSE oscillator clock selected as PLL clock entry
  *
  * @param  __PLLM__ specifies the division factor for PLL VCO input clock.
  *          This parameter must be a value of @ref RCC_PLLM_Clock_Divider
- * @note   You have to set the PLLM parameter correctly to ensure that the VCO
- * input frequency ranges from 2.66 to 8 MHz. It is recommended to select a
- * frequency of 8 MHz to limit PLL jitter.
+ * @note   You have to set the PLLM parameter correctly to ensure that the VCO input
+ *         frequency ranges from 2.66 to 8 MHz. It is recommended to select a frequency
+ *         of 8 MHz to limit PLL jitter.
  *
- * @param  __PLLN__ specifies the multiplication factor for PLL VCO output
- * clock. This parameter must be a number between 8 and 127.
+ * @param  __PLLN__ specifies the multiplication factor for PLL VCO output clock.
+ *          This parameter must be a number between 8 and 127.
  * @note   You have to set the PLLN parameter correctly to ensure that the VCO
  *         output frequency is between 64 and 344 MHz.
  *
  * @param  __PLLP__ specifies the division factor for SAI clock.
  *          This parameter must be a number in the range (2 to 31).
  *
- * @param  __PLLQ__ specifies the division factor for OTG FS, SDMMC1 and RNG
- * clocks. This parameter must be in the range (2, 4, 6 or 8).
+ * @param  __PLLQ__ specifies the division factor for OTG FS, SDMMC1 and RNG clocks.
+ *          This parameter must be in the range (2, 4, 6 or 8).
  * @note   If the USB OTG FS is used in your application, you have to set the
  *         PLLQ parameter correctly to have 48 MHz clock for the USB. However,
- *         the SDMMC1 and RNG need a frequency lower than or equal to 48 MHz to
- * work correctly.
+ *         the SDMMC1 and RNG need a frequency lower than or equal to 48 MHz to work
+ *         correctly.
  * @param  __PLLR__ specifies the division factor for the main system clock.
  * @note   You have to set the PLLR parameter correctly to not exceed 170MHZ.
  *          This parameter must be in the range (2, 4, 6 or 8).
@@ -3126,8 +3048,8 @@ typedef struct {
 		    ((((__PLLR__) >> 1U) - 1U) << RCC_PLLCFGR_PLLR_Pos) | ((__PLLP__) << RCC_PLLCFGR_PLLPDIV_Pos)))
 
 /** @brief  Macro to get the oscillator used as PLL clock source.
- * @retval The oscillator used as PLL clock source. The returned value can be
- * one of the following:
+ * @retval The oscillator used as PLL clock source. The returned value can be one
+ *         of the following:
  *              - RCC_PLLSOURCE_NONE: No oscillator is used as PLL clock source.
  *              - RCC_PLLSOURCE_HSI: HSI oscillator is used as PLL clock source.
  *              - RCC_PLLSOURCE_HSE: HSE oscillator is used as PLL clock source.
@@ -3135,19 +3057,16 @@ typedef struct {
 #define __HAL_RCC_GET_PLL_OSCSOURCE() (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC))
 
 /**
- * @brief  Enable or disable each clock output (RCC_PLL_SYSCLK, RCC_PLL_48M1CLK,
- * RCC_PLL_ADCCLK)
- * @note   Enabling/disabling clock outputs RCC_PLL_ADCCLK and RCC_PLL_48M1CLK
- * can be done at anytime without the need to stop the PLL in order to save
- * power. But RCC_PLL_SYSCLK cannot be stopped if used as System Clock.
+ * @brief  Enable or disable each clock output (RCC_PLL_SYSCLK, RCC_PLL_48M1CLK, RCC_PLL_ADCCLK)
+ * @note   Enabling/disabling clock outputs RCC_PLL_ADCCLK and RCC_PLL_48M1CLK can be done at anytime
+ *         without the need to stop the PLL in order to save power. But RCC_PLL_SYSCLK cannot
+ *         be stopped if used as System Clock.
  * @param  __PLLCLOCKOUT__ specifies the PLL clock to be output.
  *          This parameter can be one or a combination of the following values:
- *            @arg @ref RCC_PLL_ADCCLK  This clock is used to generate a clock
- * on ADC.
- *            @arg @ref RCC_PLL_48M1CLK  This Clock is used to generate the
- * clock for the USB (48 MHz), FDCAN (<=48 MHz) and QSPI (<=48 MHz).
- *            @arg @ref RCC_PLL_SYSCLK  This Clock is used to generate the high
- * speed system clock (up to 170MHz)
+ *            @arg @ref RCC_PLL_ADCCLK  This clock is used to generate a clock on ADC.
+ *            @arg @ref RCC_PLL_48M1CLK  This Clock is used to generate the clock for the USB (48 MHz),
+ *                                   FDCAN (<=48 MHz) and QSPI (<=48 MHz).
+ *            @arg @ref RCC_PLL_SYSCLK  This Clock is used to generate the high speed system clock (up to 170MHz)
  * @retval None
  */
 #define __HAL_RCC_PLLCLKOUT_ENABLE(__PLLCLOCKOUT__) SET_BIT(RCC->PLLCFGR, (__PLLCLOCKOUT__))
@@ -3155,16 +3074,13 @@ typedef struct {
 #define __HAL_RCC_PLLCLKOUT_DISABLE(__PLLCLOCKOUT__) CLEAR_BIT(RCC->PLLCFGR, (__PLLCLOCKOUT__))
 
 /**
- * @brief  Get clock output enable status (RCC_PLL_SYSCLK, RCC_PLL_48M1CLK,
- * RCC_PLL_SAI3CLK)
+ * @brief  Get clock output enable status (RCC_PLL_SYSCLK, RCC_PLL_48M1CLK, RCC_PLL_SAI3CLK)
  * @param  __PLLCLOCKOUT__ specifies the output PLL clock to be checked.
  *          This parameter can be one of the following values:
- *            @arg @ref RCC_PLL_ADCCLK  This clock is used to generate a clock
- * on ADC.
- *            @arg @ref RCC_PLL_48M1CLK  This Clock is used to generate the
- * clock for the USB (48 MHz), FDCAN (<=48 MHz) and QSPI (<=48 MHz).
- *            @arg @ref RCC_PLL_SYSCLK  This Clock is used to generate the high
- * speed system clock (up to 170MHz)
+ *            @arg @ref RCC_PLL_ADCCLK  This clock is used to generate a clock on ADC.
+ *            @arg @ref RCC_PLL_48M1CLK  This Clock is used to generate the clock for the USB (48 MHz),
+ *                                   FDCAN (<=48 MHz) and QSPI (<=48 MHz).
+ *            @arg @ref RCC_PLL_SYSCLK  This Clock is used to generate the high speed system clock (up to 170MHz)
  * @retval SET / RESET
  */
 #define __HAL_RCC_GET_PLLCLKOUT_CONFIG(__PLLCLOCKOUT__) READ_BIT(RCC->PLLCFGR, (__PLLCLOCKOUT__))
@@ -3173,12 +3089,9 @@ typedef struct {
  * @brief  Macro to configure the system clock source.
  * @param  __SYSCLKSOURCE__ specifies the system clock source.
  *          This parameter can be one of the following values:
- *              - RCC_SYSCLKSOURCE_HSI: HSI oscillator is used as system clock
- * source.
- *              - RCC_SYSCLKSOURCE_HSE: HSE oscillator is used as system clock
- * source.
- *              - RCC_SYSCLKSOURCE_PLLCLK: PLL output is used as system clock
- * source.
+ *              - RCC_SYSCLKSOURCE_HSI: HSI oscillator is used as system clock source.
+ *              - RCC_SYSCLKSOURCE_HSE: HSE oscillator is used as system clock source.
+ *              - RCC_SYSCLKSOURCE_PLLCLK: PLL output is used as system clock source.
  * @retval None
  */
 #define __HAL_RCC_SYSCLK_CONFIG(__SYSCLKSOURCE__) MODIFY_REG(RCC->CFGR, RCC_CFGR_SW, (__SYSCLKSOURCE__))
@@ -3193,8 +3106,7 @@ typedef struct {
 #define __HAL_RCC_GET_SYSCLK_SOURCE() (READ_BIT(RCC->CFGR, RCC_CFGR_SWS))
 
 /**
- * @brief  Macro to configure the External Low Speed oscillator (LSE) drive
- * capability.
+ * @brief  Macro to configure the External Low Speed oscillator (LSE) drive capability.
  * @note   As the LSE is in the Backup domain and write access is denied to
  *         this domain after reset, you have to enable write access using
  *         HAL_PWR_EnableBkUpAccess() function before to configure the LSE
@@ -3202,10 +3114,8 @@ typedef struct {
  * @param  __LSEDRIVE__ specifies the new state of the LSE drive capability.
  *          This parameter can be one of the following values:
  *            @arg @ref RCC_LSEDRIVE_LOW  LSE oscillator low drive capability.
- *            @arg @ref RCC_LSEDRIVE_MEDIUMLOW  LSE oscillator medium low drive
- * capability.
- *            @arg @ref RCC_LSEDRIVE_MEDIUMHIGH  LSE oscillator medium high
- * drive capability.
+ *            @arg @ref RCC_LSEDRIVE_MEDIUMLOW  LSE oscillator medium low drive capability.
+ *            @arg @ref RCC_LSEDRIVE_MEDIUMHIGH  LSE oscillator medium high drive capability.
  *            @arg @ref RCC_LSEDRIVE_HIGH  LSE oscillator high drive capability.
  * @retval None
  */
@@ -3215,16 +3125,13 @@ typedef struct {
  * @param  __MCOCLKSOURCE__ specifies the MCO clock source.
  *          This parameter can be one of the following values:
  *            @arg @ref RCC_MCO1SOURCE_NOCLOCK  MCO output disabled
- *            @arg @ref RCC_MCO1SOURCE_SYSCLK  System  clock selected as MCO
- * source
+ *            @arg @ref RCC_MCO1SOURCE_SYSCLK  System  clock selected as MCO source
  *            @arg @ref RCC_MCO1SOURCE_HSI  HSI clock selected as MCO source
  *            @arg @ref RCC_MCO1SOURCE_HSE  HSE clock selected as MCO source
- *            @arg @ref RCC_MCO1SOURCE_PLLCLK  Main PLL clock selected as MCO
- * source
+ *            @arg @ref RCC_MCO1SOURCE_PLLCLK  Main PLL clock selected as MCO source
  *            @arg @ref RCC_MCO1SOURCE_LSI  LSI clock selected as MCO source
  *            @arg @ref RCC_MCO1SOURCE_LSE  LSE clock selected as MCO source
- *            @arg @ref RCC_MCO1SOURCE_HSI48  HSI48 clock selected as MCO source
- * for devices with HSI48
+ *            @arg @ref RCC_MCO1SOURCE_HSI48  HSI48 clock selected as MCO source for devices with HSI48
  * @param  __MCODIV__ specifies the MCO clock prescaler.
  *          This parameter can be one of the following values:
  *            @arg @ref RCC_MCODIV_1   MCO clock source is divided by 1
@@ -3240,8 +3147,8 @@ typedef struct {
  * @{
  */
 
-/** @brief  Enable RCC interrupt (Perform Byte access to RCC_CIR[14:8] bits to
- * enable the selected interrupts).
+/** @brief  Enable RCC interrupt (Perform Byte access to RCC_CIR[14:8] bits to enable
+ *         the selected interrupts).
  * @param  __INTERRUPT__ specifies the RCC interrupt sources to be enabled.
  *         This parameter can be any combination of the following values:
  *            @arg @ref RCC_IT_LSIRDY  LSI ready interrupt
@@ -3250,14 +3157,13 @@ typedef struct {
  *            @arg @ref RCC_IT_HSERDY  HSE ready interrupt
  *            @arg @ref RCC_IT_PLLRDY  Main PLL ready interrupt
  *            @arg @ref RCC_IT_LSECSS  LSE Clock security system interrupt
- *            @arg @ref RCC_IT_HSI48RDY  HSI48 ready interrupt for devices with
- * HSI48
+ *            @arg @ref RCC_IT_HSI48RDY  HSI48 ready interrupt for devices with HSI48
  * @retval None
  */
 #define __HAL_RCC_ENABLE_IT(__INTERRUPT__) SET_BIT(RCC->CIER, (__INTERRUPT__))
 
-/** @brief Disable RCC interrupt (Perform Byte access to RCC_CIR[14:8] bits to
- * disable the selected interrupts).
+/** @brief Disable RCC interrupt (Perform Byte access to RCC_CIR[14:8] bits to disable
+ *        the selected interrupts).
  * @param  __INTERRUPT__ specifies the RCC interrupt sources to be disabled.
  *         This parameter can be any combination of the following values:
  *            @arg @ref RCC_IT_LSIRDY  LSI ready interrupt
@@ -3266,14 +3172,13 @@ typedef struct {
  *            @arg @ref RCC_IT_HSERDY  HSE ready interrupt
  *            @arg @ref RCC_IT_PLLRDY  Main PLL ready interrupt
  *            @arg @ref RCC_IT_LSECSS  LSE Clock security system interrupt
- *            @arg @ref RCC_IT_HSI48RDY  HSI48 ready interrupt for devices with
- * HSI48
+ *            @arg @ref RCC_IT_HSI48RDY  HSI48 ready interrupt for devices with HSI48
  * @retval None
  */
 #define __HAL_RCC_DISABLE_IT(__INTERRUPT__) CLEAR_BIT(RCC->CIER, (__INTERRUPT__))
 
-/** @brief  Clear the RCC's interrupt pending bits (Perform Byte access to
- * RCC_CIR[23:16] bits to clear the selected interrupt pending bits.
+/** @brief  Clear the RCC's interrupt pending bits (Perform Byte access to RCC_CIR[23:16]
+ *         bits to clear the selected interrupt pending bits.
  * @param  __INTERRUPT__ specifies the interrupt pending bit to clear.
  *         This parameter can be any combination of the following values:
  *            @arg @ref RCC_IT_LSIRDY  LSI ready interrupt
@@ -3283,8 +3188,7 @@ typedef struct {
  *            @arg @ref RCC_IT_PLLRDY  Main PLL ready interrupt
  *            @arg @ref RCC_IT_CSS  HSE Clock security system interrupt
  *            @arg @ref RCC_IT_LSECSS  LSE Clock security system interrupt
- *            @arg @ref RCC_IT_HSI48RDY  HSI48 ready interrupt for devices with
- * HSI48
+ *            @arg @ref RCC_IT_HSI48RDY  HSI48 ready interrupt for devices with HSI48
  * @retval None
  */
 #define __HAL_RCC_CLEAR_IT(__INTERRUPT__) (RCC->CICR = (__INTERRUPT__))
@@ -3299,16 +3203,14 @@ typedef struct {
  *            @arg @ref RCC_IT_PLLRDY  Main PLL ready interrupt
  *            @arg @ref RCC_IT_CSS  HSE Clock security system interrupt
  *            @arg @ref RCC_IT_LSECSS  LSE Clock security system interrupt
- *            @arg @ref RCC_IT_HSI48RDY HSI48 ready interrupt for devices with
- * HSI48
+ *            @arg @ref RCC_IT_HSI48RDY HSI48 ready interrupt for devices with HSI48
  * @retval The new state of __INTERRUPT__ (TRUE or FALSE).
  */
 #define __HAL_RCC_GET_IT(__INTERRUPT__) ((RCC->CIFR & (__INTERRUPT__)) == (__INTERRUPT__))
 
 /** @brief Set RMVF bit to clear the reset flags.
- *        The reset flags are: RCC_FLAG_FWRRST, RCC_FLAG_OBLRST,
- * RCC_FLAG_PINRST, RCC_FLAG_BORRST, RCC_FLAG_SFTRST, RCC_FLAG_IWDGRST,
- * RCC_FLAG_WWDGRST and RCC_FLAG_LPWRRST.
+ *        The reset flags are: RCC_FLAG_FWRRST, RCC_FLAG_OBLRST, RCC_FLAG_PINRST, RCC_FLAG_BORRST,
+ *        RCC_FLAG_SFTRST, RCC_FLAG_IWDGRST, RCC_FLAG_WWDGRST and RCC_FLAG_LPWRRST.
  * @retval None
  */
 #define __HAL_RCC_CLEAR_RESET_FLAGS() (RCC->CSR |= RCC_CSR_RMVF)
@@ -3319,11 +3221,9 @@ typedef struct {
  *            @arg @ref RCC_FLAG_HSIRDY  HSI oscillator clock ready
  *            @arg @ref RCC_FLAG_HSERDY  HSE oscillator clock ready
  *            @arg @ref RCC_FLAG_PLLRDY  Main PLL clock ready
- *            @arg @ref RCC_FLAG_HSI48RDY  HSI48 clock ready for devices with
- * HSI48
+ *            @arg @ref RCC_FLAG_HSI48RDY  HSI48 clock ready for devices with HSI48
  *            @arg @ref RCC_FLAG_LSERDY  LSE oscillator clock ready
- *            @arg @ref RCC_FLAG_LSECSSD  Clock security system failure on LSE
- * oscillator detection
+ *            @arg @ref RCC_FLAG_LSECSSD  Clock security system failure on LSE oscillator detection
  *            @arg @ref RCC_FLAG_LSIRDY  LSI oscillator clock ready
  *            @arg @ref RCC_FLAG_BORRST  BOR reset
  *            @arg @ref RCC_FLAG_OBLRST  OBLRST reset
@@ -3442,8 +3342,7 @@ typedef struct {
  * @{
  */
 
-/* Initialization and de-initialization functions
- * ******************************/
+/* Initialization and de-initialization functions  ******************************/
 HAL_StatusTypeDef HAL_RCC_DeInit(void);
 HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct);
 HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t FLatency);
@@ -3456,8 +3355,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruc
  * @{
  */
 
-/* Peripheral Control functions
- * ************************************************/
+/* Peripheral Control functions  ************************************************/
 void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
 void HAL_RCC_EnableCSS(void);
 void HAL_RCC_EnableLSECSS(void);

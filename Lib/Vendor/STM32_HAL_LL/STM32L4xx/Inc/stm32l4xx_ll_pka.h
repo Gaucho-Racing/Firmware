@@ -52,8 +52,7 @@ typedef struct {
 	uint32_t Mode; /*!< Specifies the PKA operation mode.
 			    This parameter can be a value of @ref PKA_LL_EC_MODE.
 
-			    This feature can be modified afterwards using unitary
-			  function @ref LL_PKA_SetMode(). */
+			    This feature can be modified afterwards using unitary function @ref LL_PKA_SetMode(). */
 } LL_PKA_InitTypeDef;
 
 /**
@@ -79,8 +78,7 @@ typedef struct {
  */
 
 /** @defgroup PKA_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_PKA_ReadReg and
- * LL_PKA_WriteReg functions
+ * @brief    IT defines which can be used with LL_PKA_ReadReg and  LL_PKA_WriteReg functions
  * @{
  */
 #define LL_PKA_CR_ADDRERRIE PKA_CR_ADDRERRIE
@@ -97,34 +95,24 @@ typedef struct {
  * @brief    List of operation mode.
  * @{
  */
-#define LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP                                                                                                                                                           \
-	((uint32_t)0x00000000U)				     /*!< Compute Montgomery parameter and modular                                                                                             \
-								exponentiation */
-#define LL_PKA_MODE_MONTGOMERY_PARAM ((uint32_t)0x00000001U) /*!< Compute Montgomery parameter only */
-#define LL_PKA_MODE_MODULAR_EXP                                                                                                                                                                        \
-	((uint32_t)0x00000002U) /*!< Compute modular exponentiation only                                                                                                                               \
-				   (Montgomery parameter should be loaded) */
-#define LL_PKA_MODE_MONTGOMERY_PARAM_ECC                                                                                                                                                               \
-	((uint32_t)0x00000020U) /*!< Compute Montgomery parameter and compute                                                                                                                          \
-				   ECC kP operation */
-#define LL_PKA_MODE_ECC_KP_PRIMITIVE                                                                                                                                                                   \
-	((uint32_t)0x00000022U)				       /*!< Compute the ECC kP primitive only                                                                                                  \
-								  (Montgomery parameter should be loaded) */
-#define LL_PKA_MODE_ECDSA_SIGNATURE ((uint32_t)0x00000024U)    /*!< ECDSA signature */
-#define LL_PKA_MODE_ECDSA_VERIFICATION ((uint32_t)0x00000026U) /*!< ECDSA verification */
-#define LL_PKA_MODE_POINT_CHECK ((uint32_t)0x00000028U)	       /*!< Point check */
-#define LL_PKA_MODE_RSA_CRT_EXP ((uint32_t)0x00000007U)	       /*!< RSA CRT exponentiation */
-#define LL_PKA_MODE_MODULAR_INV ((uint32_t)0x00000008U)	       /*!< Modular inversion */
-#define LL_PKA_MODE_ARITHMETIC_ADD ((uint32_t)0x00000009U)     /*!< Arithmetic addition */
-#define LL_PKA_MODE_ARITHMETIC_SUB ((uint32_t)0x0000000AU)     /*!< Arithmetic subtraction */
-#define LL_PKA_MODE_ARITHMETIC_MUL ((uint32_t)0x0000000BU)     /*!< Arithmetic multiplication */
-#define LL_PKA_MODE_COMPARISON ((uint32_t)0x0000000CU)	       /*!< Comparison */
-#define LL_PKA_MODE_MODULAR_REDUC ((uint32_t)0x0000000DU)      /*!< Modular reduction */
-#define LL_PKA_MODE_MODULAR_ADD                                                                                                                                                                        \
-	((uint32_t)0x0000000EU)				   /*!< Modular addition                                                                                                                       \
-							    */
-#define LL_PKA_MODE_MODULAR_SUB ((uint32_t)0x0000000FU)	   /*!< Modular subtraction */
-#define LL_PKA_MODE_MONTGOMERY_MUL ((uint32_t)0x00000010U) /*!< Montgomery multiplication */
+#define LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP ((uint32_t)0x00000000U) /*!< Compute Montgomery parameter and modular exponentiation */
+#define LL_PKA_MODE_MONTGOMERY_PARAM ((uint32_t)0x00000001U)	     /*!< Compute Montgomery parameter only */
+#define LL_PKA_MODE_MODULAR_EXP ((uint32_t)0x00000002U)		     /*!< Compute modular exponentiation only (Montgomery parameter should be loaded) */
+#define LL_PKA_MODE_MONTGOMERY_PARAM_ECC ((uint32_t)0x00000020U)     /*!< Compute Montgomery parameter and compute ECC kP operation */
+#define LL_PKA_MODE_ECC_KP_PRIMITIVE ((uint32_t)0x00000022U)	     /*!< Compute the ECC kP primitive only (Montgomery parameter should be loaded) */
+#define LL_PKA_MODE_ECDSA_SIGNATURE ((uint32_t)0x00000024U)	     /*!< ECDSA signature */
+#define LL_PKA_MODE_ECDSA_VERIFICATION ((uint32_t)0x00000026U)	     /*!< ECDSA verification */
+#define LL_PKA_MODE_POINT_CHECK ((uint32_t)0x00000028U)		     /*!< Point check */
+#define LL_PKA_MODE_RSA_CRT_EXP ((uint32_t)0x00000007U)		     /*!< RSA CRT exponentiation */
+#define LL_PKA_MODE_MODULAR_INV ((uint32_t)0x00000008U)		     /*!< Modular inversion */
+#define LL_PKA_MODE_ARITHMETIC_ADD ((uint32_t)0x00000009U)	     /*!< Arithmetic addition */
+#define LL_PKA_MODE_ARITHMETIC_SUB ((uint32_t)0x0000000AU)	     /*!< Arithmetic subtraction */
+#define LL_PKA_MODE_ARITHMETIC_MUL ((uint32_t)0x0000000BU)	     /*!< Arithmetic multiplication */
+#define LL_PKA_MODE_COMPARISON ((uint32_t)0x0000000CU)		     /*!< Comparison */
+#define LL_PKA_MODE_MODULAR_REDUC ((uint32_t)0x0000000DU)	     /*!< Modular reduction */
+#define LL_PKA_MODE_MODULAR_ADD ((uint32_t)0x0000000EU)		     /*!< Modular addition */
+#define LL_PKA_MODE_MODULAR_SUB ((uint32_t)0x0000000FU)		     /*!< Modular subtraction */
+#define LL_PKA_MODE_MONTGOMERY_MUL ((uint32_t)0x00000010U)	     /*!< Montgomery multiplication */
 
 /**
  * @}
@@ -467,7 +455,18 @@ __STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_BUSY(const PKA_TypeDef *PKAx)
 {
 	return ((READ_BIT(PKAx->SR, PKA_SR_BUSY) == (PKA_SR_BUSY)) ? 1UL : 0UL);
 }
-
+#if defined(PKA_SR_INITOK)
+/**
+ * @brief  Get PKA init ok flag.
+ * @rmtoll SR           INITOK          LL_PKA_IsActiveFlag_INITOK
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_INITOK(const PKA_TypeDef *PKAx)
+{
+	return ((READ_BIT(PKAx->SR, PKA_SR_INITOK) == (PKA_SR_INITOK)) ? 1UL : 0UL);
+}
+#endif /* PKA_SR_INITOK */
 /**
  * @brief  Clear PKA address error flag.
  * @rmtoll CLRFR        ADDRERRFC     LL_PKA_ClearFlag_ADDERR
@@ -520,9 +519,9 @@ void LL_PKA_StructInit(LL_PKA_InitTypeDef *PKA_InitStruct);
  */
 
 #endif /* USE_FULL_LL_DRIVER */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 /**
  * @}

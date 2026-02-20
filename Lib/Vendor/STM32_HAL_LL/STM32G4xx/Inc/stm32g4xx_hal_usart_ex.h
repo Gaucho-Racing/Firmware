@@ -54,10 +54,8 @@ extern "C" {
 /** @defgroup USARTEx_Slave_Select_management USARTEx Slave Select Management
  * @{
  */
-#define USART_NSS_HARD 0x00000000U /*!< SPI slave selection depends on NSS input pin */
-#define USART_NSS_SOFT                                                                                                                                                                                 \
-	USART_CR2_DIS_NSS /*!< SPI slave is always selected and NSS input pin                                                                                                                          \
-			     is ignored */
+#define USART_NSS_HARD 0x00000000U	 /*!< SPI slave selection depends on NSS input pin              */
+#define USART_NSS_SOFT USART_CR2_DIS_NSS /*!< SPI slave is always selected and NSS input pin is ignored */
 /**
  * @}
  */
@@ -66,9 +64,7 @@ extern "C" {
  * @brief    USART SLAVE mode
  * @{
  */
-#define USART_SLAVEMODE_DISABLE                                                                                                                                                                        \
-	0x00000000U			       /*!< USART SPI Slave Mode Enable                                                                                                                        \
-						*/
+#define USART_SLAVEMODE_DISABLE 0x00000000U    /*!< USART SPI Slave Mode Enable  */
 #define USART_SLAVEMODE_ENABLE USART_CR2_SLVEN /*!< USART SPI Slave Mode Disable */
 /**
  * @}
@@ -128,8 +124,7 @@ extern "C" {
  *         This masking operation is not carried out in the case of
  *         DMA transfers.
  * @param  __HANDLE__ specifies the USART Handle.
- * @retval None, the mask to apply to USART RDR register is stored in
- * (__HANDLE__)->Mask field.
+ * @retval None, the mask to apply to USART RDR register is stored in (__HANDLE__)->Mask field.
  */
 #define USART_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                             \
 	do {                                                                                                                                                                                           \

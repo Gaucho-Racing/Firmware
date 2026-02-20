@@ -44,15 +44,13 @@ extern "C" {
  * @brief  UART wake up from stop mode parameters
  */
 typedef struct {
-	uint32_t WakeUpEvent; /*!< Specifies which event will activate the Wakeup
-				 from Stop mode flag (WUF). This parameter can be a
-				 value of @ref UART_WakeUp_from_Stop_Selection. If
-				 set to UART_WAKEUP_ON_ADDRESS, the two other fields
-				 below must be filled up. */
+	uint32_t WakeUpEvent; /*!< Specifies which event will activate the Wakeup from Stop mode flag (WUF).
+				   This parameter can be a value of @ref UART_WakeUp_from_Stop_Selection.
+				   If set to UART_WAKEUP_ON_ADDRESS, the two other fields below must
+				   be filled up. */
 
-	uint16_t AddressLength; /*!< Specifies whether the address is 4 or 7-bit
-				   long. This parameter can be a value of @ref
-				   UARTEx_WakeUp_Address_Length.  */
+	uint16_t AddressLength; /*!< Specifies whether the address is 4 or 7-bit long.
+				     This parameter can be a value of @ref UARTEx_WakeUp_Address_Length.  */
 
 	uint8_t Address; /*!< UART/USART node address (7-bit long max). */
 } UART_WakeUpTypeDef;
@@ -81,9 +79,9 @@ typedef struct {
  */
 #define UART_ADDRESS_DETECT_4B 0x00000000U     /*!< 4-bit long wake-up address */
 #define UART_ADDRESS_DETECT_7B USART_CR2_ADDM7 /*!< 7-bit long wake-up address */
-					       /**
-						* @}
-						*/
+/**
+ * @}
+ */
 
 #if defined(USART_CR1_FIFOEN)
 /** @defgroup UARTEx_FIFO_mode UARTEx FIFO mode
@@ -120,9 +118,9 @@ typedef struct {
 #define UART_RXFIFO_THRESHOLD_3_4 (USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1) /*!< RX FIFO reaches 3/4 of its depth */
 #define UART_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2			      /*!< RX FIFO reaches 7/8 of its depth */
 #define UART_RXFIFO_THRESHOLD_8_8 (USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RX FIFO becomes full             */
-									      /**
-									       * @}
-									       */
+/**
+ * @}
+ */
 
 #endif /* USART_CR1_FIFOEN */
 /**
@@ -561,10 +559,10 @@ HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(const UART_HandleTypeDef *
 			(__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
-#endif /* STM32L471xx ||  STM32L475xx ||  STM32L476xx ||  STM32L485xx ||                                                                                                                               \
-	* STM32L486xx || STM32L496xx ||  STM32L4A6xx || STM32L4P5xx ||                                                                                                                                 \
-	* STM32L4Q5xx || STM32L4R5xx ||  STM32L4R7xx ||  STM32L4R9xx ||                                                                                                                                \
-	* STM32L4S5xx ||  STM32L4S7xx ||  STM32L4S9xx                                                                                                                                                  \
+#endif /* STM32L471xx ||  STM32L475xx ||  STM32L476xx ||  STM32L485xx ||  STM32L486xx ||                                                                                                               \
+	* STM32L496xx ||  STM32L4A6xx ||                                                                                                                                                               \
+	* STM32L4P5xx ||  STM32L4Q5xx ||                                                                                                                                                               \
+	* STM32L4R5xx ||  STM32L4R7xx ||  STM32L4R9xx ||  STM32L4S5xx ||  STM32L4S7xx ||  STM32L4S9xx                                                                                                  \
 	*/
 
 /** @brief  Report the UART mask to apply to retrieve the received data
@@ -574,8 +572,7 @@ HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(const UART_HandleTypeDef *
  *         This masking operation is not carried out in the case of
  *         DMA transfers.
  * @param  __HANDLE__ specifies the UART Handle.
- * @retval None, the mask to apply to UART RDR register is stored in
- * (__HANDLE__)->Mask field.
+ * @retval None, the mask to apply to UART RDR register is stored in (__HANDLE__)->Mask field.
  */
 #define UART_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                              \
 	do {                                                                                                                                                                                           \
@@ -636,9 +633,9 @@ HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(const UART_HandleTypeDef *
 	 ((__THRESHOLD__) == UART_RXFIFO_THRESHOLD_3_4) || ((__THRESHOLD__) == UART_RXFIFO_THRESHOLD_7_8) || ((__THRESHOLD__) == UART_RXFIFO_THRESHOLD_8_8))
 
 #endif /* USART_CR1_FIFOEN */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 /* Private functions ---------------------------------------------------------*/
 

@@ -30,11 +30,12 @@
 
     (#) Enable the FIREWALL in calling HAL_FIREWALL_EnableFirewall() API
 
-    (#) To ensure that any code executed outside the protected segment closes
- the FIREWALL, the user must set the flag FIREWALL_PRE_ARM_SET in calling
-	__HAL_FIREWALL_PREARM_ENABLE() macro if called within a protected code
- segment or HAL_FIREWALL_EnablePreArmFlag() API if called outside of protected
- code segment after HAL_FIREWALL_Config() call.
+    (#) To ensure that any code executed outside the protected segment closes the
+	FIREWALL, the user must set the flag FIREWALL_PRE_ARM_SET in calling
+	__HAL_FIREWALL_PREARM_ENABLE() macro if called within a protected code segment
+	or
+	HAL_FIREWALL_EnablePreArmFlag() API if called outside of protected code segment
+	after HAL_FIREWALL_Config() call.
 
 
   @endverbatim
@@ -76,8 +77,7 @@
     This subsection provides the functions allowing to initialize the Firewall.
     Initialization is done by HAL_FIREWALL_Config():
 
-      (+) Enable the Firewall clock through __HAL_RCC_FIREWALL_CLK_ENABLE()
-macro.
+      (+) Enable the Firewall clock through __HAL_RCC_FIREWALL_CLK_ENABLE() macro.
 
       (+) Set the protected code segment address start and length.
 
@@ -93,8 +93,7 @@ macro.
   */
 
 /**
- * @brief Initialize the Firewall according to the FIREWALL_InitTypeDef
- * structure parameters.
+ * @brief Initialize the Firewall according to the FIREWALL_InitTypeDef structure parameters.
  * @param fw_init: Firewall initialization structure
  * @note  The API returns HAL_ERROR if the Firewall is already enabled.
  * @retval HAL status
@@ -114,14 +113,12 @@ HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init)
 		return HAL_ERROR;
 	}
 
-	/* Check Firewall configuration addresses and lengths when segment is
-	 * protected */
+	/* Check Firewall configuration addresses and lengths when segment is protected */
 	/* Code segment */
 	if (fw_init->CodeSegmentLength != 0U) {
 		assert_param(IS_FIREWALL_CODE_SEGMENT_ADDRESS(fw_init->CodeSegmentStartAddress));
 		assert_param(IS_FIREWALL_CODE_SEGMENT_LENGTH(fw_init->CodeSegmentStartAddress, fw_init->CodeSegmentLength));
-		/* Make sure that NonVDataSegmentLength is properly set to
-		 * prevent code segment access */
+		/* Make sure that NonVDataSegmentLength is properly set to prevent code segment access */
 		if (fw_init->NonVDataSegmentLength < 0x100U) {
 			return HAL_ERROR;
 		}
@@ -167,22 +164,19 @@ HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init)
 
 /**
  * @brief Retrieve the Firewall configuration.
- * @param fw_config: Firewall configuration, type is same as initialization
- * structure
+ * @param fw_config: Firewall configuration, type is same as initialization structure
  * @note This API can't be executed inside a code area protected by the Firewall
  *       when the Firewall is enabled
- * @note If NVDSL register is different from 0, that is, if the non volatile
- * data segment is defined, this API can't be executed when the Firewall is
- * enabled.
- * @note User should resort to __HAL_FIREWALL_GET_PREARM() macro to retrieve FPA
- * bit status
+ * @note If NVDSL register is different from 0, that is, if the non volatile data segment
+ *       is defined, this API can't be executed when the Firewall is enabled.
+ * @note User should resort to __HAL_FIREWALL_GET_PREARM() macro to retrieve FPA bit status
  * @retval None
  */
 void HAL_FIREWALL_GetConfig(FIREWALL_InitTypeDef *fw_config)
 {
 
-	/* Enable Firewall clock, in case no Firewall configuration has been
-	   carried out up to this point */
+	/* Enable Firewall clock, in case no Firewall configuration has been carried
+	   out up to this point */
 	__HAL_RCC_FIREWALL_CLK_ENABLE();
 
 	/* Retrieve code segment protection setting */
@@ -223,10 +217,9 @@ void HAL_FIREWALL_EnableFirewall(void)
  * @brief Enable FIREWALL pre arm.
  * @note When FPA bit is set, any code executed outside the protected segment
  *       will close the Firewall.
- * @note This API provides the same service as __HAL_FIREWALL_PREARM_ENABLE()
- * macro but can't be executed inside a code area protected by the Firewall.
- * @note When the Firewall is disabled, user can resort to
- * HAL_FIREWALL_EnablePreArmFlag() API any time.
+ * @note This API provides the same service as __HAL_FIREWALL_PREARM_ENABLE() macro
+ *       but can't be executed inside a code area protected by the Firewall.
+ * @note When the Firewall is disabled, user can resort to HAL_FIREWALL_EnablePreArmFlag() API any time.
  * @note When the Firewall is enabled and NVDSL register is equal to 0 (that is,
  *       when the non volatile data segment is not defined),
  *        **  this API can be executed when the Firewall is closed
@@ -235,8 +228,7 @@ void HAL_FIREWALL_EnableFirewall(void)
  * @note When the Firewall is enabled and  NVDSL register is different from 0
  *       (that is, when the non volatile data segment is defined)
  *       **  FW_CR register can be accessed only when the Firewall is opened:
- *           user should resort to  __HAL_FIREWALL_PREARM_ENABLE() macro
- * instead.
+ *           user should resort to  __HAL_FIREWALL_PREARM_ENABLE() macro instead.
  * @retval None
  */
 void HAL_FIREWALL_EnablePreArmFlag(void)
@@ -249,13 +241,10 @@ void HAL_FIREWALL_EnablePreArmFlag(void)
   * @brief Disable FIREWALL pre arm.
   * @note When FPA bit is reset, any code executed outside the protected segment
   *       when the Firewall is opened will generate a system reset.
-  * @note This API provides the same service as __HAL_FIREWALL_PREARM_DISABLE()
-  macro
+  * @note This API provides the same service as __HAL_FIREWALL_PREARM_DISABLE() macro
   *       but can't be executed inside a code area protected by the Firewall.
-  * @note When the Firewall is disabled, user can resort to
-  HAL_FIREWALL_EnablePreArmFlag() API any time.
-  * @note When the Firewall is enabled and NVDSL register is equal to 0 (that
-  is,
+  * @note When the Firewall is disabled, user can resort to HAL_FIREWALL_EnablePreArmFlag() API any time.
+  * @note When the Firewall is enabled and NVDSL register is equal to 0 (that is,
   *       when the non volatile data segment is not defined),
   *        **  this API can be executed when the Firewall is closed
   *        **  when the Firewall is opened, user should resort to
@@ -263,8 +252,7 @@ void HAL_FIREWALL_EnablePreArmFlag(void)
   * @note When the Firewall is enabled and  NVDSL register is different from 0
   *       (that is, when the non volatile data segment is defined)
   *       **  FW_CR register can be accessed only when the Firewall is opened:
-  *           user should resort to  __HAL_FIREWALL_PREARM_DISABLE() macro
-  instead.
+  *           user should resort to  __HAL_FIREWALL_PREARM_DISABLE() macro instead.
 
   * @retval None
   */

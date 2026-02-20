@@ -72,9 +72,6 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
-		Core/Src/syscalls.c
-		Core/Src/sysmem.c
-		Core/Src/system_stm32g4xx.c
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c

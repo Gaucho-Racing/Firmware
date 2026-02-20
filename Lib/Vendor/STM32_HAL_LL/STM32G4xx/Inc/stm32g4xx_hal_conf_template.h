@@ -72,8 +72,7 @@ extern "C" {
 #define HAL_USART_MODULE_ENABLED
 #define HAL_WWDG_MODULE_ENABLED
 
-/* ########################## Register Callbacks selection
- * ############################## */
+/* ########################## Register Callbacks selection ############################## */
 /**
  * @brief This is the list of modules where register callback can be used
  */
@@ -108,13 +107,11 @@ extern "C" {
 #define USE_HAL_USART_REGISTER_CALLBACKS 0U
 #define USE_HAL_WWDG_REGISTER_CALLBACKS 0U
 
-/* ########################## Oscillator Values adaptation
- * ####################*/
+/* ########################## Oscillator Values adaptation ####################*/
 /**
- * @brief Adjust the value of External High Speed oscillator (HSE) used in your
- * application. This value is used by the RCC HAL module to compute the system
- * frequency (when HSE is used as system clock source, directly or through the
- * PLL).
+ * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
+ *        This value is used by the RCC HAL module to compute the system frequency
+ *        (when HSE is used as system clock source, directly or through the PLL).
  */
 #if !defined(HSE_VALUE)
 #define HSE_VALUE (8000000UL) /*!< Value of the External oscillator in Hz */
@@ -126,9 +123,8 @@ extern "C" {
 
 /**
  * @brief Internal High Speed oscillator (HSI) value.
- *        This value is used by the RCC HAL module to compute the system
- * frequency (when HSI is used as system clock source, directly or through the
- * PLL).
+ *        This value is used by the RCC HAL module to compute the system frequency
+ *        (when HSI is used as system clock source, directly or through the PLL).
  */
 #if !defined(HSI_VALUE)
 #define HSI_VALUE (16000000UL) /*!< Value of the Internal oscillator in Hz*/
@@ -136,17 +132,15 @@ extern "C" {
 
 /**
  * @brief Internal High Speed oscillator (HSI48) value for USB FS and RNG.
- *        This internal oscillator is mainly dedicated to provide a high
- * precision clock to the USB peripheral by means of a special Clock Recovery
- * System (CRS) circuitry. When the CRS is not used, the HSI48 RC oscillator
- * runs on it default frequency which is subject to manufacturing process
- * variations.
+ *        This internal oscillator is mainly dedicated to provide a high precision clock to
+ *        the USB peripheral by means of a special Clock Recovery System (CRS) circuitry.
+ *        When the CRS is not used, the HSI48 RC oscillator runs on it default frequency
+ *        which is subject to manufacturing process variations.
  */
 #if !defined(HSI48_VALUE)
 #define HSI48_VALUE                                                                                                                                                                                    \
-	(48000000UL) /*!< Value of the Internal High Speed oscillator for USB                                                                                                                          \
-			FS/RNG in Hz. The real value my vary depending on                                                                                                                              \
-			manufacturing process variations.*/
+	(48000000UL) /*!< Value of the Internal High Speed oscillator for USB FS/RNG in Hz.                                                                                                            \
+			    The real value my vary depending on manufacturing process variations.*/
 #endif		     /* HSI48_VALUE */
 
 /**
@@ -154,14 +148,12 @@ extern "C" {
  */
 #if !defined(LSI_VALUE)
 /*!< Value of the Internal Low Speed oscillator in Hz
-The real value may vary depending on the variations in voltage and
-temperature.*/
+The real value may vary depending on the variations in voltage and temperature.*/
 #define LSI_VALUE (32000UL) /*!< LSI Typical Value in Hz*/
 #endif			    /* LSI_VALUE */
 /**
  * @brief External Low Speed oscillator (LSE) value.
- *        This value is used by the UART, RTC HAL module to compute the system
- * frequency
+ *        This value is used by the UART, RTC HAL module to compute the system frequency
  */
 #if !defined(LSE_VALUE)
 #define LSE_VALUE (32768UL) /*!< Value of the External oscillator in Hz*/
@@ -173,9 +165,8 @@ temperature.*/
 
 /**
  * @brief External clock source for I2S and SAI peripherals
- *        This value is used by the I2S and SAI HAL modules to compute the I2S
- * and SAI clock source frequency, this source is inserted directly through
- * I2S_CKIN pad.
+ *        This value is used by the I2S and SAI HAL modules to compute the I2S and SAI clock source
+ *        frequency, this source is inserted directly through I2S_CKIN pad.
  */
 #if !defined(EXTERNAL_CLOCK_VALUE)
 #define EXTERNAL_CLOCK_VALUE (48000UL) /*!< Value of the External clock source in Hz*/

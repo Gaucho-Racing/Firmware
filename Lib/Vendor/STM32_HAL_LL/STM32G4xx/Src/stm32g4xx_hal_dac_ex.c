@@ -28,22 +28,22 @@
      [..]
       (+) Use HAL_DACEx_DualStart() to enable both channel and start conversion
 	  for dual mode operation.
-	  If software trigger is selected, using HAL_DACEx_DualStart() will
- start the conversion of the value previously set by HAL_DACEx_DualSetValue().
+	  If software trigger is selected, using HAL_DACEx_DualStart() will start
+	  the conversion of the value previously set by HAL_DACEx_DualSetValue().
       (+) Use HAL_DACEx_DualStop() to disable both channel and stop conversion
 	  for dual mode operation.
-      (+) Use HAL_DACEx_DualStart_DMA() to enable both channel and start
- conversion for dual mode operation using DMA to feed DAC converters. First
- issued trigger will start the conversion of the value previously set by
- HAL_DACEx_DualSetValue(). The same callbacks that are used in single mode are
- called in dual mode to notify transfer completion (half complete or complete),
- errors or underrun.
-      (+) Use HAL_DACEx_DualStop_DMA() to disable both channel and stop
- conversion for dual mode operation using DMA to feed DAC converters.
-      (+) When Dual mode is enabled (i.e. DAC Channel1 and Channel2 are used
- simultaneously) : Use HAL_DACEx_DualGetValue() to get digital data to be
- converted and use HAL_DACEx_DualSetValue() to set digital value to converted
- simultaneously in Channel 1 and Channel 2.
+      (+) Use HAL_DACEx_DualStart_DMA() to enable both channel and start conversion
+	  for dual mode operation using DMA to feed DAC converters.
+	  First issued trigger will start the conversion of the value previously
+	  set by HAL_DACEx_DualSetValue().
+	  The same callbacks that are used in single mode are called in dual mode to notify
+	  transfer completion (half complete or complete), errors or underrun.
+      (+) Use HAL_DACEx_DualStop_DMA() to disable both channel and stop conversion
+	  for dual mode operation using DMA to feed DAC converters.
+      (+) When Dual mode is enabled (i.e. DAC Channel1 and Channel2 are used simultaneously) :
+	  Use HAL_DACEx_DualGetValue() to get digital data to be converted and use
+	  HAL_DACEx_DualSetValue() to set digital value to converted simultaneously in
+	  Channel 1 and Channel 2.
      *** Signal generation operation ***
      ===================================
      [..]
@@ -206,8 +206,7 @@ HAL_StatusTypeDef HAL_DACEx_DualStop(DAC_HandleTypeDef *hdac)
 }
 
 /**
- * @brief  Enables DAC and starts conversion of both channel 1 and 2 of the same
- * DAC.
+ * @brief  Enables DAC and starts conversion of both channel 1 and 2 of the same DAC.
  * @param  hdac pointer to a DAC_HandleTypeDef structure that contains
  *         the configuration information for the specified DAC.
  * @param  Channel The DAC channel that will request data from DMA.
@@ -215,8 +214,7 @@ HAL_StatusTypeDef HAL_DACEx_DualStop(DAC_HandleTypeDef *hdac)
  *            @arg DAC_CHANNEL_1: DAC Channel1 selected
  *            @arg DAC_CHANNEL_2: DAC Channel2 selected
  * @param  pData The destination peripheral Buffer address.
- * @param  Length The length of data to be transferred from memory to DAC
- * peripheral
+ * @param  Length The length of data to be transferred from memory to DAC peripheral
  * @param  Alignment Specifies the data alignment for DAC channel.
  *          This parameter can be one of the following values:
  *            @arg DAC_ALIGN_8B_R: 8bit right data alignment selected
@@ -312,13 +310,11 @@ HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Chan
 		/* Enable the Peripheral */
 		__HAL_DAC_ENABLE(hdac, DAC_CHANNEL_1);
 		__HAL_DAC_ENABLE(hdac, DAC_CHANNEL_2);
-		/* Ensure minimum wait before using peripheral after enabling it
-		 */
+		/* Ensure minimum wait before using peripheral after enabling it */
 		/* Wait loop initialization and execution */
-		/* Note: Variable divided by 2 to compensate partially */
-		/*       CPU processing cycles, scaling in us split to not */
-		/*       exceed 32 bits register capacity and handle low
-		 * frequency. */
+		/* Note: Variable divided by 2 to compensate partially              */
+		/*       CPU processing cycles, scaling in us split to not          */
+		/*       exceed 32 bits register capacity and handle low frequency. */
 		wait_loop_index = ((DAC_DELAY_STARTUP_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 		while (wait_loop_index != 0UL) {
 			wait_loop_index--;
@@ -409,18 +405,12 @@ HAL_StatusTypeDef HAL_DACEx_DualStop_DMA(DAC_HandleTypeDef *hdac, uint32_t Chann
  *            @arg DAC_TRIANGLEAMPLITUDE_15: Select max triangle amplitude of 15
  *            @arg DAC_TRIANGLEAMPLITUDE_31: Select max triangle amplitude of 31
  *            @arg DAC_TRIANGLEAMPLITUDE_63: Select max triangle amplitude of 63
- *            @arg DAC_TRIANGLEAMPLITUDE_127: Select max triangle amplitude of
- * 127
- *            @arg DAC_TRIANGLEAMPLITUDE_255: Select max triangle amplitude of
- * 255
- *            @arg DAC_TRIANGLEAMPLITUDE_511: Select max triangle amplitude of
- * 511
- *            @arg DAC_TRIANGLEAMPLITUDE_1023: Select max triangle amplitude of
- * 1023
- *            @arg DAC_TRIANGLEAMPLITUDE_2047: Select max triangle amplitude of
- * 2047
- *            @arg DAC_TRIANGLEAMPLITUDE_4095: Select max triangle amplitude of
- * 4095
+ *            @arg DAC_TRIANGLEAMPLITUDE_127: Select max triangle amplitude of 127
+ *            @arg DAC_TRIANGLEAMPLITUDE_255: Select max triangle amplitude of 255
+ *            @arg DAC_TRIANGLEAMPLITUDE_511: Select max triangle amplitude of 511
+ *            @arg DAC_TRIANGLEAMPLITUDE_1023: Select max triangle amplitude of 1023
+ *            @arg DAC_TRIANGLEAMPLITUDE_2047: Select max triangle amplitude of 2047
+ *            @arg DAC_TRIANGLEAMPLITUDE_4095: Select max triangle amplitude of 4095
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude)
@@ -466,30 +456,18 @@ HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac, uint32
  *             Refer to device datasheet for channels availability.
  * @param  Amplitude Unmask DAC channel LFSR for noise wave generation.
  *          This parameter can be one of the following values:
- *            @arg DAC_LFSRUNMASK_BIT0: Unmask DAC channel LFSR bit0 for noise
- * wave generation
- *            @arg DAC_LFSRUNMASK_BITS1_0: Unmask DAC channel LFSR bit[1:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS2_0: Unmask DAC channel LFSR bit[2:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS3_0: Unmask DAC channel LFSR bit[3:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS4_0: Unmask DAC channel LFSR bit[4:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS5_0: Unmask DAC channel LFSR bit[5:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS6_0: Unmask DAC channel LFSR bit[6:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS7_0: Unmask DAC channel LFSR bit[7:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS8_0: Unmask DAC channel LFSR bit[8:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS9_0: Unmask DAC channel LFSR bit[9:0] for
- * noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS10_0: Unmask DAC channel LFSR bit[10:0]
- * for noise wave generation
- *            @arg DAC_LFSRUNMASK_BITS11_0: Unmask DAC channel LFSR bit[11:0]
- * for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BIT0: Unmask DAC channel LFSR bit0 for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS1_0: Unmask DAC channel LFSR bit[1:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS2_0: Unmask DAC channel LFSR bit[2:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS3_0: Unmask DAC channel LFSR bit[3:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS4_0: Unmask DAC channel LFSR bit[4:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS5_0: Unmask DAC channel LFSR bit[5:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS6_0: Unmask DAC channel LFSR bit[6:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS7_0: Unmask DAC channel LFSR bit[7:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS8_0: Unmask DAC channel LFSR bit[8:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS9_0: Unmask DAC channel LFSR bit[9:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS10_0: Unmask DAC channel LFSR bit[10:0] for noise wave generation
+ *            @arg DAC_LFSRUNMASK_BITS11_0: Unmask DAC channel LFSR bit[11:0] for noise wave generation
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude)
@@ -543,8 +521,7 @@ HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t 
  *          12.4 bit format, unsigned: 12 bits exponent / 4 bits mantissa
  *          Step value step is 1/16 = 0.0625
  *          Step value range is 0.0000 to 4095.9375 (0xFFF.F)
- * @note    Sawtooth reset and step triggers are configured by calling @ref
- * HAL_DAC_ConfigChannel
+ * @note    Sawtooth reset and step triggers are configured by calling @ref HAL_DAC_ConfigChannel
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_DACEx_SawtoothWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Polarity, uint32_t ResetData, uint32_t StepData)
@@ -708,10 +685,8 @@ HAL_StatusTypeDef HAL_DACEx_SawtoothWaveDataStep(DAC_HandleTypeDef *hdac, uint32
  *            DAC_ALIGN_8B_R: 8bit right data alignment selected
  *            DAC_ALIGN_12B_L: 12bit left data alignment selected
  *            DAC_ALIGN_12B_R: 12bit right data alignment selected
- * @param  Data1 Data for DAC Channel1 to be loaded in the selected data holding
- * register.
- * @param  Data2 Data for DAC Channel2 to be loaded in the selected data holding
- * register.
+ * @param  Data1 Data for DAC Channel1 to be loaded in the selected data holding register.
+ * @param  Data2 Data for DAC Channel2 to be loaded in the selected data  holding register.
  * @note   In dual mode, a unique register access is required to write in both
  *          DAC channels at the same time.
  * @retval HAL status
@@ -759,15 +734,13 @@ __weak void HAL_DACEx_ConvCpltCallbackCh2(DAC_HandleTypeDef *hdac)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdac);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_DACEx_ConvCpltCallbackCh2 could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_DACEx_ConvCpltCallbackCh2 could be implemented in the user file
 	 */
 }
 
 /**
- * @brief  Conversion half DMA transfer callback in non-blocking mode for
- * Channel2.
+ * @brief  Conversion half DMA transfer callback in non-blocking mode for Channel2.
  * @param  hdac pointer to a DAC_HandleTypeDef structure that contains
  *         the configuration information for the specified DAC.
  * @retval None
@@ -777,9 +750,8 @@ __weak void HAL_DACEx_ConvHalfCpltCallbackCh2(DAC_HandleTypeDef *hdac)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdac);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_DACEx_ConvHalfCpltCallbackCh2 could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_DACEx_ConvHalfCpltCallbackCh2 could be implemented in the user file
 	 */
 }
 
@@ -794,9 +766,8 @@ __weak void HAL_DACEx_ErrorCallbackCh2(DAC_HandleTypeDef *hdac)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdac);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_DACEx_ErrorCallbackCh2 could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_DACEx_ErrorCallbackCh2 could be implemented in the user file
 	 */
 }
 
@@ -811,9 +782,8 @@ __weak void HAL_DACEx_DMAUnderrunCallbackCh2(DAC_HandleTypeDef *hdac)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hdac);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_DACEx_DMAUnderrunCallbackCh2 could be implemented in
-	   the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_DACEx_DMAUnderrunCallbackCh2 could be implemented in the user file
 	 */
 }
 
@@ -880,22 +850,17 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 			/* Set candidate trimming */
 			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
-			/* Wait minimum time needed between two calibration
-			 * steps (OTRIM) */
+			/* Wait minimum time needed between two calibration steps (OTRIM) */
 			/* Wait loop initialization and execution */
-			/* Note: Variable divided by 2 to compensate partially
-			 * CPU processing cycles, scaling in us split to not
-			 * exceed */
-			/*       32 bits register capacity and handle low
-			 * frequency. */
+			/* Note: Variable divided by 2 to compensate partially CPU processing cycles, scaling in us split to not exceed */
+			/*       32 bits register capacity and handle low frequency. */
 			wait_loop_index = ((DAC_DELAY_TRIM_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
 
 			if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) {
-				/* DAC_SR_CAL_FLAGx is HIGH try higher trimming
-				 */
+				/* DAC_SR_CAL_FLAGx is HIGH try higher trimming */
 				trimmingvalue -= delta;
 			} else {
 				/* DAC_SR_CAL_FLAGx is LOW try lower trimming */
@@ -904,18 +869,14 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 			delta >>= 1UL;
 		}
 
-		/* Still need to check if right calibration is current value or
-		 * one step below */
-		/* Indeed the first value that causes the DAC_SR_CAL_FLAGx bit
-		 * to change from 0 to 1  */
+		/* Still need to check if right calibration is current value or one step below */
+		/* Indeed the first value that causes the DAC_SR_CAL_FLAGx bit to change from 0 to 1  */
 		/* Set candidate trimming */
 		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
-		/* Wait minimum time needed between two calibration steps
-		 * (OTRIM) */
+		/* Wait minimum time needed between two calibration steps (OTRIM) */
 		/* Wait loop initialization and execution */
-		/* Note: Variable divided by 2 to compensate partially CPU
-		 * processing cycles, scaling in us split to not exceed */
+		/* Note: Variable divided by 2 to compensate partially CPU processing cycles, scaling in us split to not exceed */
 		/*       32 bits register capacity and handle low frequency. */
 		wait_loop_index = ((DAC_DELAY_TRIM_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 		while (wait_loop_index != 0UL) {
@@ -950,12 +911,10 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 }
 
 /**
- * @brief  Set the trimming mode and trimming value (user trimming mode
- * applied).
+ * @brief  Set the trimming mode and trimming value (user trimming mode applied).
  * @param  hdac pointer to a DAC_HandleTypeDef structure that contains
  *         the configuration information for the specified DAC.
- * @param  sConfig DAC configuration structure updated with new DAC trimming
- * value.
+ * @param  sConfig DAC configuration structure updated with new DAC trimming value.
  * @param  Channel The selected DAC channel.
  *          This parameter can be one of the following values:
  *            @arg DAC_CHANNEL_1: DAC Channel1 selected
