@@ -25,7 +25,12 @@ typedef enum {
 	GPIO_PIN_15 = LL_GPIO_PIN_15
 } GPIO_Pins;
 
-typedef enum {GPIOA, GPIOB, GPIOC, GPIOD} GPIO_Port;
+typedef enum {
+	GPIOA,
+	GPIOB,
+	GPIOC,
+	GPIOD
+} GPIO_Port;
 
 /// @brief Alternate function for a specific pin and specific port
 // Technically can be set for AF 0-15 for low and high registers separately
@@ -69,7 +74,7 @@ typedef struct {
 	uint32_t NumberOfNeopixels;
 	GPIO_Pins gpio_pin;
 	GPIO_Alternate_Function alternate_function;
-GPIO_Port gpio_port;
+	GPIO_Port gpio_port;
 	// TODO - Add fields for GPIO pin, SPI settings, etc.
 	//
 } NeopixelConfig;

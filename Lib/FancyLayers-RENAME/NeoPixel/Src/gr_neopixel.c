@@ -60,7 +60,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .Pull = LL_GPIO_PULL_NO,
 	    .Alternate = neopixelConfiguration->alternate_function,
 	};
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB); //Only SPI1 takes AHB2, SPI2 and 3 take AHB1
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB); // Only SPI1 takes AHB2, SPI2 and 3 take AHB1
 	LL_GPIO_Init(neopixelConfiguration->gpio_port, &copi_pin);
 
 	LL_SPI_InitTypeDef spi = {
@@ -75,7 +75,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE,
 	    .CRCPoly = 7,
 	};
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);//Enable clock twice (see line 64)
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1); // Enable clock twice (see line 64)
 	LL_SPI_Init(neopixelConfiguration->SPI_Instance, &spi);
 	LL_SPI_SetStandard(neopixelConfiguration->SPI_Instance, LL_SPI_PROTOCOL_MOTOROLA);
 	LL_SPI_EnableNSSPulseMgt(neopixelConfiguration->SPI_Instance);
