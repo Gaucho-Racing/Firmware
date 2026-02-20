@@ -38,6 +38,7 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
+#include "Pinging.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -433,10 +434,17 @@ int main(void)
 		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
 		SendECUStateDataOverCAN(&stateLump);
+
+		static uint32_t nextPing;
+		if(MillisecondsSinceBoot() >= nextPing) {
+			pingAll();
+			nextPing += PINGTIMEOUT;
+		}
+
+
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
 		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
-		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */
 }

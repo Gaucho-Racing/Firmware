@@ -80,6 +80,7 @@ target_sources(
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
 		Application/Src/CANutils.c
+		Application/Src/Pinging.c
 )
 
 target_link_libraries(
