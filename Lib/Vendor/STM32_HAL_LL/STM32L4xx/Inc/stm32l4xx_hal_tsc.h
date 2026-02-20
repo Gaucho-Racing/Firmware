@@ -45,8 +45,7 @@ extern "C" {
  */
 typedef enum {
 	HAL_TSC_STATE_RESET = 0x00UL, /*!< TSC registers have their reset value */
-	HAL_TSC_STATE_READY = 0x01UL, /*!< TSC registers are initialized or acquisition is
-					 completed with success */
+	HAL_TSC_STATE_READY = 0x01UL, /*!< TSC registers are initialized or acquisition is completed with success */
 	HAL_TSC_STATE_BUSY = 0x02UL,  /*!< TSC initialization or acquisition is on-going */
 	HAL_TSC_STATE_ERROR = 0x03UL  /*!< Acquisition is completed with max count error */
 } HAL_TSC_StateTypeDef;
@@ -56,8 +55,7 @@ typedef enum {
  */
 typedef enum {
 	TSC_GROUP_ONGOING = 0x00UL,  /*!< Acquisition on group is on-going or not started */
-	TSC_GROUP_COMPLETED = 0x01UL /*!< Acquisition on group is completed with
-					success (no max count error) */
+	TSC_GROUP_COMPLETED = 0x01UL /*!< Acquisition on group is completed with success (no max count error) */
 } TSC_GroupStatusTypeDef;
 
 /**
@@ -65,39 +63,27 @@ typedef enum {
  */
 typedef struct {
 	uint32_t CTPulseHighLength;	   /*!< Charge-transfer high pulse length
-						This parameter can be a value of @ref
-					      TSC_CTPulseHL_Config  */
+						This parameter can be a value of @ref TSC_CTPulseHL_Config  */
 	uint32_t CTPulseLowLength;	   /*!< Charge-transfer low pulse length
-						This parameter can be a value of @ref
-					      TSC_CTPulseLL_Config  */
+						This parameter can be a value of @ref TSC_CTPulseLL_Config  */
 	FunctionalState SpreadSpectrum;	   /*!< Spread spectrum activation
-						This parameter can be set to ENABLE
-					      or DISABLE. */
+						This parameter can be set to ENABLE or DISABLE. */
 	uint32_t SpreadSpectrumDeviation;  /*!< Spread spectrum deviation
-						This parameter must be a number
-					      between Min_Data = 0 and Max_Data =
-					      127 */
+						This parameter must be a number between Min_Data = 0 and Max_Data = 127 */
 	uint32_t SpreadSpectrumPrescaler;  /*!< Spread spectrum prescaler
-						This parameter can be a value of
-					      @ref TSC_SpreadSpec_Prescaler */
+						This parameter can be a value of @ref TSC_SpreadSpec_Prescaler */
 	uint32_t PulseGeneratorPrescaler;  /*!< Pulse generator prescaler
-						This parameter can be a value of @ref
-					      TSC_PulseGenerator_Prescaler */
+						This parameter can be a value of @ref TSC_PulseGenerator_Prescaler */
 	uint32_t MaxCountValue;		   /*!< Max count value
-						This parameter can be a value of @ref
-					      TSC_MaxCount_Value  */
+						This parameter can be a value of @ref TSC_MaxCount_Value  */
 	uint32_t IODefaultMode;		   /*!< IO default mode
-						This parameter can be a value of @ref
-					      TSC_IO_Default_Mode  */
+						This parameter can be a value of @ref TSC_IO_Default_Mode  */
 	uint32_t SynchroPinPolarity;	   /*!< Synchro pin polarity
-						This parameter can be a value of @ref
-					      TSC_Synchro_Pin_Polarity */
+						This parameter can be a value of @ref TSC_Synchro_Pin_Polarity */
 	uint32_t AcquisitionMode;	   /*!< Acquisition mode
-						This parameter can be a value of @ref
-					      TSC_Acquisition_Mode  */
+						This parameter can be a value of @ref TSC_Acquisition_Mode  */
 	FunctionalState MaxCountInterrupt; /*!< Max count interrupt activation
-						This parameter can be set to
-					      ENABLE or DISABLE. */
+						This parameter can be set to ENABLE or DISABLE. */
 	uint32_t ChannelIOs;		   /*!< Channel IOs mask */
 	uint32_t ShieldIOs;		   /*!< Shield IOs mask */
 	uint32_t SamplingIOs;		   /*!< Sampling IOs mask */
@@ -129,10 +115,10 @@ typedef struct
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
 	void (*ConvCpltCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Conversion complete callback  */
-	void (*ErrorCallback)(struct __TSC_HandleTypeDef *htsc);    /*!< TSC Error callback */
+	void (*ErrorCallback)(struct __TSC_HandleTypeDef *htsc);    /*!< TSC Error callback                */
 
-	void (*MspInitCallback)(struct __TSC_HandleTypeDef *htsc);   /*!< TSC Msp Init callback */
-	void (*MspDeInitCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Msp DeInit callback */
+	void (*MspInitCallback)(struct __TSC_HandleTypeDef *htsc);   /*!< TSC Msp Init callback             */
+	void (*MspDeInitCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Msp DeInit callback           */
 
 #endif /* USE_HAL_TSC_REGISTER_CALLBACKS */
 } TSC_HandleTypeDef;
@@ -163,10 +149,10 @@ enum {
  */
 typedef enum {
 	HAL_TSC_CONV_COMPLETE_CB_ID = 0x00UL, /*!< TSC Conversion completed callback ID  */
-	HAL_TSC_ERROR_CB_ID = 0x01UL,	      /*!< TSC Error callback ID */
+	HAL_TSC_ERROR_CB_ID = 0x01UL,	      /*!< TSC Error callback ID                 */
 
-	HAL_TSC_MSPINIT_CB_ID = 0x02UL,	 /*!< TSC Msp Init callback ID  */
-	HAL_TSC_MSPDEINIT_CB_ID = 0x03UL /*!< TSC Msp DeInit callback ID */
+	HAL_TSC_MSPINIT_CB_ID = 0x02UL,	 /*!< TSC Msp Init callback ID              */
+	HAL_TSC_MSPDEINIT_CB_ID = 0x03UL /*!< TSC Msp DeInit callback ID            */
 
 } HAL_TSC_CallbackIDTypeDef;
 
@@ -740,8 +726,7 @@ when the selected signal is detected on the SYNC input pin) */
  * @{
  */
 
-/** @addtogroup TSC_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup TSC_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 /* Initialization and de-initialization functions *****************************/
@@ -759,8 +744,7 @@ HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_Ca
  * @}
  */
 
-/** @addtogroup TSC_Exported_Functions_Group2 Input and Output operation
- * functions
+/** @addtogroup TSC_Exported_Functions_Group2 Input and Output operation functions
  * @{
  */
 /* IO operation functions *****************************************************/
@@ -785,8 +769,7 @@ HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc, FunctionalState c
  * @}
  */
 
-/** @addtogroup TSC_Exported_Functions_Group4 Peripheral State and Errors
- * functions
+/** @addtogroup TSC_Exported_Functions_Group4 Peripheral State and Errors functions
  * @{
  */
 /* Peripheral State and Error functions ***************************************/

@@ -176,15 +176,15 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, LL_DAC_InitType
 		assert_param(IS_LL_DAC_WAVE_AUTO_GENER_CONFIG(DAC_InitStruct->WaveAutoGeneration, DAC_InitStruct->WaveAutoGenerationConfig));
 	}
 
-	/* Note: Hardware constraint (refer to description of this function) */
-	/*       DAC instance must be disabled. */
+	/* Note: Hardware constraint (refer to description of this function)        */
+	/*       DAC instance must be disabled.                                     */
 	if (LL_DAC_IsEnabled(DACx, DAC_Channel) == 0U) {
-		/* Configuration of DAC channel: */
-		/*  - TriggerSource */
-		/*  - WaveAutoGeneration */
-		/*  - OutputBuffer */
-		/*  - OutputConnection */
-		/*  - OutputMode */
+		/* Configuration of DAC channel:                                          */
+		/*  - TriggerSource                                                       */
+		/*  - WaveAutoGeneration                                                  */
+		/*  - OutputBuffer                                                        */
+		/*  - OutputConnection                                                    */
+		/*  - OutputMode                                                          */
 		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
 			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | DAC_InitStruct->WaveAutoGeneration | DAC_InitStruct->WaveAutoGenerationConfig) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
@@ -195,7 +195,7 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, LL_DAC_InitType
 		MODIFY_REG(DACx->MCR, (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 			   (DAC_InitStruct->OutputBuffer | DAC_InitStruct->OutputConnection | DAC_InitStruct->OutputMode) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 	} else {
-		/* Initialization error: DAC instance is not disabled. */
+		/* Initialization error: DAC instance is not disabled.                    */
 		status = ERROR;
 	}
 	return status;
@@ -212,8 +212,8 @@ void LL_DAC_StructInit(LL_DAC_InitTypeDef *DAC_InitStruct)
 	/* Set DAC_InitStruct fields to default values */
 	DAC_InitStruct->TriggerSource = LL_DAC_TRIG_SOFTWARE;
 	DAC_InitStruct->WaveAutoGeneration = LL_DAC_WAVE_AUTO_GENERATION_NONE;
-	/* Note: Parameter discarded if wave auto generation is disabled, */
-	/*       set anyway to its default value. */
+	/* Note: Parameter discarded if wave auto generation is disabled,           */
+	/*       set anyway to its default value.                                   */
 	DAC_InitStruct->WaveAutoGenerationConfig = LL_DAC_NOISE_LFSR_UNMASK_BIT0;
 	DAC_InitStruct->OutputBuffer = LL_DAC_OUTPUT_BUFFER_ENABLE;
 	DAC_InitStruct->OutputConnection = LL_DAC_OUTPUT_CONNECT_GPIO;

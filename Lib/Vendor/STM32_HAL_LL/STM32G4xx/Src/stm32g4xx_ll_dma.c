@@ -197,10 +197,8 @@ uint32_t LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 }
 
 /**
- * @brief  Initialize the DMA registers according to the specified parameters in
- * DMA_InitStruct.
- * @note   To convert DMAx_Channely Instance to DMAx Instance and Channely, use
- * helper macros :
+ * @brief  Initialize the DMA registers according to the specified parameters in DMA_InitStruct.
+ * @note   To convert DMAx_Channely Instance to DMAx Instance and Channely, use helper macros :
  *         @arg @ref __LL_DMA_GET_INSTANCE
  *         @arg @ref __LL_DMA_GET_CHANNEL
  * @param  DMAx DMAx Instance
@@ -235,11 +233,10 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	assert_param(IS_LL_DMA_PERIPHREQUEST(DMA_InitStruct->PeriphRequest));
 	assert_param(IS_LL_DMA_PRIORITY(DMA_InitStruct->Priority));
 
-	/*---------------------------- DMAx CCR Configuration
-	 * ------------------------ Configure DMAx_Channely: data transfer
-	 * direction, data transfer mode, peripheral and memory increment mode,
-	 *                          data size alignment and  priority level with
-	 * parameters :
+	/*---------------------------- DMAx CCR Configuration ------------------------
+	 * Configure DMAx_Channely: data transfer direction, data transfer mode,
+	 *                          peripheral and memory increment mode,
+	 *                          data size alignment and  priority level with parameters :
 	 * - Direction:      DMA_CCR_DIR and DMA_CCR_MEM2MEM bits
 	 * - Mode:           DMA_CCR_CIRC bit
 	 * - PeriphOrM2MSrcIncMode:  DMA_CCR_PINC bit
@@ -252,30 +249,26 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 			      DMA_InitStruct->Direction | DMA_InitStruct->Mode | DMA_InitStruct->PeriphOrM2MSrcIncMode | DMA_InitStruct->MemoryOrM2MDstIncMode |
 				  DMA_InitStruct->PeriphOrM2MSrcDataSize | DMA_InitStruct->MemoryOrM2MDstDataSize | DMA_InitStruct->Priority);
 
-	/*-------------------------- DMAx CMAR Configuration
-	 * ------------------------- Configure the memory or destination base
-	 * address with parameter :
+	/*-------------------------- DMAx CMAR Configuration -------------------------
+	 * Configure the memory or destination base address with parameter :
 	 * - MemoryOrM2MDstAddress: DMA_CMAR_MA[31:0] bits
 	 */
 	LL_DMA_SetMemoryAddress(DMAx, Channel, DMA_InitStruct->MemoryOrM2MDstAddress);
 
-	/*-------------------------- DMAx CPAR Configuration
-	 * ------------------------- Configure the peripheral or source base
-	 * address with parameter :
+	/*-------------------------- DMAx CPAR Configuration -------------------------
+	 * Configure the peripheral or source base address with parameter :
 	 * - PeriphOrM2MSrcAddress: DMA_CPAR_PA[31:0] bits
 	 */
 	LL_DMA_SetPeriphAddress(DMAx, Channel, DMA_InitStruct->PeriphOrM2MSrcAddress);
 
-	/*--------------------------- DMAx CNDTR Configuration
-	 * ----------------------- Configure the peripheral base address with
-	 * parameter :
+	/*--------------------------- DMAx CNDTR Configuration -----------------------
+	 * Configure the peripheral base address with parameter :
 	 * - NbData: DMA_CNDTR_NDT[15:0] bits
 	 */
 	LL_DMA_SetDataLength(DMAx, Channel, DMA_InitStruct->NbData);
 
-	/*--------------------------- DMAMUXx CCR Configuration
-	 * ---------------------- Configure the DMA request for DMA Channels on
-	 * DMAMUX Channel x with parameter :
+	/*--------------------------- DMAMUXx CCR Configuration ----------------------
+	 * Configure the DMA request for DMA Channels on DMAMUX Channel x with parameter :
 	 * - PeriphRequest: DMA_CxCR[7:0] bits
 	 */
 	LL_DMA_SetPeriphRequest(DMAx, Channel, DMA_InitStruct->PeriphRequest);

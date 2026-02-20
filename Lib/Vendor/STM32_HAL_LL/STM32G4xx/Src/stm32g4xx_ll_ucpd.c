@@ -102,15 +102,13 @@ ErrorStatus LL_UCPD_DeInit(UCPD_TypeDef *UCPDx)
 }
 
 /**
- * @brief  Initialize the ucpd registers according to the specified parameters
- * in UCPD_InitStruct.
- * @note   As some bits in ucpd configuration registers can only be written when
- * the ucpd is disabled (ucpd_CR1_SPE bit =0), UCPD peripheral should be in
- * disabled state prior calling this function. Otherwise, ERROR result will be
- * returned.
+ * @brief  Initialize the ucpd registers according to the specified parameters in UCPD_InitStruct.
+ * @note   As some bits in ucpd configuration registers can only be written when the ucpd is disabled
+ *         (ucpd_CR1_SPE bit =0), UCPD peripheral should be in disabled state prior calling this function.
+ *         Otherwise, ERROR result will be returned.
  * @param  UCPDx UCPD Instance
- * @param  UCPD_InitStruct pointer to a @ref LL_UCPD_InitTypeDef structure that
- * contains the configuration information for the UCPD peripheral.
+ * @param  UCPD_InitStruct pointer to a @ref LL_UCPD_InitTypeDef structure that contains
+ *         the configuration information for the UCPD peripheral.
  * @retval An ErrorStatus enumeration value. (Return always SUCCESS)
  */
 ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, const LL_UCPD_InitTypeDef *UCPD_InitStruct)
@@ -124,8 +122,7 @@ ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, const LL_UCPD_InitTypeDef *UCPD_In
 
 	LL_UCPD_Disable(UCPDx);
 
-	/*---------------------------- UCPDx CFG1 Configuration
-	 * ------------------------*/
+	/*---------------------------- UCPDx CFG1 Configuration ------------------------*/
 	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_PSC_UCPDCLK | UCPD_CFG1_TRANSWIN | UCPD_CFG1_IFRGAP | UCPD_CFG1_HBITCLKDIV,
 		   UCPD_InitStruct->psc_ucpdclk | (UCPD_InitStruct->transwin << UCPD_CFG1_TRANSWIN_Pos) | (UCPD_InitStruct->IfrGap << UCPD_CFG1_IFRGAP_Pos) | UCPD_InitStruct->HbitClockDiv);
 

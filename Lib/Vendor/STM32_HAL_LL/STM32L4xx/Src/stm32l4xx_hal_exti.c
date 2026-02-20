@@ -4,8 +4,7 @@
   * @author  MCD Application Team
   * @brief   EXTI HAL module driver.
   *          This file provides firmware functions to manage the following
-  *          functionalities of the Extended Interrupts and events controller
-  (EXTI) peripheral:
+  *          functionalities of the Extended Interrupts and events controller (EXTI) peripheral:
   *           + Initialization and de-initialization functions
   *           + IO operation functions
   *
@@ -63,15 +62,12 @@
     (#) Get current Exti configuration of a dedicated line using
 	HAL_EXTI_GetConfigLine().
 	(++) Provide exiting handle as parameter.
-	(++) Provide pointer on EXTI_ConfigTypeDef structure as second
-  parameter.
+	(++) Provide pointer on EXTI_ConfigTypeDef structure as second parameter.
 
-    (#) Clear Exti configuration of a dedicated line using
-  HAL_EXTI_ClearConfigLine().
+    (#) Clear Exti configuration of a dedicated line using HAL_EXTI_ClearConfigLine().
 	(++) Provide exiting handle as parameter.
 
-    (#) Register callback to treat Exti interrupts using
-  HAL_EXTI_RegisterCallback().
+    (#) Register callback to treat Exti interrupts using HAL_EXTI_RegisterCallback().
 	(++) Provide exiting handle as first parameter.
 	(++) Provide which callback will be registered using one value from
 	     EXTI_CallbackIDTypeDef.
@@ -107,17 +103,12 @@
 #ifdef HAL_EXTI_MODULE_ENABLED
 
 /* Private typedef -----------------------------------------------------------*/
-/* Private defines
- * ------------------------------------------------------------*/
+/* Private defines ------------------------------------------------------------*/
 /** @defgroup EXTI_Private_Constants EXTI Private Constants
  * @{
  */
-#define EXTI_MODE_OFFSET                                                                                                                                                                               \
-	0x08u /* 0x20: offset between MCU IMR/EMR registers                                                                                                                                            \
-	       */
-#define EXTI_CONFIG_OFFSET                                                                                                                                                                             \
-	0x08u /* 0x20: offset between MCU Rising/Falling configuration                                                                                                                                 \
-		 registers */
+#define EXTI_MODE_OFFSET 0x08u	 /* 0x20: offset between MCU IMR/EMR registers */
+#define EXTI_CONFIG_OFFSET 0x08u /* 0x20: offset between MCU Rising/Falling configuration registers */
 /**
  * @}
  */
@@ -232,8 +223,7 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigT
 	/* Store interrupt mode */
 	*regaddr = regval;
 
-	/* The event mode cannot be configured if the line does not support it
-	 */
+	/* The event mode cannot be configured if the line does not support it */
 	assert_param(((pExtiConfig->Line & EXTI_EVENT) == EXTI_EVENT) || ((pExtiConfig->Mode & EXTI_MODE_EVENT) != EXTI_MODE_EVENT));
 
 	/* Configure event mode : read current mode */

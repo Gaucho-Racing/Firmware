@@ -6,7 +6,7 @@
  *
  *            For more information about which C functions
  *            need which of these lowlevel functions
- *            please consult the Newlib or Picolibc libc manual
+ *            please consult the newlib libc manual
  ******************************************************************************
  * @attention
  *
@@ -76,10 +76,3 @@ void *_sbrk(ptrdiff_t incr)
 
 	return (void *)prev_heap_end;
 }
-
-#if defined(__PICOLIBC__)
-// Picolibc expects syscalls without the leading underscore.
-// This creates a strong alias so that
-// calls to `sbrk()` are resolved to our `_sbrk()` implementation.
-__strong_reference(_sbrk, sbrk);
-#endif

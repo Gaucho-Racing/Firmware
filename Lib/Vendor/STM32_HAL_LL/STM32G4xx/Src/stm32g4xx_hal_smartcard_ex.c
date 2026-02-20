@@ -3,8 +3,7 @@
   * @file    stm32g4xx_hal_smartcard_ex.c
   * @author  MCD Application Team
   * @brief   SMARTCARD HAL module driver.
-  *          This file provides extended firmware functions to manage the
-  following
+  *          This file provides extended firmware functions to manage the following
   *          functionalities of the SmartCard.
   *           + Initialization and de-initialization functions
   *           + Peripheral Control functions
@@ -27,16 +26,15 @@
   [..]
   The Extended SMARTCARD HAL driver can be used as follows:
 
-    (#) After having configured the SMARTCARD basic features with
-  HAL_SMARTCARD_Init(), then program SMARTCARD advanced features if required
-  (TX/RX pins swap, TimeOut, auto-retry counter,...) in the hsmartcard
-  AdvancedInit structure.
+    (#) After having configured the SMARTCARD basic features with HAL_SMARTCARD_Init(),
+	then program SMARTCARD advanced features if required (TX/RX pins swap, TimeOut,
+	auto-retry counter,...) in the hsmartcard AdvancedInit structure.
 
     (#) FIFO mode enabling/disabling and RX/TX FIFO threshold programming.
 
-	-@- When SMARTCARD operates in FIFO mode, FIFO mode must be enabled
-  prior starting RX/TX transfers. Also RX/TX FIFO thresholds must be configured
-  prior starting RX/TX transfers.
+	-@- When SMARTCARD operates in FIFO mode, FIFO mode must be enabled prior
+	    starting RX/TX transfers. Also RX/TX FIFO thresholds must be
+	    configured prior starting RX/TX transfers.
 
   @endverbatim
   ******************************************************************************
@@ -75,13 +73,11 @@
 static void SMARTCARDEx_SetNbDataToProcess(SMARTCARD_HandleTypeDef *hsmartcard);
 
 /* Exported functions --------------------------------------------------------*/
-/** @defgroup SMARTCARDEx_Exported_Functions  SMARTCARD Extended Exported
- * Functions
+/** @defgroup SMARTCARDEx_Exported_Functions  SMARTCARD Extended Exported Functions
  * @{
  */
 
-/** @defgroup SMARTCARDEx_Exported_Functions_Group1 Extended Peripheral Control
-functions
+/** @defgroup SMARTCARDEx_Exported_Functions_Group1 Extended Peripheral Control functions
   * @brief    Extended control functions
   *
 @verbatim
@@ -89,24 +85,19 @@ functions
 		      ##### Peripheral Control functions #####
   ===============================================================================
   [..]
-  This subsection provides a set of functions allowing to initialize the
-SMARTCARD.
-     (+) HAL_SMARTCARDEx_BlockLength_Config() API allows to configure the Block
-Length on the fly
-     (+) HAL_SMARTCARDEx_TimeOut_Config() API allows to configure the receiver
-timeout value on the fly
-     (+) HAL_SMARTCARDEx_EnableReceiverTimeOut() API enables the receiver
-timeout feature
-     (+) HAL_SMARTCARDEx_DisableReceiverTimeOut() API disables the receiver
-timeout feature
+  This subsection provides a set of functions allowing to initialize the SMARTCARD.
+     (+) HAL_SMARTCARDEx_BlockLength_Config() API allows to configure the Block Length on the fly
+     (+) HAL_SMARTCARDEx_TimeOut_Config() API allows to configure the receiver timeout value on the fly
+     (+) HAL_SMARTCARDEx_EnableReceiverTimeOut() API enables the receiver timeout feature
+     (+) HAL_SMARTCARDEx_DisableReceiverTimeOut() API disables the receiver timeout feature
 
 @endverbatim
   * @{
   */
 
 /** @brief Update on the fly the SMARTCARD block length in RTOR register.
- * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that
- * contains the configuration information for the specified SMARTCARD module.
+ * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that contains
+ *                    the configuration information for the specified SMARTCARD module.
  * @param BlockLength SMARTCARD block length (8-bit long at most)
  * @retval None
  */
@@ -116,10 +107,10 @@ void HAL_SMARTCARDEx_BlockLength_Config(SMARTCARD_HandleTypeDef *hsmartcard, uin
 }
 
 /** @brief Update on the fly the receiver timeout value in RTOR register.
- * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that
- * contains the configuration information for the specified SMARTCARD module.
- * @param TimeOutValue receiver timeout value in number of baud blocks. The
- * timeout value must be less or equal to 0x0FFFFFFFF.
+ * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that contains
+ *                    the configuration information for the specified SMARTCARD module.
+ * @param TimeOutValue receiver timeout value in number of baud blocks. The timeout
+ *                     value must be less or equal to 0x0FFFFFFFF.
  * @retval None
  */
 void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t TimeOutValue)
@@ -129,8 +120,8 @@ void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint32_
 }
 
 /** @brief Enable the SMARTCARD receiver timeout feature.
- * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that
- * contains the configuration information for the specified SMARTCARD module.
+ * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that contains
+ *                    the configuration information for the specified SMARTCARD module.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
@@ -156,8 +147,8 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef 
 }
 
 /** @brief Disable the SMARTCARD receiver timeout feature.
- * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that
- * contains the configuration information for the specified SMARTCARD module.
+ * @param hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that contains
+ *                    the configuration information for the specified SMARTCARD module.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
@@ -186,8 +177,7 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef
  * @}
  */
 
-/** @defgroup SMARTCARDEx_Exported_Functions_Group2 Extended Peripheral IO
-operation functions
+/** @defgroup SMARTCARDEx_Exported_Functions_Group2 Extended Peripheral IO operation functions
   * @brief   SMARTCARD Transmit and Receive functions
   *
 @verbatim
@@ -207,8 +197,8 @@ operation functions
 
 /**
  * @brief  SMARTCARD RX Fifo full callback.
- * @param  hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that
- * contains the configuration information for the specified SMARTCARD module.
+ * @param  hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that contains
+ *                   the configuration information for the specified SMARTCARD module.
  * @retval None
  */
 __weak void HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartcard)
@@ -216,16 +206,15 @@ __weak void HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartca
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsmartcard);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SMARTCARDEx_RxFifoFullCallback can be implemented in
-	   the user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SMARTCARDEx_RxFifoFullCallback can be implemented in the user file.
 	 */
 }
 
 /**
  * @brief  SMARTCARD TX Fifo empty callback.
- * @param  hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that
- * contains the configuration information for the specified SMARTCARD module.
+ * @param  hsmartcard Pointer to a SMARTCARD_HandleTypeDef structure that contains
+ *                   the configuration information for the specified SMARTCARD module.
  * @retval None
  */
 __weak void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartcard)
@@ -233,9 +222,8 @@ __weak void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartc
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsmartcard);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SMARTCARDEx_TxFifoEmptyCallback can be implemented in
-	   the user file.
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SMARTCARDEx_TxFifoEmptyCallback can be implemented in the user file.
 	 */
 }
 
@@ -243,8 +231,7 @@ __weak void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartc
  * @}
  */
 
-/** @defgroup SMARTCARDEx_Exported_Functions_Group3 Extended Peripheral FIFO
-Control functions
+/** @defgroup SMARTCARDEx_Exported_Functions_Group3 Extended Peripheral FIFO Control functions
   *  @brief   SMARTCARD control functions
   *
 @verbatim
@@ -252,8 +239,8 @@ Control functions
 		  ##### Peripheral FIFO Control functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to control the
-SMARTCARD FIFO feature.
+    This subsection provides a set of functions allowing to control the SMARTCARD
+    FIFO feature.
      (+) HAL_SMARTCARDEx_EnableFifoMode() API enables the FIFO mode
      (+) HAL_SMARTCARDEx_DisableFifoMode() API disables the FIFO mode
      (+) HAL_SMARTCARDEx_SetTxFifoThreshold() API sets the TX FIFO threshold
@@ -447,8 +434,7 @@ HAL_StatusTypeDef HAL_SMARTCARDEx_SetRxFifoThreshold(SMARTCARD_HandleTypeDef *hs
  * @}
  */
 
-/** @defgroup SMARTCARDEx_Private_Functions  SMARTCARD Extended Private
- * Functions
+/** @defgroup SMARTCARDEx_Private_Functions  SMARTCARD Extended Private Functions
  * @{
  */
 
@@ -465,8 +451,7 @@ static void SMARTCARDEx_SetNbDataToProcess(SMARTCARD_HandleTypeDef *hsmartcard)
 	uint8_t tx_fifo_depth;
 	uint8_t rx_fifo_threshold;
 	uint8_t tx_fifo_threshold;
-	/* 2 0U/1U added for MISRAC2012-Rule-18.1_b and MISRAC2012-Rule-18.1_d
-	 */
+	/* 2 0U/1U added for MISRAC2012-Rule-18.1_b and MISRAC2012-Rule-18.1_d */
 	static const uint8_t numerator[] = {1U, 1U, 1U, 3U, 7U, 1U, 0U, 0U};
 	static const uint8_t denominator[] = {8U, 4U, 2U, 4U, 8U, 1U, 1U, 1U};
 

@@ -62,8 +62,7 @@
  */
 
 /**
- * @brief  De-initialize RNG registers (Registers restored to their default
- * values).
+ * @brief  De-initialize RNG registers (Registers restored to their default values).
  * @param  RNGx RNG Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: RNG registers are de-initialized
@@ -89,15 +88,12 @@ ErrorStatus LL_RNG_DeInit(const RNG_TypeDef *RNGx)
 }
 
 /**
- * @brief  Initialize RNG registers according to the specified parameters in
- * RNG_InitStruct.
+ * @brief  Initialize RNG registers according to the specified parameters in RNG_InitStruct.
  * @param  RNGx RNG Instance
  * @param  RNG_InitStruct pointer to a LL_RNG_InitTypeDef structure
- *         that contains the configuration information for the specified RNG
- * peripheral.
+ *         that contains the configuration information for the specified RNG peripheral.
  * @retval An ErrorStatus enumeration value:
- *          - SUCCESS: RNG registers are initialized according to RNG_InitStruct
- * content
+ *          - SUCCESS: RNG registers are initialized according to RNG_InitStruct content
  *          - ERROR: not applicable
  */
 ErrorStatus LL_RNG_Init(RNG_TypeDef *RNGx, const LL_RNG_InitTypeDef *RNG_InitStruct)

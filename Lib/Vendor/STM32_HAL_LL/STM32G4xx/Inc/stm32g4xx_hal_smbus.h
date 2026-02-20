@@ -40,61 +40,49 @@ extern "C" {
  * @{
  */
 
-/** @defgroup SMBUS_Configuration_Structure_definition SMBUS Configuration
- * Structure definition
+/** @defgroup SMBUS_Configuration_Structure_definition SMBUS Configuration Structure definition
  * @brief  SMBUS Configuration Structure definition
  * @{
  */
 typedef struct {
 	uint32_t Timing;       /*!< Specifies the SMBUS_TIMINGR_register value.
-				    This parameter calculated by referring to SMBUS
-				  initialization section       in Reference manual */
+				    This parameter calculated by referring to SMBUS initialization section
+				    in Reference manual */
 	uint32_t AnalogFilter; /*!< Specifies if Analog Filter is enable or not.
-				    This parameter can be a value of @ref
-				  SMBUS_Analog_Filter */
+				    This parameter can be a value of @ref SMBUS_Analog_Filter */
 
 	uint32_t OwnAddress1; /*!< Specifies the first device own address.
-				   This parameter can be a 7-bit or 10-bit
-				 address. */
+				   This parameter can be a 7-bit or 10-bit address. */
 
-	uint32_t AddressingMode; /*!< Specifies if 7-bit or 10-bit addressing mode
-				    for master is selected. This parameter can be a
-				    value of @ref SMBUS_addressing_mode */
+	uint32_t AddressingMode; /*!< Specifies if 7-bit or 10-bit addressing mode for master is selected.
+				      This parameter can be a value of @ref SMBUS_addressing_mode */
 
-	uint32_t DualAddressMode; /*!< Specifies if dual addressing mode is
-				     selected. This parameter can be a value of
-				     @ref SMBUS_dual_addressing_mode */
+	uint32_t DualAddressMode; /*!< Specifies if dual addressing mode is selected.
+				       This parameter can be a value of @ref SMBUS_dual_addressing_mode */
 
-	uint32_t OwnAddress2; /*!< Specifies the second device own address if
-				 dual addressing mode is selected This parameter
-				 can be a 7-bit address. */
+	uint32_t OwnAddress2; /*!< Specifies the second device own address if dual addressing mode is selected
+				   This parameter can be a 7-bit address. */
 
-	uint32_t OwnAddress2Masks; /*!< Specifies the acknowledge mask address second
-				      device own address if dual addressing mode is
-				      selected This parameter can be a value of @ref
-				      SMBUS_own_address2_masks. */
+	uint32_t OwnAddress2Masks; /*!< Specifies the acknowledge mask address second device own address
+					if dual addressing mode is selected
+					This parameter can be a value of @ref SMBUS_own_address2_masks. */
 
-	uint32_t GeneralCallMode; /*!< Specifies if general call mode is
-				     selected. This parameter can be a value of
-				     @ref SMBUS_general_call_addressing_mode. */
+	uint32_t GeneralCallMode; /*!< Specifies if general call mode is selected.
+				       This parameter can be a value of @ref SMBUS_general_call_addressing_mode. */
 
 	uint32_t NoStretchMode; /*!< Specifies if nostretch mode is selected.
-				     This parameter can be a value of @ref
-				   SMBUS_nostretch_mode */
+				     This parameter can be a value of @ref SMBUS_nostretch_mode */
 
-	uint32_t PacketErrorCheckMode; /*!< Specifies if Packet Error Check mode is
-					  selected. This parameter can be a value of
-					  @ref SMBUS_packet_error_check_mode */
+	uint32_t PacketErrorCheckMode; /*!< Specifies if Packet Error Check mode is selected.
+					    This parameter can be a value of @ref SMBUS_packet_error_check_mode */
 
-	uint32_t PeripheralMode; /*!< Specifies which mode of Periphal is
-				    selected. This parameter can be a value of
-				    @ref SMBUS_peripheral_mode */
+	uint32_t PeripheralMode; /*!< Specifies which mode of Periphal is selected.
+				      This parameter can be a value of @ref SMBUS_peripheral_mode */
 
-	uint32_t SMBusTimeout; /*!< Specifies the content of the 32 Bits
-				  SMBUS_TIMEOUT_register value. (Enable bits and
-				  different timeout values) This parameter
-				  calculated by referring to SMBUS
-				  initialization section in Reference manual */
+	uint32_t SMBusTimeout; /*!< Specifies the content of the 32 Bits SMBUS_TIMEOUT_register value.
+				    (Enable bits and different timeout values)
+				    This parameter calculated by referring to SMBUS initialization section
+				    in Reference manual */
 } SMBUS_InitTypeDef;
 /**
  * @}
@@ -137,8 +125,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup SMBUS_handle_Structure_definition SMBUS handle Structure
- * definition
+/** @defgroup SMBUS_handle_Structure_definition SMBUS handle Structure definition
  * @brief  SMBUS handle Structure definition
  * @{
  */
@@ -203,10 +190,10 @@ typedef enum {
 	HAL_SMBUS_SLAVE_TX_COMPLETE_CB_ID = 0x02U,  /*!< SMBUS Slave Tx Transfer completed callback ID   */
 	HAL_SMBUS_SLAVE_RX_COMPLETE_CB_ID = 0x03U,  /*!< SMBUS Slave Rx Transfer completed callback ID   */
 	HAL_SMBUS_LISTEN_COMPLETE_CB_ID = 0x04U,    /*!< SMBUS Listen Complete callback ID               */
-	HAL_SMBUS_ERROR_CB_ID = 0x05U,		    /*!< SMBUS Error callback ID */
+	HAL_SMBUS_ERROR_CB_ID = 0x05U,		    /*!< SMBUS Error callback ID                         */
 
-	HAL_SMBUS_MSPINIT_CB_ID = 0x06U,  /*!< SMBUS Msp Init callback ID  */
-	HAL_SMBUS_MSPDEINIT_CB_ID = 0x07U /*!< SMBUS Msp DeInit callback ID */
+	HAL_SMBUS_MSPINIT_CB_ID = 0x06U,  /*!< SMBUS Msp Init callback ID                      */
+	HAL_SMBUS_MSPDEINIT_CB_ID = 0x07U /*!< SMBUS Msp DeInit callback ID                    */
 
 } HAL_SMBUS_CallbackIDTypeDef;
 
@@ -276,8 +263,7 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
  * @}
  */
 
-/** @defgroup SMBUS_general_call_addressing_mode SMBUS general call addressing
- * mode
+/** @defgroup SMBUS_general_call_addressing_mode SMBUS general call addressing mode
  * @{
  */
 #define SMBUS_GENERALCALL_DISABLE (0x00000000U)
@@ -365,8 +351,7 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
  * @}
  */
 
-/** @defgroup SMBUS_Interrupt_configuration_definition SMBUS Interrupt
- * configuration definition
+/** @defgroup SMBUS_Interrupt_configuration_definition SMBUS Interrupt configuration definition
  * @brief SMBUS Interrupt definition
  *        Elements values convention: 0xXXXXXXXX
  *           - XXXXXXXX  : Interrupt control mask
@@ -418,8 +403,7 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
  * @}
  */
 
-/* Exported macros
- * ------------------------------------------------------------*/
+/* Exported macros ------------------------------------------------------------*/
 /** @defgroup SMBUS_Exported_Macros SMBUS Exported Macros
  * @{
  */
@@ -471,8 +455,7 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
  */
 #define __HAL_SMBUS_DISABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR1 &= (~(__INTERRUPT__)))
 
-/** @brief  Check whether the specified SMBUS interrupt source is enabled or
- * not.
+/** @brief  Check whether the specified SMBUS interrupt source is enabled or not.
  * @param  __HANDLE__ specifies the SMBUS Handle.
  * @param  __INTERRUPT__ specifies the SMBUS interrupt source to check.
  *          This parameter can be one of the following values:
@@ -514,8 +497,7 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
 #define SMBUS_FLAG_MASK (0x0001FFFFU)
 #define __HAL_SMBUS_GET_FLAG(__HANDLE__, __FLAG__) (((((__HANDLE__)->Instance->ISR) & ((__FLAG__) & SMBUS_FLAG_MASK)) == ((__FLAG__) & SMBUS_FLAG_MASK)) ? SET : RESET)
 
-/** @brief  Clear the SMBUS pending flags which are cleared by writing 1 in a
- * specific bit.
+/** @brief  Clear the SMBUS pending flags which are cleared by writing 1 in a specific bit.
  * @param  __HANDLE__ specifies the SMBUS Handle.
  * @param  __FLAG__ specifies the flag to clear.
  *          This parameter can be any combination of the following values:
@@ -629,8 +611,7 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
  * @{
  */
 
-/** @addtogroup SMBUS_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup SMBUS_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 
@@ -654,12 +635,11 @@ HAL_StatusTypeDef HAL_SMBUS_UnRegisterAddrCallback(SMBUS_HandleTypeDef *hsmbus);
  * @}
  */
 
-/** @addtogroup SMBUS_Exported_Functions_Group2 Input and Output operation
- * functions
+/** @addtogroup SMBUS_Exported_Functions_Group2 Input and Output operation functions
  * @{
  */
 
-/* IO operation functions *****************************************************/
+/* IO operation functions  *****************************************************/
 /** @addtogroup Blocking_mode_Polling Blocking mode Polling
  * @{
  */
@@ -690,8 +670,7 @@ HAL_StatusTypeDef HAL_SMBUS_DisableListen_IT(SMBUS_HandleTypeDef *hsmbus);
 /** @addtogroup SMBUS_IRQ_Handler_and_Callbacks IRQ Handler and Callbacks
  * @{
  */
-/******* SMBUS IRQHandler and Callbacks used in non blocking modes (Interrupt)
- */
+/******* SMBUS IRQHandler and Callbacks used in non blocking modes (Interrupt) */
 void HAL_SMBUS_EV_IRQHandler(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_ER_IRQHandler(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_MasterTxCpltCallback(SMBUS_HandleTypeDef *hsmbus);
@@ -706,13 +685,11 @@ void HAL_SMBUS_ErrorCallback(SMBUS_HandleTypeDef *hsmbus);
  * @}
  */
 
-/** @addtogroup SMBUS_Exported_Functions_Group3 Peripheral State and Errors
- * functions
+/** @addtogroup SMBUS_Exported_Functions_Group3 Peripheral State and Errors functions
  *  @{
  */
 
-/* Peripheral State and Errors functions
- * **************************************************/
+/* Peripheral State and Errors functions  **************************************************/
 uint32_t HAL_SMBUS_GetState(const SMBUS_HandleTypeDef *hsmbus);
 uint32_t HAL_SMBUS_GetError(const SMBUS_HandleTypeDef *hsmbus);
 

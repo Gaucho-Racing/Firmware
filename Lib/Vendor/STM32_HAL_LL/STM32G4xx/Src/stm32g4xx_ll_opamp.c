@@ -94,30 +94,26 @@ ErrorStatus LL_OPAMP_DeInit(OPAMP_TypeDef *OPAMPx)
 	/* Check the parameters */
 	assert_param(IS_OPAMP_ALL_INSTANCE(OPAMPx));
 
-	/* Note: Hardware constraint (refer to description of this function): */
-	/*       OPAMP instance must not be locked. */
+	/* Note: Hardware constraint (refer to description of this function):       */
+	/*       OPAMP instance must not be locked.                                 */
 	if (LL_OPAMP_IsLocked(OPAMPx) == 0UL) {
 		LL_OPAMP_WriteReg(OPAMPx, CSR, 0x00000000UL);
 	} else {
-		/* OPAMP instance is locked: de-initialization by software is */
-		/* not possible. */
-		/* The only way to unlock the OPAMP is a device hardware reset.
-		 */
+		/* OPAMP instance is locked: de-initialization by software is              */
+		/* not possible.                                                           */
+		/* The only way to unlock the OPAMP is a device hardware reset.            */
 		status = ERROR;
 	}
 
-	/* Timer controlled mux mode register reset */
+	/* Timer controlled mux mode register reset                                  */
 	if (LL_OPAMP_IsTimerMuxLocked(OPAMPx) == 0UL) {
 		LL_OPAMP_WriteReg(OPAMPx, TCMR, 0x00000000UL);
 	} else if (LL_OPAMP_ReadReg(OPAMPx, TCMR) != 0x80000000UL) {
-		/* OPAMP instance timer controlled mux is locked configured,
-		 * deinit error  */
-		/* The only way to unlock the OPAMP is a device hardware reset.
-		 */
+		/* OPAMP instance timer controlled mux is locked configured, deinit error  */
+		/* The only way to unlock the OPAMP is a device hardware reset.            */
 		status = ERROR;
 	} else {
-		/* OPAMP instance timer controlled mux is locked unconfigured,
-		 * deinit OK */
+		/* OPAMP instance timer controlled mux is locked unconfigured, deinit OK */
 	}
 
 	return status;
@@ -135,7 +131,7 @@ ErrorStatus LL_OPAMP_DeInit(OPAMP_TypeDef *OPAMPx)
  *          - SUCCESS: OPAMP registers are initialized
  *          - ERROR: OPAMP registers are not initialized
  */
-ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
+ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, const LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
 {
 	ErrorStatus status = SUCCESS;
 
@@ -145,25 +141,23 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, LL_OPAMP_InitTypeDef *OPAMP_Ini
 	assert_param(IS_LL_OPAMP_FUNCTIONAL_MODE(OPAMP_InitStruct->FunctionalMode));
 	assert_param(IS_LL_OPAMP_INPUT_NONINVERTING(OPAMP_InitStruct->InputNonInverting));
 
-	/* Note: OPAMP inverting input can be used with OPAMP in mode standalone
-	 */
-	/*       or PGA with external capacitors for filtering circuit. */
-	/*       Otherwise (OPAMP in mode follower), OPAMP inverting input is */
-	/*       not used (not connected to GPIO pin). */
+	/* Note: OPAMP inverting input can be used with OPAMP in mode standalone    */
+	/*       or PGA with external capacitors for filtering circuit.             */
+	/*       Otherwise (OPAMP in mode follower), OPAMP inverting input is       */
+	/*       not used (not connected to GPIO pin).                              */
 	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
 		assert_param(IS_LL_OPAMP_INPUT_INVERTING(OPAMP_InitStruct->InputInverting));
 	}
 
-	/* Note: Hardware constraint (refer to description of this function): */
-	/*       OPAMP instance must not be locked. */
+	/* Note: Hardware constraint (refer to description of this function):       */
+	/*       OPAMP instance must not be locked.                                 */
 	if (LL_OPAMP_IsLocked(OPAMPx) == 0U) {
-		/* Configuration of OPAMP instance : */
-		/*  - PowerMode */
-		/*  - Functional mode */
-		/*  - Input non-inverting */
-		/*  - Input inverting */
-		/* Note: Bit OPAMP_CSR_CALON reset to ensure to be in functional
-		 * mode.    */
+		/* Configuration of OPAMP instance :                                      */
+		/*  - PowerMode                                                             */
+		/*  - Functional mode                                                     */
+		/*  - Input non-inverting                                                 */
+		/*  - Input inverting                                                     */
+		/* Note: Bit OPAMP_CSR_CALON reset to ensure to be in functional mode.    */
 		if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
 			MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_CALON | OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL | OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3,
 				   OPAMP_InitStruct->PowerMode | OPAMP_InitStruct->FunctionalMode | OPAMP_InitStruct->InputNonInverting | OPAMP_InitStruct->InputInverting);
@@ -172,7 +166,7 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, LL_OPAMP_InitTypeDef *OPAMP_Ini
 				   OPAMP_InitStruct->PowerMode | LL_OPAMP_MODE_FOLLOWER | OPAMP_InitStruct->InputNonInverting);
 		}
 	} else {
-		/* Initialization error: OPAMP instance is locked. */
+		/* Initialization error: OPAMP instance is locked.                        */
 		status = ERROR;
 	}
 
@@ -191,8 +185,8 @@ void LL_OPAMP_StructInit(LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
 	OPAMP_InitStruct->PowerMode = LL_OPAMP_POWERMODE_NORMALSPEED;
 	OPAMP_InitStruct->FunctionalMode = LL_OPAMP_MODE_FOLLOWER;
 	OPAMP_InitStruct->InputNonInverting = LL_OPAMP_INPUT_NONINVERT_IO0;
-	/* Note: Parameter discarded if OPAMP in functional mode follower, */
-	/*       set anyway to its default value. */
+	/* Note: Parameter discarded if OPAMP in functional mode follower,          */
+	/*       set anyway to its default value.                                   */
 	OPAMP_InitStruct->InputInverting = LL_OPAMP_INPUT_INVERT_CONNECT_NO;
 }
 

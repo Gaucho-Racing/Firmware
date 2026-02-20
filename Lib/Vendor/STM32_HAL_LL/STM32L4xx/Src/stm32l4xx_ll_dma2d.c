@@ -45,7 +45,7 @@
  */
 #define LL_DMA2D_COLOR 0xFFU					   /*!< Maximum output color setting                   */
 #define LL_DMA2D_NUMBEROFLINES DMA2D_NLR_NL			   /*!< Maximum number of lines                        */
-#define LL_DMA2D_NUMBEROFPIXELS (DMA2D_NLR_PL >> DMA2D_NLR_PL_Pos) /*!< Maximum number of pixels per lines */
+#define LL_DMA2D_NUMBEROFPIXELS (DMA2D_NLR_PL >> DMA2D_NLR_PL_Pos) /*!< Maximum number of pixels per lines             */
 #define LL_DMA2D_OFFSET_MAX 0x3FFFU				   /*!< Maximum output line offset expressed in pixels */
 #define LL_DMA2D_CLUTSIZE_MAX 0xFFU				   /*!< Maximum CLUT size                              */
 /**
@@ -111,14 +111,12 @@
  * @{
  */
 
-/** @addtogroup DMA2D_LL_EF_Init_Functions Initialization and De-initialization
- * Functions
+/** @addtogroup DMA2D_LL_EF_Init_Functions Initialization and De-initialization Functions
  * @{
  */
 
 /**
- * @brief  De-initialize DMA2D registers (registers restored to their default
- * values).
+ * @brief  De-initialize DMA2D registers (registers restored to their default values).
  * @param  DMA2Dx DMA2D Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: DMA2D registers are de-initialized
@@ -145,17 +143,14 @@ ErrorStatus LL_DMA2D_DeInit(const DMA2D_TypeDef *DMA2Dx)
 }
 
 /**
- * @brief  Initialize DMA2D registers according to the specified parameters in
- * DMA2D_InitStruct.
- * @note   DMA2D transfers must be disabled to set initialization bits in
- * configuration registers, otherwise ERROR result is returned.
+ * @brief  Initialize DMA2D registers according to the specified parameters in DMA2D_InitStruct.
+ * @note   DMA2D transfers must be disabled to set initialization bits in configuration registers,
+ *         otherwise ERROR result is returned.
  * @param  DMA2Dx DMA2D Instance
  * @param  DMA2D_InitStruct  pointer to a LL_DMA2D_InitTypeDef structure
- *         that contains the configuration information for the specified DMA2D
- * peripheral.
+ *         that contains the configuration information for the specified DMA2D peripheral.
  * @retval An ErrorStatus enumeration value:
- *          - SUCCESS: DMA2D registers are initialized according to
- * DMA2D_InitStruct content
+ *          - SUCCESS: DMA2D registers are initialized according to DMA2D_InitStruct content
  *          - ERROR: Issue occurred during DMA2D registers initialization
  */
 ErrorStatus LL_DMA2D_Init(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_InitTypeDef *DMA2D_InitStruct)
@@ -188,22 +183,19 @@ ErrorStatus LL_DMA2D_Init(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_InitTypeDef *DMA2D_Ini
 	assert_param(IS_LL_DMA2D_ALPHAINV(DMA2D_InitStruct->AlphaInversionMode));
 	assert_param(IS_LL_DMA2D_RBSWAP(DMA2D_InitStruct->RBSwapMode));
 
-	/* DMA2D transfers must be disabled to configure bits in initialization
-	 * registers */
+	/* DMA2D transfers must be disabled to configure bits in initialization registers */
 	tmp = LL_DMA2D_IsTransferOngoing(DMA2Dx);
 	tmp1 = LL_DMA2D_FGND_IsEnabledCLUTLoad(DMA2Dx);
 	tmp2 = LL_DMA2D_BGND_IsEnabledCLUTLoad(DMA2Dx);
 	if ((tmp == 0U) && (tmp1 == 0U) && (tmp2 == 0U)) {
-		/* DMA2D CR register configuration
-		 * -------------------------------------------*/
+		/* DMA2D CR register configuration -------------------------------------------*/
 #if defined(DMA2D_LINE_OFFSET_MODE_SUPPORT)
 		MODIFY_REG(DMA2Dx->CR, (DMA2D_CR_MODE | DMA2D_CR_LOM), (DMA2D_InitStruct->Mode | DMA2D_InitStruct->LineOffsetMode));
 #else
 		LL_DMA2D_SetMode(DMA2Dx, DMA2D_InitStruct->Mode);
 #endif /* DMA2D_LINE_OFFSET_MODE_SUPPORT */
 
-		/* DMA2D OPFCCR register configuration
-		 * ---------------------------------------*/
+		/* DMA2D OPFCCR register configuration ---------------------------------------*/
 		regMask = DMA2D_OPFCCR_CM;
 		regValue = DMA2D_InitStruct->ColorMode;
 
@@ -217,20 +209,16 @@ ErrorStatus LL_DMA2D_Init(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_InitTypeDef *DMA2D_Ini
 
 		MODIFY_REG(DMA2Dx->OPFCCR, regMask, regValue);
 
-		/* DMA2D OOR register configuration
-		 * ------------------------------------------*/
+		/* DMA2D OOR register configuration ------------------------------------------*/
 		LL_DMA2D_SetLineOffset(DMA2Dx, DMA2D_InitStruct->LineOffset);
 
-		/* DMA2D NLR register configuration
-		 * ------------------------------------------*/
+		/* DMA2D NLR register configuration ------------------------------------------*/
 		LL_DMA2D_ConfigSize(DMA2Dx, DMA2D_InitStruct->NbrOfLines, DMA2D_InitStruct->NbrOfPixelsPerLines);
 
-		/* DMA2D OMAR register configuration
-		 * ------------------------------------------*/
+		/* DMA2D OMAR register configuration ------------------------------------------*/
 		LL_DMA2D_SetOutputMemAddr(DMA2Dx, DMA2D_InitStruct->OutputMemoryAddress);
 
-		/* DMA2D OCOLR register configuration
-		 * ------------------------------------------*/
+		/* DMA2D OCOLR register configuration ------------------------------------------*/
 		dma2d_colorstruct.ColorMode = DMA2D_InitStruct->ColorMode;
 		dma2d_colorstruct.OutputBlue = DMA2D_InitStruct->OutputBlue;
 		dma2d_colorstruct.OutputGreen = DMA2D_InitStruct->OutputGreen;
@@ -275,11 +263,11 @@ void LL_DMA2D_StructInit(LL_DMA2D_InitTypeDef *DMA2D_InitStruct)
 }
 
 /**
- * @brief  Configure the foreground or background according to the specified
- * parameters in the LL_DMA2D_LayerCfgTypeDef structure.
+ * @brief  Configure the foreground or background according to the specified parameters
+ *         in the LL_DMA2D_LayerCfgTypeDef structure.
  * @param  DMA2Dx DMA2D Instance
- * @param  DMA2D_LayerCfg  pointer to a LL_DMA2D_LayerCfgTypeDef structure that
- * contains the configuration information for the specified layer.
+ * @param  DMA2D_LayerCfg  pointer to a LL_DMA2D_LayerCfgTypeDef structure that contains
+ *         the configuration information for the specified layer.
  * @param  LayerIdx  DMA2D Layer index.
  *                   This parameter can be one of the following values:
  *                   0(background) / 1(foreground)
@@ -307,8 +295,8 @@ void LL_DMA2D_ConfigLayer(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_LayerCfgTypeDef *DMA2D
 		/* Configure the background line offset */
 		LL_DMA2D_BGND_SetLineOffset(DMA2Dx, DMA2D_LayerCfg->LineOffset);
 
-		/* Configure the background Alpha value, Alpha mode, RB swap,
-		   Alpha inversion CLUT size, CLUT Color mode and Color mode */
+		/* Configure the background Alpha value, Alpha mode, RB swap, Alpha inversion
+		   CLUT size, CLUT Color mode and Color mode */
 		MODIFY_REG(DMA2Dx->BGPFCCR, (DMA2D_BGPFCCR_ALPHA | DMA2D_BGPFCCR_RBS | DMA2D_BGPFCCR_AI | DMA2D_BGPFCCR_AM | DMA2D_BGPFCCR_CS | DMA2D_BGPFCCR_CCM | DMA2D_BGPFCCR_CM),
 			   ((DMA2D_LayerCfg->Alpha << DMA2D_BGPFCCR_ALPHA_Pos) | DMA2D_LayerCfg->RBSwapMode | DMA2D_LayerCfg->AlphaInversionMode | DMA2D_LayerCfg->AlphaMode |
 			    (DMA2D_LayerCfg->CLUTSize << DMA2D_BGPFCCR_CS_Pos) | DMA2D_LayerCfg->CLUTColorMode | DMA2D_LayerCfg->ColorMode));
@@ -325,8 +313,8 @@ void LL_DMA2D_ConfigLayer(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_LayerCfgTypeDef *DMA2D
 		/* Configure the foreground line offset */
 		LL_DMA2D_FGND_SetLineOffset(DMA2Dx, DMA2D_LayerCfg->LineOffset);
 
-		/* Configure the foreground Alpha value, Alpha mode, RB swap,
-		   Alpha inversion CLUT size, CLUT Color mode and Color mode */
+		/* Configure the foreground Alpha value, Alpha mode, RB swap, Alpha inversion
+		   CLUT size, CLUT Color mode and Color mode */
 		MODIFY_REG(DMA2Dx->FGPFCCR, (DMA2D_FGPFCCR_ALPHA | DMA2D_FGPFCCR_RBS | DMA2D_FGPFCCR_AI | DMA2D_FGPFCCR_AM | DMA2D_FGPFCCR_CS | DMA2D_FGPFCCR_CCM | DMA2D_FGPFCCR_CM),
 			   ((DMA2D_LayerCfg->Alpha << DMA2D_FGPFCCR_ALPHA_Pos) | DMA2D_LayerCfg->RBSwapMode | DMA2D_LayerCfg->AlphaInversionMode | DMA2D_LayerCfg->AlphaMode |
 			    (DMA2D_LayerCfg->CLUTSize << DMA2D_FGPFCCR_CS_Pos) | DMA2D_LayerCfg->CLUTColorMode | DMA2D_LayerCfg->ColorMode));
@@ -364,12 +352,11 @@ void LL_DMA2D_LayerCfgStructInit(LL_DMA2D_LayerCfgTypeDef *DMA2D_LayerCfg)
 }
 
 /**
- * @brief  Initialize DMA2D output color register according to the specified
- * parameters in DMA2D_ColorStruct.
+ * @brief  Initialize DMA2D output color register according to the specified parameters
+ *         in DMA2D_ColorStruct.
  * @param  DMA2Dx DMA2D Instance
- * @param  DMA2D_ColorStruct  pointer to a LL_DMA2D_ColorTypeDef structure that
- * contains the color configuration information for the specified DMA2D
- * peripheral.
+ * @param  DMA2D_ColorStruct  pointer to a LL_DMA2D_ColorTypeDef structure that contains
+ *         the color configuration information for the specified DMA2D peripheral.
  * @retval None
  */
 void LL_DMA2D_ConfigOutputColor(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_ColorTypeDef *DMA2D_ColorStruct)
@@ -386,8 +373,7 @@ void LL_DMA2D_ConfigOutputColor(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_ColorTypeDef *DM
 	assert_param(IS_LL_DMA2D_BLUE(DMA2D_ColorStruct->OutputBlue));
 	assert_param(IS_LL_DMA2D_ALPHA(DMA2D_ColorStruct->OutputAlpha));
 
-	/* DMA2D OCOLR register configuration
-	 * ------------------------------------------*/
+	/* DMA2D OCOLR register configuration ------------------------------------------*/
 	if (DMA2D_ColorStruct->ColorMode == LL_DMA2D_OUTPUT_MODE_ARGB8888) {
 		outgreen = DMA2D_ColorStruct->OutputGreen << 8U;
 		outred = DMA2D_ColorStruct->OutputRed << 16U;
@@ -432,8 +418,7 @@ uint32_t LL_DMA2D_GetOutputBlueColor(const DMA2D_TypeDef *DMA2Dx, uint32_t Color
 	assert_param(IS_DMA2D_ALL_INSTANCE(DMA2Dx));
 	assert_param(IS_LL_DMA2D_OCMODE(ColorMode));
 
-	/* DMA2D OCOLR register reading
-	 * ------------------------------------------*/
+	/* DMA2D OCOLR register reading ------------------------------------------*/
 	if (ColorMode == LL_DMA2D_OUTPUT_MODE_ARGB8888) {
 		color = (uint32_t)(READ_BIT(DMA2Dx->OCOLR, 0xFFU));
 	} else if (ColorMode == LL_DMA2D_OUTPUT_MODE_RGB888) {
@@ -469,8 +454,7 @@ uint32_t LL_DMA2D_GetOutputGreenColor(const DMA2D_TypeDef *DMA2Dx, uint32_t Colo
 	assert_param(IS_DMA2D_ALL_INSTANCE(DMA2Dx));
 	assert_param(IS_LL_DMA2D_OCMODE(ColorMode));
 
-	/* DMA2D OCOLR register reading
-	 * ------------------------------------------*/
+	/* DMA2D OCOLR register reading ------------------------------------------*/
 	if (ColorMode == LL_DMA2D_OUTPUT_MODE_ARGB8888) {
 		color = (uint32_t)(READ_BIT(DMA2Dx->OCOLR, 0xFF00U) >> 8U);
 	} else if (ColorMode == LL_DMA2D_OUTPUT_MODE_RGB888) {
@@ -506,8 +490,7 @@ uint32_t LL_DMA2D_GetOutputRedColor(const DMA2D_TypeDef *DMA2Dx, uint32_t ColorM
 	assert_param(IS_DMA2D_ALL_INSTANCE(DMA2Dx));
 	assert_param(IS_LL_DMA2D_OCMODE(ColorMode));
 
-	/* DMA2D OCOLR register reading
-	 * ------------------------------------------*/
+	/* DMA2D OCOLR register reading ------------------------------------------*/
 	if (ColorMode == LL_DMA2D_OUTPUT_MODE_ARGB8888) {
 		color = (uint32_t)(READ_BIT(DMA2Dx->OCOLR, 0xFF0000U) >> 16U);
 	} else if (ColorMode == LL_DMA2D_OUTPUT_MODE_RGB888) {
@@ -543,8 +526,7 @@ uint32_t LL_DMA2D_GetOutputAlphaColor(const DMA2D_TypeDef *DMA2Dx, uint32_t Colo
 	assert_param(IS_DMA2D_ALL_INSTANCE(DMA2Dx));
 	assert_param(IS_LL_DMA2D_OCMODE(ColorMode));
 
-	/* DMA2D OCOLR register reading
-	 * ------------------------------------------*/
+	/* DMA2D OCOLR register reading ------------------------------------------*/
 	if (ColorMode == LL_DMA2D_OUTPUT_MODE_ARGB8888) {
 		color = (uint32_t)(READ_BIT(DMA2Dx->OCOLR, 0xFF000000U) >> 24U);
 	} else if ((ColorMode == LL_DMA2D_OUTPUT_MODE_RGB888) || (ColorMode == LL_DMA2D_OUTPUT_MODE_RGB565)) {

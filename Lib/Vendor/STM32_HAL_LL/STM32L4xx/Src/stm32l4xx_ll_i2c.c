@@ -100,6 +100,7 @@ ErrorStatus LL_I2C_DeInit(const I2C_TypeDef *I2Cx)
 
 		/* Release reset of I2C clock */
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_I2C2);
+
 	}
 #endif /* I2C2 */
 	else if (I2Cx == I2C3) {
@@ -126,8 +127,7 @@ ErrorStatus LL_I2C_DeInit(const I2C_TypeDef *I2Cx)
 }
 
 /**
- * @brief  Initialize the I2C registers according to the specified parameters in
- * I2C_InitStruct.
+ * @brief  Initialize the I2C registers according to the specified parameters in I2C_InitStruct.
  * @param  I2Cx I2C Instance.
  * @param  I2C_InitStruct pointer to a @ref LL_I2C_InitTypeDef structure.
  * @retval An ErrorStatus enumeration value:
@@ -150,29 +150,25 @@ ErrorStatus LL_I2C_Init(I2C_TypeDef *I2Cx, const LL_I2C_InitTypeDef *I2C_InitStr
 	/* Disable the selected I2Cx Peripheral */
 	LL_I2C_Disable(I2Cx);
 
-	/*---------------------------- I2Cx CR1 Configuration
-	 * ------------------------ Configure the analog and digital noise
-	 * filters with parameters :
+	/*---------------------------- I2Cx CR1 Configuration ------------------------
+	 * Configure the analog and digital noise filters with parameters :
 	 * - AnalogFilter: I2C_CR1_ANFOFF bit
 	 * - DigitalFilter: I2C_CR1_DNF[3:0] bits
 	 */
 	LL_I2C_ConfigFilters(I2Cx, I2C_InitStruct->AnalogFilter, I2C_InitStruct->DigitalFilter);
 
-	/*---------------------------- I2Cx TIMINGR Configuration
-	 * -------------------- Configure the SDA setup, hold time and the SCL
-	 * high, low period with parameter :
-	 * - Timing: I2C_TIMINGR_PRESC[3:0], I2C_TIMINGR_SCLDEL[3:0],
-	 * I2C_TIMINGR_SDADEL[3:0], I2C_TIMINGR_SCLH[7:0] and
-	 * I2C_TIMINGR_SCLL[7:0] bits
+	/*---------------------------- I2Cx TIMINGR Configuration --------------------
+	 * Configure the SDA setup, hold time and the SCL high, low period with parameter :
+	 * - Timing: I2C_TIMINGR_PRESC[3:0], I2C_TIMINGR_SCLDEL[3:0], I2C_TIMINGR_SDADEL[3:0],
+	 *           I2C_TIMINGR_SCLH[7:0] and I2C_TIMINGR_SCLL[7:0] bits
 	 */
 	LL_I2C_SetTiming(I2Cx, I2C_InitStruct->Timing);
 
 	/* Enable the selected I2Cx Peripheral */
 	LL_I2C_Enable(I2Cx);
 
-	/*---------------------------- I2Cx OAR1 Configuration
-	 * ----------------------- Disable, Configure and Enable I2Cx device own
-	 * address 1 with parameters :
+	/*---------------------------- I2Cx OAR1 Configuration -----------------------
+	 * Disable, Configure and Enable I2Cx device own address 1 with parameters :
 	 * - OwnAddress1:  I2C_OAR1_OA1[9:0] bits
 	 * - OwnAddrSize:  I2C_OAR1_OA1MODE bit
 	 */
@@ -184,17 +180,15 @@ ErrorStatus LL_I2C_Init(I2C_TypeDef *I2Cx, const LL_I2C_InitTypeDef *I2C_InitStr
 		LL_I2C_EnableOwnAddress1(I2Cx);
 	}
 
-	/*---------------------------- I2Cx MODE Configuration
-	 * ----------------------- Configure I2Cx peripheral mode with parameter
-	 * :
+	/*---------------------------- I2Cx MODE Configuration -----------------------
+	 * Configure I2Cx peripheral mode with parameter :
 	 * - PeripheralMode: I2C_CR1_SMBDEN and I2C_CR1_SMBHEN bits
 	 */
 	LL_I2C_SetMode(I2Cx, I2C_InitStruct->PeripheralMode);
 
-	/*---------------------------- I2Cx CR2 Configuration
-	 * ------------------------ Configure the ACKnowledge or Non ACKnowledge
-	 * condition after the address receive match code or next received byte
-	 * with parameter :
+	/*---------------------------- I2Cx CR2 Configuration ------------------------
+	 * Configure the ACKnowledge or Non ACKnowledge condition
+	 * after the address receive match code or next received byte with parameter :
 	 * - TypeAcknowledge: I2C_CR2_NACK bit
 	 */
 	LL_I2C_AcknowledgeNextData(I2Cx, I2C_InitStruct->TypeAcknowledge);
