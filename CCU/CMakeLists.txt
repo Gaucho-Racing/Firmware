@@ -30,7 +30,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			Test/Src/stm32g4xx_ll_gpio.c
 			Application/Src/StateTicks.c
 			Application/Src/StateUtils.c
-		
 	)
 	target_link_libraries(
 		StateTicksTests
