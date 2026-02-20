@@ -1,17 +1,1 @@
-{
-	"name": "Pod::Spell",
-	"provides": {
-		"Pod::Spell": {
-			"file": "lib/Pod/Spell.pm",
-			"version": "1.27"
-		},
-		"Pod::Wordlist": {
-			"file": "lib/Pod/Wordlist.pm",
-			"version": "1.27"
-		}
-	},
-	"pathname": "H/HA/HAARG/Pod-Spell-1.27.tar.gz",
-	"target": "Pod::Spell",
-	"version": "1.27",
-	"dist": "Pod-Spell-1.27"
-}
+{"name":"Pod::Spell","provides":{"Pod::Spell":{"file":"lib/Pod/Spell.pm","version":"1.27"},"Pod::Wordlist":{"file":"lib/Pod/Wordlist.pm","version":"1.27"}},"pathname":"H/HA/HAARG/Pod-Spell-1.27.tar.gz","target":"Pod::Spell","version":"1.27","dist":"Pod-Spell-1.27"}
