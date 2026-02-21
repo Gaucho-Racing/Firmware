@@ -7,8 +7,7 @@
 #include "can.h"
 #include "gpio.h"
 
-
-void setSoftwareLatch(bool close, CCU_StateData* state_data)
+void setSoftwareLatch(bool close, CCU_StateData *state_data)
 {
 
 	if (close && !(HAL_GPIO_ReadPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin))) {

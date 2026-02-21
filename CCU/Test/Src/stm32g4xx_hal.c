@@ -1,7 +1,6 @@
 #include "stm32g4xx_hal.h"
+
 #include "stm32g4xx_ll_gpio.h"
-
-
 
 uint32_t HAL_GetTick(void)
 {
@@ -28,6 +27,7 @@ uint32_t HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState
 	return 1;
 }
 
-void SendPrechargeStatus(){
-    return;
+void SendPrechargeStatus()
+{
+	return;
 }
