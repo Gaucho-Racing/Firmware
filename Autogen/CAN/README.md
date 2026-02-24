@@ -16,17 +16,17 @@
 
 All parsers live in `Src/` and read `Doc/format.CANdo` as input. You should never need to run them manually.
 
-- **`CANparser.pl`** — Reads the `Custom CAN ID:` section. Produces `Custom_CAN_ID.h`, a single enum mapping each third-party message name to its CAN ID.
-- **`GRparser.pl`** — Reads the `GR ID:` section. Produces `GR_IDS.h`, a single enum of device/node network addresses.
-- **`MSGparser.pl`** — Reads the `Message ID:` section. Produces `can_msg_ids.h`, a single enum of every team-defined message name to its MSG ID.
-- **`STRUCTparser.pl`** — Reads the `Message ID:` section. Produces `CANDler.h`, packed C structs for each message with typed fields, byte-level layout, and description comments.
+- **`CANparser.pl`** — Reads the `Custom CAN ID` section. Produces `Custom_CAN_ID.h`, a single enum mapping each third-party message name to its CAN ID.
+- **`GRparser.pl`** — Reads the `GR ID` section. Produces `GR_IDS.h`, a single enum of device/node network addresses.
+- **`MSGparser.pl`** — Reads the `Message ID` section. Produces `can_msg_ids.h`, a single enum of every team-defined message name to its MSG ID.
+- **`STRUCTparser.pl`** — Reads the `Message ID` section. Produces `CANDler.h`, packed C structs for each message with typed fields, byte-level layout, and description comments.
 
 | Parser | Section(s) Read | Key Fields Consumed | Output |
 |---|---|---|---|
-| `CANparser.pl` | `Custom CAN ID:` | Message name, `CAN ID` | `Custom_CAN_ID.h` |
-| `GRparser.pl` | `GR ID:` | Device name, hex ID value | `GR_IDS.h` |
-| `MSGparser.pl` | `Message ID:` | Message name, `MSG ID` | `can_msg_ids.h` |
-| `STRUCTparser.pl` | `Message ID:` | Message name, fields, `# bit start`, `data type`, `#` comments | `CANDler.h` |
+| `CANparser.pl` | `Custom CAN ID` | Message name, `CAN ID` | `Custom_CAN_ID.h` |
+| `GRparser.pl` | `GR ID` | Device name, hex ID value | `GR_IDS.h` |
+| `MSGparser.pl` | `Message ID` | Message name, `MSG ID` | `can_msg_ids.h` |
+| `STRUCTparser.pl` | `Message ID` | Message name, fields, `bit_start`, `data type`, `#` comments | `CANDler.h` |
 
 ---
 
@@ -38,15 +38,15 @@ All parsers live in `Src/` and read `Doc/format.CANdo` as input. You should neve
 
 | Section | Consumed By | Generated Output |
 |---|---|---|
-| `routing:` | *(build system / routing logic)* | Message routing tables |
-| `byte order:` | *(shared config)* | Endianness setting |
-| `Message ID:` | `MSGparser.pl` -> `can_msg_ids.h`, `STRUCTparser.pl` -> `CANDler.h` | MSG ID enum, packed C structs |
-| `Custom CAN ID:` | `CANparser.pl` -> `Custom_CAN_ID.h` | Custom CAN ID enum |
-| `GR ID:` | `GRparser.pl` -> `GR_IDS.h` | Device/node ID enum |
+| `routing` | *(build system / routing logic)* | Message routing tables |
+| `byte order` | *(shared config)* | Endianness setting |
+| `Message ID` | `MSGparser.pl` -> `can_msg_ids.h`, `STRUCTparser.pl` -> `CANDler.h` | MSG ID enum, packed C structs |
+| `Custom CAN ID` | `CANparser.pl` -> `Custom_CAN_ID.h` | Custom CAN ID enum |
+| `GR ID` | `GRparser.pl` -> `GR_IDS.h` | Device/node ID enum |
 
 ---
 
-### 1. `routing:` Section
+### 1. `routing` Section
 
 Defines which messages each device sends on each CAN bus, and to which receiver. Use `can_id_override` for messages that use a non-standard (externally defined) CAN ID.
 
@@ -61,11 +61,11 @@ routing:
             can_id_override: 0x1806E5F4   # optional, for external protocols
 ```
 
-**To add a new route:** nest a `- msg:` entry under the appropriate Device -> Bus -> Receiver path. The message name must match an entry in `Message ID:` or `Custom CAN ID:`.
+**To add a new route:** nest a `- msg:` entry under the appropriate Device -> Bus -> Receiver path. The message name must match an entry in `Message ID` or `Custom CAN ID`.
 
 ---
 
-### 2. `byte order:` Section
+### 2. `byte order` Section
 
 A single value that sets the byte order for the entire bus. Currently `little_endian`.
 
@@ -75,7 +75,7 @@ byte order: little_endian
 
 ---
 
-### 3. `Message ID:` Section (parsed by `MSGparser.pl` and `STRUCTparser.pl`)
+### 3. `Message ID` Section (parsed by `MSGparser.pl` and `STRUCTparser.pl`)
 
 Defines every CAN message the team controls: its ID, length, and fields. This is the largest and most commonly edited section.
 
@@ -86,7 +86,8 @@ Message ID:
   <Message Name>:
     MSG ID: <hex ID>         # e.g. 0x003
     MSG LENGTH: <bytes>      # total message length in bytes
-    <Field Name>: # bit start <N>
+    <Field Name>:
+      bit_start: <N>
       # <description comment>
       data type: <type>
       units: <unit string>          # optional
@@ -110,7 +111,7 @@ Message ID:
 
 #### Field Attributes
 
-- **`# bit start <N>`** (REQUIRED--PARSERS CALCULATE MESSAGE SIZE BASED ON BIT STARTS NOTHING WILL WORK MAKE SURE YOU USE A BIT START PLEASE ) — the bit offset of the field within the message, placed inline with the field name after a `#`.
+- **`bit_start`** (REQUIRED REQUIRED REQUIRED REQUIRED) — the bit offset of the field within the message. Must be the first sub-key under each field name. Parsers calculate message size based on bit starts — nothing will work without it.
 - **`data type`** (required) — one of the types listed above.
 - **`units`** (optional) — human-readable unit (e.g. `Volts`, `RPM`, `'%'`, `Celsius`, `Bool`, `Enum`, `ms`).
 - **`scaled min` / `scaled max`** (optional) — the real-world range after the map equation is applied.
@@ -121,26 +122,27 @@ Message ID:
 
 Mark unused bit ranges as `Reserved`:
 ```yaml
-    Reserved: # bit start 23-31
+    Reserved:
+      bit_start: 23-31
 ```
 No sub-properties are needed. The parsers will skip or collapse reserved ranges.
 
 #### Adding a New Message
 
 1. Choose an unused `MSG ID` (hex).
-2. Add an entry under `Message ID:` following the structure above.
-3. Add a corresponding route in the `routing:` section.
+2. Add an entry under `Message ID` following the structure above.
+3. Add a corresponding route in the `routing` section.
 4. Rebuild — the parsers auto-generate the updated headers.
 
 #### Adding a Field to an Existing Message
 
 1. Pick the next available bit offset (must not overlap with existing fields).
-2. Add the field line with `# bit start <N>` and its sub-properties.
+2. Add the field with `bit_start: <N>` and its sub-properties.
 3. Update `MSG LENGTH` if the message now occupies more bytes.
 
 ---
 
-### 4. `Custom CAN ID:` Section (parsed by `CANparser.pl`)
+### 4. `Custom CAN ID` Section (parsed by `CANparser.pl`)
 
 Defines CAN messages that use externally defined IDs (e.g. third-party motor controllers, chargers). These IDs are **not** auto-assigned by the team.
 
@@ -157,21 +159,21 @@ Custom CAN ID:
         bit_start: <N>
 ```
 
-**Key differences from `Message ID:`:**
-- Uses `CAN ID:` (not `MSG ID:`) and the value can be decimal or bare hex (e.g. `A16`).
-- Uses `Length:` (not `MSG LENGTH:`).
-- Fields are listed under a `signals:` array with `name:` and `bit_start:` keys, rather than using the inline `# bit start` syntax.
+**Key differences from `Message ID`:**
+- Uses `CAN ID` (not `MSG ID`) and the value can be decimal or bare hex (e.g. `A16`).
+- Uses `Length` (not `MSG LENGTH`).
+- Fields are listed under a `signals:` array with `name:` and `bit_start:` keys, rather than direct field names with `bit_start:` as a sub-key.
 
 **Parser behavior:** `CANparser.pl` reads each entry's `CAN ID`, sanitizes the message name into a C identifier, and emits it as an enum value in `Custom_CAN_ID.h`.
 
 #### Adding a Custom CAN ID Entry
 
-1. Add a new block under `Custom CAN ID:` with `CAN ID`, `Length`, and `signals`.
+1. Add a new block under `Custom CAN ID` with `CAN ID`, `Length`, and `signals`.
 2. The `CAN ID` value will be formatted as hex (`0x...`) in the generated enum if it contains non-decimal characters, or kept as decimal otherwise.
 
 ---
 
-### 5. `GR ID:` Section (parsed by `GRparser.pl`)
+### 5. `GR ID` Section (parsed by `GRparser.pl`)
 
 A flat mapping of device/node names to their unique network identifiers. Used for addressing in the GR protocol layer.
 
