@@ -13,14 +13,12 @@
     X(GR_CCU,        2)
 
 const uint8_t IDsToBePinged[] = {
-    #define AS_ID(id, idx) id,
-    PING_LIST(AS_ID)
-};
+#define AS_ID(id, idx) id,
+    PING_LIST(AS_ID)};
 
 const uint8_t PingsToBeIDed[] = {
-    #define AS_LOOKUP(id, idx) [id] = idx,
-    PING_LIST(AS_LOOKUP)
-};
+#define AS_LOOKUP(id, idx) [id] = idx,
+    PING_LIST(AS_LOOKUP)};
 
 #define NUMBER_OF_PING_DEVICES (sizeof(IDsToBePinged) / sizeof(IDsToBePinged[0]))
 
