@@ -276,21 +276,21 @@ static void MX_GPIO_Init(void)
 static void GPIO_Interrupt_Init(void)
 {
 	// Map pins to External Lines
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13); //PC13 --> EXTI 13
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3); // PA3 --> EXTI 3
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE4); // PA4 --> EXTI 4
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13); // PC13 --> EXTI 13
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3);  // PA3 --> EXTI 3
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE4);  // PA4 --> EXTI 4
 
 	// Initialize the Interrupts
 	LL_EXTI_InitTypeDef EXTI_Init = {0};
 	EXTI_Init.Line_0_31 = LL_EXTI_LINE_13; // EXTI 13
- 	EXTI_Init.LineCommand = ENABLE;
-  	EXTI_Init.Mode = LL_EXTI_MODE_IT;
-  	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
-  	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.LineCommand = ENABLE;
+	EXTI_Init.Mode = LL_EXTI_MODE_IT;
+	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
+	LL_EXTI_Init(&EXTI_Init);
 	EXTI_Init.Line_0_31 = LL_EXTI_LINE_3; // EXTI 3
-  	LL_EXTI_Init(&EXTI_Init);
+	LL_EXTI_Init(&EXTI_Init);
 	EXTI_Init.Line_0_31 = LL_EXTI_LINE_4; // EXTI 4
-  	LL_EXTI_Init(&EXTI_Init);
+	LL_EXTI_Init(&EXTI_Init);
 
 	// Set default priority
 	NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
@@ -302,7 +302,6 @@ static void GPIO_Interrupt_Init(void)
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
 }
-
 
 /* USER CODE END 4 */
 

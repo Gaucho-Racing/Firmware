@@ -20,9 +20,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_it.h"
 
-#include "main.h"
+#include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
-#include "CANdler.h" // For CAN stuff
+#include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
