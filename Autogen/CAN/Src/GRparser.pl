@@ -21,9 +21,9 @@ my $gr_ids = $yaml->{"GR ID"};
 # Open header file for writing using the dynamic output path
 open my $fh, '>', $output_path or die "CANfigurator Error: Cannot open $output_path: $!";
 
-print $fh "// Auto-generated GR ID enum header\n";
-print $fh "#ifndef GR_IDS_H\n#define GR_IDS_H\n\n";
-print $fh "typedef enum {\n";
+print {$fh} "// Auto-generated GR ID enum header\n";
+print {$fh} "#ifndef GR_IDS_H\n#define GR_IDS_H\n\n";
+print {$fh} "typedef enum {\n";
 
 # Loop through each device and write enum entries
 for my $name ( sort keys %$gr_ids ) {
@@ -33,12 +33,12 @@ for my $name ( sort keys %$gr_ids ) {
 
 	# Check if ID exists to prevent empty enum values
 	if ( defined $id ) {
-		print $fh "    $const_name = $id,\n";
+		print {$fh} "    $const_name = $id,\n";
 	}
 }
 
-print $fh "} GR_ID_t;\n\n";
-print $fh "#endif // GR_IDS_H\n";
+print {$fh} "} GR_ID_t;\n\n";
+print {$fh} "#endif // GR_IDS_H\n";
 
 close $fh;
 

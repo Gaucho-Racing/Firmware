@@ -25,7 +25,7 @@ my %TYPE_BITS = (
 
 sub normalize {
 	my ($val) = @_;
-	return "Unknown" unless defined $val && $val ne '';
+	return "Unknown" unless defined $val && $val ne q{};
 	$val =~ s/^\s+|\s+$//g;
 	$val =~ s/[\s.\-]+/_/g;
 	$val =~ s/[^a-zA-Z0-9_]//g;
@@ -61,7 +61,7 @@ sub parse_input {
 	my %data = ( routing => [], messages => {}, custom => {}, grid => {} );
 	open my $fh, '<', $file or die "Cannot open $file: $!";
 
-	my ( $sec, $cur_msg, $cur_sig, $sender, $bus, $target ) = ( '', '', '', '', '', '' );
+	my ( $sec, $cur_msg, $cur_sig, $sender, $bus, $target ) = ( q{}, q{}, q{}, q{}, q{}, q{} );
 
 	while (<$fh>) {
 		chomp;
@@ -139,8 +139,8 @@ my $input_file  = $ARGV[0] or die "Usage: perl script.pl <input.yaml> [output.db
 my $output_file = $ARGV[1] // "output.dbc";
 my $d           = parse_input($input_file);
 
-open( my $out, '>', $output_file ) or die $!;
-print $out "VERSION \"\"\n\nNS_ :\n\nBS_:\n\nBU_: " . join( ' ', sort grep { $_ ne 'ALL' } map { normalize($_) } keys %{ $d->{grid} } ) . " ALL\n\n";
+open my $out, '>', $output_file or die $!;
+print {$out} "VERSION \"\"\n\nNS_ :\n\nBS_:\n\nBU_: " . join( ' ', sort grep { $_ ne 'ALL' } map { normalize($_) } keys %{ $d->{grid} } ) . " ALL\n\n";
 
 foreach my $r ( @{ $d->{routing} } ) {
 	my $m_name = $r->{msg};
@@ -194,6 +194,6 @@ foreach my $r ( @{ $d->{routing} } ) {
 		  $unit,
 		  normalize( $r->{target} );
 	}
-	print $out "\n";
+	print {$out} "\n";
 }
-close($out);
+close $out;

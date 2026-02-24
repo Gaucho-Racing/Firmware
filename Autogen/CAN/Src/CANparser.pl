@@ -17,11 +17,11 @@ my $can_defs = $yaml->{'Custom CAN ID'};
 # This updates the existing file by overwriting it with fresh data.
 open my $fh, '>', $output_path or die "Error: Cannot open $output_path: $!";
 
-print $fh "// Auto-generated Custom CAN ID header\n";
-print $fh "#ifndef CUSTOM_CAN_ID_H\n";
-print $fh "#define CUSTOM_CAN_ID_H\n\n";
+print {$fh} "// Auto-generated Custom CAN ID header\n";
+print {$fh} "#ifndef CUSTOM_CAN_ID_H\n";
+print {$fh} "#define CUSTOM_CAN_ID_H\n\n";
 
-print $fh "typedef enum {\n";
+print {$fh} "typedef enum {\n";
 
 # Sort to keep the header organized
 for my $msg_name ( sort keys %$can_defs ) {
@@ -46,11 +46,11 @@ for my $msg_name ( sort keys %$can_defs ) {
 		$val = "0x" . lc($1);      # Handles '10d'
 	}
 
-	print $fh "    ${enum_name}_CAN_ID = $val,\n";
+	print {$fh} "    ${enum_name}_CAN_ID = $val,\n";
 }
 
-print $fh "} Custom_CAN_ID_t;\n\n";
-print $fh "#endif // CUSTOM_CAN_ID_H\n";
+print {$fh} "} Custom_CAN_ID_t;\n\n";
+print {$fh} "#endif // CUSTOM_CAN_ID_H\n";
 close $fh;
 
 print "Successfully updated $output_path\n";

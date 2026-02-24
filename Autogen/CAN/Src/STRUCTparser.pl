@@ -55,10 +55,10 @@ $in_msg_section = 0;
 my $current_msg = "";
 my @fields      = ();
 
-print $out "/* Auto-generated header file */\n";
-print $out "#ifndef ${prefix}_MESSAGES_H\n";
-print $out "#define ${prefix}_MESSAGES_H\n\n";
-print $out "#include <stdint.h>\n\n";
+print {$out} "/* Auto-generated header file */\n";
+print {$out} "#ifndef ${prefix}_MESSAGES_H\n";
+print {$out} "#define ${prefix}_MESSAGES_H\n\n";
+print {$out} "#include <stdint.h>\n\n";
 
 while ( my $line = <$in> ) {
 	chomp($line);
@@ -101,7 +101,7 @@ while ( my $line = <$in> ) {
 
 # Final call for the last message
 process_bytes_exact( $out, $current_msg, \@fields, \%desc_map ) if $current_msg;
-print $out "#endif\n";
+print {$out} "#endif\n";
 
 sub process_bytes_exact {
 	my ( $fh, $name, $f_ref, $d_map ) = @_;
@@ -110,9 +110,9 @@ sub process_bytes_exact {
 	my $struct_tag = uc( $name =~ s/[^A-Za-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr );
 
 	if ( $name =~ /Cell Data/i ) {
-		print $fh "/** $name */\ntypedef struct {\n";
-		print $fh "\tstruct {\n\t\tuint8_t voltage;\n\t\tuint8_t temperature;\n\t} cells[32];\n";
-		print $fh "} ${prefix}_${struct_tag}_MSG;\n\n";
+		print {$fh} "/** $name */\ntypedef struct {\n";
+		print {$fh} "\tstruct {\n\t\tuint8_t voltage;\n\t\tuint8_t temperature;\n\t} cells[32];\n";
+		print {$fh} "} ${prefix}_${struct_tag}_MSG;\n\n";
 		return;
 	}
 
@@ -122,7 +122,7 @@ sub process_bytes_exact {
 		push @{ $byte_map{$byte_num} }, $f;
 	}
 
-	print $fh "/** $name */\ntypedef struct {\n";
+	print {$fh} "/** $name */\ntypedef struct {\n";
 	my @sorted_bytes = sort { $a <=> $b } keys %byte_map;
 
 	for ( my $i = 0 ; $i < @sorted_bytes ; $i++ ) {
@@ -164,9 +164,9 @@ sub process_bytes_exact {
 		}
 		$final_desc =~ s/^\s+//;
 
-		if   ($final_desc) { print $fh "\t/** $final_desc (Byte $b_idx) */\n"; }
-		else               { print $fh "\t/** Byte $b_idx */\n"; }
+		if   ($final_desc) { print {$fh} "\t/** $final_desc (Byte $b_idx) */\n"; }
+		else               { print {$fh} "\t/** Byte $b_idx */\n"; }
 		printf( $fh "\t%-10s %-30s\n", $type, $f_var . ";" );
 	}
-	print $fh "} ${prefix}_${struct_tag}_MSG;\n\n";
+	print {$fh} "} ${prefix}_${struct_tag}_MSG;\n\n";
 }

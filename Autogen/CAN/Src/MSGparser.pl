@@ -14,7 +14,7 @@ if ( !-e $yaml_file ) {
 	die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n";
 }
 
-open( my $fh, '<', $yaml_file ) or die "CANfigurator Error: Can't open $yaml_file: $!";
+open my $fh, '<', $yaml_file  or die "CANfigurator Error: Can't open $yaml_file: $!";
 
 my @msg_ids;
 
@@ -62,19 +62,19 @@ while ( my $line = <$fh> ) {
 close($fh);
 
 # --- Writing Logic ---
-open( my $out, '>', $output_file ) or die "CANfigurator Error: Can't create $output_file: $!";
+open my $out, '>', $output_file or die "CANfigurator Error: Can't create $output_file: $!";
 
-print $out "// Auto-generated CAN Message IDs\n";
-print $out "#ifndef CAN_MSG_IDS_H\n";
-print $out "#define CAN_MSG_IDS_H\n\n";
-print $out "typedef enum {\n";
+print {$out} "// Auto-generated CAN Message IDs\n";
+print {$out} "#ifndef CAN_MSG_IDS_H\n";
+print {$out} "#define CAN_MSG_IDS_H\n\n";
+print {$out} "typedef enum {\n";
 
 foreach my $msg (@msg_ids) {
 	printf $out "    %-40s = %s,\n", $msg->{name}, $msg->{id};
 }
 
-print $out "} can_msg_id_t;\n\n";
-print $out "#endif // CAN_MSG_IDS_H\n";
+print {$out} "} can_msg_id_t;\n\n";
+print {$out} "#endif // CAN_MSG_IDS_H\n";
 
 close($out);
 
