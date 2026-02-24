@@ -24,7 +24,7 @@ void CANInitialize()
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK;	// TODO Change
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK; // TODO Change
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
