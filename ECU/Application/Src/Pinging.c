@@ -7,18 +7,20 @@
 #include "StateUtils.h"
 
 // add new pingable devices here, arrays are updated automagically
-#define PING_LIST(X)                                                                                                                                                                                   \
-	X(GR_BCU, 0)                                                                                                                                                                                   \
-	X(GR_DASH_PANEL, 1)                                                                                                                                                                            \
-	X(GR_CCU, 2)
+#define PING_LIST(OP)                                                                                                                                                                                  \
+	OP(GR_BCU, 0)                                                                                                                                                                                  \
+	OP(GR_DASH_PANEL, 1)                                                                                                                                                                           \
+	OP(GR_CCU, 2)
 
-const uint8_t IDsToBePinged[] = {
-#define AS_ID(id, idx) id,
-    PING_LIST(AS_ID)};
+// Converts PING_LIST into a list of the first column (IDs)
+#define PING_LIST_AS_ID(id, index) id,
 
-const uint8_t PingsToBeIDed[] = {
-#define AS_LOOKUP(id, idx) [id] = idx,
-    PING_LIST(AS_LOOKUP)};
+// Converts PING_LIST into a lookup table from ID to index
+#define PING_LIST_AS_LOOKUP(id, index) [id] = index,
+
+const uint8_t IDsToBePinged[] = {PING_LIST(PING_LIST_AS_ID)};
+
+const uint8_t PingsToBeIDed[] = {PING_LIST(PING_LIST_AS_LOOKUP)};
 
 #define NUMBER_OF_PING_DEVICES (sizeof(IDsToBePinged) / sizeof(IDsToBePinged[0]))
 
