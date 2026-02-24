@@ -104,10 +104,10 @@ process_bytes_exact( $out, $current_msg, \@fields, \%desc_map ) if $current_msg;
 print $out "#endif\n";
 
 sub process_bytes_exact {
-    my ( $fh, $name, $f_ref, $d_map ) = @_;
-    return if !$name || $name =~ /Message ID/;
+	my ( $fh, $name, $f_ref, $d_map ) = @_;
+	return if !$name || $name =~ /Message ID/;
 
-    my $struct_tag = uc( $name =~ s/[^A-Za-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr );
+	my $struct_tag = uc( $name =~ s/[^A-Za-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr );
 
 	if ( $name =~ /Cell Data/i ) {
 		print $fh "/** $name */\ntypedef struct {\n";
