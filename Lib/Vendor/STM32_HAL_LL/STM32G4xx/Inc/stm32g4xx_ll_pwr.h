@@ -145,9 +145,7 @@ extern "C" {
 #define LL_PWR_PVDLEVEL_4 (PWR_CR2_PLS_LEV4) /* VPVD4 around 2.6 V */
 #define LL_PWR_PVDLEVEL_5 (PWR_CR2_PLS_LEV5) /* VPVD5 around 2.8 V */
 #define LL_PWR_PVDLEVEL_6 (PWR_CR2_PLS_LEV6) /* VPVD6 around 2.9 V */
-#define LL_PWR_PVDLEVEL_7                                                                                                                                                                              \
-	(PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare                                                                                                                                 \
-			      internally to VREFINT) */
+#define LL_PWR_PVDLEVEL_7 (PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare internally to VREFINT) */
 /**
  * @}
  */
@@ -259,14 +257,20 @@ extern "C" {
  * @rmtoll CR1          LPR           LL_PWR_EnableLowPowerRunMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableLowPowerRunMode(void) { SET_BIT(PWR->CR1, PWR_CR1_LPR); }
+__STATIC_INLINE void LL_PWR_EnableLowPowerRunMode(void)
+{
+	SET_BIT(PWR->CR1, PWR_CR1_LPR);
+}
 
 /**
  * @brief  Switch the regulator from low-power mode to main mode
  * @rmtoll CR1          LPR           LL_PWR_DisableLowPowerRunMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableLowPowerRunMode(void) { CLEAR_BIT(PWR->CR1, PWR_CR1_LPR); }
+__STATIC_INLINE void LL_PWR_DisableLowPowerRunMode(void)
+{
+	CLEAR_BIT(PWR->CR1, PWR_CR1_LPR);
+}
 
 /**
  * @brief  Check if the regulator is in low-power mode
@@ -286,14 +290,20 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledLowPowerRunMode(void)
  * @rmtoll CR1          LPR           LL_PWR_EnterLowPowerRunMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnterLowPowerRunMode(void) { LL_PWR_EnableLowPowerRunMode(); }
+__STATIC_INLINE void LL_PWR_EnterLowPowerRunMode(void)
+{
+	LL_PWR_EnableLowPowerRunMode();
+}
 
 /**
  * @brief  Switch from run main mode to low-power mode.
  * @rmtoll CR1          LPR           LL_PWR_ExitLowPowerRunMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ExitLowPowerRunMode(void) { LL_PWR_DisableLowPowerRunMode(); }
+__STATIC_INLINE void LL_PWR_ExitLowPowerRunMode(void)
+{
+	LL_PWR_DisableLowPowerRunMode();
+}
 
 /**
  * @brief  Set the main internal regulator output voltage
@@ -303,7 +313,10 @@ __STATIC_INLINE void LL_PWR_ExitLowPowerRunMode(void) { LL_PWR_DisableLowPowerRu
  *         @arg @ref LL_PWR_REGU_VOLTAGE_SCALE2
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetRegulVoltageScaling(uint32_t VoltageScaling) { MODIFY_REG(PWR->CR1, PWR_CR1_VOS, VoltageScaling); }
+__STATIC_INLINE void LL_PWR_SetRegulVoltageScaling(uint32_t VoltageScaling)
+{
+	MODIFY_REG(PWR->CR1, PWR_CR1_VOS, VoltageScaling);
+}
 
 /**
  * @brief  Get the main internal regulator output voltage
@@ -312,7 +325,10 @@ __STATIC_INLINE void LL_PWR_SetRegulVoltageScaling(uint32_t VoltageScaling) { MO
  *         @arg @ref LL_PWR_REGU_VOLTAGE_SCALE1
  *         @arg @ref LL_PWR_REGU_VOLTAGE_SCALE2
  */
-__STATIC_INLINE uint32_t LL_PWR_GetRegulVoltageScaling(void) { return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_VOS)); }
+__STATIC_INLINE uint32_t LL_PWR_GetRegulVoltageScaling(void)
+{
+	return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_VOS));
+}
 
 #if defined(PWR_CR5_R1MODE)
 /**
@@ -320,14 +336,20 @@ __STATIC_INLINE uint32_t LL_PWR_GetRegulVoltageScaling(void) { return (uint32_t)
  * @rmtoll CR5          R1MODE        LL_PWR_EnableRange1BoostMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableRange1BoostMode(void) { CLEAR_BIT(PWR->CR5, PWR_CR5_R1MODE); }
+__STATIC_INLINE void LL_PWR_EnableRange1BoostMode(void)
+{
+	CLEAR_BIT(PWR->CR5, PWR_CR5_R1MODE);
+}
 
 /**
  * @brief  Disable main regulator voltage range 1 boost mode
  * @rmtoll CR5          R1MODE        LL_PWR_DisableRange1BoostMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableRange1BoostMode(void) { SET_BIT(PWR->CR5, PWR_CR5_R1MODE); }
+__STATIC_INLINE void LL_PWR_DisableRange1BoostMode(void)
+{
+	SET_BIT(PWR->CR5, PWR_CR5_R1MODE);
+}
 
 /**
  * @brief  Check if the main regulator voltage range 1 boost mode is enabled
@@ -348,14 +370,20 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledRange1BoostMode(void)
  * @rmtoll CR1          DBP           LL_PWR_EnableBkUpAccess
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableBkUpAccess(void) { SET_BIT(PWR->CR1, PWR_CR1_DBP); }
+__STATIC_INLINE void LL_PWR_EnableBkUpAccess(void)
+{
+	SET_BIT(PWR->CR1, PWR_CR1_DBP);
+}
 
 /**
  * @brief  Disable access to the backup domain
  * @rmtoll CR1          DBP           LL_PWR_DisableBkUpAccess
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableBkUpAccess(void) { CLEAR_BIT(PWR->CR1, PWR_CR1_DBP); }
+__STATIC_INLINE void LL_PWR_DisableBkUpAccess(void)
+{
+	CLEAR_BIT(PWR->CR1, PWR_CR1_DBP);
+}
 
 /**
  * @brief  Check if the backup domain is enabled
@@ -380,7 +408,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBkUpAccess(void)
  *         @arg @ref LL_PWR_MODE_SHUTDOWN
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetPowerMode(uint32_t LowPowerMode) { MODIFY_REG(PWR->CR1, PWR_CR1_LPMS, LowPowerMode); }
+__STATIC_INLINE void LL_PWR_SetPowerMode(uint32_t LowPowerMode)
+{
+	MODIFY_REG(PWR->CR1, PWR_CR1_LPMS, LowPowerMode);
+}
 
 /**
  * @brief  Get Low-Power mode
@@ -391,76 +422,92 @@ __STATIC_INLINE void LL_PWR_SetPowerMode(uint32_t LowPowerMode) { MODIFY_REG(PWR
  *         @arg @ref LL_PWR_MODE_STANDBY
  *         @arg @ref LL_PWR_MODE_SHUTDOWN
  */
-__STATIC_INLINE uint32_t LL_PWR_GetPowerMode(void) { return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_LPMS)); }
+__STATIC_INLINE uint32_t LL_PWR_GetPowerMode(void)
+{
+	return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_LPMS));
+}
 
 #if defined(PWR_CR3_UCPD_STDBY)
 /**
- * @brief  Enable the USB Type-C and Power Delivery memorization in Standby
- * mode.
+ * @brief  Enable the USB Type-C and Power Delivery memorization in Standby mode.
  * @note   This function must be called just before entering Standby mode.
  * @rmtoll CR3          UCPD_STDBY    LL_PWR_EnableUCPDStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableUCPDStandbyMode(void) { SET_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY); }
+__STATIC_INLINE void LL_PWR_EnableUCPDStandbyMode(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY);
+}
 
 /**
- * @brief  Disable the USB Type-C and Power Delivery memorization in Standby
- * mode.
- * @note   This function must be called after exiting Standby mode and before
- * any UCPD configuration update.
+ * @brief  Disable the USB Type-C and Power Delivery memorization in Standby mode.
+ * @note   This function must be called after exiting Standby mode and before any
+ *         UCPD configuration update.
  * @rmtoll CR3          UCPD_STDBY     LL_PWR_DisableUCPDStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableUCPDStandbyMode(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY); }
+__STATIC_INLINE void LL_PWR_DisableUCPDStandbyMode(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY);
+}
 
 /**
- * @brief  Check the USB Type-C and Power Delivery Standby mode memorization
- * state.
+ * @brief  Check the USB Type-C and Power Delivery Standby mode memorization state.
  * @rmtoll CR3          UCPD_STDBY           LL_PWR_IsEnabledUCPDStandbyMode
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDStandbyMode(void) { return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY) == (PWR_CR3_UCPD_STDBY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDStandbyMode(void)
+{
+
+	return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY) == (PWR_CR3_UCPD_STDBY)) ? 1UL : 0UL);
+}
 #endif /* PWR_CR3_UCPD_STDBY */
 
 #if defined(PWR_CR3_UCPD_DBDIS)
 /**
- * @brief  Enable the USB Type-C and power delivery dead battery pull-down
- * behavior on UCPD CC1 and CC2 pins.
+ * @brief  Enable the USB Type-C and power delivery dead battery pull-down behavior
+ *         on UCPD CC1 and CC2 pins.
  * @note   After exiting reset, the USB Type-C dead battery behavior is enabled,
- *         which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ *         which may have a pull-down effect on CC1 and CC2 pins. It is recommended
+ *         to disable it in all cases, either to stop this pull-down or to hand over
+ *         control to the UCPD (which should therefore be initialized before doing the disable).
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_EnableUCPDDeadBattery
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableUCPDDeadBattery(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS); }
+__STATIC_INLINE void LL_PWR_EnableUCPDDeadBattery(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS);
+}
 
 /**
- * @brief  Disable the USB Type-C and power delivery dead battery pull-down
- * behavior on UCPD CC1 and CC2 pins.
+ * @brief  Disable the USB Type-C and power delivery dead battery pull-down behavior
+ *         on UCPD CC1 and CC2 pins.
  * @note   After exiting reset, the USB Type-C dead battery behavior is enabled,
- *         which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ *         which may have a pull-down effect on CC1 and CC2 pins. It is recommended
+ *         to disable it in all cases, either to stop this pull-down or to hand over
+ *         control to the UCPD (which should therefore be initialized before doing the disable).
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_DisableUCPDDeadBattery
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableUCPDDeadBattery(void) { SET_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS); }
+__STATIC_INLINE void LL_PWR_DisableUCPDDeadBattery(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS);
+}
 
 /**
- * @brief  Check the USB Type-C and power delivery dead battery pull-down
- * behavior on UCPD CC1 and CC2 pins.
+ * @brief  Check the USB Type-C and power delivery dead battery pull-down behavior
+ *         on UCPD CC1 and CC2 pins.
  * @note   After exiting reset, the USB Type-C dead battery behavior is enabled,
- *         which may have a pull-down effect on CC1 and CC2 pins. It is
- * recommended to disable it in all cases, either to stop this pull-down or to
- * hand over control to the UCPD (which should therefore be initialized before
- * doing the disable).
+ *         which may have a pull-down effect on CC1 and CC2 pins. It is recommended
+ *         to disable it in all cases, either to stop this pull-down or to hand over
+ *         control to the UCPD (which should therefore be initialized before doing the disable).
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_IsEnabledUCPDDeadBattery
  * @retval State of feature (1 : enabled; 0 : disabled).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDDeadBattery(void) { return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS) == (PWR_CR3_UCPD_DBDIS)) ? 0UL : 1UL); }
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDDeadBattery(void)
+{
+	return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS) == (PWR_CR3_UCPD_DBDIS)) ? 0UL : 1UL);
+}
 #endif /* PWR_CR3_UCPD_DBDIS */
 
 #if defined(PWR_CR2_USV)
@@ -469,14 +516,20 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDDeadBattery(void) { return ((READ_B
  * @rmtoll CR2          USV           LL_PWR_EnableVddUSB
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableVddUSB(void) { SET_BIT(PWR->CR2, PWR_CR2_USV); }
+__STATIC_INLINE void LL_PWR_EnableVddUSB(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_USV);
+}
 
 /**
  * @brief  Disable VDDUSB supply
  * @rmtoll CR2          USV           LL_PWR_DisableVddUSB
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableVddUSB(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_USV); }
+__STATIC_INLINE void LL_PWR_DisableVddUSB(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_USV);
+}
 
 /**
  * @brief  Check if VDDUSB supply is enabled
@@ -498,14 +551,20 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVddUSB(void)
  * @rmtoll CR2          IOSV          LL_PWR_EnableVddIO2
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableVddIO2(void) { SET_BIT(PWR->CR2, PWR_CR2_IOSV); }
+__STATIC_INLINE void LL_PWR_EnableVddIO2(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_IOSV);
+}
 
 /**
  * @brief  Disable VDDIO2 supply
  * @rmtoll CR2          IOSV          LL_PWR_DisableVddIO2
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableVddIO2(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_IOSV); }
+__STATIC_INLINE void LL_PWR_DisableVddIO2(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_IOSV);
+}
 
 /**
  * @brief  Check if VDDIO2 supply is enabled
@@ -536,7 +595,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVddIO2(void)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnablePVM(uint32_t PeriphVoltage) { SET_BIT(PWR->CR2, PeriphVoltage); }
+__STATIC_INLINE void LL_PWR_EnablePVM(uint32_t PeriphVoltage)
+{
+	SET_BIT(PWR->CR2, PeriphVoltage);
+}
 
 /**
  * @brief  Disable the Power Voltage Monitoring on a peripheral
@@ -553,7 +615,10 @@ __STATIC_INLINE void LL_PWR_EnablePVM(uint32_t PeriphVoltage) { SET_BIT(PWR->CR2
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisablePVM(uint32_t PeriphVoltage) { CLEAR_BIT(PWR->CR2, PeriphVoltage); }
+__STATIC_INLINE void LL_PWR_DisablePVM(uint32_t PeriphVoltage)
+{
+	CLEAR_BIT(PWR->CR2, PeriphVoltage);
+}
 
 /**
  * @brief  Check if Power Voltage Monitoring is enabled on a peripheral
@@ -579,8 +644,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVM(uint32_t PeriphVoltage)
 }
 
 /**
- * @brief  Configure the voltage threshold detected by the Power Voltage
- * Detector
+ * @brief  Configure the voltage threshold detected by the Power Voltage Detector
  * @rmtoll CR2          PLS           LL_PWR_SetPVDLevel
  * @param  PVDLevel This parameter can be one of the following values:
  *         @arg @ref LL_PWR_PVDLEVEL_0
@@ -593,7 +657,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVM(uint32_t PeriphVoltage)
  *         @arg @ref LL_PWR_PVDLEVEL_7
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t PVDLevel) { MODIFY_REG(PWR->CR2, PWR_CR2_PLS, PVDLevel); }
+__STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t PVDLevel)
+{
+	MODIFY_REG(PWR->CR2, PWR_CR2_PLS, PVDLevel);
+}
 
 /**
  * @brief  Get the voltage threshold detection
@@ -608,21 +675,30 @@ __STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t PVDLevel) { MODIFY_REG(PWR->CR2
  *         @arg @ref LL_PWR_PVDLEVEL_6
  *         @arg @ref LL_PWR_PVDLEVEL_7
  */
-__STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void) { return (uint32_t)(READ_BIT(PWR->CR2, PWR_CR2_PLS)); }
+__STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
+{
+	return (uint32_t)(READ_BIT(PWR->CR2, PWR_CR2_PLS));
+}
 
 /**
  * @brief  Enable Power Voltage Detector
  * @rmtoll CR2          PVDE          LL_PWR_EnablePVD
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnablePVD(void) { SET_BIT(PWR->CR2, PWR_CR2_PVDE); }
+__STATIC_INLINE void LL_PWR_EnablePVD(void)
+{
+	SET_BIT(PWR->CR2, PWR_CR2_PVDE);
+}
 
 /**
  * @brief  Disable Power Voltage Detector
  * @rmtoll CR2          PVDE          LL_PWR_DisablePVD
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisablePVD(void) { CLEAR_BIT(PWR->CR2, PWR_CR2_PVDE); }
+__STATIC_INLINE void LL_PWR_DisablePVD(void)
+{
+	CLEAR_BIT(PWR->CR2, PWR_CR2_PVDE);
+}
 
 /**
  * @brief  Check if Power Voltage Detector is enabled
@@ -642,35 +718,50 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVD(void)
  * @rmtoll CR3          EIWF          LL_PWR_EnableInternWU
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableInternWU(void) { SET_BIT(PWR->CR3, PWR_CR3_EIWF); }
+__STATIC_INLINE void LL_PWR_EnableInternWU(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_EIWF);
+}
 
 /**
  * @brief  Disable Internal Wake-up line
  * @rmtoll CR3          EIWF          LL_PWR_DisableInternWU
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableInternWU(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_EIWF); }
+__STATIC_INLINE void LL_PWR_DisableInternWU(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_EIWF);
+}
 
 /**
  * @brief  Check if Internal Wake-up line is enabled
  * @rmtoll CR3          EIWF          LL_PWR_IsEnabledInternWU
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledInternWU(void) { return ((READ_BIT(PWR->CR3, PWR_CR3_EIWF) == (PWR_CR3_EIWF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledInternWU(void)
+{
+	return ((READ_BIT(PWR->CR3, PWR_CR3_EIWF) == (PWR_CR3_EIWF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable pull-up and pull-down configuration
  * @rmtoll CR3          APC           LL_PWR_EnablePUPDCfg
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnablePUPDCfg(void) { SET_BIT(PWR->CR3, PWR_CR3_APC); }
+__STATIC_INLINE void LL_PWR_EnablePUPDCfg(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_APC);
+}
 
 /**
  * @brief  Disable pull-up and pull-down configuration
  * @rmtoll CR3          APC           LL_PWR_DisablePUPDCfg
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisablePUPDCfg(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_APC); }
+__STATIC_INLINE void LL_PWR_DisablePUPDCfg(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_APC);
+}
 
 /**
  * @brief  Check if pull-up and pull-down configuration  is enabled
@@ -691,14 +782,20 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUPDCfg(void)
  * @rmtoll CR3          RRS           LL_PWR_EnableSRAM2Retention
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableSRAM2Retention(void) { SET_BIT(PWR->CR3, PWR_CR3_RRS); }
+__STATIC_INLINE void LL_PWR_EnableSRAM2Retention(void)
+{
+	SET_BIT(PWR->CR3, PWR_CR3_RRS);
+}
 
 /**
  * @brief  Disable SRAM2 content retention in Standby mode
  * @rmtoll CR3          RRS           LL_PWR_DisableSRAM2Retention
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableSRAM2Retention(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_RRS); }
+__STATIC_INLINE void LL_PWR_DisableSRAM2Retention(void)
+{
+	CLEAR_BIT(PWR->CR3, PWR_CR3_RRS);
+}
 
 /**
  * @brief  Check if SRAM2 content retention in Standby mode  is enabled
@@ -729,7 +826,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledSRAM2Retention(void)
  *         @arg @ref LL_PWR_WAKEUP_PIN5
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin) { SET_BIT(PWR->CR3, WakeUpPin); }
+__STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
+{
+	SET_BIT(PWR->CR3, WakeUpPin);
+}
 
 /**
  * @brief  Disable the WakeUp PINx functionality
@@ -746,7 +846,10 @@ __STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin) { SET_BIT(PWR->C
  *         @arg @ref LL_PWR_WAKEUP_PIN5
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableWakeUpPin(uint32_t WakeUpPin) { CLEAR_BIT(PWR->CR3, WakeUpPin); }
+__STATIC_INLINE void LL_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
+{
+	CLEAR_BIT(PWR->CR3, WakeUpPin);
+}
 
 /**
  * @brief  Check if the WakeUp PINx functionality is enabled
@@ -779,7 +882,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeUpPin(uint32_t WakeUpPin)
  *         @arg @ref LL_PWR_BATT_CHARGRESISTOR_1_5K
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetBattChargResistor(uint32_t Resistor) { MODIFY_REG(PWR->CR4, PWR_CR4_VBRS, Resistor); }
+__STATIC_INLINE void LL_PWR_SetBattChargResistor(uint32_t Resistor)
+{
+	MODIFY_REG(PWR->CR4, PWR_CR4_VBRS, Resistor);
+}
 
 /**
  * @brief  Get the resistor impedance
@@ -788,21 +894,30 @@ __STATIC_INLINE void LL_PWR_SetBattChargResistor(uint32_t Resistor) { MODIFY_REG
  *         @arg @ref LL_PWR_BATT_CHARG_RESISTOR_5K
  *         @arg @ref LL_PWR_BATT_CHARGRESISTOR_1_5K
  */
-__STATIC_INLINE uint32_t LL_PWR_GetBattChargResistor(void) { return (uint32_t)(READ_BIT(PWR->CR4, PWR_CR4_VBRS)); }
+__STATIC_INLINE uint32_t LL_PWR_GetBattChargResistor(void)
+{
+	return (uint32_t)(READ_BIT(PWR->CR4, PWR_CR4_VBRS));
+}
 
 /**
  * @brief  Enable battery charging
  * @rmtoll CR4          VBE           LL_PWR_EnableBatteryCharging
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableBatteryCharging(void) { SET_BIT(PWR->CR4, PWR_CR4_VBE); }
+__STATIC_INLINE void LL_PWR_EnableBatteryCharging(void)
+{
+	SET_BIT(PWR->CR4, PWR_CR4_VBE);
+}
 
 /**
  * @brief  Disable battery charging
  * @rmtoll CR4          VBE           LL_PWR_DisableBatteryCharging
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableBatteryCharging(void) { CLEAR_BIT(PWR->CR4, PWR_CR4_VBE); }
+__STATIC_INLINE void LL_PWR_DisableBatteryCharging(void)
+{
+	CLEAR_BIT(PWR->CR4, PWR_CR4_VBE);
+}
 
 /**
  * @brief  Check if battery charging is enabled
@@ -832,7 +947,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBatteryCharging(void)
  *         @arg @ref LL_PWR_WAKEUP_PIN5
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin) { SET_BIT(PWR->CR4, WakeUpPin); }
+__STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin)
+{
+	SET_BIT(PWR->CR4, WakeUpPin);
+}
 
 /**
  * @brief  Set the Wake-Up pin polarity high for the event detection
@@ -849,7 +967,10 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin) { SET_BI
  *         @arg @ref LL_PWR_WAKEUP_PIN5
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityHigh(uint32_t WakeUpPin) { CLEAR_BIT(PWR->CR4, WakeUpPin); }
+__STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityHigh(uint32_t WakeUpPin)
+{
+	CLEAR_BIT(PWR->CR4, WakeUpPin);
+}
 
 /**
  * @brief  Get the Wake-Up pin polarity for the event detection
@@ -912,7 +1033,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsWakeUpPinPolarityLow(uint32_t WakeUpPin)
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber) { SET_BIT(*((__IO uint32_t *)GPIO), GPIONumber); }
+__STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
+{
+	SET_BIT(*((__IO uint32_t *)GPIO), GPIONumber);
+}
 
 /**
  * @brief  Disable GPIO pull-up state in Standby and Shutdown modes
@@ -952,7 +1076,10 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber) { CLEAR_BIT(*((__IO uint32_t *)GPIO), GPIONumber); }
+__STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
+{
+	CLEAR_BIT(*((__IO uint32_t *)GPIO), GPIONumber);
+}
 
 /**
  * @brief  Check if GPIO pull-up state is enabled
@@ -992,7 +1119,10 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber) { return ((READ_BIT(*((__IO uint32_t *)GPIO), GPIONumber) == (GPIONumber)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
+{
+	return ((READ_BIT(*((__IO uint32_t *)GPIO), GPIONumber) == (GPIONumber)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable GPIO pull-down state in Standby and Shutdown modes
@@ -1032,7 +1162,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIO
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber) { SET_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber); }
+__STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
+{
+	SET_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber);
+}
 
 /**
  * @brief  Disable GPIO pull-down state in Standby and Shutdown modes
@@ -1072,7 +1205,10 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumbe
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber) { CLEAR_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber); }
+__STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
+{
+	CLEAR_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber);
+}
 
 /**
  * @brief  Check if GPIO pull-down state is enabled
@@ -1112,7 +1248,10 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumb
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber) { return ((READ_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber) == (GPIONumber)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
+{
+	return ((READ_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber) == (GPIONumber)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -1218,49 +1357,70 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU1(void)
  * @rmtoll SCR          CSBF          LL_PWR_ClearFlag_SB
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_SB(void) { WRITE_REG(PWR->SCR, PWR_SCR_CSBF); }
+__STATIC_INLINE void LL_PWR_ClearFlag_SB(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CSBF);
+}
 
 /**
  * @brief  Clear Wake-up Flags
  * @rmtoll SCR          CWUF          LL_PWR_ClearFlag_WU
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_WU(void) { WRITE_REG(PWR->SCR, PWR_SCR_CWUF); }
+__STATIC_INLINE void LL_PWR_ClearFlag_WU(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CWUF);
+}
 
 /**
  * @brief  Clear Wake-up Flag 5
  * @rmtoll SCR          CWUF5         LL_PWR_ClearFlag_WU5
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_WU5(void) { WRITE_REG(PWR->SCR, PWR_SCR_CWUF5); }
+__STATIC_INLINE void LL_PWR_ClearFlag_WU5(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CWUF5);
+}
 
 /**
  * @brief  Clear Wake-up Flag 4
  * @rmtoll SCR          CWUF4         LL_PWR_ClearFlag_WU4
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_WU4(void) { WRITE_REG(PWR->SCR, PWR_SCR_CWUF4); }
+__STATIC_INLINE void LL_PWR_ClearFlag_WU4(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CWUF4);
+}
 
 /**
  * @brief  Clear Wake-up Flag 3
  * @rmtoll SCR          CWUF3         LL_PWR_ClearFlag_WU3
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_WU3(void) { WRITE_REG(PWR->SCR, PWR_SCR_CWUF3); }
+__STATIC_INLINE void LL_PWR_ClearFlag_WU3(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CWUF3);
+}
 
 /**
  * @brief  Clear Wake-up Flag 2
  * @rmtoll SCR          CWUF2         LL_PWR_ClearFlag_WU2
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_WU2(void) { WRITE_REG(PWR->SCR, PWR_SCR_CWUF2); }
+__STATIC_INLINE void LL_PWR_ClearFlag_WU2(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CWUF2);
+}
 
 /**
  * @brief  Clear Wake-up Flag 1
  * @rmtoll SCR          CWUF1         LL_PWR_ClearFlag_WU1
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_ClearFlag_WU1(void) { WRITE_REG(PWR->SCR, PWR_SCR_CWUF1); }
+__STATIC_INLINE void LL_PWR_ClearFlag_WU1(void)
+{
+	WRITE_REG(PWR->SCR, PWR_SCR_CWUF1);
+}
 
 /**
  * @brief  Indicate whether VDDA voltage is below or above PVM4 threshold
@@ -1319,8 +1479,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVMO1(void)
 #endif /* PWR_SR2_PVMO1 */
 
 /**
- * @brief  Indicate whether VDD voltage is below or above the selected PVD
- * threshold
+ * @brief  Indicate whether VDD voltage is below or above the selected PVD threshold
  * @rmtoll SR2          PVDO          LL_PWR_IsActiveFlag_PVDO
  * @retval State of bit (1 or 0).
  */
@@ -1333,8 +1492,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVDO(void)
 }
 
 /**
- * @brief  Indicate whether the regulator is ready in the selected voltage range
- * or if its output voltage is still changing to the required voltage level
+ * @brief  Indicate whether the regulator is ready in the selected voltage range or if its output voltage is still changing to the required voltage level
  * @rmtoll SR2          VOSF          LL_PWR_IsActiveFlag_VOS
  * @retval State of bit (1 or 0).
  */
@@ -1347,10 +1505,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VOS(void)
 }
 
 /**
- * @brief  Indicate whether the regulator is ready in main mode or is in
- * low-power mode
- * @note: Take care, return value "0" means the regulator is ready.  Return
- * value "1" means the output voltage range is still changing.
+ * @brief  Indicate whether the regulator is ready in main mode or is in low-power mode
+ * @note: Take care, return value "0" means the regulator is ready.  Return value "1" means the output voltage range is still changing.
  * @rmtoll SR2          REGLPF        LL_PWR_IsActiveFlag_REGLPF
  * @retval State of bit (1 or 0).
  */

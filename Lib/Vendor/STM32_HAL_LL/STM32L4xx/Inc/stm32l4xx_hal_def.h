@@ -36,12 +36,20 @@ extern "C" {
 /**
  * @brief  HAL Status structures definition
  */
-typedef enum { HAL_OK = 0x00, HAL_ERROR = 0x01, HAL_BUSY = 0x02, HAL_TIMEOUT = 0x03 } HAL_StatusTypeDef;
+typedef enum {
+	HAL_OK = 0x00,
+	HAL_ERROR = 0x01,
+	HAL_BUSY = 0x02,
+	HAL_TIMEOUT = 0x03
+} HAL_StatusTypeDef;
 
 /**
  * @brief  HAL Lock structures definition
  */
-typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
+typedef enum {
+	HAL_UNLOCKED = 0x00,
+	HAL_LOCKED = 0x01
+} HAL_LockTypeDef;
 
 /* Exported macros -----------------------------------------------------------*/
 
@@ -63,17 +71,16 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 /** @brief Reset the Handle's State field.
  * @param __HANDLE__: specifies the Peripheral Handle.
  * @note  This macro can be used for the following purpose:
- *          - When the Handle is declared as local variable; before passing it
- * as parameter to HAL_PPP_Init() for the first time, it is mandatory to use
- * this macro to set to 0 the Handle's "State" field. Otherwise, "State" field
- * may have any random value and the first time the function HAL_PPP_Init() is
- * called, the low level hardware initialization will be missed (i.e.
- * HAL_PPP_MspInit() will not be executed).
- *          - When there is a need to reconfigure the low level hardware:
- * instead of calling HAL_PPP_DeInit() then HAL_PPP_Init(), user can make a call
- * to this macro then HAL_PPP_Init(). In this later function, when the Handle's
- * "State" field is set to 0, it will execute the function HAL_PPP_MspInit()
- * which will reconfigure the low level hardware.
+ *          - When the Handle is declared as local variable; before passing it as parameter
+ *            to HAL_PPP_Init() for the first time, it is mandatory to use this macro
+ *            to set to 0 the Handle's "State" field.
+ *            Otherwise, "State" field may have any random value and the first time the function
+ *            HAL_PPP_Init() is called, the low level hardware initialization will be missed
+ *            (i.e. HAL_PPP_MspInit() will not be executed).
+ *          - When there is a need to reconfigure the low level hardware: instead of calling
+ *            HAL_PPP_DeInit() then HAL_PPP_Init(), user can make a call to this macro then HAL_PPP_Init().
+ *            In this later function, when the Handle's "State" field is set to 0, it will execute the function
+ *            HAL_PPP_MspInit() which will reconfigure the low level hardware.
  * @retval None
  */
 #define __HAL_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = 0)
@@ -113,8 +120,7 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 #endif /* __packed */
 #endif /* __GNUC__ */
 
-/* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive
- * "#pragma data_alignment=4" must be used instead */
+/* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive "#pragma data_alignment=4" must be used instead */
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
 #ifndef __ALIGN_BEGIN
 #define __ALIGN_BEGIN
@@ -152,8 +158,8 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
    Functions that are executed in RAM should reside in a separate source module.
    Using the 'Options for File' dialog you can simply change the 'Code / Const'
    area of a module to a memory space in physical RAM.
-   Available memory areas are declared in the 'Target' tab of the 'Options for
-   Target' dialog.
+   Available memory areas are declared in the 'Target' tab of the 'Options for Target'
+   dialog.
 */
 #define __RAM_FUNC
 

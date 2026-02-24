@@ -629,7 +629,10 @@ bcc_status_t BCC_TPL_Enable(const uint8_t drvInstance)
  *                 Intended for TPL mode only!
  *
  *END**************************************************************************/
-void BCC_TPL_Disable(const uint8_t drvInstance) { BCC_MCU_WriteEnPin(drvInstance, 0); }
+void BCC_TPL_Disable(const uint8_t drvInstance)
+{
+	BCC_MCU_WriteEnPin(drvInstance, 0);
+}
 
 /*FUNCTION**********************************************************************
  *

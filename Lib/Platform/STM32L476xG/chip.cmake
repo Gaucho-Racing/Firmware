@@ -28,6 +28,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		${TARGET_NAME}
 		PRIVATE
 			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/startup_stm32l476xx.s"
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/system_stm32l4xx.c"
 	)
 
 	target_link_options(
@@ -35,7 +36,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		PRIVATE
 			${TARGET_FLAGS}
 			-T
-			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32L476XX_FLASH.ld"
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32L476RGTx_FLASH.ld"
 	)
 
 	target_link_libraries(

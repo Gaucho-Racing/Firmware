@@ -45,7 +45,13 @@ extern "C" {
 /**
  * @brief  PCD State structure definition
  */
-typedef enum { HAL_PCD_STATE_RESET = 0x00, HAL_PCD_STATE_READY = 0x01, HAL_PCD_STATE_ERROR = 0x02, HAL_PCD_STATE_BUSY = 0x03, HAL_PCD_STATE_TIMEOUT = 0x04 } PCD_StateTypeDef;
+typedef enum {
+	HAL_PCD_STATE_RESET = 0x00,
+	HAL_PCD_STATE_READY = 0x01,
+	HAL_PCD_STATE_ERROR = 0x02,
+	HAL_PCD_STATE_BUSY = 0x03,
+	HAL_PCD_STATE_TIMEOUT = 0x04
+} PCD_StateTypeDef;
 
 /* Device LPM suspend state */
 typedef enum {
@@ -108,35 +114,34 @@ typedef struct
 	__IO PCD_StateTypeDef State;	/*!< PCD communication state           */
 	__IO uint32_t ErrorCode;	/*!< PCD Error code                    */
 	uint32_t Setup[12];		/*!< Setup packet buffer               */
-	PCD_LPM_StateTypeDef LPM_State; /*!< LPM State */
+	PCD_LPM_StateTypeDef LPM_State; /*!< LPM State                         */
 	uint32_t BESL;
 	uint32_t FrameNumber; /*!< Store Current Frame number        */
 
 	uint32_t lpm_active; /*!< Enable or disable the Link Power Management .
-			     This parameter can be set to ENABLE or DISABLE */
+			     This parameter can be set to ENABLE or DISABLE        */
 
-	uint32_t battery_charging_active; /*!< Enable or disable Battery
-					  charging. This parameter can be set to
-					  ENABLE or DISABLE        */
+	uint32_t battery_charging_active; /*!< Enable or disable Battery charging.
+					  This parameter can be set to ENABLE or DISABLE        */
 	void *pData;			  /*!< Pointer to upper stack Handler */
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-	void (*SOFCallback)(struct __PCD_HandleTypeDef *hpcd);	      /*!< USB OTG PCD SOF callback */
+	void (*SOFCallback)(struct __PCD_HandleTypeDef *hpcd);	      /*!< USB OTG PCD SOF callback                */
 	void (*SetupStageCallback)(struct __PCD_HandleTypeDef *hpcd); /*!< USB OTG PCD Setup Stage callback        */
-	void (*ResetCallback)(struct __PCD_HandleTypeDef *hpcd);      /*!< USB OTG PCD Reset callback */
-	void (*SuspendCallback)(struct __PCD_HandleTypeDef *hpcd);    /*!< USB OTG PCD Suspend callback */
-	void (*ResumeCallback)(struct __PCD_HandleTypeDef *hpcd);     /*!< USB OTG PCD Resume callback */
-	void (*ConnectCallback)(struct __PCD_HandleTypeDef *hpcd);    /*!< USB OTG PCD Connect callback */
+	void (*ResetCallback)(struct __PCD_HandleTypeDef *hpcd);      /*!< USB OTG PCD Reset callback              */
+	void (*SuspendCallback)(struct __PCD_HandleTypeDef *hpcd);    /*!< USB OTG PCD Suspend callback            */
+	void (*ResumeCallback)(struct __PCD_HandleTypeDef *hpcd);     /*!< USB OTG PCD Resume callback             */
+	void (*ConnectCallback)(struct __PCD_HandleTypeDef *hpcd);    /*!< USB OTG PCD Connect callback            */
 	void (*DisconnectCallback)(struct __PCD_HandleTypeDef *hpcd); /*!< USB OTG PCD Disconnect callback         */
 
 	void (*DataOutStageCallback)(struct __PCD_HandleTypeDef *hpcd, uint8_t epnum);	   /*!< USB OTG PCD Data OUT Stage callback     */
 	void (*DataInStageCallback)(struct __PCD_HandleTypeDef *hpcd, uint8_t epnum);	   /*!< USB OTG PCD Data IN Stage callback      */
 	void (*ISOOUTIncompleteCallback)(struct __PCD_HandleTypeDef *hpcd, uint8_t epnum); /*!< USB OTG PCD ISO OUT Incomplete callback */
 	void (*ISOINIncompleteCallback)(struct __PCD_HandleTypeDef *hpcd, uint8_t epnum);  /*!< USB OTG PCD ISO IN Incomplete callback  */
-	void (*BCDCallback)(struct __PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg);	   /*!< USB OTG PCD BCD callback */
-	void (*LPMCallback)(struct __PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg);	   /*!< USB OTG PCD LPM callback */
+	void (*BCDCallback)(struct __PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg);	   /*!< USB OTG PCD BCD callback                */
+	void (*LPMCallback)(struct __PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg);	   /*!< USB OTG PCD LPM callback                */
 
-	void (*MspInitCallback)(struct __PCD_HandleTypeDef *hpcd);   /*!< USB OTG PCD Msp Init callback */
+	void (*MspInitCallback)(struct __PCD_HandleTypeDef *hpcd);   /*!< USB OTG PCD Msp Init callback           */
 	void (*MspDeInitCallback)(struct __PCD_HandleTypeDef *hpcd); /*!< USB OTG PCD Msp DeInit callback         */
 #endif								     /* USE_HAL_PCD_REGISTER_CALLBACKS */
 } PCD_HandleTypeDef;
@@ -228,8 +233,7 @@ typedef struct
  */
 
 /* Initialization/de-initialization functions  ********************************/
-/** @addtogroup PCD_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup PCD_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 HAL_StatusTypeDef HAL_PCD_Init(PCD_HandleTypeDef *hpcd);
@@ -238,19 +242,18 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef *hpcd);
 void HAL_PCD_MspDeInit(PCD_HandleTypeDef *hpcd);
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-/** @defgroup HAL_PCD_Callback_ID_enumeration_definition HAL USB OTG PCD
- * Callback ID enumeration definition
+/** @defgroup HAL_PCD_Callback_ID_enumeration_definition HAL USB OTG PCD Callback ID enumeration definition
  * @brief  HAL USB OTG PCD Callback ID enumeration definition
  * @{
  */
 typedef enum {
 	HAL_PCD_SOF_CB_ID = 0x01,	 /*!< USB PCD SOF callback ID          */
-	HAL_PCD_SETUPSTAGE_CB_ID = 0x02, /*!< USB PCD Setup Stage callback ID */
+	HAL_PCD_SETUPSTAGE_CB_ID = 0x02, /*!< USB PCD Setup Stage callback ID  */
 	HAL_PCD_RESET_CB_ID = 0x03,	 /*!< USB PCD Reset callback ID        */
 	HAL_PCD_SUSPEND_CB_ID = 0x04,	 /*!< USB PCD Suspend callback ID      */
 	HAL_PCD_RESUME_CB_ID = 0x05,	 /*!< USB PCD Resume callback ID       */
 	HAL_PCD_CONNECT_CB_ID = 0x06,	 /*!< USB PCD Connect callback ID      */
-	HAL_PCD_DISCONNECT_CB_ID = 0x07, /*!< USB PCD Disconnect callback ID */
+	HAL_PCD_DISCONNECT_CB_ID = 0x07, /*!< USB PCD Disconnect callback ID   */
 
 	HAL_PCD_MSPINIT_CB_ID = 0x08,  /*!< USB PCD MspInit callback ID      */
 	HAL_PCD_MSPDEINIT_CB_ID = 0x09 /*!< USB PCD MspDeInit callback ID    */
@@ -260,19 +263,18 @@ typedef enum {
  * @}
  */
 
-/** @defgroup HAL_PCD_Callback_pointer_definition HAL USB OTG PCD Callback
- * pointer definition
+/** @defgroup HAL_PCD_Callback_pointer_definition HAL USB OTG PCD Callback pointer definition
  * @brief  HAL USB OTG PCD Callback pointer definition
  * @{
  */
 
-typedef void (*pPCD_CallbackTypeDef)(PCD_HandleTypeDef *hpcd);				  /*!< pointer to a common USB OTG PCD callback function */
-typedef void (*pPCD_DataOutStageCallbackTypeDef)(PCD_HandleTypeDef *hpcd, uint8_t epnum); /*!< pointer to USB OTG PCD Data OUT Stage callback */
-typedef void (*pPCD_DataInStageCallbackTypeDef)(PCD_HandleTypeDef *hpcd, uint8_t epnum);  /*!< pointer to USB OTG PCD Data IN Stage callback */
+typedef void (*pPCD_CallbackTypeDef)(PCD_HandleTypeDef *hpcd);				  /*!< pointer to a common USB OTG PCD callback function  */
+typedef void (*pPCD_DataOutStageCallbackTypeDef)(PCD_HandleTypeDef *hpcd, uint8_t epnum); /*!< pointer to USB OTG PCD Data OUT Stage callback     */
+typedef void (*pPCD_DataInStageCallbackTypeDef)(PCD_HandleTypeDef *hpcd, uint8_t epnum);  /*!< pointer to USB OTG PCD Data IN Stage callback      */
 typedef void (*pPCD_IsoOutIncpltCallbackTypeDef)(PCD_HandleTypeDef *hpcd, uint8_t epnum); /*!< pointer to USB OTG PCD ISO OUT Incomplete callback */
 typedef void (*pPCD_IsoInIncpltCallbackTypeDef)(PCD_HandleTypeDef *hpcd, uint8_t epnum);  /*!< pointer to USB OTG PCD ISO IN Incomplete callback  */
-typedef void (*pPCD_LpmCallbackTypeDef)(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg); /*!< pointer to USB OTG PCD LPM callback */
-typedef void (*pPCD_BcdCallbackTypeDef)(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg); /*!< pointer to USB OTG PCD BCD callback */
+typedef void (*pPCD_LpmCallbackTypeDef)(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg); /*!< pointer to USB OTG PCD LPM callback                */
+typedef void (*pPCD_BcdCallbackTypeDef)(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg); /*!< pointer to USB OTG PCD BCD callback                */
 
 /**
  * @}
@@ -310,8 +312,7 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterLpmCallback(PCD_HandleTypeDef *hpcd);
 
 /* I/O operation functions  ***************************************************/
 /* Non-Blocking mode: Interrupt */
-/** @addtogroup PCD_Exported_Functions_Group2 Input and Output operation
- * functions
+/** @addtogroup PCD_Exported_Functions_Group2 Input and Output operation functions
  * @{
  */
 HAL_StatusTypeDef HAL_PCD_Start(PCD_HandleTypeDef *hpcd);
@@ -377,12 +378,12 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd);
  * @{
  */
 #if defined(USB_OTG_FS)
-#define USB_OTG_FS_WAKEUP_EXTI_LINE (0x1U << 17) /*!< USB FS EXTI Line WakeUp Interrupt */
-#endif						 /* defined (USB_OTG_FS) */
+#define USB_OTG_FS_WAKEUP_EXTI_LINE (0x1UL << 17) /*!< USB FS EXTI Line WakeUp Interrupt */
+#endif						  /* defined (USB_OTG_FS) */
 
 #if defined(USB)
-#define USB_WAKEUP_EXTI_LINE (0x1U << 17) /*!< USB FS EXTI Line WakeUp Interrupt */
-#endif					  /* defined (USB) */
+#define USB_WAKEUP_EXTI_LINE (0x1UL << 17) /*!< USB FS EXTI Line WakeUp Interrupt */
+#endif					   /* defined (USB) */
 
 /**
  * @}
@@ -423,9 +424,9 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd);
  * @}
  */
 #endif /* defined (USB) */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 #if defined(USB_OTG_FS)
 #ifndef USB_OTG_DOEPINT_OTEPSPR
@@ -441,10 +442,8 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd);
 #endif					  /* defined USB_OTG_DOEPINT_NAK */
 
 #ifndef USB_OTG_DOEPMSK_NAKM
-#define USB_OTG_DOEPMSK_NAKM                                                                                                                                                                           \
-	(0x1UL << 13) /*!< OUT Packet NAK interrupt mask                                                                                                                                               \
-		       */
-#endif		      /* defined USB_OTG_DOEPMSK_NAKM */
+#define USB_OTG_DOEPMSK_NAKM (0x1UL << 13) /*!< OUT Packet NAK interrupt mask */
+#endif					   /* defined USB_OTG_DOEPMSK_NAKM */
 
 #ifndef USB_OTG_DOEPINT_STPKTRX
 #define USB_OTG_DOEPINT_STPKTRX (0x1UL << 15) /*!< Setup Packet Received interrupt */
@@ -461,8 +460,8 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd);
  */
 #if defined(USB)
 /********************  Bit definition for USB_COUNTn_RX register  *************/
-#define USB_CNTRX_NBLK_MSK (0x1FU << 10)
-#define USB_CNTRX_BLSIZE (0x1U << 15)
+#define USB_CNTRX_NBLK_MSK (0x1FUL << 10)
+#define USB_CNTRX_BLSIZE (0x1UL << 15)
 
 /* SetENDPOINT */
 #define PCD_SET_ENDPOINT(USBx, bEpNum, wRegValue) (*(__IO uint16_t *)(&(USBx)->EP0R + ((bEpNum) * 2U)) = (uint16_t)(wRegValue))

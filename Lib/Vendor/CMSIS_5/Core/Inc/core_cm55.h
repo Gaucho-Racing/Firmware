@@ -5079,7 +5079,10 @@ __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP
   field).
  */
-__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void) { return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos)); }
+__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void)
+{
+	return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
+}
 
 /**
   \brief   Enable Interrupt
@@ -5401,7 +5404,10 @@ __STATIC_INLINE void TZ_NVIC_SetPriorityGrouping_NS(uint32_t PriorityGroup)
   secure state. \return                Priority grouping field (SCB->AIRCR
   [10:8] PRIGROUP field).
  */
-__STATIC_INLINE uint32_t TZ_NVIC_GetPriorityGrouping_NS(void) { return ((uint32_t)((SCB_NS->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos)); }
+__STATIC_INLINE uint32_t TZ_NVIC_GetPriorityGrouping_NS(void)
+{
+	return ((uint32_t)((SCB_NS->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
+}
 
 /**
   \brief   Enable Interrupt (non-secure)
@@ -5686,13 +5692,19 @@ __STATIC_INLINE uint32_t SCB_GetMVEType(void)
   \brief   Enable SAU
   \details Enables the Security Attribution Unit (SAU).
  */
-__STATIC_INLINE void TZ_SAU_Enable(void) { SAU->CTRL |= (SAU_CTRL_ENABLE_Msk); }
+__STATIC_INLINE void TZ_SAU_Enable(void)
+{
+	SAU->CTRL |= (SAU_CTRL_ENABLE_Msk);
+}
 
 /**
   \brief   Disable SAU
   \details Disables the Security Attribution Unit (SAU).
  */
-__STATIC_INLINE void TZ_SAU_Disable(void) { SAU->CTRL &= ~(SAU_CTRL_ENABLE_Msk); }
+__STATIC_INLINE void TZ_SAU_Disable(void)
+{
+	SAU->CTRL &= ~(SAU_CTRL_ENABLE_Msk);
+}
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
@@ -5726,7 +5738,10 @@ __STATIC_INLINE void DCB_SetAuthCtrl(uint32_t value)
   \details Reads Debug Authentication Control register.
   \return             Debug Authentication Control Register.
  */
-__STATIC_INLINE uint32_t DCB_GetAuthCtrl(void) { return (DCB->DAUTHCTRL); }
+__STATIC_INLINE uint32_t DCB_GetAuthCtrl(void)
+{
+	return (DCB->DAUTHCTRL);
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -5748,7 +5763,10 @@ __STATIC_INLINE void TZ_DCB_SetAuthCtrl_NS(uint32_t value)
   \details Reads non-secure Debug Authentication Control register when in secure
   state. \return             Debug Authentication Control Register.
  */
-__STATIC_INLINE uint32_t TZ_DCB_GetAuthCtrl_NS(void) { return (DCB_NS->DAUTHCTRL); }
+__STATIC_INLINE uint32_t TZ_DCB_GetAuthCtrl_NS(void)
+{
+	return (DCB_NS->DAUTHCTRL);
+}
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 /*@} end of CMSIS_Core_DCBFunctions */
@@ -5767,7 +5785,10 @@ __STATIC_INLINE uint32_t TZ_DCB_GetAuthCtrl_NS(void) { return (DCB_NS->DAUTHCTRL
   \details Reads Debug Authentication Status register.
   \return             Debug Authentication Status Register.
  */
-__STATIC_INLINE uint32_t DIB_GetAuthStatus(void) { return (DIB->DAUTHSTATUS); }
+__STATIC_INLINE uint32_t DIB_GetAuthStatus(void)
+{
+	return (DIB->DAUTHSTATUS);
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -5775,7 +5796,10 @@ __STATIC_INLINE uint32_t DIB_GetAuthStatus(void) { return (DIB->DAUTHSTATUS); }
   \details Reads non-secure Debug Authentication Status register when in secure
   state. \return             Debug Authentication Status Register.
  */
-__STATIC_INLINE uint32_t TZ_DIB_GetAuthStatus_NS(void) { return (DIB_NS->DAUTHSTATUS); }
+__STATIC_INLINE uint32_t TZ_DIB_GetAuthStatus_NS(void)
+{
+	return (DIB_NS->DAUTHSTATUS);
+}
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 /*@} end of CMSIS_Core_DCBFunctions */

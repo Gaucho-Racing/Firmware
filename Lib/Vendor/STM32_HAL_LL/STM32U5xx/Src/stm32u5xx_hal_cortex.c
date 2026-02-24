@@ -530,7 +530,10 @@ uint32_t HAL_SYSTICK_GetCLKSourceConfig(void)
  * @brief  Handle SYSTICK interrupt request.
  * @retval None
  */
-void HAL_SYSTICK_IRQHandler(void) { HAL_SYSTICK_Callback(); }
+void HAL_SYSTICK_IRQHandler(void)
+{
+	HAL_SYSTICK_Callback();
+}
 
 /**
  * @brief  SYSTICK callback.
@@ -740,7 +743,10 @@ void HAL_MPU_DisableRegion_NS(uint32_t RegionNumber)
  * contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit) { MPU_ConfigRegion(MPU, pMPU_RegionInit); }
+void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
+{
+	MPU_ConfigRegion(MPU, pMPU_RegionInit);
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -750,7 +756,10 @@ void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit) {
  * contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit) { MPU_ConfigRegion(MPU_NS, pMPU_RegionInit); }
+void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
+{
+	MPU_ConfigRegion(MPU_NS, pMPU_RegionInit);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**
@@ -759,7 +768,10 @@ void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit
  * structure that contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit) { MPU_ConfigMemoryAttributes(MPU, pMPU_AttributesInit); }
+void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
+{
+	MPU_ConfigMemoryAttributes(MPU, pMPU_AttributesInit);
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -768,7 +780,10 @@ void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU
  * structure that contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit) { MPU_ConfigMemoryAttributes(MPU_NS, pMPU_AttributesInit); }
+void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
+{
+	MPU_ConfigMemoryAttributes(MPU_NS, pMPU_AttributesInit);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**

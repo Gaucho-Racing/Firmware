@@ -264,7 +264,10 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
  * @brief  This function handles RTC ALARM interrupt request.
  * @retval None
  */
-void RTC_IRQHandler(void) { HAL_RTC_AlarmIRQHandler(&hRTC_Handle); }
+void RTC_IRQHandler(void)
+{
+	HAL_RTC_AlarmIRQHandler(&hRTC_Handle);
+}
 
 /**
  * @}

@@ -65,62 +65,47 @@ extern "C" {
  */
 typedef struct {
 	uint32_t PeripheralMode; /*!< Specifies the peripheral mode.
-				      This parameter can be a value of @ref
-				    I2C_LL_EC_PERIPHERAL_MODE.
+				      This parameter can be a value of @ref I2C_LL_EC_PERIPHERAL_MODE.
 
-				      This feature can be modified afterwards
-				    using unitary function
+				      This feature can be modified afterwards using unitary function
 				      @ref LL_I2C_SetMode(). */
 
-	uint32_t Timing; /*!< Specifies the SDA setup, hold time and the SCL
-			    high, low period values. This parameter must be set
-			    by referring to the STM32CubeMX Tool and the helper
-			    macro @ref __LL_I2C_CONVERT_TIMINGS().
+	uint32_t Timing; /*!< Specifies the SDA setup, hold time and the SCL high, low period values.
+			      This parameter must be set by referring to the STM32CubeMX Tool and
+			      the helper macro @ref __LL_I2C_CONVERT_TIMINGS().
 
-			      This feature can be modified afterwards using
-			    unitary function
+			      This feature can be modified afterwards using unitary function
 			      @ref LL_I2C_SetTiming(). */
 
 	uint32_t AnalogFilter; /*!< Enables or disables analog noise filter.
-				    This parameter can be a value of @ref
-				  I2C_LL_EC_ANALOGFILTER_SELECTION.
+				    This parameter can be a value of @ref I2C_LL_EC_ANALOGFILTER_SELECTION.
 
-				    This feature can be modified afterwards
-				  using unitary functions
-				    @ref LL_I2C_EnableAnalogFilter() or
-				  LL_I2C_DisableAnalogFilter(). */
+				    This feature can be modified afterwards using unitary functions
+				    @ref LL_I2C_EnableAnalogFilter() or LL_I2C_DisableAnalogFilter(). */
 
 	uint32_t DigitalFilter; /*!< Configures the digital noise filter.
-				     This parameter can be a number between
-				   Min_Data = 0x00 and Max_Data = 0x0F.
+				     This parameter can be a number between Min_Data = 0x00 and Max_Data = 0x0F.
 
-				     This feature can be modified afterwards
-				   using unitary function
+				     This feature can be modified afterwards using unitary function
 				     @ref LL_I2C_SetDigitalFilter(). */
 
 	uint32_t OwnAddress1; /*!< Specifies the device own address 1.
-				   This parameter must be a value between
-				 Min_Data = 0x00 and Max_Data = 0x3FF.
+				   This parameter must be a value between Min_Data = 0x00 and Max_Data = 0x3FF.
 
-				   This feature can be modified afterwards using
-				 unitary function
+				   This feature can be modified afterwards using unitary function
 				   @ref LL_I2C_SetOwnAddress1(). */
 
-	uint32_t TypeAcknowledge; /*!< Specifies the ACKnowledge or Non ACKnowledge
-				     condition after the address receive match code
-				     or next received byte. This parameter can be a
-				     value of @ref I2C_LL_EC_I2C_ACKNOWLEDGE.
+	uint32_t TypeAcknowledge; /*!< Specifies the ACKnowledge or Non ACKnowledge condition after the address receive
+				       match code or next received byte.
+				       This parameter can be a value of @ref I2C_LL_EC_I2C_ACKNOWLEDGE.
 
-				       This feature can be modified afterwards using
-				     unitary function
+				       This feature can be modified afterwards using unitary function
 				       @ref LL_I2C_AcknowledgeNextData(). */
 
-	uint32_t OwnAddrSize; /*!< Specifies the device own address 1 size
-				 (7-bit or 10-bit). This parameter can be a
-				 value of @ref I2C_LL_EC_OWNADDRESS1.
+	uint32_t OwnAddrSize; /*!< Specifies the device own address 1 size (7-bit or 10-bit).
+				   This parameter can be a value of @ref I2C_LL_EC_OWNADDRESS1.
 
-				   This feature can be modified afterwards using
-				 unitary function
+				   This feature can be modified afterwards using unitary function
 				   @ref LL_I2C_SetOwnAddress1(). */
 } LL_I2C_InitTypeDef;
 /**
@@ -155,27 +140,26 @@ typedef struct {
  * @{
  */
 #define LL_I2C_ISR_TXE I2C_ISR_TXE	   /*!< Transmit data register empty        */
-#define LL_I2C_ISR_TXIS I2C_ISR_TXIS	   /*!< Transmit interrupt status */
-#define LL_I2C_ISR_RXNE I2C_ISR_RXNE	   /*!< Receive data register not empty */
-#define LL_I2C_ISR_ADDR I2C_ISR_ADDR	   /*!< Address matched (slave mode) */
+#define LL_I2C_ISR_TXIS I2C_ISR_TXIS	   /*!< Transmit interrupt status           */
+#define LL_I2C_ISR_RXNE I2C_ISR_RXNE	   /*!< Receive data register not empty     */
+#define LL_I2C_ISR_ADDR I2C_ISR_ADDR	   /*!< Address matched (slave mode)        */
 #define LL_I2C_ISR_NACKF I2C_ISR_NACKF	   /*!< Not Acknowledge received flag       */
 #define LL_I2C_ISR_STOPF I2C_ISR_STOPF	   /*!< Stop detection flag                 */
 #define LL_I2C_ISR_TC I2C_ISR_TC	   /*!< Transfer Complete (master mode)     */
 #define LL_I2C_ISR_TCR I2C_ISR_TCR	   /*!< Transfer Complete Reload            */
-#define LL_I2C_ISR_BERR I2C_ISR_BERR	   /*!< Bus error */
-#define LL_I2C_ISR_ARLO I2C_ISR_ARLO	   /*!< Arbitration lost */
+#define LL_I2C_ISR_BERR I2C_ISR_BERR	   /*!< Bus error                           */
+#define LL_I2C_ISR_ARLO I2C_ISR_ARLO	   /*!< Arbitration lost                    */
 #define LL_I2C_ISR_OVR I2C_ISR_OVR	   /*!< Overrun/Underrun (slave mode)       */
 #define LL_I2C_ISR_PECERR I2C_ISR_PECERR   /*!< PEC Error in reception (SMBus mode) */
 #define LL_I2C_ISR_TIMEOUT I2C_ISR_TIMEOUT /*!< Timeout detection flag (SMBus mode) */
 #define LL_I2C_ISR_ALERT I2C_ISR_ALERT	   /*!< SMBus alert (SMBus mode)            */
-#define LL_I2C_ISR_BUSY I2C_ISR_BUSY	   /*!< Bus busy */
+#define LL_I2C_ISR_BUSY I2C_ISR_BUSY	   /*!< Bus busy                            */
 /**
  * @}
  */
 
 /** @defgroup I2C_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_I2C_ReadReg and
- * LL_I2C_WriteReg functions
+ * @brief    IT defines which can be used with LL_I2C_ReadReg and  LL_I2C_WriteReg functions
  * @{
  */
 #define LL_I2C_CR1_TXIE I2C_CR1_TXIE	 /*!< TX Interrupt enable                         */
@@ -249,9 +233,7 @@ typedef struct {
 /** @defgroup I2C_LL_EC_I2C_ACKNOWLEDGE Acknowledge Generation
  * @{
  */
-#define LL_I2C_ACK                                                                                                                                                                                     \
-	0x00000000U		 /*!< ACK is sent after current received byte.                                                                                                                         \
-				  */
+#define LL_I2C_ACK 0x00000000U	 /*!< ACK is sent after current received byte. */
 #define LL_I2C_NACK I2C_CR2_NACK /*!< NACK is sent after current received byte.*/
 /**
  * @}
@@ -372,8 +354,8 @@ typedef struct {
 	I2C_TIMEOUTR_TEXTEN /*!< TimeoutB (extended clock)                                                                                                                                             \
 				 enable bit                   */
 #define LL_I2C_SMBUS_ALL_TIMEOUT                                                                                                                                                                       \
-	(uint32_t)(I2C_TIMEOUTR_TIMOUTEN | I2C_TIMEOUTR_TEXTEN) /*!< TimeoutA                                                                                                                          \
-and TimeoutB (extended clock) enable bits */
+	(uint32_t)(I2C_TIMEOUTR_TIMOUTEN | I2C_TIMEOUTR_TEXTEN) /*!< TimeoutA and TimeoutB                                                                                                             \
+(extended clock) enable bits */
 /**
  * @}
  */
@@ -416,16 +398,15 @@ and TimeoutB (extended clock) enable bits */
  */
 /**
   * @brief  Configure the SDA setup, hold time and the SCL high, low period.
-  * @param  __PRESCALER__ This parameter must be a value between  Min_Data=0 and
-  Max_Data=0xF.
-  * @param  __SETUP_TIME__ This parameter must be a value between Min_Data=0 and
-  Max_Data=0xF. (tscldel = (SCLDEL+1)xtpresc)
-  * @param  __HOLD_TIME__  This parameter must be a value between Min_Data=0 and
-  Max_Data=0xF. (tsdadel = SDADELxtpresc)
-  * @param  __SCLH_PERIOD__ This parameter must be a value between Min_Data=0
-  and Max_Data=0xFF. (tsclh = (SCLH+1)xtpresc)
-  * @param  __SCLL_PERIOD__ This parameter must be a value between  Min_Data=0
-  and Max_Data=0xFF. (tscll = (SCLL+1)xtpresc)
+  * @param  __PRESCALER__ This parameter must be a value between  Min_Data=0 and Max_Data=0xF.
+  * @param  __SETUP_TIME__ This parameter must be a value between Min_Data=0 and Max_Data=0xF.
+			   (tscldel = (SCLDEL+1)xtpresc)
+  * @param  __HOLD_TIME__  This parameter must be a value between Min_Data=0 and Max_Data=0xF.
+			   (tsdadel = SDADELxtpresc)
+  * @param  __SCLH_PERIOD__ This parameter must be a value between Min_Data=0 and Max_Data=0xFF.
+			    (tsclh = (SCLH+1)xtpresc)
+  * @param  __SCLL_PERIOD__ This parameter must be a value between  Min_Data=0 and Max_Data=0xFF.
+			    (tscll = (SCLL+1)xtpresc)
   * @retval Value between Min_Data=0 and Max_Data=0xFFFFFFFF
   */
 #define __LL_I2C_CONVERT_TIMINGS(__PRESCALER__, __SETUP_TIME__, __HOLD_TIME__, __SCLH_PERIOD__, __SCLL_PERIOD__)                                                                                       \
@@ -455,18 +436,24 @@ and TimeoutB (extended clock) enable bits */
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_Enable(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_PE); }
+__STATIC_INLINE void LL_I2C_Enable(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_PE);
+}
 
 /**
  * @brief  Disable I2C peripheral (PE = 0).
  * @note   When PE = 0, the I2C SCL and SDA lines are released.
- *         Internal state machines and status bits are put back to their reset
- * value. When cleared, PE must be kept low for at least 3 APB clock cycles.
+ *         Internal state machines and status bits are put back to their reset value.
+ *         When cleared, PE must be kept low for at least 3 APB clock cycles.
  * @rmtoll CR1          PE            LL_I2C_Disable
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_Disable(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_PE); }
+__STATIC_INLINE void LL_I2C_Disable(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_PE);
+}
 
 /**
  * @brief  Check if the I2C peripheral is enabled or disabled.
@@ -474,27 +461,25 @@ __STATIC_INLINE void LL_I2C_Disable(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabled(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_PE) == (I2C_CR1_PE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabled(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_PE) == (I2C_CR1_PE)) ? 1UL : 0UL);
+}
 
 /**
   * @brief  Configure Noise Filters (Analog and Digital).
-  * @note   If the analog filter is also enabled, the digital filter is added to
-  analog filter.
-  *         The filters can only be programmed when the I2C is disabled (PE =
-  0).
+  * @note   If the analog filter is also enabled, the digital filter is added to analog filter.
+  *         The filters can only be programmed when the I2C is disabled (PE = 0).
   * @rmtoll CR1          ANFOFF        LL_I2C_ConfigFilters\n
   *         CR1          DNF           LL_I2C_ConfigFilters
   * @param  I2Cx I2C Instance.
   * @param  AnalogFilter This parameter can be one of the following values:
   *         @arg @ref LL_I2C_ANALOGFILTER_ENABLE
   *         @arg @ref LL_I2C_ANALOGFILTER_DISABLE
-  * @param  DigitalFilter This parameter must be a value between Min_Data=0x00
-  (Digital filter disabled) and Max_Data=0x0F (Digital filter enabled and
-  filtering capability up to 15*ti2cclk).
-  *         This parameter is used to configure the digital noise filter on SDA
-  and SCL input.
-  *         The digital filter will filter spikes with a length of up to
-  DNF[3:0]*ti2cclk.
+  * @param  DigitalFilter This parameter must be a value between Min_Data=0x00 (Digital filter disabled)
+			  and Max_Data=0x0F (Digital filter enabled and filtering capability up to 15*ti2cclk).
+  *         This parameter is used to configure the digital noise filter on SDA and SCL input.
+  *         The digital filter will filter spikes with a length of up to DNF[3:0]*ti2cclk.
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_ConfigFilters(I2C_TypeDef *I2Cx, uint32_t AnalogFilter, uint32_t DigitalFilter)
@@ -504,22 +489,20 @@ __STATIC_INLINE void LL_I2C_ConfigFilters(I2C_TypeDef *I2Cx, uint32_t AnalogFilt
 
 /**
   * @brief  Configure Digital Noise Filter.
-  * @note   If the analog filter is also enabled, the digital filter is added to
-  analog filter.
-  *         This filter can only be programmed when the I2C is disabled (PE =
-  0).
+  * @note   If the analog filter is also enabled, the digital filter is added to analog filter.
+  *         This filter can only be programmed when the I2C is disabled (PE = 0).
   * @rmtoll CR1          DNF           LL_I2C_SetDigitalFilter
   * @param  I2Cx I2C Instance.
-  * @param  DigitalFilter This parameter must be a value between Min_Data=0x00
-  (Digital filter disabled) and Max_Data=0x0F (Digital filter enabled and
-  filtering capability up to 15*ti2cclk).
-  *         This parameter is used to configure the digital noise filter on SDA
-  and SCL input.
-  *         The digital filter will filter spikes with a length of up to
-  DNF[3:0]*ti2cclk.
+  * @param  DigitalFilter This parameter must be a value between Min_Data=0x00 (Digital filter disabled)
+			  and Max_Data=0x0F (Digital filter enabled and filtering capability up to 15*ti2cclk).
+  *         This parameter is used to configure the digital noise filter on SDA and SCL input.
+  *         The digital filter will filter spikes with a length of up to DNF[3:0]*ti2cclk.
   * @retval None
   */
-__STATIC_INLINE void LL_I2C_SetDigitalFilter(I2C_TypeDef *I2Cx, uint32_t DigitalFilter) { MODIFY_REG(I2Cx->CR1, I2C_CR1_DNF, DigitalFilter << I2C_CR1_DNF_Pos); }
+__STATIC_INLINE void LL_I2C_SetDigitalFilter(I2C_TypeDef *I2Cx, uint32_t DigitalFilter)
+{
+	MODIFY_REG(I2Cx->CR1, I2C_CR1_DNF, DigitalFilter << I2C_CR1_DNF_Pos);
+}
 
 /**
  * @brief  Get the current Digital Noise Filter configuration.
@@ -527,7 +510,10 @@ __STATIC_INLINE void LL_I2C_SetDigitalFilter(I2C_TypeDef *I2Cx, uint32_t Digital
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x0 and Max_Data=0xF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetDigitalFilter(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->CR1, I2C_CR1_DNF) >> I2C_CR1_DNF_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetDigitalFilter(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->CR1, I2C_CR1_DNF) >> I2C_CR1_DNF_Pos);
+}
 
 /**
  * @brief  Enable Analog Noise Filter.
@@ -536,7 +522,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetDigitalFilter(const I2C_TypeDef *I2Cx) { retu
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableAnalogFilter(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_ANFOFF); }
+__STATIC_INLINE void LL_I2C_EnableAnalogFilter(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_ANFOFF);
+}
 
 /**
  * @brief  Disable Analog Noise Filter.
@@ -545,7 +534,10 @@ __STATIC_INLINE void LL_I2C_EnableAnalogFilter(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableAnalogFilter(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_ANFOFF); }
+__STATIC_INLINE void LL_I2C_DisableAnalogFilter(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_ANFOFF);
+}
 
 /**
  * @brief  Check if Analog Noise Filter is enabled or disabled.
@@ -553,7 +545,10 @@ __STATIC_INLINE void LL_I2C_DisableAnalogFilter(I2C_TypeDef *I2Cx) { SET_BIT(I2C
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledAnalogFilter(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_ANFOFF) != (I2C_CR1_ANFOFF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledAnalogFilter(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_ANFOFF) != (I2C_CR1_ANFOFF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable DMA transmission requests.
@@ -561,7 +556,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledAnalogFilter(const I2C_TypeDef *I2Cx) {
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableDMAReq_TX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_TXDMAEN); }
+__STATIC_INLINE void LL_I2C_EnableDMAReq_TX(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_TXDMAEN);
+}
 
 /**
  * @brief  Disable DMA transmission requests.
@@ -569,7 +567,10 @@ __STATIC_INLINE void LL_I2C_EnableDMAReq_TX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->C
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableDMAReq_TX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_TXDMAEN); }
+__STATIC_INLINE void LL_I2C_DisableDMAReq_TX(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_TXDMAEN);
+}
 
 /**
  * @brief  Check if DMA transmission requests are enabled or disabled.
@@ -577,7 +578,10 @@ __STATIC_INLINE void LL_I2C_DisableDMAReq_TX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledDMAReq_TX(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_TXDMAEN) == (I2C_CR1_TXDMAEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledDMAReq_TX(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_TXDMAEN) == (I2C_CR1_TXDMAEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable DMA reception requests.
@@ -585,7 +589,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledDMAReq_TX(const I2C_TypeDef *I2Cx) { re
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableDMAReq_RX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_RXDMAEN); }
+__STATIC_INLINE void LL_I2C_EnableDMAReq_RX(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_RXDMAEN);
+}
 
 /**
  * @brief  Disable DMA reception requests.
@@ -593,7 +600,10 @@ __STATIC_INLINE void LL_I2C_EnableDMAReq_RX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->C
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableDMAReq_RX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_RXDMAEN); }
+__STATIC_INLINE void LL_I2C_DisableDMAReq_RX(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_RXDMAEN);
+}
 
 /**
  * @brief  Check if DMA reception requests are enabled or disabled.
@@ -601,7 +611,10 @@ __STATIC_INLINE void LL_I2C_DisableDMAReq_RX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledDMAReq_RX(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_RXDMAEN) == (I2C_CR1_RXDMAEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledDMAReq_RX(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_RXDMAEN) == (I2C_CR1_RXDMAEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get the data register address used for DMA transfer
@@ -635,7 +648,10 @@ __STATIC_INLINE uint32_t LL_I2C_DMA_GetRegAddr(const I2C_TypeDef *I2Cx, uint32_t
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableClockStretching(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_NOSTRETCH); }
+__STATIC_INLINE void LL_I2C_EnableClockStretching(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_NOSTRETCH);
+}
 
 /**
  * @brief  Disable Clock stretching.
@@ -644,7 +660,10 @@ __STATIC_INLINE void LL_I2C_EnableClockStretching(I2C_TypeDef *I2Cx) { CLEAR_BIT
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableClockStretching(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_NOSTRETCH); }
+__STATIC_INLINE void LL_I2C_DisableClockStretching(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_NOSTRETCH);
+}
 
 /**
  * @brief  Check if Clock stretching is enabled or disabled.
@@ -652,7 +671,10 @@ __STATIC_INLINE void LL_I2C_DisableClockStretching(I2C_TypeDef *I2Cx) { SET_BIT(
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledClockStretching(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_NOSTRETCH) != (I2C_CR1_NOSTRETCH)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledClockStretching(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_NOSTRETCH) != (I2C_CR1_NOSTRETCH)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable hardware byte control in slave mode.
@@ -660,7 +682,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledClockStretching(const I2C_TypeDef *I2Cx
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableSlaveByteControl(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_SBC); }
+__STATIC_INLINE void LL_I2C_EnableSlaveByteControl(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_SBC);
+}
 
 /**
  * @brief  Disable hardware byte control in slave mode.
@@ -668,7 +693,10 @@ __STATIC_INLINE void LL_I2C_EnableSlaveByteControl(I2C_TypeDef *I2Cx) { SET_BIT(
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableSlaveByteControl(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_SBC); }
+__STATIC_INLINE void LL_I2C_DisableSlaveByteControl(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_SBC);
+}
 
 /**
  * @brief  Check if hardware byte control in slave mode is enabled or disabled.
@@ -676,38 +704,50 @@ __STATIC_INLINE void LL_I2C_DisableSlaveByteControl(I2C_TypeDef *I2Cx) { CLEAR_B
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledSlaveByteControl(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_SBC) == (I2C_CR1_SBC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledSlaveByteControl(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_SBC) == (I2C_CR1_SBC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable Wakeup from STOP.
- * @note   The macro IS_I2C_WAKEUP_FROMSTOP_INSTANCE(I2Cx) can be used to check
- * whether or not WakeUpFromStop feature is supported by the I2Cx Instance.
+ * @note   The macro IS_I2C_WAKEUP_FROMSTOP_INSTANCE(I2Cx) can be used to check whether or not
+ *         WakeUpFromStop feature is supported by the I2Cx Instance.
  * @note   This bit can only be programmed when Digital Filter is disabled.
  * @rmtoll CR1          WUPEN         LL_I2C_EnableWakeUpFromStop
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableWakeUpFromStop(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_WUPEN); }
+__STATIC_INLINE void LL_I2C_EnableWakeUpFromStop(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_WUPEN);
+}
 
 /**
  * @brief  Disable Wakeup from STOP.
- * @note   The macro IS_I2C_WAKEUP_FROMSTOP_INSTANCE(I2Cx) can be used to check
- * whether or not WakeUpFromStop feature is supported by the I2Cx Instance.
+ * @note   The macro IS_I2C_WAKEUP_FROMSTOP_INSTANCE(I2Cx) can be used to check whether or not
+ *         WakeUpFromStop feature is supported by the I2Cx Instance.
  * @rmtoll CR1          WUPEN         LL_I2C_DisableWakeUpFromStop
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableWakeUpFromStop(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_WUPEN); }
+__STATIC_INLINE void LL_I2C_DisableWakeUpFromStop(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_WUPEN);
+}
 
 /**
  * @brief  Check if Wakeup from STOP is enabled or disabled.
- * @note   The macro IS_I2C_WAKEUP_FROMSTOP_INSTANCE(I2Cx) can be used to check
- * whether or not WakeUpFromStop feature is supported by the I2Cx Instance.
+ * @note   The macro IS_I2C_WAKEUP_FROMSTOP_INSTANCE(I2Cx) can be used to check whether or not
+ *         WakeUpFromStop feature is supported by the I2Cx Instance.
  * @rmtoll CR1          WUPEN         LL_I2C_IsEnabledWakeUpFromStop
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledWakeUpFromStop(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_WUPEN) == (I2C_CR1_WUPEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledWakeUpFromStop(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_WUPEN) == (I2C_CR1_WUPEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable General Call.
@@ -716,7 +756,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledWakeUpFromStop(const I2C_TypeDef *I2Cx)
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableGeneralCall(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_GCEN); }
+__STATIC_INLINE void LL_I2C_EnableGeneralCall(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_GCEN);
+}
 
 /**
  * @brief  Disable General Call.
@@ -725,7 +768,10 @@ __STATIC_INLINE void LL_I2C_EnableGeneralCall(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx-
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableGeneralCall(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_GCEN); }
+__STATIC_INLINE void LL_I2C_DisableGeneralCall(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_GCEN);
+}
 
 /**
  * @brief  Check if General Call is enabled or disabled.
@@ -733,7 +779,10 @@ __STATIC_INLINE void LL_I2C_DisableGeneralCall(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledGeneralCall(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_GCEN) == (I2C_CR1_GCEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledGeneralCall(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_GCEN) == (I2C_CR1_GCEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configure the Master to operate in 7-bit or 10-bit addressing mode.
@@ -745,7 +794,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledGeneralCall(const I2C_TypeDef *I2Cx) { 
  *         @arg @ref LL_I2C_ADDRESSING_MODE_10BIT
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetMasterAddressingMode(I2C_TypeDef *I2Cx, uint32_t AddressingMode) { MODIFY_REG(I2Cx->CR2, I2C_CR2_ADD10, AddressingMode); }
+__STATIC_INLINE void LL_I2C_SetMasterAddressingMode(I2C_TypeDef *I2Cx, uint32_t AddressingMode)
+{
+	MODIFY_REG(I2Cx->CR2, I2C_CR2_ADD10, AddressingMode);
+}
 
 /**
  * @brief  Get the Master addressing mode.
@@ -755,21 +807,26 @@ __STATIC_INLINE void LL_I2C_SetMasterAddressingMode(I2C_TypeDef *I2Cx, uint32_t 
  *         @arg @ref LL_I2C_ADDRESSING_MODE_7BIT
  *         @arg @ref LL_I2C_ADDRESSING_MODE_10BIT
  */
-__STATIC_INLINE uint32_t LL_I2C_GetMasterAddressingMode(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_ADD10)); }
+__STATIC_INLINE uint32_t LL_I2C_GetMasterAddressingMode(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_ADD10));
+}
 
 /**
  * @brief  Set the Own Address1.
  * @rmtoll OAR1         OA1           LL_I2C_SetOwnAddress1\n
  *         OAR1         OA1MODE       LL_I2C_SetOwnAddress1
  * @param  I2Cx I2C Instance.
- * @param  OwnAddress1 This parameter must be a value between Min_Data=0 and
- * Max_Data=0x3FF.
+ * @param  OwnAddress1 This parameter must be a value between Min_Data=0 and Max_Data=0x3FF.
  * @param  OwnAddrSize This parameter can be one of the following values:
  *         @arg @ref LL_I2C_OWNADDRESS1_7BIT
  *         @arg @ref LL_I2C_OWNADDRESS1_10BIT
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetOwnAddress1(I2C_TypeDef *I2Cx, uint32_t OwnAddress1, uint32_t OwnAddrSize) { MODIFY_REG(I2Cx->OAR1, I2C_OAR1_OA1 | I2C_OAR1_OA1MODE, OwnAddress1 | OwnAddrSize); }
+__STATIC_INLINE void LL_I2C_SetOwnAddress1(I2C_TypeDef *I2Cx, uint32_t OwnAddress1, uint32_t OwnAddrSize)
+{
+	MODIFY_REG(I2Cx->OAR1, I2C_OAR1_OA1 | I2C_OAR1_OA1MODE, OwnAddress1 | OwnAddrSize);
+}
 
 /**
  * @brief  Enable acknowledge on Own Address1 match address.
@@ -777,7 +834,10 @@ __STATIC_INLINE void LL_I2C_SetOwnAddress1(I2C_TypeDef *I2Cx, uint32_t OwnAddres
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableOwnAddress1(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->OAR1, I2C_OAR1_OA1EN); }
+__STATIC_INLINE void LL_I2C_EnableOwnAddress1(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->OAR1, I2C_OAR1_OA1EN);
+}
 
 /**
  * @brief  Disable acknowledge on Own Address1 match address.
@@ -785,7 +845,10 @@ __STATIC_INLINE void LL_I2C_EnableOwnAddress1(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx-
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableOwnAddress1(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->OAR1, I2C_OAR1_OA1EN); }
+__STATIC_INLINE void LL_I2C_DisableOwnAddress1(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->OAR1, I2C_OAR1_OA1EN);
+}
 
 /**
  * @brief  Check if Own Address1 acknowledge is enabled or disabled.
@@ -793,7 +856,10 @@ __STATIC_INLINE void LL_I2C_DisableOwnAddress1(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress1(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->OAR1, I2C_OAR1_OA1EN) == (I2C_OAR1_OA1EN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress1(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->OAR1, I2C_OAR1_OA1EN) == (I2C_OAR1_OA1EN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set the 7bits Own Address2.
@@ -813,7 +879,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress1(const I2C_TypeDef *I2Cx) { 
  *         @arg @ref LL_I2C_OWNADDRESS2_MASK07
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetOwnAddress2(I2C_TypeDef *I2Cx, uint32_t OwnAddress2, uint32_t OwnAddrMask) { MODIFY_REG(I2Cx->OAR2, I2C_OAR2_OA2 | I2C_OAR2_OA2MSK, OwnAddress2 | OwnAddrMask); }
+__STATIC_INLINE void LL_I2C_SetOwnAddress2(I2C_TypeDef *I2Cx, uint32_t OwnAddress2, uint32_t OwnAddrMask)
+{
+	MODIFY_REG(I2Cx->OAR2, I2C_OAR2_OA2 | I2C_OAR2_OA2MSK, OwnAddress2 | OwnAddrMask);
+}
 
 /**
  * @brief  Enable acknowledge on Own Address2 match address.
@@ -821,7 +890,10 @@ __STATIC_INLINE void LL_I2C_SetOwnAddress2(I2C_TypeDef *I2Cx, uint32_t OwnAddres
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableOwnAddress2(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->OAR2, I2C_OAR2_OA2EN); }
+__STATIC_INLINE void LL_I2C_EnableOwnAddress2(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->OAR2, I2C_OAR2_OA2EN);
+}
 
 /**
  * @brief  Disable  acknowledge on Own Address2 match address.
@@ -829,7 +901,10 @@ __STATIC_INLINE void LL_I2C_EnableOwnAddress2(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx-
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableOwnAddress2(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->OAR2, I2C_OAR2_OA2EN); }
+__STATIC_INLINE void LL_I2C_DisableOwnAddress2(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->OAR2, I2C_OAR2_OA2EN);
+}
 
 /**
  * @brief  Check if Own Address1 acknowledge is enabled or disabled.
@@ -837,19 +912,24 @@ __STATIC_INLINE void LL_I2C_DisableOwnAddress2(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress2(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->OAR2, I2C_OAR2_OA2EN) == (I2C_OAR2_OA2EN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress2(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->OAR2, I2C_OAR2_OA2EN) == (I2C_OAR2_OA2EN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configure the SDA setup, hold time and the SCL high, low period.
  * @note   This bit can only be programmed when the I2C is disabled (PE = 0).
  * @rmtoll TIMINGR      TIMINGR       LL_I2C_SetTiming
  * @param  I2Cx I2C Instance.
- * @param  Timing This parameter must be a value between Min_Data=0 and
- * Max_Data=0xFFFFFFFF.
+ * @param  Timing This parameter must be a value between Min_Data=0 and Max_Data=0xFFFFFFFF.
  * @note   This parameter is computed with the STM32CubeMX Tool.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetTiming(I2C_TypeDef *I2Cx, uint32_t Timing) { WRITE_REG(I2Cx->TIMINGR, Timing); }
+__STATIC_INLINE void LL_I2C_SetTiming(I2C_TypeDef *I2Cx, uint32_t Timing)
+{
+	WRITE_REG(I2Cx->TIMINGR, Timing);
+}
 
 /**
  * @brief  Get the Timing Prescaler setting.
@@ -857,7 +937,10 @@ __STATIC_INLINE void LL_I2C_SetTiming(I2C_TypeDef *I2Cx, uint32_t Timing) { WRIT
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x0 and Max_Data=0xF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetTimingPrescaler(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_PRESC) >> I2C_TIMINGR_PRESC_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetTimingPrescaler(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_PRESC) >> I2C_TIMINGR_PRESC_Pos);
+}
 
 /**
  * @brief  Get the SCL low period setting.
@@ -865,7 +948,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetTimingPrescaler(const I2C_TypeDef *I2Cx) { re
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetClockLowPeriod(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SCLL) >> I2C_TIMINGR_SCLL_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetClockLowPeriod(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SCLL) >> I2C_TIMINGR_SCLL_Pos);
+}
 
 /**
  * @brief  Get the SCL high period setting.
@@ -873,7 +959,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetClockLowPeriod(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetClockHighPeriod(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SCLH) >> I2C_TIMINGR_SCLH_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetClockHighPeriod(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SCLH) >> I2C_TIMINGR_SCLH_Pos);
+}
 
 /**
  * @brief  Get the SDA hold time.
@@ -881,7 +970,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetClockHighPeriod(const I2C_TypeDef *I2Cx) { re
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x0 and Max_Data=0xF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetDataHoldTime(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SDADEL) >> I2C_TIMINGR_SDADEL_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetDataHoldTime(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SDADEL) >> I2C_TIMINGR_SDADEL_Pos);
+}
 
 /**
  * @brief  Get the SDA setup time.
@@ -889,12 +981,15 @@ __STATIC_INLINE uint32_t LL_I2C_GetDataHoldTime(const I2C_TypeDef *I2Cx) { retur
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x0 and Max_Data=0xF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetDataSetupTime(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SCLDEL) >> I2C_TIMINGR_SCLDEL_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetDataSetupTime(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMINGR, I2C_TIMINGR_SCLDEL) >> I2C_TIMINGR_SCLDEL_Pos);
+}
 
 /**
  * @brief  Configure peripheral mode.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR1          SMBHEN        LL_I2C_SetMode\n
  *         CR1          SMBDEN        LL_I2C_SetMode
  * @param  I2Cx I2C Instance.
@@ -905,12 +1000,15 @@ __STATIC_INLINE uint32_t LL_I2C_GetDataSetupTime(const I2C_TypeDef *I2Cx) { retu
  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE_ARP
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetMode(I2C_TypeDef *I2Cx, uint32_t PeripheralMode) { MODIFY_REG(I2Cx->CR1, I2C_CR1_SMBHEN | I2C_CR1_SMBDEN, PeripheralMode); }
+__STATIC_INLINE void LL_I2C_SetMode(I2C_TypeDef *I2Cx, uint32_t PeripheralMode)
+{
+	MODIFY_REG(I2Cx->CR1, I2C_CR1_SMBHEN | I2C_CR1_SMBDEN, PeripheralMode);
+}
 
 /**
  * @brief  Get peripheral mode.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR1          SMBHEN        LL_I2C_GetMode\n
  *         CR1          SMBDEN        LL_I2C_GetMode
  * @param  I2Cx I2C Instance.
@@ -920,12 +1018,15 @@ __STATIC_INLINE void LL_I2C_SetMode(I2C_TypeDef *I2Cx, uint32_t PeripheralMode) 
  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE
  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE_ARP
  */
-__STATIC_INLINE uint32_t LL_I2C_GetMode(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->CR1, I2C_CR1_SMBHEN | I2C_CR1_SMBDEN)); }
+__STATIC_INLINE uint32_t LL_I2C_GetMode(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->CR1, I2C_CR1_SMBHEN | I2C_CR1_SMBDEN));
+}
 
 /**
  * @brief  Enable SMBus alert (Host or Device mode)
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   SMBus Device mode:
  *         - SMBus Alert pin is drived low and
  *           Alert Response Address Header acknowledge is enabled.
@@ -935,12 +1036,15 @@ __STATIC_INLINE uint32_t LL_I2C_GetMode(const I2C_TypeDef *I2Cx) { return (uint3
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableSMBusAlert(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_ALERTEN); }
+__STATIC_INLINE void LL_I2C_EnableSMBusAlert(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_ALERTEN);
+}
 
 /**
  * @brief  Disable SMBus alert (Host or Device mode)
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   SMBus Device mode:
  *         - SMBus Alert pin is not drived (can be used as a standard GPIO) and
  *           Alert Response Address Header acknowledge is disabled.
@@ -950,60 +1054,73 @@ __STATIC_INLINE void LL_I2C_EnableSMBusAlert(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableSMBusAlert(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_ALERTEN); }
+__STATIC_INLINE void LL_I2C_DisableSMBusAlert(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_ALERTEN);
+}
 
 /**
  * @brief  Check if SMBus alert (Host or Device mode) is enabled or disabled.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR1          ALERTEN       LL_I2C_IsEnabledSMBusAlert
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusAlert(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_ALERTEN) == (I2C_CR1_ALERTEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusAlert(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_ALERTEN) == (I2C_CR1_ALERTEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable SMBus Packet Error Calculation (PEC).
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR1          PECEN         LL_I2C_EnableSMBusPEC
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableSMBusPEC(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_PECEN); }
+__STATIC_INLINE void LL_I2C_EnableSMBusPEC(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_PECEN);
+}
 
 /**
  * @brief  Disable SMBus Packet Error Calculation (PEC).
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR1          PECEN         LL_I2C_DisableSMBusPEC
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableSMBusPEC(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_PECEN); }
+__STATIC_INLINE void LL_I2C_DisableSMBusPEC(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_PECEN);
+}
 
 /**
  * @brief  Check if SMBus Packet Error Calculation (PEC) is enabled or disabled.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR1          PECEN         LL_I2C_IsEnabledSMBusPEC
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusPEC(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_PECEN) == (I2C_CR1_PECEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusPEC(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_PECEN) == (I2C_CR1_PECEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configure the SMBus Clock Timeout.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
- * @note   This configuration can only be programmed when associated Timeout is
- * disabled (TimeoutA and/orTimeoutB).
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
+ * @note   This configuration can only be programmed when associated Timeout is disabled (TimeoutA and/orTimeoutB).
  * @rmtoll TIMEOUTR     TIMEOUTA      LL_I2C_ConfigSMBusTimeout\n
  *         TIMEOUTR     TIDLE         LL_I2C_ConfigSMBusTimeout\n
  *         TIMEOUTR     TIMEOUTB      LL_I2C_ConfigSMBusTimeout
  * @param  I2Cx I2C Instance.
- * @param  TimeoutA This parameter must be a value between  Min_Data=0 and
- * Max_Data=0xFFF.
+ * @param  TimeoutA This parameter must be a value between  Min_Data=0 and Max_Data=0xFFF.
  * @param  TimeoutAMode This parameter can be one of the following values:
  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
@@ -1016,33 +1133,37 @@ __STATIC_INLINE void LL_I2C_ConfigSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t Timeo
 }
 
 /**
- * @brief  Configure the SMBus Clock TimeoutA (SCL low timeout or SCL and SDA
- * high timeout depends on TimeoutA mode).
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @brief  Configure the SMBus Clock TimeoutA (SCL low timeout or SCL and SDA high timeout depends on TimeoutA mode).
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   These bits can only be programmed when TimeoutA is disabled.
  * @rmtoll TIMEOUTR     TIMEOUTA      LL_I2C_SetSMBusTimeoutA
  * @param  I2Cx I2C Instance.
- * @param  TimeoutA This parameter must be a value between  Min_Data=0 and
- * Max_Data=0xFFF.
+ * @param  TimeoutA This parameter must be a value between  Min_Data=0 and Max_Data=0xFFF.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetSMBusTimeoutA(I2C_TypeDef *I2Cx, uint32_t TimeoutA) { WRITE_REG(I2Cx->TIMEOUTR, TimeoutA); }
+__STATIC_INLINE void LL_I2C_SetSMBusTimeoutA(I2C_TypeDef *I2Cx, uint32_t TimeoutA)
+{
+	WRITE_REG(I2Cx->TIMEOUTR, TimeoutA);
+}
 
 /**
  * @brief  Get the SMBus Clock TimeoutA setting.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll TIMEOUTR     TIMEOUTA      LL_I2C_GetSMBusTimeoutA
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0 and Max_Data=0xFFF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutA(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMEOUTR, I2C_TIMEOUTR_TIMEOUTA)); }
+__STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutA(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMEOUTR, I2C_TIMEOUTR_TIMEOUTA));
+}
 
 /**
  * @brief  Set the SMBus Clock TimeoutA mode.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   This bit can only be programmed when TimeoutA is disabled.
  * @rmtoll TIMEOUTR     TIDLE         LL_I2C_SetSMBusTimeoutAMode
  * @param  I2Cx I2C Instance.
@@ -1051,48 +1172,58 @@ __STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutA(const I2C_TypeDef *I2Cx) { retu
  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetSMBusTimeoutAMode(I2C_TypeDef *I2Cx, uint32_t TimeoutAMode) { WRITE_REG(I2Cx->TIMEOUTR, TimeoutAMode); }
+__STATIC_INLINE void LL_I2C_SetSMBusTimeoutAMode(I2C_TypeDef *I2Cx, uint32_t TimeoutAMode)
+{
+	WRITE_REG(I2Cx->TIMEOUTR, TimeoutAMode);
+}
 
 /**
  * @brief  Get the SMBus Clock TimeoutA mode.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll TIMEOUTR     TIDLE         LL_I2C_GetSMBusTimeoutAMode
  * @param  I2Cx I2C Instance.
  * @retval Returned value can be one of the following values:
  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
  */
-__STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutAMode(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMEOUTR, I2C_TIMEOUTR_TIDLE)); }
+__STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutAMode(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMEOUTR, I2C_TIMEOUTR_TIDLE));
+}
 
 /**
- * @brief  Configure the SMBus Extended Cumulative Clock TimeoutB (Master or
- * Slave mode).
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @brief  Configure the SMBus Extended Cumulative Clock TimeoutB (Master or Slave mode).
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   These bits can only be programmed when TimeoutB is disabled.
  * @rmtoll TIMEOUTR     TIMEOUTB      LL_I2C_SetSMBusTimeoutB
  * @param  I2Cx I2C Instance.
- * @param  TimeoutB This parameter must be a value between  Min_Data=0 and
- * Max_Data=0xFFF.
+ * @param  TimeoutB This parameter must be a value between  Min_Data=0 and Max_Data=0xFFF.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetSMBusTimeoutB(I2C_TypeDef *I2Cx, uint32_t TimeoutB) { WRITE_REG(I2Cx->TIMEOUTR, TimeoutB << I2C_TIMEOUTR_TIMEOUTB_Pos); }
+__STATIC_INLINE void LL_I2C_SetSMBusTimeoutB(I2C_TypeDef *I2Cx, uint32_t TimeoutB)
+{
+	WRITE_REG(I2Cx->TIMEOUTR, TimeoutB << I2C_TIMEOUTR_TIMEOUTB_Pos);
+}
 
 /**
  * @brief  Get the SMBus Extended Cumulative Clock TimeoutB setting.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll TIMEOUTR     TIMEOUTB      LL_I2C_GetSMBusTimeoutB
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0 and Max_Data=0xFFF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutB(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->TIMEOUTR, I2C_TIMEOUTR_TIMEOUTB) >> I2C_TIMEOUTR_TIMEOUTB_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutB(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->TIMEOUTR, I2C_TIMEOUTR_TIMEOUTB) >> I2C_TIMEOUTR_TIMEOUTB_Pos);
+}
 
 /**
  * @brief  Enable the SMBus Clock Timeout.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll TIMEOUTR     TIMOUTEN      LL_I2C_EnableSMBusTimeout\n
  *         TIMEOUTR     TEXTEN        LL_I2C_EnableSMBusTimeout
  * @param  I2Cx I2C Instance.
@@ -1102,12 +1233,15 @@ __STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutB(const I2C_TypeDef *I2Cx) { retu
  *         @arg @ref LL_I2C_SMBUS_ALL_TIMEOUT
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout) { SET_BIT(I2Cx->TIMEOUTR, ClockTimeout); }
+__STATIC_INLINE void LL_I2C_EnableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout)
+{
+	SET_BIT(I2Cx->TIMEOUTR, ClockTimeout);
+}
 
 /**
  * @brief  Disable the SMBus Clock Timeout.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll TIMEOUTR     TIMOUTEN      LL_I2C_DisableSMBusTimeout\n
  *         TIMEOUTR     TEXTEN        LL_I2C_DisableSMBusTimeout
  * @param  I2Cx I2C Instance.
@@ -1117,12 +1251,15 @@ __STATIC_INLINE void LL_I2C_EnableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t Clock
  *         @arg @ref LL_I2C_SMBUS_ALL_TIMEOUT
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout) { CLEAR_BIT(I2Cx->TIMEOUTR, ClockTimeout); }
+__STATIC_INLINE void LL_I2C_DisableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout)
+{
+	CLEAR_BIT(I2Cx->TIMEOUTR, ClockTimeout);
+}
 
 /**
  * @brief  Check if the SMBus Clock Timeout is enabled or disabled.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll TIMEOUTR     TIMOUTEN      LL_I2C_IsEnabledSMBusTimeout\n
  *         TIMEOUTR     TEXTEN        LL_I2C_IsEnabledSMBusTimeout
  * @param  I2Cx I2C Instance.
@@ -1151,7 +1288,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusTimeout(const I2C_TypeDef *I2Cx, u
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_TX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_TXIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_TX(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_TXIE);
+}
 
 /**
  * @brief  Disable TXIS interrupt.
@@ -1159,7 +1299,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_TX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, 
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_TX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_TXIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_TX(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_TXIE);
+}
 
 /**
  * @brief  Check if the TXIS Interrupt is enabled or disabled.
@@ -1167,7 +1310,10 @@ __STATIC_INLINE void LL_I2C_DisableIT_TX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_TX(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_TXIE) == (I2C_CR1_TXIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_TX(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_TXIE) == (I2C_CR1_TXIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable RXNE interrupt.
@@ -1175,7 +1321,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_TX(const I2C_TypeDef *I2Cx) { return
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_RX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_RXIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_RX(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_RXIE);
+}
 
 /**
  * @brief  Disable RXNE interrupt.
@@ -1183,7 +1332,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_RX(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, 
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_RX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_RXIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_RX(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_RXIE);
+}
 
 /**
  * @brief  Check if the RXNE Interrupt is enabled or disabled.
@@ -1191,7 +1343,10 @@ __STATIC_INLINE void LL_I2C_DisableIT_RX(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_RX(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_RXIE) == (I2C_CR1_RXIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_RX(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_RXIE) == (I2C_CR1_RXIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable Address match interrupt (slave mode only).
@@ -1199,7 +1354,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_RX(const I2C_TypeDef *I2Cx) { return
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_ADDR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_ADDRIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_ADDR(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_ADDRIE);
+}
 
 /**
  * @brief  Disable Address match interrupt (slave mode only).
@@ -1207,7 +1365,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_ADDR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_ADDR(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_ADDRIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_ADDR(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_ADDRIE);
+}
 
 /**
  * @brief  Check if Address match interrupt is enabled or disabled.
@@ -1215,7 +1376,10 @@ __STATIC_INLINE void LL_I2C_DisableIT_ADDR(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_ADDR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_ADDRIE) == (I2C_CR1_ADDRIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_ADDR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_ADDRIE) == (I2C_CR1_ADDRIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable Not acknowledge received interrupt.
@@ -1223,7 +1387,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_ADDR(const I2C_TypeDef *I2Cx) { retu
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_NACK(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_NACKIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_NACK(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_NACKIE);
+}
 
 /**
  * @brief  Disable Not acknowledge received interrupt.
@@ -1231,7 +1398,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_NACK(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_NACK(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_NACKIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_NACK(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_NACKIE);
+}
 
 /**
  * @brief  Check if Not acknowledge received interrupt is enabled or disabled.
@@ -1239,7 +1409,10 @@ __STATIC_INLINE void LL_I2C_DisableIT_NACK(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_NACK(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_NACKIE) == (I2C_CR1_NACKIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_NACK(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_NACKIE) == (I2C_CR1_NACKIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable STOP detection interrupt.
@@ -1247,7 +1420,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_NACK(const I2C_TypeDef *I2Cx) { retu
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_STOP(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_STOPIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_STOP(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_STOPIE);
+}
 
 /**
  * @brief  Disable STOP detection interrupt.
@@ -1255,7 +1431,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_STOP(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_STOP(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_STOPIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_STOP(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_STOPIE);
+}
 
 /**
  * @brief  Check if STOP detection interrupt is enabled or disabled.
@@ -1263,7 +1442,10 @@ __STATIC_INLINE void LL_I2C_DisableIT_STOP(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_STOP(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_STOPIE) == (I2C_CR1_STOPIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_STOP(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_STOPIE) == (I2C_CR1_STOPIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable Transfer Complete interrupt.
@@ -1274,7 +1456,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_STOP(const I2C_TypeDef *I2Cx) { retu
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_TC(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_TCIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_TC(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_TCIE);
+}
 
 /**
  * @brief  Disable Transfer Complete interrupt.
@@ -1285,7 +1470,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_TC(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, 
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_TC(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_TCIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_TC(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_TCIE);
+}
 
 /**
  * @brief  Check if Transfer Complete interrupt is enabled or disabled.
@@ -1293,12 +1481,15 @@ __STATIC_INLINE void LL_I2C_DisableIT_TC(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_TC(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_TCIE) == (I2C_CR1_TCIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_TC(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_TCIE) == (I2C_CR1_TCIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable Error interrupts.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   Any of these errors will generate interrupt :
  *         Arbitration Loss (ARLO)
  *         Bus Error detection (BERR)
@@ -1310,12 +1501,15 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_TC(const I2C_TypeDef *I2Cx) { return
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableIT_ERR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1, I2C_CR1_ERRIE); }
+__STATIC_INLINE void LL_I2C_EnableIT_ERR(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR1, I2C_CR1_ERRIE);
+}
 
 /**
  * @brief  Disable Error interrupts.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   Any of these errors will generate interrupt :
  *         Arbitration Loss (ARLO)
  *         Bus Error detection (BERR)
@@ -1327,7 +1521,10 @@ __STATIC_INLINE void LL_I2C_EnableIT_ERR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR1,
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableIT_ERR(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR1, I2C_CR1_ERRIE); }
+__STATIC_INLINE void LL_I2C_DisableIT_ERR(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR1, I2C_CR1_ERRIE);
+}
 
 /**
  * @brief  Check if Error interrupts are enabled or disabled.
@@ -1335,7 +1532,10 @@ __STATIC_INLINE void LL_I2C_DisableIT_ERR(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->C
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_ERR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR1, I2C_CR1_ERRIE) == (I2C_CR1_ERRIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_ERR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR1, I2C_CR1_ERRIE) == (I2C_CR1_ERRIE)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -1353,7 +1553,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledIT_ERR(const I2C_TypeDef *I2Cx) { retur
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TXE(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_TXE) == (I2C_ISR_TXE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TXE(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_TXE) == (I2C_ISR_TXE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Transmit interrupt flag.
@@ -1363,7 +1566,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TXE(const I2C_TypeDef *I2Cx) { retu
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TXIS(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_TXIS) == (I2C_ISR_TXIS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TXIS(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_TXIS) == (I2C_ISR_TXIS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Receive data register not empty flag.
@@ -1373,18 +1579,23 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TXIS(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_RXNE(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_RXNE) == (I2C_ISR_RXNE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_RXNE(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_RXNE) == (I2C_ISR_RXNE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Address matched flag (slave mode).
  * @note   RESET: Clear default value.
- *         SET: When the received slave address matched with one of the enabled
- * slave address.
+ *         SET: When the received slave address matched with one of the enabled slave address.
  * @rmtoll ISR          ADDR          LL_I2C_IsActiveFlag_ADDR
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_ADDR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_ADDR) == (I2C_ISR_ADDR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_ADDR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_ADDR) == (I2C_ISR_ADDR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Not Acknowledge received flag.
@@ -1394,7 +1605,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_ADDR(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_NACK(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_NACKF) == (I2C_ISR_NACKF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_NACK(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_NACKF) == (I2C_ISR_NACKF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Stop detection flag.
@@ -1404,7 +1618,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_NACK(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_STOP(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_STOPF) == (I2C_ISR_STOPF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_STOP(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_STOPF) == (I2C_ISR_STOPF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Transfer complete flag (master mode).
@@ -1414,7 +1631,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_STOP(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TC(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_TC) == (I2C_ISR_TC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TC(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_TC) == (I2C_ISR_TC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Transfer complete flag (master mode).
@@ -1424,7 +1644,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TC(const I2C_TypeDef *I2Cx) { retur
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TCR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_TCR) == (I2C_ISR_TCR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TCR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_TCR) == (I2C_ISR_TCR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Bus error flag.
@@ -1434,7 +1657,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_TCR(const I2C_TypeDef *I2Cx) { retu
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_BERR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_BERR) == (I2C_ISR_BERR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_BERR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_BERR) == (I2C_ISR_BERR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Arbitration lost flag.
@@ -1444,48 +1670,58 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_BERR(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_ARLO(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_ARLO) == (I2C_ISR_ARLO)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_ARLO(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_ARLO) == (I2C_ISR_ARLO)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Overrun/Underrun flag (slave mode).
  * @note   RESET: Clear default value.
- *         SET: When an overrun/underrun error occurs (Clock Stretching
- * Disabled).
+ *         SET: When an overrun/underrun error occurs (Clock Stretching Disabled).
  * @rmtoll ISR          OVR           LL_I2C_IsActiveFlag_OVR
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_OVR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_OVR) == (I2C_ISR_OVR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_OVR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_OVR) == (I2C_ISR_OVR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of SMBus PEC error flag in reception.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   RESET: Clear default value.
- *         SET: When the received PEC does not match with the PEC register
- * content.
+ *         SET: When the received PEC does not match with the PEC register content.
  * @rmtoll ISR          PECERR        LL_I2C_IsActiveSMBusFlag_PECERR
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_PECERR(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_PECERR) == (I2C_ISR_PECERR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_PECERR(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_PECERR) == (I2C_ISR_PECERR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of SMBus Timeout detection flag.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   RESET: Clear default value.
  *         SET: When a timeout or extended clock timeout occurs.
  * @rmtoll ISR          TIMEOUT       LL_I2C_IsActiveSMBusFlag_TIMEOUT
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_TIMEOUT(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_TIMEOUT) == (I2C_ISR_TIMEOUT)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_TIMEOUT(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_TIMEOUT) == (I2C_ISR_TIMEOUT)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of SMBus alert flag.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @note   RESET: Clear default value.
  *         SET: When SMBus host configuration, SMBus alert enabled and
  *              a falling edge event occurs on SMBA pin.
@@ -1493,7 +1729,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_TIMEOUT(const I2C_TypeDef *I2C
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_ALERT(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_ALERT) == (I2C_ISR_ALERT)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_ALERT(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_ALERT) == (I2C_ISR_ALERT)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate the status of Bus Busy flag.
@@ -1503,7 +1742,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveSMBusFlag_ALERT(const I2C_TypeDef *I2Cx)
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_BUSY(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->ISR, I2C_ISR_BUSY) == (I2C_ISR_BUSY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_BUSY(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->ISR, I2C_ISR_BUSY) == (I2C_ISR_BUSY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear Address Matched flag.
@@ -1511,7 +1753,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsActiveFlag_BUSY(const I2C_TypeDef *I2Cx) { ret
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_ADDR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_ADDRCF); }
+__STATIC_INLINE void LL_I2C_ClearFlag_ADDR(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_ADDRCF);
+}
 
 /**
  * @brief  Clear Not Acknowledge flag.
@@ -1519,7 +1764,10 @@ __STATIC_INLINE void LL_I2C_ClearFlag_ADDR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->IC
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_NACK(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_NACKCF); }
+__STATIC_INLINE void LL_I2C_ClearFlag_NACK(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_NACKCF);
+}
 
 /**
  * @brief  Clear Stop detection flag.
@@ -1527,17 +1775,22 @@ __STATIC_INLINE void LL_I2C_ClearFlag_NACK(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->IC
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_STOP(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_STOPCF); }
+__STATIC_INLINE void LL_I2C_ClearFlag_STOP(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_STOPCF);
+}
 
 /**
  * @brief  Clear Transmit data register empty flag (TXE).
- * @note   This bit can be clear by software in order to flush the transmit data
- * register (TXDR).
+ * @note   This bit can be clear by software in order to flush the transmit data register (TXDR).
  * @rmtoll ISR          TXE           LL_I2C_ClearFlag_TXE
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_TXE(I2C_TypeDef *I2Cx) { WRITE_REG(I2Cx->ISR, I2C_ISR_TXE); }
+__STATIC_INLINE void LL_I2C_ClearFlag_TXE(I2C_TypeDef *I2Cx)
+{
+	WRITE_REG(I2Cx->ISR, I2C_ISR_TXE);
+}
 
 /**
  * @brief  Clear Bus error flag.
@@ -1545,7 +1798,10 @@ __STATIC_INLINE void LL_I2C_ClearFlag_TXE(I2C_TypeDef *I2Cx) { WRITE_REG(I2Cx->I
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_BERR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_BERRCF); }
+__STATIC_INLINE void LL_I2C_ClearFlag_BERR(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_BERRCF);
+}
 
 /**
  * @brief  Clear Arbitration lost flag.
@@ -1553,7 +1809,10 @@ __STATIC_INLINE void LL_I2C_ClearFlag_BERR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->IC
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_ARLO(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_ARLOCF); }
+__STATIC_INLINE void LL_I2C_ClearFlag_ARLO(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_ARLOCF);
+}
 
 /**
  * @brief  Clear Overrun/Underrun flag.
@@ -1561,37 +1820,49 @@ __STATIC_INLINE void LL_I2C_ClearFlag_ARLO(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->IC
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearFlag_OVR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_OVRCF); }
+__STATIC_INLINE void LL_I2C_ClearFlag_OVR(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_OVRCF);
+}
 
 /**
  * @brief  Clear SMBus PEC error flag.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll ICR          PECCF         LL_I2C_ClearSMBusFlag_PECERR
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearSMBusFlag_PECERR(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_PECCF); }
+__STATIC_INLINE void LL_I2C_ClearSMBusFlag_PECERR(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_PECCF);
+}
 
 /**
  * @brief  Clear SMBus Timeout detection flag.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll ICR          TIMOUTCF      LL_I2C_ClearSMBusFlag_TIMEOUT
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearSMBusFlag_TIMEOUT(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_TIMOUTCF); }
+__STATIC_INLINE void LL_I2C_ClearSMBusFlag_TIMEOUT(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_TIMOUTCF);
+}
 
 /**
  * @brief  Clear SMBus Alert flag.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll ICR          ALERTCF       LL_I2C_ClearSMBusFlag_ALERT
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_ClearSMBusFlag_ALERT(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->ICR, I2C_ICR_ALERTCF); }
+__STATIC_INLINE void LL_I2C_ClearSMBusFlag_ALERT(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->ICR, I2C_ICR_ALERTCF);
+}
 
 /**
  * @}
@@ -1603,24 +1874,28 @@ __STATIC_INLINE void LL_I2C_ClearSMBusFlag_ALERT(I2C_TypeDef *I2Cx) { SET_BIT(I2
 
 /**
  * @brief  Enable automatic STOP condition generation (master mode).
- * @note   Automatic end mode : a STOP condition is automatically sent when
- * NBYTES data are transferred. This bit has no effect in slave mode or when
- * RELOAD bit is set.
+ * @note   Automatic end mode : a STOP condition is automatically sent when NBYTES data are transferred.
+ *         This bit has no effect in slave mode or when RELOAD bit is set.
  * @rmtoll CR2          AUTOEND       LL_I2C_EnableAutoEndMode
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableAutoEndMode(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR2, I2C_CR2_AUTOEND); }
+__STATIC_INLINE void LL_I2C_EnableAutoEndMode(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR2, I2C_CR2_AUTOEND);
+}
 
 /**
  * @brief  Disable automatic STOP condition generation (master mode).
- * @note   Software end mode : TC flag is set when NBYTES data are transferre,
- * stretching SCL low.
+ * @note   Software end mode : TC flag is set when NBYTES data are transferre, stretching SCL low.
  * @rmtoll CR2          AUTOEND       LL_I2C_DisableAutoEndMode
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableAutoEndMode(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR2, I2C_CR2_AUTOEND); }
+__STATIC_INLINE void LL_I2C_DisableAutoEndMode(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR2, I2C_CR2_AUTOEND);
+}
 
 /**
  * @brief  Check if automatic STOP condition is enabled or disabled.
@@ -1628,27 +1903,34 @@ __STATIC_INLINE void LL_I2C_DisableAutoEndMode(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledAutoEndMode(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR2, I2C_CR2_AUTOEND) == (I2C_CR2_AUTOEND)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledAutoEndMode(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR2, I2C_CR2_AUTOEND) == (I2C_CR2_AUTOEND)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable reload mode (master mode).
- * @note   The transfer is not completed after the NBYTES data transfer, NBYTES
- * will be reloaded when TCR flag is set.
+ * @note   The transfer is not completed after the NBYTES data transfer, NBYTES will be reloaded when TCR flag is set.
  * @rmtoll CR2          RELOAD       LL_I2C_EnableReloadMode
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_EnableReloadMode(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR2, I2C_CR2_RELOAD); }
+__STATIC_INLINE void LL_I2C_EnableReloadMode(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR2, I2C_CR2_RELOAD);
+}
 
 /**
  * @brief  Disable reload mode (master mode).
- * @note   The transfer is completed after the NBYTES data transfer(STOP or
- * RESTART will follow).
+ * @note   The transfer is completed after the NBYTES data transfer(STOP or RESTART will follow).
  * @rmtoll CR2          RELOAD       LL_I2C_DisableReloadMode
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableReloadMode(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR2, I2C_CR2_RELOAD); }
+__STATIC_INLINE void LL_I2C_DisableReloadMode(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR2, I2C_CR2_RELOAD);
+}
 
 /**
  * @brief  Check if reload mode is enabled or disabled.
@@ -1656,18 +1938,23 @@ __STATIC_INLINE void LL_I2C_DisableReloadMode(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2C
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledReloadMode(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR2, I2C_CR2_RELOAD) == (I2C_CR2_RELOAD)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledReloadMode(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR2, I2C_CR2_RELOAD) == (I2C_CR2_RELOAD)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configure the number of bytes for transfer.
  * @note   Changing these bits when START bit is set is not allowed.
  * @rmtoll CR2          NBYTES           LL_I2C_SetTransferSize
  * @param  I2Cx I2C Instance.
- * @param  TransferSize This parameter must be a value between Min_Data=0x00 and
- * Max_Data=0xFF.
+ * @param  TransferSize This parameter must be a value between Min_Data=0x00 and Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetTransferSize(I2C_TypeDef *I2Cx, uint32_t TransferSize) { MODIFY_REG(I2Cx->CR2, I2C_CR2_NBYTES, TransferSize << I2C_CR2_NBYTES_Pos); }
+__STATIC_INLINE void LL_I2C_SetTransferSize(I2C_TypeDef *I2Cx, uint32_t TransferSize)
+{
+	MODIFY_REG(I2Cx->CR2, I2C_CR2_NBYTES, TransferSize << I2C_CR2_NBYTES_Pos);
+}
 
 /**
  * @brief  Get the number of bytes configured for transfer.
@@ -1675,11 +1962,14 @@ __STATIC_INLINE void LL_I2C_SetTransferSize(I2C_TypeDef *I2Cx, uint32_t Transfer
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetTransferSize(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_NBYTES) >> I2C_CR2_NBYTES_Pos); }
+__STATIC_INLINE uint32_t LL_I2C_GetTransferSize(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_NBYTES) >> I2C_CR2_NBYTES_Pos);
+}
 
 /**
-  * @brief  Prepare the generation of a ACKnowledge or Non ACKnowledge condition
-  after the address receive match code or next received byte.
+  * @brief  Prepare the generation of a ACKnowledge or Non ACKnowledge condition after the address receive match code
+	    or next received byte.
   * @note   Usage in Slave mode only.
   * @rmtoll CR2          NACK          LL_I2C_AcknowledgeNextData
   * @param  I2Cx I2C Instance.
@@ -1688,7 +1978,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetTransferSize(const I2C_TypeDef *I2Cx) { retur
   *         @arg @ref LL_I2C_NACK
   * @retval None
   */
-__STATIC_INLINE void LL_I2C_AcknowledgeNextData(I2C_TypeDef *I2Cx, uint32_t TypeAcknowledge) { MODIFY_REG(I2Cx->CR2, I2C_CR2_NACK, TypeAcknowledge); }
+__STATIC_INLINE void LL_I2C_AcknowledgeNextData(I2C_TypeDef *I2Cx, uint32_t TypeAcknowledge)
+{
+	MODIFY_REG(I2Cx->CR2, I2C_CR2_NACK, TypeAcknowledge);
+}
 
 /**
  * @brief  Generate a START or RESTART condition
@@ -1698,48 +1991,58 @@ __STATIC_INLINE void LL_I2C_AcknowledgeNextData(I2C_TypeDef *I2Cx, uint32_t Type
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_GenerateStartCondition(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR2, I2C_CR2_START); }
+__STATIC_INLINE void LL_I2C_GenerateStartCondition(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR2, I2C_CR2_START);
+}
 
 /**
- * @brief  Generate a STOP condition after the current byte transfer (master
- * mode).
+ * @brief  Generate a STOP condition after the current byte transfer (master mode).
  * @rmtoll CR2          STOP          LL_I2C_GenerateStopCondition
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_GenerateStopCondition(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR2, I2C_CR2_STOP); }
+__STATIC_INLINE void LL_I2C_GenerateStopCondition(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR2, I2C_CR2_STOP);
+}
 
 /**
-  * @brief  Enable automatic RESTART Read request condition for 10bit address
-  header (master mode).
+  * @brief  Enable automatic RESTART Read request condition for 10bit address header (master mode).
   * @note   The master sends the complete 10bit slave address read sequence :
-  *         Start + 2 bytes 10bit address in Write direction + Restart + first 7
-  bits of 10bit address in Read direction.
+  *         Start + 2 bytes 10bit address in Write direction + Restart + first 7 bits of 10bit address
+	    in Read direction.
   * @rmtoll CR2          HEAD10R       LL_I2C_EnableAuto10BitRead
   * @param  I2Cx I2C Instance.
   * @retval None
   */
-__STATIC_INLINE void LL_I2C_EnableAuto10BitRead(I2C_TypeDef *I2Cx) { CLEAR_BIT(I2Cx->CR2, I2C_CR2_HEAD10R); }
+__STATIC_INLINE void LL_I2C_EnableAuto10BitRead(I2C_TypeDef *I2Cx)
+{
+	CLEAR_BIT(I2Cx->CR2, I2C_CR2_HEAD10R);
+}
 
 /**
- * @brief  Disable automatic RESTART Read request condition for 10bit address
- * header (master mode).
- * @note   The master only sends the first 7 bits of 10bit address in Read
- * direction.
+ * @brief  Disable automatic RESTART Read request condition for 10bit address header (master mode).
+ * @note   The master only sends the first 7 bits of 10bit address in Read direction.
  * @rmtoll CR2          HEAD10R       LL_I2C_DisableAuto10BitRead
  * @param  I2Cx I2C Instance.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_DisableAuto10BitRead(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR2, I2C_CR2_HEAD10R); }
+__STATIC_INLINE void LL_I2C_DisableAuto10BitRead(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR2, I2C_CR2_HEAD10R);
+}
 
 /**
- * @brief  Check if automatic RESTART Read request condition for 10bit address
- * header is enabled or disabled.
+ * @brief  Check if automatic RESTART Read request condition for 10bit address header is enabled or disabled.
  * @rmtoll CR2          HEAD10R       LL_I2C_IsEnabledAuto10BitRead
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledAuto10BitRead(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR2, I2C_CR2_HEAD10R) != (I2C_CR2_HEAD10R)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledAuto10BitRead(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR2, I2C_CR2_HEAD10R) != (I2C_CR2_HEAD10R)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Configure the transfer direction (master mode).
@@ -1751,7 +2054,10 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledAuto10BitRead(const I2C_TypeDef *I2Cx) 
  *         @arg @ref LL_I2C_REQUEST_READ
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetTransferRequest(I2C_TypeDef *I2Cx, uint32_t TransferRequest) { MODIFY_REG(I2Cx->CR2, I2C_CR2_RD_WRN, TransferRequest); }
+__STATIC_INLINE void LL_I2C_SetTransferRequest(I2C_TypeDef *I2Cx, uint32_t TransferRequest)
+{
+	MODIFY_REG(I2Cx->CR2, I2C_CR2_RD_WRN, TransferRequest);
+}
 
 /**
  * @brief  Get the transfer direction requested (master mode).
@@ -1761,18 +2067,23 @@ __STATIC_INLINE void LL_I2C_SetTransferRequest(I2C_TypeDef *I2Cx, uint32_t Trans
  *         @arg @ref LL_I2C_REQUEST_WRITE
  *         @arg @ref LL_I2C_REQUEST_READ
  */
-__STATIC_INLINE uint32_t LL_I2C_GetTransferRequest(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_RD_WRN)); }
+__STATIC_INLINE uint32_t LL_I2C_GetTransferRequest(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_RD_WRN));
+}
 
 /**
  * @brief  Configure the slave address for transfer (master mode).
  * @note   Changing these bits when START bit is set is not allowed.
  * @rmtoll CR2          SADD           LL_I2C_SetSlaveAddr
  * @param  I2Cx I2C Instance.
- * @param  SlaveAddr This parameter must be a value between Min_Data=0x00 and
- * Max_Data=0x3F.
+ * @param  SlaveAddr This parameter must be a value between Min_Data=0x00 and Max_Data=0x3F.
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_SetSlaveAddr(I2C_TypeDef *I2Cx, uint32_t SlaveAddr) { MODIFY_REG(I2Cx->CR2, I2C_CR2_SADD, SlaveAddr); }
+__STATIC_INLINE void LL_I2C_SetSlaveAddr(I2C_TypeDef *I2Cx, uint32_t SlaveAddr)
+{
+	MODIFY_REG(I2Cx->CR2, I2C_CR2_SADD, SlaveAddr);
+}
 
 /**
  * @brief  Get the slave address programmed for transfer.
@@ -1780,11 +2091,13 @@ __STATIC_INLINE void LL_I2C_SetSlaveAddr(I2C_TypeDef *I2Cx, uint32_t SlaveAddr) 
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x0 and Max_Data=0x3F
  */
-__STATIC_INLINE uint32_t LL_I2C_GetSlaveAddr(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_SADD)); }
+__STATIC_INLINE uint32_t LL_I2C_GetSlaveAddr(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->CR2, I2C_CR2_SADD));
+}
 
 /**
- * @brief  Handles I2Cx communication when starting transfer or during transfer
- * (TC or TCR flag are set).
+ * @brief  Handles I2Cx communication when starting transfer or during transfer (TC or TCR flag are set).
  * @rmtoll CR2          SADD          LL_I2C_HandleTransfer\n
  *         CR2          ADD10         LL_I2C_HandleTransfer\n
  *         CR2          RD_WRN        LL_I2C_HandleTransfer\n
@@ -1800,8 +2113,7 @@ __STATIC_INLINE uint32_t LL_I2C_GetSlaveAddr(const I2C_TypeDef *I2Cx) { return (
  *         @arg @ref LL_I2C_ADDRSLAVE_7BIT
  *         @arg @ref LL_I2C_ADDRSLAVE_10BIT
  * @param  TransferSize Specifies the number of bytes to be programmed.
- *                       This parameter must be a value between Min_Data=0 and
- * Max_Data=255.
+ *                       This parameter must be a value between Min_Data=0 and Max_Data=255.
  * @param  EndMode This parameter can be one of the following values:
  *         @arg @ref LL_I2C_MODE_RELOAD
  *         @arg @ref LL_I2C_MODE_AUTOEND
@@ -1846,7 +2158,10 @@ __STATIC_INLINE void LL_I2C_HandleTransfer(I2C_TypeDef *I2Cx, uint32_t SlaveAddr
  *         @arg @ref LL_I2C_DIRECTION_WRITE
  *         @arg @ref LL_I2C_DIRECTION_READ
  */
-__STATIC_INLINE uint32_t LL_I2C_GetTransferDirection(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->ISR, I2C_ISR_DIR)); }
+__STATIC_INLINE uint32_t LL_I2C_GetTransferDirection(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->ISR, I2C_ISR_DIR));
+}
 
 /**
  * @brief  Return the slave matched address.
@@ -1854,44 +2169,53 @@ __STATIC_INLINE uint32_t LL_I2C_GetTransferDirection(const I2C_TypeDef *I2Cx) { 
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x00 and Max_Data=0x3F
  */
-__STATIC_INLINE uint32_t LL_I2C_GetAddressMatchCode(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->ISR, I2C_ISR_ADDCODE) >> I2C_ISR_ADDCODE_Pos << 1); }
+__STATIC_INLINE uint32_t LL_I2C_GetAddressMatchCode(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->ISR, I2C_ISR_ADDCODE) >> I2C_ISR_ADDCODE_Pos << 1);
+}
 
 /**
-  * @brief  Enable internal comparison of the SMBus Packet Error byte
-  (transmission or reception mode).
-  * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether
-  or not
+  * @brief  Enable internal comparison of the SMBus Packet Error byte (transmission or reception mode).
+  * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
   *         SMBus feature is supported by the I2Cx Instance.
-  * @note   This feature is cleared by hardware when the PEC byte is
-  transferred, or when a STOP condition or an Address Matched is received.
+  * @note   This feature is cleared by hardware when the PEC byte is transferred, or when a STOP condition
+	    or an Address Matched is received.
   *         This bit has no effect when RELOAD bit is set.
   *         This bit has no effect in device mode when SBC bit is not set.
   * @rmtoll CR2          PECBYTE       LL_I2C_EnableSMBusPECCompare
   * @param  I2Cx I2C Instance.
   * @retval None
   */
-__STATIC_INLINE void LL_I2C_EnableSMBusPECCompare(I2C_TypeDef *I2Cx) { SET_BIT(I2Cx->CR2, I2C_CR2_PECBYTE); }
+__STATIC_INLINE void LL_I2C_EnableSMBusPECCompare(I2C_TypeDef *I2Cx)
+{
+	SET_BIT(I2Cx->CR2, I2C_CR2_PECBYTE);
+}
 
 /**
- * @brief  Check if the SMBus Packet Error byte internal comparison is requested
- * or not.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @brief  Check if the SMBus Packet Error byte internal comparison is requested or not.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll CR2          PECBYTE       LL_I2C_IsEnabledSMBusPECCompare
  * @param  I2Cx I2C Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusPECCompare(const I2C_TypeDef *I2Cx) { return ((READ_BIT(I2Cx->CR2, I2C_CR2_PECBYTE) == (I2C_CR2_PECBYTE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusPECCompare(const I2C_TypeDef *I2Cx)
+{
+	return ((READ_BIT(I2Cx->CR2, I2C_CR2_PECBYTE) == (I2C_CR2_PECBYTE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get the SMBus Packet Error byte calculated.
- * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or
- * not SMBus feature is supported by the I2Cx Instance.
+ * @note   The macro IS_SMBUS_ALL_INSTANCE(I2Cx) can be used to check whether or not
+ *         SMBus feature is supported by the I2Cx Instance.
  * @rmtoll PECR         PEC           LL_I2C_GetSMBusPEC
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_I2C_GetSMBusPEC(const I2C_TypeDef *I2Cx) { return (uint32_t)(READ_BIT(I2Cx->PECR, I2C_PECR_PEC)); }
+__STATIC_INLINE uint32_t LL_I2C_GetSMBusPEC(const I2C_TypeDef *I2Cx)
+{
+	return (uint32_t)(READ_BIT(I2Cx->PECR, I2C_PECR_PEC));
+}
 
 /**
  * @brief  Read Receive Data register.
@@ -1899,7 +2223,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetSMBusPEC(const I2C_TypeDef *I2Cx) { return (u
  * @param  I2Cx I2C Instance.
  * @retval Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint8_t LL_I2C_ReceiveData8(const I2C_TypeDef *I2Cx) { return (uint8_t)(READ_BIT(I2Cx->RXDR, I2C_RXDR_RXDATA)); }
+__STATIC_INLINE uint8_t LL_I2C_ReceiveData8(const I2C_TypeDef *I2Cx)
+{
+	return (uint8_t)(READ_BIT(I2Cx->RXDR, I2C_RXDR_RXDATA));
+}
 
 /**
  * @brief  Write in Transmit Data Register .
@@ -1908,7 +2235,10 @@ __STATIC_INLINE uint8_t LL_I2C_ReceiveData8(const I2C_TypeDef *I2Cx) { return (u
  * @param  Data Value between Min_Data=0x00 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_I2C_TransmitData8(I2C_TypeDef *I2Cx, uint8_t Data) { WRITE_REG(I2Cx->TXDR, Data); }
+__STATIC_INLINE void LL_I2C_TransmitData8(I2C_TypeDef *I2Cx, uint8_t Data)
+{
+	WRITE_REG(I2Cx->TXDR, Data);
+}
 
 /**
  * @}

@@ -54,10 +54,9 @@ extern "C" {
  */
 typedef struct {
 	uint32_t ClockErrorDetection; /*!< Clock error detection.
-				    This parameter can be one value of @ref
-				    RNG_LL_CED. This parameter can be modified
-				    using unitary functions @ref
-				    LL_RNG_EnableClkErrorDetect(). */
+				    This parameter can be one value of @ref RNG_LL_CED.
+				    This parameter can be modified using unitary
+				    functions @ref LL_RNG_EnableClkErrorDetect(). */
 } LL_RNG_InitTypeDef;
 
 /**
@@ -92,8 +91,7 @@ typedef struct {
  */
 
 /** @defgroup RNG_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_RNG_ReadReg and
- * LL_RNG_WriteReg macros
+ * @brief    IT defines which can be used with LL_RNG_ReadReg and  LL_RNG_WriteReg macros
  * @{
  */
 #define LL_RNG_CR_IE RNG_CR_IE /*!< RNG Interrupt enable */
@@ -152,7 +150,10 @@ typedef struct {
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_Enable(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_RNGEN); }
+__STATIC_INLINE void LL_RNG_Enable(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_RNGEN);
+}
 
 /**
  * @brief  Disable Random Number Generation
@@ -160,7 +161,10 @@ __STATIC_INLINE void LL_RNG_Enable(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_Disable(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG_CR_RNGEN); }
+__STATIC_INLINE void LL_RNG_Disable(RNG_TypeDef *RNGx)
+{
+	CLEAR_BIT(RNGx->CR, RNG_CR_RNGEN);
+}
 
 /**
  * @brief  Check if Random Number Generator is enabled
@@ -168,7 +172,10 @@ __STATIC_INLINE void LL_RNG_Disable(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsEnabled(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_RNGEN) == (RNG_CR_RNGEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabled(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_RNGEN) == (RNG_CR_RNGEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable Clock Error Detection
@@ -176,7 +183,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsEnabled(const RNG_TypeDef *RNGx) { return ((RE
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_EnableClkErrorDetect(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG_CR_CED); }
+__STATIC_INLINE void LL_RNG_EnableClkErrorDetect(RNG_TypeDef *RNGx)
+{
+	CLEAR_BIT(RNGx->CR, RNG_CR_CED);
+}
 
 /**
  * @brief  Disable RNG Clock Error Detection
@@ -184,7 +194,10 @@ __STATIC_INLINE void LL_RNG_EnableClkErrorDetect(RNG_TypeDef *RNGx) { CLEAR_BIT(
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_DisableClkErrorDetect(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_CED); }
+__STATIC_INLINE void LL_RNG_DisableClkErrorDetect(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_CED);
+}
 
 /**
  * @brief  Check if RNG Clock Error Detection is enabled
@@ -192,7 +205,10 @@ __STATIC_INLINE void LL_RNG_DisableClkErrorDetect(RNG_TypeDef *RNGx) { SET_BIT(R
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsEnabledClkErrorDetect(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_CED) != (RNG_CR_CED)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabledClkErrorDetect(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_CED) != (RNG_CR_CED)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -208,7 +224,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsEnabledClkErrorDetect(const RNG_TypeDef *RNGx)
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_DRDY(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_DRDY) == (RNG_SR_DRDY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_DRDY(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_DRDY) == (RNG_SR_DRDY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Clock Error Current Status Flag is set or not
@@ -216,7 +235,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_DRDY(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CECS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_CECS) == (RNG_SR_CECS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CECS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_CECS) == (RNG_SR_CECS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Seed Error Current Status Flag is set or not
@@ -224,7 +246,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CECS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SECS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_SECS) == (RNG_SR_SECS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SECS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_SECS) == (RNG_SR_SECS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Clock Error Interrupt Status Flag is set or not
@@ -232,7 +257,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SECS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CEIS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_CEIS) == (RNG_SR_CEIS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CEIS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_CEIS) == (RNG_SR_CEIS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Seed Error Interrupt Status Flag is set or not
@@ -240,7 +268,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CEIS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SEIS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_SEIS) == (RNG_SR_SEIS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SEIS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_SEIS) == (RNG_SR_SEIS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear Clock Error interrupt Status (CEIS) Flag
@@ -248,7 +279,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SEIS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_ClearFlag_CEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->SR, ~RNG_SR_CEIS); }
+__STATIC_INLINE void LL_RNG_ClearFlag_CEIS(RNG_TypeDef *RNGx)
+{
+	WRITE_REG(RNGx->SR, ~RNG_SR_CEIS);
+}
 
 /**
  * @brief  Clear Seed Error interrupt Status (SEIS) Flag
@@ -256,7 +290,10 @@ __STATIC_INLINE void LL_RNG_ClearFlag_CEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_ClearFlag_SEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->SR, ~RNG_SR_SEIS); }
+__STATIC_INLINE void LL_RNG_ClearFlag_SEIS(RNG_TypeDef *RNGx)
+{
+	WRITE_REG(RNGx->SR, ~RNG_SR_SEIS);
+}
 
 /**
  * @}
@@ -273,7 +310,10 @@ __STATIC_INLINE void LL_RNG_ClearFlag_SEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_EnableIT(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_IE); }
+__STATIC_INLINE void LL_RNG_EnableIT(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_IE);
+}
 
 /**
  * @brief  Disable Random Number Generator Interrupt
@@ -282,7 +322,10 @@ __STATIC_INLINE void LL_RNG_EnableIT(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_DisableIT(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG_CR_IE); }
+__STATIC_INLINE void LL_RNG_DisableIT(RNG_TypeDef *RNGx)
+{
+	CLEAR_BIT(RNGx->CR, RNG_CR_IE);
+}
 
 /**
  * @brief  Check if Random Number Generator Interrupt is enabled
@@ -291,7 +334,10 @@ __STATIC_INLINE void LL_RNG_DisableIT(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, R
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsEnabledIT(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_IE) == (RNG_CR_IE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabledIT(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_IE) == (RNG_CR_IE)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -307,7 +353,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsEnabledIT(const RNG_TypeDef *RNGx) { return ((
  * @param  RNGx RNG Instance
  * @retval Generated 32-bit random value
  */
-__STATIC_INLINE uint32_t LL_RNG_ReadRandData32(const RNG_TypeDef *RNGx) { return (uint32_t)(READ_REG(RNGx->DR)); }
+__STATIC_INLINE uint32_t LL_RNG_ReadRandData32(const RNG_TypeDef *RNGx)
+{
+	return (uint32_t)(READ_REG(RNGx->DR));
+}
 
 /**
  * @}

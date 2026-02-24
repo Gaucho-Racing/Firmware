@@ -1513,7 +1513,10 @@ HAL_StatusTypeDef HAL_FDCAN_DisableTimestampCounter(FDCAN_HandleTypeDef *hfdcan)
  *         the configuration information for the specified FDCAN.
  * @retval Timestamp counter value
  */
-uint16_t HAL_FDCAN_GetTimestampCounter(const FDCAN_HandleTypeDef *hfdcan) { return (uint16_t)(hfdcan->Instance->TSCV); }
+uint16_t HAL_FDCAN_GetTimestampCounter(const FDCAN_HandleTypeDef *hfdcan)
+{
+	return (uint16_t)(hfdcan->Instance->TSCV);
+}
 
 /**
  * @brief  Reset the timestamp counter to zero.
@@ -1619,7 +1622,10 @@ HAL_StatusTypeDef HAL_FDCAN_DisableTimeoutCounter(FDCAN_HandleTypeDef *hfdcan)
  *         the configuration information for the specified FDCAN.
  * @retval Timeout counter value
  */
-uint16_t HAL_FDCAN_GetTimeoutCounter(const FDCAN_HandleTypeDef *hfdcan) { return (uint16_t)(hfdcan->Instance->TOCV); }
+uint16_t HAL_FDCAN_GetTimeoutCounter(const FDCAN_HandleTypeDef *hfdcan)
+{
+	return (uint16_t)(hfdcan->Instance->TOCV);
+}
 
 /**
  * @brief  Reset the timeout counter to its start value.

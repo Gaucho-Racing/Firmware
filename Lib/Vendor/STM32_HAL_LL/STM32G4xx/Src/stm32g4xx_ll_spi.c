@@ -164,12 +164,10 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 }
 
 /**
- * @brief  Initialize the SPI registers according to the specified parameters in
- * SPI_InitStruct.
- * @note   As some bits in SPI configuration registers can only be written when
- * the SPI is disabled (SPI_CR1_SPE bit = 0), SPI peripheral should be in
- * disabled state prior calling this function. Otherwise, ERROR result will be
- * returned.
+ * @brief  Initialize the SPI registers according to the specified parameters in SPI_InitStruct.
+ * @note   As some bits in SPI configuration registers can only be written when the
+ *         SPI is disabled (SPI_CR1_SPE bit = 0), SPI peripheral should be in disabled state prior
+ *         calling this function. Otherwise, ERROR result will be returned.
  * @param  SPIx SPI Instance
  * @param  SPI_InitStruct pointer to a @ref LL_SPI_InitTypeDef structure
  * @retval An ErrorStatus enumeration value. (Return always SUCCESS)
@@ -193,10 +191,9 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 	assert_param(IS_LL_SPI_CRCCALCULATION(SPI_InitStruct->CRCCalculation));
 
 	if (LL_SPI_IsEnabled(SPIx) == 0x00000000U) {
-		/*---------------------------- SPIx CR1 Configuration
-		 * ------------------------ Configure SPIx CR1 with parameters:
-		 * - TransferDirection:  SPI_CR1_BIDIMODE, SPI_CR1_BIDIOE and
-		 * SPI_CR1_RXONLY bits
+		/*---------------------------- SPIx CR1 Configuration ------------------------
+		 * Configure SPIx CR1 with parameters:
+		 * - TransferDirection:  SPI_CR1_BIDIMODE, SPI_CR1_BIDIOE and SPI_CR1_RXONLY bits
 		 * - Master/Slave Mode:  SPI_CR1_MSTR bit
 		 * - ClockPolarity:      SPI_CR1_CPOL bit
 		 * - ClockPhase:         SPI_CR1_CPHA bit
@@ -209,21 +206,20 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 			   SPI_InitStruct->TransferDirection | SPI_InitStruct->Mode | SPI_InitStruct->ClockPolarity | SPI_InitStruct->ClockPhase | SPI_InitStruct->NSS | SPI_InitStruct->BaudRate |
 			       SPI_InitStruct->BitOrder | SPI_InitStruct->CRCCalculation);
 
-		/*---------------------------- SPIx CR2 Configuration
-		 * ------------------------ Configure SPIx CR2 with parameters:
+		/*---------------------------- SPIx CR2 Configuration ------------------------
+		 * Configure SPIx CR2 with parameters:
 		 * - DataWidth:          DS[3:0] bits
 		 * - NSS management:     SSOE bit
 		 */
 		MODIFY_REG(SPIx->CR2, SPI_CR2_DS | SPI_CR2_SSOE, SPI_InitStruct->DataWidth | (SPI_InitStruct->NSS >> 16U));
 
-		/* Set Rx FIFO to Quarter (1 Byte) in case of 8 Bits mode. No
-		 * DataPacking by default */
+		/* Set Rx FIFO to Quarter (1 Byte) in case of 8 Bits mode. No DataPacking by default */
 		if (SPI_InitStruct->DataWidth < LL_SPI_DATAWIDTH_9BIT) {
 			LL_SPI_SetRxFIFOThreshold(SPIx, LL_SPI_RX_FIFO_TH_QUARTER);
 		}
 
-		/*---------------------------- SPIx CRCPR Configuration
-		 * ---------------------- Configure SPIx CRCPR with parameters:
+		/*---------------------------- SPIx CRCPR Configuration ----------------------
+		 * Configure SPIx CRCPR with parameters:
 		 * - CRCPoly:            CRCPOLY[15:0] bits
 		 */
 		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE) {
@@ -336,22 +332,22 @@ void LL_SPI_StructInit(LL_SPI_InitTypeDef *SPI_InitStruct)
  *          - SUCCESS: SPI registers are de-initialized
  *          - ERROR: SPI registers are not de-initialized
  */
-ErrorStatus LL_I2S_DeInit(const SPI_TypeDef *SPIx) { return LL_SPI_DeInit(SPIx); }
+ErrorStatus LL_I2S_DeInit(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_DeInit(SPIx);
+}
 
 /**
- * @brief  Initializes the SPI/I2S registers according to the specified
- * parameters in I2S_InitStruct.
- * @note   As some bits in SPI configuration registers can only be written when
- * the SPI is disabled (SPI_CR1_SPE bit =0), SPI peripheral should be in
- * disabled state prior calling this function. Otherwise, ERROR result will be
- * returned.
+ * @brief  Initializes the SPI/I2S registers according to the specified parameters in I2S_InitStruct.
+ * @note   As some bits in SPI configuration registers can only be written when the SPI is disabled (SPI_CR1_SPE bit =0),
+ *         SPI peripheral should be in disabled state prior calling this function. Otherwise, ERROR result will be returned.
  * @param  SPIx SPI Instance
  * @param  I2S_InitStruct pointer to a @ref LL_I2S_InitTypeDef structure
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: SPI registers are Initialized
  *          - ERROR: SPI registers are not Initialized
  */
-ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
+ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, const LL_I2S_InitTypeDef *I2S_InitStruct)
 {
 	uint32_t i2sdiv = 2U;
 	uint32_t i2sodd = 0U;
@@ -370,47 +366,41 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
 	assert_param(IS_LL_I2S_CPOL(I2S_InitStruct->ClockPolarity));
 
 	if (LL_I2S_IsEnabled(SPIx) == 0x00000000U) {
-		/*---------------------------- SPIx I2SCFGR Configuration
-		 * -------------------- Configure SPIx I2SCFGR with parameters:
+		/*---------------------------- SPIx I2SCFGR Configuration --------------------
+		 * Configure SPIx I2SCFGR with parameters:
 		 * - Mode:          SPI_I2SCFGR_I2SCFG[1:0] bit
-		 * - Standard:      SPI_I2SCFGR_I2SSTD[1:0] and
-		 * SPI_I2SCFGR_PCMSYNC bits
-		 * - DataFormat:    SPI_I2SCFGR_CHLEN and SPI_I2SCFGR_DATLEN
-		 * bits
+		 * - Standard:      SPI_I2SCFGR_I2SSTD[1:0] and SPI_I2SCFGR_PCMSYNC bits
+		 * - DataFormat:    SPI_I2SCFGR_CHLEN and SPI_I2SCFGR_DATLEN bits
 		 * - ClockPolarity: SPI_I2SCFGR_CKPOL bit
 		 */
 
 		/* Write to SPIx I2SCFGR */
 		MODIFY_REG(SPIx->I2SCFGR, I2S_I2SCFGR_CLEAR_MASK, I2S_InitStruct->Mode | I2S_InitStruct->Standard | I2S_InitStruct->DataFormat | I2S_InitStruct->ClockPolarity | SPI_I2SCFGR_I2SMOD);
 
-		/*---------------------------- SPIx I2SPR Configuration
-		 * ---------------------- Configure SPIx I2SPR with parameters:
+		/*---------------------------- SPIx I2SPR Configuration ----------------------
+		 * Configure SPIx I2SPR with parameters:
 		 * - MCLKOutput:    SPI_I2SPR_MCKOE bit
 		 * - AudioFreq:     SPI_I2SPR_I2SDIV[7:0] and SPI_I2SPR_ODD bits
 		 */
 
-		/* If the requested audio frequency is not the default, compute
-		 * the prescaler (i2sodd, i2sdiv) else, default values are used:
-		 * i2sodd = 0U, i2sdiv = 2U.
+		/* If the requested audio frequency is not the default, compute the prescaler (i2sodd, i2sdiv)
+		 * else, default values are used:  i2sodd = 0U, i2sdiv = 2U.
 		 */
 		if (I2S_InitStruct->AudioFreq != LL_I2S_AUDIOFREQ_DEFAULT) {
 			/* Check the frame length (For the Prescaler computing)
-			 * Default value: LL_I2S_DATAFORMAT_16B (packetlength =
-			 * 1U).
+			 * Default value: LL_I2S_DATAFORMAT_16B (packetlength = 1U).
 			 */
 			if (I2S_InitStruct->DataFormat != LL_I2S_DATAFORMAT_16B) {
 				/* Packet length is 32 bits */
 				packetlength = 2U;
 			}
 
-			/* If an external I2S clock has to be used, the specific
-			define should be set in the project configuration or in
-			the stm32g4xx_ll_rcc.h file */
+			/* If an external I2S clock has to be used, the specific define should be set
+			in the project configuration or in the stm32g4xx_ll_rcc.h file */
 			/* Get the I2S source clock value */
 			sourceclock = LL_RCC_GetI2SClockFreq(LL_RCC_I2S_CLKSOURCE);
 
-			/* Compute the Real divider depending on the MCLK output
-			 * state with a floating point */
+			/* Compute the Real divider depending on the MCLK output state with a floating point */
 			if (I2S_InitStruct->MCLKOutput == LL_I2S_MCLK_OUTPUT_ENABLE) {
 				/* MCLK output is enabled */
 				tmp = (((((sourceclock / 256U) * 10U) / I2S_InitStruct->AudioFreq)) + 5U);
@@ -428,8 +418,7 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
 			/* Compute the i2sdiv prescaler */
 			i2sdiv = ((tmp - i2sodd) / 2U);
 
-			/* Get the Mask for the Odd bit (SPI_I2SPR[8]) register
-			 */
+			/* Get the Mask for the Odd bit (SPI_I2SPR[8]) register */
 			i2sodd = (i2sodd << 8U);
 		}
 
@@ -456,8 +445,7 @@ ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct)
  */
 void LL_I2S_StructInit(LL_I2S_InitTypeDef *I2S_InitStruct)
 {
-	/*--------------- Reset I2S init structure parameters values
-	 * -----------------*/
+	/*--------------- Reset I2S init structure parameters values -----------------*/
 	I2S_InitStruct->Mode = LL_I2S_MODE_SLAVE_TX;
 	I2S_InitStruct->Standard = LL_I2S_STANDARD_PHILIPS;
 	I2S_InitStruct->DataFormat = LL_I2S_DATAFORMAT_16B;
@@ -468,9 +456,8 @@ void LL_I2S_StructInit(LL_I2S_InitTypeDef *I2S_InitStruct)
 
 /**
  * @brief  Set linear and parity prescaler.
- * @note   To calculate value of PrescalerLinear(I2SDIV[7:0] bits) and
- * PrescalerParity(ODD bit)\n Check Audio frequency table and formulas inside
- * Reference Manual (SPI/I2S).
+ * @note   To calculate value of PrescalerLinear(I2SDIV[7:0] bits) and PrescalerParity(ODD bit)\n
+ *         Check Audio frequency table and formulas inside Reference Manual (SPI/I2S).
  * @param  SPIx SPI Instance
  * @param  PrescalerLinear value Min_Data=0x02 and Max_Data=0xFF.
  * @param  PrescalerParity This parameter can be one of the following values:
@@ -502,8 +489,7 @@ void LL_I2S_ConfigPrescaler(SPI_TypeDef *SPIx, uint32_t PrescalerLinear, uint32_
  */
 #endif /* SPI_I2S_SUPPORT */
 
-#endif /* defined (SPI1) || defined (SPI2) || defined (SPI3) || defined (SPI4)                                                                                                                         \
-	*/
+#endif /* defined (SPI1) || defined (SPI2) || defined (SPI3) || defined (SPI4) */
 
 /**
  * @}

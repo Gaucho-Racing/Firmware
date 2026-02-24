@@ -29,9 +29,6 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32u5xx_it.c
 		Core/Src/stm32u5xx_hal_msp.c
-		Core/Src/system_stm32u5xx.c
-		Core/Src/sysmem.c
-		Core/Src/syscalls.c
 )
 
 target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)

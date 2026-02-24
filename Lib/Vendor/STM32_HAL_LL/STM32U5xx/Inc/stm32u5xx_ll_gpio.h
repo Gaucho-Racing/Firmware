@@ -354,7 +354,10 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinMode(const GPIO_TypeDef *GPIOx, uint32_t 
  *         @arg @ref LL_GPIO_OUTPUT_OPENDRAIN
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint32_t OutputType) { MODIFY_REG(GPIOx->OTYPER, PinMask, (PinMask * OutputType)); }
+__STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint32_t OutputType)
+{
+	MODIFY_REG(GPIOx->OTYPER, PinMask, (PinMask * OutputType));
+}
 
 /**
  * @brief  Return gpio output type for several pins on dedicated port.
@@ -385,7 +388,10 @@ __STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinM
  *         @arg @ref LL_GPIO_OUTPUT_PUSHPULL
  *         @arg @ref LL_GPIO_OUTPUT_OPENDRAIN
  */
-__STATIC_INLINE uint32_t LL_GPIO_GetPinOutputType(const GPIO_TypeDef *GPIOx, uint32_t Pin) { return (uint32_t)(READ_BIT(GPIOx->OTYPER, Pin) >> POSITION_VAL(Pin)); }
+__STATIC_INLINE uint32_t LL_GPIO_GetPinOutputType(const GPIO_TypeDef *GPIOx, uint32_t Pin)
+{
+	return (uint32_t)(READ_BIT(GPIOx->OTYPER, Pin) >> POSITION_VAL(Pin));
+}
 
 /**
  * @brief  Configure gpio speed for a dedicated pin on dedicated port.
@@ -748,7 +754,10 @@ __STATIC_INLINE void LL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsPinLocked(const GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->LCKR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsPinLocked(const GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->LCKR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Return 1 if one of the pin of a dedicated port is locked. else return
@@ -757,7 +766,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsPinLocked(const GPIO_TypeDef *GPIOx, uint32_t
  * @param  GPIOx GPIO Port
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsAnyPinLocked(const GPIO_TypeDef *GPIOx) { return ((READ_BIT(GPIOx->LCKR, GPIO_LCKR_LCKK) == (GPIO_LCKR_LCKK)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsAnyPinLocked(const GPIO_TypeDef *GPIOx)
+{
+	return ((READ_BIT(GPIOx->LCKR, GPIO_LCKR_LCKK) == (GPIO_LCKR_LCKK)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -773,7 +785,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsAnyPinLocked(const GPIO_TypeDef *GPIOx) { ret
  * @param  GPIOx GPIO Port
  * @retval Input data register value of port
  */
-__STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(const GPIO_TypeDef *GPIOx) { return (uint32_t)(READ_REG(GPIOx->IDR)); }
+__STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(const GPIO_TypeDef *GPIOx)
+{
+	return (uint32_t)(READ_REG(GPIOx->IDR));
+}
 
 /**
  * @brief  Return if input data level for several pins of dedicated port is high
@@ -800,7 +815,10 @@ __STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(const GPIO_TypeDef *GPIOx) { retu
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(const GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->IDR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(const GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->IDR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Write output data register for the port.
@@ -810,7 +828,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(const GPIO_TypeDef *GPIOx, uint32
  *                   Value between 0 and 0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortValue) { WRITE_REG(GPIOx->ODR, PortValue); }
+__STATIC_INLINE void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortValue)
+{
+	WRITE_REG(GPIOx->ODR, PortValue);
+}
 
 /**
  * @brief  Return full output data register value for a dedicated port.
@@ -818,7 +839,10 @@ __STATIC_INLINE void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortV
  * @param  GPIOx GPIO Port
  * @retval Output data register value of port
  */
-__STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(const GPIO_TypeDef *GPIOx) { return (uint32_t)(READ_REG(GPIOx->ODR)); }
+__STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(const GPIO_TypeDef *GPIOx)
+{
+	return (uint32_t)(READ_REG(GPIOx->ODR));
+}
 
 /**
  * @brief  Return if input data level for several pins of dedicated port is high
@@ -845,7 +869,10 @@ __STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(const GPIO_TypeDef *GPIOx) { ret
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(const GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->ODR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(const GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->ODR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set several pins to high level on dedicated gpio port.
@@ -871,7 +898,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(const GPIO_TypeDef *GPIOx, uint3
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) { WRITE_REG(GPIOx->BSRR, PinMask); }
+__STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	WRITE_REG(GPIOx->BSRR, PinMask);
+}
 
 /**
  * @brief  Set several pins to low level on dedicated gpio port.
@@ -897,7 +927,10 @@ __STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) { WRITE_REG(GPIOx->BRR, PinMask); }
+__STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	WRITE_REG(GPIOx->BRR, PinMask);
+}
 
 /**
  * @brief  Toggle data value for several pin of dedicated port.
@@ -955,7 +988,10 @@ __STATIC_INLINE void LL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
  *         @arg @ref LL_GPIO_PIN_15
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_EnableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint32_t PinMask) { SET_BIT(GPIOx->HSLVR, PinMask); }
+__STATIC_INLINE void LL_GPIO_EnableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	SET_BIT(GPIOx->HSLVR, PinMask);
+}
 
 /**
  * @brief  Disable speed optimization for several pin of dedicated port.
@@ -983,7 +1019,10 @@ __STATIC_INLINE void LL_GPIO_EnableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint
  *         @arg @ref LL_GPIO_PIN_15
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint32_t PinMask) { CLEAR_BIT(GPIOx->HSLVR, PinMask); }
+__STATIC_INLINE void LL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	CLEAR_BIT(GPIOx->HSLVR, PinMask);
+}
 
 /**
  * @brief  Return if speed optimization for several pin of dedicated port is
@@ -1012,7 +1051,10 @@ __STATIC_INLINE void LL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uin
  *         @arg @ref LL_GPIO_PIN_15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsEnabledHighSPeedLowVoltage(const GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->HSLVR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsEnabledHighSPeedLowVoltage(const GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->HSLVR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
@@ -1040,7 +1082,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsEnabledHighSPeedLowVoltage(const GPIO_TypeDef
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_EnablePinSecure(GPIO_TypeDef *GPIOx, uint32_t PinMask) { SET_BIT(GPIOx->SECCFGR, PinMask); }
+__STATIC_INLINE void LL_GPIO_EnablePinSecure(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	SET_BIT(GPIOx->SECCFGR, PinMask);
+}
 
 /**
  * @brief  Disable secure write only access for several pin of dedicated port.
@@ -1066,7 +1111,10 @@ __STATIC_INLINE void LL_GPIO_EnablePinSecure(GPIO_TypeDef *GPIOx, uint32_t PinMa
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_DisablePinSecure(GPIO_TypeDef *GPIOx, uint32_t PinMask) { CLEAR_BIT(GPIOx->SECCFGR, PinMask); }
+__STATIC_INLINE void LL_GPIO_DisablePinSecure(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	CLEAR_BIT(GPIOx->SECCFGR, PinMask);
+}
 
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -1095,7 +1143,10 @@ __STATIC_INLINE void LL_GPIO_DisablePinSecure(GPIO_TypeDef *GPIOx, uint32_t PinM
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsEnabledPinSecure(const GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->SECCFGR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsEnabledPinSecure(const GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->SECCFGR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
  * @}

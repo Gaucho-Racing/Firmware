@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -29,17 +29,17 @@ jobs:
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
 
       - name: Install Arm Toolchain
-        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        uses: carlosperate/arm-none-eabi-gcc-action@2ca034649a66909ef5382c90ffb5d26711d2f266  # v1.12.0
         with:
           release: '12.2.Rel1'
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@v5
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306  # v5.0.3
         with:
           path: ${{ env.SCCACHE_DIR }}
           key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -48,7 +48,7 @@ jobs:
             sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-
 
       - name: Setup Shared Compilation Cache
-        uses: mozilla-actions/sccache-action@v0.0.9
+        uses: mozilla-actions/sccache-action@7d986dd989559c6ecdb630a3fd2557667be217ad # v0.0.9
 
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
@@ -83,7 +83,7 @@ jobs:
           echo "<details><summary>CMake Build</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          cmake --build --preset ${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -95,7 +95,7 @@ jobs:
           echo "<details><summary>CMake Build</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          cmake --build build/${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --build --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
@@ -157,7 +157,7 @@ jobs:
 
       - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
         with:
           name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf
@@ -183,12 +183,12 @@ jobs:
         SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
             fetch-depth: 1
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@v5
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
             path: ${{ env.SCCACHE_DIR }}
             key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -197,7 +197,7 @@ jobs:
               sccache-${{ github.workflow }}-${{ runner.os }}-
 
       - name: Setup Shared Compilation Cache
-        uses: mozilla-actions/sccache-action@v0.0.9
+        uses: mozilla-actions/sccache-action@7d986dd989559c6ecdb630a3fd2557667be217ad # v0.0.9
 
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
@@ -232,7 +232,7 @@ jobs:
             echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cmake --build build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+            cmake --build --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -244,7 +244,7 @@ jobs:
             echo "<details><summary>CMake Build (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            cmake --build build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            cmake --build --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
@@ -311,12 +311,12 @@ jobs:
       contents: read
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
 
       - name: Set up Valgrind
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05  # v1.6.0
         with:
           packages: valgrind
 

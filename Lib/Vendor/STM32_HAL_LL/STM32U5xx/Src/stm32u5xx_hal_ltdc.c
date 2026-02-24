@@ -2086,7 +2086,10 @@ functions
  *                the configuration information for the LTDC.
  * @retval HAL state
  */
-HAL_LTDC_StateTypeDef HAL_LTDC_GetState(const LTDC_HandleTypeDef *hltdc) { return hltdc->State; }
+HAL_LTDC_StateTypeDef HAL_LTDC_GetState(const LTDC_HandleTypeDef *hltdc)
+{
+	return hltdc->State;
+}
 
 /**
  * @brief  Return the LTDC handle error code.
@@ -2094,7 +2097,10 @@ HAL_LTDC_StateTypeDef HAL_LTDC_GetState(const LTDC_HandleTypeDef *hltdc) { retur
  *               the configuration information for the LTDC.
  * @retval LTDC Error Code
  */
-uint32_t HAL_LTDC_GetError(const LTDC_HandleTypeDef *hltdc) { return hltdc->ErrorCode; }
+uint32_t HAL_LTDC_GetError(const LTDC_HandleTypeDef *hltdc)
+{
+	return hltdc->ErrorCode;
+}
 
 /**
  * @}

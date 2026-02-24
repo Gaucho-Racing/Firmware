@@ -97,54 +97,42 @@ typedef struct {
 	uint32_t PLLM; /*!< Division factor for PLL VCO input clock.
 			    This parameter can be a value of @ref RCC_LL_EC_PLLM_DIV
 
-			    This feature can be modified afterwards using unitary
-			  function
+			    This feature can be modified afterwards using unitary function
 			    @ref LL_RCC_PLL_ConfigDomain_SYS(). */
 
 	uint32_t PLLN; /*!< Multiplication factor for PLL VCO output clock.
-			    This parameter must be a number between Min_Data = 8
-			  and Max_Data = 86
+			    This parameter must be a number between Min_Data = 8 and Max_Data = 86
 
-			    This feature can be modified afterwards using
-			  unitary function
+			    This feature can be modified afterwards using unitary function
 			    @ref LL_RCC_PLL_ConfigDomain_SYS(). */
 
 	uint32_t PLLR; /*!< Division for the main system clock.
 			    This parameter can be a value of @ref RCC_LL_EC_PLLR_DIV
 
-			    This feature can be modified afterwards using unitary
-			  function
+			    This feature can be modified afterwards using unitary function
 			    @ref LL_RCC_PLL_ConfigDomain_SYS(). */
 } LL_UTILS_PLLInitTypeDef;
 
 /**
- * @brief  UTILS System, AHB and APB buses clock configuration structure
- * definition
+ * @brief  UTILS System, AHB and APB buses clock configuration structure definition
  */
 typedef struct {
-	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is
-				   derived from the system clock (SYSCLK). This
-				   parameter can be a value of @ref
-				   RCC_LL_EC_SYSCLK_DIV
+	uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
+				     This parameter can be a value of @ref RCC_LL_EC_SYSCLK_DIV
 
-				     This feature can be modified afterwards
-				   using unitary function
+				     This feature can be modified afterwards using unitary function
 				     @ref LL_RCC_SetAHBPrescaler(). */
 
-	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is
-				    derived from the AHB clock (HCLK). This parameter
-				    can be a value of @ref RCC_LL_EC_APB1_DIV
+	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+				      This parameter can be a value of @ref RCC_LL_EC_APB1_DIV
 
-				      This feature can be modified afterwards using
-				    unitary function
+				      This feature can be modified afterwards using unitary function
 				      @ref LL_RCC_SetAPB1Prescaler(). */
 
-	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is
-				    derived from the AHB clock (HCLK). This parameter
-				    can be a value of @ref RCC_LL_EC_APB2_DIV
+	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
+				      This parameter can be a value of @ref RCC_LL_EC_APB2_DIV
 
-				      This feature can be modified afterwards using
-				    unitary function
+				      This feature can be modified afterwards using unitary function
 				      @ref LL_RCC_SetAPB2Prescaler(). */
 
 } LL_UTILS_ClkInitTypeDef;
@@ -210,27 +198,39 @@ typedef struct {
  * @brief  Get Word0 of the unique device identifier (UID based on 96 bits)
  * @retval UID[31:0]: X and Y coordinates on the wafer expressed in BCD format
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word0(void) { return (uint32_t)(READ_REG(*((uint32_t *)UID_BASE_ADDRESS))); }
+__STATIC_INLINE uint32_t LL_GetUID_Word0(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)UID_BASE_ADDRESS)));
+}
 
 /**
  * @brief  Get Word1 of the unique device identifier (UID based on 96 bits)
  * @retval UID[63:32]: Wafer number (UID[39:32]) & LOT_NUM[23:0] (UID[63:40])
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word1(void) { return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 4U)))); }
+__STATIC_INLINE uint32_t LL_GetUID_Word1(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 4U))));
+}
 
 /**
  * @brief  Get Word2 of the unique device identifier (UID based on 96 bits)
  * @retval UID[95:64]: Lot number (ASCII encoded) - LOT_NUM[55:24]
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word2(void) { return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U)))); }
+__STATIC_INLINE uint32_t LL_GetUID_Word2(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U))));
+}
 
 /**
  * @brief  Get Flash memory size
- * @note   This bitfield indicates the size of the device Flash memory expressed
- * in Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
+ * @note   This bitfield indicates the size of the device Flash memory expressed in
+ *         Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
  * @retval FLASH_SIZE[15:0]: Flash memory size
  */
-__STATIC_INLINE uint32_t LL_GetFlashSize(void) { return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU); }
+__STATIC_INLINE uint32_t LL_GetFlashSize(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU);
+}
 
 /**
  * @brief  Get Package type
@@ -254,7 +254,10 @@ __STATIC_INLINE uint32_t LL_GetFlashSize(void) { return (uint32_t)(READ_REG(*((u
  *
  *         (*) value not defined in all devices.
  */
-__STATIC_INLINE uint32_t LL_GetPackageType(void) { return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU); }
+__STATIC_INLINE uint32_t LL_GetPackageType(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU);
+}
 
 /**
  * @}
@@ -265,13 +268,10 @@ __STATIC_INLINE uint32_t LL_GetPackageType(void) { return (uint32_t)(READ_REG(*(
  */
 
 /**
- * @brief  This function configures the Cortex-M SysTick source of the time
- * base.
- * @param  HCLKFrequency HCLK frequency in Hz (can be calculated thanks to RCC
- * helper macro)
+ * @brief  This function configures the Cortex-M SysTick source of the time base.
+ * @param  HCLKFrequency HCLK frequency in Hz (can be calculated thanks to RCC helper macro)
  * @note   When a RTOS is used, it is recommended to avoid changing the SysTick
- *         configuration by calling this function, for a delay use rather
- * osDelay RTOS service.
+ *         configuration by calling this function, for a delay use rather osDelay RTOS service.
  * @param  Ticks Frequency of Ticks (Hz)
  * @retval None
  */

@@ -75,37 +75,27 @@ typedef struct {
 	uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
 			    This parameter can be a value of @ref GPIO_LL_EC_MODE.
 
-			    GPIO HW configuration can be modified afterwards using
-			  unitary function @ref LL_GPIO_SetPinMode().*/
+			    GPIO HW configuration can be modified afterwards using unitary function @ref LL_GPIO_SetPinMode().*/
 
 	uint32_t Speed; /*!< Specifies the speed for the selected pins.
 			     This parameter can be a value of @ref GPIO_LL_EC_SPEED.
 
-			     GPIO HW configuration can be modified afterwards using
-			   unitary function @ref LL_GPIO_SetPinSpeed().*/
+			     GPIO HW configuration can be modified afterwards using unitary function @ref LL_GPIO_SetPinSpeed().*/
 
-	uint32_t OutputType; /*!< Specifies the operating output type for the
-				selected pins. This parameter can be a value of
-				@ref GPIO_LL_EC_OUTPUT.
+	uint32_t OutputType; /*!< Specifies the operating output type for the selected pins.
+				  This parameter can be a value of @ref GPIO_LL_EC_OUTPUT.
 
-				  GPIO HW configuration can be modified
-				afterwards using unitary function @ref
-				LL_GPIO_SetPinOutputType().*/
+				  GPIO HW configuration can be modified afterwards using unitary function @ref LL_GPIO_SetPinOutputType().*/
 
-	uint32_t Pull; /*!< Specifies the operating Pull-up/Pull down for the
-			  selected pins. This parameter can be a value of @ref
-			  GPIO_LL_EC_PULL.
+	uint32_t Pull; /*!< Specifies the operating Pull-up/Pull down for the selected pins.
+			    This parameter can be a value of @ref GPIO_LL_EC_PULL.
 
-			    GPIO HW configuration can be modified afterwards
-			  using unitary function @ref LL_GPIO_SetPinPull().*/
+			    GPIO HW configuration can be modified afterwards using unitary function @ref LL_GPIO_SetPinPull().*/
 
-	uint32_t Alternate; /*!< Specifies the Peripheral to be connected to the
-			       selected pins. This parameter can be a value of @ref
-			       GPIO_LL_EC_AF.
+	uint32_t Alternate; /*!< Specifies the Peripheral to be connected to the selected pins.
+				 This parameter can be a value of @ref GPIO_LL_EC_AF.
 
-				 GPIO HW configuration can be modified afterwards
-			       using unitary function @ref LL_GPIO_SetAFPin_0_7() and
-			       LL_GPIO_SetAFPin_8_15().*/
+				 GPIO HW configuration can be modified afterwards using unitary function @ref LL_GPIO_SetAFPin_0_7() and LL_GPIO_SetAFPin_8_15().*/
 } LL_GPIO_InitTypeDef;
 
 /**
@@ -260,8 +250,7 @@ typedef struct {
 
 /**
  * @brief  Configure gpio mode for a dedicated pin on dedicated port.
- * @note   I/O mode can be Input mode, General purpose output, Alternate
- * function mode or Analog.
+ * @note   I/O mode can be Input mode, General purpose output, Alternate function mode or Analog.
  * @note   Warning: only one pin can be passed as parameter.
  * @rmtoll MODER        MODEy         LL_GPIO_SetPinMode
  * @param  GPIOx GPIO Port
@@ -296,8 +285,7 @@ __STATIC_INLINE void LL_GPIO_SetPinMode(GPIO_TypeDef *GPIOx, uint32_t Pin, uint3
 
 /**
  * @brief  Return gpio mode for a dedicated pin on dedicated port.
- * @note   I/O mode can be Input mode, General purpose output, Alternate
- * function mode or Analog.
+ * @note   I/O mode can be Input mode, General purpose output, Alternate function mode or Analog.
  * @note   Warning: only one pin can be passed as parameter.
  * @rmtoll MODER        MODEy         LL_GPIO_GetPinMode
  * @param  GPIOx GPIO Port
@@ -358,7 +346,10 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinMode(GPIO_TypeDef *GPIOx, uint32_t Pin)
  *         @arg @ref LL_GPIO_OUTPUT_OPENDRAIN
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint32_t OutputType) { MODIFY_REG(GPIOx->OTYPER, PinMask, (PinMask * OutputType)); }
+__STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint32_t OutputType)
+{
+	MODIFY_REG(GPIOx->OTYPER, PinMask, (PinMask * OutputType));
+}
 
 /**
  * @brief  Return gpio output type for several pins on dedicated port.
@@ -389,7 +380,10 @@ __STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinM
  *         @arg @ref LL_GPIO_OUTPUT_PUSHPULL
  *         @arg @ref LL_GPIO_OUTPUT_OPENDRAIN
  */
-__STATIC_INLINE uint32_t LL_GPIO_GetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t Pin) { return (uint32_t)(READ_BIT(GPIOx->OTYPER, Pin) >> POSITION_VAL(Pin)); }
+__STATIC_INLINE uint32_t LL_GPIO_GetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t Pin)
+{
+	return (uint32_t)(READ_BIT(GPIOx->OTYPER, Pin) >> POSITION_VAL(Pin));
+}
 
 /**
  * @brief  Configure gpio speed for a dedicated pin on dedicated port.
@@ -465,8 +459,7 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinSpeed(GPIO_TypeDef *GPIOx, uint32_t Pin)
 }
 
 /**
- * @brief  Configure gpio pull-up or pull-down for a dedicated pin on a
- * dedicated port.
+ * @brief  Configure gpio pull-up or pull-down for a dedicated pin on a dedicated port.
  * @note   Warning: only one pin can be passed as parameter.
  * @rmtoll PUPDR        PUPDy         LL_GPIO_SetPinPull
  * @param  GPIOx GPIO Port
@@ -499,8 +492,7 @@ __STATIC_INLINE void LL_GPIO_SetPinPull(GPIO_TypeDef *GPIOx, uint32_t Pin, uint3
 }
 
 /**
- * @brief  Return gpio pull-up or pull-down for a dedicated pin on a dedicated
- * port
+ * @brief  Return gpio pull-up or pull-down for a dedicated pin on a dedicated port
  * @note   Warning: only one pin can be passed as parameter.
  * @rmtoll PUPDR        PUPDy         LL_GPIO_GetPinPull
  * @param  GPIOx GPIO Port
@@ -532,8 +524,7 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinPull(GPIO_TypeDef *GPIOx, uint32_t Pin)
 }
 
 /**
- * @brief  Configure gpio alternate function of a dedicated pin from 0 to 7 for
- * a dedicated port.
+ * @brief  Configure gpio alternate function of a dedicated pin from 0 to 7 for a dedicated port.
  * @note   Possible values are from AF0 to AF15 depending on target.
  * @note   Warning: only one pin can be passed as parameter.
  * @rmtoll AFRL         AFSELy        LL_GPIO_SetAFPin_0_7
@@ -572,8 +563,7 @@ __STATIC_INLINE void LL_GPIO_SetAFPin_0_7(GPIO_TypeDef *GPIOx, uint32_t Pin, uin
 }
 
 /**
- * @brief  Return gpio alternate function of a dedicated pin from 0 to 7 for a
- * dedicated port.
+ * @brief  Return gpio alternate function of a dedicated pin from 0 to 7 for a dedicated port.
  * @rmtoll AFRL         AFSELy        LL_GPIO_GetAFPin_0_7
  * @param  GPIOx GPIO Port
  * @param  Pin This parameter can be one of the following values:
@@ -609,8 +599,7 @@ __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_0_7(GPIO_TypeDef *GPIOx, uint32_t Pin)
 }
 
 /**
- * @brief  Configure gpio alternate function of a dedicated pin from 8 to 15 for
- * a dedicated port.
+ * @brief  Configure gpio alternate function of a dedicated pin from 8 to 15 for a dedicated port.
  * @note   Possible values are from AF0 to AF15 depending on target.
  * @note   Warning: only one pin can be passed as parameter.
  * @rmtoll AFRH         AFSELy        LL_GPIO_SetAFPin_8_15
@@ -649,8 +638,7 @@ __STATIC_INLINE void LL_GPIO_SetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin, ui
 }
 
 /**
- * @brief  Return gpio alternate function of a dedicated pin from 8 to 15 for a
- * dedicated port.
+ * @brief  Return gpio alternate function of a dedicated pin from 8 to 15 for a dedicated port.
  * @note   Possible values are from AF0 to AF15 depending on target.
  * @rmtoll AFRH         AFSELy        LL_GPIO_GetAFPin_8_15
  * @param  GPIOx GPIO Port
@@ -688,8 +676,7 @@ __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin
 
 #if defined(GPIO_ASCR_ASC0)
 /**
- * @brief  Connect analog switch to ADC input of several pins for a dedicated
- * port.
+ * @brief  Connect analog switch to ADC input of several pins for a dedicated port.
  * @note   This bit must be set prior to the ADC conversion.
  *         Only the IO which connected to the ADC input are effective.
  *         Other IO must be kept reset value
@@ -715,11 +702,13 @@ __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_EnablePinAnalogControl(GPIO_TypeDef *GPIOx, uint32_t PinMask) { SET_BIT(GPIOx->ASCR, PinMask); }
+__STATIC_INLINE void LL_GPIO_EnablePinAnalogControl(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	SET_BIT(GPIOx->ASCR, PinMask);
+}
 
 /**
- * @brief  Disconnect analog switch to ADC input of several pins for a dedicated
- * port.
+ * @brief  Disconnect analog switch to ADC input of several pins for a dedicated port.
  * @rmtoll ASCR         ASCy          LL_GPIO_DisablePinAnalogControl
  * @param  GPIOx GPIO Port
  * @param  PinMask This parameter can be a combination of the following values:
@@ -742,7 +731,10 @@ __STATIC_INLINE void LL_GPIO_EnablePinAnalogControl(GPIO_TypeDef *GPIOx, uint32_
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_DisablePinAnalogControl(GPIO_TypeDef *GPIOx, uint32_t PinMask) { CLEAR_BIT(GPIOx->ASCR, PinMask); }
+__STATIC_INLINE void LL_GPIO_DisablePinAnalogControl(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	CLEAR_BIT(GPIOx->ASCR, PinMask);
+}
 #endif /* GPIO_ASCR_ASC0 */
 
 /**
@@ -780,15 +772,13 @@ __STATIC_INLINE void LL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
 	WRITE_REG(GPIOx->LCKR, GPIO_LCKR_LCKK | PinMask);
 	WRITE_REG(GPIOx->LCKR, PinMask);
 	WRITE_REG(GPIOx->LCKR, GPIO_LCKR_LCKK | PinMask);
-	/* Read LCKK register. This read is mandatory to complete key lock
-	 * sequence */
+	/* Read LCKK register. This read is mandatory to complete key lock sequence */
 	temp = READ_REG(GPIOx->LCKR);
 	(void)temp;
 }
 
 /**
- * @brief  Return 1 if all pins passed as parameter, of a dedicated port, are
- * locked. else Return 0.
+ * @brief  Return 1 if all pins passed as parameter, of a dedicated port, are locked. else Return 0.
  * @rmtoll LCKR         LCKy          LL_GPIO_IsPinLocked
  * @param  GPIOx GPIO Port
  * @param  PinMask This parameter can be a combination of the following values:
@@ -811,16 +801,21 @@ __STATIC_INLINE void LL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsPinLocked(GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->LCKR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsPinLocked(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->LCKR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
- * @brief  Return 1 if one of the pin of a dedicated port is locked. else return
- * 0.
+ * @brief  Return 1 if one of the pin of a dedicated port is locked. else return 0.
  * @rmtoll LCKR         LCKK          LL_GPIO_IsAnyPinLocked
  * @param  GPIOx GPIO Port
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsAnyPinLocked(GPIO_TypeDef *GPIOx) { return ((READ_BIT(GPIOx->LCKR, GPIO_LCKR_LCKK) == (GPIO_LCKR_LCKK)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsAnyPinLocked(GPIO_TypeDef *GPIOx)
+{
+	return ((READ_BIT(GPIOx->LCKR, GPIO_LCKR_LCKK) == (GPIO_LCKR_LCKK)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -836,11 +831,13 @@ __STATIC_INLINE uint32_t LL_GPIO_IsAnyPinLocked(GPIO_TypeDef *GPIOx) { return ((
  * @param  GPIOx GPIO Port
  * @retval Input data register value of port
  */
-__STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(GPIO_TypeDef *GPIOx) { return (uint32_t)(READ_REG(GPIOx->IDR)); }
+__STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(GPIO_TypeDef *GPIOx)
+{
+	return (uint32_t)(READ_REG(GPIOx->IDR));
+}
 
 /**
- * @brief  Return if input data level for several pins of dedicated port is high
- * or low.
+ * @brief  Return if input data level for several pins of dedicated port is high or low.
  * @rmtoll IDR          IDy           LL_GPIO_IsInputPinSet
  * @param  GPIOx GPIO Port
  * @param  PinMask This parameter can be a combination of the following values:
@@ -863,7 +860,10 @@ __STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(GPIO_TypeDef *GPIOx) { return (ui
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->IDR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->IDR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Write output data register for the port.
@@ -872,7 +872,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(GPIO_TypeDef *GPIOx, uint32_t Pin
  * @param  PortValue Level value for each pin of the port
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortValue) { WRITE_REG(GPIOx->ODR, PortValue); }
+__STATIC_INLINE void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortValue)
+{
+	WRITE_REG(GPIOx->ODR, PortValue);
+}
 
 /**
  * @brief  Return full output data register value for a dedicated port.
@@ -880,11 +883,13 @@ __STATIC_INLINE void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortV
  * @param  GPIOx GPIO Port
  * @retval Output data register value of port
  */
-__STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(GPIO_TypeDef *GPIOx) { return (uint32_t)(READ_REG(GPIOx->ODR)); }
+__STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(GPIO_TypeDef *GPIOx)
+{
+	return (uint32_t)(READ_REG(GPIOx->ODR));
+}
 
 /**
- * @brief  Return if input data level for several pins of dedicated port is high
- * or low.
+ * @brief  Return if input data level for several pins of dedicated port is high or low.
  * @rmtoll ODR          ODy           LL_GPIO_IsOutputPinSet
  * @param  GPIOx GPIO Port
  * @param  PinMask This parameter can be a combination of the following values:
@@ -907,7 +912,10 @@ __STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(GPIO_TypeDef *GPIOx) { return (u
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(GPIO_TypeDef *GPIOx, uint32_t PinMask) { return ((READ_BIT(GPIOx->ODR, PinMask) == (PinMask)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	return ((READ_BIT(GPIOx->ODR, PinMask) == (PinMask)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set several pins to high level on dedicated gpio port.
@@ -933,7 +941,10 @@ __STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(GPIO_TypeDef *GPIOx, uint32_t Pi
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) { WRITE_REG(GPIOx->BSRR, PinMask); }
+__STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	WRITE_REG(GPIOx->BSRR, PinMask);
+}
 
 /**
  * @brief  Set several pins to low level on dedicated gpio port.
@@ -959,7 +970,10 @@ __STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
  *         @arg @ref LL_GPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) { WRITE_REG(GPIOx->BRR, PinMask); }
+__STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
+{
+	WRITE_REG(GPIOx->BRR, PinMask);
+}
 
 /**
  * @brief  Toggle data value for several pin of dedicated port.
@@ -1017,12 +1031,10 @@ void LL_GPIO_StructInit(LL_GPIO_InitTypeDef *GPIO_InitStruct);
  * @}
  */
 
-#endif /* defined (GPIOA) || defined (GPIOB) || defined (GPIOC) || defined                                                                                                                             \
-	  (GPIOD) || defined (GPIOE) || defined (GPIOF) || defined (GPIOG) ||                                                                                                                          \
-	  defined (GPIOH) || defined (GPIOI) */
-       /**
-	* @}
-	*/
+#endif /* defined (GPIOA) || defined (GPIOB) || defined (GPIOC) || defined (GPIOD) || defined (GPIOE) || defined (GPIOF) || defined (GPIOG) || defined (GPIOH) || defined (GPIOI) */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

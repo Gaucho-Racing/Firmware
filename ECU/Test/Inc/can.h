@@ -79,7 +79,10 @@ typedef struct {
 				       Address offset: 0x0E8 */
 } FDCAN_GlobalTypeDef;
 
-typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+typedef enum {
+	DISABLE = 0,
+	ENABLE = !DISABLE
+} FunctionalState;
 #define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
 
 /**

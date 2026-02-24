@@ -1852,7 +1852,10 @@ uint32_t HAL_RCC_GetResetSource(void)
  * @note   The Clock Security System can only be cleared by reset.
  * @retval None
  */
-void HAL_RCC_EnableCSS(void) { SET_BIT(RCC->CR, RCC_CR_CSSON); }
+void HAL_RCC_EnableCSS(void)
+{
+	SET_BIT(RCC->CR, RCC_CR_CSSON);
+}
 
 /**
  * @brief Handle the RCC Clock Security System interrupt request.

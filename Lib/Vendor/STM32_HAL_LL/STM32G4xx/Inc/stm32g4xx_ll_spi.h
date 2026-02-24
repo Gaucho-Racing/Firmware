@@ -51,13 +51,11 @@ extern "C" {
  * @brief  SPI Init structures definition
  */
 typedef struct {
-	uint32_t TransferDirection; /*!< Specifies the SPI unidirectional or
-				       bidirectional data mode. This parameter can be
-				       a value of @ref SPI_LL_EC_TRANSFER_MODE.
+	uint32_t TransferDirection; /*!< Specifies the SPI unidirectional or bidirectional data mode.
+					 This parameter can be a value of @ref SPI_LL_EC_TRANSFER_MODE.
 
-					 This feature can be modified afterwards
-				       using unitary function @ref
-				       LL_SPI_SetTransferDirection().*/
+					 This feature can be modified afterwards using unitary
+					 function @ref LL_SPI_SetTransferDirection().*/
 
 	uint32_t Mode; /*!< Specifies the SPI mode (Master/Slave).
 			    This parameter can be a value of @ref SPI_LL_EC_MODE.
@@ -66,65 +64,56 @@ typedef struct {
 			    function @ref LL_SPI_SetMode().*/
 
 	uint32_t DataWidth; /*!< Specifies the SPI data width.
-				 This parameter can be a value of @ref
-			       SPI_LL_EC_DATAWIDTH.
+				 This parameter can be a value of @ref SPI_LL_EC_DATAWIDTH.
 
-				 This feature can be modified afterwards using
-			       unitary function @ref LL_SPI_SetDataWidth().*/
+				 This feature can be modified afterwards using unitary
+				 function @ref LL_SPI_SetDataWidth().*/
 
 	uint32_t ClockPolarity; /*!< Specifies the serial clock steady state.
-				     This parameter can be a value of @ref
-				   SPI_LL_EC_POLARITY.
+				     This parameter can be a value of @ref SPI_LL_EC_POLARITY.
 
-				     This feature can be modified afterwards using
-				   unitary function @ref LL_SPI_SetClockPolarity().*/
+				     This feature can be modified afterwards using unitary
+				     function @ref LL_SPI_SetClockPolarity().*/
 
-	uint32_t ClockPhase; /*!< Specifies the clock active edge for the bit
-				capture. This parameter can be a value of @ref
-				SPI_LL_EC_PHASE.
+	uint32_t ClockPhase; /*!< Specifies the clock active edge for the bit capture.
+				  This parameter can be a value of @ref SPI_LL_EC_PHASE.
 
-				  This feature can be modified afterwards using
-				unitary function @ref LL_SPI_SetClockPhase().*/
+				  This feature can be modified afterwards using unitary
+				  function @ref LL_SPI_SetClockPhase().*/
 
-	uint32_t NSS; /*!< Specifies whether the NSS signal is managed by
-			 hardware (NSS pin) or by software using the SSI bit.
-			   This parameter can be a value of @ref
-			 SPI_LL_EC_NSS_MODE.
+	uint32_t NSS; /*!< Specifies whether the NSS signal is managed by hardware (NSS pin)
+			   or by software using the SSI bit.
+			   This parameter can be a value of @ref SPI_LL_EC_NSS_MODE.
 
 			   This feature can be modified afterwards using unitary
 			   function @ref LL_SPI_SetNSSMode().*/
 
-	uint32_t BaudRate; /*!< Specifies the BaudRate prescaler value which will be
-			      used to configure the transmit and receive SCK clock.
-				This parameter can be a value of @ref
-			      SPI_LL_EC_BAUDRATEPRESCALER.
-				@note The communication clock is derived from the
-			      master clock. The slave clock does not need to be set.
+	uint32_t BaudRate; /*!< Specifies the BaudRate prescaler value which will be used
+				to configure the transmit and receive SCK clock.
+				This parameter can be a value of @ref SPI_LL_EC_BAUDRATEPRESCALER.
+				@note The communication clock is derived from the master clock.
+				      The slave clock does not need to be set.
 
 				This feature can be modified afterwards using unitary
 				function @ref LL_SPI_SetBaudRatePrescaler().*/
 
-	uint32_t BitOrder; /*!< Specifies whether data transfers start from MSB or
-			      LSB bit. This parameter can be a value of @ref
-			      SPI_LL_EC_BIT_ORDER.
+	uint32_t BitOrder; /*!< Specifies whether data transfers start from MSB or LSB bit.
+				This parameter can be a value of @ref SPI_LL_EC_BIT_ORDER.
 
 				This feature can be modified afterwards using unitary
 				function @ref LL_SPI_SetTransferBitOrder().*/
 
-	uint32_t CRCCalculation; /*!< Specifies if the CRC calculation is enabled or
-				    not. This parameter can be a value of @ref
-				    SPI_LL_EC_CRC_CALCULATION.
+	uint32_t CRCCalculation; /*!< Specifies if the CRC calculation is enabled or not.
+				      This parameter can be a value of @ref SPI_LL_EC_CRC_CALCULATION.
 
-				      This feature can be modified afterwards using
-				    unitary functions @ref LL_SPI_EnableCRC() and
-				    @ref LL_SPI_DisableCRC().*/
+				      This feature can be modified afterwards using unitary
+				      functions @ref LL_SPI_EnableCRC() and @ref LL_SPI_DisableCRC().*/
 
-	uint32_t CRCPoly; /*!< Specifies the polynomial used for the CRC
-			     calculation. This parameter must be a number
-			     between Min_Data = 0x00 and Max_Data = 0xFFFF.
+	uint32_t CRCPoly; /*!< Specifies the polynomial used for the CRC calculation.
+			       This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFFFF.
 
-			       This feature can be modified afterwards using
-			     unitary function @ref LL_SPI_SetCRCPolynomial().*/
+			       This feature can be modified afterwards using unitary
+			       function @ref LL_SPI_SetCRCPolynomial().*/
 
 } LL_SPI_InitTypeDef;
 
@@ -145,7 +134,7 @@ typedef struct {
 #define LL_SPI_SR_RXNE SPI_SR_RXNE     /*!< Rx buffer not empty flag         */
 #define LL_SPI_SR_TXE SPI_SR_TXE       /*!< Tx buffer empty flag             */
 #define LL_SPI_SR_BSY SPI_SR_BSY       /*!< Busy flag                        */
-#define LL_SPI_SR_CRCERR SPI_SR_CRCERR /*!< CRC error flag */
+#define LL_SPI_SR_CRCERR SPI_SR_CRCERR /*!< CRC error flag                   */
 #define LL_SPI_SR_MODF SPI_SR_MODF     /*!< Mode fault flag                  */
 #define LL_SPI_SR_OVR SPI_SR_OVR       /*!< Overrun flag                     */
 #define LL_SPI_SR_FRE SPI_SR_FRE       /*!< TI mode frame format error flag  */
@@ -154,8 +143,7 @@ typedef struct {
  */
 
 /** @defgroup SPI_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_SPI_ReadReg and
- * LL_SPI_WriteReg functions
+ * @brief    IT defines which can be used with LL_SPI_ReadReg and  LL_SPI_WriteReg functions
  * @{
  */
 #define LL_SPI_CR2_RXNEIE SPI_CR2_RXNEIE /*!< Rx buffer not empty interrupt enable */
@@ -186,12 +174,8 @@ typedef struct {
 /** @defgroup SPI_LL_EC_PHASE Clock Phase
  * @{
  */
-#define LL_SPI_PHASE_1EDGE                                                                                                                                                                             \
-	0x00000000U /*!< First clock transition is the first data capture edge                                                                                                                         \
-		     */
-#define LL_SPI_PHASE_2EDGE                                                                                                                                                                             \
-	(SPI_CR1_CPHA) /*!< Second clock transition is the first data capture                                                                                                                          \
-			  edge */
+#define LL_SPI_PHASE_1EDGE 0x00000000U	  /*!< First clock transition is the first data capture edge  */
+#define LL_SPI_PHASE_2EDGE (SPI_CR1_CPHA) /*!< Second clock transition is the first data capture edge */
 /**
  * @}
  */
@@ -223,10 +207,8 @@ typedef struct {
 /** @defgroup SPI_LL_EC_BIT_ORDER Transmission Bit Order
  * @{
  */
-#define LL_SPI_LSB_FIRST                                                                                                                                                                               \
-	(SPI_CR1_LSBFIRST)	     /*!< Data is transmitted/received with the LSB                                                                                                                    \
-					first */
-#define LL_SPI_MSB_FIRST 0x00000000U /*!< Data is transmitted/received with the MSB first */
+#define LL_SPI_LSB_FIRST (SPI_CR1_LSBFIRST) /*!< Data is transmitted/received with the LSB first */
+#define LL_SPI_MSB_FIRST 0x00000000U	    /*!< Data is transmitted/received with the MSB first */
 /**
  * @}
  */
@@ -235,9 +217,9 @@ typedef struct {
  * @{
  */
 #define LL_SPI_FULL_DUPLEX 0x00000000U				  /*!< Full-Duplex mode. Rx and Tx transfer on 2 lines */
-#define LL_SPI_SIMPLEX_RX (SPI_CR1_RXONLY)			  /*!< Simplex Rx mode.  Rx transfer only on 1 line */
-#define LL_SPI_HALF_DUPLEX_RX (SPI_CR1_BIDIMODE)		  /*!< Half-Duplex Rx mode. Rx transfer on 1 line */
-#define LL_SPI_HALF_DUPLEX_TX (SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE) /*!< Half-Duplex Tx mode. Tx transfer on 1 line */
+#define LL_SPI_SIMPLEX_RX (SPI_CR1_RXONLY)			  /*!< Simplex Rx mode.  Rx transfer only on 1 line    */
+#define LL_SPI_HALF_DUPLEX_RX (SPI_CR1_BIDIMODE)		  /*!< Half-Duplex Rx mode. Rx transfer on 1 line      */
+#define LL_SPI_HALF_DUPLEX_TX (SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE) /*!< Half-Duplex Tx mode. Tx transfer on 1 line      */
 /**
  * @}
  */
@@ -245,13 +227,9 @@ typedef struct {
 /** @defgroup SPI_LL_EC_NSS_MODE Slave Select Pin Mode
  * @{
  */
-#define LL_SPI_NSS_SOFT                                                                                                                                                                                \
-	(SPI_CR1_SSM)			  /*!< NSS managed internally. NSS pin not used and free                                                                                                       \
-					   */
-#define LL_SPI_NSS_HARD_INPUT 0x00000000U /*!< NSS pin used in Input. Only used in Master mode */
-#define LL_SPI_NSS_HARD_OUTPUT                                                                                                                                                                         \
-	(((uint32_t)SPI_CR2_SSOE << 16U)) /*!< NSS pin used in Output. Only used in Slave mode as                                                                                                      \
-					     chip select */
+#define LL_SPI_NSS_SOFT (SPI_CR1_SSM)				 /*!< NSS managed internally. NSS pin not used and free              */
+#define LL_SPI_NSS_HARD_INPUT 0x00000000U			 /*!< NSS pin used in Input. Only used in Master mode                */
+#define LL_SPI_NSS_HARD_OUTPUT (((uint32_t)SPI_CR2_SSOE << 16U)) /*!< NSS pin used in Output. Only used in Slave mode as chip select */
 /**
  * @}
  */
@@ -259,13 +237,11 @@ typedef struct {
 /** @defgroup SPI_LL_EC_DATAWIDTH Datawidth
  * @{
  */
-#define LL_SPI_DATAWIDTH_4BIT (SPI_CR2_DS_0 | SPI_CR2_DS_1) /*!< Data length for SPI transfer:  4 bits */
-#define LL_SPI_DATAWIDTH_5BIT (SPI_CR2_DS_2)		    /*!< Data length for SPI transfer:  5 bits */
-#define LL_SPI_DATAWIDTH_6BIT (SPI_CR2_DS_2 | SPI_CR2_DS_0) /*!< Data length for SPI transfer:  6 bits */
-#define LL_SPI_DATAWIDTH_7BIT (SPI_CR2_DS_2 | SPI_CR2_DS_1) /*!< Data length for SPI transfer:  7 bits */
-#define LL_SPI_DATAWIDTH_8BIT                                                                                                                                                                          \
-	(SPI_CR2_DS_2 | SPI_CR2_DS_1 | SPI_CR2_DS_0)					   /*!< Data length for SPI transfer:  8 bits                                                                  \
-											    */
+#define LL_SPI_DATAWIDTH_4BIT (SPI_CR2_DS_0 | SPI_CR2_DS_1)				   /*!< Data length for SPI transfer:  4 bits */
+#define LL_SPI_DATAWIDTH_5BIT (SPI_CR2_DS_2)						   /*!< Data length for SPI transfer:  5 bits */
+#define LL_SPI_DATAWIDTH_6BIT (SPI_CR2_DS_2 | SPI_CR2_DS_0)				   /*!< Data length for SPI transfer:  6 bits */
+#define LL_SPI_DATAWIDTH_7BIT (SPI_CR2_DS_2 | SPI_CR2_DS_1)				   /*!< Data length for SPI transfer:  7 bits */
+#define LL_SPI_DATAWIDTH_8BIT (SPI_CR2_DS_2 | SPI_CR2_DS_1 | SPI_CR2_DS_0)		   /*!< Data length for SPI transfer:  8 bits */
 #define LL_SPI_DATAWIDTH_9BIT (SPI_CR2_DS_3)						   /*!< Data length for SPI transfer:  9 bits */
 #define LL_SPI_DATAWIDTH_10BIT (SPI_CR2_DS_3 | SPI_CR2_DS_0)				   /*!< Data length for SPI transfer: 10 bits */
 #define LL_SPI_DATAWIDTH_11BIT (SPI_CR2_DS_3 | SPI_CR2_DS_1)				   /*!< Data length for SPI transfer: 11 bits */
@@ -301,12 +277,8 @@ typedef struct {
 /** @defgroup SPI_LL_EC_RX_FIFO_TH RX FIFO Threshold
  * @{
  */
-#define LL_SPI_RX_FIFO_TH_HALF                                                                                                                                                                         \
-	0x00000000U /*!< RXNE event is generated if FIFO level is greater than                                                                                                                         \
-		       or equal to 1/2 (16-bit) */
-#define LL_SPI_RX_FIFO_TH_QUARTER                                                                                                                                                                      \
-	(SPI_CR2_FRXTH) /*!< RXNE event is generated if FIFO level is greater                                                                                                                          \
-			   than or equal to 1/4 (8-bit)  */
+#define LL_SPI_RX_FIFO_TH_HALF 0x00000000U	  /*!< RXNE event is generated if FIFO level is greater than or equal to 1/2 (16-bit) */
+#define LL_SPI_RX_FIFO_TH_QUARTER (SPI_CR2_FRXTH) /*!< RXNE event is generated if FIFO level is greater than or equal to 1/4 (8-bit)  */
 /**
  * @}
  */
@@ -395,17 +367,22 @@ typedef struct {
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_Enable(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR1, SPI_CR1_SPE); }
+__STATIC_INLINE void LL_SPI_Enable(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR1, SPI_CR1_SPE);
+}
 
 /**
  * @brief  Disable SPI peripheral
- * @note   When disabling the SPI, follow the procedure described in the
- * Reference Manual.
+ * @note   When disabling the SPI, follow the procedure described in the Reference Manual.
  * @rmtoll CR1          SPE           LL_SPI_Disable
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_Disable(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR1, SPI_CR1_SPE); }
+__STATIC_INLINE void LL_SPI_Disable(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR1, SPI_CR1_SPE);
+}
 
 /**
  * @brief  Check if SPI peripheral is enabled
@@ -413,7 +390,10 @@ __STATIC_INLINE void LL_SPI_Disable(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR1, SP
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabled(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR1, SPI_CR1_SPE) == (SPI_CR1_SPE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabled(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR1, SPI_CR1_SPE) == (SPI_CR1_SPE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set SPI operation mode to Master or Slave
@@ -426,7 +406,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabled(const SPI_TypeDef *SPIx) { return ((RE
  *         @arg @ref LL_SPI_MODE_SLAVE
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetMode(SPI_TypeDef *SPIx, uint32_t Mode) { MODIFY_REG(SPIx->CR1, SPI_CR1_MSTR | SPI_CR1_SSI, Mode); }
+__STATIC_INLINE void LL_SPI_SetMode(SPI_TypeDef *SPIx, uint32_t Mode)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_MSTR | SPI_CR1_SSI, Mode);
+}
 
 /**
  * @brief  Get SPI operation mode (Master or Slave)
@@ -437,12 +420,14 @@ __STATIC_INLINE void LL_SPI_SetMode(SPI_TypeDef *SPIx, uint32_t Mode) { MODIFY_R
  *         @arg @ref LL_SPI_MODE_MASTER
  *         @arg @ref LL_SPI_MODE_SLAVE
  */
-__STATIC_INLINE uint32_t LL_SPI_GetMode(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_MSTR | SPI_CR1_SSI)); }
+__STATIC_INLINE uint32_t LL_SPI_GetMode(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_MSTR | SPI_CR1_SSI));
+}
 
 /**
  * @brief  Set serial protocol used
- * @note   This bit should be written only when SPI is disabled (SPE = 0) for
- * correct operation.
+ * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
  * @rmtoll CR2          FRF           LL_SPI_SetStandard
  * @param  SPIx SPI Instance
  * @param  Standard This parameter can be one of the following values:
@@ -450,7 +435,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetMode(const SPI_TypeDef *SPIx) { return (uint3
  *         @arg @ref LL_SPI_PROTOCOL_TI
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard) { MODIFY_REG(SPIx->CR2, SPI_CR2_FRF, Standard); }
+__STATIC_INLINE void LL_SPI_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
+{
+	MODIFY_REG(SPIx->CR2, SPI_CR2_FRF, Standard);
+}
 
 /**
  * @brief  Get serial protocol used
@@ -460,7 +448,10 @@ __STATIC_INLINE void LL_SPI_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard) { 
  *         @arg @ref LL_SPI_PROTOCOL_MOTOROLA
  *         @arg @ref LL_SPI_PROTOCOL_TI
  */
-__STATIC_INLINE uint32_t LL_SPI_GetStandard(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_FRF)); }
+__STATIC_INLINE uint32_t LL_SPI_GetStandard(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_FRF));
+}
 
 /**
  * @brief  Set clock phase
@@ -473,7 +464,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetStandard(const SPI_TypeDef *SPIx) { return (u
  *         @arg @ref LL_SPI_PHASE_2EDGE
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetClockPhase(SPI_TypeDef *SPIx, uint32_t ClockPhase) { MODIFY_REG(SPIx->CR1, SPI_CR1_CPHA, ClockPhase); }
+__STATIC_INLINE void LL_SPI_SetClockPhase(SPI_TypeDef *SPIx, uint32_t ClockPhase)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_CPHA, ClockPhase);
+}
 
 /**
  * @brief  Get clock phase
@@ -483,7 +477,10 @@ __STATIC_INLINE void LL_SPI_SetClockPhase(SPI_TypeDef *SPIx, uint32_t ClockPhase
  *         @arg @ref LL_SPI_PHASE_1EDGE
  *         @arg @ref LL_SPI_PHASE_2EDGE
  */
-__STATIC_INLINE uint32_t LL_SPI_GetClockPhase(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CPHA)); }
+__STATIC_INLINE uint32_t LL_SPI_GetClockPhase(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CPHA));
+}
 
 /**
  * @brief  Set clock polarity
@@ -496,7 +493,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetClockPhase(const SPI_TypeDef *SPIx) { return 
  *         @arg @ref LL_SPI_POLARITY_HIGH
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity) { MODIFY_REG(SPIx->CR1, SPI_CR1_CPOL, ClockPolarity); }
+__STATIC_INLINE void LL_SPI_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_CPOL, ClockPolarity);
+}
 
 /**
  * @brief  Get clock polarity
@@ -506,12 +506,14 @@ __STATIC_INLINE void LL_SPI_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPo
  *         @arg @ref LL_SPI_POLARITY_LOW
  *         @arg @ref LL_SPI_POLARITY_HIGH
  */
-__STATIC_INLINE uint32_t LL_SPI_GetClockPolarity(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CPOL)); }
+__STATIC_INLINE uint32_t LL_SPI_GetClockPolarity(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CPOL));
+}
 
 /**
  * @brief  Set baud rate prescaler
- * @note   These bits should not be changed when communication is ongoing. SPI
- * BaudRate = fPCLK/Prescaler.
+ * @note   These bits should not be changed when communication is ongoing. SPI BaudRate = fPCLK/Prescaler.
  * @rmtoll CR1          BR            LL_SPI_SetBaudRatePrescaler
  * @param  SPIx SPI Instance
  * @param  BaudRate This parameter can be one of the following values:
@@ -525,7 +527,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetClockPolarity(const SPI_TypeDef *SPIx) { retu
  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV256
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetBaudRatePrescaler(SPI_TypeDef *SPIx, uint32_t BaudRate) { MODIFY_REG(SPIx->CR1, SPI_CR1_BR, BaudRate); }
+__STATIC_INLINE void LL_SPI_SetBaudRatePrescaler(SPI_TypeDef *SPIx, uint32_t BaudRate)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_BR, BaudRate);
+}
 
 /**
  * @brief  Get baud rate prescaler
@@ -541,12 +546,14 @@ __STATIC_INLINE void LL_SPI_SetBaudRatePrescaler(SPI_TypeDef *SPIx, uint32_t Bau
  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV128
  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV256
  */
-__STATIC_INLINE uint32_t LL_SPI_GetBaudRatePrescaler(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_BR)); }
+__STATIC_INLINE uint32_t LL_SPI_GetBaudRatePrescaler(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_BR));
+}
 
 /**
  * @brief  Set transfer bit order
- * @note   This bit should not be changed when communication is ongoing. This
- * bit is not used in SPI TI mode.
+ * @note   This bit should not be changed when communication is ongoing. This bit is not used in SPI TI mode.
  * @rmtoll CR1          LSBFIRST      LL_SPI_SetTransferBitOrder
  * @param  SPIx SPI Instance
  * @param  BitOrder This parameter can be one of the following values:
@@ -554,7 +561,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetBaudRatePrescaler(const SPI_TypeDef *SPIx) { 
  *         @arg @ref LL_SPI_MSB_FIRST
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetTransferBitOrder(SPI_TypeDef *SPIx, uint32_t BitOrder) { MODIFY_REG(SPIx->CR1, SPI_CR1_LSBFIRST, BitOrder); }
+__STATIC_INLINE void LL_SPI_SetTransferBitOrder(SPI_TypeDef *SPIx, uint32_t BitOrder)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_LSBFIRST, BitOrder);
+}
 
 /**
  * @brief  Get transfer bit order
@@ -564,13 +574,15 @@ __STATIC_INLINE void LL_SPI_SetTransferBitOrder(SPI_TypeDef *SPIx, uint32_t BitO
  *         @arg @ref LL_SPI_LSB_FIRST
  *         @arg @ref LL_SPI_MSB_FIRST
  */
-__STATIC_INLINE uint32_t LL_SPI_GetTransferBitOrder(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_LSBFIRST)); }
+__STATIC_INLINE uint32_t LL_SPI_GetTransferBitOrder(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_LSBFIRST));
+}
 
 /**
  * @brief  Set transfer direction mode
  * @note   For Half-Duplex mode, Rx Direction is set by default.
- *         In master mode, the MOSI pin is used and in slave mode, the MISO pin
- * is used for Half-Duplex.
+ *         In master mode, the MOSI pin is used and in slave mode, the MISO pin is used for Half-Duplex.
  * @rmtoll CR1          RXONLY        LL_SPI_SetTransferDirection\n
  *         CR1          BIDIMODE      LL_SPI_SetTransferDirection\n
  *         CR1          BIDIOE        LL_SPI_SetTransferDirection
@@ -582,7 +594,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetTransferBitOrder(const SPI_TypeDef *SPIx) { r
  *         @arg @ref LL_SPI_HALF_DUPLEX_TX
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetTransferDirection(SPI_TypeDef *SPIx, uint32_t TransferDirection) { MODIFY_REG(SPIx->CR1, SPI_CR1_RXONLY | SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE, TransferDirection); }
+__STATIC_INLINE void LL_SPI_SetTransferDirection(SPI_TypeDef *SPIx, uint32_t TransferDirection)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_RXONLY | SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE, TransferDirection);
+}
 
 /**
  * @brief  Get transfer direction mode
@@ -596,7 +611,10 @@ __STATIC_INLINE void LL_SPI_SetTransferDirection(SPI_TypeDef *SPIx, uint32_t Tra
  *         @arg @ref LL_SPI_HALF_DUPLEX_RX
  *         @arg @ref LL_SPI_HALF_DUPLEX_TX
  */
-__STATIC_INLINE uint32_t LL_SPI_GetTransferDirection(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_RXONLY | SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE)); }
+__STATIC_INLINE uint32_t LL_SPI_GetTransferDirection(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_RXONLY | SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE));
+}
 
 /**
  * @brief  Set frame data width
@@ -618,7 +636,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetTransferDirection(const SPI_TypeDef *SPIx) { 
  *         @arg @ref LL_SPI_DATAWIDTH_16BIT
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetDataWidth(SPI_TypeDef *SPIx, uint32_t DataWidth) { MODIFY_REG(SPIx->CR2, SPI_CR2_DS, DataWidth); }
+__STATIC_INLINE void LL_SPI_SetDataWidth(SPI_TypeDef *SPIx, uint32_t DataWidth)
+{
+	MODIFY_REG(SPIx->CR2, SPI_CR2_DS, DataWidth);
+}
 
 /**
  * @brief  Get frame data width
@@ -639,7 +660,10 @@ __STATIC_INLINE void LL_SPI_SetDataWidth(SPI_TypeDef *SPIx, uint32_t DataWidth) 
  *         @arg @ref LL_SPI_DATAWIDTH_15BIT
  *         @arg @ref LL_SPI_DATAWIDTH_16BIT
  */
-__STATIC_INLINE uint32_t LL_SPI_GetDataWidth(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_DS)); }
+__STATIC_INLINE uint32_t LL_SPI_GetDataWidth(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_DS));
+}
 
 /**
  * @brief  Set threshold of RXFIFO that triggers an RXNE event
@@ -650,7 +674,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetDataWidth(const SPI_TypeDef *SPIx) { return (
  *         @arg @ref LL_SPI_RX_FIFO_TH_QUARTER
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetRxFIFOThreshold(SPI_TypeDef *SPIx, uint32_t Threshold) { MODIFY_REG(SPIx->CR2, SPI_CR2_FRXTH, Threshold); }
+__STATIC_INLINE void LL_SPI_SetRxFIFOThreshold(SPI_TypeDef *SPIx, uint32_t Threshold)
+{
+	MODIFY_REG(SPIx->CR2, SPI_CR2_FRXTH, Threshold);
+}
 
 /**
  * @brief  Get threshold of RXFIFO that triggers an RXNE event
@@ -660,7 +687,10 @@ __STATIC_INLINE void LL_SPI_SetRxFIFOThreshold(SPI_TypeDef *SPIx, uint32_t Thres
  *         @arg @ref LL_SPI_RX_FIFO_TH_HALF
  *         @arg @ref LL_SPI_RX_FIFO_TH_QUARTER
  */
-__STATIC_INLINE uint32_t LL_SPI_GetRxFIFOThreshold(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_FRXTH)); }
+__STATIC_INLINE uint32_t LL_SPI_GetRxFIFOThreshold(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_FRXTH));
+}
 
 /**
  * @}
@@ -672,38 +702,43 @@ __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOThreshold(const SPI_TypeDef *SPIx) { re
 
 /**
  * @brief  Enable CRC
- * @note   This bit should be written only when SPI is disabled (SPE = 0) for
- * correct operation.
+ * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
  * @rmtoll CR1          CRCEN         LL_SPI_EnableCRC
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableCRC(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR1, SPI_CR1_CRCEN); }
+__STATIC_INLINE void LL_SPI_EnableCRC(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR1, SPI_CR1_CRCEN);
+}
 
 /**
  * @brief  Disable CRC
- * @note   This bit should be written only when SPI is disabled (SPE = 0) for
- * correct operation.
+ * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
  * @rmtoll CR1          CRCEN         LL_SPI_DisableCRC
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableCRC(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR1, SPI_CR1_CRCEN); }
+__STATIC_INLINE void LL_SPI_DisableCRC(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR1, SPI_CR1_CRCEN);
+}
 
 /**
  * @brief  Check if CRC is enabled
- * @note   This bit should be written only when SPI is disabled (SPE = 0) for
- * correct operation.
+ * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
  * @rmtoll CR1          CRCEN         LL_SPI_IsEnabledCRC
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledCRC(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR1, SPI_CR1_CRCEN) == (SPI_CR1_CRCEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledCRC(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR1, SPI_CR1_CRCEN) == (SPI_CR1_CRCEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set CRC Length
- * @note   This bit should be written only when SPI is disabled (SPE = 0) for
- * correct operation.
+ * @note   This bit should be written only when SPI is disabled (SPE = 0) for correct operation.
  * @rmtoll CR1          CRCL          LL_SPI_SetCRCWidth
  * @param  SPIx SPI Instance
  * @param  CRCLength This parameter can be one of the following values:
@@ -711,7 +746,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledCRC(const SPI_TypeDef *SPIx) { return (
  *         @arg @ref LL_SPI_CRC_16BIT
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetCRCWidth(SPI_TypeDef *SPIx, uint32_t CRCLength) { MODIFY_REG(SPIx->CR1, SPI_CR1_CRCL, CRCLength); }
+__STATIC_INLINE void LL_SPI_SetCRCWidth(SPI_TypeDef *SPIx, uint32_t CRCLength)
+{
+	MODIFY_REG(SPIx->CR1, SPI_CR1_CRCL, CRCLength);
+}
 
 /**
  * @brief  Get CRC Length
@@ -721,54 +759,67 @@ __STATIC_INLINE void LL_SPI_SetCRCWidth(SPI_TypeDef *SPIx, uint32_t CRCLength) {
  *         @arg @ref LL_SPI_CRC_8BIT
  *         @arg @ref LL_SPI_CRC_16BIT
  */
-__STATIC_INLINE uint32_t LL_SPI_GetCRCWidth(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CRCL)); }
+__STATIC_INLINE uint32_t LL_SPI_GetCRCWidth(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR1, SPI_CR1_CRCL));
+}
 
 /**
  * @brief  Set CRCNext to transfer CRC on the line
- * @note   This bit has to be written as soon as the last data is written in the
- * SPIx_DR register.
+ * @note   This bit has to be written as soon as the last data is written in the SPIx_DR register.
  * @rmtoll CR1          CRCNEXT       LL_SPI_SetCRCNext
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetCRCNext(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR1, SPI_CR1_CRCNEXT); }
+__STATIC_INLINE void LL_SPI_SetCRCNext(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR1, SPI_CR1_CRCNEXT);
+}
 
 /**
  * @brief  Set polynomial for CRC calculation
  * @rmtoll CRCPR        CRCPOLY       LL_SPI_SetCRCPolynomial
  * @param  SPIx SPI Instance
- * @param  CRCPoly This parameter must be a number between Min_Data = 0x00 and
- * Max_Data = 0xFFFF
+ * @param  CRCPoly This parameter must be a number between Min_Data = 0x00 and Max_Data = 0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetCRCPolynomial(SPI_TypeDef *SPIx, uint32_t CRCPoly) { WRITE_REG(SPIx->CRCPR, (uint16_t)CRCPoly); }
+__STATIC_INLINE void LL_SPI_SetCRCPolynomial(SPI_TypeDef *SPIx, uint32_t CRCPoly)
+{
+	WRITE_REG(SPIx->CRCPR, (uint16_t)CRCPoly);
+}
 
 /**
  * @brief  Get polynomial for CRC calculation
  * @rmtoll CRCPR        CRCPOLY       LL_SPI_GetCRCPolynomial
  * @param  SPIx SPI Instance
- * @retval Returned value is a number between Min_Data = 0x00 and Max_Data =
- * 0xFFFF
+ * @retval Returned value is a number between Min_Data = 0x00 and Max_Data = 0xFFFF
  */
-__STATIC_INLINE uint32_t LL_SPI_GetCRCPolynomial(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_REG(SPIx->CRCPR)); }
+__STATIC_INLINE uint32_t LL_SPI_GetCRCPolynomial(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_REG(SPIx->CRCPR));
+}
 
 /**
  * @brief  Get Rx CRC
  * @rmtoll RXCRCR       RXCRC         LL_SPI_GetRxCRC
  * @param  SPIx SPI Instance
- * @retval Returned value is a number between Min_Data = 0x00 and Max_Data =
- * 0xFFFF
+ * @retval Returned value is a number between Min_Data = 0x00 and Max_Data = 0xFFFF
  */
-__STATIC_INLINE uint32_t LL_SPI_GetRxCRC(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_REG(SPIx->RXCRCR)); }
+__STATIC_INLINE uint32_t LL_SPI_GetRxCRC(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_REG(SPIx->RXCRCR));
+}
 
 /**
  * @brief  Get Tx CRC
  * @rmtoll TXCRCR       TXCRC         LL_SPI_GetTxCRC
  * @param  SPIx SPI Instance
- * @retval Returned value is a number between Min_Data = 0x00 and Max_Data =
- * 0xFFFF
+ * @retval Returned value is a number between Min_Data = 0x00 and Max_Data = 0xFFFF
  */
-__STATIC_INLINE uint32_t LL_SPI_GetTxCRC(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_REG(SPIx->TXCRCR)); }
+__STATIC_INLINE uint32_t LL_SPI_GetTxCRC(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_REG(SPIx->TXCRCR));
+}
 
 /**
  * @}
@@ -815,33 +866,39 @@ __STATIC_INLINE uint32_t LL_SPI_GetNSSMode(const SPI_TypeDef *SPIx)
 
 /**
  * @brief  Enable NSS pulse management
- * @note   This bit should not be changed when communication is ongoing. This
- * bit is not used in SPI TI mode.
+ * @note   This bit should not be changed when communication is ongoing. This bit is not used in SPI TI mode.
  * @rmtoll CR2          NSSP          LL_SPI_EnableNSSPulseMgt
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableNSSPulseMgt(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2, SPI_CR2_NSSP); }
+__STATIC_INLINE void LL_SPI_EnableNSSPulseMgt(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR2, SPI_CR2_NSSP);
+}
 
 /**
  * @brief  Disable NSS pulse management
- * @note   This bit should not be changed when communication is ongoing. This
- * bit is not used in SPI TI mode.
+ * @note   This bit should not be changed when communication is ongoing. This bit is not used in SPI TI mode.
  * @rmtoll CR2          NSSP          LL_SPI_DisableNSSPulseMgt
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableNSSPulseMgt(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR2, SPI_CR2_NSSP); }
+__STATIC_INLINE void LL_SPI_DisableNSSPulseMgt(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR2, SPI_CR2_NSSP);
+}
 
 /**
  * @brief  Check if NSS pulse is enabled
- * @note   This bit should not be changed when communication is ongoing. This
- * bit is not used in SPI TI mode.
+ * @note   This bit should not be changed when communication is ongoing. This bit is not used in SPI TI mode.
  * @rmtoll CR2          NSSP          LL_SPI_IsEnabledNSSPulse
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledNSSPulse(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR2, SPI_CR2_NSSP) == (SPI_CR2_NSSP)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledNSSPulse(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR2, SPI_CR2_NSSP) == (SPI_CR2_NSSP)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -857,7 +914,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledNSSPulse(const SPI_TypeDef *SPIx) { ret
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_RXNE(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_RXNE) == (SPI_SR_RXNE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_RXNE(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_RXNE) == (SPI_SR_RXNE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Tx buffer is empty
@@ -865,7 +925,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_RXNE(const SPI_TypeDef *SPIx) { ret
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_TXE(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_TXE) == (SPI_SR_TXE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_TXE(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_TXE) == (SPI_SR_TXE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get CRC error flag
@@ -873,7 +936,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_TXE(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_CRCERR(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_CRCERR) == (SPI_SR_CRCERR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_CRCERR(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_CRCERR) == (SPI_SR_CRCERR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get mode fault error flag
@@ -881,7 +947,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_CRCERR(const SPI_TypeDef *SPIx) { r
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_MODF(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_MODF) == (SPI_SR_MODF)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_MODF(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_MODF) == (SPI_SR_MODF)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get overrun error flag
@@ -889,21 +958,28 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_MODF(const SPI_TypeDef *SPIx) { ret
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_OVR(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_OVR) == (SPI_SR_OVR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_OVR(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_OVR) == (SPI_SR_OVR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get busy flag
  * @note   The BSY flag is cleared under any one of the following conditions:
  * -When the SPI is correctly disabled
  * -When a fault is detected in Master mode (MODF bit set to 1)
- * -In Master mode, when it finishes a data transmission and no new data is
- * ready to be sent -In Slave mode, when the BSY flag is set to '0' for at least
- * one SPI clock cycle between each data transfer.
+ * -In Master mode, when it finishes a data transmission and no new data is ready to be
+ * sent
+ * -In Slave mode, when the BSY flag is set to '0' for at least one SPI clock cycle between
+ * each data transfer.
  * @rmtoll SR           BSY           LL_SPI_IsActiveFlag_BSY
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_BSY(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_BSY) == (SPI_SR_BSY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_BSY(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_BSY) == (SPI_SR_BSY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get frame format error flag
@@ -911,7 +987,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_BSY(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_FRE(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_FRE) == (SPI_SR_FRE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_FRE(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_FRE) == (SPI_SR_FRE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get FIFO reception Level
@@ -923,7 +1002,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_FRE(const SPI_TypeDef *SPIx) { retu
  *         @arg @ref LL_SPI_RX_FIFO_HALF_FULL
  *         @arg @ref LL_SPI_RX_FIFO_FULL
  */
-__STATIC_INLINE uint32_t LL_SPI_GetRxFIFOLevel(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->SR, SPI_SR_FRLVL)); }
+__STATIC_INLINE uint32_t LL_SPI_GetRxFIFOLevel(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->SR, SPI_SR_FRLVL));
+}
 
 /**
  * @brief  Get FIFO Transmission Level
@@ -935,7 +1017,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOLevel(const SPI_TypeDef *SPIx) { return
  *         @arg @ref LL_SPI_TX_FIFO_HALF_FULL
  *         @arg @ref LL_SPI_TX_FIFO_FULL
  */
-__STATIC_INLINE uint32_t LL_SPI_GetTxFIFOLevel(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->SR, SPI_SR_FTLVL)); }
+__STATIC_INLINE uint32_t LL_SPI_GetTxFIFOLevel(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->SR, SPI_SR_FTLVL));
+}
 
 /**
  * @brief  Clear CRC error flag
@@ -943,7 +1028,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetTxFIFOLevel(const SPI_TypeDef *SPIx) { return
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_ClearFlag_CRCERR(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->SR, SPI_SR_CRCERR); }
+__STATIC_INLINE void LL_SPI_ClearFlag_CRCERR(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->SR, SPI_SR_CRCERR);
+}
 
 /**
  * @brief  Clear mode fault error flag
@@ -1002,13 +1090,16 @@ __STATIC_INLINE void LL_SPI_ClearFlag_FRE(const SPI_TypeDef *SPIx)
 
 /**
  * @brief  Enable error interrupt
- * @note   This bit controls the generation of an interrupt when an error
- * condition occurs (CRCERR, OVR, MODF in SPI mode, FRE at TI mode).
+ * @note   This bit controls the generation of an interrupt when an error condition
+ *         occurs (CRCERR, OVR, MODF in SPI mode, FRE at TI mode).
  * @rmtoll CR2          ERRIE         LL_SPI_EnableIT_ERR
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableIT_ERR(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2, SPI_CR2_ERRIE); }
+__STATIC_INLINE void LL_SPI_EnableIT_ERR(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR2, SPI_CR2_ERRIE);
+}
 
 /**
  * @brief  Enable Rx buffer not empty interrupt
@@ -1016,7 +1107,10 @@ __STATIC_INLINE void LL_SPI_EnableIT_ERR(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2,
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableIT_RXNE(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2, SPI_CR2_RXNEIE); }
+__STATIC_INLINE void LL_SPI_EnableIT_RXNE(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR2, SPI_CR2_RXNEIE);
+}
 
 /**
  * @brief  Enable Tx buffer empty interrupt
@@ -1024,17 +1118,23 @@ __STATIC_INLINE void LL_SPI_EnableIT_RXNE(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableIT_TXE(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2, SPI_CR2_TXEIE); }
+__STATIC_INLINE void LL_SPI_EnableIT_TXE(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR2, SPI_CR2_TXEIE);
+}
 
 /**
  * @brief  Disable error interrupt
- * @note   This bit controls the generation of an interrupt when an error
- * condition occurs (CRCERR, OVR, MODF in SPI mode, FRE at TI mode).
+ * @note   This bit controls the generation of an interrupt when an error condition
+ *         occurs (CRCERR, OVR, MODF in SPI mode, FRE at TI mode).
  * @rmtoll CR2          ERRIE         LL_SPI_DisableIT_ERR
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableIT_ERR(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR2, SPI_CR2_ERRIE); }
+__STATIC_INLINE void LL_SPI_DisableIT_ERR(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR2, SPI_CR2_ERRIE);
+}
 
 /**
  * @brief  Disable Rx buffer not empty interrupt
@@ -1042,7 +1142,10 @@ __STATIC_INLINE void LL_SPI_DisableIT_ERR(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->C
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableIT_RXNE(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR2, SPI_CR2_RXNEIE); }
+__STATIC_INLINE void LL_SPI_DisableIT_RXNE(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR2, SPI_CR2_RXNEIE);
+}
 
 /**
  * @brief  Disable Tx buffer empty interrupt
@@ -1050,7 +1153,10 @@ __STATIC_INLINE void LL_SPI_DisableIT_RXNE(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableIT_TXE(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR2, SPI_CR2_TXEIE); }
+__STATIC_INLINE void LL_SPI_DisableIT_TXE(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR2, SPI_CR2_TXEIE);
+}
 
 /**
  * @brief  Check if error interrupt is enabled
@@ -1058,7 +1164,10 @@ __STATIC_INLINE void LL_SPI_DisableIT_TXE(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->C
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_ERR(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR2, SPI_CR2_ERRIE) == (SPI_CR2_ERRIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_ERR(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR2, SPI_CR2_ERRIE) == (SPI_CR2_ERRIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Rx buffer not empty interrupt is enabled
@@ -1066,7 +1175,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_ERR(const SPI_TypeDef *SPIx) { retur
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_RXNE(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR2, SPI_CR2_RXNEIE) == (SPI_CR2_RXNEIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_RXNE(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR2, SPI_CR2_RXNEIE) == (SPI_CR2_RXNEIE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Check if Tx buffer empty interrupt
@@ -1074,7 +1186,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_RXNE(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_TXE(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR2, SPI_CR2_TXEIE) == (SPI_CR2_TXEIE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_TXE(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR2, SPI_CR2_TXEIE) == (SPI_CR2_TXEIE)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -1090,7 +1205,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledIT_TXE(const SPI_TypeDef *SPIx) { retur
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableDMAReq_RX(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2, SPI_CR2_RXDMAEN); }
+__STATIC_INLINE void LL_SPI_EnableDMAReq_RX(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR2, SPI_CR2_RXDMAEN);
+}
 
 /**
  * @brief  Disable DMA Rx
@@ -1098,7 +1216,10 @@ __STATIC_INLINE void LL_SPI_EnableDMAReq_RX(SPI_TypeDef *SPIx) { SET_BIT(SPIx->C
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableDMAReq_RX(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR2, SPI_CR2_RXDMAEN); }
+__STATIC_INLINE void LL_SPI_DisableDMAReq_RX(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR2, SPI_CR2_RXDMAEN);
+}
 
 /**
  * @brief  Check if DMA Rx is enabled
@@ -1106,7 +1227,10 @@ __STATIC_INLINE void LL_SPI_DisableDMAReq_RX(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_RX(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR2, SPI_CR2_RXDMAEN) == (SPI_CR2_RXDMAEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_RX(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR2, SPI_CR2_RXDMAEN) == (SPI_CR2_RXDMAEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable DMA Tx
@@ -1114,7 +1238,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_RX(const SPI_TypeDef *SPIx) { re
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_EnableDMAReq_TX(SPI_TypeDef *SPIx) { SET_BIT(SPIx->CR2, SPI_CR2_TXDMAEN); }
+__STATIC_INLINE void LL_SPI_EnableDMAReq_TX(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->CR2, SPI_CR2_TXDMAEN);
+}
 
 /**
  * @brief  Disable DMA Tx
@@ -1122,7 +1249,10 @@ __STATIC_INLINE void LL_SPI_EnableDMAReq_TX(SPI_TypeDef *SPIx) { SET_BIT(SPIx->C
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_DisableDMAReq_TX(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->CR2, SPI_CR2_TXDMAEN); }
+__STATIC_INLINE void LL_SPI_DisableDMAReq_TX(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->CR2, SPI_CR2_TXDMAEN);
+}
 
 /**
  * @brief  Check if DMA Tx is enabled
@@ -1130,7 +1260,10 @@ __STATIC_INLINE void LL_SPI_DisableDMAReq_TX(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->CR2, SPI_CR2_TXDMAEN) == (SPI_CR2_TXDMAEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->CR2, SPI_CR2_TXDMAEN) == (SPI_CR2_TXDMAEN)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set parity of  Last DMA reception
@@ -1141,7 +1274,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx) { re
  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetDMAParity_RX(SPI_TypeDef *SPIx, uint32_t Parity) { MODIFY_REG(SPIx->CR2, SPI_CR2_LDMARX, (Parity << SPI_CR2_LDMARX_Pos)); }
+__STATIC_INLINE void LL_SPI_SetDMAParity_RX(SPI_TypeDef *SPIx, uint32_t Parity)
+{
+	MODIFY_REG(SPIx->CR2, SPI_CR2_LDMARX, (Parity << SPI_CR2_LDMARX_Pos));
+}
 
 /**
  * @brief  Get parity configuration for  Last DMA reception
@@ -1151,7 +1287,10 @@ __STATIC_INLINE void LL_SPI_SetDMAParity_RX(SPI_TypeDef *SPIx, uint32_t Parity) 
  *         @arg @ref LL_SPI_DMA_PARITY_ODD
  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
  */
-__STATIC_INLINE uint32_t LL_SPI_GetDMAParity_RX(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_LDMARX) >> SPI_CR2_LDMARX_Pos); }
+__STATIC_INLINE uint32_t LL_SPI_GetDMAParity_RX(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_LDMARX) >> SPI_CR2_LDMARX_Pos);
+}
 
 /**
  * @brief  Set parity of  Last DMA transmission
@@ -1162,7 +1301,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_RX(const SPI_TypeDef *SPIx) { retur
  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
  * @retval None
  */
-__STATIC_INLINE void LL_SPI_SetDMAParity_TX(SPI_TypeDef *SPIx, uint32_t Parity) { MODIFY_REG(SPIx->CR2, SPI_CR2_LDMATX, (Parity << SPI_CR2_LDMATX_Pos)); }
+__STATIC_INLINE void LL_SPI_SetDMAParity_TX(SPI_TypeDef *SPIx, uint32_t Parity)
+{
+	MODIFY_REG(SPIx->CR2, SPI_CR2_LDMATX, (Parity << SPI_CR2_LDMATX_Pos));
+}
 
 /**
  * @brief  Get parity configuration for Last DMA transmission
@@ -1172,7 +1314,10 @@ __STATIC_INLINE void LL_SPI_SetDMAParity_TX(SPI_TypeDef *SPIx, uint32_t Parity) 
  *         @arg @ref LL_SPI_DMA_PARITY_ODD
  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
  */
-__STATIC_INLINE uint32_t LL_SPI_GetDMAParity_TX(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_LDMATX) >> SPI_CR2_LDMATX_Pos); }
+__STATIC_INLINE uint32_t LL_SPI_GetDMAParity_TX(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->CR2, SPI_CR2_LDMATX) >> SPI_CR2_LDMATX_Pos);
+}
 
 /**
  * @brief  Get the data register address used for DMA transfer
@@ -1180,7 +1325,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_TX(const SPI_TypeDef *SPIx) { retur
  * @param  SPIx SPI Instance
  * @retval Address of data register
  */
-__STATIC_INLINE uint32_t LL_SPI_DMA_GetRegAddr(const SPI_TypeDef *SPIx) { return (uint32_t) & (SPIx->DR); }
+__STATIC_INLINE uint32_t LL_SPI_DMA_GetRegAddr(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t) & (SPIx->DR);
+}
 
 /**
  * @}
@@ -1196,7 +1344,10 @@ __STATIC_INLINE uint32_t LL_SPI_DMA_GetRegAddr(const SPI_TypeDef *SPIx) { return
  * @param  SPIx SPI Instance
  * @retval RxData Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint8_t LL_SPI_ReceiveData8(SPI_TypeDef *SPIx) { return (*((__IO uint8_t *)&SPIx->DR)); }
+__STATIC_INLINE uint8_t LL_SPI_ReceiveData8(SPI_TypeDef *SPIx)
+{
+	return (*((__IO uint8_t *)&SPIx->DR));
+}
 
 /**
  * @brief  Read 16-Bits in the data register
@@ -1204,7 +1355,10 @@ __STATIC_INLINE uint8_t LL_SPI_ReceiveData8(SPI_TypeDef *SPIx) { return (*((__IO
  * @param  SPIx SPI Instance
  * @retval RxData Value between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint16_t LL_SPI_ReceiveData16(SPI_TypeDef *SPIx) { return (uint16_t)(READ_REG(SPIx->DR)); }
+__STATIC_INLINE uint16_t LL_SPI_ReceiveData16(SPI_TypeDef *SPIx)
+{
+	return (uint16_t)(READ_REG(SPIx->DR));
+}
 
 /**
  * @brief  Write 8-Bits in the data register
@@ -1256,9 +1410,9 @@ void LL_SPI_StructInit(LL_SPI_InitTypeDef *SPI_InitStruct);
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
-       /**
-	* @}
-	*/
+/**
+ * @}
+ */
 
 /**
  * @}
@@ -1287,47 +1441,33 @@ typedef struct {
 	uint32_t Mode; /*!< Specifies the I2S operating mode.
 			    This parameter can be a value of @ref I2S_LL_EC_MODE
 
-			    This feature can be modified afterwards using
-			  unitary function @ref LL_I2S_SetTransferMode().*/
+			    This feature can be modified afterwards using unitary function @ref LL_I2S_SetTransferMode().*/
 
-	uint32_t Standard; /*!< Specifies the standard used for the I2S
-			      communication. This parameter can be a value of
-			      @ref I2S_LL_EC_STANDARD
+	uint32_t Standard; /*!< Specifies the standard used for the I2S communication.
+				This parameter can be a value of @ref I2S_LL_EC_STANDARD
 
-				This feature can be modified afterwards using
-			      unitary function @ref LL_I2S_SetStandard().*/
+				This feature can be modified afterwards using unitary function @ref LL_I2S_SetStandard().*/
 
-	uint32_t DataFormat; /*!< Specifies the data format for the I2S
-				communication. This parameter can be a value of
-				@ref I2S_LL_EC_DATA_FORMAT
+	uint32_t DataFormat; /*!< Specifies the data format for the I2S communication.
+				  This parameter can be a value of @ref I2S_LL_EC_DATA_FORMAT
 
-				  This feature can be modified afterwards using
-				unitary function @ref LL_I2S_SetDataFormat().*/
+				  This feature can be modified afterwards using unitary function @ref LL_I2S_SetDataFormat().*/
 
-	uint32_t MCLKOutput; /*!< Specifies whether the I2S MCLK output is enabled or
-				not. This parameter can be a value of @ref
-				I2S_LL_EC_MCLK_OUTPUT
+	uint32_t MCLKOutput; /*!< Specifies whether the I2S MCLK output is enabled or not.
+				  This parameter can be a value of @ref I2S_LL_EC_MCLK_OUTPUT
 
-				  This feature can be modified afterwards using
-				unitary functions @ref LL_I2S_EnableMasterClock() or
-				@ref LL_I2S_DisableMasterClock.*/
+				  This feature can be modified afterwards using unitary functions @ref LL_I2S_EnableMasterClock() or @ref LL_I2S_DisableMasterClock.*/
 
-	uint32_t AudioFreq; /*!< Specifies the frequency selected for the I2S
-			       communication. This parameter can be a value of
-			       @ref I2S_LL_EC_AUDIO_FREQ
+	uint32_t AudioFreq; /*!< Specifies the frequency selected for the I2S communication.
+				 This parameter can be a value of @ref I2S_LL_EC_AUDIO_FREQ
 
-				 Audio Frequency can be modified afterwards
-			       using Reference manual formulas to calculate
-			       Prescaler Linear, Parity and unitary functions
-			       @ref LL_I2S_SetPrescalerLinear() and @ref
-			       LL_I2S_SetPrescalerParity() to set it.*/
+				 Audio Frequency can be modified afterwards using Reference manual formulas to calculate Prescaler Linear, Parity
+				 and unitary functions @ref LL_I2S_SetPrescalerLinear() and @ref LL_I2S_SetPrescalerParity() to set it.*/
 
 	uint32_t ClockPolarity; /*!< Specifies the idle state of the I2S clock.
-				     This parameter can be a value of @ref
-				   I2S_LL_EC_POLARITY
+				     This parameter can be a value of @ref I2S_LL_EC_POLARITY
 
-				     This feature can be modified afterwards using
-				   unitary function @ref LL_I2S_SetClockPolarity().*/
+				     This feature can be modified afterwards using unitary function @ref LL_I2S_SetClockPolarity().*/
 
 } LL_I2S_InitTypeDef;
 
@@ -1356,8 +1496,7 @@ typedef struct {
  */
 
 /** @defgroup SPI_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_SPI_ReadReg and
- * LL_SPI_WriteReg functions
+ * @brief    IT defines which can be used with LL_SPI_ReadReg and  LL_SPI_WriteReg functions
  * @{
  */
 #define LL_I2S_CR2_RXNEIE LL_SPI_CR2_RXNEIE /*!< Rx buffer not empty interrupt enable */
@@ -1370,14 +1509,10 @@ typedef struct {
 /** @defgroup I2S_LL_EC_DATA_FORMAT Data format
  * @{
  */
-#define LL_I2S_DATAFORMAT_16B 0x00000000U		   /*!< Data length 16 bits, Channel length 16bit */
-#define LL_I2S_DATAFORMAT_16B_EXTENDED (SPI_I2SCFGR_CHLEN) /*!< Data length 16 bits, Channel length 32bit */
-#define LL_I2S_DATAFORMAT_24B                                                                                                                                                                          \
-	(SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN_0) /*!< Data length 24 bits,                                                                                                                           \
-						      Channel length 32bit */
-#define LL_I2S_DATAFORMAT_32B                                                                                                                                                                          \
-	(SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN_1) /*!< Data length 16 bits,                                                                                                                           \
-						      Channel length 32bit */
+#define LL_I2S_DATAFORMAT_16B 0x00000000U				 /*!< Data length 16 bits, Channel length 16bit */
+#define LL_I2S_DATAFORMAT_16B_EXTENDED (SPI_I2SCFGR_CHLEN)		 /*!< Data length 16 bits, Channel length 32bit */
+#define LL_I2S_DATAFORMAT_24B (SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN_0) /*!< Data length 24 bits, Channel length 32bit */
+#define LL_I2S_DATAFORMAT_32B (SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN_1) /*!< Data length 16 bits, Channel length 32bit */
 /**
  * @}
  */
@@ -1385,9 +1520,7 @@ typedef struct {
 /** @defgroup I2S_LL_EC_POLARITY Clock Polarity
  * @{
  */
-#define LL_I2S_POLARITY_LOW                                                                                                                                                                            \
-	0x00000000U				 /*!< Clock steady state is low level                                                                                                                  \
-						  */
+#define LL_I2S_POLARITY_LOW 0x00000000U		 /*!< Clock steady state is low level  */
 #define LL_I2S_POLARITY_HIGH (SPI_I2SCFGR_CKPOL) /*!< Clock steady state is high level */
 /**
  * @}
@@ -1396,15 +1529,11 @@ typedef struct {
 /** @defgroup I2S_LL_EC_STANDARD I2s Standard
  * @{
  */
-#define LL_I2S_STANDARD_PHILIPS 0x00000000U	   /*!< I2S standard philips                      */
-#define LL_I2S_STANDARD_MSB (SPI_I2SCFGR_I2SSTD_0) /*!< MSB justified standard (left justified) */
-#define LL_I2S_STANDARD_LSB                                                                                                                                                                            \
-	(SPI_I2SCFGR_I2SSTD_1) /*!< LSB justified standard (right justified)                                                                                                                           \
-				*/
-#define LL_I2S_STANDARD_PCM_SHORT                                                                                                                                                                      \
-	(SPI_I2SCFGR_I2SSTD_0 | SPI_I2SCFGR_I2SSTD_1)						     /*!< PCM standard, short frame synchronization                                                    \
-												      */
-#define LL_I2S_STANDARD_PCM_LONG (SPI_I2SCFGR_I2SSTD_0 | SPI_I2SCFGR_I2SSTD_1 | SPI_I2SCFGR_PCMSYNC) /*!< PCM standard, long frame synchronization */
+#define LL_I2S_STANDARD_PHILIPS 0x00000000U							     /*!< I2S standard philips                      */
+#define LL_I2S_STANDARD_MSB (SPI_I2SCFGR_I2SSTD_0)						     /*!< MSB justified standard (left justified)   */
+#define LL_I2S_STANDARD_LSB (SPI_I2SCFGR_I2SSTD_1)						     /*!< LSB justified standard (right justified)  */
+#define LL_I2S_STANDARD_PCM_SHORT (SPI_I2SCFGR_I2SSTD_0 | SPI_I2SCFGR_I2SSTD_1)			     /*!< PCM standard, short frame synchronization */
+#define LL_I2S_STANDARD_PCM_LONG (SPI_I2SCFGR_I2SSTD_0 | SPI_I2SCFGR_I2SSTD_1 | SPI_I2SCFGR_PCMSYNC) /*!< PCM standard, long frame synchronization  */
 /**
  * @}
  */
@@ -1425,9 +1554,9 @@ typedef struct {
  */
 #define LL_I2S_PRESCALER_PARITY_EVEN 0x00000000U	  /*!< Odd factor: Real divider value is =  I2SDIV * 2    */
 #define LL_I2S_PRESCALER_PARITY_ODD (SPI_I2SPR_ODD >> 8U) /*!< Odd factor: Real divider value is = (I2SDIV * 2)+1 */
-							  /**
-							   * @}
-							   */
+/**
+ * @}
+ */
 
 #if defined(USE_FULL_LL_DRIVER)
 
@@ -1436,9 +1565,9 @@ typedef struct {
  */
 #define LL_I2S_MCLK_OUTPUT_DISABLE 0x00000000U	    /*!< Master clock output is disabled */
 #define LL_I2S_MCLK_OUTPUT_ENABLE (SPI_I2SPR_MCKOE) /*!< Master clock output is enabled  */
-						    /**
-						     * @}
-						     */
+/**
+ * @}
+ */
 
 /** @defgroup I2S_LL_EC_AUDIO_FREQ Audio Frequency
  * @{
@@ -1513,7 +1642,10 @@ typedef struct {
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_Enable(SPI_TypeDef *SPIx) { SET_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SMOD | SPI_I2SCFGR_I2SE); }
+__STATIC_INLINE void LL_I2S_Enable(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SMOD | SPI_I2SCFGR_I2SE);
+}
 
 /**
  * @brief  Disable I2S peripheral
@@ -1521,7 +1653,10 @@ __STATIC_INLINE void LL_I2S_Enable(SPI_TypeDef *SPIx) { SET_BIT(SPIx->I2SCFGR, S
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_Disable(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SMOD | SPI_I2SCFGR_I2SE); }
+__STATIC_INLINE void LL_I2S_Disable(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SMOD | SPI_I2SCFGR_I2SE);
+}
 
 /**
  * @brief  Check if I2S peripheral is enabled
@@ -1529,7 +1664,10 @@ __STATIC_INLINE void LL_I2S_Disable(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->I2SCFGR
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabled(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SE) == (SPI_I2SCFGR_I2SE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabled(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SE) == (SPI_I2SCFGR_I2SE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set I2S data frame length
@@ -1543,7 +1681,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabled(const SPI_TypeDef *SPIx) { return ((RE
  *         @arg @ref LL_I2S_DATAFORMAT_32B
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_SetDataFormat(SPI_TypeDef *SPIx, uint32_t DataFormat) { MODIFY_REG(SPIx->I2SCFGR, SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN, DataFormat); }
+__STATIC_INLINE void LL_I2S_SetDataFormat(SPI_TypeDef *SPIx, uint32_t DataFormat)
+{
+	MODIFY_REG(SPIx->I2SCFGR, SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN, DataFormat);
+}
 
 /**
  * @brief  Get I2S data frame length
@@ -1556,7 +1697,10 @@ __STATIC_INLINE void LL_I2S_SetDataFormat(SPI_TypeDef *SPIx, uint32_t DataFormat
  *         @arg @ref LL_I2S_DATAFORMAT_24B
  *         @arg @ref LL_I2S_DATAFORMAT_32B
  */
-__STATIC_INLINE uint32_t LL_I2S_GetDataFormat(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN)); }
+__STATIC_INLINE uint32_t LL_I2S_GetDataFormat(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN));
+}
 
 /**
  * @brief  Set I2S clock polarity
@@ -1567,7 +1711,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetDataFormat(const SPI_TypeDef *SPIx) { return 
  *         @arg @ref LL_I2S_POLARITY_HIGH
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity) { SET_BIT(SPIx->I2SCFGR, ClockPolarity); }
+__STATIC_INLINE void LL_I2S_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity)
+{
+	SET_BIT(SPIx->I2SCFGR, ClockPolarity);
+}
 
 /**
  * @brief  Get I2S clock polarity
@@ -1577,7 +1724,10 @@ __STATIC_INLINE void LL_I2S_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPo
  *         @arg @ref LL_I2S_POLARITY_LOW
  *         @arg @ref LL_I2S_POLARITY_HIGH
  */
-__STATIC_INLINE uint32_t LL_I2S_GetClockPolarity(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_CKPOL)); }
+__STATIC_INLINE uint32_t LL_I2S_GetClockPolarity(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_CKPOL));
+}
 
 /**
  * @brief  Set I2S standard protocol
@@ -1592,7 +1742,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetClockPolarity(const SPI_TypeDef *SPIx) { retu
  *         @arg @ref LL_I2S_STANDARD_PCM_LONG
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard) { MODIFY_REG(SPIx->I2SCFGR, SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC, Standard); }
+__STATIC_INLINE void LL_I2S_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
+{
+	MODIFY_REG(SPIx->I2SCFGR, SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC, Standard);
+}
 
 /**
  * @brief  Get I2S standard protocol
@@ -1606,7 +1759,10 @@ __STATIC_INLINE void LL_I2S_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard) { 
  *         @arg @ref LL_I2S_STANDARD_PCM_SHORT
  *         @arg @ref LL_I2S_STANDARD_PCM_LONG
  */
-__STATIC_INLINE uint32_t LL_I2S_GetStandard(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC)); }
+__STATIC_INLINE uint32_t LL_I2S_GetStandard(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC));
+}
 
 /**
  * @brief  Set I2S transfer mode
@@ -1619,7 +1775,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetStandard(const SPI_TypeDef *SPIx) { return (u
  *         @arg @ref LL_I2S_MODE_MASTER_RX
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_SetTransferMode(SPI_TypeDef *SPIx, uint32_t Mode) { MODIFY_REG(SPIx->I2SCFGR, SPI_I2SCFGR_I2SCFG, Mode); }
+__STATIC_INLINE void LL_I2S_SetTransferMode(SPI_TypeDef *SPIx, uint32_t Mode)
+{
+	MODIFY_REG(SPIx->I2SCFGR, SPI_I2SCFGR_I2SCFG, Mode);
+}
 
 /**
  * @brief  Get I2S transfer mode
@@ -1631,7 +1790,10 @@ __STATIC_INLINE void LL_I2S_SetTransferMode(SPI_TypeDef *SPIx, uint32_t Mode) { 
  *         @arg @ref LL_I2S_MODE_MASTER_TX
  *         @arg @ref LL_I2S_MODE_MASTER_RX
  */
-__STATIC_INLINE uint32_t LL_I2S_GetTransferMode(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SCFG)); }
+__STATIC_INLINE uint32_t LL_I2S_GetTransferMode(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_I2SCFG));
+}
 
 /**
  * @brief  Set I2S linear prescaler
@@ -1640,7 +1802,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetTransferMode(const SPI_TypeDef *SPIx) { retur
  * @param  PrescalerLinear Value between Min_Data=0x02 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_SetPrescalerLinear(SPI_TypeDef *SPIx, uint8_t PrescalerLinear) { MODIFY_REG(SPIx->I2SPR, SPI_I2SPR_I2SDIV, PrescalerLinear); }
+__STATIC_INLINE void LL_I2S_SetPrescalerLinear(SPI_TypeDef *SPIx, uint8_t PrescalerLinear)
+{
+	MODIFY_REG(SPIx->I2SPR, SPI_I2SPR_I2SDIV, PrescalerLinear);
+}
 
 /**
  * @brief  Get I2S linear prescaler
@@ -1648,7 +1813,10 @@ __STATIC_INLINE void LL_I2S_SetPrescalerLinear(SPI_TypeDef *SPIx, uint8_t Presca
  * @param  SPIx SPI Instance
  * @retval PrescalerLinear Value between Min_Data=0x02 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_I2S_GetPrescalerLinear(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->I2SPR, SPI_I2SPR_I2SDIV)); }
+__STATIC_INLINE uint32_t LL_I2S_GetPrescalerLinear(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->I2SPR, SPI_I2SPR_I2SDIV));
+}
 
 /**
  * @brief  Set I2S parity prescaler
@@ -1659,7 +1827,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetPrescalerLinear(const SPI_TypeDef *SPIx) { re
  *         @arg @ref LL_I2S_PRESCALER_PARITY_ODD
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_SetPrescalerParity(SPI_TypeDef *SPIx, uint32_t PrescalerParity) { MODIFY_REG(SPIx->I2SPR, SPI_I2SPR_ODD, PrescalerParity << 8U); }
+__STATIC_INLINE void LL_I2S_SetPrescalerParity(SPI_TypeDef *SPIx, uint32_t PrescalerParity)
+{
+	MODIFY_REG(SPIx->I2SPR, SPI_I2SPR_ODD, PrescalerParity << 8U);
+}
 
 /**
  * @brief  Get I2S parity prescaler
@@ -1669,7 +1840,10 @@ __STATIC_INLINE void LL_I2S_SetPrescalerParity(SPI_TypeDef *SPIx, uint32_t Presc
  *         @arg @ref LL_I2S_PRESCALER_PARITY_EVEN
  *         @arg @ref LL_I2S_PRESCALER_PARITY_ODD
  */
-__STATIC_INLINE uint32_t LL_I2S_GetPrescalerParity(const SPI_TypeDef *SPIx) { return (uint32_t)(READ_BIT(SPIx->I2SPR, SPI_I2SPR_ODD) >> 8U); }
+__STATIC_INLINE uint32_t LL_I2S_GetPrescalerParity(const SPI_TypeDef *SPIx)
+{
+	return (uint32_t)(READ_BIT(SPIx->I2SPR, SPI_I2SPR_ODD) >> 8U);
+}
 
 /**
  * @brief  Enable the master clock output (Pin MCK)
@@ -1677,7 +1851,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetPrescalerParity(const SPI_TypeDef *SPIx) { re
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableMasterClock(SPI_TypeDef *SPIx) { SET_BIT(SPIx->I2SPR, SPI_I2SPR_MCKOE); }
+__STATIC_INLINE void LL_I2S_EnableMasterClock(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->I2SPR, SPI_I2SPR_MCKOE);
+}
 
 /**
  * @brief  Disable the master clock output (Pin MCK)
@@ -1685,7 +1862,10 @@ __STATIC_INLINE void LL_I2S_EnableMasterClock(SPI_TypeDef *SPIx) { SET_BIT(SPIx-
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableMasterClock(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->I2SPR, SPI_I2SPR_MCKOE); }
+__STATIC_INLINE void LL_I2S_DisableMasterClock(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->I2SPR, SPI_I2SPR_MCKOE);
+}
 
 /**
  * @brief  Check if the master clock output (Pin MCK) is enabled
@@ -1693,7 +1873,10 @@ __STATIC_INLINE void LL_I2S_DisableMasterClock(SPI_TypeDef *SPIx) { CLEAR_BIT(SP
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledMasterClock(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->I2SPR, SPI_I2SPR_MCKOE) == (SPI_I2SPR_MCKOE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledMasterClock(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->I2SPR, SPI_I2SPR_MCKOE) == (SPI_I2SPR_MCKOE)) ? 1UL : 0UL);
+}
 
 #if defined(SPI_I2SCFGR_ASTRTEN)
 /**
@@ -1702,7 +1885,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledMasterClock(const SPI_TypeDef *SPIx) { 
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableAsyncStart(SPI_TypeDef *SPIx) { SET_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_ASTRTEN); }
+__STATIC_INLINE void LL_I2S_EnableAsyncStart(SPI_TypeDef *SPIx)
+{
+	SET_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_ASTRTEN);
+}
 
 /**
  * @brief  Disable  asynchronous start
@@ -1710,7 +1896,10 @@ __STATIC_INLINE void LL_I2S_EnableAsyncStart(SPI_TypeDef *SPIx) { SET_BIT(SPIx->
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableAsyncStart(SPI_TypeDef *SPIx) { CLEAR_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_ASTRTEN); }
+__STATIC_INLINE void LL_I2S_DisableAsyncStart(SPI_TypeDef *SPIx)
+{
+	CLEAR_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_ASTRTEN);
+}
 
 /**
  * @brief  Check if asynchronous start is enabled
@@ -1718,7 +1907,10 @@ __STATIC_INLINE void LL_I2S_DisableAsyncStart(SPI_TypeDef *SPIx) { CLEAR_BIT(SPI
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledAsyncStart(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_ASTRTEN) == (SPI_I2SCFGR_ASTRTEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledAsyncStart(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->I2SCFGR, SPI_I2SCFGR_ASTRTEN) == (SPI_I2SCFGR_ASTRTEN)) ? 1UL : 0UL);
+}
 #endif /* SPI_I2SCFGR_ASTRTEN */
 
 /**
@@ -1735,7 +1927,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledAsyncStart(const SPI_TypeDef *SPIx) { r
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_RXNE(const SPI_TypeDef *SPIx) { return LL_SPI_IsActiveFlag_RXNE(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_RXNE(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsActiveFlag_RXNE(SPIx);
+}
 
 /**
  * @brief  Check if Tx buffer is empty
@@ -1743,7 +1938,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_RXNE(const SPI_TypeDef *SPIx) { ret
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_TXE(const SPI_TypeDef *SPIx) { return LL_SPI_IsActiveFlag_TXE(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_TXE(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsActiveFlag_TXE(SPIx);
+}
 
 /**
  * @brief  Get busy flag
@@ -1751,7 +1949,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_TXE(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_BSY(const SPI_TypeDef *SPIx) { return LL_SPI_IsActiveFlag_BSY(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_BSY(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsActiveFlag_BSY(SPIx);
+}
 
 /**
  * @brief  Get overrun error flag
@@ -1759,7 +1960,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_BSY(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_OVR(const SPI_TypeDef *SPIx) { return LL_SPI_IsActiveFlag_OVR(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_OVR(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsActiveFlag_OVR(SPIx);
+}
 
 /**
  * @brief  Get underrun error flag
@@ -1767,7 +1971,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_OVR(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_UDR(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_UDR) == (SPI_SR_UDR)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_UDR(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_UDR) == (SPI_SR_UDR)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get frame format error flag
@@ -1775,7 +1982,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_UDR(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_FRE(const SPI_TypeDef *SPIx) { return LL_SPI_IsActiveFlag_FRE(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_FRE(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsActiveFlag_FRE(SPIx);
+}
 
 /**
  * @brief  Get channel side flag.
@@ -1786,7 +1996,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_FRE(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_CHSIDE(const SPI_TypeDef *SPIx) { return ((READ_BIT(SPIx->SR, SPI_SR_CHSIDE) == (SPI_SR_CHSIDE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_CHSIDE(const SPI_TypeDef *SPIx)
+{
+	return ((READ_BIT(SPIx->SR, SPI_SR_CHSIDE) == (SPI_SR_CHSIDE)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear overrun error flag
@@ -1794,7 +2007,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsActiveFlag_CHSIDE(const SPI_TypeDef *SPIx) { r
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_ClearFlag_OVR(SPI_TypeDef *SPIx) { LL_SPI_ClearFlag_OVR(SPIx); }
+__STATIC_INLINE void LL_I2S_ClearFlag_OVR(SPI_TypeDef *SPIx)
+{
+	LL_SPI_ClearFlag_OVR(SPIx);
+}
 
 /**
  * @brief  Clear underrun error flag
@@ -1815,7 +2031,10 @@ __STATIC_INLINE void LL_I2S_ClearFlag_UDR(const SPI_TypeDef *SPIx)
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_ClearFlag_FRE(const SPI_TypeDef *SPIx) { LL_SPI_ClearFlag_FRE(SPIx); }
+__STATIC_INLINE void LL_I2S_ClearFlag_FRE(const SPI_TypeDef *SPIx)
+{
+	LL_SPI_ClearFlag_FRE(SPIx);
+}
 
 /**
  * @}
@@ -1827,13 +2046,15 @@ __STATIC_INLINE void LL_I2S_ClearFlag_FRE(const SPI_TypeDef *SPIx) { LL_SPI_Clea
 
 /**
  * @brief  Enable error IT
- * @note   This bit controls the generation of an interrupt when an error
- * condition occurs (OVR, UDR and FRE in I2S mode).
+ * @note   This bit controls the generation of an interrupt when an error condition occurs (OVR, UDR and FRE in I2S mode).
  * @rmtoll CR2          ERRIE         LL_I2S_EnableIT_ERR
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableIT_ERR(SPI_TypeDef *SPIx) { LL_SPI_EnableIT_ERR(SPIx); }
+__STATIC_INLINE void LL_I2S_EnableIT_ERR(SPI_TypeDef *SPIx)
+{
+	LL_SPI_EnableIT_ERR(SPIx);
+}
 
 /**
  * @brief  Enable Rx buffer not empty IT
@@ -1841,7 +2062,10 @@ __STATIC_INLINE void LL_I2S_EnableIT_ERR(SPI_TypeDef *SPIx) { LL_SPI_EnableIT_ER
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableIT_RXNE(SPI_TypeDef *SPIx) { LL_SPI_EnableIT_RXNE(SPIx); }
+__STATIC_INLINE void LL_I2S_EnableIT_RXNE(SPI_TypeDef *SPIx)
+{
+	LL_SPI_EnableIT_RXNE(SPIx);
+}
 
 /**
  * @brief  Enable Tx buffer empty IT
@@ -1849,17 +2073,22 @@ __STATIC_INLINE void LL_I2S_EnableIT_RXNE(SPI_TypeDef *SPIx) { LL_SPI_EnableIT_R
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableIT_TXE(SPI_TypeDef *SPIx) { LL_SPI_EnableIT_TXE(SPIx); }
+__STATIC_INLINE void LL_I2S_EnableIT_TXE(SPI_TypeDef *SPIx)
+{
+	LL_SPI_EnableIT_TXE(SPIx);
+}
 
 /**
  * @brief  Disable error IT
- * @note   This bit controls the generation of an interrupt when an error
- * condition occurs (OVR, UDR and FRE in I2S mode).
+ * @note   This bit controls the generation of an interrupt when an error condition occurs (OVR, UDR and FRE in I2S mode).
  * @rmtoll CR2          ERRIE         LL_I2S_DisableIT_ERR
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableIT_ERR(SPI_TypeDef *SPIx) { LL_SPI_DisableIT_ERR(SPIx); }
+__STATIC_INLINE void LL_I2S_DisableIT_ERR(SPI_TypeDef *SPIx)
+{
+	LL_SPI_DisableIT_ERR(SPIx);
+}
 
 /**
  * @brief  Disable Rx buffer not empty IT
@@ -1867,7 +2096,10 @@ __STATIC_INLINE void LL_I2S_DisableIT_ERR(SPI_TypeDef *SPIx) { LL_SPI_DisableIT_
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableIT_RXNE(SPI_TypeDef *SPIx) { LL_SPI_DisableIT_RXNE(SPIx); }
+__STATIC_INLINE void LL_I2S_DisableIT_RXNE(SPI_TypeDef *SPIx)
+{
+	LL_SPI_DisableIT_RXNE(SPIx);
+}
 
 /**
  * @brief  Disable Tx buffer empty IT
@@ -1875,7 +2107,10 @@ __STATIC_INLINE void LL_I2S_DisableIT_RXNE(SPI_TypeDef *SPIx) { LL_SPI_DisableIT
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableIT_TXE(SPI_TypeDef *SPIx) { LL_SPI_DisableIT_TXE(SPIx); }
+__STATIC_INLINE void LL_I2S_DisableIT_TXE(SPI_TypeDef *SPIx)
+{
+	LL_SPI_DisableIT_TXE(SPIx);
+}
 
 /**
  * @brief  Check if ERR IT is enabled
@@ -1883,7 +2118,10 @@ __STATIC_INLINE void LL_I2S_DisableIT_TXE(SPI_TypeDef *SPIx) { LL_SPI_DisableIT_
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_ERR(const SPI_TypeDef *SPIx) { return LL_SPI_IsEnabledIT_ERR(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_ERR(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsEnabledIT_ERR(SPIx);
+}
 
 /**
  * @brief  Check if RXNE IT is enabled
@@ -1891,7 +2129,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_ERR(const SPI_TypeDef *SPIx) { retur
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_RXNE(const SPI_TypeDef *SPIx) { return LL_SPI_IsEnabledIT_RXNE(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_RXNE(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsEnabledIT_RXNE(SPIx);
+}
 
 /**
  * @brief  Check if TXE IT is enabled
@@ -1899,7 +2140,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_RXNE(const SPI_TypeDef *SPIx) { retu
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_TXE(const SPI_TypeDef *SPIx) { return LL_SPI_IsEnabledIT_TXE(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_TXE(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsEnabledIT_TXE(SPIx);
+}
 
 /**
  * @}
@@ -1915,7 +2159,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledIT_TXE(const SPI_TypeDef *SPIx) { retur
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableDMAReq_RX(SPI_TypeDef *SPIx) { LL_SPI_EnableDMAReq_RX(SPIx); }
+__STATIC_INLINE void LL_I2S_EnableDMAReq_RX(SPI_TypeDef *SPIx)
+{
+	LL_SPI_EnableDMAReq_RX(SPIx);
+}
 
 /**
  * @brief  Disable DMA Rx
@@ -1923,7 +2170,10 @@ __STATIC_INLINE void LL_I2S_EnableDMAReq_RX(SPI_TypeDef *SPIx) { LL_SPI_EnableDM
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableDMAReq_RX(SPI_TypeDef *SPIx) { LL_SPI_DisableDMAReq_RX(SPIx); }
+__STATIC_INLINE void LL_I2S_DisableDMAReq_RX(SPI_TypeDef *SPIx)
+{
+	LL_SPI_DisableDMAReq_RX(SPIx);
+}
 
 /**
  * @brief  Check if DMA Rx is enabled
@@ -1931,7 +2181,10 @@ __STATIC_INLINE void LL_I2S_DisableDMAReq_RX(SPI_TypeDef *SPIx) { LL_SPI_Disable
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledDMAReq_RX(const SPI_TypeDef *SPIx) { return LL_SPI_IsEnabledDMAReq_RX(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledDMAReq_RX(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsEnabledDMAReq_RX(SPIx);
+}
 
 /**
  * @brief  Enable DMA Tx
@@ -1939,7 +2192,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledDMAReq_RX(const SPI_TypeDef *SPIx) { re
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_EnableDMAReq_TX(SPI_TypeDef *SPIx) { LL_SPI_EnableDMAReq_TX(SPIx); }
+__STATIC_INLINE void LL_I2S_EnableDMAReq_TX(SPI_TypeDef *SPIx)
+{
+	LL_SPI_EnableDMAReq_TX(SPIx);
+}
 
 /**
  * @brief  Disable DMA Tx
@@ -1947,7 +2203,10 @@ __STATIC_INLINE void LL_I2S_EnableDMAReq_TX(SPI_TypeDef *SPIx) { LL_SPI_EnableDM
  * @param  SPIx SPI Instance
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_DisableDMAReq_TX(SPI_TypeDef *SPIx) { LL_SPI_DisableDMAReq_TX(SPIx); }
+__STATIC_INLINE void LL_I2S_DisableDMAReq_TX(SPI_TypeDef *SPIx)
+{
+	LL_SPI_DisableDMAReq_TX(SPIx);
+}
 
 /**
  * @brief  Check if DMA Tx is enabled
@@ -1955,7 +2214,10 @@ __STATIC_INLINE void LL_I2S_DisableDMAReq_TX(SPI_TypeDef *SPIx) { LL_SPI_Disable
  * @param  SPIx SPI Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_I2S_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx) { return LL_SPI_IsEnabledDMAReq_TX(SPIx); }
+__STATIC_INLINE uint32_t LL_I2S_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx)
+{
+	return LL_SPI_IsEnabledDMAReq_TX(SPIx);
+}
 
 /**
  * @}
@@ -1971,7 +2233,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx) { re
  * @param  SPIx SPI Instance
  * @retval RxData Value between Min_Data=0x0000 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint16_t LL_I2S_ReceiveData16(SPI_TypeDef *SPIx) { return LL_SPI_ReceiveData16(SPIx); }
+__STATIC_INLINE uint16_t LL_I2S_ReceiveData16(SPI_TypeDef *SPIx)
+{
+	return LL_SPI_ReceiveData16(SPIx);
+}
 
 /**
  * @brief  Write 16-Bits in data register
@@ -1980,7 +2245,10 @@ __STATIC_INLINE uint16_t LL_I2S_ReceiveData16(SPI_TypeDef *SPIx) { return LL_SPI
  * @param  TxData Value between Min_Data=0x0000 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_I2S_TransmitData16(SPI_TypeDef *SPIx, uint16_t TxData) { LL_SPI_TransmitData16(SPIx, TxData); }
+__STATIC_INLINE void LL_I2S_TransmitData16(SPI_TypeDef *SPIx, uint16_t TxData)
+{
+	LL_SPI_TransmitData16(SPIx, TxData);
+}
 
 /**
  * @}
@@ -1992,7 +2260,7 @@ __STATIC_INLINE void LL_I2S_TransmitData16(SPI_TypeDef *SPIx, uint16_t TxData) {
  */
 
 ErrorStatus LL_I2S_DeInit(const SPI_TypeDef *SPIx);
-ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, LL_I2S_InitTypeDef *I2S_InitStruct);
+ErrorStatus LL_I2S_Init(SPI_TypeDef *SPIx, const LL_I2S_InitTypeDef *I2S_InitStruct);
 void LL_I2S_StructInit(LL_I2S_InitTypeDef *I2S_InitStruct);
 void LL_I2S_ConfigPrescaler(SPI_TypeDef *SPIx, uint32_t PrescalerLinear, uint32_t PrescalerParity);
 
@@ -2010,8 +2278,7 @@ void LL_I2S_ConfigPrescaler(SPI_TypeDef *SPIx, uint32_t PrescalerLinear, uint32_
  */
 #endif /* SPI_I2S_SUPPORT */
 
-#endif /* defined (SPI1) || defined (SPI2) || defined (SPI3) || defined (SPI4)                                                                                                                         \
-	*/
+#endif /* defined (SPI1) || defined (SPI2) || defined (SPI3) || defined (SPI4) */
 
 /**
  * @}

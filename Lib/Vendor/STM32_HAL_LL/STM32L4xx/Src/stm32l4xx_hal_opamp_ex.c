@@ -66,8 +66,7 @@
 
 /*  2 OPAMPS available */
 /*  2 OPAMPS can be calibrated in parallel */
-/*  Not available on STM32L41x/STM32L42x/STM32L43x/STM32L44x where only one
- * OPAMP available */
+/*  Not available on STM32L41x/STM32L42x/STM32L43x/STM32L44x where only one OPAMP available */
 
 /**
  * @brief  Run the self calibration of the 2 OPAMPs in parallel.
@@ -93,8 +92,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 	uint32_t trimmingvaluen2;
 	uint32_t trimmingvaluep2;
 
-	/* Selection of register of trimming depending on power mode: OTR or
-	 * LPOTR */
+	/* Selection of register of trimming depending on power mode: OTR or LPOTR */
 	__IO uint32_t *tmp_opamp1_reg_trimming;
 	__IO uint32_t *tmp_opamp2_reg_trimming;
 
@@ -118,10 +116,9 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 		assert_param(IS_OPAMP_POWERMODE(hopamp1->Init.PowerMode));
 		assert_param(IS_OPAMP_POWERMODE(hopamp2->Init.PowerMode));
 
-		/* Save OPAMP mode as in */
-		/* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx
-		 */
-		/* the calibration is not working in PGA mode */
+		/* Save OPAMP mode as in                                       */
+		/* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx */
+		/* the calibration is not working in PGA mode                  */
 		opampmode1 = READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE);
 		opampmode2 = READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE);
 
@@ -170,48 +167,38 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
 			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
 
-			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
-			 * characteristics */
-			/* Offset trim time: during calibration, minimum time
-			 * needed between */
+			/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+			/* Offset trim time: during calibration, minimum time needed between */
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(OPAMP_TRIMMING_DELAY);
 
 			if (READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
-				/* OPAMP_CSR_CALOUT is HIGH try lower trimming
-				 */
+				/* OPAMP_CSR_CALOUT is HIGH try lower trimming */
 				trimmingvaluen1 -= delta;
 			} else {
-				/* OPAMP_CSR_CALOUT is LOW try higher trimming
-				 */
+				/* OPAMP_CSR_CALOUT is LOW try higher trimming */
 				trimmingvaluen1 += delta;
 			}
 
 			if (READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
-				/* OPAMP_CSR_CALOUT is HIGH try lower trimming
-				 */
+				/* OPAMP_CSR_CALOUT is HIGH try lower trimming */
 				trimmingvaluen2 -= delta;
 			} else {
-				/* OPAMP_CSR_CALOUT is LOW try higher trimming
-				 */
+				/* OPAMP_CSR_CALOUT is LOW try higher trimming */
 				trimmingvaluen2 += delta;
 			}
 			/* Divide range by 2 to continue dichotomy sweep */
 			delta >>= 1U;
 		}
 
-		/* Still need to check if right calibration is current value or
-		 * one step below */
-		/* Indeed the first value that causes the OUTCAL bit to change
-		 * from 0 to 1  */
+		/* Still need to check if right calibration is current value or one step below */
+		/* Indeed the first value that causes the OUTCAL bit to change from 0 to 1  */
 		/* Set candidate trimming */
 		MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
 		MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
 
-		/* OFFTRIMmax delay 1 ms as per datasheet (electrical
-		 * characteristics */
-		/* Offset trim time: during calibration, minimum time needed
-		 * between */
+		/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+		/* Offset trim time: during calibration, minimum time needed between */
 		/* two steps to have 1 mV accuracy */
 		HAL_Delay(OPAMP_TRIMMING_DELAY);
 
@@ -243,26 +230,21 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
 			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 
-			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
-			 * characteristics */
-			/* Offset trim time: during calibration, minimum time
-			 * needed between */
+			/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+			/* Offset trim time: during calibration, minimum time needed between */
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(OPAMP_TRIMMING_DELAY);
 
 			if (READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
-				/* OPAMP_CSR_CALOUT is HIGH try higher trimming
-				 */
+				/* OPAMP_CSR_CALOUT is HIGH try higher trimming */
 				trimmingvaluep1 += delta;
 			} else {
-				/* OPAMP_CSR_CALOUT is HIGH try lower trimming
-				 */
+				/* OPAMP_CSR_CALOUT is HIGH try lower trimming */
 				trimmingvaluep1 -= delta;
 			}
 
 			if (READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
-				/* OPAMP_CSR_CALOUT is HIGH try higher trimming
-				 */
+				/* OPAMP_CSR_CALOUT is HIGH try higher trimming */
 				trimmingvaluep2 += delta;
 			} else {
 				/* OPAMP_CSR_CALOUT is LOW try lower trimming */
@@ -272,18 +254,14 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 			delta >>= 1U;
 		}
 
-		/* Still need to check if right calibration is current value or
-		 * one step below */
-		/* Indeed the first value that causes the OUTCAL bit to change
-		 * from 1 to 0  */
+		/* Still need to check if right calibration is current value or one step below */
+		/* Indeed the first value that causes the OUTCAL bit to change from 1 to 0  */
 		/* Set candidate trimming */
 		MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
 		MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 
-		/* OFFTRIMmax delay 1 ms as per datasheet (electrical
-		 * characteristics */
-		/* Offset trim time: during calibration, minimum time needed
-		 * between */
+		/* OFFTRIMmax delay 1 ms as per datasheet (electrical characteristics */
+		/* Offset trim time: during calibration, minimum time needed between */
 		/* two steps to have 1 mV accuracy */
 		HAL_Delay(OPAMP_TRIMMING_DELAY);
 
@@ -308,15 +286,13 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 		CLEAR_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALON);
 
 		/* Self calibration is successful */
-		/* Store calibration (user trimming) results in init structure.
-		 */
+		/* Store calibration (user trimming) results in init structure. */
 
 		/* Set user trimming mode */
 		hopamp1->Init.UserTrimming = OPAMP_TRIMMING_USER;
 		hopamp2->Init.UserTrimming = OPAMP_TRIMMING_USER;
 
-		/* Affect calibration parameters depending on mode normal/low
-		 * power */
+		/* Affect calibration parameters depending on mode normal/low power */
 		if (hopamp1->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER) {
 			/* Write calibration result N */
 			hopamp1->Init.TrimmingValueN = trimmingvaluen1;

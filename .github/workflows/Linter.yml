@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -19,12 +19,12 @@ jobs:
       contents: read
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
 
       - name: Validate Configuration Files
-        uses: kehoecj/validate-configs-action@v4
+        uses: kehoecj/validate-configs-action@55242af1509991b2b18e2cf120eb4083a33e5c4b  # v4.0.1
 
   codeql:
     name: Analyze Code
@@ -47,17 +47,19 @@ jobs:
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        fetch-depth: 1
 
     - name: Install Arm Toolchain
       if: matrix.build_mode == 'manual'
-      uses: carlosperate/arm-none-eabi-gcc-action@v1
+      uses: carlosperate/arm-none-eabi-gcc-action@2ca034649a66909ef5382c90ffb5d26711d2f266  # v1.12.0
       with:
         release: '12.2.Rel1'
 
     - name: Setup Shared Compilation Cache
       if: matrix.build_mode == 'manual'
-      uses: actions/cache@v5
+      uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306  # v5.0.3
       with:
         path: ${{ env.SCCACHE_DIR }}
         key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -67,14 +69,14 @@ jobs:
 
     - name: Setup Shared Compilation Cache
       if: matrix.build_mode == 'manual'
-      uses: mozilla-actions/sccache-action@v0.0.9
+      uses: mozilla-actions/sccache-action@7d986dd989559c6ecdb630a3fd2557667be217ad  # v0.0.9
 
     - name: Setup Trap Cache Directory
       if: matrix.build_mode == 'manual'
       run: mkdir -p /home/runner/work/_temp/trapCaches/cpp/tarballs
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
+      uses: github/codeql-action/init@9e907b5e64f6b83e7804b09294d44122997950d6  # v4.32.3
       with:
         languages: ${{ matrix.languages }}
         build-mode: ${{ matrix.build_mode }}
@@ -85,15 +87,16 @@ jobs:
 
     - name: Analyze CodeQL
       id: analyze
-      uses: github/codeql-action/analyze@v4
-
-    - name: Upload Analysis Results
-      if: always()
-      uses: actions/upload-artifact@v6
+      uses: github/codeql-action/analyze@9e907b5e64f6b83e7804b09294d44122997950d6 # v4.32.3
       with:
-        name: codeql-${{ matrix.languages }}
-        path: ${{ steps.analyze.outputs.sarif-output }}
-        retention-days: 2
+        category: ${{ matrix.languages }}
+        upload: never
+
+    - name: Upload CodeQL Results
+      if: always()
+      uses: github/codeql-action/upload-sarif@9e907b5e64f6b83e7804b09294d44122997950d6  # v4.32.3
+      with:
+        sarif_file: ${{ steps.analyze.outputs.sarif-output }}
 
   perllinter:
     name: Perl Linter
@@ -103,12 +106,12 @@ jobs:
       checks: write
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@v1
+        uses: shogo82148/actions-setup-perl@b6cfc127f1b0a63ac98797800f641494d80f42f8  # v1.37.1
         with:
           install-modules: 'Perl::Critic'
 
@@ -161,7 +164,7 @@ jobs:
 
       - name: Upload Annotations
         if: failure() && github.event_name == 'pull_request'
-        uses: yuzutech/annotations-action@v0.5.0
+        uses: yuzutech/annotations-action@0e061a6e3ac848299310b6429b60d67cafd4e7f8  # v0.5.0
         with:
           title: 'Perl Linter Findings'
           repo-token: ${{ github.token }}

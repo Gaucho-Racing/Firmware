@@ -45,16 +45,13 @@ extern "C" {
  */
 typedef struct {
 	uint32_t Prescaler; /*!< Select the prescaler of the IWDG.
-				 This parameter can be a value of @ref
-			       IWDG_Prescaler */
+				 This parameter can be a value of @ref IWDG_Prescaler */
 
 	uint32_t Reload; /*!< Specifies the IWDG down-counter reload value.
-			      This parameter must be a number between Min_Data =
-			    0 and Max_Data = 0x0FFF */
+			      This parameter must be a number between Min_Data = 0 and Max_Data = 0x0FFF */
 
-	uint32_t Window; /*!< Specifies the window value to be compared to the
-			    down-counter. This parameter must be a number
-			    between Min_Data = 0 and Max_Data = 0x0FFF */
+	uint32_t Window; /*!< Specifies the window value to be compared to the down-counter.
+			      This parameter must be a number between Min_Data = 0 and Max_Data = 0x0FFF */
 
 } IWDG_InitTypeDef;
 

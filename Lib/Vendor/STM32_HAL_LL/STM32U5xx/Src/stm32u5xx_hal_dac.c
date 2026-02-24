@@ -1439,7 +1439,10 @@ HAL_DAC_StateTypeDef HAL_DAC_GetState(const DAC_HandleTypeDef *hdac)
  *         the configuration information for the specified DAC.
  * @retval DAC Error Code
  */
-uint32_t HAL_DAC_GetError(const DAC_HandleTypeDef *hdac) { return hdac->ErrorCode; }
+uint32_t HAL_DAC_GetError(const DAC_HandleTypeDef *hdac)
+{
+	return hdac->ErrorCode;
+}
 
 /**
  * @}

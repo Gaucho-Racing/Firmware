@@ -2572,7 +2572,10 @@ HAL_StatusTypeDef HAL_XSPI_SetFifoThreshold(XSPI_HandleTypeDef *hxspi, uint32_t 
  * @param  hxspi : XSPI handle.
  * @retval Fifo threshold
  */
-uint32_t HAL_XSPI_GetFifoThreshold(const XSPI_HandleTypeDef *hxspi) { return ((READ_BIT(hxspi->Instance->CR, XSPI_CR_FTHRES) >> XSPI_CR_FTHRES_Pos) + 1U); }
+uint32_t HAL_XSPI_GetFifoThreshold(const XSPI_HandleTypeDef *hxspi)
+{
+	return ((READ_BIT(hxspi->Instance->CR, XSPI_CR_FTHRES) >> XSPI_CR_FTHRES_Pos) + 1U);
+}
 
 /** @brief  Set XSPI Memory Type.
  * @param  hxspi     : XSPI handle.
@@ -2670,7 +2673,10 @@ HAL_StatusTypeDef HAL_XSPI_SetTimeout(XSPI_HandleTypeDef *hxspi, uint32_t Timeou
  * @param  hxspi : XSPI handle
  * @retval XSPI Error Code
  */
-uint32_t HAL_XSPI_GetError(const XSPI_HandleTypeDef *hxspi) { return hxspi->ErrorCode; }
+uint32_t HAL_XSPI_GetError(const XSPI_HandleTypeDef *hxspi)
+{
+	return hxspi->ErrorCode;
+}
 
 /**
  * @brief  Return the XSPI handle state.

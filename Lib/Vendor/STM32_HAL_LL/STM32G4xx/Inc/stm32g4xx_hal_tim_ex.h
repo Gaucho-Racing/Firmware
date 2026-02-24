@@ -45,22 +45,17 @@ extern "C" {
  */
 
 typedef struct {
-	uint32_t IC1Polarity; /*!< Specifies the active edge of the input
-				 signal. This parameter can be a value of @ref
-				 TIM_Input_Capture_Polarity */
+	uint32_t IC1Polarity; /*!< Specifies the active edge of the input signal.
+				   This parameter can be a value of @ref TIM_Input_Capture_Polarity */
 
 	uint32_t IC1Prescaler; /*!< Specifies the Input Capture Prescaler.
-				    This parameter can be a value of @ref
-				  TIM_Input_Capture_Prescaler */
+				    This parameter can be a value of @ref TIM_Input_Capture_Prescaler */
 
 	uint32_t IC1Filter; /*!< Specifies the input capture filter.
-				 This parameter can be a number between Min_Data
-			       = 0x0 and Max_Data = 0xF */
+				 This parameter can be a number between Min_Data = 0x0 and Max_Data = 0xF */
 
-	uint32_t Commutation_Delay; /*!< Specifies the pulse value to be loaded into
-				       the Capture Compare Register. This parameter
-				       can be a number between Min_Data = 0x0000 and
-				       Max_Data = 0xFFFF */
+	uint32_t Commutation_Delay; /*!< Specifies the pulse value to be loaded into the Capture Compare Register.
+					 This parameter can be a number between Min_Data = 0x0000 and Max_Data = 0xFFFF */
 } TIM_HallSensor_InitTypeDef;
 
 /**
@@ -68,40 +63,28 @@ typedef struct {
  */
 typedef struct {
 	uint32_t Source;   /*!< Specifies the source of the timer break input.
-				This parameter can be a value of @ref
-			      TIMEx_Break_Input_Source */
-	uint32_t Enable;   /*!< Specifies whether or not the break input source is
-			      enabled. This parameter can be a value of @ref
-			      TIMEx_Break_Input_Source_Enable */
+				This parameter can be a value of @ref TIMEx_Break_Input_Source */
+	uint32_t Enable;   /*!< Specifies whether or not the break input source is enabled.
+				This parameter can be a value of @ref TIMEx_Break_Input_Source_Enable */
 	uint32_t Polarity; /*!< Specifies the break input source polarity.
-				This parameter can be a value of @ref
-			      TIMEx_Break_Input_Source_Polarity */
+				This parameter can be a value of @ref TIMEx_Break_Input_Source_Polarity */
 } TIMEx_BreakInputConfigTypeDef;
 
 /**
  * @brief  TIM Encoder index configuration
  */
 typedef struct {
-	uint32_t Polarity; /*!< TIM Encoder index polarity.This parameter can be
-			      a value of @ref TIMEx_Encoder_Index_Polarity */
+	uint32_t Polarity; /*!< TIM Encoder index polarity.This parameter can be a value of @ref TIMEx_Encoder_Index_Polarity */
 
-	uint32_t Prescaler; /*!< TIM Encoder index prescaler.This parameter can be a
-			       value of @ref TIMEx_Encoder_Index_Prescaler */
+	uint32_t Prescaler; /*!< TIM Encoder index prescaler.This parameter can be a value of @ref TIMEx_Encoder_Index_Prescaler */
 
-	uint32_t Filter; /*!< TIM Encoder index filter.This parameter can be a
-			    number between Min_Data = 0x0 and Max_Data = 0xF */
+	uint32_t Filter; /*!< TIM Encoder index filter.This parameter can be a number between Min_Data = 0x0 and Max_Data = 0xF */
 
-	FunctionalState FirstIndexEnable; /*!< Specifies whether or not the encoder first
-					     index is enabled.This parameter value can be
-					     ENABLE or DISABLE. */
+	FunctionalState FirstIndexEnable; /*!< Specifies whether or not the encoder first index is enabled.This parameter value can be ENABLE or DISABLE. */
 
-	uint32_t Position; /*!< Specifies in which AB input configuration the
-			      index event resets the counter.This parameter can
-			      be a value of @ref TIMEx_Encoder_Index_Position */
+	uint32_t Position; /*!< Specifies in which AB input configuration the index event resets the counter.This parameter can be a value of @ref TIMEx_Encoder_Index_Position */
 
-	uint32_t Direction; /*!< Specifies in which counter direction the index
-			       event resets the counter.This parameter can be a
-			       value of @ref TIMEx_Encoder_Index_Direction */
+	uint32_t Direction; /*!< Specifies in which counter direction the index event resets the counter.This parameter can be a value of @ref TIMEx_Encoder_Index_Direction */
 
 } TIMEx_EncoderIndexConfigTypeDef;
 
@@ -132,11 +115,9 @@ typedef struct {
 #if defined(COMP7)
 #define TIM_TIM1_ETR_COMP7 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
 #endif										       /* COMP7 */
-#define TIM_TIM1_ETR_ADC1_AWD1                                                                                                                                                                         \
-	TIM1_AF1_ETRSEL_3					       /*!< ADC1 analog watchdog 1                                                                                                     \
-									*/
-#define TIM_TIM1_ETR_ADC1_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ADC1 analog watchdog 2 */
-#define TIM_TIM1_ETR_ADC1_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1) /*!< ADC1 analog watchdog 3 */
+#define TIM_TIM1_ETR_ADC1_AWD1 TIM1_AF1_ETRSEL_3				       /*!< ADC1 analog watchdog 1 */
+#define TIM_TIM1_ETR_ADC1_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0)		       /*!< ADC1 analog watchdog 2 */
+#define TIM_TIM1_ETR_ADC1_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1)		       /*!< ADC1 analog watchdog 3 */
 #if defined(ADC4)
 #define TIM_TIM1_ETR_ADC4_AWD1 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ADC4 analog watchdog 1 */
 #define TIM_TIM1_ETR_ADC4_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_2)			   /*!< ADC4 analog watchdog 2 */
@@ -236,11 +217,9 @@ typedef struct {
 #if defined(COMP7)
 #define TIM_TIM8_ETR_COMP7 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
 #endif										       /* COMP7 */
-#define TIM_TIM8_ETR_ADC2_AWD1                                                                                                                                                                         \
-	TIM1_AF1_ETRSEL_3					       /*!< ADC2 analog watchdog 1                                                                                                     \
-									*/
-#define TIM_TIM8_ETR_ADC2_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ADC2 analog watchdog 2 */
-#define TIM_TIM8_ETR_ADC2_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1) /*!< ADC2 analog watchdog 3 */
+#define TIM_TIM8_ETR_ADC2_AWD1 TIM1_AF1_ETRSEL_3				       /*!< ADC2 analog watchdog 1 */
+#define TIM_TIM8_ETR_ADC2_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0)		       /*!< ADC2 analog watchdog 2 */
+#define TIM_TIM8_ETR_ADC2_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1)		       /*!< ADC2 analog watchdog 3 */
 #if defined(ADC3)
 #define TIM_TIM8_ETR_ADC3_AWD1 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ADC3 analog watchdog 1 */
 #define TIM_TIM8_ETR_ADC3_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_2)			   /*!< ADC3 analog watchdog 2 */
@@ -262,11 +241,9 @@ typedef struct {
 #if defined(COMP7)
 #define TIM_TIM20_ETR_COMP7 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
 #endif											/* COMP7 */
-#define TIM_TIM20_ETR_ADC3_AWD1                                                                                                                                                                        \
-	TIM1_AF1_ETRSEL_3						/*!< ADC3 analog watchdog 1                                                                                                    \
-									 */
-#define TIM_TIM20_ETR_ADC3_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ADC3 analog watchdog 2 */
-#define TIM_TIM20_ETR_ADC3_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1) /*!< ADC3 analog watchdog 3 */
+#define TIM_TIM20_ETR_ADC3_AWD1 TIM1_AF1_ETRSEL_3					/*!< ADC3 analog watchdog 1 */
+#define TIM_TIM20_ETR_ADC3_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0)			/*!< ADC3 analog watchdog 2 */
+#define TIM_TIM20_ETR_ADC3_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1)			/*!< ADC3 analog watchdog 3 */
 #if defined(ADC5)
 #define TIM_TIM20_ETR_ADC5_AWD1 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ADC5 analog watchdog 1 */
 #define TIM_TIM20_ETR_ADC5_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_2)			    /*!< ADC5 analog watchdog 2 */
@@ -289,9 +266,7 @@ typedef struct {
 /** @defgroup TIMEx_Break_Input_Source TIM Extended Break input source
  * @{
  */
-#define TIM_BREAKINPUTSOURCE_BKIN                                                                                                                                                                      \
-	0x00000001U			       /*!< An external source (GPIO) is connected to the BKIN                                                                                                 \
-						  pin  */
+#define TIM_BREAKINPUTSOURCE_BKIN 0x00000001U  /*!< An external source (GPIO) is connected to the BKIN pin  */
 #define TIM_BREAKINPUTSOURCE_COMP1 0x00000002U /*!< The COMP1 output is connected to the break input */
 #define TIM_BREAKINPUTSOURCE_COMP2 0x00000004U /*!< The COMP2 output is connected to the break input */
 #define TIM_BREAKINPUTSOURCE_COMP3 0x00000008U /*!< The COMP3 output is connected to the break input */
@@ -309,8 +284,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup TIMEx_Break_Input_Source_Enable TIM Extended Break input source
- * enabling
+/** @defgroup TIMEx_Break_Input_Source_Enable TIM Extended Break input source enabling
  * @{
  */
 #define TIM_BREAKINPUTSOURCE_DISABLE 0x00000000U /*!< Break input source is disabled */
@@ -319,8 +293,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup TIMEx_Break_Input_Source_Polarity TIM Extended Break input
- * polarity
+/** @defgroup TIMEx_Break_Input_Source_Polarity TIM Extended Break input polarity
  * @{
  */
 #define TIM_BREAKINPUTSOURCE_POLARITY_LOW 0x00000001U  /*!< Break input source is active low */
@@ -332,17 +305,13 @@ typedef struct {
 /** @defgroup TIMEx_Timer_Input_Selection TIM Extended Timer input selection
  * @{
  */
-#define TIM_TIM1_TI1_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM1 input 1 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM1_TI1_GPIO 0x00000000U				     /*!< TIM1 input 1 is connected to GPIO */
 #define TIM_TIM1_TI1_COMP1 TIM_TISEL_TI1SEL_0			     /*!< TIM1 input 1 is connected to COMP1_OUT */
 #define TIM_TIM1_TI1_COMP2 TIM_TISEL_TI1SEL_1			     /*!< TIM1 input 1 is connected to COMP2_OUT */
 #define TIM_TIM1_TI1_COMP3 (TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM1 input 1 is connected to COMP3_OUT */
 #define TIM_TIM1_TI1_COMP4 TIM_TISEL_TI1SEL_2			     /*!< TIM1 input 1 is connected to COMP4_OUT */
 
-#define TIM_TIM2_TI1_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM2 input 1 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM2_TI1_GPIO 0x00000000U				     /*!< TIM2 input 1 is connected to GPIO */
 #define TIM_TIM2_TI1_COMP1 TIM_TISEL_TI1SEL_0			     /*!< TIM2 input 1 is connected to COMP1_OUT */
 #define TIM_TIM2_TI1_COMP2 TIM_TISEL_TI1SEL_1			     /*!< TIM2 input 1 is connected to COMP2_OUT */
 #define TIM_TIM2_TI1_COMP3 (TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM2 input 1 is connected to COMP3_OUT */
@@ -351,9 +320,7 @@ typedef struct {
 #define TIM_TIM2_TI1_COMP5 (TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_0) /*!< TIM2 input 1 is connected to COMP5_OUT */
 #endif								     /* COMP5 */
 
-#define TIM_TIM2_TI2_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM2 input 2 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM2_TI2_GPIO 0x00000000U				     /*!< TIM2 input 2 is connected to GPIO */
 #define TIM_TIM2_TI2_COMP1 TIM_TISEL_TI2SEL_0			     /*!< TIM2 input 2 is connected to COMP1_OUT */
 #define TIM_TIM2_TI2_COMP2 TIM_TISEL_TI2SEL_1			     /*!< TIM2 input 2 is connected to COMP2_OUT */
 #define TIM_TIM2_TI2_COMP3 (TIM_TISEL_TI2SEL_1 | TIM_TISEL_TI2SEL_0) /*!< TIM2 input 2 is connected to COMP3_OUT */
@@ -362,20 +329,14 @@ typedef struct {
 #define TIM_TIM2_TI2_COMP6 (TIM_TISEL_TI2SEL_2 | TIM_TISEL_TI2SEL_0) /*!< TIM2 input 2 is connected to COMP6_OUT */
 #endif								     /* COMP6 */
 
-#define TIM_TIM2_TI3_GPIO                                                                                                                                                                              \
-	0x00000000U			      /*!< TIM2 input 3 is connected to GPIO                                                                                                                   \
-					       */
+#define TIM_TIM2_TI3_GPIO 0x00000000U	      /*!< TIM2 input 3 is connected to GPIO */
 #define TIM_TIM2_TI3_COMP4 TIM_TISEL_TI3SEL_0 /*!< TIM2 input 3 is connected to COMP4_OUT */
 
-#define TIM_TIM2_TI4_GPIO                                                                                                                                                                              \
-	0x00000000U			      /*!< TIM2 input 4 is connected to GPIO                                                                                                                   \
-					       */
+#define TIM_TIM2_TI4_GPIO 0x00000000U	      /*!< TIM2 input 4 is connected to GPIO */
 #define TIM_TIM2_TI4_COMP1 TIM_TISEL_TI4SEL_0 /*!< TIM2 input 4 is connected to COMP1_OUT */
 #define TIM_TIM2_TI4_COMP2 TIM_TISEL_TI4SEL_1 /*!< TIM2 input 4 is connected to COMP2_OUT */
 
-#define TIM_TIM3_TI1_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM3 input 1 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM3_TI1_GPIO 0x00000000U				     /*!< TIM3 input 1 is connected to GPIO */
 #define TIM_TIM3_TI1_COMP1 TIM_TISEL_TI1SEL_0			     /*!< TIM3 input 1 is connected to COMP1_OUT */
 #define TIM_TIM3_TI1_COMP2 TIM_TISEL_TI1SEL_1			     /*!< TIM3 input 1 is connected to COMP2_OUT */
 #define TIM_TIM3_TI1_COMP3 (TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM3 input 1 is connected to COMP3_OUT */
@@ -390,9 +351,7 @@ typedef struct {
 #define TIM_TIM3_TI1_COMP7 (TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM3 input 1 is connected to COMP7_OUT */
 #endif											  /* COMP7 */
 
-#define TIM_TIM3_TI2_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM3 input 2 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM3_TI2_GPIO 0x00000000U				     /*!< TIM3 input 2 is connected to GPIO */
 #define TIM_TIM3_TI2_COMP1 TIM_TISEL_TI2SEL_0			     /*!< TIM3 input 2 is connected to COMP1_OUT */
 #define TIM_TIM3_TI2_COMP2 TIM_TISEL_TI2SEL_1			     /*!< TIM3 input 2 is connected to COMP2_OUT */
 #define TIM_TIM3_TI2_COMP3 (TIM_TISEL_TI2SEL_1 | TIM_TISEL_TI2SEL_0) /*!< TIM3 input 2 is connected to COMP3_OUT */
@@ -407,14 +366,10 @@ typedef struct {
 #define TIM_TIM3_TI2_COMP7 (TIM_TISEL_TI2SEL_2 | TIM_TISEL_TI2SEL_1 | TIM_TISEL_TI2SEL_0) /*!< TIM3 input 2 is connected to COMP7_OUT */
 #endif											  /* COMP7 */
 
-#define TIM_TIM3_TI3_GPIO                                                                                                                                                                              \
-	0x00000000U			      /*!< TIM3 input 3 is connected to GPIO                                                                                                                   \
-					       */
+#define TIM_TIM3_TI3_GPIO 0x00000000U	      /*!< TIM3 input 3 is connected to GPIO */
 #define TIM_TIM3_TI3_COMP3 TIM_TISEL_TI3SEL_0 /*!< TIM3 input 3 is connected to COMP3_OUT */
 
-#define TIM_TIM4_TI1_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM4 input 1 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM4_TI1_GPIO 0x00000000U				     /*!< TIM4 input 1 is connected to GPIO */
 #define TIM_TIM4_TI1_COMP1 TIM_TISEL_TI1SEL_0			     /*!< TIM4 input 1 is connected to COMP1_OUT */
 #define TIM_TIM4_TI1_COMP2 TIM_TISEL_TI1SEL_1			     /*!< TIM4 input 1 is connected to COMP2_OUT */
 #define TIM_TIM4_TI1_COMP3 (TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM4 input 1 is connected to COMP3_OUT */
@@ -429,9 +384,7 @@ typedef struct {
 #define TIM_TIM4_TI1_COMP7 (TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM4 input 1 is connected to COMP7_OUT */
 #endif											  /* COMP7 */
 
-#define TIM_TIM4_TI2_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM4 input 2 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM4_TI2_GPIO 0x00000000U				     /*!< TIM4 input 2 is connected to GPIO */
 #define TIM_TIM4_TI2_COMP1 TIM_TISEL_TI2SEL_0			     /*!< TIM4 input 2 is connected to COMP1_OUT */
 #define TIM_TIM4_TI2_COMP2 TIM_TISEL_TI2SEL_1			     /*!< TIM4 input 2 is connected to COMP2_OUT */
 #define TIM_TIM4_TI2_COMP3 (TIM_TISEL_TI2SEL_1 | TIM_TISEL_TI2SEL_0) /*!< TIM4 input 2 is connected to COMP3_OUT */
@@ -446,24 +399,18 @@ typedef struct {
 #define TIM_TIM4_TI2_COMP7 (TIM_TISEL_TI2SEL_2 | TIM_TISEL_TI2SEL_1 | TIM_TISEL_TI2SEL_0) /*!< TIM4 input 2 is connected to COMP7_OUT */
 #endif											  /* COMP7 */
 
-#define TIM_TIM4_TI3_GPIO                                                                                                                                                                              \
-	0x00000000U /*!< TIM4 input 3 is connected to GPIO                                                                                                                                             \
-		     */
+#define TIM_TIM4_TI3_GPIO 0x00000000U /*!< TIM4 input 3 is connected to GPIO */
 #if defined(COMP5)
 #define TIM_TIM4_TI3_COMP5 TIM_TISEL_TI3SEL_0 /*!< TIM4 input 3 is connected to COMP5_OUT */
 #endif					      /* COMP5 */
 
-#define TIM_TIM4_TI4_GPIO                                                                                                                                                                              \
-	0x00000000U /*!< TIM4 input 4 is connected to GPIO                                                                                                                                             \
-		     */
+#define TIM_TIM4_TI4_GPIO 0x00000000U /*!< TIM4 input 4 is connected to GPIO */
 #if defined(COMP6)
 #define TIM_TIM4_TI4_COMP6 TIM_TISEL_TI4SEL_0 /*!< TIM4 input 4 is connected to COMP6_OUT */
 #endif					      /* COMP6 */
 
 #if defined(TIM5)
-#define TIM_TIM5_TI1_GPIO                                                                                                                                                                              \
-	0x00000000U									  /*!< TIM5 input 1 is connected to GPIO                                                                       \
-											   */
+#define TIM_TIM5_TI1_GPIO 0x00000000U							  /*!< TIM5 input 1 is connected to GPIO */
 #define TIM_TIM5_TI1_LSI TIM_TISEL_TI1SEL_0						  /*!< TIM5 input 1 is connected to LSI */
 #define TIM_TIM5_TI1_LSE TIM_TISEL_TI1SEL_1						  /*!< TIM5 input 1 is connected to LSE */
 #define TIM_TIM5_TI1_RTC_WK (TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0)			  /*!< TIM5 input 1 is connected to RTC_WAKEUP */
@@ -481,9 +428,7 @@ typedef struct {
 #define TIM_TIM5_TI1_COMP7 (TIM_TISEL_TI1SEL_3 | TIM_TISEL_TI1SEL_1) /*!< TIM5 input 1 is connected to COMP7_OUT */
 #endif								     /* COMP7 */
 
-#define TIM_TIM5_TI2_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM5 input 2 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM5_TI2_GPIO 0x00000000U				     /*!< TIM5 input 2 is connected to GPIO */
 #define TIM_TIM5_TI2_COMP1 TIM_TISEL_TI2SEL_0			     /*!< TIM5 input 2 is connected to COMP1_OUT */
 #define TIM_TIM5_TI2_COMP2 TIM_TISEL_TI2SEL_1			     /*!< TIM5 input 2 is connected to COMP2_OUT */
 #define TIM_TIM5_TI2_COMP3 (TIM_TISEL_TI2SEL_1 | TIM_TISEL_TI2SEL_0) /*!< TIM5 input 2 is connected to COMP3_OUT */
@@ -499,9 +444,7 @@ typedef struct {
 #endif											  /* COMP7 */
 #endif											  /* TIM5 */
 
-#define TIM_TIM8_TI1_GPIO                                                                                                                                                                              \
-	0x00000000U						     /*!< TIM8 input 1 is connected to GPIO                                                                                            \
-								      */
+#define TIM_TIM8_TI1_GPIO 0x00000000U				     /*!< TIM8 input 1 is connected to GPIO */
 #define TIM_TIM8_TI1_COMP1 TIM_TISEL_TI1SEL_0			     /*!< TIM8 input 1 is connected to COMP1_OUT */
 #define TIM_TIM8_TI1_COMP2 TIM_TISEL_TI1SEL_1			     /*!< TIM8 input 1 is connected to COMP2_OUT */
 #define TIM_TIM8_TI1_COMP3 (TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM8 input 1 is connected to COMP3_OUT */
@@ -559,8 +502,7 @@ typedef struct {
  * @}
  */
 
-/** @defgroup TIMEx_SMS_Preload_Enable TIM Extended Bitfield SMS preload
- * enabling
+/** @defgroup TIMEx_SMS_Preload_Enable TIM Extended Bitfield SMS preload enabling
  * @{
  */
 #define TIM_SMS_PRELOAD_SOURCE_UPDATE 0x00000000U   /*!< Prelaod of SMS bitfield is disabled */
@@ -576,12 +518,8 @@ typedef struct {
 #define TIM_ENCODERINDEX_POSITION_01 TIM_ECR_IPOS_0		       /*!< Encoder index position is AB=01 */
 #define TIM_ENCODERINDEX_POSITION_10 TIM_ECR_IPOS_1		       /*!< Encoder index position is AB=10 */
 #define TIM_ENCODERINDEX_POSITION_11 (TIM_ECR_IPOS_1 | TIM_ECR_IPOS_0) /*!< Encoder index position is AB=11 */
-#define TIM_ENCODERINDEX_POSITION_0                                                                                                                                                                    \
-	0x00000000U /*!< In directional clock mode or clock plus direction                                                                                                                             \
-		       mode, index resets the counter when clock is 0 */
-#define TIM_ENCODERINDEX_POSITION_1                                                                                                                                                                    \
-	TIM_ECR_IPOS_0 /*!< In directional clock mode or clock plus direction                                                                                                                          \
-			  mode, index resets the counter when clock is 1 */
+#define TIM_ENCODERINDEX_POSITION_0 0x00000000U			       /*!< In directional clock mode or clock plus direction mode, index resets the counter when clock is 0 */
+#define TIM_ENCODERINDEX_POSITION_1 TIM_ECR_IPOS_0		       /*!< In directional clock mode or clock plus direction mode, index resets the counter when clock is 1 */
 /**
  * @}
  */
@@ -590,10 +528,8 @@ typedef struct {
  * @{
  */
 #define TIM_ENCODERINDEX_DIRECTION_UP_DOWN 0x00000000U /*!< Index resets the counter whatever the direction  */
-#define TIM_ENCODERINDEX_DIRECTION_UP TIM_ECR_IDIR_0   /*!< Index resets the counter when up-counting only */
-#define TIM_ENCODERINDEX_DIRECTION_DOWN                                                                                                                                                                \
-	TIM_ECR_IDIR_1 /*!< Index resets the counter when down-counting only                                                                                                                           \
-			*/
+#define TIM_ENCODERINDEX_DIRECTION_UP TIM_ECR_IDIR_0   /*!< Index resets the counter when up-counting only   */
+#define TIM_ENCODERINDEX_DIRECTION_DOWN TIM_ECR_IDIR_1 /*!< Index resets the counter when down-counting only */
 /**
  * @}
  */
@@ -607,20 +543,13 @@ typedef struct {
  * @}
  */
 
-/** @defgroup TIMEx_Encoder_Index_Prescaler TIM Extended Encodder index
- * prescaler
+/** @defgroup TIMEx_Encoder_Index_Prescaler TIM Extended Encodder index prescaler
  * @{
  */
-#define TIM_ENCODERINDEX_PRESCALER_DIV1 TIM_ETRPRESCALER_DIV1 /*!< No prescaler is used */
-#define TIM_ENCODERINDEX_PRESCALER_DIV2                                                                                                                                                                \
-	TIM_ETRPRESCALER_DIV2 /*!< Prescaler for External ETR pin: Capture                                                                                                                             \
-				 performed once every 2 events. */
-#define TIM_ENCODERINDEX_PRESCALER_DIV4                                                                                                                                                                \
-	TIM_ETRPRESCALER_DIV4 /*!< Prescaler for External ETR pin: Capture                                                                                                                             \
-				 performed once every 4 events. */
-#define TIM_ENCODERINDEX_PRESCALER_DIV8                                                                                                                                                                \
-	TIM_ETRPRESCALER_DIV8 /*!< Prescaler for External ETR pin: Capture                                                                                                                             \
-				 performed once every 8 events. */
+#define TIM_ENCODERINDEX_PRESCALER_DIV1 TIM_ETRPRESCALER_DIV1 /*!< No prescaler is used                                                   */
+#define TIM_ENCODERINDEX_PRESCALER_DIV2 TIM_ETRPRESCALER_DIV2 /*!< Prescaler for External ETR pin: Capture performed once every 2 events. */
+#define TIM_ENCODERINDEX_PRESCALER_DIV4 TIM_ETRPRESCALER_DIV4 /*!< Prescaler for External ETR pin: Capture performed once every 4 events. */
+#define TIM_ENCODERINDEX_PRESCALER_DIV8 TIM_ETRPRESCALER_DIV8 /*!< Prescaler for External ETR pin: Capture performed once every 8 events. */
 /**
  * @}
  */
@@ -636,8 +565,7 @@ typedef struct {
  */
 
 /**
- * @brief  HELPER macro calculating the prescaler value to achieve the required
- * counter clock frequency.
+ * @brief  HELPER macro calculating the prescaler value to achieve the required counter clock frequency.
  * @note   ex: @ref __HAL_TIM_CALC_PSC(80000000, 1000000);
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
  * @param  __CNTCLK__ counter clock frequency (in Hz)
@@ -646,8 +574,7 @@ typedef struct {
 #define __HAL_TIM_CALC_PSC(__TIMCLK__, __CNTCLK__) ((__TIMCLK__) >= (__CNTCLK__)) ? (uint32_t)((__TIMCLK__) / (__CNTCLK__) - 1U) : 0U
 
 /**
- * @brief  HELPER macro calculating the auto-reload value to achieve the
- * required output signal frequency.
+ * @brief  HELPER macro calculating the auto-reload value to achieve the required output signal frequency.
  * @note   ex: @ref __HAL_TIM_CALC_PERIOD(1000000, 0, 10000);
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
  * @param  __PSC__ prescaler
@@ -657,8 +584,8 @@ typedef struct {
 #define __HAL_TIM_CALC_PERIOD(__TIMCLK__, __PSC__, __FREQ__) (((__TIMCLK__) / ((__PSC__) + 1U)) >= (__FREQ__)) ? ((__TIMCLK__) / ((__FREQ__) * ((__PSC__) + 1U)) - 1U) : 0U
 
 /**
- * @brief  HELPER macro calculating the auto-reload value, with dithering
- * feature enabled, to achieve the required output signal frequency.
+ * @brief  HELPER macro calculating the auto-reload value, with dithering feature enabled, to achieve the required
+ *         output signal frequency.
  * @note   ex: @ref __HAL_TIM_CALC_PERIOD_DITHER(1000000, 0, 10000);
  * @note   This macro should be used only if dithering is already enabled
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
@@ -670,8 +597,8 @@ typedef struct {
 	(((__TIMCLK__) / ((__PSC__) + 1U)) >= (__FREQ__)) ? (uint32_t)(((uint64_t)(__TIMCLK__) * 16 / ((__FREQ__) * ((__PSC__) + 1U)) - 16U)) : 0U
 
 /**
- * @brief  HELPER macro calculating the compare value required to achieve the
- * required timer output compare active/inactive delay.
+ * @brief  HELPER macro calculating the compare value required to achieve the required timer output compare
+ *         active/inactive delay.
  * @note   ex: @ref __HAL_TIM_CALC_PULSE(1000000, 0, 10);
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
  * @param  __PSC__ prescaler
@@ -681,8 +608,8 @@ typedef struct {
 #define __HAL_TIM_CALC_PULSE(__TIMCLK__, __PSC__, __DELAY__) ((uint32_t)(((uint64_t)(__TIMCLK__) * (uint64_t)(__DELAY__)) / ((uint64_t)1000000U * (uint64_t)((__PSC__) + 1U))))
 
 /**
- * @brief  HELPER macro calculating the compare value, with dithering feature
- * enabled, to achieve the required timer output compare active/inactive delay.
+ * @brief  HELPER macro calculating the compare value, with dithering feature enabled, to achieve the required timer
+ *         output compare active/inactive delay.
  * @note   ex: @ref __HAL_TIM_CALC_PULSE_DITHER(1000000, 0, 10);
  * @note   This macro should be used only if dithering is already enabled
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
@@ -693,8 +620,8 @@ typedef struct {
 #define __HAL_TIM_CALC_PULSE_DITHER(__TIMCLK__, __PSC__, __DELAY__) ((uint32_t)(((uint64_t)(__TIMCLK__) * (uint64_t)(__DELAY__) * 16U) / ((uint64_t)1000000U * (uint64_t)((__PSC__) + 1U))))
 
 /**
- * @brief  HELPER macro calculating the auto-reload value to achieve the
- * required pulse duration (when the timer operates in one pulse mode).
+ * @brief  HELPER macro calculating the auto-reload value to achieve the required pulse duration
+ *        (when the timer operates in one pulse mode).
  * @note   ex: @ref __HAL_TIM_CALC_PERIOD_BY_DELAY(1000000, 0, 10, 20);
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
  * @param  __PSC__ prescaler
@@ -706,9 +633,8 @@ typedef struct {
 	((uint32_t)(__HAL_TIM_CALC_PULSE((__TIMCLK__), (__PSC__), (__PULSE__)) + __HAL_TIM_CALC_PULSE((__TIMCLK__), (__PSC__), (__DELAY__))))
 
 /**
- * @brief  HELPER macro calculating the auto-reload value, with dithering
- * feature enabled, to achieve the required pulse duration (when the timer
- * operates in one pulse mode).
+ * @brief  HELPER macro calculating the auto-reload value, with dithering feature enabled, to achieve the required
+ *         pulse duration (when the timer operates in one pulse mode).
  * @note   ex: @ref __HAL_TIM_CALC_PERIOD_DITHER_BY_DELAY(1000000, 0, 10, 20);
  * @note   This macro should be used only if dithering is already enabled
  * @param  __TIMCLK__ timer input clock frequency (in Hz)
@@ -1115,8 +1041,7 @@ typedef struct {
  * @{
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group1 Extended Timer Hall Sensor
- * functions
+/** @addtogroup TIMEx_Exported_Functions_Group1 Extended Timer Hall Sensor functions
  *  @brief    Timer Hall Sensor functions
  * @{
  */
@@ -1140,8 +1065,7 @@ HAL_StatusTypeDef HAL_TIMEx_HallSensor_Stop_DMA(TIM_HandleTypeDef *htim);
  * @}
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group2 Extended Timer Complementary
- * Output Compare functions
+/** @addtogroup TIMEx_Exported_Functions_Group2 Extended Timer Complementary Output Compare functions
  *  @brief   Timer Complementary Output Compare functions
  * @{
  */
@@ -1161,8 +1085,7 @@ HAL_StatusTypeDef HAL_TIMEx_OCN_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Chann
  * @}
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group3 Extended Timer Complementary PWM
- * functions
+/** @addtogroup TIMEx_Exported_Functions_Group3 Extended Timer Complementary PWM functions
  *  @brief    Timer Complementary PWM functions
  * @{
  */
@@ -1181,8 +1104,7 @@ HAL_StatusTypeDef HAL_TIMEx_PWMN_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Chan
  * @}
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group4 Extended Timer Complementary One
- * Pulse functions
+/** @addtogroup TIMEx_Exported_Functions_Group4 Extended Timer Complementary One Pulse functions
  *  @brief    Timer Complementary One Pulse functions
  * @{
  */
@@ -1198,8 +1120,7 @@ HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t 
  * @}
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group5 Extended Peripheral Control
- * functions
+/** @addtogroup TIMEx_Exported_Functions_Group5 Extended Peripheral Control functions
  *  @brief    Peripheral Control functions
  * @{
  */
@@ -1254,8 +1175,7 @@ void HAL_TIMEx_TransitionErrorCallback(TIM_HandleTypeDef *htim);
  * @}
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group7 Extended Peripheral State
- * functions
+/** @addtogroup TIMEx_Exported_Functions_Group7 Extended Peripheral State functions
  * @brief    Extended Peripheral State functions
  * @{
  */

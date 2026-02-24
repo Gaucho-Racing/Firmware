@@ -41,7 +41,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			# GR_ADC
 			# PERIPHERAL_CAN_LIB
 			BitManipulations_Lib
-			ConvenienceMacros_Lib
 	)
 	add_test(StateTicksTest StateTicksTest)
 
@@ -73,14 +72,12 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
-		Core/Src/syscalls.c
-		Core/Src/sysmem.c
-		Core/Src/system_stm32g4xx.c
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
 		Application/Src/CANutils.c
+		Application/Src/Lights.c
 )
 
 target_link_libraries(
@@ -90,7 +87,6 @@ target_link_libraries(
 		GR_ADC
 		PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
-		ConvenienceMacros_Lib
 )
 
 target_include_directories(

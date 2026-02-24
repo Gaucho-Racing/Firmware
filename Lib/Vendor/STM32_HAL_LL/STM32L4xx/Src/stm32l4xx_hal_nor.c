@@ -22,38 +22,36 @@
 		     ##### How to use this driver #####
   ==============================================================================
     [..]
-      This driver is a generic layered driver which contains a set of APIs used
-  to control NOR flash memories. It uses the FMC layer functions to interface
+      This driver is a generic layered driver which contains a set of APIs used to
+      control NOR flash memories. It uses the FMC layer functions to interface
       with NOR devices. This driver is used as follows:
 
-      (+) NOR flash memory configuration sequence using the function
-  HAL_NOR_Init() with control and timing parameters for both normal and extended
-  mode.
+      (+) NOR flash memory configuration sequence using the function HAL_NOR_Init()
+	  with control and timing parameters for both normal and extended mode.
 
-      (+) Read NOR flash memory manufacturer code and device IDs using the
-  function HAL_NOR_Read_ID(). The read information is stored in the
-  NOR_ID_TypeDef structure declared by the function caller.
+      (+) Read NOR flash memory manufacturer code and device IDs using the function
+	  HAL_NOR_Read_ID(). The read information is stored in the NOR_ID_TypeDef
+	  structure declared by the function caller.
 
-      (+) Access NOR flash memory by read/write data unit operations using the
-  functions HAL_NOR_Read(), HAL_NOR_Program().
+      (+) Access NOR flash memory by read/write data unit operations using the functions
+	  HAL_NOR_Read(), HAL_NOR_Program().
 
       (+) Perform NOR flash erase block/chip operations using the functions
 	  HAL_NOR_Erase_Block() and HAL_NOR_Erase_Chip().
 
       (+) Read the NOR flash CFI (common flash interface) IDs using the function
-	  HAL_NOR_Read_CFI(). The read information is stored in the
-  NOR_CFI_TypeDef structure declared by the function caller.
+	  HAL_NOR_Read_CFI(). The read information is stored in the NOR_CFI_TypeDef
+	  structure declared by the function caller.
 
-      (+) You can also control the NOR device by calling the control APIs
-  HAL_NOR_WriteOperation_Enable()/ HAL_NOR_WriteOperation_Disable() to
-  respectively enable/disable the NOR write operation
+      (+) You can also control the NOR device by calling the control APIs HAL_NOR_WriteOperation_Enable()/
+	  HAL_NOR_WriteOperation_Disable() to respectively enable/disable the NOR write operation
 
       (+) You can monitor the NOR device HAL state by calling the function
 	  HAL_NOR_GetState()
     [..]
-     (@) This driver is a set of generic APIs which handle standard NOR flash
-  operations. If a NOR flash device contains different operations and/or
-  implementations, it should be implemented separately.
+     (@) This driver is a set of generic APIs which handle standard NOR flash operations.
+	 If a NOR flash device contains different operations and/or implementations,
+	 it should be implemented separately.
 
      *** NOR HAL driver macros list ***
      =============================================
@@ -72,32 +70,30 @@
       it allows to register following callbacks:
 	(+) MspInitCallback    : NOR MspInit.
 	(+) MspDeInitCallback  : NOR MspDeInit.
-      This function takes as parameters the HAL peripheral handle, the Callback
-  ID and a pointer to the user callback function.
+      This function takes as parameters the HAL peripheral handle, the Callback ID
+      and a pointer to the user callback function.
 
-      Use function HAL_NOR_UnRegisterCallback() to reset a callback to the
-  default weak (overridden) function. It allows to reset following callbacks:
+      Use function HAL_NOR_UnRegisterCallback() to reset a callback to the default
+      weak (overridden) function. It allows to reset following callbacks:
 	(+) MspInitCallback    : NOR MspInit.
 	(+) MspDeInitCallback  : NOR MspDeInit.
-      This function) takes as parameters the HAL peripheral handle and the
-  Callback ID.
+      This function) takes as parameters the HAL peripheral handle and the Callback ID.
 
       By default, after the HAL_NOR_Init and if the state is HAL_NOR_STATE_RESET
-      all callbacks are reset to the corresponding legacy weak (overridden)
-  functions. Exception done for MspInit and MspDeInit callbacks that are
-  respectively reset to the legacy weak (overridden) functions in the
-  HAL_NOR_Init and  HAL_NOR_DeInit only when these callbacks are null (not
-  registered beforehand). If not, MspInit or MspDeInit are not null, the
-  HAL_NOR_Init and HAL_NOR_DeInit keep and use the user MspInit/MspDeInit
-  callbacks (registered beforehand)
+      all callbacks are reset to the corresponding legacy weak (overridden) functions.
+      Exception done for MspInit and MspDeInit callbacks that are respectively
+      reset to the legacy weak (overridden) functions in the HAL_NOR_Init
+      and  HAL_NOR_DeInit only when these callbacks are null (not registered beforehand).
+      If not, MspInit or MspDeInit are not null, the HAL_NOR_Init and HAL_NOR_DeInit
+      keep and use the user MspInit/MspDeInit callbacks (registered beforehand)
 
       Callbacks can be registered/unregistered in READY state only.
-      Exception done for MspInit/MspDeInit callbacks that can be
-  registered/unregistered in READY or RESET state, thus registered (user)
-  MspInit/DeInit callbacks can be used during the Init/DeInit. In that case
-  first register the MspInit/MspDeInit user callbacks using
-  HAL_NOR_RegisterCallback before calling HAL_NOR_DeInit or HAL_NOR_Init
-  function.
+      Exception done for MspInit/MspDeInit callbacks that can be registered/unregistered
+      in READY or RESET state, thus registered (user) MspInit/DeInit callbacks can be used
+      during the Init/DeInit.
+      In that case first register the MspInit/MspDeInit user callbacks
+      using HAL_NOR_RegisterCallback before calling HAL_NOR_DeInit
+      or HAL_NOR_Init function.
 
       When The compilation define USE_HAL_NOR_REGISTER_CALLBACKS is set to 0 or
       not defined, the callback registering feature is not available
@@ -212,8 +208,7 @@ static uint32_t uwNORMemoryDataWidth = NOR_MEMORY_8B;
  * @{
  */
 
-/** @defgroup NOR_Exported_Functions_Group1 Initialization and de-initialization
-functions
+/** @defgroup NOR_Exported_Functions_Group1 Initialization and de-initialization functions
   * @brief    Initialization and Configuration functions
   *
   @verbatim
@@ -361,8 +356,8 @@ __weak void HAL_NOR_MspInit(NOR_HandleTypeDef *hnor)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hnor);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_NOR_MspInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_NOR_MspInit could be implemented in the user file
 	 */
 }
 
@@ -377,8 +372,8 @@ __weak void HAL_NOR_MspDeInit(NOR_HandleTypeDef *hnor)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hnor);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_NOR_MspDeInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_NOR_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -395,8 +390,8 @@ __weak void HAL_NOR_MspWait(NOR_HandleTypeDef *hnor, uint32_t Timeout)
 	UNUSED(hnor);
 	UNUSED(Timeout);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_NOR_MspWait could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_NOR_MspWait could be implemented in the user file
 	 */
 }
 
@@ -780,8 +775,8 @@ HAL_StatusTypeDef HAL_NOR_ReadBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress
 }
 
 /**
-  * @brief  Writes a half-word buffer to the NOR memory. This function must be
-  used only with S29GL128P NOR memory.
+  * @brief  Writes a half-word buffer to the NOR memory. This function must be used
+	    only with S29GL128P NOR memory.
   * @param  hnor pointer to the NOR handle
   * @param  uwAddress NOR memory internal start write address
   * @param  pData pointer to source data buffer.
@@ -855,8 +850,7 @@ HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddr
 
 			if (hnor->CommandSet == NOR_AMD_FUJITSU_COMMAND_SET) {
 				NOR_WRITE((deviceaddress + uwAddress), NOR_CMD_DATA_BUFFER_AND_PROG_CONFIRM);
-			} else /* => hnor->CommandSet ==
-				  NOR_INTEL_SHARP_EXT_COMMAND_SET */
+			} else /* => hnor->CommandSet == NOR_INTEL_SHARP_EXT_COMMAND_SET */
 			{
 				NOR_WRITE((deviceaddress + uwAddress), NOR_CMD_CONFIRM);
 			}
@@ -933,8 +927,7 @@ HAL_StatusTypeDef HAL_NOR_Erase_Block(NOR_HandleTypeDef *hnor, uint32_t BlockAdd
 			status = HAL_ERROR;
 		}
 
-		/* Check the NOR memory status and update the controller state
-		 */
+		/* Check the NOR memory status and update the controller state */
 		hnor->State = HAL_NOR_STATE_READY;
 
 		/* Process unlocked */
@@ -1000,8 +993,7 @@ HAL_StatusTypeDef HAL_NOR_Erase_Chip(NOR_HandleTypeDef *hnor, uint32_t Address)
 			status = HAL_ERROR;
 		}
 
-		/* Check the NOR memory status and update the controller state
-		 */
+		/* Check the NOR memory status and update the controller state */
 		hnor->State = HAL_NOR_STATE_READY;
 
 		/* Process unlocked */
@@ -1261,7 +1253,10 @@ HAL_StatusTypeDef HAL_NOR_WriteOperation_Disable(NOR_HandleTypeDef *hnor)
  *                the configuration information for NOR module.
  * @retval NOR controller state
  */
-HAL_NOR_StateTypeDef HAL_NOR_GetState(const NOR_HandleTypeDef *hnor) { return hnor->State; }
+HAL_NOR_StateTypeDef HAL_NOR_GetState(const NOR_HandleTypeDef *hnor)
+{
+	return hnor->State;
+}
 
 /**
  * @brief  Returns the NOR operation status.
@@ -1269,8 +1264,8 @@ HAL_NOR_StateTypeDef HAL_NOR_GetState(const NOR_HandleTypeDef *hnor) { return hn
  *                the configuration information for NOR module.
  * @param  Address Device address
  * @param  Timeout NOR programming Timeout
- * @retval NOR_Status The returned value can be: HAL_NOR_STATUS_SUCCESS,
- * HAL_NOR_STATUS_ERROR or HAL_NOR_STATUS_TIMEOUT
+ * @retval NOR_Status The returned value can be: HAL_NOR_STATUS_SUCCESS, HAL_NOR_STATUS_ERROR
+ *         or HAL_NOR_STATUS_TIMEOUT
  */
 HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Address, uint32_t Timeout)
 {
@@ -1279,12 +1274,10 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 	uint16_t tmpsr2;
 	uint32_t tickstart;
 
-	/* Poll on NOR memory Ready/Busy signal
-	 * ------------------------------------*/
+	/* Poll on NOR memory Ready/Busy signal ------------------------------------*/
 	HAL_NOR_MspWait(hnor, Timeout);
 
-	/* Get the NOR memory operation status
-	 * -------------------------------------*/
+	/* Get the NOR memory operation status -------------------------------------*/
 
 	/* Get tick */
 	tickstart = HAL_GetTick();
@@ -1302,8 +1295,7 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 			tmpsr1 = *(__IO uint16_t *)Address;
 			tmpsr2 = *(__IO uint16_t *)Address;
 
-			/* If DQ6 did not toggle between the two reads then
-			 * return HAL_NOR_STATUS_SUCCESS  */
+			/* If DQ6 did not toggle between the two reads then return HAL_NOR_STATUS_SUCCESS  */
 			if ((tmpsr1 & NOR_MASK_STATUS_DQ6) == (tmpsr2 & NOR_MASK_STATUS_DQ6)) {
 				return HAL_NOR_STATUS_SUCCESS;
 			}
@@ -1315,8 +1307,7 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
 			tmpsr1 = *(__IO uint16_t *)Address;
 			tmpsr2 = *(__IO uint16_t *)Address;
 
-			/* If DQ6 did not toggle between the two reads then
-			 * return HAL_NOR_STATUS_SUCCESS  */
+			/* If DQ6 did not toggle between the two reads then return HAL_NOR_STATUS_SUCCESS  */
 			if ((tmpsr1 & NOR_MASK_STATUS_DQ6) == (tmpsr2 & NOR_MASK_STATUS_DQ6)) {
 				return HAL_NOR_STATUS_SUCCESS;
 			}

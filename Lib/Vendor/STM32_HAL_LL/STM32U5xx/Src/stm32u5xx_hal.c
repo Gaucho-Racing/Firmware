@@ -323,7 +323,10 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
  *      implementations in user file.
  * @retval None
  */
-__weak void HAL_IncTick(void) { uwTick += (uint32_t)uwTickFreq; }
+__weak void HAL_IncTick(void)
+{
+	uwTick += (uint32_t)uwTickFreq;
+}
 
 /**
  * @brief Provides a tick value in millisecond.
@@ -331,13 +334,19 @@ __weak void HAL_IncTick(void) { uwTick += (uint32_t)uwTickFreq; }
  *       implementations in user file.
  * @retval tick value
  */
-__weak uint32_t HAL_GetTick(void) { return uwTick; }
+__weak uint32_t HAL_GetTick(void)
+{
+	return uwTick;
+}
 
 /**
  * @brief This function returns a tick priority.
  * @retval tick priority
  */
-uint32_t HAL_GetTickPrio(void) { return uwTickPrio; }
+uint32_t HAL_GetTickPrio(void)
+{
+	return uwTickPrio;
+}
 
 /**
  * @brief Set new tick Freq.
@@ -374,7 +383,10 @@ HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
  * @retval Tick frequency.
  *         Value of @ref HAL_TickFreqTypeDef.
  */
-HAL_TickFreqTypeDef HAL_GetTickFreq(void) { return uwTickFreq; }
+HAL_TickFreqTypeDef HAL_GetTickFreq(void)
+{
+	return uwTickFreq;
+}
 
 /**
  * @brief This function provides minimum delay (in milliseconds) based
@@ -436,40 +448,58 @@ __weak void HAL_ResumeTick(void)
  * @brief  Returns the HAL revision
  * @retval version : 0xXYZR (8bits for each decimal, R for RC)
  */
-uint32_t HAL_GetHalVersion(void) { return __STM32U5xx_HAL_VERSION; }
+uint32_t HAL_GetHalVersion(void)
+{
+	return __STM32U5xx_HAL_VERSION;
+}
 
 /**
  * @brief  Returns the device revision identifier.
  * @retval Device revision identifier
  */
-uint32_t HAL_GetREVID(void) { return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16); }
+uint32_t HAL_GetREVID(void)
+{
+	return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16);
+}
 
 /**
  * @brief  Returns the device identifier.
  * @retval Device identifier
  */
-uint32_t HAL_GetDEVID(void) { return (DBGMCU->IDCODE & DBGMCU_IDCODE_DEV_ID); }
+uint32_t HAL_GetDEVID(void)
+{
+	return (DBGMCU->IDCODE & DBGMCU_IDCODE_DEV_ID);
+}
 
 /**
  * @brief  Return the first word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw0(void) { return (READ_REG(*((uint32_t *)UID_BASE))); }
+uint32_t HAL_GetUIDw0(void)
+{
+	return (READ_REG(*((uint32_t *)UID_BASE)));
+}
 
 /**
  * @brief  Return the second word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw1(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 4U)))); }
+uint32_t HAL_GetUIDw1(void)
+{
+	return (READ_REG(*((uint32_t *)(UID_BASE + 4U))));
+}
 
 /**
  * @brief  Return the third word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw2(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 8U)))); }
+uint32_t HAL_GetUIDw2(void)
+{
+	return (READ_REG(*((uint32_t *)(UID_BASE + 8U))));
+}
 
 /**
  * @}
@@ -494,25 +524,37 @@ uint32_t HAL_GetUIDw2(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 8U))));
  * @brief  Enable the Debug Module during STOP0/STOP1/STOP2 modes.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGStopMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+void HAL_DBGMCU_EnableDBGStopMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Disable the Debug Module during STOP0/STOP1/STOP2 modes.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGStopMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
+void HAL_DBGMCU_DisableDBGStopMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+}
 
 /**
  * @brief  Enable the Debug Module during STANDBY mode.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGStandbyMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+void HAL_DBGMCU_EnableDBGStandbyMode(void)
+{
+	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @brief  Disable the Debug Module during STANDBY mode.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
+void HAL_DBGMCU_DisableDBGStandbyMode(void)
+{
+	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+}
 
 /**
  * @}
@@ -618,35 +660,50 @@ HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableVREFBUF(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
+void HAL_SYSCFG_DisableVREFBUF(void)
+{
+	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+}
 
 /**
  * @brief  Enable the I/O analog switch voltage booster
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableIOAnalogBooster(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+void HAL_SYSCFG_EnableIOAnalogBooster(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Disable the I/O analog switch voltage booster
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableIOAnalogBooster(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
+void HAL_SYSCFG_DisableIOAnalogBooster(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+}
 
 /**
  * @brief  Enable the I/O analog switch voltage selection
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableIOAnalogVoltageSelection(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD); }
+void HAL_SYSCFG_EnableIOAnalogVoltageSelection(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD);
+}
 
 /**
  * @brief  Disable the I/O analog switch voltage selection
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableIOAnalogVoltageSelection(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD); }
+void HAL_SYSCFG_DisableIOAnalogVoltageSelection(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ANASWVDD);
+}
 
 #if defined(SYSCFG_CFGR1_ENDCAP)
 /**
@@ -676,7 +733,10 @@ void HAL_SYSCFG_SetHSPIDecouplingCapacitance(uint32_t Capacitance)
  *         @arg @ref SYSCFG_HSPI_CAPACITANCE_2_DIV_3
  *         @arg @ref SYSCFG_HSPI_CAPACITANCE_FULL
  */
-uint32_t HAL_SYSCFG_GetHSPIDecouplingCapacitance(void) { return (uint32_t)(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP)); }
+uint32_t HAL_SYSCFG_GetHSPIDecouplingCapacitance(void)
+{
+	return (uint32_t)(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP));
+}
 #endif /* SYSCFG_CFGR1_ENDCAP */
 
 #if defined(SYSCFG_CFGR1_SRAMCACHED)
@@ -685,14 +745,20 @@ uint32_t HAL_SYSCFG_GetHSPIDecouplingCapacitance(void) { return (uint32_t)(READ_
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableSRAMCached(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED); }
+void HAL_SYSCFG_EnableSRAMCached(void)
+{
+	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED);
+}
 
 /**
  * @brief  Disable the Cacheability of internal SRAMx by DCACHE2
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableSRAMCached(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED); }
+void HAL_SYSCFG_DisableSRAMCached(void)
+{
+	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_SRAMCACHED);
+}
 #endif /* SYSCFG_CFGR1_SRAMCACHED */
 
 /**
@@ -702,7 +768,10 @@ void HAL_SYSCFG_DisableSRAMCached(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_
  *         voltage ranges from 1.71 to 3.6 V
  * @retval None
  */
-void HAL_SYSCFG_EnableVddCompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1); }
+void HAL_SYSCFG_EnableVddCompensationCell(void)
+{
+	SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1);
+}
 
 /**
  * @brief  Enable the Compensation Cell of GPIO supplied by VDDIO2
@@ -711,7 +780,10 @@ void HAL_SYSCFG_EnableVddCompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_
  *         voltage ranges from 1.08 to 3.6 V
  * @retval None
  */
-void HAL_SYSCFG_EnableVddIO2CompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2); }
+void HAL_SYSCFG_EnableVddIO2CompensationCell(void)
+{
+	SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2);
+}
 
 #if defined(SYSCFG_CCCSR_EN3)
 /**
@@ -719,7 +791,10 @@ void HAL_SYSCFG_EnableVddIO2CompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSC
  * @rmtoll CCCSR   EN3    HAL_SYSCFG_EnableVddHSPICompensationCell
  * @retval None
  */
-void HAL_SYSCFG_EnableVddHSPICompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3); }
+void HAL_SYSCFG_EnableVddHSPICompensationCell(void)
+{
+	SET_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3);
+}
 #endif /* SYSCFG_CCCSR_EN3 */
 
 /**
@@ -729,7 +804,10 @@ void HAL_SYSCFG_EnableVddHSPICompensationCell(void) { SET_BIT(SYSCFG->CCCSR, SYS
  *         voltage ranges from 1.71 to 3.6 V
  * @retval None
  */
-void HAL_SYSCFG_DisableVddCompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1); }
+void HAL_SYSCFG_DisableVddCompensationCell(void)
+{
+	CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN1);
+}
 
 /**
  * @brief  Disable the Compensation Cell of GPIO supplied by VDDIO2
@@ -738,7 +816,10 @@ void HAL_SYSCFG_DisableVddCompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSC
  *         voltage ranges from 1.08 to 3.6 V
  * @retval None
  */
-void HAL_SYSCFG_DisableVddIO2CompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2); }
+void HAL_SYSCFG_DisableVddIO2CompensationCell(void)
+{
+	CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN2);
+}
 
 #if defined(SYSCFG_CCCSR_EN3)
 /**
@@ -746,7 +827,10 @@ void HAL_SYSCFG_DisableVddIO2CompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, S
  * @rmtoll CCCSR   EN3    HAL_SYSCFG_DisableVddHSPICompensationCell
  * @retval None
  */
-void HAL_SYSCFG_DisableVddHSPICompensationCell(void) { CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3); }
+void HAL_SYSCFG_DisableVddHSPICompensationCell(void)
+{
+	CLEAR_BIT(SYSCFG->CCCSR, SYSCFG_CCCSR_EN3);
+}
 #endif /* SYSCFG_CCCSR_EN3 */
 /**
  * @}

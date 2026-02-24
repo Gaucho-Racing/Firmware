@@ -2635,7 +2635,10 @@ HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi, uint32_t Lane
  *               the configuration information for the DSI.
  * @retval HAL state
  */
-HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi) { return hdsi->State; }
+HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi)
+{
+	return hdsi->State;
+}
 
 /**
  * @brief  Return the DSI error code

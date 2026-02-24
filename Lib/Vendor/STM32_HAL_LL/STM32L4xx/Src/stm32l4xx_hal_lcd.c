@@ -15,8 +15,7 @@
   * Copyright (c) 2017 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  in
+  * This software is licensed under terms that can be found in the LICENSE file in
   * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
@@ -32,13 +31,11 @@
 	  starting from an LCD input clock frequency (LCDCLK) which can vary
 	  from 32 kHz up to 1 MHz.
 
-      (#) Initialize the LCD low level resources by implementing the
-  HAL_LCD_MspInit() API:
+      (#) Initialize the LCD low level resources by implementing the HAL_LCD_MspInit() API:
 
-	  (++) Enable the LCDCLK (same as RTCCLK): to configure the
-  RTCCLK/LCDCLK, proceed as follows:
-	       (+++) Use RCC function HAL_RCCEx_PeriphCLKConfig in indicating
-  RCC_PERIPHCLK_LCD and selected clock source (HSE, LSI or LSE)
+	  (++) Enable the LCDCLK (same as RTCCLK): to configure the RTCCLK/LCDCLK, proceed as follows:
+	       (+++) Use RCC function HAL_RCCEx_PeriphCLKConfig in indicating RCC_PERIPHCLK_LCD and
+		  selected clock source (HSE, LSI or LSE)
 
 	  (++) LCD pins configuration:
 	      (+++) Enable the clock for the LCD GPIOs.
@@ -46,31 +43,27 @@
 	  (++) Enable the LCD interface clock.
 
 
-      (#) Program the Prescaler, Divider, Blink mode, Blink Frequency Duty,
-  Bias, Voltage Source, Dead Time, Pulse On Duration, Contrast, High drive and
-  Multiplexer Segment in the Init structure of the LCD handle.
+      (#) Program the Prescaler, Divider, Blink mode, Blink Frequency Duty, Bias,
+	  Voltage Source, Dead Time, Pulse On Duration, Contrast, High drive and Multiplexer
+	  Segment in the Init structure of the LCD handle.
 
       (#) Initialize the LCD registers by calling the HAL_LCD_Init() API.
 
-      -@- The HAL_LCD_Init() API configures also the low level Hardware GPIO,
-  CLOCK, ...etc) by calling the customized HAL_LCD_MspInit() API.
+      -@- The HAL_LCD_Init() API configures also the low level Hardware GPIO, CLOCK, ...etc)
+	  by calling the customized HAL_LCD_MspInit() API.
       -@- After calling the HAL_LCD_Init() the LCD RAM memory is cleared
 
       (#) Optionally you can update the LCD configuration using these macros:
-	      (++) LCD High Drive using the __HAL_LCD_HIGHDRIVER_ENABLE() and
-  __HAL_LCD_HIGHDRIVER_DISABLE() macros
-	      (++) Voltage output buffer using __HAL_LCD_VOLTAGE_BUFFER_ENABLE()
-  and __HAL_LCD_VOLTAGE_BUFFER_DISABLE() macros
-	      (++) LCD Pulse ON Duration using the
-  __HAL_LCD_PULSEONDURATION_CONFIG() macro
+	      (++) LCD High Drive using the __HAL_LCD_HIGHDRIVER_ENABLE() and __HAL_LCD_HIGHDRIVER_DISABLE() macros
+	      (++) Voltage output buffer using __HAL_LCD_VOLTAGE_BUFFER_ENABLE() and __HAL_LCD_VOLTAGE_BUFFER_DISABLE() macros
+	      (++) LCD Pulse ON Duration using the __HAL_LCD_PULSEONDURATION_CONFIG() macro
 	      (++) LCD Dead Time using the __HAL_LCD_DEADTIME_CONFIG() macro
-	      (++) The LCD Blink mode and frequency using the
-  __HAL_LCD_BLINK_CONFIG() macro
+	      (++) The LCD Blink mode and frequency using the __HAL_LCD_BLINK_CONFIG() macro
 	      (++) The LCD Contrast using the __HAL_LCD_CONTRAST_CONFIG() macro
 
-      (#) Write to the LCD RAM memory using the HAL_LCD_Write() API, this API
-  can be called more time to update the different LCD RAM registers before
-  calling HAL_LCD_UpdateDisplayRequest() API.
+      (#) Write to the LCD RAM memory using the HAL_LCD_Write() API, this API can be called
+	  more time to update the different LCD RAM registers before calling
+	  HAL_LCD_UpdateDisplayRequest() API.
 
       (#) The HAL_LCD_Clear() API can be used to clear the LCD RAM memory.
 
@@ -78,8 +71,8 @@
 	  the HAL_LCD_UpdateDisplayRequest() API.
 
       [..] LCD and low power modes:
-	   (#) The LCD remain active during Sleep, Low Power run, Low Power
-  Sleep and STOP modes.
+	   (#) The LCD remain active during Sleep, Low Power run, Low Power Sleep and
+	       STOP modes.
 
   @endverbatim
   ******************************************************************************
@@ -122,8 +115,7 @@
  * @{
  */
 
-/** @defgroup LCD_Exported_Functions_Group1 Initialization/de-initialization
-methods
+/** @defgroup LCD_Exported_Functions_Group1 Initialization/de-initialization methods
   *  @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -182,8 +174,8 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	/* Disable the peripheral */
 	__HAL_LCD_DISABLE(hlcd);
 
-	/* Clear the LCD_RAM registers and enable the display request by setting
-	   the UDR bit in the LCD_SR register */
+	/* Clear the LCD_RAM registers and enable the display request by setting the UDR bit
+	   in the LCD_SR register */
 	for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++) {
 		hlcd->Instance->RAM[counter] = 0;
 	}
@@ -202,20 +194,19 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 		   (hlcd->Init.Prescaler | hlcd->Init.Divider | hlcd->Init.BlinkMode | hlcd->Init.BlinkFrequency | hlcd->Init.DeadTime | hlcd->Init.PulseOnDuration | hlcd->Init.Contrast |
 		    hlcd->Init.HighDrive));
 
-	/* Wait until LCD Frame Control Register Synchronization flag (FCRSF) is
-	   set in the LCD_SR register This bit is set by hardware each time the
-	   LCD_FCR register is updated in the LCDCLK domain. It is cleared by
-	   hardware when writing to the LCD_FCR register.*/
+	/* Wait until LCD Frame Control Register Synchronization flag (FCRSF) is set in the LCD_SR register
+	   This bit is set by hardware each time the LCD_FCR register is updated in the LCDCLK
+	   domain. It is cleared by hardware when writing to the LCD_FCR register.*/
 	status = LCD_WaitForSynchro(hlcd);
 	if (status != HAL_OK) {
 		return status;
 	}
 
-	/* Configure the LCD Duty, Bias, Voltage Source, Dead Time, Pulse On
-	   Duration and Contrast: Set DUTY[2:0] bits according to
-	   hlcd->Init.Duty value Set BIAS[1:0] bits according to hlcd->Init.Bias
-	   value Set VSEL bit according to hlcd->Init.VoltageSource value Set
-	   MUX_SEG bit according to hlcd->Init.MuxSegment value */
+	/* Configure the LCD Duty, Bias, Voltage Source, Dead Time, Pulse On Duration and Contrast:
+	   Set DUTY[2:0] bits according to hlcd->Init.Duty value
+	   Set BIAS[1:0] bits according to hlcd->Init.Bias value
+	   Set VSEL bit according to hlcd->Init.VoltageSource value
+	   Set MUX_SEG bit according to hlcd->Init.MuxSegment value */
 	MODIFY_REG(hlcd->Instance->CR, (LCD_CR_DUTY | LCD_CR_BIAS | LCD_CR_VSEL | LCD_CR_MUX_SEG), (hlcd->Init.Duty | hlcd->Init.Bias | hlcd->Init.VoltageSource | hlcd->Init.MuxSegment));
 
 	/* Enable the peripheral */
@@ -289,8 +280,8 @@ __weak void HAL_LCD_MspDeInit(LCD_HandleTypeDef *hlcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hlcd);
 
-	/* NOTE: This function should not be modified, when the callback is
-	   needed, the HAL_LCD_MspDeInit it to be implemented in the user file
+	/* NOTE: This function should not be modified, when the callback is needed,
+		 the HAL_LCD_MspDeInit it to be implemented in the user file
 	 */
 }
 
@@ -304,8 +295,8 @@ __weak void HAL_LCD_MspInit(LCD_HandleTypeDef *hlcd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hlcd);
 
-	/* NOTE: This function should not be modified, when the callback is
-	   needed, the HAL_LCD_MspInit is to be implemented in the user file
+	/* NOTE: This function should not be modified, when the callback is needed,
+		 the HAL_LCD_MspInit is to be implemented in the user file
 	 */
 }
 
@@ -320,21 +311,23 @@ __weak void HAL_LCD_MspInit(LCD_HandleTypeDef *hlcd)
  ===============================================================================
 		      ##### IO operation functions #####
  ===============================================================================
- [..] Using its double buffer memory the LCD controller ensures the coherency of
-the displayed information without having to use interrupts to control LCD_RAM
+ [..] Using its double buffer memory the LCD controller ensures the coherency of the
+ displayed information without having to use interrupts to control LCD_RAM
  modification.
  The application software can access the first buffer level (LCD_RAM) through
- the APB interface. Once it has modified the LCD_RAM using the HAL_LCD_Write()
-API, it sets the UDR flag in the LCD_SR register using the
-HAL_LCD_UpdateDisplayRequest() API. This UDR flag (update display request)
-requests the updated information to be moved into the second buffer level
-(LCD_DISPLAY). This operation is done synchronously with the frame (at the
-beginning of the next frame), until the update is completed, the LCD_RAM is
-write protected and the UDR flag stays high. Once the update is completed
-another flag (UDD - Update Display Done) is set and generates an interrupt if
-the UDDIE bit in the LCD_FCR register is set. The time it takes to update
-LCD_DISPLAY is, in the worst case, one odd and one even frame. The update will
-not occur (UDR = 1 and UDD = 0) until the display is enabled (LCDEN = 1).
+ the APB interface. Once it has modified the LCD_RAM using the HAL_LCD_Write() API,
+ it sets the UDR flag in the LCD_SR register using the HAL_LCD_UpdateDisplayRequest() API.
+ This UDR flag (update display request) requests the updated information to be
+ moved into the second buffer level (LCD_DISPLAY).
+ This operation is done synchronously with the frame (at the beginning of the
+ next frame), until the update is completed, the LCD_RAM is write protected and
+ the UDR flag stays high.
+ Once the update is completed another flag (UDD - Update Display Done) is set and
+ generates an interrupt if the UDDIE bit in the LCD_FCR register is set.
+ The time it takes to update LCD_DISPLAY is, in the worst case, one odd and one
+ even frame.
+ The update will not occur (UDR = 1 and UDD = 0) until the display is
+ enabled (LCDEN = 1).
 
 @endverbatim
   * @{
@@ -456,8 +449,8 @@ HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd)
  *         time the LCD_RAM is write protected.
  * @note   When the display is disabled, the update is performed for all
  *         LCD_DISPLAY locations.
- *         When the display is enabled, the update is performed only for
- * locations for which commons are active (depending on DUTY). For example if
+ *         When the display is enabled, the update is performed only for locations
+ *         for which commons are active (depending on DUTY). For example if
  *         DUTY = 1/2, only the LCD_DISPLAY of COM0 and COM1 will be updated.
  * @retval None
  */
@@ -465,8 +458,7 @@ HAL_StatusTypeDef HAL_LCD_UpdateDisplayRequest(LCD_HandleTypeDef *hlcd)
 {
 	uint32_t tickstart;
 
-	/* Clear the Update Display Done flag before starting the update display
-	 * request */
+	/* Clear the Update Display Done flag before starting the update display request */
 	__HAL_LCD_CLEAR_FLAG(hlcd, LCD_FLAG_UDD);
 
 	/* Enable the display request */
@@ -508,8 +500,7 @@ HAL_StatusTypeDef HAL_LCD_UpdateDisplayRequest(LCD_HandleTypeDef *hlcd)
  ===============================================================================
     [..]
      This subsection provides a set of functions allowing to control the LCD:
-      (+) HAL_LCD_GetState() API can be helpful to check in run-time the state
-of the LCD peripheral State.
+      (+) HAL_LCD_GetState() API can be helpful to check in run-time the state of the LCD peripheral State.
       (+) HAL_LCD_GetError() API to return the LCD error code.
 @endverbatim
   * @{
@@ -531,7 +522,10 @@ HAL_LCD_StateTypeDef HAL_LCD_GetState(LCD_HandleTypeDef *hlcd)
  * @param hlcd LCD handle
  * @retval LCD Error Code
  */
-uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd) { return hlcd->ErrorCode; }
+uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd)
+{
+	return hlcd->ErrorCode;
+}
 
 /**
  * @}
@@ -582,5 +576,4 @@ HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd)
  * @}
  */
 
-#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||                                                                                                                                  \
-	  STM32L496xx || STM32L4A6xx */
+#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx || STM32L496xx || STM32L4A6xx */

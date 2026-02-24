@@ -9,9 +9,9 @@
  * Copyright (c) 2017 STMicroelectronics.
  * All rights reserved.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- *in the root directory of this software component. If no LICENSE file comes
- *with this software, it is provided AS-IS.
+ * This software is licensed under terms that can be found in the LICENSE file in
+ * the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  ******************************************************************************
  */
 
@@ -52,32 +52,26 @@ typedef struct {
 			    This parameter can be a value of @ref CRYP_Key_Size */
 
 	uint32_t OperatingMode; /*!< AES operating mode.
-				  This parameter can be a value of @ref
-				  CRYP_AES_OperatingMode */
+				  This parameter can be a value of @ref CRYP_AES_OperatingMode */
 
 	uint32_t ChainingMode; /*!< AES chaining mode.
-				 This parameter can be a value of @ref
-				 CRYP_AES_ChainingMode */
+				 This parameter can be a value of @ref CRYP_AES_ChainingMode */
 
-	uint32_t KeyWriteFlag; /*!< Allows to bypass or not key write-up before
-				 decryption. This parameter can be a value of
-				 @ref CRYP_Key_Write */
+	uint32_t KeyWriteFlag; /*!< Allows to bypass or not key write-up before decryption.
+				 This parameter can be a value of @ref CRYP_Key_Write */
 
-	uint32_t GCMCMACPhase; /*!< Indicates the processing phase of the Galois
-				 Counter Mode (GCM), Galois Message Authentication
-				 Code (GMAC), Cipher Message Authentication Code
-				 (CMAC) (when applicable) or Counter with Cipher Mode
-				 (CCM) (when applicable). This parameter can be a
-				 value of @ref CRYP_GCM_CMAC_Phase */
+	uint32_t GCMCMACPhase; /*!< Indicates the processing phase of the Galois Counter Mode (GCM),
+				 Galois Message Authentication Code (GMAC), Cipher Message
+				 Authentication Code (CMAC) (when applicable) or Counter with Cipher
+				 Mode (CCM) (when applicable).
+				 This parameter can be a value of @ref CRYP_GCM_CMAC_Phase */
 
 	uint8_t *pKey; /*!< Encryption/Decryption Key */
 
-	uint8_t *pInitVect; /*!< Initialization Vector used for CTR, CBC,
-			       GCM/GMAC, CMAC (when applicable) and CCM (when
-			       applicable) modes */
+	uint8_t *pInitVect; /*!< Initialization Vector used for CTR, CBC, GCM/GMAC, CMAC (when applicable)
+				 and CCM (when applicable) modes */
 
-	uint8_t *Header; /*!< Header used in GCM/GMAC, CMAC (when applicable)
-			    and CCM (when applicable) modes */
+	uint8_t *Header; /*!< Header used in GCM/GMAC, CMAC (when applicable) and CCM (when applicable) modes */
 
 	uint64_t HeaderSize; /*!< Header size in bytes */
 
@@ -88,30 +82,28 @@ typedef struct {
  */
 typedef enum {
 	HAL_CRYP_STATE_RESET = 0x00,	/*!< CRYP not yet initialized or disabled  */
-	HAL_CRYP_STATE_READY = 0x01,	/*!< CRYP initialized and ready for use */
-	HAL_CRYP_STATE_BUSY = 0x02,	/*!< CRYP internal processing is ongoing  */
-	HAL_CRYP_STATE_TIMEOUT = 0x03,	/*!< CRYP timeout state  */
-	HAL_CRYP_STATE_ERROR = 0x04,	/*!< CRYP error state    */
-	HAL_CRYP_STATE_SUSPENDED = 0x05 /*!< CRYP suspended */
+	HAL_CRYP_STATE_READY = 0x01,	/*!< CRYP initialized and ready for use    */
+	HAL_CRYP_STATE_BUSY = 0x02,	/*!< CRYP internal processing is ongoing   */
+	HAL_CRYP_STATE_TIMEOUT = 0x03,	/*!< CRYP timeout state                    */
+	HAL_CRYP_STATE_ERROR = 0x04,	/*!< CRYP error state                      */
+	HAL_CRYP_STATE_SUSPENDED = 0x05 /*!< CRYP suspended                        */
 } HAL_CRYP_STATETypeDef;
 
 /**
  * @brief HAL CRYP phase structures definition
  */
 typedef enum {
-	HAL_CRYP_PHASE_READY = 0x01,		 /*!< CRYP peripheral is ready for initialization. */
-	HAL_CRYP_PHASE_PROCESS = 0x02,		 /*!< CRYP peripheral is in processing phase */
-	HAL_CRYP_PHASE_START = 0x03,		 /*!< CRYP peripheral has been initialized
-						    but GCM/GMAC(/CMAC)(/CCM) initialization
-						    phase has not started */
-	HAL_CRYP_PHASE_INIT_OVER = 0x04,	 /*!< GCM/GMAC(/CMAC)(/CCM) init phase has been carried out */
-	HAL_CRYP_PHASE_HEADER_OVER = 0x05,	 /*!< GCM/GMAC(/CMAC)(/CCM) header
-						    phase has been carried out  */
-	HAL_CRYP_PHASE_PAYLOAD_OVER = 0x06,	 /*!< GCM(/CCM) payload phase has been carried out */
-	HAL_CRYP_PHASE_FINAL_OVER = 0x07,	 /*!< GCM/GMAC(/CMAC)(/CCM) final phase has been carried out */
-	HAL_CRYP_PHASE_HEADER_SUSPENDED = 0x08,	 /*!< GCM/GMAC(/CMAC)(/CCM) header phase has been suspended */
-	HAL_CRYP_PHASE_PAYLOAD_SUSPENDED = 0x09, /*!< GCM(/CCM) payload phase has been suspended */
-	HAL_CRYP_PHASE_NOT_USED = 0x0a		 /*!< Phase is irrelevant to the current chaining mode */
+	HAL_CRYP_PHASE_READY = 0x01,		 /*!< CRYP peripheral is ready for initialization.             */
+	HAL_CRYP_PHASE_PROCESS = 0x02,		 /*!< CRYP peripheral is in processing phase                   */
+	HAL_CRYP_PHASE_START = 0x03,		 /*!< CRYP peripheral has been initialized but
+						    GCM/GMAC(/CMAC)(/CCM) initialization phase has not started */
+	HAL_CRYP_PHASE_INIT_OVER = 0x04,	 /*!< GCM/GMAC(/CMAC)(/CCM) init phase has been carried out    */
+	HAL_CRYP_PHASE_HEADER_OVER = 0x05,	 /*!< GCM/GMAC(/CMAC)(/CCM) header phase has been carried out  */
+	HAL_CRYP_PHASE_PAYLOAD_OVER = 0x06,	 /*!< GCM(/CCM) payload phase has been carried out             */
+	HAL_CRYP_PHASE_FINAL_OVER = 0x07,	 /*!< GCM/GMAC(/CMAC)(/CCM) final phase has been carried out   */
+	HAL_CRYP_PHASE_HEADER_SUSPENDED = 0x08,	 /*!< GCM/GMAC(/CMAC)(/CCM) header phase has been suspended    */
+	HAL_CRYP_PHASE_PAYLOAD_SUSPENDED = 0x09, /*!< GCM(/CCM) payload phase has been suspended               */
+	HAL_CRYP_PHASE_NOT_USED = 0x0a		 /*!< Phase is irrelevant to the current chaining mode         */
 } HAL_PhaseTypeDef;
 
 /**
@@ -142,9 +134,9 @@ typedef enum {
 	HAL_CRYP_INPUTCPLT_CB_ID = 0x01U,  /*!< CRYP input DMA transfer completion callback ID  */
 	HAL_CRYP_OUTPUTCPLT_CB_ID = 0x02U, /*!< CRYP output DMA transfer completion callback ID */
 	HAL_CRYP_COMPCPLT_CB_ID = 0x03U,   /*!< CRYP computation completion callback ID         */
-	HAL_CRYP_ERROR_CB_ID = 0x04U,	   /*!< CRYP error callback ID     */
-	HAL_CRYP_MSPINIT_CB_ID = 0x05U,	   /*!< CRYP MspInit callback ID   */
-	HAL_CRYP_MSPDEINIT_CB_ID = 0x06U,  /*!< CRYP MspDeInit callback ID */
+	HAL_CRYP_ERROR_CB_ID = 0x04U,	   /*!< CRYP error callback ID                          */
+	HAL_CRYP_MSPINIT_CB_ID = 0x05U,	   /*!< CRYP MspInit callback ID                        */
+	HAL_CRYP_MSPDEINIT_CB_ID = 0x06U,  /*!< CRYP MspDeInit callback ID                      */
 } HAL_CRYP_CallbackIDTypeDef;
 #endif /* USE_HAL_CRYP_REGISTER_CALLBACKS */
 
@@ -161,21 +153,19 @@ typedef struct
 
 	CRYP_InitTypeDef Init; /*!< CRYP initialization parameters */
 
-	uint8_t *pCrypInBuffPtr; /*!< Pointer to CRYP processing (encryption,
-				    decryption,...) input buffer */
+	uint8_t *pCrypInBuffPtr; /*!< Pointer to CRYP processing (encryption, decryption,...) input buffer */
 
-	uint8_t *pCrypOutBuffPtr; /*!< Pointer to CRYP processing (encryption,
-				     decryption,...) output buffer */
+	uint8_t *pCrypOutBuffPtr; /*!< Pointer to CRYP processing (encryption, decryption,...) output buffer */
 
-	uint32_t CrypInCount; /*!< Input data size in bytes or, after suspension, the
-				 remaining number of bytes to process */
+	uint32_t CrypInCount; /*!< Input data size in bytes or, after suspension, the remaining
+				    number of bytes to process */
 
 	uint32_t CrypOutCount; /*!< Output data size in bytes */
 
-	HAL_PhaseTypeDef Phase; /*!< CRYP peripheral processing phase for GCM,
-				   GMAC, CMAC (when applicable) or CCM (when
-				   applicable) modes. Indicates the last phase
-				   carried out to ease phase transitions  */
+	HAL_PhaseTypeDef Phase; /*!< CRYP peripheral processing phase for GCM, GMAC, CMAC (when applicable)
+				     or CCM (when applicable) modes.
+				     Indicates the last phase carried out to ease
+				     phase transitions  */
 
 	DMA_HandleTypeDef *hdmain; /*!< CRYP peripheral Input DMA handle parameters */
 
@@ -252,13 +242,11 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 /** @defgroup CRYP_AES_OperatingMode AES operating mode
  * @{
  */
-#define CRYP_ALGOMODE_ENCRYPT ((uint32_t)0x00000000)	/*!< Encryption mode */
-#define CRYP_ALGOMODE_KEYDERIVATION AES_CR_MODE_0	/*!< Key derivation mode */
-#define CRYP_ALGOMODE_DECRYPT AES_CR_MODE_1		/*!< Decryption */
-#define CRYP_ALGOMODE_KEYDERIVATION_DECRYPT AES_CR_MODE /*!< Key derivation and decryption */
-#define CRYP_ALGOMODE_TAG_GENERATION                                                                                                                                                                   \
-	((uint32_t)0x00000000) /*!< GMAC or CMAC (when applicable)                                                                                                                                     \
-				  authentication tag generation */
+#define CRYP_ALGOMODE_ENCRYPT ((uint32_t)0x00000000)	    /*!< Encryption mode                                              */
+#define CRYP_ALGOMODE_KEYDERIVATION AES_CR_MODE_0	    /*!< Key derivation mode                                          */
+#define CRYP_ALGOMODE_DECRYPT AES_CR_MODE_1		    /*!< Decryption                                                   */
+#define CRYP_ALGOMODE_KEYDERIVATION_DECRYPT AES_CR_MODE	    /*!< Key derivation and decryption                                */
+#define CRYP_ALGOMODE_TAG_GENERATION ((uint32_t)0x00000000) /*!< GMAC or CMAC (when applicable) authentication tag generation */
 /**
  * @}
  */
@@ -266,16 +254,14 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 /** @defgroup CRYP_AES_ChainingMode AES chaining mode
  * @{
  */
-#define CRYP_CHAINMODE_AES_ECB ((uint32_t)0x00000000) /*!< Electronic codebook chaining algorithm */
-#define CRYP_CHAINMODE_AES_CBC AES_CR_CHMOD_0	      /*!< Cipher block chaining algorithm */
-#define CRYP_CHAINMODE_AES_CTR AES_CR_CHMOD_1	      /*!< Counter mode chaining algorithm */
-#define CRYP_CHAINMODE_AES_GCM_GMAC                                                                                                                                                                    \
-	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois                                                                                                                            \
-					     message authentication code */
+#define CRYP_CHAINMODE_AES_ECB ((uint32_t)0x00000000)		      /*!< Electronic codebook chaining algorithm                   */
+#define CRYP_CHAINMODE_AES_CBC AES_CR_CHMOD_0			      /*!< Cipher block chaining algorithm                          */
+#define CRYP_CHAINMODE_AES_CTR AES_CR_CHMOD_1			      /*!< Counter mode chaining algorithm                          */
+#define CRYP_CHAINMODE_AES_GCM_GMAC (AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois message authentication code */
 #if defined(AES_CR_NPBLB)
-#define CRYP_CHAINMODE_AES_CCM AES_CR_CHMOD_2 /*!< Counter with Cipher Mode */
+#define CRYP_CHAINMODE_AES_CCM AES_CR_CHMOD_2 /*!< Counter with Cipher Mode                                 */
 #else
-#define CRYP_CHAINMODE_AES_CMAC AES_CR_CHMOD_2 /*!< Cipher message authentication code */
+#define CRYP_CHAINMODE_AES_CMAC AES_CR_CHMOD_2 /*!< Cipher message authentication code                       */
 #endif
 /**
  * @}
@@ -308,8 +294,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @}
  */
 
-/** @defgroup CRYP_GCM_CMAC_Phase GCM/GMAC and CCM/CMAC (when applicable)
- * processing phase selection
+/** @defgroup CRYP_GCM_CMAC_Phase GCM/GMAC and CCM/CMAC (when applicable) processing phase selection
  * @{
  */
 #define CRYP_GCM_INIT_PHASE ((uint32_t)0x00000000) /*!< GCM/GMAC (or CCM) init phase   */
@@ -322,9 +307,9 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_HEADER_PHASE AES_CR_GCMPH_0       /*!< Header phase  */
 #define CRYP_PAYLOAD_PHASE AES_CR_GCMPH_1      /*!< Payload phase */
 #define CRYP_FINAL_PHASE AES_CR_GCMPH	       /*!< Final phase   */
-					       /**
-						* @}
-						*/
+/**
+ * @}
+ */
 
 /** @defgroup CRYP_Flags   AES status flags
  * @{
@@ -334,9 +319,9 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_FLAG_WRERR AES_SR_WRERR /*!< Write Error                      */
 #define CRYP_FLAG_RDERR AES_SR_RDERR /*!< Read error                       */
 #define CRYP_FLAG_CCF AES_SR_CCF     /*!< Computation completed            */
-				     /**
-				      * @}
-				      */
+/**
+ * @}
+ */
 
 /** @defgroup CRYP_Clear_Flags   AES clearing flags
  * @{
@@ -351,10 +336,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 /** @defgroup AES_Interrupts_Enable AES Interrupts Enable bits
  * @{
  */
-#define CRYP_IT_CCFIE                                                                                                                                                                                  \
-	AES_CR_CCFIE		   /*!< Computation Complete interrupt enable                                                                                                                          \
-				    */
-#define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable */
+#define CRYP_IT_CCFIE AES_CR_CCFIE /*!< Computation Complete interrupt enable */
+#define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable                */
 /**
  * @}
  */
@@ -415,8 +398,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  *            @arg @ref CRYP_ALGOMODE_ENCRYPT encryption
  *            @arg @ref CRYP_ALGOMODE_KEYDERIVATION key derivation
  *            @arg @ref CRYP_ALGOMODE_DECRYPT decryption
- *            @arg @ref CRYP_ALGOMODE_KEYDERIVATION_DECRYPT key derivation and
- * decryption
+ *            @arg @ref CRYP_ALGOMODE_KEYDERIVATION_DECRYPT key derivation and decryption
  * @retval None
  */
 #define __HAL_CRYP_SET_OPERATINGMODE(__HANDLE__, __OPERATING_MODE__) MODIFY_REG((__HANDLE__)->Instance->CR, AES_CR_MODE, (__OPERATING_MODE__))
@@ -429,10 +411,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  *            @arg @ref CRYP_CHAINMODE_AES_ECB Electronic CodeBook
  *            @arg @ref CRYP_CHAINMODE_AES_CBC Cipher Block Chaining
  *            @arg @ref CRYP_CHAINMODE_AES_CTR CounTeR mode
- *            @arg @ref CRYP_CHAINMODE_AES_GCM_GMAC Galois Counter Mode or
- * Galois Message Authentication Code
- *            @arg @ref CRYP_CHAINMODE_AES_CMAC Cipher Message Authentication
- * Code (or Counter with Cipher Mode when applicable)
+ *            @arg @ref CRYP_CHAINMODE_AES_GCM_GMAC Galois Counter Mode or Galois Message Authentication Code
+ *            @arg @ref CRYP_CHAINMODE_AES_CMAC Cipher Message Authentication Code (or Counter with Cipher Mode when applicable)
  * @retval None
  */
 #define __HAL_CRYP_SET_CHAININGMODE(__HANDLE__, __CHAINING_MODE__) MODIFY_REG((__HANDLE__)->Instance->CR, AES_CR_CHMOD, (__CHAINING_MODE__))
@@ -453,8 +433,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @param  __HANDLE__ specifies the CRYP handle.
  * @param  __FLAG__ specifies the flag to clear.
  *         This parameter can be one of the following values:
- *            @arg @ref CRYP_ERR_CLEAR Read (RDERR) or Write Error (WRERR) Flag
- * Clear
+ *            @arg @ref CRYP_ERR_CLEAR Read (RDERR) or Write Error (WRERR) Flag Clear
  *            @arg @ref CRYP_CCF_CLEAR Computation Complete Flag (CCF) Clear
  * @retval None
  */
@@ -485,8 +464,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @param  __HANDLE__ specifies the CRYP handle.
  * @param  __INTERRUPT__ specifies the IT to clear.
  *         This parameter can be one of the following values:
- *            @arg @ref CRYP_ERR_CLEAR Read (RDERR) or Write Error (WRERR) Flag
- * Clear
+ *            @arg @ref CRYP_ERR_CLEAR Read (RDERR) or Write Error (WRERR) Flag Clear
  *            @arg @ref CRYP_CCF_CLEAR Computation Complete Flag (CCF) Clear
  * @retval None
  */
@@ -546,8 +524,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 
 /**
  * @brief Verify the selected CRYP algorithm.
- * @param __ALGOMODE__ Selected CRYP algorithm (ciphering, deciphering, key
- * derivation or a combination of the latter).
+ * @param __ALGOMODE__ Selected CRYP algorithm (ciphering, deciphering, key derivation or a combination of the latter).
  * @retval SET (__ALGOMODE__ is valid) or RESET (__ALGOMODE__ is invalid)
  */
 #define IS_CRYP_ALGOMODE(__ALGOMODE__)                                                                                                                                                                 \
@@ -591,10 +568,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define IS_CRYP_DMAOUT(__MODE__) (((__MODE__) == CRYP_DMAOUT_DISABLE) || ((__MODE__) == CRYP_DMAOUT_ENABLE))
 
 /**
- * @brief Verify the CRYP AES ciphering/deciphering/authentication algorithm
- * phase.
- * @param __PHASE__ CRYP AES ciphering/deciphering/authentication algorithm
- * phase.
+ * @brief Verify the CRYP AES ciphering/deciphering/authentication algorithm phase.
+ * @param __PHASE__ CRYP AES ciphering/deciphering/authentication algorithm phase.
  * @retval SET (__PHASE__ is valid) or RESET (__PHASE__ is invalid)
  */
 #define IS_CRYP_GCMCMAC_PHASE(__PHASE__) (((__PHASE__) == CRYP_INIT_PHASE) || ((__PHASE__) == CRYP_HEADER_PHASE) || ((__PHASE__) == CRYP_PAYLOAD_PHASE) || ((__PHASE__) == CRYP_FINAL_PHASE))
@@ -611,8 +586,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-/** @addtogroup CRYP_Exported_Functions_Group1 Initialization and
- * deinitialization functions
+/** @addtogroup CRYP_Exported_Functions_Group1 Initialization and deinitialization functions
  * @{
  */
 
@@ -695,8 +669,8 @@ void HAL_CRYP_IRQHandler(CRYP_HandleTypeDef *hcryp);
  */
 
 /* Peripheral State functions  ************************************************/
-HAL_CRYP_STATETypeDef HAL_CRYP_GetState(CRYP_HandleTypeDef *hcryp);
-uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp);
+HAL_CRYP_STATETypeDef HAL_CRYP_GetState(const CRYP_HandleTypeDef *hcryp);
+uint32_t HAL_CRYP_GetError(const CRYP_HandleTypeDef *hcryp);
 
 /**
  * @}

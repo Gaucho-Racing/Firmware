@@ -215,7 +215,10 @@ void HAL_PWR_DeInit(void) {}
  *         possible unwanted write accesses.
  * @retval None.
  */
-void HAL_PWR_EnableBkUpAccess(void) { SET_BIT(PWR->DBPR, PWR_DBPR_DBP); }
+void HAL_PWR_EnableBkUpAccess(void)
+{
+	SET_BIT(PWR->DBPR, PWR_DBPR_DBP);
+}
 
 /**
  * @brief  Disable access to the backup domain (RCC Backup domain control
@@ -223,7 +226,10 @@ void HAL_PWR_EnableBkUpAccess(void) { SET_BIT(PWR->DBPR, PWR_DBPR_DBP); }
  *         and backup SRAM).
  * @retval None.
  */
-void HAL_PWR_DisableBkUpAccess(void) { CLEAR_BIT(PWR->DBPR, PWR_DBPR_DBP); }
+void HAL_PWR_DisableBkUpAccess(void)
+{
+	CLEAR_BIT(PWR->DBPR, PWR_DBPR_DBP);
+}
 /**
  * @}
  */
@@ -434,13 +440,19 @@ HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *pConfigPVD)
  * @brief  Enable the programmable voltage detector (PVD).
  * @retval None.
  */
-void HAL_PWR_EnablePVD(void) { SET_BIT(PWR->SVMCR, PWR_SVMCR_PVDE); }
+void HAL_PWR_EnablePVD(void)
+{
+	SET_BIT(PWR->SVMCR, PWR_SVMCR_PVDE);
+}
 
 /**
  * @brief  Disable the programmable voltage detector (PVD).
  * @retval None.
  */
-void HAL_PWR_DisablePVD(void) { CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_PVDE); }
+void HAL_PWR_DisablePVD(void)
+{
+	CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_PVDE);
+}
 
 /**
  * @brief  Enable the wake up line functionality.

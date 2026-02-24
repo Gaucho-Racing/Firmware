@@ -4,8 +4,7 @@
   * @author  MCD Application Team
   * @brief   PSSI HAL module driver.
   *          This file provides firmware functions to manage the following
-  *          functionalities of the Parallel Synchronous Slave Interface (PSSI)
-  peripheral:
+  *          functionalities of the Parallel Synchronous Slave Interface (PSSI) peripheral:
   *           + Initialization and de-initialization functions
   *           + IO operation functions
   *           + Peripheral State and Errors functions
@@ -31,8 +30,7 @@
     (#) Declare a PSSI_HandleTypeDef handle structure, for example:
 	PSSI_HandleTypeDef  hpssi;
 
-    (#) Initialize the PSSI low level resources by implementing the @ref
-  HAL_PSSI_MspInit() API:
+    (#) Initialize the PSSI low level resources by implementing the @ref HAL_PSSI_MspInit() API:
 	(##) Enable the PSSIx interface clock
 	(##) PSSI pins configuration
 	    (+++) Enable the clock for the PSSI GPIOs
@@ -41,55 +39,44 @@
 	    (+++) Configure the PSSIx interrupt priority
 	    (+++) Enable the NVIC PSSI IRQ Channel
 	(##) DMA Configuration if you need to use DMA process
-	    (+++) Declare  DMA_HandleTypeDef handles structure for the transmit
-  and receive
+	    (+++) Declare  DMA_HandleTypeDef handles structure for the transmit and receive
 	    (+++) Enable the DMAx interface clock
 	    (+++) Configure the DMA handle parameters
 	    (+++) Configure the DMA Tx and Rx
-	    (+++) Associate the initialized DMA handle to the hpssi DMA Tx and
-  Rx handle
-	    (+++) Configure the priority and enable the NVIC for the transfer
-  complete interrupt on the DMA Tx and Rx
+	    (+++) Associate the initialized DMA handle to the hpssi DMA Tx and Rx handle
+	    (+++) Configure the priority and enable the NVIC for the transfer complete interrupt on
+		  the DMA Tx and Rx
 
-    (#) Configure the Communication Bus Width,  Control Signals, Input Polarity
-  and Output Polarity in the hpssi Init structure.
+    (#) Configure the Communication Bus Width,  Control Signals, Input Polarity and Output Polarity
+	 in the hpssi Init structure.
 
-    (#) Initialize the PSSI registers by calling the @ref HAL_PSSI_Init(),
-  configure also the low level Hardware (GPIO, CLOCK, NVIC...etc) by calling the
-  customized @ref HAL_PSSI_MspInit(&hpssi) API.
+    (#) Initialize the PSSI registers by calling the @ref HAL_PSSI_Init(), configure also the low level Hardware
+	(GPIO, CLOCK, NVIC...etc) by calling the customized @ref HAL_PSSI_MspInit(&hpssi) API.
 
-    (#) For PSSI IO operations, two operation modes are available within this
-  driver :
+    (#) For PSSI IO operations, two operation modes are available within this driver :
 
     *** Polling mode IO operation ***
     =================================
     [..]
-      (+) Transmit an amount of data by byte in blocking mode using @ref
-  HAL_PSSI_Transmit()
-      (+) Receive an amount of data by byte in blocking mode using @ref
-  HAL_PSSI_Receive()
+      (+) Transmit an amount of data by byte in blocking mode using @ref HAL_PSSI_Transmit()
+      (+) Receive an amount of data by byte in blocking mode using @ref HAL_PSSI_Receive()
 
     *** DMA mode IO operation ***
     ==============================
     [..]
       (+) Transmit an amount of data in non-blocking mode (DMA) using
 	  @ref HAL_PSSI_Transmit_DMA()
-      (+) At transmission end of transfer, @ref HAL_PSSI_TxCpltCallback() is
-  executed and user can add his own code by customization of function pointer
-  @ref HAL_PSSI_TxCpltCallback()
+      (+) At transmission end of transfer, @ref HAL_PSSI_TxCpltCallback() is executed and user can
+	   add his own code by customization of function pointer @ref HAL_PSSI_TxCpltCallback()
       (+) Receive an amount of data in non-blocking mode (DMA) using
 	  @ref HAL_PSSI_Receive_DMA()
-      (+) At reception end of transfer, @ref HAL_PSSI_RxCpltCallback() is
-  executed and user can add his own code by customization of function pointer
-  @ref HAL_PSSI_RxCpltCallback()
-      (+) In case of transfer Error, @ref HAL_PSSI_ErrorCallback() function is
-  executed and user can add his own code by customization of function pointer
-  @ref HAL_PSSI_ErrorCallback()
-      (+) Abort a  PSSI process communication with Interrupt using @ref
-  HAL_PSSI_Abort_IT()
-      (+) End of abort process, @ref HAL_PSSI_AbortCpltCallback() is executed
-  and user can add his own code by customization of function pointer @ref
-  HAL_PSSI_AbortCpltCallback()
+      (+) At reception end of transfer, @ref HAL_PSSI_RxCpltCallback() is executed and user can
+	   add his own code by customization of function pointer @ref HAL_PSSI_RxCpltCallback()
+      (+) In case of transfer Error, @ref HAL_PSSI_ErrorCallback() function is executed and user can
+	   add his own code by customization of function pointer @ref HAL_PSSI_ErrorCallback()
+      (+) Abort a  PSSI process communication with Interrupt using @ref HAL_PSSI_Abort_IT()
+      (+) End of abort process, @ref HAL_PSSI_AbortCpltCallback() is executed and user can
+	   add his own code by customization of function pointer @ref HAL_PSSI_AbortCpltCallback()
 
      *** PSSI HAL driver macros list ***
      ==================================
@@ -98,34 +85,32 @@
 
       (+) @ref HAL_PSSI_ENABLE     : Enable the PSSI peripheral
       (+) @ref HAL_PSSI_DISABLE    : Disable the PSSI peripheral
-      (+) @ref HAL_PSSI_GET_FLAG   : Check whether the specified PSSI flag is
-  set or not
+      (+) @ref HAL_PSSI_GET_FLAG   : Check whether the specified PSSI flag is set or not
       (+) @ref HAL_PSSI_CLEAR_FLAG : Clear the specified PSSI pending flag
       (+) @ref HAL_PSSI_ENABLE_IT  : Enable the specified PSSI interrupt
       (+) @ref HAL_PSSI_DISABLE_IT : Disable the specified PSSI interrupt
 
      *** Callback registration ***
      =============================================
-     Use Functions @ref HAL_PSSI_RegisterCallback() or @ref
-  HAL_PSSI_RegisterAddrCallback() to register an interrupt callback.
+     Use Functions @ref HAL_PSSI_RegisterCallback() or @ref HAL_PSSI_RegisterAddrCallback()
+     to register an interrupt callback.
 
-     Function @ref HAL_PSSI_RegisterCallback() allows to register following
-  callbacks:
+     Function @ref HAL_PSSI_RegisterCallback() allows to register following callbacks:
        (+) TxCpltCallback       : callback for transmission end of transfer.
        (+) RxCpltCallback       : callback for reception end of transfer.
        (+) ErrorCallback        : callback for error detection.
        (+) AbortCpltCallback    : callback for abort completion process.
        (+) MspInitCallback      : callback for Msp Init.
        (+) MspDeInitCallback    : callback for Msp DeInit.
-     This function takes as parameters the HAL peripheral handle, the Callback
-  ID and a pointer to the user callback function.
+     This function takes as parameters the HAL peripheral handle, the Callback ID
+     and a pointer to the user callback function.
 
 
-     Use function @ref HAL_PSSI_UnRegisterCallback to reset a callback to the
-  default weak function.
-     @ref HAL_PSSI_UnRegisterCallback takes as parameters the HAL peripheral
-  handle, and the Callback ID. This function allows to reset following
-  callbacks:
+     Use function @ref HAL_PSSI_UnRegisterCallback to reset a callback to the default
+     weak function.
+     @ref HAL_PSSI_UnRegisterCallback takes as parameters the HAL peripheral handle,
+     and the Callback ID.
+     This function allows to reset following callbacks:
        (+) TxCpltCallback       : callback for transmission end of transfer.
        (+) RxCpltCallback       : callback for reception end of transfer.
        (+) ErrorCallback        : callback for error detection.
@@ -134,28 +119,26 @@
        (+) MspDeInitCallback    : callback for Msp DeInit.
 
 
-     By default, after the @ref HAL_PSSI_Init() and when the state is @ref
-  HAL_PSSI_STATE_RESET all callbacks are set to the corresponding weak
-  functions: examples @ref HAL_PSSI_TxCpltCallback(), @ref
-  HAL_PSSI_RxCpltCallback(). Exception done for MspInit and MspDeInit functions
-  that are reset to the legacy weak functions in the @ref HAL_PSSI_Init()/ @ref
-  HAL_PSSI_DeInit() only when these callbacks are null (not registered
-  beforehand). If MspInit or MspDeInit are not null, the @ref HAL_PSSI_Init()/
-  @ref HAL_PSSI_DeInit() keep and use the user MspInit/MspDeInit callbacks
-  (registered beforehand) whatever the state.
+     By default, after the @ref HAL_PSSI_Init() and when the state is @ref HAL_PSSI_STATE_RESET
+     all callbacks are set to the corresponding weak functions:
+     examples @ref HAL_PSSI_TxCpltCallback(), @ref HAL_PSSI_RxCpltCallback().
+     Exception done for MspInit and MspDeInit functions that are
+     reset to the legacy weak functions in the @ref HAL_PSSI_Init()/ @ref HAL_PSSI_DeInit() only when
+     these callbacks are null (not registered beforehand).
+     If MspInit or MspDeInit are not null, the @ref HAL_PSSI_Init()/ @ref HAL_PSSI_DeInit()
+     keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
 
-     Callbacks can be registered/unregistered in @ref HAL_PSSI_STATE_READY state
-  only. Exception done MspInit/MspDeInit functions that can be
-  registered/unregistered in @ref HAL_PSSI_STATE_READY or @ref
-  HAL_PSSI_STATE_RESET state, thus registered (user) MspInit/DeInit callbacks
-  can be used during the Init/DeInit. Then, the user first registers the
-  MspInit/MspDeInit user callbacks using @ref HAL_PSSI_RegisterCallback() before
-  calling @ref HAL_PSSI_DeInit() or @ref HAL_PSSI_Init() function.
+     Callbacks can be registered/unregistered in @ref HAL_PSSI_STATE_READY state only.
+     Exception done MspInit/MspDeInit functions that can be registered/unregistered
+     in @ref HAL_PSSI_STATE_READY or @ref HAL_PSSI_STATE_RESET state,
+     thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
+     Then, the user first registers the MspInit/MspDeInit user callbacks
+     using @ref HAL_PSSI_RegisterCallback() before calling @ref HAL_PSSI_DeInit()
+     or @ref HAL_PSSI_Init() function.
 
 
      [..]
-       (@) You can refer to the PSSI HAL driver header file for more useful
-  macros
+       (@) You can refer to the PSSI HAL driver header file for more useful macros
 
   @endverbatim
   */
@@ -220,8 +203,7 @@ static HAL_StatusTypeDef PSSI_WaitOnStatusUntilTimeout(PSSI_HandleTypeDef *hpssi
  * @{
  */
 
-/** @defgroup PSSI_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup PSSI_Exported_Functions_Group1 Initialization and de-initialization functions
   *  @brief    Initialization and Configuration functions
   *
 @verbatim
@@ -234,15 +216,15 @@ de-initialization functions
       (+) User must implement HAL_PSSI_MspInit() function in which he configures
 	  all related peripherals resources (CLOCK, GPIO, DMA, IT and NVIC ).
 
-      (+) Call the function HAL_PSSI_Init() to configure the selected device
-with the selected configuration:
+      (+) Call the function HAL_PSSI_Init() to configure the selected device with
+	  the selected configuration:
 	(++) Data Width
 	(++) Control Signals
 	(++) Input Clock polarity
 	(++) Output Clock polarity
 
-      (+) Call the function HAL_PSSI_DeInit() to restore the default
-configuration of the selected PSSIx peripheral.
+      (+) Call the function HAL_PSSI_DeInit() to restore the default configuration
+	  of the selected PSSIx peripheral.
 
 @endverbatim
   * @{
@@ -278,9 +260,8 @@ HAL_StatusTypeDef HAL_PSSI_Init(PSSI_HandleTypeDef *hpssi)
 		/* Init the PSSI Callback settings */
 		hpssi->TxCpltCallback = HAL_PSSI_TxCpltCallback;       /* Legacy weak TxCpltCallback */
 		hpssi->RxCpltCallback = HAL_PSSI_RxCpltCallback;       /* Legacy weak RxCpltCallback */
-		hpssi->ErrorCallback = HAL_PSSI_ErrorCallback;	       /* Legacy weak ErrorCallback */
-		hpssi->AbortCpltCallback = HAL_PSSI_AbortCpltCallback; /* Legacy weak AbortCpltCallback
-									*/
+		hpssi->ErrorCallback = HAL_PSSI_ErrorCallback;	       /* Legacy weak ErrorCallback        */
+		hpssi->AbortCpltCallback = HAL_PSSI_AbortCpltCallback; /* Legacy weak AbortCpltCallback    */
 
 		if (hpssi->MspInitCallback == NULL) {
 			hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit  */
@@ -299,8 +280,7 @@ HAL_StatusTypeDef HAL_PSSI_Init(PSSI_HandleTypeDef *hpssi)
 	/* Disable the selected PSSI peripheral */
 	HAL_PSSI_DISABLE(hpssi);
 
-	/*---------------------------- PSSIx CR Configuration
-	 * ----------------------*/
+	/*---------------------------- PSSIx CR Configuration ----------------------*/
 	/* Configure PSSIx: Control Signal and Bus Width*/
 
 	MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DERDYCFG | PSSI_CR_EDM | PSSI_CR_DEPOL | PSSI_CR_RDYPOL,
@@ -365,8 +345,8 @@ __weak void HAL_PSSI_MspInit(PSSI_HandleTypeDef *hpssi)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpssi);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PSSI_MspInit can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PSSI_MspInit can be implemented in the user file
 	 */
 }
 
@@ -381,8 +361,8 @@ __weak void HAL_PSSI_MspDeInit(PSSI_HandleTypeDef *hpssi)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpssi);
 
-	/* NOTE : This function should not be modified; when the callback is
-	   needed, the HAL_PSSI_MspDeInit can be implemented in the user file
+	/* NOTE : This function should not be modified; when the callback is needed,
+		  the HAL_PSSI_MspDeInit can be implemented in the user file
 	 */
 }
 
@@ -390,17 +370,15 @@ __weak void HAL_PSSI_MspDeInit(PSSI_HandleTypeDef *hpssi)
 /**
  * @brief  Register a User PSSI Callback
  *         To be used instead of the weak predefined callback
- * @note   The HAL_PSSI_RegisterCallback() may be called before HAL_PSSI_Init()
- * in HAL_PSSI_STATE_RESET to register callbacks for HAL_PSSI_MSPINIT_CB_ID and
- * HAL_PSSI_MSPDEINIT_CB_ID.
+ * @note   The HAL_PSSI_RegisterCallback() may be called before HAL_PSSI_Init() in
+ *         HAL_PSSI_STATE_RESET to register callbacks for HAL_PSSI_MSPINIT_CB_ID
+ *         and HAL_PSSI_MSPDEINIT_CB_ID.
  * @param  hpssi Pointer to a PSSI_HandleTypeDef structure that contains
  *                the configuration information for the specified PSSI.
  * @param  CallbackID ID of the callback to be registered
  *         This parameter can be one of the following values:
- *          @arg @ref HAL_PSSI_TX_COMPLETE_CB_ID  Tx Transfer completed callback
- * ID
- *          @arg @ref HAL_PSSI_RX_COMPLETE_CB_ID  Rx Transfer completed callback
- * ID
+ *          @arg @ref HAL_PSSI_TX_COMPLETE_CB_ID  Tx Transfer completed callback ID
+ *          @arg @ref HAL_PSSI_RX_COMPLETE_CB_ID  Rx Transfer completed callback ID
  *          @arg @ref HAL_PSSI_ERROR_CB_ID Error callback ID
  *          @arg @ref HAL_PSSI_ABORT_CB_ID Abort callback ID
  *          @arg @ref HAL_PSSI_MSPINIT_CB_ID MspInit callback ID
@@ -485,17 +463,15 @@ HAL_StatusTypeDef HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSSI_
 /**
  * @brief  Unregister an PSSI Callback
  *         PSSI callback is redirected to the weak predefined callback
- * @note   The HAL_PSSI_UnRegisterCallback() may be called before
- * HAL_PSSI_Init() in HAL_PSSI_STATE_RESET to un-register callbacks for
- * HAL_PSSI_MSPINIT_CB_ID and HAL_PSSI_MSPDEINIT_CB_ID.
+ * @note   The HAL_PSSI_UnRegisterCallback() may be called before HAL_PSSI_Init() in
+ *         HAL_PSSI_STATE_RESET to un-register callbacks for HAL_PSSI_MSPINIT_CB_ID
+ *         and HAL_PSSI_MSPDEINIT_CB_ID.
  * @param  hpssi Pointer to a PSSI_HandleTypeDef structure that contains
  *                the configuration information for the specified PSSI.
  * @param  CallbackID ID of the callback to be unregistered
  *         This parameter can be one of the following values:
- *          @arg @ref HAL_PSSI_TX_COMPLETE_CB_ID  Tx Transfer completed callback
- * ID
- *          @arg @ref HAL_PSSI_RX_COMPLETE_CB_ID  Rx Transfer completed callback
- * ID
+ *          @arg @ref HAL_PSSI_TX_COMPLETE_CB_ID  Tx Transfer completed callback ID
+ *          @arg @ref HAL_PSSI_RX_COMPLETE_CB_ID  Rx Transfer completed callback ID
  *          @arg @ref HAL_PSSI_ERROR_CB_ID Error callback ID
  *          @arg @ref HAL_PSSI_ABORT_CB_ID Abort callback ID
  *          @arg @ref HAL_PSSI_MSPINIT_CB_ID MspInit callback ID
@@ -509,36 +485,27 @@ HAL_StatusTypeDef HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSS
 	if (HAL_PSSI_STATE_READY == hpssi->State) {
 		switch (CallbackID) {
 			case HAL_PSSI_TX_COMPLETE_CB_ID:
-				hpssi->TxCpltCallback = HAL_PSSI_TxCpltCallback; /* Legacy weak
-										    TxCpltCallback
-										  */
+				hpssi->TxCpltCallback = HAL_PSSI_TxCpltCallback; /* Legacy weak TxCpltCallback     */
 				break;
 
 			case HAL_PSSI_RX_COMPLETE_CB_ID:
-				hpssi->RxCpltCallback = HAL_PSSI_RxCpltCallback; /* Legacy weak
-										    RxCpltCallback
-										  */
+				hpssi->RxCpltCallback = HAL_PSSI_RxCpltCallback; /* Legacy weak RxCpltCallback     */
 				break;
 
 			case HAL_PSSI_ERROR_CB_ID:
-				hpssi->ErrorCallback = HAL_PSSI_ErrorCallback; /* Legacy weak
-										* ErrorCallback
-										*/
+				hpssi->ErrorCallback = HAL_PSSI_ErrorCallback; /* Legacy weak ErrorCallback      */
 				break;
 
 			case HAL_PSSI_ABORT_CB_ID:
-				hpssi->AbortCpltCallback = HAL_PSSI_AbortCpltCallback; /* Legacy weak
-											  AbortCpltCallback
-											*/
+				hpssi->AbortCpltCallback = HAL_PSSI_AbortCpltCallback; /* Legacy weak AbortCpltCallback  */
 				break;
 
 			case HAL_PSSI_MSPINIT_CB_ID:
-				hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit */
+				hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit            */
 				break;
 
 			case HAL_PSSI_MSPDEINIT_CB_ID:
-				hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
-										*/
+				hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit          */
 				break;
 
 			default:
@@ -552,12 +519,11 @@ HAL_StatusTypeDef HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSS
 	} else if (HAL_PSSI_STATE_RESET == hpssi->State) {
 		switch (CallbackID) {
 			case HAL_PSSI_MSPINIT_CB_ID:
-				hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit */
+				hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit            */
 				break;
 
 			case HAL_PSSI_MSPDEINIT_CB_ID:
-				hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
-										*/
+				hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit          */
 				break;
 
 			default:
@@ -585,8 +551,7 @@ HAL_StatusTypeDef HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSS
  * @}
  */
 
-/** @defgroup PSSI_Exported_Functions_Group2 Input and Output operation
-functions
+/** @defgroup PSSI_Exported_Functions_Group2 Input and Output operation functions
   *  @brief   Data transfers functions
   *
 @verbatim
@@ -669,8 +634,7 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData, u
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
-				/* Wait until Fifo is ready to transfer one byte
-				 * flag is set */
+				/* Wait until Fifo is ready to transfer one byte flag is set */
 				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT1B, RESET, Timeout, tickstart) != HAL_OK) {
 					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
@@ -693,8 +657,7 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData, u
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
-				/* Wait until Fifo is ready to transfer four
-				 * bytes flag is set */
+				/* Wait until Fifo is ready to transfer four bytes flag is set */
 				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
 					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
@@ -714,8 +677,7 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData, u
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
-				/* Wait until Fifo is ready to transfer four
-				 * bytes flag is set */
+				/* Wait until Fifo is ready to transfer four bytes flag is set */
 				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
 					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
@@ -805,8 +767,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData, ui
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
-				/* Wait until Fifo is ready to receive one byte
-				 * flag is set */
+				/* Wait until Fifo is ready to receive one byte flag is set */
 				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT1B, RESET, Timeout, tickstart) != HAL_OK) {
 					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
@@ -826,8 +787,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData, ui
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
-				/* Wait until Fifo is ready to receive four
-				 * bytes flag is set */
+				/* Wait until Fifo is ready to receive four bytes flag is set */
 				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
 					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
@@ -847,8 +807,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData, ui
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
-				/* Wait until Fifo is ready to receive four
-				 * bytes flag is set */
+				/* Wait until Fifo is ready to receive four bytes flag is set */
 				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
 					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
@@ -935,8 +894,7 @@ HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDa
 						   PSSI_CR_DMA_ENABLE | hpssi->Init.BusWidth | PSSI_CR_OUTEN_OUTPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? 0U : PSSI_CR_CKPOL));
 				}
 
-				/* Set the PSSI DMA transfer complete callback
-				 */
+				/* Set the PSSI DMA transfer complete callback */
 				hpssi->hdmatx->XferCpltCallback = PSSI_DMATransmitCplt;
 
 				/* Set the DMA error callback */
@@ -968,10 +926,9 @@ HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDa
 				/* Process Unlocked */
 				__HAL_UNLOCK(hpssi);
 
-				/* Note : The PSSI interrupts must be enabled
-				   after unlocking current process to avoid the
-				   risk of PSSI interrupt handle execution
-				   before current process unlock */
+				/* Note : The PSSI interrupts must be enabled after unlocking current process
+					  to avoid the risk of PSSI interrupt handle execution before current
+					  process unlock */
 				/* Enable ERR interrupt */
 				HAL_PSSI_ENABLE_IT(hpssi, PSSI_FLAG_OVR_RIS);
 
@@ -995,10 +952,9 @@ HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDa
 			/* Process Unlocked */
 			__HAL_UNLOCK(hpssi);
 
-			/* Note : The PSSI interrupts must be enabled after
-			   unlocking current process to avoid the risk of PSSI
-			   interrupt handle execution before current process
-			   unlock */
+			/* Note : The PSSI interrupts must be enabled after unlocking current process
+				  to avoid the risk of PSSI interrupt handle execution before current
+				  process unlock */
 			/* Enable ERRinterrupt */
 			/* possible to enable all of these */
 
@@ -1054,8 +1010,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDat
 						   PSSI_CR_DMA_ENABLE | hpssi->Init.BusWidth | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? PSSI_CR_CKPOL : 0U));
 				}
 
-				/* Set the PSSI DMA transfer complete callback
-				 */
+				/* Set the PSSI DMA transfer complete callback */
 				hpssi->hdmarx->XferCpltCallback = PSSI_DMAReceiveCplt;
 
 				/* Set the DMA error callback */
@@ -1087,10 +1042,9 @@ HAL_StatusTypeDef HAL_PSSI_Receive_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pDat
 				/* Process Unlocked */
 				__HAL_UNLOCK(hpssi);
 
-				/* Note : The PSSI interrupts must be enabled
-				   after unlocking current process to avoid the
-				   risk of PSSI interrupt handle execution
-				   before current process unlock */
+				/* Note : The PSSI interrupts must be enabled after unlocking current process
+					  to avoid the risk of PSSI interrupt handle execution before current
+					  process unlock */
 				/* Enable ERR  interrupt */
 				HAL_PSSI_ENABLE_IT(hpssi, PSSI_FLAG_OVR_RIS);
 
@@ -1148,14 +1102,12 @@ HAL_StatusTypeDef HAL_PSSI_Abort_DMA(PSSI_HandleTypeDef *hpssi)
 
 			if (hpssi->hdmatx != NULL) {
 				/* Set the PSSI DMA Abort callback :
-				will lead to call HAL_PSSI_ErrorCallback() at
-				end of DMA abort procedure */
+				will lead to call HAL_PSSI_ErrorCallback() at end of DMA abort procedure */
 				hpssi->hdmatx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Abort DMA TX */
 				if (HAL_DMA_Abort_IT(hpssi->hdmatx) != HAL_OK) {
-					/* Call Directly XferAbortCallback
-					 * function in case of error */
+					/* Call Directly XferAbortCallback function in case of error */
 					hpssi->hdmatx->XferAbortCallback(hpssi->hdmatx);
 				}
 			}
@@ -1166,15 +1118,12 @@ HAL_StatusTypeDef HAL_PSSI_Abort_DMA(PSSI_HandleTypeDef *hpssi)
 
 			if (hpssi->hdmarx != NULL) {
 				/* Set the PSSI DMA Abort callback :
-				will lead to call HAL_PSSI_ErrorCallback() at
-				end of DMA abort procedure */
+				will lead to call HAL_PSSI_ErrorCallback() at end of DMA abort procedure */
 				hpssi->hdmarx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Abort DMA RX */
 				if (HAL_DMA_Abort_IT(hpssi->hdmarx) != HAL_OK) {
-					/* Call Directly
-					 * hpssi->hdma->XferAbortCallback
-					 * function in case of error */
+					/* Call Directly hpssi->hdma->XferAbortCallback function in case of error */
 					hpssi->hdmarx->XferAbortCallback(hpssi->hdmarx);
 				}
 			}
@@ -1192,9 +1141,9 @@ HAL_StatusTypeDef HAL_PSSI_Abort_DMA(PSSI_HandleTypeDef *hpssi)
 	/* Process Unlocked */
 	__HAL_UNLOCK(hpssi);
 
-	/* Note : The PSSI interrupts must be enabled after unlocking current
-	   process to avoid the risk of PSSI interrupt handle execution before
-	   current process unlock */
+	/* Note : The PSSI interrupts must be enabled after unlocking current process
+		  to avoid the risk of PSSI interrupt handle execution before current
+		  process unlock */
 	HAL_PSSI_ENABLE_IT(hpssi, PSSI_FLAG_OVR_RIS);
 
 	return HAL_OK;
@@ -1236,9 +1185,7 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 
 				if (hpssi->hdmatx != NULL) {
 					/* Set the PSSI DMA Abort callback :
-					will lead to call
-					HAL_PSSI_ErrorCallback() at end of DMA
-					abort procedure */
+					will lead to call HAL_PSSI_ErrorCallback() at end of DMA abort procedure */
 					hpssi->hdmatx->XferAbortCallback = PSSI_DMAAbort;
 
 					/* Process Unlocked */
@@ -1246,9 +1193,7 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 
 					/* Abort DMA TX */
 					if (HAL_DMA_Abort_IT(hpssi->hdmatx) != HAL_OK) {
-						/* Call Directly
-						 * XferAbortCallback function in
-						 * case of error */
+						/* Call Directly XferAbortCallback function in case of error */
 						hpssi->hdmatx->XferAbortCallback(hpssi->hdmatx);
 					}
 				}
@@ -1262,9 +1207,7 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 
 				if (hpssi->hdmarx != NULL) {
 					/* Set the PSSI DMA Abort callback :
-					will lead to call
-					HAL_PSSI_ErrorCallback() at end of DMA
-					abort procedure */
+					will lead to call HAL_PSSI_ErrorCallback() at end of DMA abort procedure */
 					hpssi->hdmarx->XferAbortCallback = PSSI_DMAAbort;
 
 					/* Process Unlocked */
@@ -1272,16 +1215,13 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 
 					/* Abort DMA RX */
 					if (HAL_DMA_Abort_IT(hpssi->hdmarx) != HAL_OK) {
-						/* Call Directly
-						 * hpssi->hdma->XferAbortCallback
-						 * function in case of error */
+						/* Call Directly hpssi->hdma->XferAbortCallback function in case of error */
 						hpssi->hdmarx->XferAbortCallback(hpssi->hdmarx);
 					}
 				}
 			} else {
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
-				/* Call the corresponding callback to inform
-				 * upper layer of the error */
+				/* Call the corresponding callback to inform upper layer of the error */
 				hpssi->ErrorCallback(hpssi);
 #else
 				HAL_PSSI_ErrorCallback(hpssi);
@@ -1290,8 +1230,7 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 		}
 #endif /*HAL_DMA_MODULE_ENABLED*/
 
-		/* If state is an abort treatment on going, don't change state
-		 */
+		/* If state is an abort treatment on going, don't change state */
 		if (hpssi->State == HAL_PSSI_STATE_ABORT) {
 			hpssi->State = HAL_PSSI_STATE_READY;
 
@@ -1299,8 +1238,7 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 			__HAL_UNLOCK(hpssi);
 
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
-			/* Call the corresponding callback to inform upper layer
-			 * of End of Transfer */
+			/* Call the corresponding callback to inform upper layer of End of Transfer */
 			hpssi->AbortCpltCallback(hpssi);
 #else
 			HAL_PSSI_AbortCpltCallback(hpssi);
@@ -1312,8 +1250,7 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 			__HAL_UNLOCK(hpssi);
 
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
-			/* Call the corresponding callback to inform upper layer
-			 * of End of Transfer */
+			/* Call the corresponding callback to inform upper layer of End of Transfer */
 			hpssi->ErrorCallback(hpssi);
 #else
 			HAL_PSSI_ErrorCallback(hpssi);
@@ -1333,9 +1270,8 @@ __weak void HAL_PSSI_TxCpltCallback(PSSI_HandleTypeDef *hpssi)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpssi);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PSSI_TxCpltCallback can be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PSSI_TxCpltCallback can be implemented in the user file
 	 */
 }
 
@@ -1350,9 +1286,8 @@ __weak void HAL_PSSI_RxCpltCallback(PSSI_HandleTypeDef *hpssi)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpssi);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PSSI_RxCpltCallback can be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PSSI_RxCpltCallback can be implemented in the user file
 	 */
 }
 
@@ -1367,9 +1302,8 @@ __weak void HAL_PSSI_ErrorCallback(PSSI_HandleTypeDef *hpssi)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpssi);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PSSI_ErrorCallback could be implemented in the user
-	   file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PSSI_ErrorCallback could be implemented in the user file
 	 */
 }
 
@@ -1384,9 +1318,8 @@ __weak void HAL_PSSI_AbortCpltCallback(PSSI_HandleTypeDef *hpssi)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpssi);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_PSSI_AbortCpltCallback could be implemented in the
-	   user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_PSSI_AbortCpltCallback could be implemented in the user file
 	 */
 }
 
@@ -1394,8 +1327,7 @@ __weak void HAL_PSSI_AbortCpltCallback(PSSI_HandleTypeDef *hpssi)
  * @}
  */
 
-/** @defgroup PSSI_Exported_Functions_Group3 Peripheral State and Error
-functions
+/** @defgroup PSSI_Exported_Functions_Group3 Peripheral State and Error functions
   *  @brief   Peripheral State, Mode and Error functions
   *
 @verbatim
@@ -1428,7 +1360,10 @@ HAL_PSSI_StateTypeDef HAL_PSSI_GetState(const PSSI_HandleTypeDef *hpssi)
  *              the configuration information for the specified PSSI.
  * @retval PSSI Error Code
  */
-uint32_t HAL_PSSI_GetError(const PSSI_HandleTypeDef *hpssi) { return hpssi->ErrorCode; }
+uint32_t HAL_PSSI_GetError(const PSSI_HandleTypeDef *hpssi)
+{
+	return hpssi->ErrorCode;
+}
 
 /**
  * @}
@@ -1467,8 +1402,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 
 			if (hpssi->hdmatx != NULL) {
 				/* Set the PSSI DMA Abort callback :
-				will lead to call HAL_PSSI_ErrorCallback() at
-				end of DMA abort procedure */
+				will lead to call HAL_PSSI_ErrorCallback() at end of DMA abort procedure */
 				hpssi->hdmatx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Process Unlocked */
@@ -1476,8 +1410,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 
 				/* Abort DMA TX */
 				if (HAL_DMA_Abort_IT(hpssi->hdmatx) != HAL_OK) {
-					/* Call Directly XferAbortCallback
-					 * function in case of error */
+					/* Call Directly XferAbortCallback function in case of error */
 					hpssi->hdmatx->XferAbortCallback(hpssi->hdmatx);
 				}
 			}
@@ -1488,8 +1421,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 
 			if (hpssi->hdmarx != NULL) {
 				/* Set the PSSI DMA Abort callback :
-				will lead to call HAL_PSSI_ErrorCallback() at
-				end of DMA abort procedure */
+				will lead to call HAL_PSSI_ErrorCallback() at end of DMA abort procedure */
 				hpssi->hdmarx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Process Unlocked */
@@ -1497,9 +1429,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 
 				/* Abort DMA RX */
 				if (HAL_DMA_Abort_IT(hpssi->hdmarx) != HAL_OK) {
-					/* Call Directly
-					 * hpssi->hdma->XferAbortCallback
-					 * function in case of error */
+					/* Call Directly hpssi->hdma->XferAbortCallback function in case of error */
 					hpssi->hdmarx->XferAbortCallback(hpssi->hdmarx);
 				}
 			}
@@ -1516,8 +1446,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hpssi);
 
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->AbortCpltCallback(hpssi);
 #else
@@ -1530,8 +1459,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hpssi);
 
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->ErrorCallback(hpssi);
 #else
@@ -1559,11 +1487,9 @@ void PSSI_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 	/* Store current volatile hpssi->ErrorCode, misra rule */
 	tmperror = hpssi->ErrorCode;
 
-	/* Call the corresponding callback to inform upper layer of End of
-	 * Transfer */
+	/* Call the corresponding callback to inform upper layer of End of Transfer */
 	if ((hpssi->State == HAL_PSSI_STATE_ABORT) || (tmperror != HAL_PSSI_ERROR_NONE)) {
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 		PSSI_Error(hpssi, hpssi->ErrorCode);
 	}
 	/* hpssi->State == HAL_PSSI_STATE_BUSY_TX */
@@ -1573,8 +1499,7 @@ void PSSI_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hpssi);
 
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->TxCpltCallback(hpssi);
 #else
@@ -1601,11 +1526,9 @@ void PSSI_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 	/* Store current volatile hpssi->ErrorCode, misra rule */
 	tmperror = hpssi->ErrorCode;
 
-	/* Call the corresponding callback to inform upper layer of End of
-	 * Transfer */
+	/* Call the corresponding callback to inform upper layer of End of Transfer */
 	if ((hpssi->State == HAL_PSSI_STATE_ABORT) || (tmperror != HAL_PSSI_ERROR_NONE)) {
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 		PSSI_Error(hpssi, hpssi->ErrorCode);
 	}
 	/* hpssi->State == HAL_PSSI_STATE_BUSY_RX */
@@ -1615,8 +1538,7 @@ void PSSI_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hpssi);
 
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->RxCpltCallback(hpssi);
 #else
@@ -1644,16 +1566,14 @@ void PSSI_DMAAbort(DMA_HandleTypeDef *hdma)
 	if (hpssi->State == HAL_PSSI_STATE_ABORT) {
 		hpssi->State = HAL_PSSI_STATE_READY;
 
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->AbortCpltCallback(hpssi);
 #else
 		HAL_PSSI_AbortCpltCallback(hpssi);
 #endif /* USE_HAL_PSSI_REGISTER_CALLBACKS */
 	} else {
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->ErrorCallback(hpssi);
 #else
@@ -1709,11 +1629,9 @@ void PSSI_DMAError(DMA_HandleTypeDef *hdma)
 	/* Store current volatile hpssi->ErrorCode, misra rule */
 	tmperror = hpssi->ErrorCode;
 
-	/* Call the corresponding callback to inform upper layer of End of
-	 * Transfer */
+	/* Call the corresponding callback to inform upper layer of End of Transfer */
 	if ((hpssi->State == HAL_PSSI_STATE_ABORT) || (tmperror != HAL_PSSI_ERROR_NONE)) {
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 		PSSI_Error(hpssi, hpssi->ErrorCode);
 	} else {
 		hpssi->State = HAL_PSSI_STATE_READY;
@@ -1721,8 +1639,7 @@ void PSSI_DMAError(DMA_HandleTypeDef *hdma)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hpssi);
 
-		/* Call the corresponding callback to inform upper layer of End
-		 * of Transfer */
+		/* Call the corresponding callback to inform upper layer of End of Transfer */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		hpssi->ErrorCallback(hpssi);
 #else

@@ -33,6 +33,7 @@
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
 #include "CANutils.h"
+#include "Lights.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
@@ -248,7 +249,10 @@ void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 			       (0xFF00000 & ID) >> 20, data, size);
 }
 
-void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size) { ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size); }
+void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)
+{
+	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
+}
 
 void CAN_Configure()
 {
@@ -418,6 +422,7 @@ int main(void)
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
+	LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -432,6 +437,7 @@ int main(void)
 		SendECUStateDataOverCAN(&stateLump);
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
+		lightControl(&stateLump);
 		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 		LL_mDelay(250); // FIXME Reduce or remove de
 	}

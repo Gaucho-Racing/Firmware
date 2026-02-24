@@ -43,8 +43,7 @@ extern "C" {
 /** @defgroup DMA_LL_Private_Variables DMA Private Variables
  * @{
  */
-/* Array used to get the DMA channel register offset versus channel index
- * LL_DMA_CHANNEL_x */
+/* Array used to get the DMA channel register offset versus channel index LL_DMA_CHANNEL_x */
 static const uint8_t CHANNEL_OFFSET_TAB[] = {(uint8_t)(DMA1_Channel1_BASE - DMA1_BASE),
 					     (uint8_t)(DMA1_Channel2_BASE - DMA1_BASE),
 					     (uint8_t)(DMA1_Channel3_BASE - DMA1_BASE),
@@ -93,106 +92,69 @@ static const uint8_t CHANNEL_OFFSET_TAB[] = {(uint8_t)(DMA1_Channel1_BASE - DMA1
  * @{
  */
 typedef struct {
-	uint32_t PeriphOrM2MSrcAddress; /*!< Specifies the peripheral base address
-					   for DMA transfer or as Source base address
-					   in case of memory to memory transfer
-					   direction.
+	uint32_t PeriphOrM2MSrcAddress; /*!< Specifies the peripheral base address for DMA transfer
+					     or as Source base address in case of memory to memory transfer direction.
 
-					     This parameter must be a value between
-					   Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
+					     This parameter must be a value between Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
 
-	uint32_t MemoryOrM2MDstAddress; /*!< Specifies the memory base address for
-					   DMA transfer or as Destination base
-					   address in case of memory to memory
-					   transfer direction.
+	uint32_t MemoryOrM2MDstAddress; /*!< Specifies the memory base address for DMA transfer
+					     or as Destination base address in case of memory to memory transfer direction.
 
-					     This parameter must be a value between
-					   Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
+					     This parameter must be a value between Min_Data = 0 and Max_Data = 0xFFFFFFFF. */
 
-	uint32_t Direction; /*!< Specifies if the data will be transferred from
-			       memory to peripheral, from memory to memory or
-			       from peripheral to memory. This parameter can be
-			       a value of @ref DMA_LL_EC_DIRECTION
+	uint32_t Direction; /*!< Specifies if the data will be transferred from memory to peripheral,
+				 from memory to memory or from peripheral to memory.
+				 This parameter can be a value of @ref DMA_LL_EC_DIRECTION
 
-				 This feature can be modified afterwards using
-			       unitary function @ref
-			       LL_DMA_SetDataTransferDirection(). */
+				 This feature can be modified afterwards using unitary function @ref LL_DMA_SetDataTransferDirection(). */
 
 	uint32_t Mode; /*!< Specifies the normal or circular operation mode.
 			    This parameter can be a value of @ref DMA_LL_EC_MODE
-			    @note: The circular buffer mode cannot be used if
-			  the memory to memory data transfer direction is
-			  configured on the selected Channel
+			    @note: The circular buffer mode cannot be used if the memory to memory
+				   data transfer direction is configured on the selected Channel
 
-			    This feature can be modified afterwards using
-			  unitary function @ref LL_DMA_SetMode(). */
+			    This feature can be modified afterwards using unitary function @ref LL_DMA_SetMode(). */
 
-	uint32_t PeriphOrM2MSrcIncMode; /*!< Specifies whether the Peripheral address
-					   or Source address in case of memory to
-					   memory transfer direction is incremented
-					   or not. This parameter can be a value of
-					   @ref DMA_LL_EC_PERIPH
+	uint32_t PeriphOrM2MSrcIncMode; /*!< Specifies whether the Peripheral address or Source address in case of memory to memory transfer direction
+					     is incremented or not.
+					     This parameter can be a value of @ref DMA_LL_EC_PERIPH
 
-					     This feature can be modified afterwards
-					   using unitary function @ref
-					   LL_DMA_SetPeriphIncMode(). */
+					     This feature can be modified afterwards using unitary function @ref LL_DMA_SetPeriphIncMode(). */
 
-	uint32_t MemoryOrM2MDstIncMode; /*!< Specifies whether the Memory address or
-					   Destination address in case of memory to
-					   memory transfer direction is incremented
-					   or not. This parameter can be a value of
-					   @ref DMA_LL_EC_MEMORY
+	uint32_t MemoryOrM2MDstIncMode; /*!< Specifies whether the Memory address or Destination address in case of memory to memory transfer direction
+					     is incremented or not.
+					     This parameter can be a value of @ref DMA_LL_EC_MEMORY
 
-					     This feature can be modified afterwards
-					   using unitary function @ref
-					   LL_DMA_SetMemoryIncMode(). */
+					     This feature can be modified afterwards using unitary function @ref LL_DMA_SetMemoryIncMode(). */
 
-	uint32_t PeriphOrM2MSrcDataSize; /*!< Specifies the Peripheral data size
-					    alignment or Source data size
-					    alignment (byte, half word, word) in
-					    case of memory to memory transfer
-					    direction. This parameter can be a
-					    value of @ref DMA_LL_EC_PDATAALIGN
+	uint32_t PeriphOrM2MSrcDataSize; /*!< Specifies the Peripheral data size alignment or Source data size alignment (byte, half word, word)
+					      in case of memory to memory transfer direction.
+					      This parameter can be a value of @ref DMA_LL_EC_PDATAALIGN
 
-					      This feature can be modified
-					    afterwards using unitary function
-					    @ref LL_DMA_SetPeriphSize(). */
+					      This feature can be modified afterwards using unitary function @ref LL_DMA_SetPeriphSize(). */
 
-	uint32_t MemoryOrM2MDstDataSize; /*!< Specifies the Memory data size
-					    alignment or Destination data size
-					    alignment (byte, half word, word) in
-					    case of memory to memory transfer
-					    direction. This parameter can be a
-					    value of @ref DMA_LL_EC_MDATAALIGN
+	uint32_t MemoryOrM2MDstDataSize; /*!< Specifies the Memory data size alignment or Destination data size alignment (byte, half word, word)
+					      in case of memory to memory transfer direction.
+					      This parameter can be a value of @ref DMA_LL_EC_MDATAALIGN
 
-					      This feature can be modified
-					    afterwards using unitary function
-					    @ref LL_DMA_SetMemorySize(). */
+					      This feature can be modified afterwards using unitary function @ref LL_DMA_SetMemorySize(). */
 
-	uint32_t NbData; /*!< Specifies the number of data to transfer, in data
-			    unit. The data unit is equal to the source buffer
-			    configuration set in PeripheralSize or MemorySize
-			    parameters depending in the transfer direction. This
-			    parameter must be a value between Min_Data = 0 and
-			    Max_Data = 0x0000FFFF
+	uint32_t NbData; /*!< Specifies the number of data to transfer, in data unit.
+			      The data unit is equal to the source buffer configuration set in PeripheralSize
+			      or MemorySize parameters depending in the transfer direction.
+			      This parameter must be a value between Min_Data = 0 and Max_Data = 0x0000FFFF
 
-			      This feature can be modified afterwards using
-			    unitary function @ref LL_DMA_SetDataLength(). */
+			      This feature can be modified afterwards using unitary function @ref LL_DMA_SetDataLength(). */
 
 	uint32_t PeriphRequest; /*!< Specifies the peripheral request.
-				     This parameter can be a value of @ref
-				   DMAMUX_LL_EC_REQUEST
+				     This parameter can be a value of @ref DMAMUX_LL_EC_REQUEST
 
-				     This feature can be modified afterwards
-				   using unitary function @ref
-				   LL_DMA_SetPeriphRequest(). */
+				     This feature can be modified afterwards using unitary function @ref LL_DMA_SetPeriphRequest(). */
 
 	uint32_t Priority; /*!< Specifies the channel priority level.
-				This parameter can be a value of @ref
-			      DMA_LL_EC_PRIORITY
+				This parameter can be a value of @ref DMA_LL_EC_PRIORITY
 
-				This feature can be modified afterwards using unitary
-			      function @ref LL_DMA_SetChannelPriorityLevel(). */
+				This feature can be modified afterwards using unitary function @ref LL_DMA_SetChannelPriorityLevel(). */
 
 } LL_DMA_InitTypeDef;
 /**
@@ -252,65 +214,48 @@ typedef struct {
  * @brief    Flags defines which can be used with LL_DMA_ReadReg function
  * @{
  */
-#define LL_DMA_ISR_GIF1 DMA_ISR_GIF1 /*!< Channel 1 global flag            */
-#define LL_DMA_ISR_TCIF1                                                                                                                                                                               \
-	DMA_ISR_TCIF1		       /*!< Channel 1 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF1 DMA_ISR_HTIF1 /*!< Channel 1 half transfer flag */
-#define LL_DMA_ISR_TEIF1 DMA_ISR_TEIF1 /*!< Channel 1 transfer error flag */
+#define LL_DMA_ISR_GIF1 DMA_ISR_GIF1   /*!< Channel 1 global flag            */
+#define LL_DMA_ISR_TCIF1 DMA_ISR_TCIF1 /*!< Channel 1 transfer complete flag */
+#define LL_DMA_ISR_HTIF1 DMA_ISR_HTIF1 /*!< Channel 1 half transfer flag     */
+#define LL_DMA_ISR_TEIF1 DMA_ISR_TEIF1 /*!< Channel 1 transfer error flag    */
 #define LL_DMA_ISR_GIF2 DMA_ISR_GIF2   /*!< Channel 2 global flag            */
-#define LL_DMA_ISR_TCIF2                                                                                                                                                                               \
-	DMA_ISR_TCIF2		       /*!< Channel 2 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF2 DMA_ISR_HTIF2 /*!< Channel 2 half transfer flag */
-#define LL_DMA_ISR_TEIF2 DMA_ISR_TEIF2 /*!< Channel 2 transfer error flag */
+#define LL_DMA_ISR_TCIF2 DMA_ISR_TCIF2 /*!< Channel 2 transfer complete flag */
+#define LL_DMA_ISR_HTIF2 DMA_ISR_HTIF2 /*!< Channel 2 half transfer flag     */
+#define LL_DMA_ISR_TEIF2 DMA_ISR_TEIF2 /*!< Channel 2 transfer error flag    */
 #define LL_DMA_ISR_GIF3 DMA_ISR_GIF3   /*!< Channel 3 global flag            */
-#define LL_DMA_ISR_TCIF3                                                                                                                                                                               \
-	DMA_ISR_TCIF3		       /*!< Channel 3 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF3 DMA_ISR_HTIF3 /*!< Channel 3 half transfer flag */
-#define LL_DMA_ISR_TEIF3 DMA_ISR_TEIF3 /*!< Channel 3 transfer error flag */
+#define LL_DMA_ISR_TCIF3 DMA_ISR_TCIF3 /*!< Channel 3 transfer complete flag */
+#define LL_DMA_ISR_HTIF3 DMA_ISR_HTIF3 /*!< Channel 3 half transfer flag     */
+#define LL_DMA_ISR_TEIF3 DMA_ISR_TEIF3 /*!< Channel 3 transfer error flag    */
 #define LL_DMA_ISR_GIF4 DMA_ISR_GIF4   /*!< Channel 4 global flag            */
-#define LL_DMA_ISR_TCIF4                                                                                                                                                                               \
-	DMA_ISR_TCIF4		       /*!< Channel 4 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF4 DMA_ISR_HTIF4 /*!< Channel 4 half transfer flag */
-#define LL_DMA_ISR_TEIF4 DMA_ISR_TEIF4 /*!< Channel 4 transfer error flag */
+#define LL_DMA_ISR_TCIF4 DMA_ISR_TCIF4 /*!< Channel 4 transfer complete flag */
+#define LL_DMA_ISR_HTIF4 DMA_ISR_HTIF4 /*!< Channel 4 half transfer flag     */
+#define LL_DMA_ISR_TEIF4 DMA_ISR_TEIF4 /*!< Channel 4 transfer error flag    */
 #define LL_DMA_ISR_GIF5 DMA_ISR_GIF5   /*!< Channel 5 global flag            */
-#define LL_DMA_ISR_TCIF5                                                                                                                                                                               \
-	DMA_ISR_TCIF5		       /*!< Channel 5 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF5 DMA_ISR_HTIF5 /*!< Channel 5 half transfer flag */
-#define LL_DMA_ISR_TEIF5 DMA_ISR_TEIF5 /*!< Channel 5 transfer error flag */
+#define LL_DMA_ISR_TCIF5 DMA_ISR_TCIF5 /*!< Channel 5 transfer complete flag */
+#define LL_DMA_ISR_HTIF5 DMA_ISR_HTIF5 /*!< Channel 5 half transfer flag     */
+#define LL_DMA_ISR_TEIF5 DMA_ISR_TEIF5 /*!< Channel 5 transfer error flag    */
 #define LL_DMA_ISR_GIF6 DMA_ISR_GIF6   /*!< Channel 6 global flag            */
-#define LL_DMA_ISR_TCIF6                                                                                                                                                                               \
-	DMA_ISR_TCIF6		       /*!< Channel 6 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF6 DMA_ISR_HTIF6 /*!< Channel 6 half transfer flag */
-#define LL_DMA_ISR_TEIF6 DMA_ISR_TEIF6 /*!< Channel 6 transfer error flag */
+#define LL_DMA_ISR_TCIF6 DMA_ISR_TCIF6 /*!< Channel 6 transfer complete flag */
+#define LL_DMA_ISR_HTIF6 DMA_ISR_HTIF6 /*!< Channel 6 half transfer flag     */
+#define LL_DMA_ISR_TEIF6 DMA_ISR_TEIF6 /*!< Channel 6 transfer error flag    */
 #if defined(DMA1_Channel7)
-#define LL_DMA_ISR_GIF7 DMA_ISR_GIF7 /*!< Channel 7 global flag            */
-#define LL_DMA_ISR_TCIF7                                                                                                                                                                               \
-	DMA_ISR_TCIF7		       /*!< Channel 7 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF7 DMA_ISR_HTIF7 /*!< Channel 7 half transfer flag */
-#define LL_DMA_ISR_TEIF7 DMA_ISR_TEIF7 /*!< Channel 7 transfer error flag */
+#define LL_DMA_ISR_GIF7 DMA_ISR_GIF7   /*!< Channel 7 global flag            */
+#define LL_DMA_ISR_TCIF7 DMA_ISR_TCIF7 /*!< Channel 7 transfer complete flag */
+#define LL_DMA_ISR_HTIF7 DMA_ISR_HTIF7 /*!< Channel 7 half transfer flag     */
+#define LL_DMA_ISR_TEIF7 DMA_ISR_TEIF7 /*!< Channel 7 transfer error flag    */
 #endif				       /* DMA1_Channel7 */
 #if defined(DMA1_Channel8)
-#define LL_DMA_ISR_GIF8 DMA_ISR_GIF8 /*!< Channel 8 global flag            */
-#define LL_DMA_ISR_TCIF8                                                                                                                                                                               \
-	DMA_ISR_TCIF8		       /*!< Channel 8 transfer complete flag                                                                                                                           \
-					*/
-#define LL_DMA_ISR_HTIF8 DMA_ISR_HTIF8 /*!< Channel 8 half transfer flag */
-#define LL_DMA_ISR_TEIF8 DMA_ISR_TEIF8 /*!< Channel 8 transfer error flag */
+#define LL_DMA_ISR_GIF8 DMA_ISR_GIF8   /*!< Channel 8 global flag            */
+#define LL_DMA_ISR_TCIF8 DMA_ISR_TCIF8 /*!< Channel 8 transfer complete flag */
+#define LL_DMA_ISR_HTIF8 DMA_ISR_HTIF8 /*!< Channel 8 half transfer flag     */
+#define LL_DMA_ISR_TEIF8 DMA_ISR_TEIF8 /*!< Channel 8 transfer error flag    */
 #endif				       /* DMA1_Channel8 */
 /**
  * @}
  */
 
 /** @defgroup DMA_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_DMA_ReadReg and
- * LL_DMA_WriteReg functions
+ * @brief    IT defines which can be used with LL_DMA_ReadReg and  LL_DMA_WriteReg functions
  * @{
  */
 #define LL_DMA_CCR_TCIE DMA_CCR_TCIE /*!< Transfer complete interrupt */
@@ -336,10 +281,8 @@ typedef struct {
 #define LL_DMA_CHANNEL_8 0x00000007U /*!< DMA Channel 8 */
 #endif				     /* DMA1_Channel8 */
 #if defined(USE_FULL_LL_DRIVER)
-#define LL_DMA_CHANNEL_ALL                                                                                                                                                                             \
-	0xFFFF0000U /*!< DMA Channel all (used only for function @ref                                                                                                                                  \
-		       LL_DMA_DeInit(). */
-#endif		    /*USE_FULL_LL_DRIVER*/
+#define LL_DMA_CHANNEL_ALL 0xFFFF0000U /*!< DMA Channel all (used only for function @ref LL_DMA_DeInit(). */
+#endif				       /*USE_FULL_LL_DRIVER*/
 /**
  * @}
  */
@@ -637,19 +580,14 @@ __STATIC_INLINE uint32_t LL_DMA_IsEnabledChannel(DMA_TypeDef *DMAx, uint32_t Cha
  *         @arg @ref LL_DMA_CHANNEL_7 (*)
  *         @arg @ref LL_DMA_CHANNEL_8 (*)
  *         (*) Not on all G4 devices
- * @param  Configuration This parameter must be a combination of all the
- * following values:
- *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY or @ref
- * LL_DMA_DIRECTION_MEMORY_TO_PERIPH or @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
+ * @param  Configuration This parameter must be a combination of all the following values:
+ *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY or @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH or @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
  *         @arg @ref LL_DMA_MODE_NORMAL or @ref LL_DMA_MODE_CIRCULAR
  *         @arg @ref LL_DMA_PERIPH_INCREMENT or @ref LL_DMA_PERIPH_NOINCREMENT
  *         @arg @ref LL_DMA_MEMORY_INCREMENT or @ref LL_DMA_MEMORY_NOINCREMENT
- *         @arg @ref LL_DMA_PDATAALIGN_BYTE or @ref LL_DMA_PDATAALIGN_HALFWORD
- * or @ref LL_DMA_PDATAALIGN_WORD
- *         @arg @ref LL_DMA_MDATAALIGN_BYTE or @ref LL_DMA_MDATAALIGN_HALFWORD
- * or @ref LL_DMA_MDATAALIGN_WORD
- *         @arg @ref LL_DMA_PRIORITY_LOW or @ref LL_DMA_PRIORITY_MEDIUM or @ref
- * LL_DMA_PRIORITY_HIGH or @ref LL_DMA_PRIORITY_VERYHIGH
+ *         @arg @ref LL_DMA_PDATAALIGN_BYTE or @ref LL_DMA_PDATAALIGN_HALFWORD or @ref LL_DMA_PDATAALIGN_WORD
+ *         @arg @ref LL_DMA_MDATAALIGN_BYTE or @ref LL_DMA_MDATAALIGN_HALFWORD or @ref LL_DMA_MDATAALIGN_WORD
+ *         @arg @ref LL_DMA_PRIORITY_LOW or @ref LL_DMA_PRIORITY_MEDIUM or @ref LL_DMA_PRIORITY_HIGH or @ref LL_DMA_PRIORITY_VERYHIGH
  * @retval None
  */
 __STATIC_INLINE void LL_DMA_ConfigTransfer(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
@@ -777,8 +715,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetMode(DMA_TypeDef *DMAx, uint32_t Channel)
  *         @arg @ref LL_DMA_CHANNEL_7 (*)
  *         @arg @ref LL_DMA_CHANNEL_8 (*)
  *         (*) Not on all G4 devices
- * @param  PeriphOrM2MSrcIncMode This parameter can be one of the following
- * values:
+ * @param  PeriphOrM2MSrcIncMode This parameter can be one of the following values:
  *         @arg @ref LL_DMA_PERIPH_INCREMENT
  *         @arg @ref LL_DMA_PERIPH_NOINCREMENT
  * @retval None
@@ -827,8 +764,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetPeriphIncMode(DMA_TypeDef *DMAx, uint32_t Cha
  *         @arg @ref LL_DMA_CHANNEL_7 (*)
  *         @arg @ref LL_DMA_CHANNEL_8 (*)
  *         (*) Not on all G4 devices
- * @param  MemoryOrM2MDstIncMode This parameter can be one of the following
- * values:
+ * @param  MemoryOrM2MDstIncMode This parameter can be one of the following values:
  *         @arg @ref LL_DMA_MEMORY_INCREMENT
  *         @arg @ref LL_DMA_MEMORY_NOINCREMENT
  * @retval None
@@ -877,8 +813,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetMemoryIncMode(DMA_TypeDef *DMAx, uint32_t Cha
  *         @arg @ref LL_DMA_CHANNEL_7 (*)
  *         @arg @ref LL_DMA_CHANNEL_8 (*)
  *         (*) Not on all G4 devices
- * @param  PeriphOrM2MSrcDataSize This parameter can be one of the following
- * values:
+ * @param  PeriphOrM2MSrcDataSize This parameter can be one of the following values:
  *         @arg @ref LL_DMA_PDATAALIGN_BYTE
  *         @arg @ref LL_DMA_PDATAALIGN_HALFWORD
  *         @arg @ref LL_DMA_PDATAALIGN_WORD
@@ -929,8 +864,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetPeriphSize(DMA_TypeDef *DMAx, uint32_t Channe
  *         @arg @ref LL_DMA_CHANNEL_7 (*)
  *         @arg @ref LL_DMA_CHANNEL_8 (*)
  *         (*) Not on all G4 devices
- * @param  MemoryOrM2MDstDataSize This parameter can be one of the following
- * values:
+ * @param  MemoryOrM2MDstDataSize This parameter can be one of the following values:
  *         @arg @ref LL_DMA_MDATAALIGN_BYTE
  *         @arg @ref LL_DMA_MDATAALIGN_HALFWORD
  *         @arg @ref LL_DMA_MDATAALIGN_WORD
@@ -1072,8 +1006,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetDataLength(DMA_TypeDef *DMAx, uint32_t Channe
 /**
  * @brief  Configure the Source and Destination addresses.
  * @note   This API must not be called when the DMA channel is enabled.
- * @note   Each IP using DMA provides an API to get directly the register
- * address (LL_PPP_DMA_GetRegAddr).
+ * @note   Each IP using DMA provides an API to get directly the register address (LL_PPP_DMA_GetRegAddr).
  * @rmtoll CPAR         PA            LL_DMA_ConfigAddresses\n
  *         CMAR         MA            LL_DMA_ConfigAddresses
  * @param  DMAx DMAx Instance
@@ -1113,8 +1046,7 @@ __STATIC_INLINE void LL_DMA_ConfigAddresses(DMA_TypeDef *DMAx, uint32_t Channel,
 
 /**
  * @brief  Set the Memory address.
- * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or
- * LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
+ * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
  * @note   This API must not be called when the DMA channel is enabled.
  * @rmtoll CMAR         MA            LL_DMA_SetMemoryAddress
  * @param  DMAx DMAx Instance
@@ -1139,8 +1071,7 @@ __STATIC_INLINE void LL_DMA_SetMemoryAddress(DMA_TypeDef *DMAx, uint32_t Channel
 
 /**
  * @brief  Set the Peripheral address.
- * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or
- * LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
+ * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
  * @note   This API must not be called when the DMA channel is enabled.
  * @rmtoll CPAR         PA            LL_DMA_SetPeriphAddress
  * @param  DMAx DMAx Instance
@@ -1165,8 +1096,7 @@ __STATIC_INLINE void LL_DMA_SetPeriphAddress(DMA_TypeDef *DMAx, uint32_t Channel
 
 /**
  * @brief  Get Memory address.
- * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or
- * LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
+ * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
  * @rmtoll CMAR         MA            LL_DMA_GetMemoryAddress
  * @param  DMAx DMAx Instance
  * @param  Channel This parameter can be one of the following values:
@@ -1189,8 +1119,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetMemoryAddress(DMA_TypeDef *DMAx, uint32_t Cha
 
 /**
  * @brief  Get Peripheral address.
- * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or
- * LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
+ * @note   Interface used for direction LL_DMA_DIRECTION_PERIPH_TO_MEMORY or LL_DMA_DIRECTION_MEMORY_TO_PERIPH only.
  * @rmtoll CPAR         PA            LL_DMA_GetPeriphAddress
  * @param  DMAx DMAx Instance
  * @param  Channel This parameter can be one of the following values:
@@ -1309,8 +1238,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetM2MDstAddress(DMA_TypeDef *DMAx, uint32_t Cha
 
 /**
  * @brief  Set DMA request for DMA instance on Channel x.
- * @note   Please refer to Reference Manual to get the available mapping of
- * Request value link to Channel Selection.
+ * @note   Please refer to Reference Manual to get the available mapping of Request value link to Channel Selection.
  * @rmtoll CSELR        C1S           LL_DMA_SetPeriphRequest\n
  *         CSELR        C2S           LL_DMA_SetPeriphRequest\n
  *         CSELR        C3S           LL_DMA_SetPeriphRequest\n
@@ -1614,7 +1542,10 @@ __STATIC_INLINE uint32_t LL_DMA_GetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Cha
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI1(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF1) == (DMA_ISR_GIF1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI1(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF1) == (DMA_ISR_GIF1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 2 global interrupt flag.
@@ -1622,7 +1553,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI1(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI2(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF2) == (DMA_ISR_GIF2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI2(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF2) == (DMA_ISR_GIF2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 3 global interrupt flag.
@@ -1630,7 +1564,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI2(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI3(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF3) == (DMA_ISR_GIF3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI3(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF3) == (DMA_ISR_GIF3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 4 global interrupt flag.
@@ -1638,7 +1575,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI3(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI4(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF4) == (DMA_ISR_GIF4)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI4(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF4) == (DMA_ISR_GIF4)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 5 global interrupt flag.
@@ -1646,7 +1586,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI4(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI5(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF5) == (DMA_ISR_GIF5)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI5(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF5) == (DMA_ISR_GIF5)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 6 global interrupt flag.
@@ -1654,7 +1597,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI5(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI6(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF6) == (DMA_ISR_GIF6)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI6(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF6) == (DMA_ISR_GIF6)) ? 1UL : 0UL);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -1663,7 +1609,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI6(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI7(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF7) == (DMA_ISR_GIF7)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI7(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF7) == (DMA_ISR_GIF7)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -1673,7 +1622,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI7(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI8(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF8) == (DMA_ISR_GIF8)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI8(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_GIF8) == (DMA_ISR_GIF8)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -1682,7 +1634,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_GI8(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC1(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF1) == (DMA_ISR_TCIF1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC1(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF1) == (DMA_ISR_TCIF1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 2 transfer complete flag.
@@ -1690,7 +1645,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC1(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC2(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF2) == (DMA_ISR_TCIF2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC2(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF2) == (DMA_ISR_TCIF2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 3 transfer complete flag.
@@ -1698,7 +1656,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC2(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC3(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF3) == (DMA_ISR_TCIF3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC3(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF3) == (DMA_ISR_TCIF3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 4 transfer complete flag.
@@ -1706,7 +1667,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC3(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC4(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF4) == (DMA_ISR_TCIF4)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC4(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF4) == (DMA_ISR_TCIF4)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 5 transfer complete flag.
@@ -1714,7 +1678,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC4(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC5(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF5) == (DMA_ISR_TCIF5)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC5(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF5) == (DMA_ISR_TCIF5)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 6 transfer complete flag.
@@ -1722,7 +1689,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC5(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC6(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF6) == (DMA_ISR_TCIF6)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC6(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF6) == (DMA_ISR_TCIF6)) ? 1UL : 0UL);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -1731,7 +1701,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC6(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC7(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF7) == (DMA_ISR_TCIF7)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC7(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF7) == (DMA_ISR_TCIF7)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -1741,7 +1714,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC7(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC8(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF8) == (DMA_ISR_TCIF8)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC8(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TCIF8) == (DMA_ISR_TCIF8)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -1750,7 +1726,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TC8(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT1(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF1) == (DMA_ISR_HTIF1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT1(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF1) == (DMA_ISR_HTIF1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 2 half transfer flag.
@@ -1758,7 +1737,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT1(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT2(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF2) == (DMA_ISR_HTIF2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT2(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF2) == (DMA_ISR_HTIF2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 3 half transfer flag.
@@ -1766,7 +1748,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT2(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT3(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF3) == (DMA_ISR_HTIF3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT3(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF3) == (DMA_ISR_HTIF3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 4 half transfer flag.
@@ -1774,7 +1759,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT3(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT4(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF4) == (DMA_ISR_HTIF4)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT4(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF4) == (DMA_ISR_HTIF4)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 5 half transfer flag.
@@ -1782,7 +1770,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT4(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT5(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF5) == (DMA_ISR_HTIF5)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT5(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF5) == (DMA_ISR_HTIF5)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 6 half transfer flag.
@@ -1790,7 +1781,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT5(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT6(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF6) == (DMA_ISR_HTIF6)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT6(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF6) == (DMA_ISR_HTIF6)) ? 1UL : 0UL);
+}
 
 #if defined(DMA1_Channel8)
 /**
@@ -1799,7 +1793,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT6(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT7(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF7) == (DMA_ISR_HTIF7)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT7(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF7) == (DMA_ISR_HTIF7)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -1809,7 +1806,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT7(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT8(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF8) == (DMA_ISR_HTIF8)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT8(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_HTIF8) == (DMA_ISR_HTIF8)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -1818,7 +1818,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_HT8(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE1(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF1) == (DMA_ISR_TEIF1)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE1(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF1) == (DMA_ISR_TEIF1)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 2 transfer error flag.
@@ -1826,7 +1829,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE1(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE2(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF2) == (DMA_ISR_TEIF2)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE2(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF2) == (DMA_ISR_TEIF2)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 3 transfer error flag.
@@ -1834,7 +1840,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE2(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE3(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF3) == (DMA_ISR_TEIF3)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE3(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF3) == (DMA_ISR_TEIF3)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 4 transfer error flag.
@@ -1842,7 +1851,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE3(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE4(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF4) == (DMA_ISR_TEIF4)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE4(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF4) == (DMA_ISR_TEIF4)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 5 transfer error flag.
@@ -1850,7 +1862,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE4(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE5(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF5) == (DMA_ISR_TEIF5)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE5(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF5) == (DMA_ISR_TEIF5)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Get Channel 6 transfer error flag.
@@ -1858,7 +1873,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE5(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE6(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF6) == (DMA_ISR_TEIF6)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE6(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF6) == (DMA_ISR_TEIF6)) ? 1UL : 0UL);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -1867,7 +1885,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE6(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE7(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF7) == (DMA_ISR_TEIF7)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE7(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF7) == (DMA_ISR_TEIF7)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -1877,7 +1898,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE7(DMA_TypeDef *DMAx) { return ((R
  * @param  DMAx DMAx Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE8(DMA_TypeDef *DMAx) { return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF8) == (DMA_ISR_TEIF8)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE8(DMA_TypeDef *DMAx)
+{
+	return ((READ_BIT(DMAx->ISR, DMA_ISR_TEIF8) == (DMA_ISR_TEIF8)) ? 1UL : 0UL);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -1890,7 +1914,10 @@ __STATIC_INLINE uint32_t LL_DMA_IsActiveFlag_TE8(DMA_TypeDef *DMAx) { return ((R
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF1); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI1(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF1);
+}
 
 /**
   * @brief  Clear Channel 2 global interrupt flag.
@@ -1902,7 +1929,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF2); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI2(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF2);
+}
 
 /**
   * @brief  Clear Channel 3 global interrupt flag.
@@ -1914,7 +1944,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF3); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI3(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF3);
+}
 
 /**
   * @brief  Clear Channel 4 global interrupt flag.
@@ -1926,7 +1959,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF4); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI4(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF4);
+}
 
 /**
   * @brief  Clear Channel 5 global interrupt flag.
@@ -1938,7 +1974,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF5); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI5(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF5);
+}
 
 /**
   * @brief  Clear Channel 6 global interrupt flag.
@@ -1950,7 +1989,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF6); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI6(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF6);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -1963,7 +2005,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF7); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI7(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF7);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -1977,7 +2022,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
   * @param  DMAx DMAx Instance
   * @retval None
   */
-__STATIC_INLINE void LL_DMA_ClearFlag_GI8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF8); }
+__STATIC_INLINE void LL_DMA_ClearFlag_GI8(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CGIF8);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -1986,7 +2034,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_GI8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF1); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC1(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF1);
+}
 
 /**
  * @brief  Clear Channel 2  transfer complete flag.
@@ -1994,7 +2045,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF2); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC2(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF2);
+}
 
 /**
  * @brief  Clear Channel 3  transfer complete flag.
@@ -2002,7 +2056,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF3); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC3(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF3);
+}
 
 /**
  * @brief  Clear Channel 4  transfer complete flag.
@@ -2010,7 +2067,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF4); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC4(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF4);
+}
 
 /**
  * @brief  Clear Channel 5  transfer complete flag.
@@ -2018,7 +2078,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF5); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC5(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF5);
+}
 
 /**
  * @brief  Clear Channel 6  transfer complete flag.
@@ -2026,7 +2089,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF6); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC6(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF6);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -2035,7 +2101,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF7); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC7(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF7);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -2045,7 +2114,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TC8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF8); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TC8(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTCIF8);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -2054,7 +2126,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TC8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF1); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT1(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF1);
+}
 
 /**
  * @brief  Clear Channel 2  half transfer flag.
@@ -2062,7 +2137,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF2); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT2(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF2);
+}
 
 /**
  * @brief  Clear Channel 3  half transfer flag.
@@ -2070,7 +2148,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF3); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT3(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF3);
+}
 
 /**
  * @brief  Clear Channel 4  half transfer flag.
@@ -2078,7 +2159,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF4); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT4(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF4);
+}
 
 /**
  * @brief  Clear Channel 5  half transfer flag.
@@ -2086,7 +2170,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF5); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT5(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF5);
+}
 
 /**
  * @brief  Clear Channel 6  half transfer flag.
@@ -2094,7 +2181,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF6); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT6(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF6);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -2103,7 +2193,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF7); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT7(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF7);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -2113,7 +2206,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_HT8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF8); }
+__STATIC_INLINE void LL_DMA_ClearFlag_HT8(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CHTIF8);
+}
 #endif /* DMA1_Channel8 */
 
 /**
@@ -2122,7 +2218,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_HT8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF1); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE1(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF1);
+}
 
 /**
  * @brief  Clear Channel 2 transfer error flag.
@@ -2130,7 +2229,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE1(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF2); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE2(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF2);
+}
 
 /**
  * @brief  Clear Channel 3 transfer error flag.
@@ -2138,7 +2240,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE2(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF3); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE3(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF3);
+}
 
 /**
  * @brief  Clear Channel 4 transfer error flag.
@@ -2146,7 +2251,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE3(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF4); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE4(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF4);
+}
 
 /**
  * @brief  Clear Channel 5 transfer error flag.
@@ -2154,7 +2262,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE4(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF5); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE5(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF5);
+}
 
 /**
  * @brief  Clear Channel 6 transfer error flag.
@@ -2162,7 +2273,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE5(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF6); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE6(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF6);
+}
 
 #if defined(DMA1_Channel7)
 /**
@@ -2171,7 +2285,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE6(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF7); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE7(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF7);
+}
 #endif /* DMA1_Channel7 */
 
 #if defined(DMA1_Channel8)
@@ -2181,7 +2298,10 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE7(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->I
  * @param  DMAx DMAx Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA_ClearFlag_TE8(DMA_TypeDef *DMAx) { WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF8); }
+__STATIC_INLINE void LL_DMA_ClearFlag_TE8(DMA_TypeDef *DMAx)
+{
+	WRITE_REG(DMAx->IFCR, DMA_IFCR_CTEIF8);
+}
 #endif /* DMA1_Channel8 */
 
 /**

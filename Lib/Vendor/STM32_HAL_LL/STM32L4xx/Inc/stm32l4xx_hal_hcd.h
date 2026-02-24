@@ -44,7 +44,13 @@ extern "C" {
 /** @defgroup HCD_Exported_Types_Group1 HCD State Structure definition
  * @{
  */
-typedef enum { HAL_HCD_STATE_RESET = 0x00, HAL_HCD_STATE_READY = 0x01, HAL_HCD_STATE_ERROR = 0x02, HAL_HCD_STATE_BUSY = 0x03, HAL_HCD_STATE_TIMEOUT = 0x04 } HCD_StateTypeDef;
+typedef enum {
+	HAL_HCD_STATE_RESET = 0x00,
+	HAL_HCD_STATE_READY = 0x01,
+	HAL_HCD_STATE_ERROR = 0x02,
+	HAL_HCD_STATE_BUSY = 0x03,
+	HAL_HCD_STATE_TIMEOUT = 0x04
+} HCD_StateTypeDef;
 
 typedef USB_OTG_GlobalTypeDef HCD_TypeDef;
 typedef USB_OTG_CfgTypeDef HCD_InitTypeDef;
@@ -72,15 +78,14 @@ typedef struct
 	__IO uint32_t ErrorCode;     /*!< HCD Error code           */
 	void *pData;		     /*!< Pointer Stack Handler    */
 #if (USE_HAL_HCD_REGISTER_CALLBACKS == 1U)
-	void (*SOFCallback)(struct __HCD_HandleTypeDef *hhcd);								    /*!< USB OTG HCD SOF callback */
-	void (*ConnectCallback)(struct __HCD_HandleTypeDef *hhcd);							    /*!< USB OTG HCD Connect callback */
+	void (*SOFCallback)(struct __HCD_HandleTypeDef *hhcd);								    /*!< USB OTG HCD SOF callback                */
+	void (*ConnectCallback)(struct __HCD_HandleTypeDef *hhcd);							    /*!< USB OTG HCD Connect callback            */
 	void (*DisconnectCallback)(struct __HCD_HandleTypeDef *hhcd);							    /*!< USB OTG HCD Disconnect callback         */
 	void (*PortEnabledCallback)(struct __HCD_HandleTypeDef *hhcd);							    /*!< USB OTG HCD Port Enable callback        */
 	void (*PortDisabledCallback)(struct __HCD_HandleTypeDef *hhcd);							    /*!< USB OTG HCD Port Disable callback       */
-	void (*HC_NotifyURBChangeCallback)(struct __HCD_HandleTypeDef *hhcd, uint8_t chnum, HCD_URBStateTypeDef urb_state); /*!< USB OTG HCD Host Channel Notify
-															       URB Change callback  */
+	void (*HC_NotifyURBChangeCallback)(struct __HCD_HandleTypeDef *hhcd, uint8_t chnum, HCD_URBStateTypeDef urb_state); /*!< USB OTG HCD Host Channel Notify URB Change callback  */
 
-	void (*MspInitCallback)(struct __HCD_HandleTypeDef *hhcd);   /*!< USB OTG HCD Msp Init callback */
+	void (*MspInitCallback)(struct __HCD_HandleTypeDef *hhcd);   /*!< USB OTG HCD Msp Init callback           */
 	void (*MspDeInitCallback)(struct __HCD_HandleTypeDef *hhcd); /*!< USB OTG HCD Msp DeInit callback         */
 #endif								     /* USE_HAL_HCD_REGISTER_CALLBACKS */
 } HCD_HandleTypeDef;
@@ -96,6 +101,9 @@ typedef struct
 /** @defgroup HCD_Exported_Constants HCD Exported Constants
  * @{
  */
+#ifndef HAL_HCD_CHANNEL_NAK_COUNT
+#define HAL_HCD_CHANNEL_NAK_COUNT 2U
+#endif /* HAL_HCD_CHANNEL_NAK_COUNT */
 
 /** @defgroup HCD_Speed HCD Speed
  * @{
@@ -170,8 +178,7 @@ typedef struct
  * @{
  */
 
-/** @defgroup HCD_Exported_Functions_Group1 Initialization and de-initialization
- * functions
+/** @defgroup HCD_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 HAL_StatusTypeDef HAL_HCD_Init(HCD_HandleTypeDef *hhcd);
@@ -179,19 +186,19 @@ HAL_StatusTypeDef HAL_HCD_DeInit(HCD_HandleTypeDef *hhcd);
 HAL_StatusTypeDef HAL_HCD_HC_Init(HCD_HandleTypeDef *hhcd, uint8_t ch_num, uint8_t epnum, uint8_t dev_address, uint8_t speed, uint8_t ep_type, uint16_t mps);
 
 HAL_StatusTypeDef HAL_HCD_HC_Halt(HCD_HandleTypeDef *hhcd, uint8_t ch_num);
+HAL_StatusTypeDef HAL_HCD_HC_Activate(HCD_HandleTypeDef *hhcd, uint8_t ch_num);
 void HAL_HCD_MspInit(HCD_HandleTypeDef *hhcd);
 void HAL_HCD_MspDeInit(HCD_HandleTypeDef *hhcd);
 
 #if (USE_HAL_HCD_REGISTER_CALLBACKS == 1U)
-/** @defgroup HAL_HCD_Callback_ID_enumeration_definition HAL USB OTG HCD
- * Callback ID enumeration definition
+/** @defgroup HAL_HCD_Callback_ID_enumeration_definition HAL USB OTG HCD Callback ID enumeration definition
  * @brief  HAL USB OTG HCD Callback ID enumeration definition
  * @{
  */
 typedef enum {
 	HAL_HCD_SOF_CB_ID = 0x01,	    /*!< USB HCD SOF callback ID           */
 	HAL_HCD_CONNECT_CB_ID = 0x02,	    /*!< USB HCD Connect callback ID       */
-	HAL_HCD_DISCONNECT_CB_ID = 0x03,    /*!< USB HCD Disconnect callback ID */
+	HAL_HCD_DISCONNECT_CB_ID = 0x03,    /*!< USB HCD Disconnect callback ID    */
 	HAL_HCD_PORT_ENABLED_CB_ID = 0x04,  /*!< USB HCD Port Enable callback ID   */
 	HAL_HCD_PORT_DISABLED_CB_ID = 0x05, /*!< USB HCD Port Disable callback ID  */
 
@@ -203,13 +210,12 @@ typedef enum {
  * @}
  */
 
-/** @defgroup HAL_HCD_Callback_pointer_definition HAL USB OTG HCD Callback
- * pointer definition
+/** @defgroup HAL_HCD_Callback_pointer_definition HAL USB OTG HCD Callback pointer definition
  * @brief  HAL USB OTG HCD Callback pointer definition
  * @{
  */
 
-typedef void (*pHCD_CallbackTypeDef)(HCD_HandleTypeDef *hhcd);								       /*!< pointer to a common USB OTG HCD callback function */
+typedef void (*pHCD_CallbackTypeDef)(HCD_HandleTypeDef *hhcd);								       /*!< pointer to a common USB OTG HCD callback function  */
 typedef void (*pHCD_HC_NotifyURBChangeCallbackTypeDef)(HCD_HandleTypeDef *hhcd, uint8_t epnum, HCD_URBStateTypeDef urb_state); /*!< pointer to USB OTG HCD host channel  callback */
 /**
  * @}
@@ -228,8 +234,7 @@ HAL_StatusTypeDef HAL_HCD_UnRegisterHC_NotifyURBChangeCallback(HCD_HandleTypeDef
  */
 
 /* I/O operation functions  ***************************************************/
-/** @addtogroup HCD_Exported_Functions_Group2 Input and Output operation
- * functions
+/** @addtogroup HCD_Exported_Functions_Group2 Input and Output operation functions
  * @{
  */
 HAL_StatusTypeDef HAL_HCD_HC_SubmitRequest(HCD_HandleTypeDef *hhcd, uint8_t ch_num, uint8_t direction, uint8_t ep_type, uint8_t token, uint8_t *pbuff, uint16_t length, uint8_t do_ping);

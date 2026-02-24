@@ -3,8 +3,7 @@
   * @file    stm32g4xx_hal_nand.c
   * @author  MCD Application Team
   * @brief   NAND HAL module driver.
-  *          This file provides a generic firmware to drive NAND memories
-  mounted
+  *          This file provides a generic firmware to drive NAND memories mounted
   *          as external device.
   *
   ******************************************************************************
@@ -23,50 +22,46 @@
 			 ##### How to use this driver #####
   ==============================================================================
     [..]
-      This driver is a generic layered driver which contains a set of APIs used
-  to control NAND flash memories. It uses the FMC layer functions to interface
+      This driver is a generic layered driver which contains a set of APIs used to
+      control NAND flash memories. It uses the FMC layer functions to interface
       with NAND devices. This driver is used as follows:
 
-      (+) NAND flash memory configuration sequence using the function
-  HAL_NAND_Init() with control and timing parameters for both common and
-  attribute spaces.
+      (+) NAND flash memory configuration sequence using the function HAL_NAND_Init()
+	  with control and timing parameters for both common and attribute spaces.
 
       (+) Read NAND flash memory maker and device IDs using the function
-	  HAL_NAND_Read_ID(). The read information is stored in the
-  NAND_ID_TypeDef structure declared by the function caller.
+	  HAL_NAND_Read_ID(). The read information is stored in the NAND_ID_TypeDef
+	  structure declared by the function caller.
 
       (+) Access NAND flash memory by read/write operations using the functions
 	  HAL_NAND_Read_Page_8b()/HAL_NAND_Read_SpareArea_8b(),
 	  HAL_NAND_Write_Page_8b()/HAL_NAND_Write_SpareArea_8b(),
 	  HAL_NAND_Read_Page_16b()/HAL_NAND_Read_SpareArea_16b(),
 	  HAL_NAND_Write_Page_16b()/HAL_NAND_Write_SpareArea_16b()
-	  to read/write page(s)/spare area(s). These functions use specific
-  device information (Block, page size..) predefined by the user in the
-  NAND_DeviceConfigTypeDef structure. The read/write address information is
-  contained by the Nand_Address_Typedef structure passed as parameter.
+	  to read/write page(s)/spare area(s). These functions use specific device
+	  information (Block, page size..) predefined by the user in the NAND_DeviceConfigTypeDef
+	  structure. The read/write address information is contained by the Nand_Address_Typedef
+	  structure passed as parameter.
 
-      (+) Perform NAND flash Reset chip operation using the function
-  HAL_NAND_Reset().
+      (+) Perform NAND flash Reset chip operation using the function HAL_NAND_Reset().
 
-      (+) Perform NAND flash erase block operation using the function
-  HAL_NAND_Erase_Block(). The erase block address information is contained in
-  the Nand_Address_Typedef structure passed as parameter.
+      (+) Perform NAND flash erase block operation using the function HAL_NAND_Erase_Block().
+	  The erase block address information is contained in the Nand_Address_Typedef
+	  structure passed as parameter.
 
-      (+) Read the NAND flash status operation using the function
-  HAL_NAND_Read_Status().
+      (+) Read the NAND flash status operation using the function HAL_NAND_Read_Status().
 
-      (+) You can also control the NAND device by calling the control APIs
-  HAL_NAND_ECC_Enable()/ HAL_NAND_ECC_Disable() to respectively enable/disable
-  the ECC code correction feature or the function HAL_NAND_GetECC() to get the
-  ECC correction code.
+      (+) You can also control the NAND device by calling the control APIs HAL_NAND_ECC_Enable()/
+	  HAL_NAND_ECC_Disable() to respectively enable/disable the ECC code correction
+	  feature or the function HAL_NAND_GetECC() to get the ECC correction code.
 
       (+) You can monitor the NAND device HAL state by calling the function
 	  HAL_NAND_GetState()
 
     [..]
-      (@) This driver is a set of generic APIs which handle standard NAND flash
-  operations. If a NAND flash device contains different operations and/or
-  implementations, it should be implemented separately.
+      (@) This driver is a set of generic APIs which handle standard NAND flash operations.
+	  If a NAND flash device contains different operations and/or implementations,
+	  it should be implemented separately.
 
     *** Callback registration ***
     =============================================
@@ -78,32 +73,30 @@
       it allows to register following callbacks:
 	(+) MspInitCallback    : NAND MspInit.
 	(+) MspDeInitCallback  : NAND MspDeInit.
-      This function takes as parameters the HAL peripheral handle, the Callback
-  ID and a pointer to the user callback function.
+      This function takes as parameters the HAL peripheral handle, the Callback ID
+      and a pointer to the user callback function.
 
-      Use function HAL_NAND_UnRegisterCallback() to reset a callback to the
-  default weak (overridden) function. It allows to reset following callbacks:
+      Use function HAL_NAND_UnRegisterCallback() to reset a callback to the default
+      weak (overridden) function. It allows to reset following callbacks:
 	(+) MspInitCallback    : NAND MspInit.
 	(+) MspDeInitCallback  : NAND MspDeInit.
-      This function) takes as parameters the HAL peripheral handle and the
-  Callback ID.
+      This function) takes as parameters the HAL peripheral handle and the Callback ID.
 
-      By default, after the HAL_NAND_Init and if the state is
-  HAL_NAND_STATE_RESET all callbacks are reset to the corresponding legacy weak
-  (overridden) functions. Exception done for MspInit and MspDeInit callbacks
-  that are respectively reset to the legacy weak (overridden) functions in the
-  HAL_NAND_Init and  HAL_NAND_DeInit only when these callbacks are null (not
-  registered beforehand). If not, MspInit or MspDeInit are not null, the
-  HAL_NAND_Init and HAL_NAND_DeInit keep and use the user MspInit/MspDeInit
-  callbacks (registered beforehand)
+      By default, after the HAL_NAND_Init and if the state is HAL_NAND_STATE_RESET
+      all callbacks are reset to the corresponding legacy weak (overridden) functions.
+      Exception done for MspInit and MspDeInit callbacks that are respectively
+      reset to the legacy weak (overridden) functions in the HAL_NAND_Init
+      and  HAL_NAND_DeInit only when these callbacks are null (not registered beforehand).
+      If not, MspInit or MspDeInit are not null, the HAL_NAND_Init and HAL_NAND_DeInit
+      keep and use the user MspInit/MspDeInit callbacks (registered beforehand)
 
       Callbacks can be registered/unregistered in READY state only.
-      Exception done for MspInit/MspDeInit callbacks that can be
-  registered/unregistered in READY or RESET state, thus registered (user)
-  MspInit/DeInit callbacks can be used during the Init/DeInit. In that case
-  first register the MspInit/MspDeInit user callbacks using
-  HAL_NAND_RegisterCallback before calling HAL_NAND_DeInit or HAL_NAND_Init
-  function.
+      Exception done for MspInit/MspDeInit callbacks that can be registered/unregistered
+      in READY or RESET state, thus registered (user) MspInit/DeInit callbacks can be used
+      during the Init/DeInit.
+      In that case first register the MspInit/MspDeInit user callbacks
+      using HAL_NAND_RegisterCallback before calling HAL_NAND_DeInit
+      or HAL_NAND_Init function.
 
       When The compilation define USE_HAL_NAND_REGISTER_CALLBACKS is set to 0 or
       not defined, the callback registering feature is not available
@@ -130,20 +123,17 @@
  */
 
 /* Private typedef -----------------------------------------------------------*/
-/* Private Constants
- * ------------------------------------------------------------*/
+/* Private Constants ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-/* Exported functions
- * ---------------------------------------------------------*/
+/* Exported functions ---------------------------------------------------------*/
 
 /** @defgroup NAND_Exported_Functions NAND Exported Functions
  * @{
  */
 
-/** @defgroup NAND_Exported_Functions_Group1 Initialization and
-de-initialization functions
+/** @defgroup NAND_Exported_Functions_Group1 Initialization and de-initialization functions
   * @brief    Initialization and Configuration functions
   *
   @verbatim
@@ -252,8 +242,8 @@ __weak void HAL_NAND_MspInit(NAND_HandleTypeDef *hnand)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hnand);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_NAND_MspInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_NAND_MspInit could be implemented in the user file
 	 */
 }
 
@@ -268,8 +258,8 @@ __weak void HAL_NAND_MspDeInit(NAND_HandleTypeDef *hnand)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hnand);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_NAND_MspDeInit could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_NAND_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -345,8 +335,8 @@ __weak void HAL_NAND_ITCallback(NAND_HandleTypeDef *hnand)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hnand);
 
-	/* NOTE : This function Should not be modified, when the callback is
-	   needed, the HAL_NAND_ITCallback could be implemented in the user file
+	/* NOTE : This function Should not be modified, when the callback is needed,
+		  the HAL_NAND_ITCallback could be implemented in the user file
 	 */
 }
 
@@ -505,7 +495,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numpagesread = 0U;
 	uint32_t nandaddress;
 	uint32_t nbpages = NumPageToRead;
 	uint8_t *buff = pBuffer;
@@ -541,8 +530,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -564,8 +552,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -590,8 +577,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
 				/* Read status until NAND is ready */
 				while (HAL_NAND_Read_Status(hnand) != NAND_READY) {
 					if ((HAL_GetTick() - tickstart) > NAND_WRITE_TIMEOUT) {
-						/* Update the NAND controller
-						 * state */
+						/* Update the NAND controller state */
 						hnand->State = HAL_NAND_STATE_ERROR;
 
 						/* Process unlocked */
@@ -611,9 +597,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
 				*buff = *(__IO uint8_t *)deviceaddress;
 				buff++;
 			}
-
-			/* Increment read pages number */
-			numpagesread++;
 
 			/* Decrement pages to read */
 			nbpages--;
@@ -639,8 +622,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
  * @param  hnand pointer to a NAND_HandleTypeDef structure that contains
  *                the configuration information for NAND module.
  * @param  pAddress  pointer to NAND address structure
- * @param  pBuffer  pointer to destination read buffer. pBuffer should be 16bits
- * aligned
+ * @param  pBuffer  pointer to destination read buffer. pBuffer should be 16bits aligned
  * @param  NumPageToRead  number of pages to read from block
  * @retval HAL status
  */
@@ -649,7 +631,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numpagesread = 0U;
 	uint32_t nandaddress;
 	uint32_t nbpages = NumPageToRead;
 	uint16_t *buff = pBuffer;
@@ -685,8 +666,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -708,8 +688,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -734,8 +713,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
 				/* Read status until NAND is ready */
 				while (HAL_NAND_Read_Status(hnand) != NAND_READY) {
 					if ((HAL_GetTick() - tickstart) > NAND_WRITE_TIMEOUT) {
-						/* Update the NAND controller
-						 * state */
+						/* Update the NAND controller state */
 						hnand->State = HAL_NAND_STATE_ERROR;
 
 						/* Process unlocked */
@@ -755,8 +733,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
 				hnand->Config.PageSize = hnand->Config.PageSize / 2U;
 			} else {
 				/* Do nothing */
-				/* Keep the same PageSize for
-				 * FMC_NAND_MEM_BUS_WIDTH_16*/
+				/* Keep the same PageSize for FMC_NAND_MEM_BUS_WIDTH_16*/
 			}
 
 			/* Get Data into Buffer */
@@ -764,9 +741,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
 				*buff = *(__IO uint16_t *)deviceaddress;
 				buff++;
 			}
-
-			/* Increment read pages number */
-			numpagesread++;
 
 			/* Decrement pages to read */
 			nbpages--;
@@ -801,7 +775,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numpageswritten = 0U;
 	uint32_t nandaddress;
 	uint32_t nbpages = NumPageToWrite;
 	const uint8_t *buff = pBuffer;
@@ -839,8 +812,7 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -862,8 +834,7 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -904,9 +875,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
 				}
 			}
 
-			/* Increment written pages number */
-			numpageswritten++;
-
 			/* Decrement pages to write */
 			nbpages--;
 
@@ -931,8 +899,7 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
  * @param  hnand pointer to a NAND_HandleTypeDef structure that contains
  *                the configuration information for NAND module.
  * @param  pAddress  pointer to NAND address structure
- * @param  pBuffer  pointer to source buffer to write. pBuffer should be 16bits
- * aligned
+ * @param  pBuffer  pointer to source buffer to write. pBuffer should be 16bits aligned
  * @param  NumPageToWrite   number of pages to write to block
  * @retval HAL status
  */
@@ -941,7 +908,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numpageswritten = 0U;
 	uint32_t nandaddress;
 	uint32_t nbpages = NumPageToWrite;
 	const uint16_t *buff = pBuffer;
@@ -979,8 +945,7 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -1002,8 +967,7 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -1023,8 +987,7 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
 				hnand->Config.PageSize = hnand->Config.PageSize / 2U;
 			} else {
 				/* Do nothing */
-				/* Keep the same PageSize for
-				 * FMC_NAND_MEM_BUS_WIDTH_16*/
+				/* Keep the same PageSize for FMC_NAND_MEM_BUS_WIDTH_16*/
 			}
 
 			/* Write data to memory */
@@ -1052,9 +1015,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
 					return HAL_TIMEOUT;
 				}
 			}
-
-			/* Increment written pages number */
-			numpageswritten++;
 
 			/* Decrement pages to write */
 			nbpages--;
@@ -1089,7 +1049,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numsparearearead = 0U;
 	uint32_t nandaddress;
 	uint32_t columnaddress;
 	uint32_t nbspare = NumSpareAreaToRead;
@@ -1129,8 +1088,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -1156,8 +1114,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = COLUMN_1ST_CYCLE(columnaddress);
 					__DSB();
@@ -1182,8 +1139,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
 				/* Read status until NAND is ready */
 				while (HAL_NAND_Read_Status(hnand) != NAND_READY) {
 					if ((HAL_GetTick() - tickstart) > NAND_WRITE_TIMEOUT) {
-						/* Update the NAND controller
-						 * state */
+						/* Update the NAND controller state */
 						hnand->State = HAL_NAND_STATE_ERROR;
 
 						/* Process unlocked */
@@ -1203,9 +1159,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
 				*buff = *(__IO uint8_t *)deviceaddress;
 				buff++;
 			}
-
-			/* Increment read spare areas number */
-			numsparearearead++;
 
 			/* Decrement spare areas to read */
 			nbspare--;
@@ -1231,8 +1184,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
  * @param  hnand pointer to a NAND_HandleTypeDef structure that contains
  *                the configuration information for NAND module.
  * @param  pAddress  pointer to NAND address structure
- * @param  pBuffer pointer to source buffer to write. pBuffer should be 16bits
- * aligned.
+ * @param  pBuffer pointer to source buffer to write. pBuffer should be 16bits aligned.
  * @param  NumSpareAreaToRead Number of spare area to read
  * @retval HAL status
  */
@@ -1241,7 +1193,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numsparearearead = 0U;
 	uint32_t nandaddress;
 	uint32_t columnaddress;
 	uint32_t nbspare = NumSpareAreaToRead;
@@ -1281,8 +1232,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -1308,8 +1258,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = COLUMN_1ST_CYCLE(columnaddress);
 					__DSB();
@@ -1334,8 +1283,7 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
 				/* Read status until NAND is ready */
 				while (HAL_NAND_Read_Status(hnand) != NAND_READY) {
 					if ((HAL_GetTick() - tickstart) > NAND_WRITE_TIMEOUT) {
-						/* Update the NAND controller
-						 * state */
+						/* Update the NAND controller state */
 						hnand->State = HAL_NAND_STATE_ERROR;
 
 						/* Process unlocked */
@@ -1355,9 +1303,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
 				*buff = *(__IO uint16_t *)deviceaddress;
 				buff++;
 			}
-
-			/* Increment read spare areas number */
-			numsparearearead++;
 
 			/* Decrement spare areas to read */
 			nbspare--;
@@ -1392,7 +1337,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numspareareawritten = 0U;
 	uint32_t nandaddress;
 	uint32_t columnaddress;
 	uint32_t nbspare = NumSpareAreaTowrite;
@@ -1434,8 +1378,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -1463,8 +1406,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = COLUMN_1ST_CYCLE(columnaddress);
 					__DSB();
@@ -1505,9 +1447,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
 				}
 			}
 
-			/* Increment written spare areas number */
-			numspareareawritten++;
-
 			/* Decrement spare areas to write */
 			nbspare--;
 
@@ -1532,8 +1471,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
  * @param  hnand pointer to a NAND_HandleTypeDef structure that contains
  *                the configuration information for NAND module.
  * @param  pAddress  pointer to NAND address structure
- * @param  pBuffer  pointer to source buffer to write. pBuffer should be 16bits
- * aligned.
+ * @param  pBuffer  pointer to source buffer to write. pBuffer should be 16bits aligned.
  * @param  NumSpareAreaTowrite   number of spare areas to write to block
  * @retval HAL status
  */
@@ -1542,7 +1480,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const 
 	uint32_t index;
 	uint32_t tickstart;
 	uint32_t deviceaddress;
-	uint32_t numspareareawritten = 0U;
 	uint32_t nandaddress;
 	uint32_t columnaddress;
 	uint32_t nbspare = NumSpareAreaTowrite;
@@ -1584,8 +1521,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const 
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = 0x00U;
 					__DSB();
@@ -1613,8 +1549,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const 
 					__DSB();
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = ADDR_2ND_CYCLE(nandaddress);
 					__DSB();
-				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr))
-					  > 65535 */
+				} else /* ((hnand->Config.BlockSize)*(hnand->Config.BlockNbr)) > 65535 */
 				{
 					*(__IO uint8_t *)((uint32_t)(deviceaddress | ADDR_AREA)) = COLUMN_1ST_CYCLE(columnaddress);
 					__DSB();
@@ -1654,9 +1589,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const 
 					return HAL_TIMEOUT;
 				}
 			}
-
-			/* Increment written spare areas number */
-			numspareareawritten++;
 
 			/* Decrement spare areas to write */
 			nbspare--;
@@ -2000,7 +1932,10 @@ HAL_StatusTypeDef HAL_NAND_GetECC(NAND_HandleTypeDef *hnand, uint32_t *ECCval, u
  *                the configuration information for NAND module.
  * @retval HAL state
  */
-HAL_NAND_StateTypeDef HAL_NAND_GetState(const NAND_HandleTypeDef *hnand) { return hnand->State; }
+HAL_NAND_StateTypeDef HAL_NAND_GetState(const NAND_HandleTypeDef *hnand)
+{
+	return hnand->State;
+}
 
 /**
  * @brief  NAND memory read status

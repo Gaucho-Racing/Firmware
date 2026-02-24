@@ -26,68 +26,56 @@
 			##### How to use this driver #####
   ==============================================================================
   [..]
-    This driver implements a high level communication layer for read and write
-  from/to this memory. The needed STM32 hardware resources (SDMMC and GPIO) are
-  performed by the user in HAL_SD_MspInit() function (MSP layer). Basically, the
-  MSP layer configuration should be the same as we provide in the examples. You
-  can easily tailor this configuration according to hardware resources.
+    This driver implements a high level communication layer for read and write from/to
+    this memory. The needed STM32 hardware resources (SDMMC and GPIO) are performed by
+    the user in HAL_SD_MspInit() function (MSP layer).
+    Basically, the MSP layer configuration should be the same as we provide in the
+    examples.
+    You can easily tailor this configuration according to hardware resources.
 
   [..]
-    This driver is a generic layered driver for SDMMC memories which uses the
-  HAL SDMMC driver functions to interface with SD and uSD cards devices. It is
-  used as follows:
+    This driver is a generic layered driver for SDMMC memories which uses the HAL
+    SDMMC driver functions to interface with SD and uSD cards devices.
+    It is used as follows:
 
-    (#)Initialize the SDMMC low level resources by implementing the
-  HAL_SD_MspInit() API:
-	(##) Call the function HAL_RCCEx_PeriphCLKConfig with
-  RCC_PERIPHCLK_SDMMC1 for PeriphClockSelection and select SDMMC1 clock source
-  (MSI, main PLL or PLLSAI1)
-	(##) Enable the SDMMC interface clock using
-  __HAL_RCC_SDMMC1_CLK_ENABLE();
+    (#)Initialize the SDMMC low level resources by implementing the HAL_SD_MspInit() API:
+	(##) Call the function HAL_RCCEx_PeriphCLKConfig with RCC_PERIPHCLK_SDMMC1 for
+	PeriphClockSelection and select SDMMC1 clock source (MSI, main PLL or PLLSAI1)
+	(##) Enable the SDMMC interface clock using __HAL_RCC_SDMMC1_CLK_ENABLE();
 	(##) SDMMC pins configuration for SD card
-	    (+++) Enable the clock for the SDMMC GPIOs using the functions
-  __HAL_RCC_GPIOx_CLK_ENABLE();
-	    (+++) Configure these SDMMC pins as alternate function pull-up using
-  HAL_GPIO_Init() and according to your pin assignment;
-	(##) On STM32L4Rx/STM32L4Sxx devices, no DMA configuration is need, an
-  internal DMA for SDMMC Peripheral is used.
-	(##) On other devices, perform DMA configuration if you need to use DMA
-  process (HAL_SD_ReadBlocks_DMA() and HAL_SD_WriteBlocks_DMA() APIs).
-	    (+++) Enable the DMAx interface clock using
-  __HAL_RCC_DMAx_CLK_ENABLE();
-	    (+++) Configure the DMA using the function HAL_DMA_Init() with
-  predeclared and filled.
-	(##) NVIC configuration if you need to use interrupt process when using
-  DMA transfer.
-	    (+++) Configure the SDMMC and DMA interrupt priorities using
-  functions HAL_NVIC_SetPriority(); DMA priority is superior to SDMMC's priority
-	    (+++) Enable the NVIC DMA and SDMMC IRQs using function
-  HAL_NVIC_EnableIRQ()
-	    (+++) SDMMC interrupts are managed using the macros
-  __HAL_SD_ENABLE_IT() and __HAL_SD_DISABLE_IT() inside the communication
-  process.
-	    (+++) SDMMC interrupts pending bits are managed using the macros
-  __HAL_SD_GET_IT() and __HAL_SD_CLEAR_IT()
-	(##) NVIC configuration if you need to use interrupt process
-  (HAL_SD_ReadBlocks_IT() and HAL_SD_WriteBlocks_IT() APIs).
-	    (+++) Configure the SDMMC interrupt priorities using function
-  HAL_NVIC_SetPriority();
+	    (+++) Enable the clock for the SDMMC GPIOs using the functions __HAL_RCC_GPIOx_CLK_ENABLE();
+	    (+++) Configure these SDMMC pins as alternate function pull-up using HAL_GPIO_Init()
+		  and according to your pin assignment;
+	(##) On STM32L4Rx/STM32L4Sxx devices, no DMA configuration is need, an internal DMA for SDMMC Peripheral is used.
+	(##) On other devices, perform DMA configuration if you need to use DMA process (HAL_SD_ReadBlocks_DMA()
+	     and HAL_SD_WriteBlocks_DMA() APIs).
+	    (+++) Enable the DMAx interface clock using __HAL_RCC_DMAx_CLK_ENABLE();
+	    (+++) Configure the DMA using the function HAL_DMA_Init() with predeclared and filled.
+	(##) NVIC configuration if you need to use interrupt process when using DMA transfer.
+	    (+++) Configure the SDMMC and DMA interrupt priorities using functions
+		  HAL_NVIC_SetPriority(); DMA priority is superior to SDMMC's priority
+	    (+++) Enable the NVIC DMA and SDMMC IRQs using function HAL_NVIC_EnableIRQ()
+	    (+++) SDMMC interrupts are managed using the macros __HAL_SD_ENABLE_IT()
+		  and __HAL_SD_DISABLE_IT() inside the communication process.
+	    (+++) SDMMC interrupts pending bits are managed using the macros __HAL_SD_GET_IT()
+		  and __HAL_SD_CLEAR_IT()
+	(##) NVIC configuration if you need to use interrupt process (HAL_SD_ReadBlocks_IT()
+	     and HAL_SD_WriteBlocks_IT() APIs).
+	    (+++) Configure the SDMMC interrupt priorities using function HAL_NVIC_SetPriority();
 	    (+++) Enable the NVIC SDMMC IRQs using function HAL_NVIC_EnableIRQ()
-	    (+++) SDMMC interrupts are managed using the macros
-  __HAL_SD_ENABLE_IT() and __HAL_SD_DISABLE_IT() inside the communication
-  process.
-	    (+++) SDMMC interrupts pending bits are managed using the macros
-  __HAL_SD_GET_IT() and __HAL_SD_CLEAR_IT()
-    (#) At this stage, you can perform SD read/write/erase operations after SD
-  card initialization
+	    (+++) SDMMC interrupts are managed using the macros __HAL_SD_ENABLE_IT()
+		  and __HAL_SD_DISABLE_IT() inside the communication process.
+	    (+++) SDMMC interrupts pending bits are managed using the macros __HAL_SD_GET_IT()
+		  and __HAL_SD_CLEAR_IT()
+    (#) At this stage, you can perform SD read/write/erase operations after SD card initialization
 
 
   *** SD Card Initialization and configuration ***
   ================================================
   [..]
     To initialize the SD Card, use the HAL_SD_Init() function. It Initializes
-    SDMMC Peripheral(STM32 side) and the SD Card, and put it into StandBy State
-  (Ready for data transfer). This function provide the following operations:
+    SDMMC Peripheral(STM32 side) and the SD Card, and put it into StandBy State (Ready for data transfer).
+    This function provide the following operations:
 
     (#) Apply the SD Card initialization process at 400KHz and check the SD Card
 	type (Standard Capacity or High Capacity). You can change or adapt this
@@ -108,102 +96,98 @@
 	and check the SD Card type (Standard Capacity or High Capacity)
 	The initialization flow is compatible with SD standard.
 
-	This API (HAL_SD_InitCard()) could be used also to reinitialize the card
-  in case of plug-off plug-in.
+	This API (HAL_SD_InitCard()) could be used also to reinitialize the card in case
+	of plug-off plug-in.
 
-    (#) Configure the SD Card Data transfer frequency. You can change or adapt
-  this frequency by adjusting the "ClockDiv" field. In transfer mode and
-  according to the SD Card standard, make sure that the SDMMC_CK frequency
-  doesn't exceed 25MHz and 100MHz in High-speed mode switch.
+    (#) Configure the SD Card Data transfer frequency. You can change or adapt this
+	frequency by adjusting the "ClockDiv" field.
+	In transfer mode and according to the SD Card standard, make sure that the
+    SDMMC_CK frequency doesn't exceed 25MHz and 100MHz in High-speed mode switch.
 
-    (#) Select the corresponding SD Card according to the address read with the
-  step 2.
+    (#) Select the corresponding SD Card according to the address read with the step 2.
 
     (#) Configure the SD Card in wide bus mode: 4-bits data.
 
   *** SD Card Read operation ***
   ==============================
   [..]
-    (+) You can read from SD card in polling mode by using function
-  HAL_SD_ReadBlocks(). This function support only 512-bytes block length (the
-  block size should be chosen as 512 bytes). You can choose either one block
-  read operation or multiple block read operation by adjusting the
-  "NumberOfBlocks" parameter. After this, you have to ensure that the transfer
-  is done correctly. The check is done through HAL_SD_GetCardState() function
-  for SD card state.
+    (+) You can read from SD card in polling mode by using function HAL_SD_ReadBlocks().
+	This function support only 512-bytes block length (the block size should be
+	chosen as 512 bytes).
+	You can choose either one block read operation or multiple block read operation
+	by adjusting the "NumberOfBlocks" parameter.
+	After this, you have to ensure that the transfer is done correctly. The check is done
+	through HAL_SD_GetCardState() function for SD card state.
 
-    (+) You can read from SD card in DMA mode by using function
-  HAL_SD_ReadBlocks_DMA(). This function support only 512-bytes block length
-  (the block size should be chosen as 512 bytes). You can choose either one
-  block read operation or multiple block read operation by adjusting the
-  "NumberOfBlocks" parameter. After this, you have to ensure that the transfer
-  is done correctly. The check is done through HAL_SD_GetCardState() function
-  for SD card state. You could also check the DMA transfer process through the
-  SD Rx interrupt event.
+    (+) You can read from SD card in DMA mode by using function HAL_SD_ReadBlocks_DMA().
+	This function support only 512-bytes block length (the block size should be
+	chosen as 512 bytes).
+	You can choose either one block read operation or multiple block read operation
+	by adjusting the "NumberOfBlocks" parameter.
+	After this, you have to ensure that the transfer is done correctly. The check is done
+	through HAL_SD_GetCardState() function for SD card state.
+	You could also check the DMA transfer process through the SD Rx interrupt event.
 
-    (+) You can read from SD card in Interrupt mode by using function
-  HAL_SD_ReadBlocks_IT(). This function support only 512-bytes block length (the
-  block size should be chosen as 512 bytes). You can choose either one block
-  read operation or multiple block read operation by adjusting the
-  "NumberOfBlocks" parameter. After this, you have to ensure that the transfer
-  is done correctly. The check is done through HAL_SD_GetCardState() function
-  for SD card state. You could also check the IT transfer process through the SD
-  Rx interrupt event.
+    (+) You can read from SD card in Interrupt mode by using function HAL_SD_ReadBlocks_IT().
+	This function support only 512-bytes block length (the block size should be
+	chosen as 512 bytes).
+	You can choose either one block read operation or multiple block read operation
+	by adjusting the "NumberOfBlocks" parameter.
+	After this, you have to ensure that the transfer is done correctly. The check is done
+	through HAL_SD_GetCardState() function for SD card state.
+	You could also check the IT transfer process through the SD Rx interrupt event.
 
   *** SD Card Write operation ***
   ===============================
   [..]
-    (+) You can write to SD card in polling mode by using function
-  HAL_SD_WriteBlocks(). This function support only 512-bytes block length (the
-  block size should be chosen as 512 bytes). You can choose either one block
-  read operation or multiple block read operation by adjusting the
-  "NumberOfBlocks" parameter. After this, you have to ensure that the transfer
-  is done correctly. The check is done through HAL_SD_GetCardState() function
-  for SD card state.
+    (+) You can write to SD card in polling mode by using function HAL_SD_WriteBlocks().
+	This function support only 512-bytes block length (the block size should be
+	chosen as 512 bytes).
+	You can choose either one block read operation or multiple block read operation
+	by adjusting the "NumberOfBlocks" parameter.
+	After this, you have to ensure that the transfer is done correctly. The check is done
+	through HAL_SD_GetCardState() function for SD card state.
 
-    (+) You can write to SD card in DMA mode by using function
-  HAL_SD_WriteBlocks_DMA(). This function support only 512-bytes block length
-  (the block size should be chosen as 512 bytes). You can choose either one
-  block read operation or multiple block read operation by adjusting the
-  "NumberOfBlocks" parameter. After this, you have to ensure that the transfer
-  is done correctly. The check is done through HAL_SD_GetCardState() function
-  for SD card state. You could also check the DMA transfer process through the
-  SD Tx interrupt event.
+    (+) You can write to SD card in DMA mode by using function HAL_SD_WriteBlocks_DMA().
+	This function support only 512-bytes block length (the block size should be
+	chosen as 512 bytes).
+	You can choose either one block read operation or multiple block read operation
+	by adjusting the "NumberOfBlocks" parameter.
+	After this, you have to ensure that the transfer is done correctly. The check is done
+	through HAL_SD_GetCardState() function for SD card state.
+	You could also check the DMA transfer process through the SD Tx interrupt event.
 
-    (+) You can write to SD card in Interrupt mode by using function
-  HAL_SD_WriteBlocks_IT(). This function support only 512-bytes block length
-  (the block size should be chosen as 512 bytes). You can choose either one
-  block read operation or multiple block read operation by adjusting the
-  "NumberOfBlocks" parameter. After this, you have to ensure that the transfer
-  is done correctly. The check is done through HAL_SD_GetCardState() function
-  for SD card state. You could also check the IT transfer process through the SD
-  Tx interrupt event.
+    (+) You can write to SD card in Interrupt mode by using function HAL_SD_WriteBlocks_IT().
+	This function support only 512-bytes block length (the block size should be
+	chosen as 512 bytes).
+	You can choose either one block read operation or multiple block read operation
+	by adjusting the "NumberOfBlocks" parameter.
+	After this, you have to ensure that the transfer is done correctly. The check is done
+	through HAL_SD_GetCardState() function for SD card state.
+	You could also check the IT transfer process through the SD Tx interrupt event.
 
   *** SD card status ***
   ======================
   [..]
     (+) The SD Status contains status bits that are related to the SD Memory
-	Card proprietary features. To get SD card status use the
-  HAL_SD_GetCardStatus().
+	Card proprietary features. To get SD card status use the HAL_SD_GetCardStatus().
 
   *** SD card information ***
   ===========================
   [..]
-    (+) To get SD card information, you can use the function
-  HAL_SD_GetCardInfo(). It returns useful information about the SD card such as
-  block size, card type, block number ...
+    (+) To get SD card information, you can use the function HAL_SD_GetCardInfo().
+	It returns useful information about the SD card such as block size, card type,
+	block number ...
 
   *** SD card CSD register ***
   ============================
-    (+) The HAL_SD_GetCardCSD() API allows to get the parameters of the CSD
-  register. Some of the CSD parameters are useful for card initialization and
-  identification.
+    (+) The HAL_SD_GetCardCSD() API allows to get the parameters of the CSD register.
+	Some of the CSD parameters are useful for card initialization and identification.
 
   *** SD card CID register ***
   ============================
-    (+) The HAL_SD_GetCardCID() API allows to get the parameters of the CID
-  register. Some of the CSD parameters are useful for card initialization and
-  identification.
+    (+) The HAL_SD_GetCardCID() API allows to get the parameters of the CID register.
+	Some of the CSD parameters are useful for card initialization and identification.
 
   *** SD HAL driver macros list ***
   ==================================
@@ -233,14 +217,10 @@
       (+) RxCpltCallback : callback when a reception transfer is completed.
       (+) ErrorCallback : callback when error occurs.
       (+) AbortCpltCallback : callback when abort is completed.
-      (+) Read_DMADblBuf0CpltCallback : callback when the DMA reception of first
-  buffer is completed.
-      (+) Read_DMADblBuf1CpltCallback : callback when the DMA reception of
-  second buffer is completed.
-      (+) Write_DMADblBuf0CpltCallback : callback when the DMA transmission of
-  first buffer is completed.
-      (+) Write_DMADblBuf1CpltCallback : callback when the DMA transmission of
-  second buffer is completed.
+      (+) Read_DMADblBuf0CpltCallback : callback when the DMA reception of first buffer is completed.
+      (+) Read_DMADblBuf1CpltCallback : callback when the DMA reception of second buffer is completed.
+      (+) Write_DMADblBuf0CpltCallback : callback when the DMA transmission of first buffer is completed.
+      (+) Write_DMADblBuf1CpltCallback : callback when the DMA transmission of second buffer is completed.
       (+) MspInitCallback    : SD MspInit.
       (+) MspDeInitCallback  : SD MspDeInit.
     This function takes as parameters the HAL peripheral handle, the Callback ID
@@ -254,35 +234,31 @@
       (+) RxCpltCallback : callback when a reception transfer is completed.
       (+) ErrorCallback : callback when error occurs.
       (+) AbortCpltCallback : callback when abort is completed.
-      (+) Read_DMADblBuf0CpltCallback : callback when the DMA reception of first
-  buffer is completed.
-      (+) Read_DMADblBuf1CpltCallback : callback when the DMA reception of
-  second buffer is completed.
-      (+) Write_DMADblBuf0CpltCallback : callback when the DMA transmission of
-  first buffer is completed.
-      (+) Write_DMADblBuf1CpltCallback : callback when the DMA transmission of
-  second buffer is completed.
+      (+) Read_DMADblBuf0CpltCallback : callback when the DMA reception of first buffer is completed.
+      (+) Read_DMADblBuf1CpltCallback : callback when the DMA reception of second buffer is completed.
+      (+) Write_DMADblBuf0CpltCallback : callback when the DMA transmission of first buffer is completed.
+      (+) Write_DMADblBuf1CpltCallback : callback when the DMA transmission of second buffer is completed.
       (+) MspInitCallback    : SD MspInit.
       (+) MspDeInitCallback  : SD MspDeInit.
-    This function) takes as parameters the HAL peripheral handle and the
-  Callback ID. For specific callbacks TransceiverCallback use dedicated
-  unregister callbacks: respectively HAL_SD_UnRegisterTransceiverCallback().
+    This function) takes as parameters the HAL peripheral handle and the Callback ID.
+    For specific callbacks TransceiverCallback use dedicated unregister callbacks:
+    respectively HAL_SD_UnRegisterTransceiverCallback().
 
     By default, after the HAL_SD_Init and if the state is HAL_SD_STATE_RESET
-    all callbacks are reset to the corresponding legacy weak (surcharged)
-  functions. Exception done for MspInit and MspDeInit callbacks that are
-  respectively reset to the legacy weak (surcharged) functions in the
-  HAL_SD_Init and HAL_SD_DeInit only when these callbacks are null (not
-  registered beforehand). If not, MspInit or MspDeInit are not null, the
-  HAL_SD_Init and HAL_SD_DeInit keep and use the user MspInit/MspDeInit
-  callbacks (registered beforehand)
+    all callbacks are reset to the corresponding legacy weak (surcharged) functions.
+    Exception done for MspInit and MspDeInit callbacks that are respectively
+    reset to the legacy weak (surcharged) functions in the HAL_SD_Init
+    and  HAL_SD_DeInit only when these callbacks are null (not registered beforehand).
+    If not, MspInit or MspDeInit are not null, the HAL_SD_Init and HAL_SD_DeInit
+    keep and use the user MspInit/MspDeInit callbacks (registered beforehand)
 
     Callbacks can be registered/unregistered in READY state only.
-    Exception done for MspInit/MspDeInit callbacks that can be
-  registered/unregistered in READY or RESET state, thus registered (user)
-  MspInit/DeInit callbacks can be used during the Init/DeInit. In that case
-  first register the MspInit/MspDeInit user callbacks using
-  HAL_SD_RegisterCallback before calling HAL_SD_DeInit or HAL_SD_Init function.
+    Exception done for MspInit/MspDeInit callbacks that can be registered/unregistered
+    in READY or RESET state, thus registered (user) MspInit/DeInit callbacks can be used
+    during the Init/DeInit.
+    In that case first register the MspInit/MspDeInit user callbacks
+    using HAL_SD_RegisterCallback before calling HAL_SD_DeInit
+    or HAL_SD_Init function.
 
     When The compilation define USE_HAL_SD_REGISTER_CALLBACKS is set to 0 or
     not defined, the callback registering feature is not available
@@ -312,6 +288,7 @@
 /** @addtogroup SD_Private_Defines
  * @{
  */
+
 /* Frequencies used in the driver for clock divider calculation */
 #define SD_INIT_FREQ 400000U	       /* Initialization phase : 400 kHz max */
 #define SD_NORMAL_SPEED_FREQ 25000000U /* Normal speed phase : 25 MHz max */
@@ -346,8 +323,7 @@ static void SD_DMARxAbort(DMA_HandleTypeDef *hdma);
 #else
 static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd);
 static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 /**
  * @}
  */
@@ -358,8 +334,8 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd);
  */
 
 /** @addtogroup SD_Exported_Functions_Group1
- *  @brief   Initialization and de-initialization functions
- *
+  *  @brief   Initialization and de-initialization functions
+  *
 @verbatim
   ==============================================================================
 	  ##### Initialization and de-initialization functions #####
@@ -375,7 +351,7 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd);
 /**
   * @brief  Initializes the SD according to the specified parameters in the
 	    SD_HandleTypeDef and create the associated handle.
-  * @param  hsd Pointer to the SD handle
+  * @param  hsd: Pointer to the SD handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
@@ -396,8 +372,7 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 	assert_param(IS_SDMMC_CLOCK_EDGE(hsd->Init.ClockEdge));
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	assert_param(IS_SDMMC_CLOCK_BYPASS(hsd->Init.ClockBypass));
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 	assert_param(IS_SDMMC_CLOCK_POWER_SAVE(hsd->Init.ClockPowerSave));
 	assert_param(IS_SDMMC_BUS_WIDE(hsd->Init.BusWide));
 	assert_param(IS_SDMMC_HARDWARE_FLOW_CONTROL(hsd->Init.HardwareFlowControl));
@@ -439,6 +414,11 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 		return HAL_ERROR;
 	}
 
+	/* Configure the bus wide with the specified value in the SD_HandleTypeDef */
+	if (HAL_SD_ConfigWideBusOperation(hsd, hsd->Init.BusWide) != HAL_OK) {
+		return HAL_ERROR;
+	}
+
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	if (HAL_SD_GetCardStatus(hsd, &CardStatus) != HAL_OK) {
 		return HAL_ERROR;
@@ -470,11 +450,9 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 			return HAL_TIMEOUT;
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
-	/* Configure the bus wide with the specified value in the
-	 * SD_HandleTypeDef */
+	/* Configure the bus wide with the specified value in the SD_HandleTypeDef */
 	if (HAL_SD_ConfigWideBusOperation(hsd, hsd->Init.BusWide) != HAL_OK) {
 		return HAL_ERROR;
 	}
@@ -493,7 +471,7 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 
 /**
   * @brief  Initializes the SD Card.
-  * @param  hsd Pointer to SD handle
+  * @param  hsd: Pointer to SD handle
   * @note   This function initializes the SD card. It could be used when a card
 	    re-initialization is needed.
   * @retval HAL status
@@ -502,18 +480,17 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
 {
 	uint32_t errorstate;
 	SD_InitTypeDef Init;
-	uint32_t sdmmc_clk;
+	HAL_StatusTypeDef status;
 
+	uint32_t sdmmc_clk;
 	/* Default SDMMC peripheral configuration for SD card initialization */
 	Init.ClockEdge = SDMMC_CLOCK_EDGE_RISING;
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	Init.ClockBypass = SDMMC_CLOCK_BYPASS_DISABLE;
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 	Init.ClockPowerSave = SDMMC_CLOCK_POWER_SAVE_DISABLE;
 	Init.BusWide = SDMMC_BUS_WIDE_1B;
 	Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
-
 	/* Init Clock should be less or equal to 400Khz*/
 	sdmmc_clk = HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_SDMMC1);
 	if (sdmmc_clk == 0U) {
@@ -533,17 +510,18 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
 		/* Set Transceiver polarity */
 		hsd->Instance->POWER |= SDMMC_POWER_DIRPOL;
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	/* Initialize SDMMC peripheral interface with default configuration */
-	(void)SDMMC_Init(hsd->Instance, Init);
+	status = SDMMC_Init(hsd->Instance, Init);
+	if (status == HAL_ERROR) {
+		return HAL_ERROR;
+	}
 
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	/* Disable SDMMC Clock */
 	__HAL_SD_DISABLE(hsd);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 	/* Set Power State to ON */
 	(void)SDMMC_PowerState_ON(hsd->Instance);
@@ -551,8 +529,7 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	/* Enable SDMMC Clock */
 	__HAL_SD_ENABLE(hsd);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 	/* wait 74 Cycles: required power up waiting time before starting
 	   the SD initialization sequence */
@@ -594,7 +571,7 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  De-Initializes the SD card.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd)
@@ -608,7 +585,6 @@ HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd)
 	assert_param(IS_SDMMC_ALL_INSTANCE(hsd->Instance));
 
 	hsd->State = HAL_SD_STATE_BUSY;
-
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* Deactivate the 1.8V Mode */
 	if (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE) {
@@ -646,7 +622,7 @@ HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Initializes the SD MSP.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval None
  */
 __weak void HAL_SD_MspInit(SD_HandleTypeDef *hsd)
@@ -654,14 +630,14 @@ __weak void HAL_SD_MspInit(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SD_MspInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SD_MspInit could be implemented in the user file
 	 */
 }
 
 /**
  * @brief  De-Initialize SD MSP.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval None
  */
 __weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
@@ -669,8 +645,8 @@ __weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SD_MspDeInit could be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SD_MspDeInit could be implemented in the user file
 	 */
 }
 
@@ -679,8 +655,8 @@ __weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
  */
 
 /** @addtogroup SD_Exported_Functions_Group2
- *  @brief   Data transfer functions
- *
+  *  @brief   Data transfer functions
+  *
 @verbatim
   ==============================================================================
 			##### IO operation functions #####
@@ -698,11 +674,11 @@ __weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
  *         is managed by polling mode.
  * @note   This API should be followed by a check on the card state through
  *         HAL_SD_GetCardState().
- * @param  hsd Pointer to SD handle
- * @param  pData pointer to the buffer that will contain the received data
- * @param  BlockAdd Block Address from where data is to be read
- * @param  NumberOfBlocks Number of SD blocks to read
- * @param  Timeout Specify timeout value
+ * @param  hsd: Pointer to SD handle
+ * @param  pData: pointer to the buffer that will contain the received data
+ * @param  BlockAdd: Block Address from where data is to be read
+ * @param  NumberOfBlocks: Number of SD blocks to read
+ * @param  Timeout: Specify timeout value
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout)
@@ -746,13 +722,11 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint3
 		config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Read block(s) in polling mode */
 		if (NumberOfBlocks > 1U) {
@@ -806,10 +780,10 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint3
 				return HAL_TIMEOUT;
 			}
 		}
+
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Send stop transmission command in case of multiblock read */
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) && (NumberOfBlocks > 1U)) {
@@ -852,7 +826,6 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint3
 		} else {
 			/* Nothing to do */
 		}
-
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		/* Empty FIFO if there is still any data */
 		while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)) && (dataremaining > 0U)) {
@@ -879,8 +852,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint3
 				return HAL_ERROR;
 			}
 		}
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 		/* Clear all the static flags */
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_DATA_FLAGS);
@@ -899,21 +871,21 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint3
  *         transfer is managed by polling mode.
  * @note   This API should be followed by a check on the card state through
  *         HAL_SD_GetCardState().
- * @param  hsd Pointer to SD handle
- * @param  pData pointer to the buffer that will contain the data to transmit
- * @param  BlockAdd Block Address where data will be written
- * @param  NumberOfBlocks Number of SD blocks to write
- * @param  Timeout Specify timeout value
+ * @param  hsd: Pointer to SD handle
+ * @param  pData: pointer to the buffer that will contain the data to transmit
+ * @param  BlockAdd: Block Address where data will be written
+ * @param  NumberOfBlocks: Number of SD blocks to write
+ * @param  Timeout: Specify timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout)
+HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout)
 {
 	SDMMC_DataInitTypeDef config;
 	uint32_t errorstate;
 	uint32_t tickstart = HAL_GetTick();
 	uint32_t count, data, dataremaining;
 	uint32_t add = BlockAdd;
-	uint8_t *tempbuff = pData;
+	const uint8_t *tempbuff = pData;
 
 	if (NULL == pData) {
 		hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
@@ -947,13 +919,11 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint
 		config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Write Blocks in Polling mode */
 		if (NumberOfBlocks > 1U) {
@@ -1007,10 +977,10 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint
 				return HAL_TIMEOUT;
 			}
 		}
+
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Send stop transmission command in case of multiblock write */
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) && (NumberOfBlocks > 1U)) {
@@ -1073,10 +1043,10 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint
  *         HAL_SD_GetCardState().
  * @note   You could also check the IT transfer process through the SD Rx
  *         interrupt event.
- * @param  hsd Pointer to SD handle
- * @param  pData Pointer to the buffer that will contain the received data
- * @param  BlockAdd Block Address from where data is to be read
- * @param  NumberOfBlocks Number of blocks to read.
+ * @param  hsd: Pointer to SD handle
+ * @param  pData: Pointer to the buffer that will contain the received data
+ * @param  BlockAdd: Block Address from where data is to be read
+ * @param  NumberOfBlocks: Number of blocks to read.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks)
@@ -1120,13 +1090,11 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, ui
 		config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Read Blocks in IT mode */
 		if (NumberOfBlocks > 1U) {
@@ -1149,6 +1117,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, ui
 			return HAL_ERROR;
 		}
 
+		/* Enable transfer interrupts */
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND | SDMMC_FLAG_RXFIFOHF));
 
 		return HAL_OK;
@@ -1164,10 +1133,10 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, ui
  *         HAL_SD_GetCardState().
  * @note   You could also check the IT transfer process through the SD Tx
  *         interrupt event.
- * @param  hsd Pointer to SD handle
- * @param  pData Pointer to the buffer that will contain the data to transmit
- * @param  BlockAdd Block Address where data will be written
- * @param  NumberOfBlocks Number of blocks to write
+ * @param  hsd: Pointer to SD handle
+ * @param  pData: Pointer to the buffer that will contain the data to transmit
+ * @param  BlockAdd: Block Address where data will be written
+ * @param  NumberOfBlocks: Number of blocks to write
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks)
@@ -1212,8 +1181,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, u
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
 
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Write Blocks in Polling mode */
 		if (NumberOfBlocks > 1U) {
@@ -1245,8 +1213,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, u
 		config.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		config.DPSM = SDMMC_DPSM_ENABLE;
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 		/* Enable transfer interrupts */
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND | SDMMC_FLAG_TXFIFOHE));
@@ -1264,10 +1231,10 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, u
  *         HAL_SD_GetCardState().
  * @note   You could also check the DMA transfer process through the SD Rx
  *         interrupt event.
- * @param  hsd Pointer SD handle
- * @param  pData Pointer to the buffer that will contain the received data
- * @param  BlockAdd Block Address from where data is to be read
- * @param  NumberOfBlocks Number of blocks to read.
+ * @param  hsd: Pointer SD handle
+ * @param  pData: Pointer to the buffer that will contain the received data
+ * @param  BlockAdd: Block Address from where data is to be read
+ * @param  NumberOfBlocks: Number of blocks to read.
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks)
@@ -1304,6 +1271,10 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, u
 		/* Set the DMA Abort callback */
 		hsd->hdmarx->XferAbortCallback = NULL;
 
+		/* Force DMA Direction */
+		hsd->hdmarx->Init.Direction = DMA_PERIPH_TO_MEMORY;
+		MODIFY_REG(hsd->hdmarx->Instance->CCR, DMA_CCR_DIR, hsd->hdmarx->Init.Direction);
+
 		/* Enable the DMA Channel */
 		if (HAL_DMA_Start_IT(hsd->hdmarx, (uint32_t)&hsd->Instance->FIFO, (uint32_t)pData, (uint32_t)(BLOCKSIZE * NumberOfBlocks) / 4U) != HAL_OK) {
 			__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
@@ -1316,8 +1287,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, u
 #else
 		hsd->pRxBuffPtr = pData;
 		hsd->RxXferSize = BLOCKSIZE * NumberOfBlocks;
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 			if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 				add *= 512U;
@@ -1333,8 +1303,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, u
 			config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 			(void)SDMMC_ConfigData(hsd->Instance, &config);
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
@@ -1342,8 +1311,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, u
 			__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
 			hsd->Instance->IDMABASE0 = (uint32_t)pData;
 			hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_SINGLE_BUFF;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 			/* Read Blocks in DMA mode */
 			if (NumberOfBlocks > 1U) {
@@ -1385,10 +1353,10 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, u
  *         HAL_SD_GetCardState().
  * @note   You could also check the DMA transfer process through the SD Tx
  *         interrupt event.
- * @param  hsd Pointer to SD handle
- * @param  pData Pointer to the buffer that will contain the data to transmit
- * @param  BlockAdd Block Address where data will be written
- * @param  NumberOfBlocks Number of blocks to write
+ * @param  hsd: Pointer to SD handle
+ * @param  pData: Pointer to the buffer that will contain the data to transmit
+ * @param  BlockAdd: Block Address where data will be written
+ * @param  NumberOfBlocks: Number of blocks to write
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks)
@@ -1427,8 +1395,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, 
 
 		/* Set the DMA Abort callback */
 		hsd->hdmatx->XferAbortCallback = NULL;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 			add *= 512U;
@@ -1448,8 +1415,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, 
 
 		hsd->Instance->IDMABASE0 = (uint32_t)pData;
 		hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_SINGLE_BUFF;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Write Blocks in Polling mode */
 		if (NumberOfBlocks > 1U) {
@@ -1471,7 +1437,6 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, 
 			hsd->Context = SD_CONTEXT_NONE;
 			return HAL_ERROR;
 		}
-
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		/* Enable SDMMC DMA transfer */
 		__HAL_SD_DMA_ENABLE(hsd);
@@ -1498,8 +1463,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, 
 #else
 		/* Enable transfer interrupts */
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND));
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 			return HAL_OK;
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
@@ -1514,9 +1478,9 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, 
  * @brief  Erases the specified memory area of the given SD card.
  * @note   This API should be followed by a check on the card state through
  *         HAL_SD_GetCardState().
- * @param  hsd Pointer to SD handle
- * @param  BlockStartAdd Start Block address
- * @param  BlockEndAdd End Block address
+ * @param  hsd: Pointer to SD handle
+ * @param  BlockStartAdd: Start Block address
+ * @param  BlockEndAdd: End Block address
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, uint32_t BlockEndAdd)
@@ -1563,11 +1527,9 @@ HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, ui
 			end_add *= 512U;
 		}
 
-		/* According to sd-card spec 1.0 ERASE_GROUP_START (CMD32) and
-		 * erase_group_end(CMD33) */
+		/* According to sd-card spec 1.0 ERASE_GROUP_START (CMD32) and erase_group_end(CMD33) */
 		if (hsd->SdCard.CardType != CARD_SECURED) {
-			/* Send CMD32 SD_ERASE_GRP_START with argument as addr
-			 */
+			/* Send CMD32 SD_ERASE_GRP_START with argument as addr  */
 			errorstate = SDMMC_CmdSDEraseStartAdd(hsd->Instance, start_add);
 			if (errorstate != HAL_SD_ERROR_NONE) {
 				/* Clear all the static flags */
@@ -1608,7 +1570,7 @@ HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, ui
 
 /**
  * @brief  This function handles SD card interrupt request.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval None
  */
 void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
@@ -1631,8 +1593,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
 #else
 		hsd->Instance->DCTRL &= ~(SDMMC_DCTRL_DTEN);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		if ((context & SD_CONTEXT_IT) != 0U) {
 			if (((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U) || ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U)) {
@@ -1671,8 +1632,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			hsd->Instance->DCTRL = 0;
 			hsd->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
 
-			/* Stop Transfer for Write Multi blocks or Read Multi
-			 * blocks */
+			/* Stop Transfer for Write Multi blocks or Read Multi blocks */
 			if (((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U) || ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U)) {
 				errorstate = SDMMC_CmdStopTransfer(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
@@ -1714,9 +1674,8 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				}
 			}
 			if (((context & SD_CONTEXT_READ_SINGLE_BLOCK) == 0U) && ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) == 0U)) {
-				/* Disable the DMA transfer for transmit request
-				by setting the DMAEN bit in the SD DCTRL
-				register */
+				/* Disable the DMA transfer for transmit request by setting the DMAEN bit
+				in the SD DCTRL register */
 				hsd->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 				hsd->State = HAL_SD_STATE_READY;
@@ -1727,8 +1686,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				HAL_SD_TxCpltCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		} else {
 			/* Nothing to do */
 		}
@@ -1740,16 +1698,16 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 
 	else if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_RXOVERR | SDMMC_FLAG_TXUNDERR) != RESET) {
 		/* Set Error code */
-		if (__HAL_SD_GET_FLAG(hsd, SDMMC_IT_DCRCFAIL) != RESET) {
+		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DCRCFAIL) != RESET) {
 			hsd->ErrorCode |= HAL_SD_ERROR_DATA_CRC_FAIL;
 		}
-		if (__HAL_SD_GET_FLAG(hsd, SDMMC_IT_DTIMEOUT) != RESET) {
+		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DTIMEOUT) != RESET) {
 			hsd->ErrorCode |= HAL_SD_ERROR_DATA_TIMEOUT;
 		}
-		if (__HAL_SD_GET_FLAG(hsd, SDMMC_IT_RXOVERR) != RESET) {
+		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR) != RESET) {
 			hsd->ErrorCode |= HAL_SD_ERROR_RX_OVERRUN;
 		}
-		if (__HAL_SD_GET_FLAG(hsd, SDMMC_IT_TXUNDERR) != RESET) {
+		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_TXUNDERR) != RESET) {
 			hsd->ErrorCode |= HAL_SD_ERROR_TX_UNDERRUN;
 		}
 
@@ -1763,18 +1721,15 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
 		hsd->Instance->DCTRL |= SDMMC_DCTRL_FIFORST;
 		hsd->Instance->CMD |= SDMMC_CMD_CMDSTOP;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		hsd->ErrorCode |= SDMMC_CmdStopTransfer(hsd->Instance);
+
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		hsd->Instance->CMD &= ~(SDMMC_CMD_CMDSTOP);
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_FLAG_DABORT);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
-
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		if ((context & SD_CONTEXT_IT) != 0U) {
-			/* Set the SD state to ready to be able to start again
-			 * the process */
+			/* Set the SD state to ready to be able to start again the process */
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->Context = SD_CONTEXT_NONE;
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
@@ -1789,8 +1744,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_IDMABTC);
 				hsd->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
 
-				/* Set the SD state to ready to be able to start
-				 * again the process */
+				/* Set the SD state to ready to be able to start again the process */
 				hsd->State = HAL_SD_STATE_READY;
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->ErrorCallback(hsd);
@@ -1824,8 +1778,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				HAL_SD_AbortCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		} else {
 			/* Nothing to do */
 		}
@@ -1835,8 +1788,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 	else if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_IDMABTC) != RESET) {
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_FLAG_IDMABTC);
 		if (READ_BIT(hsd->Instance->IDMACTRL, SDMMC_IDMA_IDMABACT) == 0U) {
-			/* Current buffer is buffer0, Transfer complete for
-			 * buffer1 */
+			/* Current buffer is buffer0, Transfer complete for buffer1 */
 			if ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U) {
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->Write_DMADblBuf1CpltCallback(hsd);
@@ -1853,8 +1805,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			}
 		} else /* SD_DMA_BUFFER1 */
 		{
-			/* Current buffer is buffer1, Transfer complete for
-			 * buffer0 */
+			/* Current buffer is buffer1, Transfer complete for buffer0 */
 			if ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U) {
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->Write_DMADblBuf0CpltCallback(hsd);
@@ -1871,8 +1822,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			}
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	else {
 		/* Nothing to do */
 	}
@@ -1880,10 +1830,13 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 
 /**
  * @brief return the SD state
- * @param hsd Pointer to sd handle
+ * @param hsd: Pointer to sd handle
  * @retval HAL state
  */
-HAL_SD_StateTypeDef HAL_SD_GetState(SD_HandleTypeDef *hsd) { return hsd->State; }
+HAL_SD_StateTypeDef HAL_SD_GetState(const SD_HandleTypeDef *hsd)
+{
+	return hsd->State;
+}
 
 /**
  * @brief  Return the SD error code
@@ -1891,11 +1844,14 @@ HAL_SD_StateTypeDef HAL_SD_GetState(SD_HandleTypeDef *hsd) { return hsd->State; 
  *              the configuration information.
  * @retval SD Error Code
  */
-uint32_t HAL_SD_GetError(SD_HandleTypeDef *hsd) { return hsd->ErrorCode; }
+uint32_t HAL_SD_GetError(const SD_HandleTypeDef *hsd)
+{
+	return hsd->ErrorCode;
+}
 
 /**
  * @brief Tx Transfer completed callbacks
- * @param hsd Pointer to SD handle
+ * @param hsd: Pointer to SD handle
  * @retval None
  */
 __weak void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
@@ -1903,14 +1859,14 @@ __weak void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SD_TxCpltCallback can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SD_TxCpltCallback can be implemented in the user file
 	 */
 }
 
 /**
  * @brief Rx Transfer completed callbacks
- * @param hsd Pointer SD handle
+ * @param hsd: Pointer SD handle
  * @retval None
  */
 __weak void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd)
@@ -1918,14 +1874,14 @@ __weak void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SD_RxCpltCallback can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SD_RxCpltCallback can be implemented in the user file
 	 */
 }
 
 /**
  * @brief SD error callbacks
- * @param hsd Pointer SD handle
+ * @param hsd: Pointer SD handle
  * @retval None
  */
 __weak void HAL_SD_ErrorCallback(SD_HandleTypeDef *hsd)
@@ -1933,14 +1889,14 @@ __weak void HAL_SD_ErrorCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SD_ErrorCallback can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SD_ErrorCallback can be implemented in the user file
 	 */
 }
 
 /**
  * @brief SD Abort callbacks
- * @param hsd Pointer SD handle
+ * @param hsd: Pointer SD handle
  * @retval None
  */
 __weak void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
@@ -1948,8 +1904,8 @@ __weak void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsd);
 
-	/* NOTE : This function should not be modified, when the callback is
-	   needed, the HAL_SD_AbortCallback can be implemented in the user file
+	/* NOTE : This function should not be modified, when the callback is needed,
+		  the HAL_SD_AbortCallback can be implemented in the user file
 	 */
 }
 
@@ -1960,24 +1916,16 @@ __weak void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
  * @param hsd : SD handle
  * @param CallbackID : ID of the callback to be registered
  *        This parameter can be one of the following values:
- *          @arg @ref HAL_SD_TX_CPLT_CB_ID                 SD Tx Complete
- * Callback ID
- *          @arg @ref HAL_SD_RX_CPLT_CB_ID                 SD Rx Complete
- * Callback ID
- *          @arg @ref HAL_SD_ERROR_CB_ID                   SD Error Callback ID
- *          @arg @ref HAL_SD_ABORT_CB_ID                   SD Abort Callback ID
- *          @arg @ref HAL_SD_READ_DMA_DBL_BUF0_CPLT_CB_ID  SD DMA Rx Double
- * buffer 0 Callback ID
- *          @arg @ref HAL_SD_READ_DMA_DBL_BUF1_CPLT_CB_ID  SD DMA Rx Double
- * buffer 1 Callback ID
- *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF0_CPLT_CB_ID SD DMA Tx Double
- * buffer 0 Callback ID
- *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID SD DMA Tx Double
- * buffer 1 Callback ID
- *          @arg @ref HAL_SD_MSP_INIT_CB_ID                SD MspInit Callback
- * ID
- *          @arg @ref HAL_SD_MSP_DEINIT_CB_ID              SD MspDeInit Callback
- * ID
+ *          @arg @ref HAL_SD_TX_CPLT_CB_ID    SD Tx Complete Callback ID
+ *          @arg @ref HAL_SD_RX_CPLT_CB_ID    SD Rx Complete Callback ID
+ *          @arg @ref HAL_SD_ERROR_CB_ID      SD Error Callback ID
+ *          @arg @ref HAL_SD_ABORT_CB_ID      SD Abort Callback ID
+ *          @arg @ref HAL_SD_READ_DMA_DBL_BUF0_CPLT_CB_ID  SD DMA Rx Double buffer 0 Callback ID
+ *          @arg @ref HAL_SD_READ_DMA_DBL_BUF1_CPLT_CB_ID  SD DMA Rx Double buffer 1 Callback ID
+ *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF0_CPLT_CB_ID SD DMA Tx Double buffer 0 Callback ID
+ *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID SD DMA Tx Double buffer 1 Callback ID
+ *          @arg @ref HAL_SD_MSP_INIT_CB_ID   SD MspInit Callback ID
+ *          @arg @ref HAL_SD_MSP_DEINIT_CB_ID SD MspDeInit Callback ID
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
@@ -2021,7 +1969,7 @@ HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_Callback
 			case HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID:
 				hsd->Write_DMADblBuf1CpltCallback = pCallback;
 				break;
-#endif
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 			case HAL_SD_MSP_INIT_CB_ID:
 				hsd->MspInitCallback = pCallback;
 				break;
@@ -2064,29 +2012,20 @@ HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_Callback
 
 /**
  * @brief  Unregister a User SD Callback
- *         SD Callback is redirected to the weak (surcharged) predefined
- * callback
+ *         SD Callback is redirected to the weak (surcharged) predefined callback
  * @param hsd : SD handle
  * @param CallbackID : ID of the callback to be unregistered
  *        This parameter can be one of the following values:
- *          @arg @ref HAL_SD_TX_CPLT_CB_ID                 SD Tx Complete
- * Callback ID
- *          @arg @ref HAL_SD_RX_CPLT_CB_ID                 SD Rx Complete
- * Callback ID
- *          @arg @ref HAL_SD_ERROR_CB_ID                   SD Error Callback ID
- *          @arg @ref HAL_SD_ABORT_CB_ID                   SD Abort Callback ID
- *          @arg @ref HAL_SD_READ_DMA_DBL_BUF0_CPLT_CB_ID  SD DMA Rx Double
- * buffer 0 Callback ID
- *          @arg @ref HAL_SD_READ_DMA_DBL_BUF1_CPLT_CB_ID  SD DMA Rx Double
- * buffer 1 Callback ID
- *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF0_CPLT_CB_ID SD DMA Tx Double
- * buffer 0 Callback ID
- *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID SD DMA Tx Double
- * buffer 1 Callback ID
- *          @arg @ref HAL_SD_MSP_INIT_CB_ID                SD MspInit Callback
- * ID
- *          @arg @ref HAL_SD_MSP_DEINIT_CB_ID              SD MspDeInit Callback
- * ID
+ *          @arg @ref HAL_SD_TX_CPLT_CB_ID    SD Tx Complete Callback ID
+ *          @arg @ref HAL_SD_RX_CPLT_CB_ID    SD Rx Complete Callback ID
+ *          @arg @ref HAL_SD_ERROR_CB_ID      SD Error Callback ID
+ *          @arg @ref HAL_SD_ABORT_CB_ID      SD Abort Callback ID
+ *          @arg @ref HAL_SD_READ_DMA_DBL_BUF0_CPLT_CB_ID  SD DMA Rx Double buffer 0 Callback ID
+ *          @arg @ref HAL_SD_READ_DMA_DBL_BUF1_CPLT_CB_ID  SD DMA Rx Double buffer 1 Callback ID
+ *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF0_CPLT_CB_ID SD DMA Tx Double buffer 0 Callback ID
+ *          @arg @ref HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID SD DMA Tx Double buffer 1 Callback ID
+ *          @arg @ref HAL_SD_MSP_INIT_CB_ID   SD MspInit Callback ID
+ *          @arg @ref HAL_SD_MSP_DEINIT_CB_ID SD MspDeInit Callback ID
  * @retval status
  */
 HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID)
@@ -2123,7 +2062,7 @@ HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_Callba
 			case HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID:
 				hsd->Write_DMADblBuf1CpltCallback = HAL_SDEx_Write_DMADoubleBuffer1CpltCallback;
 				break;
-#endif
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 			case HAL_SD_MSP_INIT_CB_ID:
 				hsd->MspInitCallback = HAL_SD_MspInit;
 				break;
@@ -2167,7 +2106,7 @@ HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_Callba
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /**
  * @brief  Register a User SD Transceiver Callback
- *         To be used instead of the weak (surcharged) predefined callback
+ *         To be used instead of the weak (overridden) predefined callback
  * @param hsd : SD handle
  * @param pCallback : pointer to the Callback function
  * @retval status
@@ -2201,8 +2140,7 @@ HAL_StatusTypeDef HAL_SD_RegisterTransceiverCallback(SD_HandleTypeDef *hsd, pSD_
 
 /**
  * @brief  Unregister a User SD Transceiver Callback
- *         SD Callback is redirected to the weak (surcharged) predefined
- * callback
+ *         SD Callback is redirected to the weak (overridden) predefined callback
  * @param hsd : SD handle
  * @retval status
  */
@@ -2226,7 +2164,8 @@ HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd)
 	__HAL_UNLOCK(hsd);
 	return status;
 }
-#endif
+
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 
 /**
@@ -2234,8 +2173,8 @@ HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd)
  */
 
 /** @addtogroup SD_Exported_Functions_Group3
- *  @brief   management functions
- *
+  *  @brief   management functions
+  *
 @verbatim
   ==============================================================================
 		      ##### Peripheral Control functions #####
@@ -2251,8 +2190,8 @@ HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd)
 /**
  * @brief  Returns information the information of the card which are stored on
  *         the CID register.
- * @param  hsd Pointer to SD handle
- * @param  pCID Pointer to a HAL_SD_CardCIDTypeDef structure that
+ * @param  hsd: Pointer to SD handle
+ * @param  pCID: Pointer to a HAL_SD_CardCIDTypeDef structure that
  *         contains all CID register parameters
  * @retval HAL status
  */
@@ -2284,8 +2223,8 @@ HAL_StatusTypeDef HAL_SD_GetCardCID(SD_HandleTypeDef *hsd, HAL_SD_CardCIDTypeDef
 /**
  * @brief  Returns information the information of the card which are stored on
  *         the CSD register.
- * @param  hsd Pointer to SD handle
- * @param  pCSD Pointer to a HAL_SD_CardCSDTypeDef structure that
+ * @param  hsd: Pointer to SD handle
+ * @param  pCSD: Pointer to a HAL_SD_CardCSDTypeDef structure that
  *         contains all CSD register parameters
  * @retval HAL status
  */
@@ -2393,8 +2332,8 @@ HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd, HAL_SD_CardCSDTypeDef
 
 /**
  * @brief  Gets the SD status info.
- * @param  hsd Pointer to SD handle
- * @param  pStatus Pointer to the HAL_SD_CardStatusTypeDef structure that
+ * @param  hsd: Pointer to SD handle
+ * @param  pStatus: Pointer to the HAL_SD_CardStatusTypeDef structure that
  *         will contain the SD card status information
  * @retval HAL status
  */
@@ -2436,7 +2375,7 @@ HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd, HAL_SD_CardStatusT
 		pStatus->UhsSpeedGrade = (uint8_t)((sd_status[3] & 0x00F0U) >> 4U);
 		pStatus->UhsAllocationUnitSize = (uint8_t)(sd_status[3] & 0x000FU);
 		pStatus->VideoSpeedClass = (uint8_t)((sd_status[4] & 0xFF000000U) >> 24U);
-#endif
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	}
 
 	/* Set Block Size for Card */
@@ -2454,8 +2393,8 @@ HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd, HAL_SD_CardStatusT
 
 /**
  * @brief  Gets the SD card info.
- * @param  hsd Pointer to SD handle
- * @param  pCardInfo Pointer to the HAL_SD_CardInfoTypeDef structure that
+ * @param  hsd: Pointer to SD handle
+ * @param  pCardInfo: Pointer to the HAL_SD_CardInfoTypeDef structure that
  *         will contain the SD card status information
  * @retval HAL status
  */
@@ -2469,6 +2408,9 @@ HAL_StatusTypeDef HAL_SD_GetCardInfo(SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypeD
 	pCardInfo->BlockSize = (uint32_t)(hsd->SdCard.BlockSize);
 	pCardInfo->LogBlockNbr = (uint32_t)(hsd->SdCard.LogBlockNbr);
 	pCardInfo->LogBlockSize = (uint32_t)(hsd->SdCard.LogBlockSize);
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+	pCardInfo->CardSpeed = (uint32_t)(hsd->SdCard.CardSpeed);
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	return HAL_OK;
 }
@@ -2476,8 +2418,8 @@ HAL_StatusTypeDef HAL_SD_GetCardInfo(SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypeD
 /**
  * @brief  Enables wide bus operation for the requested card if supported by
  *         card.
- * @param  hsd Pointer to SD handle
- * @param  WideMode Specifies the SD card wide bus mode
+ * @param  hsd: Pointer to SD handle
+ * @param  WideMode: Specifies the SD card wide bus mode
  *          This parameter can be one of the following values:
  *            @arg SDMMC_BUS_WIDE_8B: 8-bit data transfer
  *            @arg SDMMC_BUS_WIDE_4B: 4-bit data transfer
@@ -2520,6 +2462,7 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t 
 	if (hsd->ErrorCode != HAL_SD_ERROR_NONE) {
 		/* Clear all the static flags */
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
+		hsd->State = HAL_SD_STATE_READY;
 		status = HAL_ERROR;
 	} else {
 		sdmmc_clk = HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_SDMMC1);
@@ -2528,15 +2471,13 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t 
 			Init.ClockEdge = hsd->Init.ClockEdge;
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 			Init.ClockBypass = hsd->Init.ClockBypass;
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 			Init.ClockPowerSave = hsd->Init.ClockPowerSave;
 			Init.BusWide = WideMode;
 			Init.HardwareFlowControl = hsd->Init.HardwareFlowControl;
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-			/* Check if user Clock div < Normal speed 25Mhz, no
-			 * change in Clockdiv */
+			/* Check if user Clock div < Normal speed 25Mhz, no change in Clockdiv */
 			if (hsd->Init.ClockDiv >= (sdmmc_clk / (2U * SD_NORMAL_SPEED_FREQ))) {
 				Init.ClockDiv = hsd->Init.ClockDiv;
 			} else if (hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) {
@@ -2558,8 +2499,7 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t 
 					}
 				}
 			} else {
-				/* No High speed SD card, Max Frequency = 25Mhz
-				 */
+				/* No High speed SD card, Max Frequency = 25Mhz */
 				if (hsd->Init.ClockDiv == 0U) {
 					if (sdmmc_clk > SD_NORMAL_SPEED_FREQ) {
 						Init.ClockDiv = sdmmc_clk / (2U * SD_NORMAL_SPEED_FREQ);
@@ -2582,8 +2522,7 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t 
 			} else {
 				Init.ClockDiv = hsd->Init.ClockDiv;
 			}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 			(void)SDMMC_Init(hsd->Instance, Init);
 		} else {
@@ -2739,8 +2678,7 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd, uint32_t
 			case SDMMC_SPEED_MODE_DEFAULT:
 				break;
 
-			case SDMMC_SPEED_MODE_ULTRA: /*not valid without
-							transceiver*/
+			case SDMMC_SPEED_MODE_ULTRA: /*not valid without transceiver*/
 			default:
 				hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
 				status = HAL_ERROR;
@@ -2771,12 +2709,11 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd, uint32_t
 	hsd->State = HAL_SD_STATE_READY;
 	return status;
 }
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 /**
  * @brief  Gets the current sd card data state.
- * @param  hsd pointer to SD handle
+ * @param  hsd: pointer to SD handle
  * @retval Card state
  */
 HAL_SD_CardStateTypeDef HAL_SD_GetCardState(SD_HandleTypeDef *hsd)
@@ -2797,7 +2734,7 @@ HAL_SD_CardStateTypeDef HAL_SD_GetCardState(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Abort the current transfer and disable the SD.
- * @param  hsd pointer to a SD_HandleTypeDef structure that contains
+ * @param  hsd: pointer to a SD_HandleTypeDef structure that contains
  *                the configuration information for SD module.
  * @retval HAL status
  */
@@ -2814,6 +2751,7 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 	/* Clear All flags */
 	__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_DATA_FLAGS);
 
+	CLEAR_BIT(hsd->Instance->DCTRL, SDMMC_DCTRL_DTEN);
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* If IDMA Context, disable Internal DMA */
 	hsd->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
@@ -2839,8 +2777,7 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 			/* Nothing to do */
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	hsd->State = HAL_SD_STATE_READY;
 
@@ -2859,7 +2796,7 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Abort the current transfer and disable the SD (IT mode).
- * @param  hsd pointer to a SD_HandleTypeDef structure that contains
+ * @param  hsd: pointer to a SD_HandleTypeDef structure that contains
  *                the configuration information for SD module.
  * @retval HAL status
  */
@@ -2941,8 +2878,7 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	return HAL_OK;
 }
@@ -2959,11 +2895,10 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
 /** @addtogroup SD_Private_Functions
  * @{
  */
-
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 /**
  * @brief  DMA SD transmit process complete callback
- * @param  hdma DMA handle
+ * @param  hdma: DMA handle
  * @retval None
  */
 static void SD_DMATransmitCplt(DMA_HandleTypeDef *hdma)
@@ -2976,7 +2911,7 @@ static void SD_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 
 /**
  * @brief  DMA SD receive process complete callback
- * @param  hdma DMA handle
+ * @param  hdma: DMA handle
  * @retval None
  */
 static void SD_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
@@ -2997,8 +2932,8 @@ static void SD_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 		}
 	}
 
-	/* Disable the DMA transfer for transmit request by setting the DMAEN
-	bit in the SD DCTRL register */
+	/* Disable the DMA transfer for transmit request by setting the DMAEN bit
+	in the SD DCTRL register */
 	hsd->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 	/* Clear all the static flags */
@@ -3016,7 +2951,7 @@ static void SD_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 
 /**
  * @brief  DMA SD communication error callback
- * @param  hdma DMA handle
+ * @param  hdma: DMA handle
  * @retval None
  */
 static void SD_DMAError(DMA_HandleTypeDef *hdma)
@@ -3053,7 +2988,7 @@ static void SD_DMAError(DMA_HandleTypeDef *hdma)
 
 /**
  * @brief  DMA SD Tx Abort callback
- * @param  hdma DMA handle
+ * @param  hdma: DMA handle
  * @retval None
  */
 static void SD_DMATxAbort(DMA_HandleTypeDef *hdma)
@@ -3088,7 +3023,7 @@ static void SD_DMATxAbort(DMA_HandleTypeDef *hdma)
 
 /**
  * @brief  DMA SD Rx Abort callback
- * @param  hdma DMA handle
+ * @param  hdma: DMA handle
  * @retval None
  */
 static void SD_DMARxAbort(DMA_HandleTypeDef *hdma)
@@ -3120,12 +3055,11 @@ static void SD_DMARxAbort(DMA_HandleTypeDef *hdma)
 #endif
 	}
 }
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                                                                                                              \
-	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx && !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 /**
  * @brief  Initializes the sd card.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval SD Card error state
  */
 static uint32_t SD_InitCard(SD_HandleTypeDef *hsd)
@@ -3201,7 +3135,7 @@ static uint32_t SD_InitCard(SD_HandleTypeDef *hsd)
  * @brief  Enquires cards about their operating voltage and configures clock
  *         controls and stores SD information that will be needed in future
  *         in the SD handle.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval error state
  */
 static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
@@ -3211,8 +3145,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 	uint32_t errorstate;
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	uint32_t tickstart = HAL_GetTick();
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	/* CMD0: GO_IDLE_STATE */
 	errorstate = SDMMC_CmdGoIdleState(hsd->Instance);
@@ -3229,6 +3162,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		}
+
 	} else {
 		hsd->SdCard.CardVersion = CARD_V2_X;
 	}
@@ -3297,8 +3231,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 
 				/* Check to BusyD0 */
 				if ((hsd->Instance->STA & SDMMC_FLAG_BUSYD0) != SDMMC_FLAG_BUSYD0) {
-					/* Error when activate Voltage Switch in
-					 * SDMMC Peripheral */
+					/* Error when activate Voltage Switch in SDMMC Peripheral */
 					return SDMMC_ERROR_UNSUPPORTED_FEATURE;
 				} else {
 					/* Enable Transceiver Switch PIN */
@@ -3323,14 +3256,12 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 
 					/* Check BusyD0 status */
 					if ((hsd->Instance->STA & SDMMC_FLAG_BUSYD0) == SDMMC_FLAG_BUSYD0) {
-						/* Error when enabling 1.8V mode
-						 */
+						/* Error when enabling 1.8V mode */
 						return HAL_SD_ERROR_INVALID_VOLTRANGE;
 					}
 					/* Switch to 1.8V OK */
 
-					/* Disable VSWITCH FLAG from SDMMC
-					 * Peripheral */
+					/* Disable VSWITCH FLAG from SDMMC Peripheral */
 					hsd->Instance->POWER = 0x13U;
 
 					/* Clean Status flags */
@@ -3338,8 +3269,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 				}
 			}
 		}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	} else {
 		hsd->SdCard.CardType = CARD_SDSC;
 	}
@@ -3349,7 +3279,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Turns the SDMMC output signals off.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval None
  */
 static void SD_PowerOFF(SD_HandleTypeDef *hsd)
@@ -3360,8 +3290,8 @@ static void SD_PowerOFF(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Send Status info command.
- * @param  hsd pointer to SD handle
- * @param  pSDstatus Pointer to the buffer that will contain the SD card status
+ * @param  hsd: pointer to SD handle
+ * @param  pSDstatus: Pointer to the buffer that will contain the SD card status
  *         SD Status register)
  * @retval error state
  */
@@ -3378,8 +3308,7 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 		return HAL_SD_ERROR_LOCK_UNLOCK_FAILED;
 	}
 
-	/* Set block size for card if it is not equal to current block size for
-	 * card */
+	/* Set block size for card if it is not equal to current block size for card */
 	errorstate = SDMMC_CmdBlockLength(hsd->Instance, 64U);
 	if (errorstate != HAL_SD_ERROR_NONE) {
 		hsd->ErrorCode |= HAL_SD_ERROR_NONE;
@@ -3414,8 +3343,7 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 	while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
 #else
 	while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND))
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	{
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF)) {
 			for (count = 0U; count < 8U; count++) {
@@ -3424,7 +3352,7 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 			}
 		}
 
-		if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT) {
+		if ((HAL_GetTick() - tickstart) >= SDMMC_SWDATATIMEOUT) {
 			return HAL_SD_ERROR_TIMEOUT;
 		}
 	}
@@ -3443,13 +3371,12 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 	while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DPSMACT)))
 #else
 	while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)))
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	{
 		*pData = SDMMC_ReadFIFO(hsd->Instance);
 		pData++;
 
-		if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT) {
+		if ((HAL_GetTick() - tickstart) >= SDMMC_SWDATATIMEOUT) {
 			return HAL_SD_ERROR_TIMEOUT;
 		}
 	}
@@ -3462,8 +3389,8 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 
 /**
  * @brief  Returns the current card's status.
- * @param  hsd Pointer to SD handle
- * @param  pCardStatus pointer to the buffer that will contain the SD card
+ * @param  hsd: Pointer to SD handle
+ * @param  pCardStatus: pointer to the buffer that will contain the SD card
  *         status (Card Status register)
  * @retval error state
  */
@@ -3489,12 +3416,12 @@ static uint32_t SD_SendStatus(SD_HandleTypeDef *hsd, uint32_t *pCardStatus)
 
 /**
  * @brief  Enables the SDMMC wide bus mode.
- * @param  hsd pointer to SD handle
+ * @param  hsd: pointer to SD handle
  * @retval error state
  */
 static uint32_t SD_WideBus_Enable(SD_HandleTypeDef *hsd)
 {
-	uint32_t scr[2U] = {0UL, 0UL};
+	uint32_t scr[2U] = {0U, 0U};
 	uint32_t errorstate;
 
 	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) & SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
@@ -3529,12 +3456,12 @@ static uint32_t SD_WideBus_Enable(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Disables the SDMMC wide bus mode.
- * @param  hsd Pointer to SD handle
+ * @param  hsd: Pointer to SD handle
  * @retval error state
  */
 static uint32_t SD_WideBus_Disable(SD_HandleTypeDef *hsd)
 {
-	uint32_t scr[2U] = {0UL, 0UL};
+	uint32_t scr[2U] = {0U, 0U};
 	uint32_t errorstate;
 
 	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) & SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
@@ -3569,8 +3496,8 @@ static uint32_t SD_WideBus_Disable(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Finds the SD card SCR register value.
- * @param  hsd Pointer to SD handle
- * @param  pSCR pointer to the buffer that will contain the SCR value
+ * @param  hsd: Pointer to SD handle
+ * @param  pSCR: pointer to the buffer that will contain the SCR value
  * @retval error state
  */
 static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
@@ -3579,7 +3506,7 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 	uint32_t errorstate;
 	uint32_t tickstart = HAL_GetTick();
 	uint32_t index = 0U;
-	uint32_t tempscr[2U] = {0UL, 0UL};
+	uint32_t tempscr[2U] = {0U, 0U};
 	uint32_t *scr = pSCR;
 
 	/* Set Block Size To 8 Bytes */
@@ -3621,18 +3548,20 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 		}
 	}
 #else
-	while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND)) {
+	while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT)) {
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)) {
 			*(tempscr + index) = SDMMC_ReadFIFO(hsd->Instance);
 			index++;
+		} else if (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXACT)) {
+			break;
+		} else {
+			/* Nothing to do */
 		}
-
 		if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT) {
 			return HAL_SD_ERROR_TIMEOUT;
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DTIMEOUT)) {
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_FLAG_DTIMEOUT);
@@ -3661,7 +3590,7 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 
 /**
  * @brief  Wrap up reading in non-blocking mode.
- * @param  hsd pointer to a SD_HandleTypeDef structure that contains
+ * @param  hsd: pointer to a SD_HandleTypeDef structure that contains
  *              the configuration information.
  * @retval None
  */
@@ -3698,7 +3627,7 @@ static void SD_Read_IT(SD_HandleTypeDef *hsd)
 
 /**
  * @brief  Wrap up writing in non-blocking mode.
- * @param  hsd pointer to a SD_HandleTypeDef structure that contains
+ * @param  hsd: pointer to a SD_HandleTypeDef structure that contains
  *              the configuration information.
  * @retval None
  */
@@ -3739,7 +3668,7 @@ static void SD_Write_IT(SD_HandleTypeDef *hsd)
  *         This API must be used after "Transfer State"
  * @note   This operation should be followed by the configuration
  *         of PLL to have SDMMCCK clock between 50 and 120 MHz
- * @param  hsd SD handle
+ * @param  hsd: SD handle
  * @retval SD Card error state
  */
 uint32_t SD_HighSpeed(SD_HandleTypeDef *hsd)
@@ -3747,7 +3676,8 @@ uint32_t SD_HighSpeed(SD_HandleTypeDef *hsd)
 	uint32_t errorstate = HAL_SD_ERROR_NONE;
 	SDMMC_DataInitTypeDef sdmmc_datainitstructure;
 	uint32_t SD_hs[16] = {0};
-	uint32_t count, loop = 0;
+	uint32_t count;
+	uint32_t loop = 0;
 	uint32_t Timeout = HAL_GetTick();
 
 	if (hsd->SdCard.CardSpeed == CARD_NORMAL_SPEED) {
@@ -3831,7 +3761,7 @@ uint32_t SD_HighSpeed(SD_HandleTypeDef *hsd)
  *         This API must be used after "Transfer State"
  * @note   This operation should be followed by the configuration
  *         of PLL to have SDMMCCK clock between 50 and 120 MHz
- * @param  hsd SD handle
+ * @param  hsd: SD handle
  * @retval SD Card error state
  */
 static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
@@ -3839,7 +3769,8 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 	uint32_t errorstate = HAL_SD_ERROR_NONE;
 	SDMMC_DataInitTypeDef sdmmc_datainitstructure;
 	uint32_t SD_hs[16] = {0};
-	uint32_t count, loop = 0;
+	uint32_t count;
+	uint32_t loop = 0;
 	uint32_t Timeout = HAL_GetTick();
 
 	if (hsd->SdCard.CardSpeed == CARD_NORMAL_SPEED) {
@@ -3864,7 +3795,9 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 		sdmmc_datainitstructure.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		sdmmc_datainitstructure.DPSM = SDMMC_DPSM_ENABLE;
 
-		(void)SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure);
+		if (SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure) != HAL_OK) {
+			return (HAL_SD_ERROR_GENERAL_UNKNOWN_ERR);
+		}
 
 		errorstate = SDMMC_CmdSwitch(hsd->Instance, SDMMC_SDR104_SWITCH_PATTERN);
 		if (errorstate != HAL_SD_ERROR_NONE) {
@@ -3920,8 +3853,7 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 #if defined(DLYB_SDMMC1) || defined(DLYB_SDMMC2)
 			/* Enable DelayBlock Peripheral */
-			/* SDMMC_FB_CLK tuned feedback clock selected as receive
-			 * clock, for SDR104 */
+			/* SDMMC_FB_CLK tuned feedback clock selected as receive clock, for SDR104 */
 			MODIFY_REG(hsd->Instance->CLKCR, SDMMC_CLKCR_SELCLKRX, SDMMC_CLKCR_SELCLKRX_1);
 			if (DelayBlock_Enable(SD_GET_DLYB_INSTANCE(hsd->Instance)) != HAL_OK) {
 				return (HAL_SD_ERROR_GENERAL_UNKNOWN_ERR);
@@ -3938,7 +3870,7 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
  *         This API must be used after "Transfer State"
  * @note   This operation should be followed by the configuration
  *         of PLL to have SDMMCCK clock less than 50MHz
- * @param  hsd SD handle
+ * @param  hsd: SD handle
  * @retval SD Card error state
  */
 static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
@@ -3946,7 +3878,8 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 	uint32_t errorstate = HAL_SD_ERROR_NONE;
 	SDMMC_DataInitTypeDef sdmmc_datainitstructure;
 	uint32_t SD_hs[16] = {0};
-	uint32_t count, loop = 0;
+	uint32_t count;
+	uint32_t loop = 0;
 	uint32_t Timeout = HAL_GetTick();
 
 	if (hsd->SdCard.CardSpeed == CARD_NORMAL_SPEED) {
@@ -3971,7 +3904,9 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 		sdmmc_datainitstructure.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		sdmmc_datainitstructure.DPSM = SDMMC_DPSM_ENABLE;
 
-		(void)SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure);
+		if (SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure) != HAL_OK) {
+			return (HAL_SD_ERROR_GENERAL_UNKNOWN_ERR);
+		}
 
 		errorstate = SDMMC_CmdSwitch(hsd->Instance, SDMMC_DDR50_SWITCH_PATTERN);
 		if (errorstate != HAL_SD_ERROR_NONE) {
@@ -4027,8 +3962,7 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 #if defined(DLYB_SDMMC1) || defined(DLYB_SDMMC2)
 			/* Enable DelayBlock Peripheral */
-			/* SDMMC_FB_CLK tuned feedback clock selected as receive
-			 * clock, for SDR104 */
+			/* SDMMC_FB_CLK tuned feedback clock selected as receive clock, for SDR104 */
 			MODIFY_REG(hsd->Instance->CLKCR, SDMMC_CLKCR_SELCLKRX, SDMMC_CLKCR_SELCLKRX_1);
 			if (DelayBlock_Enable(SD_GET_DLYB_INSTANCE(hsd->Instance)) != HAL_OK) {
 				return (HAL_SD_ERROR_GENERAL_UNKNOWN_ERR);
@@ -4039,9 +3973,8 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 
 	return errorstate;
 }
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 /**
  * @}
  */

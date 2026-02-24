@@ -5,7 +5,7 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
@@ -34,7 +34,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -50,14 +50,14 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: '3.x'
           pip-install: gersemi
@@ -66,7 +66,7 @@ jobs:
         run: gersemi --in-place ${{ github.workspace }}
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -82,7 +82,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
           git ls-files '*.json' | xargs -r -I{} sh -c 'jq --tab . {} > {}.tmp && mv {}.tmp {}'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -110,14 +110,14 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@v1
+        uses: shogo82148/actions-setup-perl@b6cfc127f1b0a63ac98797800f641494d80f42f8  # v1.37.1
         with:
           install-modules: 'Perl::Tidy'
 
@@ -127,7 +127,7 @@ jobs:
           git ls-files '*.pl' '*.pm' | xargs perltidy -b -bext='/'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -143,14 +143,14 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
 
       - name: Setup Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6.2.0
         with:
           go-version: 'stable'
 
@@ -165,7 +165,7 @@ jobs:
           git ls-files '*.s' '*.asm' | xargs -r asmfmt -w -e
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}

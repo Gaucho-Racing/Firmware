@@ -67,8 +67,7 @@
  */
 
 /**
- * @brief  De-initialize PKA registers (Registers restored to their default
- * values).
+ * @brief  De-initialize PKA registers (Registers restored to their default values).
  * @param  PKAx PKA Instance.
  * @retval ErrorStatus
  *          - SUCCESS: PKA registers are de-initialized
@@ -95,15 +94,12 @@ ErrorStatus LL_PKA_DeInit(const PKA_TypeDef *PKAx)
 }
 
 /**
- * @brief  Initialize PKA registers according to the specified parameters in
- * PKA_InitStruct.
+ * @brief  Initialize PKA registers according to the specified parameters in PKA_InitStruct.
  * @param  PKAx PKA Instance.
  * @param  PKA_InitStruct pointer to a @ref LL_PKA_InitTypeDef structure
- *         that contains the configuration information for the specified PKA
- * peripheral.
+ *         that contains the configuration information for the specified PKA peripheral.
  * @retval ErrorStatus
- *          - SUCCESS: PKA registers are initialized according to PKA_InitStruct
- * content
+ *          - SUCCESS: PKA registers are initialized according to PKA_InitStruct content
  *          - ERROR:   Not applicable
  */
 ErrorStatus LL_PKA_Init(PKA_TypeDef *PKAx, LL_PKA_InitTypeDef *PKA_InitStruct)

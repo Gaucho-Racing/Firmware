@@ -63,10 +63,9 @@ extern "C" {
  */
 typedef struct {
 	uint32_t ClockErrorDetection; /*!< Clock error detection.
-				    This parameter can be one value of @ref
-				    RNG_LL_CED. This parameter can be modified
-				    using unitary functions @ref
-				    LL_RNG_EnableClkErrorDetect(). */
+				    This parameter can be one value of @ref RNG_LL_CED.
+				    This parameter can be modified using unitary
+				    functions @ref LL_RNG_EnableClkErrorDetect(). */
 } LL_RNG_InitTypeDef;
 
 /**
@@ -74,10 +73,10 @@ typedef struct {
  */
 #endif /* USE_FULL_LL_DRIVER */
 #endif /* RNG_CR_CED */
-       /* Exported constants --------------------------------------------------------*/
-       /** @defgroup RNG_LL_Exported_Constants RNG Exported Constants
-	* @{
-	*/
+/* Exported constants --------------------------------------------------------*/
+/** @defgroup RNG_LL_Exported_Constants RNG Exported Constants
+ * @{
+ */
 
 #if defined(RNG_CR_CED)
 /** @defgroup RNG_LL_CED Clock Error Detection
@@ -95,26 +94,22 @@ typedef struct {
  *            programmable divider acting on the incoming RNG clock
  * @{
  */
-#define LL_RNG_CLKDIV_BY_1 (0x00000000UL)					    /*!< No clock division                             */
-#define LL_RNG_CLKDIV_BY_2 (RNG_CR_CLKDIV_0)					    /*!< 2 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_4 (RNG_CR_CLKDIV_1)					    /*!< 4 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_8 (RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)			    /*!< 8 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_16 (RNG_CR_CLKDIV_2)					    /*!< 16 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_32 (RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_0)			    /*!< 32 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_64 (RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1)			    /*!< 64 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_128 (RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)  /*!< 128 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_256 (RNG_CR_CLKDIV_3)					    /*!< 256 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_512 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_0)		    /*!< 512 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_1024 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_1)		    /*!< 1024 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_2048 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0) /*!< 2048 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_4096 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2)		    /*!< 4096 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_8192 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_0) /*!< 8192 RNG clock cycles per internal RNG clock */
-#define LL_RNG_CLKDIV_BY_16384                                                                                                                                                                         \
-	(RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1) /*!< 16384 RNG clock cycles per internal RNG clock                                                                                       \
-							       */
-#define LL_RNG_CLKDIV_BY_32768                                                                                                                                                                         \
-	(RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0) /*!< 32768 RNG clock cycles per internal RNG clock                                                                     \
-										 */
+#define LL_RNG_CLKDIV_BY_1 (0x00000000UL)							       /*!< No clock division                             */
+#define LL_RNG_CLKDIV_BY_2 (RNG_CR_CLKDIV_0)							       /*!< 2 RNG clock cycles per internal RNG clock     */
+#define LL_RNG_CLKDIV_BY_4 (RNG_CR_CLKDIV_1)							       /*!< 4 RNG clock cycles per internal RNG clock     */
+#define LL_RNG_CLKDIV_BY_8 (RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)					       /*!< 8 RNG clock cycles per internal RNG clock     */
+#define LL_RNG_CLKDIV_BY_16 (RNG_CR_CLKDIV_2)							       /*!< 16 RNG clock cycles per internal RNG clock    */
+#define LL_RNG_CLKDIV_BY_32 (RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_0)					       /*!< 32 RNG clock cycles per internal RNG clock    */
+#define LL_RNG_CLKDIV_BY_64 (RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1)					       /*!< 64 RNG clock cycles per internal RNG clock    */
+#define LL_RNG_CLKDIV_BY_128 (RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)		       /*!< 128 RNG clock cycles per internal RNG clock   */
+#define LL_RNG_CLKDIV_BY_256 (RNG_CR_CLKDIV_3)							       /*!< 256 RNG clock cycles per internal RNG clock   */
+#define LL_RNG_CLKDIV_BY_512 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_0)				       /*!< 512 RNG clock cycles per internal RNG clock   */
+#define LL_RNG_CLKDIV_BY_1024 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_1)				       /*!< 1024 RNG clock cycles per internal RNG clock  */
+#define LL_RNG_CLKDIV_BY_2048 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)		       /*!< 2048 RNG clock cycles per internal RNG clock  */
+#define LL_RNG_CLKDIV_BY_4096 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2)				       /*!< 4096 RNG clock cycles per internal RNG clock  */
+#define LL_RNG_CLKDIV_BY_8192 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_0)		       /*!< 8192 RNG clock cycles per internal RNG clock  */
+#define LL_RNG_CLKDIV_BY_16384 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1)		       /*!< 16384 RNG clock cycles per internal RNG clock */
+#define LL_RNG_CLKDIV_BY_32768 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0) /*!< 32768 RNG clock cycles per internal RNG clock */
 /**
  * @}
  */
@@ -146,8 +141,7 @@ typedef struct {
  */
 
 /** @defgroup RNG_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_RNG_ReadReg and
- * LL_RNG_WriteReg macros
+ * @brief    IT defines which can be used with LL_RNG_ReadReg and  LL_RNG_WriteReg macros
  * @{
  */
 #define LL_RNG_CR_IE RNG_CR_IE /*!< RNG Interrupt enable */
@@ -196,6 +190,23 @@ typedef struct {
 /** @defgroup RNG_LL_Exported_Functions RNG Exported Functions
  * @{
  */
+#if defined(RNG_CR_CONDRST)
+/** Legacy definitions for compatibility purpose
+@cond 0
+  */
+#define LL_RNG_SetConditioningResetBit LL_RNG_EnableCondReset
+#define LL_RNG_ResetConditioningResetBit LL_RNG_DisableCondReset
+#define LL_RNG_IsResetConditioningBitSet LL_RNG_IsEnabledCondReset
+#define LL_RNG_IsNistComplianceEnabled LL_RNG_IsEnabledNistCompliance
+#endif /* RNG_CR_CONDRST */
+
+#if defined(RNG_VER_3_2)
+#define LL_RNG_SetHealthconfiguration LL_RNG_SetHealthConfig
+#define LL_RNG_GetHealthconfiguration LL_RNG_GetHealthConfig
+#endif /* RNG_VER_3_2 */
+/**
+@endcond
+  */
 /** @defgroup RNG_LL_EF_Configuration RNG Configuration functions
  * @{
  */
@@ -206,7 +217,10 @@ typedef struct {
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_Enable(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_RNGEN); }
+__STATIC_INLINE void LL_RNG_Enable(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_RNGEN);
+}
 
 /**
  * @brief  Disable Random Number Generation
@@ -214,7 +228,10 @@ __STATIC_INLINE void LL_RNG_Enable(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_Disable(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG_CR_RNGEN); }
+__STATIC_INLINE void LL_RNG_Disable(RNG_TypeDef *RNGx)
+{
+	CLEAR_BIT(RNGx->CR, RNG_CR_RNGEN);
+}
 
 /**
  * @brief  Check if Random Number Generator is enabled
@@ -222,7 +239,10 @@ __STATIC_INLINE void LL_RNG_Disable(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsEnabled(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_RNGEN) == (RNG_CR_RNGEN)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabled(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_RNGEN) == (RNG_CR_RNGEN)) ? 1UL : 0UL);
+}
 
 #if defined(RNG_CR_CED)
 /**
@@ -263,32 +283,44 @@ __STATIC_INLINE void LL_RNG_DisableClkErrorDetect(RNG_TypeDef *RNGx)
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsEnabledClkErrorDetect(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_CED) != (RNG_CR_CED)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabledClkErrorDetect(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_CED) != (RNG_CR_CED)) ? 1UL : 0UL);
+}
 
 #if defined(RNG_CR_CONDRST)
 /**
  * @brief  Set RNG Conditioning Soft Reset bit
- * @rmtoll CR           CONDRST          LL_RNG_SetConditioningResetBit
+ * @rmtoll CR           CONDRST          LL_RNG_EnableCondReset
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_SetConditioningResetBit(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_CONDRST); }
+__STATIC_INLINE void LL_RNG_EnableCondReset(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_CONDRST);
+}
 
 /**
  * @brief  Reset RNG  Conditioning Soft Reset bit
- * @rmtoll CR           CONDRST         LL_RNG_ResetConditioningResetBit
+ * @rmtoll CR           CONDRST         LL_RNG_DisableCondReset
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_ResetConditioningResetBit(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG_CR_CONDRST); }
+__STATIC_INLINE void LL_RNG_DisableCondReset(RNG_TypeDef *RNGx)
+{
+	CLEAR_BIT(RNGx->CR, RNG_CR_CONDRST);
+}
 
 /**
  * @brief  Check if RNG Conditioning Soft Reset bit is set
- * @rmtoll CR           CONDRST         LL_RNG_IsResetConditioningBitSet
+ * @rmtoll CR           CONDRST         LL_RNG_IsEnabledCondReset
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsResetConditioningBitSet(RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_CONDRST) == (RNG_CR_CONDRST)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabledCondReset(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_CONDRST) == (RNG_CR_CONDRST)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable RNG Config Lock
@@ -296,7 +328,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsResetConditioningBitSet(RNG_TypeDef *RNGx) { r
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_ConfigLock(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_CONFIGLOCK); }
+__STATIC_INLINE void LL_RNG_ConfigLock(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_CONFIGLOCK);
+}
 
 /**
  * @brief  Check if RNG Config Lock is enabled
@@ -304,7 +339,10 @@ __STATIC_INLINE void LL_RNG_ConfigLock(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RN
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsConfigLocked(RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_CONFIGLOCK) == (RNG_CR_CONFIGLOCK)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsConfigLocked(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_CONFIGLOCK) == (RNG_CR_CONFIGLOCK)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Enable NIST Compliance
@@ -332,11 +370,14 @@ __STATIC_INLINE void LL_RNG_DisableNistCompliance(RNG_TypeDef *RNGx)
 
 /**
  * @brief  Check if NIST Compliance is enabled
- * @rmtoll CR           NISTC         LL_RNG_IsNistComplianceEnabled
+ * @rmtoll CR           NISTC         LL_RNG_IsEnabledNistCompliance
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsNistComplianceEnabled(RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_NISTC) != (RNG_CR_NISTC)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabledNistCompliance(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_NISTC) != (RNG_CR_NISTC)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Set RNG  Config1 Configuration field value
@@ -357,7 +398,10 @@ __STATIC_INLINE void LL_RNG_SetConfig1(RNG_TypeDef *RNGx, uint32_t Config1)
  * @param  RNGx RNG Instance
  * @retval Returned Value expressed on 6 bits : Value between 0 and 0x3F
  */
-__STATIC_INLINE uint32_t LL_RNG_GetConfig1(RNG_TypeDef *RNGx) { return (uint32_t)(READ_BIT(RNGx->CR, RNG_CR_RNG_CONFIG1) >> RNG_CR_RNG_CONFIG1_Pos); }
+__STATIC_INLINE uint32_t LL_RNG_GetConfig1(const RNG_TypeDef *RNGx)
+{
+	return (uint32_t)(READ_BIT(RNGx->CR, RNG_CR_RNG_CONFIG1) >> RNG_CR_RNG_CONFIG1_Pos);
+}
 
 /**
  * @brief  Set RNG  Config2 Configuration field value
@@ -378,7 +422,10 @@ __STATIC_INLINE void LL_RNG_SetConfig2(RNG_TypeDef *RNGx, uint32_t Config2)
  * @param  RNGx RNG Instance
  * @retval Returned Value expressed on 3 bits : Value between 0 and 0x7
  */
-__STATIC_INLINE uint32_t LL_RNG_GetConfig2(RNG_TypeDef *RNGx) { return (uint32_t)(READ_BIT(RNGx->CR, RNG_CR_RNG_CONFIG2) >> RNG_CR_RNG_CONFIG2_Pos); }
+__STATIC_INLINE uint32_t LL_RNG_GetConfig2(const RNG_TypeDef *RNGx)
+{
+	return (uint32_t)(READ_BIT(RNGx->CR, RNG_CR_RNG_CONFIG2) >> RNG_CR_RNG_CONFIG2_Pos);
+}
 
 /**
  * @brief  Set RNG  Config3 Configuration field value
@@ -399,7 +446,10 @@ __STATIC_INLINE void LL_RNG_SetConfig3(RNG_TypeDef *RNGx, uint32_t Config3)
  * @param  RNGx RNG Instance
  * @retval Returned Value expressed on 4 bits : Value between 0 and 0xF
  */
-__STATIC_INLINE uint32_t LL_RNG_GetConfig3(RNG_TypeDef *RNGx) { return (uint32_t)(READ_BIT(RNGx->CR, RNG_CR_RNG_CONFIG3) >> RNG_CR_RNG_CONFIG3_Pos); }
+__STATIC_INLINE uint32_t LL_RNG_GetConfig3(const RNG_TypeDef *RNGx)
+{
+	return (uint32_t)(READ_BIT(RNGx->CR, RNG_CR_RNG_CONFIG3) >> RNG_CR_RNG_CONFIG3_Pos);
+}
 
 /**
  * @brief  Set RNG  Clock divider factor
@@ -452,7 +502,10 @@ __STATIC_INLINE void LL_RNG_SetClockDivider(RNG_TypeDef *RNGx, uint32_t Divider)
  *         @arg @ref LL_RNG_CLKDIV_BY_16384
  *         @arg @ref LL_RNG_CLKDIV_BY_32768
  */
-__STATIC_INLINE uint32_t LL_RNG_GetClockDivider(RNG_TypeDef *RNGx) { return (uint32_t)READ_BIT(RNGx->CR, RNG_CR_CLKDIV); }
+__STATIC_INLINE uint32_t LL_RNG_GetClockDivider(const RNG_TypeDef *RNGx)
+{
+	return (uint32_t)READ_BIT(RNGx->CR, RNG_CR_CLKDIV);
+}
 #endif /* RNG_CR_CONDRST */
 #endif /* RNG_CR_CED */
 /**
@@ -469,7 +522,10 @@ __STATIC_INLINE uint32_t LL_RNG_GetClockDivider(RNG_TypeDef *RNGx) { return (uin
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_DRDY(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_DRDY) == (RNG_SR_DRDY)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_DRDY(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_DRDY) == (RNG_SR_DRDY)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Clock Error Current Status Flag is set or not
@@ -477,7 +533,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_DRDY(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CECS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_CECS) == (RNG_SR_CECS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CECS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_CECS) == (RNG_SR_CECS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Seed Error Current Status Flag is set or not
@@ -485,7 +544,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CECS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SECS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_SECS) == (RNG_SR_SECS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SECS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_SECS) == (RNG_SR_SECS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Clock Error Interrupt Status Flag is set or not
@@ -493,7 +555,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SECS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CEIS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_CEIS) == (RNG_SR_CEIS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CEIS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_CEIS) == (RNG_SR_CEIS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Indicate if the Seed Error Interrupt Status Flag is set or not
@@ -501,7 +566,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_CEIS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SEIS(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->SR, RNG_SR_SEIS) == (RNG_SR_SEIS)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SEIS(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->SR, RNG_SR_SEIS) == (RNG_SR_SEIS)) ? 1UL : 0UL);
+}
 
 /**
  * @brief  Clear Clock Error interrupt Status (CEIS) Flag
@@ -509,7 +577,10 @@ __STATIC_INLINE uint32_t LL_RNG_IsActiveFlag_SEIS(const RNG_TypeDef *RNGx) { ret
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_ClearFlag_CEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->SR, ~RNG_SR_CEIS); }
+__STATIC_INLINE void LL_RNG_ClearFlag_CEIS(RNG_TypeDef *RNGx)
+{
+	WRITE_REG(RNGx->SR, ~RNG_SR_CEIS);
+}
 
 /**
  * @brief  Clear Seed Error interrupt Status (SEIS) Flag
@@ -517,7 +588,10 @@ __STATIC_INLINE void LL_RNG_ClearFlag_CEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_ClearFlag_SEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->SR, ~RNG_SR_SEIS); }
+__STATIC_INLINE void LL_RNG_ClearFlag_SEIS(RNG_TypeDef *RNGx)
+{
+	WRITE_REG(RNGx->SR, ~RNG_SR_SEIS);
+}
 
 /**
  * @}
@@ -534,7 +608,10 @@ __STATIC_INLINE void LL_RNG_ClearFlag_SEIS(RNG_TypeDef *RNGx) { WRITE_REG(RNGx->
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_EnableIT(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_CR_IE); }
+__STATIC_INLINE void LL_RNG_EnableIT(RNG_TypeDef *RNGx)
+{
+	SET_BIT(RNGx->CR, RNG_CR_IE);
+}
 
 /**
  * @brief  Disable Random Number Generator Interrupt
@@ -543,7 +620,10 @@ __STATIC_INLINE void LL_RNG_EnableIT(RNG_TypeDef *RNGx) { SET_BIT(RNGx->CR, RNG_
  * @param  RNGx RNG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_DisableIT(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, RNG_CR_IE); }
+__STATIC_INLINE void LL_RNG_DisableIT(RNG_TypeDef *RNGx)
+{
+	CLEAR_BIT(RNGx->CR, RNG_CR_IE);
+}
 
 /**
  * @brief  Check if Random Number Generator Interrupt is enabled
@@ -552,7 +632,10 @@ __STATIC_INLINE void LL_RNG_DisableIT(RNG_TypeDef *RNGx) { CLEAR_BIT(RNGx->CR, R
  * @param  RNGx RNG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RNG_IsEnabledIT(const RNG_TypeDef *RNGx) { return ((READ_BIT(RNGx->CR, RNG_CR_IE) == (RNG_CR_IE)) ? 1UL : 0UL); }
+__STATIC_INLINE uint32_t LL_RNG_IsEnabledIT(const RNG_TypeDef *RNGx)
+{
+	return ((READ_BIT(RNGx->CR, RNG_CR_IE) == (RNG_CR_IE)) ? 1UL : 0UL);
+}
 
 /**
  * @}
@@ -568,38 +651,53 @@ __STATIC_INLINE uint32_t LL_RNG_IsEnabledIT(const RNG_TypeDef *RNGx) { return ((
  * @param  RNGx RNG Instance
  * @retval Generated 32-bit random value
  */
-__STATIC_INLINE uint32_t LL_RNG_ReadRandData32(const RNG_TypeDef *RNGx) { return (uint32_t)(READ_REG(RNGx->DR)); }
+__STATIC_INLINE uint32_t LL_RNG_ReadRandData32(const RNG_TypeDef *RNGx)
+{
+	return (uint32_t)(READ_REG(RNGx->DR));
+}
 
 /**
  * @}
  */
 
-#if defined(RNG_VER_3_2) || defined(RNG_VER_3_1)
+#if defined(RNG_VER_3_2)
 /** @defgroup RNG_LL_EF_Health_Test_Control Health Test Control
  * @{
  */
 
 /**
  * @brief  Set RNG Health Test Control
- * @rmtoll HTCR       HTCFG       LL_RNG_SetHealthconfiguration
+ * @rmtoll HTCR       HTCFG       LL_RNG_SetHealthConfig
  * @param  RNGx RNG Instance
  * @param  HTCFG can be values of 32 bits
  * @retval None
  */
-__STATIC_INLINE void LL_RNG_SetHealthconfiguration(RNG_TypeDef *RNGx, uint32_t HTCFG) { WRITE_REG(RNGx->HTCR, HTCFG); }
+__STATIC_INLINE void LL_RNG_SetHealthConfig(RNG_TypeDef *RNGx, uint32_t HTCFG)
+{
+	/*!< magic number must be written immediately before to RNG_HTCRG */
+	WRITE_REG(RNGx->HTCR, RNG_HTCFG_1);
+
+	/* For NIST compliance we can find the recommended value in the application note AN4230 */
+	WRITE_REG(RNGx->HTCR, RNG_HTCFG);
+}
 
 /**
  * @brief  Get RNG Health Test Control
- * @rmtoll HTCR         HTCFG        LL_RNG_GetHealthconfiguration
+ * @rmtoll HTCR         HTCFG        LL_RNG_GetHealthConfig
  * @param  RNGx RNG Instance
  * @retval Return 32-bit RNG Health Test configuration
  */
-__STATIC_INLINE uint32_t LL_RNG_GetHealthconfiguration(RNG_TypeDef *RNGx) { return (uint32_t)READ_REG(RNGx->HTCR); }
-
+__STATIC_INLINE uint32_t LL_RNG_GetHealthConfig(RNG_TypeDef *RNGx)
+{
+	/*!< magic number must be written immediately before reading RNG_HTCRG */
+	WRITE_REG(RNGx->HTCR, RNG_HTCFG_1);
+	return (uint32_t)READ_REG(RNGx->HTCR);
+}
+#else
 /**
  * @}
  */
-#endif /* RNG_VER_3_2 || RNG_VER_3_1 */
+#endif /* RNG_VER_3_2*/
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup RNG_LL_EF_Init Initialization and de-initialization functions
  * @{

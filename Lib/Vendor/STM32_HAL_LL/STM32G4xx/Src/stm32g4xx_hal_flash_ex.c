@@ -15,10 +15,9 @@
   [..] Comparing to other previous devices, the FLASH interface for STM32G4xx
        devices contains the following additional features
 
-       (+) Capacity up to 512 Kbytes with dual bank architecture supporting
-  read-while-write capability (RWW)
-       (+) Dual bank 64-bits memory organization with possibility of single bank
-  128-bits
+       (+) Capacity up to 512 Kbytes with dual bank architecture supporting read-while-write
+	   capability (RWW)
+       (+) Dual bank 64-bits memory organization with possibility of single bank 128-bits
        (+) Protected areas including WRP, PCROP and Securable memory
 
 			##### How to use this driver #####
@@ -41,18 +40,15 @@
 	(++) Configure the Securable memory areas
 	(++) Configure the Boot Lock
 
-      (#) Get Option Bytes Configuration function: Use HAL_FLASHEx_OBGetConfig()
-  to:
+      (#) Get Option Bytes Configuration function: Use HAL_FLASHEx_OBGetConfig() to:
 	(++) Get the configuration of write protection areas (WRP)
 	(++) Get the level of read protection (RDP)
 	(++) Get the value of the user Option Bytes
-	(++) Get the configuration of Proprietary Code ReadOut Protection areas
-  (PCROP)
+	(++) Get the configuration of Proprietary Code ReadOut Protection areas (PCROP)
 	(++) Get the configuration of Securable memory areas
 	(++) Get the status of Boot Lock
 
-      (#) Activation of Securable memory area: Use
-  HAL_FLASHEx_EnableSecMemProtection()
+      (#) Activation of Securable memory area: Use HAL_FLASHEx_EnableSecMemProtection()
 	(++) Deny the access to securable memory area
 
       (#) Enable or disable debugger: Use HAL_FLASHEx_EnableDebugger() or
@@ -65,8 +61,7 @@
   * Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  in
+  * This software is licensed under terms that can be found in the LICENSE file in
   * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
@@ -125,8 +120,8 @@ static uint32_t FLASH_OB_GetBootLock(void);
 		##### Extended programming operation functions #####
  ===============================================================================
     [..]
-    This subsection provides a set of functions allowing to manage the Extended
-FLASH programming operations Operations.
+    This subsection provides a set of functions allowing to manage the Extended FLASH
+    programming operations Operations.
 
 @endverbatim
   * @{
@@ -136,8 +131,8 @@ FLASH programming operations Operations.
  * @param[in]  pEraseInit pointer to an FLASH_EraseInitTypeDef structure that
  *         contains the configuration information for the erasing.
  * @param[out]  PageError pointer to variable that contains the configuration
- *         information on faulty page in case of error (0xFFFFFFFF means that
- * all the pages have been correctly erased).
+ *         information on faulty page in case of error (0xFFFFFFFF means that all
+ *         the pages have been correctly erased).
  * @retval HAL_Status
  */
 HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError)
@@ -157,8 +152,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 	if (status == HAL_OK) {
 		pFlash.ErrorCode = HAL_FLASH_ERROR_NONE;
 
-		/* Deactivate the cache if they are activated to avoid data
-		 * misbehavior */
+		/* Deactivate the cache if they are activated to avoid data misbehavior */
 		if (READ_BIT(FLASH->ACR, FLASH_ACR_ICEN) != 0U) {
 			if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
 				/* Disable data cache  */
@@ -183,12 +177,10 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 			status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
 #if defined(FLASH_OPTR_DBANK)
-			/* If the erase operation is completed, disable the MER1
-			 * and MER2 Bits */
+			/* If the erase operation is completed, disable the MER1 and MER2 Bits */
 			CLEAR_BIT(FLASH->CR, (FLASH_CR_MER1 | FLASH_CR_MER2));
 #else
-			/* If the erase operation is completed, disable the MER1
-			 * Bit */
+			/* If the erase operation is completed, disable the MER1 Bit */
 			CLEAR_BIT(FLASH->CR, (FLASH_CR_MER1));
 #endif
 		} else {
@@ -201,14 +193,11 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 				/* Wait for last operation to be completed */
 				status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
-				/* If the erase operation is completed, disable
-				 * the PER Bit */
+				/* If the erase operation is completed, disable the PER Bit */
 				CLEAR_BIT(FLASH->CR, (FLASH_CR_PER | FLASH_CR_PNB));
 
 				if (status != HAL_OK) {
-					/* In case of error, stop erase
-					 * procedure and return the faulty page
-					 */
+					/* In case of error, stop erase procedure and return the faulty page */
 					*PageError = page_index;
 					break;
 				}
@@ -226,8 +215,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 }
 
 /**
- * @brief  Perform a mass erase or erase the specified FLASH memory pages with
- * interrupt enabled.
+ * @brief  Perform a mass erase or erase the specified FLASH memory pages with interrupt enabled.
  * @param  pEraseInit pointer to an FLASH_EraseInitTypeDef structure that
  *         contains the configuration information for the erasing.
  * @retval HAL_Status
@@ -244,8 +232,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
 
 	pFlash.ErrorCode = HAL_FLASH_ERROR_NONE;
 
-	/* Deactivate the cache if they are activated to avoid data misbehavior
-	 */
+	/* Deactivate the cache if they are activated to avoid data misbehavior */
 	if (READ_BIT(FLASH->ACR, FLASH_ACR_ICEN) != 0U) {
 		if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
 			/* Disable data cache  */
@@ -290,10 +277,8 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
  *         contains the configuration information for the programming.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
  * @retval HAL_Status
  */
@@ -370,8 +355,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
  * @param  pOBInit pointer to an FLASH_OBInitStruct structure that contains the
  *         configuration information.
  * @note   The fields pOBInit->WRPArea and pOBInit->PCROPConfig should indicate
- *         which area is requested for the WRP and PCROP, else no information
- * will be returned.
+ *         which area is requested for the WRP and PCROP, else no information will be returned.
  * @retval None
  */
 void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
@@ -441,14 +425,12 @@ HAL_StatusTypeDef HAL_FLASHEx_EnableSecMemProtection(uint32_t Bank)
 		/* Check the parameters */
 		assert_param(IS_FLASH_BANK(Bank));
 
-		/* Enable the Securable Memory Protection Bit for the bank 1 if
-		 * requested */
+		/* Enable the Securable Memory Protection Bit for the bank 1 if requested */
 		if ((Bank & FLASH_BANK_1) != 0U) {
 			SET_BIT(FLASH->CR, FLASH_CR_SEC_PROT1);
 		}
 
-		/* Enable the Securable Memory Protection Bit for the bank 2 if
-		 * requested */
+		/* Enable the Securable Memory Protection Bit for the bank 2 if requested */
 		if ((Bank & FLASH_BANK_2) != 0U) {
 			SET_BIT(FLASH->CR, FLASH_CR_SEC_PROT2);
 		}
@@ -469,15 +451,21 @@ HAL_StatusTypeDef HAL_FLASHEx_EnableSecMemProtection(uint32_t Bank)
  * @note   After calling this API, flash interface allow debugger intrusion.
  * @retval None
  */
-void HAL_FLASHEx_EnableDebugger(void) { FLASH->ACR |= FLASH_ACR_DBG_SWEN; }
+void HAL_FLASHEx_EnableDebugger(void)
+{
+	FLASH->ACR |= FLASH_ACR_DBG_SWEN;
+}
 
 /**
  * @brief  Disable Debugger.
- * @note   After calling this API, Debugger is disabled: it's no more possible
- * to break, see CPU register, etc...
+ * @note   After calling this API, Debugger is disabled: it's no more possible to
+ *         break, see CPU register, etc...
  * @retval None
  */
-void HAL_FLASHEx_DisableDebugger(void) { FLASH->ACR &= ~FLASH_ACR_DBG_SWEN; }
+void HAL_FLASHEx_DisableDebugger(void)
+{
+	FLASH->ACR &= ~FLASH_ACR_DBG_SWEN;
+}
 
 /**
  * @}
@@ -536,8 +524,7 @@ static void FLASH_MassErase(uint32_t Banks)
 /**
  * @brief  Erase the specified FLASH memory page.
  * @param  Page FLASH page to erase.
- *         This parameter must be a value between 0 and (max number of pages in
- * the bank - 1).
+ *         This parameter must be a value between 0 and (max number of pages in the bank - 1).
  * @param  Banks Bank where the page will be erased.
  *         This parameter can be one of the following values:
  *            @arg FLASH_BANK_1: Page in bank 1 to be erased
@@ -611,10 +598,8 @@ void FLASH_FlushCaches(void)
  *         executed from RAM or System flash, even if WRP is not activated.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
  * @param  WRPArea specifies the area to be configured.
  *         This parameter can be one of the following values:
@@ -624,11 +609,9 @@ void FLASH_FlushCaches(void)
  *            @arg OB_WRPAREA_BANK2_AREAB: Flash Bank 2 Area B (*)
  * @note   (*) availability depends on devices
  * @param  WRPStartOffset specifies the start page of the write protected area.
- *         This parameter can be page number between 0 and (max number of pages
- * in the bank - 1).
+ *         This parameter can be page number between 0 and (max number of pages in the bank - 1).
  * @param  WRDPEndOffset specifies the end page of the write protected area.
- *         This parameter can be page number between WRPStartOffset and (max
- * number of pages in the bank - 1).
+ *         This parameter can be page number between WRPStartOffset and (max number of pages in the bank - 1).
  * @retval HAL_Status
  */
 static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRDPEndOffset)
@@ -675,10 +658,8 @@ static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartO
  * @brief  Set the read protection level into Option Bytes.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
  * @note   !!! Warning : When enabling OB_RDP level 2 it's no more possible
  *         to go back to level 1 or 0 !!!
@@ -718,10 +699,8 @@ static HAL_StatusTypeDef FLASH_OB_RDPConfig(uint32_t RDPLevel)
  * @brief  Program the FLASH User Option Bytes.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
  * @param  UserType The FLASH User Option Bytes to be modified.
  *         This parameter can be a combination of @ref FLASH_OB_USER_Type.
@@ -734,8 +713,7 @@ static HAL_StatusTypeDef FLASH_OB_RDPConfig(uint32_t RDPLevel)
  *         @ref FLASH_OB_USER_BFB2 (*), @ref FLASH_OB_USER_nBOOT1,
  *         @ref FLASH_OB_USER_SRAM_PE, @ref FLASH_OB_USER_CCMSRAM_RST,
  *         @ref FLASH_OB_USER_nSWBOOT0, @ref FLASH_OB_USER_nBOOT0,
- *         @ref FLASH_OB_USER_NRST_MODE, @ref
- * FLASH_OB_USER_INTERNAL_RESET_HOLDER
+ *         @ref FLASH_OB_USER_NRST_MODE, @ref FLASH_OB_USER_INTERNAL_RESET_HOLDER
  * @note   (*) availability depends on devices
  * @retval HAL_Status
  */
@@ -893,8 +871,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserCon
 			/* Reset Configuration option byte should be modified */
 			assert_param(IS_OB_USER_NRST_MODE(UserConfig & FLASH_OPTR_NRST_MODE));
 
-			/* Set value and mask for Reset Configuration option
-			 * byte */
+			/* Set value and mask for Reset Configuration option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_NRST_MODE);
 			optr_reg_mask |= FLASH_OPTR_NRST_MODE;
 		}
@@ -922,25 +899,20 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserCon
 }
 
 /**
- * @brief  Configure the Proprietary code readout protection area into Option
- * Bytes.
+ * @brief  Configure the Proprietary code readout protection area into Option Bytes.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
- * @param  PCROPConfig specifies the configuration (Bank to be configured and
- * PCROP_RDP option). This parameter must be a combination of FLASH_BANK_1 or
- * FLASH_BANK_2 (*) with OB_PCROP_RDP_NOT_ERASE or OB_PCROP_RDP_ERASE.
+ * @param  PCROPConfig specifies the configuration (Bank to be configured and PCROP_RDP option).
+ *         This parameter must be a combination of FLASH_BANK_1 or FLASH_BANK_2 (*)
+ *         with OB_PCROP_RDP_NOT_ERASE or OB_PCROP_RDP_ERASE.
  * @note   (*) availability depends on devices
- * @param  PCROPStartAddr specifies the start address of the Proprietary code
- * readout protection. This parameter can be an address between begin and end of
- * the bank.
- * @param  PCROPEndAddr specifies the end address of the Proprietary code
- * readout protection. This parameter can be an address between PCROPStartAddr
- * and end of the bank.
+ * @param  PCROPStartAddr specifies the start address of the Proprietary code readout protection.
+ *         This parameter can be an address between begin and end of the bank.
+ * @param  PCROPEndAddr specifies the end address of the Proprietary code readout protection.
+ *         This parameter can be an address between PCROPStartAddr and end of the bank.
  * @retval HAL_Status
  */
 static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig, uint32_t PCROPStartAddr, uint32_t PCROPEndAddr)
@@ -1034,10 +1006,8 @@ static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig, uint32_t PCR
  * @brief  Configure the Securable memory area into Option Bytes.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
  * @param  SecBank specifies bank of securable memory area to be configured.
  *          This parameter can be one of the following values:
@@ -1046,8 +1016,7 @@ static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig, uint32_t PCR
  * @note   (*) availability depends on devices
  * @param  SecSize specifies the number of pages of the Securable memory area,
  *         starting from first page of the bank.
- *         This parameter can be page number between 0 and (max number of pages
- * in the bank - 1)
+ *         This parameter can be page number between 0 and (max number of pages in the bank - 1)
  * @retval HAL Status
  */
 static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecBank, uint32_t SecSize)
@@ -1088,10 +1057,8 @@ static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecBank, uint32_t SecSiz
  * @brief  Configure the Boot Lock into Option Bytes.
  * @note   To configure any option bytes, the option lock bit OPTLOCK must be
  *         cleared with the call of HAL_FLASH_OB_Unlock() function.
- * @note   New option bytes configuration will be taken into account in two
- * cases:
- *         - after an option bytes launch through the call of
- * HAL_FLASH_OB_Launch()
+ * @note   New option bytes configuration will be taken into account in two cases:
+ *         - after an option bytes launch through the call of HAL_FLASH_OB_Launch()
  *         - after a power reset (BOR reset or exit from Standby/Shutdown modes)
  * @param  BootLockConfig specifies the boot lock configuration.
  *          This parameter can be one of the following values:
@@ -1125,8 +1092,7 @@ static HAL_StatusTypeDef FLASH_OB_BootLockConfig(uint32_t BootLockConfig)
 
 /**
   * @brief  Return the Securable memory area configuration into Option Bytes.
-  * @param[in]  SecBank specifies the bank where securable memory area is
-  located.
+  * @param[in]  SecBank specifies the bank where securable memory area is located.
   *          This parameter can be one of the following values:
   *            @arg FLASH_BANK_1: Securable memory in Bank1
   *            @arg FLASH_BANK_2: Securable memory in Bank2 (*)
@@ -1157,7 +1123,10 @@ static void FLASH_OB_GetSecMem(uint32_t SecBank, uint32_t *SecSize)
  *            @arg OB_BOOT_LOCK_ENABLE: Boot lock enabled
  *            @arg OB_BOOT_LOCK_DISABLE: Boot lock disabled
  */
-static uint32_t FLASH_OB_GetBootLock(void) { return (READ_REG(FLASH->SEC1R) & FLASH_SEC1R_BOOT_LOCK); }
+static uint32_t FLASH_OB_GetBootLock(void)
+{
+	return (READ_REG(FLASH->SEC1R) & FLASH_SEC1R_BOOT_LOCK);
+}
 
 /**
  * @brief  Return the Write Protection configuration into Option Bytes.
@@ -1165,14 +1134,12 @@ static uint32_t FLASH_OB_GetBootLock(void) { return (READ_REG(FLASH->SEC1R) & FL
  *          This parameter can be one of the following values:
  *            @arg OB_WRPAREA_BANK1_AREAA: Flash Bank 1 Area A
  *            @arg OB_WRPAREA_BANK1_AREAB: Flash Bank 1 Area B
- *            @arg OB_WRPAREA_BANK2_AREAA: Flash Bank 2 Area A (don't apply to
- * STM32G43x/STM32G44x devices)
- *            @arg OB_WRPAREA_BANK2_AREAB: Flash Bank 2 Area B (don't apply to
- * STM32G43x/STM32G44x devices)
- * @param[out]  WRPStartOffset specifies the address where to copied the start
- * page of the write protected area.
- * @param[out]  WRDPEndOffset specifies the address where to copied the end page
- * of the write protected area.
+ *            @arg OB_WRPAREA_BANK2_AREAA: Flash Bank 2 Area A (don't apply to STM32G43x/STM32G44x devices)
+ *            @arg OB_WRPAREA_BANK2_AREAB: Flash Bank 2 Area B (don't apply to STM32G43x/STM32G44x devices)
+ * @param[out]  WRPStartOffset specifies the address where to copied the start page
+ *              of the write protected area.
+ * @param[out]  WRDPEndOffset specifies the address where to copied the end page of
+ *              the write protected area.
  * @retval None
  */
 static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRDPEndOffset)
@@ -1228,10 +1195,8 @@ static uint32_t FLASH_OB_GetRDP(void)
  *         @ref FLASH_OB_USER_WWDG_SW, @ref FLASH_OB_USER_WWDG_SW,
  *         @ref FLASH_OB_USER_BFB2 (*), @ref FLASH_OB_USER_DBANK (*),
  *         @ref FLASH_OB_USER_nBOOT1, @ref FLASH_OB_USER_SRAM_PE,
- *         @ref FLASH_OB_USER_CCMSRAM_RST, @ref OB_USER_nSWBOOT0,@ref
- * FLASH_OB_USER_nBOOT0,
- *         @ref FLASH_OB_USER_NRST_MODE, @ref
- * FLASH_OB_USER_INTERNAL_RESET_HOLDER
+ *         @ref FLASH_OB_USER_CCMSRAM_RST, @ref OB_USER_nSWBOOT0,@ref FLASH_OB_USER_nBOOT0,
+ *         @ref FLASH_OB_USER_NRST_MODE, @ref FLASH_OB_USER_INTERNAL_RESET_HOLDER
  * @note  (*) availability depends on devices
  */
 static uint32_t FLASH_OB_GetUser(void)
@@ -1244,13 +1209,13 @@ static uint32_t FLASH_OB_GetUser(void)
 
 /**
  * @brief  Return the FLASH PCROP configuration into Option Bytes.
- * @param[in,out] PCROPConfig specifies the configuration (Bank to be configured
- * and PCROP_RDP option). This parameter must be a combination of FLASH_BANK_1
- * or FLASH_BANK_2 with OB_PCROP_RDP_NOT_ERASE or OB_PCROP_RDP_ERASE.
- * @param[out] PCROPStartAddr specifies the address where to copied the start
- * address of the Proprietary code readout protection.
- * @param[out] PCROPEndAddr specifies the address where to copied the end
- * address of the Proprietary code readout protection.
+ * @param[in,out] PCROPConfig specifies the configuration (Bank to be configured and PCROP_RDP option).
+ *        This parameter must be a combination of FLASH_BANK_1 or FLASH_BANK_2
+ *        with OB_PCROP_RDP_NOT_ERASE or OB_PCROP_RDP_ERASE.
+ * @param[out] PCROPStartAddr specifies the address where to copied the start address
+ *        of the Proprietary code readout protection.
+ * @param[out] PCROPEndAddr specifies the address where to copied the end address of
+ *        the Proprietary code readout protection.
  * @retval None
  */
 static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr, uint32_t *PCROPEndAddr)

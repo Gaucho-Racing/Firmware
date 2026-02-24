@@ -46,44 +46,46 @@ extern "C" {
  * @brief  HAL SRAM State structures definition
  */
 typedef enum {
-	HAL_NOR_STATE_RESET = 0x00U,	/*!< NOR not yet initialized or disabled */
-	HAL_NOR_STATE_READY = 0x01U,	/*!< NOR initialized and ready for use */
+	HAL_NOR_STATE_RESET = 0x00U,	/*!< NOR not yet initialized or disabled  */
+	HAL_NOR_STATE_READY = 0x01U,	/*!< NOR initialized and ready for use    */
 	HAL_NOR_STATE_BUSY = 0x02U,	/*!< NOR internal processing is ongoing   */
-	HAL_NOR_STATE_ERROR = 0x03U,	/*!< NOR error state */
+	HAL_NOR_STATE_ERROR = 0x03U,	/*!< NOR error state                      */
 	HAL_NOR_STATE_PROTECTED = 0x04U /*!< NOR NORSRAM device write protected   */
 } HAL_NOR_StateTypeDef;
 
 /**
  * @brief  FMC NOR Status typedef
  */
-typedef enum { HAL_NOR_STATUS_SUCCESS = 0U, HAL_NOR_STATUS_ONGOING, HAL_NOR_STATUS_ERROR, HAL_NOR_STATUS_TIMEOUT } HAL_NOR_StatusTypeDef;
+typedef enum {
+	HAL_NOR_STATUS_SUCCESS = 0U,
+	HAL_NOR_STATUS_ONGOING,
+	HAL_NOR_STATUS_ERROR,
+	HAL_NOR_STATUS_TIMEOUT
+} HAL_NOR_StatusTypeDef;
 
 /**
  * @brief  FMC NOR ID typedef
  */
 typedef struct {
-	uint16_t Manufacturer_Code; /*!< Defines the device's manufacturer code
-				       used to identify the memory       */
+	uint16_t Manufacturer_Code; /*!< Defines the device's manufacturer code used to identify the memory       */
 
 	uint16_t Device_Code1;
 
 	uint16_t Device_Code2;
 
-	uint16_t Device_Code3; /*!< Defines the device's codes used to identify the
-				  memory. These codes can be accessed by performing
-				  read operations with specific control signals and
-				  addresses set.They can also be accessed by issuing
-				    an Auto Select command */
+	uint16_t Device_Code3; /*!< Defines the device's codes used to identify the memory.
+				    These codes can be accessed by performing read operations with specific
+				    control signals and addresses set.They can also be accessed by issuing
+				    an Auto Select command                                                   */
 } NOR_IDTypeDef;
 
 /**
  * @brief  FMC NOR CFI typedef
  */
 typedef struct {
-	/*!< Defines the information stored in the memory's Common flash
-	   interface which contains a description of various electrical and
-	   timing parameters, density information and functions supported by the
-	   memory                   */
+	/*!< Defines the information stored in the memory's Common flash interface
+	     which contains a description of various electrical and timing parameters,
+	     density information and functions supported by the memory                   */
 
 	uint16_t CFI_1;
 
@@ -104,21 +106,21 @@ typedef struct
 #endif /* USE_HAL_NOR_REGISTER_CALLBACKS  */
 
 {
-	FMC_NORSRAM_TypeDef *Instance; /*!< Register base address */
+	FMC_NORSRAM_TypeDef *Instance; /*!< Register base address                        */
 
 	FMC_NORSRAM_EXTENDED_TypeDef *Extended; /*!< Extended mode register base address          */
 
 	FMC_NORSRAM_InitTypeDef Init; /*!< NOR device control configuration parameters  */
 
-	HAL_LockTypeDef Lock; /*!< NOR locking object */
+	HAL_LockTypeDef Lock; /*!< NOR locking object                           */
 
-	__IO HAL_NOR_StateTypeDef State; /*!< NOR device access state */
+	__IO HAL_NOR_StateTypeDef State; /*!< NOR device access state                      */
 
-	uint32_t CommandSet; /*!< NOR algorithm command set and control */
+	uint32_t CommandSet; /*!< NOR algorithm command set and control        */
 
 #if (USE_HAL_NOR_REGISTER_CALLBACKS == 1)
-	void (*MspInitCallback)(struct __NOR_HandleTypeDef *hnor);   /*!< NOR Msp Init callback */
-	void (*MspDeInitCallback)(struct __NOR_HandleTypeDef *hnor); /*!< NOR Msp DeInit callback */
+	void (*MspInitCallback)(struct __NOR_HandleTypeDef *hnor);   /*!< NOR Msp Init callback              */
+	void (*MspDeInitCallback)(struct __NOR_HandleTypeDef *hnor); /*!< NOR Msp DeInit callback            */
 #endif								     /* USE_HAL_NOR_REGISTER_CALLBACKS */
 } NOR_HandleTypeDef;
 
@@ -128,7 +130,7 @@ typedef struct
  */
 typedef enum {
 	HAL_NOR_MSP_INIT_CB_ID = 0x00U,	 /*!< NOR MspInit Callback ID          */
-	HAL_NOR_MSP_DEINIT_CB_ID = 0x01U /*!< NOR MspDeInit Callback ID */
+	HAL_NOR_MSP_DEINIT_CB_ID = 0x01U /*!< NOR MspDeInit Callback ID        */
 } HAL_NOR_CallbackIDTypeDef;
 
 /**
@@ -168,8 +170,7 @@ typedef void (*pNOR_CallbackTypeDef)(NOR_HandleTypeDef *hnor);
  * @{
  */
 
-/** @addtogroup NOR_Exported_Functions_Group1 Initialization and
- * de-initialization functions
+/** @addtogroup NOR_Exported_Functions_Group1 Initialization and de-initialization functions
  * @{
  */
 
