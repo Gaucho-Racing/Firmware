@@ -21,7 +21,8 @@
 #include "stm32g4xx_it.h"
 
 #include "main.h"
-#include "Logomatic.h"
+#include "Logomatic.h" // For Logomatic
+#include "CANdler.h" // For CAN stuff
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -206,6 +207,43 @@ void EXTI15_10_IRQHandler(void)
 		LOGOMATIC("PC13 Button Pressed!\n");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
 		LL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+	}
+}
+
+/**
+ * @brief EXTI Line 3 Interrupt Handler (for TS Active button)
+ * @param None
+ * @retval None
+ */
+void EXTI3_IRQHandler(void)
+{
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
+
+		// Blame Electronics if hardware debounce doesn't work
+		dashStatus.TSActiveButton = 1;
+		canReadyToSend = true;
+		LOGOMATIC("TS Active Pressed!");
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+	}
+}
+
+/**
+ * @brief EXTI Line 4 Interrupt Handler (for RTD button)
+ * @param None
+ * @retval None
+ */
+void EXTI4_IRQHandler(void)
+{
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
+
+		// Blame Electronics if hardware debounce doesn't work
+
+		dashStatus.RTDButton = 1;
+		canReadyToSend = true;
+		LOGOMATIC("RTD Pressed!");
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
 }
 /* USER CODE END 1 */

@@ -110,7 +110,7 @@ int main(void)
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-	LL_mDelay(50);
+	LL_mDelay(150);
 	LOGOMATIC("\nBoot completed at %lu ms\n", MillisecondsSinceBoot());
 	/* USER CODE END SysInit */
 
@@ -275,74 +275,35 @@ static void MX_GPIO_Init(void)
  */
 static void GPIO_Interrupt_Init(void)
 {
-	// Map PC13 to External Line 13
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13);
-	// Initialize
+	// Map pins to External Lines
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13); //PC13 --> EXTI 13
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3); // PA3 --> EXTI 3
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE4); // PA4 --> EXTI 4
+
+	// Initialize the Interrupts
 	LL_EXTI_InitTypeDef EXTI_Init = {0};
-	EXTI_Init.Line_0_31 = LL_EXTI_LINE_13;
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_13; // EXTI 13
  	EXTI_Init.LineCommand = ENABLE;
   	EXTI_Init.Mode = LL_EXTI_MODE_IT;
   	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
   	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_3; // EXTI 3
+  	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_4; // EXTI 4
+  	LL_EXTI_Init(&EXTI_Init);
+
 	// Set default priority
 	NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
-	// Enable Interrupt
-	NVIC_EnableIRQ(EXTI15_10_IRQn);
-
-	// Map PA3 and PA4 to EXTI lines 3 and 4
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3);
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE4);
-
-	LL_EXTI_EnableIT_0_31(LL_SYSCFG_EXTI_LINE3);
-	LL_EXTI_EnableIT_0_31(LL_SYSCFG_EXTI_LINE4);
-	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_3);
-	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_4);
-
 	NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 	NVIC_SetPriority(EXTI4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 
-	// Enable interrupts
+	// Enable Interrupt
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
 }
 
-/**
- * @brief EXTI Line 3 Interrupt Handler (for TS Active button)
- * @param None
- * @retval None
- */
-void EXTI3_IRQHandler(void)
-{
 
-	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
-
-		// Blame Electronics if hardware debounce doesn't work
-
-		dashStatus.TSActiveButton = 1;
-		canReadyToSend = true;
-		LOGOMATIC("TS Active Pressed!");
-		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
-	}
-}
-
-/**
- * @brief EXTI Line 4 Interrupt Handler (for RTD button)
- * @param None
- * @retval None
- */
-void EXTI4_IRQHandler(void)
-{
-
-	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
-
-		// Blame Electronics if hardware debounce doesn't work
-
-		dashStatus.RTDButton = 1;
-		canReadyToSend = true;
-		LOGOMATIC("RTD Pressed!");
-		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
-	}
-}
 /* USER CODE END 4 */
 
 /**
