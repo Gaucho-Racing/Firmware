@@ -1,16 +1,14 @@
 # DASH PLANel
 
-## CAN
+- Update the README
 
-1. Test CAN
+## Notes:
 
 - Torque, Current, Speed, or put battery before drive
-- Probably need to figure out what we're putting on the board for now
-- Also update the README
 
-## Buttons
+## CAN
 
-1. Test button interrupts
+- Test ping
 
 ## LED
 

@@ -107,6 +107,6 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 	} else if (ID == PING_ID) {
 		// process ping
 		// TODO: fix ping
-		// CAN_sendPing();
+		CAN_sendPing();
 	}
 }
