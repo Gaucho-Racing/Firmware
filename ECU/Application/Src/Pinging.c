@@ -7,17 +7,9 @@
 #include "StateUtils.h"
 
 // add node IDs of devices to be pinged here, and add their indices in here to Pings ToBe IDed
-const uint8_t IDsToBePinged[] = {
-    GR_BCU,
-	GR_DASH_PANEL,
-    GR_CCU
-};
+const uint8_t IDsToBePinged[] = {GR_BCU, GR_DASH_PANEL, GR_CCU};
 
-const uint8_t PingsToBeIDed[] = {
-    [GR_BCU] = 0,
-	[GR_DASH_PANEL] = 1,
-    [GR_CCU] = 2
-};
+const uint8_t PingsToBeIDed[] = {[GR_BCU] = 0, [GR_DASH_PANEL] = 1, [GR_CCU] = 2};
 
 #define NUMBER_OF_PING_DEVICES (sizeof(IDsToBePinged) / sizeof(IDsToBePinged[0]))
 
