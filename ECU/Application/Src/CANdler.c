@@ -6,6 +6,7 @@
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
+#include "Pinging.h"
 #include "StateData.h"
 #include "bitManipulations.h"
 
@@ -48,7 +49,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			// TODO See Issue #143
+			respondToPing(sender_id, ((GR_OLD_PING_MSG *)data)->timestamp);
 			break;
 
 		case MSG_BCU_STATUS_1:
