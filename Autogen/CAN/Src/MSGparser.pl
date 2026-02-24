@@ -14,7 +14,7 @@ if ( !-e $yaml_file ) {
 	die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n";
 }
 
-open my $fh, '<', $yaml_file  or die "CANfigurator Error: Can't open $yaml_file: $!";
+open my $fh, '<', $yaml_file or die "CANfigurator Error: Can't open $yaml_file: $!";
 
 my @msg_ids;
 
