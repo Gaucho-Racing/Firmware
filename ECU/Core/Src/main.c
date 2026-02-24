@@ -445,7 +445,7 @@ int main(void)
 				}
 				if (getRTT(GR_CCU) != PINGTIMEOUT_VALUE) {
 					// halt if CCU is connected
-					return;
+					return 1;
 				}
 			}
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
