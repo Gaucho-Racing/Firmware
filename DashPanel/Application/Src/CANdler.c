@@ -24,7 +24,7 @@ void CANInitialize()
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK;	// TODO Change
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
@@ -44,25 +44,19 @@ void CANInitialize()
 	canCfg.tx_interrupt_priority = 0;  // PLEASE SET
 	canCfg.tx_buffer_length = 3;	   // PLEASE SET
 
-	// canCfg.rx_gpio = GPIOB;
-	// canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
-	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
-	canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
-	canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	// canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
+	canCfg.fdcan_instance = FDCAN1;
+	canCfg.rx_gpio = GPIOA;
+	canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+	canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
-	// canCfg.tx_gpio = GPIOB;
-	// canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
-	canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
-	canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
-	canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	// canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
-
-	// FDCAN_FilterTypeDef filter;
-	// can_add_filter(can2Handle, &filter);
-	/* USER CODE END 2 */
+	canCfg.tx_gpio = GPIOA;
+	canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
 	can_handler = can_init(&canCfg);
+	HAL_FDCAN_ConfigGlobalFilter(can_handler->hal_fdcanP, 0, 0, 0, 0);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
 	can_start(can_handler);
 }
 
