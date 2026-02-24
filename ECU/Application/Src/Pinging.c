@@ -8,20 +8,18 @@
 
 // add node IDs of devices to be pinged here, and add their indices in here to Pings ToBe IDed
 
-#define PING_LIST(X) \
-    X(GR_BCU,        0) \
-    X(GR_DASH_PANEL, 1) \
-    X(GR_CCU,        2)
+#define PING_LIST(X)                                                                                                                                                                                   \
+	X(GR_BCU, 0)                                                                                                                                                                                   \
+	X(GR_DASH_PANEL, 1)                                                                                                                                                                            \
+	X(GR_CCU, 2)
 
 const uint8_t IDsToBePinged[] = {
-    #define AS_ID(id, idx) id,
-    PING_LIST(AS_ID)
-};
+#define AS_ID(id, idx) id,
+    PING_LIST(AS_ID)};
 
 const uint8_t PingsToBeIDed[] = {
-    #define AS_LOOKUP(id, idx) [id] = idx,
-    PING_LIST(AS_LOOKUP)
-};
+#define AS_LOOKUP(id, idx) [id] = idx,
+    PING_LIST(AS_LOOKUP)};
 
 #define NUMBER_OF_PING_DEVICES (sizeof(IDsToBePinged) / sizeof(IDsToBePinged[0]))
 
