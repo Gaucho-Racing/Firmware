@@ -46,6 +46,7 @@ typedef enum {
 	GR_SAM19 = 0x27,
 	GR_SAM20 = 0x28,
 	GR_LV_DC_DC = 0x29,
+	GR_CCU = 0x2A,
 	GR_ALL = 0xFF,
 } GR_OLD_NODE_ID;
 
