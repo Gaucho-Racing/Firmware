@@ -24,7 +24,7 @@ typedef struct {
 	uint32_t tx_interrupt_priority;
 
 	// Circular Buffer
-	//uint32_t tx_buffer_capacity;
+	// uint32_t tx_buffer_capacity;
 
 	GPIO_TypeDef *rx_gpio;	       // Instance name, like GPIOA, GPIOB, etc.
 	GPIO_InitTypeDef init_rx_gpio; // GPIO Parameters - set correct Alternate Function, no pullup/pulldown, high/very_high frequency
@@ -33,7 +33,6 @@ typedef struct {
 
 	// additional parameters
 } CANConfig;
-
 
 #define FDCAN_MAX_DATA_BYTES 64
 typedef struct {
@@ -45,18 +44,17 @@ typedef struct {
 	uint8_t data[FDCAN_MAX_DATA_BYTES];
 } FDCANRxMessage;
 
-
 // FDCAN peripheral for STM32G4
 typedef struct {
-	FDCAN_HandleTypeDef *hal_fdcanP; //DO NOT REORDER THIS
+	FDCAN_HandleTypeDef *hal_fdcanP; // DO NOT REORDER THIS
 
-	//TX buffer
+	// TX buffer
 	volatile FDCANTxMessage *tx_buffer;
 	volatile uint32_t tx_capacity;
 	volatile uint32_t tx_tail;
 	volatile uint32_t tx_elements;
 
-	//RX Callback
+	// RX Callback
 	CAN_RXCallback rx_callback;
 
 	uint32_t rx_interrupt_priority;
@@ -75,8 +73,6 @@ typedef struct {
 
 	// error states
 } CANHandle;
-
-
 
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
 int can_start(CANHandle *handle);

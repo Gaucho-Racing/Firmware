@@ -280,7 +280,7 @@ void CAN_Configure()
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
-	//canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
+	// canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
 
 	// RX shared settings
 	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
