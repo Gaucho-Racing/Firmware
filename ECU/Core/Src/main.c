@@ -437,10 +437,10 @@ int main(void)
 			pingAll();
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 
-			if(getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
+			if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
 				LOGOMATIC("ERROR: BCU is not responding to pings!\n");
 			}
-			if(getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
+			if (getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
 				LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
 			}
 		}
@@ -449,7 +449,6 @@ int main(void)
 		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
 		SendECUStateDataOverCAN(&stateLump);
-
 
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
