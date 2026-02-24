@@ -7,10 +7,10 @@
 #include "StateUtils.h"
 
 // add new pingable devices here, arrays are updated automagically
-#define PING_LIST(X) \
-    X(GR_BCU,        0) \
-    X(GR_DASH_PANEL, 1) \
-    X(GR_CCU,        2)
+#define PING_LIST(X)                                                                                                                                                                                   \
+	X(GR_BCU, 0)                                                                                                                                                                                   \
+	X(GR_DASH_PANEL, 1)                                                                                                                                                                            \
+	X(GR_CCU, 2)
 
 const uint8_t IDsToBePinged[] = {
 #define AS_ID(id, idx) id,
