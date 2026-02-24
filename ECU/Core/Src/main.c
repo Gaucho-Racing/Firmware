@@ -35,6 +35,7 @@
 #include "CANutils.h"
 #include "Lights.h"
 #include "Logomatic.h"
+#include "Pinging.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "adc.h"
@@ -431,15 +432,34 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		static uint32_t nextPing;
+		if (MillisecondsSinceBoot() >= nextPing) {
+			pingAll();
+
+			if (nextPing != 0) {
+				if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
+					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
+				}
+				if (getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
+					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
+				}
+				if (getRTT(GR_CCU) != PINGTIMEOUT_VALUE) {
+					// halt if CCU is connected
+					return 1;
+				}
+			}
+			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
+		}
+
 		read_digital();
 		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
 		SendECUStateDataOverCAN(&stateLump);
+
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
 		lightControl(&stateLump);
 		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
-		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */
 }
