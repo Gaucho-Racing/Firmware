@@ -4955,6 +4955,7 @@ Custom CAN ID:
         # Fuck if I know
 
 GR ID:
+  CCU : "0x2A"
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
