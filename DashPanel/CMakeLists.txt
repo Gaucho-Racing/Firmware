@@ -32,7 +32,7 @@ target_sources(
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/dashutils.c
-	# TODO
+		# TODO
 )
 
 target_link_libraries(
