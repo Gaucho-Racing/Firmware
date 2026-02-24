@@ -435,14 +435,20 @@ int main(void)
 		static uint32_t nextPing;
 		if (MillisecondsSinceBoot() >= nextPing) {
 			pingAll();
-			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 
-			if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
-				LOGOMATIC("ERROR: BCU is not responding to pings!\n");
+			if (nextPing != 0) {
+				if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
+					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
+				}
+				if (getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
+					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
+				}
+				if (getRTT(GR_CCU) != PINGTIMEOUT_VALUE) {
+					// halt if CCU is connected
+					return;
+				}
 			}
-			if (getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
-				LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
-			}
+			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 		}
 
 		read_digital();
