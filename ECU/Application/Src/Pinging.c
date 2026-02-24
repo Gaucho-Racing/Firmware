@@ -6,20 +6,28 @@
 #include "GR_OLD_NODE_ID.h"
 #include "StateUtils.h"
 
+// add node IDs of devices to be pinged here, and add their indices in here to Pings ToBe IDed
 const uint8_t IDsToBePinged[] = {
-    GR_BCU, GR_DASH_PANEL,
-    // GR_CCU,
+    GR_BCU,
+	GR_DASH_PANEL,
+    //GR_CCU
 };
 
-const uint8_t PingsToBeIDed[] = {[GR_BCU] = 0, [GR_DASH_PANEL] = 1};
+const uint8_t PingsToBeIDed[] = {
+	[GR_BCU] = 0,
+	[GR_DASH_PANEL] = 1,
+	//[GR_CCU] = 2
+};
 
-static volatile uint32_t sentTimestamps[sizeof(IDsToBePinged)];
-static volatile uint32_t receivedTimestamps[sizeof(IDsToBePinged)];
-static uint8_t RTTs[sizeof(IDsToBePinged)];
+#define NUMBER_OF_PING_DEVICES (sizeof(IDsToBePinged)/sizeof(IDsToBePinged[0]))
+
+static volatile uint32_t sentTimestamps[NUMBER_OF_PING_DEVICES];
+static volatile uint32_t receivedTimestamps[NUMBER_OF_PING_DEVICES];
+static uint8_t RTTs[NUMBER_OF_PING_DEVICES];
 
 void pingAll(void)
 {
-	for (uint8_t i = 0; i < sizeof(IDsToBePinged); i++) {
+	for (uint8_t i = 0; i < NUMBER_OF_PING_DEVICES; i++) {
 		uint32_t timestamp = MillisecondsSinceBoot();
 
 		if (receivedTimestamps[i] >= sentTimestamps[i]) {
@@ -27,7 +35,7 @@ void pingAll(void)
 			RTTs[i] = receivedTimestamps[i] - sentTimestamps[i];
 		} else {
 			// timeout
-			RTTs[i] = 255;
+			RTTs[i] = PINGTIMEOUT_VALUE;
 		}
 
 		sentTimestamps[i] = timestamp;
