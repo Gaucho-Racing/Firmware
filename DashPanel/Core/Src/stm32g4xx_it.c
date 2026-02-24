@@ -21,6 +21,7 @@
 #include "stm32g4xx_it.h"
 
 #include "main.h"
+#include "Logomatic.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -194,5 +195,17 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
-
+/**
+ * @brief EXTI Line[15:10] Interrupt Handler (for PC13 button)
+ * @param None
+ * @retval None
+ */
+void EXTI15_10_IRQHandler(void)
+{
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_13)) {
+		LOGOMATIC("PC13 Button Pressed!\n");
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
+		LL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+	}
+}
 /* USER CODE END 1 */

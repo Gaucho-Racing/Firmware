@@ -95,7 +95,7 @@ void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg, GR_OLD_NODE_ID to)
 	sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	sendECUMsg.tx_header.MessageMarker = 0;
 
-	((uint32_t *)(sendECUMsg.data))[0] = (uint32_t *)msg;
+	((uint32_t *)(sendECUMsg.data))[0] = (uint32_t)msg;
 
 	can_send(c, &sendECUMsg);
 }

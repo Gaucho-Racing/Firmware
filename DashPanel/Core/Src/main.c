@@ -232,9 +232,9 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(RTD_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/**/
+	// PA5 for the toggling LED
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -275,6 +275,19 @@ static void MX_GPIO_Init(void)
  */
 static void GPIO_Interrupt_Init(void)
 {
+	// Map PC13 to External Line 13
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13);
+	// Initialize
+	LL_EXTI_InitTypeDef EXTI_Init = {0};
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_13;
+ 	EXTI_Init.LineCommand = ENABLE;
+  	EXTI_Init.Mode = LL_EXTI_MODE_IT;
+  	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
+  	LL_EXTI_Init(&EXTI_Init);
+	// Set default priority
+	NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+	// Enable Interrupt
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 	// Map PA3 and PA4 to EXTI lines 3 and 4
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3);
@@ -291,12 +304,6 @@ static void GPIO_Interrupt_Init(void)
 	// Enable interrupts
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
-
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13);
-	LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_13);
-	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_13);
-	NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
-	NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
 /**
@@ -337,19 +344,6 @@ void EXTI4_IRQHandler(void)
 	}
 }
 /* USER CODE END 4 */
-
-/**
- * @brief EXTI Line[15:10] Interrupt Handler (for PC13 button)
- * @param None
- * @retval None
- */
-void EXTI15_10_IRQHandler(void)
-{
-	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_13)) {
-		LOGOMATIC("PC13 Button Pressed!\n");
-		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
-	}
-}
 
 /**
  * @brief  This function is executed in case of error occurrence.
