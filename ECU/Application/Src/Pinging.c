@@ -6,8 +6,7 @@
 #include "GR_OLD_NODE_ID.h"
 #include "StateUtils.h"
 
-// add node IDs of devices to be pinged here, and add their indices in here to Pings ToBe IDed
-
+// add new pingable devices here, arrays are updated automagically
 #define PING_LIST(X) \
     X(GR_BCU,        0) \
     X(GR_DASH_PANEL, 1) \
