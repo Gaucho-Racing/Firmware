@@ -20,8 +20,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_it.h"
 
-#include "main.h"
 #include "Logomatic.h"
+#include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */

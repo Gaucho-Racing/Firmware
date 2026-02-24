@@ -280,10 +280,10 @@ static void GPIO_Interrupt_Init(void)
 	// Initialize
 	LL_EXTI_InitTypeDef EXTI_Init = {0};
 	EXTI_Init.Line_0_31 = LL_EXTI_LINE_13;
- 	EXTI_Init.LineCommand = ENABLE;
-  	EXTI_Init.Mode = LL_EXTI_MODE_IT;
-  	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
-  	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.LineCommand = ENABLE;
+	EXTI_Init.Mode = LL_EXTI_MODE_IT;
+	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
+	LL_EXTI_Init(&EXTI_Init);
 	// Set default priority
 	NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 	// Enable Interrupt
