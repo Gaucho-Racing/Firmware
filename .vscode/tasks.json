@@ -28,6 +28,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CCU"
 		},
 		{
+			"label": "CMake: configure and build DashPanel",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target DashPanel"
+		},
+		{
 			"label": "CMake: configure and build G4HELLO",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -62,6 +71,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4CANTESTING"
+		},
+		{
+			"label": "CMake: configure and build G4NEOTESTING",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4NEOTESTING"
 		},
 		{
 			"label": "CMake: configure and build G4BLINKY",
