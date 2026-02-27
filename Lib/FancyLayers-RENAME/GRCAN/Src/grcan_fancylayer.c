@@ -5,16 +5,15 @@
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
-
 #include "Logomatic.h"
 #include "can.h"
 #include "main.h"
 
-static CANHandle* grcan_primary;
-static CANHandle* grcan_data;
+static CANHandle *grcan_primary;
+static CANHandle *grcan_data;
 static GR_OLD_NODE_ID grcan_local_node_id;
 
-void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle* primaryCAN, CANHandle* dataCAN)
+void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *dataCAN)
 {
 	GRCAN_Fancy_RegisterLocalID(localID);
 	GRCAN_Fancy_RegisterPrimaryCAN(primaryCAN);
@@ -22,16 +21,16 @@ void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle* primaryCAN, CANHandle* 
 }
 grcan_local_node_id = localID;
 
-	if (primaryCAN == NULL) {
-		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for primary CAN handle\n");
-	}
+if (primaryCAN == NULL) {
+	LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for primary CAN handle\n");
+}
 
-	if (dataCAN == NULL) {
-		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for data CAN handle\n");
-	}
+if (dataCAN == NULL) {
+	LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for data CAN handle\n");
+}
 
-	grcan_primary = primaryCAN;
-	grcan_data = dataCAN;
+grcan_primary = primaryCAN;
+grcan_data = dataCAN;
 }
 
 uint32_t GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id)

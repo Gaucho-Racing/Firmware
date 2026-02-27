@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#include "GR_OLD_NODE_ID.h"
 #include "GR_OLD_MSG_ID.h"
+#include "GR_OLD_NODE_ID.h"
 
 #ifndef GRCAN_FANCYLAYER_H
 #define GRCAN_FANCYLAYER_H
