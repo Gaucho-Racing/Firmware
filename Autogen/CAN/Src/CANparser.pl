@@ -17,31 +17,24 @@ my $yaml     = LoadFile($yaml_path);
 my $can_defs = $yaml->{'Custom CAN ID'};
 
 # --- 2. Build the Header Content in Memory ---
-# This ensures the exact formatting for IDs like 0x1806e5f4 and 23.
+# This approach satisfies the 'RequireBriefOpen' linter rule.
 my $content = "// Auto-generated Custom CAN ID header\n";
 $content .= "#ifndef CUSTOM_CAN_ID_H\n";
 $content .= "#define CUSTOM_CAN_ID_H\n\n";
 $content .= "typedef enum {\n";
 
 for my $msg_name ( sort keys %{$can_defs} ) {
-<<<<<<< Updated upstream
 	my $entry = $can_defs->{$msg_name};
-	if ( ref $entry ne 'HASH' ) {
-		next;
-	}
+	if ( ref $entry ne 'HASH' ) { next; }
 
 	my $can_id = $entry->{'CAN ID'};
-	if ( !defined $can_id ) {
-		next;
-	}
+	if ( !defined $can_id ) { next; }
 
-	# Format the enum name: "Charger Control" -> "CHARGER_CONTROL_CAN_ID"
 	my $enum_name = uc $msg_name;
 	$enum_name =~ s/[[:^upper:][:digit:]]/_/g;
 	$enum_name =~ s/_+/_/g;
 	$enum_name =~ s/^_|_$//g;
 
-	# Logic to match your specific hex/decimal formatting requirements
 	my $val = $can_id;
 	if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
 		$val = '0x' . lc $val;
@@ -49,26 +42,6 @@ for my $msg_name ( sort keys %{$can_defs} ) {
 	elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
 		$val = '0x' . lc $1;
 	}
-=======
-    my $entry = $can_defs->{$msg_name};
-    if ( ref $entry ne 'HASH' ) { next; }
-
-    my $can_id = $entry->{'CAN ID'};
-    if ( !defined $can_id ) { next; }
-
-    my $enum_name = uc $msg_name;
-    $enum_name =~ s/[[:^upper:][:digit:]]/_/g;
-    $enum_name =~ s/_+/_/g;
-    $enum_name =~ s/^_|_$//g;
-
-    my $val = $can_id;
-    if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
-        $val = '0x' . lc $val;
-    }
-    elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
-        $val = '0x' . lc $1;
-    }
->>>>>>> Stashed changes
 
 	$content .= "    ${enum_name}_CAN_ID = $val,\n";
 }
@@ -77,7 +50,6 @@ $content .= "} Custom_CAN_ID_t;\n\n";
 $content .= "#endif // CUSTOM_CAN_ID_H\n";
 
 # --- 3. Brief Open/Write/Close ---
-# Satisfies 'InputOutput::RequireBriefOpen' and 'InputOutput::RequireCheckedSyscalls'
 if ( -d $output_path ) {
 	die "Error: $output_path is a directory.";
 }
@@ -86,7 +58,7 @@ open my $fh, '>', $output_path or die "Error: $OS_ERROR";
 print {$fh} $content or die "Print failed: $OS_ERROR";
 close $fh            or die "Close failed: $OS_ERROR";
 
-# Fixed: Line 70 - Checking return of the final success print
+# Final print check to satisfy 'RequireCheckedSyscalls'
 print "Successfully updated $output_path\n" or die "Final print failed: $OS_ERROR";
 
 exit 0;
