@@ -32,18 +32,6 @@ void Neopixel_LatchStrip(NeopixelContext *context)
 
 NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 {
-	// TODO Abstraction
-	// - Add internal enums instead of using provided preprocessor values -> DONE
-	// - Initialize GPIO for SPI from config -> DONE
-	// - Initialize SPI peripheral with settings from config -> DONE
-	//
-	// Essentially, main.c should be able to call this function with a config struct and not have to worry about the details of SPI or GPIO initialization.
-	// This will make it easier to reuse this code across different projects and microcontrollers in the future.
-	//
-	// TLDR
-	// Remove the call to MX_SPI1_Init from main.c, setup the SPI peripheral with the settings being determined by the NeopixelConfig struct passed in.
-	// NeopixelConfig should have the minimum necessary information to fully initialize the SPI peripheral for Neopixel control.
-
 	if (neopixelConfiguration == NULL) {
 		LOGOMATIC("Neopixel configuration is NULL!\n");
 		return NULL;

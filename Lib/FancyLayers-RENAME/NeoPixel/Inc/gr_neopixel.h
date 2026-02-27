@@ -55,7 +55,6 @@ typedef struct NeopixelContext NeopixelContext;
 
 /**
  * @brief Configuration struct for Neopixel control. This should be initialized and passed to Neopixel_Setup before using any other functions in this library.
- * @todo Add fields for GPIO pin, SPI settings, etc.
  */
 typedef struct {
 	SPI_TypeDef *SPI_Instance;
@@ -64,12 +63,10 @@ typedef struct {
 	GPIO_Alternate_Function neopixelAF;
 	Neopixel_GPIO_Port gpio_port;
 	uint32_t neopixel_baudRatePrescaler;
-	// TODO - Add fields for GPIO pin, SPI settings, etc.
 } NeopixelConfig;
 
 /**
  * @brief Encodes a 24-bit GRB color into the format required for Neopixel transmission.
- * @todo Add more experimentally found nice looking predetermined color options.
  */
 typedef enum {
 	COLOR_OFF = (uint32_t)0x000000,
@@ -99,10 +96,5 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration);
  * @return None
  */
 void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, uint32_t sizeofColors);
-
-// make typedefs for all constants
-// create initialization structs (one for GPIO, one for SPI)
-// create a function to initialize SPI
-// initialize spi in gr_neopixel.c
 
 #endif
