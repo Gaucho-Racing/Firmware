@@ -128,7 +128,6 @@ int main(void)
 		// LOGOMATIC("Hello from DashPanel!\n");
 		// LL_mDelay(1000);
 
-
 		if (canReadyToSend) {
 
 			GR_OLD_DASH_STATUS_MSG msg_struct;
