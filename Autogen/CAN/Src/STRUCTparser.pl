@@ -1,16 +1,24 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use English qw(-no_match_vars);
 use autodie qw(open close);
 use File::Basename;
 use File::Path qw(make_path);
+use Readonly;
+
+# Brutal-compliant constants
+Readonly::Scalar my $BITS_PER_BYTE => 8;
+Readonly::Scalar my $CELL_COUNT    => 32;
+Readonly::Scalar my $EMPTY_STR     => q{};
+Readonly::Scalar my $SPACE_STR     => q{ };
 
 main();
 
 sub main {
 	my $yaml_path   = $ARGV[0] // 'format.CANdo';
 	my $output_path = $ARGV[1] // 'CANDler.h';
-	my $prefix      = "GR_OLD";
+	my $prefix      = 'GR_OLD';
 
 	ensure_directory_exists($output_path);
 
@@ -22,9 +30,9 @@ sub main {
 
 sub ensure_directory_exists {
 	my ($path) = @_;
-	my $dir = dirname($path);
-	if ( $dir && $dir ne '.' && !-d $dir ) {
-		make_path($dir);
+	my $dir = dirname $path;
+	if ( $dir && $dir ne q{.} && !-d $dir ) {
+		make_path $dir;
 	}
 	return;
 }
@@ -34,30 +42,33 @@ sub parse_descriptions {
 	my %map;
 	my $in_msg_section = 0;
 
-	# Slurp and close immediately to satisfy RequireBriefOpen
-	open( my $in, '<', $path );
+	open my $in, '<', $path;
 	my @lines = <$in>;
 	close $in;
 
-	for ( my $i = 0 ; $i < scalar @lines ; $i++ ) {
+	for my $i ( 0 .. $#lines ) {
 		my $line = $lines[$i];
 		chomp $line;
 
-		if ( $line =~ /^Message ID:/ ) {
+		if ( $line =~ /^Message \s ID:/smx ) {
 			$in_msg_section = 1;
 			next;
 		}
-		if ( $line =~ /^\S/ ) {
+		if ( $line =~ /^\S/smx ) {
 			$in_msg_section = 0;
 		}
-		next unless $in_msg_section;
+		if ( !$in_msg_section ) {
+			next;
+		}
 
-		if ( $line =~ /^\s{2,4}([^:#\s][^:]+):/ ) {
-			my $f_name = clean_field_name($1);
-
-			# Move index forward and extract description from the local array
+		# Use explicit \s{2,4} because /x ignores literal spaces
+		if ( $line =~ /^\s{2,4} ([^:#\s][^:]+) :/smx ) {
+			my $raw_name = $1;
+			my $f_name   = clean_field_name($raw_name);
 			my ( $desc, $new_i ) = extract_desc_from_array( \@lines, $i );
-			$map{$f_name} = $desc if $desc;
+			if ($desc) {
+				$map{$f_name} = $desc;
+			}
 			$i = $new_i;
 		}
 	}
@@ -66,20 +77,23 @@ sub parse_descriptions {
 
 sub extract_desc_from_array {
 	my ( $lines_ref, $index ) = @_;
-	my $description = "";
+	my $description = $EMPTY_STR;
 	my $i           = $index;
 
 	while ( ++$i < scalar @{$lines_ref} ) {
-		my $sub = $lines_ref->[$i];
-		if ( $sub =~ /^\s+#\s*(.*)/ ) {
-			$description .= " " . $1;
+		my $sub = ${$lines_ref}[$i];
+		if ( $sub =~ /^\s+ \# \s* (.*)/smx ) {
+			my $comment_text = $1;
+			$description .= $SPACE_STR . $comment_text;
 		}
 
-		# Break if we hit a new field or message
-		last if $sub =~ /^\s{2,4}[^#\s]/ || $sub =~ /^\S/;
+		# Check for new field or message start
+		if ( $sub =~ /^\s{2,4} [^#\s]/smx || $sub =~ /^\S/smx ) {
+			last;
+		}
 	}
 
-	$description =~ s/^\s+//;
+	$description =~ s/^\s+//smx;
 	return ( $description, $i - 1 );
 }
 
@@ -94,30 +108,39 @@ sub generate_header {
 	push @output, "#include <stdint.h>\n\n";
 
 	my $in_msg_section = 0;
-	my $current_msg    = "";
+	my $current_msg    = $EMPTY_STR;
 	my @fields         = ();
 
-	for ( my $i = 0 ; $i < scalar @{$lines_ref} ; $i++ ) {
-		my $line = $lines_ref->[$i];
-		if ( $line =~ /^Message ID:/ ) { $in_msg_section = 1; next; }
-		if ( $line =~ /^\S/ )          { $in_msg_section = 0; }
-		next unless $in_msg_section;
+	for my $i ( 0 .. $#{$lines_ref} ) {
+		my $line = ${$lines_ref}[$i];
+		if ( $line =~ /^Message \s ID:/smx ) { $in_msg_section = 1; next; }
+		if ( $line =~ /^\S/smx )             { $in_msg_section = 0; }
+		if ( !$in_msg_section )              { next; }
 
-		if ( $line =~ /^  ([^:#\s][^:]+):$/ ) {
+		# Explicitly match 2 spaces for Message Name
+		if ( $line =~ /^\s{2} ([^:#\s][^:]+) :$/smx ) {
+			my $msg_name = $1;
 			if ($current_msg) {
 				push @output, process_message( $current_msg, \@fields, $d_map, $prefix );
 			}
-			$current_msg = $1;
+			$current_msg = $msg_name;
 			@fields      = ();
 		}
-		elsif ( $line =~ /^\s{4}([^:#\s][^:]+):/ ) {
-			my ( $f_data, $new_i ) = parse_field_details( $lines_ref, $i, $1 );
-			push @fields, $f_data if %{$f_data};
+
+		# Explicitly match 4 spaces for Field Name
+		elsif ( $line =~ /^\s{4} ([^:#\s][^:]+) :/smx ) {
+			my $field_raw = $1;
+			my ( $f_data, $new_i ) = parse_field_details( $lines_ref, $i, $field_raw );
+			if ( %{$f_data} ) {
+				push @fields, $f_data;
+			}
 			$i = $new_i;
 		}
 	}
 
-	push @output, process_message( $current_msg, \@fields, $d_map, $prefix ) if $current_msg;
+	if ($current_msg) {
+		push @output, process_message( $current_msg, \@fields, $d_map, $prefix );
+	}
 	push @output, "#endif\n";
 
 	write_file( $out_p, \@output );
@@ -126,7 +149,7 @@ sub generate_header {
 
 sub slurp_file {
 	my ($path) = @_;
-	open( my $fh, '<', $path );
+	open my $fh, '<', $path;
 	my @lines = <$fh>;
 	close $fh;
 	chomp @lines;
@@ -135,9 +158,9 @@ sub slurp_file {
 
 sub write_file {
 	my ( $path, $content_ref ) = @_;
-	open( my $fh, '>', $path );
-	for my $line (@$content_ref) {
-		print {$fh} $line or die "Could not write to $path: $!";
+	open my $fh, '>', $path;
+	for my $line ( @{$content_ref} ) {
+		print {$fh} $line or die "Could not write to $path: $OS_ERROR";
 	}
 	close $fh;
 	return;
@@ -145,18 +168,20 @@ sub write_file {
 
 sub parse_field_details {
 	my ( $lines_ref, $index, $name ) = @_;
-	my ( $start, $data_type ) = ( undef, "u8" );
+	my ( $start, $data_type ) = ( undef, 'u8' );
 	my $i = $index;
 
 	while ( ++$i < scalar @{$lines_ref} ) {
-		my $sub = $lines_ref->[$i];
-		if ( $sub =~ /bit_start:\s*(\d+)/ ) {
+		my $sub = ${$lines_ref}[$i];
+		if ( $sub =~ /bit_start: \s* (\d+)/smx ) {
 			$start = $1;
 		}
-		if ( $sub =~ /data type:\s*(\w+)/ ) {
+		if ( $sub =~ /data \s type: \s* (\w+)/smx ) {
 			$data_type = $1;
 		}
-		last if $sub =~ /^\s{4}[^#\s]/ || $sub =~ /^\s{0,2}\S/;
+		if ( $sub =~ /^\s{4} [^#\s]/smx || $sub =~ /^\s{0,2} \S/smx ) {
+			last;
+		}
 	}
 	my %res = defined $start ? ( name => $name, start => $start, type => $data_type ) : ();
 	return ( \%res, $i - 1 );
@@ -165,42 +190,44 @@ sub parse_field_details {
 sub clean_field_name {
 	my ($name) = @_;
 	my $clean = lc $name;
-	$clean =~ s/[^a-z0-9]/_/g;
-	$clean =~ s/_+/_/g;
-	$clean =~ s/^_|_$//g;
-	return $clean || "unknown_field";
+
+	# Correctly inverted POSIX character class
+	$clean =~ s/[^[:lower:][:digit:]]/_/gsmx;
+	$clean =~ s/_+/_/gsmx;
+	$clean =~ s/^_|_$//gsmx;
+	return $clean || 'unknown_field';
 }
 
 sub process_message {
 	my ( $name, $f_ref, $d_map, $prefix ) = @_;
 	my @buf;
-	my $tag = uc( $name =~ s/[^A-Za-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr );
+	my $tag = uc $name =~ s/[^[:alpha:][:digit:]]/_/grsmx =~ s/_+/_/grsmx =~ s/^_|_$//grsmx;
 
-	if ( $name =~ /Cell Data/i ) {
-		push @buf, sprintf "/** %s */\ntypedef struct {\n\tstruct {\n\t\tuint8_t voltage;\n\t\tuint8_t temperature;\n\t} cells[32];\n} %s_%s_MSG;\n\n", $name, $prefix, $tag;
-		return join '', @buf;
+	if ( $name =~ /Cell \s Data/ismx ) {
+		push @buf, sprintf "/** %s */\ntypedef struct {\n\tstruct {\n\t\tuint8_t voltage;\n\t\tuint8_t temperature;\n\t} cells[%d];\n} %s_%s_MSG;\n\n", $name, $CELL_COUNT, $prefix, $tag;
+		return join $EMPTY_STR, @buf;
 	}
 
 	my %byte_map;
-	for my $f (@$f_ref) {
-		push @{ $byte_map{ int( $f->{start} / 8 ) } }, $f;
+	for my $f ( @{$f_ref} ) {
+		push @{ $byte_map{ int( $f->{start} / $BITS_PER_BYTE ) } }, $f;
 	}
 
 	push @buf, "/** $name */\ntypedef struct {\n";
 	my @sorted = sort { $a <=> $b } keys %byte_map;
 
-	for ( my $i = 0 ; $i < scalar @sorted ; $i++ ) {
+	for my $i ( 0 .. $#sorted ) {
 		push @buf, process_byte_entry( \@sorted, \%byte_map, \$i, $d_map );
 	}
 	push @buf, "} ${prefix}_${tag}_MSG;\n\n";
-	return join '', @buf;
+	return join $EMPTY_STR, @buf;
 }
 
 sub process_byte_entry {
 	my ( $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
 	my @out;
-	my $b_idx  = $sorted_ref->[$$idx_ref];
-	my $fields = $map_ref->{$b_idx};
+	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
+	my $fields = ${$map_ref}{$b_idx};
 
 	if ( scalar @{$fields} > 2 ) {
 		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
@@ -208,36 +235,42 @@ sub process_byte_entry {
 	else {
 		my $f_var =
 		  ( scalar @{$fields} == 1 )
-		  ? clean_field_name( $fields->[0]->{name} )
-		  : join( '_', map { clean_field_name( $_->{name} ) } @{$fields} );
-		$f_var = "_" . $f_var if $f_var =~ /^\d/;
+		  ? clean_field_name( ${$fields}[0]->{name} )
+		  : join q{_}, map { clean_field_name( $_->{name} ) } @{$fields};
+		if ( $f_var =~ /^[[:digit:]]/smx ) {
+			$f_var = q{_} . $f_var;
+		}
 
 		my $type =
-		    ( $fields->[0]->{type} =~ /32/ ) ? "uint32_t"
-		  : ( $fields->[0]->{type} =~ /16/ ) ? "uint16_t"
-		  :                                    "uint8_t";
-		my $desc = join ' ', map { $d_map->{ clean_field_name( $_->{name} ) } // () } @{$fields};
+		    ( ${$fields}[0]->{type} =~ /32/smx ) ? 'uint32_t'
+		  : ( ${$fields}[0]->{type} =~ /16/smx ) ? 'uint16_t'
+		  :                                        'uint8_t';
+		my $desc = join $SPACE_STR, map { ${$d_map}{ clean_field_name( $_->{name} ) } // () } @{$fields};
 
-		push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . ";";
+		push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . q{;};
 	}
-	return join '', @out;
+	return join $EMPTY_STR, @out;
 }
 
 sub handle_multi_field_range {
 	my ( $bytes_ref, $map_ref, $idx_ref ) = @_;
-	my $start_byte = $bytes_ref->[$$idx_ref];
-	my $has_error  = grep { $_->{name} =~ /error|fault|violation/i } @{ $map_ref->{$start_byte} };
+	my $start_byte = ${$bytes_ref}[ ${$idx_ref} ];
+	my $has_error  = grep { $_->{name} =~ /error|fault|violation/ismx } @{ ${$map_ref}{$start_byte} };
 
-	while ( $$idx_ref + 1 < scalar @{$bytes_ref} ) {
-		my $next_byte = $bytes_ref->[ $$idx_ref + 1 ];
-		my $next_f    = $map_ref->{$next_byte};
+	while ( ${$idx_ref} + 1 < scalar @{$bytes_ref} ) {
+		my $next_byte = ${$bytes_ref}[ ${$idx_ref} + 1 ];
+		my $next_f    = ${$map_ref}{$next_byte};
 		if ( scalar @{$next_f} <= 2 ) {
-			last if $next_f->[0]->{name} !~ /reserved/i;
+			my $first_name = ${$next_f}[0]->{name};
+			if ( $first_name !~ /reserved/ismx ) {
+				last;
+			}
 		}
-		$$idx_ref++;
+		${$idx_ref}++;
 	}
 
-	my $len    = ( $bytes_ref->[$$idx_ref] - $start_byte ) + 1;
-	my $v_name = $has_error ? "error_fault_violation_bits" : "ping_block";
-	return sprintf "\tuint8_t    %s%s;\n", $v_name, ( $len > 1 ? "[$len]" : "" );
+	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
+	my $v_name = $has_error   ? 'error_fault_violation_bits' : 'ping_block';
+	my $suffix = ( $len > 1 ) ? "[$len]"                     : $EMPTY_STR;
+	return sprintf "\tuint8_t    %s%s;\n", $v_name, $suffix;
 }
