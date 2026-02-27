@@ -4,11 +4,11 @@
 
 #include <stdint.h>
 
+#define SOFTWARE_OK_CONTROL_GPIO_Port ((void *)42)
+#define SOFTWARE_OK_CONTROL_Pin 42
+
 typedef enum {
-	SOFTWARE_OK_CONTROL_GPIO_Port,
-	TSSI_R_CONTROL_GPIO_Port,
-	TSSI_G_CONTROL_GPIO_Port,
-	RTD_CONTROL_GPIO_Port
+	nothing
 } GPIO_TypeDef;
 
 typedef struct {
@@ -29,11 +29,6 @@ typedef struct {
 				 This parameter can be a value of @ref
 			       GPIOEx_Alternate_function_selection */
 } GPIO_InitTypeDef;
-
-#define TSSI_R_CONTROL_Pin 42
-#define TSSI_G_CONTROL_Pin 42
-#define RTD_CONTROL_Pin 42
-#define SOFTWARE_OK_CONTROL_Pin 42
 
 void LL_GPIO_SetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
 void LL_GPIO_ResetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
