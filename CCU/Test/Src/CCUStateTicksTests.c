@@ -254,6 +254,54 @@ int main(void)
 			return 6;
 		}
 	}
+	{
+		// ######### FIXME: Double check valid test
+		// No Error, is Charging + Then Error (7)
+		// #########
+		LOGOMATIC("In Charging, then error occurs\n");
+		CCU_StateData state_dataTest = {0};
+
+		state_dataTest.state = CCU_STATE_IDLE;
+		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		state_dataTest.Button_Status = 1;
+		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
+
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
+			LOGOMATIC("CCU STATE did not stay CHARGING\n");
+			return 7;
+		}
+
+		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1) {
+			LOGOMATIC("PRECHARGE Message did not send correct message\n");
+			return 7;
+		}
+
+		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software Latch was tripped and set to low\n");
+		}
+
+		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
+
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("CCU STATE did not stay IDLE\n");
+			return 7;
+		}
+
+		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
+			LOGOMATIC("PRECHARGE Message did not send correct message\n");
+			return 7;
+		}
+
+		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
+			LOGOMATIC("Software Latch was not tripped and set to low\n");
+			return 7;
+		}
+
+	}
 	LOGOMATIC("ALL CURRENT TEST CASES PASSED\n");
 	return 0;
 }
