@@ -88,6 +88,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: TS Voltage >= %d!\n", SAFE_VOLTAGE_LIMIT);
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-Runwy", 8);
 		return;
 	}
 
@@ -119,6 +120,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	if (!stateData->ts_active_button_active || CommunicationError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("ERROR or ts_active OFF! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-P-ITR", 8);
 		return;
 	}
 }
@@ -134,6 +136,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (CriticalError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.\n");
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "HV-CritE", 8);
 		return;
 	}
 
@@ -158,6 +161,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	if (!stateData->ts_active_button_active || CriticalError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.\n");
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "DA-CritE", 8);
 		return;
 	}
 
@@ -222,5 +226,6 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	*/
 	if (stateData->millisSinceBoot - stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
 		LOGOMATIC("Warning: Tractive System fails to discharge in time.\n");
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-D-TLE", 8);
 	}
 }
