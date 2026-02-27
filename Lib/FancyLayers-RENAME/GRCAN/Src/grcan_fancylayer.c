@@ -18,7 +18,7 @@ void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *
 	GRCAN_Fancy_RegisterLocalID(localID);
 	GRCAN_Fancy_RegisterPrimaryCAN(primaryCAN);
 	GRCAN_Fancy_RegisterDataCAN(dataCAN);
-}
+
 grcan_local_node_id = localID;
 
 if (primaryCAN == NULL) {
