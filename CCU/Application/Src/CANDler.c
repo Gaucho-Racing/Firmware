@@ -186,7 +186,7 @@ void SendDebugReport(char *data)
 
 	msg.data[8] = (uint8_t)*data;
 
-	LOGOMATIC("ERROR: %s", data);
+	LOGOMATIC("ERROR: %s\n", data);
 
 	can_send(primary_can, &msg);
 
