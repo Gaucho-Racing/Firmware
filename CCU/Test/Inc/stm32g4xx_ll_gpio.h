@@ -30,10 +30,10 @@ typedef struct {
 			       GPIOEx_Alternate_function_selection */
 } GPIO_InitTypeDef;
 
-#define TSSI_R_CONTROL_Pin 0
-#define TSSI_G_CONTROL_Pin 0
-#define RTD_CONTROL_Pin 0
-#define SOFTWARE_OK_CONTROL_Pin 0
+#define TSSI_R_CONTROL_Pin 42
+#define TSSI_G_CONTROL_Pin 42
+#define RTD_CONTROL_Pin 42
+#define SOFTWARE_OK_CONTROL_Pin 42
 
 void LL_GPIO_SetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
 void LL_GPIO_ResetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
