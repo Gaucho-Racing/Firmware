@@ -52,23 +52,23 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	GPIO_TypeDef *gpio_port = 0;
 	switch (neopixelConfiguration->gpio_port) {
 		case Neopixel_GPIOA:
-			gpio_port = Neopixel_GPIOA;
+			gpio_port = GPIOA;
 			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 			break;
 		case Neopixel_GPIOB:
-			gpio_port = Neopixel_GPIOB;
+			gpio_port = GPIOB;
 			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
 			break;
 		case Neopixel_GPIOC:
-			gpio_port = Neopixel_GPIOC;
+			gpio_port = GPIOC;
 			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
 			break;
 		case Neopixel_GPIOD:
-			gpio_port = Neopixel_GPIOD;
+			gpio_port = GPIOD;
 			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOD);
 			break;
 		default:
-			return;
+			return NULL;
 	}
 
 	LL_GPIO_InitTypeDef copi_pin = {
@@ -95,18 +95,14 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .CRCPoly = 7,
 	};
 
-	switch (neopixelConfiguration->SPI_Instance) {
-		case SPI1:
-			LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
-			break;
-		case SPI2:
-			LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
-			break;
-		case SPI3:
-			LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI3);
-			break;
-		default:
-			return;
+	if (neopixelConfiguration->SPI_Instance == SPI1) {
+		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
+	}
+	else if (neopixelConfiguration->SPI_Instance == SPI2) {
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+	}
+	else if (neopixelConfiguration->SPI_Instance == SPI3) {
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI3);
 	}
 
 	LL_SPI_Init(neopixelConfiguration->SPI_Instance, &spi);

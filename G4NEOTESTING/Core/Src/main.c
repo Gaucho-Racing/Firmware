@@ -68,7 +68,14 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
-NeopixelConfig neopixelConfig = {.SPI_Instance = SPI1, .NumberOfNeopixels = 60U}; // TODO Expand with select configurable contents of MX_SPI1_Init
+NeopixelConfig neopixelConfig = {
+	.SPI_Instance = SPI1,
+	.NumberOfNeopixels = 60U,
+	.gpio_port = Neopixel_GPIOB,
+	.neopixelAF = Neopixel_GPIO_AF_5,
+	.mosi_gpio_pin = NEOPIXEL_DIN_Pin,
+	.neopixel_baudRatePrescaler = LL_SPI_BAUDRATEPRESCALER_DIV64,
+}; // TODO Expand with select configurable contents of MX_SPI1_Init
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
