@@ -56,7 +56,6 @@ void STATE_IDLE(CCU_StateData *state_data)
 		SendDebugReport("No_Errors");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-
 	}
 }
 
@@ -82,9 +81,5 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		SendDebugReport("No_Error");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-
 	}
-
-
-
 }
