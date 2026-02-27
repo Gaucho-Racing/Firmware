@@ -200,7 +200,7 @@ typedef struct {
 
 /** Dashboard Config */
 typedef struct {
-	uint8_t led_bits;	/** BMS/IMD/BSPD LED cmds (0=off, 1=on) */
+	uint8_t led_bits; /** BMS/IMD/BSPD LED cmds (0=off, 1=on) */
 } GR_OLD_DASH_CONFIG_MSG;
 
 /** Steering Wheel Status */

@@ -1,8 +1,8 @@
 #ifndef CANDLER_H
 #define CANDLER_H
+#include "GR_OLD_MSG_DAT.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
-#include "GR_OLD_MSG_DAT.h"
 #include "can.h"
 
 typedef struct {
