@@ -7,12 +7,12 @@ SRC_DIR = Src
 DOC_DIR = Doc
 
 # Files
-CANDO = $(DOC_DIR)/format.CANdo
-STRUCT_ID = $(INC_DIR)/Struct_ID.h
-GR_ID = $(INC_DIR)/GR_IDS.h
-MSG_ID = $(INC_DIR)/CAN_msg_ID.h
-CAN_ID = $(INC_DIR)/Custom_CAN_ID.h
-DBC = $(DOC_DIR)/output.dbc
+CANDO = $(DOC_DIR)/GRCAN.CANdo
+STRUCT_ID = $(INC_DIR)/GRCAN_MSG_DATA.h
+GR_ID = $(INC_DIR)/GRCAN_NODE_ID.h
+MSG_ID = $(INC_DIR)/CANCAN_MSG_ID.h
+CAN_ID = $(INC_DIR)/GRCAN_CUSTOM_ID.h
+DBC = $(DOC_DIR)/GRCAN.dbc
 
 .PHONY: all clean STRUCTparser CANparser DBCparser GRparser MSGparser
 

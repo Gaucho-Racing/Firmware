@@ -4955,12 +4955,13 @@ Custom CAN ID:
         # Fuck if I know
 
 GR ID:
-  CCU : "0x2A"
+
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
   IMD: "0x00"
   Debugger: "0x01"
+  CCU : "0x2A"
   ECU: "0x02"
   ACU: "0x03"
   TCM: "0x04"
