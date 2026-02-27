@@ -1,72 +1,73 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use English  qw(-no_match_vars);    # Allows using $OS_ERROR instead of $!
+use English qw(-no_match_vars);
 use YAML::XS qw(LoadFile);
 use File::Basename;
 use English qw(-no_match_vars);
 
-main();
+# --- 1. Configuration & Data Loading ---
+my $yaml_path   = $ARGV[0] // 'format.CANdo';
+my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
 
-sub main {
-	my $yaml_path   = $ARGV[0] // 'format.CANdo';
-	my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
-
-# 1. Load the data first (satisfies RequireBriefOpen)
 if ( !-e $yaml_path ) {
-	die "Error: $yaml_path not found.\n";
+    die "Error: $yaml_path not found.\n";
 }
 
 my $yaml     = LoadFile($yaml_path);
 my $can_defs = $yaml->{'Custom CAN ID'};
 
-# 2. Open the file in WRITE mode
-# Fixed: Variables::ProhibitPunctuationVars - Using $OS_ERROR
-open my $fh, '>', $output_path or die "Error: Cannot open $output_path for writing: $OS_ERROR";
+# --- 2. Build the Header Content in Memory ---
+# Building the string first ensures the file handle is only open for writing.
+my $content = "// Auto-generated Custom CAN ID header\n";
+$content .= "#ifndef CUSTOM_CAN_ID_H\n";
+$content .= "#define CUSTOM_CAN_ID_H\n\n";
+$content .= "typedef enum {\n";
 
-# Fixed: InputOutput::RequireBracedFileHandleWithPrint - Using print {$fh}
-print {$fh} "// Auto-generated Custom CAN ID header\n" or die "Print failed: $OS_ERROR";
-print {$fh} "#ifndef CUSTOM_CAN_ID_H\n"                or die "Print failed: $OS_ERROR";
-print {$fh} "#define CUSTOM_CAN_ID_H\n\n"              or die "Print failed: $OS_ERROR";
-print {$fh} "typedef enum {\n"                         or die "Print failed: $OS_ERROR";
-
+# Sort to maintain the exact order seen in your required output
 for my $msg_name ( sort keys %{$can_defs} ) {
-	my $entry = $can_defs->{$msg_name};
+    my $entry = $can_defs->{$msg_name};
+    if ( ref $entry ne 'HASH' ) {
+        next;
+    }
 
-	if ( ref $entry ne 'HASH' ) {
-		next;
-	}
+    my $can_id = $entry->{'CAN ID'};
+    if ( !defined $can_id ) {
+        next;
+    }
 
-	my $can_id = $entry->{'CAN ID'};
-	if ( !defined $can_id ) {
-		next;
-	}
+    # Format the enum name: "Charger Control" -> "CHARGER_CONTROL_CAN_ID"
+    my $enum_name = uc $msg_name;
+    $enum_name =~ s/[[:^upper:][:digit:]]/_/g;
+    $enum_name =~ s/_+/_/g;
+    $enum_name =~ s/^_|_$//g;
 
-	my $enum_name = uc $msg_name;
+    # Logic to match your specific hex/decimal formatting requirements
+    my $val = $can_id;
+    if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
+        $val = '0x' . lc $val;
+    }
+    elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
+        $val = '0x' . lc $1;
+    }
 
-	# Named character classes to satisfy linter
-	$enum_name =~ s/[[:^upper:][:digit:]]/_/g;
-	$enum_name =~ s/_+/_/g;
-	$enum_name =~ s/^_|_$//g;
-
-	my $val = $can_id;
-	if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
-		$val = '0x' . lc $val;
-	}
-	elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
-		$val = '0x' . lc $1;
-	}
-
-	print {$fh} "    ${enum_name}_CAN_ID = $val,\n" or die "Print failed: $OS_ERROR";
+    $content .= "    ${enum_name}_CAN_ID = $val,\n";
 }
 
-print {$fh} "} Custom_CAN_ID_t;\n\n"      or die "Print failed: $OS_ERROR";
-print {$fh} "#endif // CUSTOM_CAN_ID_H\n" or die "Print failed: $OS_ERROR";
+$content .= "} Custom_CAN_ID_t;\n\n";
+$content .= "#endif // CUSTOM_CAN_ID_H\n";
 
-# Fixed: InputOutput::RequireCheckedClose
-close $fh or die "Error: Failed to close $output_path: $OS_ERROR";
+# --- 3. Brief Open/Write/Close ---
+# This section satisfies 'InputOutput::RequireBriefOpen'.
+if ( -d $output_path ) {
+    die "Error: $output_path is a directory.";
+}
 
-print "Successfully updated $output_path\n" or die "Print failed: $OS_ERROR";
+open my $fh, '>', $output_path or die "Error: $OS_ERROR";
+print {$fh} $content or die "Print failed: $OS_ERROR";
+close $fh or die "Close failed: $OS_ERROR";
+
+print "Successfully updated $output_path\n";
 
 exit 0;
 
