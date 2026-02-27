@@ -16,8 +16,22 @@ typedef enum {
 /// @brief Alternate function for a specific pin and specific port
 // AF5 is usually used, but AF6 can be used for SPI3
 typedef enum {
+	Neopixel_GPIO_AF_0 = LL_GPIO_AF_0,
+	Neopixel_GPIO_AF_1 = LL_GPIO_AF_1,
+	Neopixel_GPIO_AF_2 = LL_GPIO_AF_2,
+	Neopixel_GPIO_AF_3 = LL_GPIO_AF_3,
+	Neopixel_GPIO_AF_4 = LL_GPIO_AF_4,
 	Neopixel_GPIO_AF_5 = LL_GPIO_AF_5,
-	Neopixel_GPIO_AF_6 = LL_GPIO_AF_6
+	Neopixel_GPIO_AF_6 = LL_GPIO_AF_6,
+	Neopixel_GPIO_AF_7 = LL_GPIO_AF_7,
+	Neopixel_GPIO_AF_8 = LL_GPIO_AF_8,
+	Neopixel_GPIO_AF_9 = LL_GPIO_AF_9,
+	Neopixel_GPIO_AF_10 = LL_GPIO_AF_10,
+	Neopixel_GPIO_AF_11 = LL_GPIO_AF_11,
+	Neopixel_GPIO_AF_12 = LL_GPIO_AF_12,
+	Neopixel_GPIO_AF_13 = LL_GPIO_AF_13,
+	Neopixel_GPIO_AF_14 = LL_GPIO_AF_14,
+	Neopixel_GPIO_AF_15 = LL_GPIO_AF_15
 } GPIO_Alternate_Function;
 
 /**
