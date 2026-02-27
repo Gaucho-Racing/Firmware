@@ -39,46 +39,43 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			//  cast *data to whatever msg dti control 10 struct there is
 			//  copy data from that struct into the ccu state data struct (eg GETBIT)
 
-			//What the rewrite would look like: STATUS 2
+			// What the rewrite would look like: STATUS 2
 
-			 GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
-			 state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
-			 state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
-			 state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->error_bits, 0);
-			 state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 1);
-			 state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 2);
-			 state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 3);
-			 state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 4);
-			 state_data.BCU_S2_PRECHARGE_BITS = bcu_status_2->precharge_bits;
+			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
+			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
+			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
+			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->error_bits, 0);
+			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 1);
+			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 2);
+			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 3);
+			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 4);
+			state_data.BCU_S2_PRECHARGE_BITS = bcu_status_2->precharge_bits;
 
-			 break;
-
-
+			break;
 
 			// uint8_t byte_S2_3 = ((uint8_t *)data)[3];
-			//uint8_t byte_S2_4 = ((uint8_t *)data)[4];
-			//uint8_t byte_S2_5 = ((uint8_t *)data)[5];
+			// uint8_t byte_S2_4 = ((uint8_t *)data)[4];
+			// uint8_t byte_S2_5 = ((uint8_t *)data)[5];
 			// uint8_t byte_6 = ((uint8_t *)data)[6];
-            /* commentblock starts here
-			// BCU_STATUS_2 MIN CELL Volt (3)
-			state_data.BCU_S2_MIN_CELL_Volt = GETBITS(((uint8_t *)data)[3], 0, 8);
+			/* commentblock starts here
+				    // BCU_STATUS_2 MIN CELL Volt (3)
+				    state_data.BCU_S2_MIN_CELL_Volt = GETBITS(((uint8_t *)data)[3], 0, 8);
 
-			/// BCU_STATUS_2 MAX CELL TEMP(4)
-			state_data.BCU_S2_MAX_CELL_TEMP = GETBITS(byte_S2_4, 0, 8);
+				    /// BCU_STATUS_2 MAX CELL TEMP(4)
+				    state_data.BCU_S2_MAX_CELL_TEMP = GETBITS(byte_S2_4, 0, 8);
 
-			/// BCU_STATUS_2 Error Byte (5)
-			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(byte_S2_5, 0);
-			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(byte_S2_5, 1);
-			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(byte_S2_5, 2);
-			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(byte_S2_5, 3);
-			state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(byte_S2_5, 4);
-			*/
+				    /// BCU_STATUS_2 Error Byte (5)
+				    state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(byte_S2_5, 0);
+				    state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(byte_S2_5, 1);
+				    state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(byte_S2_5, 2);
+				    state_data.BCU_S2_OVERCURR_ERROR = GETBIT(byte_S2_5, 3);
+				    state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(byte_S2_5, 4);
+				    */
 
 			// BCU_STATUS_2 PRECHARGE + SOFTWARE LATCH (6)
 			// state_data.BCU_S2_SOFTWARE_LATCH = GETBIT(byte_6, 3);
 
 			break;
-
 
 		default:
 			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu", ID, size);

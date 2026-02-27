@@ -35,8 +35,6 @@ typedef struct {
 	// bool BCU_S2_IR_STATE;
 	bool BCU_S2_SOFTWARE_LATCH;
 
-
-
 	// BCU_PRECHARGE
 	bool BCU_PRECHARGE_SET_TS_ACTIVE;
 
