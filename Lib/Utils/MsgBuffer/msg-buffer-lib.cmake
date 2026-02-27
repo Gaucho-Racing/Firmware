@@ -18,14 +18,8 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		MsgBuffer_Lib_Initialization_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/testInitialization.c
 	)
-	target_link_libraries(
-		MsgBuffer_Lib_Initialization_test
-		MsgBuffer_Lib
-	)
-	add_test(
-		MsgBuffer_Lib_Initialization
-		MsgBuffer_Lib_Initialization_test
-	)
+	target_link_libraries(MsgBuffer_Lib_Initialization_test MsgBuffer_Lib)
+	add_test(MsgBuffer_Lib_Initialization MsgBuffer_Lib_Initialization_test)
 
 	# Push/Pop
 	add_executable(
@@ -56,14 +50,8 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		MsgBuffer_Lib_Get_Current_Size_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/testGetCurrentSize.c
 	)
-	target_link_libraries(
-		MsgBuffer_Lib_Get_Current_Size_test
-		MsgBuffer_Lib
-	)
-	add_test(
-		MsgBuffer_Lib_Get_Current_Size
-		MsgBuffer_Lib_Get_Current_Size_test
-	)
+	target_link_libraries(MsgBuffer_Lib_Get_Current_Size_test MsgBuffer_Lib)
+	add_test(MsgBuffer_Lib_Get_Current_Size MsgBuffer_Lib_Get_Current_Size_test)
 
 	# If Full
 	add_executable(
