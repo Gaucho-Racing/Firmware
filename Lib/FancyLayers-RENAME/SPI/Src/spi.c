@@ -42,14 +42,14 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	}
 
 	// Create Circular Buffers and assign the rx and the tx pointers
-	GR_MsgBuffer *msg_buffer_ptr = GR_MsgBuffer_Create(msg_buffer_ptr, GR_SPI_BUFFER_BYTE_CAPACITY);
+	GR_MsgBuffer *msg_buffer_ptr = GR_MsgBuffer_Create(GR_SPI_BUFFER_BYTE_CAPACITY);
 	if (msg_buffer_ptr == NULL) {
 		handle->error_status = GR_SPI_ERR_BAD_INIT_RXBUF;
 		return;
 	} else {
 		handle->rx_buffer = msg_buffer_ptr;
 	}
-	msg_buffer_ptr = GR_MsgBuffer_Create(msg_buffer_ptr, GR_SPI_BUFFER_BYTE_CAPACITY);
+	msg_buffer_ptr = GR_MsgBuffer_Create(GR_SPI_BUFFER_BYTE_CAPACITY);
 	if (msg_buffer_ptr == NULL) {
 		handle->error_status = GR_SPI_ERR_BAD_INIT_TXBUF;
 		return;
