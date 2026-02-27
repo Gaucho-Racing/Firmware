@@ -3838,7 +3838,7 @@ Message ID:
       map equation: "abs(x)/10"
   Dash Config:
     MSG ID: 0x01B
-    MSG LENGTH: 7
+    MSG LENGTH: 1
     BMS LED:
       bit_start: 0
       # LED command (0: off, 1: on)
@@ -3854,54 +3854,6 @@ Message ID:
       # LED command (0: off, 1: on)
       data type: b
       units: Bool
-    Button LED 1 R:
-      bit_start: 8
-      # Discarded input but still send it, set by ECU State
-      data type: u8
-      units: RGB
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Button LED 1 G:
-      bit_start: 16
-      # Discarded input but still send it, set by ECU State
-      data type: u8
-      units: RGB
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Button LED 1 B:
-      bit_start: 24
-      # Discarded input but still send it, set by ECU State
-      data type: u8
-      units: RGB
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Button LED 2 R:
-      bit_start: 32
-      # Discarded input but still send it, set by ECU State
-      data type: u8
-      units: RGB
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Button LED 2 G:
-      bit_start: 40
-      # Discarded input but still send it, set by ECU State
-      data type: u8
-      units: RGB
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Button LED 2 B:
-      bit_start: 48
-      # Discarded input but still send it, set by ECU State
-      data type: u8
-      units: RGB
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
   Steering Status:
     MSG ID: 0x01C
     MSG LENGTH: 2
