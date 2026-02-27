@@ -8,6 +8,7 @@
 #include "dashutils.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
+#include "Logomatic.h"
 
 #define ECU_ID GR_ECU	 // ID of correct ECU message - TODO: change with correct ID
 #define PING_ID MSG_PING // ID of ping message - TODO: change with correct ID
@@ -102,14 +103,13 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 	// Process data
 	if (ID == MSG_ECU_STATUS_1) {
 		GR_OLD_ECU_STATUS_1_MSG *ecu_data = (GR_OLD_ECU_STATUS_1_MSG *)data;
-		dashStatus.ECUState = ecu_data->ecu_status;
-		// Process data
+		dashStatus.ECUState = ecu_data->ecu_status; // Get ECU Status
 	} else if (ID == MSG_DASH_CONFIG) {
 		GR_OLD_DASH_CONFIG_MSG *dash_data = (GR_OLD_DASH_CONFIG_MSG *)data;
-		dashStatus.led_bits = dash_data->led_bits;
+		dashStatus.led_bits = dash_data->led_bits; // Get LED bis
 	} else if (ID == PING_ID) {
 		// process ping
-		// TODO: fix ping
 		CAN_sendPing(PING_ID);
+		LOGOMATIC("Ping received");
 	}
 }
