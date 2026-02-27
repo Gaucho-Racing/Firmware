@@ -64,6 +64,8 @@ void SoftwareOKLightControl(ECU_StateData *stateLump)
 	}
 }
 
+// TODO: add BCU, IMS, and BSPD lights
+
 void lightControl(ECU_StateData *stateData)
 {
 	BrakeLightControl(stateData);
