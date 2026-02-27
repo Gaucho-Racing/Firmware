@@ -127,7 +127,6 @@ int main(void)
 		/* USER CODE END WHILE */
 		// LOGOMATIC("Hello from DashPanel!\n");
 		// LL_mDelay(1000);
-
 		if (canReadyToSend) {
 
 			GR_OLD_DASH_STATUS_MSG msg_struct;
@@ -144,7 +143,7 @@ int main(void)
 				dashStatus.RTDButton = 0;
 			}
 
-			CAN_sendPing(MSG_PING);
+			// CAN_sendPing(GR_DASH_PANEL);
 			CAN_sendECU(can_handler, &msg_struct, GR_ECU);
 
 			canReadyToSend = false;

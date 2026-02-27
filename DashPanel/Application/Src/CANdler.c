@@ -62,11 +62,13 @@ void CANInitialize()
 	can_start(can_handler);
 }
 
+
+
 void CAN_sendPing(GR_OLD_NODE_ID to)
 {
 	FDCANTxMessage pingMsg;
 	pingMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to;
-	pingMsg.tx_header.IdType = FDCAN_STANDARD_ID;
+	pingMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 	pingMsg.tx_header.DataLength = 4;
@@ -83,7 +85,7 @@ void CAN_sendECU(CANHandle *c, GR_OLD_DASH_STATUS_MSG *msg, GR_OLD_NODE_ID to)
 
 	FDCANTxMessage sendECUMsg;
 	sendECUMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_DASH_STATUS << 8) | to; // TODO: replace identifier with correct values
-	sendECUMsg.tx_header.IdType = FDCAN_STANDARD_ID;
+	sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 	sendECUMsg.tx_header.DataLength = sizeof(GR_OLD_DASH_STATUS_MSG);
@@ -100,16 +102,18 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
 	UNUSED(size); // FIXME Validate actual size versus expected size for different messages!
 
+	GR_OLD_MSG_ID msg_id = (0x000FFF00 & ID) >> 8;
+	GR_OLD_NODE_ID node_id = (0x0FF00000 & ID) >> 20;
+
 	// Process data
-	if (ID == MSG_ECU_STATUS_1) {
+	if (msg_id == MSG_ECU_STATUS_1) {
 		GR_OLD_ECU_STATUS_1_MSG *ecu_data = (GR_OLD_ECU_STATUS_1_MSG *)data;
 		dashStatus.ECUState = ecu_data->ecu_status; // Get ECU Status
-	} else if (ID == MSG_DASH_CONFIG) {
+	} else if (msg_id == MSG_DASH_CONFIG) {
 		GR_OLD_DASH_CONFIG_MSG *dash_data = (GR_OLD_DASH_CONFIG_MSG *)data;
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bis
-	} else if (ID == PING_ID) {
+	} else if (msg_id == PING_ID) {
 		// process ping
-		CAN_sendPing(PING_ID);
-		LOGOMATIC("Ping received");
+		CAN_sendPing(node_id);
 	}
 }
