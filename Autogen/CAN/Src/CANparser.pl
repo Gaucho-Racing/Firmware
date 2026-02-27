@@ -1,8 +1,14 @@
+# #!/usr/bin/env perl
+# use strict;
+# use warnings;
+# use fatal qw(open close); # Addresses Linter Error #1 & #5 (Unchecked returns)
+# use autodie qw(open close print);
+# use YAML::XS 'LoadFile';
+# use File::Basename;
+
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use fatal   qw(open close);         # Addresses Linter Error #1 & #5 (Unchecked returns)
-use autodie qw(open close print);
 use YAML::XS 'LoadFile';
 use File::Basename;
 
@@ -19,13 +25,14 @@ my $yaml     = LoadFile($yaml_path);
 my $can_defs = $yaml->{'Custom CAN ID'};
 
 # 2. Open the file in WRITE mode
-# autodie handles the "or die" automatically here
-open my $fh, '>', $output_path;
+# Explicitly checking return value for open
+open my $fh, '>', $output_path or die "Error: Cannot open $output_path for writing: $!";
 
-print $fh "// Auto-generated Custom CAN ID header\n";
-print $fh "#ifndef CUSTOM_CAN_ID_H\n";
-print $fh "#define CUSTOM_CAN_ID_H\n\n";
-print $fh "typedef enum {\n";
+# Explicitly checking return values for every print to satisfy linter
+print $fh "// Auto-generated Custom CAN ID header\n" or die "Print failed: $!";
+print $fh "#ifndef CUSTOM_CAN_ID_H\n"                or die "Print failed: $!";
+print $fh "#define CUSTOM_CAN_ID_H\n\n"              or die "Print failed: $!";
+print $fh "typedef enum {\n"                         or die "Print failed: $!";
 
 # Sort to keep the header organized
 for my $msg_name ( sort keys %$can_defs ) {
@@ -50,13 +57,15 @@ for my $msg_name ( sort keys %$can_defs ) {
 		$val = "0x" . lc($1);
 	}
 
-	print $fh "    ${enum_name}_CAN_ID = $val,\n";
+    # Checking return for the dynamic print inside the loop
+    print $fh "    ${enum_name}_CAN_ID = $val,\n" or die "Print failed: $!";
 }
 
-print $fh "} Custom_CAN_ID_t;\n\n";
-print $fh "#endif // CUSTOM_CAN_ID_H\n";
+print $fh "} Custom_CAN_ID_t;\n\n"      or die "Print failed: $!";
+print $fh "#endif // CUSTOM_CAN_ID_H\n" or die "Print failed: $!";
 
-close $fh;
+# Explicitly checking return value for close
+close $fh or die "Error: Failed to close $output_path properly: $!";
 
 print "Successfully updated $output_path\n";
 
