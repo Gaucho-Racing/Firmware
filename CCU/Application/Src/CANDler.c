@@ -58,7 +58,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	}
 }
 
-void CAN_Configure()
+void CAN_Configure(void)
 {
 
 	CANConfig canCfg;
