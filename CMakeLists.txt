@@ -44,11 +44,15 @@ include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
+# Autogen
+include("Autogen/CAN/CANfigurator.cmake")
+
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
+include("${lib_path}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 
 message(
 	STATUS
@@ -68,12 +72,14 @@ message(
 add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
 add_gr_project(STM32G474xE AnalogCalibration)
+add_gr_project(STM32G474xE DashPanel)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)
 add_gr_project(STM32G474xE G4SPITESTING)
 add_gr_project(STM32G474xE G4ADCTESTING)
 add_gr_project(STM32G474xE G4CANTESTING)
+add_gr_project(STM32G474xE G4NEOTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4HELLO)
