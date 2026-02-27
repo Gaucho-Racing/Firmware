@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: ACU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 Fan_Controller_4 Fan_Controller_5 Fan_Controller_6 Fan_Controller_7 Fan_Controller_8 GR_Inverter_1 GR_Inverter_2 GR_Inverter_3 GR_Inverter_4 IMD LV_DC_DC SAM1 SAM10 SAM11 SAM12 SAM13 SAM14 SAM15 SAM16 SAM17 SAM18 SAM19 SAM2 SAM20 SAM3 SAM4 SAM5 SAM6 SAM7 SAM8 SAM9 Steering_Wheel TCM ALL
+BU_: ACU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 Fan_Controller_4 Fan_Controller_5 Fan_Controller_6 Fan_Controller_7 Fan_Controller_8 GR_Inverter_1 GR_Inverter_2 GR_Inverter_3 GR_Inverter_4 IMD LV_DC_DC SAM1 SAM10 SAM11 SAM12 SAM13 SAM14 SAM15 SAM16 SAM17 SAM18 SAM19 SAM2 SAM20 SAM3 SAM4 SAM5 SAM6 SAM7 SAM8 SAM9 Steering_Wheel TCM ALL
 
 BO_ 2147680257 ACU_Debug_2_0_to_Debugger: 8 ACU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -394,8 +394,18 @@ BO_ 2147684610 ACU_ACU_Cell_Data_5_to_ECU: 64 ACU
  SG_ Cell_159_Temp : 504|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
 
 BO_ 2550588916 ACU_Charger_Control_to_Charger: 5 ACU
+ SG_ Set_Voltage : 0|8@1+ (1,0) [0|0] "" Charger
+ SG_ Set_Current : 16|8@1+ (1,0) [0|0] "" Charger
+ SG_ Charge_Enable : 17|8@1+ (1,0) [0|0] "" Charger
 
 BO_ 2566869221 Charger_Charger_Data_to_ACU: 8 Charger
+ SG_ Output_Voltage : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ Output_Current : 16|8@1+ (1,0) [0|0] "" ACU
+ SG_ Hardware_Failure : 17|8@1+ (1,0) [0|0] "" ACU
+ SG_ OverTemp : 18|8@1+ (1,0) [0|0] "" ACU
+ SG_ Input_Voltage_Error : 19|8@1+ (1,0) [0|0] "" ACU
+ SG_ Connection_Error : 20|8@1+ (1,0) [0|0] "" ACU
+ SG_ Communication_State : 21|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 2147811329 Dash_Panel_Debug_2_0_to_Debugger: 8 Dash_Panel
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -668,38 +678,86 @@ BO_ 2147549708 Debugger_Ping_to_Charging_SDC: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Charging_SDC
 
 BO_ 2147491862 DTI_Inverter_DTI_Data_1_to_ECU: 8 DTI_Inverter
+ SG_ ERPM : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ Duty_Cycle : 32|8@1+ (1,0) [0|0] "" ECU
+ SG_ Input_Voltage : 48|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 2147492118 DTI_Inverter_DTI_Data_2_to_ECU: 8 DTI_Inverter
+ SG_ AC_Current : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ DC_Current : 16|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 2147492374 DTI_Inverter_DTI_Data_3_to_ECU: 8 DTI_Inverter
+ SG_ Controller_Temp : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ Motor_Temp : 16|8@1+ (1,0) [0|0] "" ECU
+ SG_ Fault_Codes : 32|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 2147492630 DTI_Inverter_DTI_Data_4_to_ECU: 8 DTI_Inverter
+ SG_ FOC_Id : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ FOC_Iq : 32|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 2147492886 DTI_Inverter_DTI_Data_5_to_ECU: 8 DTI_Inverter
+ SG_ Throttle : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ Brake : 8|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_input_1 : 16|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_input_2 : 17|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_input_3 : 18|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_input_4 : 19|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_output_1 : 20|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_output_2 : 21|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_output_3 : 22|8@1+ (1,0) [0|0] "" ECU
+ SG_ Digital_output_4 : 23|8@1+ (1,0) [0|0] "" ECU
+ SG_ Drive_Enable : 24|8@1+ (1,0) [0|0] "" ECU
+ SG_ Capacitor_temp_limit : 32|8@1+ (1,0) [0|0] "" ECU
+ SG_ DC_current_limit : 33|8@1+ (1,0) [0|0] "" ECU
+ SG_ Drive_enable_limit : 34|8@1+ (1,0) [0|0] "" ECU
+ SG_ IGBT_acceleration_temperature_limit : 35|8@1+ (1,0) [0|0] "" ECU
+ SG_ IGBT_temperature_limit : 36|8@1+ (1,0) [0|0] "" ECU
+ SG_ Input_voltage_limit : 37|8@1+ (1,0) [0|0] "" ECU
+ SG_ Motor_acceleration_temperature_limit : 38|8@1+ (1,0) [0|0] "" ECU
+ SG_ Motor_temperature_limit : 39|8@1+ (1,0) [0|0] "" ECU
+ SG_ RPM_min_limit : 40|8@1+ (1,0) [0|0] "" ECU
+ SG_ RPM_max_limit : 41|8@1+ (1,0) [0|0] "" ECU
+ SG_ Power_limit : 42|8@1+ (1,0) [0|0] "" ECU
+ SG_ CAN_Version : 56|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 278 ECU_DTI_Control_1_to_DTI_Inverter: 2 ECU
+ SG_ Target_AC_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 534 ECU_DTI_Control_2_to_DTI_Inverter: 2 ECU
+ SG_ Target_Brake_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 790 ECU_DTI_Control_3_to_DTI_Inverter: 4 ECU
+ SG_ Target_ERPM : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 1046 ECU_DTI_Control_4_to_DTI_Inverter: 2 ECU
+ SG_ Target_Position : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 1302 ECU_DTI_Control_5_to_DTI_Inverter: 2 ECU
+ SG_ R_AC_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 1558 ECU_DTI_Control_6_to_DTI_Inverter: 2 ECU
+ SG_ R_AC_Brake_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 1814 ECU_DTI_Control_7_to_DTI_Inverter: 1 ECU
+ SG_ Digital_Output_1 : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
+ SG_ Digital_Output_2 : 1|8@1+ (1,0) [0|0] "" DTI_Inverter
+ SG_ Digital_Output_3 : 2|8@1+ (1,0) [0|0] "" DTI_Inverter
+ SG_ Digital_Output_4 : 3|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 2147485718 ECU_DTI_Control_8_to_DTI_Inverter: 2 ECU
+ SG_ Max_AC_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 2147485974 ECU_DTI_Control_9_to_DTI_Inverter: 2 ECU
+ SG_ Max_Brake_AC_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 2147486230 ECU_DTI_Control_10_to_DTI_Inverter: 2 ECU
+ SG_ Max_DC_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 2147486486 ECU_DTI_Control_11_to_DTI_Inverter: 2 ECU
+ SG_ Max_Brake_DC_Current : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 2147486742 ECU_DTI_Control_12_to_DTI_Inverter: 1 ECU
+ SG_ Drive_Enable : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
 BO_ 2147614721 ECU_Debug_2_0_to_Debugger: 8 ECU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -866,18 +924,36 @@ BO_ 2181169152 ECU_ECU_Pedals_Data_to_TCM: 10 ECU
  SG_ APPS1_SIGNAL : 0|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ APPS2_SIGNAL : 16|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ BSE_SIGNAL : 32|16@1+ (0.0015259,0) [0|100] "%" TCM
- SG_ BRAKE_R_SIGNAL : 48|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ BRAKE_F_SIGNAL : 48|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ BRAKE_R_SIGNAL : 48|16@1+ (0.0015259,0) [0|100] "%" TCM
 
 BO_ 269 Energy_Meter_EM_Measurement_to_ACU: 8 Energy_Meter
+ SG_ Current : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ Voltage : 32|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 781 Energy_Meter_EM_Team_Data_1_to_ACU: 8 Energy_Meter
+ SG_ Team_Signal_1 : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ Team_Signal_2 : 32|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 782 Energy_Meter_EM_Team_Data_2_to_ACU: 8 Energy_Meter
+ SG_ Team_Signal_3 : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ Team_Signal_4 : 32|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 1037 Energy_Meter_EM_Status_to_ACU: 8 Energy_Meter
+ SG_ Violation : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ Logging : 1|8@1+ (1,0) [0|0] "" ACU
+ SG_ Energy : 8|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 1549 Energy_Meter_EM_Temperature_to_ACU: 8 Energy_Meter
+ SG_ Mux_Signal : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ Num_Sensors : 3|8@1+ (1,0) [0|0] "" ACU
+ SG_ Min_Temp : 8|8@1+ (1,0) [0|0] "" ACU
+ SG_ Max_Temp : 16|8@1+ (1,0) [0|0] "" ACU
+ SG_ Temp_5n : 24|8@1+ (1,0) [0|0] "" ACU
+ SG_ Temp_5n1 : 32|8@1+ (1,0) [0|0] "" ACU
+ SG_ Temp_5n2 : 40|8@1+ (1,0) [0|0] "" ACU
+ SG_ Temp_5n3 : 48|8@1+ (1,0) [0|0] "" ACU
+ SG_ Temp_5n4 : 56|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 2148335617 Fan_Controller_1_Debug_2_0_to_Debugger: 8 Fan_Controller_1
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -1124,6 +1200,11 @@ BO_ 2565862654 IMD_IMD_request_to_ACU: 0 IMD
 BO_ 2565862654 IMD_IMD_request_to_ACU: 0 IMD
 
 BO_ 2566849012 IMD_IMD_general_to_ACU: 8 IMD
+ SG_ R_Iso_Corrected : 0|8@1+ (1,0) [0|0] "" ACU
+ SG_ R_Iso_Status : 16|8@1+ (1,0) [0|0] "" ACU
+ SG_ Iso_Meas_Count : 24|8@1+ (1,0) [0|0] "" ACU
+ SG_ Status : 32|8@1+ (1,0) [0|0] "" ACU
+ SG_ Activity : 48|8@1+ (1,0) [0|0] "" ACU
 
 BO_ 2150171137 LV_DC_DC_Ping_to_Debugger: 4 LV_DC_DC
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Debugger
