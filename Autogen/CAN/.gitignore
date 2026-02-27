@@ -1,0 +1,6 @@
+inc/
+!inc/output.dbc
+
+# CANfigurator
+Inc/*.h
+Doc/*.dbc
