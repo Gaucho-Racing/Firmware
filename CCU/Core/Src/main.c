@@ -19,6 +19,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "CANDler.h"
+#include "CCUStateData.h"
+#include "StateMachine.h"
+#include "StateTicks.h"
+#include "StateUtils.h"
+#include "UpdateButton.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -47,6 +53,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+CCU_StateData state_data = {0};
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
@@ -110,19 +117,31 @@ int main(void)
 	MX_ADC1_Init();
 	MX_ADC2_Init();
 	/* USER CODE BEGIN 2 */
+
+	// Initialize CAN
+	CAN_Configure();
+
 	LOGOMATIC("Initialization complete\n");
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
 	while (1) {
-		/* USER CODE END WHILE */
+		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
+		LL_mDelay(100);
 
-		/* USER CODE BEGIN 3 */
-		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
-		LL_mDelay(250); // FIXME Reduce or remove delay
+		// Initialize SoftwareLatch High
+		setSoftwareLatch(1, &state_data);
+
+		Check_Button(&state_data);
+		CCU_State_Tick(&state_data);
+
+		LL_mDelay(200);
+
+		/* USER CODE END 3 */
 	}
-	/* USER CODE END 3 */
 }
 
 /**
