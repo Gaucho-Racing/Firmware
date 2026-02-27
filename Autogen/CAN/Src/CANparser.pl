@@ -4,10 +4,13 @@ use warnings;
 use English  qw(-no_match_vars);    # Allows using $OS_ERROR instead of $!
 use YAML::XS qw(LoadFile);
 use File::Basename;
+use English qw(-no_match_vars);
 
-# --- Configuration ---
-my $yaml_path   = $ARGV[0] // 'format.CANdo';
-my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
+main();
+
+sub main {
+	my $yaml_path   = $ARGV[0] // 'format.CANdo';
+	my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
 
 # 1. Load the data first (satisfies RequireBriefOpen)
 if ( !-e $yaml_path ) {
