@@ -33,6 +33,6 @@ typedef enum {
 	IMD_REQUEST_CAN_ID = 0x18eff4fe,
 	IMD_RESPONSE_CAN_ID = 23,
 	IMD_VOLTAGE_CAN_ID = 0x18eff4fe,
-} Custom_CAN_ID_t;
+} GRCAN_CUSTOM_ID;
 
 #endif // CUSTOM_CAN_ID_H

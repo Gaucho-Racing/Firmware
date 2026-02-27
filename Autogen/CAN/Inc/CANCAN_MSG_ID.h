@@ -56,6 +56,6 @@ typedef enum {
 	MSG_GPS_QY = 0x035,
 	MSG_GPS_RZ = 0x036,
 	MSG_UVW_DGPS = 0x030,
-} can_msg_id_t;
+} GRCAN_MSG_ID;
 
 #endif // CAN_MSG_IDS_H

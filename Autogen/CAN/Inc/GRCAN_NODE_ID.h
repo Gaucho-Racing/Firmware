@@ -51,6 +51,6 @@ typedef enum {
 	SAM9 = 0x1D,
 	Steering_Wheel = 0x06,
 	TCM = 0x04,
-} GR_ID_t;
+} GRCAN_NODE_ID;
 
 #endif // GR_IDS_H
