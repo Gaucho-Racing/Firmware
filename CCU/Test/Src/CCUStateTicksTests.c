@@ -300,7 +300,6 @@ int main(void)
 			LOGOMATIC("Software Latch was not tripped and set to low\n");
 			return 7;
 		}
-
 	}
 	LOGOMATIC("ALL CURRENT TEST CASES PASSED\n");
 	return 0;
