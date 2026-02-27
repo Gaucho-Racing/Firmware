@@ -97,11 +97,9 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 
 	if (neopixelConfiguration->SPI_Instance == SPI1) {
 		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
-	}
-	else if (neopixelConfiguration->SPI_Instance == SPI2) {
+	} else if (neopixelConfiguration->SPI_Instance == SPI2) {
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
-	}
-	else if (neopixelConfiguration->SPI_Instance == SPI3) {
+	} else if (neopixelConfiguration->SPI_Instance == SPI3) {
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI3);
 	}
 
