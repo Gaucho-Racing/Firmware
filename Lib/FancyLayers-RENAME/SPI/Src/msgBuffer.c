@@ -19,7 +19,7 @@ void GR_MsgBuffer_Free(GR_MsgBuffer *msg_buffer)
 	free(msg_buffer->buffer);
 }
 
-int8_t GR_MsgBuffer_Push(GR_MsgBuffer *msg_buffer, uint8_t *byte_array, uint8_t size)
+int8_t GR_MsgBuffer_Push(GR_MsgBuffer *msg_buffer, uint8_t *byte_array, uint32_t size)
 {
 	if ((size + 1) > msg_buffer->free_space) {
 		return FAIL;

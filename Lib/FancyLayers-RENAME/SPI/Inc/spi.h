@@ -5,6 +5,7 @@
 
 #include "circularBuffer.h"
 #include "main.h"
+#include "msgBuffer.h"
 
 #define GR_SPI_UNKNOWN_IRQN -64
 #define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
@@ -29,8 +30,8 @@ typedef struct GR_SPI_Handler_struct {
 	LL_SPI_InitTypeDef *spi_config;
 	GR_SPI_Pins *pins;
 	// GR structs
-	CircularBuffer *rx_buffer;
-	CircularBuffer *tx_buffer;
+	GR_MsgBuffer *rx_buffer;
+	GR_MsgBuffer *tx_buffer;
 	// Tx-Rx parameters
 	uint8_t transfer_size;
 	// Tx-Rx current messages

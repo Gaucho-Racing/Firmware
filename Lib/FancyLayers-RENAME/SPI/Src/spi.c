@@ -1,6 +1,6 @@
 // Wonderful SPI Abstraction Layer courtesy of Bailey, Colin, and Aaryan
 #include "spi.h"
-
+#include "msgBuffer.h"
 #include <stdlib.h>
 
 // Transfer sizes
@@ -28,18 +28,21 @@
 static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handle structs for SPI1
 					      // (0), SPI2 (1), & SPI3 (2)
 
+
 void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config)
 {
 	// Create Circular Buffers
-	CircularBuffer *circular_buffer_ptr;
-	circular_buffer_ptr = GR_CircularBuffer_Create(GR_SPI_BUFFER_MESSAGE_CAPACITY);
+
+	// Assign the rx and the tx pointers
+	GR_MsgBuffer *circular_buffer_ptr = {0};
+	GR_MsgBuffer_Create(circular_buffer_ptr, GR_SPI_BUFFER_MESSAGE_CAPACITY);
 	if (circular_buffer_ptr == NULL) {
 		handle->error_status = GR_SPI_ERR_BAD_INIT_RXBUF;
 		return;
 	} else {
 		handle->rx_buffer = circular_buffer_ptr;
 	}
-	circular_buffer_ptr = GR_CircularBuffer_Create(GR_SPI_BUFFER_MESSAGE_CAPACITY);
+	GR_MsgBuffer_Create(circular_buffer_ptr, GR_SPI_BUFFER_MESSAGE_CAPACITY);
 	if (circular_buffer_ptr == NULL) {
 		handle->error_status = GR_SPI_ERR_BAD_INIT_TXBUF;
 		return;
@@ -139,7 +142,7 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 	}
 
 	// Push the new message (copy) onto the Tx circular buffer
-	GR_CircularBuffer_Push(handle->tx_buffer, &temp_msg, sizeof(GR_SPI_Message));
+	GR_MsgBuffer_Push(handle->tx_buffer, (uint8_t *)&temp_msg, sizeof(temp_msg));
 
 	// Check if there is no message in progress
 	if (handle->msg_status != GR_SPI_MSG_IN_PROGRESS) {
@@ -149,7 +152,11 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 
 void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg)
 {
-	GR_SPI_Message *rx_msg = GR_CircularBuffer_Pop(handle->rx_buffer);
+	GR_SPI_Message *rx_msg;
+	GR_MsgBuffer_Pop(handle->rx_buffer, (uint8_t *)&rx_msg);
+
+	// Maybe include a status check?
+	// if status = ...
 
 	// Check if there was a message returned by buffer pop
 	if (rx_msg) {
@@ -232,14 +239,14 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 		// Push current message into Rx circular buffer to mark completion
 		if (handle->current_rx_msg_index == msg_size) {
 			handle->current_rx_msg_index = 0;
-			GR_CircularBuffer_Push(handle->rx_buffer, (void *)handle->current_msg, sizeof(GR_SPI_Message));
+			GR_MsgBuffer_Push(handle->rx_buffer, (uint8_t *)handle->current_msg, sizeof(handle->current_msg));
 			// Free message struct but not the byte array within the message (pointed to by the message on the rx_buffer)
-			free(handle->current_msg);
+			GR_SPI_Msg_Free(handle->current_msg);
 			handle->current_msg = NULL;
 			// Finish transaction
 			LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
 			// Only go to IDLE when no additional messages are in pipeline
-			if (GR_CircularBuffer_IsEmpty(handle->tx_buffer)) {
+			if (GR_MsgBuffer_IsEmpty(handle->tx_buffer)) {
 				handle->msg_status = GR_SPI_MSG_IDLE;
 			} else {
 				GR_SPI_Begin_New_Tx(handle);
@@ -319,7 +326,8 @@ void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
 	handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
 	handle->current_tx_msg_index = 0;
 	handle->current_rx_msg_index = 0;
-	handle->current_msg = GR_CircularBuffer_Pop(handle->tx_buffer);
+	GR_MsgBuffer_Pop(handle->tx_buffer, (uint8_t *) handle->current_msg);
+	// Add status validation here?
 
 	// Pull chip select to active low
 	LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
@@ -352,8 +360,8 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 	if (handle->current_tx_msg_index == msg_size) {
 		handle->current_tx_msg_index = 0;
 		// Queue up next message to be sent
-		if (!GR_CircularBuffer_IsEmpty(handle->tx_buffer)) {
-			handle->current_msg = GR_CircularBuffer_Pop(handle->tx_buffer);
+		if (!GR_MsgBuffer_IsEmpty(handle->tx_buffer)) {
+			GR_MsgBuffer_Pop(handle->tx_buffer, (uint8_t *) handle->current_msg);
 		}
 		// No more messages to load into transfer buffer
 		else {
@@ -405,8 +413,8 @@ void GR_SPI_Close(GR_SPI_Handler *handle)
 		free(handle->pins);
 	}
 	GR_SPI_Msg_Free(handle->current_msg);
-	GR_CircularBuffer_Free(&handle->rx_buffer);
-	GR_CircularBuffer_Free(&handle->tx_buffer);
+	GR_MsgBuffer_Free(handle->rx_buffer);
+	GR_MsgBuffer_Free(handle->tx_buffer);
 }
 
 void GR_SPI_Msg_Free(GR_SPI_Message *msg)
@@ -421,5 +429,5 @@ void GR_SPI_Msg_Free(GR_SPI_Message *msg)
 
 bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle)
 {
-	return GR_CircularBuffer_IsEmpty(handle->rx_buffer);
+	return GR_MsgBuffer_IsEmpty(handle->rx_buffer);
 }
