@@ -27,8 +27,8 @@ print {$fh} "#ifndef CUSTOM_CAN_ID_H\n"                or die 'Print failed: ' .
 print {$fh} "#define CUSTOM_CAN_ID_H\n\n"              or die 'Print failed: ' . $!;
 print {$fh} "typedef enum {\n"                         or die 'Print failed: ' . $!;
 
-for my $msg_name ( sort keys %{ $can_defs } ) {
-    my $entry = $can_defs->{$msg_name};
+for my $msg_name ( sort keys %{$can_defs} ) {
+	my $entry = $can_defs->{$msg_name};
 
 	if ( ref $entry ne 'HASH' ) {
 		next;
@@ -39,20 +39,20 @@ for my $msg_name ( sort keys %{ $can_defs } ) {
 		next;
 	}
 
-    my $enum_name = uc $msg_name;
-    $enum_name =~ s/[[:^upper:][:digit:]]/_/g;
-    $enum_name =~ s/_+/_/g;
-    $enum_name =~ s/^_|_$//g;
+	my $enum_name = uc $msg_name;
+	$enum_name =~ s/[[:^upper:][:digit:]]/_/g;
+	$enum_name =~ s/_+/_/g;
+	$enum_name =~ s/^_|_$//g;
 
-    my $val = $can_id;
-    if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
-        $val = '0x' . lc $val;
-    }
-    elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
-        $val = '0x' . lc $1;
-    }
+	my $val = $can_id;
+	if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
+		$val = '0x' . lc $val;
+	}
+	elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
+		$val = '0x' . lc $1;
+	}
 
-    print {$fh} "    ${enum_name}_CAN_ID = $val,\n" or die 'Print failed: ' . $!;
+	print {$fh} "    ${enum_name}_CAN_ID = $val,\n" or die 'Print failed: ' . $!;
 }
 
 print {$fh} "} Custom_CAN_ID_t;\n\n"      or die 'Print failed: ' . $!;
