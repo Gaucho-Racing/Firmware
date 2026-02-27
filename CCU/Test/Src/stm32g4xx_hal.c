@@ -1,9 +1,8 @@
 #include "stm32g4xx_hal.h"
 
 #include "Logomatic.h"
-#include "stm32g4xx_ll_gpio.h"
-#include "Logomatic.h"
 #include "Unused.h"
+#include "stm32g4xx_ll_gpio.h"
 
 uint32_t HAL_GetTick(void)
 {
