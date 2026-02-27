@@ -68,7 +68,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
-NeopixelConfig neopixelConfig = {.SPI_Instance = SPI1, .SPI_FrequencyHz = 2656250U, .LatchTimeUs = 80U, .NumberOfNeopixels = 60U}; // TODO Expand with select configurable contents of MX_SPI1_Init
+NeopixelConfig neopixelConfig = {.SPI_Instance = SPI1, .NumberOfNeopixels = 60U}; // TODO Expand with select configurable contents of MX_SPI1_Init
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,6 +87,7 @@ void SystemClock_Config(void);
  * @retval int
  */
 
+/*
 void MX_SPI1_Init(void)
 {
 	LL_GPIO_InitTypeDef copi_pin = {
@@ -118,6 +119,7 @@ void MX_SPI1_Init(void)
 	LL_SPI_EnableNSSPulseMgt(SPI1);
 	LL_SPI_Enable(SPI1);
 }
+*/
 
 int main(void)
 {
@@ -146,7 +148,6 @@ int main(void)
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
-	MX_SPI1_Init();
 	/* USER CODE BEGIN 2 */
 	NeopixelContext *neopixel_context = Neopixel_Setup(&neopixelConfig);
 	/* USER CODE END 2 */

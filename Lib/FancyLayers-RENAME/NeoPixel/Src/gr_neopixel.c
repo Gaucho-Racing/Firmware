@@ -7,14 +7,9 @@
 #include "Logomatic.h"
 #include "main.h"
 
-#define BITS_PER_BYTE (8U)
-#define MICROSECONDS_PER_SECOND (1000000UL)
-
 struct NeopixelContext {
 	// Configuration provided at setup
 	NeopixelConfig config;
-	// Number of zero bytes to send after color data to ensure latching, cached calculation from config parameters
-	uint32_t zeroTailBytes;
 };
 
 /**
@@ -31,19 +26,16 @@ static void Neopixel_BlockWhileBusy(NeopixelContext *context)
 void Neopixel_LatchStrip(NeopixelContext *context)
 {
 	Neopixel_BlockWhileBusy(context);
-	for (uint32_t i = 0; i < context->zeroTailBytes; i++) {
-		while (!LL_SPI_IsActiveFlag_TXE(context->config.SPI_Instance)) {}
-		LL_SPI_TransmitData8(context->config.SPI_Instance, 0x00);
-	}
+	LL_mDelay(1); // 1 ms delay is longer than required (50 us) between data refresh, but convenient
 	Neopixel_BlockWhileBusy(context);
 }
 
 NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 {
 	// TODO Abstraction
-	// - Add internal enums instead of using provided preprocessor values
-	// - Initialize GPIO for SPI from config
-	// - Initialize SPI peripheral with settings from config
+	// - Add internal enums instead of using provided preprocessor values -> DONE
+	// - Initialize GPIO for SPI from config -> DONE
+	// - Initialize SPI peripheral with settings from config -> DONE
 	//
 	// Essentially, main.c should be able to call this function with a config struct and not have to worry about the details of SPI or GPIO initialization.
 	// This will make it easier to reuse this code across different projects and microcontrollers in the future.
@@ -52,16 +44,43 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	// Remove the call to MX_SPI1_Init from main.c, setup the SPI peripheral with the settings being determined by the NeopixelConfig struct passed in.
 	// NeopixelConfig should have the minimum necessary information to fully initialize the SPI peripheral for Neopixel control.
 
+	if (neopixelConfiguration == NULL) {
+		LOGOMATIC("Neopixel configuration is NULL!\n");
+		return NULL;
+	}
+
+	GPIO_TypeDef *gpio_port = 0;
+	switch (neopixelConfiguration->gpio_port) {
+		case Neopixel_GPIOA:
+			gpio_port = Neopixel_GPIOA;
+			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+			break;
+		case Neopixel_GPIOB:
+			gpio_port = Neopixel_GPIOB;
+			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+			break;
+		case Neopixel_GPIOC:
+			gpio_port = Neopixel_GPIOC;
+			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+			break;
+		case Neopixel_GPIOD:
+			gpio_port = Neopixel_GPIOD;
+			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOD);
+			break;
+		default:
+			return;
+	}
+
 	LL_GPIO_InitTypeDef copi_pin = {
-	    .Pin = neopixelConfiguration->gpio_pin,
+	    .Pin = neopixelConfiguration->mosi_gpio_pin,
 	    .Mode = LL_GPIO_MODE_ALTERNATE,
 	    .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
 	    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
 	    .Pull = LL_GPIO_PULL_NO,
-	    .Alternate = neopixelConfiguration->alternate_function,
+	    .Alternate = neopixelConfiguration->neopixelAF,
 	};
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB); // Only SPI1 takes AHB2, SPI2 and 3 take AHB1
-	LL_GPIO_Init(neopixelConfiguration->gpio_port, &copi_pin);
+
+	LL_GPIO_Init(gpio_port, &copi_pin);
 
 	LL_SPI_InitTypeDef spi = {
 	    .TransferDirection = LL_SPI_HALF_DUPLEX_TX,
@@ -70,20 +89,30 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .ClockPolarity = LL_SPI_POLARITY_LOW,
 	    .ClockPhase = LL_SPI_PHASE_1EDGE,
 	    .NSS = LL_SPI_NSS_SOFT,
-	    .BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV64,
+	    .BaudRate = neopixelConfiguration->neopixel_baudRatePrescaler,
 	    .BitOrder = LL_SPI_MSB_FIRST,
 	    .CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE,
 	    .CRCPoly = 7,
 	};
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1); // Enable clock twice (see line 64)
+
+	switch (neopixelConfiguration->SPI_Instance) {
+		case SPI1:
+			LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
+			break;
+		case SPI2:
+			LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+			break;
+		case SPI3:
+			LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI3);
+			break;
+		default:
+			return;
+	}
+
 	LL_SPI_Init(neopixelConfiguration->SPI_Instance, &spi);
 	LL_SPI_SetStandard(neopixelConfiguration->SPI_Instance, LL_SPI_PROTOCOL_MOTOROLA);
 	LL_SPI_EnableNSSPulseMgt(neopixelConfiguration->SPI_Instance);
 	LL_SPI_Enable(neopixelConfiguration->SPI_Instance);
-	if (neopixelConfiguration == NULL) {
-		LOGOMATIC("Neopixel configuration is NULL!\n");
-		return NULL;
-	}
 
 	NeopixelContext *context = malloc(sizeof(NeopixelContext));
 
@@ -93,12 +122,6 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	}
 
 	context->config = *neopixelConfiguration;
-
-	// Calculate timings
-
-	const uint64_t zerotail_divisor = BITS_PER_BYTE * MICROSECONDS_PER_SECOND;
-	const uint64_t zerotail_numerator = (uint64_t)context->config.SPI_FrequencyHz * (uint64_t)context->config.LatchTimeUs + zerotail_divisor - 1ULL;
-	context->zeroTailBytes = (uint32_t)(zerotail_numerator / zerotail_divisor);
 
 	Neopixel_LatchStrip(context);
 
@@ -124,6 +147,9 @@ void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, u
 		return; // possiblty works
 	}
 	if (colors == NULL) {
+		return; // possiblty works
+	}
+	if (sizeofColors == 0) {
 		return; // possiblty works
 	}
 
