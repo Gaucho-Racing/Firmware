@@ -122,6 +122,7 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
 	while (1) {
 		/* USER CODE END WHILE */
 		// LOGOMATIC("Hello from DashPanel!\n");
@@ -129,9 +130,11 @@ int main(void)
 
 		if (canReadyToSend) {
 
-			CAN_SEND_ECU msg_struct;
-			msg_struct.TSActiveButton = dashStatus.TSActiveButton;
-			msg_struct.RTDButton = dashStatus.RTDButton;
+			GR_OLD_DASH_STATUS_MSG msg_struct;
+
+			msg_struct.led_bits = dashStatus.led_bits;
+			msg_struct.ts_button = dashStatus.TSActiveButton;
+			msg_struct.rtd_button = dashStatus.RTDButton;
 
 			// Kinda weird ngl but it doesn't matter
 			if (dashStatus.TSActiveButton) {
@@ -145,6 +148,7 @@ int main(void)
 
 			canReadyToSend = false;
 		}
+
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */

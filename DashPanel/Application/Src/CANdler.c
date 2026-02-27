@@ -2,6 +2,7 @@
 
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
+#include "GR_OLD_MSG_DAT.h"
 #include "Unused.h"
 #include "can.h"
 #include "dashutils.h"
@@ -76,7 +77,7 @@ void CAN_sendPing(GR_OLD_NODE_ID to)
 	can_send(can_handler, &pingMsg);
 }
 
-void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg, GR_OLD_NODE_ID to)
+void CAN_sendECU(CANHandle *c, GR_OLD_DASH_STATUS_MSG *msg, GR_OLD_NODE_ID to)
 {
 
 	FDCANTxMessage sendECUMsg;
@@ -84,7 +85,7 @@ void CAN_sendECU(CANHandle *c, CAN_SEND_ECU *msg, GR_OLD_NODE_ID to)
 	sendECUMsg.tx_header.IdType = FDCAN_STANDARD_ID;
 	sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	sendECUMsg.tx_header.DataLength = sizeof(CAN_SEND_ECU);
+	sendECUMsg.tx_header.DataLength = sizeof(GR_OLD_DASH_STATUS_MSG);
 	sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	sendECUMsg.tx_header.MessageMarker = 0;
@@ -99,14 +100,16 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 	UNUSED(size); // FIXME Validate actual size versus expected size for different messages!
 
 	// Process data
-	if (ID == ECU_ID) {
-		CAN_RECEIVE_ECU *ecu_data = (CAN_RECEIVE_ECU *)data;
-		dashStatus.vehicleSpeed = ecu_data->vehicleSpeed;
-		dashStatus.ECUState = ecu_data->ECUState;
+	if (ID == MSG_ECU_STATUS_1) {
+		GR_OLD_ECU_STATUS_1_MSG *ecu_data = (GR_OLD_ECU_STATUS_1_MSG *)data;
+		dashStatus.ECUState = ecu_data->ecu_status;
 		// Process data
+	} else if (ID == MSG_DASH_CONFIG) {
+		GR_OLD_DASH_CONFIG_MSG *dash_data = (GR_OLD_DASH_CONFIG_MSG *)data;
+		dashStatus.led_bits = dash_data->led_bits;
 	} else if (ID == PING_ID) {
 		// process ping
 		// TODO: fix ping
-		CAN_sendPing();
+		CAN_sendPing(PING_ID);
 	}
 }
