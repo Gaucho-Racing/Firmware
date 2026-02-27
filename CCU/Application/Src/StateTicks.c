@@ -52,7 +52,8 @@ void STATE_IDLE(CCU_StateData *state_data)
 
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 1;
-		SendPrechargeStatus();
+		SendPrechargeStatus(state_data);
+		SendDebugReport("No_Errors");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
@@ -67,8 +68,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		setSoftwareLatch(0, state_data);
 
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		SendPrechargeStatus();
-		//FIXME: Send debug 2.0
+		SendPrechargeStatus(state_data);
 
 		state_data->state = CCU_STATE_IDLE;
 
@@ -78,8 +78,8 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	if (!(state_data->Button_Status)) {
 		state_data->state = CCU_STATE_IDLE;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		SendPrechargeStatus();
-		//Send debug 2.0
+		SendPrechargeStatus(state_data);
+		SendDebugReport("No_Error");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 

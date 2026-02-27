@@ -1,11 +1,13 @@
 #include "StateUtils.h"
-
+#include "CANDler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
 #include "bitManipulations.h"
 #include "can.h"
 #include "gpio.h"
+
+
 
 void setSoftwareLatch(bool close, CCU_StateData *state_data)
 {
@@ -25,21 +27,27 @@ bool CriticalError(const CCU_StateData *state_data)
 {
 
 	if (state_data->BCU_S2_OVERCURR_ERROR) {
+		SendDebugReport("OVERCURR");
 		return true;
 
 	} else if (state_data->BCU_S2_OVERTEMP_ERROR) {
+		SendDebugReport("OVERTEMP");
 		return true;
 
 	} else if (state_data->BCU_S2_OVERVOLT_ERROR) {
+		SendDebugReport("OVERVOLT");
 		return true;
 
 	} else if (state_data->BCU_S2_UNDERCURR_ERROR) {
+		SendDebugReport("UNDECURR");
 		return true;
 
 	} else if (state_data->BCU_S2_UNDERVOLT_ERROR) {
+		SendDebugReport("UNDEVOLT");
 		return true;
 
 	} else {
 		return false;
 	}
 }
+
