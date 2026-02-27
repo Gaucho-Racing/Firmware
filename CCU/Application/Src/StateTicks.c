@@ -55,7 +55,6 @@ void STATE_IDLE(CCU_StateData *state_data)
 		SendPrechargeStatus();
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-
 	}
 }
 
@@ -68,7 +67,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		SendPrechargeStatus();
-		//FIXME: Send debug 2.0
+		// FIXME: Send debug 2.0
 
 		state_data->state = CCU_STATE_IDLE;
 
@@ -79,12 +78,8 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		state_data->state = CCU_STATE_IDLE;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		SendPrechargeStatus();
-		//Send debug 2.0
+		// Send debug 2.0
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-
 	}
-
-
-
 }
