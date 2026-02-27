@@ -72,7 +72,7 @@
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4CANTESTING"
 		},
-    {
+		{
 			"label": "CMake: configure and build G4SPITESTING",
 			"type": "shell",
 			"dependsOrder": "sequence",
