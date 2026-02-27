@@ -11,7 +11,7 @@ typedef struct msg_buffer_stc {
 	uint32_t max_size;
 } GR_MsgBuffer;
 
-GR_MsgBuffer* GR_MsgBuffer_Create(uint32_t size);
+GR_MsgBuffer *GR_MsgBuffer_Create(uint32_t size);
 
 void GR_MsgBuffer_Free(GR_MsgBuffer *msg_buffer);
 

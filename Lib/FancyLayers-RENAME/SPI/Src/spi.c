@@ -1,7 +1,9 @@
 // Wonderful SPI Abstraction Layer courtesy of Bailey, Colin, William, and Aaryan
 #include "spi.h"
-#include "msgBuffer.h"
+
 #include <stdlib.h>
+
+#include "msgBuffer.h"
 
 // Transfer sizes
 #define GR_SPI_TRANSFER_SIZE_8 8
@@ -29,10 +31,11 @@
 static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handle structs for SPI1
 					      // (0), SPI2 (1), & SPI3 (2)
 
-
 void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config)
 {
-	if (!handle) return;
+	if (!handle) {
+		return;
+	}
 	if (!config || !pin_config) {
 		handle->error_status = GR_SPI_ERR_BAD_INIT_CONFIG;
 		return;
@@ -72,9 +75,9 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	handle->pins->alternate_function_number = pin_config->alternate_function_number;
 
 	// Set current message variables
-	handle->current_msg = (GR_SPI_Message*)malloc(sizeof(GR_SPI_Message));
+	handle->current_msg = (GR_SPI_Message *)malloc(sizeof(GR_SPI_Message));
 	handle->current_msg->size = 0;
-	handle->current_msg->data = (uint8_t*)malloc(GR_SPI_MAX_MSG_BYTE_SIZE * sizeof(uint8_t));
+	handle->current_msg->data = (uint8_t *)malloc(GR_SPI_MAX_MSG_BYTE_SIZE * sizeof(uint8_t));
 	handle->current_rx_msg_index = 0;
 	handle->current_tx_msg_index = 0;
 	handle->msg_status = GR_SPI_MSG_IDLE;
@@ -140,7 +143,9 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 
 void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 {
-	if(!handle || !msg || msg->size > GR_SPI_MAX_MSG_BYTE_SIZE) return;
+	if (!handle || !msg || msg->size > GR_SPI_MAX_MSG_BYTE_SIZE) {
+		return;
+	}
 
 	// Push the new message (copy) onto the Tx circular buffer
 	GR_MsgBuffer_Push(handle->tx_buffer, msg->data, msg->size);
@@ -153,7 +158,9 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 
 void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg)
 {
-	if (!handle || !dest_msg || dest_msg->size != GR_MsgBuffer_PeekMsgSize(handle->rx_buffer)) return;
+	if (!handle || !dest_msg || dest_msg->size != GR_MsgBuffer_PeekMsgSize(handle->rx_buffer)) {
+		return;
+	}
 
 	GR_MsgBuffer_Pop(handle->rx_buffer, dest_msg->data);
 }
@@ -175,7 +182,9 @@ void SPI3_IRQHandler(void)
 
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 {
-	if (!handle) return;
+	if (!handle) {
+		return;
+	}
 
 	// Check if called by error interrupt
 	// Frame format error
@@ -258,7 +267,9 @@ uint32_t GR_SPI_Get_IRQn(SPI_TypeDef *SPIx)
 
 void GR_SPI_Enable_Clocks(GR_SPI_Handler *handle)
 {
-	if (!handle) return;
+	if (!handle) {
+		return;
+	}
 
 	uint32_t GPIOx_Port;
 
@@ -304,13 +315,17 @@ void GR_SPI_Enable_Clocks(GR_SPI_Handler *handle)
 
 void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
 {
-	if (!handle) return;
+	if (!handle) {
+		return;
+	}
 
 	handle->current_msg->size = GR_MsgBuffer_PeekMsgSize(handle->tx_buffer);
 	GR_MsgBuffer_Pop(handle->tx_buffer, handle->current_msg->data);
 
 	// ERROR: unexpected zero size
-	if(handle->current_msg->size < 1) return;
+	if (handle->current_msg->size < 1) {
+		return;
+	}
 
 	// Re-initiate a transaction
 	handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
@@ -326,7 +341,9 @@ void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
 
 void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 {
-	if (!handle) return;
+	if (!handle) {
+		return;
+	}
 
 	uint16_t tx_index = handle->current_tx_msg_index, msg_size = handle->current_msg->size;
 	// Send two bytes if transferring 16 bits
@@ -364,7 +381,9 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 
 void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_config)
 {
-	if(!handle || !pin_config) return;
+	if (!handle || !pin_config) {
+		return;
+	}
 
 	LL_GPIO_StructInit(pin_config);					 // Default config values
 	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;		 // Very high output speed
@@ -380,7 +399,9 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_conf
 
 void GR_SPI_Close(GR_SPI_Handler *handle)
 {
-	if (!handle) return;
+	if (!handle) {
+		return;
+	}
 
 	// Safety Checks
 	LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]); // Set CS high
@@ -424,7 +445,9 @@ void GR_SPI_Msg_Free(GR_SPI_Message *msg)
 
 bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle)
 {
-	if (!handle) return true;
+	if (!handle) {
+		return true;
+	}
 
 	return GR_MsgBuffer_IsEmpty(handle->rx_buffer);
 }

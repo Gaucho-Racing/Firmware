@@ -12,7 +12,7 @@ int main(void)
 	}
 
 	// Test GetCurrentSize
-    GR_MsgBuffer *buffer_ptr = (GR_MsgBuffer *)malloc(sizeof(GR_MsgBuffer));
+	GR_MsgBuffer *buffer_ptr = (GR_MsgBuffer *)malloc(sizeof(GR_MsgBuffer));
 	GR_MsgBuffer_Create(buffer_ptr, sizeof(GR_MsgBuffer));
 
 	// Test single item
