@@ -4938,10 +4938,10 @@ Custom CAN ID:
     signals:
       - name: "Team Signal 1"
         bit_start: 0
-        # Fuck if I know
+        # Frick if I know
       - name: "Team Signal 2"
         bit_start: 32
-        # Fuck if I know
+        # Frick if I know
 
   EM Team Data 2:
     CAN ID: 30e
@@ -4949,13 +4949,12 @@ Custom CAN ID:
     signals:
       - name: "Team Signal 3"
         bit_start: 0
-        # Fuck if I know
+        # Frick if I know
       - name: "Team Signal 4"
         bit_start: 32
-        # Fuck if I know
+        # Frick if I know
 
 GR ID:
-  CCU : "0x2A"
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
@@ -5000,5 +4999,6 @@ GR ID:
   SAM19: "0x27"
   SAM20: "0x28"
   LV DC-DC: "0x29"
+  CCU : "0x2A"
   DGPS: "0x30"
   ALL: "0xFF"
