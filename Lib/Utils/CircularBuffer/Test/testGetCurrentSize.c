@@ -13,7 +13,7 @@ int main(void)
 	}
 
 	// Test GetCurrentSize
-	buffer_ptr = GR_CircularBuffer_Create(10);
+	GR_CircularBuffer_Create(10);
 
 	// Test single item
 	int temp = 0;

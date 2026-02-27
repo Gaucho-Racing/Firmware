@@ -2,13 +2,14 @@
 #define SPI_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
-#include "circularBuffer.h"
 #include "main.h"
 #include "msgBuffer.h"
 
 #define GR_SPI_UNKNOWN_IRQN -64
-#define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
+#define GR_SPI_BUFFER_BYTE_CAPACITY 16
+#define GR_SPI_MAX_MSG_BYTE_SIZE 8
 
 // Generic type
 typedef struct {
