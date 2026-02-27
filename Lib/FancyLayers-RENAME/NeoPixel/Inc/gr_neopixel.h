@@ -5,7 +5,7 @@
 #ifndef GR_NEOPIXEL_H
 #define GR_NEOPIXEL_H
 
-//No longer needed, can just pass GPIOA, GPIOB, etc. directly into config struct
+// No longer needed, can just pass GPIOA, GPIOB, etc. directly into config struct
 typedef enum {
 	Neopixel_GPIOA,
 	Neopixel_GPIOB,
