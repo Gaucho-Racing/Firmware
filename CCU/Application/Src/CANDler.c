@@ -196,3 +196,5 @@ void SendPrechargeStatus()
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
 }
+
+
