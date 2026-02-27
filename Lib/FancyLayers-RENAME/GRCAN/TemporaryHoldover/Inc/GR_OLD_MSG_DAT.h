@@ -200,13 +200,7 @@ typedef struct {
 
 /** Dashboard Config */
 typedef struct {
-	uint8_t led_bits;	/** BMS/IMD/BSPD LED cmds (0=off, 1=on) */
-	uint8_t button_led_1_r; /** Button 1 red (set by ECU state) */
-	uint8_t button_led_1_g; /** Button 1 green (set by ECU state) */
-	uint8_t button_led_1_b; /** Button 1 blue (set by ECU state) */
-	uint8_t button_led_2_r; /** Button 2 red (set by ECU state) */
-	uint8_t button_led_2_g; /** Button 2 green (set by ECU state) */
-	uint8_t button_led_2_b; /** Button 2 blue (set by ECU state) */
+	uint8_t led_bits; /** BMS/IMD/BSPD LED cmds (0=off, 1=on) */
 } GR_OLD_DASH_CONFIG_MSG;
 
 /** Steering Wheel Status */
