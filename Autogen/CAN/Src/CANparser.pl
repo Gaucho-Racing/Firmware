@@ -57,8 +57,8 @@ for my $msg_name ( sort keys %$can_defs ) {
 		$val = "0x" . lc($1);
 	}
 
-    # Checking return for the dynamic print inside the loop
-    print $fh "    ${enum_name}_CAN_ID = $val,\n" or die "Print failed: $!";
+	# Checking return for the dynamic print inside the loop
+	print $fh "    ${enum_name}_CAN_ID = $val,\n" or die "Print failed: $!";
 }
 
 print $fh "} Custom_CAN_ID_t;\n\n"      or die "Print failed: $!";
