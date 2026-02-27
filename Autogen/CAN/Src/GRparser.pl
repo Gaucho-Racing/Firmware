@@ -84,7 +84,7 @@ sub generate_gr_header_content {
 		}
 	}
 
-	push @header_lines, "} GR_ID_t;\n\n";
+	push @header_lines, "} GRCAN_NODE_ID;\n\n";
 	push @header_lines, "#endif // GR_IDS_H\n";
 
 	return @header_lines;

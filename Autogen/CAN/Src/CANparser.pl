@@ -46,7 +46,7 @@ for my $msg_name ( sort keys %{$can_defs} ) {
 	$content .= "    ${enum_name}_CAN_ID = $val,\n";
 }
 
-$content .= "} Custom_CAN_ID_t;\n\n";
+$content .= "} GRCAN_CUSTOM_ID;\n\n";
 $content .= "#endif // CUSTOM_CAN_ID_H\n";
 
 # --- 3. Brief Open/Write/Close ---

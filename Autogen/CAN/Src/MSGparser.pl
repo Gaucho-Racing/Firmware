@@ -111,7 +111,7 @@ sub write_msg_header {
 		push @header_lines, sprintf "    %-40s = %s,\n", $msg->{name}, $msg->{id};
 	}
 
-	push @header_lines, "} can_msg_id_t;\n\n";
+	push @header_lines, "} GRCAN_MSG_ID;\n\n";
 	push @header_lines, "#endif // CAN_MSG_IDS_H\n";
 
 	open my $out, '>', $path;
