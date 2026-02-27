@@ -12,7 +12,12 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Src/grcan_fancylayer.c
 )
 
-target_link_libraries(GRCAN_FANCYLAYER INTERFACE GLOBALSHARE_LIB GRCAN_LIB)
+target_link_libraries(
+	GRCAN_FANCYLAYER
+	INTERFACE
+		GLOBALSHARE_LIB
+		GRCAN_LIB
+)
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	# target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
