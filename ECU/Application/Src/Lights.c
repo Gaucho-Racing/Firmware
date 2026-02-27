@@ -1,8 +1,8 @@
 #include "Lights.h"
 
+#include "CANutils.h"
 #include "StateData.h"
 #include "StateUtils.h"
-#include "CANutils.h"
 #include "adc.h"
 #include "can.h"
 #include "main.h"
@@ -67,7 +67,8 @@ void SoftwareOKLightControl(ECU_StateData *stateLump)
 
 // TODO: add BCU, IMS, and BSPD lights
 
-void BMSLights(ECU_StateData *stateLump) {
+void BMSLights(ECU_StateData *stateLump)
+{
 	bool light = 0;
 	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
 	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
@@ -77,7 +78,8 @@ void BMSLights(ECU_StateData *stateLump) {
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DASH_PANEL, MSG_DASH_CONFIG, &message, sizeof(message));
 }
 
-void IMDLights(ECU_StateData *stateLump) {
+void IMDLights(ECU_StateData *stateLump)
+{
 	uint8_t light = 0;
 	// TODO: isolation failure?
 	light |= imdFailure(stateLump);
@@ -85,7 +87,8 @@ void IMDLights(ECU_StateData *stateLump) {
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DASH_PANEL, MSG_DASH_CONFIG, &message, sizeof(message));
 }
 
-void BSPDLights(ECU_StateData *stateLump) {
+void BSPDLights(ECU_StateData *stateLump)
+{
 	uint8_t light = 0;
 	// TODO: isolation failure?
 	light |= bspdFailure(stateLump);

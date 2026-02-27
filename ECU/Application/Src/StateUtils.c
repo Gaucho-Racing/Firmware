@@ -45,7 +45,7 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
 	return (stateData->bspd_sense >= 2.7) || (stateData->bspd_sense <= 1.45); // TODO: find better range
-	// TODO: shutdown switch stuff
+										  // TODO: shutdown switch stuff
 }
 
 bool CommunicationError(volatile const ECU_StateData *stateData)
