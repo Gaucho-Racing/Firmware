@@ -77,6 +77,7 @@ add_gr_project(STM32G474xE BLINKY G4HELLO)
 add_gr_project(STM32G474xE BLINKY G4BLINKY)
 add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
+add_gr_project(STM32L476xG BLINKY L4HELLO)
 
 # Onboarding Workshops
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
