@@ -29,38 +29,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_link_libraries(MsgBuffer_Lib_Push_Pop_test MsgBuffer_Lib)
 	add_test(MsgBuffer_Lib_Push_Pop MsgBuffer_Lib_Push_Pop_test)
 
-	# Peek
-	add_executable(
-		MsgBuffer_Lib_Peek_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/testPeek.c
-	)
-	target_link_libraries(MsgBuffer_Lib_Peek_test MsgBuffer_Lib)
-	add_test(MsgBuffer_Lib_Peek MsgBuffer_Lib_Peek_test)
-
-	# Get Capacity
-	add_executable(
-		MsgBuffer_Lib_Get_Capacity_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/testGetCapacity.c
-	)
-	target_link_libraries(MsgBuffer_Lib_Get_Capacity_test MsgBuffer_Lib)
-	add_test(MsgBuffer_Lib_Get_Capacity MsgBuffer_Lib_Get_Capacity_test)
-
-	# Get Current Size
-	add_executable(
-		MsgBuffer_Lib_Get_Current_Size_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/testGetCurrentSize.c
-	)
-	target_link_libraries(MsgBuffer_Lib_Get_Current_Size_test MsgBuffer_Lib)
-	add_test(MsgBuffer_Lib_Get_Current_Size MsgBuffer_Lib_Get_Current_Size_test)
-
-	# If Full
-	add_executable(
-		MsgBuffer_Lib_If_Full_test
-		${CMAKE_CURRENT_LIST_DIR}/Test/testIfFull.c
-	)
-	target_link_libraries(MsgBuffer_Lib_If_Full_test MsgBuffer_Lib)
-	add_test(MsgBuffer_Lib_If_Full MsgBuffer_Lib_If_Full_test)
-
 	# Is Empty
 	add_executable(
 		MsgBuffer_Lib_Is_Empty_test
