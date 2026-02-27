@@ -1,4 +1,5 @@
 #include "StateUtils.h"
+
 #include "CANDler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
@@ -6,8 +7,6 @@
 #include "bitManipulations.h"
 #include "can.h"
 #include "gpio.h"
-
-
 
 void setSoftwareLatch(bool close, CCU_StateData *state_data)
 {
@@ -50,4 +49,3 @@ bool CriticalError(const CCU_StateData *state_data)
 		return false;
 	}
 }
-

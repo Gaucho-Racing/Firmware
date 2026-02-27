@@ -152,7 +152,7 @@ void CAN_Configure()
 	can_start(primary_can);
 }
 
-void SendPrechargeStatus(CCU_StateData* state_data)
+void SendPrechargeStatus(CCU_StateData *state_data)
 {
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_BCU_PRECHARGE) << 8) | (0xFF & GR_BCU);
@@ -172,7 +172,8 @@ void SendPrechargeStatus(CCU_StateData* state_data)
 	LOGOMATIC("CAN MESSAGE SENT:\n");
 }
 
-void SendDebugReport(char *data){
+void SendDebugReport(char *data)
+{
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_DEBUG_2_0) << 8) | (0xFF & GR_BCU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
@@ -184,7 +185,6 @@ void SendDebugReport(char *data){
 	msg.tx_header.MessageMarker = 0;
 
 	msg.data[8] = (uint8_t)*data;
-
 
 	LOGOMATIC("ERROR: %s", data);
 

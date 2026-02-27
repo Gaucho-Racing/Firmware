@@ -30,7 +30,7 @@ typedef struct {
 	// bool BCU_S2_PRECHARGE_ERROR;
 
 	// State
-	//uint8_t BCU_S2_PRECHARGE_BITS;
+	// uint8_t BCU_S2_PRECHARGE_BITS;
 	// bool BCU_S2_PRECHARGE_STATE;
 	// bool BCU_S2_IR_STATE;
 	bool BCU_S2_SOFTWARE_LATCH;
