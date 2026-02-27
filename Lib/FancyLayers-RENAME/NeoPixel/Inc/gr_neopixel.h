@@ -34,7 +34,7 @@ typedef enum {
 	Neopixel_GPIO_AF_15 = LL_GPIO_AF_15
 } GPIO_Alternate_Function;
 
-typedef enum{
+typedef enum {
 	Neopixel_SPI_BaudRatePrescaler_Div2 = LL_SPI_BAUDRATEPRESCALER_DIV2,
 	Neopixel_SPI_BaudRatePrescaler_Div4 = LL_SPI_BAUDRATEPRESCALER_DIV4,
 	Neopixel_SPI_BaudRatePrescaler_Div8 = LL_SPI_BAUDRATEPRESCALER_DIV8,
