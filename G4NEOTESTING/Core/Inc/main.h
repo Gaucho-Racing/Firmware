@@ -73,8 +73,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define NEOPIXEL_DIN_Pin LL_GPIO_PIN_5
-#define NEOPIXEL_DIN_GPIO_Port GPIOB
+#define NEOPIXEL_DIN_1_Pin LL_GPIO_PIN_5
+#define NEOPIXEL_DIN_2_Pin LL_GPIO_PIN_15
 
 /* USER CODE BEGIN Private defines */
 

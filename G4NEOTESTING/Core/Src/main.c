@@ -36,12 +36,19 @@
 /* USER CODE BEGIN PD */
 #define NEOPIXEL_LED_COUNT 60U
 
-static Neopixel_Color neopixelColors[NEOPIXEL_LED_COUNT] = {
+static Neopixel_Color neopixelColors1[NEOPIXEL_LED_COUNT] = {
     COLOR_RED,	COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,	 COLOR_OFF,   COLOR_RED,  COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN,
     COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,  COLOR_OFF,	 COLOR_RED,  COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,  COLOR_OFF,
     COLOR_RED,	COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,	 COLOR_OFF,   COLOR_RED,  COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN,
     COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,  COLOR_OFF,	 COLOR_RED,  COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,  COLOR_OFF,
     COLOR_RED,	COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_WHITE,	 COLOR_OFF,   COLOR_RED,  COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN,
+};
+
+static Neopixel_Color neopixelColors2[NEOPIXEL_LED_COUNT] = {
+    COLOR_RED,	 COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,	COLOR_RED,   COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,   COLOR_RED,	 COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,	COLOR_RED,   COLOR_WHITE, COLOR_BLUE,
+    COLOR_OFF,	 COLOR_RED,   COLOR_WHITE, COLOR_BLUE,	COLOR_OFF,   COLOR_RED,	  COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,	 COLOR_RED,   COLOR_WHITE, COLOR_BLUE,	COLOR_OFF,   COLOR_RED,	  COLOR_WHITE,
+    COLOR_BLUE,	 COLOR_OFF,   COLOR_RED,   COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,	  COLOR_RED,   COLOR_WHITE, COLOR_BLUE,	 COLOR_OFF,   COLOR_RED,   COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,	  COLOR_RED,
+    COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,   COLOR_RED,	COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,   COLOR_RED,   COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,   COLOR_RED,	COLOR_WHITE, COLOR_BLUE,  COLOR_OFF,
 };
 
 /* USER CODE END PD */
@@ -54,28 +61,39 @@ static Neopixel_Color neopixelColors[NEOPIXEL_LED_COUNT] = {
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
-				   .bus = LOGOMATIC_BUS,
-				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-				   .baud_rate = 115200,
-				   .data_width = LOGOMATIC_DATAWIDTH_8B,
-				   .stop_bits = LOGOMATIC_STOPBITS_1,
-				   .parity = LOGOMATIC_PARITY_NONE,
-				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
-				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
-				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+LogomaticConfig logomaticConfig = {
+	.clock_source = LOGOMATIC_PCLK1,
+	.bus = LOGOMATIC_BUS,
+	.gpio_port = LOGOMATIC_GPIOA,
+	.gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+	.baud_rate = 115200,
+	.data_width = LOGOMATIC_DATAWIDTH_8B,
+	.stop_bits = LOGOMATIC_STOPBITS_1,
+	.parity = LOGOMATIC_PARITY_NONE,
+	.transfer_direction = LOGOMATIC_DIRECTION_TX,
+	.hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+	.prescaler = LOGOMATIC_PRESCALER_DIV1,
+	.tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+	.rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8
+};
 
-NeopixelConfig neopixelConfig = {
+NeopixelConfig neopixelConfig1 = {
     .SPI_Instance = SPI1,
-    .NumberOfNeopixels = 60U,
+    .NumberOfNeopixels = NEOPIXEL_LED_COUNT,
     .gpio_port = Neopixel_GPIOB,
     .neopixelAF = Neopixel_GPIO_AF_5,
-    .mosi_gpio_pin = NEOPIXEL_DIN_Pin,
-    .neopixel_baudRatePrescaler = LL_SPI_BAUDRATEPRESCALER_DIV64,
-}; // TODO Expand with select configurable contents of MX_SPI1_Init
+    .mosi_gpio_pin = NEOPIXEL_DIN_1_Pin,
+    .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64
+};
+
+NeopixelConfig neopixelConfig2 = {
+    .SPI_Instance = SPI2,
+    .NumberOfNeopixels = NEOPIXEL_LED_COUNT,
+    .gpio_port = Neopixel_GPIOB,
+    .neopixelAF = Neopixel_GPIO_AF_5,
+    .mosi_gpio_pin = NEOPIXEL_DIN_2_Pin,
+    .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,41 +111,6 @@ void SystemClock_Config(void);
  * @brief  The application entry point.
  * @retval int
  */
-
-/*
-void MX_SPI1_Init(void)
-{
-	LL_GPIO_InitTypeDef copi_pin = {
-	    .Pin = NEOPIXEL_DIN_Pin,
-	    .Mode = LL_GPIO_MODE_ALTERNATE,
-	    .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
-	    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
-	    .Pull = LL_GPIO_PULL_NO,
-	    .Alternate = LL_GPIO_AF_5,
-	};
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-	LL_GPIO_Init(NEOPIXEL_DIN_GPIO_Port, &copi_pin);
-
-	LL_SPI_InitTypeDef sp1 = {
-	    .TransferDirection = LL_SPI_HALF_DUPLEX_TX,
-	    .Mode = LL_SPI_MODE_MASTER,
-	    .DataWidth = LL_SPI_DATAWIDTH_8BIT,
-	    .ClockPolarity = LL_SPI_POLARITY_LOW,
-	    .ClockPhase = LL_SPI_PHASE_1EDGE,
-	    .NSS = LL_SPI_NSS_SOFT,
-	    .BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV64,
-	    .BitOrder = LL_SPI_MSB_FIRST,
-	    .CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE,
-	    .CRCPoly = 7,
-	};
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
-	LL_SPI_Init(SPI1, &sp1);
-	LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
-	LL_SPI_EnableNSSPulseMgt(SPI1);
-	LL_SPI_Enable(SPI1);
-}
-*/
-
 int main(void)
 {
 
@@ -156,7 +139,9 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	/* USER CODE BEGIN 2 */
-	NeopixelContext *neopixel_context = Neopixel_Setup(&neopixelConfig);
+	NeopixelContext *neopixel_context_1 = Neopixel_Setup(&neopixelConfig1);
+	NeopixelContext *neopixel_context_2 = Neopixel_Setup(&neopixelConfig2);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -166,9 +151,13 @@ int main(void)
 		LOGOMATIC("Rotating colors...\n");
 		/* USER CODE BEGIN 3 */
 		LL_mDelay(500);
-		Neopixel_WriteAll(neopixel_context, neopixelColors, sizeof(neopixelColors));
+
+		Neopixel_WriteAll(neopixel_context_1, neopixelColors1, sizeof(neopixelColors1));
+		Neopixel_WriteAll(neopixel_context_2, neopixelColors2, sizeof(neopixelColors2));
+
 		for (uint32_t i = 0; i < NEOPIXEL_LED_COUNT; i++) {
-			neopixelColors[i] = neopixelColors[(i + 1) % NEOPIXEL_LED_COUNT];
+			neopixelColors1[i] = neopixelColors1[(i + 1) % NEOPIXEL_LED_COUNT];
+			neopixelColors2[i] = neopixelColors2[(i + 1) % NEOPIXEL_LED_COUNT];
 		}
 	}
 }

@@ -136,15 +136,17 @@ static void Neopixel_EncodeColor(uint8_t *buffer, uint32_t color)
 
 void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, uint32_t sizeofColors)
 {
-	// TODO Add null checks for all parameters
 	if (context == NULL) {
-		return; // possiblty works
+		LOGOMATIC("Context is NULL!\n");
+		return;
 	}
 	if (colors == NULL) {
-		return; // possiblty works
+		LOGOMATIC("Colors array is NULL!\n");
+		return;
 	}
 	if (sizeofColors == 0) {
-		return; // possiblty works
+		LOGOMATIC("Size of colors array is 0!\n");
+		return;
 	}
 
 	if (context->config.NumberOfNeopixels * sizeof(Neopixel_Color) != sizeofColors) {
