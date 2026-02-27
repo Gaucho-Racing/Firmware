@@ -30,14 +30,14 @@ uint32_t HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState
 }
 
 // Dont where else to place this
-void SendPrechargeStatus(CCU_StateData* state_data)
+void SendPrechargeStatus(CCU_StateData *state_data)
 {
 	UNUSED(state_data);
 	LOGOMATIC("Precharge should send\n");
 	return;
 }
 
-void SendDebugReport(char* data)
+void SendDebugReport(char *data)
 {
 	UNUSED(data);
 	LOGOMATIC("Debug should send\n");
