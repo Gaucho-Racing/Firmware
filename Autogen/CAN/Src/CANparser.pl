@@ -10,7 +10,7 @@ my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
 
 # 1. Load the data
 if ( !-e $yaml_path ) {
-    die "Error: $yaml_path not found.\n";
+	die "Error: $yaml_path not found.\n";
 }
 
 my $yaml     = LoadFile($yaml_path);
@@ -29,36 +29,38 @@ print {$fh} "typedef enum {\n"                         or die "Print failed: $!"
 
 # Fixed: "ControlStructures::ProhibitPostfixControls" - No more 'for my $x (...) { next if ... }'
 # Fixed: "References::ProhibitDoubleSigils" - Using keys %{ $can_defs }
-for my $msg_name ( sort keys %{ $can_defs } ) {
-    my $entry = $can_defs->{$msg_name};
+for my $msg_name ( sort keys %{$can_defs} ) {
+	my $entry = $can_defs->{$msg_name};
 
-    if ( ref $entry ne 'HASH' ) {
-        next;
-    }
+	if ( ref $entry ne 'HASH' ) {
+		next;
+	}
 
-    my $can_id = $entry->{'CAN ID'};
-    if ( !defined $can_id ) {
-        next;
-    }
+	my $can_id = $entry->{'CAN ID'};
+	if ( !defined $can_id ) {
+		next;
+	}
 
-    # Clean the name
-    my $enum_name = uc $msg_name;
-    # Fixed: "RegularExpressions::ProhibitEnumeratedClasses" - Using [[:^upper:]]
-    $enum_name =~ s/[[:^upper:][:digit:]]/_/g;
-    $enum_name =~ s/_+/_/g;
-    $enum_name =~ s/^_|_$//g;
+	# Clean the name
+	my $enum_name = uc $msg_name;
 
-    # Format the ID
-    my $val = $can_id;
-    # Fixed: ProhibitEnumeratedClasses - Using [[:xdigit:]]
-    if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
-        $val = '0x' . lc $val;
-    }
-    elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
-        $val = '0x' . lc $1;
-    }
+	# Fixed: "RegularExpressions::ProhibitEnumeratedClasses" - Using [[:^upper:]]
+	$enum_name =~ s/[[:^upper:][:digit:]]/_/g;
+	$enum_name =~ s/_+/_/g;
+	$enum_name =~ s/^_|_$//g;
 
-    print {$fh} "    ${enum_name}_CAN_ID = $val,\n" or die "Print failed: $!";
+	# Format the ID
+	my $val = $can_id;
+
+	# Fixed: ProhibitEnumeratedClasses - Using [[:xdigit:]]
+	if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
+		$val = '0x' . lc $val;
+	}
+	elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
+		$val = '0x' . lc $1;
+	}
+
+	print {$fh} "    ${enum_name}_CAN_ID = $val,\n" or die "Print failed: $!";
 }
 
 print {$fh} "} Custom_CAN_ID_t;\n\n"      or die "Print failed: $!";
@@ -70,10 +72,6 @@ close $fh or die "Error: Failed to close $output_path: $!";
 print "Successfully updated $output_path\n" or die "Print failed: $!";
 
 exit 0;
-
-
-
-
 
 # #!/usr/bin/env perl
 # use strict;
@@ -139,11 +137,6 @@ exit 0;
 
 # # Addresses Linter Error #3 (Explicit return for main script flow)
 # exit 0;
-
-
-
-
-
 
 # #!/usr/bin/env perl
 # use strict;
