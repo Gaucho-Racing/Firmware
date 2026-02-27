@@ -1,6 +1,7 @@
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "Logomatic.h"
+#include "Unused.h"
 
 uint32_t HAL_GetTick(void)
 {
@@ -13,17 +14,17 @@ uint32_t HAL_GetTickFreq(void)
 
 uint32_t HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 {
-	(void)GPIOx;
-	(void)GPIO_Pin;
+	UNUSED(GPIOx);
+	UNUSED(GPIO_Pin);
 
 	return 1;
 }
 
 uint32_t HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)
 {
-	(void)GPIOx;
-	(void)GPIO_Pin;
-	(void)PinState;
+	UNUSED(GPIOx);
+	UNUSED(GPIO_Pin);
+	UNUSED(PinState);
 	return 1;
 }
 
