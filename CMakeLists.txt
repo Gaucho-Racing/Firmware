@@ -43,6 +43,9 @@ include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
+# Autogen
+include("Autogen/CAN/CANfigurator.cmake")
+
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")

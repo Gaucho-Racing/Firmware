@@ -1,0 +1,192 @@
+# CANfigurator
+#### By Aarnav, Caroline, Kartik, Nandini
+
+## Workflow: How to Apply Changes
+
+**Do not run the parsers locally.** The generated headers are produced by a GitHub Actions workflow.
+
+1. Edit `Doc/format.CANdo` with your changes.
+2. Commit and push to GitHub.
+3. The CI workflow runs all four parsers and commits the regenerated headers automatically.
+4. Pull the latest changes to get the updated headers locally.
+
+---
+
+## The Parsers
+
+All parsers live in `Src/` and read `Doc/format.CANdo` as input. You should never need to run them manually.
+
+- **`CANparser.pl`** — Reads the `Custom CAN ID` section. Produces `Custom_CAN_ID.h`, a single enum mapping each third-party message name to its CAN ID.
+- **`GRparser.pl`** — Reads the `GR ID` section. Produces `GR_IDS.h`, a single enum of device/node network addresses.
+- **`MSGparser.pl`** — Reads the `Message ID` section. Produces `can_msg_ids.h`, a single enum of every team-defined message name to its MSG ID.
+- **`STRUCTparser.pl`** — Reads the `Message ID` section. Produces `CANDler.h`, packed C structs for each message with typed fields, byte-level layout, and description comments.
+
+| Parser | Section(s) Read | Key Fields Consumed | Output |
+|---|---|---|---|
+| `CANparser.pl` | `Custom CAN ID` | Message name, `CAN ID` | `Custom_CAN_ID.h` |
+| `GRparser.pl` | `GR ID` | Device name, hex ID value | `GR_IDS.h` |
+| `MSGparser.pl` | `Message ID` | Message name, `MSG ID` | `can_msg_ids.h` |
+| `STRUCTparser.pl` | `Message ID` | Message name, fields, `bit_start`, `data type`, `#` comments | `CANDler.h` |
+
+---
+
+## Modifying `format.CANdo`
+
+`Doc/format.CANdo` is the single source of truth for the CAN bus configuration. It is a YAML file with five top-level sections, each consumed by one or more Perl parsers during the build. Changes here propagate into auto-generated C headers.
+
+### Top-Level Sections
+
+| Section | Consumed By | Generated Output |
+|---|---|---|
+| `routing` | *(build system / routing logic)* | Message routing tables |
+| `byte order` | *(shared config)* | Endianness setting |
+| `Message ID` | `MSGparser.pl` -> `can_msg_ids.h`, `STRUCTparser.pl` -> `CANDler.h` | MSG ID enum, packed C structs |
+| `Custom CAN ID` | `CANparser.pl` -> `Custom_CAN_ID.h` | Custom CAN ID enum |
+| `GR ID` | `GRparser.pl` -> `GR_IDS.h` | Device/node ID enum |
+
+---
+
+### 1. `routing` Section
+
+Defines which messages each device sends on each CAN bus, and to which receiver. Use `can_id_override` for messages that use a non-standard (externally defined) CAN ID.
+
+```yaml
+routing:
+  messages:
+    <Device Name>:
+      <CAN Bus>:           # CAN1, CAN2, CAN3
+        <Receiver Name>:
+          - msg: <Message Name>
+          - msg: <Message Name>
+            can_id_override: 0x1806E5F4   # optional, for external protocols
+```
+
+**To add a new route:** nest a `- msg:` entry under the appropriate Device -> Bus -> Receiver path. The message name must match an entry in `Message ID` or `Custom CAN ID`.
+
+---
+
+### 2. `byte order` Section
+
+A single value that sets the byte order for the entire bus. Currently `little_endian`.
+
+```yaml
+byte order: little_endian
+```
+
+---
+
+### 3. `Message ID` Section (parsed by `MSGparser.pl` and `STRUCTparser.pl`)
+
+Defines every CAN message the team controls: its ID, length, and fields. This is the largest and most commonly edited section.
+
+#### Message Structure
+
+```yaml
+Message ID:
+  <Message Name>:
+    MSG ID: <hex ID>         # e.g. 0x003
+    MSG LENGTH: <bytes>      # total message length in bytes
+    <Field Name>:
+      bit_start: <N>
+      # <description comment>
+      data type: <type>
+      units: <unit string>          # optional
+      scaled min: <number>          # optional
+      scaled max: <number>          # optional
+      map equation: "<equation>"    # optional
+```
+
+#### Data Types
+
+| Type | Meaning | C Equivalent |
+|---|---|---|
+| `b` | Boolean (1 bit) | bit field |
+| `u4` | Unsigned 4-bit | nibble |
+| `u8` | Unsigned 8-bit | `uint8_t` |
+| `u16` | Unsigned 16-bit | `uint16_t` |
+| `u32` | Unsigned 32-bit | `uint32_t` |
+| `i16` | Signed 16-bit | `int16_t` |
+| `s8` | Signed 8-bit | `int8_t` |
+| `s` | String (variable length, up to MSG LENGTH) | `char[]` |
+
+#### Field Attributes
+
+- **`bit_start`** (REQUIRED REQUIRED REQUIRED REQUIRED) — the bit offset of the field within the message. Must be the first sub-key under each field name. Parsers calculate message size based on bit starts — nothing will work without it.
+- **`data type`** (required) — one of the types listed above.
+- **`units`** (optional) — human-readable unit (e.g. `Volts`, `RPM`, `'%'`, `Celsius`, `Bool`, `Enum`, `ms`).
+- **`scaled min` / `scaled max`** (optional) — the real-world range after the map equation is applied.
+- **`map equation`** (optional) — the formula to convert the raw value to engineering units (e.g. `"0.01x"`, `"0.1x-3276.8"`).
+- **`# <comment>`** (optional) — description lines below the field name, prefixed with `#`. `STRUCTparser.pl` extracts these as doxygen-style comments in the generated struct.
+
+#### Reserved Fields
+
+Mark unused bit ranges as `Reserved`:
+```yaml
+    Reserved:
+      bit_start: 23-31
+```
+No sub-properties are needed. The parsers will skip or collapse reserved ranges.
+
+#### Adding a New Message
+
+1. Choose an unused `MSG ID` (hex).
+2. Add an entry under `Message ID` following the structure above.
+3. Add a corresponding route in the `routing` section.
+4. Rebuild — the parsers auto-generate the updated headers.
+
+#### Adding a Field to an Existing Message
+
+1. Pick the next available bit offset (must not overlap with existing fields).
+2. Add the field with `bit_start: <N>` and its sub-properties.
+3. Update `MSG LENGTH` if the message now occupies more bytes.
+
+---
+
+### 4. `Custom CAN ID` Section (parsed by `CANparser.pl`)
+
+Defines CAN messages that use externally defined IDs (e.g. third-party motor controllers, chargers). These IDs are **not** auto-assigned by the team.
+
+```yaml
+Custom CAN ID:
+  <Message Name>:
+    CAN ID: <decimal or hex ID>   # e.g. 116, A16
+    Length: <bytes>
+    signals:
+      - name: "<Signal Name>"
+        bit_start: <N>
+        # <description comment>
+      - name: "<Signal Name>"
+        bit_start: <N>
+```
+
+**Key differences from `Message ID`:**
+- Uses `CAN ID` (not `MSG ID`) and the value can be decimal or bare hex (e.g. `A16`).
+- Uses `Length` (not `MSG LENGTH`).
+- Fields are listed under a `signals:` array with `name:` and `bit_start:` keys, rather than direct field names with `bit_start:` as a sub-key.
+
+**Parser behavior:** `CANparser.pl` reads each entry's `CAN ID`, sanitizes the message name into a C identifier, and emits it as an enum value in `Custom_CAN_ID.h`.
+
+#### Adding a Custom CAN ID Entry
+
+1. Add a new block under `Custom CAN ID` with `CAN ID`, `Length`, and `signals`.
+2. The `CAN ID` value will be formatted as hex (`0x...`) in the generated enum if it contains non-decimal characters, or kept as decimal otherwise.
+
+---
+
+### 5. `GR ID` Section (parsed by `GRparser.pl`)
+
+A flat mapping of device/node names to their unique network identifiers. Used for addressing in the GR protocol layer.
+
+```yaml
+GR ID:
+  <Device Name>: "<hex ID>"    # e.g. "0x02"
+```
+
+**Parser behavior:** `GRparser.pl` reads each key-value pair and emits a C enum in `GR_IDS.h`. The name is sanitized (non-alphanumeric characters become underscores).
+
+#### Adding a New Device
+
+Add a single line with the device name and a unique hex ID string:
+```yaml
+  My New Board: "0x2A"
+```
