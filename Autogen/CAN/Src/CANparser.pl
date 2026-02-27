@@ -4,7 +4,6 @@ use warnings;
 use English  qw(-no_match_vars);
 use YAML::XS qw(LoadFile);
 use File::Basename;
-use English qw(-no_match_vars);
 
 # --- 1. Configuration & Data Loading ---
 my $yaml_path   = $ARGV[0] // 'format.CANdo';
@@ -18,14 +17,14 @@ my $yaml     = LoadFile($yaml_path);
 my $can_defs = $yaml->{'Custom CAN ID'};
 
 # --- 2. Build the Header Content in Memory ---
-# Building the string first ensures the file handle is only open for writing.
+# This ensures the exact formatting for IDs like 0x1806e5f4 and 23.
 my $content = "// Auto-generated Custom CAN ID header\n";
 $content .= "#ifndef CUSTOM_CAN_ID_H\n";
 $content .= "#define CUSTOM_CAN_ID_H\n\n";
 $content .= "typedef enum {\n";
 
-# Sort to maintain the exact order seen in your required output
 for my $msg_name ( sort keys %{$can_defs} ) {
+<<<<<<< Updated upstream
 	my $entry = $can_defs->{$msg_name};
 	if ( ref $entry ne 'HASH' ) {
 		next;
@@ -50,6 +49,26 @@ for my $msg_name ( sort keys %{$can_defs} ) {
 	elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
 		$val = '0x' . lc $1;
 	}
+=======
+    my $entry = $can_defs->{$msg_name};
+    if ( ref $entry ne 'HASH' ) { next; }
+
+    my $can_id = $entry->{'CAN ID'};
+    if ( !defined $can_id ) { next; }
+
+    my $enum_name = uc $msg_name;
+    $enum_name =~ s/[[:^upper:][:digit:]]/_/g;
+    $enum_name =~ s/_+/_/g;
+    $enum_name =~ s/^_|_$//g;
+
+    my $val = $can_id;
+    if ( $val =~ /^[[:xdigit:]]+$/ && $val !~ /^[[:digit:]]+$/ ) {
+        $val = '0x' . lc $val;
+    }
+    elsif ( $val =~ /^([[:xdigit:]]+)d$/ ) {
+        $val = '0x' . lc $1;
+    }
+>>>>>>> Stashed changes
 
 	$content .= "    ${enum_name}_CAN_ID = $val,\n";
 }
@@ -58,7 +77,7 @@ $content .= "} Custom_CAN_ID_t;\n\n";
 $content .= "#endif // CUSTOM_CAN_ID_H\n";
 
 # --- 3. Brief Open/Write/Close ---
-# This section satisfies 'InputOutput::RequireBriefOpen'.
+# Satisfies 'InputOutput::RequireBriefOpen' and 'InputOutput::RequireCheckedSyscalls'
 if ( -d $output_path ) {
 	die "Error: $output_path is a directory.";
 }
@@ -67,7 +86,8 @@ open my $fh, '>', $output_path or die "Error: $OS_ERROR";
 print {$fh} $content or die "Print failed: $OS_ERROR";
 close $fh            or die "Close failed: $OS_ERROR";
 
-print "Successfully updated $output_path\n";
+# Fixed: Line 70 - Checking return of the final success print
+print "Successfully updated $output_path\n" or die "Final print failed: $OS_ERROR";
 
 exit 0;
 
