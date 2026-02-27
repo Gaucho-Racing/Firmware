@@ -19,18 +19,18 @@ void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *
 	GRCAN_Fancy_RegisterPrimaryCAN(primaryCAN);
 	GRCAN_Fancy_RegisterDataCAN(dataCAN);
 
-grcan_local_node_id = localID;
+	grcan_local_node_id = localID;
 
-if (primaryCAN == NULL) {
-	LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for primary CAN handle\n");
-}
+	if (primaryCAN == NULL) {
+		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for primary CAN handle\n");
+	}
 
-if (dataCAN == NULL) {
-	LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for data CAN handle\n");
-}
+	if (dataCAN == NULL) {
+		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for data CAN handle\n");
+	}
 
-grcan_primary = primaryCAN;
-grcan_data = dataCAN;
+	grcan_primary = primaryCAN;
+	grcan_data = dataCAN;
 }
 
 uint32_t GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id)
