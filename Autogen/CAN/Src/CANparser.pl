@@ -22,18 +22,10 @@ my $can_defs = $yaml->{'Custom CAN ID'};
 # autodie handles the "or die" automatically here
 open my $fh, '>', $output_path;
 
-<<<<<<< Updated upstream
-print {$fh} "// Auto-generated Custom CAN ID header\n";
-print {$fh} "#ifndef CUSTOM_CAN_ID_H\n";
-print {$fh} "#define CUSTOM_CAN_ID_H\n\n";
-
-print {$fh} "typedef enum {\n";
-=======
 print $fh "// Auto-generated Custom CAN ID header\n";
 print $fh "#ifndef CUSTOM_CAN_ID_H\n";
 print $fh "#define CUSTOM_CAN_ID_H\n\n";
 print $fh "typedef enum {\n";
->>>>>>> Stashed changes
 
 # Sort to keep the header organized
 for my $msg_name ( sort keys %$can_defs ) {
@@ -58,26 +50,20 @@ for my $msg_name ( sort keys %$can_defs ) {
         $val = "0x" . lc($1);
     }
 
-<<<<<<< Updated upstream
-	print {$fh} "    ${enum_name}_CAN_ID = $val,\n";
-}
-
-print {$fh} "} Custom_CAN_ID_t;\n\n";
-print {$fh} "#endif // CUSTOM_CAN_ID_H\n";
-=======
     print $fh "    ${enum_name}_CAN_ID = $val,\n";
 }
 
 print $fh "} Custom_CAN_ID_t;\n\n";
 print $fh "#endif // CUSTOM_CAN_ID_H\n";
 
->>>>>>> Stashed changes
 close $fh;
 
 print "Successfully updated $output_path\n";
 
 # Addresses Linter Error #3 (Explicit return for main script flow)
 exit 0;
+
+
 
 
 
