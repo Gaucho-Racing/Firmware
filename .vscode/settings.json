@@ -13,6 +13,5 @@
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
-	"files.eol": "\n",
-	"cortex-debug.variableUseNaturalFormat": false
+	"files.eol": "\n"
 }
