@@ -1,172 +1,239 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use autodie qw(open close);
 use File::Basename;
 use File::Path qw(make_path);
 
-# --- Configuration ---
-my $yaml_path   = $ARGV[0] // 'format.CANdo';
-my $output_path = $ARGV[1] // 'CANDler.h';
-my $prefix      = "GR_OLD";
+main();
 
-my $dir = dirname($output_path);
-make_path($dir) if $dir && $dir ne '.' && !-d $dir;
+sub main {
+    my $yaml_path   = $ARGV[0] // 'format.CANdo';
+    my $output_path = $ARGV[1] // 'CANDler.h';
+    my $prefix      = "GR_OLD";
 
-open( my $in,  '<', $yaml_path )   or die "Can't open YAML: $!";
-open( my $out, '>', $output_path ) or die "Can't open Output: $!";
+    ensure_directory_exists($output_path);
 
-my $in_msg_section = 0;
-my %desc_map;
+    my %desc_map = parse_descriptions($yaml_path);
+    generate_header($yaml_path, $output_path, $prefix, \%desc_map);
 
-# --- Step 1: Pre-parse for descriptions ---
-while ( my $line = <$in> ) {
-	chomp($line);
-	if    ( $line =~ /^Message ID:/ )                   { $in_msg_section = 1; next; }
-	elsif ( $line =~ /^\S/ && $line !~ /^Message ID:/ ) { $in_msg_section = 0; }
-	next unless $in_msg_section;
-
-	# Match "    Field Name:"
-	if ( $line =~ /^\s{2,4}([^:#\s][^:]+):/ ) {
-		my $raw_name = $1;
-		my $f_name   = lc($raw_name);
-		$f_name =~ s/[^a-z0-9]/_/g;
-		$f_name =~ s/_+/_/g;
-		$f_name =~ s/^_|_$//g;
-
-		my $description = "";
-		my $pos         = tell($in);
-		while ( my $sub = <$in> ) {
-			if ( $sub =~ /^\s+#\s*(.*)/ ) {
-				$description .= " " . $1;
-			}
-
-			# Stop if we hit a new field or a new message
-			last if $sub =~ /^\s{2,4}[^#\s]/ || $sub =~ /^\S/;
-		}
-		seek( $in, $pos, 0 );
-		$description =~ s/^\s+//;
-		$desc_map{$f_name} = $description if $description;
-	}
+    return;
 }
 
-# --- Step 2: Generate the Header ---
-seek( $in, 0, 0 );
-$in_msg_section = 0;
-my $current_msg = "";
-my @fields      = ();
-
-print {$out} "/* Auto-generated header file */\n";
-print {$out} "#ifndef ${prefix}_MESSAGES_H\n";
-print {$out} "#define ${prefix}_MESSAGES_H\n\n";
-print {$out} "#include <stdint.h>\n\n";
-
-while ( my $line = <$in> ) {
-	chomp($line);
-	if    ( $line =~ /^Message ID:/ )                   { $in_msg_section = 1; next; }
-	elsif ( $line =~ /^\S/ && $line !~ /^Message ID:/ ) { $in_msg_section = 0; }
-	next unless $in_msg_section;
-
-	# Match "  Message Name:" (2 spaces)
-	if ( $line =~ /^  ([^:#\s][^:]+):$/ ) {
-		process_bytes_exact( $out, $current_msg, \@fields, \%desc_map ) if $current_msg;
-		$current_msg = $1;
-		@fields      = ();
-	}
-
-	# Match "    Field Name:" (4 spaces)
-	elsif ( $line =~ /^\s{4}([^:#\s][^:]+):/ ) {
-		my $f_name    = $1;
-		my $start     = undef;
-		my $data_type = "u8";
-
-		my $pos = tell($in);
-		while ( my $sub = <$in> ) {
-			if ( $sub =~ /bit_start:\s*(\d+)/ ) {
-				$start = $1;
-			}
-			if ( $sub =~ /data type:\s*(\w+)/ ) {
-				$data_type = $1;
-			}
-
-			# Break if we hit a new field or message
-			last if $sub =~ /^\s{4}[^#\s]/ || $sub =~ /^\s{0,2}\S/;
-		}
-		seek( $in, $pos, 0 );
-
-		if ( defined $start ) {
-			push @fields, { name => $f_name, start => $start, type => $data_type };
-		}
-	}
+sub ensure_directory_exists {
+    my ($path) = @_;
+    my $dir = dirname($path);
+    if ($dir && $dir ne '.' && !-d $dir) {
+        make_path($dir);
+    }
+    return;
 }
 
-# Final call for the last message
-process_bytes_exact( $out, $current_msg, \@fields, \%desc_map ) if $current_msg;
-print {$out} "#endif\n";
+sub parse_descriptions {
+    my ($path) = @_;
+    my %map;
+    my $in_msg_section = 0;
 
-sub process_bytes_exact {
-	my ( $fh, $name, $f_ref, $d_map ) = @_;
-	return if !$name || $name =~ /Message ID/;
+    # Slurp and close immediately to satisfy RequireBriefOpen
+    open( my $in, '<', $path );
+    my @lines = <$in>;
+    close $in;
 
-	my $struct_tag = uc( $name =~ s/[^A-Za-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr );
+    for ( my $i = 0 ; $i < scalar @lines ; $i++ ) {
+        my $line = $lines[$i];
+        chomp $line;
 
-	if ( $name =~ /Cell Data/i ) {
-		print {$fh} "/** $name */\ntypedef struct {\n";
-		print {$fh} "\tstruct {\n\t\tuint8_t voltage;\n\t\tuint8_t temperature;\n\t} cells[32];\n";
-		print {$fh} "} ${prefix}_${struct_tag}_MSG;\n\n";
-		return;
-	}
+        if ( $line =~ /^Message ID:/ ) {
+            $in_msg_section = 1;
+            next;
+        }
+        if ( $line =~ /^\S/ ) {
+            $in_msg_section = 0;
+        }
+        next unless $in_msg_section;
 
-	my %byte_map;
-	foreach my $f (@$f_ref) {
-		my $byte_num = int( $f->{start} / 8 );
-		push @{ $byte_map{$byte_num} }, $f;
-	}
+        if ( $line =~ /^\s{2,4}([^:#\s][^:]+):/ ) {
+            my $f_name = clean_field_name($1);
+            # Move index forward and extract description from the local array
+            my ( $desc, $new_i ) = extract_desc_from_array( \@lines, $i );
+            $map{$f_name} = $desc if $desc;
+            $i = $new_i;
+        }
+    }
+    return %map;
+}
 
-	print {$fh} "/** $name */\ntypedef struct {\n";
-	my @sorted_bytes = sort { $a <=> $b } keys %byte_map;
+sub extract_desc_from_array {
+    my ( $lines_ref, $index ) = @_;
+    my $description = "";
+    my $i = $index;
 
-	for ( my $i = 0 ; $i < @sorted_bytes ; $i++ ) {
-		my $b_idx  = $sorted_bytes[$i];
-		my @fields = @{ $byte_map{$b_idx} };
+    while ( ++$i < scalar @{$lines_ref} ) {
+        my $sub = $lines_ref->[$i];
+        if ( $sub =~ /^\s+#\s*(.*)/ ) {
+            $description .= " " . $1;
+        }
+        # Break if we hit a new field or message
+        last if $sub =~ /^\s{2,4}[^#\s]/ || $sub =~ /^\S/;
+    }
 
-		if ( scalar @fields > 2 ) {
-			my $start_byte          = $b_idx;
-			my $next_real_data_byte = $b_idx + 1;
-			my $has_error           = grep { $_->{name} =~ /error|fault|violation/i } @fields;
-			for ( my $j = $i + 1 ; $j < @sorted_bytes ; $j++ ) {
-				my $look_idx = $sorted_bytes[$j];
-				my @look_f   = @{ $byte_map{$look_idx} };
-				if ( scalar @look_f > 2 || ( scalar @look_f == 1 && $look_f[0]->{name} =~ /reserved/i ) ) {
-					$next_real_data_byte = $look_idx + 1;
-					$i++;
-				}
-				else { $next_real_data_byte = $look_idx; last; }
-			}
-			my $len    = $next_real_data_byte - $start_byte;
-			my $v_name = $has_error ? "error_fault_violation_bits" : "ping_block";
-			printf( $fh "\tuint8_t    %s%s;\n", $v_name, ( $len > 1 ? "[$len]" : "" ) );
-			next;
-		}
+    $description =~ s/^\s+//;
+    return ( $description, $i - 1 );
+}
 
-		my $f_var = ( scalar @fields == 1 ) ? lc( $fields[0]->{name} ) : join( '_', map { lc( $_->{name} ) } @fields );
-		$f_var =~ s/[^a-z0-9]/_/g;
-		$f_var =~ s/_+/_/g;
-		$f_var =~ s/^_|_$//g;
-		$f_var = "_" . $f_var if $f_var =~ /^\d/;
+sub generate_header {
+    my ( $in_p, $out_p, $prefix, $d_map ) = @_;
+    my $lines_ref = slurp_file($in_p);
+    my @output;
 
-		my $type       = "uint8_t";
-		my $final_desc = "";
-		foreach my $f (@fields) {
-			$type = "uint16_t" if $f->{type} =~ /16/;
-			$type = "uint32_t" if $f->{type} =~ /32/;
-			my $clean_name = lc( $f->{name} ) =~ s/[^a-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr;
-			$final_desc .= " " . $d_map->{$clean_name} if $d_map->{$clean_name};
-		}
-		$final_desc =~ s/^\s+//;
+    push @output, "/* Auto-generated header file */\n";
+    push @output, "#ifndef ${prefix}_MESSAGES_H\n";
+    push @output, "#define ${prefix}_MESSAGES_H\n\n";
+    push @output, "#include <stdint.h>\n\n";
 
-		if   ($final_desc) { print {$fh} "\t/** $final_desc (Byte $b_idx) */\n"; }
-		else               { print {$fh} "\t/** Byte $b_idx */\n"; }
-		printf( $fh "\t%-10s %-30s\n", $type, $f_var . ";" );
-	}
-	print {$fh} "} ${prefix}_${struct_tag}_MSG;\n\n";
+    my $in_msg_section = 0;
+    my $current_msg    = "";
+    my @fields         = ();
+
+    for ( my $i = 0 ; $i < scalar @{$lines_ref} ; $i++ ) {
+        my $line = $lines_ref->[$i];
+        if ( $line =~ /^Message ID:/ ) { $in_msg_section = 1; next; }
+        if ( $line =~ /^\S/ ) { $in_msg_section = 0; }
+        next unless $in_msg_section;
+
+        if ( $line =~ /^  ([^:#\s][^:]+):$/ ) {
+            if ($current_msg) {
+                push @output, process_message( $current_msg, \@fields, $d_map, $prefix );
+            }
+            $current_msg = $1;
+            @fields      = ();
+        }
+        elsif ( $line =~ /^\s{4}([^:#\s][^:]+):/ ) {
+            my ( $f_data, $new_i ) = parse_field_details( $lines_ref, $i, $1 );
+            push @fields, $f_data if %{$f_data};
+            $i = $new_i;
+        }
+    }
+
+    push @output, process_message( $current_msg, \@fields, $d_map, $prefix ) if $current_msg;
+    push @output, "#endif\n";
+
+    write_file( $out_p, \@output );
+    return;
+}
+
+sub slurp_file {
+    my ($path) = @_;
+    open( my $fh, '<', $path );
+    my @lines = <$fh>;
+    close $fh;
+    chomp @lines;
+    return \@lines;
+}
+
+sub write_file {
+    my ( $path, $content_ref ) = @_;
+    open( my $fh, '>', $path );
+    for my $line (@$content_ref) {
+        print {$fh} $line or die "Could not write to $path: $!";
+    }
+    close $fh;
+    return;
+}
+
+sub parse_field_details {
+    my ( $lines_ref, $index, $name ) = @_;
+    my ( $start, $data_type ) = ( undef, "u8" );
+    my $i = $index;
+
+    while ( ++$i < scalar @{$lines_ref} ) {
+        my $sub = $lines_ref->[$i];
+        if ( $sub =~ /bit_start:\s*(\d+)/ ) {
+            $start = $1;
+        }
+        if ( $sub =~ /data type:\s*(\w+)/ ) {
+            $data_type = $1;
+        }
+        last if $sub =~ /^\s{4}[^#\s]/ || $sub =~ /^\s{0,2}\S/;
+    }
+    my %res = defined $start ? ( name => $name, start => $start, type => $data_type ) : ();
+    return ( \%res, $i - 1 );
+}
+
+sub clean_field_name {
+    my ($name) = @_;
+    my $clean = lc $name;
+    $clean =~ s/[^a-z0-9]/_/g;
+    $clean =~ s/_+/_/g;
+    $clean =~ s/^_|_$//g;
+    return $clean || "unknown_field";
+}
+
+sub process_message {
+    my ( $name, $f_ref, $d_map, $prefix ) = @_;
+    my @buf;
+    my $tag = uc( $name =~ s/[^A-Za-z0-9]/_/gr =~ s/_+/_/gr =~ s/^_|_$//gr );
+
+    if ( $name =~ /Cell Data/i ) {
+        push @buf, sprintf "/** %s */\ntypedef struct {\n\tstruct {\n\t\tuint8_t voltage;\n\t\tuint8_t temperature;\n\t} cells[32];\n} %s_%s_MSG;\n\n", $name, $prefix, $tag;
+        return join '', @buf;
+    }
+
+    my %byte_map;
+    for my $f (@$f_ref) {
+        push @{ $byte_map{ int( $f->{start} / 8 ) } }, $f;
+    }
+
+    push @buf, "/** $name */\ntypedef struct {\n";
+    my @sorted = sort { $a <=> $b } keys %byte_map;
+
+    for ( my $i = 0 ; $i < scalar @sorted ; $i++ ) {
+        push @buf, process_byte_entry( \@sorted, \%byte_map, \$i, $d_map );
+    }
+    push @buf, "} ${prefix}_${tag}_MSG;\n\n";
+    return join '', @buf;
+}
+
+sub process_byte_entry {
+    my ( $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
+    my @out;
+    my $b_idx  = $sorted_ref->[$$idx_ref];
+    my $fields = $map_ref->{$b_idx};
+
+    if ( scalar @{$fields} > 2 ) {
+        push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
+    }
+    else {
+        my $f_var = ( scalar @{$fields} == 1 )
+          ? clean_field_name( $fields->[0]->{name} )
+          : join( '_', map { clean_field_name( $_->{name} ) } @{$fields} );
+        $f_var = "_" . $f_var if $f_var =~ /^\d/;
+
+        my $type = ( $fields->[0]->{type} =~ /32/ ) ? "uint32_t"
+          : ( $fields->[0]->{type} =~ /16/ )         ? "uint16_t"
+          :                                           "uint8_t";
+        my $desc = join ' ', map { $d_map->{ clean_field_name( $_->{name} ) } // () } @{$fields};
+
+        push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . ";";
+    }
+    return join '', @out;
+}
+
+sub handle_multi_field_range {
+    my ( $bytes_ref, $map_ref, $idx_ref ) = @_;
+    my $start_byte = $bytes_ref->[$$idx_ref];
+    my $has_error  = grep { $_->{name} =~ /error|fault|violation/i } @{ $map_ref->{$start_byte} };
+
+    while ( $$idx_ref + 1 < scalar @{$bytes_ref} ) {
+        my $next_byte = $bytes_ref->[ $$idx_ref + 1 ];
+        my $next_f    = $map_ref->{$next_byte};
+        if ( scalar @{$next_f} <= 2 ) {
+            last if $next_f->[0]->{name} !~ /reserved/i;
+        }
+        $$idx_ref++;
+    }
+
+    my $len    = ( $bytes_ref->[$$idx_ref] - $start_byte ) + 1;
+    my $v_name = $has_error ? "error_fault_violation_bits" : "ping_block";
+    return sprintf "\tuint8_t    %s%s;\n", $v_name, ( $len > 1 ? "[$len]" : "" );
 }
