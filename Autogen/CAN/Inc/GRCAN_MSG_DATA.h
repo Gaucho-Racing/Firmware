@@ -327,24 +327,6 @@ typedef struct {
 /** Dash Config */
 typedef struct {
 	uint8_t ping_block;
-	/** Discarded input but still send it, set by ECU State
- (Byte 1) */
-	uint8_t button_led_1_r;
-	/** Discarded input but still send it, set by ECU State
- (Byte 2) */
-	uint8_t button_led_1_g;
-	/** Discarded input but still send it, set by ECU State
- (Byte 3) */
-	uint8_t button_led_1_b;
-	/** Discarded input but still send it, set by ECU State
- (Byte 4) */
-	uint8_t button_led_2_r;
-	/** Discarded input but still send it, set by ECU State
- (Byte 5) */
-	uint8_t button_led_2_g;
-	/** Discarded input but still send it, set by ECU State
- (Byte 6) */
-	uint8_t button_led_2_b;
 } GR_OLD_DASH_CONFIG_MSG;
 
 /** Steering Status */
