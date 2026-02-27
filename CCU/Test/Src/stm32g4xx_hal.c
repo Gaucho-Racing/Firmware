@@ -1,4 +1,6 @@
 #include "stm32g4xx_hal.h"
+
+#include "Logomatic.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "Logomatic.h"
 #include "Unused.h"
@@ -28,14 +30,15 @@ uint32_t HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState
 	return 1;
 }
 
-//Dont where else to place this
+// Dont where else to place this
 void SendPrechargeStatus()
 {
 	LOGOMATIC("Precharge should send\n");
 	return;
 }
 
-void SendDebugReport(){
+void SendDebugReport()
+{
 	LOGOMATIC("Debug should send\n");
 	return;
 }
