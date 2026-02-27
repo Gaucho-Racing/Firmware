@@ -62,8 +62,6 @@ void CANInitialize()
 	can_start(can_handler);
 }
 
-
-
 void CAN_sendPing(GR_OLD_NODE_ID to)
 {
 	FDCANTxMessage pingMsg;
