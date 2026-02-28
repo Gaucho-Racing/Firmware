@@ -7,7 +7,7 @@ let circles = [];
 let lastW = 0;
 let lastH = 0;
 
-function randomCircle(w, h {
+function randomCircle(w, h) {
 	const radius = 50 + Math.random() * 150;
 	const cx = Math.random() * w;
 	const cy = Math.random() * h;
