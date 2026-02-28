@@ -189,6 +189,11 @@ jobs:
           css: 'true'
           log_level: 'DEBUG'
 
+      - name: ESLint
+        uses: stefanoeb/eslint-action@0b532bcd98dbed80a59071fa8986fcf1b1715be4  #v1.0.2
+        with:
+          files: 'Web'
+
   all:
     name: Completed All Linting
     needs: [ configs, codeql, perllinter, web ]
