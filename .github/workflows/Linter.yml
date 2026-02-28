@@ -169,10 +169,28 @@ jobs:
           title: 'Perl Linter Findings'
           repo-token: ${{ github.token }}
           input: 'perlcritic_annotations.json'
+  web:
+    name: Web Linter
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 1
+
+      - name: HTML5 Validator
+        uses: Cyb3r-Jak3/html5validator-action@41633d488eb36e18fd1a95ffc83daf1bf22a75bd  # v7.2.0
+        with:
+          root: 'Web'
+          css: 'true'
+          log_level: 'DEBUG'
 
   all:
     name: Completed All Linting
-    needs: [ configs, codeql, perllinter ]
+    needs: [ configs, codeql, perllinter, web ]
     runs-on: ubuntu-slim
     permissions: { }
     if: always()
@@ -182,7 +200,8 @@ jobs:
           ${{
             needs.configs.result != 'success' ||
             needs.codeql.result != 'success' ||
-            needs.perllinter.result != 'success'
+            needs.perllinter.result != 'success' ||
+            needs.web.result != 'success'
           }}
         run: |
           echo "One or more linting jobs have failed."
