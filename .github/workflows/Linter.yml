@@ -189,10 +189,22 @@ jobs:
           css: 'true'
           log_level: 'DEBUG'
 
+      - name: Setup NodeJS
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+
+      - name: Install ESLint
+        run: npm install -g --no-fund eslint
+
       - name: ESLint
-        uses: stefanoeb/eslint-action@0b532bcd98dbed80a59071fa8986fcf1b1715be4  #v1.0.2
-        with:
-          files: 'Web'
+        run: |
+          set -o pipefail
+          echo "<details open><summary>ESLint Output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          eslint 'Web/**/*.js' --max-warnings=0 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
   all:
     name: Completed All Linting
