@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GRCAN Viewer</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+	<div id="alert-placeholder" class="alert-warning">
+		<span>This is a placeholder for an actual viewer. Please remove this notice for the real viewer.</span>
+	</div>
+	<canvas id="bg-canvas"></canvas>
+	<div class="container">
+		<h1>GRCAN Viewer</h1>
+		<div class="description">
+			<p>
+				This tool allows you to view the <b>GRCAN.CANdo</b> file from any branch, tag, or commit in the <a href="https://grlink.to/monorepo">Firmware monorepo</a>.
+				<br><br>
+				Soon to be made by the Firmware 2026 URCA team.
+				<br><br>
+				Please note that this page is unofficial and not supported by <a href="https://gauchoracing.com">Gaucho Racing</a>.
+			</p>
+		</div>
+		<div id="ref-input-row">
+			<input id="ref-combobox" list="ref-list" type="text" placeholder="Branch, Tag, or SHA-1 Hash" minlength="7"
+				maxlength="40" autocomplete="off">
+			<datalist id="ref-list"></datalist>
+		</div>
+		<div id="cando-box" class="cando-box">
+			<span class="placeholder">Select a branch, tag, or enter a commit SHA to view GRCAN.CANdo</span>
+		</div>
+	</div>
+	<script src="logic.js"></script>
+	<script src="background.js"></script>
+</body>
+
+</html>
