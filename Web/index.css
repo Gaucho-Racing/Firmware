@@ -10,7 +10,7 @@
 }
 
 .description a:hover,
-.description a:focus 
+.description a:focus {
 	color: #fff;
 	text-decoration: underline;
 	text-shadow:
