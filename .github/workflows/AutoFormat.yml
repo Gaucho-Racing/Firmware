@@ -198,7 +198,7 @@ jobs:
           echo "<details open><summary>Prettier Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git ls-files 'Web/*.html' 'Web/*.css' 'Web/*.js' | xargs -r prettier --write --use-tabs
+          git ls-files 'Web/*.html' 'Web/*.css' 'Web/*.js' | xargs -r prettier --write --use-tabs 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
