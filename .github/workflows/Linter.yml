@@ -169,6 +169,7 @@ jobs:
           title: 'Perl Linter Findings'
           repo-token: ${{ github.token }}
           input: 'perlcritic_annotations.json'
+
   web:
     name: Web Linter
     runs-on: ubuntu-latest

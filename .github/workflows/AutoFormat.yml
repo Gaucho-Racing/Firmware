@@ -173,6 +173,7 @@ jobs:
           default_author: github_actions
           message: 'Automatic Assembly Format: Standardized formatting automatically'
           fetch: 'false'
+
   web:
     name: Web
     runs-on: ubuntu-slim
