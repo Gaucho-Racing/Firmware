@@ -4,8 +4,8 @@ const DENSITY = 0.18;
 const CIRCLE_RADIUS = 120;
 let NUM_CIRCLES = 200;
 let circles = [];
-let lastW = 0,
-  lastH = 0;
+let lastW = 0;
+let lastH = 0;
 
 function randomCircle(w, h) {
   const radius = 50 + Math.random() * 150;
