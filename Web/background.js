@@ -27,7 +27,7 @@ function randomCircle(w, h) {
 		}
 	}
 	return { color, squares, radius };
-}
+}}
 
 let bgSquares = null;
 
