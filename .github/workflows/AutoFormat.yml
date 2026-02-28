@@ -195,7 +195,7 @@ jobs:
       - name: Format Web Files
         run: |
           set -o pipefail
-          git ls-files 'Web/*.html' 'Web/*.css' 'Web/*.js' | xargs -r prettier --write
+          git ls-files 'Web/*.html' 'Web/*.css' 'Web/*.js' | xargs -r prettier --write --use-tabs
 
       - name: Save Changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5  # v9.1.4
