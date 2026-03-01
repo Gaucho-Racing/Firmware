@@ -130,11 +130,7 @@ sub get_dbc_message {
 		@sigs = map { { name => $_, %{ $m_def->{sigs}{$_} } } } keys %{ $m_def->{sigs} };
 	}
 
-	my @sorted_sigs = sort {
-       ($a->{start} // 0 ) <=> ( $b->{start} // 0 )
-		||
-		normalize( $a->{name} ) cmp normalize( $b->{name} )
-	} @sigs;
+	my @sorted_sigs = sort { ( $a->{start} // 0 ) <=> ( $b->{start} // 0 ) || normalize( $a->{name} ) cmp normalize( $b->{name} ) } @sigs;
 
 	for my $s_ref (@sorted_sigs) {
 		$output .= format_signal( $s_ref, $t_norm );
