@@ -28,7 +28,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_adc.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_cortex.h"
 #include "stm32g4xx_ll_crs.h"
@@ -39,12 +38,11 @@ extern "C" {
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_system.h"
-#include "stm32g4xx_ll_usart.h"
 #include "stm32g4xx_ll_utils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "GR_OLD_NODE_ID.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -70,45 +68,23 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define BSE_SIGNAL_Pin LL_GPIO_PIN_0
-#define BSE_SIGNAL_GPIO_Port GPIOC
-#define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
-#define BSPD_SIGNAL_GPIO_Port GPIOC
-#define APPS1_SIGNAL_Pin LL_GPIO_PIN_2
-#define APPS1_SIGNAL_GPIO_Port GPIOC
-#define APPS2_SIGNAL_Pin LL_GPIO_PIN_3
-#define APPS2_SIGNAL_GPIO_Port GPIOC
-#define BSPD_SENSE_Pin LL_GPIO_PIN_5
-#define BSPD_SENSE_GPIO_Port GPIOA
-#define IMD_SENSE_Pin LL_GPIO_PIN_6
-#define IMD_SENSE_GPIO_Port GPIOA
-#define AMS_SENSE_Pin LL_GPIO_PIN_7
-#define AMS_SENSE_GPIO_Port GPIOA
-#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0
-#define BRAKE_F_SIGNAL_GPIO_Port GPIOB
-#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_1
-#define BRAKE_R_SIGNAL_GPIO_Port GPIOB
-#define LED_TEST_Pin LL_GPIO_PIN_11
-#define LED_TEST_GPIO_Port GPIOB
-#define AUX_SIGNAL_Pin LL_GPIO_PIN_14
-#define AUX_SIGNAL_GPIO_Port GPIOB
-#define STEERING_ANGLE_Pin LL_GPIO_PIN_15
-#define STEERING_ANGLE_GPIO_Port GPIOB
-#define BRAKE_LIGHT_Pin LL_GPIO_PIN_4
-#define BRAKE_LIGHT_GPIO_Port GPIOB
-#define TSSI_G_CONTROL_Pin LL_GPIO_PIN_5
-#define TSSI_G_CONTROL_GPIO_Port GPIOB
-#define TSSI_R_CONTROL_Pin LL_GPIO_PIN_6
-#define TSSI_R_CONTROL_GPIO_Port GPIOB
-#define RTD_CONTROL_Pin LL_GPIO_PIN_7
-#define RTD_CONTROL_GPIO_Port GPIOB
-#define AUX_CONTROL_Pin LL_GPIO_PIN_8
-#define AUX_CONTROL_GPIO_Port GPIOB
-#define SOFTWARE_OK_CONTROL_Pin LL_GPIO_PIN_9
-#define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
+#define RCC_OSC32_IN_Pin LL_GPIO_PIN_14
+#define RCC_OSC32_IN_GPIO_Port GPIOC
+#define RCC_OSC32_OUT_Pin LL_GPIO_PIN_15
+#define RCC_OSC32_OUT_GPIO_Port GPIOC
+#define RCC_OSC_IN_Pin LL_GPIO_PIN_0
+#define RCC_OSC_IN_GPIO_Port GPIOF
+#define RCC_OSC_OUT_Pin LL_GPIO_PIN_1
+#define RCC_OSC_OUT_GPIO_Port GPIOF
+#define T_SWDIO_Pin LL_GPIO_PIN_13
+#define T_SWDIO_GPIO_Port GPIOA
+#define T_SWCLK_Pin LL_GPIO_PIN_14
+#define T_SWCLK_GPIO_Port GPIOA
+#define T_SWO_Pin LL_GPIO_PIN_3
+#define T_SWO_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-#define LOCAL_GR_ID GR_CCU
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

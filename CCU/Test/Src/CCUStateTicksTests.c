@@ -60,7 +60,7 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
@@ -121,7 +121,7 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
@@ -155,7 +155,7 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
@@ -191,7 +191,7 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
@@ -229,7 +229,7 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
@@ -248,7 +248,7 @@ int main(void)
 			LOGOMATIC("Software Latch was tripped and set to low\n");
 		}
 
-		state_dataTest.Button_Status = 0;
+		state_dataTest.recv_charge_cmd = 0;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
@@ -277,7 +277,7 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
