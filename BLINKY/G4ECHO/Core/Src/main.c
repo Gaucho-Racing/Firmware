@@ -72,7 +72,7 @@ LogomaticConfig logomatic_config = {
 };
 
 VCP_Config vcp_config = {
-	.baud_rate = 115200,
+	.baud_rate = 19200,
 	.clock_source = VCP_CLOCK_PCLK,
 	.gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
 	.bus_port = VCP_Port_A,
