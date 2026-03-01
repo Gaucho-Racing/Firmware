@@ -25,7 +25,6 @@
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "UpdateButton.h"
-#include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"

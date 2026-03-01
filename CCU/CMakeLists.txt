@@ -63,7 +63,6 @@ target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
-		Core/Src/adc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
 		Core/Src/gpio.c
