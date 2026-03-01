@@ -36,7 +36,7 @@
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target DashPanel"
 		},
-    {
+		{
 			"label": "CMake: configure and build CANine",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -53,7 +53,8 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4ECHO"
-		},		{
+		},
+		{
 			"label": "CMake: configure and build G4HELLO",
 			"type": "shell",
 			"dependsOrder": "sequence",
