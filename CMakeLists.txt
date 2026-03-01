@@ -70,8 +70,9 @@ message(
 # Projects
 add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
-add_gr_project(STM32G474xE AnalogCalibration)
 add_gr_project(STM32G474xE DashPanel)
+add_gr_project(STM32G474xE AnalogCalibration)
+add_gr_project(STM32G474xE CANine)
 
 # Development
 add_gr_project(STM32G474xE G4ADCTESTING)
