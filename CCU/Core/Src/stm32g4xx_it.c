@@ -23,8 +23,8 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Logomatic.h"
 #include "CCUStateData.h"
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
