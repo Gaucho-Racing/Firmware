@@ -8,6 +8,7 @@
 		"github.vscode-github-actions",
 		"github.vscode-pull-request-github",
 		"eamodio.gitlens",
-		"davidanson.vscode-markdownlint"
+		"davidanson.vscode-markdownlint",
+		"ms-vscode.vscode-serial-monitor"
 	]
 }

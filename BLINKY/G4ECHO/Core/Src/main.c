@@ -19,15 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "CANDler.h"
-#include "CCUStateData.h"
-#include "StateMachine.h"
-#include "StateTicks.h"
-#include "StateUtils.h"
-#include "dma.h"
-#include "fdcan.h"
-#include "gpio.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
@@ -52,20 +43,33 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-CCU_StateData state_data = {0};
-LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
-				   .bus = LOGOMATIC_BUS,
-				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
-				   .baud_rate = 115200,
-				   .data_width = LOGOMATIC_DATAWIDTH_8B,
-				   .stop_bits = LOGOMATIC_STOPBITS_1,
-				   .parity = LOGOMATIC_PARITY_NONE,
-				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
-				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
-				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+LogomaticConfig logomatic_config = {
+    .baud_rate = 115200,
+    .clock_source = LOGOMATIC_PCLK1,
+    .data_width = LOGOMATIC_DATAWIDTH_8B,
+    .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
+    .gpio_port = LOGOMATIC_GPIOA,
+    .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+    .parity = LOGOMATIC_PARITY_NONE,
+    .prescaler = LOGOMATIC_PRESCALER_DIV1,
+    .stop_bits = LOGOMATIC_STOPBITS_1,
+    .transfer_direction = LOGOMATIC_DIRECTION_TX,
+    .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+    .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+    .bus = LOGOMATIC_BUS,
+};
 
 VCP_Config vcp_config = {.baud_rate = 19200,
 			 .clock_source = VCP_CLOCK_PCLK,
@@ -78,17 +82,19 @@ VCP_Config vcp_config = {.baud_rate = 19200,
 			 .tx_fifo_threshold = VCP_Threshold_1_8,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
 			 .usart_instance = USART2};
-/* USER CODE END PV */
 
-/* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
+void USART2_IRQHandler(void)
+{
+	if (LL_USART_IsActiveFlag_ORE(USART2)) {
+		LL_USART_ClearFlag_ORE(USART2);
+	}
+	while (LL_USART_IsEnabledIT_RXNE(USART2) && LL_USART_IsActiveFlag_RXNE(USART2)) {
+		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
+		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
+		LL_USART_TransmitData8(USART2, receivedData);
+		LOGOMATIC("Received: %c\n", receivedData);
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -110,44 +116,32 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-	Setup_Logomatic(&logomaticConfig);
+	Setup_Logomatic(&logomatic_config);
 	Setup_VCP(&vcp_config);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_FDCAN1_Init();
 	/* USER CODE BEGIN 2 */
-
-	// Initialize CAN
-	CAN_Configure();
-
-	LOGOMATIC("Initialization complete\n");
 
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
 	while (1) {
-		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
-		LL_mDelay(100);
+		/* USER CODE END WHILE */
 
-		// Initialize SoftwareLatch High
-		setSoftwareLatch(1, &state_data);
-		CCU_State_Tick(&state_data);
-
-		LL_mDelay(200);
-
-		/* USER CODE END 3 */
+		/* USER CODE BEGIN 3 */
+		LOGOMATIC("Hello, LOGOMATIC! Great to be here %f\n", 3.14159265);
+		LL_mDelay(750);
 	}
+	/* USER CODE END 3 */
 }
 
 /**
@@ -189,6 +183,28 @@ void SystemClock_Config(void)
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
 		Error_Handler();
 	}
+}
+
+/**
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_GPIO_Init(void)
+{
+	/* USER CODE BEGIN MX_GPIO_Init_1 */
+
+	/* USER CODE END MX_GPIO_Init_1 */
+
+	/* GPIO Ports Clock Enable */
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOF);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+
+	/* USER CODE BEGIN MX_GPIO_Init_2 */
+
+	/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

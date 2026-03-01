@@ -9,7 +9,7 @@ typedef struct {
 	CCU_STATE state;
 
 	// name lwk might be too long
-	bool Button_Status;
+	bool recv_charge_cmd;
 
 	// BCU_STATUS_2
 	uint8_t BCU_S2_20Volt;

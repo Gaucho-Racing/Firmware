@@ -58,4 +58,4 @@ jobs:
           default_author: github_actions
           message: 'Automatic CANfigurator: Updated CAN files automatically'
           fetch: 'false'
-          add: 'Autogen/CAN/Inc/*.h --force'
+          add: '--force Autogen/CAN/Inc/*.h Autogen/CAN/Doc/*.dbc'

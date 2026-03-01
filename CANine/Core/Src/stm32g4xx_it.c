@@ -23,8 +23,6 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "CCUStateData.h"
-#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,8 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern FDCAN_HandleTypeDef hfdcan1;
-extern FDCAN_HandleTypeDef hfdcan2;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -189,24 +186,32 @@ void SysTick_Handler(void)
 	/* USER CODE END SysTick_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
-void USART2_IRQHandler(void)
+/******************************************************************************/
+/* STM32G4xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32g4xx.s).                    */
+/******************************************************************************/
+
+/**
+ * @brief This function handles EXTI line[15:10] interrupts.
+ */
+void EXTI15_10_IRQHandler(void)
 {
-	if (LL_USART_IsActiveFlag_ORE(USART2)) {
-		LL_USART_ClearFlag_ORE(USART2);
+	/* USER CODE BEGIN EXTI15_10_IRQn 0 */
+
+	/* USER CODE END EXTI15_10_IRQn 0 */
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_13) != RESET) {
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
+		/* USER CODE BEGIN LL_EXTI_LINE_13 */
+
+		/* USER CODE END LL_EXTI_LINE_13 */
 	}
-	while (LL_USART_IsEnabledIT_RXNE(USART2) && LL_USART_IsActiveFlag_RXNE(USART2)) {
-		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
-		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
-		LOGOMATIC("VCP: %c\n", receivedData);
-		if (receivedData == 'C' && !state_data.recv_charge_cmd) {
-			LOGOMATIC("Received charge command\n");
-			state_data.recv_charge_cmd = true;
-			LL_USART_TransmitData8(USART2, 'C');
-		} else {
-			state_data.recv_charge_cmd = false;
-			LL_USART_TransmitData8(USART2, 'X');
-		}
-	}
+	/* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
+	/* USER CODE END EXTI15_10_IRQn 1 */
 }
+
+/* USER CODE BEGIN 1 */
+
 /* USER CODE END 1 */

@@ -39,6 +39,7 @@ include("${platform_path}/STM32L476xG/chip.cmake")
 # Utils
 include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/Logomatic/logomatic.cmake")
+include("${lib_path}/Utils/VirtualComPort/vcp.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
@@ -71,8 +72,9 @@ message(
 # Projects
 add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
-add_gr_project(STM32G474xE AnalogCalibration)
 add_gr_project(STM32G474xE DashPanel)
+add_gr_project(STM32G474xE AnalogCalibration)
+add_gr_project(STM32G474xE CANine)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)
@@ -82,10 +84,11 @@ add_gr_project(STM32G474xE G4CANTESTING)
 add_gr_project(STM32G474xE G4NEOTESTING)
 
 # BLINKY Demos
-add_gr_project(STM32G474xE BLINKY G4HELLO)
 add_gr_project(STM32G474xE BLINKY G4BLINKY)
 add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
+add_gr_project(STM32G474xE BLINKY G4HELLO)
+add_gr_project(STM32G474xE BLINKY G4ECHO)
 
 # Onboarding Workshops
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
