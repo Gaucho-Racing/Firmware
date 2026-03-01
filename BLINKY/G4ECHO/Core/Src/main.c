@@ -71,19 +71,17 @@ LogomaticConfig logomatic_config = {
     .bus = LOGOMATIC_BUS,
 };
 
-VCP_Config vcp_config = {
-	.baud_rate = 19200,
-	.clock_source = VCP_CLOCK_PCLK,
-	.gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-	.bus_port = VCP_Port_A,
-	.parity = VCP_Parity_None,
-	.prescaler = VCP_Prescalar_Div1,
-	.stop_bits = VCP_StopBits_1,
-	.oversampling = VCP_Oversampling_16,
-	.tx_fifo_threshold = VCP_Threshold_1_8,
-	.rx_fifo_threshold = VCP_Threshold_1_8,
-	.usart_instance = USART2
-};
+VCP_Config vcp_config = {.baud_rate = 19200,
+			 .clock_source = VCP_CLOCK_PCLK,
+			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+			 .bus_port = VCP_Port_A,
+			 .parity = VCP_Parity_None,
+			 .prescaler = VCP_Prescalar_Div1,
+			 .stop_bits = VCP_StopBits_1,
+			 .oversampling = VCP_Oversampling_16,
+			 .tx_fifo_threshold = VCP_Threshold_1_8,
+			 .rx_fifo_threshold = VCP_Threshold_1_8,
+			 .usart_instance = USART2};
 
 void USART2_IRQHandler(void)
 {
