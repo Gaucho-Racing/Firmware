@@ -66,6 +66,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
 VCP_Config vcp_config = {.baud_rate = 19200,
 			 .clock_source = VCP_CLOCK_PCLK,
 			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
