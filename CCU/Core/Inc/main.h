@@ -36,6 +36,7 @@ extern "C" {
 #include "stm32g4xx_ll_exti.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "stm32g4xx_ll_lpuart.h"
+#include "stm32g4xx_ll_usart.h"
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_system.h"

@@ -72,7 +72,6 @@ target_sources(
 		# Application
 		Application/Src/CANDler.c
 		Application/Src/StateTicks.c
-		Application/Src/UpdateButton.c
 		Application/Src/StateUtils.c
 )
 
@@ -82,6 +81,7 @@ target_link_libraries(
 		GR_OLD_CAN_MESSAGES
 		BitManipulations_Lib
 		PERIPHERAL_CAN_LIB
+		VCP_LIB
 )
 
 target_include_directories(
