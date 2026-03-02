@@ -119,7 +119,7 @@
 		},
 		{
 			"type": "cmake",
-			"label": "CMake: build",
+			"label": "CMake: build L4HELLO",
 			"command": "build",
 			"targets": [
 				"L4HELLO"
@@ -131,7 +131,7 @@
 		},
 		{
 			"type": "cmake",
-			"label": "CMake: build",
+			"label": "CMake: build L4BLINKY",
 			"command": "build",
 			"targets": [
 				"L4BLINKY"
@@ -143,15 +143,31 @@
 		},
 		{
 			"type": "cmake",
+			"label": "CMake: clean",
+			"command": "clean",
+			"preset": "Debug",
+			"problemMatcher": [],
+			"detail": "CMake template clean task"
+		},
+		{
+			"type": "cmake",
 			"label": "CMake: build",
 			"command": "build",
 			"targets": [
-				"L4BLINKY"
+				"L4HELLO"
 			],
 			"preset": "Debug",
 			"group": "build",
 			"problemMatcher": [],
 			"detail": "CMake template build task"
+		},
+		{
+		"label": "CMake: configure and build L4HELLO",
+		"dependsOrder": "sequence",
+		"dependsOn": [
+			"CMake: configure",
+			"CMake: build L4HELLO"
+		]
 		}
 	]
 }
