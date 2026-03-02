@@ -24,8 +24,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
 #include <Logomatic.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -103,9 +103,9 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-		counter +=1;
-		//ITM_SendChar(counter & 0xFF); for sending characters to ITM console
-		LOGOMATIC("Counter: %u\n", counter); //shows up in SWO console
+		counter += 1;
+		// ITM_SendChar(counter & 0xFF); for sending characters to ITM console
+		LOGOMATIC("Counter: %u\n", counter); // shows up in SWO console
 		HAL_Delay(100);
 
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
