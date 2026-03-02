@@ -23,6 +23,8 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "CCUStateData.h"
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -187,41 +189,24 @@ void SysTick_Handler(void)
 	/* USER CODE END SysTick_IRQn 1 */
 }
 
-/******************************************************************************/
-/* STM32G4xx Peripheral Interrupt Handlers                                    */
-/* Add here the Interrupt Handlers for the used peripherals.                  */
-/* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32g4xx.s).                    */
-/******************************************************************************/
-
-/**
- * @brief This function handles FDCAN1 interrupt 0.
- */
-void FDCAN1_IT0_IRQHandler(void)
-{
-	/* USER CODE BEGIN FDCAN1_IT0_IRQn 0 */
-
-	/* USER CODE END FDCAN1_IT0_IRQn 0 */
-	HAL_FDCAN_IRQHandler(&hfdcan1);
-	/* USER CODE BEGIN FDCAN1_IT0_IRQn 1 */
-
-	/* USER CODE END FDCAN1_IT0_IRQn 1 */
-}
-
-/**
- * @brief This function handles FDCAN2 interrupt 0.
- */
-void FDCAN2_IT0_IRQHandler(void)
-{
-	/* USER CODE BEGIN FDCAN2_IT0_IRQn 0 */
-
-	/* USER CODE END FDCAN2_IT0_IRQn 0 */
-	HAL_FDCAN_IRQHandler(&hfdcan2);
-	/* USER CODE BEGIN FDCAN2_IT0_IRQn 1 */
-
-	/* USER CODE END FDCAN2_IT0_IRQn 1 */
-}
-
 /* USER CODE BEGIN 1 */
-
+void USART2_IRQHandler(void)
+{
+	if (LL_USART_IsActiveFlag_ORE(USART2)) {
+		LL_USART_ClearFlag_ORE(USART2);
+	}
+	while (LL_USART_IsEnabledIT_RXNE(USART2) && LL_USART_IsActiveFlag_RXNE(USART2)) {
+		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
+		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
+		LOGOMATIC("VCP: %c\n", receivedData);
+		if (receivedData == 'C' && !state_data.recv_charge_cmd) {
+			LOGOMATIC("Received charge command\n");
+			state_data.recv_charge_cmd = true;
+			LL_USART_TransmitData8(USART2, 'C');
+		} else {
+			state_data.recv_charge_cmd = false;
+			LL_USART_TransmitData8(USART2, 'X');
+		}
+	}
+}
 /* USER CODE END 1 */
