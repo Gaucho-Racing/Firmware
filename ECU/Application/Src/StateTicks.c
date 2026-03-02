@@ -25,6 +25,7 @@
  *
  * @remark Intentionally not a globally accessible variable
  */
+
 ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
 static uint32_t buzzer_start_millis;
 static uint32_t last_can_inverter_request_millis;
