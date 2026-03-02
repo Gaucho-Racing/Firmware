@@ -189,12 +189,12 @@
 			"detail": "CMake template build task"
 		},
 		{
-		"label": "CMake: configure and build L4HELLO",
-		"dependsOrder": "sequence",
-		"dependsOn": [
-			"CMake: configure",
-			"CMake: build L4HELLO"
-		]
+			"label": "CMake: configure and build L4HELLO",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure",
+				"CMake: build L4HELLO"
+			]
 		}
 	]
 }
