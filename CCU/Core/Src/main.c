@@ -24,6 +24,8 @@
 #include "StateMachine.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
+#include "UpdateButton.h"
+#include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
@@ -31,7 +33,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
-#include "vcp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +57,7 @@ CCU_StateData state_data = {0};
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
 				   .baud_rate = 115200,
 				   .data_width = LOGOMATIC_DATAWIDTH_8B,
 				   .stop_bits = LOGOMATIC_STOPBITS_1,
@@ -66,18 +67,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
-
-VCP_Config vcp_config = {.baud_rate = 19200,
-			 .clock_source = VCP_CLOCK_PCLK,
-			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-			 .bus_port = VCP_Port_A,
-			 .parity = VCP_Parity_None,
-			 .prescaler = VCP_Prescalar_Div1,
-			 .stop_bits = VCP_StopBits_1,
-			 .oversampling = VCP_Oversampling_16,
-			 .tx_fifo_threshold = VCP_Threshold_1_8,
-			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .usart_instance = USART2};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,20 +99,23 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
+	Setup_Logomatic(&logomaticConfig);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-	Setup_Logomatic(&logomaticConfig);
-	Setup_VCP(&vcp_config);
+
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	MX_DMA_Init();
 	MX_FDCAN1_Init();
+	MX_FDCAN2_Init();
+	MX_ADC1_Init();
+	MX_ADC2_Init();
 	/* USER CODE BEGIN 2 */
 
 	// Initialize CAN
@@ -142,6 +134,8 @@ int main(void)
 
 		// Initialize SoftwareLatch High
 		setSoftwareLatch(1, &state_data);
+
+		Check_Button(&state_data);
 		CCU_State_Tick(&state_data);
 
 		LL_mDelay(200);

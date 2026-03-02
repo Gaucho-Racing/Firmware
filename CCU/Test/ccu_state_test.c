@@ -46,7 +46,7 @@ static CCU_STATE STATE_IDLE(CCU_StateData *sd, CCU_STATE state)
 {
 	update_error_flags(sd);
 
-	if (!any_errors(sd) && sd->recv_charge_cmd) {
+	if (!any_errors(sd) && sd->Button_Status) {
 		return CCU_STATE_CHARGING;
 	}
 	return state;
@@ -57,7 +57,7 @@ static CCU_STATE STATE_CHARGING(CCU_StateData *sd, CCU_STATE state)
 	update_error_flags(sd);
 
 	// stop OR fault
-	if (!sd->recv_charge_cmd || any_errors(sd)) {
+	if (!sd->Button_Status || any_errors(sd)) {
 		return CCU_STATE_IDLE;
 	}
 	return state;
@@ -91,7 +91,7 @@ int main(void)
 	printf("Initial state: %s\n", state_name(state));
 
 	// 1) Press button, no errors -> should enter CHARGING
-	sd.recv_charge_cmd = true;
+	sd.Button_Status = true;
 	sd.ACU_S2_ERROR_BITS = 0;
 	state = CCU_State_Tick(&sd, state);
 	printf("After button ON, no errors: %s\n", state_name(state));
@@ -103,12 +103,12 @@ int main(void)
 
 	// 3) Clear error, press button again -> should go CHARGING
 	sd.ACU_S2_ERROR_BITS = 0;
-	sd.recv_charge_cmd = true;
+	sd.Button_Status = true;
 	state = CCU_State_Tick(&sd, state);
 	printf("After clear fault + button ON: %s\n", state_name(state));
 
 	// 4) Turn button off -> should go IDLE
-	sd.recv_charge_cmd = false;
+	sd.Button_Status = false;
 	state = CCU_State_Tick(&sd, state);
 	printf("After button OFF: %s\n", state_name(state));
 

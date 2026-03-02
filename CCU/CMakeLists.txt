@@ -63,6 +63,7 @@ target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
+		Core/Src/adc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
 		Core/Src/gpio.c
@@ -72,6 +73,7 @@ target_sources(
 		# Application
 		Application/Src/CANDler.c
 		Application/Src/StateTicks.c
+		Application/Src/UpdateButton.c
 		Application/Src/StateUtils.c
 )
 
@@ -81,7 +83,6 @@ target_link_libraries(
 		GR_OLD_CAN_MESSAGES
 		BitManipulations_Lib
 		PERIPHERAL_CAN_LIB
-		VCP_LIB
 )
 
 target_include_directories(
