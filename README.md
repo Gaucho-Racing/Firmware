@@ -23,6 +23,7 @@ If trying to run HOOTL tests or simulated development: see [Testing](#testing)
 
 If simply trying to build the executable for the arm based platform: use any other configure preset (Options as of 8/28/2025: Debug, RelWithDebInfo, Release, MinSizeRel)
 
+
 **To choose configure preset:**
 
 *If using CMake VSCode plugin*: VScode will prompt upon first entrance, otherwise go to the CMake plugin window and click the pencil icon on the option under configure. Alternatively use the command palette and call CMake: Select Configure Preset.
