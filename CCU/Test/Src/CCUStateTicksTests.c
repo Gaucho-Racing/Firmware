@@ -40,7 +40,7 @@ int main(void)
 		// #########
 		// No Errors + No Button Pressed (0)
 		// #########
-		LOGOMATIC("State Tick Started \n");
+		LOGOMATIC("----State Tick Started---- \n");
 		CCU_StateData state_dataTest = {0};
 		LOGOMATIC("No Errors Occurs, button is not pressed\n");
 
@@ -49,17 +49,18 @@ int main(void)
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// #########
 		// No Errors + Button Pressed (1)
 		// #########
-		LOGOMATIC("No Errors Occurs, button is pressed\n");
+		LOGOMATIC("----No Errors Occurs, button is pressed----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
@@ -75,20 +76,22 @@ int main(void)
 		}
 
 		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
-			LOGOMATIC("SOftware Latch tripped when it shouldn't\n");
+			LOGOMATIC("Software Latch tripped when it shouldn't\n");
 			return 1;
 		}
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// ######### FIXME: Double check valid test
 		// 1 Error + No Button Pressed (2)
 		// #########
-		LOGOMATIC("1 Errors Occurs, button is not pressed\n");
+		LOGOMATIC("----1 Errors Occurs, button is not pressed----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
+		state_dataTest.BCU_S2_OVERCURR_ERROR = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -104,18 +107,21 @@ int main(void)
 
 		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
 			LOGOMATIC("Software Latch was not tripped and set to low\n");
+			return 2;
 		}
+
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// ######### FIXME: Double check valid test
 		// 1 Error + Button Pressed (3)
 		// #########
-		LOGOMATIC("1 Errors Occurs, button pressed\n");
+		LOGOMATIC("----1 Errors Occurs, button pressed----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
@@ -136,18 +142,20 @@ int main(void)
 			LOGOMATIC("Software Latch was not tripped and set to low\n");
 			return 3;
 		}
+
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// ######### FIXME: Double check valid test
 		// Some Errors + Button Pressed (4)
 		// #########
 
-		LOGOMATIC("Some Errors Occur, button pressed\n");
+		LOGOMATIC("----Some Errors Occur, button pressed----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
@@ -170,18 +178,20 @@ int main(void)
 			LOGOMATIC("Software Latch was not tripped and set to low\n");
 			return 4;
 		}
+
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// ######### FIXME: Double check valid test
 		// Every Error + Button Pressed (5)
 		// #########
 
-		LOGOMATIC("Every Error Occurs, button pressed\n");
+		LOGOMATIC("----Every Error Occurs, button pressed----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
@@ -206,18 +216,20 @@ int main(void)
 			LOGOMATIC("Software Latch was not tripped and set to low\n");
 			return 5;
 		}
+
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// ######### FIXME: Double check valid test
 		// No Error + Button Pressed ON then OFF (6)
 		// #########
 
-		LOGOMATIC("No Errors Occur, button is pressed ON then OFF\n");
+		LOGOMATIC("----No Errors Occur, button is pressed ON then OFF----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
@@ -236,7 +248,7 @@ int main(void)
 			LOGOMATIC("Software Latch was tripped and set to low\n");
 		}
 
-		state_dataTest.Button_Status = 0;
+		state_dataTest.recv_charge_cmd = 0;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
@@ -253,17 +265,19 @@ int main(void)
 			LOGOMATIC("Software Latch was tripped and set to low\n");
 			return 6;
 		}
+
+		LOGOMATIC("\n\n\n");
 	}
 	{
 		// ######### FIXME: Double check valid test
 		// No Error, is Charging + Then Error (7)
 		// #########
-		LOGOMATIC("In Charging, then error occurs\n");
+		LOGOMATIC("----In Charging, then error occurs----\n");
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
 		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.Button_Status = 1;
+		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
@@ -300,7 +314,8 @@ int main(void)
 			LOGOMATIC("Software Latch was not tripped and set to low\n");
 			return 7;
 		}
+		LOGOMATIC("\n\n\n");
 	}
-	LOGOMATIC("ALL CURRENT TEST CASES PASSED\n");
+	LOGOMATIC("----ALL CURRENT TEST CASES PASSED\n----");
 	return 0;
 }

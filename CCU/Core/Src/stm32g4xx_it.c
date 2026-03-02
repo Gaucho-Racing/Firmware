@@ -23,6 +23,8 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "CCUStateData.h"
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -188,5 +190,23 @@ void SysTick_Handler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+void USART2_IRQHandler(void)
+{
+	if (LL_USART_IsActiveFlag_ORE(USART2)) {
+		LL_USART_ClearFlag_ORE(USART2);
+	}
+	while (LL_USART_IsEnabledIT_RXNE(USART2) && LL_USART_IsActiveFlag_RXNE(USART2)) {
+		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
+		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
+		LOGOMATIC("VCP: %c\n", receivedData);
+		if (receivedData == 'C' && !state_data.recv_charge_cmd) {
+			LOGOMATIC("Received charge command\n");
+			state_data.recv_charge_cmd = true;
+			LL_USART_TransmitData8(USART2, 'C');
+		} else {
+			state_data.recv_charge_cmd = false;
+			LL_USART_TransmitData8(USART2, 'X');
+		}
+	}
+}
 /* USER CODE END 1 */

@@ -48,11 +48,12 @@ void STATE_IDLE(CCU_StateData *state_data)
 		LOGOMATIC("Critical Error Occured; State set to IDLE \n");
 	};
 
-	if (!anyErrors && state_data->Button_Status) {
+	if (!anyErrors && state_data->recv_charge_cmd) {
 
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 1;
-		SendPrechargeStatus();
+		SendPrechargeStatus(state_data);
+		SendDebugReport("No_Errors");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	}
@@ -66,19 +67,18 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		setSoftwareLatch(0, state_data);
 
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		SendPrechargeStatus();
-		// FIXME: Send debug 2.0
+		SendPrechargeStatus(state_data);
 
 		state_data->state = CCU_STATE_IDLE;
 
 		LOGOMATIC("Critical Error Occured; State Set to IDLE \n");
 	}
 
-	if (!(state_data->Button_Status)) {
+	if (!(state_data->recv_charge_cmd)) {
 		state_data->state = CCU_STATE_IDLE;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		SendPrechargeStatus();
-		// Send debug 2.0
+		SendPrechargeStatus(state_data);
+		SendDebugReport("No_Error");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	}

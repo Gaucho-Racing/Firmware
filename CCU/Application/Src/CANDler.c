@@ -49,31 +49,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 2);
 			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 3);
 			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 4);
-			state_data.BCU_S2_PRECHARGE_BITS = bcu_status_2->precharge_bits;
-
-			break;
-
-			// uint8_t byte_S2_3 = ((uint8_t *)data)[3];
-			// uint8_t byte_S2_4 = ((uint8_t *)data)[4];
-			// uint8_t byte_S2_5 = ((uint8_t *)data)[5];
-			// uint8_t byte_6 = ((uint8_t *)data)[6];
-			/* commentblock starts here
-				    // BCU_STATUS_2 MIN CELL Volt (3)
-				    state_data.BCU_S2_MIN_CELL_Volt = GETBITS(((uint8_t *)data)[3], 0, 8);
-
-				    /// BCU_STATUS_2 MAX CELL TEMP(4)
-				    state_data.BCU_S2_MAX_CELL_TEMP = GETBITS(byte_S2_4, 0, 8);
-
-				    /// BCU_STATUS_2 Error Byte (5)
-				    state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(byte_S2_5, 0);
-				    state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(byte_S2_5, 1);
-				    state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(byte_S2_5, 2);
-				    state_data.BCU_S2_OVERCURR_ERROR = GETBIT(byte_S2_5, 3);
-				    state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(byte_S2_5, 4);
-				    */
-
-			// BCU_STATUS_2 PRECHARGE + SOFTWARE LATCH (6)
-			// state_data.BCU_S2_SOFTWARE_LATCH = GETBIT(byte_6, 3);
 
 			break;
 
@@ -83,7 +58,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	}
 }
 
-void CAN_Configure()
+void CAN_Configure(void)
 {
 
 	CANConfig canCfg;
@@ -177,11 +152,11 @@ void CAN_Configure()
 	can_start(primary_can);
 }
 
-void SendPrechargeStatus()
+void SendPrechargeStatus(CCU_StateData *state_data)
 {
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) & ((0xFFF & MSG_BCU_PRECHARGE) << 8) & (0xFF & GR_BCU);
-	msg.tx_header.IdType = FDCAN_STANDARD_ID;
+	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_BCU_PRECHARGE) << 8) | (0xFF & GR_BCU);
+	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 	msg.tx_header.DataLength = 1;
@@ -189,10 +164,31 @@ void SendPrechargeStatus()
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
 
-	msg.data[0] = (state_data.BCU_PRECHARGE_SET_TS_ACTIVE);
-	LOGOMATIC("PRECHARGE SET: %d", state_data.BCU_PRECHARGE_SET_TS_ACTIVE);
+	msg.data[0] = (state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+	LOGOMATIC("PRECHARGE SET: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
+}
+
+void SendDebugReport(char *data)
+{
+	FDCANTxMessage msg;
+	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_DEBUG_2_0) << 8) | (0xFF & GR_BCU);
+	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
+	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	msg.tx_header.DataLength = 8;
+	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	msg.tx_header.MessageMarker = 0;
+
+	msg.data[8] = (uint8_t)*data;
+
+	LOGOMATIC("ERROR: %s\n", data);
+
+	can_send(primary_can, &msg);
+
+	LOGOMATIC("DEBUG MESSAGE SENT\n");
 }
