@@ -237,5 +237,4 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = stateData->millisSinceBoot;
 	}
-
 }
