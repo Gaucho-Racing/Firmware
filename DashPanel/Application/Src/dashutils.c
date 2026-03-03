@@ -1,5 +1,9 @@
 #include "dashutils.h"
+#include "gr_neopixel.h"
 #include "main.h"
+
+NeopixelContext *NeoPixel_LED_Context;
+NeopixelContext *NeoPixel_Button_Context;
 
 // from ECU
 uint32_t MillisecondsSinceBoot(void)
@@ -26,23 +30,22 @@ void NeoPixel_Init(){
 				  .mosi_gpio_pin = LL_GPIO_PIN_14,
 				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
 
-	NeoPixel_LED_Context = NeoPixel_Setup(&NeoPixel_LED_Config);
-	NeoPixel_Button_Context = NeoPixel_Setup(&NeoPixel_Button_Config);
+	NeoPixel_LED_Context = Neopixel_Setup(&NeoPixel_LED_Config);
+	NeoPixel_Button_Context = Neopixel_Setup(&NeoPixel_Button_Config);
 }
 
 void Neopixel_LEDWrite() {
 
 	// 1: BMS, 2: IMD, 3: BSPD
-	LED_colors[0] = (dashStatus.led_bits & 0b00000001) ? COLOR_RED : COLOR_OFF;
-	LED_colors[1] = (dashStatus.led_bits & 0b00000010) ? COLOR_RED : COLOR_OFF;
-	LED_colors[2] = (dashStatus.led_bits & 0b00000100) ? COLOR_RED : COLOR_OFF;
+	LED_colors[0] = (dashStatus.led_bits & 0x01) ? COLOR_RED : COLOR_OFF;
+	LED_colors[1] = (dashStatus.led_bits & 0x02) ? COLOR_RED : COLOR_OFF;
+	LED_colors[2] = (dashStatus.led_bits & 0x03) ? COLOR_RED : COLOR_OFF;
 
 	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, NUM_LEDS);
-
 	return;
 }
 
-void Neopixel_ButtonWrite(NeopixelCo) {
+void Neopixel_ButtonWrite() {
 
 	// 1: TS Active, 2: RTD
 	// If the button doesn't do anything, it's off
@@ -55,18 +58,19 @@ void Neopixel_ButtonWrite(NeopixelCo) {
 
 	uint32_t COLOR_MAGICAL = (MillisecondsSinceBoot() * 71) & 0x00FFFFFF;
 
+	// Not dealing with this enum include nonsense
 	switch (dashStatus.ECUState) {
-		case GR_GLV_ON:
+		case 1: // GR_GLV_ON
 			button_colors[0] = COLOR_MAGICAL;
 			break;
-		case GR_PRECHARGED_ENGAGED:
+		case 2: // GR_PRECHARGE_ENGAGED
 			button_colors[0] = COLOR_RED;
 			break;
-		case GR_PRECHARGE_COMPLETE:
+		case 3: // GR_PRECHARGE_COMPLETE
 			button_colors[0] = COLOR_RED;
 			button_colors[1] = COLOR_MAGICAL;
 			break;
-		case GR_DRIVE_ACTIVE:
+		case 4: // GR_DRIVE_ACTIVE
 			button_colors[0] = COLOR_RED;
 			button_colors[1] = COLOR_RED;
 			break;
