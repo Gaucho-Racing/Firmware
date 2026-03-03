@@ -436,6 +436,7 @@ int main(void)
 		if (MillisecondsSinceBoot() >= nextPing) {
 			pingAll();
 
+			// TODO: implement error handling
 			if (nextPing != 0) {
 				if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
