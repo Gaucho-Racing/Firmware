@@ -116,7 +116,7 @@ int main(void)
 	ex_config.ClockPolarity = LL_SPI_POLARITY_LOW;
 	ex_config.ClockPhase = LL_SPI_PHASE_1EDGE;
 	ex_config.NSS = LL_SPI_NSS_SOFT;
-	ex_config.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV2;
+	ex_config.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
 	ex_config.BitOrder = LL_SPI_LSB_FIRST;
 	ex_config.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
 	ex_config.CRCPoly = 0x1D;

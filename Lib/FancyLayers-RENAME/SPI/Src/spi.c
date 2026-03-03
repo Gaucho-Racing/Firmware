@@ -41,6 +41,9 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 		return;
 	}
 
+	// Error status variable
+	handle->error_status = GR_SPI_ERR_NONE;
+
 	// Create Circular Buffers and assign the rx and the tx pointers
 	GR_MsgBuffer *msg_buffer_ptr = GR_MsgBuffer_Create(GR_SPI_BUFFER_BYTE_CAPACITY);
 	if (msg_buffer_ptr == NULL) {
@@ -73,17 +76,6 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	handle->pins->SPIx = pin_config->SPIx;
 	handle->pins->num_pins = pin_config->num_pins;
 	handle->pins->alternate_function_number = pin_config->alternate_function_number;
-
-	// Set current message variables
-	handle->current_msg = (GR_SPI_Message *)malloc(sizeof(GR_SPI_Message));
-	handle->current_msg->size = 0;
-	handle->current_msg->data = (uint8_t *)malloc(GR_SPI_MAX_MSG_BYTE_SIZE * sizeof(uint8_t));
-	handle->current_rx_msg_index = 0;
-	handle->current_tx_msg_index = 0;
-	handle->msg_status = GR_SPI_MSG_IDLE;
-
-	// Error status variable
-	handle->error_status = GR_SPI_ERR_NONE;
 
 	// Store handle in lookup table for interrupts
 	if (handle->pins->SPIx == SPI1) {
@@ -121,6 +113,14 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 		// Make the RXNE trigger when >= 16 bits are received
 		handle->pins->SPIx->CR2 &= ~SPI_CR2_FRXTH;
 	}
+
+	// Set current message variables
+	handle->current_msg = (GR_SPI_Message *)malloc(sizeof(GR_SPI_Message));
+	handle->current_msg->size = handle->transfer_size == GR_SPI_TRANSFER_SIZE_16 ? 2 : 1;
+	handle->current_msg->data = (uint8_t *)malloc(GR_SPI_MAX_MSG_BYTE_SIZE * sizeof(uint8_t));
+	handle->current_rx_msg_index = 0;
+	handle->current_tx_msg_index = 0;
+	handle->msg_status = GR_SPI_MSG_IDLE;
 
 	// Enable SPI peripheral after BSY flag clears
 	while (LL_SPI_IsActiveFlag_BSY(handle->pins->SPIx)) {}
@@ -212,6 +212,13 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 
 	// Check if Rx circular buffer is not empty
 	if (LL_SPI_IsActiveFlag_RXNE(handle->pins->SPIx)) {
+		// Start a transaction when starting to receive data without an ongoing transaction
+		if (handle->msg_status != GR_SPI_MSG_IN_PROGRESS) {
+			handle->current_msg->size = handle->transfer_size == GR_SPI_TRANSFER_SIZE_16 ? 2 : 1;
+			handle->current_tx_msg_index = 0;
+			handle->current_rx_msg_index = 0;
+			handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
+		}
 		uint16_t rx_index = handle->current_rx_msg_index, msg_size = handle->current_msg->size;
 		// Queue the message into the circular buffer
 		if (handle->transfer_size == GR_SPI_TRANSFER_SIZE_16 && rx_index <= msg_size - 2) {
