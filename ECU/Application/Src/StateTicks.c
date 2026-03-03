@@ -27,8 +27,6 @@
  */
 
 ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
-static uint32_t buzzer_start_millis;
-static uint32_t last_can_inverter_request_millis;
 
 CANHandle *primary_can;
 CANHandle *data_can;
@@ -150,10 +148,11 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 }
 
+static uint32_t buzzer_start_millis;
+
 void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 {
 	buzzer_start_millis = stateData->millisSinceBoot;
-	last_can_inverter_request_millis = stateData->millisSinceBoot;
 	stateData->ecu_state = GR_DRIVE_ACTIVE;
 }
 
@@ -195,6 +194,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		torque_request = 0;
 	}
 
+	static uint32_t last_can_inverter_request_millis;
 	if (stateData->millisSinceBoot - last_can_inverter_request_millis > 10) {
 		GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
@@ -229,4 +229,13 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		LOGOMATIC("Warning: Tractive System fails to discharge in time.\n");
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-D-TLE", 8);
 	}
+
+	// Discharge the car @ 100 Hz
+	static uint32_t last_discharge_request_millis;
+	if (stateData->millisSinceBoot - last_discharge_request_millis > 10) {
+		GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
+		last_discharge_request_millis = stateData->millisSinceBoot;
+	}
+
 }
