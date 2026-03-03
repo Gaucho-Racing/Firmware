@@ -23,10 +23,16 @@ static void Neopixel_BlockWhileBusy(NeopixelContext *context)
 	while (LL_SPI_IsActiveFlag_BSY(context->config.SPI_Instance)) {}
 }
 
+/**
+ * @brief Internal function to delay execution between transmissions, using BlockWhileBusy.
+ * @note 1 ms delay is longer than required between data refresh, but more convenient than implementing minimum (50 us)
+ * @param context A pointer to the NeopixelContext containing the SPI instance to check.
+ * @return none
+ */
 void Neopixel_LatchStrip(NeopixelContext *context)
 {
 	Neopixel_BlockWhileBusy(context);
-	LL_mDelay(1); // 1 ms delay is longer than required (50 us) between data refresh, but convenient
+	LL_mDelay(1);
 	Neopixel_BlockWhileBusy(context);
 }
 
@@ -38,7 +44,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	}
 
 	GPIO_TypeDef *gpio_port = 0;
-	switch (neopixelConfiguration->gpio_port) {
+	switch (neopixelConfiguration->GPIO_Port) {
 		case Neopixel_GPIOA:
 			gpio_port = GPIOA;
 			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
@@ -60,12 +66,12 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	}
 
 	LL_GPIO_InitTypeDef copi_pin = {
-	    .Pin = neopixelConfiguration->mosi_gpio_pin,
+	    .Pin = neopixelConfiguration->MOSI_Pin,
 	    .Mode = LL_GPIO_MODE_ALTERNATE,
 	    .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
 	    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
 	    .Pull = LL_GPIO_PULL_NO,
-	    .Alternate = neopixelConfiguration->neopixelAF,
+	    .Alternate = neopixelConfiguration->Neopixel_Count,
 	};
 
 	LL_GPIO_Init(gpio_port, &copi_pin);
@@ -77,7 +83,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .ClockPolarity = LL_SPI_POLARITY_LOW,
 	    .ClockPhase = LL_SPI_PHASE_1EDGE,
 	    .NSS = LL_SPI_NSS_SOFT,
-	    .BaudRate = neopixelConfiguration->neopixel_baudRatePrescaler,
+	    .BaudRate = neopixelConfiguration->SPI_BaudRatePrescaler,
 	    .BitOrder = LL_SPI_MSB_FIRST,
 	    .CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE,
 	    .CRCPoly = 7,
@@ -137,15 +143,15 @@ void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, u
 		return;
 	}
 
-	if (context->config.NumberOfNeopixels * sizeof(Neopixel_Color) != sizeofColors) {
+	if (context->config.Neopixel_Count * sizeof(Neopixel_Color) != sizeofColors) {
 		LOGOMATIC("Number of colors provided does not match number of Neopixels configured!\n");
-		LOGOMATIC("Expected %lu colors, got %lu colors\n", context->config.NumberOfNeopixels, sizeofColors / sizeof(Neopixel_Color));
+		LOGOMATIC("Expected %lu colors, got %lu colors\n", context->config.Neopixel_Count, sizeofColors / sizeof(Neopixel_Color));
 		assert_param(context->config.NumberOfNeopixels * sizeof(Neopixel_Color) == sizeofColors);
 		return;
 	}
 
-	uint8_t neopixelTransmission[context->config.NumberOfNeopixels * 24];
-	for (uint32_t i = 0; i < context->config.NumberOfNeopixels; i++) {
+	uint8_t neopixelTransmission[context->config.Neopixel_Count * 24];
+	for (uint32_t i = 0; i < context->config.Neopixel_Count; i++) {
 		Neopixel_EncodeColor(&neopixelTransmission[i * 24], colors[i]);
 	}
 

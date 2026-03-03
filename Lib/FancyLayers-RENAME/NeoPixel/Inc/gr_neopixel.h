@@ -5,7 +5,10 @@
 #ifndef GR_NEOPIXEL_H
 #define GR_NEOPIXEL_H
 
-// No longer needed, can just pass GPIOA, GPIOB, etc. directly into config struct
+/**
+ * @brief Port used by Neopixel GPIO pins.
+ * @note Same port must be used by all GPIO pins associated with one NeopixelConfig struct.
+ */
 typedef enum {
 	Neopixel_GPIOA,
 	Neopixel_GPIOB,
@@ -13,36 +16,41 @@ typedef enum {
 	Neopixel_GPIOD
 } Neopixel_GPIO_Port;
 
-/// @brief Alternate function for a specific pin and specific port
-// AF5 is usually used, but AF6 can be used for SPI3
+/**
+ * @brief Alternate function for a specific GPIO pin and port.
+ * @note AF5 used for SPI1/SPI2, AF6 is available for SPI3.
+ */
 typedef enum {
-	Neopixel_GPIO_AF_0 = LL_GPIO_AF_0,
-	Neopixel_GPIO_AF_1 = LL_GPIO_AF_1,
-	Neopixel_GPIO_AF_2 = LL_GPIO_AF_2,
-	Neopixel_GPIO_AF_3 = LL_GPIO_AF_3,
-	Neopixel_GPIO_AF_4 = LL_GPIO_AF_4,
-	Neopixel_GPIO_AF_5 = LL_GPIO_AF_5,
-	Neopixel_GPIO_AF_6 = LL_GPIO_AF_6,
-	Neopixel_GPIO_AF_7 = LL_GPIO_AF_7,
-	Neopixel_GPIO_AF_8 = LL_GPIO_AF_8,
-	Neopixel_GPIO_AF_9 = LL_GPIO_AF_9,
-	Neopixel_GPIO_AF_10 = LL_GPIO_AF_10,
-	Neopixel_GPIO_AF_11 = LL_GPIO_AF_11,
-	Neopixel_GPIO_AF_12 = LL_GPIO_AF_12,
-	Neopixel_GPIO_AF_13 = LL_GPIO_AF_13,
-	Neopixel_GPIO_AF_14 = LL_GPIO_AF_14,
-	Neopixel_GPIO_AF_15 = LL_GPIO_AF_15
-} GPIO_Alternate_Function;
+	Neopixel_AF0 = LL_GPIO_AF_0,
+	Neopixel_AF1 = LL_GPIO_AF_1,
+	Neopixel_AF2 = LL_GPIO_AF_2,
+	Neopixel_AF3 = LL_GPIO_AF_3,
+	Neopixel_AF4 = LL_GPIO_AF_4,
+	Neopixel_AF5 = LL_GPIO_AF_5,
+	Neopixel_AF6 = LL_GPIO_AF_6,
+	Neopixel_AF7 = LL_GPIO_AF_7,
+	Neopixel_AF8 = LL_GPIO_AF_8,
+	Neopixel_AF9 = LL_GPIO_AF_9,
+	Neopixel_AF10 = LL_GPIO_AF_10,
+	Neopixel_AF11 = LL_GPIO_AF_11,
+	Neopixel_AF12 = LL_GPIO_AF_12,
+	Neopixel_AF13 = LL_GPIO_AF_13,
+	Neopixel_AF14 = LL_GPIO_AF_14,
+	Neopixel_AF15 = LL_GPIO_AF_15
+} Neopixel_GPIO_AlternateFunction;
 
+/**
+ * @brief Baud rate prescaler for SPI (division factor for system clock).
+ */
 typedef enum {
-	Neopixel_SPI_BaudRatePrescaler_Div2 = LL_SPI_BAUDRATEPRESCALER_DIV2,
-	Neopixel_SPI_BaudRatePrescaler_Div4 = LL_SPI_BAUDRATEPRESCALER_DIV4,
-	Neopixel_SPI_BaudRatePrescaler_Div8 = LL_SPI_BAUDRATEPRESCALER_DIV8,
-	Neopixel_SPI_BaudRatePrescaler_Div16 = LL_SPI_BAUDRATEPRESCALER_DIV16,
-	Neopixel_SPI_BaudRatePrescaler_Div32 = LL_SPI_BAUDRATEPRESCALER_DIV32,
-	Neopixel_SPI_BaudRatePrescaler_Div64 = LL_SPI_BAUDRATEPRESCALER_DIV64,
-	Neopixel_SPI_BaudRatePrescaler_Div128 = LL_SPI_BAUDRATEPRESCALER_DIV128,
-	Neopixel_SPI_BaudRatePrescaler_Div256 = LL_SPI_BAUDRATEPRESCALER_DIV256
+	Neopixel_SPI_PS2 = LL_SPI_BAUDRATEPRESCALER_DIV2,
+	Neopixel_SPI_PS4 = LL_SPI_BAUDRATEPRESCALER_DIV4,
+	Neopixel_SPI_PS8 = LL_SPI_BAUDRATEPRESCALER_DIV8,
+	Neopixel_SPI_PS16 = LL_SPI_BAUDRATEPRESCALER_DIV16,
+	Neopixel_SPI_PS32 = LL_SPI_BAUDRATEPRESCALER_DIV32,
+	Neopixel_SPI_PS64 = LL_SPI_BAUDRATEPRESCALER_DIV64,
+	Neopixel_SPI_PS128 = LL_SPI_BAUDRATEPRESCALER_DIV128,
+	Neopixel_SPI_PS256 = LL_SPI_BAUDRATEPRESCALER_DIV256
 } Neopixel_SPI_BaudRatePrescaler;
 
 /**
@@ -58,11 +66,11 @@ typedef struct NeopixelContext NeopixelContext;
  */
 typedef struct {
 	SPI_TypeDef *SPI_Instance;
-	uint32_t NumberOfNeopixels;
-	uint32_t mosi_gpio_pin;
-	GPIO_Alternate_Function neopixelAF;
-	Neopixel_GPIO_Port gpio_port;
-	uint32_t neopixel_baudRatePrescaler;
+	uint32_t Neopixel_Count;
+	uint32_t MOSI_Pin;
+	Neopixel_GPIO_AlternateFunction GPIO_AlternateFunction;
+	Neopixel_GPIO_Port GPIO_Port;
+	uint32_t SPI_BaudRatePrescaler;
 } NeopixelConfig;
 
 /**
