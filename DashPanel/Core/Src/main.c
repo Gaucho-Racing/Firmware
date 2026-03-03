@@ -149,6 +149,12 @@ int main(void)
 			canReadyToSend = false;
 		}
 
+		// Neopixel
+		LL_mDelay(20);
+		Neopixel_ButtonWrite();
+		Neopixel_LEDWrite();
+
+
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
