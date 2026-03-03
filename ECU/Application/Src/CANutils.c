@@ -9,8 +9,8 @@
 #include "StateUtils.h"
 #include "can.h"
 #include "main.h"
-#include "string.h"
 #include "stm32g4xx_hal_fdcan.h"
+#include "string.h"
 
 uint32_t lastTickECUStateDataSent = 0;
 
