@@ -1,3 +1,9 @@
+Bus ID:
+  Testing: 0   # Testing Bus
+  Primary: 1   # Primary Bus
+  Data: 2      # Data Bus
+  Charging: 3  # Charging Bus
+
 routing:
   messages:
     ACU:
