@@ -39,11 +39,12 @@ extern "C" {
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_system.h"
+#include "stm32g4xx_ll_usart.h"
 #include "stm32g4xx_ll_utils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "GR_OLD_NODE_ID.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -107,7 +108,7 @@ void Error_Handler(void);
 #define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+#define LOCAL_GR_ID GR_CCU
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
