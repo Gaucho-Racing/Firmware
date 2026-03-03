@@ -36,6 +36,11 @@ void Neopixel_LatchStrip(NeopixelContext *context)
 	Neopixel_BlockWhileBusy(context);
 }
 
+/**
+ * @brief Initialize GPIO and SPI for Neopixel based on neopixelConfiguration
+ * @param neopixelConfiguration A pointer to the NeopixelConfig containing all customizable parameters, must be initialized by user
+ * @return A pointer to NeopixelContext, which contains the set up from neopixelConfiguration
+ */
 NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 {
 	if (neopixelConfiguration == NULL) {
@@ -43,6 +48,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 		return NULL;
 	}
 
+	// Enable clocks for GPIO depending on port used
 	GPIO_TypeDef *gpio_port = 0;
 	switch (neopixelConfiguration->GPIO_Port) {
 		case Neopixel_GPIOA:
@@ -65,6 +71,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 			return NULL;
 	}
 
+	// Set up and initialize GPIO
 	LL_GPIO_InitTypeDef copi_pin = {
 	    .Pin = neopixelConfiguration->MOSI_Pin,
 	    .Mode = LL_GPIO_MODE_ALTERNATE,
@@ -76,6 +83,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 
 	LL_GPIO_Init(gpio_port, &copi_pin);
 
+	// Set up and initialize SPI
 	LL_SPI_InitTypeDef spi = {
 	    .TransferDirection = LL_SPI_HALF_DUPLEX_TX,
 	    .Mode = LL_SPI_MODE_MASTER,
@@ -89,6 +97,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .CRCPoly = 7,
 	};
 
+	// Enable clocks for SPI depending on SPI instance used
 	if (neopixelConfiguration->SPI_Instance == SPI1) {
 		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
 	} else if (neopixelConfiguration->SPI_Instance == SPI2) {
