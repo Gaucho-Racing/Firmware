@@ -7,6 +7,11 @@
 
 // Tested STM32 Families
 #ifdef STM32G4
+#define USECAN1
+#define TX_BUFFER_2_SIZE 10
+#define USECAN2
+#define TX_BUFFER_3_SIZE 10
+
 // #elif defined(STM32L4)
 // #elif defined(STM32U5)
 #else

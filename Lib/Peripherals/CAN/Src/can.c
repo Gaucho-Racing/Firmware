@@ -7,27 +7,40 @@
 
 #include "Logomatic.h"
 
+//TODO: Figure out how to move these defines into the application code (by linking)
+
+//#define USECAN2
+//#define TX_BUFFER_2_SIZE 10
+//#define USECAN3
+//#define TX_BUFFER_3_SIZE 10
+
 // HAL handles
-// #ifdef USECAN1
-#define TX_BUFFER_1_SIZE 3
+#ifdef USECAN1
+#ifndef TX_BUFFER_1_SIZE
+#error "Please Define TX_BUFFER_1_SIZE"
+#endif
 static FDCAN_HandleTypeDef hal_fdcan1 = {.Instance = FDCAN1};
 FDCANTxMessage tx_buffer_1[TX_BUFFER_1_SIZE] = {0};
 static CANHandle CAN1 = {.hal_fdcanP = &hal_fdcan1, .tx_buffer = tx_buffer_1};
-// #endif
+#endif
 
-// #ifdef USECAN2
-#define TX_BUFFER_2_SIZE 3
+#ifdef USECAN2
+#ifndef TX_BUFFER_2_SIZE
+#error "Please Define TX_BUFFER_2_SIZE"
+#endif
 static FDCAN_HandleTypeDef hal_fdcan2 = {.Instance = FDCAN2};
 FDCANTxMessage tx_buffer_2[TX_BUFFER_2_SIZE] = {0};
 static CANHandle CAN2 = {.hal_fdcanP = &hal_fdcan2, .tx_buffer = tx_buffer_2};
-// #endif
+#endif
 
-// #ifdef USECAN3
-#define TX_BUFFER_3_SIZE 3
+#ifdef USECAN3
+#ifndef TX_BUFFER_3_SIZE
+#error "Please Define TX_BUFFER_3_SIZE"
+#endif
 static FDCAN_HandleTypeDef hal_fdcan3 = {.Instance = FDCAN3};
 FDCANTxMessage tx_buffer_3[TX_BUFFER_3_SIZE] = {0};
 static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
-// #endif
+#endif
 
 #define MIN(A, B) ((A < B) ? A : B)
 
@@ -110,7 +123,7 @@ CANHandle *can_init(const CANConfig *config)
 
 	// #ifdef STM32G474xx
 	CANHandle *canHandle = 0;
-	// #ifdef USECAN1
+	#ifdef USECAN1
 	if (config->fdcan_instance == FDCAN1) {
 		if (CAN1.init) {
 			LOGOMATIC("CAN: CAN1 is already initialized\n");
@@ -120,9 +133,9 @@ CANHandle *can_init(const CANConfig *config)
 			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
 		}
 	}
-	// #endif
-	// #ifdef USECAN2
-	else if (config->fdcan_instance == FDCAN2) {
+	#endif
+	#ifdef USECAN2
+	if (config->fdcan_instance == FDCAN2) {
 		if (CAN2.init) {
 			LOGOMATIC("CAN: CAN2 is already initialized\n");
 			return 0;
@@ -131,8 +144,10 @@ CANHandle *can_init(const CANConfig *config)
 			canHandle->tx_capacity = TX_BUFFER_2_SIZE;
 		}
 	}
-	// #ifdef USECAN3
-	else if (config->fdcan_instance == FDCAN3) {
+	#endif
+
+	#ifdef USECAN3
+	if (config->fdcan_instance == FDCAN3) {
 		if (CAN3.init) {
 			LOGOMATIC("CAN: CAN3 is already initialized\n");
 			return 0;
@@ -141,12 +156,12 @@ CANHandle *can_init(const CANConfig *config)
 			canHandle->tx_capacity = TX_BUFFER_3_SIZE;
 		}
 	}
-	// #endif
+	#endif
 	// #elif defined(STM32L476xx)
 	// #else
 	// #error "Unsupported STM32 family"
 	// #endif
-	else {
+	if (canHandle == 0) {
 		LOGOMATIC("CAN: Unrecognized FDCAN instance");
 		return 0;
 	}
@@ -298,7 +313,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 	// Can Add to Fifo Q
 	if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hal_fdcanP)) {
 		// lock the Circular Buffer
-		FDCANTxMessage *msg = &handle->tx_buffer[handle->tx_tail];
+		const FDCANTxMessage *msg = &(handle->tx_buffer[handle->tx_tail]);
 
 		// should call Tx Buffer Callback once complete
 		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(handle->hal_fdcanP, &msg->tx_header, msg->data);
@@ -365,7 +380,8 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		canHandle->tx_elements++;
 		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
-		//__set_BASEPRI(primask);
+		__set_BASEPRI(basepri);
+		return 0; // added to software buffer
 
 		/*if (result != 0) {
 		    LOGOMATIC("CAN_send: buffer push failed\n");
@@ -488,7 +504,11 @@ int can_start(CANHandle *canHandle)
 	}
 
 	IRQn_Type rx0it, txit;
-	can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit);
+	rx0it = txit = -1; //TOOD: Check that this is a valid way to initialize an invalid value
+	if (!can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)) {
+		LOGOMATIC("can_start: could not obtain irq #s");
+		return -1;
+	}
 
 	HAL_NVIC_ClearPendingIRQ(rx0it); // prevent a spurious interrupt
 	HAL_NVIC_ClearPendingIRQ(txit);
@@ -523,8 +543,11 @@ int can_stop(CANHandle *canHandle)
 	HAL_FDCAN_Stop(canHandle->hal_fdcanP);
 
 	IRQn_Type rx0it, txit;
-	can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit);
-
+	rx0it = txit = -1; //TODO: Check that this initialization is valid
+	if (!can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit) ) {
+		LOGOMATIC("can_start: could not obtain irq #s");
+		return -1;
+	}
 	HAL_NVIC_DisableIRQ(rx0it);
 	HAL_NVIC_DisableIRQ(txit);
 	HAL_NVIC_ClearPendingIRQ(rx0it);
@@ -587,16 +610,25 @@ static int can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan)
 {
 	// #ifdef STM32G474xx
+	#ifdef USECAN1
 	if (hfdcan->Instance == FDCAN1) {
 		return &CAN1;
-	} else if (hfdcan->Instance == FDCAN2) {
-		return &CAN2;
-	} else if (hfdcan->Instance == FDCAN3) {
-		return &CAN3;
-	} else {
-		LOGOMATIC("CAN_get_handle: was given invalid FDCAN instance\n");
-		return 0;
 	}
+	#endif
+	#ifdef USECAN2
+	if (hfdcan->Instance == FDCAN2) {
+		return &CAN2;
+	}
+	#endif
+	#ifdef USECAN3
+	if (hfdcan->Instance == FDCAN3) {
+		return &CAN3;
+	}
+	#endif
+
+	LOGOMATIC("CAN_get_handle: was given invalid FDCAN instance\n");
+	UNUSED(hfdcan);
+	return 0;
 }
 
 /*
@@ -726,27 +758,39 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 // Probably is safe from races
 void FDCAN1_IT0_IRQHandler(void)
 {
+	#ifdef USECAN1
 	HAL_FDCAN_IRQHandler(&hal_fdcan1);
+	#endif
 }
 void FDCAN1_IT1_IRQHandler(void)
 {
+	#ifdef USECAN1
 	HAL_FDCAN_IRQHandler(&hal_fdcan1);
+	#endif
 }
 
 void FDCAN2_IT0_IRQHandler(void)
 {
+	#ifdef USECAN2
 	HAL_FDCAN_IRQHandler(&hal_fdcan2);
+	#endif
 }
 void FDCAN2_IT1_IRQHandler(void)
 {
+	#ifdef USECAN2
 	HAL_FDCAN_IRQHandler(&hal_fdcan2);
+	#endif
 }
 
 void FDCAN3_IT0_IRQHandler(void)
 {
+	#ifdef USECAN3
 	HAL_FDCAN_IRQHandler(&hal_fdcan3);
+	#endif
 }
 void FDCAN3_IT1_IRQHandler(void)
 {
+	#ifdef USECAN3
 	HAL_FDCAN_IRQHandler(&hal_fdcan3);
+	#endif
 }
