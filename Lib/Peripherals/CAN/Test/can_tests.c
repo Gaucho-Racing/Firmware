@@ -28,7 +28,7 @@ void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 	return;
 }
 
-int defaultCANCfg(CAN_RXCallback primary_callback, CAN_RXCallback data_callback, CANHandle** primary_can_out, CANHandle** data_can_out)
+int defaultCANCfg(CAN_RXCallback primary_callback, CAN_RXCallback data_callback, CANHandle **primary_can_out, CANHandle **data_can_out)
 {
 	CANConfig canCfg;
 	// canCfg.fdcan_instance = FDCAN2;
@@ -88,7 +88,9 @@ int defaultCANCfg(CAN_RXCallback primary_callback, CAN_RXCallback data_callback,
 	canCfg.rx_callback = primary_callback; // PLEASE SET
 
 	CANHandle *primary_can = can_init(&canCfg);
-	if (primary_can == NULL) return -1;
+	if (primary_can == NULL) {
+		return -1;
+	}
 	*primary_can_out = primary_can;
 
 	HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
@@ -117,11 +119,15 @@ int defaultCANCfg(CAN_RXCallback primary_callback, CAN_RXCallback data_callback,
 	// filter.FilterID2 = 0x02;
 
 	CANHandle *data_can = can_init(&canCfg);
-	if (data_can == NULL) return ERROR;
+	if (data_can == NULL) {
+		return ERROR;
+	}
 	*data_can_out = data_can;
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	if (HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0) != HAL_OK) return ERROR;
+	if (HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0) != HAL_OK) {
+		return ERROR;
+	}
 
 	// not accepting filters
 	// can_add_filter(data_can, &filter);
@@ -129,7 +135,9 @@ int defaultCANCfg(CAN_RXCallback primary_callback, CAN_RXCallback data_callback,
 	// API Testing
 	// can_init(&canCfg);
 
-	if (can_start(data_can)) return ERROR;
+	if (can_start(data_can)) {
+		return ERROR;
+	}
 	// can_release(data_can);
 
 #endif
@@ -139,8 +147,8 @@ int defaultCANCfg(CAN_RXCallback primary_callback, CAN_RXCallback data_callback,
 	return SUCCESS;
 }
 
-//TODO - allow user to send data without needing to construct a header for the buffer
-// TODO: G4 tests are dependent on the System clock configuration
+// TODO - allow user to send data without needing to construct a header for the buffer
+//  TODO: G4 tests are dependent on the System clock configuration
 int can_test(void)
 {
 	FDCAN_TxHeaderTypeDef TxHeader = {
@@ -156,7 +164,7 @@ int can_test(void)
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
 
-	CANHandle  *primary_can, *data_can;
+	CANHandle *primary_can, *data_can;
 	primary_can = data_can = NULL;
 
 	if (defaultCANCfg(can_test_rx_callback1, can_test_rx_callback2, &primary_can, &data_can)) {
@@ -197,7 +205,7 @@ int can_stress_test(void)
 
 	status = loop = 0;
 
-	CANHandle  *primary_can, *data_can;
+	CANHandle *primary_can, *data_can;
 	primary_can = data_can = NULL;
 
 	defaultCANCfg(can_stress_test_rx_callback, NULL, &primary_can, &data_can);
@@ -226,7 +234,7 @@ int can_stress_test(void)
 		i = 0;
 		while (i < 100) {
 			if (can_send(primary_can, &msg) != 0) {
-				LOGOMATIC("Stress test failed sending CAN msg at %d-th consecutive send.\n", i+1);
+				LOGOMATIC("Stress test failed sending CAN msg at %d-th consecutive send.\n", i + 1);
 				break;
 			}
 			i++;
@@ -234,7 +242,7 @@ int can_stress_test(void)
 		LOGOMATIC("Sent %d CAN msgs...\n", i);
 		HAL_Delay(1000);
 
-		LOGOMATIC("Received %d/%d CAN msgs after 1 second.\n", can_stress_test_received,i);
+		LOGOMATIC("Received %d/%d CAN msgs after 1 second.\n", can_stress_test_received, i);
 		msg.data[0] = 0x10;
 		can_send(data_can, &msg);
 		HAL_Delay(1000);

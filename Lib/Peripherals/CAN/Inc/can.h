@@ -49,7 +49,7 @@ typedef struct {
 	FDCAN_HandleTypeDef *hal_fdcanP; // DO NOT REORDER THIS
 
 	// TX buffer
-	FDCANTxMessage * const tx_buffer;
+	FDCANTxMessage *const tx_buffer;
 	volatile uint32_t tx_capacity;
 	volatile uint32_t tx_tail;
 	volatile uint32_t tx_elements;
