@@ -58,8 +58,8 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 				break;
 			}
 			GR_OLD_BCU_STATUS_1_MSG *bcu_status_1 = (GR_OLD_BCU_STATUS_1_MSG *)data;
-			state_data->tractivebattery_soc = bcu_status_1->tractivebattery_soc * 0.01;
-			state_data->glv_soc = bcu_status_1->glv_soc * 20 / 51;
+			state_data->tractivebattery_soc = bcu_status_1->tractivebattery_soc;
+			state_data->glv_soc = bcu_status_1->glv_soc;
 			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01;
 			break;
 
