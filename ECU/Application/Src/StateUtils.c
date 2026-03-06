@@ -50,9 +50,10 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 
 bool CommunicationError(volatile const ECU_StateData *stateData)
 {
-	UNUSED(stateData);
 	// TODO: Check for communication errors
-	return false;
+	UNUSED(stateData);
+	bool problem = false;
+	return problem;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)

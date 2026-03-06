@@ -2,11 +2,12 @@
 
 #include <stdint.h>
 
+#include "stm32g4xx_hal_fdcan.h"
+#include "stm32g4xx_hal.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateUtils.h"
 #include "can.h"
-#include "stm32g4xx_hal.h"
 
 /*
 - GLV ON
@@ -29,10 +30,6 @@
 
 static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 {
-	if (stateLumpTest->millisSinceBoot - stateLumpTest->lastECUStatusMsgMillis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
-		LOGOMATIC("ECU Current State: %d\n", stateLumpTest->ecu_state);
-		stateLumpTest->lastECUStatusMsgMillis = stateLumpTest->millisSinceBoot;
-	}
 
 	if (bmsFailure(stateLumpTest) || imdFailure(stateLumpTest)) {
 		stateLumpTest->tssi_fault = true;
