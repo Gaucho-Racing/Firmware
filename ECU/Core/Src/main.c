@@ -460,7 +460,7 @@ int main(void)
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
 		lightControl(&stateLump);
-		//LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
+		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */
 }
