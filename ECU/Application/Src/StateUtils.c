@@ -48,14 +48,6 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 										  // TODO: shutdown switch stuff
 }
 
-bool CommunicationError(volatile const ECU_StateData *stateData)
-{
-	// TODO: Check for communication errors
-	UNUSED(stateData);
-	bool problem = false;
-	return problem;
-}
-
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time

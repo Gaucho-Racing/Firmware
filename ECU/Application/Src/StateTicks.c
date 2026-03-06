@@ -31,10 +31,6 @@ ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
 CANHandle *primary_can;
 CANHandle *data_can;
 
-#define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
-// EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
-#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
-
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
 {
@@ -100,6 +96,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 }
 
+static uint32_t time_start_precharge; // for potential comms errors while precharging
+
 void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 {
 	/*send message to BCU to start precharging*/
@@ -107,6 +105,7 @@ void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
+	time_start_precharge = millis_since_boot;
 	return;
 }
 
@@ -118,7 +117,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (!stateData->ts_active_button_active || CommunicationError(stateData)) {
+	if (!stateData->ts_active_button_active || (millis_since_boot - time_start_precharge) >= MAX_PRECHARGE_TIME) {
 		LOGOMATIC("ERROR or ts_active OFF! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
