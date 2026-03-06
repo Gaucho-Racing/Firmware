@@ -51,11 +51,6 @@ typedef volatile struct ECU_StateData {
 
 	// TODO: Remove unneeded states
 
-	uint32_t can_msg_cooldown_tick;
-
-	uint32_t lastTSSIFlash;
-	int32_t last_drive_active_control_ms;
-
 	float min_amk_heat_cap_throttle_percent;
 	float ts_voltage;
 	float max_cell_temp_c; /** Temperature of hottest cell, celsius */
