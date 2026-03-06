@@ -440,6 +440,7 @@ int main(void)
 			if (nextPing != 0) {
 				if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
+					ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "ECU-P-ITR", 8);
 				}
 				if (getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
@@ -460,7 +461,7 @@ int main(void)
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
 		lightControl(&stateLump);
-		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
+		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */
 }

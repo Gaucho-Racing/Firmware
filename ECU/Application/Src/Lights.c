@@ -23,7 +23,7 @@ void TSSILightControl(ECU_StateData *stateLump)
 	//     Here we chose a period of 350ms
 	if (stateLump->tssi_fault) {
 		LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
-		if (stateLump->millisSinceBoot % 350 < 175) {
+		if (MillisecondsSinceBoot() % 350 < 175) {
 			LL_GPIO_SetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
 		} else {
 			LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);

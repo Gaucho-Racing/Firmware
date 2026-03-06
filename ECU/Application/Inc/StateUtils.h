@@ -29,12 +29,17 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
+#define MAX_PRECHARGE_TIME 15000 // in ms
+
+#define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
+// EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
+#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
+
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
 bool bmsFailure(volatile const ECU_StateData *stateData);
 bool imdFailure(volatile const ECU_StateData *stateData);
 bool bspdFailure(volatile const ECU_StateData *stateData);
-bool CommunicationError(volatile const ECU_StateData *stateData);
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData);
 bool PressingBrake(volatile const ECU_StateData *stateData);
 float CalcBrakePercent(volatile const ECU_StateData *stateData);

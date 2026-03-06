@@ -31,17 +31,15 @@ ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
 CANHandle *primary_can;
 CANHandle *data_can;
 
-#define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
-// EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
-#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
-
+static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
 {
-	stateLump.millisSinceBoot = MillisecondsSinceBoot();
+	millis_since_boot = MillisecondsSinceBoot();
 
-	if (stateLump.millisSinceBoot - stateLump.lastECUStatusMsgMillis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
+	static uint32_t last_ECU_status_msg_millis;
+	if (millis_since_boot - last_ECU_status_msg_millis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
-		stateLump.lastECUStatusMsgMillis = stateLump.millisSinceBoot;
+		last_ECU_status_msg_millis = millis_since_boot;
 	}
 
 	if (bmsFailure(&stateLump) || imdFailure(&stateLump)) {
@@ -98,6 +96,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 }
 
+static uint32_t time_start_precharge; // for potential comms errors while precharging
+
 void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 {
 	/*send message to BCU to start precharging*/
@@ -105,6 +105,7 @@ void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
+	time_start_precharge = millis_since_boot;
 	return;
 }
 
@@ -116,7 +117,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (!stateData->ts_active_button_active || CommunicationError(stateData)) {
+	if (!stateData->ts_active_button_active || CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= MAX_PRECHARGE_TIME) {
 		LOGOMATIC("ERROR or ts_active OFF! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
@@ -152,7 +153,7 @@ static uint32_t buzzer_start_millis;
 
 void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 {
-	buzzer_start_millis = stateData->millisSinceBoot;
+	buzzer_start_millis = millis_since_boot;
 	stateData->ecu_state = GR_DRIVE_ACTIVE;
 }
 
@@ -165,7 +166,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	if (stateData->millisSinceBoot - buzzer_start_millis > 2000) {
+	if (millis_since_boot - buzzer_start_millis > 2000) {
 		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	} else {
 		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
@@ -195,20 +196,21 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	static uint32_t last_can_inverter_request_millis;
-	if (stateData->millisSinceBoot - last_can_inverter_request_millis > 10) {
+	if (millis_since_boot - last_can_inverter_request_millis > 10) {
 		GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
-		last_can_inverter_request_millis = stateData->millisSinceBoot;
+		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
 
+static uint32_t discharge_start_millis;
 void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
 	LOGOMATIC("ECU: BCU discharge Tractive System\n");
 	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
-	stateData->dischargeStartMillis = stateData->millisSinceBoot;
+	discharge_start_millis = millis_since_boot;
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
@@ -225,16 +227,16 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
 	*/
-	if (stateData->millisSinceBoot - stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
+	if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
 		LOGOMATIC("Warning: Tractive System fails to discharge in time.\n");
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-D-TLE", 8);
 	}
 
 	// Discharge the car @ 100 Hz
 	static uint32_t last_discharge_request_millis;
-	if (stateData->millisSinceBoot - last_discharge_request_millis > 10) {
+	if (millis_since_boot - last_discharge_request_millis > 10) {
 		GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
-		last_discharge_request_millis = stateData->millisSinceBoot;
+		last_discharge_request_millis = millis_since_boot;
 	}
 }
