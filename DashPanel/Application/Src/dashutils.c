@@ -10,11 +10,11 @@ static uint32_t i = 0;
 
 void NeoPixel_Init(){
 	// LED NeoPixel Config
-	NeopixelConfig NeoPixel_LED_Config = {.SPI_Instance = SPI1,
+	NeopixelConfig NeoPixel_LED_Config = {.SPI_Instance = SPI2,
 				  .NumberOfNeopixels = NUM_LEDS, // 3 LEDs
-				  .gpio_port = Neopixel_GPIOA,
+				  .gpio_port = Neopixel_GPIOB,
 				  .neopixelAF = Neopixel_GPIO_AF_5,
-				  .mosi_gpio_pin = LL_GPIO_PIN_7,
+				  .mosi_gpio_pin = LL_GPIO_PIN_15,
 				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
 
 	// LED NeoPixel Config
