@@ -51,11 +51,8 @@ typedef volatile struct ECU_StateData {
 
 	// TODO: Remove unneeded states
 
-	uint32_t millisSinceBoot;
 	uint32_t can_msg_cooldown_tick;
 
-	int32_t dischargeStartMillis;
-	uint32_t lastECUStatusMsgMillis;
 	uint32_t lastTSSIFlash;
 	int32_t last_drive_active_control_ms;
 
