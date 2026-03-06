@@ -62,19 +62,19 @@ void CANInitialize()
 	can_start(can_handler);
 }
 
-void CAN_sendPing(GR_OLD_NODE_ID to)
+void CAN_sendPing(GR_OLD_NODE_ID to, void* data)
 {
 	FDCANTxMessage pingMsg;
 	pingMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to;
 	pingMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	pingMsg.tx_header.DataLength = 4;
+	pingMsg.tx_header.DataLength = sizeof(GR_OLD_PING_MSG);
 	pingMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
 
-	((uint32_t *)(pingMsg.data))[0] = MillisecondsSinceBoot();
+	((uint32_t *)(pingMsg.data))[0] = (uint32_t) data;
 	can_send(can_handler, &pingMsg);
 }
 
@@ -112,6 +112,6 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bis
 	} else if (msg_id == PING_ID) {
 		// process ping
-		CAN_sendPing(node_id);
+		CAN_sendPing(node_id, data);
 	}
 }

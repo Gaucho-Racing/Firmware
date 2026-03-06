@@ -111,11 +111,12 @@ int main(void)
 
 	/* USER CODE BEGIN SysInit */
 	LL_mDelay(150);
-	LOGOMATIC("\nBoot completed at %lu ms\n", MillisecondsSinceBoot());
+	LOGOMATIC("\nBoot completed\n");
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
 	/* USER CODE END 2 */
@@ -150,10 +151,9 @@ int main(void)
 		}
 
 		// Neopixel
-		LL_mDelay(20);
+		LL_mDelay(200);
 		Neopixel_ButtonWrite();
 		Neopixel_LEDWrite();
-
 
 		/* USER CODE BEGIN 3 */
 	}

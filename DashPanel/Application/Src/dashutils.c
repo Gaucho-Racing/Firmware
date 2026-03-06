@@ -1,17 +1,12 @@
 #include "dashutils.h"
 #include "gr_neopixel.h"
 #include "main.h"
+#include "Logomatic.h"
 
 NeopixelContext *NeoPixel_LED_Context;
 NeopixelContext *NeoPixel_Button_Context;
 
-// from ECU
-uint32_t MillisecondsSinceBoot(void)
-{
-	// For some reason, GetTickFreq returns period in millisecon instead of frequency
-	// See https://community.st.com/t5/stm32-mcus-embedded-software/name-amp-description-of-hal-gettickfreq-misleading/td-p/242457
-	return HAL_GetTick() * HAL_GetTickFreq();
-}
+static uint32_t i = 0;
 
 void NeoPixel_Init(){
 	// LED NeoPixel Config
@@ -23,11 +18,11 @@ void NeoPixel_Init(){
 				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
 
 	// LED NeoPixel Config
-	NeopixelConfig NeoPixel_Button_Config = {.SPI_Instance = SPI2,
+	NeopixelConfig NeoPixel_Button_Config = {.SPI_Instance = SPI3,
 				  .NumberOfNeopixels = NUM_BUTTONS,
-				  .gpio_port = Neopixel_GPIOB,
-				  .neopixelAF = Neopixel_GPIO_AF_5,
-				  .mosi_gpio_pin = LL_GPIO_PIN_14,
+				  .gpio_port = Neopixel_GPIOC,
+				  .neopixelAF = Neopixel_GPIO_AF_6,
+				  .mosi_gpio_pin = LL_GPIO_PIN_12,
 				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
 
 	NeoPixel_LED_Context = Neopixel_Setup(&NeoPixel_LED_Config);
@@ -41,7 +36,8 @@ void Neopixel_LEDWrite() {
 	LED_colors[1] = (dashStatus.led_bits & 0x02) ? COLOR_RED : COLOR_OFF;
 	LED_colors[2] = (dashStatus.led_bits & 0x03) ? COLOR_RED : COLOR_OFF;
 
-	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, NUM_LEDS);
+	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
+	LOGOMATIC("LED Flashing\n");
 	return;
 }
 
@@ -56,12 +52,13 @@ void Neopixel_ButtonWrite() {
 	button_colors[0] = COLOR_OFF;
 	button_colors[1] = COLOR_OFF;
 
-	uint32_t COLOR_MAGICAL = (MillisecondsSinceBoot() * 71) & 0x00FFFFFF;
+	uint32_t COLOR_MAGICAL = (i++ * 27644437) & 0x00FFFFFF;
 
 	// Not dealing with this enum include nonsense
 	switch (dashStatus.ECUState) {
 		case 1: // GR_GLV_ON
 			button_colors[0] = COLOR_MAGICAL;
+			button_colors[1] = COLOR_WHITE;
 			break;
 		case 2: // GR_PRECHARGE_ENGAGED
 			button_colors[0] = COLOR_RED;
@@ -76,6 +73,7 @@ void Neopixel_ButtonWrite() {
 			break;
 	}
 
-	Neopixel_WriteAll(NeoPixel_Button_Context, button_colors, NUM_BUTTONS);
+	Neopixel_WriteAll(NeoPixel_Button_Context, button_colors, sizeof(button_colors));
+	LOGOMATIC("Button Flashing\nColor: %x\n", COLOR_MAGICAL);
 	return;
 }

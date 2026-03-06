@@ -12,6 +12,7 @@ static Neopixel_Color LED_colors[NUM_LEDS];
 static Neopixel_Color button_colors[NUM_BUTTONS];
 
 uint32_t MillisecondsSinceBoot(void);
+void NeoPixel_Init();
 void Neopixel_LEDWrite();
 void Neopixel_ButtonWrite();
 
