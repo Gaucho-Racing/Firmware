@@ -13,6 +13,5 @@
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
-	"files.eol": "\n",
-	"makefile.configureOnOpen": false
+	"files.eol": "\n"
 }
