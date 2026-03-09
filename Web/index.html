@@ -4,50 +4,61 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>GRCAN Viewer</title>
-		<link rel="stylesheet" href="index.css" />
+		<link rel="stylesheet" href="index.css?v=2" />
+		<link rel="stylesheet" href="viewer.css?v=2" />
 	</head>
-
 	<body>
-		<div id="alert-placeholder" class="alert-warning">
-			<span
-				>This is a placeholder for an actual viewer. Please remove this notice
-				for the real viewer.</span
-			>
+		<div class="alert-warning">
+			Not an official GR tool.
 		</div>
+
 		<canvas id="bg-canvas"></canvas>
-		<div class="container">
-			<h1>GRCAN Viewer</h1>
-			<div class="description">
-				<p>
-					This tool allows you to view the <b>GRCAN.CANdo</b> file from any
-					branch, tag, or commit in the
+
+		<div class="app-shell">
+			<aside class="app-sidebar">
+				<h1>GRCAN Viewer</h1>
+				<p class="description">
+					View <b>GRCAN.CANdo</b> from any branch, tag, or commit in the
 					<a href="https://grlink.to/monorepo">Firmware monorepo</a>.
-					<br /><br />
-					Soon to be made by the Firmware 2026 URCA team.
-					<br /><br />
-					Please note that this page is unofficial and not supported by
-					<a href="https://gauchoracing.com">Gaucho Racing</a>.
 				</p>
+				<p class="description description-muted">
+					Simple navigation: bus -> node -> message.
+				</p>
+
+				<div id="ref-input-row">
+					<label class="input-label" for="ref-select">Reference</label>
+					<select id="ref-select">
+						<option value="">Loading references...</option>
+					</select>
+				</div>
+			</aside>
+
+			<main class="viewer-host">
+				<div id="viewer">
+					<div class="panel" id="bus-panel">
+						<div class="panel-header">Bus</div>
+						<div class="panel-list" id="bus-list">
+							<span class="placeholder">Select a ref</span>
+						</div>
+					</div>
+					<div class="panel" id="node-panel">
+						<div class="panel-header">Nodes</div>
+						<div class="panel-list" id="node-list">
+							<span class="placeholder">Select a bus</span>
+						</div>
+					</div>
+					<div class="panel" id="msg-panel">
+						<div class="panel-header">Messages</div>
+						<div class="panel-list" id="msg-list">
+							<span class="placeholder">Select a node</span>
+						</div>
+					</div>
+				</div>
+			</main>
 			</div>
-			<div id="ref-input-row">
-				<input
-					id="ref-combobox"
-					list="ref-list"
-					type="text"
-					placeholder="Branch, Tag, or SHA-1 Hash"
-					minlength="7"
-					maxlength="40"
-					autocomplete="off"
-				/>
-				<datalist id="ref-list"></datalist>
-			</div>
-			<div id="cando-box" class="cando-box">
-				<span class="placeholder"
-					>Select a branch, tag, or enter a commit SHA to view GRCAN.CANdo</span
-				>
-			</div>
-		</div>
-		<script src="logic.js"></script>
-		<script src="background.js"></script>
+
+		<script src="logic.js?v=2"></script>
+		<script src="viewer.js?v=2"></script>
+		<script src="background.js?v=2"></script>
 	</body>
 </html>
