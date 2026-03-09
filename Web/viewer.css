@@ -88,7 +88,10 @@
 	cursor: pointer;
 	user-select: none;
 	border-left: 3px solid transparent;
-	transition: background 0.12s, color 0.12s, border-color 0.12s;
+	transition:
+		background 0.12s,
+		color 0.12s,
+		border-color 0.12s;
 }
 
 .panel-item:hover {

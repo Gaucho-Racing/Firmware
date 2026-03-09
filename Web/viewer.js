@@ -169,7 +169,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			const item = makeItem(node.name, true);
 			appendNodeIdAccent(item, node.name);
 			item.addEventListener("click", () => {
-				secondList.querySelectorAll(".panel-item").forEach((el) => el.classList.remove("active"));
+				secondList
+					.querySelectorAll(".panel-item")
+					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderMessages(node.messages);
 			});
@@ -184,7 +186,12 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		const result = await window.GrcanApi.fetchBus(ref);
 		if (result.error || !result.buses) {
-			setPlaceholder(firstList, result.error === "rate_limited" ? "GitHub API rate limited" : "Unable to load buses");
+			setPlaceholder(
+				firstList,
+				result.error === "rate_limited"
+					? "GitHub API rate limited"
+					: "Unable to load buses",
+			);
 			return;
 		}
 
@@ -194,7 +201,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			const busName = canonicalBusName(display) || canonicalBusName(bus.name);
 			const item = makeItem(display, true);
 			item.addEventListener("click", async () => {
-				firstList.querySelectorAll(".panel-item").forEach((el) => el.classList.remove("active"));
+				firstList
+					.querySelectorAll(".panel-item")
+					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				setPlaceholder(secondList, "Loading nodes...");
 				setPlaceholder(msgList, "Select a node");
@@ -204,9 +213,17 @@ window.addEventListener("DOMContentLoaded", function () {
 					return;
 				}
 
-				const nodesResult = await window.GrcanApi.fetchMessageByBus(ref, busName);
+				const nodesResult = await window.GrcanApi.fetchMessageByBus(
+					ref,
+					busName,
+				);
 				if (nodesResult.error) {
-					setPlaceholder(secondList, nodesResult.error === "rate_limited" ? "GitHub API rate limited" : "Unable to load nodes");
+					setPlaceholder(
+						secondList,
+						nodesResult.error === "rate_limited"
+							? "GitHub API rate limited"
+							: "Unable to load nodes",
+					);
 					return;
 				}
 				renderBusNodeSecondary(nodesResult.nodes);
@@ -225,7 +242,9 @@ window.addEventListener("DOMContentLoaded", function () {
 		busEntries.forEach((entry) => {
 			const item = makeItem(entry.busName, true);
 			item.addEventListener("click", () => {
-				secondList.querySelectorAll(".panel-item").forEach((el) => el.classList.remove("active"));
+				secondList
+					.querySelectorAll(".panel-item")
+					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderMessages(entry.messages);
 			});
@@ -240,24 +259,35 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		const busesResult = await window.GrcanApi.fetchBus(ref);
 		if (busesResult.error || !busesResult.buses) {
-			setPlaceholder(firstList, busesResult.error === "rate_limited" ? "GitHub API rate limited" : "Unable to load nodes");
+			setPlaceholder(
+				firstList,
+				busesResult.error === "rate_limited"
+					? "GitHub API rate limited"
+					: "Unable to load nodes",
+			);
 			return;
 		}
 
 		const routingBuses = busesResult.buses
 			.map((bus) => ({
 				display: bus.label || bus.name,
-				name: canonicalBusName(bus.label || bus.name) || canonicalBusName(bus.name),
+				name:
+					canonicalBusName(bus.label || bus.name) || canonicalBusName(bus.name),
 			}))
 			.filter((b) => b.name && b.name !== "Testing");
 
 		const nodeMap = new Map();
 		for (const bus of routingBuses) {
-			const nodesResult = await window.GrcanApi.fetchMessageByBus(ref, bus.name);
+			const nodesResult = await window.GrcanApi.fetchMessageByBus(
+				ref,
+				bus.name,
+			);
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
 				if (!nodeMap.has(node.name)) nodeMap.set(node.name, []);
-				nodeMap.get(node.name).push({ busName: bus.display, messages: node.messages });
+				nodeMap
+					.get(node.name)
+					.push({ busName: bus.display, messages: node.messages });
 			}
 		}
 
@@ -275,7 +305,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			const item = makeItem(nodeEntry.name, true);
 			appendNodeIdAccent(item, nodeEntry.name);
 			item.addEventListener("click", () => {
-				firstList.querySelectorAll(".panel-item").forEach((el) => el.classList.remove("active"));
+				firstList
+					.querySelectorAll(".panel-item")
+					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderNodeBusSecondary(nodeEntry.buses);
 			});
@@ -296,8 +328,14 @@ window.addEventListener("DOMContentLoaded", function () {
 		const ref = refSelect.value;
 		if (!ref) {
 			setPlaceholder(firstList, "Select a reference");
-			setPlaceholder(secondList, HIERARCHY_MODE === "NODE_BUS" ? "Select a node" : "Select a bus");
-			setPlaceholder(msgList, HIERARCHY_MODE === "NODE_BUS" ? "Select a bus" : "Select a node");
+			setPlaceholder(
+				secondList,
+				HIERARCHY_MODE === "NODE_BUS" ? "Select a node" : "Select a bus",
+			);
+			setPlaceholder(
+				msgList,
+				HIERARCHY_MODE === "NODE_BUS" ? "Select a bus" : "Select a node",
+			);
 			return;
 		}
 		await renderHierarchy(ref);

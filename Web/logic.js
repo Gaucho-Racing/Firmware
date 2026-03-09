@@ -5,7 +5,8 @@ const GR_GRAY = "#9AA3B0";
 
 const GITHUB_API = "https://api.github.com/repos/Gaucho-Racing/Firmware";
 const CANDO_PATH = "Autogen/CAN/Doc/GRCAN.CANdo";
-const BUS_ID_PATH = "Lib/FancyLayers-RENAME/GRCAN/TemporaryHoldover/Inc/GR_OLD_BUS_ID.h";
+const BUS_ID_PATH =
+	"Lib/FancyLayers-RENAME/GRCAN/TemporaryHoldover/Inc/GR_OLD_BUS_ID.h";
 const NODE_ID_PATH = "Autogen/CAN/Inc/GRCAN_NODE_ID.h";
 
 // Maps CANdo CAN port names to logical bus names as used in routing section
@@ -70,7 +71,9 @@ function parseMessageDefinitions(candoText) {
 			}
 			if (content.startsWith("MSG LENGTH:")) {
 				const rawLen = content.split(":")[1].trim().replace(/,/g, "");
-				currentMsg.msgLength = /^\d+$/.test(rawLen) ? parseInt(rawLen, 10) : null;
+				currentMsg.msgLength = /^\d+$/.test(rawLen)
+					? parseInt(rawLen, 10)
+					: null;
 				continue;
 			}
 			if (content.endsWith(":")) {
@@ -109,7 +112,9 @@ function parseMessageDefinitions(candoText) {
 
 	for (const def of defs.values()) {
 		def.byteMappings = def.fields
-			.filter((f) => typeof f.bitStart === "number" && typeof f.bitEnd === "number")
+			.filter(
+				(f) => typeof f.bitStart === "number" && typeof f.bitEnd === "number",
+			)
 			.map((f) => {
 				const byteStart = Math.floor(f.bitStart / 8);
 				const byteEnd = Math.floor(f.bitEnd / 8);
@@ -117,8 +122,12 @@ function parseMessageDefinitions(candoText) {
 					fieldName: f.fieldName,
 					byteStart,
 					byteEnd,
-					byteLabel: byteStart === byteEnd ? `${byteStart}` : `${byteStart}-${byteEnd}`,
-					bitLabel: f.bitStart === f.bitEnd ? `${f.bitStart}` : `${f.bitStart}-${f.bitEnd}`,
+					byteLabel:
+						byteStart === byteEnd ? `${byteStart}` : `${byteStart}-${byteEnd}`,
+					bitLabel:
+						f.bitStart === f.bitEnd
+							? `${f.bitStart}`
+							: `${f.bitStart}-${f.bitEnd}`,
 					comment: f.comment,
 				};
 			});
@@ -322,7 +331,8 @@ async function fetchMessageByBus(ref, busName) {
 
 			if (indent === 4) {
 				const senderName = content.replace(/:$/, "");
-				if (!nodeMap.has(senderName)) nodeMap.set(senderName, { name: senderName, messages: [] });
+				if (!nodeMap.has(senderName))
+					nodeMap.set(senderName, { name: senderName, messages: [] });
 				currentNode = nodeMap.get(senderName);
 				onTargetPort = false;
 				receiver = null;
@@ -334,12 +344,19 @@ async function fetchMessageByBus(ref, busName) {
 			} else if (onTargetPort && indent === 8) {
 				receiver = content.replace(/:$/, "");
 				pendingMsg = null;
-			} else if (onTargetPort && indent === 10 && content.startsWith("- msg:")) {
+			} else if (
+				onTargetPort &&
+				indent === 10 &&
+				content.startsWith("- msg:")
+			) {
 				const msgName = content.replace("- msg:", "").trim();
 				const msgDef = messageDefs.get(msgName);
-				const existing = currentNode.messages.find((m) => m.msgName === msgName);
+				const existing = currentNode.messages.find(
+					(m) => m.msgName === msgName,
+				);
 				if (existing) {
-					if (!existing.receivers.includes(receiver)) existing.receivers.push(receiver);
+					if (!existing.receivers.includes(receiver))
+						existing.receivers.push(receiver);
 					pendingMsg = null;
 				} else {
 					pendingMsg = {
@@ -352,7 +369,12 @@ async function fetchMessageByBus(ref, busName) {
 					};
 					currentNode.messages.push(pendingMsg);
 				}
-			} else if (onTargetPort && indent === 12 && content.startsWith("can_id_override:") && pendingMsg) {
+			} else if (
+				onTargetPort &&
+				indent === 12 &&
+				content.startsWith("can_id_override:") &&
+				pendingMsg
+			) {
 				pendingMsg.canIdOverride = content.split(":")[1].trim();
 			}
 		}
