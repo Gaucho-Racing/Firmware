@@ -111,6 +111,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	LL_SPI_EnableNSSPulseMgt(neopixelConfiguration->SPI_Instance);
 	LL_SPI_Enable(neopixelConfiguration->SPI_Instance);
 
+	// Config is internal, while context is what's passed into other functions
 	NeopixelContext *context = malloc(sizeof(NeopixelContext));
 
 	if (context == NULL) {

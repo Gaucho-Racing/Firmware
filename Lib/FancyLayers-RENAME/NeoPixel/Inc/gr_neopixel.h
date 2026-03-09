@@ -18,7 +18,7 @@ typedef enum {
 
 /**
  * @brief Alternate function for a specific GPIO pin and port.
- * @note AF5 used for SPI1/SPI2, AF6 is available for SPI3.
+ * @note AF5 used for SPI1/SPI2, AF6 used for SPI3.
  */
 typedef enum {
 	Neopixel_AF0 = LL_GPIO_AF_0,
