@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+#include "vcp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,22 +57,18 @@ static void MX_GPIO_Init(void);
 /* USER CODE BEGIN 0 */
 
 /* Enable ITM for SWO output */
-LogomaticConfig logomatic_config = {
-    .baud_rate = 115200,
-    .clock_source = LOGOMATIC_PCLK1,
-    .data_width = LOGOMATIC_DATAWIDTH_8B,
-    .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-    .gpio_port = LOGOMATIC_GPIOA,
-    .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-    .parity = LOGOMATIC_PARITY_NONE,
-    .prescaler = LOGOMATIC_PRESCALER_DIV1,
-    .stop_bits = LOGOMATIC_STOPBITS_1,
-    .transfer_direction = LOGOMATIC_DIRECTION_TX,
-    .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-    .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-    .bus = LOGOMATIC_BUS,
-};
-
+VCP_Config vcp_config = {.baud_rate = 250000,
+			 .clock_source = VCP_CLOCK_PCLK,
+			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+			 .bus_port = VCP_Port_A,
+			 .parity = VCP_Parity_None,
+			 .prescaler = VCP_Prescalar_Div1,
+			 .stop_bits = VCP_StopBits_1,
+			 .oversampling = VCP_Oversampling_8,
+			 .tx_fifo_threshold = VCP_Threshold_1_8,
+			 .rx_fifo_threshold = VCP_Threshold_1_8,
+			 .usart_instance = LPUART1,
+			.alternate_function = LL_GPIO_AF_12};
 /* USER CODE END 0 */
 
 /**
@@ -93,20 +90,22 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	Setup_Logomatic(&logomatic_config);
+
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-
+	// Setup_Logomatic(&logomatic_config);
+	Setup_VCP(&vcp_config);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
-
+	// LOGOMATIC("Logomatic initialization complete\n");
+	VCP_Send((uint8_t*)"VCP initialization complete\n", 29);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -115,7 +114,8 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		LOGOMATIC("Hello, LOGOMATIC! Great to be here %f\n", 3.14159265);
+		LOGOMATIC("Hello, LOGOMATIC! Great to be here\n");
+		VCP_Send((uint8_t*)"Hello, VCP! Great to be here\n", 30);
 
 		LL_mDelay(750);
 	}
