@@ -7,7 +7,7 @@
 #include "StateUtils.h"
 #include "Unused.h"
 #include "main.h"
-#include "stm32g4xx_hal.h"
+#include "stm32g4xx_ll_gpio.h"
 
 static void CCU_PSUEDO_STATE_TICK(CCU_StateData *state_data)
 {
