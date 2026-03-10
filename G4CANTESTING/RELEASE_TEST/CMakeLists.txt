@@ -35,7 +35,7 @@ target_sources(
 		../Core/Src/dma.c
 		../Core/Src/gpio.c
 		../Core/Src/i2c.c
-		../Core/Src/main.c
+		main.c
 		../Core/Src/spi.c
 		../Core/Src/stm32g4xx_hal_msp.c
 		../Core/Src/stm32g4xx_it.c
@@ -52,4 +52,4 @@ endif()
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
 
-target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
+target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE ../Core/Inc)

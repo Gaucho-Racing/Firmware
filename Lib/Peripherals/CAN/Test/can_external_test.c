@@ -15,7 +15,7 @@
 
 // TODO: Make creating these callbacks a macro, rather than defining each one separately
 static volatile int rx_2_received = 0;
-void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
+static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
 	rx_2_received++;
 	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
@@ -24,7 +24,7 @@ void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 }
 
 static volatile int rx_1_received = 0;
-void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
+static void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 {
 	rx_1_received++;
 	LOGOMATIC("CAN1 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);

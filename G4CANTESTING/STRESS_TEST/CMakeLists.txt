@@ -27,21 +27,17 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_include_directories(
-	${PROJECT_NAME}_USER_CODE
-	INTERFACE
-		/Users/vihan/Documents/Gaucho_Racing/Firmware/Firmware/G4CANTESTING/Core/Inc
-)
+target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE ../Core/Inc)
 
 target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
+		main.c
 		../Core/Src/adc.c
 		../Core/Src/crc.c
 		../Core/Src/dma.c
 		../Core/Src/gpio.c
 		../Core/Src/i2c.c
-		../Core/Src/main.c
 		../Core/Src/spi.c
 		../Core/Src/stm32g4xx_hal_msp.c
 		../Core/Src/stm32g4xx_it.c
