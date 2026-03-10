@@ -194,6 +194,19 @@
 	color: #dbe6ff;
 }
 
+.msg-type-chip {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	font-size: 0.63rem;
+	font-family: "Fira Mono", "Consolas", monospace;
+	color: #c4b5fd;
+	background: rgba(91, 33, 182, 0.2);
+	border: 1px solid rgba(167, 139, 250, 0.3);
+	vertical-align: middle;
+}
+
 .msg-byte-bits {
 	color: #9aa8c8;
 }

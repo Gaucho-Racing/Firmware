@@ -136,6 +136,13 @@ window.addEventListener("DOMContentLoaded", function () {
 					main.textContent = `Byte ${mapping.byteLabel} -> ${mapping.fieldName}`;
 					row.appendChild(main);
 
+					if (mapping.dataType) {
+						const typeChip = document.createElement("span");
+						typeChip.className = "msg-type-chip";
+						typeChip.textContent = mapping.dataType;
+						row.appendChild(typeChip);
+					}
+
 					if (mapping.bitLabel) {
 						const bit = document.createElement("span");
 						bit.className = "msg-byte-bits";

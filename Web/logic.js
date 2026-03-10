@@ -82,6 +82,7 @@ function parseMessageDefinitions(candoText) {
 					fieldName: content.replace(/:$/, ""),
 					bitStart: null,
 					bitEnd: null,
+					dataType: null,
 					comment: null,
 				};
 				continue;
@@ -104,6 +105,10 @@ function parseMessageDefinitions(candoText) {
 				currentField.comment = currentField.comment
 					? `${currentField.comment} ${lineComment}`
 					: lineComment;
+				continue;
+			}
+			if (content.startsWith("data type:")) {
+				currentField.dataType = content.slice("data type:".length).trim() || null;
 			}
 		}
 	}
