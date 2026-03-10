@@ -43,6 +43,7 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData);
 bool PressingBrake(volatile const ECU_StateData *stateData);
 float CalcBrakePercent(volatile const ECU_StateData *stateData);
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
+bool APPS_Plausible(volatile const ECU_StateData *stateData);
 bool vehicle_is_moving(volatile const ECU_StateData *stateData);
 
 #endif
