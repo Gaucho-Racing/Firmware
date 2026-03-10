@@ -23,6 +23,7 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -213,5 +214,16 @@ void EXTI15_10_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+void USART2_IRQHandler(void)
+{
+	if (LL_USART_IsActiveFlag_ORE(USART2)) {
+		LL_USART_ClearFlag_ORE(USART2);
+	}
+	while (LL_USART_IsEnabledIT_RXNE(USART2) && LL_USART_IsActiveFlag_RXNE(USART2)) {
+		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
+		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
+		LOGOMATIC("VCP: %c\n", receivedData);
+		LL_USART_TransmitData8(USART2, receivedData);
+	}
+}
 /* USER CODE END 1 */
