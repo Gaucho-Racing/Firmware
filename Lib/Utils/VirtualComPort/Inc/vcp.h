@@ -121,6 +121,8 @@ typedef struct {
 	VCP_FifoThreshold tx_fifo_threshold;
 	/* FIFO threshold for RX */
 	VCP_FifoThreshold rx_fifo_threshold;
+	/* Alternate function for use on pins */
+	uint32_t alternate_function;
 } VCP_Config;
 
 void VCP_Send(uint8_t *data, uint32_t length);
