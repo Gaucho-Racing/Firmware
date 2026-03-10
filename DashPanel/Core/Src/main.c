@@ -126,8 +126,7 @@ int main(void)
 
 	while (1) {
 		/* USER CODE END WHILE */
-		// LOGOMATIC("Hello from DashPanel!\n");
-		// LL_mDelay(1000);
+
 		if (canReadyToSend) {
 
 			GR_OLD_DASH_STATUS_MSG msg_struct;
@@ -136,7 +135,6 @@ int main(void)
 			msg_struct.ts_button = dashStatus.TSActiveButton;
 			msg_struct.rtd_button = dashStatus.RTDButton;
 
-			// Kinda weird ngl but it doesn't matter
 			if (dashStatus.TSActiveButton) {
 				dashStatus.TSActiveButton = 0;
 			}

@@ -9,21 +9,22 @@ NeopixelContext *NeoPixel_Button_Context;
 static uint32_t i = 0;
 
 void NeoPixel_Init(){
+
 	// LED NeoPixel Config
 	NeopixelConfig NeoPixel_LED_Config = {.SPI_Instance = SPI2,
-				  .NumberOfNeopixels = NUM_LEDS, // 3 LEDs
-				  .gpio_port = Neopixel_GPIOB,
-				  .neopixelAF = Neopixel_GPIO_AF_5,
-				  .mosi_gpio_pin = LL_GPIO_PIN_15,
-				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
+				  .Neopixel_Count = NUM_LEDS, // 3 LEDs
+				  .GPIO_Port = Neopixel_GPIOB,
+				  .GPIO_AlternateFunction = Neopixel_AF5,
+				  .MOSI_Pin = LL_GPIO_PIN_15,
+				  .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
 
 	// LED NeoPixel Config
 	NeopixelConfig NeoPixel_Button_Config = {.SPI_Instance = SPI3,
-				  .NumberOfNeopixels = NUM_BUTTONS,
-				  .gpio_port = Neopixel_GPIOC,
-				  .neopixelAF = Neopixel_GPIO_AF_6,
-				  .mosi_gpio_pin = LL_GPIO_PIN_12,
-				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
+				  .Neopixel_Count = NUM_BUTTONS,
+				  .GPIO_Port = Neopixel_GPIOC,
+				  .GPIO_AlternateFunction = Neopixel_AF6,
+				  .MOSI_Pin = LL_GPIO_PIN_12,
+				  .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
 
 	NeoPixel_LED_Context = Neopixel_Setup(&NeoPixel_LED_Config);
 	NeoPixel_Button_Context = Neopixel_Setup(&NeoPixel_Button_Config);
@@ -31,13 +32,13 @@ void NeoPixel_Init(){
 
 void Neopixel_LEDWrite() {
 
-	// 1: BMS, 2: IMD, 3: BSPD
+	// 0: BMS, 1: IMD, 2: BSPD
 	LED_colors[0] = (dashStatus.led_bits & 0x01) ? COLOR_RED : COLOR_OFF;
 	LED_colors[1] = (dashStatus.led_bits & 0x02) ? COLOR_RED : COLOR_OFF;
 	LED_colors[2] = (dashStatus.led_bits & 0x03) ? COLOR_RED : COLOR_OFF;
 
 	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
-	LOGOMATIC("LED Flashing\n");
+	// LOGOMATIC("LED Flashing\n");
 	return;
 }
 
@@ -54,7 +55,6 @@ void Neopixel_ButtonWrite() {
 
 	uint32_t COLOR_MAGICAL = (i++ * 27644437) & 0x00FFFFFF;
 
-	// Not dealing with this enum include nonsense
 	switch (dashStatus.ECUState) {
 		case 1: // GR_GLV_ON
 			button_colors[0] = COLOR_MAGICAL;
@@ -74,6 +74,5 @@ void Neopixel_ButtonWrite() {
 	}
 
 	Neopixel_WriteAll(NeoPixel_Button_Context, button_colors, sizeof(button_colors));
-	LOGOMATIC("Button Flashing\nColor: %x\n", COLOR_MAGICAL);
 	return;
 }
