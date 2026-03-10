@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#define SOFTWARE_OK_CONTROL_GPIO_Port ((void *)42)
+#define SOFTWARE_OK_CONTROL_GPIO_Port 42
 #define SOFTWARE_OK_CONTROL_Pin 42
 
 typedef enum {
@@ -30,14 +30,14 @@ typedef struct {
 			       GPIOEx_Alternate_function_selection */
 } GPIO_InitTypeDef;
 
-void LL_GPIO_SetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
-void LL_GPIO_ResetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
+uint32_t LL_GPIO_ResetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
+uint32_t LL_GPIO_IsInputPinSet(GPIO_TypeDef GPIOx, uint32_t PinMask);
 
 // void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) {
 //     (void)GPIOx;
 //     (void)PinMask;
 // }
-//
+
 // void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) {
 //     (void)GPIOx;
 //     (void)PinMask;
