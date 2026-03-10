@@ -163,7 +163,7 @@ CANHandle *can_init(const CANConfig *config)
 	// #endif
 	if (canHandle == NULL) {
 		LOGOMATIC("CAN: Unrecognized FDCAN instance");
-		return CAN_SUCCESS;
+		return NULL;
 	}
 	canHandle->init = false;
 	canHandle->started = false;

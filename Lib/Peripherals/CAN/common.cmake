@@ -23,6 +23,7 @@ target_sources(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_external_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_internal_test.c
+		${CMAKE_CURRENT_LIST_DIR}/Test/can_release_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_stress_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_test_helpers.c
 	#${CMAKE_CURRENT_LIST_DIR}/Test/can.c

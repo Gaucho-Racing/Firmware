@@ -13,8 +13,13 @@
 	return 0;
 }*/
 
+#define USECAN1
+#define TX_BUFFER_1_SIZE 10
+#define USECAN2
+#define TX_BUFFER_2_SIZE 10
+
 // TODO: Make creating these callbacks a macro, rather than defining each one separately
-static volatile int rx_2_received = 0;
+static volatile uint32_t rx_2_received = 0;
 static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
 	rx_2_received++;
@@ -23,7 +28,7 @@ static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 	return;
 }
 
-static volatile int rx_1_received = 0;
+static volatile uint32_t rx_1_received = 0;
 static void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 {
 	rx_1_received++;
@@ -104,15 +109,28 @@ int can_external_test(void)
 		can_send(data_can, &msg);
 		i += 1;
 	}
-	LOGOMATIC("Received %d messages on bus1...\n", rx_1_received);
-	LOGOMATIC("Received %d messages on bus2...\n", rx_2_received);
+	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
+	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
 
-	if (can_release(primary_can)) {
-		LOGOMATIC("can_test; could not release primary_can\n");
+
+	uint32_t error = false;
+
+	if ((rx_1_received!=num_messages)) {
+		error = true;
+		LOGOMATIC("FAIL: can_internal_test: did not receive all rx1\n");
 	}
-	if (can_release(data_can)) {
-		LOGOMATIC("can_test; could not release data_can\n");
+	if ((rx_2_received!=num_messages)) {
+		error = true;
+		LOGOMATIC("FAIL: can_internal_test: did not receive all rx2\n");
 	}
+
+	uint32_t rc;
+	if ( (rc = can_release(primary_can))) LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
+	error |= rc;
+	if ( (rc = can_release(primary_can))) LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
+	error |= rc;
+
+	if (error) {return ERROR;}
 
 	return SUCCESS;
 }

@@ -43,12 +43,9 @@ target_sources(
 		../Core/Src/usart.c
 )
 
-if(FILTER EQUAL 1)
-	message(HERE)
-	target_compile_definitions(${PROJECT_NAME}_USER_CODE INTERFACE FILTER)
-else()
-	message(THERE)
-endif()
+set_target_properties(${NAME} PROPERTIES
+    OUTPUT_NAME "CAN_${NAME}"
+)
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
 

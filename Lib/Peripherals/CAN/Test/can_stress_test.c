@@ -3,6 +3,9 @@
 #include "can.h"
 #include "can_tests.h"
 
+#define USECAN1
+#define TX_BUFFER_1_SIZE 10
+
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
 void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
@@ -16,6 +19,7 @@ void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 
 int can_stress_test(void)
 {
+    LOGOMATIC("running can_stress_test\n");
 	uint32_t status, loop;
 	UNUSED(status);
 
@@ -59,6 +63,7 @@ int can_stress_test(void)
 
 	size_t i = 0;
 	size_t messages = 5;
+    uint32_t successes = 0;
 	while (i < messages) {
 		loop++;
 		can_stress_test_received = 0;
@@ -74,7 +79,11 @@ int can_stress_test(void)
 		HAL_Delay(1000);
 
 		LOGOMATIC("Received %ud/%ud CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int)i);
-		msg.data[0] = 0x10;
+
+        if (can_stress_test_received == i) {
+            successes += 1;
+        }
+        msg.data[0] = 0x10;
 		can_send(data_can, &msg);
 		HAL_Delay(1000);
 		LOGOMATIC("Stress test finished loop %ld\n", loop);
@@ -82,7 +91,15 @@ int can_stress_test(void)
 
 	if (can_release(primary_can)) {
 		LOGOMATIC("can_test; could not release primary_can\n");
+        return ERROR;
 	}
+
+    if (successes != messages) {
+        LOGOMATIC("can_stress_test failed\n");
+        return ERROR;
+    }
+
+    LOGOMATIC("can_stress_test passed\n");
 
 	return SUCCESS;
 }
