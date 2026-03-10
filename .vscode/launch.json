@@ -283,6 +283,37 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/L4HELLO.elf",
+			"name": "L4HELLO",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32l4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build L4HELLO",
+			"showDevDebugOutput": "raw",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 80000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			},
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32L476.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Receive.elf",
 			"name": "SPI Receive W3 WS",
 			"request": "launch",
