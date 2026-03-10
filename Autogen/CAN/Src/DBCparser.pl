@@ -349,99 +349,101 @@ sub parse_routing {
 }
 
 sub parse_message_id {
-    my ( $data_ref, $state_ref, $ind, $line ) = @_;
+	my ( $data_ref, $state_ref, $ind, $line ) = @_;
 
-    if ( $ind == 2 && $line =~ /^ ([^:]+) : /smx ) {
-        my $msg = $1;
-        $msg =~ s/\s+$//smx;
-        $state_ref->{cur_msg} = $msg;
-        $data_ref->{messages}{ $state_ref->{cur_msg} } = { sigs => {} };
-        return;
-    }
-    if ( $ind == 4 && $line =~ /^ MSG \s+ ID \s* : \s* (.+) /ixsm ) {
-        my $id = $1;
-        $id =~ s/\s+$//smx;
-        $data_ref->{messages}{ $state_ref->{cur_msg} }{id} = $id;
-        return;
-    }
-    if ( $ind == 4 && $line =~ /^ MSG \s+ LENGTH \s* : \s* (.+) /ixsm ) {
-        my $len = $1;
-        $len =~ s/\s+$//smx;
-        $data_ref->{messages}{ $state_ref->{cur_msg} }{len} = $len;
-        return;
-    }
-    if ( $ind == 4 && $line =~ /^ ([^:]+) : /smx ) {
-        my $sig = $1;
-        $sig =~ s/\s+$//smx;
-        # Skip if the "signal name" is actually the comment field
-        return if $sig eq 'comment';
+	if ( $ind == 2 && $line =~ /^ ([^:]+) : /smx ) {
+		my $msg = $1;
+		$msg =~ s/\s+$//smx;
+		$state_ref->{cur_msg} = $msg;
+		$data_ref->{messages}{ $state_ref->{cur_msg} } = { sigs => {} };
+		return;
+	}
+	if ( $ind == 4 && $line =~ /^ MSG \s+ ID \s* : \s* (.+) /ixsm ) {
+		my $id = $1;
+		$id =~ s/\s+$//smx;
+		$data_ref->{messages}{ $state_ref->{cur_msg} }{id} = $id;
+		return;
+	}
+	if ( $ind == 4 && $line =~ /^ MSG \s+ LENGTH \s* : \s* (.+) /ixsm ) {
+		my $len = $1;
+		$len =~ s/\s+$//smx;
+		$data_ref->{messages}{ $state_ref->{cur_msg} }{len} = $len;
+		return;
+	}
+	if ( $ind == 4 && $line =~ /^ ([^:]+) : /smx ) {
+		my $sig = $1;
+		$sig =~ s/\s+$//smx;
 
-        $state_ref->{cur_sig} = $sig;
-        $data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} } = {};
-        return;
-    }
-    if ( $ind == 6 && $state_ref->{cur_sig} ne $EMPTY_STR && $line =~ /^ ([^:]+) \s* : \s* (.+) /smx ) {
-        my $k = $1;
-        my $v = $2;
-        $k =~ s/\s+$//smx;
-        $v =~ s/\s+$//smx;
+		# Skip if the "signal name" is actually the comment field
+		return if $sig eq 'comment';
 
-        # Skip comment fields at the property level
-        return if $k eq 'comment';
+		$state_ref->{cur_sig} = $sig;
+		$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} } = {};
+		return;
+	}
+	if ( $ind == 6 && $state_ref->{cur_sig} ne $EMPTY_STR && $line =~ /^ ([^:]+) \s* : \s* (.+) /smx ) {
+		my $k = $1;
+		my $v = $2;
+		$k =~ s/\s+$//smx;
+		$v =~ s/\s+$//smx;
 
-        if ( $k eq 'bit_start' || $k eq 'bit start' ) {
-            $v =~ s/-.*//smx;
-            $data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} }{start} = $v;
-        }
-        else {
-            $data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} }{$k} = $v;
-        }
-        return;
-    }
-    return;
+		# Skip comment fields at the property level
+		return if $k eq 'comment';
+
+		if ( $k eq 'bit_start' || $k eq 'bit start' ) {
+			$v =~ s/-.*//smx;
+			$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} }{start} = $v;
+		}
+		else {
+			$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} }{$k} = $v;
+		}
+		return;
+	}
+	return;
 }
 
 sub parse_custom_id {
-    my ( $data_ref, $state_ref, $ind, $line ) = @_;
+	my ( $data_ref, $state_ref, $ind, $line ) = @_;
 
-    if ( $ind == 2 && $line =~ /^ ["']? ([^"':]+) ["']? : /smx ) {
-        my $msg = $1;
-        $msg =~ s/\s+$//smx;
-        $state_ref->{cur_msg} = $msg;
-        $data_ref->{custom}{ $state_ref->{cur_msg} } = { sigs => [] };
-        return;
-    }
-    if ( $line =~ /^ CAN \s+ ID \s* : \s* (.+) /ixsm ) {
-        my $id = $1;
-        $id =~ s/\s+$//smx;
-        $data_ref->{custom}{ $state_ref->{cur_msg} }{id} = $id;
-        return;
-    }
-    if ( $line =~ /^ Length \s* : \s* (.+) /ixsm ) {
-        my $len = $1;
-        $len =~ s/\s+$//smx;
-        $data_ref->{custom}{ $state_ref->{cur_msg} }{len} = $len;
-        return;
-    }
-    # Skip standalone comment fields in custom section
-    if ( $line =~ /^ comment \s* : /ixsm ) {
-        return;
-    }
-    if ( $line =~ /^ [-] \s+ name \s* : \s* ["']? ([^"']+) ["']? /smx ) {
-        my $name = $1;
-        $name =~ s/\s+$//smx;
-        push @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} }, { name => $name };
-        return;
-    }
-    if ( $line =~ /^ bit_start \s* : \s* ([\d\-]+) /smx ) {
-        my $bs = $1;
-        $bs =~ s/-.*//smx;
-        if ( @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} } ) {
-            $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs}->[-1]->{start} = $bs;
-        }
-        return;
-    }
-    return;
+	if ( $ind == 2 && $line =~ /^ ["']? ([^"':]+) ["']? : /smx ) {
+		my $msg = $1;
+		$msg =~ s/\s+$//smx;
+		$state_ref->{cur_msg} = $msg;
+		$data_ref->{custom}{ $state_ref->{cur_msg} } = { sigs => [] };
+		return;
+	}
+	if ( $line =~ /^ CAN \s+ ID \s* : \s* (.+) /ixsm ) {
+		my $id = $1;
+		$id =~ s/\s+$//smx;
+		$data_ref->{custom}{ $state_ref->{cur_msg} }{id} = $id;
+		return;
+	}
+	if ( $line =~ /^ Length \s* : \s* (.+) /ixsm ) {
+		my $len = $1;
+		$len =~ s/\s+$//smx;
+		$data_ref->{custom}{ $state_ref->{cur_msg} }{len} = $len;
+		return;
+	}
+
+	# Skip standalone comment fields in custom section
+	if ( $line =~ /^ comment \s* : /ixsm ) {
+		return;
+	}
+	if ( $line =~ /^ [-] \s+ name \s* : \s* ["']? ([^"']+) ["']? /smx ) {
+		my $name = $1;
+		$name =~ s/\s+$//smx;
+		push @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} }, { name => $name };
+		return;
+	}
+	if ( $line =~ /^ bit_start \s* : \s* ([\d\-]+) /smx ) {
+		my $bs = $1;
+		$bs =~ s/-.*//smx;
+		if ( @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} } ) {
+			$data_ref->{custom}{ $state_ref->{cur_msg} }{sigs}->[-1]->{start} = $bs;
+		}
+		return;
+	}
+	return;
 }
 
 sub parse_grid_id {
