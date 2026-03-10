@@ -32,8 +32,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_PRECHARGE_TIME 15000 // in ms
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
-// EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
-#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
+#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
 
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
