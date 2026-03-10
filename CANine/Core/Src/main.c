@@ -118,8 +118,8 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
-	// LOGOMATIC("Logomatic initialization complete\n");
-	VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
+	LOGOMATIC("Logomatic initialization complete\n");
+	VCP_Send((uint8_t*)"VCP initialization complete\n", 29);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
