@@ -62,7 +62,7 @@ void CANInitialize()
 	can_start(can_handler);
 }
 
-void CAN_sendPing(GR_OLD_NODE_ID to, void *data)
+void CAN_sendPing(GR_OLD_NODE_ID to, uint32_t *data)
 {
 	FDCANTxMessage pingMsg;
 	pingMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to;
@@ -74,7 +74,7 @@ void CAN_sendPing(GR_OLD_NODE_ID to, void *data)
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
 
-	((uint32_t *)(pingMsg.data))[0] = (uint32_t)data;
+	((uint32_t *)(pingMsg.data))[0] = *data;
 	can_send(can_handler, &pingMsg);
 }
 
@@ -110,7 +110,7 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 		GR_OLD_DASH_CONFIG_MSG *dash_data = (GR_OLD_DASH_CONFIG_MSG *)data;
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bits
 	} else if (msg_id == PING_ID) {
-		CAN_sendPing(node_id, data);
+		CAN_sendPing(node_id, (uint32_t *) data);
 	} else {
 		// Check that you are sending the correct sizes if you get this message
 		LOGOMATIC("Unrecognized CAN message.\n");

@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define NEOPIXEL_DELAY 200
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -149,7 +149,7 @@ int main(void)
 		}
 
 		// Neopixel
-		LL_mDelay(200);
+		LL_mDelay(NEOPIXEL_DELAY);
 		Neopixel_ButtonWrite();
 		Neopixel_LEDWrite();
 
