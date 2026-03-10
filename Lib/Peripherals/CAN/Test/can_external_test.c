@@ -1,9 +1,8 @@
-#include "can_tests.h"
-
 #include <inttypes.h>
 #include <string.h>
 
 #include "can.h"
+#include "can_tests.h"
 
 // each family has a constant number of CAN peripherals
 
@@ -14,7 +13,7 @@
 	return 0;
 }*/
 
-//TODO: Make creating these callbacks a macro, rather than defining each one separately
+// TODO: Make creating these callbacks a macro, rather than defining each one separately
 static volatile int rx_2_received = 0;
 void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
@@ -66,7 +65,7 @@ int can_external_test(void)
 	}
 
 	//=============================================================================================
-	if ( (primary_can = can_init(&cfg1)) == NULL) {
+	if ((primary_can = can_init(&cfg1)) == NULL) {
 		LOGOMATIC("Could not initialize primary_can\n");
 		return ERROR;
 	}
@@ -95,7 +94,7 @@ int can_external_test(void)
 	uint32_t i = 0;
 	uint32_t num_messages = 5;
 
-	LOGOMATIC("Sending %ld messages on each bus...\n",num_messages);
+	LOGOMATIC("Sending %ld messages on each bus...\n", num_messages);
 	while (i < num_messages) {
 		HAL_Delay(1000);
 		msg.data[0] = 0x2;
@@ -105,11 +104,15 @@ int can_external_test(void)
 		can_send(data_can, &msg);
 		i += 1;
 	}
-	LOGOMATIC("Received %d messages on bus1...\n",rx_1_received);
-	LOGOMATIC("Received %d messages on bus2...\n",rx_2_received);
+	LOGOMATIC("Received %d messages on bus1...\n", rx_1_received);
+	LOGOMATIC("Received %d messages on bus2...\n", rx_2_received);
 
-	if (can_release(primary_can)) LOGOMATIC("can_test; could not release primary_can\n");
-	if (can_release(data_can)) 	  LOGOMATIC("can_test; could not release data_can\n");
+	if (can_release(primary_can)) {
+		LOGOMATIC("can_test; could not release primary_can\n");
+	}
+	if (can_release(data_can)) {
+		LOGOMATIC("can_test; could not release data_can\n");
+	}
 
 	return SUCCESS;
 }

@@ -92,9 +92,9 @@ int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // doesn't need a handle, CAN cores share peripheral clock
 void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
-//TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
+// TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
 
-//TODO: put this somewhere that someone will read it
-//Somewhere in your application, define USECAN1 and TX_BUFFER_1_SIZE
+// TODO: put this somewhere that someone will read it
+// Somewhere in your application, define USECAN1 and TX_BUFFER_1_SIZE
 
 #endif // End Header Guard

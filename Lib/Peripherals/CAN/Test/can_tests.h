@@ -11,15 +11,14 @@
 #define USECAN2
 #define TX_BUFFER_3_SIZE 10
 
-//abstract families
+// abstract families
 extern int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);
 extern int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);
 
-
-//testing functions
+// testing functions
 extern int can_external_test(void);
 extern int can_internal_test(void);
 extern int can_stress_test(void);
-extern int can_release_test(CANHandle * handle);
+extern int can_release_test(CANHandle *handle);
 
 #endif

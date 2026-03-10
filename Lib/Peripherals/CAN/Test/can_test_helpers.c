@@ -1,20 +1,21 @@
-#include "can_tests.h"
 #include "can.h"
+#include "can_tests.h"
 
-int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode) {
-    #ifdef STM32G4
-    return defaultSTM32G4_CANCfg(instance, callback, out_cfg,Mode);
-    #elif defined(STM32L4)
-    #elif defined(STM32U5)
-    #error "STM32U5 is untested"#else
-    #else
-    #error "Untested STM32 Family"
-    #endif
+int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
+{
+#ifdef STM32G4
+	return defaultSTM32G4_CANCfg(instance, callback, out_cfg, Mode);
+#elif defined(STM32L4)
+#elif defined(STM32U5)
+#error "STM32U5 is untested"#else
+#else
+#error "Untested STM32 Family"
+#endif
 }
 
-//TODO: Abstract out the system clock calculation
-//Abstracts out everything but the mode and callback
-int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef* instance , CAN_RXCallback callback, CANConfig * out_cfg, uint32_t Mode)
+// TODO: Abstract out the system clock calculation
+// Abstracts out everything but the mode and callback
+int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
 {
 	CANConfig canCfg;
 	// canCfg.fdcan_instance = FDCAN2;
@@ -37,7 +38,7 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef* instance , CAN_RXCallback callbac
 	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
-	canCfg.rx_callback = NULL;	  // PLEASE SET
+	canCfg.rx_callback = NULL;	   // PLEASE SET
 	canCfg.rx_interrupt_priority = 14; // PLEASE SET
 	canCfg.tx_interrupt_priority = 14; // PLEASE SET
 
@@ -63,7 +64,7 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef* instance , CAN_RXCallback callbac
 
 	canCfg.rx_callback = callback;
 
-	if (instance == FDCAN1){
+	if (instance == FDCAN1) {
 		canCfg.fdcan_instance = FDCAN1;
 		canCfg.rx_gpio = GPIOA;
 		canCfg.init_rx_gpio.Pin = GPIO_PIN_11;

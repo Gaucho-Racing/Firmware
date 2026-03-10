@@ -203,7 +203,7 @@ CANHandle *can_init(const CANConfig *config)
 	if (HAL_FDCAN_Init(canHandle->hal_fdcanP) != HAL_OK) {
 		failure |= HAL_ERROR;
 		LOGOMATIC("CAN: HAL Could not initialize FDCAN peripheral");
-		return 0; 
+		return 0;
 		// Error_Handler();
 	}
 
@@ -263,7 +263,7 @@ int can_release(CANHandle *canHandle)
 		LOGOMATIC("CAN_release: can instance is already deinitialized");
 		return CAN_ERROR;
 	}
-	if (can_stop(canHandle)) {// try to prevent more interrupts from firing
+	if (can_stop(canHandle)) { // try to prevent more interrupts from firing
 		LOGOMATIC("CAN_release: could not stop instance");
 		return CAN_ERROR;
 	}

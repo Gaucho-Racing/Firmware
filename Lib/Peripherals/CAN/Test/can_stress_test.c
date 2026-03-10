@@ -1,9 +1,9 @@
-#include "can.h"
-#include "can_tests.h"
 #include <string.h>
 
+#include "can.h"
+#include "can_tests.h"
 
-//TODO:
+// TODO:
 static volatile uint32_t can_stress_test_received = 0;
 void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 {
@@ -43,7 +43,7 @@ int can_stress_test(void)
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
 
-	if ( (primary_can = can_init(&cfg1)) == NULL) {
+	if ((primary_can = can_init(&cfg1)) == NULL) {
 		LOGOMATIC("Could not initialize primary_can\n");
 		return ERROR;
 	}
@@ -57,7 +57,7 @@ int can_stress_test(void)
 	msg.data[0] = 0x80;
 	msg.tx_header = TxHeader;
 
-    size_t i = 0;
+	size_t i = 0;
 	size_t messages = 5;
 	while (i < messages) {
 		loop++;
@@ -65,7 +65,7 @@ int can_stress_test(void)
 		i = 0;
 		while (i < 100) {
 			if (can_send(primary_can, &msg) != 0) {
-				LOGOMATIC("Stress test failed sending CAN msg at %ud-th consecutive send.\n", (unsigned int) i + 1);
+				LOGOMATIC("Stress test failed sending CAN msg at %ud-th consecutive send.\n", (unsigned int)i + 1);
 				break;
 			}
 			i++;
@@ -73,14 +73,16 @@ int can_stress_test(void)
 		LOGOMATIC("Sent %ud CAN msgs...\n", (unsigned int)i);
 		HAL_Delay(1000);
 
-		LOGOMATIC("Received %ud/%ud CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int) i);
+		LOGOMATIC("Received %ud/%ud CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int)i);
 		msg.data[0] = 0x10;
 		can_send(data_can, &msg);
 		HAL_Delay(1000);
 		LOGOMATIC("Stress test finished loop %ld\n", loop);
 	}
 
-	if (can_release(primary_can)) LOGOMATIC("can_test; could not release primary_can\n");
+	if (can_release(primary_can)) {
+		LOGOMATIC("can_test; could not release primary_can\n");
+	}
 
 	return SUCCESS;
 }
