@@ -279,10 +279,6 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build L4BLINKY",
 			"showDevDebugOutput": "raw",
-			"liveWatch": {
-				"enabled": true,
-				"samplesPerSecond": 4
-			},
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 80000000,
@@ -314,10 +310,6 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build L4HELLO",
 			"showDevDebugOutput": "raw",
-			"liveWatch": {
-				"enabled": true,
-				"samplesPerSecond": 4
-			},
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 80000000,
