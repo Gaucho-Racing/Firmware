@@ -1,6 +1,7 @@
 #include <stdint.h>
-#include "gr_neopixel.h"
+
 #include "CANdler.h"
+#include "gr_neopixel.h"
 
 #ifndef DASHPANEL_UTILS_H
 #define DASHPANEL_UTILS_H

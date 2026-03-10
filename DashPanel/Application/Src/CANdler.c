@@ -62,7 +62,7 @@ void CANInitialize()
 	can_start(can_handler);
 }
 
-void CAN_sendPing(GR_OLD_NODE_ID to, void* data)
+void CAN_sendPing(GR_OLD_NODE_ID to, void *data)
 {
 	FDCANTxMessage pingMsg;
 	pingMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to;
@@ -74,7 +74,7 @@ void CAN_sendPing(GR_OLD_NODE_ID to, void* data)
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
 
-	((uint32_t *)(pingMsg.data))[0] = (uint32_t) data;
+	((uint32_t *)(pingMsg.data))[0] = (uint32_t)data;
 	can_send(can_handler, &pingMsg);
 }
 

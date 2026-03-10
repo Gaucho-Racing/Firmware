@@ -1,36 +1,39 @@
 #include "dashutils.h"
+
+#include "Logomatic.h"
 #include "gr_neopixel.h"
 #include "main.h"
-#include "Logomatic.h"
 
 NeopixelContext *NeoPixel_LED_Context;
 NeopixelContext *NeoPixel_Button_Context;
 
 static uint32_t i = 0;
 
-void NeoPixel_Init(){
+void NeoPixel_Init()
+{
 
 	// LED NeoPixel Config
 	NeopixelConfig NeoPixel_LED_Config = {.SPI_Instance = SPI2,
-				  .Neopixel_Count = NUM_LEDS, // 3 LEDs
-				  .GPIO_Port = Neopixel_GPIOB,
-				  .GPIO_AlternateFunction = Neopixel_AF5,
-				  .MOSI_Pin = LL_GPIO_PIN_15,
-				  .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
+					      .Neopixel_Count = NUM_LEDS, // 3 LEDs
+					      .GPIO_Port = Neopixel_GPIOB,
+					      .GPIO_AlternateFunction = Neopixel_AF5,
+					      .MOSI_Pin = LL_GPIO_PIN_15,
+					      .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
 
 	// LED NeoPixel Config
 	NeopixelConfig NeoPixel_Button_Config = {.SPI_Instance = SPI3,
-				  .Neopixel_Count = NUM_BUTTONS,
-				  .GPIO_Port = Neopixel_GPIOC,
-				  .GPIO_AlternateFunction = Neopixel_AF6,
-				  .MOSI_Pin = LL_GPIO_PIN_12,
-				  .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
+						 .Neopixel_Count = NUM_BUTTONS,
+						 .GPIO_Port = Neopixel_GPIOC,
+						 .GPIO_AlternateFunction = Neopixel_AF6,
+						 .MOSI_Pin = LL_GPIO_PIN_12,
+						 .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
 
 	NeoPixel_LED_Context = Neopixel_Setup(&NeoPixel_LED_Config);
 	NeoPixel_Button_Context = Neopixel_Setup(&NeoPixel_Button_Config);
 }
 
-void Neopixel_LEDWrite() {
+void Neopixel_LEDWrite()
+{
 
 	// 0: BMS, 1: IMD, 2: BSPD
 	LED_colors[0] = (dashStatus.led_bits & 0x01) ? COLOR_RED : COLOR_OFF;
@@ -42,7 +45,8 @@ void Neopixel_LEDWrite() {
 	return;
 }
 
-void Neopixel_ButtonWrite() {
+void Neopixel_ButtonWrite()
+{
 
 	// 1: TS Active, 2: RTD
 	// If the button doesn't do anything, it's off

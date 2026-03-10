@@ -36,9 +36,9 @@ extern "C" {
 #include "stm32g4xx_ll_lpuart.h"
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
+#include "stm32g4xx_ll_spi.h"
 #include "stm32g4xx_ll_system.h"
 #include "stm32g4xx_ll_utils.h"
-#include "stm32g4xx_ll_spi.h"
 
 #if defined(USE_FULL_ASSERT)
 #include "stm32_assert.h"
