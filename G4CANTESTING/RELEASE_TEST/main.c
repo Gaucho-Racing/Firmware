@@ -134,7 +134,7 @@ int main(void)
 	LOGOMATIC("Booted!\n");
 
 	LOGOMATIC("running can_release_test:\n");
-//	can_release_test();
+	//	can_release_test();
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
