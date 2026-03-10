@@ -193,11 +193,11 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	static uint32_t last_apps_plausible_frame_millis;
 	if (APPS_Plausible(stateData)) {
-		last_apps_plausible_frame_millis = stateData->millisSinceBoot;
+		last_apps_plausible_frame_millis = millis_since_boot;
 	}
 
 	// Stop throttle if implausible for > 100ms
-	if (stateData->apps_bse_violation || stateData->millisSinceBoot - last_apps_plausible_frame_millis > 100) {
+	if (stateData->apps_bse_violation || millis_since_boot - last_apps_plausible_frame_millis > 100) {
 		torque_request = 0;
 	}
 
