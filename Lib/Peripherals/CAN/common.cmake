@@ -25,9 +25,8 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_internal_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_stress_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_test_helpers.c
-		#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
-		#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
-
+	#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
+	#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
 )
 target_include_directories(
 	PERIPHERAL_CAN_TEST_LIB
