@@ -134,6 +134,7 @@ function parseMessageDefinitions(candoText) {
 						f.bitStart === f.bitEnd
 							? `${f.bitStart}`
 							: `${f.bitStart}-${f.bitEnd}`,
+					dataType: f.dataType,
 					comment: f.comment,
 				};
 			});
