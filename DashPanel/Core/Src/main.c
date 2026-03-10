@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define NEOPIXEL_DELAY 200
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -111,11 +111,12 @@ int main(void)
 
 	/* USER CODE BEGIN SysInit */
 	LL_mDelay(150);
-	LOGOMATIC("\nBoot completed at %lu ms\n", MillisecondsSinceBoot());
+	LOGOMATIC("\nBoot completed\n");
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
 	/* USER CODE END 2 */
@@ -125,8 +126,7 @@ int main(void)
 
 	while (1) {
 		/* USER CODE END WHILE */
-		// LOGOMATIC("Hello from DashPanel!\n");
-		// LL_mDelay(1000);
+
 		if (canReadyToSend) {
 
 			GR_OLD_DASH_STATUS_MSG msg_struct;
@@ -135,7 +135,6 @@ int main(void)
 			msg_struct.ts_button = dashStatus.TSActiveButton;
 			msg_struct.rtd_button = dashStatus.RTDButton;
 
-			// Kinda weird ngl but it doesn't matter
 			if (dashStatus.TSActiveButton) {
 				dashStatus.TSActiveButton = 0;
 			}
@@ -148,6 +147,11 @@ int main(void)
 
 			canReadyToSend = false;
 		}
+
+		// Neopixel
+		LL_mDelay(NEOPIXEL_DELAY);
+		Neopixel_ButtonWrite();
+		Neopixel_LEDWrite();
 
 		/* USER CODE BEGIN 3 */
 	}
