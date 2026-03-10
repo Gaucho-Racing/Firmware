@@ -10,6 +10,8 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 
+#define WHEEL_RPM_TO_MPH_RATIO 0.06 // TODO: find this out fr
+
 extern ECU_StateData stateLump;
 
 void ReportBadMessageLength(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id, GR_OLD_NODE_ID sender_id)
@@ -82,8 +84,6 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 				break;
 			}
 			GR_OLD_INVERTER_STATUS_1_MSG *inverter_status_1 = (GR_OLD_INVERTER_STATUS_1_MSG *)data;
-			state_data->rl_wheel_rpm = inverter_status_1->motor_rpm - 32768;
-			state_data->rr_wheel_rpm = inverter_status_1->motor_rpm - 32768;
 			break;
 		case MSG_INVERTER_STATUS_3:
 			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_3_MSG)) {
@@ -100,6 +100,15 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			}
 			GR_OLD_STEERING_STATUS_MSG *steering_status = (GR_OLD_STEERING_STATUS_MSG *)data;
 			state_data->powerlevel_torquemap = steering_status->encoder_bits;
+			break;
+		case MSG_SAM_REAR_WHEELSPEED:
+			if (data_length != sizeof(GR_OLD_SAM_REAR_WHEELSPEED_MSG)) {
+				ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+			GR_OLD_SAM_REAR_WHEELSPEED_MSG *encoder_status = (GR_OLD_SAM_REAR_WHEELSPEED_MSG *)data;
+			state_data->rr_wheel_rpm = encoder_status->wheel_speed * 0.1 - 32768; // TODO: find out which wheel this actually measures
+			state_data->vehicle_speed_mph = state_data->rr_wheel_rpm * WHEEL_RPM_TO_MPH_RATIO;
 			break;
 		default:
 			ReportUnhandledMessage(bus_id, msg_id, sender_id);
