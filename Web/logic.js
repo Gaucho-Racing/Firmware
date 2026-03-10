@@ -108,7 +108,8 @@ function parseMessageDefinitions(candoText) {
 				continue;
 			}
 			if (content.startsWith("data type:")) {
-				currentField.dataType = content.slice("data type:".length).trim() || null;
+				const rawType = content.slice("data type:".length).trim();
+				currentField.dataType = rawType === "s" ? "string" : rawType || null;
 			}
 		}
 	}
