@@ -77,7 +77,8 @@ VCP_Config vcp_config = {.baud_rate = 19200,
 			 .oversampling = VCP_Oversampling_16,
 			 .tx_fifo_threshold = VCP_Threshold_1_8,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .usart_instance = USART2};
+			 .usart_instance = USART2,
+			 .alternate_function = LL_GPIO_AF_7};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
