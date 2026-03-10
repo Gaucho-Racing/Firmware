@@ -15,7 +15,7 @@ void setSoftwareLatch(bool close, CCU_StateData *state_data)
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		state_data->BCU_S2_SOFTWARE_LATCH = 1;
 		LOGOMATIC("Software Latch: High\n");
-	} else if (!(close) && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
+	} else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		state_data->BCU_S2_SOFTWARE_LATCH = 0;
 		LOGOMATIC("Software Latch: Low\n");
