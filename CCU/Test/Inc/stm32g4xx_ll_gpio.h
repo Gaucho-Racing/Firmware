@@ -32,7 +32,7 @@ typedef struct {
 
 uint32_t LL_GPIO_ResetOutputPin(GPIO_TypeDef GPIOx, uint32_t PinMask);
 uint32_t LL_GPIO_IsInputPinSet(GPIO_TypeDef GPIOx, uint32_t PinMask);
- 
+
 // void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask) {
 //     (void)GPIOx;
 //     (void)PinMask;
