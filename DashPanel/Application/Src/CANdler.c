@@ -110,7 +110,7 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 		GR_OLD_DASH_CONFIG_MSG *dash_data = (GR_OLD_DASH_CONFIG_MSG *)data;
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bits
 	} else if (msg_id == PING_ID) {
-		CAN_sendPing(node_id, (uint32_t *) data);
+		CAN_sendPing(node_id, (uint32_t *)data);
 	} else {
 		// Check that you are sending the correct sizes if you get this message
 		LOGOMATIC("Unrecognized CAN message.\n");
