@@ -542,21 +542,21 @@ Message ID:
     MSG LENGTH: 8
     Debug:
       bit_start: 0
-      # Essentially a print statement up to 8 bytes long that whichever targeted can parse
+      comment: Essentially a print statement up to 8 bytes long that whichever targeted can parse
       data type: s
   Debug FD:
     MSG ID: 0x001
     MSG LENGTH: 64
     Debug:
       bit_start: 0
-      # Essentially a print statement up to 64 bytes long that whichever targeted can parse
+      comment: Essentially a print statement up to 64 bytes long that whichever targeted can parse
       data type: s
   Ping:
     MSG ID: 0x002
     MSG LENGTH: 4
     Timestamp:
       bit_start: 0
-      # Time in millis
+      comment: Time in millis
       data type: u32
       units: ms
       scaled min: 0
@@ -567,98 +567,99 @@ Message ID:
     MSG LENGTH: 8
     ECU State:
       bit_start: 0
-      # See diagram
+      comment: See diagram
       data type: u8
       units: Enum
     ACU Node Status:
       bit_start: 8
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     GR Inv 1 Status:
       bit_start: 9
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     GR Inv 2 Status:
       bit_start: 10
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     GR Inv 3 Status:
       bit_start: 11
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     GR Inv 4 Status:
       bit_start: 12
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 1:
       bit_start: 13
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 2:
       bit_start: 14
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 3:
       bit_start: 15
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 4:
       bit_start: 16
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 5:
       bit_start: 17
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 6:
       bit_start: 18
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 7:
       bit_start: 19
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Fan Controller 8:
       bit_start: 20
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Dash:
       bit_start: 21
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Steering:
       bit_start: 22
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Reserved:
       bit_start: 23-31
     Power Level:
       bit_start: 32
-      # Controls the AC current limits to each of the inverters
-      # Discrete Mapping, actual values TBD (16 possible values)
+      comment:
+        Controls the AC current limits to each of the inverters
+        Discrete Mapping, actual values TBD (16 possible values)
       data type: u4
     Torque Map:
       bit_start: 36
-      # The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
+      comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
       data type: u4
     Max Cell Temp:
       bit_start: 40
-      # the temperature of the hottest cell of the accumulator
+      comment: the temperature of the hottest cell of the accumulator
       data type: u8
       units: Celsius
       scaled min: 0
@@ -666,7 +667,7 @@ Message ID:
       map equation: "0.25x"
     Accumulator State of Charge:
       bit_start: 48
-      # % charged of the Accumulator
+      comment: % charged of the Accumulator
       data type: u8
       units: '%'
       scaled min: 0
@@ -674,7 +675,7 @@ Message ID:
       map equation: "20x/51"
     GLV State of Charge:
       bit_start: 56
-      # % charged of the Low Voltage Bat
+      comment: % charged of the Low Voltage Bat
       data type: u8
       units: '%'
       scaled min: 0
@@ -685,7 +686,7 @@ Message ID:
     MSG LENGTH: 8
     Tractive System Voltage:
       bit_start: 0
-      # Output terminal voltage of accumulator
+      comment: Output terminal voltage of accumulator
       data type: u16
       units: Volts
       scaled min: 0
@@ -693,7 +694,7 @@ Message ID:
       map equation: "0.01x"
     Vehicle Speed:
       bit_start: 16
-      # Absolute value of speed
+      comment: Absolute value of speed
       data type: u16
       units: MPH
       scaled min: 0
@@ -701,7 +702,7 @@ Message ID:
       map equation: "0.01x"
     FR Wheel RPM:
       bit_start: 32
-      # Wheel RPM
+      comment: Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -709,7 +710,7 @@ Message ID:
       map equation: "0.1x-3276.8"
     FL Wheel RPM:
       bit_start: 48
-      # Wheel RPM
+      comment: Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -720,7 +721,7 @@ Message ID:
     MSG LENGTH: 4
     RR Wheel RPM:
       bit_start: 0
-      # Wheel RPM
+      comment: Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -728,7 +729,7 @@ Message ID:
       map equation: "0.1x-3276.8"
     RL Wheel RPM:
       bit_start: 16
-      # Wheel RPM
+      comment: Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -744,7 +745,7 @@ Message ID:
     MSG LENGTH: 8
     Accumulator Voltage:
       bit_start: 0
-      # All cell voltages added up
+      comment: All cell voltages added up
       data type: u16
       units: Volts
       scaled min: 0
@@ -752,7 +753,7 @@ Message ID:
       map equation: "0.01x"
     TS Voltage:
       bit_start: 16
-      # Output terminal voltage of accumulator
+      comment: Output terminal voltage of accumulator
       data type: u16
       units: Volts
       scaled min: 0
@@ -760,7 +761,7 @@ Message ID:
       map equation: "0.01x"
     Accumulator Current:
       bit_start: 32
-      # Current output of accumulator
+      comment: Current output of accumulator
       data type: i16
       units: Amps
       scaled min: -327.68
@@ -768,7 +769,7 @@ Message ID:
       map equation: "0.01x"
     Accumulator SOC:
       bit_start: 48
-      # Accumulator state of charge (Based on lowest cell)
+      comment: Accumulator state of charge (Based on lowest cell)
       data type: u8
       units: '%'
       scaled min: 0
@@ -776,7 +777,7 @@ Message ID:
       map equation: "20x/51"
     GLV SOC:
       bit_start: 56
-      # GLV state of charge
+      comment: GLV state of charge
       data type: u8
       units: '%'
       scaled min: 0
@@ -787,7 +788,7 @@ Message ID:
     MSG LENGTH: 7
     20v Voltage:
       bit_start: 0
-      # 20v GLV voltage
+      comment: 20v GLV voltage
       data type: u8
       units: Volts
       scaled min: 0
@@ -795,7 +796,7 @@ Message ID:
       map equation: "0.1x"
     12v Voltage:
       bit_start: 8
-      # 12v supply voltage
+      comment: 12v supply voltage
       data type: u8
       units: Volts
       scaled min: 0
@@ -803,7 +804,7 @@ Message ID:
       map equation: "0.1x"
     SDC Voltage:
       bit_start: 16
-      # Voltage before ACU Latch
+      comment: Voltage before ACU Latch
       data type: u8
       units: Volts
       scaled min: 0
@@ -811,7 +812,7 @@ Message ID:
       map equation: "0.1x"
     Min Cell Voltage:
       bit_start: 24
-      # Lowest cell voltage in accumulator
+      comment: Lowest cell voltage in accumulator
       data type: u8
       units: Volts
       scaled min: 2
@@ -819,7 +820,7 @@ Message ID:
       map equation: "0.01x+2"
     Max Cell Temp:
       bit_start: 32
-      # Hottest cell in accumulator
+      comment: Hottest cell in accumulator
       data type: u8
       units: Celsius
       scaled min: 0
@@ -827,62 +828,62 @@ Message ID:
       map equation: "0.25x"
     Over Temp Error:
       bit_start: 40
-      # Over temp (>60c)
+      comment: Over temp (>60c)
       data type: b
       units: Bool
     Over Voltage Error:
       bit_start: 41
-      # Over voltage (>4.2v per cell)
+      comment: Over voltage (>4.2v per cell)
       data type: b
       units: Bool
     Under Voltage Error:
       bit_start: 42
-      # Under voltage (<2.5v per cell)
+      comment: Under voltage (<2.5v per cell)
       data type: b
       units: Bool
     Over Current Error:
       bit_start: 43
-      # Over current (discharge)
+      comment: Over current (discharge)
       data type: b
       units: Bool
     Under Current Error:
       bit_start: 44
-      # Over current (charging)
+      comment: Over current (charging)
       data type: b
       units: Bool
     Under Voltage 20v Warning:
       bit_start: 45
-      # 20v GLV too low (<15?)
+      comment: 20v GLV too low (<15?)
       data type: b
       units: Bool
     Under Voltage 12v Warning:
       bit_start: 46
-      # 12v supply too low (<10?)
+      comment: 12v supply too low (<10?)
       data type: b
       units: Bool
     Under Voltage SDC Warning:
       bit_start: 47
-      # SDC too low (<9?)
+      comment: SDC too low (<9?)
       data type: b
       units: Bool
     Precharge Error:
       bit_start: 48
-      # Precharge timed out
+      comment: Precharge timed out
       data type: b
       units: Bool
     IR- / Precharge State:
       bit_start: 49
-      # 0: Open           1: Closed
+      comment: 0: Open           1: Closed
       data type: b
       units: Bool
     IR+ State:
       bit_start: 50
-      # 0: Open           1: Closed
+      comment: 0: Open           1: Closed
       data type: b
       units: Bool
     Software Latch:
       bit_start: 51
-      # 0: Open           1: Closed
+      comment: 0: Open           1: Closed
       data type: b
       units: Bool
     Reserved:
@@ -892,7 +893,7 @@ Message ID:
     MSG LENGTH: 8
     HV Input Voltage:
       bit_start: 0
-      # 600v input voltage
+      comment: 600v input voltage
       data type: u16
       units: Volts
       scaled min: 0
@@ -900,7 +901,7 @@ Message ID:
       map equation: "0.01x"
     HV Output Voltage:
       bit_start: 16
-      # 20v output voltage
+      comment: 20v output voltage
       data type: u16
       units: Volts
       scaled min: 0
@@ -908,7 +909,7 @@ Message ID:
       map equation: "0.01x"
     HV Input Current:
       bit_start: 32
-      # 600v input current
+      comment: 600v input current
       data type: u16
       units: Amps
       scaled min: 0
@@ -916,7 +917,7 @@ Message ID:
       map equation: "0.001x"
     HV Output Current:
       bit_start: 48
-      # 20v output current
+      comment: 20v output current
       data type: u16
       units: Amps
       scaled min: 0
@@ -927,7 +928,7 @@ Message ID:
     MSG LENGTH: 1
     Set TS Active:
       bit_start: 0
-      # 0: shutdown, 1: go TS Active/Precharge
+      comment: 0: shutdown, 1: go TS Active/Precharge
       data type: b
       units: Bool
   ACU Config Charge Parameters:
@@ -935,7 +936,7 @@ Message ID:
     MSG LENGTH: 4
     Charge Voltage:
       bit_start: 0
-      # Sets the Target Charging voltage
+      comment: Sets the Target Charging voltage
       data type: u16
       units: Volts
       scaled min: 0
@@ -943,7 +944,7 @@ Message ID:
       map equation: "0.1x"
     Charge Current:
       bit_start: 16
-      # Sets the Target Charging Current
+      comment: Sets the Target Charging Current
       data type: u16
       units: Amps
       scaled min: 0
@@ -954,7 +955,7 @@ Message ID:
     MSG LENGTH: 2
     Minimium Cell Voltage:
       bit_start: 0
-      # Sets the threshold for Minimum Cell Voltage before Shutdown
+      comment: Sets the threshold for Minimum Cell Voltage before Shutdown
       data type: u8
       units: Volts
       scaled min: 2
@@ -962,7 +963,7 @@ Message ID:
       map equation: "0.01x+2"
     Max Cell Temperature:
       bit_start: 8
-      # Sets the threshold for Max Cell Temperature before Shutdown
+      comment: Sets the threshold for Max Cell Temperature before Shutdown
       data type: u8
       units: Celsius
       scaled min: 0
@@ -973,7 +974,7 @@ Message ID:
     MSG LENGTH: 64
     Cell 0 Voltage:
       bit_start: 0
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -981,7 +982,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 0 Temp:
       bit_start: 8
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -989,7 +990,7 @@ Message ID:
       map equation: "0.25x"
     Cell 1 Voltage:
       bit_start: 16
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -997,7 +998,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 1 Temp:
       bit_start: 24
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1005,7 +1006,7 @@ Message ID:
       map equation: "0.25x"
     Cell 2 Voltage:
       bit_start: 32
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1013,7 +1014,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 2 Temp:
       bit_start: 40
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1021,7 +1022,7 @@ Message ID:
       map equation: "0.25x"
     Cell 3 Voltage:
       bit_start: 48
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1029,7 +1030,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 3 Temp:
       bit_start: 56
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1037,7 +1038,7 @@ Message ID:
       map equation: "0.25x"
     Cell 4 Voltage:
       bit_start: 64
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1045,7 +1046,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 4 Temp:
       bit_start: 72
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1053,7 +1054,7 @@ Message ID:
       map equation: "0.25x"
     Cell 5 Voltage:
       bit_start: 80
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1061,7 +1062,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 5 Temp:
       bit_start: 88
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1069,7 +1070,7 @@ Message ID:
       map equation: "0.25x"
     Cell 6 Voltage:
       bit_start: 96
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1077,7 +1078,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 6 Temp:
       bit_start: 104
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1085,7 +1086,7 @@ Message ID:
       map equation: "0.25x"
     Cell 7 Voltage:
       bit_start: 112
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1093,7 +1094,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 7 Temp:
       bit_start: 120
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1101,7 +1102,7 @@ Message ID:
       map equation: "0.25x"
     Cell 8 Voltage:
       bit_start: 128
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1109,7 +1110,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 8 Temp:
       bit_start: 136
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1117,7 +1118,7 @@ Message ID:
       map equation: "0.25x"
     Cell 9 Voltage:
       bit_start: 144
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1125,7 +1126,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 9 Temp:
       bit_start: 152
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1133,7 +1134,7 @@ Message ID:
       map equation: "0.25x"
     Cell 10 Voltage:
       bit_start: 160
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1141,7 +1142,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 10 Temp:
       bit_start: 168
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1149,7 +1150,7 @@ Message ID:
       map equation: "0.25x"
     Cell 11 Voltage:
       bit_start: 176
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1157,7 +1158,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 11 Temp:
       bit_start: 184
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1165,7 +1166,7 @@ Message ID:
       map equation: "0.25x"
     Cell 12 Voltage:
       bit_start: 192
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1173,7 +1174,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 12 Temp:
       bit_start: 200
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1181,7 +1182,7 @@ Message ID:
       map equation: "0.25x"
     Cell 13 Voltage:
       bit_start: 208
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1189,7 +1190,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 13 Temp:
       bit_start: 216
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1197,7 +1198,7 @@ Message ID:
       map equation: "0.25x"
     Cell 14 Voltage:
       bit_start: 224
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1205,7 +1206,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 14 Temp:
       bit_start: 232
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1213,7 +1214,7 @@ Message ID:
       map equation: "0.25x"
     Cell 15 Voltage:
       bit_start: 240
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1221,7 +1222,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 15 Temp:
       bit_start: 248
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1229,7 +1230,7 @@ Message ID:
       map equation: "0.25x"
     Cell 16 Voltage:
       bit_start: 256
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1237,7 +1238,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 16 Temp:
       bit_start: 264
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1245,7 +1246,7 @@ Message ID:
       map equation: "0.25x"
     Cell 17 Voltage:
       bit_start: 272
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1253,7 +1254,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 17 Temp:
       bit_start: 280
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1261,7 +1262,7 @@ Message ID:
       map equation: "0.25x"
     Cell 18 Voltage:
       bit_start: 288
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1269,7 +1270,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 18 Temp:
       bit_start: 296
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1277,7 +1278,7 @@ Message ID:
       map equation: "0.25x"
     Cell 19 Voltage:
       bit_start: 304
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1285,7 +1286,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 19 Temp:
       bit_start: 312
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1293,7 +1294,7 @@ Message ID:
       map equation: "0.25x"
     Cell 20 Voltage:
       bit_start: 320
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1301,7 +1302,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 20 Temp:
       bit_start: 328
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1309,7 +1310,7 @@ Message ID:
       map equation: "0.25x"
     Cell 21 Voltage:
       bit_start: 336
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1317,7 +1318,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 21 Temp:
       bit_start: 344
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1325,7 +1326,7 @@ Message ID:
       map equation: "0.25x"
     Cell 22 Voltage:
       bit_start: 352
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1333,7 +1334,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 22 Temp:
       bit_start: 360
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1341,7 +1342,7 @@ Message ID:
       map equation: "0.25x"
     Cell 23 Voltage:
       bit_start: 368
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1349,7 +1350,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 23 Temp:
       bit_start: 376
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1357,7 +1358,7 @@ Message ID:
       map equation: "0.25x"
     Cell 24 Voltage:
       bit_start: 384
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1365,7 +1366,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 24 Temp:
       bit_start: 392
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1373,7 +1374,7 @@ Message ID:
       map equation: "0.25x"
     Cell 25 Voltage:
       bit_start: 400
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1381,7 +1382,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 25 Temp:
       bit_start: 408
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1389,7 +1390,7 @@ Message ID:
       map equation: "0.25x"
     Cell 26 Voltage:
       bit_start: 416
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1397,7 +1398,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 26 Temp:
       bit_start: 424
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1405,7 +1406,7 @@ Message ID:
       map equation: "0.25x"
     Cell 27 Voltage:
       bit_start: 432
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1413,7 +1414,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 27 Temp:
       bit_start: 440
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1421,7 +1422,7 @@ Message ID:
       map equation: "0.25x"
     Cell 28 Voltage:
       bit_start: 448
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1429,7 +1430,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 28 Temp:
       bit_start: 456
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1437,7 +1438,7 @@ Message ID:
       map equation: "0.25x"
     Cell 29 Voltage:
       bit_start: 464
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1445,7 +1446,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 29 Temp:
       bit_start: 472
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1453,7 +1454,7 @@ Message ID:
       map equation: "0.25x"
     Cell 30 Voltage:
       bit_start: 480
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1461,7 +1462,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 30 Temp:
       bit_start: 488
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1469,7 +1470,7 @@ Message ID:
       map equation: "0.25x"
     Cell 31 Voltage:
       bit_start: 496
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1477,7 +1478,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 31 Temp:
       bit_start: 504
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1488,7 +1489,7 @@ Message ID:
     MSG LENGTH: 64
     Cell 32 Voltage:
       bit_start: 0
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1496,7 +1497,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 32 Temp:
       bit_start: 8
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1504,7 +1505,7 @@ Message ID:
       map equation: "0.25x"
     Cell 33 Voltage:
       bit_start: 16
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1512,7 +1513,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 33 Temp:
       bit_start: 24
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1520,7 +1521,7 @@ Message ID:
       map equation: "0.25x"
     Cell 34 Voltage:
       bit_start: 32
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1528,7 +1529,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 34 Temp:
       bit_start: 40
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1536,7 +1537,7 @@ Message ID:
       map equation: "0.25x"
     Cell 35 Voltage:
       bit_start: 48
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1544,7 +1545,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 35 Temp:
       bit_start: 56
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1552,7 +1553,7 @@ Message ID:
       map equation: "0.25x"
     Cell 36 Voltage:
       bit_start: 64
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1560,7 +1561,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 36 Temp:
       bit_start: 72
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1568,7 +1569,7 @@ Message ID:
       map equation: "0.25x"
     Cell 37 Voltage:
       bit_start: 80
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1576,7 +1577,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 37 Temp:
       bit_start: 88
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1584,7 +1585,7 @@ Message ID:
       map equation: "0.25x"
     Cell 38 Voltage:
       bit_start: 96
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1592,7 +1593,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 38 Temp:
       bit_start: 104
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1600,7 +1601,7 @@ Message ID:
       map equation: "0.25x"
     Cell 39 Voltage:
       bit_start: 112
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1608,7 +1609,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 39 Temp:
       bit_start: 120
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1616,7 +1617,7 @@ Message ID:
       map equation: "0.25x"
     Cell 40 Voltage:
       bit_start: 128
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1624,7 +1625,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 40 Temp:
       bit_start: 136
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1632,7 +1633,7 @@ Message ID:
       map equation: "0.25x"
     Cell 41 Voltage:
       bit_start: 144
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1640,7 +1641,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 41 Temp:
       bit_start: 152
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1648,7 +1649,7 @@ Message ID:
       map equation: "0.25x"
     Cell 42 Voltage:
       bit_start: 160
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1656,7 +1657,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 42 Temp:
       bit_start: 168
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1664,7 +1665,7 @@ Message ID:
       map equation: "0.25x"
     Cell 43 Voltage:
       bit_start: 176
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1672,7 +1673,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 43 Temp:
       bit_start: 184
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1680,7 +1681,7 @@ Message ID:
       map equation: "0.25x"
     Cell 44 Voltage:
       bit_start: 192
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1688,7 +1689,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 44 Temp:
       bit_start: 200
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1696,7 +1697,7 @@ Message ID:
       map equation: "0.25x"
     Cell 45 Voltage:
       bit_start: 208
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1704,7 +1705,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 45 Temp:
       bit_start: 216
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1712,7 +1713,7 @@ Message ID:
       map equation: "0.25x"
     Cell 46 Voltage:
       bit_start: 224
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1720,7 +1721,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 46 Temp:
       bit_start: 232
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1728,7 +1729,7 @@ Message ID:
       map equation: "0.25x"
     Cell 47 Voltage:
       bit_start: 240
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1736,7 +1737,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 47 Temp:
       bit_start: 248
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1744,7 +1745,7 @@ Message ID:
       map equation: "0.25x"
     Cell 48 Voltage:
       bit_start: 256
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1752,7 +1753,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 48 Temp:
       bit_start: 264
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1760,7 +1761,7 @@ Message ID:
       map equation: "0.25x"
     Cell 49 Voltage:
       bit_start: 272
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1768,7 +1769,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 49 Temp:
       bit_start: 280
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1776,7 +1777,7 @@ Message ID:
       map equation: "0.25x"
     Cell 50 Voltage:
       bit_start: 288
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1784,7 +1785,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 50 Temp:
       bit_start: 296
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1792,7 +1793,7 @@ Message ID:
       map equation: "0.25x"
     Cell 51 Voltage:
       bit_start: 304
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1800,7 +1801,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 51 Temp:
       bit_start: 312
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1808,7 +1809,7 @@ Message ID:
       map equation: "0.25x"
     Cell 52 Voltage:
       bit_start: 320
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1816,7 +1817,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 52 Temp:
       bit_start: 328
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1824,7 +1825,7 @@ Message ID:
       map equation: "0.25x"
     Cell 53 Voltage:
       bit_start: 336
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1832,7 +1833,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 53 Temp:
       bit_start: 344
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1840,7 +1841,7 @@ Message ID:
       map equation: "0.25x"
     Cell 54 Voltage:
       bit_start: 352
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1848,7 +1849,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 54 Temp:
       bit_start: 360
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1856,7 +1857,7 @@ Message ID:
       map equation: "0.25x"
     Cell 55 Voltage:
       bit_start: 368
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1864,7 +1865,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 55 Temp:
       bit_start: 376
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1872,7 +1873,7 @@ Message ID:
       map equation: "0.25x"
     Cell 56 Voltage:
       bit_start: 384
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1880,7 +1881,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 56 Temp:
       bit_start: 392
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1888,7 +1889,7 @@ Message ID:
       map equation: "0.25x"
     Cell 57 Voltage:
       bit_start: 400
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1896,7 +1897,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 57 Temp:
       bit_start: 408
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1904,7 +1905,7 @@ Message ID:
       map equation: "0.25x"
     Cell 58 Voltage:
       bit_start: 416
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1912,7 +1913,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 58 Temp:
       bit_start: 424
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1920,7 +1921,7 @@ Message ID:
       map equation: "0.25x"
     Cell 59 Voltage:
       bit_start: 432
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1928,7 +1929,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 59 Temp:
       bit_start: 440
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1936,7 +1937,7 @@ Message ID:
       map equation: "0.25x"
     Cell 60 Voltage:
       bit_start: 448
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1944,7 +1945,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 60 Temp:
       bit_start: 456
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1952,7 +1953,7 @@ Message ID:
       map equation: "0.25x"
     Cell 61 Voltage:
       bit_start: 464
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1960,7 +1961,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 61 Temp:
       bit_start: 472
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1968,7 +1969,7 @@ Message ID:
       map equation: "0.25x"
     Cell 62 Voltage:
       bit_start: 480
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1976,7 +1977,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 62 Temp:
       bit_start: 488
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -1984,7 +1985,7 @@ Message ID:
       map equation: "0.25x"
     Cell 63 Voltage:
       bit_start: 496
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -1992,7 +1993,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 63 Temp:
       bit_start: 504
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2003,7 +2004,7 @@ Message ID:
     MSG LENGTH: 64
     Cell 64 Voltage:
       bit_start: 0
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2011,7 +2012,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 64 Temp:
       bit_start: 8
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2019,7 +2020,7 @@ Message ID:
       map equation: "0.25x"
     Cell 65 Voltage:
       bit_start: 16
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2027,7 +2028,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 65 Temp:
       bit_start: 24
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2035,7 +2036,7 @@ Message ID:
       map equation: "0.25x"
     Cell 66 Voltage:
       bit_start: 32
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2043,7 +2044,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 66 Temp:
       bit_start: 40
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2051,7 +2052,7 @@ Message ID:
       map equation: "0.25x"
     Cell 67 Voltage:
       bit_start: 48
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2059,7 +2060,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 67 Temp:
       bit_start: 56
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2067,7 +2068,7 @@ Message ID:
       map equation: "0.25x"
     Cell 68 Voltage:
       bit_start: 64
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2075,7 +2076,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 68 Temp:
       bit_start: 72
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2083,7 +2084,7 @@ Message ID:
       map equation: "0.25x"
     Cell 69 Voltage:
       bit_start: 80
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2091,7 +2092,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 69 Temp:
       bit_start: 88
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2099,7 +2100,7 @@ Message ID:
       map equation: "0.25x"
     Cell 70 Voltage:
       bit_start: 96
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2107,7 +2108,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 70 Temp:
       bit_start: 104
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2115,7 +2116,7 @@ Message ID:
       map equation: "0.25x"
     Cell 71 Voltage:
       bit_start: 112
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2123,7 +2124,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 71 Temp:
       bit_start: 120
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2131,7 +2132,7 @@ Message ID:
       map equation: "0.25x"
     Cell 72 Voltage:
       bit_start: 128
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2139,7 +2140,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 72 Temp:
       bit_start: 136
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2147,7 +2148,7 @@ Message ID:
       map equation: "0.25x"
     Cell 73 Voltage:
       bit_start: 144
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2155,7 +2156,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 73 Temp:
       bit_start: 152
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2163,7 +2164,7 @@ Message ID:
       map equation: "0.25x"
     Cell 74 Voltage:
       bit_start: 160
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2171,7 +2172,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 74 Temp:
       bit_start: 168
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2179,7 +2180,7 @@ Message ID:
       map equation: "0.25x"
     Cell 75 Voltage:
       bit_start: 176
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2187,7 +2188,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 75 Temp:
       bit_start: 184
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2195,7 +2196,7 @@ Message ID:
       map equation: "0.25x"
     Cell 76 Voltage:
       bit_start: 192
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2203,7 +2204,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 76 Temp:
       bit_start: 200
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2211,7 +2212,7 @@ Message ID:
       map equation: "0.25x"
     Cell 77 Voltage:
       bit_start: 208
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2219,7 +2220,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 77 Temp:
       bit_start: 216
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2227,7 +2228,7 @@ Message ID:
       map equation: "0.25x"
     Cell 78 Voltage:
       bit_start: 224
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2235,7 +2236,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 78 Temp:
       bit_start: 232
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2243,7 +2244,7 @@ Message ID:
       map equation: "0.25x"
     Cell 79 Voltage:
       bit_start: 240
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2251,7 +2252,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 79 Temp:
       bit_start: 248
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2259,7 +2260,7 @@ Message ID:
       map equation: "0.25x"
     Cell 80 Voltage:
       bit_start: 256
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2267,7 +2268,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 80 Temp:
       bit_start: 264
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2275,7 +2276,7 @@ Message ID:
       map equation: "0.25x"
     Cell 81 Voltage:
       bit_start: 272
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2283,7 +2284,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 81 Temp:
       bit_start: 280
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2291,7 +2292,7 @@ Message ID:
       map equation: "0.25x"
     Cell 82 Voltage:
       bit_start: 288
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2299,7 +2300,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 82 Temp:
       bit_start: 296
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2307,7 +2308,7 @@ Message ID:
       map equation: "0.25x"
     Cell 83 Voltage:
       bit_start: 304
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2315,7 +2316,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 83 Temp:
       bit_start: 312
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2323,7 +2324,7 @@ Message ID:
       map equation: "0.25x"
     Cell 84 Voltage:
       bit_start: 320
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2331,7 +2332,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 84 Temp:
       bit_start: 328
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2339,7 +2340,7 @@ Message ID:
       map equation: "0.25x"
     Cell 85 Voltage:
       bit_start: 336
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2347,7 +2348,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 85 Temp:
       bit_start: 344
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2355,7 +2356,7 @@ Message ID:
       map equation: "0.25x"
     Cell 86 Voltage:
       bit_start: 352
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2363,7 +2364,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 86 Temp:
       bit_start: 360
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2371,7 +2372,7 @@ Message ID:
       map equation: "0.25x"
     Cell 87 Voltage:
       bit_start: 368
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2379,7 +2380,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 87 Temp:
       bit_start: 376
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2387,7 +2388,7 @@ Message ID:
       map equation: "0.25x"
     Cell 88 Voltage:
       bit_start: 384
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2395,7 +2396,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 88 Temp:
       bit_start: 392
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2403,7 +2404,7 @@ Message ID:
       map equation: "0.25x"
     Cell 89 Voltage:
       bit_start: 400
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2411,7 +2412,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 89 Temp:
       bit_start: 408
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2419,7 +2420,7 @@ Message ID:
       map equation: "0.25x"
     Cell 90 Voltage:
       bit_start: 416
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2427,7 +2428,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 90 Temp:
       bit_start: 424
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2435,7 +2436,7 @@ Message ID:
       map equation: "0.25x"
     Cell 91 Voltage:
       bit_start: 432
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2443,7 +2444,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 91 Temp:
       bit_start: 440
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2451,7 +2452,7 @@ Message ID:
       map equation: "0.25x"
     Cell 92 Voltage:
       bit_start: 448
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2459,7 +2460,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 92 Temp:
       bit_start: 456
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2467,7 +2468,7 @@ Message ID:
       map equation: "0.25x"
     Cell 93 Voltage:
       bit_start: 464
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2475,7 +2476,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 93 Temp:
       bit_start: 472
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2483,7 +2484,7 @@ Message ID:
       map equation: "0.25x"
     Cell 94 Voltage:
       bit_start: 480
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2491,7 +2492,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 94 Temp:
       bit_start: 488
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2499,7 +2500,7 @@ Message ID:
       map equation: "0.25x"
     Cell 95 Voltage:
       bit_start: 496
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2507,7 +2508,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 95 Temp:
       bit_start: 504
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2518,7 +2519,7 @@ Message ID:
     MSG LENGTH: 64
     Cell 96 Voltage:
       bit_start: 0
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2526,7 +2527,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 96 Temp:
       bit_start: 8
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2534,7 +2535,7 @@ Message ID:
       map equation: "0.25x"
     Cell 97 Voltage:
       bit_start: 16
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2542,7 +2543,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 97 Temp:
       bit_start: 24
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2550,7 +2551,7 @@ Message ID:
       map equation: "0.25x"
     Cell 98 Voltage:
       bit_start: 32
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2558,7 +2559,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 98 Temp:
       bit_start: 40
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2566,7 +2567,7 @@ Message ID:
       map equation: "0.25x"
     Cell 99 Voltage:
       bit_start: 48
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2574,7 +2575,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 99 Temp:
       bit_start: 56
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2582,7 +2583,7 @@ Message ID:
       map equation: "0.25x"
     Cell 100 Voltage:
       bit_start: 64
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2590,7 +2591,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 100 Temp:
       bit_start: 72
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2598,7 +2599,7 @@ Message ID:
       map equation: "0.25x"
     Cell 101 Voltage:
       bit_start: 80
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2606,7 +2607,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 101 Temp:
       bit_start: 88
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2614,7 +2615,7 @@ Message ID:
       map equation: "0.25x"
     Cell 102 Voltage:
       bit_start: 96
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2622,7 +2623,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 102 Temp:
       bit_start: 104
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2630,7 +2631,7 @@ Message ID:
       map equation: "0.25x"
     Cell 103 Voltage:
       bit_start: 112
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2638,7 +2639,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 103 Temp:
       bit_start: 120
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2646,7 +2647,7 @@ Message ID:
       map equation: "0.25x"
     Cell 104 Voltage:
       bit_start: 128
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2654,7 +2655,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 104 Temp:
       bit_start: 136
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2662,7 +2663,7 @@ Message ID:
       map equation: "0.25x"
     Cell 105 Voltage:
       bit_start: 144
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2670,7 +2671,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 105 Temp:
       bit_start: 152
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2678,7 +2679,7 @@ Message ID:
       map equation: "0.25x"
     Cell 106 Voltage:
       bit_start: 160
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2686,7 +2687,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 106 Temp:
       bit_start: 168
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2694,7 +2695,7 @@ Message ID:
       map equation: "0.25x"
     Cell 107 Voltage:
       bit_start: 176
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2702,7 +2703,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 107 Temp:
       bit_start: 184
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2710,7 +2711,7 @@ Message ID:
       map equation: "0.25x"
     Cell 108 Voltage:
       bit_start: 192
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2718,7 +2719,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 108 Temp:
       bit_start: 200
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2726,7 +2727,7 @@ Message ID:
       map equation: "0.25x"
     Cell 109 Voltage:
       bit_start: 208
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2734,7 +2735,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 109 Temp:
       bit_start: 216
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2742,7 +2743,7 @@ Message ID:
       map equation: "0.25x"
     Cell 110 Voltage:
       bit_start: 224
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2750,7 +2751,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 110 Temp:
       bit_start: 232
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2758,7 +2759,7 @@ Message ID:
       map equation: "0.25x"
     Cell 111 Voltage:
       bit_start: 240
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2766,7 +2767,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 111 Temp:
       bit_start: 248
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2774,7 +2775,7 @@ Message ID:
       map equation: "0.25x"
     Cell 112 Voltage:
       bit_start: 256
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2782,7 +2783,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 112 Temp:
       bit_start: 264
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2790,7 +2791,7 @@ Message ID:
       map equation: "0.25x"
     Cell 113 Voltage:
       bit_start: 272
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2798,7 +2799,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 113 Temp:
       bit_start: 280
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2806,7 +2807,7 @@ Message ID:
       map equation: "0.25x"
     Cell 114 Voltage:
       bit_start: 288
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2814,7 +2815,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 114 Temp:
       bit_start: 296
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2822,7 +2823,7 @@ Message ID:
       map equation: "0.25x"
     Cell 115 Voltage:
       bit_start: 304
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2830,7 +2831,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 115 Temp:
       bit_start: 312
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2838,7 +2839,7 @@ Message ID:
       map equation: "0.25x"
     Cell 116 Voltage:
       bit_start: 320
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2846,7 +2847,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 116 Temp:
       bit_start: 328
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2854,7 +2855,7 @@ Message ID:
       map equation: "0.25x"
     Cell 117 Voltage:
       bit_start: 336
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2862,7 +2863,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 117 Temp:
       bit_start: 344
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2870,7 +2871,7 @@ Message ID:
       map equation: "0.25x"
     Cell 118 Voltage:
       bit_start: 352
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2878,7 +2879,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 118 Temp:
       bit_start: 360
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2886,7 +2887,7 @@ Message ID:
       map equation: "0.25x"
     Cell 119 Voltage:
       bit_start: 368
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2894,7 +2895,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 119 Temp:
       bit_start: 376
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2902,7 +2903,7 @@ Message ID:
       map equation: "0.25x"
     Cell 120 Voltage:
       bit_start: 384
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2910,7 +2911,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 120 Temp:
       bit_start: 392
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2918,7 +2919,7 @@ Message ID:
       map equation: "0.25x"
     Cell 121 Voltage:
       bit_start: 400
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2926,7 +2927,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 121 Temp:
       bit_start: 408
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2934,7 +2935,7 @@ Message ID:
       map equation: "0.25x"
     Cell 122 Voltage:
       bit_start: 416
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2942,7 +2943,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 122 Temp:
       bit_start: 424
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2950,7 +2951,7 @@ Message ID:
       map equation: "0.25x"
     Cell 123 Voltage:
       bit_start: 432
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2958,7 +2959,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 123 Temp:
       bit_start: 440
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2966,7 +2967,7 @@ Message ID:
       map equation: "0.25x"
     Cell 124 Voltage:
       bit_start: 448
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2974,7 +2975,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 124 Temp:
       bit_start: 456
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2982,7 +2983,7 @@ Message ID:
       map equation: "0.25x"
     Cell 125 Voltage:
       bit_start: 464
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -2990,7 +2991,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 125 Temp:
       bit_start: 472
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -2998,7 +2999,7 @@ Message ID:
       map equation: "0.25x"
     Cell 126 Voltage:
       bit_start: 480
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3006,7 +3007,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 126 Temp:
       bit_start: 488
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3014,7 +3015,7 @@ Message ID:
       map equation: "0.25x"
     Cell 127 Voltage:
       bit_start: 496
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3022,7 +3023,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 127 Temp:
       bit_start: 504
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3033,7 +3034,7 @@ Message ID:
     MSG LENGTH: 64
     Cell 128 Voltage:
       bit_start: 0
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3041,7 +3042,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 128 Temp:
       bit_start: 8
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3049,7 +3050,7 @@ Message ID:
       map equation: "0.25x"
     Cell 129 Voltage:
       bit_start: 16
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3057,7 +3058,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 129 Temp:
       bit_start: 24
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3065,7 +3066,7 @@ Message ID:
       map equation: "0.25x"
     Cell 130 Voltage:
       bit_start: 32
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3073,7 +3074,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 130 Temp:
       bit_start: 40
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3081,7 +3082,7 @@ Message ID:
       map equation: "0.25x"
     Cell 131 Voltage:
       bit_start: 48
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3089,7 +3090,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 131 Temp:
       bit_start: 56
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3097,7 +3098,7 @@ Message ID:
       map equation: "0.25x"
     Cell 132 Voltage:
       bit_start: 64
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3105,7 +3106,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 132 Temp:
       bit_start: 72
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3113,7 +3114,7 @@ Message ID:
       map equation: "0.25x"
     Cell 133 Voltage:
       bit_start: 80
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3121,7 +3122,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 133 Temp:
       bit_start: 88
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3129,7 +3130,7 @@ Message ID:
       map equation: "0.25x"
     Cell 134 Voltage:
       bit_start: 96
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3137,7 +3138,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 134 Temp:
       bit_start: 104
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3145,7 +3146,7 @@ Message ID:
       map equation: "0.25x"
     Cell 135 Voltage:
       bit_start: 112
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3153,7 +3154,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 135 Temp:
       bit_start: 120
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3161,7 +3162,7 @@ Message ID:
       map equation: "0.25x"
     Cell 136 Voltage:
       bit_start: 128
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3169,7 +3170,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 136 Temp:
       bit_start: 136
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3177,7 +3178,7 @@ Message ID:
       map equation: "0.25x"
     Cell 137 Voltage:
       bit_start: 144
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3185,7 +3186,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 137 Temp:
       bit_start: 152
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3193,7 +3194,7 @@ Message ID:
       map equation: "0.25x"
     Cell 138 Voltage:
       bit_start: 160
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3201,7 +3202,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 138 Temp:
       bit_start: 168
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3209,7 +3210,7 @@ Message ID:
       map equation: "0.25x"
     Cell 139 Voltage:
       bit_start: 176
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3217,7 +3218,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 139 Temp:
       bit_start: 184
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3225,7 +3226,7 @@ Message ID:
       map equation: "0.25x"
     Cell 140 Voltage:
       bit_start: 192
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3233,7 +3234,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 140 Temp:
       bit_start: 200
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3241,7 +3242,7 @@ Message ID:
       map equation: "0.25x"
     Cell 141 Voltage:
       bit_start: 208
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3249,7 +3250,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 141 Temp:
       bit_start: 216
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3257,7 +3258,7 @@ Message ID:
       map equation: "0.25x"
     Cell 142 Voltage:
       bit_start: 224
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3265,7 +3266,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 142 Temp:
       bit_start: 232
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3273,7 +3274,7 @@ Message ID:
       map equation: "0.25x"
     Cell 143 Voltage:
       bit_start: 240
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3281,7 +3282,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 143 Temp:
       bit_start: 248
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3289,7 +3290,7 @@ Message ID:
       map equation: "0.25x"
     Cell 144 Voltage:
       bit_start: 256
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3297,7 +3298,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 144 Temp:
       bit_start: 264
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3305,7 +3306,7 @@ Message ID:
       map equation: "0.25x"
     Cell 145 Voltage:
       bit_start: 272
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3313,7 +3314,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 145 Temp:
       bit_start: 280
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3321,7 +3322,7 @@ Message ID:
       map equation: "0.25x"
     Cell 146 Voltage:
       bit_start: 288
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3329,7 +3330,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 146 Temp:
       bit_start: 296
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3337,7 +3338,7 @@ Message ID:
       map equation: "0.25x"
     Cell 147 Voltage:
       bit_start: 304
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3345,7 +3346,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 147 Temp:
       bit_start: 312
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3353,7 +3354,7 @@ Message ID:
       map equation: "0.25x"
     Cell 148 Voltage:
       bit_start: 320
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3361,7 +3362,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 148 Temp:
       bit_start: 328
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3369,7 +3370,7 @@ Message ID:
       map equation: "0.25x"
     Cell 149 Voltage:
       bit_start: 336
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3377,7 +3378,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 149 Temp:
       bit_start: 344
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3385,7 +3386,7 @@ Message ID:
       map equation: "0.25x"
     Cell 150 Voltage:
       bit_start: 352
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3393,7 +3394,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 150 Temp:
       bit_start: 360
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3401,7 +3402,7 @@ Message ID:
       map equation: "0.25x"
     Cell 151 Voltage:
       bit_start: 368
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3409,7 +3410,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 151 Temp:
       bit_start: 376
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3417,7 +3418,7 @@ Message ID:
       map equation: "0.25x"
     Cell 152 Voltage:
       bit_start: 384
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3425,7 +3426,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 152 Temp:
       bit_start: 392
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3433,7 +3434,7 @@ Message ID:
       map equation: "0.25x"
     Cell 153 Voltage:
       bit_start: 400
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3441,7 +3442,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 153 Temp:
       bit_start: 408
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3449,7 +3450,7 @@ Message ID:
       map equation: "0.25x"
     Cell 154 Voltage:
       bit_start: 416
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3457,7 +3458,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 154 Temp:
       bit_start: 424
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3465,7 +3466,7 @@ Message ID:
       map equation: "0.25x"
     Cell 155 Voltage:
       bit_start: 432
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3473,7 +3474,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 155 Temp:
       bit_start: 440
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3481,7 +3482,7 @@ Message ID:
       map equation: "0.25x"
     Cell 156 Voltage:
       bit_start: 448
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3489,7 +3490,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 156 Temp:
       bit_start: 456
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3497,7 +3498,7 @@ Message ID:
       map equation: "0.25x"
     Cell 157 Voltage:
       bit_start: 464
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3505,7 +3506,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 157 Temp:
       bit_start: 472
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3513,7 +3514,7 @@ Message ID:
       map equation: "0.25x"
     Cell 158 Voltage:
       bit_start: 480
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3521,7 +3522,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 158 Temp:
       bit_start: 488
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3529,7 +3530,7 @@ Message ID:
       map equation: "0.25x"
     Cell 159 Voltage:
       bit_start: 496
-      # Cell  n voltage
+      comment: Cell  n voltage
       data type: u8
       units: Volts
       scaled min: 2
@@ -3537,7 +3538,7 @@ Message ID:
       map equation: "0.01x+2"
     Cell 159 Temp:
       bit_start: 504
-      # Cell n temperature
+      comment: Cell n temperature
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3548,7 +3549,7 @@ Message ID:
     MSG LENGTH: 7
     Input Voltage:
       bit_start: 0
-      # ~20v for LV (LV only. Send 0 for HV)
+      comment: ~20v for LV (LV only. Send 0 for HV)
       data type: u16
       units: Volts
       scaled min: 0
@@ -3556,7 +3557,7 @@ Message ID:
       map equation: "x/1000"
     Output Voltage:
       bit_start: 16
-      # ~12v for LV and ~20v for HV
+      comment: ~12v for LV and ~20v for HV
       data type: u16
       units: Volts
       scaled min: 0
@@ -3564,7 +3565,7 @@ Message ID:
       map equation: "x/1000"
     Input Current:
       bit_start: 32
-      # Input current (LV only. Send 0 for HV)
+      comment: Input current (LV only. Send 0 for HV)
       data type: u8
       units: Amps
       scaled min: 0
@@ -3572,7 +3573,7 @@ Message ID:
       map equation: "0.1x"
     Output Current:
       bit_start: 40
-      # Output current
+      comment: Output current
       data type: u8
       units: Amps
       scaled min: 0
@@ -3580,7 +3581,7 @@ Message ID:
       map equation: "0.1x"
     DC-DC Temp:
       bit_start: 48
-      # Temp of DC-DC converter
+      comment: Temp of DC-DC converter
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3591,7 +3592,7 @@ Message ID:
     MSG LENGTH: 6
     AC current:
       bit_start: 0
-      # 0.01 * current, int16_t
+      comment: 0.01 * current, int16_t
       data type: u16
       units: Amps
       scaled min: -327.68
@@ -3599,7 +3600,7 @@ Message ID:
       map equation: "0.01x-327.68"
     DC current:
       bit_start: 16
-      # 0.01 * current, int16_t
+      comment: 0.01 * current, int16_t
       data type: u16
       units: Amps
       scaled min: 0
@@ -3607,7 +3608,7 @@ Message ID:
       map equation: "0.01x"
     Motor RPM:
       bit_start: 32
-      # RPM, int16_t
+      comment: RPM, int16_t
       data type: u16
       units: RPM
       scaled min: -32768
@@ -3618,7 +3619,7 @@ Message ID:
     MSG LENGTH: 6
     U MOSFET temperature:
       bit_start: 0
-      # Celsius + 40, uint8_t
+      comment: Celsius + 40, uint8_t
       data type: u8
       units: Celsius
       scaled min: -40
@@ -3626,7 +3627,7 @@ Message ID:
       map equation: "x-40"
     V MOSFET temperature:
       bit_start: 16
-      # Celsius + 40, uint8_t
+      comment: Celsius + 40, uint8_t
       data type: u8
       units: Celsius
       scaled min: -40
@@ -3634,7 +3635,7 @@ Message ID:
       map equation: "x-40"
     W MOSFET temperature:
       bit_start: 32
-      # Celsius + 40, uint8_t
+      comment: Celsius + 40, uint8_t
       data type: u8
       units: Celsius
       scaled min: -40
@@ -3645,7 +3646,7 @@ Message ID:
     MSG LENGTH: 2
     Motor temperature:
       bit_start: 0
-      # Celsius + 40, uint8_t
+      comment: Celsius + 40, uint8_t
       data type: u8
       units: Celsius
       scaled min: -40
@@ -3653,37 +3654,37 @@ Message ID:
       map equation: "x-40"
     Over voltage faults:
       bit_start: 16
-      # TS above set max voltage
+      comment: TS above set max voltage
       data type: b
       units: Bool
     Under voltage fault:
       bit_start: 17
-      # TS below set min voltage
+      comment: TS below set min voltage
       data type: b
       units: Bool
     Inv. overtemp fault:
       bit_start: 18
-      # Inverter over set max temp
+      comment: Inverter over set max temp
       data type: b
       units: Bool
     Motor overtemp fault:
       bit_start: 19
-      # Motor over set max temp
+      comment: Motor over set max temp
       data type: b
       units: Bool
     Transistor fault:
       bit_start: 20
-      # Mosfet or mosfet drive error
+      comment: Mosfet or mosfet drive error
       data type: b
       units: Bool
     Encoder fault:
       bit_start: 21
-      # Encoder communication or calc error
+      comment: Encoder communication or calc error
       data type: b
       units: Bool
     CAN fault:
       bit_start: 22
-      # CAN message error or timeout
+      comment: CAN message error or timeout
       data type: b
       units: Bool
     Future use:
@@ -3695,7 +3696,7 @@ Message ID:
     MSG LENGTH: 7
     Max AC Current:
       bit_start: 0
-      # Max AC Current
+      comment: Max AC Current
       data type: u16
       units: Amps
       scaled min: -327.68
@@ -3703,7 +3704,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Max DC Current:
       bit_start: 16
-      # Max DC Current
+      comment: Max DC Current
       data type: u16
       units: Amps
       scaled min: -327.68
@@ -3711,7 +3712,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Absolute Max RPM Limit:
       bit_start: 32
-      # 0: No limit      n :limited at n RPM
+      comment: 0: No limit      n :limited at n RPM
       data type: u16
       units: RPM
       scaled min: -32768
@@ -3719,7 +3720,7 @@ Message ID:
       map equation: "x-32768"
     Motor direction:
       bit_start: 48
-      # Write 1 inverts direction
+      comment: Write 1 inverts direction
       data type: b
       units: Enable
       scaled min: "-"
@@ -3730,7 +3731,7 @@ Message ID:
     MSG LENGTH: 8
     Set AC Current:
       bit_start: 0
-      # Commanded AC Current
+      comment: Commanded AC Current
       data type: u16
       units: Amps
       scaled min: -327.68
@@ -3738,7 +3739,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Set DC Current:
       bit_start: 16
-      # Commanded DC Current
+      comment: Commanded DC Current
       data type: u16
       units: Amps
       scaled min: -327.68
@@ -3746,7 +3747,7 @@ Message ID:
       map equation: "0.01x-327.68"
     RPM Limit:
       bit_start: 32
-      # 0: No limit      n :limited at n RPM
+      comment: 0: No limit      n :limited at n RPM
       data type: u16
       units: RPM
       scaled min: -32768
@@ -3754,7 +3755,7 @@ Message ID:
       map equation: "x-32768"
     Field weakening:
       bit_start: 48
-      # Field weakening strength
+      comment: Field weakening strength
       data type: u8
       units: Amps
       scaled min: 0
@@ -3762,7 +3763,7 @@ Message ID:
       map equation: "0.1x"
     Drive enable:
       bit_start: 56
-      # Write this to 1 every 100ms to enable inverter
+      comment: Write this to 1 every 100ms to enable inverter
       data type: b
       units: Enable
       scaled min: "-"
@@ -3773,7 +3774,7 @@ Message ID:
     MSG LENGTH: 4
     Fan Speed:
       bit_start: 0
-      # Fan RPM
+      comment: Fan RPM
       data type: u16
       units: RPM
       scaled min: 0
@@ -3781,7 +3782,7 @@ Message ID:
       map equation: "1x"
     Input Voltage:
       bit_start: 16
-      # 0-22
+      comment: 0-22
       data type: u8
       units: Volts
       scaled min: 0
@@ -3789,7 +3790,7 @@ Message ID:
       map equation: "0.1x"
     Input Current:
       bit_start: 24
-      # 0-10
+      comment: 0-10
       data type: u8
       units: Amps
       scaled min: 0
@@ -3800,7 +3801,7 @@ Message ID:
     MSG LENGTH: 1
     Fan Command:
       bit_start: 0
-      # 0-100 Percent
+      comment: 0-100 Percent
       data type: u8
       units: '%'
       scaled min: 0
@@ -3811,23 +3812,24 @@ Message ID:
     MSG LENGTH: 3
     BMS LED:
       bit_start: 0
-      # State of BMS LED
+      comment: State of BMS LED
       data type: b
       units: Bool
     IMD LED:
       bit_start: 1
-      # State of IMD LED
+      comment: State of IMD LED
       data type: b
       units: Bool
     BSPD LED:
       bit_start: 2
-      # State of BSPD LED
+      comment: State of BSPD LED
       data type: b
       units: Bool
     TS Button Data:
       bit_start: 8
-      # MSB is state (1: pressed)
-      # Other 7 bits represent the time in 0.1s that it has been in that state
+      comment:
+        MSB is state (1: pressed)
+        Other 7 bits represent the time in 0.1s that it has been in that state
       data type: s8
       units: Seconds
       scaled min: 0
@@ -3835,8 +3837,9 @@ Message ID:
       map equation: "abs(x)/10"
     RTD Button Data:
       bit_start: 16
-      # MSB is state (1: pressed)
-      # Other 7 bits represent the time in 0.1s that it has been in that state
+      comment:
+        MSB is state (1: pressed)
+        Other 7 bits represent the time in 0.1s that it has been in that state
       data type: s8
       units: Seconds
       scaled min: 0
@@ -3847,17 +3850,17 @@ Message ID:
     MSG LENGTH: 1
     BMS LED:
       bit_start: 0
-      # LED command (0: off, 1: on)
+      comment: LED command (0: off, 1: on)
       data type: b
       units: Bool
     IMD LED:
       bit_start: 1
-      # LED command (0: off, 1: on)
+      comment: LED command (0: off, 1: on)
       data type: b
       units: Bool
     BSPD LED:
       bit_start: 2
-      # LED command (0: off, 1: on)
+      comment: LED command (0: off, 1: on)
       data type: b
       units: Bool
   Steering Status:
@@ -3865,7 +3868,7 @@ Message ID:
     MSG LENGTH: 2
     Current Encoder:
       bit_start: 0
-      # Position of knob (1-16)
+      comment: Position of knob (1-16)
       data type: u4
       units: Position
       scaled min: 1
@@ -3873,7 +3876,7 @@ Message ID:
       map equation: "1x"
     Torque Map Encoder:
       bit_start: 4
-      # Position of knob (1-16)
+      comment: Position of knob (1-16)
       data type: u4
       units: Position
       scaled min: 1
@@ -3881,7 +3884,7 @@ Message ID:
       map equation: "1x"
     Regen:
       bit_start: 8
-      # Position of knob (1-16)
+      comment: Position of knob (1-16)
       data type: u4
       units: Position
       scaled min: 1
@@ -3889,22 +3892,22 @@ Message ID:
       map equation: "1x"
     Button 1:
       bit_start: 12
-      # Button State
+      comment: Button State
       data type: b
       units: Bool
     Button 2:
       bit_start: 13
-      # Button State
+      comment: Button State
       data type: b
       units: Bool
     Button 3:
       bit_start: 14
-      # Button State
+      comment: Button State
       data type: b
       units: Bool
     Button 4:
       bit_start: 15
-      # Button State
+      comment: Button State
       data type: b
       units: Bool
   Steering Config:
@@ -3917,7 +3920,7 @@ Message ID:
     MSG LENGTH: 1
     Temp:
       bit_start: 0
-      # IR Temp of Brakes
+      comment: IR Temp of Brakes
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3928,7 +3931,7 @@ Message ID:
     MSG LENGTH: 4
     Outside Temp:
       bit_start: 0
-      # Furthest from chassis
+      comment: Furthest from chassis
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3936,7 +3939,7 @@ Message ID:
       map equation: "1x"
     Outside Middle Temp:
       bit_start: 8
-      # Middle of tire
+      comment: Middle of tire
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3944,7 +3947,7 @@ Message ID:
       map equation: "1x"
     Inside Middle Temp:
       bit_start: 16
-      # Middle of tire
+      comment: Middle of tire
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3952,7 +3955,7 @@ Message ID:
       map equation: "1x"
     Inside Temp:
       bit_start: 24
-      # Closest to chassis
+      comment: Closest to chassis
       data type: u8
       units: Celsius
       scaled min: 0
@@ -3963,7 +3966,7 @@ Message ID:
     MSG LENGTH: 12
     Accel X:
       bit_start: 0
-      # Acceleration in X-axis
+      comment: Acceleration in X-axis
       data type: u16
       units: Meters/s^2
       scaled min: -327.68
@@ -3971,7 +3974,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Accel Y:
       bit_start: 16
-      # Acceleration in Y-axis
+      comment: Acceleration in Y-axis
       data type: u16
       units: Meters/s^2
       scaled min: -327.68
@@ -3979,7 +3982,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Accel Z:
       bit_start: 32
-      # Acceleration in Z-axis
+      comment: Acceleration in Z-axis
       data type: u16
       units: Meters/s^2
       scaled min: -327.68
@@ -3987,7 +3990,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Gyro X:
       bit_start: 48
-      # Angular velocity in X-axis
+      comment: Angular velocity in X-axis
       data type: u16
       units: Meters/s^2
       scaled min: -32.768
@@ -3995,7 +3998,7 @@ Message ID:
       map equation: "0.001x-32.768"
     Gyro Y:
       bit_start: 64
-      # Angular velocity in Y-axis
+      comment: Angular velocity in Y-axis
       data type: u16
       units: Meters/s^2
       scaled min: -32.768
@@ -4003,7 +4006,7 @@ Message ID:
       map equation: "0.001x-32.768"
     Gyro Z:
       bit_start: 80
-      # Angular velocity in Z-axis
+      comment: Angular velocity in Z-axis
       data type: u16
       units: Meters/s^2
       scaled min: -32.768
@@ -4014,12 +4017,12 @@ Message ID:
     MSG LENGTH: 8
     Latitude:
       bit_start: 0
-      # Latitude in decimal degrees
+      comment: Latitude in decimal degrees
       data type: u32
       units: Degrees
     Longitude:
       bit_start: 32
-      # Longitude in decimal degrees
+      comment: Longitude in decimal degrees
       data type: u32
       units: Degrees
   SAM GPS 2:
@@ -4027,36 +4030,36 @@ Message ID:
     MSG LENGTH: 8
     Accuracy:
       bit_start: 0
-      # GPS position accuracy
+      comment: GPS position accuracy
       data type: u32
     Attitude:
       bit_start: 32
-      # Vehicle attitude
+      comment: Vehicle attitude
       data type: u32
   SAM GPS Time:
     MSG ID: 0x023
     MSG LENGTH: 8
     Time:
       bit_start: 0
-      # Time in seconds since GPS Epoch
+      comment: Time in seconds since GPS Epoch
       data type: u32
     Time of Week Ms:
       bit_start: 32
-      # Time of week in milliseconds
+      comment: Time of week in milliseconds
       data type: u32
   SAM GPS Heading:
     MSG ID: 0x024
     MSG LENGTH: 4
     Heading from North:
       bit_start: 0
-      # Heading angle relative to true North
+      comment: Heading angle relative to true North
       data type: u32
   SAM Sus Pots:
     MSG ID: 0x025
     MSG LENGTH: 1
     Suspension Angle:
       bit_start: 0
-      # Pot Pos
+      comment: Pot Pos
       data type: u8
       units: degrees
       scaled min: 0
@@ -4067,7 +4070,7 @@ Message ID:
     MSG LENGTH: 2
     Height:
       bit_start: 0
-      # Ride Height
+      comment: Ride Height
       data type: u16
       units: mm
       scaled min: 0
@@ -4078,7 +4081,7 @@ Message ID:
     MSG LENGTH: 2
     Speed:
       bit_start: 0
-      # Wheel RPM
+      comment: Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -4089,7 +4092,7 @@ Message ID:
     MSG LENGTH: 2
     Load Force:
       bit_start: 0
-      # Pushrod Force
+      comment: Pushrod Force
       data type: u16
       units: N
       scaled min: -3276.8
@@ -4100,34 +4103,34 @@ Message ID:
     MSG LENGTH: 8
     Connection Status:
       bit_start: 0
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     MQTT Status:
       bit_start: 1
-      # 1: OK, 0: Timeout
+      comment: 1: OK, 0: Timeout
       data type: b
       units: Bool
     Epic Shelter Status:
       bit_start: 2
-      # 1: In Progress, 0: Idle
+      comment: 1: In Progress, 0: Idle
       data type: b
       units: Bool
     Camera Status:
       bit_start: 3
-      # 1: Recording, 0: Idle
+      comment: 1: Recording, 0: Idle
       data type: b
       units: Bool
     Reserved:
       bit_start: 4-7
     Ping:
       bit_start: 8
-      # Mapache ping (upload)
+      comment: Mapache ping (upload)
       data type: u16
       units: ms
     Cache Size:
       bit_start: 24
-      # # of messages on cache (non-synced)
+      comment: # of messages on cache (non-synced)
       data type: u32
       units: #
     Reserved:
@@ -4137,113 +4140,113 @@ Message ID:
     MSG LENGTH: 44
     CPU 0 Freq:
       bit_start: 0
-      # core 0 frequency in MHz
+      comment: core 0 frequency in MHz
       data type: u16
       units: '%'
     CPU 0 Util:
       bit_start: 16
-      # core 0 utilization in %
+      comment: core 0 utilization in %
       data type: u8
       units: '%'
     CPU 1 Freq:
       bit_start: 24
-      # core 1 frequency in MHz
+      comment: core 1 frequency in MHz
       data type: u16
       units: '%'
     CPU 1 Util:
       bit_start: 40
-      # core 1 utilization in %
+      comment: core 1 utilization in %
       data type: u8
     CPU 2 Freq:
       bit_start: 48
-      # core 2 frequency in MHz
+      comment: core 2 frequency in MHz
       data type: u16
       units: '%'
     CPU 2 Util:
       bit_start: 64
-      # core 2 utilization in %
+      comment: core 2 utilization in %
       data type: u8
     CPU 3 Freq:
       bit_start: 72
-      # core 3 frequency in MHz
+      comment: core 3 frequency in MHz
       data type: u16
     CPU 3 Util:
       bit_start: 88
-      # core 3 utilization in %
+      comment: core 3 utilization in %
       data type: u8
     CPU 4 Freq:
       bit_start: 96
-      # core 4 frequency in MHz
+      comment: core 4 frequency in MHz
       data type: u16
     CPU 4 Util:
       bit_start: 112
-      # core 4 utilization in %
+      comment: core 4 utilization in %
       data type: u8
     CPU 5 Freq:
       bit_start: 120
-      # core 5 frequency in MHz
+      comment: core 5 frequency in MHz
       data type: u16
     CPU 5 Util:
       bit_start: 136
-      # core 5 utilization in %
+      comment: core 5 utilization in %
       data type: u8
       units: Watts
     CPU Total Util:
       bit_start: 144
-      # total cpu utilization in %
+      comment: total cpu utilization in %
       data type: u8
     RAM Total:
       bit_start: 152
-      # total memory in MB
+      comment: total memory in MB
       data type: u16
     RAM Used:
       bit_start: 168
-      # used memory in MB
+      comment: used memory in MB
       data type: u16
     RAM Util:
       bit_start: 184
-      # memory utilization in %
+      comment: memory utilization in %
       data type: u8
     GPU Util:
       bit_start: 192
-      # gpu utilization in %
+      comment: gpu utilization in %
       data type: u8
     GPU Freq:
       bit_start: 200
-      # gpu frequency in MHz
+      comment: gpu frequency in MHz
       data type: u16
     Disk Total:
       bit_start: 216
-      # total disk space in MB
+      comment: total disk space in MB
       data type: u32
     Disk Used:
       bit_start: 248
-      # used disk space in MB
+      comment: used disk space in MB
       data type: u32
     Disk Util:
       bit_start: 280
-      # disk utilization in %
+      comment: disk utilization in %
       data type: u8
       units: Celsius
     CPU Temp:
       bit_start: 288
-      # cpu temp in ˚C
+      comment: cpu temp in ˚C
       data type: u8
     GPU Temp:
       bit_start: 296
-      # gpu temp in ˚C
+      comment: gpu temp in ˚C
       data type: u8
     Voltage Draw:
       bit_start: 304
-      # voltage draw in mV
+      comment: voltage draw in mV
       data type: u16
     Current Draw:
       bit_start: 320
-      # current draw in mA
+      comment: current draw in mA
       data type: u16
     Power Draw:
       bit_start: 336
-      # power draw in mW
+      comment: power draw in mW
       data type: u16
       units: Celsius
   Dash Warning Flags:
@@ -4251,7 +4254,7 @@ Message ID:
     MSG LENGTH: 1
     BSE APPS Violation:
       bit_start: 0
-      # 1: Violation, 0: OK
+      comment: 1: Violation, 0: OK
       data type: b
       units: Bool
     Reserved:
@@ -4273,11 +4276,11 @@ Message ID:
     MSG LENGTH: 2
     Wheel identifier:
       bit_start: 0
-      # Wheel identifier according to the wiki
+      comment: Wheel identifier according to the wiki
       data type: u8
     Temp:
       bit_start: 8
-      # IR Temp of Brakes
+      comment: IR Temp of Brakes
       data type: u8
       units: Celsius
       scaled min: 0
@@ -4288,7 +4291,7 @@ Message ID:
     MSG LENGTH: 3
     Online pings:
       bit_start: 0
-      # Literal copy of ECU Status's status bit map
+      comment: Literal copy of ECU Status's status bit map
       data type: b[24]
       units: Bool map
   ECU Pedals Data:
@@ -4296,7 +4299,7 @@ Message ID:
     MSG LENGTH: 10
     APPS1_SIGNAL:
       bit_start: 0
-      # APPS 1 Signal
+      comment: APPS 1 Signal
       data type: u16
       units: '%'
       scaled min: 0
@@ -4304,7 +4307,7 @@ Message ID:
       map equation: "x/655.35"
     APPS2_SIGNAL:
       bit_start: 16
-      # APPS 2 Signal
+      comment: APPS 2 Signal
       data type: u16
       units: '%'
       scaled min: 0
@@ -4312,7 +4315,7 @@ Message ID:
       map equation: "x/655.35"
     BSE_SIGNAL:
       bit_start: 32
-      # Brake Force Signal
+      comment: Brake Force Signal
       data type: u16
       units: '%'
       scaled min: 0
@@ -4320,7 +4323,7 @@ Message ID:
       map equation: "x/655.35"
     BRAKE_F_SIGNAL:
       bit_start: 48
-      # Brake Pressure Signal
+      comment: Brake Pressure Signal
       data type: u16
       units: '%'
       scaled min: 0
@@ -4328,7 +4331,7 @@ Message ID:
       map equation: "x/655.35"
     BRAKE_R_SIGNAL:
       bit_start: 48
-      # Brake Pressure Signal
+      comment: Brake Pressure Signal
       data type: u16
       units: '%'
       scaled min: 0
@@ -4339,21 +4342,21 @@ Message ID:
     MSG LENGTH: 8
     LAT:
       bit_start: 0
-      # lattitude
+      comment: lattitude
       data type: double
   GPS LON:
     MSG ID: 0x032
     MSG LENGTH: 8
     LON:
       bit_start: 0
-      # longitude
+      comment: longitude
       data type: double
   GPS ALT:
     MSG ID: 0x033
     MSG LENGTH: 8
     ALT:
       bit_start: 0
-      # altitude
+      comment: altitude
       data type: double
   GPS PX:
     MSG ID: 0x034
@@ -4402,17 +4405,17 @@ Message ID:
     MSG LENGTH: 6
     DGPS_U:
       bit_start: 0
-      # U
+      comment: U
       data type: i16
       map equation: "x/100"
     DGPS_V:
       bit_start: 16
-      # V
+      comment: V
       data type: i16
       map equation: "x/100"
     DGPS_W:
       bit_start: 32
-      # W
+      comment: W
       data type: i16
       map equation: "x/100"
 
@@ -4423,14 +4426,15 @@ Custom CAN ID:
     signals:
       - name: "Target AC Current"
         bit_start: 0
-        # This command sets the target motor AC current (peak, not
-        # RMS). When the controller receives this message, it
-        # automatically switches to current control mode.
-        # This value must not be above the limits of the inverter and must
-        # be multiplied by 10 before sending. This is a signed parameter,
-        # and the sign represents the direction of the torque which
-        # correlates with the motor AC current. (For the correlation, please
-        # refer to the motor parameters)
+        comment:
+          This command sets the target motor AC current (peak, not
+          RMS). When the controller receives this message, it
+          automatically switches to current control mode.
+          This value must not be above the limits of the inverter and must
+          be multiplied by 10 before sending. This is a signed parameter,
+          and the sign represents the direction of the torque which
+          correlates with the motor AC current. (For the correlation, please
+          refer to the motor parameters)
 
   DTI Control 2:
     CAN ID: 216
@@ -4438,10 +4442,11 @@ Custom CAN ID:
     signals:
       - name: "Target Brake Current"
         bit_start: 0
-        # Targets the brake current of the motor. It will result negative
-        # torque relatively to the forward direction of the motor.
-        # This value must be multiplied by 10 before sending, only
-        # positive currents are accepted.
+        comment:
+          Targets the brake current of the motor. It will result negative
+          torque relatively to the forward direction of the motor.
+          This value must be multiplied by 10 before sending, only
+          positive currents are accepted.
 
   DTI Control 3:
     CAN ID: 316
@@ -4449,11 +4454,12 @@ Custom CAN ID:
     signals:
       - name: "Target ERPM"
         bit_start: 0
-        # This command enables the speed control of the motor with a
-        # target ERPM. This is a signed parameter, and the sign
-        # represents the direction of the spinning. For better operation you
-        # need to tune the PID of speed control.
-        # Equation: ERPM = Motor RPM * number of the motor pole pairs
+        comment:
+          This command enables the speed control of the motor with a
+          target ERPM. This is a signed parameter, and the sign
+          represents the direction of the spinning. For better operation you
+          need to tune the PID of speed control.
+          Equation: ERPM = Motor RPM * number of the motor pole pairs
 
   DTI Control 4:
     CAN ID: 416
@@ -4461,10 +4467,11 @@ Custom CAN ID:
     signals:
       - name: "Target Position"
         bit_start: 0
-        # This value targets the desired position of the motor in degrees.
-        # This command is used to hold a position of the motor.
-        # This feature is enabled only if encoder is used as position
-        # sensor. The value has to be multiplied by 10 before sending.
+        comment:
+          This value targets the desired position of the motor in degrees.
+          This command is used to hold a position of the motor.
+          This feature is enabled only if encoder is used as position
+          sensor. The value has to be multiplied by 10 before sending.
 
   DTI Control 5:
     CAN ID: 516
@@ -4472,13 +4479,14 @@ Custom CAN ID:
     signals:
       - name: "R-AC Current"
         bit_start: 0
-        # This command sets a relative AC current to the minimum and
-        # maximum limits set by configuration. This achieves the same
-        # function as the “Set AC current” command. Gives you a freedom
-        # to send values between -100,0% and 100,0%. You do not need
-        # to know the motor limit parameters.
-        # This value must be between -100 and 100 and must be
-        # multiplied by 10 before sending.
+        comment:
+          This command sets a relative AC current to the minimum and
+          maximum limits set by configuration. This achieves the same
+          function as the “Set AC current” command. Gives you a freedom
+          to send values between -100,0% and 100,0%. You do not need
+          to know the motor limit parameters.
+          This value must be between -100 and 100 and must be
+          multiplied by 10 before sending.
 
   DTI Control 6:
     CAN ID: 616
@@ -4486,14 +4494,15 @@ Custom CAN ID:
     signals:
       - name: "R-AC Brake Current"
         bit_start: 0
-        # Targets the relative brake current of the motor. It will result
-        # negative torque relatively to the forward direction of the motor.
-        # This value must be between 0 and 100 and must be multiplied
-        # by 10 before sending Gives you a freedom to send values
-        # between 0% and 100,0%. You do not need to know the motor
-        # limit parameters.
-        # This value must be between 0 and 100 and has to be multiplied
-        # by 10 before sending
+        comment:
+          Targets the relative brake current of the motor. It will result
+          negative torque relatively to the forward direction of the motor.
+          This value must be between 0 and 100 and must be multiplied
+          by 10 before sending Gives you a freedom to send values
+          between 0% and 100,0%. You do not need to know the motor
+          limit parameters.
+          This value must be between 0 and 100 and has to be multiplied
+          by 10 before sending
 
   DTI Control 7:
     CAN ID: 716
@@ -4501,16 +4510,16 @@ Custom CAN ID:
     signals:
       - name: "Digital Output 1"
         bit_start: 0
-        # Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
       - name: "Digital Output 2"
         bit_start: 1
-        # Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
       - name: "Digital Output 3"
         bit_start: 2
-        # Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
       - name: "Digital Output 4"
         bit_start: 3
-        # Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
 
   DTI Control 8:
     CAN ID: 816
@@ -4518,10 +4527,11 @@ Custom CAN ID:
     signals:
       - name: "Max AC Current"
         bit_start: 0
-        # This value determines the maximum allowable drive current on
-        # the AC side. With this function you are able maximize the
-        # maximum torque on the motor.
-        # The value must be multiplied by 10 before sending.
+        comment:
+          This value determines the maximum allowable drive current on
+          the AC side. With this function you are able maximize the
+          maximum torque on the motor.
+          The value must be multiplied by 10 before sending.
 
   DTI Control 9:
     CAN ID: 916
@@ -4529,10 +4539,11 @@ Custom CAN ID:
     signals:
       - name: "Max Brake AC Current"
         bit_start: 0
-        # This value sets the maximum allowable brake current on the AC
-        # side.
-        # This value must be multiplied by 10 before sending, only
-        # negative currents are accepted.
+        comment:
+          This value sets the maximum allowable brake current on the AC
+          side.
+          This value must be multiplied by 10 before sending, only
+          negative currents are accepted.
 
   DTI Control 10:
     CAN ID: A16
@@ -4540,10 +4551,11 @@ Custom CAN ID:
     signals:
       - name: "Max DC Current"
         bit_start: 0
-        # This value determines the maximum allowable drive current on
-        # the DC side. With this command the BMS can limit the
-        # maximum allowable battery discharge current.
-        # The value has to be multiplied by 10 before sending.
+        comment:
+          This value determines the maximum allowable drive current on
+          the DC side. With this command the BMS can limit the
+          maximum allowable battery discharge current.
+          The value has to be multiplied by 10 before sending.
 
   DTI Control 11:
     CAN ID: B16
@@ -4551,11 +4563,12 @@ Custom CAN ID:
     signals:
       - name: "Max Brake DC Current"
         bit_start: 0
-        # This value determines the maximum allowable brake current
-        # on the DC side. With this command the BMS can limit the
-        # maximum allowable battery charge current.
-        # The value has to be multiplied by 10 before sending. Only
-        # negative currents are accepted.
+        comment:
+          This value determines the maximum allowable brake current
+          on the DC side. With this command the BMS can limit the
+          maximum allowable battery charge current.
+          The value has to be multiplied by 10 before sending. Only
+          negative currents are accepted.
 
   DTI Control 12:
     CAN ID: C16
@@ -4563,10 +4576,11 @@ Custom CAN ID:
     signals:
       - name: "Drive Enable"
         bit_start: 0
-        # 0: Drive not allowed
-        # 1: Drive allowed
-        # Only 0 and 1 values are accepted. Must be sent periodically to
-        # be enabled.
+        comment:
+          0: Drive not allowed
+          1: Drive allowed
+          Only 0 and 1 values are accepted. Must be sent periodically to
+          be enabled.
 
   DTI Data 1:
     CAN ID: 2016
@@ -4574,16 +4588,18 @@ Custom CAN ID:
     signals:
       - name: "ERPM"
         bit_start: 0
-        # Electrical RPM
-        # Equation: ERPM = Motor RPM * number of the motor pole pairs.
+        comment:
+          Electrical RPM
+          Equation: ERPM = Motor RPM * number of the motor pole pairs.
       - name: "Duty Cycle"
         bit_start: 32
-        # The controller duty cycle. The sign of this value will represent
-        # whether the motor is running(positive) current or regenerating
-        # (negative) current.
+        comment:
+          The controller duty cycle. The sign of this value will represent
+          whether the motor is running(positive) current or regenerating
+          (negative) current.
       - name: "Input Voltage"
         bit_start: 48
-        # Input voltage is the DC voltage.
+        comment: Input voltage is the DC voltage.
 
   DTI Data 2:
     CAN ID: 2116
@@ -4591,17 +4607,19 @@ Custom CAN ID:
     signals:
       - name: "AC Current"
         bit_start: 0
-        # The motor current. The sign of this value represents whether the
-        # motor is running(positive) current or regenerating (negative)
-        # current.
+        comment:
+          The motor current. The sign of this value represents whether the
+          motor is running(positive) current or regenerating (negative)
+          current.
       - name: "DC Current"
         bit_start: 16
-        # DC Current: Current on DC side. The sign of this value
-        # represents whether the motor is running(positive) current or
-        # regenerating (negative) current.
+        comment:
+          DC Current: Current on DC side. The sign of this value
+          represents whether the motor is running(positive) current or
+          regenerating (negative) current.
       - name: "RESERVED"
         bit_start: 32
-        # Filled with FF’s. For future use.
+        comment: Filled with FF’s. For future use.
 
   DTI Data 3:
     CAN ID: 2216
@@ -4609,34 +4627,35 @@ Custom CAN ID:
     signals:
       - name: "Controller Temp"
         bit_start: 0
-        # Temperature of the inverter semiconductors.
+        comment: Temperature of the inverter semiconductors.
       - name: "Motor Temp"
         bit_start: 16
-        # Temperature of the motor measured by the inverter
+        comment: Temperature of the motor measured by the inverter
       - name: "Fault Codes"
         bit_start: 32
-        # 0x00 : NO FAULTS
-        # 0x01 : Overvoltage - The input voltage is higher than the set
-        # maximum.
-        # 0x02 : Undervoltage - The input voltage is lower than the set
-        # minimum.
-        # 0x03 : DRV - Transistor or transistor drive error
-        # 0x04 : ABS. Overcurrent - The AC current is higher than the
-        # set absolute maximum current.
-        # 0x05 : CTLR Overtemp. - The controller temperature is higher
-        # than the set maximum.
-        # 0x06 : Motor Overtemp. - The motor temperature is higher than
-        # the set maximum.
-        # 0x07 : Sensor wire fault - Something went wrong with the
-        # sensor differential signals.
-        # 0x08 : Sensor general fault - An error occurred while
-        # processing the sensor signals
-        # 0x09 : CAN Command error - CAN message received contains
-        # parameter out of boundaries
-        # 0x0A : Analog input error – Redundant output out of range
+        comment:
+          0x00 : NO FAULTS
+          0x01 : Overvoltage - The input voltage is higher than the set
+          maximum.
+          0x02 : Undervoltage - The input voltage is lower than the set
+          minimum.
+          0x03 : DRV - Transistor or transistor drive error
+          0x04 : ABS. Overcurrent - The AC current is higher than the
+          set absolute maximum current.
+          0x05 : CTLR Overtemp. - The controller temperature is higher
+          than the set maximum.
+          0x06 : Motor Overtemp. - The motor temperature is higher than
+          the set maximum.
+          0x07 : Sensor wire fault - Something went wrong with the
+          sensor differential signals.
+          0x08 : Sensor general fault - An error occurred while
+          processing the sensor signals
+          0x09 : CAN Command error - CAN message received contains
+          parameter out of boundaries
+          0x0A : Analog input error – Redundant output out of range
       - name: "RESERVED"
         bit_start: 40
-        # Filled with FF’s. For future use.
+        comment: Filled with FF’s. For future use.
 
   DTI Data 4:
     CAN ID: 2316
@@ -4644,10 +4663,10 @@ Custom CAN ID:
     signals:
       - name: "FOC Id"
         bit_start: 0
-        # FOC algorithm component Id.
+        comment: FOC algorithm component Id.
       - name: "FOC Iq"
         bit_start: 32
-        # FOC algorithm component Id\q.
+        comment: FOC algorithm component Id\q.
 
   DTI Data 5:
     CAN ID: 2416
@@ -4655,14 +4674,15 @@ Custom CAN ID:
     signals:
       - name: "Throttle"
         bit_start: 0
-        # Throttle signal derived from analog inputs or CAN2
+        comment: Throttle signal derived from analog inputs or CAN2
       - name: "Brake"
         bit_start: 8
-        # Brake signal derived from analog inputs or CAN2
+        comment: Brake signal derived from analog inputs or CAN2
       - name: "Digital input 1"
         bit_start: 16
-        # 1: Digital input is active
-        # 0: Digital input is inactive
+        comment:
+          1: Digital input is active
+          0: Digital input is inactive
       - name: "Digital input 2"
         bit_start: 17
       - name: "Digital input 3"
@@ -4671,8 +4691,9 @@ Custom CAN ID:
         bit_start: 19
       - name: "Digital output 1"
         bit_start: 20
-        # 1: Digital output is active
-        # 0: Digital output is inactive
+        comment:
+          1: Digital output is active
+          0: Digital output is inactive
       - name: "Digital output 2"
         bit_start: 21
       - name: "Digital output 3"
@@ -4681,68 +4702,80 @@ Custom CAN ID:
         bit_start: 23
       - name: "Drive Enable"
         bit_start: 24
-        # 1: Drive enabled
-        # 0: Drive disabled
-        # Drive can be enabled/disbled by the digital input or/and via
-        # CAN2 interface
+        comment:
+          1: Drive enabled
+          0: Drive disabled
+          Drive can be enabled/disbled by the digital input or/and via
+          CAN2 interface
       - name: "Capacitor temp limit"
         bit_start: 32
-        # 1: Capacitor temperature limit active
-        # 0: Capacitor temperature limit inactive
-        # The inverter can limit the output power to not to overheat the
-        # internal capacitors. (only valid HW version 3.6 or newer)
+        comment:
+          1: Capacitor temperature limit active
+          0: Capacitor temperature limit inactive
+          The inverter can limit the output power to not to overheat the
+          internal capacitors. (only valid HW version 3.6 or newer)
       - name: "DC current limit"
         bit_start: 33
-        # 1: DC current limit active
-        # 0: DC current limit inactive
+        comment:
+          1: DC current limit active
+          0: DC current limit inactive
       - name: "Drive enable limit"
         bit_start: 34
-        # 1: Drive enable limit active
-        # 0: Drive enable limit inactive
-        # Indicates whether the drive enable limitation is active or inactive.
-        # Used for software development purposes. For true indication
-        # of the drive state please use byte 3, bit 24 of this message.
+        comment:
+          1: Drive enable limit active
+          0: Drive enable limit inactive
+          Indicates whether the drive enable limitation is active or inactive.
+          Used for software development purposes. For true indication
+          of the drive state please use byte 3, bit 24 of this message.
       - name: "IGBT acceleration temperature limit"
         bit_start: 35
-        # 1: IGBT acceleration limit active
-        # 0: IGBT acceleration limit inactive
+        comment:
+          1: IGBT acceleration limit active
+          0: IGBT acceleration limit inactive
       - name: "IGBT temperature limit"
         bit_start: 36
-        # 1: IGBT temperature limit active
-        # 0: IGBT temperature limit inactive
+        comment:
+          1: IGBT temperature limit active
+          0: IGBT temperature limit inactive
       - name: "Input voltage limit"
         bit_start: 37
-        # 1: Input voltage limit active
-        # 0: Input voltage limit inactive
+        comment:
+          1: Input voltage limit active
+          0: Input voltage limit inactive
       - name: "Motor acceleration temperature limit"
         bit_start: 38
-        # 1: Motor acceleration temperature limit active
-        # 0: Motor acceleration temperature limit inactive
+        comment:
+          1: Motor acceleration temperature limit active
+          0: Motor acceleration temperature limit inactive
       - name: "Motor temperature limit"
         bit_start: 39
-        # 1: Motor temperature limit active
-        # 0: Motor temperature limit inactive
+        comment:
+          1: Motor temperature limit active
+          0: Motor temperature limit inactive
       - name: "RPM min limit"
         bit_start: 40
-        # 1: RPM min limit active
-        # 0: RPM min limit inactive
+        comment:
+          1: RPM min limit active
+          0: RPM min limit inactive
       - name: "RPM max limit"
         bit_start: 41
-        # 1: RPM max limit active
-        # 0: RPM max limit inactive
+        comment:
+          1: RPM max limit active
+          0: RPM max limit inactive
       - name: "Power limit"
         bit_start: 42
-        # 1: Power limit by configuration active
-        # 0: Power limit by configuration inactive
+        comment:
+          1: Power limit by configuration active
+          0: Power limit by configuration inactive
       - name: "RESERVED"
         bit_start: 43
-        # Set to 0.
+        comment: Set to 0.
       - name: "RESERVED"
         bit_start: 48
-        # Filled with FF’s. For future use.
+        comment: Filled with FF’s. For future use.
       - name: "CAN Version"
         bit_start: 56
-        # Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
+        comment: Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
 
   IMD general:
     CAN ID: 18FF01F4
@@ -4756,22 +4789,23 @@ Custom CAN ID:
         bit_start: 24
       - name: "Status"
         bit_start: 32
-        # Bit 0: true = Device error active
-        # Bit 1: true = HV_pos connection failure
-        # Bit 2: true = HV_neg connection failure
-        # Bit 3: true = Earth connection failure
-        # Bit 4: true = Iso Alarm (iso value below threshold error)
-        # Bit 5: true = Iso Warning (iso value below threshold warning)
-        # Bit 6: true = Iso Outdated (value „Time elapsed since lst measurement“ > = „measurement timeout“)
-        # Bit 7: true = Unbalance Alarm (unbalance value below threshold)
-        # Bit 8: true = Undervoltage Alarm
-        # Bit 9: true = Unsafe to Start
-        # Bit 10: true = Earthlift open
+        comment:
+          Bit 0: true = Device error active
+          Bit 1: true = HV_pos connection failure
+          Bit 2: true = HV_neg connection failure
+          Bit 3: true = Earth connection failure
+          Bit 4: true = Iso Alarm (iso value below threshold error)
+          Bit 5: true = Iso Warning (iso value below threshold warning)
+          Bit 6: true = Iso Outdated (value „Time elapsed since lst measurement“ > = „measurement timeout“)
+          Bit 7: true = Unbalance Alarm (unbalance value below threshold)
+          Bit 8: true = Undervoltage Alarm
+          Bit 9: true = Unsafe to Start
+          Bit 10: true = Earthlift open
       - name: "Activity"
         bit_start: 48
       - name: "RESERVED"
         bit_start: 56
-        # Filled with FF’s
+        comment: Filled with FF’s
 
   IMD isolation info:
     CAN ID: 18EFF4FE
@@ -4808,19 +4842,19 @@ Custom CAN ID:
         bit_start: 16
       - name: "Hardware Failure"
         bit_start: 17
-        # Bit 0: Hardware Failure: 0-Normal, 1-Error
+        comment: Bit 0: Hardware Failure: 0-Normal, 1-Error
       - name: "OverTemp"
         bit_start: 18
-        # Bit 1: OverTemp: 0-Normal, 1-Error
+        comment: Bit 1: OverTemp: 0-Normal, 1-Error
       - name: "Input Voltage Error"
         bit_start: 19
-        # Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage
+        comment: Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage
       - name: "Connection Error"
         bit_start: 20
-        # Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC
+        comment: Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC
       - name: "Communication State"
         bit_start: 21
-        # Bit 4: Communication State: 0-Normal, 1-Timeout
+        comment: Bit 4: Communication State: 0-Normal, 1-Timeout
       - name: "RESERVED"
         bit_start: 24
 
@@ -4834,8 +4868,9 @@ Custom CAN ID:
         bit_start: 16
       - name: "Charge Enable"
         bit_start: 17
-        # 1: Start Charging
-        # 0: Stop Charging
+        comment:
+          1: Start Charging
+          0: Stop Charging
 
   EM Measurement:
     CAN ID: 10d
@@ -4843,10 +4878,10 @@ Custom CAN ID:
     signals:
       - name: "Current"
         bit_start: 0
-        # TS Current
+        comment: TS Current
       - name: "Voltage"
         bit_start: 32
-        # TS Voltage
+        comment: TS Voltage
 
   EM Status:
     CAN ID: 40d
@@ -4854,13 +4889,13 @@ Custom CAN ID:
     signals:
       - name: "Violation"
         bit_start: 0
-        # Violation occured?
+        comment: Violation occured?
       - name: "Logging"
         bit_start: 1
-        # Logging enabled?
+        comment: Logging enabled?
       - name: "Energy"
         bit_start: 8
-        # Energy used in Wh
+        comment: Energy used in Wh
 
   EM Temperature:
     CAN ID: 60d
@@ -4868,19 +4903,19 @@ Custom CAN ID:
     signals:
       - name: "Mux Signal"
         bit_start: 0-2
-        # n = [0-6]
+        comment: n = [0-6]
       - name: "Num Sensors"
         bit_start: 3-7
-        # Number of sensors up to 32
+        comment: Number of sensors up to 32
       - name: "Min Temp"
         bit_start: 8
-        # Min temp of all sensors
+        comment: Min temp of all sensors
       - name: "Max Temp"
         bit_start: 16
-        # Max temp of all sensors
+        comment: Max temp of all sensors
       - name: "Temp 5n"
         bit_start: 24
-        # [0,5,10,15,20,25,30] based on n above
+        comment: [0,5,10,15,20,25,30] based on n above
       - name: "Temp 5n+1"
         bit_start: 32
       - name: "Temp 5n+2"
@@ -4896,10 +4931,10 @@ Custom CAN ID:
     signals:
       - name: "Team Signal 1"
         bit_start: 0
-        # Frick if I know
+        comment: Frick if I know
       - name: "Team Signal 2"
         bit_start: 32
-        # Frick if I know
+        comment: Frick if I know
 
   EM Team Data 2:
     CAN ID: 30e
@@ -4907,10 +4942,10 @@ Custom CAN ID:
     signals:
       - name: "Team Signal 3"
         bit_start: 0
-        # Frick if I know
+        comment: Frick if I know
       - name: "Team Signal 4"
         bit_start: 32
-        # Frick if I know
+        comment: Frick if I know
 
 GR ID:
 
