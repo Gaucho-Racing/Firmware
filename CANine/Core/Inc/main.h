@@ -38,8 +38,8 @@ extern "C" {
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_system.h"
-#include "stm32g4xx_ll_utils.h"
 #include "stm32g4xx_ll_usart.h"
+#include "stm32g4xx_ll_utils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

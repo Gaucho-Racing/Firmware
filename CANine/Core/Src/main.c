@@ -119,7 +119,7 @@ int main(void)
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
 	// LOGOMATIC("Logomatic initialization complete\n");
-	VCP_Send((uint8_t*)"VCP initialization complete\n", 29);
+	VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -129,7 +129,7 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Hello, LOGOMATIC! Great to be here\n");
-		VCP_Send((uint8_t*)"Hello, VCP! Great to be here\n", 30);
+		VCP_Send((uint8_t *)"Hello, VCP! Great to be here\n", 30);
 
 		LL_mDelay(750);
 	}

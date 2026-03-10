@@ -134,7 +134,7 @@ void Setup_VCP(VCP_Config *input_config)
 		}
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART3);
 
-	} else  if (vcp_config.usart_instance == LPUART1) {
+	} else if (vcp_config.usart_instance == LPUART1) {
 		switch (vcp_config.clock_source) {
 			case VCP_CLOCK_PCLK:
 				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_PCLK1);
