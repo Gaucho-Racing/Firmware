@@ -3,8 +3,8 @@
 #include "can.h"
 #include "can_tests.h"
 
-#define USECAN1
-#define TX_BUFFER_1_SIZE 10
+//#define USECAN1
+//#define TX_BUFFER_1_SIZE 10
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;

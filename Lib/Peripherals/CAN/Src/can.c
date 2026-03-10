@@ -7,12 +7,18 @@
 
 #include "Logomatic.h"
 
-// TODO: Figure out how to move these defines into the application code (by linking)
+//#include "can_conf.h"
+// TODO: Figure out how to move these defines into the application code
 
-// #define USECAN2
-// #define TX_BUFFER_2_SIZE 10
-// #define USECAN3
-// #define TX_BUFFER_3_SIZE 10
+#define USECAN1
+#define TX_BUFFER_1_SIZE 10
+
+#define USECAN2
+#define TX_BUFFER_2_SIZE 10
+
+#define USECAN3
+#define TX_BUFFER_3_SIZE 10
+
 
 // HAL handles
 #ifdef USECAN1

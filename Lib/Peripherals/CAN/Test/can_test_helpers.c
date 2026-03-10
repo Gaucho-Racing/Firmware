@@ -66,6 +66,8 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback
 
 	canCfg.rx_callback = callback;
 
+//TODO: Recheck these once you figure out how to define in application code
+//#ifdef USECAN1
 	if (instance == FDCAN1) {
 		canCfg.fdcan_instance = FDCAN1;
 		canCfg.rx_gpio = GPIOA;
@@ -79,8 +81,9 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback
 		*out_cfg = canCfg;
 		return SUCCESS;
 	}
+//#endif
 
-#ifdef USECAN2
+//#ifdef USECAN2
 	if (instance == FDCAN2) {
 		canCfg.fdcan_instance = FDCAN2;
 		canCfg.rx_gpio = GPIOB;
@@ -94,10 +97,10 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback
 		*out_cfg = canCfg;
 		return SUCCESS;
 	}
-#endif
+//#endif
 
-#ifdef USECAN3
-#endif
+//#ifdef USECAN3
+//#endif
 
 	return ERROR;
 }

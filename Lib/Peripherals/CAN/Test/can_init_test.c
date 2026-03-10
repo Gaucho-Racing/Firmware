@@ -1,7 +1,8 @@
 #include "can.h"
 #include "can_tests.h"
 
-// TODO:
+
+
 int can_init_test(CANConfig *cfg)
 {
 	CANHandle *handle;

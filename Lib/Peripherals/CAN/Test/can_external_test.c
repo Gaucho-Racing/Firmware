@@ -13,10 +13,10 @@
 	return 0;
 }*/
 
-#define USECAN1
-#define TX_BUFFER_1_SIZE 10
-#define USECAN2
-#define TX_BUFFER_2_SIZE 10
+//#define USECAN1
+//#define TX_BUFFER_1_SIZE 10
+//#define USECAN2
+//#define TX_BUFFER_2_SIZE 10
 
 // TODO: Make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;

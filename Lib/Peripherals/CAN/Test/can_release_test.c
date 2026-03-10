@@ -1,8 +1,8 @@
 #include "can.h"
 #include "can_tests.h"
 
-#define USECAN1
-#define TX_BUFFER_1_SIZE 10
+//#define USECAN1
+//#define TX_BUFFER_1_SIZE 10
 
 // TODO:
 int can_release_test()
