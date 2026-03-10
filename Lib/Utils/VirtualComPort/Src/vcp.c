@@ -134,6 +134,25 @@ void Setup_VCP(VCP_Config *input_config)
 		}
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART3);
 
+	} else if (vcp_config.usart_instance == LPUART1) {
+		switch (vcp_config.clock_source) {
+			case VCP_CLOCK_PCLK:
+				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_PCLK1);
+				break;
+			case VCP_CLOCK_SYSCLK:
+				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_SYSCLK);
+				break;
+			case VCP_CLOCK_HSI:
+				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_HSI);
+				break;
+			case VCP_CLOCK_LSE:
+				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_LSE);
+				break;
+			default:
+				LOGOMATIC("Unsupported clock source for LPUART1 in Setup_VCP\n");
+				return;
+		}
+		LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_LPUART1);
 	} else {
 		LOGOMATIC("Unsupported USART instance for Setup_VCP\n");
 		return;
@@ -146,7 +165,7 @@ void Setup_VCP(VCP_Config *input_config)
 					       .Speed = LL_GPIO_SPEED_FREQ_LOW,
 					       .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
 					       .Pull = LL_GPIO_PULL_NO,
-					       .Alternate = LL_GPIO_AF_7};
+					       .Alternate = vcp_config.alternate_function};
 
 	switch (vcp_config.bus_port) {
 		case VCP_Port_A:
@@ -175,15 +194,26 @@ void Setup_VCP(VCP_Config *input_config)
 			return;
 	}
 
-	LL_USART_InitTypeDef USART_InitStruct = {.PrescalerValue = vcp_config.prescaler,
-						 .BaudRate = vcp_config.baud_rate,
-						 .DataWidth = LL_USART_DATAWIDTH_8B,
-						 .StopBits = vcp_config.stop_bits,
-						 .Parity = vcp_config.parity,
-						 .TransferDirection = LL_USART_DIRECTION_TX_RX,
-						 .HardwareFlowControl = LL_USART_HWCONTROL_NONE,
-						 .OverSampling = vcp_config.oversampling};
-	LL_USART_Init(vcp_config.usart_instance, &USART_InitStruct);
+	if (vcp_config.usart_instance == LPUART1) {
+		LL_LPUART_InitTypeDef LPUART_InitStruct = {.PrescalerValue = vcp_config.prescaler,
+							   .BaudRate = vcp_config.baud_rate,
+							   .DataWidth = LL_LPUART_DATAWIDTH_8B,
+							   .StopBits = vcp_config.stop_bits,
+							   .Parity = vcp_config.parity,
+							   .TransferDirection = LL_LPUART_DIRECTION_TX_RX,
+							   .HardwareFlowControl = LL_LPUART_HWCONTROL_NONE};
+		LL_LPUART_Init(vcp_config.usart_instance, &LPUART_InitStruct);
+	} else {
+		LL_USART_InitTypeDef USART_InitStruct = {.PrescalerValue = vcp_config.prescaler,
+							 .BaudRate = vcp_config.baud_rate,
+							 .DataWidth = LL_USART_DATAWIDTH_8B,
+							 .StopBits = vcp_config.stop_bits,
+							 .Parity = vcp_config.parity,
+							 .TransferDirection = LL_USART_DIRECTION_TX_RX,
+							 .HardwareFlowControl = LL_USART_HWCONTROL_NONE,
+							 .OverSampling = vcp_config.oversampling};
+		LL_USART_Init(vcp_config.usart_instance, &USART_InitStruct);
+	}
 	LL_USART_SetTXFIFOThreshold(vcp_config.usart_instance, vcp_config.tx_fifo_threshold);
 	LL_USART_SetRXFIFOThreshold(vcp_config.usart_instance, vcp_config.rx_fifo_threshold);
 	LL_USART_DisableFIFO(vcp_config.usart_instance);
@@ -199,6 +229,11 @@ void Setup_VCP(VCP_Config *input_config)
 		LL_USART_EnableIT_RXNE(USART3);
 		LL_USART_Enable(USART3);
 		while ((!(LL_USART_IsActiveFlag_TEACK(USART3))) || (!(LL_USART_IsActiveFlag_REACK(USART3)))) {}
+	} else if (vcp_config.usart_instance == LPUART1) {
+		NVIC_EnableIRQ(LPUART1_IRQn);
+		LL_USART_EnableIT_RXNE(LPUART1);
+		LL_USART_Enable(LPUART1);
+		while ((!(LL_USART_IsActiveFlag_TEACK(LPUART1))) || (!(LL_USART_IsActiveFlag_REACK(LPUART1)))) {}
 	} else {
 		LOGOMATIC("Unsupported USART instance for Setup_VCP\n");
 		return;
