@@ -7,6 +7,9 @@
 NeopixelContext *NeoPixel_LED_Context;
 NeopixelContext *NeoPixel_Button_Context;
 
+static Neopixel_Color LED_colors[NUM_LEDS];
+static Neopixel_Color button_colors[NUM_BUTTONS];
+
 static uint32_t i = 0;
 
 void NeoPixel_Init()
