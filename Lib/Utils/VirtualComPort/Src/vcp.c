@@ -146,7 +146,7 @@ void Setup_VCP(VCP_Config *input_config)
 					       .Speed = LL_GPIO_SPEED_FREQ_LOW,
 					       .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
 					       .Pull = LL_GPIO_PULL_NO,
-					       .Alternate = LL_GPIO_AF_7};
+					       .Alternate = vcp_config.alternate_function};
 
 	switch (vcp_config.bus_port) {
 		case VCP_Port_A:
