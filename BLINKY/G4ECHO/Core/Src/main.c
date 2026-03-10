@@ -125,7 +125,7 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Hello, LOGOMATIC! Great to be here\n");
-		VCP_Send("Hello, VCP! Great to be here\n", 30);
+		VCP_Send((uint8_t*)"Hello, VCP! Great to be here\n", 30);
 
 		LL_mDelay(750);
 	}
