@@ -1,7 +1,7 @@
+#include <stdint.h>
+
 #include "can.h"
 #include "can_tests.h"
-#include "can.h"
-#include <stdint.h>
 
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
 {
