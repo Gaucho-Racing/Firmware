@@ -76,50 +76,51 @@ sub parse_descriptions {
 }
 
 sub extract_desc_from_array {
-    my ( $lines_ref, $index ) = @_;
-    my $description = '';
-    my $i           = $index;
-    my $in_comment_block = 0;
+	my ( $lines_ref, $index ) = @_;
+	my $description      = '';
+	my $i                = $index;
+	my $in_comment_block = 0;
 
-    while ( ++$i < scalar @{$lines_ref} ) {
-        my $sub = ${$lines_ref}[$i];
+	while ( ++$i < scalar @{$lines_ref} ) {
+		my $sub = ${$lines_ref}[$i];
 
-        # 1. Match the start of the comment block
-        if ( $sub =~ /^\s+ comment: \s* (.*)/smx ) {
-            my $text = $1;
-            $in_comment_block = 1;
-            if ($text ne '') {
-                $description .= ($description ? ' ' : '') . $text;
-            }
-            next;
-        }
+		# 1. Match the start of the comment block
+		if ( $sub =~ /^\s+ comment: \s* (.*)/smx ) {
+			my $text = $1;
+			$in_comment_block = 1;
+			if ( $text ne '' ) {
+				$description .= ( $description ? ' ' : '' ) . $text;
+			}
+			next;
+		}
 
-        # 2. If we are in the block, grab lines that ARE NOT new YAML keys
-        if ($in_comment_block) {
-            # A YAML key usually looks like: "    units:" or "    data type:"
-            # This regex says: Stop if the line starts with 4-6 spaces,
-            # followed by a word, and then a colon + space/newline.
-            if ($sub =~ /^\s{4,6} \w+[\w\s]*:(\s|$)/smx) {
-                last;
-            }
+		# 2. If we are in the block, grab lines that ARE NOT new YAML keys
+		if ($in_comment_block) {
 
-            # Otherwise, if it's indented text, it's part of our sentence!
-            if ($sub =~ /^\s{6,} (.+)/smx) {
-                my $line_text = $1;
-                $description .= ($description ? ' ' : '') . $line_text;
-                next;
-            }
-        }
+			# A YAML key usually looks like: "    units:" or "    data type:"
+			# This regex says: Stop if the line starts with 4-6 spaces,
+			# followed by a word, and then a colon + space/newline.
+			if ( $sub =~ /^\s{4,6} \w+[\w\s]*:(\s|$)/smx ) {
+				last;
+			}
 
-        # 3. Global break if we hit a new message or field entirely
-        if ( $sub =~ /^\s{0,4} \S/smx ) {
-            last;
-        }
-    }
+			# Otherwise, if it's indented text, it's part of our sentence!
+			if ( $sub =~ /^\s{6,} (.+)/smx ) {
+				my $line_text = $1;
+				$description .= ( $description ? ' ' : '' ) . $line_text;
+				next;
+			}
+		}
 
-    # Clean up any trailing/leading whitespace
-    $description =~ s/^\s+|\s+$//gsmx;
-    return ( $description, $i - 1 );
+		# 3. Global break if we hit a new message or field entirely
+		if ( $sub =~ /^\s{0,4} \S/smx ) {
+			last;
+		}
+	}
+
+	# Clean up any trailing/leading whitespace
+	$description =~ s/^\s+|\s+$//gsmx;
+	return ( $description, $i - 1 );
 }
 
 sub generate_header {
