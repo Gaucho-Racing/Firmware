@@ -134,7 +134,7 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4HELLO"
-		}
+		},
 		{
 			"label": "CMake: configure and build W3_G4SPI_Transmit",
 			"type": "shell",
