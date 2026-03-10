@@ -41,6 +41,7 @@ target_link_libraries(
 		GR_OLD_CAN_MESSAGES
 		PERIPHERAL_CAN_LIB
 		CircularBuffer_Lib
+		GR_NEOPIXEL
 )
 
 target_include_directories(
