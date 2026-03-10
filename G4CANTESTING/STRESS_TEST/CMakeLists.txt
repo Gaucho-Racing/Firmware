@@ -27,7 +27,11 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE /Users/vihan/Documents/Gaucho_Racing/Firmware/Firmware/G4CANTESTING/Core/Inc)
+target_include_directories(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+		/Users/vihan/Documents/Gaucho_Racing/Firmware/Firmware/G4CANTESTING/Core/Inc
+)
 
 target_sources(
 	${PROJECT_NAME}_USER_CODE
@@ -45,9 +49,4 @@ target_sources(
 		../Core/Src/usart.c
 )
 
-
-target_link_libraries(
-	${PROJECT_NAME}_USER_CODE
-	INTERFACE
-		PERIPHERAL_CAN_LIB
-)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)

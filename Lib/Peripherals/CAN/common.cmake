@@ -1,6 +1,11 @@
 add_library(PERIPHERAL_CAN_LIB INTERFACE)
 
-target_link_libraries(PERIPHERAL_CAN_LIB INTERFACE PERIPHERAL_CAN_TEST_LIB CircularBuffer_Lib)
+target_link_libraries(
+	PERIPHERAL_CAN_LIB
+	INTERFACE
+		PERIPHERAL_CAN_TEST_LIB
+		CircularBuffer_Lib
+)
 
 target_sources(PERIPHERAL_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/can.c)
 
@@ -19,9 +24,8 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_external_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_internal_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_stress_test.c
-		#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
-		#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
-
+	#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
+	#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
 )
 target_include_directories(
 	PERIPHERAL_CAN_TEST_LIB

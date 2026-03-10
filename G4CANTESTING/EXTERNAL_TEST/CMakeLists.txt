@@ -43,19 +43,13 @@ target_sources(
 		../Core/Src/usart.c
 )
 
-
 if(FILTER EQUAL 1)
-message(HERE)
-target_compile_definitions(${PROJECT_NAME}_USER_CODE INTERFACE FILTER)
+	message(HERE)
+	target_compile_definitions(${PROJECT_NAME}_USER_CODE INTERFACE FILTER)
 else()
-message(THERE)
+	message(THERE)
 endif()
 
-
-target_link_libraries(
-	${PROJECT_NAME}_USER_CODE
-	INTERFACE
-		PERIPHERAL_CAN_LIB
-)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
 
 target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
