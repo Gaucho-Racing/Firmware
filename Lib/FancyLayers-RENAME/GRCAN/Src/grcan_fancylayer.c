@@ -1,4 +1,5 @@
 #include <stdint.h>
+
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
@@ -35,37 +36,57 @@ static GR_OLD_NODE_ID grcan_local_node_id;
 
 GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus)
 {
-    switch (bus) {
-        case GR_OLD_BUS_PRIMARY:  return GRCAN_MODE_FD;
-        case GR_OLD_BUS_TESTING:  return GRCAN_MODE_FD;
-        case GR_OLD_BUS_DATA:     return GRCAN_MODE_CLASSIC;
-        case GR_OLD_BUS_CHARGING: return GRCAN_MODE_CLASSIC; // update later
-        default:
-            LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
-            return GRCAN_MODE_CLASSIC;
-    }
+	switch (bus) {
+		case GR_OLD_BUS_PRIMARY:
+			return GRCAN_MODE_FD;
+		case GR_OLD_BUS_TESTING:
+			return GRCAN_MODE_FD;
+		case GR_OLD_BUS_DATA:
+			return GRCAN_MODE_CLASSIC;
+		case GR_OLD_BUS_CHARGING:
+			return GRCAN_MODE_CLASSIC; // update later
+		default:
+			LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
+			return GRCAN_MODE_CLASSIC;
+	}
 }
 
-CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus) {
-    switch (bus) {
-        case GR_OLD_BUS_PRIMARY:  return grcan_primary;
-        case GR_OLD_BUS_DATA:     return grcan_data;
-        case GR_OLD_BUS_TESTING:  return grcan_testing;
-        case GR_OLD_BUS_CHARGING: return grcan_charging;
-        default: return NULL;
-    }
+CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus)
+{
+	switch (bus) {
+		case GR_OLD_BUS_PRIMARY:
+			return grcan_primary;
+		case GR_OLD_BUS_DATA:
+			return grcan_data;
+		case GR_OLD_BUS_TESTING:
+			return grcan_testing;
+		case GR_OLD_BUS_CHARGING:
+			return grcan_charging;
+		default:
+			return NULL;
+	}
 }
 
 void GRCAN_ConfigureBus(GR_OLD_BUS_ID bus, CANConfig *config)
 {
-    CANHandle **h = NULL;
-    switch (bus) {
-        case GR_OLD_BUS_PRIMARY:   h = &grcan_primary; break;
-        case GR_OLD_BUS_DATA:      h = &grcan_data; break;
-        case GR_OLD_BUS_TESTING:   h = &grcan_testing; break;
-        case GR_OLD_BUS_CHARGING:  h = &grcan_charging; break;
-        default: LOGOMATIC("Invalid bus\n"); return;
-    }
+	CANHandle **h = NULL;
+	switch (bus) {
+		case GR_OLD_BUS_PRIMARY:
+			h = &grcan_primary;
+			break;
+		case GR_OLD_BUS_DATA:
+			h = &grcan_data;
+			break;
+		case GR_OLD_BUS_TESTING:
+			h = &grcan_testing;
+			break;
+		case GR_OLD_BUS_CHARGING:
+			h = &grcan_charging;
+			break;
+		default:
+			LOGOMATIC("Invalid bus\n");
+			return;
+	}
 
 	*h = can_init(config);
 	if (*h == NULL) {
@@ -100,7 +121,7 @@ void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *
 	grcan_data = dataCAN;
 	grcan_testing = testingCAN;
 	grcan_charging = chargingCAN;
-} //different version of init function, keeping both architectures to see which works better
+} // different version of init function, keeping both architectures to see which works better
 
 uint32_t GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id)
 {
@@ -141,13 +162,11 @@ void GRCAN_Fancy_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID 
 	if (mode == GRCAN_MODE_FD) {
 		GRCAN_Raw_Send_FD(bus, GRCAN_Fancy_DecodeID(&id), data, size);
 		return;
-	}
-	else if (mode == GRCAN_MODE_CLASSIC) {
+	} else if (mode == GRCAN_MODE_CLASSIC) {
 		GRCAN_Raw_Send_Classic(bus, GRCAN_Fancy_DecodeID(&id), data, size);
 		return;
-	}
-	else {
-    	LOGOMATIC("GRCAN_Fancy_Send: invalid bus mode for bus %d\n", bus);
+	} else {
+		LOGOMATIC("GRCAN_Fancy_Send: invalid bus mode for bus %d\n", bus);
 		return;
 	}
 }
@@ -168,14 +187,14 @@ MessageMarker can be used to identify the message in the Tx event FIFO
 void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
 {
 	if (size > 8) {
-        LOGOMATIC("GRCAN_Raw_Send_Classic: size %lu > 8 (classic CAN)\n", size);
-        return;
-    }
+		LOGOMATIC("GRCAN_Raw_Send_Classic: size %lu > 8 (classic CAN)\n", size);
+		return;
+	}
 
 	FDCANTxHeaderTypeDef header = {
 	    .Identifier = rawID,
-	    .IdType = FDCAN_EXTENDED_ID, //using extended ID -- src << 20 | msgID << 8 | dest
-	    .TxFrameType = FDCAN_DATA_FRAME, //data frame
+	    .IdType = FDCAN_EXTENDED_ID,     // using extended ID -- src << 20 | msgID << 8 | dest
+	    .TxFrameType = FDCAN_DATA_FRAME, // data frame
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 	    .DataLength = FDCAN_DLC_BYTES(size),
 	    .BitRateSwitch = FDCAN_BRS_OFF,
@@ -185,7 +204,7 @@ void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint3
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = header;
-	//memcpy(&(msg.data), data, size);
+	// memcpy(&(msg.data), data, size);
 	memcpy(msg.data, data, size);
 
 	if (GRCAN_BusModeForBus(bus) != GRCAN_MODE_CLASSIC) {
@@ -196,9 +215,9 @@ void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint3
 	CANHandle *handle = GRCAN_GetHandle(bus);
 
 	if (!handle) {
-        LOGOMATIC("GRCAN_Raw_Send_Classic: bus %d not configured\n", bus);
-        return;
-    }
+		LOGOMATIC("GRCAN_Raw_Send_Classic: bus %d not configured\n", bus);
+		return;
+	}
 
 	can_send(handle, &msg);
 	// switch (bus) {
@@ -224,17 +243,17 @@ void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint3
 	// }
 }
 
-void GRCAN_Raw_Send_FD(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) //FDCAN funciton allows for modification with different settings
+void GRCAN_Raw_Send_FD(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) // FDCAN funciton allows for modification with different settings
 {
 	if (size > 64) {
-        LOGOMATIC("GRCAN_Raw_Send_FD: size %lu > 64 (CAN FD)\n", size);
-        return;
-    }
+		LOGOMATIC("GRCAN_Raw_Send_FD: size %lu > 64 (CAN FD)\n", size);
+		return;
+	}
 
 	FDCANTxHeaderTypeDef header = {
 	    .Identifier = rawID,
-	    .IdType = FDCAN_EXTENDED_ID, //using extended ID -- src << 20 | msgID << 8 | dest
-	    .TxFrameType = FDCAN_DATA_FRAME, //data frame
+	    .IdType = FDCAN_EXTENDED_ID,     // using extended ID -- src << 20 | msgID << 8 | dest
+	    .TxFrameType = FDCAN_DATA_FRAME, // data frame
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 	    .DataLength = FDCAN_DLC_BYTES(size),
 	    .BitRateSwitch = FDCAN_BRS_OFF,
@@ -244,7 +263,7 @@ void GRCAN_Raw_Send_FD(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t s
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = header;
-	//memcpy(&(msg.data), data, size);
+	// memcpy(&(msg.data), data, size);
 	memcpy(msg.data, data, size);
 
 	if (GRCAN_BusModeForBus(bus) != GRCAN_MODE_FD) {
@@ -255,9 +274,9 @@ void GRCAN_Raw_Send_FD(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t s
 	CANHandle *handle = GRCAN_GetHandle(bus);
 
 	if (!handle) {
-        LOGOMATIC("GRCAN_Raw_Send_FD: bus %d not configured\n", bus);
-        return;
-    }
+		LOGOMATIC("GRCAN_Raw_Send_FD: bus %d not configured\n", bus);
+		return;
+	}
 
 	can_send(handle, &msg);
 	// switch (bus) {
