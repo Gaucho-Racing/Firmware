@@ -191,7 +191,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	static uint32_t last_apps_plausible_frame_millis;
-	if(APPS_Plausible(stateData)){
+	if (APPS_Plausible(stateData)) {
 		last_apps_plausible_frame_millis = stateData->millisSinceBoot;
 	}
 
