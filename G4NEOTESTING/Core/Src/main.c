@@ -76,18 +76,19 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
 NeopixelConfig neopixelConfig1 = {.SPI_Instance = SPI1,
-				  .NumberOfNeopixels = NEOPIXEL_LED_COUNT,
-				  .gpio_port = Neopixel_GPIOB,
-				  .neopixelAF = Neopixel_GPIO_AF_5,
-				  .mosi_gpio_pin = NEOPIXEL_DIN_1_Pin,
-				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
+				  .Neopixel_Count = NEOPIXEL_LED_COUNT,
+				  .MOSI_Pin = NEOPIXEL_DIN_1_Pin,
+				  .GPIO_AlternateFunction = Neopixel_AF5,
+				  .GPIO_Port = Neopixel_GPIOB,
+				  .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
 
 NeopixelConfig neopixelConfig2 = {.SPI_Instance = SPI2,
-				  .NumberOfNeopixels = NEOPIXEL_LED_COUNT,
-				  .gpio_port = Neopixel_GPIOB,
-				  .neopixelAF = Neopixel_GPIO_AF_5,
-				  .mosi_gpio_pin = NEOPIXEL_DIN_2_Pin,
-				  .neopixel_baudRatePrescaler = Neopixel_SPI_BaudRatePrescaler_Div64};
+				  .Neopixel_Count = NEOPIXEL_LED_COUNT,
+				  .MOSI_Pin = NEOPIXEL_DIN_2_Pin,
+				  .GPIO_AlternateFunction = Neopixel_AF5,
+				  .GPIO_Port = Neopixel_GPIOB,
+				  .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
