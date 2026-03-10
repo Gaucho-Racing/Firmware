@@ -1,5 +1,7 @@
 #include "CANdler.h"
 
+#include <string.h>
+
 #include "GR_OLD_MSG_DAT.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
@@ -8,7 +10,6 @@
 #include "can.h"
 #include "dashutils.h"
 #include "main.h"
-#include <string.h>
 #include "stm32g4xx_hal_fdcan.h"
 
 #define ECU_ID GR_ECU
@@ -113,7 +114,7 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 		GR_OLD_DASH_CONFIG_MSG *dash_data = (GR_OLD_DASH_CONFIG_MSG *)data;
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bits
 	} else if (msg_id == PING_ID && size == sizeof(GR_OLD_PING_MSG)) {
-		CAN_sendPing(node_id, *(uint32_t*)data);
+		CAN_sendPing(node_id, *(uint32_t *)data);
 	} else {
 		// Check that you are sending the correct sizes if you get this message
 		LOGOMATIC("Unrecognized CAN message.\n");
