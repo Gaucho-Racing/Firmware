@@ -127,6 +127,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4BLINKY"
 		},
 		{
+			"label": "CMake: configure and build L4HELLO",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4HELLO"
+		}
+		{
 			"label": "CMake: configure and build W3_G4SPI_Transmit",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -143,58 +152,6 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
-		},
-		{
-			"type": "cmake",
-			"label": "CMake: build L4HELLO",
-			"command": "build",
-			"targets": [
-				"L4HELLO"
-			],
-			"preset": "Debug",
-			"group": "build",
-			"problemMatcher": [],
-			"detail": "CMake template build task"
-		},
-		{
-			"type": "cmake",
-			"label": "CMake: build L4BLINKY",
-			"command": "build",
-			"targets": [
-				"L4BLINKY"
-			],
-			"preset": "Debug",
-			"group": "build",
-			"problemMatcher": [],
-			"detail": "CMake template build task"
-		},
-		{
-			"type": "cmake",
-			"label": "CMake: clean",
-			"command": "clean",
-			"preset": "Debug",
-			"problemMatcher": [],
-			"detail": "CMake template clean task"
-		},
-		{
-			"type": "cmake",
-			"label": "CMake: build",
-			"command": "build",
-			"targets": [
-				"L4HELLO"
-			],
-			"preset": "Debug",
-			"group": "build",
-			"problemMatcher": [],
-			"detail": "CMake template build task"
-		},
-		{
-			"label": "CMake: configure and build L4HELLO",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure",
-				"CMake: build L4HELLO"
-			]
 		}
 	]
 }
