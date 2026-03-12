@@ -57,8 +57,8 @@ typedef struct {
 	// RX Callback
 	CAN_RXCallback rx_callback;
 
-	uint32_t rx_interrupt_priority;
-	uint32_t tx_interrupt_priority;
+	uint8_t rx_interrupt_priority; //only 4 bits
+	uint8_t tx_interrupt_priority;
 
 	// for release
 	GPIO_TypeDef *rx_gpio;
@@ -94,7 +94,5 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 
 // TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
 
-// TODO: put this somewhere that someone will read it
-// Somewhere in your application, define USECAN1 and TX_BUFFER_1_SIZE
 
 #endif // End Header Guard

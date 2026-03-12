@@ -18,7 +18,7 @@
 //#define USECAN2
 //#define TX_BUFFER_2_SIZE 10
 
-// TODO: Make creating these callbacks a macro, rather than defining each one separately
+// TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
 static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
@@ -69,6 +69,9 @@ int can_external_test(void)
 		return ERROR;
 	}
 
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+
 	//=============================================================================================
 	if ((primary_can = can_init(&cfg1)) == NULL) {
 		LOGOMATIC("Could not initialize primary_can\n");
@@ -101,10 +104,10 @@ int can_external_test(void)
 
 	LOGOMATIC("Sending %ld messages on each bus...\n", num_messages);
 	while (i < num_messages) {
-		HAL_Delay(1000);
+		HAL_Delay(100);
 		msg.data[0] = 0x2;
 		can_send(primary_can, &msg);
-		HAL_Delay(1000);
+		HAL_Delay(100);
 		msg.data[0] = 0x10;
 		can_send(data_can, &msg);
 		i += 1;
@@ -112,25 +115,39 @@ int can_external_test(void)
 	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
 	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
 
-
 	uint32_t error = false;
 
+
+	//TODO: Create testing functions to check state of can instance
 	if ((rx_1_received!=num_messages)) {
 		error = true;
 		LOGOMATIC("FAIL: can_internal_test: did not receive all rx1\n");
+	} else {
+		LOGOMATIC("SUCCESS: can_internal_test: received all rx1\n");
 	}
 	if ((rx_2_received!=num_messages)) {
 		error = true;
 		LOGOMATIC("FAIL: can_internal_test: did not receive all rx2\n");
+	} else {
+		LOGOMATIC("SUCCESS: can_internal_test: received all rx2\n");
 	}
+
+	if (primary_can->tx_elements > 0) {
+			LOGOMATIC("can_internal_test: FAIL: did not send all messages from tx_buffer\n");
+	}
+	LOGOMATIC("\n");
 
 	uint32_t rc;
 	if ( (rc = can_release(primary_can))) LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
 	error |= rc;
-	if ( (rc = can_release(primary_can))) LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
+	if ( (rc = can_release(data_can))) LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
 	error |= rc;
 
 	if (error) {return ERROR;}
+
+
+	LOGOMATIC("can_external_test: SUCCESS\n");
+
 
 	return SUCCESS;
 }

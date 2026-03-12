@@ -184,6 +184,7 @@ CANHandle *can_init(const CANConfig *config)
 	canHandle->tx_gpio = config->tx_gpio;
 	canHandle->rx_pin = config->init_rx_gpio.Pin;
 	canHandle->tx_pin = config->init_tx_gpio.Pin;
+
 	canHandle->rx_interrupt_priority = config->rx_interrupt_priority;
 	canHandle->tx_interrupt_priority = config->tx_interrupt_priority;
 
@@ -243,7 +244,11 @@ CANHandle *can_init(const CANConfig *config)
 	if (failure) {
 		can_msp_deinit(canHandle);
 		FDCAN_InstanceDeInit(canHandle->hal_fdcanP);
-		memset(canHandle + sizeof(FDCAN_HandleTypeDef), 0, sizeof(*canHandle) - sizeof(FDCAN_HandleTypeDef)); // FIXME: Make sure instance is not being overwritten (FDCANx)
+
+		FDCAN_HandleTypeDef *temp = canHandle->hal_fdcanP;
+		memset(canHandle, 0, sizeof(*canHandle)); // FIXME: Make sure instance is not being overwritten (FDCANx)
+		canHandle->hal_fdcanP = temp;
+
 		return CAN_SUCCESS;
 	}
 
@@ -284,9 +289,8 @@ int can_release(CANHandle *canHandle)
 	// HAL_FDCAN_DeInit(canHandle->hal_fdcanP); resets a little too hard
 	FDCAN_InstanceDeInit(canHandle->hal_fdcanP);
 
-	// TODO: Not sure these actually do anything
-	//__DSB(); // Data Synchronization Barrier
-	//__ISB(); // Instruction Synchronization Barrier
+	__DSB(); // Data Synchronization Barrier
+	__ISB(); // Instruction Synchronization Barrier
 
 	// free circular buffer contents
 	// GR_CircularBuffer_Free(&(canHandle->tx_buffer));
@@ -301,7 +305,6 @@ int can_release(CANHandle *canHandle)
 
 	return CAN_SUCCESS;
 }
-// TODO: prevent races conditions on the circular buffer
 // TODO: Implement timer
 // lock access to Circular Buffer when sending and dequeuing
 static void can_tx_dequeue_helper(CANHandle *handle)
@@ -311,23 +314,17 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 		return;
 	}
 
-	// TODO: use interrupt masking in case any other ISRs need to lock the circular buffer
+	// use interrupt masking in case any other ISRs need to lock the circular buffer
 	uint32_t basepri = __get_BASEPRI();
-
-	__set_BASEPRI(handle->tx_interrupt_priority);
-	// single consumer shouldn't affect state of circular buffer too closely
+	__set_BASEPRI(handle->tx_interrupt_priority << 4);
+	// single consumer shouldn't affect state of circular buffer
 	if (handle->tx_elements == 0) {
-		__set_BASEPRI(basepri);
+		__set_BASEPRI(basepri << 4);
 		return;
 	}
 
-	// uint32_t basepri = __get_basepri();
-	//__disable_irq();
-	// TODO: No need to lock circular buffer, as this ISR cannot interrupt the thread mode (can_send)
-
 	// Can Add to Fifo Q
 	if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hal_fdcanP)) {
-		// lock the Circular Buffer
 		const FDCANTxMessage *msg = &(handle->tx_buffer[handle->tx_tail]);
 
 		// should call Tx Buffer Callback once complete
@@ -335,7 +332,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 		if (status != HAL_OK) {
 			// LOGOMATIC("CAN_tx_helper: failed to add message to FIFO\n"); //FIXME: Logomatic may not work with interrupts disabled
-			__set_BASEPRI(basepri);
+			__set_BASEPRI(basepri << 4);
 			return; // Stop trying to send more
 		}
 		// free(msg); // Successfully sent, free the entry in the circular buffer (which is pointed to by tail)
@@ -346,7 +343,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 	} // alternatively, if fifo is full, tx_dequeue should get called anyways, and we don't need the else statement
 
-	__set_BASEPRI(basepri);
+	__set_BASEPRI(basepri << 4);
 }
 
 int can_send(CANHandle *canHandle, FDCANTxMessage *message)
@@ -367,11 +364,10 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 
 	// stop can_tx_dequeue_helper from from interleaving
 	uint32_t basepri = __get_BASEPRI();
-	__set_BASEPRI(canHandle->tx_interrupt_priority);
+	__set_BASEPRI( (canHandle->tx_interrupt_priority) << 4);
 
-	// FIXME: get rid of this jank
-	// if (hardwareEnabled) {
-	if (HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP) > 0) {
+	uint32_t free = 0;
+	if ( (free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
 		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
 
 		uint32_t val = 0;
@@ -381,7 +377,7 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		} else {
 			val = CAN_SUCCESS;
 		}
-		__set_BASEPRI(basepri);
+		__set_BASEPRI(basepri << 4);
 		return val;
 	}
 	//}
@@ -395,7 +391,7 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		canHandle->tx_elements++;
 		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
-		__set_BASEPRI(basepri);
+		__set_BASEPRI(basepri << 4);
 		return CAN_SUCCESS; // added to software buffer
 
 		/*if (result != 0) {
@@ -407,7 +403,7 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	} else {
 		LOGOMATIC("CAN_send: all buffers full\n"); // p
 	}
-	__set_BASEPRI(basepri);
+	__set_BASEPRI(basepri << 4);
 	// Both buffers full
 	return CAN_ERROR;
 }
@@ -453,7 +449,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
 	FDCAN_RxHeaderTypeDef rx_header;
 
-	// TODO: Stack allocation may be unsafe
+	// TODO: Stack allocation may be unsafe, (but not unsafer than heap)
 	uint8_t rx_data[64] = {0};
 
 	// TODO: maybe also use a timer for this?
@@ -520,7 +516,7 @@ int can_start(CANHandle *canHandle)
 
 	IRQn_Type rx0it, txit;
 	rx0it = txit = -1; // TOOD: Check that this is a valid way to initialize an invalid value
-	if (!can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)) {
+	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)) {
 		LOGOMATIC("can_start: could not obtain irq #s");
 		return CAN_ERROR;
 	}
@@ -553,13 +549,15 @@ int can_stop(CANHandle *canHandle)
 
 	// stop can interrupts from activating
 	uint32_t prev_priority = __get_BASEPRI();
-	__set_BASEPRI(MIN(canHandle->rx_interrupt_priority, canHandle->tx_interrupt_priority));
+	__set_BASEPRI(MIN(canHandle->rx_interrupt_priority, canHandle->tx_interrupt_priority) << 4);
 
-	HAL_FDCAN_Stop(canHandle->hal_fdcanP);
+	if (HAL_FDCAN_Stop(canHandle->hal_fdcanP)) {
+		return ERROR;
+	}
 
 	IRQn_Type rx0it, txit;
-	rx0it = txit = -1; // TODO: Check that this initialization is valid
-	if (!can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)) {
+	rx0it = txit = -1;
+	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)) {
 		LOGOMATIC("can_stop: could not obtain irq #s");
 		return CAN_ERROR;
 	}
@@ -568,7 +566,7 @@ int can_stop(CANHandle *canHandle)
 	HAL_NVIC_ClearPendingIRQ(rx0it);
 	HAL_NVIC_ClearPendingIRQ(txit);
 
-	__set_BASEPRI(prev_priority);
+	__set_BASEPRI(prev_priority << 4);
 
 	GPIOx_CLK_DISABLE(canHandle->rx_gpio);
 	GPIOx_CLK_DISABLE(canHandle->tx_gpio);
@@ -723,8 +721,8 @@ static int can_msp_deinit(CANHandle *canHandle)
 	// TODO: used to disable GPIOs clocks, but that might affect other peripherals
 
 	// RCC
-	fdcan_disable_shared_clock();
-
+	//fdcan_disable_shared_clock();
+	//can only disable clock after resetting all FDCAN instances
 	return CAN_SUCCESS;
 }
 
@@ -734,10 +732,15 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 	hfdcan->Instance->CCCR |= FDCAN_CCCR_INIT;
 	while (!(hfdcan->Instance->CCCR & FDCAN_CCCR_INIT))
 		;
+	hfdcan->Instance->CCCR |= FDCAN_CCCR_CCE;
 
 	// Disable interrupts
-	__HAL_FDCAN_DISABLE_IT(hfdcan, FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | FDCAN_IT_LIST_BIT_LINE_ERROR |
-					   FDCAN_IT_LIST_PROTOCOL_ERROR);
+	//__HAL_FDCAN_DISABLE_IT(hfdcan, FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | //FDCAN_IT_LIST_BIT_LINE_ERROR |
+					   //FDCAN_IT_LIST_PROTOCOL_ERROR);
+
+	//
+	CLEAR_BIT(hfdcan->Instance->ILE, (FDCAN_INTERRUPT_LINE0 | FDCAN_INTERRUPT_LINE1));
+
 
 	// Clear filters
 	// TODO: fix magic numbers
@@ -748,11 +751,12 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 
 	// Exit INIT mode
 	hfdcan->Instance->CCCR &= ~FDCAN_CCCR_INIT;
-	while (hfdcan->Instance->CCCR & FDCAN_CCCR_INIT)
-		;
+	while (hfdcan->Instance->CCCR & FDCAN_CCCR_INIT);
 
 	// Update handle state
 	hfdcan->State = HAL_FDCAN_STATE_RESET;
+
+	fdcan_disable_shared_clock();
 }
 
 // valid only for STM32G4

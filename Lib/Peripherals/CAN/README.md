@@ -1,5 +1,8 @@
 - USAGE:
 
+- Somewhere in your application, define USECAN1 and TX_BUFFER_1_SIZE
+
+
 CANHandle* can_init(CANConfig *config); //user must supply an rx callback function
 
 void can_set_clksource(uint32_t LL_RCC_FDCAN_CLKSOURCE); //ex LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE

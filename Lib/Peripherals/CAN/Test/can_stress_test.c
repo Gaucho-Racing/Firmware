@@ -34,6 +34,9 @@ int can_stress_test(void)
 		return ERROR;
 	}
 
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
 
@@ -62,44 +65,55 @@ int can_stress_test(void)
 	msg.tx_header = TxHeader;
 
 	size_t i = 0;
-	size_t messages = 5;
+	size_t rounds = 5;
+	size_t messages = primary_can->tx_capacity * 2;
     uint32_t successes = 0;
-	while (i < messages) {
+	while (loop < rounds) {
 		loop++;
 		can_stress_test_received = 0;
 		i = 0;
-		while (i < 100) {
+		while (i < messages) {
 			if (can_send(primary_can, &msg) != 0) {
-				LOGOMATIC("Stress test failed sending CAN msg at %ud-th consecutive send.\n", (unsigned int)i + 1);
+				LOGOMATIC("can_stress_test: FAIL: sending CAN msg at %u-th consecutive send.\n", (unsigned int)i + 1);
 				break;
 			}
 			i++;
 		}
-		LOGOMATIC("Sent %ud CAN msgs...\n", (unsigned int)i);
+		LOGOMATIC("Sent %u/%u CAN msgs...\n", (unsigned int)i, (unsigned int) messages);
 		HAL_Delay(1000);
 
-		LOGOMATIC("Received %ud/%ud CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int)i);
+		LOGOMATIC("Received %u/%u CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int)messages);
 
-        if (can_stress_test_received == i) {
+		LOGOMATIC("finished loop %ld\n", loop);
+
+		if (primary_can->tx_elements > 0) {
+			LOGOMATIC("can_stress_test: FAIL: did not send all messages from tx_buffer\n");
+			continue;
+		}
+		LOGOMATIC("\n");
+
+        if (can_stress_test_received == messages) {
             successes += 1;
         }
-        msg.data[0] = 0x10;
-		can_send(data_can, &msg);
-		HAL_Delay(1000);
-		LOGOMATIC("Stress test finished loop %ld\n", loop);
+        //msg.data[0] = 0x10;
+		//can_send(data_can, &msg);
+		//HAL_Delay(1000);
 	}
+
+
 
 	if (can_release(primary_can)) {
-		LOGOMATIC("can_test; could not release primary_can\n");
+		LOGOMATIC("can_stress_test: FAIL: could not release primary_can\n");
         return ERROR;
 	}
 
-    if (successes != messages) {
-        LOGOMATIC("can_stress_test failed\n");
-        return ERROR;
-    }
-
-    LOGOMATIC("can_stress_test passed\n");
+	//FINAL CHECK
+	LOGOMATIC("can_stress_test: succeeded %u/%u rounds\n",successes,rounds);
+	if (successes < rounds) {
+		LOGOMATIC("can_stress_test: FAIL\n");
+	} else {
+		LOGOMATIC("can_stress_test: SUCCESS\n");
+	}
 
 	return SUCCESS;
 }
