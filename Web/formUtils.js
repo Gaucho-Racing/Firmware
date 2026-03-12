@@ -125,7 +125,19 @@
 	}
 
 	function typeBitWidth(type) {
-		const m = { b: 1, u4: 4, u8: 8, s8: 8, u16: 16, i16: 16, u32: 32 };
+		const m = {
+			b: 1,
+			u4: 4,
+			s4: 4,
+			u8: 8,
+			s8: 8,
+			u16: 16,
+			s16: 16,
+			i16: 16,
+			u32: 32,
+			s32: 32,
+			i32: 32,
+		};
 		return m[type] || null;
 	}
 

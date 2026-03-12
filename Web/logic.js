@@ -116,7 +116,15 @@ function parseMessageDefinitions(candoText) {
 			}
 			if (content.startsWith("data type:")) {
 				const rawType = content.slice("data type:".length).trim();
-				currentField.dataType = rawType === "s" ? "string" : rawType || null;
+				if (rawType === "s") {
+					currentField.dataType = "string";
+				} else if (rawType === "i16") {
+					currentField.dataType = "s16";
+				} else if (rawType === "i32") {
+					currentField.dataType = "s32";
+				} else {
+					currentField.dataType = rawType || null;
+				}
 			}
 		}
 	}

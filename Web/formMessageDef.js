@@ -9,7 +9,18 @@
 (function () {
 	"use strict";
 
-	const VALID_DATA_TYPES = ["b", "u4", "u8", "u16", "u32", "i16", "s8", "s"];
+	const VALID_DATA_TYPES = [
+		"b",
+		"u4",
+		"s4",
+		"u8",
+		"s8",
+		"u16",
+		"s16",
+		"u32",
+		"s32",
+		"s",
+	];
 
 	// ==================== Raw Text Parser ====================
 	// Reads the current working text from GrcanEditor to pre-populate the form
@@ -65,7 +76,12 @@
 					const t = c.replace(/^#\s*/, "").trim();
 					if (t) cur.comment = cur.comment ? cur.comment + "\n" + t : t;
 				} else if (c.startsWith("data type:")) {
-					cur.rawDataType = c.slice(10).trim();
+					const rawType = c.slice(10).trim();
+					// Backward compatibility for older aliases while keeping
+					// canonical signed type labels in the editor UI.
+					if (rawType === "i16") cur.rawDataType = "s16";
+					else if (rawType === "i32") cur.rawDataType = "s32";
+					else cur.rawDataType = rawType;
 				} else if (c.startsWith("units:")) {
 					cur.units = c.slice(6).trim();
 				} else if (c.startsWith("scaled min:")) {
@@ -195,9 +211,30 @@
 			const removeBtn = document.createElement("button");
 			removeBtn.className = "editor-btn editor-btn-danger editor-btn-sm";
 			removeBtn.innerHTML = fu.TRASH_SVG + " Remove";
-			removeBtn.style.alignSelf = "flex-end";
 			removeBtn.addEventListener("click", () => card.remove());
-			card.appendChild(removeBtn);
+
+			const controlsRow = document.createElement("div");
+			controlsRow.className = "editor-field-controls";
+			const upBtn = fu.makeBtn("Move Up", "editor-btn-sm");
+			const downBtn = fu.makeBtn("Move Down", "editor-btn-sm");
+			upBtn.addEventListener("click", (e) => {
+				e.preventDefault();
+				const parent = card.parentNode;
+				if (!parent) return;
+				const prev = card.previousElementSibling;
+				if (prev) parent.insertBefore(card, prev);
+			});
+			downBtn.addEventListener("click", (e) => {
+				e.preventDefault();
+				const parent = card.parentNode;
+				if (!parent) return;
+				const next = card.nextElementSibling;
+				if (next) parent.insertBefore(next, card);
+			});
+			controlsRow.appendChild(upBtn);
+			controlsRow.appendChild(downBtn);
+			controlsRow.appendChild(removeBtn);
+			card.appendChild(controlsRow);
 
 			card._getValues = () => ({
 				name: fName.input.value.trim(),

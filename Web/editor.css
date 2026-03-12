@@ -368,6 +368,7 @@
 	flex-direction: column;
 	gap: 4px;
 	margin-bottom: 12px;
+	position: relative;
 }
 
 .editor-label {
@@ -528,6 +529,50 @@ textarea.editor-input {
 
 .editor-field-grid-5 {
 	grid-template-columns: repeat(5, 1fr);
+}
+
+.editor-field-controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: 6px;
+	margin-top: 8px;
+}
+
+/* ==================== Message Suggestions (Add Route) ==================== */
+
+.editor-suggest {
+	position: absolute;
+	z-index: 2100;
+	top: 100%;
+	left: 0;
+	padding: 4px 0;
+	min-width: 100%;
+	max-height: 220px;
+	overflow-y: auto;
+	border-radius: 8px;
+	border: 1px solid #1f2439;
+	background: #020617;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.editor-suggest.hidden {
+	display: none;
+}
+
+.editor-suggest-item {
+	padding: 4px 10px;
+	font-size: 0.8rem;
+	color: #cbd5f5;
+	cursor: pointer;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.editor-suggest-item:hover,
+.editor-suggest-item-active {
+	background: #1e293b;
+	color: #f9fafb;
 }
 
 @media (max-width: 640px) {

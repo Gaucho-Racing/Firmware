@@ -48,11 +48,9 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function addStatusBadge(container, status) {
-		const b = document.createElement("span");
-		b.className =
-			"status-badge " + (status === "new" ? "status-new" : "status-changed");
-		b.textContent = status === "new" ? "NEW" : "CHANGED";
-		container.appendChild(b);
+		// PM request: use a simple yellow dot for all change states.
+		// Keep the existing helper call sites unchanged.
+		addChangedDot(container);
 	}
 
 	function addChangedDot(container) {
@@ -211,12 +209,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	function setEditModeUI(active) {
 		const toggleBtn = document.getElementById("edit-mode-toggle");
-		const dlBtn = document.getElementById("download-btn");
 		if (toggleBtn) {
 			toggleBtn.textContent = active ? "Exit Edit Mode" : "Edit Mode";
 			toggleBtn.classList.toggle("active", active);
 		}
-		if (dlBtn) dlBtn.style.display = active ? "block" : "none";
 	}
 
 	function wireEditModeButtons() {
@@ -822,6 +818,14 @@ window.addEventListener("DOMContentLoaded", function () {
 	if (editor) {
 		editor.setReRenderCallback(reRenderLocal);
 	}
+
+	// Warn users before accidental tab close/reload when in-memory edits exist.
+	window.addEventListener("beforeunload", function (e) {
+		if (!editor || !editor.hasUnsavedEdits || !editor.hasUnsavedEdits()) return;
+		e.preventDefault();
+		e.returnValue = "";
+		return "";
+	});
 
 	// ==================== Event handlers ====================
 
