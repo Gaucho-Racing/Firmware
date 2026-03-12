@@ -299,12 +299,10 @@
 			}
 			const msgIdTakenBy = existingDefs.find(
 				(e) =>
-					e.msgId === msgId.toLowerCase() &&
-					(isNewMsg || e.name !== msgName),
+					e.msgId === msgId.toLowerCase() && (isNewMsg || e.name !== msgName),
 			);
 			if (msgIdTakenBy) {
-				idF.error.textContent =
-					"MSG ID already used by " + msgIdTakenBy.name;
+				idF.error.textContent = "MSG ID already used by " + msgIdTakenBy.name;
 				ok = false;
 			}
 
@@ -333,16 +331,14 @@
 				const explicitEnd = range ? parseInt(range[2], 10) : null;
 				const width = fu.typeBitWidth(f.dataType);
 				if (!Number.isInteger(start) || start < 0) {
-					lenF.error.textContent =
-						"Invalid bit layout: negative/invalid start";
+					lenF.error.textContent = "Invalid bit layout: negative/invalid start";
 					ok = false;
 					break;
 				}
 				let end;
 				if (f.dataType === "s") {
 					if (explicitEnd !== null) {
-						lenF.error.textContent =
-							"String field must use single bit_start";
+						lenF.error.textContent = "String field must use single bit_start";
 						ok = false;
 						break;
 					}
@@ -355,15 +351,13 @@
 					end = msgLenBits - 1;
 				} else {
 					if (!width) {
-						lenF.error.textContent =
-							"Unsupported data type in field layout";
+						lenF.error.textContent = "Unsupported data type in field layout";
 						ok = false;
 						break;
 					}
 					if (explicitEnd !== null) {
 						if (explicitEnd < start) {
-							lenF.error.textContent =
-								"Invalid bit range in field " + f.name;
+							lenF.error.textContent = "Invalid bit range in field " + f.name;
 							ok = false;
 							break;
 						}
@@ -383,11 +377,7 @@
 				}
 				if (end >= msgLenBits) {
 					lenF.error.textContent =
-						"Field " +
-						f.name +
-						" exceeds MSG LENGTH (" +
-						msgLen +
-						" bytes)";
+						"Field " + f.name + " exceeds MSG LENGTH (" + msgLen + " bytes)";
 					ok = false;
 					break;
 				}
@@ -404,10 +394,7 @@
 							spans[j].start <= spans[i].end
 						) {
 							lenF.error.textContent =
-								"Field overlap: " +
-								spans[i].name +
-								" and " +
-								spans[j].name;
+								"Field overlap: " + spans[i].name + " and " + spans[j].name;
 							ok = false;
 							break;
 						}
@@ -428,7 +415,8 @@
 				const defRange = editor.findMessageDefRange(msgName);
 				const changed =
 					defRange &&
-					editor.getLineRangeText(defRange.startLine, defRange.endLine) !== yaml;
+					editor.getLineRangeText(defRange.startLine, defRange.endLine) !==
+						yaml;
 				if (changed) {
 					editor.replaceLineRange(defRange.startLine, defRange.endLine, yaml);
 					if (name !== msgName) {

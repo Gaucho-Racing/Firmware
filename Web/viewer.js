@@ -50,8 +50,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	function addStatusBadge(container, status) {
 		const b = document.createElement("span");
 		b.className =
-			"status-badge " +
-			(status === "new" ? "status-new" : "status-changed");
+			"status-badge " + (status === "new" ? "status-new" : "status-changed");
 		b.textContent = status === "new" ? "NEW" : "CHANGED";
 		container.appendChild(b);
 	}
@@ -70,9 +69,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		const defStatus = keyStatus("msgDef:" + msgName);
 		const routeStatus =
 			!!busPort && !!deviceName
-				? keyStatus(
-						"routeMsg:" + deviceName + "|" + busPort + "|" + msgName,
-					)
+				? keyStatus("routeMsg:" + deviceName + "|" + busPort + "|" + msgName)
 				: null;
 		const directStatus = combineStatus(defStatus, routeStatus);
 		return { directStatus, any: !!directStatus };
@@ -86,22 +83,21 @@ window.addEventListener("DOMContentLoaded", function () {
 			return { directStatus: null, bubbled: false, any: false };
 		const directStatus = keyStatus("routeBus:" + deviceName + "|" + busPort);
 		const bubbled = (messages || []).some(
-			(m) =>
-				messageChangeState(m.msgName, deviceName, busCanonical).any,
+			(m) => messageChangeState(m.msgName, deviceName, busCanonical).any,
 		);
 		return { directStatus, bubbled, any: !!directStatus || bubbled };
 	}
 
 	function nodeChangeState(deviceName, buses) {
-		if (!deviceName)
-			return { directStatus: null, bubbled: false, any: false };
+		if (!deviceName) return { directStatus: null, bubbled: false, any: false };
 		const directStatus = keyStatus("routeNode:" + deviceName);
-		const bubbled = (buses || []).some((b) =>
-			busChangeState(
-				deviceName,
-				b.canonicalBus || currentBusCanonical,
-				b.messages,
-			).any,
+		const bubbled = (buses || []).some(
+			(b) =>
+				busChangeState(
+					deviceName,
+					b.canonicalBus || currentBusCanonical,
+					b.messages,
+				).any,
 		);
 		return { directStatus, bubbled, any: !!directStatus || bubbled };
 	}
@@ -334,10 +330,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				item.appendChild(badgeRow);
 			}
 
-			if (
-				msg.canIdOverride ||
-				(msg.receivers && msg.receivers.length > 0)
-			) {
+			if (msg.canIdOverride || (msg.receivers && msg.receivers.length > 0)) {
 				const meta = document.createElement("div");
 				meta.className = "msg-meta";
 				if (msg.canIdOverride) {
@@ -458,18 +451,10 @@ window.addEventListener("DOMContentLoaded", function () {
 							editor.confirmAndDelete(
 								node.name + " on " + currentBusCanonical,
 								() => {
-									const range = editor.findRoutingBusRange(
-										node.name,
-										busPort,
-									);
+									const range = editor.findRoutingBusRange(node.name, busPort);
 									if (range)
-										editor.deleteLineRange(
-											range.startLine,
-											range.endLine,
-										);
-									editor.markEdited(
-										"routeBus:" + node.name + "|" + busPort,
-									);
+										editor.deleteLineRange(range.startLine, range.endLine);
+									editor.markEdited("routeBus:" + node.name + "|" + busPort);
 								},
 							);
 						}
@@ -516,8 +501,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		firstList.innerHTML = "";
 		result.buses.forEach((bus) => {
 			const display = bus.label || bus.name;
-			const busName =
-				canonicalBusName(display) || canonicalBusName(bus.name);
+			const busName = canonicalBusName(display) || canonicalBusName(bus.name);
 			const item = makeItem(display, true);
 			item.dataset.busCanonical = busName || "";
 			if (isLocal && busName && busName !== "Testing") {
@@ -526,8 +510,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					busName,
 				);
 				const busChanged = (nr.nodes || []).some(
-					(n) =>
-						busChangeState(n.name, busName, n.messages).any,
+					(n) => busChangeState(n.name, busName, n.messages).any,
 				);
 				if (busChanged) {
 					item.classList.add("edited-item");
@@ -547,10 +530,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				setPlaceholder(msgList, "Select a node");
 
 				if (!busName || busName === "Testing") {
-					setPlaceholder(
-						secondList,
-						"No routing data for this bus",
-					);
+					setPlaceholder(secondList, "No routing data for this bus");
 					return;
 				}
 
@@ -561,10 +541,7 @@ window.addEventListener("DOMContentLoaded", function () {
 						busName,
 					);
 				} else {
-					nodesResult = await window.GrcanApi.fetchMessageByBus(
-						ref,
-						busName,
-					);
+					nodesResult = await window.GrcanApi.fetchMessageByBus(ref, busName);
 				}
 
 				if (nodesResult.error) {
@@ -626,21 +603,10 @@ window.addEventListener("DOMContentLoaded", function () {
 							editor.confirmAndDelete(
 								deviceName + " > " + entry.busName,
 								() => {
-									const range = editor.findRoutingBusRange(
-										deviceName,
-										busPort,
-									);
+									const range = editor.findRoutingBusRange(deviceName, busPort);
 									if (range)
-										editor.deleteLineRange(
-											range.startLine,
-											range.endLine,
-										);
-									editor.markEdited(
-										"routeBus:" +
-											deviceName +
-											"|" +
-											busPort,
-									);
+										editor.deleteLineRange(range.startLine, range.endLine);
+									editor.markEdited("routeBus:" + deviceName + "|" + busPort);
 								},
 							);
 						}),
@@ -697,8 +663,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			.map((bus) => ({
 				display: bus.label || bus.name,
 				name:
-					canonicalBusName(bus.label || bus.name) ||
-					canonicalBusName(bus.name),
+					canonicalBusName(bus.label || bus.name) || canonicalBusName(bus.name),
 			}))
 			.filter((b) => b.name && b.name !== "Testing");
 
@@ -711,10 +676,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					bus.name,
 				);
 			} else {
-				nodesResult = await window.GrcanApi.fetchMessageByBus(
-					ref,
-					bus.name,
-				);
+				nodesResult = await window.GrcanApi.fetchMessageByBus(ref, bus.name);
 			}
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
@@ -765,22 +727,11 @@ window.addEventListener("DOMContentLoaded", function () {
 				icons.appendChild(
 					editor.createDeleteBtn(() => {
 						editor.setNavSnapshot(navSnapshot());
-						editor.confirmAndDelete(
-							nodeEntry.name + " (all routes)",
-							() => {
-								const range = editor.findRoutingDeviceRange(
-									nodeEntry.name,
-								);
-								if (range)
-									editor.deleteLineRange(
-										range.startLine,
-										range.endLine,
-									);
-								editor.markEdited(
-									"routeNode:" + nodeEntry.name,
-								);
-							},
-						);
+						editor.confirmAndDelete(nodeEntry.name + " (all routes)", () => {
+							const range = editor.findRoutingDeviceRange(nodeEntry.name);
+							if (range) editor.deleteLineRange(range.startLine, range.endLine);
+							editor.markEdited("routeNode:" + nodeEntry.name);
+						});
 					}),
 				);
 				addIconsBeforeChevron(item, icons);
@@ -829,34 +780,26 @@ window.addEventListener("DOMContentLoaded", function () {
 		if (snapshot.mode === "NODE_BUS") {
 			if (snapshot.device) {
 				const n = firstList.querySelector(
-					'.panel-item[data-node-name="' +
-						CSS.escape(snapshot.device) +
-						'"]',
+					'.panel-item[data-node-name="' + CSS.escape(snapshot.device) + '"]',
 				);
 				if (n) n.click();
 			}
 			if (snapshot.bus) {
 				const b = secondList.querySelector(
-					'.panel-item[data-bus-canonical="' +
-						CSS.escape(snapshot.bus) +
-						'"]',
+					'.panel-item[data-bus-canonical="' + CSS.escape(snapshot.bus) + '"]',
 				);
 				if (b) b.click();
 			}
 		} else {
 			if (snapshot.bus) {
 				const b = firstList.querySelector(
-					'.panel-item[data-bus-canonical="' +
-						CSS.escape(snapshot.bus) +
-						'"]',
+					'.panel-item[data-bus-canonical="' + CSS.escape(snapshot.bus) + '"]',
 				);
 				if (b) b.click();
 			}
 			if (snapshot.device) {
 				const n = secondList.querySelector(
-					'.panel-item[data-node-name="' +
-						CSS.escape(snapshot.device) +
-						'"]',
+					'.panel-item[data-node-name="' + CSS.escape(snapshot.device) + '"]',
 				);
 				if (n) n.click();
 			}
@@ -955,8 +898,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 
-		refSelect.innerHTML =
-			'<option value="">Select a branch or tag</option>';
+		refSelect.innerHTML = '<option value="">Select a branch or tag</option>';
 		[...branches, ...tags].forEach((ref) => {
 			const opt = document.createElement("option");
 			opt.value = ref;

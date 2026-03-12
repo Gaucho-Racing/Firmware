@@ -409,7 +409,8 @@
 
 select.editor-input {
 	appearance: none;
-	background-image: linear-gradient(45deg, transparent 50%, #7f8ca4 50%),
+	background-image:
+		linear-gradient(45deg, transparent 50%, #7f8ca4 50%),
 		linear-gradient(135deg, #7f8ca4 50%, transparent 50%);
 	background-position:
 		calc(100% - 14px) calc(50% - 2px),

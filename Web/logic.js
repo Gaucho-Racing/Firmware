@@ -345,16 +345,10 @@ function parseMessageByBusFromText(text, busName) {
 		} else if (onTargetPort && indent === 8) {
 			receiver = content.replace(/:$/, "");
 			pendingMsg = null;
-		} else if (
-			onTargetPort &&
-			indent === 10 &&
-			content.startsWith("- msg:")
-		) {
+		} else if (onTargetPort && indent === 10 && content.startsWith("- msg:")) {
 			const msgName = content.replace("- msg:", "").trim();
 			const msgDef = messageDefs.get(msgName);
-			const existing = currentNode.messages.find(
-				(m) => m.msgName === msgName,
-			);
+			const existing = currentNode.messages.find((m) => m.msgName === msgName);
 			if (existing) {
 				if (!existing.receivers.includes(receiver))
 					existing.receivers.push(receiver);

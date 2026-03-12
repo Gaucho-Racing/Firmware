@@ -134,16 +134,19 @@
 				onCancel();
 			}
 		});
-		overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => {
-			close();
-			onCancel();
-		});
-		overlay.querySelector('[data-act="confirm"]').addEventListener("click", () => {
-			close();
-			onConfirm();
-		});
+		overlay
+			.querySelector('[data-act="cancel"]')
+			.addEventListener("click", () => {
+				close();
+				onCancel();
+			});
+		overlay
+			.querySelector('[data-act="confirm"]')
+			.addEventListener("click", () => {
+				close();
+				onConfirm();
+			});
 	}
 
 	window.DiffViewer = { show };
 })();
-

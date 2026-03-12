@@ -77,8 +77,7 @@
 				msgF.error.textContent = "Required";
 				ok = false;
 			} else if (!editor.messageNameExists(msg)) {
-				msgF.error.textContent =
-					"Must exist in Message ID or Custom CAN ID";
+				msgF.error.textContent = "Must exist in Message ID or Custom CAN ID";
 				ok = false;
 			} else msgF.error.textContent = "";
 
@@ -132,11 +131,7 @@
 				} else {
 					let recFound = false;
 					const freshLines = editor.getLines();
-					for (
-						let i = busRange.startLine + 1;
-						i < busRange.endLine;
-						i++
-					) {
+					for (let i = busRange.startLine + 1; i < busRange.endLine; i++) {
 						if (
 							freshLines[i].search(/\S/) === 8 &&
 							freshLines[i].trim() === rec + ":"

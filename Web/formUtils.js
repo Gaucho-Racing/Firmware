@@ -130,7 +130,9 @@
 	}
 
 	function isValidMapEquation(raw) {
-		const eq = String(raw || "").trim().replace(/\s+/g, "");
+		const eq = String(raw || "")
+			.trim()
+			.replace(/\s+/g, "");
 		if (!eq) return true;
 		return (
 			/^x$/i.test(eq) ||

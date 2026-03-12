@@ -92,10 +92,7 @@
 		if (!devRange) return null;
 		const lines = getLines();
 		for (let i = devRange.startLine + 1; i < devRange.endLine; i++) {
-			if (
-				lines[i].search(/\S/) === 6 &&
-				lines[i].trim() === busPort + ":"
-			) {
+			if (lines[i].search(/\S/) === 6 && lines[i].trim() === busPort + ":") {
 				return {
 					startLine: i,
 					endLine: findBlockEnd(lines, i, devRange.endLine, 6),
@@ -176,7 +173,13 @@
 		return body ? body + "\n" : "";
 	}
 
-	function routeEntryExists(deviceName, busPort, receiver, msgName, canIdOverride) {
+	function routeEntryExists(
+		deviceName,
+		busPort,
+		receiver,
+		msgName,
+		canIdOverride,
+	) {
 		const busRange = findRoutingBusRange(deviceName, busPort);
 		if (!busRange) return false;
 		const lines = getLines();
@@ -185,10 +188,15 @@
 			const indent = lines[i].search(/\S/);
 			const content = lines[i].trim();
 			if (indent === 8) curReceiver = content.replace(/:$/, "");
-			if (indent === 10 && content === "- msg: " + msgName && curReceiver === receiver) {
+			if (
+				indent === 10 &&
+				content === "- msg: " + msgName &&
+				curReceiver === receiver
+			) {
 				const next = lines[i + 1] || "";
 				const hasOverride =
-					next.search(/\S/) === 12 && next.trim().startsWith("can_id_override:");
+					next.search(/\S/) === 12 &&
+					next.trim().startsWith("can_id_override:");
 				if (!canIdOverride && !hasOverride) return true;
 				if (canIdOverride && hasOverride) {
 					const ov = next.split(":")[1].trim();
@@ -267,8 +275,7 @@
 				y += "      scaled min: " + f.scaledMin + "\n";
 			if (f.scaledMax !== undefined && f.scaledMax !== "")
 				y += "      scaled max: " + f.scaledMax + "\n";
-			if (f.mapEquation)
-				y += '      map equation: "' + f.mapEquation + '"\n';
+			if (f.mapEquation) y += '      map equation: "' + f.mapEquation + '"\n';
 		}
 		return y;
 	}
