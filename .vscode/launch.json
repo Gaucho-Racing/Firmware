@@ -467,7 +467,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CAN_EXTERNAL_TEST.elf",
 			"name": "CAN_EXTERNAL_TEST",
@@ -497,7 +498,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CAN_INTERNAL_TEST.elf",
 			"name": "CAN_INTERNAL_TEST",
@@ -527,7 +529,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CAN_STRESS_TEST.elf",
 			"name": "CAN_STRESS_TEST",
@@ -557,7 +560,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CAN_RELEASE_TEST.elf",
 			"name": "CAN_RELEASE_TEST",
