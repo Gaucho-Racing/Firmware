@@ -8,7 +8,7 @@
   *
   @verbatim
  ===============================================================================
-                     ##### How to use this driver #####
+		     ##### How to use this driver #####
  ===============================================================================
     [..]
 
@@ -30,13 +30,13 @@
 #include "stm32h5xx_hal.h"
 
 /** @addtogroup STM32H5xx_HAL_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup HAL_MSP HAL MSP module driver
-  * @brief HAL MSP module.
-  * @{
-  */
+ * @brief HAL MSP module.
+ * @{
+ */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -46,54 +46,41 @@
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup HAL_MSP_Private_Functions HAL MSP Private Functions
-  * @{
-  */
+ * @{
+ */
 
 /**
-  * @brief  Initializes the Global MSP.
-  * @retval None
-  */
-void HAL_MspInit(void)
-{
-
-}
+ * @brief  Initializes the Global MSP.
+ * @retval None
+ */
+void HAL_MspInit(void) {}
 
 /**
-  * @brief  DeInitializes the Global MSP.
-  * @retval None
-  */
-void HAL_MspDeInit(void)
-{
-
-}
+ * @brief  DeInitializes the Global MSP.
+ * @retval None
+ */
+void HAL_MspDeInit(void) {}
 
 /**
-  * @brief  Initializes the PPP MSP.
-  * @retval None
-  */
-void HAL_PPP_MspInit(void)
-{
-
-}
+ * @brief  Initializes the PPP MSP.
+ * @retval None
+ */
+void HAL_PPP_MspInit(void) {}
 
 /**
-  * @brief  DeInitializes the PPP MSP.
-  * @retval None
-  */
-void HAL_PPP_MspDeInit(void)
-{
-
-}
+ * @brief  DeInitializes the PPP MSP.
+ * @retval None
+ */
+void HAL_PPP_MspDeInit(void) {}
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
-
+ * @}
+ */
