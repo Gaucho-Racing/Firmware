@@ -53,7 +53,7 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
-		}
+		},
 		{
 			"label": "CMake: configure and build G4ECHO",
 			"type": "shell",
