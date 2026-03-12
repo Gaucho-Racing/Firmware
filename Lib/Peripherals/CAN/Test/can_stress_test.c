@@ -3,8 +3,8 @@
 #include "can.h"
 #include "can_tests.h"
 
-//#define USECAN1
-//#define TX_BUFFER_1_SIZE 10
+// #define USECAN1
+// #define TX_BUFFER_1_SIZE 10
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
@@ -19,7 +19,7 @@ void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 
 int can_stress_test(void)
 {
-    LOGOMATIC("running can_stress_test\n");
+	LOGOMATIC("running can_stress_test\n");
 	uint32_t status, loop;
 	UNUSED(status);
 
@@ -35,7 +35,6 @@ int can_stress_test(void)
 	}
 
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
-
 
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
@@ -67,7 +66,7 @@ int can_stress_test(void)
 	size_t i = 0;
 	size_t rounds = 5;
 	size_t messages = primary_can->tx_capacity * 2;
-    uint32_t successes = 0;
+	uint32_t successes = 0;
 	while (loop < rounds) {
 		loop++;
 		can_stress_test_received = 0;
@@ -79,7 +78,7 @@ int can_stress_test(void)
 			}
 			i++;
 		}
-		LOGOMATIC("Sent %u/%u CAN msgs...\n", (unsigned int)i, (unsigned int) messages);
+		LOGOMATIC("Sent %u/%u CAN msgs...\n", (unsigned int)i, (unsigned int)messages);
 		HAL_Delay(1000);
 
 		LOGOMATIC("Received %u/%u CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int)messages);
@@ -92,23 +91,21 @@ int can_stress_test(void)
 		}
 		LOGOMATIC("\n");
 
-        if (can_stress_test_received == messages) {
-            successes += 1;
-        }
-        //msg.data[0] = 0x10;
-		//can_send(data_can, &msg);
-		//HAL_Delay(1000);
+		if (can_stress_test_received == messages) {
+			successes += 1;
+		}
+		// msg.data[0] = 0x10;
+		// can_send(data_can, &msg);
+		// HAL_Delay(1000);
 	}
-
-
 
 	if (can_release(primary_can)) {
 		LOGOMATIC("can_stress_test: FAIL: could not release primary_can\n");
-        return ERROR;
+		return ERROR;
 	}
 
-	//FINAL CHECK
-	LOGOMATIC("can_stress_test: succeeded %u/%u rounds\n",successes,rounds);
+	// FINAL CHECK
+	LOGOMATIC("can_stress_test: succeeded %u/%u rounds\n", successes, rounds);
 	if (successes < rounds) {
 		LOGOMATIC("can_stress_test: FAIL\n");
 	} else {

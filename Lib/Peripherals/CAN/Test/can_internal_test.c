@@ -13,10 +13,10 @@
 	return 0;
 }*/
 
-//#define USECAN1 1
-//#define TX_BUFFER_1_SIZE 10
-//#define USECAN2 1
-//#define TX_BUFFER_2_SIZE 10
+// #define USECAN1 1
+// #define TX_BUFFER_1_SIZE 10
+// #define USECAN2 1
+// #define TX_BUFFER_2_SIZE 10
 
 // TODO: Make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
@@ -76,14 +76,13 @@ int can_internal_test(void)
 		LOGOMATIC("Could not initialize primary_can\n");
 		return ERROR;
 	}
-	//HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
+	// HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
 
 	if ((data_can = can_init(&cfg2)) == NULL) {
 		LOGOMATIC("Could not initialize data_can\n");
 		return ERROR;
 	}
-	//HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0);
-
+	// HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0);
 
 	//=============================================================================================
 	if (can_start(primary_can)) {
@@ -117,13 +116,13 @@ int can_internal_test(void)
 
 	uint32_t error = false;
 
-	if ((rx_1_received!=num_messages)) {
+	if ((rx_1_received != num_messages)) {
 		error = true;
 		LOGOMATIC("FAIL: can_internal_test: did not receive all rx1\n");
 	} else {
 		LOGOMATIC("SUCCESS: can_internal_test: received all rx1\n");
 	}
-	if ((rx_2_received!=num_messages)) {
+	if ((rx_2_received != num_messages)) {
 		error = true;
 		LOGOMATIC("FAIL: can_internal_test: did not receive all rx2\n");
 	} else {
@@ -131,21 +130,25 @@ int can_internal_test(void)
 	}
 
 	if (primary_can->tx_elements > 0) {
-			LOGOMATIC("can_internal_test: FAIL: did not send all messages from tx_buffer\n");
+		LOGOMATIC("can_internal_test: FAIL: did not send all messages from tx_buffer\n");
 	}
 	LOGOMATIC("\n");
 
-
 	uint32_t rc;
-	if ( (rc = can_release(primary_can)) ) LOGOMATIC("FAIL: can_internal_test; could not release primary_can\n");
+	if ((rc = can_release(primary_can))) {
+		LOGOMATIC("FAIL: can_internal_test; could not release primary_can\n");
+	}
 	error |= rc;
-	if ( (rc = can_release(data_can)) ) LOGOMATIC("FAIL: can_internal_test; could not release data_can\n");
+	if ((rc = can_release(data_can))) {
+		LOGOMATIC("FAIL: can_internal_test; could not release data_can\n");
+	}
 	error |= rc;
 
-	if (error) {return ERROR;}
+	if (error) {
+		return ERROR;
+	}
 
 	LOGOMATIC("can_internal_test: SUCCESS\n");
-
 
 	return SUCCESS;
 }

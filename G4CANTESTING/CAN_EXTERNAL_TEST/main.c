@@ -133,7 +133,7 @@ int main(void)
 
 	LOGOMATIC("Booted!\n");
 
-	//LOGOMATIC("running can_external_test:\n");
+	// LOGOMATIC("running can_external_test:\n");
 	can_external_test();
 
 	/* Infinite loop */

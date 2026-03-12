@@ -133,7 +133,7 @@ int main(void)
 
 	LOGOMATIC("Booted!\n");
 
-	//LOGOMATIC("running can_stress_test:\n");
+	// LOGOMATIC("running can_stress_test:\n");
 	can_stress_test();
 
 	/* Infinite loop */

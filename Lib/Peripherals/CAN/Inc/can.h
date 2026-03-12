@@ -57,7 +57,7 @@ typedef struct {
 	// RX Callback
 	CAN_RXCallback rx_callback;
 
-	uint8_t rx_interrupt_priority; //only 4 bits
+	uint8_t rx_interrupt_priority; // only 4 bits
 	uint8_t tx_interrupt_priority;
 
 	// for release
@@ -93,6 +93,5 @@ int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
 // TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
-
 
 #endif // End Header Guard

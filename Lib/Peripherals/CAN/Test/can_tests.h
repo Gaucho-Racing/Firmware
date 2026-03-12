@@ -6,10 +6,10 @@
 #include "can_platform_deps.h"
 
 // Tested STM32 Families
-//#define USECAN1
-//#define TX_BUFFER_2_SIZE 10
-//#define USECAN2
-//#define TX_BUFFER_3_SIZE 10
+// #define USECAN1
+// #define TX_BUFFER_2_SIZE 10
+// #define USECAN2
+// #define TX_BUFFER_3_SIZE 10
 
 // abstract families
 extern int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);

@@ -7,8 +7,8 @@
 
 #include "Logomatic.h"
 
-//#include "can_conf.h"
-// TODO: Figure out how to move these defines into the application code
+// #include "can_conf.h"
+//  TODO: Figure out how to move these defines into the application code
 
 #define USECAN1
 #define TX_BUFFER_1_SIZE 10
@@ -18,7 +18,6 @@
 
 #define USECAN3
 #define TX_BUFFER_3_SIZE 10
-
 
 // HAL handles
 #ifdef USECAN1
@@ -364,10 +363,10 @@ int can_send(CANHandle *canHandle, FDCANTxMessage *message)
 
 	// stop can_tx_dequeue_helper from from interleaving
 	uint32_t basepri = __get_BASEPRI();
-	__set_BASEPRI( (canHandle->tx_interrupt_priority) << 4);
+	__set_BASEPRI((canHandle->tx_interrupt_priority) << 4);
 
 	uint32_t free = 0;
-	if ( (free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
+	if ((free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
 		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
 
 		uint32_t val = 0;
@@ -721,8 +720,8 @@ static int can_msp_deinit(CANHandle *canHandle)
 	// TODO: used to disable GPIOs clocks, but that might affect other peripherals
 
 	// RCC
-	//fdcan_disable_shared_clock();
-	//can only disable clock after resetting all FDCAN instances
+	// fdcan_disable_shared_clock();
+	// can only disable clock after resetting all FDCAN instances
 	return CAN_SUCCESS;
 }
 
@@ -736,11 +735,10 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 
 	// Disable interrupts
 	//__HAL_FDCAN_DISABLE_IT(hfdcan, FDCAN_IT_LIST_RX_FIFO0 | FDCAN_IT_LIST_RX_FIFO1 | FDCAN_IT_LIST_SMSG | FDCAN_IT_LIST_TX_FIFO_ERROR | FDCAN_IT_LIST_MISC | //FDCAN_IT_LIST_BIT_LINE_ERROR |
-					   //FDCAN_IT_LIST_PROTOCOL_ERROR);
+	// FDCAN_IT_LIST_PROTOCOL_ERROR);
 
 	//
 	CLEAR_BIT(hfdcan->Instance->ILE, (FDCAN_INTERRUPT_LINE0 | FDCAN_INTERRUPT_LINE1));
-
 
 	// Clear filters
 	// TODO: fix magic numbers
@@ -751,7 +749,8 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 
 	// Exit INIT mode
 	hfdcan->Instance->CCCR &= ~FDCAN_CCCR_INIT;
-	while (hfdcan->Instance->CCCR & FDCAN_CCCR_INIT);
+	while (hfdcan->Instance->CCCR & FDCAN_CCCR_INIT)
+		;
 
 	// Update handle state
 	hfdcan->State = HAL_FDCAN_STATE_RESET;
