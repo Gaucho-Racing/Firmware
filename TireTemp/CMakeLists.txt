@@ -39,10 +39,6 @@ target_sources(
 		Core/Src/MLX_I2C_Driver.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
-		# MLX90640
-		MLX90640/Src/MLX90640_API.c
-		# DSP
-		DSP/Src/arm_sqrt_q31.c
 )
 
 target_link_libraries(
@@ -50,16 +46,7 @@ target_link_libraries(
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
 		BitManipulations_Lib
-		m
+		MLX90640_LIB
 )
 
-target_include_directories(
-	${GR_PROJECT_NAME}_USER_CODE
-	INTERFACE
-		Core/Inc
-		MLX90640/Inc
-		DSP/Inc
-)
-
-# TODO Eventually resolve all warnings and remove this
-target_compile_options(${GR_PROJECT_NAME}_USER_CODE INTERFACE "-Wno-error")
+target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
