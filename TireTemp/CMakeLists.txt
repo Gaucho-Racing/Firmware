@@ -49,8 +49,4 @@ target_link_libraries(
 		MLX90640_LIB
 )
 
-target_include_directories(
-	${GR_PROJECT_NAME}_USER_CODE
-	INTERFACE
-		Core/Inc
-)
+target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
