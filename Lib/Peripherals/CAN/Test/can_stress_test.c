@@ -105,7 +105,7 @@ int can_stress_test(void)
 	}
 
 	// FINAL CHECK
-	LOGOMATIC("can_stress_test: succeeded %u/%u rounds\n",(unsigned int) successes,(unsigned int) rounds);
+	LOGOMATIC("can_stress_test: succeeded %u/%u rounds\n", (unsigned int)successes, (unsigned int)rounds);
 	if (successes < rounds) {
 		LOGOMATIC("can_stress_test: FAIL\n");
 	} else {
