@@ -94,8 +94,7 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 
 // TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
 
-
-//Configuration helpers
+// Configuration helpers
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);
 
 #endif // End Header Guard
