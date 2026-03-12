@@ -17,6 +17,8 @@
 #ifndef _MLX90640_API_H_
 #define _MLX90640_API_H_
 
+#include <stdint.h>
+
 #define MLX90640_NO_ERROR 0
 #define MLX90640_I2C_NACK_ERROR 1
 #define MLX90640_I2C_WRITE_ERROR 2
