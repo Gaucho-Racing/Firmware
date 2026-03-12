@@ -10,7 +10,12 @@
 		"*.md": "markdown",
 		"*.pl": "perl",
 		"*.json": "json",
-		"*.yml": "yaml"
+		"*.yml": "yaml",
+		"*.html": "html",
+		"*.css": "css",
+		"*.js": "javascript",
+		"Makefile": "makefile",
+		"*.CANdo": "yaml"
 	},
 	"C_Cpp.default.cStandard": "gnu11",
 	"markdown.validate.enabled": true,
