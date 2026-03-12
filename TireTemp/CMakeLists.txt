@@ -42,7 +42,7 @@ target_sources(
 		# MLX90640
 		MLX90640/Src/MLX90640_API.c
 		# DSP
-		${CMSIS_5_DSP_SOURCE_ROOT}/FastMathFunctions/arm_sqrt_q31.c
+		DSP/Src/arm_sqrt_q31.c
 )
 
 target_link_libraries(
@@ -50,7 +50,6 @@ target_link_libraries(
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
 		BitManipulations_Lib
-		CMSIS_5_DSP
 		m
 )
 
@@ -59,4 +58,5 @@ target_include_directories(
 	INTERFACE
 		Core/Inc
 		MLX90640/Inc
+		DSP/Inc
 )
