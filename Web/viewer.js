@@ -1,3 +1,12 @@
+// Purpose: Main viewer controller. Owns the three-panel hierarchy UI (Nodes /
+// Buses / Messages) and all rendering logic. Handles GitHub ref selection,
+// initial data load, local re-renders after edits, and change-state badge/dot
+// bubbling. Edit mode is treated as a simple boolean flag on GrcanEditor; all
+// if(editing) branches live here so the panels naturally show/hide edit controls
+// without a separate code path. Also owns the sidebar Edit Mode toggle and
+// Download button wiring (moved here from the inline script in index.html).
+// Depends on: logic.js (GrcanApi), editor.js (GrcanEditor), diffViewer.js (DiffViewer).
+
 window.addEventListener("DOMContentLoaded", function () {
 	const HIERARCHY_MODE = "NODE_BUS"; // "NODE_BUS" or "BUS_NODE"
 
@@ -9,10 +18,99 @@ window.addEventListener("DOMContentLoaded", function () {
 	const firstHeader = document.querySelector("#bus-panel .panel-header");
 	const secondHeader = document.querySelector("#node-panel .panel-header");
 	let nodeIdMap = new Map();
+	let currentRef = "";
+
+	let currentDeviceName = null;
+	let currentBusCanonical = null;
+
+	function navSnapshot() {
+		return {
+			device: currentDeviceName,
+			bus: currentBusCanonical,
+			mode: HIERARCHY_MODE,
+		};
+	}
+
+	function isChanged(key) {
+		return !!editor && !!editor.isEdited && editor.isEdited(key);
+	}
+
+	function keyStatus(key) {
+		if (!!editor && !!editor.isNew && editor.isNew(key)) return "new";
+		if (isChanged(key)) return "changed";
+		return null;
+	}
+
+	function combineStatus(a, b) {
+		if (a === "new" || b === "new") return "new";
+		if (a === "changed" || b === "changed") return "changed";
+		return null;
+	}
+
+	function addStatusBadge(container, status) {
+		const b = document.createElement("span");
+		b.className =
+			"status-badge " +
+			(status === "new" ? "status-new" : "status-changed");
+		b.textContent = status === "new" ? "NEW" : "CHANGED";
+		container.appendChild(b);
+	}
+
+	function addChangedDot(container) {
+		const d = document.createElement("span");
+		d.className = "changed-dot";
+		d.title = "Changed";
+		container.appendChild(d);
+	}
+
+	function messageChangeState(msgName, deviceName, busCanonical) {
+		const busPort = busCanonical
+			? window.GrcanApi.busToPort(busCanonical)
+			: null;
+		const defStatus = keyStatus("msgDef:" + msgName);
+		const routeStatus =
+			!!busPort && !!deviceName
+				? keyStatus(
+						"routeMsg:" + deviceName + "|" + busPort + "|" + msgName,
+					)
+				: null;
+		const directStatus = combineStatus(defStatus, routeStatus);
+		return { directStatus, any: !!directStatus };
+	}
+
+	function busChangeState(deviceName, busCanonical, messages) {
+		const busPort = busCanonical
+			? window.GrcanApi.busToPort(busCanonical)
+			: null;
+		if (!deviceName || !busPort)
+			return { directStatus: null, bubbled: false, any: false };
+		const directStatus = keyStatus("routeBus:" + deviceName + "|" + busPort);
+		const bubbled = (messages || []).some(
+			(m) =>
+				messageChangeState(m.msgName, deviceName, busCanonical).any,
+		);
+		return { directStatus, bubbled, any: !!directStatus || bubbled };
+	}
+
+	function nodeChangeState(deviceName, buses) {
+		if (!deviceName)
+			return { directStatus: null, bubbled: false, any: false };
+		const directStatus = keyStatus("routeNode:" + deviceName);
+		const bubbled = (buses || []).some((b) =>
+			busChangeState(
+				deviceName,
+				b.canonicalBus || currentBusCanonical,
+				b.messages,
+			).any,
+		);
+		return { directStatus, bubbled, any: !!directStatus || bubbled };
+	}
 
 	if (!window.GrcanApi || !refSelect || !firstList || !secondList || !msgList) {
 		return;
 	}
+
+	const editor = window.GrcanEditor || null;
 
 	function setPlaceholder(el, text) {
 		el.innerHTML = `<span class="placeholder">${text}</span>`;
@@ -59,10 +157,27 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
+	function addIconsBeforeChevron(item, icons) {
+		const chev = item.querySelector(".item-chevron");
+		if (chev) item.insertBefore(icons, chev);
+		else item.appendChild(icons);
+	}
+
 	async function loadNodeIds(ref) {
 		const result = await window.GrcanApi.fetchNodeIds(ref);
 		nodeIdMap = new Map();
 		if (result.error || !result.nodeIds) return;
+		result.nodeIds.forEach((entry) => {
+			const pretty = entry.name.replace(/_/g, " ");
+			nodeIdMap.set(normalizeNodeName(entry.name), entry.id);
+			nodeIdMap.set(normalizeNodeName(pretty), entry.id);
+		});
+	}
+
+	function loadNodeIdsFromText(text) {
+		const result = window.GrcanApi.parseNodeIdsFromText(text);
+		nodeIdMap = new Map();
+		if (!result.nodeIds) return;
 		result.nodeIds.forEach((entry) => {
 			const pretty = entry.name.replace(/_/g, " ");
 			nodeIdMap.set(normalizeNodeName(entry.name), entry.id);
@@ -90,6 +205,57 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
+	function isEditing() {
+		return editor && editor.isEditMode();
+	}
+
+	// ==================== Edit Mode UI ====================
+	// Centralises sidebar button state so both the toggle click and the ref-change
+	// reset go through a single place.
+
+	function setEditModeUI(active) {
+		const toggleBtn = document.getElementById("edit-mode-toggle");
+		const dlBtn = document.getElementById("download-btn");
+		if (toggleBtn) {
+			toggleBtn.textContent = active ? "Exit Edit Mode" : "Edit Mode";
+			toggleBtn.classList.toggle("active", active);
+		}
+		if (dlBtn) dlBtn.style.display = active ? "block" : "none";
+	}
+
+	function wireEditModeButtons() {
+		const toggleBtn = document.getElementById("edit-mode-toggle");
+		const dlBtn = document.getElementById("download-btn");
+		if (!toggleBtn || !dlBtn || !editor) return;
+
+		toggleBtn.addEventListener("click", function () {
+			if (!editor.getRawText()) return;
+			const active = editor.toggleEditMode();
+			setEditModeUI(active);
+			editor.triggerReRender();
+		});
+
+		dlBtn.addEventListener("click", function () {
+			const oldText = editor.getOriginalRawText
+				? editor.getOriginalRawText()
+				: "";
+			const newText = editor.getRawText ? editor.getRawText() : "";
+			if (!window.DiffViewer || oldText === newText) {
+				editor.downloadCando();
+				return;
+			}
+			window.DiffViewer.show({
+				oldText,
+				newText,
+				onConfirm: function () {
+					editor.downloadCando();
+				},
+			});
+		});
+	}
+
+	// ==================== Render Messages (Panel 3) ====================
+
 	function renderMessages(messages) {
 		msgList.innerHTML = "";
 		if (!messages || messages.length === 0) {
@@ -97,16 +263,81 @@ window.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 
+		const editing = isEditing();
+		const busPort = currentBusCanonical
+			? window.GrcanApi.busToPort(currentBusCanonical)
+			: null;
+
 		messages.forEach((msg) => {
 			const item = document.createElement("div");
 			item.className = "panel-item msg-item";
+			const change = messageChangeState(
+				msg.msgName,
+				currentDeviceName,
+				currentBusCanonical,
+			);
+			if (change.any) item.classList.add("edited-item");
+
+			const nameRow = document.createElement("div");
+			nameRow.className = "msg-name-row";
 
 			const name = document.createElement("span");
 			name.className = "msg-name";
 			name.textContent = msg.msgName;
-			item.appendChild(name);
+			nameRow.appendChild(name);
 
-			if (msg.canIdOverride || (msg.receivers && msg.receivers.length > 0)) {
+			if (editing) {
+				const icons = document.createElement("span");
+				icons.className = "editor-icons";
+				icons.appendChild(
+					editor.createEditBtn(() => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showMessageEditForm(msg.msgName, false);
+					}),
+				);
+				if (busPort && currentDeviceName) {
+					icons.appendChild(
+						editor.createDeleteBtn(() => {
+							editor.setNavSnapshot(navSnapshot());
+							editor.confirmAndDelete(msg.msgName, () => {
+								const entries = editor.findRoutingMsgEntries(
+									currentDeviceName,
+									busPort,
+									msg.msgName,
+								);
+								for (let i = entries.length - 1; i >= 0; i--) {
+									editor.deleteLineRange(
+										entries[i].startLine,
+										entries[i].endLine,
+									);
+								}
+								editor.markEdited(
+									"routeMsg:" +
+										(currentDeviceName || "") +
+										"|" +
+										busPort +
+										"|" +
+										msg.msgName,
+								);
+							});
+						}),
+					);
+				}
+				nameRow.appendChild(icons);
+			}
+
+			item.appendChild(nameRow);
+			if (change.any) {
+				const badgeRow = document.createElement("div");
+				badgeRow.className = "msg-edited-row";
+				addStatusBadge(badgeRow, change.directStatus || "changed");
+				item.appendChild(badgeRow);
+			}
+
+			if (
+				msg.canIdOverride ||
+				(msg.receivers && msg.receivers.length > 0)
+			) {
 				const meta = document.createElement("div");
 				meta.className = "msg-meta";
 				if (msg.canIdOverride) {
@@ -163,7 +394,24 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 			msgList.appendChild(item);
 		});
+
+		if (editing && busPort && currentDeviceName) {
+			msgList.appendChild(
+				editor.createAddBtn("Add Route", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showRoutingAddForm(currentDeviceName, busPort);
+				}),
+			);
+			msgList.appendChild(
+				editor.createAddBtn("Add Message Definition", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showMessageEditForm(null, true);
+				}),
+			);
+		}
 	}
+
+	// ==================== BUS_NODE mode ====================
 
 	function renderBusNodeSecondary(nodes) {
 		secondList.innerHTML = "";
@@ -172,10 +420,66 @@ window.addEventListener("DOMContentLoaded", function () {
 			setPlaceholder(secondList, "No nodes on this bus");
 			return;
 		}
+		const editing = isEditing();
 		nodes.forEach((node) => {
 			const item = makeItem(node.name, true);
+			item.dataset.nodeName = node.name;
+			const busState = busChangeState(
+				node.name,
+				currentBusCanonical,
+				node.messages,
+			);
+			if (busState.any) {
+				item.classList.add("edited-item");
+				const tokenHost = document.createElement("span");
+				if (busState.directStatus)
+					addStatusBadge(tokenHost, busState.directStatus);
+				else addChangedDot(tokenHost);
+				addIconsBeforeChevron(item, tokenHost);
+			}
 			appendNodeIdAccent(item, node.name);
+
+			if (editing) {
+				const icons = document.createElement("span");
+				icons.className = "editor-icons";
+				icons.appendChild(
+					editor.createEditBtn(() => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showRoutingNodeEditForm(node.name);
+					}),
+				);
+				icons.appendChild(
+					editor.createDeleteBtn(() => {
+						const busPort = currentBusCanonical
+							? window.GrcanApi.busToPort(currentBusCanonical)
+							: null;
+						if (busPort) {
+							editor.setNavSnapshot(navSnapshot());
+							editor.confirmAndDelete(
+								node.name + " on " + currentBusCanonical,
+								() => {
+									const range = editor.findRoutingBusRange(
+										node.name,
+										busPort,
+									);
+									if (range)
+										editor.deleteLineRange(
+											range.startLine,
+											range.endLine,
+										);
+									editor.markEdited(
+										"routeBus:" + node.name + "|" + busPort,
+									);
+								},
+							);
+						}
+					}),
+				);
+				addIconsBeforeChevron(item, icons);
+			}
+
 			item.addEventListener("click", () => {
+				currentDeviceName = node.name;
 				secondList
 					.querySelectorAll(".panel-item")
 					.forEach((el) => el.classList.remove("active"));
@@ -186,12 +490,19 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	async function renderBusNode(ref) {
+	async function renderBusNode(ref, localText) {
+		const isLocal = !!localText;
 		setPlaceholder(firstList, "Loading buses...");
 		setPlaceholder(secondList, "Select a bus");
 		setPlaceholder(msgList, "Select a node");
 
-		const result = await window.GrcanApi.fetchBus(ref);
+		let result;
+		if (isLocal) {
+			result = window.GrcanApi.parseBusIdsFromText(localText);
+		} else {
+			result = await window.GrcanApi.fetchBus(ref);
+		}
+
 		if (result.error || !result.buses) {
 			setPlaceholder(
 				firstList,
@@ -205,9 +516,29 @@ window.addEventListener("DOMContentLoaded", function () {
 		firstList.innerHTML = "";
 		result.buses.forEach((bus) => {
 			const display = bus.label || bus.name;
-			const busName = canonicalBusName(display) || canonicalBusName(bus.name);
+			const busName =
+				canonicalBusName(display) || canonicalBusName(bus.name);
 			const item = makeItem(display, true);
+			item.dataset.busCanonical = busName || "";
+			if (isLocal && busName && busName !== "Testing") {
+				const nr = window.GrcanApi.parseMessageByBusFromText(
+					localText,
+					busName,
+				);
+				const busChanged = (nr.nodes || []).some(
+					(n) =>
+						busChangeState(n.name, busName, n.messages).any,
+				);
+				if (busChanged) {
+					item.classList.add("edited-item");
+					const tokenHost = document.createElement("span");
+					addChangedDot(tokenHost);
+					addIconsBeforeChevron(item, tokenHost);
+				}
+			}
 			item.addEventListener("click", async () => {
+				currentBusCanonical = busName;
+				currentDeviceName = null;
 				firstList
 					.querySelectorAll(".panel-item")
 					.forEach((el) => el.classList.remove("active"));
@@ -216,14 +547,26 @@ window.addEventListener("DOMContentLoaded", function () {
 				setPlaceholder(msgList, "Select a node");
 
 				if (!busName || busName === "Testing") {
-					setPlaceholder(secondList, "No routing data for this bus");
+					setPlaceholder(
+						secondList,
+						"No routing data for this bus",
+					);
 					return;
 				}
 
-				const nodesResult = await window.GrcanApi.fetchMessageByBus(
-					ref,
-					busName,
-				);
+				let nodesResult;
+				if (isLocal) {
+					nodesResult = window.GrcanApi.parseMessageByBusFromText(
+						localText,
+						busName,
+					);
+				} else {
+					nodesResult = await window.GrcanApi.fetchMessageByBus(
+						ref,
+						busName,
+					);
+				}
+
 				if (nodesResult.error) {
 					setPlaceholder(
 						secondList,
@@ -239,16 +582,75 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	function renderNodeBusSecondary(busEntries) {
+	// ==================== NODE_BUS mode ====================
+
+	function renderNodeBusSecondary(busEntries, deviceName) {
 		secondList.innerHTML = "";
 		setPlaceholder(msgList, "Select a bus");
 		if (!busEntries || busEntries.length === 0) {
 			setPlaceholder(secondList, "No buses for this node");
 			return;
 		}
+		const editing = isEditing();
 		busEntries.forEach((entry) => {
 			const item = makeItem(entry.busName, true);
+			item.dataset.busCanonical = entry.canonicalBus || "";
+			const busState = busChangeState(
+				deviceName,
+				entry.canonicalBus,
+				entry.messages,
+			);
+			if (busState.any) {
+				item.classList.add("edited-item");
+				const tokenHost = document.createElement("span");
+				if (busState.directStatus)
+					addStatusBadge(tokenHost, busState.directStatus);
+				else addChangedDot(tokenHost);
+				addIconsBeforeChevron(item, tokenHost);
+			}
+
+			if (editing && entry.canonicalBus) {
+				const busPort = window.GrcanApi.busToPort(entry.canonicalBus);
+				if (busPort) {
+					const icons = document.createElement("span");
+					icons.className = "editor-icons";
+					icons.appendChild(
+						editor.createEditBtn(() => {
+							editor.setNavSnapshot(navSnapshot());
+							editor.showRoutingBusEditForm(deviceName, busPort);
+						}),
+					);
+					icons.appendChild(
+						editor.createDeleteBtn(() => {
+							editor.setNavSnapshot(navSnapshot());
+							editor.confirmAndDelete(
+								deviceName + " > " + entry.busName,
+								() => {
+									const range = editor.findRoutingBusRange(
+										deviceName,
+										busPort,
+									);
+									if (range)
+										editor.deleteLineRange(
+											range.startLine,
+											range.endLine,
+										);
+									editor.markEdited(
+										"routeBus:" +
+											deviceName +
+											"|" +
+											busPort,
+									);
+								},
+							);
+						}),
+					);
+					addIconsBeforeChevron(item, icons);
+				}
+			}
+
 			item.addEventListener("click", () => {
+				currentBusCanonical = entry.canonicalBus || null;
 				secondList
 					.querySelectorAll(".panel-item")
 					.forEach((el) => el.classList.remove("active"));
@@ -257,14 +659,30 @@ window.addEventListener("DOMContentLoaded", function () {
 			});
 			secondList.appendChild(item);
 		});
+
+		if (editing && deviceName) {
+			secondList.appendChild(
+				editor.createAddBtn("Add Bus", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showRoutingAddForm(deviceName, null);
+				}),
+			);
+		}
 	}
 
-	async function renderNodeBus(ref) {
+	async function renderNodeBus(ref, localText) {
+		const isLocal = !!localText;
 		setPlaceholder(firstList, "Loading nodes...");
 		setPlaceholder(secondList, "Select a node");
 		setPlaceholder(msgList, "Select a bus");
 
-		const busesResult = await window.GrcanApi.fetchBus(ref);
+		let busesResult;
+		if (isLocal) {
+			busesResult = window.GrcanApi.parseBusIdsFromText(localText);
+		} else {
+			busesResult = await window.GrcanApi.fetchBus(ref);
+		}
+
 		if (busesResult.error || !busesResult.buses) {
 			setPlaceholder(
 				firstList,
@@ -279,22 +697,33 @@ window.addEventListener("DOMContentLoaded", function () {
 			.map((bus) => ({
 				display: bus.label || bus.name,
 				name:
-					canonicalBusName(bus.label || bus.name) || canonicalBusName(bus.name),
+					canonicalBusName(bus.label || bus.name) ||
+					canonicalBusName(bus.name),
 			}))
 			.filter((b) => b.name && b.name !== "Testing");
 
 		const nodeMap = new Map();
 		for (const bus of routingBuses) {
-			const nodesResult = await window.GrcanApi.fetchMessageByBus(
-				ref,
-				bus.name,
-			);
+			let nodesResult;
+			if (isLocal) {
+				nodesResult = window.GrcanApi.parseMessageByBusFromText(
+					localText,
+					bus.name,
+				);
+			} else {
+				nodesResult = await window.GrcanApi.fetchMessageByBus(
+					ref,
+					bus.name,
+				);
+			}
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
 				if (!nodeMap.has(node.name)) nodeMap.set(node.name, []);
-				nodeMap
-					.get(node.name)
-					.push({ busName: bus.display, messages: node.messages });
+				nodeMap.get(node.name).push({
+					busName: bus.display,
+					canonicalBus: bus.name,
+					messages: node.messages,
+				});
 			}
 		}
 
@@ -308,22 +737,86 @@ window.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 
+		const editing = isEditing();
+
 		nodes.forEach((nodeEntry) => {
 			const item = makeItem(nodeEntry.name, true);
+			item.dataset.nodeName = nodeEntry.name;
+			const nodeState = nodeChangeState(nodeEntry.name, nodeEntry.buses);
+			if (nodeState.any) {
+				item.classList.add("edited-item");
+				const tokenHost = document.createElement("span");
+				if (nodeState.directStatus)
+					addStatusBadge(tokenHost, nodeState.directStatus);
+				else addChangedDot(tokenHost);
+				addIconsBeforeChevron(item, tokenHost);
+			}
 			appendNodeIdAccent(item, nodeEntry.name);
+
+			if (editing) {
+				const icons = document.createElement("span");
+				icons.className = "editor-icons";
+				icons.appendChild(
+					editor.createEditBtn(() => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showRoutingNodeEditForm(nodeEntry.name);
+					}),
+				);
+				icons.appendChild(
+					editor.createDeleteBtn(() => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.confirmAndDelete(
+							nodeEntry.name + " (all routes)",
+							() => {
+								const range = editor.findRoutingDeviceRange(
+									nodeEntry.name,
+								);
+								if (range)
+									editor.deleteLineRange(
+										range.startLine,
+										range.endLine,
+									);
+								editor.markEdited(
+									"routeNode:" + nodeEntry.name,
+								);
+							},
+						);
+					}),
+				);
+				addIconsBeforeChevron(item, icons);
+			}
+
 			item.addEventListener("click", () => {
+				currentDeviceName = nodeEntry.name;
 				firstList
 					.querySelectorAll(".panel-item")
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
-				renderNodeBusSecondary(nodeEntry.buses);
+				renderNodeBusSecondary(nodeEntry.buses, nodeEntry.name);
 			});
 			firstList.appendChild(item);
 		});
+
+		if (editing) {
+			firstList.appendChild(
+				editor.createAddBtn("Add Node", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showRoutingAddForm(null, null);
+				}),
+			);
+		}
 	}
+
+	// ==================== Hierarchy entry points ====================
 
 	async function renderHierarchy(ref) {
 		await loadNodeIds(ref);
+
+		const candoResult = await window.GrcanApi.fetchCando(ref);
+		if (!candoResult.notFound && editor) {
+			editor.setRawText(candoResult.content);
+		}
+
 		if (HIERARCHY_MODE === "NODE_BUS") {
 			await renderNodeBus(ref);
 		} else {
@@ -331,8 +824,96 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
+	function restoreSelection(snapshot) {
+		if (!snapshot) return;
+		if (snapshot.mode === "NODE_BUS") {
+			if (snapshot.device) {
+				const n = firstList.querySelector(
+					'.panel-item[data-node-name="' +
+						CSS.escape(snapshot.device) +
+						'"]',
+				);
+				if (n) n.click();
+			}
+			if (snapshot.bus) {
+				const b = secondList.querySelector(
+					'.panel-item[data-bus-canonical="' +
+						CSS.escape(snapshot.bus) +
+						'"]',
+				);
+				if (b) b.click();
+			}
+		} else {
+			if (snapshot.bus) {
+				const b = firstList.querySelector(
+					'.panel-item[data-bus-canonical="' +
+						CSS.escape(snapshot.bus) +
+						'"]',
+				);
+				if (b) b.click();
+			}
+			if (snapshot.device) {
+				const n = secondList.querySelector(
+					'.panel-item[data-node-name="' +
+						CSS.escape(snapshot.device) +
+						'"]',
+				);
+				if (n) n.click();
+			}
+		}
+	}
+
+	async function reRenderLocal(snapshot) {
+		if (!editor) return;
+		const text = editor.getRawText();
+		if (!text) return;
+		loadNodeIdsFromText(text);
+		if (HIERARCHY_MODE === "NODE_BUS") {
+			await renderNodeBus(null, text);
+		} else {
+			await renderBusNode(null, text);
+		}
+		restoreSelection(snapshot || navSnapshot());
+	}
+
+	if (editor) {
+		editor.setReRenderCallback(reRenderLocal);
+	}
+
+	// ==================== Event handlers ====================
+
 	async function onRefInputChange() {
 		const ref = refSelect.value;
+		if (
+			editor &&
+			currentRef &&
+			ref &&
+			ref !== currentRef &&
+			editor.hasUnsavedEdits()
+		) {
+			const wantsDownload = window.confirm(
+				"You have unsaved changes. Download your changes before switching reference?",
+			);
+			if (wantsDownload) {
+				const oldText = editor.getOriginalRawText
+					? editor.getOriginalRawText()
+					: "";
+				const newText = editor.getRawText ? editor.getRawText() : "";
+				if (window.DiffViewer && oldText !== newText) {
+					window.DiffViewer.show({
+						oldText,
+						newText,
+						onConfirm: function () {
+							editor.downloadCando();
+						},
+					});
+				} else {
+					editor.downloadCando();
+				}
+			}
+			refSelect.value = currentRef;
+			return;
+		}
 		if (!ref) {
 			setPlaceholder(firstList, "Select a reference");
 			setPlaceholder(
@@ -345,7 +926,12 @@ window.addEventListener("DOMContentLoaded", function () {
 			);
 			return;
 		}
+		if (editor && editor.isEditMode()) {
+			editor.toggleEditMode();
+			setEditModeUI(false);
+		}
 		await renderHierarchy(ref);
+		currentRef = ref;
 		if (typeof window.regenerateAndDrawBg === "function") {
 			window.regenerateAndDrawBg();
 		}
@@ -353,6 +939,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	async function init() {
 		setHierarchyHeaders();
+		wireEditModeButtons();
 		setPlaceholder(firstList, "Loading...");
 
 		const [branches, tags] = await Promise.all([
@@ -368,7 +955,8 @@ window.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 
-		refSelect.innerHTML = '<option value="">Select a branch or tag</option>';
+		refSelect.innerHTML =
+			'<option value="">Select a branch or tag</option>';
 		[...branches, ...tags].forEach((ref) => {
 			const opt = document.createElement("option");
 			opt.value = ref;
@@ -379,6 +967,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		if (branches.includes("main")) {
 			refSelect.value = "main";
 			await renderHierarchy("main");
+			currentRef = "main";
 		} else {
 			setPlaceholder(firstList, "Select a ref");
 		}

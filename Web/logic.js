@@ -1,3 +1,10 @@
+// Purpose: Data acquisition and parse helpers for GRCAN.CANdo.
+// Fetches branches, tags, and file contents from the GitHub API, and provides
+// pure text parsers (parseMessageByBusFromText, parseBusIdsFromText,
+// parseNodeIdsFromText, parseMessageDefinitions) used by viewer.js for local
+// re-renders after edits. No DOM manipulation; no edit state.
+// Exposed as: window.GrcanApi
+
 const GR_PINK = "#EF0DA1";
 const GR_PURPLE = "#7920FF";
 const GR_NAVY = "#195297";
@@ -289,10 +296,94 @@ async function fetchNodeIds(ref) {
 	}
 }
 
-// Returns { nodes, error } where nodes is an array of
-// { name, messages[] } grouped by sender node, for all messages
-// routed on the given busName (e.g. "Primary", "Data", "Charger").
-// Each message entry: { msgName, canIdOverride, receivers[] }
+function parseMessageByBusFromText(text, busName) {
+	const messageDefs = parseMessageDefinitions(text);
+
+	const targetPort = Object.entries(CAN_PORT_TO_BUS).find(
+		([, bus]) => bus.toLowerCase() === busName.toLowerCase(),
+	)?.[0];
+	if (!targetPort) return { nodes: null, error: "unknown_bus" };
+
+	const lines = text.split("\n");
+	const routingStart = lines.findIndex((l) => l.startsWith("routing:"));
+	if (routingStart === -1) return { nodes: [], error: null };
+
+	const msgSectionStart = lines.findIndex(
+		(l, i) => i > routingStart && l.trim() === "messages:",
+	);
+	const nextTopLevel = lines.findIndex(
+		(l, i) => i > routingStart + 1 && /^\S/.test(l),
+	);
+	const routingLines = lines.slice(
+		msgSectionStart + 1,
+		nextTopLevel === -1 ? undefined : nextTopLevel,
+	);
+
+	const nodeMap = new Map();
+	let currentNode = null;
+	let onTargetPort = false;
+	let receiver = null;
+	let pendingMsg = null;
+
+	for (const raw of routingLines) {
+		const indent = raw.search(/\S/);
+		if (indent === -1) continue;
+		const content = raw.trim();
+
+		if (indent === 4) {
+			const senderName = content.replace(/:$/, "");
+			if (!nodeMap.has(senderName))
+				nodeMap.set(senderName, { name: senderName, messages: [] });
+			currentNode = nodeMap.get(senderName);
+			onTargetPort = false;
+			receiver = null;
+			pendingMsg = null;
+		} else if (indent === 6) {
+			onTargetPort = content.replace(/:$/, "") === targetPort;
+			receiver = null;
+			pendingMsg = null;
+		} else if (onTargetPort && indent === 8) {
+			receiver = content.replace(/:$/, "");
+			pendingMsg = null;
+		} else if (
+			onTargetPort &&
+			indent === 10 &&
+			content.startsWith("- msg:")
+		) {
+			const msgName = content.replace("- msg:", "").trim();
+			const msgDef = messageDefs.get(msgName);
+			const existing = currentNode.messages.find(
+				(m) => m.msgName === msgName,
+			);
+			if (existing) {
+				if (!existing.receivers.includes(receiver))
+					existing.receivers.push(receiver);
+				pendingMsg = null;
+			} else {
+				pendingMsg = {
+					msgName,
+					canIdOverride: null,
+					receivers: [receiver],
+					msgId: msgDef ? msgDef.msgId : null,
+					msgLength: msgDef ? msgDef.msgLength : null,
+					byteMappings: msgDef ? msgDef.byteMappings : [],
+				};
+				currentNode.messages.push(pendingMsg);
+			}
+		} else if (
+			onTargetPort &&
+			indent === 12 &&
+			content.startsWith("can_id_override:") &&
+			pendingMsg
+		) {
+			pendingMsg.canIdOverride = content.split(":")[1].trim();
+		}
+	}
+
+	const nodes = [...nodeMap.values()].filter((n) => n.messages.length > 0);
+	return { nodes, error: null };
+}
+
 async function fetchMessageByBus(ref, busName) {
 	try {
 		const res = await fetch(
@@ -304,94 +395,55 @@ async function fetchMessageByBus(ref, busName) {
 		const data = await res.json();
 		if (data.encoding !== "base64") return { nodes: null, error: "encoding" };
 		const text = atob(data.content.replace(/\n/g, ""));
-		const messageDefs = parseMessageDefinitions(text);
-
-		const targetPort = Object.entries(CAN_PORT_TO_BUS).find(
-			([, bus]) => bus.toLowerCase() === busName.toLowerCase(),
-		)?.[0];
-		if (!targetPort) return { nodes: null, error: "unknown_bus" };
-
-		const lines = text.split("\n");
-		const routingStart = lines.findIndex((l) => l.startsWith("routing:"));
-		const msgSectionStart = lines.findIndex(
-			(l, i) => i > routingStart && l.trim() === "messages:",
-		);
-		const nextTopLevel = lines.findIndex(
-			(l, i) => i > routingStart + 1 && /^\S/.test(l),
-		);
-		const routingLines = lines.slice(
-			msgSectionStart + 1,
-			nextTopLevel === -1 ? undefined : nextTopLevel,
-		);
-
-		// nodeMap: senderName -> { name, messages[] }
-		const nodeMap = new Map();
-		let currentNode = null;
-		let onTargetPort = false;
-		let receiver = null;
-		let pendingMsg = null;
-
-		for (const raw of routingLines) {
-			const indent = raw.search(/\S/);
-			if (indent === -1) continue;
-			const content = raw.trim();
-
-			if (indent === 4) {
-				const senderName = content.replace(/:$/, "");
-				if (!nodeMap.has(senderName))
-					nodeMap.set(senderName, { name: senderName, messages: [] });
-				currentNode = nodeMap.get(senderName);
-				onTargetPort = false;
-				receiver = null;
-				pendingMsg = null;
-			} else if (indent === 6) {
-				onTargetPort = content.replace(/:$/, "") === targetPort;
-				receiver = null;
-				pendingMsg = null;
-			} else if (onTargetPort && indent === 8) {
-				receiver = content.replace(/:$/, "");
-				pendingMsg = null;
-			} else if (
-				onTargetPort &&
-				indent === 10 &&
-				content.startsWith("- msg:")
-			) {
-				const msgName = content.replace("- msg:", "").trim();
-				const msgDef = messageDefs.get(msgName);
-				const existing = currentNode.messages.find(
-					(m) => m.msgName === msgName,
-				);
-				if (existing) {
-					if (!existing.receivers.includes(receiver))
-						existing.receivers.push(receiver);
-					pendingMsg = null;
-				} else {
-					pendingMsg = {
-						msgName,
-						canIdOverride: null,
-						receivers: [receiver],
-						msgId: msgDef ? msgDef.msgId : null,
-						msgLength: msgDef ? msgDef.msgLength : null,
-						byteMappings: msgDef ? msgDef.byteMappings : [],
-					};
-					currentNode.messages.push(pendingMsg);
-				}
-			} else if (
-				onTargetPort &&
-				indent === 12 &&
-				content.startsWith("can_id_override:") &&
-				pendingMsg
-			) {
-				pendingMsg.canIdOverride = content.split(":")[1].trim();
-			}
-		}
-
-		// Only return nodes that actually sent something on this bus
-		const nodes = [...nodeMap.values()].filter((n) => n.messages.length > 0);
-		return { nodes, error: null };
+		return parseMessageByBusFromText(text, busName);
 	} catch (e) {
 		return { nodes: null, error: "fetch_failed" };
 	}
+}
+
+function parseBusIdsFromText(candoText) {
+	const lines = candoText.split("\n");
+	const startIdx = lines.findIndex((l) => l.startsWith("Bus ID:"));
+	if (startIdx === -1) return { buses: [], error: null };
+	const buses = [];
+	for (let i = startIdx + 1; i < lines.length; i++) {
+		const line = lines[i];
+		if (/^\S/.test(line) && line.trim() !== "") break;
+		const match = line.match(/^\s+([^:]+):\s*(\d+)\s*(?:#\s*(.*))?/);
+		if (match) {
+			buses.push({
+				name: match[1].trim(),
+				id: parseInt(match[2], 10),
+				label: (match[3] || match[1]).trim(),
+			});
+		}
+	}
+	return { buses, error: null };
+}
+
+function parseNodeIdsFromText(candoText) {
+	const lines = candoText.split("\n");
+	const startIdx = lines.findIndex((l) => l.startsWith("GR ID:"));
+	if (startIdx === -1) return { nodeIds: [], error: null };
+	const nodeIds = [];
+	for (let i = startIdx + 1; i < lines.length; i++) {
+		const line = lines[i];
+		if (/^\S/.test(line) && line.trim() !== "") break;
+		const match = line.match(/^\s+([^:]+):\s*["']?([^"'\s]+)["']?/);
+		if (match) {
+			nodeIds.push({
+				name: match[1].trim().replace(/[^a-zA-Z0-9]/g, "_"),
+				id: match[2].trim(),
+			});
+		}
+	}
+	return { nodeIds, error: null };
+}
+
+function busToPort(canonicalBus) {
+	return Object.entries(CAN_PORT_TO_BUS).find(
+		([, b]) => b === canonicalBus,
+	)?.[0];
 }
 
 window.GrcanApi = {
@@ -403,4 +455,8 @@ window.GrcanApi = {
 	fetchBus,
 	fetchNodeIds,
 	fetchMessageByBus,
+	parseMessageByBusFromText,
+	parseBusIdsFromText,
+	parseNodeIdsFromText,
+	busToPort,
 };
