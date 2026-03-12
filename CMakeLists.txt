@@ -35,6 +35,7 @@ include("${lib_path}/Vendor/STM32_HAL_LL/cube.cmake")
 include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
+include("${platform_path}/STM32H523xE/chip.cmake")
 
 # Utils
 include("${lib_path}/GlobalShare/common.cmake")
@@ -84,6 +85,8 @@ add_gr_project(STM32G474xE G4NEOTESTING)
 add_gr_project(STM32G474xE BLINKY G4BLINKY)
 add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
+add_gr_project(STM32H523xE BLINKY H5BLINKY)
+
 add_gr_project(STM32L476xG BLINKY L4HELLO)
 add_gr_project(STM32G474xE BLINKY G4HELLO)
 add_gr_project(STM32G474xE BLINKY G4ECHO)
