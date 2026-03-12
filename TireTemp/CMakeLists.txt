@@ -60,3 +60,6 @@ target_include_directories(
 		MLX90640/Inc
 		DSP/Inc
 )
+
+# TODO Eventually resolve all warnings and remove this
+target_compile_options(${GR_PROJECT_NAME}_USER_CODE INTERFACE "-Wno-error")
