@@ -183,8 +183,7 @@
 				recSuggestIndex = (recSuggestIndex + 1) % items.length;
 			} else if (e.key === "ArrowUp") {
 				e.preventDefault();
-				recSuggestIndex =
-					(recSuggestIndex - 1 + items.length) % items.length;
+				recSuggestIndex = (recSuggestIndex - 1 + items.length) % items.length;
 			} else if (e.key === "Enter") {
 				e.preventDefault();
 				if (recSuggestIndex >= 0 && recSuggestIndex < items.length) {
@@ -244,7 +243,8 @@
 			matches.slice(0, 20).forEach((name, idx) => {
 				const item = document.createElement("div");
 				item.className =
-					"editor-suggest-item" + (idx === 0 ? " editor-suggest-item-active" : "");
+					"editor-suggest-item" +
+					(idx === 0 ? " editor-suggest-item-active" : "");
 				item.textContent = name;
 				item.addEventListener("mousedown", (e) => {
 					e.preventDefault();
