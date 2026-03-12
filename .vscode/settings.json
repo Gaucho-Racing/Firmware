@@ -6,12 +6,22 @@
 		"*.cmake": "cmake",
 		"CMakeLists.txt": "cmake",
 		"*.ld": "ld",
-		"*.s": "asm"
+		"*.s": "asm",
+		"*.md": "markdown",
+		"*.pl": "perl",
+		"*.json": "json",
+		"*.yml": "yaml",
+		"*.html": "html",
+		"*.css": "css",
+		"*.js": "javascript",
+		"Makefile": "makefile",
+		"*.CANdo": "yaml"
 	},
 	"C_Cpp.default.cStandard": "gnu11",
 	"markdown.validate.enabled": true,
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
-	"files.eol": "\n"
+	"files.eol": "\n",
+	"cmake.useCMakePresets": "always"
 }
