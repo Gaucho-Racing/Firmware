@@ -48,7 +48,7 @@
 		{
 			"label": "CMake: configure and build TireTemp",
 			"type": "shell",
-			"dependsOrder":"sequence",
+			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure"
 			],
