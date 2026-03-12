@@ -39,25 +39,25 @@ static int IsPixelBad(uint16_t pixel, paramsMLX90640 *params);
 static int ValidateFrameData(uint16_t *frameData);
 static int ValidateAuxData(uint16_t *auxData);
 
-// fast sqrt (some chat GPT thing)
-double fsqrt(double x)
-{
-	if (x <= 0) {
-		return 0; // Handle edge cases
-	}
+// // fast sqrt (some chat GPT thing)
+// double fsqrt(double x)
+// {
+// 	if (x <= 0) {
+// 		return 0; // Handle edge cases
+// 	}
 
-	long i;
-	double y;
+// 	long i;
+// 	double y;
 
-	i = *(long *)&x;		    // Interpret double bits as integer
-	i = (i + 0x1FF8000000000000L) >> 1; // Adjust exponent for sqrt approximation
-	y = *(double *)&i;		    // Convert back to double
+// 	i = *(long *)&x;		    // Interpret double bits as integer
+// 	i = (i + 0x1FF8000000000000L) >> 1; // Adjust exponent for sqrt approximation
+// 	y = *(double *)&i;		    // Convert back to double
 
-	// One Newton-Raphson iteration to improve accuracy
-	y = 0.5 * (y + x / y);
+// 	// One Newton-Raphson iteration to improve accuracy
+// 	y = 0.5 * (y + x / y);
 
-	return y;
-}
+// 	return y;
+// }
 
 int MLX90640_DumpEE(uint8_t slaveAddr, uint16_t *eeData)
 {
@@ -422,7 +422,7 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 	float kta;
 	float kv;
 
-	float temp;
+	// float temp;
 
 	subPage = frameData[833];
 	vdd = MLX90640_GetVdd(frameData, params);
