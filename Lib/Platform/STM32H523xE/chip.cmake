@@ -5,7 +5,10 @@ function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "STM32H523xE")
 	set(
 		TARGET_FLAGS
-		-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb
+		-mcpu=cortex-m33
+		-mfpu=fpv5-sp-d16
+		-mfloat-abi=hard
+		-mthumb
 	)
 
 	add_executable(${TARGET_NAME})
