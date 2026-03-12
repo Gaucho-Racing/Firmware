@@ -27,8 +27,6 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 
-
-
 target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
@@ -44,8 +42,6 @@ target_sources(
 		../Core/Src/tim.c
 		../Core/Src/usart.c
 )
-
-
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
 
