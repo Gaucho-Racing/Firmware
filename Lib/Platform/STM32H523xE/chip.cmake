@@ -29,7 +29,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 		PRIVATE
 			${TARGET_FLAGS}
 			-T
-			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32H523xE_FLASH.ld"
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32H523CEUx_FLASH.ld"
 	)
 
 	target_sources(
