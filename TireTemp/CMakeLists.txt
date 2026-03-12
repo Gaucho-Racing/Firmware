@@ -40,7 +40,7 @@ target_sources(
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		# MLX90640
-		MLX90640/functions/MLX90640_API.c
+		MLX90640/Src/MLX90640_API.c
 		# DSP
 		${CMSIS_5_DSP_SOURCE_ROOT}/FastMathFunctions/arm_sqrt_q31.c
 )
@@ -58,5 +58,5 @@ target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Core/Inc
-		MLX90640/headers
+		MLX90640/Inc
 )
