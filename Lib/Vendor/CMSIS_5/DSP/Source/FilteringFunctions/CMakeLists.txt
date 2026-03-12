@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required(VERSION 3.6)
 
 project(CMSISDSPFiltering)
-
 
 add_library(CMSISDSPFiltering STATIC)
 
@@ -10,19 +9,23 @@ interpol(CMSISDSPFiltering)
 
 configdsp(CMSISDSPFiltering ..)
 
-if (CONFIGTABLE AND ALLFAST)
-target_compile_definitions(CMSISDSPFiltering PUBLIC ARM_ALL_FAST_TABLES)  
+if(CONFIGTABLE AND ALLFAST)
+	target_compile_definitions(CMSISDSPFiltering PUBLIC ARM_ALL_FAST_TABLES)
 endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_LMS_NORM_Q31)
-target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_init_q31.c)
+if(NOT CONFIGTABLE OR ALLFAST OR ARM_LMS_NORM_Q31)
+	target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_init_q31.c)
 endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_LMS_NORM_Q15)
-target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_init_q15.c)
+if(NOT CONFIGTABLE OR ALLFAST OR ARM_LMS_NORM_Q15)
+	target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_init_q15.c)
 endif()
 
-target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df1_32x64_init_q31.c)
+target_sources(
+	CMSISDSPFiltering
+	PRIVATE
+		arm_biquad_cascade_df1_32x64_init_q31.c
+)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df1_32x64_q31.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df1_f32.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df1_fast_q15.c)
@@ -37,7 +40,11 @@ target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_f64.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_init_f32.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_init_f64.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_f32.c)
-target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_init_f32.c)
+target_sources(
+	CMSISDSPFiltering
+	PRIVATE
+		arm_biquad_cascade_stereo_df2T_init_f32.c
+)
 target_sources(CMSISDSPFiltering PRIVATE arm_conv_f32.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_conv_fast_opt_q15.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_conv_fast_q15.c)
@@ -120,9 +127,5 @@ target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_q31.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_q15.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_q31.c)
 
-
 ### Includes
 target_include_directories(CMSISDSPFiltering PUBLIC "${DSP}/../../Include")
-
-
-

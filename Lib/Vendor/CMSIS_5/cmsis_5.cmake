@@ -13,7 +13,9 @@ target_include_directories(
 add_library(CMSIS_5_DSP INTERFACE)
 
 target_include_directories(
-	CMSIS_5_DSP INTERFACE ${CMAKE_CURRENT_LIST_DIR}/DSP/Include
+	CMSIS_5_DSP
+	INTERFACE
+		${CMAKE_CURRENT_LIST_DIR}/DSP/Include
 )
 
 set(CMSIS_5_DSP_SOURCE_ROOT ${CMAKE_CURRENT_LIST_DIR}/DSP/Source)

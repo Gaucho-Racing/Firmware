@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required(VERSION 3.6)
 
 project(CMSISDSPComplexMath)
-
 
 file(GLOB SRC "./*_*.c")
 
@@ -11,6 +10,3 @@ configdsp(CMSISDSPComplexMath ..)
 
 ### Includes
 target_include_directories(CMSISDSPComplexMath PUBLIC "${DSP}/../../Include")
-
-
-
