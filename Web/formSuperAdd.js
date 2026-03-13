@@ -39,12 +39,14 @@
 		const secStart = editor.findSectionStart(lines, "GR ID");
 		if (secStart === -1) return false;
 		const secEnd = editor.findSectionEnd(lines, secStart);
-		editor.insertAtLine(secEnd, '  ' + name + ': "' + nodeId + '"\n');
+		editor.insertAtLine(secEnd, "  " + name + ': "' + nodeId + '"\n');
 		return true;
 	}
 
 	function appendRoute(editor, device, bus, receiver, msg, overrideId) {
-		if (editor.routeEntryExists(device, bus, receiver, msg, overrideId || null)) {
+		if (
+			editor.routeEntryExists(device, bus, receiver, msg, overrideId || null)
+		) {
 			return { changed: false, createdNode: false, createdBus: false };
 		}
 
@@ -57,7 +59,8 @@
 			createdNode = true;
 			createdBus = true;
 			const rStart = editor.findSectionStart(lines, "routing");
-			if (rStart === -1) return { changed: false, createdNode: false, createdBus: false };
+			if (rStart === -1)
+				return { changed: false, createdNode: false, createdBus: false };
 			const rEnd = editor.findSectionEnd(lines, rStart);
 			editor.insertAtLine(
 				rEnd,
@@ -91,9 +94,15 @@
 		let recFound = false;
 		const freshLines = editor.getLines();
 		for (let i = busRange.startLine + 1; i < busRange.endLine; i++) {
-			if (freshLines[i].search(/\S/) === 8 && freshLines[i].trim() === receiver + ":") {
+			if (
+				freshLines[i].search(/\S/) === 8 &&
+				freshLines[i].trim() === receiver + ":"
+			) {
 				const recEnd = editor.findBlockEnd(freshLines, i, busRange.endLine, 8);
-				editor.insertAtLine(recEnd, editor.generateRoutingMsgYaml(msg, overrideId || null));
+				editor.insertAtLine(
+					recEnd,
+					editor.generateRoutingMsgYaml(msg, overrideId || null),
+				);
 				recFound = true;
 				break;
 			}
@@ -101,7 +110,10 @@
 		if (!recFound) {
 			editor.insertAtLine(
 				busRange.endLine,
-				"        " + receiver + ":\n" + editor.generateRoutingMsgYaml(msg, overrideId || null),
+				"        " +
+					receiver +
+					":\n" +
+					editor.generateRoutingMsgYaml(msg, overrideId || null),
 			);
 		}
 		return { changed: true, createdNode, createdBus };
@@ -114,7 +126,8 @@
 
 		const note = document.createElement("div");
 		note.className = "editor-hint";
-		note.textContent = "Optional blocks let you create only the pieces you need.";
+		note.textContent =
+			"Optional blocks let you create only the pieces you need.";
 		body.appendChild(note);
 
 		const mkToggle = (label, checked) => {
@@ -138,7 +151,11 @@
 		const addReceiverNode = mkToggle("Create receiver node in GR ID", false);
 		const addMessageDef = mkToggle("Create message definition", false);
 
-		const senderF = fu.makeFormRow("Sender Node", fu.makeInput("text", "", "e.g. Alice"), true);
+		const senderF = fu.makeFormRow(
+			"Sender Node",
+			fu.makeInput("text", "", "e.g. Alice"),
+			true,
+		);
 		const senderIdF = fu.makeFormRow(
 			"Sender Node ID",
 			fu.makeInput("text", "", "e.g. 0x31"),
@@ -174,9 +191,18 @@
 		msgDefHdr.appendChild(msgDefTitle);
 
 		const msgIdF = fu.makeFormRow("MSG ID", fu.makeInput("text", "", "0x123"));
-		const msgLenF = fu.makeFormRow("MSG LENGTH (bytes)", fu.makeInput("number", "8", "8"));
-		const fieldNameF = fu.makeFormRow("Field Name", fu.makeInput("text", "value", "value"));
-		const fieldBitF = fu.makeFormRow("Field bit_start", fu.makeInput("text", "0", "0 or 0-7"));
+		const msgLenF = fu.makeFormRow(
+			"MSG LENGTH (bytes)",
+			fu.makeInput("number", "8", "8"),
+		);
+		const fieldNameF = fu.makeFormRow(
+			"Field Name",
+			fu.makeInput("text", "value", "value"),
+		);
+		const fieldBitF = fu.makeFormRow(
+			"Field bit_start",
+			fu.makeInput("text", "0", "0 or 0-7"),
+		);
 		const fieldTypeF = fu.makeFormRow(
 			"Field Data Type",
 			fu.makeSelect(VALID_DATA_TYPES, "u8"),
@@ -198,9 +224,12 @@
 
 		function syncVisibility() {
 			const routeOn = !!doRoute.checked;
-			senderF.row.style.display = routeOn || addSenderNode.checked ? "" : "none";
-			receiverF.row.style.display = routeOn || addReceiverNode.checked ? "" : "none";
-			msgNameF.row.style.display = routeOn || addMessageDef.checked ? "" : "none";
+			senderF.row.style.display =
+				routeOn || addSenderNode.checked ? "" : "none";
+			receiverF.row.style.display =
+				routeOn || addReceiverNode.checked ? "" : "none";
+			msgNameF.row.style.display =
+				routeOn || addMessageDef.checked ? "" : "none";
 			busF.row.style.display = routeOn ? "" : "none";
 			ovrF.row.style.display = routeOn ? "" : "none";
 			senderIdF.row.style.display = addSenderNode.checked ? "" : "none";
@@ -314,7 +343,11 @@
 					receiverIdF.error.textContent = "ID already used by " + existingForId;
 					ok = false;
 				}
-				if (createSender && sender === receiver && senderId.toLowerCase() !== receiverId.toLowerCase()) {
+				if (
+					createSender &&
+					sender === receiver &&
+					senderId.toLowerCase() !== receiverId.toLowerCase()
+				) {
 					receiverF.error.textContent = "Same node name must use same ID";
 					ok = false;
 				}
@@ -350,9 +383,12 @@
 					msgNameF.error.textContent = "Message name already exists";
 					ok = false;
 				}
-				const existingId = existingDefs.find((e) => e.msgId === msgId.toLowerCase());
+				const existingId = existingDefs.find(
+					(e) => e.msgId === msgId.toLowerCase(),
+				);
 				if (existingId) {
-					msgIdF.error.textContent = "MSG ID already used by " + existingId.name;
+					msgIdF.error.textContent =
+						"MSG ID already used by " + existingId.name;
 					ok = false;
 				}
 
@@ -362,10 +398,12 @@
 					const start = range ? parseInt(range[1], 10) : parseInt(fieldBit, 10);
 					const explicitEnd = range ? parseInt(range[2], 10) : null;
 					const width = fu.typeBitWidth(fieldType);
-					let end = explicitEnd !== null ? explicitEnd : start + (width || 1) - 1;
+					let end =
+						explicitEnd !== null ? explicitEnd : start + (width || 1) - 1;
 					if (fieldType === "s") {
 						if (explicitEnd !== null || start % 8 !== 0) {
-							fieldBitF.error.textContent = "String must be single, byte-aligned";
+							fieldBitF.error.textContent =
+								"String must be single, byte-aligned";
 							ok = false;
 						}
 						end = msgLenBits - 1;
@@ -383,7 +421,8 @@
 					}
 				}
 			} else if (routeOn && !editor.messageNameExists(msgName)) {
-				msgNameF.error.textContent = "Must exist in Message ID or Custom CAN ID";
+				msgNameF.error.textContent =
+					"Must exist in Message ID or Custom CAN ID";
 				ok = false;
 			}
 
@@ -444,7 +483,8 @@
 				if (routeResult.changed) {
 					if (routeResult.createdNode) editor.markNew("routeNode:" + sender);
 					else editor.markEdited("routeNode:" + sender);
-					if (routeResult.createdBus) editor.markNew("routeBus:" + sender + "|" + bus);
+					if (routeResult.createdBus)
+						editor.markNew("routeBus:" + sender + "|" + bus);
 					else editor.markEdited("routeBus:" + sender + "|" + bus);
 					editor.markNew("routeMsg:" + sender + "|" + bus + "|" + msgName);
 					changed = true;

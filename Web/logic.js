@@ -457,7 +457,9 @@ async function fetchNodeCatalog(ref) {
 		String(nodeHeader.text || "")
 			.split("\n")
 			.forEach((line) => {
-				const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+|\d+)/);
+				const m = line.match(
+					/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+|\d+)/,
+				);
 				if (!m) return;
 				fromHeader.push(m[1].replace(/_/g, " ").trim());
 			});

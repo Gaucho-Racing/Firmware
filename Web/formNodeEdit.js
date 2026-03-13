@@ -35,10 +35,8 @@
 				ok = false;
 			} else if (
 				newName !== oldDeviceName &&
-				(
-					editor.findRoutingDeviceRange(newName) ||
-					(!!editor.grIdNameExists && editor.grIdNameExists(newName))
-				)
+				(editor.findRoutingDeviceRange(newName) ||
+					(!!editor.grIdNameExists && editor.grIdNameExists(newName)))
 			) {
 				nameF.error.textContent = "Node already exists";
 				ok = false;

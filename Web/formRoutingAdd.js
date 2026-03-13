@@ -123,17 +123,23 @@
 			// message definitions created in this edit session are immediately
 			// available in autocomplete. Header names remain the long-term
 			// source of truth; text names add local, in-session additions.
-			const messageCandidates = [...new Set([...headerNames, ...fallbackMessages])];
+			const messageCandidates = [
+				...new Set([...headerNames, ...fallbackMessages]),
+			];
 			// For receivers: use catalog node names ONLY when no bus is selected,
 			// so we don't suggest nodes from other buses. When a bus is locked,
 			// routingNames already contains the bus-local receivers.
 			const nodeCandidates =
-				!nodeCatalog.error && nodeCatalog.nodes ? nodeCatalog.nodes : fallbackNodes;
+				!nodeCatalog.error && nodeCatalog.nodes
+					? nodeCatalog.nodes
+					: fallbackNodes;
 			const baseReceivers = currentBusPort
 				? [...routingNames]
 				: [...new Set([...nodeCandidates, ...routingNames])];
 			allMessageNames = [...new Set(messageCandidates)];
-			receiverList = [...new Set(baseReceivers)].sort((a, b) => a.localeCompare(b));
+			receiverList = [...new Set(baseReceivers)].sort((a, b) =>
+				a.localeCompare(b),
+			);
 		}
 
 		const devF = fu.makeFormRow(
