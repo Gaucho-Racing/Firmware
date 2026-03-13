@@ -1,3 +1,10 @@
+// Purpose: Data acquisition and parse helpers for GRCAN.CANdo.
+// Fetches branches, tags, and file contents from the GitHub API, and provides
+// pure text parsers (parseMessageByBusFromText, parseBusIdsFromText,
+// parseNodeIdsFromText, parseMessageDefinitions) used by viewer.js for local
+// re-renders after edits. No DOM manipulation; no edit state.
+// Exposed as: window.GrcanApi
+
 const GR_PINK = "#EF0DA1";
 const GR_PURPLE = "#7920FF";
 const GR_NAVY = "#195297";
@@ -5,9 +12,10 @@ const GR_GRAY = "#9AA3B0";
 
 const GITHUB_API = "https://api.github.com/repos/Gaucho-Racing/Firmware";
 const CANDO_PATH = "Autogen/CAN/Doc/GRCAN.CANdo";
-const BUS_ID_PATH =
-	"Lib/FancyLayers-RENAME/GRCAN/TemporaryHoldover/Inc/GR_OLD_BUS_ID.h";
+const BUS_ID_PATH = "Autogen/CAN/Inc/GRCAN_BUS_ID.h";
 const NODE_ID_PATH = "Autogen/CAN/Inc/GRCAN_NODE_ID.h";
+const MSG_ID_PATH = "Autogen/CAN/Inc/GRCAN_MSG_ID.h";
+const CUSTOM_ID_PATH = "Autogen/CAN/Inc/GRCAN_CUSTOM_ID.h";
 
 // Maps CANdo CAN port names to logical bus names as used in routing section
 const CAN_PORT_TO_BUS = {
@@ -109,7 +117,15 @@ function parseMessageDefinitions(candoText) {
 			}
 			if (content.startsWith("data type:")) {
 				const rawType = content.slice("data type:".length).trim();
-				currentField.dataType = rawType === "s" ? "string" : rawType || null;
+				if (rawType === "s") {
+					currentField.dataType = "string";
+				} else if (rawType === "i16") {
+					currentField.dataType = "s16";
+				} else if (rawType === "i32") {
+					currentField.dataType = "s32";
+				} else {
+					currentField.dataType = rawType || null;
+				}
 			}
 		}
 	}
@@ -159,6 +175,119 @@ function isValidSha(str) {
 		}
 	}
 	return true;
+}
+
+function normalizeCatalogName(name) {
+	return String(name || "")
+		.toLowerCase()
+		.replace(/[^a-z0-9]/g, "");
+}
+
+function sectionLinesByHeader(candoText, headerName) {
+	const lines = String(candoText || "").split("\n");
+	const start = lines.findIndex((l) => l.startsWith(headerName + ":"));
+	if (start === -1) return [];
+	const end = lines.findIndex((l, i) => i > start + 1 && /^\S/.test(l));
+	return lines.slice(start + 1, end === -1 ? undefined : end);
+}
+
+function parseMessageCatalogFromText(candoText) {
+	const names = [];
+	const seen = new Set();
+	function collectFromSection(sectionHeader) {
+		const section = sectionLinesByHeader(candoText, sectionHeader);
+		section.forEach((raw) => {
+			const indent = raw.search(/\S/);
+			const content = raw.trim();
+			if (indent === 2 && content.endsWith(":")) {
+				const name = content.replace(/:$/, "").trim();
+				if (!name || seen.has(name)) return;
+				seen.add(name);
+				names.push(name);
+			}
+		});
+	}
+	collectFromSection("Message ID");
+	collectFromSection("Custom CAN ID");
+	return names;
+}
+
+function parseNodeCatalogFromText(candoText) {
+	const section = sectionLinesByHeader(candoText, "GR ID");
+	const names = [];
+	const seen = new Set();
+	section.forEach((line) => {
+		const m = line.match(/^\s+([^:]+):\s*["']?([^"'\s]+)["']?\s*(?:#.*)?$/);
+		if (!m) return;
+		const name = m[1].trim();
+		if (!name || seen.has(name)) return;
+		seen.add(name);
+		names.push(name);
+	});
+	return names;
+}
+
+function parseMsgIdHeaderNames(headerText) {
+	const names = [];
+	const seen = new Set();
+	String(headerText || "")
+		.split("\n")
+		.forEach((line) => {
+			const m = line.match(/^\s*MSG_([A-Z0-9_]+)\s*=/);
+			if (!m) return;
+			const human = m[1].replace(/_/g, " ").trim();
+			if (!human || seen.has(human)) return;
+			seen.add(human);
+			names.push(human);
+		});
+	return names;
+}
+
+function parseCustomIdHeaderNames(headerText) {
+	const names = [];
+	const seen = new Set();
+	String(headerText || "")
+		.split("\n")
+		.forEach((line) => {
+			const m = line.match(/^\s*([A-Z0-9_]+)_CAN_ID\s*=/);
+			if (!m) return;
+			const human = m[1].replace(/_/g, " ").trim();
+			if (!human || seen.has(human)) return;
+			seen.add(human);
+			names.push(human);
+		});
+	return names;
+}
+
+function reconcileCatalogNames(preferredNames, canonicalNames) {
+	const byCanonical = new Map();
+	preferredNames.forEach((name) => {
+		const key = normalizeCatalogName(name);
+		if (!key || byCanonical.has(key)) return;
+		byCanonical.set(key, name);
+	});
+	const resolved = [];
+	const seen = new Set();
+	canonicalNames.forEach((name) => {
+		const key = normalizeCatalogName(name);
+		const preferred = byCanonical.get(key) || name;
+		if (!preferred || seen.has(preferred)) return;
+		seen.add(preferred);
+		resolved.push(preferred);
+	});
+	return resolved;
+}
+
+async function fetchRepoText(path, ref) {
+	const res = await fetch(
+		`${GITHUB_API}/contents/${path}?ref=${encodeURIComponent(ref)}`,
+	);
+	if (res.status === 403) return { text: null, error: "rate_limited" };
+	if (res.status === 404) return { text: null, error: "not_found" };
+	if (!res.ok) return { text: null, error: "fetch_failed" };
+	const data = await res.json();
+	if (data.encoding !== "base64") return { text: null, error: "encoding" };
+	return { text: atob(data.content.replace(/\n/g, "")), error: null };
 }
 
 async function fetchBranches() {
@@ -289,10 +418,153 @@ async function fetchNodeIds(ref) {
 	}
 }
 
-// Returns { nodes, error } where nodes is an array of
-// { name, messages[] } grouped by sender node, for all messages
-// routed on the given busName (e.g. "Primary", "Data", "Charger").
-// Each message entry: { msgName, canIdOverride, receivers[] }
+async function fetchMessageCatalog(ref) {
+	try {
+		const [msgHeader, customHeader, candoFile] = await Promise.all([
+			fetchRepoText(MSG_ID_PATH, ref),
+			fetchRepoText(CUSTOM_ID_PATH, ref),
+			fetchCando(ref),
+		]);
+		if (msgHeader.error) return { messages: null, error: msgHeader.error };
+		if (customHeader.error && customHeader.error !== "not_found")
+			return { messages: null, error: customHeader.error };
+		const fromHeaders = [
+			...parseMsgIdHeaderNames(msgHeader.text || ""),
+			...parseCustomIdHeaderNames(customHeader.text || ""),
+		];
+		const headerUnique = [...new Set(fromHeaders)];
+		if (candoFile && !candoFile.notFound && candoFile.content) {
+			const exactNames = parseMessageCatalogFromText(candoFile.content);
+			return {
+				messages: reconcileCatalogNames(exactNames, headerUnique),
+				error: null,
+			};
+		}
+		return { messages: headerUnique, error: null };
+	} catch (e) {
+		return { messages: null, error: "fetch_failed" };
+	}
+}
+
+async function fetchNodeCatalog(ref) {
+	try {
+		const [nodeHeader, candoFile] = await Promise.all([
+			fetchRepoText(NODE_ID_PATH, ref),
+			fetchCando(ref),
+		]);
+		if (nodeHeader.error) return { nodes: null, error: nodeHeader.error };
+		const fromHeader = [];
+		String(nodeHeader.text || "")
+			.split("\n")
+			.forEach((line) => {
+				const m = line.match(
+					/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+|\d+)/,
+				);
+				if (!m) return;
+				fromHeader.push(m[1].replace(/_/g, " ").trim());
+			});
+		const headerUnique = [...new Set(fromHeader)];
+		if (candoFile && !candoFile.notFound && candoFile.content) {
+			const exactNames = parseNodeCatalogFromText(candoFile.content);
+			return {
+				nodes: reconcileCatalogNames(exactNames, headerUnique),
+				error: null,
+			};
+		}
+		return { nodes: headerUnique, error: null };
+	} catch (e) {
+		return { nodes: null, error: "fetch_failed" };
+	}
+}
+
+async function fetchBusCatalog(ref) {
+	const result = await fetchBus(ref);
+	if (result.error) return { buses: null, error: result.error };
+	return { buses: result.buses || [], error: null };
+}
+
+function parseMessageByBusFromText(text, busName) {
+	const messageDefs = parseMessageDefinitions(text);
+
+	const targetPort = Object.entries(CAN_PORT_TO_BUS).find(
+		([, bus]) => bus.toLowerCase() === busName.toLowerCase(),
+	)?.[0];
+	if (!targetPort) return { nodes: null, error: "unknown_bus" };
+
+	const lines = text.split("\n");
+	const routingStart = lines.findIndex((l) => l.startsWith("routing:"));
+	if (routingStart === -1) return { nodes: [], error: null };
+
+	const msgSectionStart = lines.findIndex(
+		(l, i) => i > routingStart && l.trim() === "messages:",
+	);
+	const nextTopLevel = lines.findIndex(
+		(l, i) => i > routingStart + 1 && /^\S/.test(l),
+	);
+	const routingLines = lines.slice(
+		msgSectionStart + 1,
+		nextTopLevel === -1 ? undefined : nextTopLevel,
+	);
+
+	const nodeMap = new Map();
+	let currentNode = null;
+	let onTargetPort = false;
+	let receiver = null;
+	let pendingMsg = null;
+
+	for (const raw of routingLines) {
+		const indent = raw.search(/\S/);
+		if (indent === -1) continue;
+		const content = raw.trim();
+
+		if (indent === 4) {
+			const senderName = content.replace(/:$/, "");
+			if (!nodeMap.has(senderName))
+				nodeMap.set(senderName, { name: senderName, messages: [] });
+			currentNode = nodeMap.get(senderName);
+			onTargetPort = false;
+			receiver = null;
+			pendingMsg = null;
+		} else if (indent === 6) {
+			onTargetPort = content.replace(/:$/, "") === targetPort;
+			receiver = null;
+			pendingMsg = null;
+		} else if (onTargetPort && indent === 8) {
+			receiver = content.replace(/:$/, "");
+			pendingMsg = null;
+		} else if (onTargetPort && indent === 10 && content.startsWith("- msg:")) {
+			const msgName = content.replace("- msg:", "").trim();
+			const msgDef = messageDefs.get(msgName);
+			const existing = currentNode.messages.find((m) => m.msgName === msgName);
+			if (existing) {
+				if (!existing.receivers.includes(receiver))
+					existing.receivers.push(receiver);
+				pendingMsg = null;
+			} else {
+				pendingMsg = {
+					msgName,
+					canIdOverride: null,
+					receivers: [receiver],
+					msgId: msgDef ? msgDef.msgId : null,
+					msgLength: msgDef ? msgDef.msgLength : null,
+					byteMappings: msgDef ? msgDef.byteMappings : [],
+				};
+				currentNode.messages.push(pendingMsg);
+			}
+		} else if (
+			onTargetPort &&
+			indent === 12 &&
+			content.startsWith("can_id_override:") &&
+			pendingMsg
+		) {
+			pendingMsg.canIdOverride = content.split(":")[1].trim();
+		}
+	}
+
+	const nodes = [...nodeMap.values()];
+	return { nodes, error: null };
+}
+
 async function fetchMessageByBus(ref, busName) {
 	try {
 		const res = await fetch(
@@ -304,94 +576,55 @@ async function fetchMessageByBus(ref, busName) {
 		const data = await res.json();
 		if (data.encoding !== "base64") return { nodes: null, error: "encoding" };
 		const text = atob(data.content.replace(/\n/g, ""));
-		const messageDefs = parseMessageDefinitions(text);
-
-		const targetPort = Object.entries(CAN_PORT_TO_BUS).find(
-			([, bus]) => bus.toLowerCase() === busName.toLowerCase(),
-		)?.[0];
-		if (!targetPort) return { nodes: null, error: "unknown_bus" };
-
-		const lines = text.split("\n");
-		const routingStart = lines.findIndex((l) => l.startsWith("routing:"));
-		const msgSectionStart = lines.findIndex(
-			(l, i) => i > routingStart && l.trim() === "messages:",
-		);
-		const nextTopLevel = lines.findIndex(
-			(l, i) => i > routingStart + 1 && /^\S/.test(l),
-		);
-		const routingLines = lines.slice(
-			msgSectionStart + 1,
-			nextTopLevel === -1 ? undefined : nextTopLevel,
-		);
-
-		// nodeMap: senderName -> { name, messages[] }
-		const nodeMap = new Map();
-		let currentNode = null;
-		let onTargetPort = false;
-		let receiver = null;
-		let pendingMsg = null;
-
-		for (const raw of routingLines) {
-			const indent = raw.search(/\S/);
-			if (indent === -1) continue;
-			const content = raw.trim();
-
-			if (indent === 4) {
-				const senderName = content.replace(/:$/, "");
-				if (!nodeMap.has(senderName))
-					nodeMap.set(senderName, { name: senderName, messages: [] });
-				currentNode = nodeMap.get(senderName);
-				onTargetPort = false;
-				receiver = null;
-				pendingMsg = null;
-			} else if (indent === 6) {
-				onTargetPort = content.replace(/:$/, "") === targetPort;
-				receiver = null;
-				pendingMsg = null;
-			} else if (onTargetPort && indent === 8) {
-				receiver = content.replace(/:$/, "");
-				pendingMsg = null;
-			} else if (
-				onTargetPort &&
-				indent === 10 &&
-				content.startsWith("- msg:")
-			) {
-				const msgName = content.replace("- msg:", "").trim();
-				const msgDef = messageDefs.get(msgName);
-				const existing = currentNode.messages.find(
-					(m) => m.msgName === msgName,
-				);
-				if (existing) {
-					if (!existing.receivers.includes(receiver))
-						existing.receivers.push(receiver);
-					pendingMsg = null;
-				} else {
-					pendingMsg = {
-						msgName,
-						canIdOverride: null,
-						receivers: [receiver],
-						msgId: msgDef ? msgDef.msgId : null,
-						msgLength: msgDef ? msgDef.msgLength : null,
-						byteMappings: msgDef ? msgDef.byteMappings : [],
-					};
-					currentNode.messages.push(pendingMsg);
-				}
-			} else if (
-				onTargetPort &&
-				indent === 12 &&
-				content.startsWith("can_id_override:") &&
-				pendingMsg
-			) {
-				pendingMsg.canIdOverride = content.split(":")[1].trim();
-			}
-		}
-
-		// Only return nodes that actually sent something on this bus
-		const nodes = [...nodeMap.values()].filter((n) => n.messages.length > 0);
-		return { nodes, error: null };
+		return parseMessageByBusFromText(text, busName);
 	} catch (e) {
 		return { nodes: null, error: "fetch_failed" };
 	}
+}
+
+function parseBusIdsFromText(candoText) {
+	const lines = candoText.split("\n");
+	const startIdx = lines.findIndex((l) => l.startsWith("Bus ID:"));
+	if (startIdx === -1) return { buses: [], error: null };
+	const buses = [];
+	for (let i = startIdx + 1; i < lines.length; i++) {
+		const line = lines[i];
+		if (/^\S/.test(line) && line.trim() !== "") break;
+		const match = line.match(/^\s+([^:]+):\s*(\d+)\s*(?:#\s*(.*))?/);
+		if (match) {
+			buses.push({
+				name: match[1].trim(),
+				id: parseInt(match[2], 10),
+				label: (match[3] || match[1]).trim(),
+			});
+		}
+	}
+	return { buses, error: null };
+}
+
+function parseNodeIdsFromText(candoText) {
+	const lines = candoText.split("\n");
+	const startIdx = lines.findIndex((l) => l.startsWith("GR ID:"));
+	if (startIdx === -1) return { nodeIds: [], error: null };
+	const nodeIds = [];
+	for (let i = startIdx + 1; i < lines.length; i++) {
+		const line = lines[i];
+		if (/^\S/.test(line) && line.trim() !== "") break;
+		const match = line.match(/^\s+([^:]+):\s*["']?([^"'\s]+)["']?/);
+		if (match) {
+			nodeIds.push({
+				name: match[1].trim().replace(/[^a-zA-Z0-9]/g, "_"),
+				id: match[2].trim(),
+			});
+		}
+	}
+	return { nodeIds, error: null };
+}
+
+function busToPort(canonicalBus) {
+	return Object.entries(CAN_PORT_TO_BUS).find(
+		([, b]) => b === canonicalBus,
+	)?.[0];
 }
 
 window.GrcanApi = {
@@ -402,5 +635,14 @@ window.GrcanApi = {
 	fetchCando,
 	fetchBus,
 	fetchNodeIds,
+	fetchMessageCatalog,
+	fetchNodeCatalog,
+	fetchBusCatalog,
 	fetchMessageByBus,
+	parseMessageByBusFromText,
+	parseMessageCatalogFromText,
+	parseBusIdsFromText,
+	parseNodeCatalogFromText,
+	parseNodeIdsFromText,
+	busToPort,
 };
