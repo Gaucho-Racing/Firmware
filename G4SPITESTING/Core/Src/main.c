@@ -79,9 +79,9 @@ int main(void)
 {
 
 	/* USER CODE BEGIN 1 */
-	static GR_SPI_Handler ex_handler;
-	static LL_SPI_InitTypeDef ex_config;
-	static GR_SPI_Pins ex_pins;
+	static GR_SPI_Handler handle_spi2, handle_spi3;
+	static LL_SPI_InitTypeDef config_spi2, config_spi3;
+	static GR_SPI_Pins pins_spi2, pins_spi3;
 	/*HAL_OSPI_HandleTypeDef hospi;
 	HAL_StatusTypeDef status;*/
 
@@ -110,113 +110,75 @@ int main(void)
 	LL_mDelay(1000); // Wait for peripherals to stabilize
 	LOGOMATIC("Booted!\n");
 
-	ex_config.TransferDirection = LL_SPI_FULL_DUPLEX;
-	ex_config.Mode = LL_SPI_MODE_MASTER;
-	ex_config.DataWidth = LL_SPI_DATAWIDTH_8BIT;
-	ex_config.ClockPolarity = LL_SPI_POLARITY_LOW;
-	ex_config.ClockPhase = LL_SPI_PHASE_1EDGE;
-	ex_config.NSS = LL_SPI_NSS_SOFT;
-	ex_config.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
-	ex_config.BitOrder = LL_SPI_LSB_FIRST;
-	ex_config.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
-	ex_config.CRCPoly = 0x1D;
+	// ========== RECEIVER CONFIGURATION ==========
+	config_spi2.Mode = LL_SPI_MODE_SLAVE;
+	config_spi2.NSS = LL_SPI_NSS_HARD_INPUT;
+	config_spi2.TransferDirection = LL_SPI_FULL_DUPLEX;
+	config_spi2.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+	config_spi2.ClockPolarity = LL_SPI_POLARITY_LOW;
+	config_spi2.ClockPhase = LL_SPI_PHASE_1EDGE;
+	config_spi2.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+	config_spi2.BitOrder = LL_SPI_MSB_FIRST;
+	config_spi2.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
+	config_spi2.CRCPoly = 0x1D;
 
-	ex_pins.SPIx = SPI3;
-	ex_pins.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
+	pins_spi2.SPIx = SPI2;
+	pins_spi2.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
+	// All pins are in the A clock port
+	for (int i = 0; i < 4; i++) {
+		*(pins_spi2.GPIOx + i) = GPIOB;
+	}
+	pins_spi2.num_pins = 4;
+	pins_spi2.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
+	pins_spi2.pin_nums[0] = LL_GPIO_PIN_15; // COPI
+	pins_spi2.pin_nums[1] = LL_GPIO_PIN_14; // CIPO
+	pins_spi2.pin_nums[2] = LL_GPIO_PIN_13; // SCK
+	pins_spi2.pin_nums[3] = LL_GPIO_PIN_12;  // NSS
+	pins_spi2.alternate_function_number = 5;
+
+	GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);
+
+	// ========== SENDER CONFIGURATION ==========
+	config_spi3.Mode = LL_SPI_MODE_MASTER;
+	config_spi3.NSS = LL_SPI_NSS_SOFT;
+	config_spi3.TransferDirection = LL_SPI_FULL_DUPLEX;
+	config_spi3.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+	config_spi3.ClockPolarity = LL_SPI_POLARITY_LOW;
+	config_spi3.ClockPhase = LL_SPI_PHASE_1EDGE;
+	config_spi3.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+	config_spi3.BitOrder = LL_SPI_MSB_FIRST;
+	config_spi3.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
+	config_spi3.CRCPoly = 0x1D;
+
+	pins_spi3.SPIx = SPI3;
+	pins_spi3.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
 	// All pins are in the A clock port
 	for (int i = 0; i < 3; i++) {
-		*(ex_pins.GPIOx + i) = GPIOC;
+		*(pins_spi3.GPIOx + i) = GPIOC;
 	}
-	ex_pins.GPIOx[3] = GPIOA;
-	ex_pins.num_pins = 4;
-	ex_pins.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
-	ex_pins.pin_nums[0] = LL_GPIO_PIN_12; // COPI
-	ex_pins.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
-	ex_pins.pin_nums[2] = LL_GPIO_PIN_10; // SCK
-	ex_pins.pin_nums[3] = LL_GPIO_PIN_4;  // NSS
-	ex_pins.alternate_function_number = 6;
+	pins_spi3.GPIOx[3] = GPIOA;
+	pins_spi3.num_pins = 4;
+	pins_spi3.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
+	pins_spi3.pin_nums[0] = LL_GPIO_PIN_12; // COPI
+	pins_spi3.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
+	pins_spi3.pin_nums[2] = LL_GPIO_PIN_10; // SCK
+	pins_spi3.pin_nums[3] = LL_GPIO_PIN_4;  // NSS
+	pins_spi3.alternate_function_number = 6;
 
-	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
-
-	// LOGOMATIC("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
-	// /* ---------------- SPI ---------------- */
-	// LOGOMATIC("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
-	// LOGOMATIC("Mode              = %lu | %lu\n", LL_SPI_GetMode(ex_pins.SPIx), ex_config.Mode);
-	// LOGOMATIC("DataWidth         = %lu | %lu\n", LL_SPI_GetDataWidth(ex_pins.SPIx), ex_config.DataWidth);
-	// LOGOMATIC("ClockPolarity     = %lu | %lu\n", LL_SPI_GetClockPolarity(ex_pins.SPIx), ex_config.ClockPolarity);
-	// LOGOMATIC("ClockPhase        = %lu | %lu\n", LL_SPI_GetClockPhase(ex_pins.SPIx), ex_config.ClockPhase);
-	// LOGOMATIC("NSS               = %lu | %lu\n", LL_SPI_GetNSSMode(ex_pins.SPIx), ex_config.NSS);
-	// LOGOMATIC("BaudRate          = %lu | %lu\n", LL_SPI_GetBaudRatePrescaler(ex_pins.SPIx), ex_config.BaudRate);
-	// LOGOMATIC("BitOrder          = %lu | %lu\n", LL_SPI_GetTransferBitOrder(ex_pins.SPIx), ex_config.BitOrder);
-	// LOGOMATIC("CRC Enable        = %lu | 1\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx));
-	// LOGOMATIC("CRC Polynomial    = 0x%lx | 0x%lx\n", ex_pins.SPIx->CRCPR, ex_config.CRCPoly);
-	// LOGOMATIC("SPI Enable        = %lu | 1\n", LL_SPI_IsEnabled(ex_pins.SPIx));
-
-	// uint32_t spi_clk_en = 0;
-	// if (ex_handler.pins->SPIx == SPI1) {
-	// 	spi_clk_en = LL_APB2_GRP1_IsEnabledClock(LL_APB2_GRP1_PERIPH_SPI1);
-	// } else if (ex_handler.pins->SPIx == SPI2) {
-	// 	spi_clk_en = LL_APB1_GRP1_IsEnabledClock(LL_APB1_GRP1_PERIPH_SPI2);
-	// } else if (ex_handler.pins->SPIx == SPI3) {
-	// 	spi_clk_en = LL_APB1_GRP1_IsEnabledClock(LL_APB1_GRP1_PERIPH_SPI3);
-	// }
-	// LOGOMATIC("SPI Clock Enable  = %lu | 1\n", spi_clk_en);
-	// /* ---------------- GPIO CLOCKS ---------------- */
-	// for (int i = 0; i < ex_pins.num_pins; i++) {
-	// 	uint32_t clk_en = 0;
-
-	// 	if (ex_pins.GPIOx[i] == GPIOA) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-	// 	} else if (ex_pins.GPIOx[i] == GPIOB) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-	// 	} else if (ex_pins.GPIOx[i] == GPIOC) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOC);
-	// 	} else if (ex_pins.GPIOx[i] == GPIOD) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOD);
-	// 	} else if (ex_pins.GPIOx[i] == GPIOE) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOE);
-	// 	} else if (ex_pins.GPIOx[i] == GPIOF) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOF);
-	// 	} else if (ex_pins.GPIOx[i] == GPIOG) {
-	// 		clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOG);
-	// 	}
-
-	// 	LOGOMATIC("GPIO Clock [%p] = %lu | 1\n", (void *)ex_pins.GPIOx[i], clk_en);
-	// }
-	// /* ---------------- GPIO MODE + AF ---------------- */
-	// for (int i = 0; i < ex_pins.num_pins; i++) {
-	// 	uint32_t pin = ex_pins.pin_nums[i];
-
-	// 	LOGOMATIC("GPIO[%d] Mode     = %lu | %lu\n", pin, LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
-
-	// 	LOGOMATIC("GPIO[%d] AF       = %lu | %lu\n", pin, (ex_pins.pin_nums[i] < LL_GPIO_PIN_8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
-	// 		  ex_pins.alternate_function_number);
-	// }
-	// LOGOMATIC("-= End Verification =-\n");
+	GR_SPI_Initialize(&handle_spi3, &config_spi3, &pins_spi3);
 
 	LOGOMATIC("Starting message transaction...\n");
-	/*
-	uint8_t data = 0x00;
-	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4); // NSS low
 
-	for(uint8_t i = 1; i < 128; i++) {
-		LL_SPI_TransmitData8(SPI3, i);
-		while (LL_SPI_IsActiveFlag_BSY(SPI3));
-		data = LL_SPI_ReceiveData8(SPI3);
-		LOGOMATIC("data: %d\n", data);
-	}
-
-	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);   // NSS high
-	*/
 	GR_SPI_Message msg;
 	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
-	msg.size = 32;
+	msg.size = 1;
 
 	for (int i = 0; i < msg.size; i++) {
 		msg.data[i] = 'A' + i;
 	}
 
-	GR_SPI_Send(&ex_handler, &msg);
+	//GR_SPI_Send(&handle_spi3, &msg);
+	LL_SPI_TransmitData8(SPI3, 'A');
 
 	LOGOMATIC("Sent message, now receiving...\n");
 
@@ -224,18 +186,19 @@ int main(void)
 		msg.data[i] = '#';
 	}
 
-	while (GR_SPI_IsRxEmpty(&ex_handler)) {}
+	while (GR_SPI_IsRxEmpty(&handle_spi2)) {}
 
-	GR_SPI_Receive(&ex_handler, &msg);
+	GR_SPI_Receive(&handle_spi2, &msg);
 
 	char str[33];
-	memcpy(str, msg.data, msg.size);
-	str[32] = '\0';
+	memcpy(str, msg.data, msg.size * sizeof(uint8_t));
+	str[2] = '\0';
 
 	LOGOMATIC("Received: %s\n", str);
 
 	free(msg.data);
-	GR_SPI_Close(&ex_handler);
+	GR_SPI_Close(&handle_spi2);
+	GR_SPI_Close(&handle_spi3);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */

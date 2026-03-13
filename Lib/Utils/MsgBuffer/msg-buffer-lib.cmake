@@ -36,4 +36,12 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	)
 	target_link_libraries(MsgBuffer_Lib_Is_Empty_test MsgBuffer_Lib)
 	add_test(MsgBuffer_Lib_Is_Empty MsgBuffer_Lib_Is_Empty_test)
+
+	# Overflow
+	add_executable(
+		MsgBuffer_Lib_Overflow_test
+		${CMAKE_CURRENT_LIST_DIR}/Test/testOverflow.c
+	)
+	target_link_libraries(MsgBuffer_Lib_Overflow_test MsgBuffer_Lib)
+	add_test(MsgBuffer_Lib_Overflow MsgBuffer_Lib_Overflow_test)
 endif()

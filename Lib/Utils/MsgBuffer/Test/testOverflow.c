@@ -52,5 +52,7 @@ int main(void)
 		return 1;
 	}
 
+	GR_MsgBuffer_Free(buffer_ptr);
+
 	return 0;
 }

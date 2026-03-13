@@ -22,5 +22,7 @@ int main(void)
 		return 2;
 	}
 
+	GR_MsgBuffer_Free(buffer_ptr);
+
 	return 0;
 }

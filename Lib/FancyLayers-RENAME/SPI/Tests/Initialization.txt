@@ -1,4 +1,4 @@
-LOGOMATIC("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
+	LOGOMATIC("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
 	/* ---------------- SPI ---------------- */
 	LOGOMATIC("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
 	LOGOMATIC("Mode              = %lu | %lu\n", LL_SPI_GetMode(ex_pins.SPIx), ex_config.Mode);
