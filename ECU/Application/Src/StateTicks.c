@@ -191,7 +191,13 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		stateData->apps_bse_violation = false;
 	}
 
-	if (stateData->apps_bse_violation) {
+	static uint32_t last_apps_plausible_frame_millis;
+	if (APPS_Plausible(stateData)) {
+		last_apps_plausible_frame_millis = millis_since_boot;
+	}
+
+	// Stop throttle if implausible for > 100ms
+	if (stateData->apps_bse_violation || millis_since_boot - last_apps_plausible_frame_millis > 100) {
 		torque_request = 0;
 	}
 
@@ -228,7 +234,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	   see #129
 	*/
 	if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
-		LOGOMATIC("Warning: Tractive System fails to discharge in time.\n");
+		LOGOMATIC("Warning: Tractive System fails to discharge in %d seconds.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
 		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-D-TLE", 8);
 	}
 

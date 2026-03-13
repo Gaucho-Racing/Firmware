@@ -77,7 +77,8 @@ VCP_Config vcp_config = {.baud_rate = 19200,
 			 .oversampling = VCP_Oversampling_16,
 			 .tx_fifo_threshold = VCP_Threshold_1_8,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .usart_instance = USART2};
+			 .usart_instance = USART2,
+			 .alternate_function = LL_GPIO_AF_7};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -135,13 +136,12 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
+	setSoftwareLatch(1, &state_data);
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 		LL_mDelay(100);
 
 		// Initialize SoftwareLatch High
-		setSoftwareLatch(1, &state_data);
 		CCU_State_Tick(&state_data);
 
 		LL_mDelay(200);

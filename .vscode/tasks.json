@@ -46,6 +46,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CANine"
 		},
 		{
+			"label": "CMake: configure and build TireTemp",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+		},
+		{
 			"label": "CMake: configure and build G4ECHO",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -125,6 +134,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4BLINKY"
+		},
+		{
+			"label": "CMake: configure and build L4HELLO",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4HELLO"
 		},
 		{
 			"label": "CMake: configure and build W3_G4SPI_Transmit",
