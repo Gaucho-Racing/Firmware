@@ -112,7 +112,7 @@ int main(void)
 
 	// ========== RECEIVER CONFIGURATION ==========
 	config_spi2.Mode = LL_SPI_MODE_SLAVE;
-	config_spi2.NSS = LL_SPI_NSS_HARD_INPUT;
+	config_spi2.NSS = LL_SPI_NSS_SOFT;
 	config_spi2.TransferDirection = LL_SPI_FULL_DUPLEX;
 	config_spi2.DataWidth = LL_SPI_DATAWIDTH_8BIT;
 	config_spi2.ClockPolarity = LL_SPI_POLARITY_LOW;
@@ -177,8 +177,7 @@ int main(void)
 		msg.data[i] = 'A' + i;
 	}
 
-	//GR_SPI_Send(&handle_spi3, &msg);
-	LL_SPI_TransmitData8(SPI3, 'A');
+	GR_SPI_Send(&handle_spi3, &msg);
 
 	LOGOMATIC("Sent message, now receiving...\n");
 
@@ -192,7 +191,7 @@ int main(void)
 
 	char str[33];
 	memcpy(str, msg.data, msg.size * sizeof(uint8_t));
-	str[2] = '\0';
+	str[msg.size] = '\0';
 
 	LOGOMATIC("Received: %s\n", str);
 

@@ -239,20 +239,24 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 		if (handle->current_rx_msg_index == msg_size) {
 			handle->current_rx_msg_index = 0;
 			GR_MsgBuffer_Push(handle->rx_buffer, handle->current_msg->data, handle->current_msg->size);
-			// Finish transaction
-			LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
-			// Only go to IDLE when no additional messages are in pipeline
-			if (GR_MsgBuffer_IsEmpty(handle->tx_buffer)) {
-				handle->msg_status = GR_SPI_MSG_IDLE;
-			} else {
-				GR_SPI_Begin_New_Tx(handle);
+			if (handle->spi_config->Mode == LL_SPI_MODE_MASTER) {
+				// Finish transaction
+				LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
+				// Only go to IDLE when no additional messages are in pipeline
+				if (GR_MsgBuffer_IsEmpty(handle->tx_buffer)) {
+					handle->msg_status = GR_SPI_MSG_IDLE;
+				} else {
+					GR_SPI_Begin_New_Tx(handle);
+				}
 			}
 		}
 	}
 	// Check if Tx is empty
 	if (LL_SPI_IsActiveFlag_TXE(handle->pins->SPIx)) {
 		// Continue sending bytes in transaction
-		if (handle->current_tx_msg_index != GR_SPI_INVALID_TX_SIZE) {
+		if (handle->spi_config->Mode == LL_SPI_MODE_MASTER &&
+			handle->current_tx_msg_index != GR_SPI_INVALID_TX_SIZE &&
+			handle->msg_status == GR_SPI_MSG_IN_PROGRESS) {
 			GR_SPI_Transfer_Tx_Bytes(handle);
 		}
 	}
