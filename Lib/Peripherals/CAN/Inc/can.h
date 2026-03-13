@@ -76,7 +76,7 @@ typedef struct {
 } CANHandle;
 
 typedef enum {
-	CAN_SUCCESS,
+	CAN_SUCCESS = 0,
 	CAN_ERROR
 } CAN_STATUS;
 
