@@ -196,19 +196,13 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		last_apps_plausible_frame_millis = millis_since_boot;
 	}
 
-	static uint32_t last_bse_failure_millis;
-	static bool bse_failure;
-	if (BSE_Implausible(stateData)) {
-		if (!bse_failure) {
-			last_bse_failure_millis = millis_since_boot;
-		}
-		bse_failure = true;
-	} else {
-		bse_failure = false;
+	static uint32_t last_bse_plausible_millis;
+	if (!BSE_Implausible(stateData)) {
+		last_bse_plausible_millis = millis_since_boot;
 	}
 
 	// Stop throttle if implausible for > 100ms
-	if (stateData->apps_bse_violation || millis_since_boot - last_apps_plausible_frame_millis > 100 || millis_since_boot - last_bse_failure_millis > MAX_BSE_FAILURE_TIME) {
+	if (stateData->apps_bse_violation || millis_since_boot - last_apps_plausible_frame_millis > 100 || millis_since_boot - last_bse_plausible_millis > MAX_BSE_FAILURE_TIME) {
 		torque_request = 0;
 	}
 
