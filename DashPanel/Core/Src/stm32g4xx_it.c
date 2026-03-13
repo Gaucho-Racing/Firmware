@@ -201,15 +201,15 @@ void SysTick_Handler(void)
  * @param None
  * @retval None
  */
-void EXTI15_10_IRQHandler(void)
-{
-	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_13)) {
-		LOGOMATIC("PC13 Button Pressed!\n");
-		canReadyToSend = true;
-		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
-		LL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-	}
-}
+// void EXTI15_10_IRQHandler(void)
+// {
+// 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_13)) {
+// 		LOGOMATIC("PC13 Button Pressed!\n");
+// 		canReadyToSend = true;
+// 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
+// 		LL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+// 	}
+// }
 
 /**
  * @brief EXTI Line 3 Interrupt Handler (for TS Active button)
