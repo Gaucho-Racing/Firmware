@@ -250,15 +250,28 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	function renderMessages(messages) {
 		msgList.innerHTML = "";
-		if (!messages || messages.length === 0) {
-			setPlaceholder(msgList, "No messages");
-			return;
-		}
-
 		const editing = isEditing();
 		const busPort = currentBusCanonical
 			? window.GrcanApi.busToPort(currentBusCanonical)
 			: null;
+		if (!messages || messages.length === 0) {
+			setPlaceholder(msgList, "No messages");
+			if (editing && busPort && currentDeviceName) {
+				msgList.appendChild(
+					editor.createAddBtn("Add Route", () => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showRoutingAddForm(currentDeviceName, busPort);
+					}),
+				);
+				msgList.appendChild(
+					editor.createAddBtn("Add Message Definition", () => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showMessageEditForm(null, true);
+					}),
+				);
+			}
+			return;
+		}
 
 		messages.forEach((msg) => {
 			const item = document.createElement("div");
@@ -563,11 +576,25 @@ window.addEventListener("DOMContentLoaded", function () {
 	function renderNodeBusSecondary(busEntries, deviceName) {
 		secondList.innerHTML = "";
 		setPlaceholder(msgList, "Select a bus");
+		const editing = isEditing();
 		if (!busEntries || busEntries.length === 0) {
 			setPlaceholder(secondList, "No buses for this node");
+			if (editing) {
+				const hint = document.createElement("div");
+				hint.className = "placeholder";
+				hint.textContent = "Use Add Bus to create this node's first route.";
+				secondList.appendChild(hint);
+			}
+			if (editing && deviceName) {
+				secondList.appendChild(
+					editor.createAddBtn("Add Bus", () => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showRoutingAddForm(deviceName, null);
+					}),
+				);
+			}
 			return;
 		}
-		const editing = isEditing();
 		busEntries.forEach((entry) => {
 			const item = makeItem(entry.busName, true);
 			item.dataset.busCanonical = entry.canonicalBus || "";
