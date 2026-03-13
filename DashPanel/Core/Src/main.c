@@ -240,7 +240,7 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(RTD_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	// PA5 for the toggling LED
+	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
