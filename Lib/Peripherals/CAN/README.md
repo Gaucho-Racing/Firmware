@@ -9,8 +9,8 @@ This document provides an overview of the Gaucho Racing CAN API, a simplified wr
 In your application*, add a file called `can_cfg.h`, containing at least:
 
 ```c
-#ifndef CAN_CONF_H
-#define CAN_CONF_H
+#ifndef CAN_CFG_H
+#define CAN_CFG_H
 
 #define USECAN<1/2/3>
 #define TX_BUFFER_<1/2/3>_SIZE <size>
