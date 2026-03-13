@@ -6,12 +6,24 @@ This document provides an overview of the Gaucho Racing CAN API, a simplified wr
 
 # Build Usage
 
-Somewhere in your application, define:
+In your application*, add a file called `can_cfg.h`, containing at least:
 
 ```c
-#define USECAN1
-#define TX_BUFFER_1_SIZE <size>
+#ifndef CAN_CONF_H
+#define CAN_CONF_H
+
+#define USECAN<1/2/3>
+#define TX_BUFFER_<1/2/3>_SIZE <size>
+
+// ... potentially other USECANM + TX_BUFFER_M_SIZE defines...
+
+#endif
 ```
+
+for each CAN peripheral you want to use.
+
+\* Make sure `can_cfg.h` is in a folder included by `target_include_directories` in the project's `CMakeLists.txt`!
+
 
 ---
 

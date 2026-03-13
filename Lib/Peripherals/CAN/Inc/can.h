@@ -8,6 +8,7 @@
 #error "Unsupported STM32 Family"
 #endif
 
+#include "can_cfg.h"
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
 
