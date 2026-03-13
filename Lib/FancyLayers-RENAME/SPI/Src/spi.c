@@ -254,9 +254,7 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 	// Check if Tx is empty
 	if (LL_SPI_IsActiveFlag_TXE(handle->pins->SPIx)) {
 		// Continue sending bytes in transaction
-		if (handle->spi_config->Mode == LL_SPI_MODE_MASTER &&
-			handle->current_tx_msg_index != GR_SPI_INVALID_TX_SIZE &&
-			handle->msg_status == GR_SPI_MSG_IN_PROGRESS) {
+		if (handle->spi_config->Mode == LL_SPI_MODE_MASTER && handle->current_tx_msg_index != GR_SPI_INVALID_TX_SIZE && handle->msg_status == GR_SPI_MSG_IN_PROGRESS) {
 			GR_SPI_Transfer_Tx_Bytes(handle);
 		}
 	}

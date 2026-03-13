@@ -133,7 +133,7 @@ int main(void)
 	pins_spi2.pin_nums[0] = LL_GPIO_PIN_15; // COPI
 	pins_spi2.pin_nums[1] = LL_GPIO_PIN_14; // CIPO
 	pins_spi2.pin_nums[2] = LL_GPIO_PIN_13; // SCK
-	pins_spi2.pin_nums[3] = LL_GPIO_PIN_12;  // NSS
+	pins_spi2.pin_nums[3] = LL_GPIO_PIN_12; // NSS
 	pins_spi2.alternate_function_number = 5;
 
 	GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);
@@ -162,7 +162,7 @@ int main(void)
 	pins_spi3.pin_nums[0] = LL_GPIO_PIN_12; // COPI
 	pins_spi3.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
 	pins_spi3.pin_nums[2] = LL_GPIO_PIN_10; // SCK
-	pins_spi3.pin_nums[3] = LL_GPIO_PIN_4;  // NSS
+	pins_spi3.pin_nums[3] = LL_GPIO_PIN_4;	// NSS
 	pins_spi3.alternate_function_number = 6;
 
 	GR_SPI_Initialize(&handle_spi3, &config_spi3, &pins_spi3);
