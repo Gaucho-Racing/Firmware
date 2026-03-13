@@ -96,7 +96,6 @@ typedef volatile struct ECU_StateData {
 
 	bool apps_bse_violation;
 
-
 	GR_ECU_State ecu_state;
 } ECU_StateData;
 
