@@ -1,3 +1,9 @@
+// Purpose: Decorative background canvas animation.
+// Generates and draws a static field of brand-colored dot clusters onto a fixed
+// fullscreen canvas. Redraws on scroll and resize to keep the pattern aligned.
+// Exposes window.regenerateAndDrawBg() so viewer.js can force a refresh after a
+// ref change (which may alter page height).
+
 const colors = ["#195297", "#7920FF", "#EF0DA1"];
 const SQUARE_SIZE = 18;
 const DENSITY = 0.18;
