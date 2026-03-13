@@ -32,7 +32,7 @@
 			if (!range) return;
 
 			if (newBus === oldBusPort) {
-				fu.closeOverlay(overlay);
+				fu.closeOverlay(overlay, { force: true });
 				return;
 			}
 
@@ -48,7 +48,7 @@
 				"      " + newBus + ":\n",
 			);
 			editor.markEdited("routeBus:" + deviceName + "|" + newBus);
-			fu.closeOverlay(overlay);
+			fu.closeOverlay(overlay, { force: true });
 			editor.triggerReRender();
 		});
 	}

@@ -549,7 +549,10 @@ window.addEventListener("DOMContentLoaded", function () {
 					);
 					return;
 				}
-				renderBusNodeSecondary(nodesResult.nodes);
+				const nodesOnBus = (nodesResult.nodes || []).filter(
+					(node) => (node.messages || []).length > 0,
+				);
+				renderBusNodeSecondary(nodesOnBus);
 			});
 			firstList.appendChild(item);
 		});
@@ -664,6 +667,22 @@ window.addEventListener("DOMContentLoaded", function () {
 			.filter((b) => b.name && b.name !== "Testing");
 
 		const nodeMap = new Map();
+		let nodeCatalogResult;
+		if (isLocal) {
+			nodeCatalogResult = window.GrcanApi.parseNodeCatalogFromText(localText);
+		} else {
+			nodeCatalogResult = await window.GrcanApi.fetchNodeCatalog(ref);
+		}
+		const catalogNodes = Array.isArray(nodeCatalogResult)
+			? nodeCatalogResult
+			: nodeCatalogResult && Array.isArray(nodeCatalogResult.nodes)
+				? nodeCatalogResult.nodes
+				: [];
+		if (catalogNodes.length > 0) {
+			catalogNodes.forEach((nodeName) => {
+				if (!nodeMap.has(nodeName)) nodeMap.set(nodeName, []);
+			});
+		}
 		for (const bus of routingBuses) {
 			let nodesResult;
 			if (isLocal) {
@@ -676,6 +695,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
+				if (!node.messages || node.messages.length === 0) continue;
 				if (!nodeMap.has(node.name)) nodeMap.set(node.name, []);
 				nodeMap.get(node.name).push({
 					busName: bus.display,
@@ -749,6 +769,12 @@ window.addEventListener("DOMContentLoaded", function () {
 				editor.createAddBtn("Add Node", () => {
 					editor.setNavSnapshot(navSnapshot());
 					editor.showRoutingAddForm(null, null);
+				}),
+			);
+			firstList.appendChild(
+				editor.createAddBtn("Super Add", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showSuperAddForm();
 				}),
 			);
 		}

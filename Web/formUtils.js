@@ -19,19 +19,39 @@
 
 	// ==================== Modal Builder ====================
 
-	function closeOverlay(overlay) {
-		if (overlay && overlay.parentNode) overlay.remove();
+	function closeOverlay(overlay, opts) {
+		if (!overlay || !overlay.parentNode) return;
+		const force = !!(opts && opts.force);
+		const isDirty = !!overlay.__editorDirty;
+		if (!force && isDirty) {
+			const discard = window.confirm(
+				"You have unsaved changes. Discard them and close this popup?",
+			);
+			if (!discard) return;
+		}
+		overlay.remove();
 	}
 
 	function createModal(title) {
 		const overlay = document.createElement("div");
 		overlay.className = "editor-overlay";
+		overlay.__editorDirty = false;
 		overlay.addEventListener("click", (e) => {
 			if (e.target === overlay) closeOverlay(overlay);
 		});
 
 		const modal = document.createElement("div");
 		modal.className = "editor-modal";
+		function markDirty(e) {
+			const t = e && e.target ? e.target : null;
+			if (!t) return;
+			const tag = (t.tagName || "").toLowerCase();
+			if (tag === "input" || tag === "textarea" || tag === "select") {
+				overlay.__editorDirty = true;
+			}
+		}
+		modal.addEventListener("input", markDirty, true);
+		modal.addEventListener("change", markDirty, true);
 
 		const header = document.createElement("div");
 		header.className = "editor-modal-header";

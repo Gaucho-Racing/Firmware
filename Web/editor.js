@@ -231,6 +231,71 @@
 		return entries;
 	}
 
+	function getGrIdEntries() {
+		const lines = getLines();
+		const start = lines.findIndex((l) => l.startsWith("GR ID:"));
+		if (start === -1) return [];
+		const end = findSectionEnd(lines, start);
+		const entries = [];
+		for (let i = start + 1; i < end; i++) {
+			const raw = lines[i];
+			const indent = raw.search(/\S/);
+			if (indent !== 2) continue;
+			const content = raw.trim();
+			const colonIdx = content.indexOf(":");
+			if (colonIdx <= 0) continue;
+			const name = content.slice(0, colonIdx).trim();
+			if (!name) continue;
+			const idMatch = content.match(/:\s*["']?([^"'\s]+)["']?/);
+			entries.push({ name, id: idMatch ? idMatch[1] : null, line: i });
+		}
+		return entries;
+	}
+
+	function findGrIdEntryRange(nodeName) {
+		if (!nodeName) return null;
+		const lines = getLines();
+		const start = lines.findIndex((l) => l.startsWith("GR ID:"));
+		if (start === -1) return null;
+		const end = findSectionEnd(lines, start);
+		for (let i = start + 1; i < end; i++) {
+			const raw = lines[i];
+			const indent = raw.search(/\S/);
+			if (indent !== 2) continue;
+			const content = raw.trim();
+			const colonIdx = content.indexOf(":");
+			if (colonIdx <= 0) continue;
+			const name = content.slice(0, colonIdx).trim();
+			if (name === nodeName) {
+				return { startLine: i, endLine: i + 1 };
+			}
+		}
+		return null;
+	}
+
+	function grIdNameExists(nodeName) {
+		return !!findGrIdEntryRange(nodeName);
+	}
+
+	function renameGrIdNode(oldName, newName) {
+		if (!oldName || !newName || oldName === newName) return false;
+		const range = findGrIdEntryRange(oldName);
+		if (!range) return false;
+		const lines = getLines();
+		const raw = lines[range.startLine];
+		const colonIdx = raw.indexOf(":");
+		if (colonIdx === -1) return false;
+		const leadingWs = raw.match(/^\s*/);
+		const prefix = leadingWs ? leadingWs[0] : "";
+		const rest = raw.slice(colonIdx);
+		const nextLine = prefix + newName + rest;
+		if (nextLine === raw) return false;
+		lines[range.startLine] = nextLine;
+		rawCandoText = lines.join("\n");
+		hasEdits = true;
+		return true;
+	}
+
 	function messageNameExists(msgName) {
 		return !!findMessageDefRange(msgName) || !!findCustomCanIdRange(msgName);
 	}
@@ -407,6 +472,10 @@
 		getLineRangeText,
 		routeEntryExists,
 		getMessageIdEntries,
+		getGrIdEntries,
+		findGrIdEntryRange,
+		grIdNameExists,
+		renameGrIdNode,
 		messageNameExists,
 		renameRoutingMessageRefs,
 		generateMessageIdYaml,

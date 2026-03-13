@@ -464,7 +464,7 @@
 					editor.markEdited("msgDef:" + msgName);
 					if (name !== msgName) editor.markEdited("msgDef:" + name);
 				}
-				fu.closeOverlay(overlay);
+				fu.closeOverlay(overlay, { force: true });
 				if (changed) editor.triggerReRender();
 				return;
 			} else {
@@ -476,7 +476,7 @@
 				}
 				editor.markNew("msgDef:" + name);
 			}
-			fu.closeOverlay(overlay);
+			fu.closeOverlay(overlay, { force: true });
 			editor.triggerReRender();
 		});
 	}

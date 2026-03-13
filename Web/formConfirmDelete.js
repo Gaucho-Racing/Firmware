@@ -32,7 +32,7 @@
 
 		delBtn.addEventListener("click", () => {
 			deleteFn();
-			fu.closeOverlay(overlay);
+			fu.closeOverlay(overlay, { force: true });
 			editor.triggerReRender();
 		});
 	}

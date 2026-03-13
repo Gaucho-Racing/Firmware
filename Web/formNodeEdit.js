@@ -35,7 +35,10 @@
 				ok = false;
 			} else if (
 				newName !== oldDeviceName &&
-				editor.findRoutingDeviceRange(newName)
+				(
+					editor.findRoutingDeviceRange(newName) ||
+					(!!editor.grIdNameExists && editor.grIdNameExists(newName))
+				)
 			) {
 				nameF.error.textContent = "Node already exists";
 				ok = false;
@@ -45,7 +48,7 @@
 			if (!ok) return;
 
 			if (newName === oldDeviceName) {
-				fu.closeOverlay(overlay);
+				fu.closeOverlay(overlay, { force: true });
 				return;
 			}
 
@@ -56,8 +59,9 @@
 				range.startLine + 1,
 				"    " + newName + ":\n",
 			);
+			if (editor.renameGrIdNode) editor.renameGrIdNode(oldDeviceName, newName);
 			editor.markEdited("routeNode:" + newName);
-			fu.closeOverlay(overlay);
+			fu.closeOverlay(overlay, { force: true });
 			editor.triggerReRender();
 		});
 	}
