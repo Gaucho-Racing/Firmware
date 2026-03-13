@@ -73,6 +73,7 @@ typedef volatile struct ECU_StateData {
 	uint16_t driving_heat_capacity_2;
 	uint16_t APPS1_Signal;
 	uint16_t APPS2_Signal;
+	uint16_t BSE_Signal;
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
 	uint16_t STEERING_ANGLE_SIGNAL;
@@ -94,6 +95,7 @@ typedef volatile struct ECU_StateData {
 	bool tssi_fault;
 
 	bool apps_bse_violation;
+
 
 	GR_ECU_State ecu_state;
 } ECU_StateData;

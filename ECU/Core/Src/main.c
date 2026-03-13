@@ -118,7 +118,7 @@ void read_digital(void)
 void write_adc_values_to_state_data()
 {
 	// analog
-	// TODO: bse signal idk what to do ADC_outputs[0]
+	stateLump.BSE_Signal = ADC_outputs[0];
 	// TODO: bspd signal --> ADC_outputs[1], find use
 	stateLump.APPS1_Signal = ADC_outputs[2];
 	stateLump.APPS2_Signal = ADC_outputs[3];
