@@ -532,8 +532,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CAN_STRESS_TEST.elf",
-			"name": "CAN_STRESS_TEST",
+			"executable": "${command:cmake.buildDirectory}/CAN_FILTER_TEST.elf",
+			"name": "CAN_FILTER_TEST",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -542,7 +542,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CAN_STRESS_TEST",
+			"preLaunchTask": "CMake: configure and build CAN_FILTER_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {

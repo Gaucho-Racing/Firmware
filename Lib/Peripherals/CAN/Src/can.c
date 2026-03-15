@@ -302,9 +302,26 @@ CAN_STATUS can_release(CANHandle *canHandle)
 	canHandle->tx_tail = 0;
 
 	// reset can handle
-	FDCAN_HandleTypeDef *temp = canHandle->hal_fdcanP;
-	memset(canHandle, 0, sizeof(*canHandle));
-	canHandle->hal_fdcanP = temp;
+	//FDCAN_HandleTypeDef *temp = canHandle->hal_fdcanP;
+	//uint32_t capacity = canHandle->tx_capacity;
+	//FDCANTxMessage* buff = canHandle->tx_buffer;
+
+	canHandle->init = 0;
+	canHandle->started = 0;
+	canHandle->rx_callback = 0;
+	canHandle->tx_elements = 0;
+	canHandle->rx_gpio = 0;
+	canHandle->rx_interrupt_priority = 0;
+	canHandle->tx_interrupt_priority = 0;
+	canHandle->tx_gpio = 0;
+	canHandle->rx_pin = 0;
+	canHandle->tx_pin = 0;
+	canHandle->tx_tail = 0;
+
+	//memset(canHandle, 0, sizeof(*canHandle));
+	//canHandle->hal_fdcanP = temp;
+	//canHandle->tx_capacity = capacity;
+	//canHandle->tx_buffer = buff;
 
 	return CAN_SUCCESS;
 }
@@ -353,6 +370,11 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 {
 	if (validate_can_handle(canHandle) != CAN_SUCCESS) { return CAN_ERROR;}
+
+	if (!canHandle->started) {
+		LOGOMATIC("CAN_send: instance is not started\n");
+		return CAN_ERROR;
+	}
 
 	//TODO: validate message??
 	if (message == NULL) {

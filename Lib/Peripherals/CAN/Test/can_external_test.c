@@ -50,11 +50,11 @@ int can_external_test(void)
 	CANConfig cfg1, cfg2;
 
 	LOGOMATIC("Initializing primary and data CAN Bus in Normal mode.\n");
-	if (get_cfg(FDCAN1, can_test_rx_callback1, &cfg1, FDCAN_MODE_NORMAL)) {
+	if (get_cfg(FDCAN1, can_test_rx_callback1, &cfg1, FDCAN_MODE_NORMAL,0,0)) {
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
-	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_NORMAL)) {
+	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_NORMAL,0,0)) {
 		LOGOMATIC("Could not get config for FDCAN2\n");
 		return ERROR;
 	}

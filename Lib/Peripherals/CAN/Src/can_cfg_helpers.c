@@ -3,12 +3,18 @@
 #include "can.h"
 #include "can_tests.h"
 
-static CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);
+#include "can_cfg.h"
+#ifndef CAN_CFG_H
+#error "can_cfg_helpers.c: Please define CAN_CFG_H and define at least one USECANx and TX_BUFFER_X_SIZE"
+#endif
 
-int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
+
+static CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters);
+
+int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
 #ifdef STM32G4
-	return defaultSTM32G4_CANCfg(instance, callback, out_cfg, Mode);
+	return defaultSTM32G4_CANCfg(instance, callback, out_cfg, Mode, numStdFilters, numExtFilters);
 #elif defined(STM32L4)
 #elif defined(STM32U5)
 #error "STM32U5 is untested"#else
@@ -19,7 +25,7 @@ int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *o
 
 // TODO: Abstract out the system clock calculation
 // Abstracts out everything but the mode and callback
-CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
+CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
 	CANConfig canCfg;
 	// canCfg.fdcan_instance = FDCAN2;
@@ -39,8 +45,8 @@ CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback c
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
 	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+	canCfg.hal_fdcan_init.StdFiltersNbr = numStdFilters;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = numExtFilters;
 
 	canCfg.rx_callback = NULL;	   // PLEASE SET
 	canCfg.rx_interrupt_priority = 14; // PLEASE SET

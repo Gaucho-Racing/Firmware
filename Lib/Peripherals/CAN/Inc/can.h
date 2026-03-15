@@ -66,7 +66,7 @@ typedef struct {
 	uint32_t rx_pin;
 	GPIO_TypeDef *tx_gpio;
 	uint32_t tx_pin;
-	uint32_t Clock_Source;
+	//uint32_t Clock_Source;
 
 	// state
 	bool init;
@@ -96,6 +96,6 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 // TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
 
 // Configuration helpers
-int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t FDCAN_Mode);
+int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t FDCAN_Mode, uint32_t numStdFilters, uint32_t numExtFilters);
 
 #endif
