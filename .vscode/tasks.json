@@ -91,15 +91,6 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
 		},
 		{
-			"label": "CMake: configure and build G4CANTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4CANTESTING"
-		},
-		{
 			"label": "CMake: configure and build G4NEOTESTING",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -161,6 +152,60 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
+		},
+		{
+			"label": "CMake: configure and build CAN_EXTERNAL_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_EXTERNAL_TEST"
+		},
+		{
+			"label": "CMake: configure and build CAN_STRESS_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_STRESS_TEST"
+		},
+		{
+			"label": "CMake: configure and build CAN_FILTER_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_FILTER_TEST"
+		},
+		{
+			"label": "CMake: configure and build CAN_INTERNAL_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_INTERNAL_TEST"
+		},
+		{
+			"label": "CMake: configure and build CAN_RELEASE_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_RELEASE_TEST"
+		},
+		{
+			"label": "CMake: configure and build CAN_STRESS_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_STRESS_TEST"
 		}
 	]
 }
