@@ -1,3 +1,131 @@
 #include "can_tests.h"
+#include <string.h>
 
+//TODO:
 // TODO:
+static volatile uint32_t can_filter_test_received = 0;
+void can_filter_test_rx_callback(uint32_t id, void *data, uint32_t size)
+{
+	can_filter_test_received++;
+	UNUSED(id);
+	UNUSED(data);
+	UNUSED(size);
+	return;
+}
+
+//TODO: Filter test with multiple FIFOs
+int can_filter_test(void)
+{
+	LOGOMATIC("running can_filter_test\n");
+	uint32_t status, loop;
+	UNUSED(status);
+
+	status = loop = 0;
+
+	CANHandle *primary_can, *data_can;
+	primary_can = data_can = NULL;
+	CANConfig cfg1;
+
+    // Filter 1 Definitions
+	FDCAN_FilterTypeDef fdcan1_filter;
+
+	fdcan1_filter.IdType = FDCAN_STANDARD_ID;
+	fdcan1_filter.FilterIndex = 0;
+	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
+	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan1_filter.FilterID1 = 0x01;
+	fdcan1_filter.FilterID2 = 0x00000FF;
+
+	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
+
+    if (can_add_filter(primary_can, &fdcan1_filter) != CAN_SUCCESS) {
+        LOGOMATIC("can_filter_test: FAIL, failed to add filter\n");
+        return ERROR;
+    }
+
+	if (get_cfg(FDCAN1, can_filter_test_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK)) {
+		LOGOMATIC("can_filter_test: FAIL, could not get config for FDCAN1\n");
+		return ERROR;
+	}
+
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+	FDCAN_TxHeaderTypeDef TxHeader = {
+	    .Identifier = 1,
+
+	    .IdType = FDCAN_STANDARD_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .DataLength = 1,
+	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
+	};
+
+	if ((primary_can = can_init(&cfg1)) == NULL) {
+		LOGOMATIC("can_add_filter: FAIL, could not initialize primary_can\n");
+		return ERROR;
+	}
+
+	if (can_start(primary_can)) {
+		LOGOMATIC("can_add_filter: FAIL, could not start primary_can\n");
+		return ERROR;
+	}
+
+	FDCANTxMessage msg;
+	memset(&(msg.data), 0, sizeof(msg.data));
+	msg.data[0] = 0x80;
+	msg.tx_header = TxHeader;
+
+	size_t i = 0;
+	size_t rounds = 5;
+	size_t messages = primary_can->tx_capacity;
+	uint32_t successes = 0;
+	while (loop < rounds) {
+		loop++;
+		can_filter_test_received = 0;
+		i = 0;
+		while (i < messages) {
+			if (can_send(primary_can, &msg) != 0) {
+				LOGOMATIC("can_filter_test: FAIL: sending CAN msg at %u-th consecutive send.\n", (unsigned int)i + 1);
+				break;
+			}
+			i++;
+		}
+		LOGOMATIC("Sent %u/%u CAN msgs...\n", (unsigned int)i, (unsigned int)messages);
+		HAL_Delay(1000);
+
+		LOGOMATIC("Received %u/%u CAN msgs after 1 second.\n", (unsigned int)can_filter_test_received, (unsigned int)messages);
+
+		LOGOMATIC("finished loop %ld\n", loop);
+
+		if (primary_can->tx_elements > 0) {
+			LOGOMATIC("can_filter_test: FAIL: did not send all messages from tx_buffer\n");
+			continue;
+		}
+		LOGOMATIC("\n");
+
+		if (can_filter_test_received == messages) {
+			successes += 1;
+		}
+		// msg.data[0] = 0x10;
+		// can_send(data_can, &msg);
+		// HAL_Delay(1000);
+	}
+
+	if (can_release(primary_can)) {
+		LOGOMATIC("can_filter_test: FAIL: could not release primary_can\n");
+		return ERROR;
+	}
+
+	// FINAL CHECK
+	LOGOMATIC("can_filter_test: succeeded %u/%u rounds\n", (unsigned int)successes, (unsigned int)rounds);
+	if (successes < rounds) {
+		LOGOMATIC("can_filter_test: FAIL\n");
+	} else {
+		LOGOMATIC("can_filter_test: SUCCESS\n");
+	}
+
+	return SUCCESS;
+}

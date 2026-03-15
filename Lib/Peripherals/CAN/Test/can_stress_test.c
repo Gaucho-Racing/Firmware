@@ -3,8 +3,7 @@
 #include "can.h"
 #include "can_tests.h"
 
-// #define USECAN1
-// #define TX_BUFFER_1_SIZE 10
+
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
@@ -36,6 +35,7 @@ int can_stress_test(void)
 
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
+	//TODO: Make the stress test more stressful
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
 
@@ -43,7 +43,7 @@ int can_stress_test(void)
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
 						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 1,
+	    .DataLength = 20,
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control

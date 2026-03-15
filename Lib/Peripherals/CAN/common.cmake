@@ -30,6 +30,8 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_internal_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_release_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_stress_test.c
+		${CMAKE_CURRENT_LIST_DIR}/Test/can_filter_test.c
+
 	#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
 	#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
 )

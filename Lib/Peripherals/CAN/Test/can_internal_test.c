@@ -4,19 +4,8 @@
 #include "can.h"
 #include "can_tests.h"
 
-// each family has a constant number of CAN peripherals
 
-/*int can_test_instance(FDCAN_HandleTypeDef fdcan_handle)
-{
-	//can_init(fdcan_handle);
-	UNUSED(fdcan_handle);
-	return 0;
-}*/
 
-// #define USECAN1 1
-// #define TX_BUFFER_1_SIZE 10
-// #define USECAN2 1
-// #define TX_BUFFER_2_SIZE 10
 
 // TODO: Make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;

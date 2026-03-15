@@ -8,7 +8,7 @@
 #error "Unsupported STM32 Family"
 #endif
 
-#include "can_cfg.h"
+//#include "can_cfg.h"
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
 
@@ -81,11 +81,11 @@ typedef enum {
 } CAN_STATUS;
 
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
-int can_start(CANHandle *handle);
-int can_stop(CANHandle *handle);
-int can_send(CANHandle *handle, FDCANTxMessage *buffer);
-int can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
-int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
+CAN_STATUS can_start(CANHandle *handle);
+CAN_STATUS can_stop(CANHandle *handle);
+CAN_STATUS can_send(CANHandle *handle, FDCANTxMessage *buffer);
+CAN_STATUS can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
+CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // alternatively use
 // HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
 // HAL_FDCAN_ConfigFilter()
@@ -96,6 +96,6 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 // TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
 
 // Configuration helpers
-int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);
+int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t FDCAN_Mode);
 
-#endif // End Header Guard
+#endif

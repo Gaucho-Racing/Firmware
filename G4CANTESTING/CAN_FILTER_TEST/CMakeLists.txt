@@ -43,13 +43,6 @@ target_sources(
 		../Core/Src/usart.c
 )
 
-set_target_properties(
-	${NAME}
-	PROPERTIES
-		OUTPUT_NAME
-			"CAN_${NAME}"
-)
-
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
 
 target_include_directories(
@@ -58,4 +51,3 @@ target_include_directories(
 		../Core/Inc
 		.
 )
-

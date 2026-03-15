@@ -3,6 +3,8 @@
 #include "can.h"
 #include "can_tests.h"
 
+static CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);
+
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
 {
 #ifdef STM32G4
@@ -17,7 +19,7 @@ int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *o
 
 // TODO: Abstract out the system clock calculation
 // Abstracts out everything but the mode and callback
-int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
+CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode)
 {
 	CANConfig canCfg;
 	// canCfg.fdcan_instance = FDCAN2;
@@ -66,24 +68,23 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback
 
 	canCfg.rx_callback = callback;
 
-// TODO: Recheck these once you figure out how to define in application code
-#ifdef USECAN1
-	if (instance == FDCAN1) {
-		canCfg.fdcan_instance = FDCAN1;
-		canCfg.rx_gpio = GPIOA;
-		canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
-		canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+	#ifdef USECAN1
+		if (instance == FDCAN1) {
+			canCfg.fdcan_instance = FDCAN1;
+			canCfg.rx_gpio = GPIOA;
+			canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+			canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
-		canCfg.tx_gpio = GPIOA;
-		canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
-		canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+			canCfg.tx_gpio = GPIOA;
+			canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+			canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
-		*out_cfg = canCfg;
-		return SUCCESS;
+			*out_cfg = canCfg;
+			return CAN_SUCCESS;
 	}
-#endif
+	#endif
 
-#ifdef USECAN2
+	#ifdef USECAN2
 	if (instance == FDCAN2) {
 		canCfg.fdcan_instance = FDCAN2;
 		canCfg.rx_gpio = GPIOB;
@@ -95,12 +96,12 @@ int defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback
 		canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
 		*out_cfg = canCfg;
-		return SUCCESS;
+		return CAN_SUCCESS;
 	}
-#endif
+	#endif
 
 	// #ifdef USECAN3
 	// #endif
 
-	return ERROR;
+	return CAN_ERROR;
 }
