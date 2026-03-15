@@ -3,8 +3,6 @@
 #include "can.h"
 #include "can_tests.h"
 
-
-
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
 void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
@@ -28,14 +26,14 @@ int can_stress_test(void)
 	primary_can = data_can = NULL;
 	CANConfig cfg1;
 
-	if (get_cfg(FDCAN1, can_stress_test_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK,0,0)) {
+	if (get_cfg(FDCAN1, can_stress_test_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
 
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
-	//TODO: Make the stress test more stressful
+	// TODO: Make the stress test more stressful
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
 

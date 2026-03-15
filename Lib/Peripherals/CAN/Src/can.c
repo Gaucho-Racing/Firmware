@@ -7,21 +7,21 @@
 
 #include "Logomatic.h"
 
-//CAN CONFIGURATION HEADER
+// CAN CONFIGURATION HEADER
 #include "can_cfg.h"
 #ifndef CAN_CFG_H
 #error "can.c: Please define CAN_CFG_H and define at least one USECANx and TX_BUFFER_X_SIZE"
 #endif
 // ===============================
 
-//EXAMPLE Configuration in "can_cfg.h"
-//#ifndef CAN_CFG_H
-//#define CAN_CFG_H
+// EXAMPLE Configuration in "can_cfg.h"
+// #ifndef CAN_CFG_H
+// #define CAN_CFG_H
 
-//#define USECAN1
-//#define TX_BUFFER_1_SIZE 10
+// #define USECAN1
+// #define TX_BUFFER_1_SIZE 10
 
-//#endif
+// #endif
 
 // HAL handles
 #ifdef USECAN1
@@ -42,8 +42,6 @@ FDCANTxMessage tx_buffer_2[TX_BUFFER_2_SIZE] = {0};
 static CANHandle CAN2 = {.hal_fdcanP = &hal_fdcan2, .tx_buffer = tx_buffer_2};
 #endif
 
-
-
 #ifdef USECAN3
 #ifndef TX_BUFFER_3_SIZE
 #error "Please Define TX_BUFFER_3_SIZE"
@@ -55,7 +53,7 @@ static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
 
 #define MIN(A, B) ((A < B) ? A : B)
 
-//bool hardwareEnabled = false;
+// bool hardwareEnabled = false;
 
 // macro lore
 /*
@@ -114,7 +112,7 @@ static inline void fdcan_enable_shared_clock(void);
 static inline void fdcan_disable_shared_clock(void);
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
-static CAN_STATUS validate_can_handle(CANHandle * canHandle);
+static CAN_STATUS validate_can_handle(CANHandle *canHandle);
 
 inline void can_set_clksource(uint32_t clksource)
 {
@@ -135,8 +133,8 @@ CANHandle *can_init(const CANConfig *config)
 	// assert(config != 0)
 	CANHandle *canHandle = NULL;
 
-	#ifdef STM32G474xx
-	#ifdef USECAN1
+#ifdef STM32G474xx
+#ifdef USECAN1
 	if (config->fdcan_instance == FDCAN1) {
 		if (CAN1.init) {
 			LOGOMATIC("CAN: CAN1 is already initialized\n");
@@ -146,8 +144,8 @@ CANHandle *can_init(const CANConfig *config)
 			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
 		}
 	}
-	#endif
-	#ifdef USECAN2
+#endif
+#ifdef USECAN2
 	if (config->fdcan_instance == FDCAN2) {
 		if (CAN2.init) {
 			LOGOMATIC("CAN: CAN2 is already initialized\n");
@@ -157,8 +155,8 @@ CANHandle *can_init(const CANConfig *config)
 			canHandle->tx_capacity = TX_BUFFER_2_SIZE;
 		}
 	}
-	#endif
-	#ifdef USECAN3
+#endif
+#ifdef USECAN3
 	if (config->fdcan_instance == FDCAN3) {
 		if (CAN3.init) {
 			LOGOMATIC("CAN: CAN3 is already initialized\n");
@@ -168,8 +166,8 @@ CANHandle *can_init(const CANConfig *config)
 			canHandle->tx_capacity = TX_BUFFER_3_SIZE;
 		}
 	}
-	#endif
-	#endif
+#endif
+#endif
 
 	// #elif defined(STM32L476xx)
 	// #else
@@ -211,7 +209,7 @@ CANHandle *can_init(const CANConfig *config)
 
 	// Current idea, redefine HAL_FDCAN_MspInit and MspDeInit to do nothing at all, do all the work in can_msp_init()
 	uint32_t failure = 0;
-	if (failure |= (can_msp_init(canHandle, (CANConfig *)config)!=CAN_SUCCESS) ) {
+	if (failure |= (can_msp_init(canHandle, (CANConfig *)config) != CAN_SUCCESS)) {
 		LOGOMATIC("CAN_init: could not initialize MSP resources");
 		return NULL;
 	}
@@ -270,7 +268,9 @@ CANHandle *can_init(const CANConfig *config)
 
 CAN_STATUS can_release(CANHandle *canHandle)
 {
-	if (validate_can_handle(canHandle) != CAN_SUCCESS) { return CAN_ERROR;}
+	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	if (!canHandle->init) {
 		LOGOMATIC("CAN_release: can instance is already deinitialized");
@@ -283,7 +283,7 @@ CAN_STATUS can_release(CANHandle *canHandle)
 	}
 
 	// No more interrupts should be firing that modify canHandle
-	if (can_msp_deinit(canHandle)!=CAN_SUCCESS) {
+	if (can_msp_deinit(canHandle) != CAN_SUCCESS) {
 		LOGOMATIC("CAN_release: could not stop instance");
 		return CAN_ERROR;
 	}
@@ -302,9 +302,9 @@ CAN_STATUS can_release(CANHandle *canHandle)
 	canHandle->tx_tail = 0;
 
 	// reset can handle
-	//FDCAN_HandleTypeDef *temp = canHandle->hal_fdcanP;
-	//uint32_t capacity = canHandle->tx_capacity;
-	//FDCANTxMessage* buff = canHandle->tx_buffer;
+	// FDCAN_HandleTypeDef *temp = canHandle->hal_fdcanP;
+	// uint32_t capacity = canHandle->tx_capacity;
+	// FDCANTxMessage* buff = canHandle->tx_buffer;
 
 	canHandle->init = 0;
 	canHandle->started = 0;
@@ -318,10 +318,10 @@ CAN_STATUS can_release(CANHandle *canHandle)
 	canHandle->tx_pin = 0;
 	canHandle->tx_tail = 0;
 
-	//memset(canHandle, 0, sizeof(*canHandle));
-	//canHandle->hal_fdcanP = temp;
-	//canHandle->tx_capacity = capacity;
-	//canHandle->tx_buffer = buff;
+	// memset(canHandle, 0, sizeof(*canHandle));
+	// canHandle->hal_fdcanP = temp;
+	// canHandle->tx_capacity = capacity;
+	// canHandle->tx_buffer = buff;
 
 	return CAN_SUCCESS;
 }
@@ -329,7 +329,7 @@ CAN_STATUS can_release(CANHandle *canHandle)
 // lock access to Circular Buffer when sending and dequeuing
 static void can_tx_dequeue_helper(CANHandle *handle)
 {
-	//TODO: validate buffer
+	// TODO: validate buffer
 	if (!handle->tx_buffer) {
 		LOGOMATIC("can_tx_buffer_helper: buffer is invalid");
 		return;
@@ -369,14 +369,16 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 {
-	if (validate_can_handle(canHandle) != CAN_SUCCESS) { return CAN_ERROR;}
+	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	if (!canHandle->started) {
 		LOGOMATIC("CAN_send: instance is not started\n");
 		return CAN_ERROR;
 	}
 
-	//TODO: validate message??
+	// TODO: validate message??
 	if (message == NULL) {
 		LOGOMATIC("CAN_send: received null pointer for <message>\n");
 		return CAN_ERROR;
@@ -468,8 +470,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	} */ // no rx buffer at the moment
 
 	if (RxFifo0ITs & FDCAN_IT_RX_FIFO0_MESSAGE_LOST) {
-		//TODO: Implement lost message counters
-		// lost_rx++;
+		// TODO: Implement lost message counters
+		//  lost_rx++;
 	}
 
 	if (!(RxFifo0ITs & ~FDCAN_IT_RX_FIFO0_MESSAGE_LOST)) {
@@ -516,7 +518,9 @@ void can_read_rx_buffer(CANHandle* canHandle) {
 // Just alternatively just use the HAL_FDCAN_ConfigFilter directly with the canHandle->hal_fdcan
 CAN_STATUS can_add_filter(CANHandle *canHandle, FDCAN_FilterTypeDef *filter)
 {
-	if (validate_can_handle(canHandle) != CAN_SUCCESS) { return CAN_ERROR;}
+	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	if (!canHandle->init || canHandle->started) {
 		LOGOMATIC("CAN_add_filter: can instance is not initialized or already started\n");
@@ -533,7 +537,9 @@ CAN_STATUS can_add_filter(CANHandle *canHandle, FDCAN_FilterTypeDef *filter)
 
 CAN_STATUS can_start(CANHandle *canHandle)
 {
-	if (validate_can_handle(canHandle) != CAN_SUCCESS) { return CAN_ERROR;}
+	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	if (!canHandle->init) {
 		LOGOMATIC("CAN_start: can instance is not initialized\n");
@@ -546,7 +552,7 @@ CAN_STATUS can_start(CANHandle *canHandle)
 
 	IRQn_Type rx0it, txit;
 	rx0it = txit = -1; // TOOD: Check that this is a valid way to initialize an invalid value
-	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)!=CAN_SUCCESS) {
+	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit) != CAN_SUCCESS) {
 		LOGOMATIC("can_start: could not obtain irq #s\n");
 		return CAN_ERROR;
 	}
@@ -569,24 +575,32 @@ CAN_STATUS can_start(CANHandle *canHandle)
 
 CAN_STATUS can_stop(CANHandle *canHandle)
 {
-	if (validate_can_handle(canHandle) != CAN_SUCCESS) { return CAN_ERROR;}
+	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	if (!canHandle->init) {
 		LOGOMATIC("CAN_stop: can instance is not initialized\n");
 		return CAN_ERROR;
 	}
 
-	if (!canHandle->started) {return CAN_SUCCESS;}
+	if (!canHandle->started) {
+		return CAN_SUCCESS;
+	}
 
 	// stop can interrupts from activating
 	uint32_t prev_priority = __get_BASEPRI();
 	__set_BASEPRI(MIN(canHandle->rx_interrupt_priority, canHandle->tx_interrupt_priority) << 4);
 
-	if (HAL_FDCAN_Stop(canHandle->hal_fdcanP)!=HAL_OK) {return CAN_ERROR;}
+	if (HAL_FDCAN_Stop(canHandle->hal_fdcanP) != HAL_OK) {
+		return CAN_ERROR;
+	}
 
 	IRQn_Type rx0it, txit;
 	rx0it = txit = -1;
-	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)!=CAN_SUCCESS) {return CAN_ERROR;}
+	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	HAL_NVIC_DisableIRQ(rx0it);
 	HAL_NVIC_DisableIRQ(txit);
@@ -627,7 +641,7 @@ static inline void fdcan_disable_shared_clock(void)
 // valid only for STM32G4
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1)
 {
-	#ifdef STM32G4
+#ifdef STM32G4
 	if (instance == FDCAN1) {
 		*it0 = FDCAN1_IT0_IRQn;
 		*it1 = FDCAN1_IT1_IRQn;
@@ -643,7 +657,7 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 		*it1 = FDCAN3_IT1_IRQn;
 		return CAN_SUCCESS;
 	}
-	#endif
+#endif
 
 	LOGOMATIC("can_get_irqs: could not obtain irq #s\n");
 	return CAN_ERROR; // invalid instance
@@ -651,47 +665,54 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan)
 {
-	#ifdef STM32G4
-	#ifdef USECAN1
-		if (hfdcan->Instance == FDCAN1) {
-			return &CAN1;
-		}
-	#endif
-	#ifdef USECAN2
-		if (hfdcan->Instance == FDCAN2) {
-			return &CAN2;
-		}
-	#endif
-	#ifdef USECAN3
-		if (hfdcan->Instance == FDCAN3) {
-			return &CAN3;
-		}
-	#endif
-	#endif
+#ifdef STM32G4
+#ifdef USECAN1
+	if (hfdcan->Instance == FDCAN1) {
+		return &CAN1;
+	}
+#endif
+#ifdef USECAN2
+	if (hfdcan->Instance == FDCAN2) {
+		return &CAN2;
+	}
+#endif
+#ifdef USECAN3
+	if (hfdcan->Instance == FDCAN3) {
+		return &CAN3;
+	}
+#endif
+#endif
 
 	LOGOMATIC("CAN_get_handle: was given invalid FDCAN instance\n");
 	UNUSED(hfdcan);
 	return NULL;
 }
 
-static CAN_STATUS validate_can_handle(CANHandle * canHandle) {
+static CAN_STATUS validate_can_handle(CANHandle *canHandle)
+{
 
 	if (canHandle == NULL) {
 		LOGOMATIC("can.c: handle is null\n");
 		return CAN_ERROR;
 	}
 
-	#ifdef STM32G4
-	#ifdef USECAN1
-		if (canHandle == &CAN1) {return CAN_SUCCESS;}
-	#endif
-	#ifdef USECAN2
-		if (canHandle == &CAN2) {return CAN_SUCCESS;}
-	#endif
-	#ifdef USECAN3
-		if (canHandle == &CAN3) {return CAN_SUCCESS;}
-	#endif
-	#endif
+#ifdef STM32G4
+#ifdef USECAN1
+	if (canHandle == &CAN1) {
+		return CAN_SUCCESS;
+	}
+#endif
+#ifdef USECAN2
+	if (canHandle == &CAN2) {
+		return CAN_SUCCESS;
+	}
+#endif
+#ifdef USECAN3
+	if (canHandle == &CAN3) {
+		return CAN_SUCCESS;
+	}
+#endif
+#endif
 
 	LOGOMATIC("can.c: invalid can handle\n");
 	return CAN_ERROR;
@@ -739,7 +760,7 @@ static CAN_STATUS can_msp_init(CANHandle *canHandle, CANConfig *config)
 
 	IRQn_Type rxit = -1;
 	IRQn_Type txit = -1;
-	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rxit, &txit)!=CAN_SUCCESS) {
+	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rxit, &txit) != CAN_SUCCESS) {
 		return CAN_ERROR;
 	}
 
@@ -764,14 +785,16 @@ static CAN_STATUS can_msp_deinit(CANHandle *canHandle)
 	// NVIC
 	IRQn_Type rx0it = -1;
 	IRQn_Type txit = -1;
-	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit)!=CAN_SUCCESS) {return CAN_ERROR;}
+	if (can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
 	HAL_NVIC_DisableIRQ(rx0it);
 	HAL_NVIC_DisableIRQ(txit);
 
 	// TODO: turn off gpio clocks if no other peripherals are using them??? Could implement a shared GPIO layer
-	//HAL_GPIO_DeInit(canHandle->rx_gpio, canHandle->rx_pin);
-	//HAL_GPIO_DeInit(canHandle->tx_gpio, canHandle->tx_pin);
+	// HAL_GPIO_DeInit(canHandle->rx_gpio, canHandle->rx_pin);
+	// HAL_GPIO_DeInit(canHandle->tx_gpio, canHandle->tx_pin);
 
 	// MSP shared layer for GPIOs
 	// TODO: used to disable GPIOs clocks, but that might affect other peripherals

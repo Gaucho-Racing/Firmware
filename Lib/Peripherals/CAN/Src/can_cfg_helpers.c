@@ -1,13 +1,11 @@
 #include <stdint.h>
 
 #include "can.h"
-#include "can_tests.h"
-
 #include "can_cfg.h"
+#include "can_tests.h"
 #ifndef CAN_CFG_H
 #error "can_cfg_helpers.c: Please define CAN_CFG_H and define at least one USECANx and TX_BUFFER_X_SIZE"
 #endif
-
 
 static CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters);
 
@@ -74,23 +72,23 @@ CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback c
 
 	canCfg.rx_callback = callback;
 
-	#ifdef USECAN1
-		if (instance == FDCAN1) {
-			canCfg.fdcan_instance = FDCAN1;
-			canCfg.rx_gpio = GPIOA;
-			canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
-			canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+#ifdef USECAN1
+	if (instance == FDCAN1) {
+		canCfg.fdcan_instance = FDCAN1;
+		canCfg.rx_gpio = GPIOA;
+		canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+		canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
-			canCfg.tx_gpio = GPIOA;
-			canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
-			canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+		canCfg.tx_gpio = GPIOA;
+		canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+		canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
-			*out_cfg = canCfg;
-			return CAN_SUCCESS;
+		*out_cfg = canCfg;
+		return CAN_SUCCESS;
 	}
-	#endif
+#endif
 
-	#ifdef USECAN2
+#ifdef USECAN2
 	if (instance == FDCAN2) {
 		canCfg.fdcan_instance = FDCAN2;
 		canCfg.rx_gpio = GPIOB;
@@ -104,7 +102,7 @@ CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback c
 		*out_cfg = canCfg;
 		return CAN_SUCCESS;
 	}
-	#endif
+#endif
 
 	// #ifdef USECAN3
 	// #endif

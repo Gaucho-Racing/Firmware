@@ -4,9 +4,6 @@
 #include "can.h"
 #include "can_tests.h"
 
-
-
-
 // TODO: Make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
 static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
@@ -49,11 +46,11 @@ int can_internal_test(void)
 	CANConfig cfg1, cfg2;
 
 	LOGOMATIC("Initializing primary and data CAN Bus in Normal mode.\n");
-	if (get_cfg(FDCAN1, can_test_rx_callback1, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK,0,0)) {
+	if (get_cfg(FDCAN1, can_test_rx_callback1, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
-	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_INTERNAL_LOOPBACK,0,0)) {
+	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN2\n");
 		return ERROR;
 	}

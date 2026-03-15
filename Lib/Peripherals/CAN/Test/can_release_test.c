@@ -1,7 +1,6 @@
+#include "Logomatic.h"
 #include "can.h"
 #include "can_tests.h"
-#include "Logomatic.h"
-
 
 static volatile uint32_t rx_1_received = 0;
 static void can_release_callback1(uint32_t id, void *data, uint32_t size)
@@ -16,7 +15,7 @@ int can_release_test()
 	LOGOMATIC("running can_release_test\n");
 
 	CANConfig cfg;
-	if (get_cfg(FDCAN1, can_release_callback1, &cfg, FDCAN_MODE_INTERNAL_LOOPBACK,0,0)) {
+	if (get_cfg(FDCAN1, can_release_callback1, &cfg, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
@@ -33,7 +32,7 @@ int can_release_test()
 		return ERROR;
 	}
 
-	//send a message =======================
+	// send a message =======================
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
 	    .IdType = FDCAN_STANDARD_ID,
@@ -50,18 +49,16 @@ int can_release_test()
 	msg.data[0] = 0x80;
 	msg.tx_header = TxHeader;
 
-
 	if (can_start(can) != CAN_SUCCESS) {
 		LOGOMATIC("can_release_test: FAIL: could not start instance\n");
 		return CAN_ERROR;
 	}
 	LOGOMATIC("can_release_test: sending message\n");
 
-	if (can_send(can, &msg)!= CAN_SUCCESS) {
+	if (can_send(can, &msg) != CAN_SUCCESS) {
 		LOGOMATIC("can_release_test: FAIL: could not send messages\n");
 		return CAN_ERROR;
 	};
-
 
 	HAL_Delay(500);
 	if (rx_1_received != 1) {
@@ -70,33 +67,24 @@ int can_release_test()
 	}
 	LOGOMATIC("can_release_test: SUCCESS: received message\n");
 
-	//Test Releasing
+	// Test Releasing
 	FDCAN_HandleTypeDef *temp = can->hal_fdcanP;
 	uint32_t cap = can->tx_capacity;
-	FDCANTxMessage* buff = can->tx_buffer;
+	FDCANTxMessage *buff = can->tx_buffer;
 	if (can_release(can)) {
 		LOGOMATIC("can_release: FAIL: Could not release can\n");
 		return ERROR;
 	}
 
-
-	//TODO: use a stack canary to see if memory was cleared safely??
-	// test state of canHandle after release
-	if (temp != can->hal_fdcanP ||
-		cap != can->tx_capacity ||
-		buff != can->tx_buffer ||
-		can->init ||
-		can->started ||
-		can->tx_elements ||
-		can->tx_tail ||
-		can->rx_callback) {
+	// TODO: use a stack canary to see if memory was cleared safely??
+	//  test state of canHandle after release
+	if (temp != can->hal_fdcanP || cap != can->tx_capacity || buff != can->tx_buffer || can->init || can->started || can->tx_elements || can->tx_tail || can->rx_callback) {
 		LOGOMATIC("can_release: FAIL: cleared handle incorrectly\n");
 		return ERROR;
 	}
 	LOGOMATIC("can_release_test: SUCCESS: released handle the first time\n");
 
-
-	//Do it again for good luck
+	// Do it again for good luck
 	if ((can = can_init(&cfg)) == NULL) {
 		LOGOMATIC("can_init: FAIL Could not initialize primary_can the second time\n");
 		return ERROR;
@@ -110,19 +98,11 @@ int can_release_test()
 		LOGOMATIC("can_release: FAIL: Could not release can the second time\n");
 		return ERROR;
 	}
-	if (temp != can->hal_fdcanP ||
-		cap != can->tx_capacity ||
-		buff != can->tx_buffer ||
-		can->init ||
-		can->started ||
-		can->tx_elements ||
-		can->tx_tail ||
-		can->rx_callback) {
+	if (temp != can->hal_fdcanP || cap != can->tx_capacity || buff != can->tx_buffer || can->init || can->started || can->tx_elements || can->tx_tail || can->rx_callback) {
 		LOGOMATIC("can_release: FAIL: cleared handle incorrectly\n");
 		return ERROR;
 	}
 	LOGOMATIC("can_release_test: SUCCESS: released handle the second time\n");
-
 
 	LOGOMATIC("can_release: SUCCESS\n");
 	return SUCCESS;

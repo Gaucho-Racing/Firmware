@@ -8,7 +8,7 @@
 #error "Unsupported STM32 Family"
 #endif
 
-//#include "can_cfg.h"
+// #include "can_cfg.h"
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
 
@@ -66,7 +66,7 @@ typedef struct {
 	uint32_t rx_pin;
 	GPIO_TypeDef *tx_gpio;
 	uint32_t tx_pin;
-	//uint32_t Clock_Source;
+	// uint32_t Clock_Source;
 
 	// state
 	bool init;
