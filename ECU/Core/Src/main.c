@@ -271,17 +271,17 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
 	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
 	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
-	canCfg.hal_fdcan_init.DataPrescaler = 8;
+	canCfg.hal_fdcan_init.DataPrescaler = 2;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 12; // Updated for 170MHz: 170 MHz/((1+12+4)*2) = 5 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
-	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
+	// canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
 
 	// RX shared settings
 	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;

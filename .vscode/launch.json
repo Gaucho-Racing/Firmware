@@ -439,8 +439,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4CANTESTING.elf",
-			"name": "G4CANTESTING",
+			"executable": "${command:cmake.buildDirectory}/G4NEOTESTING.elf",
+			"name": "G4NEOTESTING",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -449,12 +449,12 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4CANTESTING",
+			"preLaunchTask": "CMake: configure and build G4NEOTESTING",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 160000000,
+				"cpuFrequency": 170000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -470,8 +470,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4NEOTESTING.elf",
-			"name": "G4NEOTESTING",
+			"executable": "${command:cmake.buildDirectory}/CAN_EXTERNAL_TEST.elf",
+			"name": "CAN_EXTERNAL_TEST",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -480,7 +480,131 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4NEOTESTING",
+			"preLaunchTask": "CMake: configure and build CAN_EXTERNAL_TEST",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/CAN_INTERNAL_TEST.elf",
+			"name": "CAN_INTERNAL_TEST",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build CAN_INTERNAL_TEST",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/CAN_FILTER_TEST.elf",
+			"name": "CAN_FILTER_TEST",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build CAN_FILTER_TEST",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/CAN_STRESS_TEST.elf",
+			"name": "CAN_STRESS_TEST",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build CAN_STRESS_TEST",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/CAN_RELEASE_TEST.elf",
+			"name": "CAN_RELEASE_TEST",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build CAN_RELEASE_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
