@@ -17,6 +17,8 @@ int can_init_test(CANConfig *cfg)
 		LOGOMATIC("can_init_test: did not set init bool in handle\n");
 		return ERROR;
 	}
+	LOGOMATIC("can_init_test: SUCCESS: initialized\n");
+
 
 	return SUCCESS;
 }

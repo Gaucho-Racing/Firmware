@@ -26,6 +26,8 @@ int can_release_test()
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
 	//=============================================================================================
+	LOGOMATIC("can_release_test: initializing handle\n");
+
 	if ((can = can_init(&cfg)) == NULL) {
 		LOGOMATIC("can_init: FAIL Could not initialize primary_can\n");
 		return ERROR;
@@ -48,13 +50,25 @@ int can_release_test()
 	msg.data[0] = 0x80;
 	msg.tx_header = TxHeader;
 
-	can_start(can);
-	can_send(can, &msg);
+
+	if (can_start(can) != CAN_SUCCESS) {
+		LOGOMATIC("can_release_test: FAIL: could not start instance\n");
+		return CAN_ERROR;
+	}
+	LOGOMATIC("can_release_test: sending message\n");
+
+	if (can_send(can, &msg)!= CAN_SUCCESS) {
+		LOGOMATIC("can_release_test: FAIL: could not send messages\n");
+		return CAN_ERROR;
+	};
+
+
 	HAL_Delay(500);
 	if (rx_1_received != 1) {
 		LOGOMATIC("can_release: FAIL: did not receive message over loopback\n");
 		return ERROR;
 	}
+	LOGOMATIC("can_release_test: SUCCESS: received message\n");
 
 	//Test Releasing
 	FDCAN_HandleTypeDef *temp = can->hal_fdcanP;
@@ -64,6 +78,7 @@ int can_release_test()
 		LOGOMATIC("can_release: FAIL: Could not release can\n");
 		return ERROR;
 	}
+
 
 	//TODO: use a stack canary to see if memory was cleared safely??
 	// test state of canHandle after release
@@ -78,12 +93,16 @@ int can_release_test()
 		LOGOMATIC("can_release: FAIL: cleared handle incorrectly\n");
 		return ERROR;
 	}
+	LOGOMATIC("can_release_test: SUCCESS: released handle the first time\n");
+
 
 	//Do it again for good luck
 	if ((can = can_init(&cfg)) == NULL) {
 		LOGOMATIC("can_init: FAIL Could not initialize primary_can the second time\n");
 		return ERROR;
 	}
+	LOGOMATIC("can_release_test: SUCCESS: initialized handle the second time\n");
+
 	temp = can->hal_fdcanP;
 	cap = can->tx_capacity;
 	buff = can->tx_buffer;
@@ -102,6 +121,8 @@ int can_release_test()
 		LOGOMATIC("can_release: FAIL: cleared handle incorrectly\n");
 		return ERROR;
 	}
+	LOGOMATIC("can_release_test: SUCCESS: released handle the second time\n");
+
 
 	LOGOMATIC("can_release: SUCCESS\n");
 	return SUCCESS;
