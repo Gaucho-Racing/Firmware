@@ -66,4 +66,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			CANfigurator
 	)
 	add_test(Autogen_CAN_Node_ID_Compilation_Test Autogen_CAN_Node_ID_Compilation_Test)
+
+	# TODO Add more tests
 endif()
