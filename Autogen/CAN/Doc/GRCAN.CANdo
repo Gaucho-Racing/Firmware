@@ -4913,13 +4913,12 @@ Custom CAN ID:
         # Frick if I know
 
 GR ID:
-
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
   IMD: "0x00"
   Debugger: "0x01"
-  CCU : "0x2A"
+  CCU : "0x02"
   ECU: "0x02"
   ACU: "0x03"
   TCM: "0x04"
@@ -4959,6 +4958,5 @@ GR ID:
   SAM19: "0x27"
   SAM20: "0x28"
   LV DC-DC: "0x29"
-  CCU : "0x2A"
   DGPS: "0x30"
   ALL: "0xFF"
