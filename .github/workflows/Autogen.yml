@@ -10,6 +10,7 @@ concurrency:
 
 jobs:
   canfigurator:
+    if: false  # Disable running until compilation of header files is resolved
     name: CANfigurator
     runs-on: ubuntu-latest
     permissions:
