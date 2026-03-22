@@ -14,9 +14,15 @@ const GITHUB_API = "https://api.github.com/repos/Gaucho-Racing/Firmware";
 
 // Local-file mode: when set, fetchCando returns this content instead of hitting the API.
 let _localCandoText = null;
-function setLocalCandoText(text) { _localCandoText = text; }
-function getLocalCandoText() { return _localCandoText; }
-function isLocalMode() { return _localCandoText !== null; }
+function setLocalCandoText(text) {
+	_localCandoText = text;
+}
+function getLocalCandoText() {
+	return _localCandoText;
+}
+function isLocalMode() {
+	return _localCandoText !== null;
+}
 const CANDO_PATH = "Autogen/CAN/Doc/GRCAN.CANdo";
 const BUS_ID_PATH = "Autogen/CAN/Inc/GRCAN_BUS_ID.h";
 const NODE_ID_PATH = "Autogen/CAN/Inc/GRCAN_NODE_ID.h";

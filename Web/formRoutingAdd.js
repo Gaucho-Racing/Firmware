@@ -438,7 +438,13 @@
 				}
 			}
 
-			const routeResult = window.GrcanDocument.addRoute(dev, bus, rec, msg, ovr || null);
+			const routeResult = window.GrcanDocument.addRoute(
+				dev,
+				bus,
+				rec,
+				msg,
+				ovr || null,
+			);
 			if (!routeResult.ok) {
 				msgF.error.textContent = routeResult.error;
 				return;

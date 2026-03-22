@@ -433,13 +433,23 @@
 
 			if (createSender && !doc.deviceExists(sender)) {
 				const r = doc.addDevice(sender, senderId);
-				if (!r.ok) { senderF.error.textContent = r.error; return; }
+				if (!r.ok) {
+					senderF.error.textContent = r.error;
+					return;
+				}
 				editor.markNew("routeNode:" + sender);
 				changed = true;
 			}
-			if (createReceiver && receiver !== sender && !doc.deviceExists(receiver)) {
+			if (
+				createReceiver &&
+				receiver !== sender &&
+				!doc.deviceExists(receiver)
+			) {
 				const r = doc.addDevice(receiver, receiverId);
-				if (!r.ok) { receiverF.error.textContent = r.error; return; }
+				if (!r.ok) {
+					receiverF.error.textContent = r.error;
+					return;
+				}
 				editor.markNew("routeNode:" + receiver);
 				changed = true;
 			}
@@ -463,14 +473,26 @@
 					],
 				};
 				const r = doc.addMessageDef(msgDef);
-				if (!r.ok) { msgNameF.error.textContent = r.error; return; }
+				if (!r.ok) {
+					msgNameF.error.textContent = r.error;
+					return;
+				}
 				editor.markNew("msgDef:" + msgName);
 				changed = true;
 			}
 
 			if (routeOn) {
-				const r = doc.addRoute(sender, bus, receiver, msgName, overrideId || null);
-				if (!r.ok) { msgNameF.error.textContent = r.error; return; }
+				const r = doc.addRoute(
+					sender,
+					bus,
+					receiver,
+					msgName,
+					overrideId || null,
+				);
+				if (!r.ok) {
+					msgNameF.error.textContent = r.error;
+					return;
+				}
 				if (!doc.deviceExists(sender)) editor.markNew("routeNode:" + sender);
 				else editor.markEdited("routeNode:" + sender);
 				editor.markNew("routeBus:" + sender + "|" + bus);

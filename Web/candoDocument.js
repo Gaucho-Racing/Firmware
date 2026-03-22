@@ -61,10 +61,7 @@
 
 		// Verbatim: Bus ID = everything before routing section header.
 		if (routingStart > 0) {
-			_busIdsText = lines
-				.slice(0, routingStart)
-				.join("\n")
-				.replace(/\n+$/, "");
+			_busIdsText = lines.slice(0, routingStart).join("\n").replace(/\n+$/, "");
 		}
 
 		// Verbatim: byte order line through the blank line before Message ID.
@@ -205,8 +202,7 @@
 					curField.bitStart = content.slice("bit_start:".length).trim();
 				} else if (content.startsWith("#")) {
 					const t = content.slice(1).trim();
-					curField.comment =
-						curField.comment ? curField.comment + "\n" + t : t;
+					curField.comment = curField.comment ? curField.comment + "\n" + t : t;
 				} else if (content.startsWith("data type:")) {
 					curField.dataType = content.slice("data type:".length).trim();
 				} else if (content.startsWith("units:")) {
@@ -298,7 +294,7 @@
 	function _serializeGrIds() {
 		let out = "GR ID:\n\n";
 		for (const [name, hexId] of _grIds.entries()) {
-			out += '  ' + name + ': "' + hexId + '"\n';
+			out += "  " + name + ': "' + hexId + '"\n';
 		}
 		return out;
 	}
@@ -501,7 +497,7 @@
 			if (!grId || !/^0x[0-9a-fA-F]+$/i.test(grId.trim()))
 				return {
 					ok: false,
-					error: 'GR ID must be a hex value (e.g. 0x2B)',
+					error: "GR ID must be a hex value (e.g. 0x2B)",
 				};
 			const n = name.trim(),
 				g = grId.trim();
@@ -602,8 +598,7 @@
 	function addRoute(deviceName, busPort, receiverName, msgName, canIdOverride) {
 		return _withEditor(() => {
 			const warnings = [];
-			if (!deviceName)
-				return { ok: false, error: "Device name is required" };
+			if (!deviceName) return { ok: false, error: "Device name is required" };
 			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
 				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
 			if (!receiverName)
@@ -654,7 +649,9 @@
 			if (!bus.receivers.has(receiverName)) {
 				bus.receivers.set(receiverName, { receiverName, routes: [] });
 			}
-			bus.receivers.get(receiverName).routes.push({ msgName, canIdOverride: ovr });
+			bus.receivers
+				.get(receiverName)
+				.routes.push({ msgName, canIdOverride: ovr });
 
 			return { ok: true, warnings };
 		});

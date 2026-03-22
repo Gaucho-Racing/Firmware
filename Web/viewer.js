@@ -804,7 +804,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	async function renderHierarchy(ref) {
 		const candoResult = await window.GrcanApi.fetchCando(ref);
-		const localText = window.GrcanApi.isLocalMode() ? candoResult.content : null;
+		const localText = window.GrcanApi.isLocalMode()
+			? candoResult.content
+			: null;
 
 		if (localText) {
 			loadNodeIdsFromText(localText);
