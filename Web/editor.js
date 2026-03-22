@@ -433,6 +433,12 @@
 			editedKeys.clear();
 			newKeys.clear();
 		},
+		// Update working text without resetting original or edit state.
+		// Used by GrcanDocument after semantic mutations.
+		updateRawText(text) {
+			rawCandoText = text;
+			hasEdits = true;
+		},
 		getRawText() {
 			return rawCandoText;
 		},

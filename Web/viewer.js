@@ -305,17 +305,11 @@ window.addEventListener("DOMContentLoaded", function () {
 						editor.createDeleteBtn(() => {
 							editor.setNavSnapshot(navSnapshot());
 							editor.confirmAndDelete(msg.msgName, () => {
-								const entries = editor.findRoutingMsgEntries(
+								window.GrcanDocument.deleteRouteEntry(
 									currentDeviceName,
 									busPort,
 									msg.msgName,
 								);
-								for (let i = entries.length - 1; i >= 0; i--) {
-									editor.deleteLineRange(
-										entries[i].startLine,
-										entries[i].endLine,
-									);
-								}
 								editor.markEdited(
 									"routeMsg:" +
 										(currentDeviceName || "") +
@@ -460,9 +454,7 @@ window.addEventListener("DOMContentLoaded", function () {
 							editor.confirmAndDelete(
 								node.name + " on " + currentBusCanonical,
 								() => {
-									const range = editor.findRoutingBusRange(node.name, busPort);
-									if (range)
-										editor.deleteLineRange(range.startLine, range.endLine);
+									window.GrcanDocument.deleteBusBlock(node.name, busPort);
 									editor.markEdited("routeBus:" + node.name + "|" + busPort);
 								},
 							);
@@ -629,9 +621,7 @@ window.addEventListener("DOMContentLoaded", function () {
 							editor.confirmAndDelete(
 								deviceName + " > " + entry.busName,
 								() => {
-									const range = editor.findRoutingBusRange(deviceName, busPort);
-									if (range)
-										editor.deleteLineRange(range.startLine, range.endLine);
+									window.GrcanDocument.deleteBusBlock(deviceName, busPort);
 									editor.markEdited("routeBus:" + deviceName + "|" + busPort);
 								},
 							);
@@ -771,8 +761,11 @@ window.addEventListener("DOMContentLoaded", function () {
 					editor.createDeleteBtn(() => {
 						editor.setNavSnapshot(navSnapshot());
 						editor.confirmAndDelete(nodeEntry.name + " (all routes)", () => {
-							const range = editor.findRoutingDeviceRange(nodeEntry.name);
-							if (range) editor.deleteLineRange(range.startLine, range.endLine);
+							const result = window.GrcanDocument.deleteDevice(nodeEntry.name);
+							if (!result.ok) {
+								console.error("deleteDevice failed:", result.error);
+								return;
+							}
 							editor.markEdited("routeNode:" + nodeEntry.name);
 						});
 					}),
@@ -810,17 +803,32 @@ window.addEventListener("DOMContentLoaded", function () {
 	// ==================== Hierarchy entry points ====================
 
 	async function renderHierarchy(ref) {
-		await loadNodeIds(ref);
-
 		const candoResult = await window.GrcanApi.fetchCando(ref);
+		const localText = window.GrcanApi.isLocalMode() ? candoResult.content : null;
+
+		if (localText) {
+			loadNodeIdsFromText(localText);
+		} else {
+			await loadNodeIds(ref);
+		}
+
 		if (!candoResult.notFound && editor) {
 			editor.setRawText(candoResult.content);
+			if (window.GrcanDocument) {
+				const violations = window.GrcanDocument.validate();
+				if (violations.length > 0) {
+					console.warn(
+						"[GrcanDocument] CANdo validation issues on load:",
+						violations,
+					);
+				}
+			}
 		}
 
 		if (HIERARCHY_MODE === "NODE_BUS") {
-			await renderNodeBus(ref);
+			await renderNodeBus(ref, localText);
 		} else {
-			await renderBusNode(ref);
+			await renderBusNode(ref, localText);
 		}
 	}
 
@@ -973,6 +981,43 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 
 	refSelect.addEventListener("change", onRefInputChange);
+
+	// ==================== Local-file toggle ====================
+	const localToggle = document.getElementById("local-toggle");
+	const localFileInput = document.getElementById("local-file-input");
+
+	if (localToggle && localFileInput) {
+		localToggle.addEventListener("change", function () {
+			if (localToggle.checked) {
+				localFileInput.style.display = "block";
+				localFileInput.click();
+			} else {
+				localFileInput.style.display = "none";
+				localFileInput.value = "";
+				window.GrcanApi.setLocalCandoText(null);
+				refSelect.disabled = false;
+				if (currentRef) renderHierarchy(currentRef);
+			}
+		});
+
+		localFileInput.addEventListener("change", function () {
+			const file = localFileInput.files[0];
+			if (!file) {
+				localToggle.checked = false;
+				localFileInput.style.display = "none";
+				window.GrcanApi.setLocalCandoText(null);
+				refSelect.disabled = false;
+				return;
+			}
+			const reader = new FileReader();
+			reader.onload = function (e) {
+				window.GrcanApi.setLocalCandoText(e.target.result);
+				refSelect.disabled = true;
+				renderHierarchy(currentRef || "local");
+			};
+			reader.readAsText(file);
+		});
+	}
 
 	init();
 });

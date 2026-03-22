@@ -1,0 +1,854 @@
+// Purpose: Semantic document model for the CANdo format.
+// Parses the full file into typed data structures, enforces all cross-section
+// invariants (I1–I5 per IMPLEMENTATION_PLAN.md), and exposes atomic operations
+// that keep routing + GR ID + Message ID consistent with each other.
+// After every mutation, serializes the model back to canonical text and calls
+// editor.updateRawText() so editor.js remains the single source of raw text truth.
+//
+// Sections owned (regenerated on serialize): routing, Message ID, GR ID
+// Sections preserved verbatim:               Bus ID, byte order, Custom CAN ID
+//
+// Dual-mode: browser (window.GrcanDocument) or Node.js (module.exports) for tests.
+
+/* global window, module */
+(function (factory) {
+	if (typeof module !== "undefined" && module.exports) {
+		module.exports = factory();
+	} else {
+		window.GrcanDocument = factory();
+	}
+})(function () {
+	"use strict";
+
+	// ==================== Module-level model state ====================
+	// All mutable; reset by _parse() at the start of every operation.
+
+	let _devices = new Map(); // Map<deviceName, DeviceBlock>
+	let _grIds = new Map(); // Map<deviceName, hexId: string>
+	let _messageIds = new Map(); // Map<msgName, MessageDef>
+	let _busIdsText = ""; // verbatim Bus ID section text
+	let _byteOrderText = ""; // verbatim byte order line text
+	let _customCanIdsText = ""; // verbatim Custom CAN ID section text
+
+	// ==================== Parser ====================
+
+	function _parse(rawText) {
+		_devices = new Map();
+		_grIds = new Map();
+		_messageIds = new Map();
+		_busIdsText = "";
+		_byteOrderText = "";
+		_customCanIdsText = "";
+
+		if (!rawText) return;
+		const lines = rawText.split("\n");
+
+		// Find 0-indexed start line of each top-level section.
+		let routingStart = -1,
+			byteOrderStart = -1,
+			msgIdStart = -1,
+			customCanIdStart = -1,
+			grIdStart = -1;
+
+		for (let i = 0; i < lines.length; i++) {
+			const l = lines[i];
+			if (l.startsWith("routing:")) routingStart = i;
+			else if (l.startsWith("byte order:")) byteOrderStart = i;
+			else if (l.startsWith("Message ID:")) msgIdStart = i;
+			else if (l.startsWith("Custom CAN ID:")) customCanIdStart = i;
+			else if (l.startsWith("GR ID:")) grIdStart = i;
+		}
+
+		// Verbatim: Bus ID = everything before routing section header.
+		if (routingStart > 0) {
+			_busIdsText = lines
+				.slice(0, routingStart)
+				.join("\n")
+				.replace(/\n+$/, "");
+		}
+
+		// Verbatim: byte order line through the blank line before Message ID.
+		if (byteOrderStart > -1) {
+			const end = msgIdStart > -1 ? msgIdStart : lines.length;
+			_byteOrderText = lines
+				.slice(byteOrderStart, end)
+				.join("\n")
+				.replace(/\n+$/, "");
+		}
+
+		// Verbatim: Custom CAN ID section through the blank line before GR ID.
+		if (customCanIdStart > -1) {
+			const end = grIdStart > -1 ? grIdStart : lines.length;
+			_customCanIdsText = lines
+				.slice(customCanIdStart, end)
+				.join("\n")
+				.replace(/\n+$/, "");
+		}
+
+		// Owned sections: parse into model.
+		if (routingStart > -1) {
+			const end =
+				byteOrderStart > -1
+					? byteOrderStart
+					: msgIdStart > -1
+						? msgIdStart
+						: lines.length;
+			_parseRouting(lines, routingStart, end);
+		}
+		if (msgIdStart > -1) {
+			const end = customCanIdStart > -1 ? customCanIdStart : lines.length;
+			_parseMsgIds(lines, msgIdStart, end);
+		}
+		if (grIdStart > -1) {
+			_parseGrIds(lines, grIdStart, lines.length);
+		}
+	}
+
+	function _parseRouting(lines, start, end) {
+		let curDevice = null,
+			curBus = null,
+			curReceiver = null;
+
+		for (let i = start; i < end; i++) {
+			const line = lines[i];
+			if (!line.trim()) continue;
+			const indent = line.search(/\S/);
+			const content = line.trim();
+
+			if (indent === 4 && content.endsWith(":")) {
+				// Device name. Skip the "messages:" sub-key which is at indent 2.
+				const name = content.slice(0, -1);
+				curDevice = { deviceName: name, buses: new Map() };
+				_devices.set(name, curDevice);
+				curBus = null;
+				curReceiver = null;
+			} else if (indent === 6 && content.endsWith(":")) {
+				if (!curDevice) continue;
+				const busPort = content.slice(0, -1);
+				curBus = { busPort, receivers: new Map() };
+				curDevice.buses.set(busPort, curBus);
+				curReceiver = null;
+			} else if (indent === 8 && content.endsWith(":")) {
+				if (!curBus) continue;
+				const recName = content.slice(0, -1);
+				curReceiver = { receiverName: recName, routes: [] };
+				curBus.receivers.set(recName, curReceiver);
+			} else if (indent === 10 && content.startsWith("- msg:")) {
+				if (!curReceiver) continue;
+				const msgName = content.slice("- msg:".length).trim();
+				let canIdOverride = null;
+				if (i + 1 < end) {
+					const next = lines[i + 1];
+					const ni = next.search(/\S/);
+					if (ni === 12 && next.trim().startsWith("can_id_override:")) {
+						canIdOverride = next.trim().slice("can_id_override:".length).trim();
+						i++;
+					}
+				}
+				curReceiver.routes.push({ msgName, canIdOverride });
+			}
+		}
+	}
+
+	function _parseMsgIds(lines, start, end) {
+		let curMsg = null,
+			curField = null;
+
+		function flushField() {
+			if (curField && curMsg) {
+				curMsg.fields.push(curField);
+			}
+			curField = null;
+		}
+		function flushMsg() {
+			flushField();
+			if (curMsg) _messageIds.set(curMsg.name, curMsg);
+			curMsg = null;
+		}
+
+		for (let i = start; i < end; i++) {
+			const line = lines[i];
+			if (!line.trim()) continue;
+			const indent = line.search(/\S/);
+			const content = line.trim();
+
+			if (indent === 2 && content.endsWith(":")) {
+				flushMsg();
+				curMsg = {
+					name: content.slice(0, -1),
+					msgId: "",
+					msgLength: "",
+					fields: [],
+				};
+			} else if (indent === 4 && curMsg) {
+				if (content.startsWith("MSG ID:")) {
+					flushField();
+					curMsg.msgId = content.slice("MSG ID:".length).trim();
+				} else if (content.startsWith("MSG LENGTH:")) {
+					flushField();
+					curMsg.msgLength = content.slice("MSG LENGTH:".length).trim();
+				} else if (content.endsWith(":")) {
+					flushField();
+					curField = {
+						name: content.slice(0, -1),
+						bitStart: "",
+						comment: null,
+						dataType: null,
+						units: null,
+						scaledMin: null,
+						scaledMax: null,
+						mapEquation: null,
+					};
+				}
+			} else if (indent >= 6 && curField) {
+				if (content.startsWith("bit_start:")) {
+					curField.bitStart = content.slice("bit_start:".length).trim();
+				} else if (content.startsWith("#")) {
+					const t = content.slice(1).trim();
+					curField.comment =
+						curField.comment ? curField.comment + "\n" + t : t;
+				} else if (content.startsWith("data type:")) {
+					curField.dataType = content.slice("data type:".length).trim();
+				} else if (content.startsWith("units:")) {
+					curField.units = content.slice("units:".length).trim();
+				} else if (content.startsWith("scaled min:")) {
+					curField.scaledMin = content.slice("scaled min:".length).trim();
+				} else if (content.startsWith("scaled max:")) {
+					curField.scaledMax = content.slice("scaled max:".length).trim();
+				} else if (content.startsWith("map equation:")) {
+					curField.mapEquation = content
+						.slice("map equation:".length)
+						.trim()
+						.replace(/^["']|["']$/g, "");
+				}
+			}
+		}
+		flushMsg();
+	}
+
+	function _parseGrIds(lines, start, end) {
+		for (let i = start + 1; i < end; i++) {
+			const line = lines[i];
+			if (!line.trim()) continue;
+			const indent = line.search(/\S/);
+			if (indent !== 2) continue;
+			const colonIdx = line.indexOf(":");
+			if (colonIdx <= 0) continue;
+			const name = line.slice(0, colonIdx).trim();
+			if (!name) continue;
+			const rawVal = line.slice(colonIdx + 1).trim();
+			const hexId = rawVal.replace(/^["']|["']$/g, "");
+			_grIds.set(name, hexId);
+		}
+	}
+
+	// ==================== Serializer ====================
+
+	function _serializeRouting() {
+		let out = "routing:\n  messages:\n";
+		for (const device of _devices.values()) {
+			if (device.buses.size === 0) continue;
+			out += "    " + device.deviceName + ":\n";
+			for (const bus of device.buses.values()) {
+				out += "      " + bus.busPort + ":\n";
+				for (const receiver of bus.receivers.values()) {
+					out += "        " + receiver.receiverName + ":\n";
+					for (const route of receiver.routes) {
+						out += "          - msg: " + route.msgName + "\n";
+						if (route.canIdOverride) {
+							out +=
+								"            can_id_override: " + route.canIdOverride + "\n";
+						}
+					}
+				}
+			}
+		}
+		return out;
+	}
+
+	function _serializeMessageIds() {
+		let out = "Message ID:\n";
+		for (const msg of _messageIds.values()) {
+			out += "  " + msg.name + ":\n";
+			out += "    MSG ID: " + msg.msgId + "\n";
+			out += "    MSG LENGTH: " + msg.msgLength + "\n";
+			for (const field of msg.fields) {
+				out += "    " + field.name + ":\n";
+				out += "      bit_start: " + field.bitStart + "\n";
+				if (field.comment) {
+					for (const commentLine of field.comment.split("\n")) {
+						out += "      # " + commentLine + "\n";
+					}
+				}
+				if (field.dataType !== null) {
+					out += "      data type: " + field.dataType + "\n";
+				}
+				if (field.units) out += "      units: " + field.units + "\n";
+				if (field.scaledMin !== null && field.scaledMin !== "")
+					out += "      scaled min: " + field.scaledMin + "\n";
+				if (field.scaledMax !== null && field.scaledMax !== "")
+					out += "      scaled max: " + field.scaledMax + "\n";
+				if (field.mapEquation)
+					out += '      map equation: "' + field.mapEquation + '"\n';
+			}
+		}
+		return out;
+	}
+
+	function _serializeGrIds() {
+		let out = "GR ID:\n\n";
+		for (const [name, hexId] of _grIds.entries()) {
+			out += '  ' + name + ': "' + hexId + '"\n';
+		}
+		return out;
+	}
+
+	function _serialize() {
+		const parts = [
+			_busIdsText,
+			_serializeRouting(),
+			_byteOrderText,
+			_serializeMessageIds(),
+			_customCanIdsText,
+			_serializeGrIds(),
+		];
+		// Strip trailing newlines from each part, join with exactly one blank line,
+		// add a single trailing newline.
+		return parts.map((p) => p.replace(/\n+$/, "")).join("\n\n") + "\n";
+	}
+
+	// ==================== Validator ====================
+
+	function _getCustomCanIdNames() {
+		const names = new Set();
+		if (!_customCanIdsText) return names;
+		for (const line of _customCanIdsText.split("\n")) {
+			const indent = line.search(/\S/);
+			const content = line.trim();
+			if (indent === 2 && content.endsWith(":")) {
+				names.add(content.slice(0, -1));
+			}
+		}
+		return names;
+	}
+
+	function validate() {
+		_ensureParsed();
+		const results = [];
+		const customCanIds = _getCustomCanIdNames();
+
+		// V1: MISSING_GR_ID
+		for (const name of _devices.keys()) {
+			if (!_grIds.has(name)) {
+				results.push({
+					severity: "error",
+					code: "MISSING_GR_ID",
+					message: `Device "${name}" is in routing but has no GR ID entry`,
+					context: { device: name },
+				});
+			}
+		}
+
+		// V2: ORPHAN_GR_ID
+		for (const name of _grIds.keys()) {
+			if (!_devices.has(name)) {
+				results.push({
+					severity: "warning",
+					code: "ORPHAN_GR_ID",
+					message: `GR ID entry "${name}" has no corresponding device in routing`,
+					context: { device: name },
+				});
+			}
+		}
+
+		// V3: BROKEN_MSG_REF
+		for (const device of _devices.values()) {
+			for (const bus of device.buses.values()) {
+				for (const receiver of bus.receivers.values()) {
+					for (const route of receiver.routes) {
+						if (
+							!_messageIds.has(route.msgName) &&
+							!customCanIds.has(route.msgName)
+						) {
+							results.push({
+								severity: "error",
+								code: "BROKEN_MSG_REF",
+								message: `Route in "${device.deviceName}" > ${bus.busPort} references unknown message "${route.msgName}"`,
+								context: {
+									device: device.deviceName,
+									bus: bus.busPort,
+									msg: route.msgName,
+								},
+							});
+						}
+					}
+				}
+			}
+		}
+
+		// V4: UNKNOWN_RECEIVER
+		for (const device of _devices.values()) {
+			for (const bus of device.buses.values()) {
+				for (const receiverName of bus.receivers.keys()) {
+					if (!_grIds.has(receiverName)) {
+						results.push({
+							severity: "warning",
+							code: "UNKNOWN_RECEIVER",
+							message: `Receiver "${receiverName}" in "${device.deviceName}" > ${bus.busPort} is not in GR ID`,
+							context: {
+								device: device.deviceName,
+								bus: bus.busPort,
+								receiver: receiverName,
+							},
+						});
+					}
+				}
+			}
+		}
+
+		// V5: DUPLICATE_MSG_ID
+		const seenMsgIds = new Map();
+		for (const msg of _messageIds.values()) {
+			const norm = msg.msgId.toLowerCase();
+			if (seenMsgIds.has(norm)) {
+				results.push({
+					severity: "error",
+					code: "DUPLICATE_MSG_ID",
+					message: `MSG ID ${msg.msgId} used by both "${seenMsgIds.get(norm)}" and "${msg.name}"`,
+					context: {
+						first: seenMsgIds.get(norm),
+						second: msg.name,
+						id: msg.msgId,
+					},
+				});
+			} else {
+				seenMsgIds.set(norm, msg.name);
+			}
+		}
+
+		// V6: DUPLICATE_GR_ID
+		const seenGrIds = new Map();
+		for (const [name, hexId] of _grIds.entries()) {
+			const norm = hexId.toLowerCase();
+			if (seenGrIds.has(norm)) {
+				results.push({
+					severity: "warning",
+					code: "DUPLICATE_GR_ID",
+					message: `GR ID ${hexId} shared by "${seenGrIds.get(norm)}" and "${name}"`,
+					context: { first: seenGrIds.get(norm), second: name, id: hexId },
+				});
+			} else {
+				seenGrIds.set(norm, name);
+			}
+		}
+
+		// V7: EMPTY_DEVICE_BLOCK
+		for (const device of _devices.values()) {
+			if (device.buses.size === 0) {
+				results.push({
+					severity: "warning",
+					code: "EMPTY_DEVICE_BLOCK",
+					message: `Device "${device.deviceName}" has no bus entries in routing`,
+					context: { device: device.deviceName },
+				});
+			}
+		}
+
+		return results;
+	}
+
+	// ==================== Editor bridge ====================
+
+	function _getEditor() {
+		const g =
+			typeof window !== "undefined"
+				? window
+				: typeof global !== "undefined"
+					? global
+					: {};
+		return g.GrcanEditor || null;
+	}
+
+	function _ensureParsed() {
+		const editor = _getEditor();
+		if (editor && typeof editor.getRawText === "function") {
+			_parse(editor.getRawText());
+		}
+		// else: test environment — use state already set by _parseForTest()
+	}
+
+	// Wraps a mutation fn: parse from editor → run fn → serialize back to editor.
+	// fn() returns an OpResult. If ok is false, setRawText is NOT called.
+	function _withEditor(fn) {
+		const editor = _getEditor();
+		if (!editor) {
+			return { ok: false, error: "GrcanEditor not available" };
+		}
+		_parse(editor.getRawText());
+		const result = fn();
+		if (result.ok !== false) {
+			editor.updateRawText(_serialize());
+		}
+		return result;
+	}
+
+	// ==================== Operations ====================
+
+	function addDevice(name, grId) {
+		return _withEditor(() => {
+			if (!name || !name.trim())
+				return { ok: false, error: "Device name is required" };
+			if (!grId || !/^0x[0-9a-fA-F]+$/i.test(grId.trim()))
+				return {
+					ok: false,
+					error: 'GR ID must be a hex value (e.g. 0x2B)',
+				};
+			const n = name.trim(),
+				g = grId.trim();
+			if (_devices.has(n))
+				return { ok: false, error: `Device "${n}" already exists in routing` };
+			if (_grIds.has(n))
+				return {
+					ok: false,
+					error: `A GR ID entry for "${n}" already exists`,
+				};
+			_devices.set(n, { deviceName: n, buses: new Map() });
+			_grIds.set(n, g);
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function deleteDevice(name) {
+		return _withEditor(() => {
+			if (!name) return { ok: false, error: "Device name is required" };
+			const warnings = [];
+			_devices.delete(name);
+			_grIds.delete(name);
+
+			// Receiver ref sweep — snapshot keys first to avoid mutation-during-iteration.
+			for (const device of [..._devices.values()]) {
+				for (const [busPort, bus] of [...device.buses.entries()]) {
+					if (bus.receivers.has(name)) {
+						bus.receivers.delete(name);
+						warnings.push(
+							`Removed receiver reference to "${name}" from ${device.deviceName} > ${busPort}`,
+						);
+						if (bus.receivers.size === 0) {
+							device.buses.delete(busPort);
+						}
+					}
+				}
+			}
+			return { ok: true, warnings };
+		});
+	}
+
+	function renameDevice(oldName, newName) {
+		return _withEditor(() => {
+			if (!oldName || !newName)
+				return { ok: false, error: "Both names are required" };
+			if (oldName === newName) return { ok: true, warnings: [] };
+			if (!_devices.has(oldName))
+				return { ok: false, error: `Device "${oldName}" not found` };
+			if (_devices.has(newName))
+				return {
+					ok: false,
+					error: `Device "${newName}" already exists`,
+				};
+			if (_grIds.has(newName))
+				return {
+					ok: false,
+					error: `GR ID entry for "${newName}" already exists`,
+				};
+
+			// Rebuild _devices map preserving insertion order.
+			const newDevices = new Map();
+			for (const [k, v] of _devices) {
+				if (k === oldName) {
+					v.deviceName = newName;
+					newDevices.set(newName, v);
+				} else {
+					newDevices.set(k, v);
+				}
+			}
+			_devices = newDevices;
+
+			// Rebuild _grIds map preserving insertion order.
+			const newGrIds = new Map();
+			for (const [k, v] of _grIds) {
+				newGrIds.set(k === oldName ? newName : k, v);
+			}
+			_grIds = newGrIds;
+
+			// Receiver ref sweep across all remaining devices.
+			for (const device of _devices.values()) {
+				for (const bus of device.buses.values()) {
+					if (bus.receivers.has(oldName)) {
+						const block = bus.receivers.get(oldName);
+						block.receiverName = newName;
+						const newReceivers = new Map();
+						for (const [k, v] of bus.receivers) {
+							newReceivers.set(k === oldName ? newName : k, v);
+						}
+						bus.receivers = newReceivers;
+					}
+				}
+			}
+
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function addRoute(deviceName, busPort, receiverName, msgName, canIdOverride) {
+		return _withEditor(() => {
+			const warnings = [];
+			if (!deviceName)
+				return { ok: false, error: "Device name is required" };
+			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
+				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
+			if (!receiverName)
+				return { ok: false, error: "Receiver name is required" };
+			if (!msgName) return { ok: false, error: "Message name is required" };
+
+			const customCanIds = _getCustomCanIdNames();
+			if (!_messageIds.has(msgName) && !customCanIds.has(msgName)) {
+				return {
+					ok: false,
+					error: `Message "${msgName}" not found in Message ID or Custom CAN ID`,
+				};
+			}
+			if (!_grIds.has(deviceName))
+				warnings.push(
+					`Device "${deviceName}" has no GR ID entry. Use addDevice first.`,
+				);
+			if (!_grIds.has(receiverName))
+				warnings.push(`Receiver "${receiverName}" is not a known device.`);
+
+			const ovr = canIdOverride || null;
+
+			// Idempotency check.
+			const existDev = _devices.get(deviceName);
+			if (existDev) {
+				const existBus = existDev.buses.get(busPort);
+				if (existBus) {
+					const existRec = existBus.receivers.get(receiverName);
+					if (
+						existRec &&
+						existRec.routes.some(
+							(r) => r.msgName === msgName && r.canIdOverride === ovr,
+						)
+					) {
+						return { ok: true, warnings };
+					}
+				}
+			}
+
+			if (!_devices.has(deviceName)) {
+				_devices.set(deviceName, { deviceName, buses: new Map() });
+			}
+			const device = _devices.get(deviceName);
+			if (!device.buses.has(busPort)) {
+				device.buses.set(busPort, { busPort, receivers: new Map() });
+			}
+			const bus = device.buses.get(busPort);
+			if (!bus.receivers.has(receiverName)) {
+				bus.receivers.set(receiverName, { receiverName, routes: [] });
+			}
+			bus.receivers.get(receiverName).routes.push({ msgName, canIdOverride: ovr });
+
+			return { ok: true, warnings };
+		});
+	}
+
+	function deleteRouteEntry(deviceName, busPort, msgName) {
+		return _withEditor(() => {
+			const device = _devices.get(deviceName);
+			if (!device) return { ok: true, warnings: [] };
+			const bus = device.buses.get(busPort);
+			if (!bus) return { ok: true, warnings: [] };
+
+			for (const [recName, receiver] of [...bus.receivers.entries()]) {
+				receiver.routes = receiver.routes.filter((r) => r.msgName !== msgName);
+				if (receiver.routes.length === 0) {
+					bus.receivers.delete(recName);
+				}
+			}
+			if (bus.receivers.size === 0) {
+				device.buses.delete(busPort);
+			}
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function deleteBusBlock(deviceName, busPort) {
+		return _withEditor(() => {
+			const device = _devices.get(deviceName);
+			if (!device) return { ok: true, warnings: [] };
+			device.buses.delete(busPort);
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function addMessageDef(def) {
+		return _withEditor(() => {
+			if (!def || !def.name)
+				return { ok: false, error: "Message name is required" };
+			if (_messageIds.has(def.name))
+				return {
+					ok: false,
+					error: `Message "${def.name}" already exists`,
+				};
+			if (!/^0x[0-9a-fA-F]+$/i.test(def.msgId))
+				return { ok: false, error: "MSG ID must be hex (e.g. 0x003)" };
+			const normId = def.msgId.toLowerCase();
+			for (const msg of _messageIds.values()) {
+				if (msg.msgId.toLowerCase() === normId) {
+					return {
+						ok: false,
+						error: `MSG ID ${def.msgId} is already used by "${msg.name}"`,
+					};
+				}
+			}
+			_messageIds.set(def.name, def);
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function updateMessageDef(oldName, def) {
+		return _withEditor(() => {
+			if (!_messageIds.has(oldName))
+				return { ok: false, error: `Message "${oldName}" not found` };
+			if (!def || !def.name)
+				return { ok: false, error: "Message name is required" };
+			if (def.name !== oldName && _messageIds.has(def.name))
+				return {
+					ok: false,
+					error: `Message "${def.name}" already exists`,
+				};
+
+			const normId = def.msgId.toLowerCase();
+			for (const [k, msg] of _messageIds) {
+				if (k !== oldName && msg.msgId.toLowerCase() === normId) {
+					return {
+						ok: false,
+						error: `MSG ID ${def.msgId} is already used by "${k}"`,
+					};
+				}
+			}
+
+			if (def.name === oldName) {
+				_messageIds.set(oldName, def);
+			} else {
+				// Rename: rebuild map preserving insertion order.
+				const newMsgIds = new Map();
+				for (const [k, v] of _messageIds) {
+					newMsgIds.set(k === oldName ? def.name : k, k === oldName ? def : v);
+				}
+				_messageIds = newMsgIds;
+
+				// Route ref sweep.
+				for (const device of _devices.values()) {
+					for (const bus of device.buses.values()) {
+						for (const receiver of bus.receivers.values()) {
+							for (const route of receiver.routes) {
+								if (route.msgName === oldName) route.msgName = def.name;
+							}
+						}
+					}
+				}
+			}
+
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	// ==================== Read-only accessors ====================
+
+	function deviceExists(name) {
+		_ensureParsed();
+		return _devices.has(name);
+	}
+
+	function grIdExists(name) {
+		_ensureParsed();
+		return _grIds.has(name);
+	}
+
+	function getDeviceNames() {
+		_ensureParsed();
+		return [..._devices.keys()];
+	}
+
+	function getGrIds() {
+		_ensureParsed();
+		return new Map(_grIds);
+	}
+
+	function getGrId(name) {
+		_ensureParsed();
+		return _grIds.get(name) || null;
+	}
+
+	function getMessageDef(name) {
+		_ensureParsed();
+		return _messageIds.get(name) || null;
+	}
+
+	function getMessageIdNames() {
+		_ensureParsed();
+		return [..._messageIds.keys()];
+	}
+
+	function routeEntryExists(device, bus, receiver, msg, canIdOverride) {
+		_ensureParsed();
+		const dev = _devices.get(device);
+		if (!dev) return false;
+		const b = dev.buses.get(bus);
+		if (!b) return false;
+		const rec = b.receivers.get(receiver);
+		if (!rec) return false;
+		return rec.routes.some(
+			(r) => r.msgName === msg && r.canIdOverride === (canIdOverride || null),
+		);
+	}
+
+	// ==================== Test helpers ====================
+	// Exposed only for Node.js test environment.
+
+	function _parseForTest(text) {
+		_parse(text);
+		return { devices: _devices, grIds: _grIds, messageIds: _messageIds };
+	}
+
+	function _serializeFromState() {
+		return _serialize();
+	}
+
+	// ==================== Public API ====================
+
+	return {
+		// Mutations
+		addDevice,
+		deleteDevice,
+		renameDevice,
+		addRoute,
+		deleteRouteEntry,
+		deleteBusBlock,
+		addMessageDef,
+		updateMessageDef,
+		// Validation
+		validate,
+		// Read-only
+		deviceExists,
+		grIdExists,
+		getDeviceNames,
+		getGrIds,
+		getGrId,
+		getMessageDef,
+		getMessageIdNames,
+		routeEntryExists,
+		// Test hooks
+		_parseForTest,
+		_serializeFromState,
+	};
+});

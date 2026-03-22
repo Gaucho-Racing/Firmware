@@ -150,6 +150,25 @@
 		if (deviceName) devF.input.disabled = true;
 		body.appendChild(devF.row);
 
+		// GR ID field: only shown (and required) when the typed device name is new.
+		const grIdF = fu.makeFormRow(
+			"GR ID (new device)",
+			fu.makeInput("text", "", "e.g. 0x2B"),
+			false,
+		);
+		grIdF.row.style.display = "none";
+		body.appendChild(grIdF.row);
+
+		function updateGrIdVisibility() {
+			const isNew =
+				!devF.input.disabled &&
+				!window.GrcanDocument.deviceExists(devF.input.value.trim());
+			grIdF.row.style.display = isNew && devF.input.value.trim() ? "" : "none";
+		}
+		devF.input.addEventListener("input", updateGrIdVisibility);
+		// Run once on open in case a device name was pre-filled.
+		if (!devF.input.disabled) updateGrIdVisibility();
+
 		const busF = fu.makeFormRow(
 			"Bus",
 			fu.makeSelect(["CAN1", "CAN2", "CAN3"], busPort || "CAN1"),
@@ -403,86 +422,31 @@
 			} else ovrF.error.textContent = "";
 
 			if (!ok) return;
-			if (editor.routeEntryExists(dev, bus, rec, msg, ovr || null)) {
-				fu.closeOverlay(overlay, { force: true });
-				return;
-			}
 
-			const lines = editor.getLines();
-			const devRange = editor.findRoutingDeviceRange(dev);
-			let createdNode = false;
-			let createdBus = false;
-
-			if (!devRange) {
-				createdNode = true;
-				createdBus = true;
-				const rStart = editor.findSectionStart(lines, "routing");
-				if (rStart === -1) return;
-				const rEnd = editor.findSectionEnd(lines, rStart);
-				editor.insertAtLine(
-					rEnd,
-					"    " +
-						dev +
-						":\n      " +
-						bus +
-						":\n        " +
-						rec +
-						":\n" +
-						editor.generateRoutingMsgYaml(msg, ovr || null),
-				);
-			} else {
-				const busRange = editor.findRoutingBusRange(dev, bus);
-				if (!busRange) {
-					createdBus = true;
-					editor.insertAtLine(
-						devRange.endLine,
-						"      " +
-							bus +
-							":\n        " +
-							rec +
-							":\n" +
-							editor.generateRoutingMsgYaml(msg, ovr || null),
-					);
-				} else {
-					let recFound = false;
-					const freshLines = editor.getLines();
-					for (let i = busRange.startLine + 1; i < busRange.endLine; i++) {
-						if (
-							freshLines[i].search(/\S/) === 8 &&
-							freshLines[i].trim() === rec + ":"
-						) {
-							// findBlockEnd locates the end of this receiver block
-							// (indent ≤ 8), bounded by the parent bus block end.
-							const recEnd = editor.findBlockEnd(
-								freshLines,
-								i,
-								busRange.endLine,
-								8,
-							);
-							editor.insertAtLine(
-								recEnd,
-								editor.generateRoutingMsgYaml(msg, ovr || null),
-							);
-							recFound = true;
-							break;
-						}
-					}
-					if (!recFound) {
-						editor.insertAtLine(
-							busRange.endLine,
-							"        " +
-								rec +
-								":\n" +
-								editor.generateRoutingMsgYaml(msg, ovr || null),
-						);
-					}
+			// If device is new, validate and create it with a GR ID first.
+			const isNewDevice = !window.GrcanDocument.deviceExists(dev);
+			if (isNewDevice) {
+				const grId = grIdF.input.value.trim();
+				if (!grId || !/^0x[0-9a-fA-F]+$/i.test(grId)) {
+					grIdF.error.textContent = "Required for new device (hex, e.g. 0x2B)";
+					return;
+				}
+				const addResult = window.GrcanDocument.addDevice(dev, grId);
+				if (!addResult.ok) {
+					devF.error.textContent = addResult.error;
+					return;
 				}
 			}
 
-			if (createdNode) editor.markNew("routeNode:" + dev);
+			const routeResult = window.GrcanDocument.addRoute(dev, bus, rec, msg, ovr || null);
+			if (!routeResult.ok) {
+				msgF.error.textContent = routeResult.error;
+				return;
+			}
+
+			if (isNewDevice) editor.markNew("routeNode:" + dev);
 			else editor.markEdited("routeNode:" + dev);
-			if (createdBus) editor.markNew("routeBus:" + dev + "|" + bus);
-			else editor.markEdited("routeBus:" + dev + "|" + bus);
+			editor.markNew("routeBus:" + dev + "|" + bus);
 			editor.markNew("routeMsg:" + dev + "|" + bus + "|" + msg);
 
 			fu.closeOverlay(overlay, { force: true });

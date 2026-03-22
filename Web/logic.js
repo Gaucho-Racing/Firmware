@@ -11,6 +11,12 @@ const GR_NAVY = "#195297";
 const GR_GRAY = "#9AA3B0";
 
 const GITHUB_API = "https://api.github.com/repos/Gaucho-Racing/Firmware";
+
+// Local-file mode: when set, fetchCando returns this content instead of hitting the API.
+let _localCandoText = null;
+function setLocalCandoText(text) { _localCandoText = text; }
+function getLocalCandoText() { return _localCandoText; }
+function isLocalMode() { return _localCandoText !== null; }
 const CANDO_PATH = "Autogen/CAN/Doc/GRCAN.CANdo";
 const BUS_ID_PATH = "Autogen/CAN/Inc/GRCAN_BUS_ID.h";
 const NODE_ID_PATH = "Autogen/CAN/Inc/GRCAN_NODE_ID.h";
@@ -317,6 +323,9 @@ async function fetchTags() {
 }
 
 async function fetchCando(ref) {
+	if (_localCandoText !== null) {
+		return { content: _localCandoText, notFound: false };
+	}
 	try {
 		const res = await fetch(
 			`${GITHUB_API}/contents/${CANDO_PATH}?ref=${encodeURIComponent(ref)}`,
@@ -566,6 +575,9 @@ function parseMessageByBusFromText(text, busName) {
 }
 
 async function fetchMessageByBus(ref, busName) {
+	if (_localCandoText !== null) {
+		return parseMessageByBusFromText(_localCandoText, busName);
+	}
 	try {
 		const res = await fetch(
 			`${GITHUB_API}/contents/${CANDO_PATH}?ref=${encodeURIComponent(ref)}`,
@@ -633,6 +645,9 @@ window.GrcanApi = {
 	fetchBranches,
 	fetchTags,
 	fetchCando,
+	setLocalCandoText,
+	getLocalCandoText,
+	isLocalMode,
 	fetchBus,
 	fetchNodeIds,
 	fetchMessageCatalog,

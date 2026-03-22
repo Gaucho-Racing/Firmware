@@ -441,38 +441,24 @@
 			}
 			if (!ok) return;
 
-			const yaml = editor.generateMessageIdYaml({
-				name,
-				msgId,
-				msgLength: parseInt(msgLen, 10),
-				fields,
-			});
+			const def = { name, msgId, msgLength: msgLen, fields };
 
 			if (!isNewMsg && msgName) {
-				const defRange = editor.findMessageDefRange(msgName);
-				const changed =
-					defRange &&
-					editor.getLineRangeText(defRange.startLine, defRange.endLine) !==
-						yaml;
-				if (changed) {
-					editor.replaceLineRange(defRange.startLine, defRange.endLine, yaml);
-					if (name !== msgName) {
-						editor.renameRoutingMessageRefs(msgName, name);
-					}
+				const result = window.GrcanDocument.updateMessageDef(msgName, def);
+				if (!result.ok) {
+					nameF.error.textContent = result.error;
+					return;
 				}
-				if (changed) {
-					editor.markEdited("msgDef:" + msgName);
-					if (name !== msgName) editor.markEdited("msgDef:" + name);
-				}
+				editor.markEdited("msgDef:" + msgName);
+				if (name !== msgName) editor.markEdited("msgDef:" + name);
 				fu.closeOverlay(overlay, { force: true });
-				if (changed) editor.triggerReRender();
+				editor.triggerReRender();
 				return;
 			} else {
-				const lines = editor.getLines();
-				const secStart = editor.findSectionStart(lines, "Message ID");
-				if (secStart !== -1) {
-					const secEnd = editor.findSectionEnd(lines, secStart);
-					editor.insertAtLine(secEnd, yaml);
+				const result = window.GrcanDocument.addMessageDef(def);
+				if (!result.ok) {
+					nameF.error.textContent = result.error;
+					return;
 				}
 				editor.markNew("msgDef:" + name);
 			}
