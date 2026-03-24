@@ -22,8 +22,9 @@ void setSoftwareLatch(bool close, CCU_StateData *state_data)
 	}
 }
 
-bool BCU_Warnings(const CCU_StateData * state_data){
-	if (state_data->BCU_S2_UNDER20v_WARNING){
+bool BCU_Warnings(const CCU_StateData *state_data)
+{
+	if (state_data->BCU_S2_UNDER20v_WARNING) {
 		LOGOMATIC("Under 20v Warning");
 		return true;
 	} else if (state_data->BCU_S2_UNDER12v_WARNING) {

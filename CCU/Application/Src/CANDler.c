@@ -171,5 +171,3 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
 }
-
-

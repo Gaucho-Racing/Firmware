@@ -10,7 +10,6 @@
 #include "Unused.h"
 #include "bitManipulations.h"
 
-
 void CCU_State_Tick(CCU_StateData *state_data)
 {
 
@@ -35,7 +34,6 @@ void CCU_State_Tick(CCU_StateData *state_data)
 			break;
 	};
 }
-
 
 void STATE_IDLE(CCU_StateData *state_data)
 {
