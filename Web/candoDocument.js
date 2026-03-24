@@ -5,8 +5,8 @@
 // After every mutation, serializes the model back to canonical text and calls
 // editor.updateRawText() so editor.js remains the single source of raw text truth.
 //
-// Sections owned (regenerated on serialize): routing, Message ID, GR ID
-// Sections preserved verbatim:               Bus ID, byte order, Custom CAN ID
+// Sections owned (regenerated on serialize): routing, Message ID, Custom CAN ID, GR ID
+// Sections preserved verbatim:               Bus ID, byte order
 //
 // Dual-mode: browser (window.GrcanDocument) or Node.js (module.exports) for tests.
 
@@ -28,7 +28,7 @@
 	let _messageIds = new Map(); // Map<msgName, MessageDef>
 	let _busIdsText = ""; // verbatim Bus ID section text
 	let _byteOrderText = ""; // verbatim byte order line text
-	let _customCanIdsText = ""; // verbatim Custom CAN ID section text
+	let _customCanIds = new Map(); // Map<name, {name, canId, length, signals[]}>
 
 	// ==================== Parser ====================
 
@@ -38,7 +38,7 @@
 		_messageIds = new Map();
 		_busIdsText = "";
 		_byteOrderText = "";
-		_customCanIdsText = "";
+		_customCanIds = new Map();
 
 		if (!rawText) return;
 		const lines = rawText.split("\n");
@@ -73,13 +73,10 @@
 				.replace(/\n+$/, "");
 		}
 
-		// Verbatim: Custom CAN ID section through the blank line before GR ID.
+		// Owned: Custom CAN ID section through the blank line before GR ID.
 		if (customCanIdStart > -1) {
 			const end = grIdStart > -1 ? grIdStart : lines.length;
-			_customCanIdsText = lines
-				.slice(customCanIdStart, end)
-				.join("\n")
-				.replace(/\n+$/, "");
+			_parseCustomCanIds(lines, customCanIdStart, end);
 		}
 
 		// Owned sections: parse into model.
@@ -238,6 +235,64 @@
 		}
 	}
 
+	function _parseCustomCanIds(lines, start, end) {
+		let curEntry = null;
+		let curSignal = null;
+
+		function flushSignal() {
+			if (curSignal && curEntry) {
+				curEntry.signals.push(curSignal);
+			}
+			curSignal = null;
+		}
+		function flushEntry() {
+			flushSignal();
+			if (curEntry) _customCanIds.set(curEntry.name, curEntry);
+			curEntry = null;
+		}
+
+		for (let i = start; i < end; i++) {
+			const line = lines[i];
+			if (!line.trim()) continue;
+			const indent = line.search(/\S/);
+			const content = line.trim();
+
+			if (indent === 2 && content.endsWith(":")) {
+				flushEntry();
+				curEntry = {
+					name: content.slice(0, -1),
+					canId: "",
+					length: "",
+					signals: [],
+				};
+			} else if (indent === 4 && curEntry) {
+				if (content.startsWith("CAN ID:")) {
+					curEntry.canId = content.slice("CAN ID:".length).trim();
+				} else if (content.startsWith("Length:")) {
+					curEntry.length = content.slice("Length:".length).trim();
+				} else if (content === "signals: []") {
+					// empty signals array on same line — already empty
+				} else if (content === "signals:") {
+					// signals array follows on subsequent lines
+				}
+			} else if (indent === 6 && content.startsWith("- name:") && curEntry) {
+				flushSignal();
+				let nameVal = content.slice("- name:".length).trim();
+				nameVal = nameVal.replace(/^["']|["']$/g, "");
+				curSignal = { name: nameVal, bitStart: "", comment: null };
+			} else if (indent === 8 && curSignal) {
+				if (content.startsWith("bit_start:")) {
+					curSignal.bitStart = content.slice("bit_start:".length).trim();
+				} else if (content.startsWith("#")) {
+					const t = content.slice(1).trim();
+					curSignal.comment =
+						curSignal.comment ? curSignal.comment + "\n" + t : t;
+				}
+			}
+		}
+		flushEntry();
+	}
+
 	// ==================== Serializer ====================
 
 	function _serializeRouting() {
@@ -291,6 +346,30 @@
 		return out;
 	}
 
+	function _serializeCustomCanIds() {
+		let out = "Custom CAN ID:\n";
+		for (const entry of _customCanIds.values()) {
+			out += "  " + entry.name + ":\n";
+			out += "    CAN ID: " + entry.canId + "\n";
+			out += "    Length: " + entry.length + "\n";
+			if (entry.signals.length === 0) {
+				out += "    signals: []\n";
+			} else {
+				out += "    signals:\n";
+				for (const sig of entry.signals) {
+					out += '      - name: "' + sig.name + '"\n';
+					out += "        bit_start: " + sig.bitStart + "\n";
+					if (sig.comment) {
+						for (const commentLine of sig.comment.split("\n")) {
+							out += "        # " + commentLine + "\n";
+						}
+					}
+				}
+			}
+		}
+		return out;
+	}
+
 	function _serializeGrIds() {
 		let out = "GR ID:\n\n";
 		for (const [name, hexId] of _grIds.entries()) {
@@ -305,7 +384,7 @@
 			_serializeRouting(),
 			_byteOrderText,
 			_serializeMessageIds(),
-			_customCanIdsText,
+			_serializeCustomCanIds(),
 			_serializeGrIds(),
 		];
 		// Strip trailing newlines from each part, join with exactly one blank line,
@@ -316,16 +395,7 @@
 	// ==================== Validator ====================
 
 	function _getCustomCanIdNames() {
-		const names = new Set();
-		if (!_customCanIdsText) return names;
-		for (const line of _customCanIdsText.split("\n")) {
-			const indent = line.search(/\S/);
-			const content = line.trim();
-			if (indent === 2 && content.endsWith(":")) {
-				names.add(content.slice(0, -1));
-			}
-		}
-		return names;
+		return new Set(_customCanIds.keys());
 	}
 
 	function validate() {
@@ -695,6 +765,11 @@
 					ok: false,
 					error: `Message "${def.name}" already exists`,
 				};
+			if (_customCanIds.has(def.name))
+				return {
+					ok: false,
+					error: `Name "${def.name}" already exists in Custom CAN ID section`,
+				};
 			if (!/^0x[0-9a-fA-F]+$/i.test(def.msgId))
 				return { ok: false, error: "MSG ID must be hex (e.g. 0x003)" };
 			const normId = def.msgId.toLowerCase();
@@ -759,6 +834,152 @@
 		});
 	}
 
+	// ==================== Custom CAN ID mutations ====================
+
+	function addCustomCanIdDef(def) {
+		return _withEditor(() => {
+			if (!def || !def.name)
+				return { ok: false, error: "Message name is required" };
+			if (_customCanIds.has(def.name))
+				return {
+					ok: false,
+					error: `Custom CAN ID "${def.name}" already exists`,
+				};
+			if (_messageIds.has(def.name))
+				return {
+					ok: false,
+					error: `Name "${def.name}" already exists in Message ID section`,
+				};
+			if (!def.canId || !def.canId.trim())
+				return { ok: false, error: "CAN ID is required" };
+			if (!/^[0-9a-fA-F]+$/i.test(def.canId.trim()))
+				return {
+					ok: false,
+					error: "CAN ID must be a valid hex value (e.g. 116 or 18FF50E5)",
+				};
+			if (
+				!def.length ||
+				isNaN(parseInt(def.length, 10)) ||
+				parseInt(def.length, 10) < 0
+			)
+				return { ok: false, error: "Length must be a non-negative integer" };
+			_customCanIds.set(def.name, {
+				name: def.name,
+				canId: def.canId.trim(),
+				length: String(parseInt(def.length, 10)),
+				signals: (def.signals || []).map((s) => ({
+					name: s.name,
+					bitStart: s.bitStart,
+					comment: s.comment || null,
+				})),
+			});
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function updateCustomCanIdDef(oldName, def) {
+		return _withEditor(() => {
+			if (!_customCanIds.has(oldName))
+				return {
+					ok: false,
+					error: `Custom CAN ID "${oldName}" not found`,
+				};
+			if (!def || !def.name)
+				return { ok: false, error: "Message name is required" };
+			if (def.name !== oldName && _customCanIds.has(def.name))
+				return {
+					ok: false,
+					error: `Custom CAN ID "${def.name}" already exists`,
+				};
+			if (def.name !== oldName && _messageIds.has(def.name))
+				return {
+					ok: false,
+					error: `Name "${def.name}" already exists in Message ID section`,
+				};
+			if (!def.canId || !def.canId.trim())
+				return { ok: false, error: "CAN ID is required" };
+			if (!/^[0-9a-fA-F]+$/i.test(def.canId.trim()))
+				return {
+					ok: false,
+					error: "CAN ID must be a valid hex value (e.g. 116 or 18FF50E5)",
+				};
+			if (
+				!def.length ||
+				isNaN(parseInt(def.length, 10)) ||
+				parseInt(def.length, 10) < 0
+			)
+				return { ok: false, error: "Length must be a non-negative integer" };
+
+			const newEntry = {
+				name: def.name,
+				canId: def.canId.trim(),
+				length: String(parseInt(def.length, 10)),
+				signals: (def.signals || []).map((s) => ({
+					name: s.name,
+					bitStart: s.bitStart,
+					comment: s.comment || null,
+				})),
+			};
+
+			if (def.name === oldName) {
+				_customCanIds.set(oldName, newEntry);
+			} else {
+				// Rename: rebuild map preserving insertion order.
+				const newMap = new Map();
+				for (const [k, v] of _customCanIds) {
+					newMap.set(k === oldName ? def.name : k, k === oldName ? newEntry : v);
+				}
+				_customCanIds = newMap;
+
+				// Route ref sweep.
+				for (const device of _devices.values()) {
+					for (const bus of device.buses.values()) {
+						for (const receiver of bus.receivers.values()) {
+							for (const route of receiver.routes) {
+								if (route.msgName === oldName) route.msgName = def.name;
+							}
+						}
+					}
+				}
+			}
+
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function deleteCustomCanIdDef(name) {
+		return _withEditor(() => {
+			if (!name) return { ok: false, error: "Message name is required" };
+			const warnings = [];
+			_customCanIds.delete(name);
+
+			// Sweep routing references.
+			for (const device of _devices.values()) {
+				for (const bus of device.buses.values()) {
+					for (const [recName, receiver] of [...bus.receivers.entries()]) {
+						const before = receiver.routes.length;
+						receiver.routes = receiver.routes.filter(
+							(r) => r.msgName !== name,
+						);
+						if (receiver.routes.length < before) {
+							warnings.push(
+								`Removed route to "${name}" from ${device.deviceName} > ${bus.busPort} > ${recName}`,
+							);
+						}
+						if (receiver.routes.length === 0) {
+							bus.receivers.delete(recName);
+						}
+					}
+					if (bus.receivers.size === 0) {
+						device.buses.delete(bus.busPort);
+					}
+				}
+			}
+
+			return { ok: true, warnings };
+		});
+	}
+
 	// ==================== Read-only accessors ====================
 
 	function deviceExists(name) {
@@ -796,6 +1017,16 @@
 		return [..._messageIds.keys()];
 	}
 
+	function getCustomCanIdDef(name) {
+		_ensureParsed();
+		return _customCanIds.get(name) || null;
+	}
+
+	function getCustomCanIdNames() {
+		_ensureParsed();
+		return [..._customCanIds.keys()];
+	}
+
 	function routeEntryExists(device, bus, receiver, msg, canIdOverride) {
 		_ensureParsed();
 		const dev = _devices.get(device);
@@ -814,7 +1045,12 @@
 
 	function _parseForTest(text) {
 		_parse(text);
-		return { devices: _devices, grIds: _grIds, messageIds: _messageIds };
+		return {
+			devices: _devices,
+			grIds: _grIds,
+			messageIds: _messageIds,
+			customCanIds: _customCanIds,
+		};
 	}
 
 	function _serializeFromState() {
@@ -833,6 +1069,9 @@
 		deleteBusBlock,
 		addMessageDef,
 		updateMessageDef,
+		addCustomCanIdDef,
+		updateCustomCanIdDef,
+		deleteCustomCanIdDef,
 		// Validation
 		validate,
 		// Read-only
@@ -843,6 +1082,8 @@
 		getGrId,
 		getMessageDef,
 		getMessageIdNames,
+		getCustomCanIdDef,
+		getCustomCanIdNames,
 		routeEntryExists,
 		// Test hooks
 		_parseForTest,

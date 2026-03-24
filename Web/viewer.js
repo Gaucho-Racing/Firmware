@@ -17,8 +17,11 @@ window.addEventListener("DOMContentLoaded", function () {
 	const refInputRow = document.getElementById("ref-input-row");
 	const firstHeader = document.querySelector("#bus-panel .panel-header");
 	const secondHeader = document.querySelector("#node-panel .panel-header");
+	const searchInput = document.getElementById("viewer-search");
 	let nodeIdMap = new Map();
 	let currentRef = "";
+	let _allNodes = []; // persisted node→bus→messages index for search
+	let _searchDropdown = null;
 
 	let currentDeviceName = null;
 	let currentBusCanonical = null;
@@ -157,6 +160,143 @@ window.addEventListener("DOMContentLoaded", function () {
 		else item.appendChild(icons);
 	}
 
+	function applySearchFilter() {
+		const term = (searchInput ? searchInput.value : "").trim().toLowerCase();
+		[firstList, secondList, msgList].forEach((list) => {
+			list.querySelectorAll(".panel-item").forEach((item) => {
+				const text = item.textContent.toLowerCase();
+				item.style.display = term && !text.includes(term) ? "none" : "";
+			});
+		});
+	}
+
+	function buildMessageIndex() {
+		const results = [];
+		for (const node of _allNodes) {
+			for (const bus of node.buses) {
+				for (const msg of bus.messages) {
+					results.push({
+						msgName: msg.msgName,
+						deviceName: node.name,
+						canonicalBus: bus.canonicalBus,
+						busDisplayName: bus.busName,
+					});
+				}
+			}
+		}
+		return results;
+	}
+
+	function getSearchDropdown() {
+		if (_searchDropdown) return _searchDropdown;
+		_searchDropdown = document.createElement("div");
+		_searchDropdown.id = "search-dropdown";
+		const row = document.getElementById("viewer-search-row");
+		if (row) row.appendChild(_searchDropdown);
+		return _searchDropdown;
+	}
+
+	function highlightMessage(msgName) {
+		const items = msgList.querySelectorAll(".msg-item");
+		for (const item of items) {
+			const nameEl = item.querySelector(".msg-name");
+			if (nameEl && nameEl.textContent === msgName) {
+				item.scrollIntoView({ block: "nearest" });
+				item.classList.add("msg-highlight");
+				setTimeout(() => item.classList.remove("msg-highlight"), 1800);
+				break;
+			}
+		}
+	}
+
+	function navigateToMessage(result) {
+		if (_searchDropdown) _searchDropdown.style.display = "none";
+		if (searchInput) searchInput.value = "";
+		applySearchFilter();
+		const nodeEl = firstList.querySelector(
+			'[data-node-name="' + CSS.escape(result.deviceName) + '"]',
+		);
+		if (!nodeEl) return;
+		nodeEl.scrollIntoView({ block: "nearest" });
+		nodeEl.click();
+		requestAnimationFrame(() => {
+			const busEl = secondList.querySelector(
+				'[data-bus-canonical="' + CSS.escape(result.canonicalBus) + '"]',
+			);
+			if (!busEl) return;
+			busEl.scrollIntoView({ block: "nearest" });
+			busEl.click();
+			requestAnimationFrame(() => highlightMessage(result.msgName));
+		});
+	}
+
+	function applySearch() {
+		applySearchFilter();
+		const dropdown = getSearchDropdown();
+		const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
+		if (!term || _allNodes.length === 0) {
+			dropdown.style.display = "none";
+			return;
+		}
+		const index = buildMessageIndex();
+		const seen = new Set();
+		const matches = index.filter((r) => {
+			if (!r.msgName.toLowerCase().includes(term)) return false;
+			const key = r.msgName + "|" + r.deviceName + "|" + r.canonicalBus;
+			if (seen.has(key)) return false;
+			seen.add(key);
+			return true;
+		});
+		if (matches.length === 0) {
+			dropdown.style.display = "none";
+			return;
+		}
+		dropdown.innerHTML = "";
+		matches.slice(0, 12).forEach((result) => {
+			const row = document.createElement("div");
+			row.className = "search-result-row";
+			const nameEl = document.createElement("span");
+			nameEl.className = "sr-name";
+			nameEl.textContent = result.msgName;
+			const pathEl = document.createElement("span");
+			pathEl.className = "sr-path";
+			pathEl.textContent = result.deviceName + " \u203a " + result.busDisplayName;
+			row.appendChild(nameEl);
+			row.appendChild(pathEl);
+			row.addEventListener("mousedown", (e) => {
+				e.preventDefault();
+				navigateToMessage(result);
+			});
+			dropdown.appendChild(row);
+		});
+		dropdown.style.display = "block";
+	}
+
+	if (searchInput) {
+		searchInput.addEventListener("input", applySearch);
+		searchInput.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				searchInput.value = "";
+				applySearch();
+				searchInput.blur();
+			} else if (e.key === "Enter") {
+				const dd = _searchDropdown;
+				if (dd && dd.firstElementChild) {
+					dd.firstElementChild.dispatchEvent(new MouseEvent("mousedown"));
+				}
+			}
+		});
+		document.addEventListener("click", (e) => {
+			if (
+				_searchDropdown &&
+				!_searchDropdown.contains(e.target) &&
+				e.target !== searchInput
+			) {
+				_searchDropdown.style.display = "none";
+			}
+		});
+	}
+
 	async function loadNodeIds(ref) {
 		const result = await window.GrcanApi.fetchNodeIds(ref);
 		nodeIdMap = new Map();
@@ -269,6 +409,12 @@ window.addEventListener("DOMContentLoaded", function () {
 						editor.showMessageEditForm(null, true);
 					}),
 				);
+				msgList.appendChild(
+					editor.createAddBtn("Add Custom CAN ID", () => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showCustomCanIdEditForm(null, true);
+					}),
+				);
 			}
 			return;
 		}
@@ -297,7 +443,11 @@ window.addEventListener("DOMContentLoaded", function () {
 				icons.appendChild(
 					editor.createEditBtn(() => {
 						editor.setNavSnapshot(navSnapshot());
-						editor.showMessageEditForm(msg.msgName, false);
+						if (editor.isCustomCanIdMessage(msg.msgName)) {
+							editor.showCustomCanIdEditForm(msg.msgName, false);
+						} else {
+							editor.showMessageEditForm(msg.msgName, false);
+						}
 					}),
 				);
 				if (busPort && currentDeviceName) {
@@ -404,7 +554,14 @@ window.addEventListener("DOMContentLoaded", function () {
 					editor.showMessageEditForm(null, true);
 				}),
 			);
+			msgList.appendChild(
+				editor.createAddBtn("Add Custom CAN ID", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showCustomCanIdEditForm(null, true);
+				}),
+			);
 		}
+		applySearchFilter();
 	}
 
 	// ==================== BUS_NODE mode ====================
@@ -650,9 +807,11 @@ window.addEventListener("DOMContentLoaded", function () {
 				}),
 			);
 		}
+		applySearchFilter();
 	}
 
 	async function renderNodeBus(ref, localText) {
+		_allNodes = [];
 		const isLocal = !!localText;
 		setPlaceholder(firstList, "Loading nodes...");
 		setPlaceholder(secondList, "Select a node");
@@ -724,7 +883,15 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		const nodes = [...nodeMap.entries()]
 			.map(([name, buses]) => ({ name, buses }))
-			.sort((a, b) => a.name.localeCompare(b.name));
+			.sort((a, b) => {
+				const idA = nodeIdForName(a.name);
+				const idB = nodeIdForName(b.name);
+				const numA = idA ? parseInt(idA, 16) : Infinity;
+				const numB = idB ? parseInt(idB, 16) : Infinity;
+				if (numA !== numB) return numA - numB;
+				return a.name.localeCompare(b.name);
+			});
+		_allNodes = nodes;
 
 		firstList.innerHTML = "";
 		if (nodes.length === 0) {
@@ -798,15 +965,14 @@ window.addEventListener("DOMContentLoaded", function () {
 				}),
 			);
 		}
+		applySearchFilter();
 	}
 
 	// ==================== Hierarchy entry points ====================
 
 	async function renderHierarchy(ref) {
 		const candoResult = await window.GrcanApi.fetchCando(ref);
-		const localText = window.GrcanApi.isLocalMode()
-			? candoResult.content
-			: null;
+		const localText = candoResult.notFound ? null : candoResult.content;
 
 		if (localText) {
 			loadNodeIdsFromText(localText);
@@ -1018,6 +1184,11 @@ window.addEventListener("DOMContentLoaded", function () {
 				renderHierarchy(currentRef || "local");
 			};
 			reader.readAsText(file);
+		});
+
+		localFileInput.addEventListener("cancel", function () {
+			localToggle.checked = false;
+			localFileInput.style.display = "none";
 		});
 	}
 

@@ -8,7 +8,7 @@
 
 body {
 	margin: 0;
-	padding-top: 44px;
+	padding-top: 36px;
 	min-height: 100vh;
 	font-family: "Inter", Arial, sans-serif;
 	background: #050608;
@@ -42,9 +42,9 @@ body {
 .app-shell {
 	position: relative;
 	z-index: 1;
-	width: min(1200px, 94vw);
-	min-height: min(84vh, 760px);
-	margin: 28px auto 36px;
+	width: min(1600px, 96vw);
+	min-height: 84vh;
+	margin: 12px auto 16px;
 	display: grid;
 	grid-template-columns: 300px minmax(0, 1fr);
 	gap: 16px;

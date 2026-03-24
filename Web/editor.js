@@ -300,6 +300,10 @@
 		return !!findMessageDefRange(msgName) || !!findCustomCanIdRange(msgName);
 	}
 
+	function isCustomCanIdMessage(msgName) {
+		return !!findCustomCanIdRange(msgName);
+	}
+
 	function renameRoutingMessageRefs(oldName, newName) {
 		if (!oldName || !newName || oldName === newName) return false;
 		const lines = getLines();
@@ -483,6 +487,7 @@
 		grIdNameExists,
 		renameGrIdNode,
 		messageNameExists,
+		isCustomCanIdMessage,
 		renameRoutingMessageRefs,
 		generateMessageIdYaml,
 		generateRoutingMsgYaml,

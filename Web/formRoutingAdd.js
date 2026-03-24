@@ -88,55 +88,26 @@
 		// name lists). Usage ranking is bus-local: currentBusPort narrows which
 		// routing entries count as "already used" so unused-first sorting is
 		// meaningful in context.
-		async function loadCatalogSuggestions() {
+		function loadCatalogSuggestions() {
 			const rawText = editor.getRawText ? editor.getRawText() : "";
 			// Read the live bus value so filtering updates when the user changes it.
 			const currentBusPort = busF.input.value || null;
 			buildRouteUsageMap(rawText, currentBusPort);
 			const routingNames = buildRoutingReceiverSet(rawText, currentBusPort);
-			const fallbackMessages =
+			const messages =
 				window.GrcanApi && window.GrcanApi.parseMessageCatalogFromText
 					? window.GrcanApi.parseMessageCatalogFromText(rawText)
 					: [];
-			const fallbackNodes =
+			const nodes =
 				window.GrcanApi && window.GrcanApi.parseNodeCatalogFromText
 					? window.GrcanApi.parseNodeCatalogFromText(rawText)
 					: [];
-			const refEl = document.getElementById("ref-select");
-			const ref = refEl ? refEl.value : "";
-			if (!window.GrcanApi || !ref) {
-				allMessageNames = [...new Set(fallbackMessages)];
-				receiverList = [...new Set([...fallbackNodes, ...routingNames])].sort(
-					(a, b) => a.localeCompare(b),
-				);
-				return;
-			}
-			const [messageCatalog, nodeCatalog] = await Promise.all([
-				window.GrcanApi.fetchMessageCatalog(ref),
-				window.GrcanApi.fetchNodeCatalog(ref),
-			]);
-			const headerNames =
-				!messageCatalog.error && messageCatalog.messages
-					? messageCatalog.messages
-					: [];
-			// Merge header-derived and current-text-derived names so that new
-			// message definitions created in this edit session are immediately
-			// available in autocomplete. Header names remain the long-term
-			// source of truth; text names add local, in-session additions.
-			const messageCandidates = [
-				...new Set([...headerNames, ...fallbackMessages]),
-			];
-			// For receivers: use catalog node names ONLY when no bus is selected,
-			// so we don't suggest nodes from other buses. When a bus is locked,
-			// routingNames already contains the bus-local receivers.
-			const nodeCandidates =
-				!nodeCatalog.error && nodeCatalog.nodes
-					? nodeCatalog.nodes
-					: fallbackNodes;
+			allMessageNames = [...new Set(messages)];
+			// For receivers: when a bus is locked, routingNames already contains
+			// the bus-local receivers; don't mix in nodes from other buses.
 			const baseReceivers = currentBusPort
 				? [...routingNames]
-				: [...new Set([...nodeCandidates, ...routingNames])];
-			allMessageNames = [...new Set(messageCandidates)];
+				: [...new Set([...nodes, ...routingNames])];
 			receiverList = [...new Set(baseReceivers)].sort((a, b) =>
 				a.localeCompare(b),
 			);
