@@ -172,23 +172,4 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 	LOGOMATIC("CAN MESSAGE SENT:\n");
 }
 
-void SendDebugReport(char *data)
-{
-	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_DEBUG_2_0) << 8) | (0xFF & GR_BCU);
-	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
-	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
-	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	msg.tx_header.DataLength = 8;
-	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-	msg.tx_header.MessageMarker = 0;
 
-	msg.data[8] = (uint8_t)*data;
-
-	LOGOMATIC("ERROR: %s\n", data);
-
-	can_send(primary_can, &msg);
-
-	LOGOMATIC("DEBUG MESSAGE SENT\n");
-}

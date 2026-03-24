@@ -22,27 +22,42 @@ void setSoftwareLatch(bool close, CCU_StateData *state_data)
 	}
 }
 
+bool BCU_Warnings(const CCU_StateData * state_data){
+	if (state_data->BCU_S2_UNDER20v_WARNING){
+		LOGOMATIC("Under 20v Warning");
+		return true;
+	} else if (state_data->BCU_S2_UNDER12v_WARNING) {
+		LOGOMATIC("Under 12v Warning");
+		return true;
+	} else if (state_data->BCU_S2_UNDERVOLTSDC_WARNING) {
+		LOGOMATIC("Undervolt TSDC Wanring");
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool CriticalError(const CCU_StateData *state_data)
 {
 
 	if (state_data->BCU_S2_OVERCURR_ERROR) {
-		SendDebugReport("OVERCURR");
+		LOGOMATIC("OVERCURR");
 		return true;
 
 	} else if (state_data->BCU_S2_OVERTEMP_ERROR) {
-		SendDebugReport("OVERTEMP");
+		LOGOMATIC("OVERTEMP");
 		return true;
 
 	} else if (state_data->BCU_S2_OVERVOLT_ERROR) {
-		SendDebugReport("OVERVOLT");
+		LOGOMATIC("OVERVOLT");
 		return true;
 
 	} else if (state_data->BCU_S2_UNDERCURR_ERROR) {
-		SendDebugReport("UNDECURR");
+		LOGOMATIC("UNDECURR");
 		return true;
 
 	} else if (state_data->BCU_S2_UNDERVOLT_ERROR) {
-		SendDebugReport("UNDEVOLT");
+		LOGOMATIC("UNDEVOLT");
 		return true;
 
 	} else {
