@@ -260,7 +260,8 @@ window.addEventListener("DOMContentLoaded", function () {
 			nameEl.textContent = result.msgName;
 			const pathEl = document.createElement("span");
 			pathEl.className = "sr-path";
-			pathEl.textContent = result.deviceName + " \u203a " + result.busDisplayName;
+			pathEl.textContent =
+				result.deviceName + " \u203a " + result.busDisplayName;
 			row.appendChild(nameEl);
 			row.appendChild(pathEl);
 			row.addEventListener("mousedown", (e) => {

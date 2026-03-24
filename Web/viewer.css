@@ -292,8 +292,12 @@
 }
 
 @keyframes highlight-fade {
-	0% { background: rgba(139, 92, 246, 0.35); }
-	100% { background: transparent; }
+	0% {
+		background: rgba(139, 92, 246, 0.35);
+	}
+	100% {
+		background: transparent;
+	}
 }
 
 .msg-highlight {

@@ -285,8 +285,9 @@
 					curSignal.bitStart = content.slice("bit_start:".length).trim();
 				} else if (content.startsWith("#")) {
 					const t = content.slice(1).trim();
-					curSignal.comment =
-						curSignal.comment ? curSignal.comment + "\n" + t : t;
+					curSignal.comment = curSignal.comment
+						? curSignal.comment + "\n" + t
+						: t;
 				}
 			}
 		}
@@ -927,7 +928,10 @@
 				// Rename: rebuild map preserving insertion order.
 				const newMap = new Map();
 				for (const [k, v] of _customCanIds) {
-					newMap.set(k === oldName ? def.name : k, k === oldName ? newEntry : v);
+					newMap.set(
+						k === oldName ? def.name : k,
+						k === oldName ? newEntry : v,
+					);
 				}
 				_customCanIds = newMap;
 
@@ -958,9 +962,7 @@
 				for (const bus of device.buses.values()) {
 					for (const [recName, receiver] of [...bus.receivers.entries()]) {
 						const before = receiver.routes.length;
-						receiver.routes = receiver.routes.filter(
-							(r) => r.msgName !== name,
-						);
+						receiver.routes = receiver.routes.filter((r) => r.msgName !== name);
 						if (receiver.routes.length < before) {
 							warnings.push(
 								`Removed route to "${name}" from ${device.deviceName} > ${bus.busPort} > ${recName}`,
