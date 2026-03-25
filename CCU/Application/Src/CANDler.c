@@ -44,11 +44,16 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
 			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
 			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
+
 			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->error_bits, 0);
 			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 1);
 			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 2);
 			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 3);
 			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 4);
+
+			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->error_bits, 5);
+			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->error_bits, 6);
+			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->error_bits, 7);
 
 			break;
 
