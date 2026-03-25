@@ -34,12 +34,12 @@ jobs:
           fetch-depth: 1
 
       - name: Install Arm Toolchain
-        uses: carlosperate/arm-none-eabi-gcc-action@2ca034649a66909ef5382c90ffb5d26711d2f266  # v1.12.0
+        uses: carlosperate/arm-none-eabi-gcc-action@7153327ecfbc421a0b4268058e4bb3d5d6e5df2c  # v1.12.1
         with:
           release: '12.2.Rel1'
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306  # v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  # v5.0.4
         with:
           path: ${{ env.SCCACHE_DIR }}
           key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -188,7 +188,7 @@ jobs:
             fetch-depth: 1
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
             path: ${{ env.SCCACHE_DIR }}
             key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
