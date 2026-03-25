@@ -29,11 +29,11 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			// FIXME: if bad message do a thing
 
 			if (size != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
-				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu", ID, size);
+				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				break;
 			}
 
-			LOGOMATIC("Received a BCU STATUS 2 msg");
+			LOGOMATIC("Received a BCU STATUS 2 msg\n");
 
 			// FIXME: Might need to double check we are doing this v
 			//  cast *data to whatever msg dti control 10 struct there is
@@ -58,7 +58,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			break;
 
 		default:
-			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu", ID, size);
+			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
 			break;
 	}
 }
