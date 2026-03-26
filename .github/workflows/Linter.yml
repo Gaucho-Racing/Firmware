@@ -53,13 +53,13 @@ jobs:
 
     - name: Install Arm Toolchain
       if: matrix.build_mode == 'manual'
-      uses: carlosperate/arm-none-eabi-gcc-action@2ca034649a66909ef5382c90ffb5d26711d2f266  # v1.12.0
+      uses: carlosperate/arm-none-eabi-gcc-action@7153327ecfbc421a0b4268058e4bb3d5d6e5df2c  # v1.12.1
       with:
         release: '12.2.Rel1'
 
     - name: Setup Shared Compilation Cache
       if: matrix.build_mode == 'manual'
-      uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306  # v5.0.3
+      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  # v5.0.4
       with:
         path: ${{ env.SCCACHE_DIR }}
         key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -76,7 +76,7 @@ jobs:
       run: mkdir -p /home/runner/work/_temp/trapCaches/cpp/tarballs
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@b1bff81932f5cdfc8695c7752dcee935dcd061c8  # v4.33.0
+      uses: github/codeql-action/init@38697555549f1db7851b81482ff19f1fa5c4fedc  # v4.34.1
       with:
         languages: ${{ matrix.languages }}
         build-mode: ${{ matrix.build_mode }}
@@ -87,14 +87,14 @@ jobs:
 
     - name: Analyze CodeQL
       id: analyze
-      uses: github/codeql-action/analyze@b1bff81932f5cdfc8695c7752dcee935dcd061c8 # v4.33.0
+      uses: github/codeql-action/analyze@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
       with:
         category: ${{ matrix.languages }}
         upload: never
 
     - name: Upload CodeQL Results
       if: always()
-      uses: github/codeql-action/upload-sarif@b1bff81932f5cdfc8695c7752dcee935dcd061c8  # v4.33.0
+      uses: github/codeql-action/upload-sarif@38697555549f1db7851b81482ff19f1fa5c4fedc  # v4.34.1
       with:
         sarif_file: ${{ steps.analyze.outputs.sarif-output }}
 
@@ -111,7 +111,7 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@b6cfc127f1b0a63ac98797800f641494d80f42f8  # v1.37.1
+        uses: shogo82148/actions-setup-perl@22ab01e83d59dc1abe1796fd8f338da7e7f2d033  # v1.38.1
         with:
           install-modules: 'Perl::Critic'
 
