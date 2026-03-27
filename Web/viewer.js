@@ -458,7 +458,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 			if (hasPreview) {
 				const expandBtn = document.createElement("span");
-				expandBtn.className = "msg-expand-btn collapsed";
+				expandBtn.className = "msg-expand-btn";
 				expandBtn.textContent = "›";
 				nameRow.appendChild(expandBtn);
 			}
@@ -529,7 +529,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 			if (hasPreview) {
 				const details = document.createElement("div");
-				details.className = "msg-details collapsed";
+				details.className = "msg-details";
 
 				const bytesWrap = document.createElement("div");
 				bytesWrap.className = "msg-bytes";
