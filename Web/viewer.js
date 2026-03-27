@@ -441,10 +441,20 @@ window.addEventListener("DOMContentLoaded", function () {
 			// Determine preview content: standard byte mappings or Custom CAN ID signals
 			const hasByteMappings = msg.byteMappings && msg.byteMappings.length > 0;
 			let customCanIdDef = null;
-			if (!hasByteMappings && editor && editor.isCustomCanIdMessage(msg.msgName)) {
-				customCanIdDef = window.GrcanDocument && window.GrcanDocument.getCustomCanIdDef(msg.msgName);
+			if (
+				!hasByteMappings &&
+				editor &&
+				editor.isCustomCanIdMessage(msg.msgName)
+			) {
+				customCanIdDef =
+					window.GrcanDocument &&
+					window.GrcanDocument.getCustomCanIdDef(msg.msgName);
 			}
-			const hasPreview = hasByteMappings || (customCanIdDef && customCanIdDef.signals && customCanIdDef.signals.length > 0);
+			const hasPreview =
+				hasByteMappings ||
+				(customCanIdDef &&
+					customCanIdDef.signals &&
+					customCanIdDef.signals.length > 0);
 
 			if (hasPreview) {
 				const expandBtn = document.createElement("span");
@@ -861,9 +871,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		if (editing && deviceName) {
 			secondList.appendChild(
-			editor.createAddBtn("Add Bus", () => {
+				editor.createAddBtn("Add Bus", () => {
 					editor.setNavSnapshot(navSnapshot());
-				editor.showRoutingBusAddForm(deviceName);
+					editor.showRoutingBusAddForm(deviceName);
 				}),
 			);
 		}
@@ -931,7 +941,8 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
-				if (!node.hasBus && (!node.messages || node.messages.length === 0)) continue;
+				if (!node.hasBus && (!node.messages || node.messages.length === 0))
+					continue;
 				if (!nodeMap.has(node.name)) nodeMap.set(node.name, []);
 				nodeMap.get(node.name).push({
 					busName: bus.display,

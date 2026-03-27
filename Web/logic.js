@@ -304,7 +304,10 @@ async function fetchRepoText(path, ref) {
 	if (!res.ok) return { text: null, error: "fetch_failed" };
 	const data = await res.json();
 	if (data.encoding !== "base64") return { text: null, error: "encoding" };
-	return { text: decodeBase64Utf8(data.content.replace(/\n/g, "")), error: null };
+	return {
+		text: decodeBase64Utf8(data.content.replace(/\n/g, "")),
+		error: null,
+	};
 }
 
 async function fetchBranches() {
@@ -540,7 +543,11 @@ function parseMessageByBusFromText(text, busName) {
 		if (indent === 4) {
 			const senderName = content.replace(/:$/, "");
 			if (!nodeMap.has(senderName))
-				nodeMap.set(senderName, { name: senderName, messages: [], hasBus: false });
+				nodeMap.set(senderName, {
+					name: senderName,
+					messages: [],
+					hasBus: false,
+				});
 			currentNode = nodeMap.get(senderName);
 			onTargetPort = false;
 			receiver = null;
