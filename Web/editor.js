@@ -398,7 +398,10 @@
 		const btn = document.createElement("button");
 		btn.className = "editor-add-btn";
 		btn.innerHTML = window.FormUtils.PLUS_SVG + " " + label;
-		btn.addEventListener("click", onClick);
+		btn.addEventListener("click", (e) => {
+			e.stopPropagation();
+			onClick();
+		});
 		return btn;
 	}
 

@@ -666,6 +666,31 @@
 		});
 	}
 
+	function addBus(deviceName, busPort) {
+		return _withEditor(() => {
+			deviceName = (deviceName || "").trim();
+			busPort = (busPort || "").trim();
+			if (!deviceName) return { ok: false, error: "Device name is required" };
+			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
+				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
+
+			const warnings = [];
+			let device = _devices.get(deviceName);
+			if (!device) {
+				// Node exists in GR ID catalog but has no routing block yet — create stub.
+				_devices.set(deviceName, { deviceName, buses: new Map() });
+				device = _devices.get(deviceName);
+			}
+			if (!_grIds.has(deviceName))
+				warnings.push(`Device "${deviceName}" has no GR ID entry.`);
+			if (device.buses.has(busPort))
+				return { ok: false, error: "Bus already exists for this node" };
+
+			device.buses.set(busPort, { busPort, receivers: new Map() });
+			return { ok: true, warnings };
+		});
+	}
+
 	function addRoute(deviceName, busPort, receiverName, msgName, canIdOverride) {
 		return _withEditor(() => {
 			const warnings = [];
@@ -1066,6 +1091,7 @@
 		addDevice,
 		deleteDevice,
 		renameDevice,
+		addBus,
 		addRoute,
 		deleteRouteEntry,
 		deleteBusBlock,

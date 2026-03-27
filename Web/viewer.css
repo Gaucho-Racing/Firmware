@@ -302,3 +302,32 @@
 	animation: highlight-fade 1.8s ease-out forwards;
 	border-radius: 4px;
 }
+
+/* ── Message expand/collapse toggle ── */
+.msg-expand-btn {
+	flex-shrink: 0;
+	color: #8b5cf6;
+	cursor: pointer;
+	font-size: 0.82rem;
+	line-height: 1;
+	padding: 0 2px;
+	transform: rotate(90deg);
+	transition: transform 0.12s, color 0.12s;
+	user-select: none;
+}
+
+.msg-expand-btn.collapsed {
+	transform: rotate(0deg);
+	color: #67728b;
+}
+
+.msg-details {
+	width: 100%;
+	overflow: hidden;
+	max-height: 600px;
+	transition: max-height 0.15s ease-out;
+}
+
+.msg-details.collapsed {
+	max-height: 0;
+}

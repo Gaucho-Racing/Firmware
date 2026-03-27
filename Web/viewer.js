@@ -438,6 +438,21 @@ window.addEventListener("DOMContentLoaded", function () {
 			name.textContent = msg.msgName;
 			nameRow.appendChild(name);
 
+			// Determine preview content: standard byte mappings or Custom CAN ID signals
+			const hasByteMappings = msg.byteMappings && msg.byteMappings.length > 0;
+			let customCanIdDef = null;
+			if (!hasByteMappings && editor && editor.isCustomCanIdMessage(msg.msgName)) {
+				customCanIdDef = window.GrcanDocument && window.GrcanDocument.getCustomCanIdDef(msg.msgName);
+			}
+			const hasPreview = hasByteMappings || (customCanIdDef && customCanIdDef.signals && customCanIdDef.signals.length > 0);
+
+			if (hasPreview) {
+				const expandBtn = document.createElement("span");
+				expandBtn.className = "msg-expand-btn collapsed";
+				expandBtn.textContent = "›";
+				nameRow.appendChild(expandBtn);
+			}
+
 			if (editing) {
 				const icons = document.createElement("span");
 				icons.className = "editor-icons";
@@ -502,42 +517,86 @@ window.addEventListener("DOMContentLoaded", function () {
 				item.appendChild(meta);
 			}
 
-			if (msg.byteMappings && msg.byteMappings.length > 0) {
+			if (hasPreview) {
+				const details = document.createElement("div");
+				details.className = "msg-details collapsed";
+
 				const bytesWrap = document.createElement("div");
 				bytesWrap.className = "msg-bytes";
-				msg.byteMappings.forEach((mapping) => {
-					const row = document.createElement("div");
-					row.className = "msg-byte-row";
 
-					const main = document.createElement("span");
-					main.className = "msg-byte-main";
-					main.textContent = `Byte ${mapping.byteLabel} -> ${mapping.fieldName}`;
-					row.appendChild(main);
+				if (hasByteMappings) {
+					msg.byteMappings.forEach((mapping) => {
+						const row = document.createElement("div");
+						row.className = "msg-byte-row";
 
-					if (mapping.dataType) {
-						const typeChip = document.createElement("span");
-						typeChip.className = "msg-type-chip";
-						typeChip.textContent = mapping.dataType;
-						row.appendChild(typeChip);
-					}
+						const main = document.createElement("span");
+						main.className = "msg-byte-main";
+						main.textContent = `Byte ${mapping.byteLabel} -> ${mapping.fieldName}`;
+						row.appendChild(main);
 
-					if (mapping.bitLabel) {
-						const bit = document.createElement("span");
-						bit.className = "msg-byte-bits";
-						bit.textContent = ` (bits ${mapping.bitLabel})`;
-						row.appendChild(bit);
-					}
+						if (mapping.dataType) {
+							const typeChip = document.createElement("span");
+							typeChip.className = "msg-type-chip";
+							typeChip.textContent = mapping.dataType;
+							row.appendChild(typeChip);
+						}
 
-					if (mapping.comment) {
-						const c = document.createElement("div");
-						c.className = "msg-byte-comment";
-						c.textContent = mapping.comment;
-						row.appendChild(c);
-					}
+						if (mapping.bitLabel) {
+							const bit = document.createElement("span");
+							bit.className = "msg-byte-bits";
+							bit.textContent = ` (bits ${mapping.bitLabel})`;
+							row.appendChild(bit);
+						}
 
-					bytesWrap.appendChild(row);
-				});
-				item.appendChild(bytesWrap);
+						if (mapping.comment) {
+							const c = document.createElement("div");
+							c.className = "msg-byte-comment";
+							c.textContent = mapping.comment;
+							row.appendChild(c);
+						}
+
+						bytesWrap.appendChild(row);
+					});
+				} else if (customCanIdDef) {
+					customCanIdDef.signals.forEach((signal) => {
+						const row = document.createElement("div");
+						row.className = "msg-byte-row";
+
+						const main = document.createElement("span");
+						main.className = "msg-byte-main";
+						main.textContent = `Signal: ${signal.name || "(unnamed)"}`;
+						row.appendChild(main);
+
+						if (signal.bitStart !== undefined && signal.bitStart !== null) {
+							const bit = document.createElement("span");
+							bit.className = "msg-byte-bits";
+							bit.textContent = ` (bits ${signal.bitStart})`;
+							row.appendChild(bit);
+						}
+
+						if (signal.comment) {
+							const c = document.createElement("div");
+							c.className = "msg-byte-comment";
+							c.textContent = signal.comment;
+							row.appendChild(c);
+						}
+
+						bytesWrap.appendChild(row);
+					});
+				}
+
+				details.appendChild(bytesWrap);
+				item.appendChild(details);
+
+				// Wire expand/collapse toggle
+				const expandBtn = nameRow.querySelector(".msg-expand-btn");
+				if (expandBtn) {
+					expandBtn.addEventListener("click", (e) => {
+						e.stopPropagation();
+						const collapsed = details.classList.toggle("collapsed");
+						expandBtn.classList.toggle("collapsed", collapsed);
+					});
+				}
 			}
 			msgList.appendChild(item);
 		});
@@ -713,7 +772,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					return;
 				}
 				const nodesOnBus = (nodesResult.nodes || []).filter(
-					(node) => (node.messages || []).length > 0,
+					(node) => node.hasBus || (node.messages || []).length > 0,
 				);
 				renderBusNodeSecondary(nodesOnBus);
 			});
@@ -732,14 +791,14 @@ window.addEventListener("DOMContentLoaded", function () {
 			if (editing) {
 				const hint = document.createElement("div");
 				hint.className = "placeholder";
-				hint.textContent = "Use Add Bus to create this node's first route.";
+				hint.textContent = "Use Add Bus to create this node's first bus.";
 				secondList.appendChild(hint);
 			}
 			if (editing && deviceName) {
 				secondList.appendChild(
 					editor.createAddBtn("Add Bus", () => {
 						editor.setNavSnapshot(navSnapshot());
-						editor.showRoutingAddForm(deviceName, null);
+						editor.showRoutingBusAddForm(deviceName);
 					}),
 				);
 			}
@@ -802,9 +861,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		if (editing && deviceName) {
 			secondList.appendChild(
-				editor.createAddBtn("Add Bus", () => {
+			editor.createAddBtn("Add Bus", () => {
 					editor.setNavSnapshot(navSnapshot());
-					editor.showRoutingAddForm(deviceName, null);
+				editor.showRoutingBusAddForm(deviceName);
 				}),
 			);
 		}
@@ -872,7 +931,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
-				if (!node.messages || node.messages.length === 0) continue;
+				if (!node.hasBus && (!node.messages || node.messages.length === 0)) continue;
 				if (!nodeMap.has(node.name)) nodeMap.set(node.name, []);
 				nodeMap.get(node.name).push({
 					busName: bus.display,
