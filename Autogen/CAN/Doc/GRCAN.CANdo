@@ -60,16 +60,7 @@ routing:
         Dash Panel:
           - msg: Debug 2.0
           - msg: Ping
-        GR Inverter 1:
-          - msg: Debug 2.0
-          - msg: Ping
-        GR Inverter 2:
-          - msg: Debug 2.0
-          - msg: Ping
-        GR Inverter 3:
-          - msg: Debug 2.0
-          - msg: Ping
-        GR Inverter 4:
+        GR Inverter:
           - msg: Debug 2.0
           - msg: Ping
         Fan Controller 1:
@@ -79,21 +70,6 @@ routing:
           - msg: Debug 2.0
           - msg: Ping
         Fan Controller 3:
-          - msg: Debug 2.0
-          - msg: Ping
-        Fan Controller 4:
-          - msg: Debug 2.0
-          - msg: Ping
-        Fan Controller 5:
-          - msg: Debug 2.0
-          - msg: Ping
-        Fan Controller 6:
-          - msg: Debug 2.0
-          - msg: Ping
-        Fan Controller 7:
-          - msg: Debug 2.0
-          - msg: Ping
-        Fan Controller 8:
           - msg: Debug 2.0
           - msg: Ping
         LV DC-DC:
@@ -108,69 +84,6 @@ routing:
           - msg: Debug FD
           - msg: Ping
         TCM:
-          - msg: Debug FD
-          - msg: Ping
-        Steering Wheel:
-          - msg: Debug FD
-          - msg: Ping
-        SAM1:
-          - msg: Debug FD
-          - msg: Ping
-        SAM2:
-          - msg: Debug FD
-          - msg: Ping
-        SAM3:
-          - msg: Debug FD
-          - msg: Ping
-        SAM4:
-          - msg: Debug FD
-          - msg: Ping
-        SAM5:
-          - msg: Debug FD
-          - msg: Ping
-        SAM6:
-          - msg: Debug FD
-          - msg: Ping
-        SAM7:
-          - msg: Debug FD
-          - msg: Ping
-        SAM8:
-          - msg: Debug FD
-          - msg: Ping
-        SAM9:
-          - msg: Debug FD
-          - msg: Ping
-        SAM10:
-          - msg: Debug FD
-          - msg: Ping
-        SAM11:
-          - msg: Debug FD
-          - msg: Ping
-        SAM12:
-          - msg: Debug FD
-          - msg: Ping
-        SAM13:
-          - msg: Debug FD
-          - msg: Ping
-        SAM14:
-          - msg: Debug FD
-          - msg: Ping
-        SAM15:
-          - msg: Debug FD
-          - msg: Ping
-        SAM16:
-          - msg: Debug FD
-          - msg: Ping
-        SAM17:
-          - msg: Debug FD
-          - msg: Ping
-        SAM18:
-          - msg: Debug FD
-          - msg: Ping
-        SAM19:
-          - msg: Debug FD
-          - msg: Ping
-        SAM20:
           - msg: Debug FD
           - msg: Ping
       CAN3:
@@ -228,16 +141,7 @@ routing:
           - msg: ACU Precharge
           - msg: ACU Config Charge Parameters
           - msg: ACU Config Operational Parameters
-        GR Inverter 1:
-          - msg: Inverter Config
-          - msg: Inverter Command
-        GR Inverter 2:
-          - msg: Inverter Config
-          - msg: Inverter Command
-        GR Inverter 3:
-          - msg: Inverter Config
-          - msg: Inverter Command
-        GR Inverter 4:
+        GR Inverter:
           - msg: Inverter Config
           - msg: Inverter Command
         Fan Controller 1:
@@ -245,16 +149,6 @@ routing:
         Fan Controller 2:
           - msg: Fan Command
         Fan Controller 3:
-          - msg: Fan Command
-        Fan Controller 4:
-          - msg: Fan Command
-        Fan Controller 5:
-          - msg: Fan Command
-        Fan Controller 6:
-          - msg: Fan Command
-        Fan Controller 7:
-          - msg: Fan Command
-        Fan Controller 8:
           - msg: Fan Command
         Dash Panel:
           - msg: Dash Config
@@ -266,9 +160,6 @@ routing:
           - msg: Ping
         ECU:
           - msg: Ping
-        Steering Wheel:
-          - msg: Steering Config
-          - msg: ECU Ping Information
         TCM:
           - msg: ECU Pedals Data
             can_id_override: 0x2020000
@@ -285,7 +176,6 @@ routing:
             can_id_override: 0x40d
           - msg: EM Temperature
             can_id_override: 0x60d
-
     Fan Controller 1:
       CAN1:
         Debugger:
@@ -310,77 +200,7 @@ routing:
         ECU:
           - msg: Ping
           - msg: Fan Status
-    Fan Controller 4:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Fan Status
-    Fan Controller 5:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Fan Status
-    Fan Controller 6:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Fan Status
-    Fan Controller 7:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Fan Status
-    Fan Controller 8:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Fan Status
-    GR Inverter 1:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Inverter Status 1
-          - msg: Inverter Status 2
-          - msg: Inverter Status 3
-    GR Inverter 2:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Inverter Status 1
-          - msg: Inverter Status 2
-          - msg: Inverter Status 3
-    GR Inverter 3:
-      CAN1:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Inverter Status 1
-          - msg: Inverter Status 2
-          - msg: Inverter Status 3
-    GR Inverter 4:
+    GR Inverter:
       CAN1:
         Debugger:
           - msg: Debug 2.0
@@ -414,105 +234,6 @@ routing:
         ECU:
           - msg: Ping
           - msg: DC-DC Status
-    SAM1:
-      CAN2:
-        Debugger:
-          - msg: Ping
-        ECU:
-          - msg: SAM Brake IR
-    SAM2:
-      CAN2:
-        Debugger:
-          - msg: Ping
-        ECU:
-          - msg: SAM Brake IR
-    SAM3:
-      CAN2:
-        Debugger:
-          - msg: Ping
-        ECU:
-          - msg: SAM Brake IR
-    SAM4:
-      CAN2:
-        Debugger:
-          - msg: Ping
-        ECU:
-          - msg: SAM Brake IR
-    SAM5:
-      CAN2:
-        Debugger:
-          - msg: Ping
-        ECU:
-          - msg: SAM IMU
-          - msg: SAM TOF
-    SAM6:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM7:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM8:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM9:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM10:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM11:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM12:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM13:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM14:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM15:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM16:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM17:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM18:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM19:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    SAM20:
-      CAN2:
-        Debugger:
-          - msg: Ping
-    Steering Wheel:
-      CAN2:
-        Debugger:
-          - msg: Debug FD
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Steering Status
     TCM:
       CAN1:
         Debugger:
@@ -520,9 +241,6 @@ routing:
       CAN2:
         Debugger:
           - msg: Ping
-        Steering Wheel:
-          - msg: TCM Status
-          - msg: TCM Resource Utilization
     DGPS:
       CAN2:
         ECU:
@@ -4431,7 +4149,6 @@ Custom CAN ID:
         # and the sign represents the direction of the torque which
         # correlates with the motor AC current. (For the correlation, please
         # refer to the motor parameters)
-
   DTI Control 2:
     CAN ID: 216
     Length: 2
@@ -4442,7 +4159,6 @@ Custom CAN ID:
         # torque relatively to the forward direction of the motor.
         # This value must be multiplied by 10 before sending, only
         # positive currents are accepted.
-
   DTI Control 3:
     CAN ID: 316
     Length: 4
@@ -4454,7 +4170,6 @@ Custom CAN ID:
         # represents the direction of the spinning. For better operation you
         # need to tune the PID of speed control.
         # Equation: ERPM = Motor RPM * number of the motor pole pairs
-
   DTI Control 4:
     CAN ID: 416
     Length: 2
@@ -4465,7 +4180,6 @@ Custom CAN ID:
         # This command is used to hold a position of the motor.
         # This feature is enabled only if encoder is used as position
         # sensor. The value has to be multiplied by 10 before sending.
-
   DTI Control 5:
     CAN ID: 516
     Length: 2
@@ -4479,7 +4193,6 @@ Custom CAN ID:
         # to know the motor limit parameters.
         # This value must be between -100 and 100 and must be
         # multiplied by 10 before sending.
-
   DTI Control 6:
     CAN ID: 616
     Length: 2
@@ -4494,7 +4207,6 @@ Custom CAN ID:
         # limit parameters.
         # This value must be between 0 and 100 and has to be multiplied
         # by 10 before sending
-
   DTI Control 7:
     CAN ID: 716
     Length: 1
@@ -4511,7 +4223,6 @@ Custom CAN ID:
       - name: "Digital Output 4"
         bit_start: 3
         # Sets the digital output 1 to HIGH (1) or LOW (0) state
-
   DTI Control 8:
     CAN ID: 816
     Length: 2
@@ -4522,7 +4233,6 @@ Custom CAN ID:
         # the AC side. With this function you are able maximize the
         # maximum torque on the motor.
         # The value must be multiplied by 10 before sending.
-
   DTI Control 9:
     CAN ID: 916
     Length: 2
@@ -4533,7 +4243,6 @@ Custom CAN ID:
         # side.
         # This value must be multiplied by 10 before sending, only
         # negative currents are accepted.
-
   DTI Control 10:
     CAN ID: A16
     Length: 2
@@ -4544,7 +4253,6 @@ Custom CAN ID:
         # the DC side. With this command the BMS can limit the
         # maximum allowable battery discharge current.
         # The value has to be multiplied by 10 before sending.
-
   DTI Control 11:
     CAN ID: B16
     Length: 2
@@ -4556,7 +4264,6 @@ Custom CAN ID:
         # maximum allowable battery charge current.
         # The value has to be multiplied by 10 before sending. Only
         # negative currents are accepted.
-
   DTI Control 12:
     CAN ID: C16
     Length: 1
@@ -4567,7 +4274,6 @@ Custom CAN ID:
         # 1: Drive allowed
         # Only 0 and 1 values are accepted. Must be sent periodically to
         # be enabled.
-
   DTI Data 1:
     CAN ID: 2016
     Length: 8
@@ -4584,7 +4290,6 @@ Custom CAN ID:
       - name: "Input Voltage"
         bit_start: 48
         # Input voltage is the DC voltage.
-
   DTI Data 2:
     CAN ID: 2116
     Length: 8
@@ -4602,7 +4307,6 @@ Custom CAN ID:
       - name: "RESERVED"
         bit_start: 32
         # Filled with FF’s. For future use.
-
   DTI Data 3:
     CAN ID: 2216
     Length: 8
@@ -4637,7 +4341,6 @@ Custom CAN ID:
       - name: "RESERVED"
         bit_start: 40
         # Filled with FF’s. For future use.
-
   DTI Data 4:
     CAN ID: 2316
     Length: 8
@@ -4648,7 +4351,6 @@ Custom CAN ID:
       - name: "FOC Iq"
         bit_start: 32
         # FOC algorithm component Id\q.
-
   DTI Data 5:
     CAN ID: 2416
     Length: 8
@@ -4743,7 +4445,6 @@ Custom CAN ID:
       - name: "CAN Version"
         bit_start: 56
         # Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
-
   IMD general:
     CAN ID: 18FF01F4
     Length: 8
@@ -4772,5 +4473,151 @@ Custom CAN ID:
       - name: "RESERVED"
         bit_start: 56
         # Filled with FF’s
+  IMD isolation info:
+    CAN ID: 18EFF4FE
+    Length: 0
+    signals: []
+  IMD voltage:
+    CAN ID: 18EFF4FE
+    Length: 0
+    signals: []
+  IMD IT-system:
+    CAN ID: 18EFF4FE
+    Length: 0
+    signals: []
+  IMD request:
+    CAN ID: 18EFF4FE
+    Length: 0
+    signals: []
+  IMD response:
+    CAN ID: 23
+    Length: 0
+    signals: []
+  Charger Data:
+    CAN ID: 18FF50E5
+    Length: 8
+    signals:
+      - name: "Output Voltage"
+        bit_start: 0
+      - name: "Output Current"
+        bit_start: 16
+      - name: "Hardware Failure"
+        bit_start: 17
+        # Bit 0: Hardware Failure: 0-Normal, 1-Error
+      - name: "OverTemp"
+        bit_start: 18
+        # Bit 1: OverTemp: 0-Normal, 1-Error
+      - name: "Input Voltage Error"
+        bit_start: 19
+        # Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage
+      - name: "Connection Error"
+        bit_start: 20
+        # Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC
+      - name: "Communication State"
+        bit_start: 21
+        # Bit 4: Communication State: 0-Normal, 1-Timeout
+      - name: "RESERVED"
+        bit_start: 24
+  Charger Control:
+    CAN ID: 1806E5F4
+    Length: 5
+    signals:
+      - name: "Set Voltage"
+        bit_start: 0
+      - name: "Set Current"
+        bit_start: 16
+      - name: "Charge Enable"
+        bit_start: 17
+        # 1: Start Charging
+        # 0: Stop Charging
+  EM Measurement:
+    CAN ID: 10d
+    Length: 8
+    signals:
+      - name: "Current"
+        bit_start: 0
+        # TS Current
+      - name: "Voltage"
+        bit_start: 32
+        # TS Voltage
+  EM Status:
+    CAN ID: 40d
+    Length: 8
+    signals:
+      - name: "Violation"
+        bit_start: 0
+        # Violation occured?
+      - name: "Logging"
+        bit_start: 1
+        # Logging enabled?
+      - name: "Energy"
+        bit_start: 8
+        # Energy used in Wh
+  EM Temperature:
+    CAN ID: 60d
+    Length: 8
+    signals:
+      - name: "Mux Signal"
+        bit_start: 0-2
+        # n = [0-6]
+      - name: "Num Sensors"
+        bit_start: 3-7
+        # Number of sensors up to 32
+      - name: "Min Temp"
+        bit_start: 8
+        # Min temp of all sensors
+      - name: "Max Temp"
+        bit_start: 16
+        # Max temp of all sensors
+      - name: "Temp 5n"
+        bit_start: 24
+        # [0,5,10,15,20,25,30] based on n above
+      - name: "Temp 5n+1"
+        bit_start: 32
+      - name: "Temp 5n+2"
+        bit_start: 40
+      - name: "Temp 5n+3"
+        bit_start: 48
+      - name: "Temp 5n+4"
+        bit_start: 56
+  EM Team Data 1:
+    CAN ID: 30d
+    Length: 8
+    signals:
+      - name: "Team Signal 1"
+        bit_start: 0
+        # Frick if I know
+      - name: "Team Signal 2"
+        bit_start: 32
+        # Frick if I know
+  EM Team Data 2:
+    CAN ID: 30e
+    Length: 8
+    signals:
+      - name: "Team Signal 3"
+        bit_start: 0
+        # Frick if I know
+      - name: "Team Signal 4"
+        bit_start: 32
+        # Frick if I know
+
+GR ID:
+
+  DTI Inverter: "0x00"
+  Energy Meter: "0x00"
+  Charger: "0x00"
+  IMD: "0x00"
+  Debugger: "0x01"
+  CCU: "0x2A"
+  ECU: "0x02"
+  ACU: "0x03"
+  TCM: "0x04"
+  Dash Panel: "0x05"
+  GR Inverter: "0x08"
+  Charging SDC: "0x0C"
+  Fan Controller 1: "0x0D"
+  Fan Controller 2: "0x0E"
+  Fan Controller 3: "0x0F"
+  LV DC-DC: "0x29"
   DGPS: "0x30"
   ALL: "0xFF"
