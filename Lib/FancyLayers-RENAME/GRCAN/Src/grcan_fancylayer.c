@@ -1,14 +1,15 @@
+#include "GRCAN_FancyLayer.h"
+
 #include <stdint.h>
+#include <string.h>
 
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
 #include "can.h"
-#include "main.h"
 #include "grcan_utils.h"
-#include "GRCAN_FancyLayer.h"
-#include <string.h>
+#include "main.h"
 
 static CANHandle *grcan_primary;
 static CANHandle *grcan_data;
@@ -34,33 +35,33 @@ GRCAN_BusConfig ecu_primary_cfg = {
     .protocol_exception = GRCAN_FEATURE_ENABLE,
 
     .bit_timing = {
-        .nominal = {
-            .prescaler = 1,
-            .sjw = 16,
-            .seg1 = 127,
-            .seg2 = 42
-        },
-        .data = {
-            .prescaler = 8,
-            .sjw = 16,
-            .seg1 = 15,
-            .seg2 = 5
-        }
+	.nominal = {
+	    .prescaler = 1,
+	    .sjw = 16,
+	    .seg1 = 127,
+	    .seg2 = 42
+	},
+	.data = {
+	    .prescaler = 8,
+	    .sjw = 16,
+	    .seg1 = 15,
+	    .seg2 = 5
+	}
     },
 
     .std_filters_nbr = 0,
     .ext_filters_nbr = 2,
 
     .rx_pin = {
-        .port = GPIOA,
-        .pin = GPIO_PIN_11,
-        .alternate_function = GPIO_AF9_FDCAN1
+	.port = GPIOA,
+	.pin = GPIO_PIN_11,
+	.alternate_function = GPIO_AF9_FDCAN1
     },
 
     .tx_pin = {
-        .port = GPIOA,
-        .pin = GPIO_PIN_12,
-        .alternate_function = GPIO_AF9_FDCAN1
+	.port = GPIOA,
+	.pin = GPIO_PIN_12,
+	.alternate_function = GPIO_AF9_FDCAN1
     },
 
     .rx_callback = Read_CAN,
@@ -72,30 +73,30 @@ GRCAN_BusConfig ecu_primary_cfg = {
 };
 
 */
-void GRCAN_Abstracted_Config(GRCAN_BusConfig *bus_config){
+void GRCAN_Abstracted_Config(GRCAN_BusConfig *bus_config)
+{
 	CANConfig cfg;
-    CANHandle *handle;
+	CANHandle *handle;
 
-    if (bus_config == NULL) {
-        LOGOMATIC("GRCAN_Abstracted_Config: NULL bus_config\n");
-        return;
-    }
+	if (bus_config == NULL) {
+		LOGOMATIC("GRCAN_Abstracted_Config: NULL bus_config\n");
+		return;
+	}
 
-    can_set_clksource(GRCAN_ToHAL_ClockSource(bus_config->clock_source));
+	can_set_clksource(GRCAN_ToHAL_ClockSource(bus_config->clock_source));
 
-    GRCAN_FillCANConfig(&cfg, bus_config);
-    GRCAN_ConfigureBus(bus_config->bus, &cfg);
+	GRCAN_FillCANConfig(&cfg, bus_config);
+	GRCAN_ConfigureBus(bus_config->bus, &cfg);
 
-    handle = GRCAN_GetHandle(bus_config->bus);
-    if (handle == NULL) {
-        LOGOMATIC("GRCAN_Abstracted_Config: bus %d handle is NULL after init\n", bus_config->bus);
-        return;
-    }
+	handle = GRCAN_GetHandle(bus_config->bus);
+	if (handle == NULL) {
+		LOGOMATIC("GRCAN_Abstracted_Config: bus %d handle is NULL after init\n", bus_config->bus);
+		return;
+	}
 
-    if (bus_config->filter_config_fn != NULL) {
-        bus_config->filter_config_fn(handle);
-    }
-
+	if (bus_config->filter_config_fn != NULL) {
+		bus_config->filter_config_fn(handle);
+	}
 }
 
 GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus)
