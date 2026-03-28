@@ -2,6 +2,7 @@
 
 #include "Logomatic.h"
 #include "gr_neopixel.h"
+#include "StateMachine.h"
 #include "main.h"
 #include "bitManipulations.h"
 
@@ -56,18 +57,18 @@ void Neopixel_ButtonWrite()
 	uint32_t COLOR_MAGICAL = (magic_color_counter++ * 27644437) & 0x00FFFFFF;
 
 	switch (dashStatus.ECUState) {
-		case 1: // GR_GLV_ON
+		case GR_GLV_ON:
 			button_colors[0] = COLOR_MAGICAL;
 			button_colors[1] = COLOR_WHITE;
 			break;
-		case 2: // GR_PRECHARGE_ENGAGED
+		case GR_PRECHARGE_ENGAGED:
 			button_colors[0] = COLOR_RED;
 			break;
-		case 3: // GR_PRECHARGE_COMPLETE
+		case GR_PRECHARGE_COMPLETE:
 			button_colors[0] = COLOR_RED;
 			button_colors[1] = COLOR_MAGICAL;
 			break;
-		case 4: // GR_DRIVE_ACTIVE
+		case GR_DRIVE_ACTIVE:
 			button_colors[0] = COLOR_RED;
 			button_colors[1] = COLOR_RED;
 			break;
