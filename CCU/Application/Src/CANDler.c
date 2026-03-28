@@ -29,11 +29,11 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			// FIXME: if bad message do a thing
 
 			if (size != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
-				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu", ID, size);
+				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				break;
 			}
 
-			LOGOMATIC("Received a BCU STATUS 2 msg");
+			LOGOMATIC("Received a BCU STATUS 2 msg\n");
 
 			// FIXME: Might need to double check we are doing this v
 			//  cast *data to whatever msg dti control 10 struct there is
@@ -44,16 +44,21 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
 			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
 			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
+
 			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->error_bits, 0);
 			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 1);
 			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 2);
 			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 3);
 			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 4);
 
+			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->error_bits, 5);
+			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->error_bits, 6);
+			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->error_bits, 7);
+
 			break;
 
 		default:
-			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu", ID, size);
+			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
 			break;
 	}
 }
@@ -170,25 +175,4 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 	can_send(primary_can, &msg);
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
-}
-
-void SendDebugReport(char *data)
-{
-	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_DEBUG_2_0) << 8) | (0xFF & GR_BCU);
-	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
-	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
-	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	msg.tx_header.DataLength = 8;
-	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-	msg.tx_header.MessageMarker = 0;
-
-	msg.data[8] = (uint8_t)*data;
-
-	LOGOMATIC("ERROR: %s\n", data);
-
-	can_send(primary_can, &msg);
-
-	LOGOMATIC("DEBUG MESSAGE SENT\n");
 }

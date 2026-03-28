@@ -11,5 +11,5 @@
 
 void setSoftwareLatch(bool close, CCU_StateData *state_data);
 bool CriticalError(const CCU_StateData *state_data);
-
+bool BCU_Warnings(const CCU_StateData *state_data);
 #endif
