@@ -61,7 +61,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define GR_NEOPIXEL_MAX_LEDS (3)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

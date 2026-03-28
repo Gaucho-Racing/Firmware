@@ -5,6 +5,11 @@
 #ifndef GR_NEOPIXEL_H
 #define GR_NEOPIXEL_H
 
+#ifndef GR_NEOPIXEL_MAX_LEDS
+#warning "GR_NEOPIXEL_MAX_LEDS is not defined: Define GR_NEOPIXEL_MAX_LEDS to the maximum number of LEDs you plan to use in your main.h to avoid this warning."
+#define GR_NEOPIXEL_MAX_LEDS (64)
+#endif
+
 /**
  * @brief Port used by Neopixel GPIO pins.
  * @note Same port must be used by all GPIO pins associated with one NeopixelConfig struct.
