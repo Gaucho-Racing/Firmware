@@ -1,10 +1,10 @@
 #include "dashutils.h"
 
 #include "Logomatic.h"
-#include "gr_neopixel.h"
 #include "StateMachine.h"
-#include "main.h"
 #include "bitManipulations.h"
+#include "gr_neopixel.h"
+#include "main.h"
 
 NeopixelContext *NeoPixel_LED_Context;
 NeopixelContext *NeoPixel_Button_Context;
