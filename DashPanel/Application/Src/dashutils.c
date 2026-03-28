@@ -4,6 +4,7 @@
 #include "StateMachine.h"
 #include "bitManipulations.h"
 #include "gr_neopixel.h"
+#include "StateMachine.h"
 #include "main.h"
 #include "bitManipulations.h"
 
