@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 
 #include "main.h"
@@ -59,26 +60,6 @@ typedef enum {
 } Neopixel_SPI_BaudRatePrescaler;
 
 /**
- * @brief Context containing all necessary information for controlling a Neopixel strip.
- * @note Acquired by calling Neopixel_Setup with a NeopixelConfig struct.
- * @note This struct is opaque to users of the library, its contents should not be accessed directly. All interactions with the Neopixel strip should be done through the provided functions in this
- * library.
- */
-typedef struct NeopixelContext NeopixelContext;
-
-/**
- * @brief Configuration struct for Neopixel control. This should be initialized and passed to Neopixel_Setup before using any other functions in this library.
- */
-typedef struct {
-	SPI_TypeDef *SPI_Instance;
-	uint32_t Neopixel_Count;
-	uint32_t MOSI_Pin;
-	Neopixel_GPIO_AlternateFunction GPIO_AlternateFunction;
-	Neopixel_GPIO_Port GPIO_Port;
-	uint32_t SPI_BaudRatePrescaler;
-} NeopixelConfig;
-
-/**
  * @brief Encodes a 24-bit GRB color into the format required for Neopixel transmission.
  */
 typedef enum {
@@ -93,13 +74,39 @@ typedef enum {
 } Neopixel_Color;
 
 /**
- * @brief Initializes the Neopixel library with the provided configuration. This must be called before any other functions in this library.
- * @note This function will allocate memory for the NeopixelContext struct. There is no corresponding de-initialization function, this is not an issue in practice since this is only expected to be
- * called once at the beginning of the program.
- * @param neopixelConfiguration A pointer to a NeopixelConfig struct containing the desired configuration for the Neopixel library.
- * @return A pointer to a NeopixelContext struct that can be used for subsequent operations on the Neopixel strip.
+ * @brief Configuration struct for Neopixel control. This should be initialized and passed to Neopixel_Setup before using any other functions in this library.
  */
-NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration);
+typedef struct {
+	SPI_TypeDef *SPI_Instance;
+	uint32_t Neopixel_Count;
+	uint32_t MOSI_Pin;
+	Neopixel_GPIO_AlternateFunction GPIO_AlternateFunction;
+	Neopixel_GPIO_Port GPIO_Port;
+	uint32_t SPI_BaudRatePrescaler;
+} NeopixelConfig;
+
+/**
+ * @brief Internal context containing all necessary information for controlling a Neopixel strip.
+ * @note Acquired by calling Neopixel_Setup with a NeopixelConfig struct.
+ * @note This struct is opaque to users of the library, its contents should not be accessed directly. All interactions with the Neopixel strip should be done through the provided functions in this
+ * library.
+ */
+typedef struct {
+	// Internal struct to hold configuration and state information, should not be accessed directly by users of the library
+	struct {
+		// Configuration provided at setup time, stored for internal use in library functions
+		NeopixelConfig config;
+		// Internal state to track whether setup was successful, used to prevent functions from being called with an uninitialized context
+		bool is_initialized;
+	} INTERNAL;
+} NeopixelContext;
+
+/**
+ * @brief Initialize GPIO and SPI for Neopixel based on neopixelConfiguration
+ * @param neopixelConfiguration A pointer to the NeopixelConfig containing all customizable parameters, must be initialized by user
+ * @return A struct containing all necessary information for controlling the Neopixel strip. This context should be passed to all other functions in this library when controlling the strip.
+ */
+NeopixelContext Neopixel_Setup(NeopixelConfig *neopixelConfiguration);
 
 /**
  * @brief Writes an array of colors to the Neopixel strip. The number of colors must match the number of Neopixels configured in Neopixel_Setup.

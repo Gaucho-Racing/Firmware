@@ -4,8 +4,8 @@
 #include "gr_neopixel.h"
 #include "main.h"
 
-NeopixelContext *NeoPixel_LED_Context;
-NeopixelContext *NeoPixel_Button_Context;
+NeopixelContext NeoPixel_LED_Context;
+NeopixelContext NeoPixel_Button_Context;
 
 static Neopixel_Color LED_colors[NUM_LEDS];
 static Neopixel_Color button_colors[NUM_BUTTONS];
@@ -43,8 +43,7 @@ void Neopixel_LEDWrite()
 	LED_colors[1] = (dashStatus.led_bits & 0x02) ? COLOR_RED : COLOR_OFF;
 	LED_colors[2] = (dashStatus.led_bits & 0x03) ? COLOR_RED : COLOR_OFF;
 
-	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
-	// LOGOMATIC("LED Flashing\n");
+	Neopixel_WriteAll(&NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
 	return;
 }
 
@@ -80,6 +79,6 @@ void Neopixel_ButtonWrite()
 			break;
 	}
 
-	Neopixel_WriteAll(NeoPixel_Button_Context, button_colors, sizeof(button_colors));
+	Neopixel_WriteAll(&NeoPixel_Button_Context, button_colors, sizeof(button_colors));
 	return;
 }

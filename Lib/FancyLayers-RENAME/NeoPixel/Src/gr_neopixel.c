@@ -1,16 +1,17 @@
 #include "gr_neopixel.h"
 
-#include <malloc.h>
 #include <stdbool.h>
 #include <stdint.h>
 
 #include "Logomatic.h"
 #include "main.h"
 
-struct NeopixelContext {
-	// Configuration provided at setup
-	NeopixelConfig config;
-};
+/**
+ * @brief Buffer to hold the encoded color data for each LED. Each LED requires 24 bytes of data.
+ * @remarks This buffer is used to store the encoded color data before it is transmitted over SPI to the Neopixel strip.
+ * @note This buffer is used to avoid allocating large amounts of memory on the stack during transmission.
+ */
+static uint8_t neopixel_color_to_bits_conversion_buffer[GR_NEOPIXEL_MAX_LEDS][24]; // Buffer to hold the encoded color data for each LED, 24 bytes per LED
 
 /**
  * @brief Internal function to block execution until the SPI peripheral is no longer busy. This is used to ensure that we don't start a new transmission before the previous one has completed.
@@ -20,7 +21,40 @@ struct NeopixelContext {
  */
 static void Neopixel_BlockWhileBusy(NeopixelContext *context)
 {
-	while (LL_SPI_IsActiveFlag_BSY(context->config.SPI_Instance)) {}
+	if (context == NULL) {
+		LOGOMATIC("Context is NULL!\n");
+		return;
+	}
+
+	if (!context->INTERNAL.is_initialized) {
+		LOGOMATIC("Context is not initialized!\n");
+		return;
+	}
+
+	while (LL_SPI_IsActiveFlag_BSY(context->INTERNAL.config.SPI_Instance)) {}
+}
+
+/**
+ * @brief Internal function to block execution until the SPI peripheral is ready to transmit data. This is used to ensure that we don't write data to the SPI data register before the peripheral is
+ * ready, which could cause data corruption.
+ * @param context A pointer to the NeopixelContext containing the SPI instance to check.
+ * @return None
+ * @warning This function will block indefinitely if the SPI peripheral gets stuck in a transmitting state. This can happen if the SPI bus is not setup correctly or if there is a hardware issue with
+ * the SPI peripheral.
+ */
+static void Neopixel_BlockWhileTransmitting(NeopixelContext *context)
+{
+	if (context == NULL) {
+		LOGOMATIC("Context is NULL!\n");
+		return;
+	}
+
+	if (!context->INTERNAL.is_initialized) {
+		LOGOMATIC("Context is not initialized!\n");
+		return;
+	}
+
+	while (!LL_SPI_IsActiveFlag_TXE(context->INTERNAL.config.SPI_Instance)) {}
 }
 
 /**
@@ -36,16 +70,21 @@ void Neopixel_LatchStrip(NeopixelContext *context)
 	Neopixel_BlockWhileBusy(context);
 }
 
-/**
- * @brief Initialize GPIO and SPI for Neopixel based on neopixelConfiguration
- * @param neopixelConfiguration A pointer to the NeopixelConfig containing all customizable parameters, must be initialized by user
- * @return A pointer to NeopixelContext, which contains the set up from neopixelConfiguration
- */
-NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
+NeopixelContext Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 {
 	if (neopixelConfiguration == NULL) {
 		LOGOMATIC("Neopixel configuration is NULL!\n");
-		return NULL;
+		return (NeopixelContext){0};
+	}
+
+	if (neopixelConfiguration->Neopixel_Count == 0) {
+		LOGOMATIC("Number of Neopixels cannot be 0!\n");
+		return (NeopixelContext){0};
+	}
+
+	if (neopixelConfiguration->Neopixel_Count > GR_NEOPIXEL_MAX_LEDS) {
+		LOGOMATIC("Number of Neopixels configured exceeds maximum supported!\n");
+		return (NeopixelContext){0};
 	}
 
 	// Enable clocks for GPIO depending on port used
@@ -68,7 +107,7 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 			LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOD);
 			break;
 		default:
-			return NULL;
+			return (NeopixelContext){0};
 	}
 
 	// Set up and initialize GPIO
@@ -111,17 +150,8 @@ NeopixelContext *Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	LL_SPI_EnableNSSPulseMgt(neopixelConfiguration->SPI_Instance);
 	LL_SPI_Enable(neopixelConfiguration->SPI_Instance);
 
-	// Config is internal, while context is what's passed into other functions
-	NeopixelContext *context = malloc(sizeof(NeopixelContext));
-
-	if (context == NULL) {
-		LOGOMATIC("Failed to allocate memory for Neopixel context!\n");
-		return NULL;
-	}
-
-	context->config = *neopixelConfiguration;
-
-	Neopixel_LatchStrip(context);
+	NeopixelContext context = {.INTERNAL = {.config = *neopixelConfiguration, .is_initialized = true}};
+	Neopixel_LatchStrip(&context);
 
 	return context;
 }
@@ -148,28 +178,35 @@ void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, u
 		LOGOMATIC("Colors array is NULL!\n");
 		return;
 	}
+
 	if (sizeofColors == 0) {
 		LOGOMATIC("Size of colors array is 0!\n");
 		return;
 	}
 
-	if (context->config.Neopixel_Count * sizeof(Neopixel_Color) != sizeofColors) {
-		LOGOMATIC("Number of colors provided does not match number of Neopixels configured!\n");
-		LOGOMATIC("Expected %lu colors, got %lu colors\n", context->config.Neopixel_Count, sizeofColors / sizeof(Neopixel_Color));
-		assert_param(context->config.NumberOfNeopixels * sizeof(Neopixel_Color) == sizeofColors);
+	if (!context->INTERNAL.is_initialized) {
+		LOGOMATIC("Context is not initialized!\n");
 		return;
 	}
 
-	uint8_t neopixelTransmission[context->config.Neopixel_Count * 24];
-	for (uint32_t i = 0; i < context->config.Neopixel_Count; i++) {
-		Neopixel_EncodeColor(&neopixelTransmission[i * 24], colors[i]);
+	if (context->INTERNAL.config.Neopixel_Count * sizeof(Neopixel_Color) != sizeofColors) {
+		LOGOMATIC("Number of colors provided does not match number of Neopixels configured!\n");
+		LOGOMATIC("\tExpected %lu colors, got %lu colors\n", context->INTERNAL.config.Neopixel_Count, sizeofColors / sizeof(Neopixel_Color));
+		assert_param(context->INTERNAL.config.NumberOfNeopixels * sizeof(Neopixel_Color) == sizeofColors);
+		return;
+	}
+
+	for (uint32_t i = 0; i < context->INTERNAL.config.Neopixel_Count; i++) {
+		Neopixel_EncodeColor(neopixel_color_to_bits_conversion_buffer[i], colors[i]);
 	}
 
 	Neopixel_BlockWhileBusy(context);
 
-	for (uint32_t i = 0; i < sizeof(neopixelTransmission); i++) {
-		while (!LL_SPI_IsActiveFlag_TXE(context->config.SPI_Instance)) {}
-		LL_SPI_TransmitData8(context->config.SPI_Instance, neopixelTransmission[i]);
+	for (uint32_t i = 0; i < context->INTERNAL.config.Neopixel_Count; i++) {
+		for (uint32_t j = 0; j < 24; j++) {
+			Neopixel_BlockWhileTransmitting(context);
+			LL_SPI_TransmitData8(context->INTERNAL.config.SPI_Instance, neopixel_color_to_bits_conversion_buffer[i][j]);
+		}
 	}
 
 	Neopixel_LatchStrip(context);
