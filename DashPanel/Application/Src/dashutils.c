@@ -11,28 +11,22 @@ NeopixelContext *NeoPixel_Button_Context;
 static Neopixel_Color LED_colors[NUM_LEDS];
 static Neopixel_Color button_colors[NUM_BUTTONS];
 
-static uint32_t i = 0;
-
 void NeoPixel_Init()
 {
-
-	// LED NeoPixel Config
 	NeopixelConfig NeoPixel_LED_Config = {.SPI_Instance = SPI2,
-					      .Neopixel_Count = NUM_LEDS, // 3 LEDs
+					      .Neopixel_Count = NUM_LEDS,
 					      .GPIO_Port = Neopixel_GPIOB,
 					      .GPIO_AlternateFunction = Neopixel_AF5,
 					      .MOSI_Pin = LL_GPIO_PIN_15,
 					      .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
+	NeoPixel_LED_Context = Neopixel_Setup(&NeoPixel_LED_Config);
 
-	// LED NeoPixel Config
 	NeopixelConfig NeoPixel_Button_Config = {.SPI_Instance = SPI3,
 						 .Neopixel_Count = NUM_BUTTONS,
 						 .GPIO_Port = Neopixel_GPIOC,
 						 .GPIO_AlternateFunction = Neopixel_AF6,
 						 .MOSI_Pin = LL_GPIO_PIN_12,
 						 .SPI_BaudRatePrescaler = Neopixel_SPI_PS64};
-
-	NeoPixel_LED_Context = Neopixel_Setup(&NeoPixel_LED_Config);
 	NeoPixel_Button_Context = Neopixel_Setup(&NeoPixel_Button_Config);
 }
 
@@ -49,17 +43,17 @@ void Neopixel_LEDWrite()
 
 void Neopixel_ButtonWrite()
 {
+	static uint32_t magic_color_counter = 0;
 
 	// 1: TS Active, 2: RTD
 	// If the button doesn't do anything, it's off
 	// If the button will turn the car back a state, it's red
 	// If the button is ready to be pressed, it's a magical color
-	// Milliseconds since boot is a seed, multiply by 71, take last 24 bits, then that's the magical color
 
 	button_colors[0] = COLOR_OFF;
 	button_colors[1] = COLOR_OFF;
 
-	uint32_t COLOR_MAGICAL = (i++ * 27644437) & 0x00FFFFFF;
+	uint32_t COLOR_MAGICAL = (magic_color_counter++ * 27644437) & 0x00FFFFFF;
 
 	switch (dashStatus.ECUState) {
 		case 1: // GR_GLV_ON
