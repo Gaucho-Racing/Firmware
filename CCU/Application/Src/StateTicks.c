@@ -10,8 +10,6 @@
 #include "Unused.h"
 #include "bitManipulations.h"
 
-// FIXME: Currently defining check to switch CCU state from idle to charging and etc.
-
 void CCU_State_Tick(CCU_StateData *state_data)
 {
 
@@ -37,8 +35,6 @@ void CCU_State_Tick(CCU_StateData *state_data)
 	};
 }
 
-// TODO: Implement State functionality
-
 void STATE_IDLE(CCU_StateData *state_data)
 {
 	bool anyErrors = 0;
@@ -53,7 +49,6 @@ void STATE_IDLE(CCU_StateData *state_data)
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 1;
 		SendPrechargeStatus(state_data);
-		SendDebugReport("No_Errors");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	}
@@ -62,6 +57,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 void STATE_CHARGING(CCU_StateData *state_data)
 {
 
+	BCU_Warnings(state_data);
 	if (CriticalError(state_data)) {
 
 		setSoftwareLatch(0, state_data);
@@ -78,7 +74,6 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		state_data->state = CCU_STATE_IDLE;
 		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		SendPrechargeStatus(state_data);
-		SendDebugReport("No_Error");
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	}
