@@ -22,22 +22,7 @@ typedef struct {
 	uint32_t timestamp;
 } GR_OLD_PING_MSG;
 
-/** ECU Status 1 */
-typedef struct {
-	/** See diagram (Byte 0) */
-	uint8_t ecu_state;
-	uint8_t ping_block[2];
-	uint8_t ping_block;
-	/** Controls the AC current limits to each of the inverters
-Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
-	uint8_t power_level_torque_map;
-	/** Hottest cell in accumulator (Byte 5) */
-	uint8_t max_cell_temp;
-	/** % charged of the Accumulator (Byte 6) */
-	uint8_t accumulator_state_of_charge;
-	/** % charged of the Low Voltage Bat (Byte 7) */
-	uint8_t glv_state_of_charge;
-} GR_OLD_ECU_STATUS_1_MSG;
+// Removed as being broken in `main` is not allowed
 
 /** ECU Status 2 */
 typedef struct {
@@ -79,21 +64,7 @@ typedef struct {
 	uint8_t glv_soc;
 } GR_OLD_ACU_STATUS_1_MSG;
 
-/** ACU Status 2 */
-typedef struct {
-	/** 20v GLV voltage (Byte 0) */
-	uint8_t _20v_voltage;
-	/** 12v supply voltage (Byte 1) */
-	uint8_t _12v_voltage;
-	/** Voltage before ACU Latch (Byte 2) */
-	uint8_t sdc_voltage;
-	/** Lowest cell voltage in accumulator (Byte 3) */
-	uint8_t min_cell_voltage;
-	/** Hottest cell in accumulator (Byte 4) */
-	uint8_t max_cell_temp;
-	uint8_t error_fault_violation_bits[2];
-	uint8_t error_fault_violation_bits;
-} GR_OLD_ACU_STATUS_2_MSG;
+// Removed as being broken in `main` is not allowed
 
 /** ACU Status 3 */
 typedef struct {
