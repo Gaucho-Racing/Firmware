@@ -5,6 +5,7 @@
 #include "bitManipulations.h"
 #include "gr_neopixel.h"
 #include "main.h"
+#include "bitManipulations.h"
 
 NeopixelContext *NeoPixel_LED_Context;
 NeopixelContext *NeoPixel_Button_Context;
