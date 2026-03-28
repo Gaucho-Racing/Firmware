@@ -150,7 +150,7 @@ int main(void)
 			if (GETBIT(dashStatus.button_flags, 1)) { // RTD
 				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
-			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons(this through the end)
+			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons (this through the end)
 				SetBitInByte(dashStatus.button_flags, 2, false);
 			}
 			if (GETBIT(dashStatus.button_flags, 3)) {
