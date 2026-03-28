@@ -3,6 +3,7 @@
 #include "Logomatic.h"
 #include "gr_neopixel.h"
 #include "main.h"
+#include "bitManipulations.h"
 
 NeopixelContext *NeoPixel_LED_Context;
 NeopixelContext *NeoPixel_Button_Context;
@@ -37,11 +38,9 @@ void NeoPixel_Init()
 
 void Neopixel_LEDWrite()
 {
-
-	// 0: BMS, 1: IMD, 2: BSPD
-	LED_colors[0] = (dashStatus.led_bits & 0x01) ? COLOR_RED : COLOR_OFF;
-	LED_colors[1] = (dashStatus.led_bits & 0x02) ? COLOR_RED : COLOR_OFF;
-	LED_colors[2] = (dashStatus.led_bits & 0x03) ? COLOR_RED : COLOR_OFF;
+	LED_colors[0] = GETBIT(dashStatus.led_bits, 0) ? COLOR_RED : COLOR_OFF;
+	LED_colors[1] = GETBIT(dashStatus.led_bits, 1) ? COLOR_RED : COLOR_OFF;
+	LED_colors[2] = GETBIT(dashStatus.led_bits, 2) ? COLOR_RED : COLOR_OFF;
 
 	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
 	// LOGOMATIC("LED Flashing\n");
