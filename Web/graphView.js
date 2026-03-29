@@ -22,8 +22,8 @@ window.GrcanGraphView = (() => {
 	let nodePanelEl = null;
 	let focusPillEl = null;
 	let _escHandler = null;
-	let _focusedNodeId = null;   // null = full graph view
-	let _savedPositions = null;  // node positions before entering focus
+	let _focusedNodeId = null; // null = full graph view
+	let _savedPositions = null; // node positions before entering focus
 	let _currentGraphData = null;
 
 	// ==================== Color Assignment ====================
@@ -31,7 +31,9 @@ window.GrcanGraphView = (() => {
 	function _assignColors(nodes) {
 		const sorted = nodes.map((n) => n.id).sort();
 		const map = new Map();
-		sorted.forEach((id, i) => map.set(id, COLOR_PALETTE[i % COLOR_PALETTE.length]));
+		sorted.forEach((id, i) =>
+			map.set(id, COLOR_PALETTE[i % COLOR_PALETTE.length]),
+		);
 		return map;
 	}
 
@@ -41,10 +43,14 @@ window.GrcanGraphView = (() => {
 		if (nodeCount <= 6) {
 			return {
 				name: "cose",
-				animate: true, animationDuration: 300,
-				nodeRepulsion: 8000, edgeElasticity: 80,
-				gravity: 0.4, numIter: 800,
-				fit: true, padding: 48,
+				animate: true,
+				animationDuration: 300,
+				nodeRepulsion: 8000,
+				edgeElasticity: 80,
+				gravity: 0.4,
+				numIter: 800,
+				fit: true,
+				padding: 48,
 			};
 		}
 		return {
@@ -52,8 +58,10 @@ window.GrcanGraphView = (() => {
 			concentric: (node) => node.degree(),
 			levelWidth: () => 2,
 			minNodeSpacing: 80,
-			fit: true, padding: 64,
-			animate: true, animationDuration: 400,
+			fit: true,
+			padding: 64,
+			animate: true,
+			animationDuration: 400,
 		};
 	}
 
@@ -63,8 +71,10 @@ window.GrcanGraphView = (() => {
 			concentric: (node) => (node.id() === centerId ? 100 : 1),
 			levelWidth: () => 1,
 			minNodeSpacing: 48,
-			fit: true, padding: 80,
-			animate: true, animationDuration: 280,
+			fit: true,
+			padding: 80,
+			animate: true,
+			animationDuration: 280,
 		};
 	}
 
@@ -140,7 +150,8 @@ window.GrcanGraphView = (() => {
 	// ==================== Focus Pill ====================
 
 	function _showFocusPill(nodeId) {
-		focusPillEl.querySelector(".graph-pill-label").textContent = `Focus: ${nodeId}`;
+		focusPillEl.querySelector(".graph-pill-label").textContent =
+			`Focus: ${nodeId}`;
 		focusPillEl.style.display = "flex";
 	}
 
@@ -283,7 +294,7 @@ window.GrcanGraphView = (() => {
 						"arrow-scale": 1.0,
 						"line-color": "#7090b0",
 						"target-arrow-color": "#7090b0",
-						opacity: 0.06,         // ← actual transparency control
+						opacity: 0.06, // ← actual transparency control
 						width: "data(width)",
 						"min-zoomed-font-size": 7,
 					},
@@ -464,20 +475,30 @@ window.GrcanGraphView = (() => {
 		}
 
 		_appendPeerSection(
-			nodePanelEl, "Sends",
+			nodePanelEl,
+			"Sends",
 			edges.filter((e) => e.source === nodeId),
-			(e) => e.target, "→",
+			(e) => e.target,
+			"→",
 		);
 		_appendPeerSection(
-			nodePanelEl, "Receives",
+			nodePanelEl,
+			"Receives",
 			edges.filter((e) => e.target === nodeId),
-			(e) => e.source, "←",
+			(e) => e.source,
+			"←",
 		);
 
 		nodePanelEl.classList.add("open");
 	}
 
-	function _appendPeerSection(container, label, peerEdges, getPeerId, arrowChar) {
+	function _appendPeerSection(
+		container,
+		label,
+		peerEdges,
+		getPeerId,
+		arrowChar,
+	) {
 		const divider = document.createElement("div");
 		divider.className = "graph-panel-divider";
 		container.appendChild(divider);
@@ -490,7 +511,8 @@ window.GrcanGraphView = (() => {
 		if (peerEdges.length === 0) {
 			const empty = document.createElement("div");
 			empty.className = "graph-panel-empty";
-			empty.textContent = label === "Sends" ? "No outgoing messages" : "No incoming messages";
+			empty.textContent =
+				label === "Sends" ? "No outgoing messages" : "No incoming messages";
 			container.appendChild(empty);
 			return;
 		}
@@ -551,11 +573,17 @@ window.GrcanGraphView = (() => {
 			btn.addEventListener("click", () => _loadBus(btn.dataset.bus));
 		});
 
-		overlayEl.querySelector(".graph-fit-btn").addEventListener("click", () => cy.fit(64));
-		overlayEl.querySelector(".graph-back-btn").addEventListener("click", _close);
-		overlayEl.querySelector(".graph-pill-close").addEventListener("click", () => {
-			_exitFocus();
-		});
+		overlayEl
+			.querySelector(".graph-fit-btn")
+			.addEventListener("click", () => cy.fit(64));
+		overlayEl
+			.querySelector(".graph-back-btn")
+			.addEventListener("click", _close);
+		overlayEl
+			.querySelector(".graph-pill-close")
+			.addEventListener("click", () => {
+				_exitFocus();
+			});
 
 		_escHandler = (e) => {
 			if (e.key === "Escape") {
@@ -570,7 +598,10 @@ window.GrcanGraphView = (() => {
 
 	function _close() {
 		if (!overlayEl) return;
-		if (cy) { cy.destroy(); cy = null; }
+		if (cy) {
+			cy.destroy();
+			cy = null;
+		}
 		overlayEl.remove();
 		overlayEl = null;
 		nodePanelEl = null;

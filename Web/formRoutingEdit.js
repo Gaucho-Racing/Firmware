@@ -12,7 +12,9 @@
 	function showRoutingEditForm(deviceName, busPort, msgName, currentReceivers) {
 		const editor = window.GrcanEditor;
 		const fu = window.FormUtils;
-		const { overlay, body, footer } = fu.createModal("Edit Route \u2014 " + msgName);
+		const { overlay, body, footer } = fu.createModal(
+			"Edit Route \u2014 " + msgName,
+		);
 		overlay.querySelector(".editor-modal").classList.add("editor-modal-wide");
 
 		// Compact context subtitle (device · bus) instead of locked row fields.
@@ -157,7 +159,10 @@
 					return;
 				}
 				items.forEach((el, idx) =>
-					el.classList.toggle("editor-suggest-item-active", idx === suggestIndex),
+					el.classList.toggle(
+						"editor-suggest-item-active",
+						idx === suggestIndex,
+					),
 				);
 			});
 
@@ -275,8 +280,10 @@
 				const ovr = r.canIdOverride.trim();
 				if (ovr && !/^0x[0-9a-fA-F]+$/.test(ovr)) {
 					const rowEls = rowsContainer.querySelectorAll(".route-edit-row");
-					const errEl = rowEls[idx] && rowEls[idx].querySelector(".route-edit-row-error");
-					if (errEl) errEl.textContent = "Hex format required (e.g. 0x1806E5F4)";
+					const errEl =
+						rowEls[idx] && rowEls[idx].querySelector(".route-edit-row-error");
+					if (errEl)
+						errEl.textContent = "Hex format required (e.g. 0x1806E5F4)";
 					ovrValid = false;
 				}
 			});
@@ -287,7 +294,10 @@
 				currentReceivers.map((r) => [r.receiverName, r.canIdOverride || null]),
 			);
 			const newMap = new Map(
-				filledRows.map((r) => [r.receiverName.trim(), r.canIdOverride.trim() || null]),
+				filledRows.map((r) => [
+					r.receiverName.trim(),
+					r.canIdOverride.trim() || null,
+				]),
 			);
 
 			let anyChange = false;
@@ -295,7 +305,12 @@
 			// Removed: in original but not in new
 			for (const [recName] of originalMap) {
 				if (!newMap.has(recName)) {
-					window.GrcanDocument.deleteRouteFromReceiver(deviceName, busPort, recName, msgName);
+					window.GrcanDocument.deleteRouteFromReceiver(
+						deviceName,
+						busPort,
+						recName,
+						msgName,
+					);
 					anyChange = true;
 				}
 			}
@@ -305,18 +320,37 @@
 				const origOvr = originalMap.get(recName);
 				if (origOvr === undefined) {
 					// New receiver
-					window.GrcanDocument.addRoute(deviceName, busPort, recName, msgName, ovr);
+					window.GrcanDocument.addRoute(
+						deviceName,
+						busPort,
+						recName,
+						msgName,
+						ovr,
+					);
 					anyChange = true;
 				} else if (origOvr !== ovr) {
 					// Same receiver, updated CAN ID override
-					window.GrcanDocument.deleteRouteFromReceiver(deviceName, busPort, recName, msgName);
-					window.GrcanDocument.addRoute(deviceName, busPort, recName, msgName, ovr);
+					window.GrcanDocument.deleteRouteFromReceiver(
+						deviceName,
+						busPort,
+						recName,
+						msgName,
+					);
+					window.GrcanDocument.addRoute(
+						deviceName,
+						busPort,
+						recName,
+						msgName,
+						ovr,
+					);
 					anyChange = true;
 				}
 			}
 
 			if (anyChange) {
-				editor.markEdited("routeMsg:" + deviceName + "|" + busPort + "|" + msgName);
+				editor.markEdited(
+					"routeMsg:" + deviceName + "|" + busPort + "|" + msgName,
+				);
 			}
 
 			fu.closeOverlay(overlay, { force: true });

@@ -31,7 +31,10 @@
 	font-family: inherit;
 	padding: 6px 12px;
 	cursor: pointer;
-	transition: background 0.12s, border-color 0.12s, color 0.12s;
+	transition:
+		background 0.12s,
+		border-color 0.12s,
+		color 0.12s;
 	white-space: nowrap;
 }
 
@@ -66,7 +69,10 @@
 	font-weight: 500;
 	padding: 5px 14px;
 	cursor: pointer;
-	transition: background 0.12s, border-color 0.12s, color 0.12s;
+	transition:
+		background 0.12s,
+		border-color 0.12s,
+		color 0.12s;
 }
 
 .graph-bus-tab:hover {
@@ -128,7 +134,10 @@
 	font-family: inherit;
 	padding: 5px 12px;
 	cursor: pointer;
-	transition: background 0.12s, border-color 0.12s, color 0.12s;
+	transition:
+		background 0.12s,
+		border-color 0.12s,
+		color 0.12s;
 }
 
 .graph-fit-btn:hover {

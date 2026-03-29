@@ -584,7 +584,11 @@
 			if (!name || !name.trim())
 				return { ok: false, error: "Device name is required" };
 			if (name.trim().toUpperCase() === "ALL")
-				return { ok: false, error: '"ALL" is a reserved broadcast receiver and cannot be used as a device name' };
+				return {
+					ok: false,
+					error:
+						'"ALL" is a reserved broadcast receiver and cannot be used as a device name',
+				};
 			if (!grId || !/^0x[0-9a-fA-F]+$/i.test(grId.trim()))
 				return {
 					ok: false,
@@ -716,7 +720,11 @@
 			const warnings = [];
 			if (!deviceName) return { ok: false, error: "Device name is required" };
 			if (deviceName.trim().toUpperCase() === "ALL")
-				return { ok: false, error: '"ALL" is a reserved broadcast receiver and cannot be used as a sender device' };
+				return {
+					ok: false,
+					error:
+						'"ALL" is a reserved broadcast receiver and cannot be used as a sender device',
+				};
 			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
 				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
 			if (!receiverName)
@@ -823,7 +831,11 @@
 		const result = [];
 		for (const receiver of bus.receivers.values()) {
 			const route = receiver.routes.find((r) => r.msgName === msgName);
-			if (route) result.push({ receiverName: receiver.receiverName, canIdOverride: route.canIdOverride });
+			if (route)
+				result.push({
+					receiverName: receiver.receiverName,
+					canIdOverride: route.canIdOverride,
+				});
 		}
 		return result;
 	}
@@ -1174,7 +1186,8 @@
 		return rec.routes.some(
 			(r) =>
 				r.msgName === msg &&
-				normalizeCanId(r.canIdOverride) === normalizeCanId(canIdOverride || null),
+				normalizeCanId(r.canIdOverride) ===
+					normalizeCanId(canIdOverride || null),
 		);
 	}
 
