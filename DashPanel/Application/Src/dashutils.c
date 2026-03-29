@@ -4,8 +4,8 @@
 #include "gr_neopixel.h"
 #include "main.h"
 
-NeopixelContext NeoPixel_LED_Context;
-NeopixelContext NeoPixel_Button_Context;
+static NeopixelContext NeoPixel_LED_Context;
+static NeopixelContext NeoPixel_Button_Context;
 
 static Neopixel_Color LED_colors[NUM_LEDS];
 static Neopixel_Color button_colors[NUM_BUTTONS];
