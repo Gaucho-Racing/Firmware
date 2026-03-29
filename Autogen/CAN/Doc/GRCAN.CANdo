@@ -6,16 +6,16 @@ Bus ID:
 
 routing:
   messages:
-    ACU:
+    BCU:
       CAN1:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: ACU Status 1
-          - msg: ACU Status 2
-          - msg: ACU Status 3
+          - msg: BCU Status 1
+          - msg: BCU Status 2
+          - msg: BCU Status 3
           - msg: DC-DC Status
       CAN2:
         Debugger:
@@ -23,18 +23,18 @@ routing:
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: ACU Cell Data 1
-          - msg: ACU Cell Data 2
-          - msg: ACU Cell Data 3
-          - msg: ACU Cell Data 4
-          - msg: ACU Cell Data 5
+          - msg: BCU Cell Data 1
+          - msg: BCU Cell Data 2
+          - msg: BCU Cell Data 3
+          - msg: BCU Cell Data 4
+          - msg: BCU Cell Data 5
       CAN3:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
     Charger:
       CAN3:
-        ACU:
+        BCU:
           - msg: Charger Data
             can_id_override: 0x18FF50E5
     Dash Panel:
@@ -51,7 +51,7 @@ routing:
           - msg: Debug 2.0
           - msg: Ping
           - msg: ECU config
-        ACU:
+        BCU:
           - msg: Debug 2.0
           - msg: Ping
         TCM:
@@ -72,15 +72,11 @@ routing:
         Fan Controller 3:
           - msg: Debug 2.0
           - msg: Ping
-        LV DC-DC:
-          - msg: Debug 2.0
-          - msg: Ping
-          - msg: Ping
       CAN2:
         ECU:
           - msg: Debug FD
           - msg: Ping
-        ACU:
+        BCU:
           - msg: Debug FD
           - msg: Ping
         TCM:
@@ -134,13 +130,10 @@ routing:
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: ECU Status 1
-          - msg: ECU Status 2
-          - msg: ECU Status 3
-        ACU:
-          - msg: ACU Precharge
-          - msg: ACU Config Charge Parameters
-          - msg: ACU Config Operational Parameters
+        BCU:
+          - msg: BCU Precharge
+          - msg: BCU Config Charge Parameters
+          - msg: BCU Config Operational Parameters
         GR Inverter:
           - msg: Inverter Config
           - msg: Inverter Command
@@ -152,8 +145,10 @@ routing:
           - msg: Fan Command
         Dash Panel:
           - msg: Dash Config
-          - msg: Dash Warning Flags
-          - msg: Specific Brake IR
+        ALL:
+          - msg: ECU Status 1
+          - msg: ECU Status 2
+          - msg: ECU Status 3
       CAN2:
         Debugger:
           - msg: Debug FD
@@ -165,7 +160,7 @@ routing:
             can_id_override: 0x2020000
     Energy Meter:
       CAN3:
-        ACU:
+        BCU:
           - msg: EM Measurement
             can_id_override: 0x10d
           - msg: EM Team Data 1
@@ -212,7 +207,7 @@ routing:
           - msg: Inverter Status 3
     IMD:
       CAN3:
-        ACU:
+        BCU:
           - msg: IMD response
             can_id_override: 0x23
           - msg: IMD isolation info
@@ -227,13 +222,6 @@ routing:
             can_id_override: 0x18EFF4FE
           - msg: IMD general
             can_id_override: 0x18FF01F4
-    LV DC-DC:
-      CAN1:
-        Debugger:
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: DC-DC Status
     TCM:
       CAN1:
         Debugger:
@@ -241,16 +229,21 @@ routing:
       CAN2:
         Debugger:
           - msg: Ping
+    CCU:
+      CAN3:
+        BCU:
+          - msg: BCU Precharge
+          - msg: Debug 2.0
     DGPS:
       CAN2:
-        ECU:
-          - msg: UVW DGPS
+        TCM:
+          - msg: GPS ALT
           - msg: GPS LAT
           - msg: GPS LON
-          - msg: GPS ALT
           - msg: GPS PX
           - msg: GPS QY
           - msg: GPS RZ
+          - msg: UVW DGPS
 
 byte order: little_endian
 
@@ -288,7 +281,7 @@ Message ID:
       # See diagram
       data type: u8
       units: Enum
-    ACU Node Status:
+    BCU Node Status:
       bit_start: 8
       # 1: OK, 0: Timeout
       data type: b
@@ -457,7 +450,7 @@ Message ID:
     MSG LENGTH: 0
     Reserved:
       bit_start: 0
-  ACU Status 1:
+  BCU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
     Accumulator Voltage:
@@ -479,7 +472,7 @@ Message ID:
     Accumulator Current:
       bit_start: 32
       # Current output of accumulator
-      data type: i16
+      data type: s16
       units: Amps
       scaled min: -327.68
       scaled max: 327.67
@@ -500,7 +493,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "20x/51"
-  ACU Status 2:
+  BCU Status 2:
     MSG ID: 0x008
     MSG LENGTH: 7
     20v Voltage:
@@ -521,7 +514,7 @@ Message ID:
       map equation: "0.1x"
     SDC Voltage:
       bit_start: 16
-      # Voltage before ACU Latch
+      # Voltage before BCU Latch
       data type: u8
       units: Volts
       scaled min: 0
@@ -605,7 +598,8 @@ Message ID:
       units: Bool
     Reserved:
       bit_start: 52-55
-  ACU Status 3:
+      data type: u4
+  BCU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
     HV Input Voltage:
@@ -640,7 +634,7 @@ Message ID:
       scaled min: 0
       scaled max: 65.535
       map equation: "0.001x"
-  ACU Precharge:
+  BCU Precharge:
     MSG ID: 0x00A
     MSG LENGTH: 1
     Set TS Active:
@@ -648,7 +642,7 @@ Message ID:
       # 0: shutdown, 1: go TS Active/Precharge
       data type: b
       units: Bool
-  ACU Config Charge Parameters:
+  BCU Config Charge Parameters:
     MSG ID: 0x00B
     MSG LENGTH: 4
     Charge Voltage:
@@ -667,7 +661,7 @@ Message ID:
       scaled min: 0
       scaled max: 6553.5
       map equation: "0.1x"
-  ACU Config Operational Parameters:
+  BCU Config Operational Parameters:
     MSG ID: 0x00C
     MSG LENGTH: 2
     Minimium Cell Voltage:
@@ -686,7 +680,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  ACU Cell Data 1:
+  BCU Cell Data 1:
     MSG ID: 0x00D
     MSG LENGTH: 64
     Cell 0 Voltage:
@@ -1201,7 +1195,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  ACU Cell Data 2:
+  BCU Cell Data 2:
     MSG ID: 0x00E
     MSG LENGTH: 64
     Cell 32 Voltage:
@@ -1716,7 +1710,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  ACU Cell Data 3:
+  BCU Cell Data 3:
     MSG ID: 0x00F
     MSG LENGTH: 64
     Cell 64 Voltage:
@@ -2231,7 +2225,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  ACU Cell Data 4:
+  BCU Cell Data 4:
     MSG ID: 0x010
     MSG LENGTH: 64
     Cell 96 Voltage:
@@ -2746,7 +2740,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  ACU Cell Data 5:
+  BCU Cell Data 5:
     MSG ID: 0x011
     MSG LENGTH: 64
     Cell 128 Voltage:
@@ -3527,39 +3521,14 @@ Message ID:
   Dash Status:
     MSG ID: 0x01A
     MSG LENGTH: 3
-    BMS LED:
+    button_flags:
       bit_start: 0
-      # State of BMS LED
-      data type: b
-      units: Bool
-    IMD LED:
-      bit_start: 1
-      # State of IMD LED
-      data type: b
-      units: Bool
-    BSPD LED:
-      bit_start: 2
-      # State of BSPD LED
-      data type: b
-      units: Bool
-    TS Button Data:
+      # TS Active = bit 0, RTD = bit 1, bits 2–7 reserved
+      data type: u8
+    led_bits:
       bit_start: 8
-      # MSB is state (1: pressed)
-      # Other 7 bits represent the time in 0.1s that it has been in that state
-      data type: s8
-      units: Seconds
-      scaled min: 0
-      scaled max: 12.7
-      map equation: "abs(x)/10"
-    RTD Button Data:
-      bit_start: 16
-      # MSB is state (1: pressed)
-      # Other 7 bits represent the time in 0.1s that it has been in that state
-      data type: s8
-      units: Seconds
-      scaled min: 0
-      scaled max: 12.7
-      map equation: "abs(x)/10"
+      # BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved
+      data type: u8
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
@@ -4608,9 +4577,9 @@ GR ID:
   Charger: "0x00"
   IMD: "0x00"
   Debugger: "0x01"
-  CCU: "0x2A"
+  CCU: "0x02"
   ECU: "0x02"
-  ACU: "0x03"
+  BCU: "0x03"
   TCM: "0x04"
   Dash Panel: "0x05"
   GR Inverter: "0x08"
@@ -4618,6 +4587,5 @@ GR ID:
   Fan Controller 1: "0x0D"
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
-  LV DC-DC: "0x29"
   DGPS: "0x30"
   ALL: "0xFF"
