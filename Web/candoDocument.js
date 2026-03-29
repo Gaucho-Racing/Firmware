@@ -30,6 +30,24 @@
 	let _byteOrderText = ""; // verbatim byte order line text
 	let _customCanIds = new Map(); // Map<name, {name, canId, length, signals[]}>
 
+	// ==================== CAN ID format utilities ====================
+	// Custom CAN ID section canonical form: bare uppercase hex, no 0x prefix (e.g. "2416").
+	// Routing can_id_override canonical form: 0x-prefixed uppercase hex (e.g. "0x2416").
+	// These two utilities are the single point of conversion between the two formats.
+
+	function normalizeCanId(raw) {
+		const s = String(raw ?? "")
+			.trim()
+			.replace(/^0x/i, "")
+			.toUpperCase();
+		return /^[0-9A-F]+$/.test(s) ? s : null;
+	}
+
+	function toCanIdOverride(bareHex) {
+		const n = normalizeCanId(bareHex);
+		return n ? "0x" + n : null;
+	}
+
 	// ==================== Parser ====================
 
 	function _parse(rawText) {
@@ -565,6 +583,8 @@
 		return _withEditor(() => {
 			if (!name || !name.trim())
 				return { ok: false, error: "Device name is required" };
+			if (name.trim().toUpperCase() === "ALL")
+				return { ok: false, error: '"ALL" is a reserved broadcast receiver and cannot be used as a device name' };
 			if (!grId || !/^0x[0-9a-fA-F]+$/i.test(grId.trim()))
 				return {
 					ok: false,
@@ -695,6 +715,8 @@
 		return _withEditor(() => {
 			const warnings = [];
 			if (!deviceName) return { ok: false, error: "Device name is required" };
+			if (deviceName.trim().toUpperCase() === "ALL")
+				return { ok: false, error: '"ALL" is a reserved broadcast receiver and cannot be used as a sender device' };
 			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
 				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
 			if (!receiverName)
@@ -726,7 +748,9 @@
 					if (
 						existRec &&
 						existRec.routes.some(
-							(r) => r.msgName === msgName && r.canIdOverride === ovr,
+							(r) =>
+								r.msgName === msgName &&
+								normalizeCanId(r.canIdOverride) === normalizeCanId(ovr),
 						)
 					) {
 						return { ok: true, warnings };
@@ -771,6 +795,37 @@
 			}
 			return { ok: true, warnings: [] };
 		});
+	}
+
+	function deleteRouteFromReceiver(deviceName, busPort, receiverName, msgName) {
+		return _withEditor(() => {
+			const device = _devices.get(deviceName);
+			if (!device) return { ok: true, warnings: [] };
+			const bus = device.buses.get(busPort);
+			if (!bus) return { ok: true, warnings: [] };
+			const receiver = bus.receivers.get(receiverName);
+			if (!receiver) return { ok: true, warnings: [] };
+			receiver.routes = receiver.routes.filter((r) => r.msgName !== msgName);
+			if (receiver.routes.length === 0) bus.receivers.delete(receiverName);
+			if (bus.receivers.size === 0) device.buses.delete(busPort);
+			return { ok: true, warnings: [] };
+		});
+	}
+
+	function getRouteReceivers(deviceName, busPort, msgName) {
+		const editor = _getEditor();
+		if (!editor) return [];
+		_parse(editor.getRawText());
+		const device = _devices.get(deviceName);
+		if (!device) return [];
+		const bus = device.buses.get(busPort);
+		if (!bus) return [];
+		const result = [];
+		for (const receiver of bus.receivers.values()) {
+			const route = receiver.routes.find((r) => r.msgName === msgName);
+			if (route) result.push({ receiverName: receiver.receiverName, canIdOverride: route.canIdOverride });
+		}
+		return result;
 	}
 
 	function deleteBusBlock(deviceName, busPort) {
@@ -891,7 +946,7 @@
 				return { ok: false, error: "Length must be a non-negative integer" };
 			_customCanIds.set(def.name, {
 				name: def.name,
-				canId: def.canId.trim(),
+				canId: normalizeCanId(def.canId),
 				length: String(parseInt(def.length, 10)),
 				signals: (def.signals || []).map((s) => ({
 					name: s.name,
@@ -936,9 +991,12 @@
 			)
 				return { ok: false, error: "Length must be a non-negative integer" };
 
+			const oldCanId = normalizeCanId(_customCanIds.get(oldName).canId);
+			const newCanId = normalizeCanId(def.canId);
+
 			const newEntry = {
 				name: def.name,
-				canId: def.canId.trim(),
+				canId: newCanId,
 				length: String(parseInt(def.length, 10)),
 				signals: (def.signals || []).map((s) => ({
 					name: s.name,
@@ -960,12 +1018,33 @@
 				}
 				_customCanIds = newMap;
 
-				// Route ref sweep.
+				// Route msgName ref sweep.
 				for (const device of _devices.values()) {
 					for (const bus of device.buses.values()) {
 						for (const receiver of bus.receivers.values()) {
 							for (const route of receiver.routes) {
 								if (route.msgName === oldName) route.msgName = def.name;
+							}
+						}
+					}
+				}
+			}
+
+			// canIdOverride sweep: update all routing overrides that matched the old
+			// CAN ID so the two sections stay in sync when the CAN ID value changes.
+			if (oldCanId !== newCanId) {
+				const oldOverride = toCanIdOverride(oldCanId);
+				const newOverride = toCanIdOverride(newCanId);
+				for (const device of _devices.values()) {
+					for (const bus of device.buses.values()) {
+						for (const receiver of bus.receivers.values()) {
+							for (const route of receiver.routes) {
+								if (
+									route.msgName === def.name &&
+									route.canIdOverride === oldOverride
+								) {
+									route.canIdOverride = newOverride;
+								}
 							}
 						}
 					}
@@ -1054,6 +1133,36 @@
 		return [..._customCanIds.keys()];
 	}
 
+	function getGraphDataForBus(busPort) {
+		_ensureParsed();
+		const nodeSet = new Set();
+		const edgeMap = new Map();
+		for (const [senderName, device] of _devices) {
+			const busBlock = device.buses.get(busPort);
+			if (!busBlock) continue;
+			nodeSet.add(senderName);
+			for (const [receiverName, receiverBlock] of busBlock.receivers) {
+				nodeSet.add(receiverName);
+				const key = `${senderName}__${receiverName}`;
+				const msgs = receiverBlock.routes.map((r) => r.msgName);
+				edgeMap.set(key, {
+					id: key,
+					source: senderName,
+					target: receiverName,
+					messages: msgs,
+					count: msgs.length,
+				});
+			}
+		}
+		const nodes = [...nodeSet].map((id) => ({
+			id,
+			label: id,
+			grId: _grIds.get(id) || null,
+		}));
+		const edges = [...edgeMap.values()];
+		return { nodes, edges };
+	}
+
 	function routeEntryExists(device, bus, receiver, msg, canIdOverride) {
 		_ensureParsed();
 		const dev = _devices.get(device);
@@ -1063,7 +1172,9 @@
 		const rec = b.receivers.get(receiver);
 		if (!rec) return false;
 		return rec.routes.some(
-			(r) => r.msgName === msg && r.canIdOverride === (canIdOverride || null),
+			(r) =>
+				r.msgName === msg &&
+				normalizeCanId(r.canIdOverride) === normalizeCanId(canIdOverride || null),
 		);
 	}
 
@@ -1094,6 +1205,7 @@
 		addBus,
 		addRoute,
 		deleteRouteEntry,
+		deleteRouteFromReceiver,
 		deleteBusBlock,
 		addMessageDef,
 		updateMessageDef,
@@ -1113,6 +1225,8 @@
 		getCustomCanIdDef,
 		getCustomCanIdNames,
 		routeEntryExists,
+		getRouteReceivers,
+		getGraphDataForBus,
 		// Test hooks
 		_parseForTest,
 		_serializeFromState,

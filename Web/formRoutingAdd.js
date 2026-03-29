@@ -111,6 +111,7 @@
 			receiverList = [...new Set(baseReceivers)].sort((a, b) =>
 				a.localeCompare(b),
 			);
+			if (!receiverList.includes("ALL")) receiverList.unshift("ALL");
 		}
 
 		const devF = fu.makeFormRow(
@@ -156,6 +157,10 @@
 			});
 		}
 		body.appendChild(busF.row);
+
+		// Eagerly populate suggestions so "ALL" and other candidates are ready
+		// before the user focuses the receiver field.
+		loadCatalogSuggestions();
 
 		const recF = fu.makeFormRow(
 			"Receiver",
@@ -214,7 +219,6 @@
 			renderReceiverSuggestions(recF.input.value);
 		});
 		recF.input.addEventListener("focus", () => {
-			if (!receiverList.length) loadCatalogSuggestions();
 			renderReceiverSuggestions(recF.input.value);
 		});
 		recF.input.addEventListener("blur", () => {
@@ -302,6 +306,7 @@
 					e.preventDefault();
 					msgF.input.value = name;
 					suggestBox.classList.add("hidden");
+					syncOverrideForMessage(name);
 				});
 				suggestBox.appendChild(item);
 			});
@@ -335,6 +340,7 @@
 				if (suggestIndex >= 0 && suggestIndex < items.length) {
 					const name = items[suggestIndex].textContent || "";
 					msgF.input.value = name;
+					syncOverrideForMessage(name);
 				}
 				suggestBox.classList.add("hidden");
 				return;
@@ -351,6 +357,36 @@
 			fu.makeInput("text", "", "0x1806E5F4 (optional)"),
 		);
 		body.appendChild(ovrF.row);
+
+		// Auto-fill the override field when the selected message is a Custom CAN ID
+		// message (whose canId is stored as bare hex, e.g. "2416"). The routing
+		// section requires 0x-prefixed format, so we prefix it here.
+		// _autoFilled tracks whether the current value was set programmatically so
+		// we can clear it when the user switches to a non-custom message, without
+		// ever clearing a value the user typed themselves.
+		ovrF.input._autoFilled = false;
+		ovrF.input.addEventListener("input", () => {
+			ovrF.input._autoFilled = false;
+		});
+
+		function syncOverrideForMessage(name) {
+			if (!name) return;
+			if (window.GrcanEditor.isCustomCanIdMessage(name)) {
+				const def =
+					window.GrcanDocument && window.GrcanDocument.getCustomCanIdDef(name);
+				if (def && def.canId && !ovrF.input.value.trim()) {
+					ovrF.input.value = "0x" + def.canId.toUpperCase();
+					ovrF.input._autoFilled = true;
+				}
+			} else if (ovrF.input._autoFilled) {
+				ovrF.input.value = "";
+				ovrF.input._autoFilled = false;
+			}
+		}
+
+		msgF.input.addEventListener("blur", () =>
+			syncOverrideForMessage(msgF.input.value.trim()),
+		);
 
 		const cancelBtn = fu.makeBtn("Cancel");
 		cancelBtn.addEventListener("click", () => fu.closeOverlay(overlay));
