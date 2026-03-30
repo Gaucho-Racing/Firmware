@@ -276,11 +276,36 @@ Message ID:
   ECU Status 1:
     MSG ID: 0x003
     MSG LENGTH: 8
-    ECU State:
+    GLV Off State:
       bit_start: 0
-      # See diagram
-      data type: u8
-      units: Enum
+      # See diagram in StateMachine.h
+      data type: b
+      units: Bool
+    GLV On State:
+      bit_start: 1
+      # See diagram in StateMachine.h
+      data type: b
+      units: Bool
+    Precharge Engaged State:
+      bit_start: 2
+      # See diagram in StateMachine.h
+      data type: b
+      units: Bool
+    Precharge Complete State:
+      bit_start: 3
+      # See diagram in StateMachine.h
+      data type: b
+      units: Bool
+    Drive Active ECU State:
+      bit_start: 3
+      # See diagram in StateMachine.h
+      data type: b
+      units: Bool
+    TS Discharge ECU State:
+      bit_start: 3
+      # See diagram in StateMachine.h
+      data type: b
+      units: Bool
     BCU Node Status:
       bit_start: 8
       # 1: OK, 0: Timeout
