@@ -35,6 +35,7 @@ include("${lib_path}/Vendor/MLX90640/combined.cmake")
 
 # Platforms
 include("${platform_path}/STM32G474xE/chip.cmake")
+include("${platform_path}/STM32G431x8/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
 include("${platform_path}/STM32H523xE/chip.cmake")
@@ -78,7 +79,7 @@ add_gr_project(STM32G474xE CCU)
 add_gr_project(STM32G474xE DashPanel)
 add_gr_project(STM32G474xE AnalogCalibration)
 add_gr_project(STM32G474xE CANine)
-add_gr_project(STM32G474xE TireTemp)
+add_gr_project(STM32G431x8 TireTemp)
 
 # Development
 add_gr_project(STM32G474xE G4ADCTESTING)
