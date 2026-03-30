@@ -128,8 +128,6 @@ routing:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
-        ECU:
-          - msg: Ping
         BCU:
           - msg: BCU Precharge
           - msg: BCU Config Charge Parameters
@@ -152,8 +150,6 @@ routing:
       CAN2:
         Debugger:
           - msg: Debug FD
-          - msg: Ping
-        ECU:
           - msg: Ping
         TCM:
           - msg: ECU Pedals Data
