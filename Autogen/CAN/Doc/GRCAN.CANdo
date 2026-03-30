@@ -297,15 +297,17 @@ Message ID:
       data type: b
       units: Bool
     Drive Active ECU State:
-      bit_start: 3
+      bit_start: 4
       # See diagram in StateMachine.h
       data type: b
       units: Bool
     TS Discharge ECU State:
-      bit_start: 3
+      bit_start: 5
       # See diagram in StateMachine.h
       data type: b
       units: Bool
+    Reserved:
+      bit_start: 6-7
     BCU Node Status:
       bit_start: 8
       # 1: OK, 0: Timeout
