@@ -1,8 +1,8 @@
 Bus ID:
-  Testing: 0   # Testing Bus
-  Primary: 1   # Primary Bus
-  Data: 2      # Data Bus
-  Charger: 3  # Charger Bus
+  Testing: 0
+  Primary: 1
+  Data: 2
+  Charger: 3
 
 routing:
   messages:
@@ -519,7 +519,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-    Over Temp Error:
+    status_flags:
       bit_start: 40
       comment: Over temp (>60c)
       data type: b
