@@ -112,20 +112,20 @@ int main(void)
   MX_I2C1_Init();
   MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
-  
+
   // HAL_FDCAN_Start(&hfdcan1);
   // HAL_FDCAN_Start(&hfdcan2);
   // HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
   // HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
-  
+
   // static uint16_t eeMLX90640[832];
   // static paramsMLX90640 mlx90640;
   // #define MLX90640_ADDRESS 0x33<<1
   // MLX90640_DumpEE(MLX90640_ADDRESS, eeMLX90640);
-  
+
   // MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
-  
+
   // MLX90640_SetRefreshRate(MLX90640_ADDRESS, 0x05);
 
   // MLX90640_SynchFrame(MLX90640_ADDRESS);
@@ -134,21 +134,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_L_XSHUT_Pin
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_L_XSHUT_Pin
+  // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
   HAL_Delay(100); // wait for 5ms to reset the device
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); //TOF_L_XSHUT_Pin
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); //TOF_L_XSHUT_Pin
+  // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
   HAL_Delay(100); // wait for 5ms to power up the device
 
   uint16_t status = 0;
-  
+
   uint16_t sensor_id = 0;
   VL53L4ED_ResultsData_t results;
   uint8_t p_data_ready;
 
   int TOF_ID = 0x52;
-  HAL_GPIO_TogglePin(GPIOF, GPIO_PIN_1);
+  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
   status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
   printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
   status = VL53L4ED_StartRanging(TOF_ID);
@@ -156,7 +156,7 @@ int main(void)
   status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
   while (1)
-  { 
+  {
     // HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
     // HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
     /* USER CODE END WHILE */
@@ -179,8 +179,6 @@ int main(void)
         __disable_irq();
         __enable_irq();
       }
-    
-    
   }
   /* USER CODE END 3 */
 }
