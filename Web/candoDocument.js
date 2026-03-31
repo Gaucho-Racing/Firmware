@@ -385,7 +385,9 @@
 				if (field.comment) {
 					if (field.comment.includes("\n")) {
 						out += "      comment:\n";
-						for (const line of field.comment.split("\n")) {
+						const lines = field.comment.split("\n");
+						if (lines[lines.length - 1] === "") lines.pop();
+						for (const line of lines) {
 							out += "        " + line + "\n";
 						}
 					} else {
@@ -423,7 +425,9 @@
 					if (sig.comment) {
 						if (sig.comment.includes("\n")) {
 							out += "        comment:\n";
-							for (const line of sig.comment.split("\n")) {
+							const lines = sig.comment.split("\n");
+							if (lines[lines.length - 1] === "") lines.pop();
+							for (const line of lines) {
 								out += "          " + line + "\n";
 							}
 						} else {

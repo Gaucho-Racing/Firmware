@@ -153,7 +153,6 @@ routing:
           - msg: Ping
         TCM:
           - msg: ECU Pedals Data
-          - msg: ECU Performance
     Energy Meter:
       CAN3:
         BCU:
@@ -343,7 +342,9 @@ Message ID:
       bit_start: 15
     Power Level:
       bit_start: 16
-      comment: Controls the AC current limits to each of the inverters
+      comment:
+        Controls the AC current limits to each of the inverters
+        Discrete Mapping, actual values TBD (16 possible values)
       data type: u4
     Torque Map:
       bit_start: 20
@@ -3505,7 +3506,7 @@ Message ID:
     MSG LENGTH: 3
     button_flags:
       bit_start: 0
-      comment: TS Active = bit 0, RTD = bit 1, Button 1 = bit 2, Button 2 = bit 3, Button 3 = bit  4, Button 4 = bit 5, bit 6-7 reserved
+      comment: TS Active = bit 0, RTD = bit 1, bits 2–7 reserved
       data type: u8
     led_bits:
       bit_start: 8
@@ -3962,7 +3963,7 @@ Message ID:
       units: Bool map
   ECU Pedals Data:
     MSG ID: 0x02E
-    MSG LENGTH: 12
+    MSG LENGTH: 10
     APPS1_SIGNAL:
       bit_start: 0
       comment: APPS 1 Signal
@@ -3996,17 +3997,13 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     BRAKE_R_SIGNAL:
-      bit_start: 64
+      bit_start: 48
       comment: Brake Pressure Signal
       data type: u16
       units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    STEERING_ANGLE:
-      bit_start: 80
-      data type: u16
-      units: percentage
   GPS LAT:
     MSG ID: 0x031
     MSG LENGTH: 8
@@ -4088,14 +4085,6 @@ Message ID:
       comment: W
       data type: i16
       map equation: "x/100"
-  ECU Performance:
-    MSG ID: 0x123
-    MSG LENGTH: 4
-    Elapsed Cycles:
-      bit_start: 0
-      comment: Represents total number of clock cycles in main excluding delay
-      data type: u32
-      units: Clock Cycles
 
 Custom CAN ID:
   DTI Control 1:
@@ -4104,42 +4093,78 @@ Custom CAN ID:
     signals:
       - name: "Target AC Current"
         bit_start: 0
-        comment: This command sets the target motor AC current (peak, not
+        comment:
+          This command sets the target motor AC current (peak, not
+          RMS). When the controller receives this message, it
+          automatically switches to current control mode.
+          This value must not be above the limits of the inverter and must
+          be multiplied by 10 before sending. This is a signed parameter,
+          and the sign represents the direction of the torque which
+          correlates with the motor AC current. (For the correlation, please
+          refer to the motor parameters)
   DTI Control 2:
     CAN ID: 216
     Length: 2
     signals:
       - name: "Target Brake Current"
         bit_start: 0
-        comment: Targets the brake current of the motor. It will result negative
+        comment:
+          Targets the brake current of the motor. It will result negative
+          torque relatively to the forward direction of the motor.
+          This value must be multiplied by 10 before sending, only
+          positive currents are accepted.
   DTI Control 3:
     CAN ID: 316
     Length: 4
     signals:
       - name: "Target ERPM"
         bit_start: 0
-        comment: This command enables the speed control of the motor with a
+        comment:
+          This command enables the speed control of the motor with a
+          target ERPM. This is a signed parameter, and the sign
+          represents the direction of the spinning. For better operation you
+          need to tune the PID of speed control.
+          Equation: ERPM = Motor RPM * number of the motor pole pairs
   DTI Control 4:
     CAN ID: 416
     Length: 2
     signals:
       - name: "Target Position"
         bit_start: 0
-        comment: This value targets the desired position of the motor in degrees.
+        comment:
+          This value targets the desired position of the motor in degrees.
+          This command is used to hold a position of the motor.
+          This feature is enabled only if encoder is used as position
+          sensor. The value has to be multiplied by 10 before sending.
   DTI Control 5:
     CAN ID: 516
     Length: 2
     signals:
       - name: "R-AC Current"
         bit_start: 0
-        comment: This command sets a relative AC current to the minimum and
+        comment:
+          This command sets a relative AC current to the minimum and
+          maximum limits set by configuration. This achieves the same
+          function as the “Set AC current” command. Gives you a freedom
+          to send values between -100,0% and 100,0%. You do not need
+          to know the motor limit parameters.
+          This value must be between -100 and 100 and must be
+          multiplied by 10 before sending.
   DTI Control 6:
     CAN ID: 616
     Length: 2
     signals:
       - name: "R-AC Brake Current"
         bit_start: 0
-        comment: Targets the relative brake current of the motor. It will result
+        comment:
+          Targets the relative brake current of the motor. It will result
+          negative torque relatively to the forward direction of the motor.
+          This value must be between 0 and 100 and must be multiplied
+          by 10 before sending Gives you a freedom to send values
+          between 0% and 100,0%. You do not need to know the motor
+          limit parameters.
+          This value must be between 0 and 100 and has to be multiplied
+          by 10 before sending
   DTI Control 7:
     CAN ID: 716
     Length: 1
@@ -4162,45 +4187,71 @@ Custom CAN ID:
     signals:
       - name: "Max AC Current"
         bit_start: 0
-        comment: This value determines the maximum allowable drive current on
+        comment:
+          This value determines the maximum allowable drive current on
+          the AC side. With this function you are able maximize the
+          maximum torque on the motor.
+          The value must be multiplied by 10 before sending.
   DTI Control 9:
     CAN ID: 916
     Length: 2
     signals:
       - name: "Max Brake AC Current"
         bit_start: 0
-        comment: This value sets the maximum allowable brake current on the AC
+        comment:
+          This value sets the maximum allowable brake current on the AC
+          side.
+          This value must be multiplied by 10 before sending, only
+          negative currents are accepted.
   DTI Control 10:
     CAN ID: A16
     Length: 2
     signals:
       - name: "Max DC Current"
         bit_start: 0
-        comment: This value determines the maximum allowable drive current on
+        comment:
+          This value determines the maximum allowable drive current on
+          the DC side. With this command the BMS can limit the
+          maximum allowable battery discharge current.
+          The value has to be multiplied by 10 before sending.
   DTI Control 11:
     CAN ID: B16
     Length: 2
     signals:
       - name: "Max Brake DC Current"
         bit_start: 0
-        comment: This value determines the maximum allowable brake current
+        comment:
+          This value determines the maximum allowable brake current
+          on the DC side. With this command the BMS can limit the
+          maximum allowable battery charge current.
+          The value has to be multiplied by 10 before sending. Only
+          negative currents are accepted.
   DTI Control 12:
     CAN ID: C16
     Length: 1
     signals:
       - name: "Drive Enable"
         bit_start: 0
-        comment: 0: Drive not allowed
+        comment:
+          0: Drive not allowed
+          1: Drive allowed
+          Only 0 and 1 values are accepted. Must be sent periodically to
+          be enabled.
   DTI Data 1:
     CAN ID: 2016
     Length: 8
     signals:
       - name: "ERPM"
         bit_start: 0
-        comment: Electrical RPM
+        comment:
+          Electrical RPM
+          Equation: ERPM = Motor RPM * number of the motor pole pairs.
       - name: "Duty Cycle"
         bit_start: 32
-        comment: The controller duty cycle. The sign of this value will represent
+        comment:
+          The controller duty cycle. The sign of this value will represent
+          whether the motor is running(positive) current or regenerating
+          (negative) current.
       - name: "Input Voltage"
         bit_start: 48
         comment: Input voltage is the DC voltage.
@@ -4210,10 +4261,16 @@ Custom CAN ID:
     signals:
       - name: "AC Current"
         bit_start: 0
-        comment: The motor current. The sign of this value represents whether the
+        comment:
+          The motor current. The sign of this value represents whether the
+          motor is running(positive) current or regenerating (negative)
+          current.
       - name: "DC Current"
         bit_start: 16
-        comment: DC Current: Current on DC side. The sign of this value
+        comment:
+          DC Current: Current on DC side. The sign of this value
+          represents whether the motor is running(positive) current or
+          regenerating (negative) current.
       - name: "RESERVED"
         bit_start: 32
         comment: Filled with FF’s. For future use.
@@ -4229,7 +4286,26 @@ Custom CAN ID:
         comment: Temperature of the motor measured by the inverter
       - name: "Fault Codes"
         bit_start: 32
-        comment: 0x00 : NO FAULTS
+        comment:
+          0x00 : NO FAULTS
+          0x01 : Overvoltage - The input voltage is higher than the set
+          maximum.
+          0x02 : Undervoltage - The input voltage is lower than the set
+          minimum.
+          0x03 : DRV - Transistor or transistor drive error
+          0x04 : ABS. Overcurrent - The AC current is higher than the
+          set absolute maximum current.
+          0x05 : CTLR Overtemp. - The controller temperature is higher
+          than the set maximum.
+          0x06 : Motor Overtemp. - The motor temperature is higher than
+          the set maximum.
+          0x07 : Sensor wire fault - Something went wrong with the
+          sensor differential signals.
+          0x08 : Sensor general fault - An error occurred while
+          processing the sensor signals
+          0x09 : CAN Command error - CAN message received contains
+          parameter out of boundaries
+          0x0A : Analog input error – Redundant output out of range
       - name: "RESERVED"
         bit_start: 40
         comment: Filled with FF’s. For future use.
@@ -4255,7 +4331,9 @@ Custom CAN ID:
         comment: Brake signal derived from analog inputs or CAN2
       - name: "Digital input 1"
         bit_start: 16
-        comment: 1: Digital input is active
+        comment:
+          1: Digital input is active
+          0: Digital input is inactive
       - name: "Digital input 2"
         bit_start: 17
       - name: "Digital input 3"
@@ -4264,7 +4342,9 @@ Custom CAN ID:
         bit_start: 19
       - name: "Digital output 1"
         bit_start: 20
-        comment: 1: Digital output is active
+        comment:
+          1: Digital output is active
+          0: Digital output is inactive
       - name: "Digital output 2"
         bit_start: 21
       - name: "Digital output 3"
@@ -4273,40 +4353,71 @@ Custom CAN ID:
         bit_start: 23
       - name: "Drive Enable"
         bit_start: 24
-        comment: 1: Drive enabled
+        comment:
+          1: Drive enabled
+          0: Drive disabled
+          Drive can be enabled/disbled by the digital input or/and via
+          CAN2 interface
       - name: "Capacitor temp limit"
         bit_start: 32
-        comment: 1: Capacitor temperature limit active
+        comment:
+          1: Capacitor temperature limit active
+          0: Capacitor temperature limit inactive
+          The inverter can limit the output power to not to overheat the
+          internal capacitors. (only valid HW version 3.6 or newer)
       - name: "DC current limit"
         bit_start: 33
-        comment: 1: DC current limit active
+        comment:
+          1: DC current limit active
+          0: DC current limit inactive
       - name: "Drive enable limit"
         bit_start: 34
-        comment: 1: Drive enable limit active
+        comment:
+          1: Drive enable limit active
+          0: Drive enable limit inactive
+          Indicates whether the drive enable limitation is active or inactive.
+          Used for software development purposes. For true indication
+          of the drive state please use byte 3, bit 24 of this message.
       - name: "IGBT acceleration temperature limit"
         bit_start: 35
-        comment: 1: IGBT acceleration limit active
+        comment:
+          1: IGBT acceleration limit active
+          0: IGBT acceleration limit inactive
       - name: "IGBT temperature limit"
         bit_start: 36
-        comment: 1: IGBT temperature limit active
+        comment:
+          1: IGBT temperature limit active
+          0: IGBT temperature limit inactive
       - name: "Input voltage limit"
         bit_start: 37
-        comment: 1: Input voltage limit active
+        comment:
+          1: Input voltage limit active
+          0: Input voltage limit inactive
       - name: "Motor acceleration temperature limit"
         bit_start: 38
-        comment: 1: Motor acceleration temperature limit active
+        comment:
+          1: Motor acceleration temperature limit active
+          0: Motor acceleration temperature limit inactive
       - name: "Motor temperature limit"
         bit_start: 39
-        comment: 1: Motor temperature limit active
+        comment:
+          1: Motor temperature limit active
+          0: Motor temperature limit inactive
       - name: "RPM min limit"
         bit_start: 40
-        comment: 1: RPM min limit active
+        comment:
+          1: RPM min limit active
+          0: RPM min limit inactive
       - name: "RPM max limit"
         bit_start: 41
-        comment: 1: RPM max limit active
+        comment:
+          1: RPM max limit active
+          0: RPM max limit inactive
       - name: "Power limit"
         bit_start: 42
-        comment: 1: Power limit by configuration active
+        comment:
+          1: Power limit by configuration active
+          0: Power limit by configuration inactive
       - name: "RESERVED"
         bit_start: 43
         comment: Set to 0.
@@ -4328,7 +4439,18 @@ Custom CAN ID:
         bit_start: 24
       - name: "Status"
         bit_start: 32
-        comment: Bit 0: true = Device error active
+        comment:
+          Bit 0: true = Device error active
+          Bit 1: true = HV_pos connection failure
+          Bit 2: true = HV_neg connection failure
+          Bit 3: true = Earth connection failure
+          Bit 4: true = Iso Alarm (iso value below threshold error)
+          Bit 5: true = Iso Warning (iso value below threshold warning)
+          Bit 6: true = Iso Outdated (value „Time elapsed since lst measurement“ > = „measurement timeout“)
+          Bit 7: true = Unbalance Alarm (unbalance value below threshold)
+          Bit 8: true = Undervoltage Alarm
+          Bit 9: true = Unsafe to Start
+          Bit 10: true = Earthlift open
       - name: "Activity"
         bit_start: 48
       - name: "RESERVED"
@@ -4389,7 +4511,9 @@ Custom CAN ID:
         bit_start: 16
       - name: "Charge Enable"
         bit_start: 17
-        comment: 1: Start Charging
+        comment:
+          1: Start Charging
+          0: Stop Charging
   EM Measurement:
     CAN ID: 10d
     Length: 8

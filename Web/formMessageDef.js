@@ -196,7 +196,7 @@
 			botRow.className = "editor-field-grid editor-field-grid-5";
 			const fComment = fu.makeFormRow(
 				"Comment",
-				fu.makeInput("text", field?.comment || "", "Description"),
+				fu.makeInput("textarea", field?.comment || "", "Description"),
 			);
 			const fUnits = fu.makeFormRow(
 				"Units",
