@@ -1,25 +1,25 @@
 /**
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 
 #include "platform.h"
-#include "main.h"
+
 #include "i2c.h"
+#include "main.h"
 
 extern I2C_HandleTypeDef hi2c1;
 
-
 /*
 Im legit just using the example stm provides but instead of filling everything out im only copying the platform.c implemintation
-for the vl53l4ed sensor. 
+for the vl53l4ed sensor.
 
 
 */
@@ -34,8 +34,7 @@ uint8_t VL53L4ED_RdDWord(Dev_t dev, uint16_t RegisterAdress, uint32_t *value)
 	data_write[1] = RegisterAdress & 0xFF;
 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 2, 100);
 	status = HAL_I2C_Master_Receive(&hi2c1, dev, data_read, 4, 100);
-	*value =  ((data_read[0] << 24) | (data_read[1]<<16) |
-			(data_read[2]<<8)| (data_read[3]));
+	*value = ((data_read[0] << 24) | (data_read[1] << 16) | (data_read[2] << 8) | (data_read[3]));
 	return status;
 }
 

@@ -1,14 +1,14 @@
 /**
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 
 #ifndef VL53L4ED_API_H_
 #define VL53L4ED_API_H_
@@ -19,10 +19,10 @@
  *  @brief Driver version
  */
 
-#define VL53L4ED_IMPLEMENTATION_VER_MAJOR       1
-#define VL53L4ED_IMPLEMENTATION_VER_MINOR       1
-#define VL53L4ED_IMPLEMENTATION_VER_BUILD       2
-#define VL53L4ED_IMPLEMENTATION_VER_REVISION  	0
+#define VL53L4ED_IMPLEMENTATION_VER_MAJOR 1
+#define VL53L4ED_IMPLEMENTATION_VER_MINOR 1
+#define VL53L4ED_IMPLEMENTATION_VER_BUILD 2
+#define VL53L4ED_IMPLEMENTATION_VER_REVISION 0
 
 /**
  *  @brief Driver error type
@@ -30,58 +30,56 @@
 
 typedef uint8_t VL53L4ED_Error;
 
-#define VL53L4ED_ERROR_NONE					((uint8_t)0U)
-#define VL53L4ED_ERROR_XTALK_FAILED			((uint8_t)253U)
-#define VL53L4ED_ERROR_INVALID_ARGUMENT		((uint8_t)254U)
-#define VL53L4ED_ERROR_TIMEOUT				((uint8_t)255U)
-
+#define VL53L4ED_ERROR_NONE ((uint8_t)0U)
+#define VL53L4ED_ERROR_XTALK_FAILED ((uint8_t)253U)
+#define VL53L4ED_ERROR_INVALID_ARGUMENT ((uint8_t)254U)
+#define VL53L4ED_ERROR_TIMEOUT ((uint8_t)255U)
 
 /**
  *  @brief Inner Macro for API. Not for user, only for development.
  */
 
 #define VL53L4ED_SOFT_RESET     ((uint16_t)0x0000))
-#define VL53L4ED_I2C_SLAVE__DEVICE_ADDRESS      ((uint16_t)0x0001)
-#define VL53L4ED_VHV_CONFIG__TIMEOUT_MACROP_LOOP_BOUND  ((uint16_t)0x0008)
+#define VL53L4ED_I2C_SLAVE__DEVICE_ADDRESS ((uint16_t)0x0001)
+#define VL53L4ED_VHV_CONFIG__TIMEOUT_MACROP_LOOP_BOUND ((uint16_t)0x0008)
 #define VL53L4ED_XTALK_PLANE_OFFSET_KCPS ((uint16_t)0x0016)
-#define VL53L4ED_XTALK_X_PLANE_GRADIENT_KCPS     ((uint16_t)0x0018)
-#define VL53L4ED_XTALK_Y_PLANE_GRADIENT_KCPS     ((uint16_t)0x001A)
-#define VL53L4ED_RANGE_OFFSET_MM     ((uint16_t)0x001E)
-#define VL53L4ED_INNER_OFFSET_MM     ((uint16_t)0x0020)
-#define VL53L4ED_OUTER_OFFSET_MM     ((uint16_t)0x0022)
-#define VL53L4ED_GPIO_HV_MUX__CTRL      ((uint16_t)0x0030)
-#define VL53L4ED_GPIO__TIO_HV_STATUS    ((uint16_t)0x0031)
-#define VL53L4ED_SYSTEM__INTERRUPT  ((uint16_t)0x0046)
-#define VL53L4ED_RANGE_CONFIG_A     ((uint16_t)0x005E)
-#define VL53L4ED_RANGE_CONFIG_B      ((uint16_t)0x0061)
-#define VL53L4ED_RANGE_CONFIG__SIGMA_THRESH     ((uint16_t)0x0064)
-#define VL53L4ED_MIN_COUNT_RATE_RTN_LIMIT_MCPS    ((uint16_t)0x0066)
+#define VL53L4ED_XTALK_X_PLANE_GRADIENT_KCPS ((uint16_t)0x0018)
+#define VL53L4ED_XTALK_Y_PLANE_GRADIENT_KCPS ((uint16_t)0x001A)
+#define VL53L4ED_RANGE_OFFSET_MM ((uint16_t)0x001E)
+#define VL53L4ED_INNER_OFFSET_MM ((uint16_t)0x0020)
+#define VL53L4ED_OUTER_OFFSET_MM ((uint16_t)0x0022)
+#define VL53L4ED_GPIO_HV_MUX__CTRL ((uint16_t)0x0030)
+#define VL53L4ED_GPIO__TIO_HV_STATUS ((uint16_t)0x0031)
+#define VL53L4ED_SYSTEM__INTERRUPT ((uint16_t)0x0046)
+#define VL53L4ED_RANGE_CONFIG_A ((uint16_t)0x005E)
+#define VL53L4ED_RANGE_CONFIG_B ((uint16_t)0x0061)
+#define VL53L4ED_RANGE_CONFIG__SIGMA_THRESH ((uint16_t)0x0064)
+#define VL53L4ED_MIN_COUNT_RATE_RTN_LIMIT_MCPS ((uint16_t)0x0066)
 #define VL53L4ED_INTERMEASUREMENT_MS ((uint16_t)0x006C)
-#define VL53L4ED_THRESH_HIGH    ((uint16_t)0x0072)
-#define VL53L4ED_THRESH_LOW     ((uint16_t)0x0074)
-#define VL53L4ED_SYSTEM__INTERRUPT_CLEAR        ((uint16_t)0x0086)
-#define VL53L4ED_SYSTEM_START     ((uint16_t)0x0087)
-#define VL53L4ED_RESULT__RANGE_STATUS   ((uint16_t)0x0089)
-#define VL53L4ED_RESULT__SPAD_NB   ((uint16_t)0x008C)
-#define VL53L4ED_RESULT__SIGNAL_RATE   ((uint16_t)0x008E)
-#define VL53L4ED_RESULT__AMBIENT_RATE   ((uint16_t)0x0090)
-#define VL53L4ED_RESULT__SIGMA   ((uint16_t)0x0092)
-#define VL53L4ED_RESULT__DISTANCE   ((uint16_t)0x0096)
+#define VL53L4ED_THRESH_HIGH ((uint16_t)0x0072)
+#define VL53L4ED_THRESH_LOW ((uint16_t)0x0074)
+#define VL53L4ED_SYSTEM__INTERRUPT_CLEAR ((uint16_t)0x0086)
+#define VL53L4ED_SYSTEM_START ((uint16_t)0x0087)
+#define VL53L4ED_RESULT__RANGE_STATUS ((uint16_t)0x0089)
+#define VL53L4ED_RESULT__SPAD_NB ((uint16_t)0x008C)
+#define VL53L4ED_RESULT__SIGNAL_RATE ((uint16_t)0x008E)
+#define VL53L4ED_RESULT__AMBIENT_RATE ((uint16_t)0x0090)
+#define VL53L4ED_RESULT__SIGMA ((uint16_t)0x0092)
+#define VL53L4ED_RESULT__DISTANCE ((uint16_t)0x0096)
 
-
-#define VL53L4ED_RESULT__OSC_CALIBRATE_VAL      ((uint16_t)0x00DE)
-#define VL53L4ED_FIRMWARE__SYSTEM_STATUS        ((uint16_t)0x00E5)
-#define VL53L4ED_IDENTIFICATION__MODEL_ID       ((uint16_t)0x010F)
+#define VL53L4ED_RESULT__OSC_CALIBRATE_VAL ((uint16_t)0x00DE)
+#define VL53L4ED_FIRMWARE__SYSTEM_STATUS ((uint16_t)0x00E5)
+#define VL53L4ED_IDENTIFICATION__MODEL_ID ((uint16_t)0x010F)
 
 /**
  *  @brief defines Software Version
  */
 
 typedef struct {
-	uint8_t      major;    /*!< major number */
-	uint8_t      minor;    /*!< minor number */
-	uint8_t      build;    /*!< build number */
-	uint32_t     revision; /*!< revision number */
+	uint8_t major;	   /*!< major number */
+	uint8_t minor;	   /*!< minor number */
+	uint8_t build;	   /*!< build number */
+	uint32_t revision; /*!< revision number */
 } VL53L4ED_Version_t;
 
 /**
@@ -115,9 +113,7 @@ typedef struct {
  * @return (VL53L4ED_ERROR) status : 0 if SW version is OK.
  */
 
-VL53L4ED_Error VL53L4ED_GetSWVersion(
-		VL53L4ED_Version_t *pVersion);
-
+VL53L4ED_Error VL53L4ED_GetSWVersion(VL53L4ED_Version_t *pVersion);
 
 /**
  * @brief This function sets a new I2C address to a sensor. It can be used for
@@ -128,9 +124,7 @@ VL53L4ED_Error VL53L4ED_GetSWVersion(
  * programmed.
  */
 
-VL53L4ED_Error VL53L4ED_SetI2CAddress(
-		Dev_t dev,
-		uint8_t new_address);
+VL53L4ED_Error VL53L4ED_SetI2CAddress(Dev_t dev, uint8_t new_address);
 
 /**
  * @brief This function is used to get the sensor id of VL53L4ED. The sensor id
@@ -140,9 +134,7 @@ VL53L4ED_Error VL53L4ED_SetI2CAddress(
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_GetSensorId(
-		Dev_t dev,
-		uint16_t *p_id);
+VL53L4ED_Error VL53L4ED_GetSensorId(Dev_t dev, uint16_t *p_id);
 
 /**
  * @brief This function is used to initialize the sensor.
@@ -150,8 +142,7 @@ VL53L4ED_Error VL53L4ED_GetSensorId(
  * @return (VL53L4ED_ERROR) status : 0 if init is OK.
  */
 
-VL53L4ED_Error VL53L4ED_SensorInit(
-		Dev_t dev);
+VL53L4ED_Error VL53L4ED_SensorInit(Dev_t dev);
 
 /**
  * @brief This function clears the interrupt. It needs to be called after a
@@ -160,8 +151,7 @@ VL53L4ED_Error VL53L4ED_SensorInit(
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_ClearInterrupt(
-		Dev_t dev);
+VL53L4ED_Error VL53L4ED_ClearInterrupt(Dev_t dev);
 
 /**
  * @brief This function starts a ranging session. The ranging operation is
@@ -171,8 +161,7 @@ VL53L4ED_Error VL53L4ED_ClearInterrupt(
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_StartRanging(
-		Dev_t dev);
+VL53L4ED_Error VL53L4ED_StartRanging(Dev_t dev);
 
 /**
  * @brief This function stops the ranging in progress.
@@ -180,8 +169,7 @@ VL53L4ED_Error VL53L4ED_StartRanging(
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_StopRanging(
-		Dev_t dev);
+VL53L4ED_Error VL53L4ED_StopRanging(Dev_t dev);
 
 /**
  * @brief This function check if a new data is available by polling a dedicated
@@ -192,9 +180,7 @@ VL53L4ED_Error VL53L4ED_StopRanging(
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_CheckForDataReady(
-		Dev_t dev,
-		uint8_t *p_is_data_ready);
+VL53L4ED_Error VL53L4ED_CheckForDataReady(Dev_t dev, uint8_t *p_is_data_ready);
 
 /**
  * @brief This function sets new range timing. Timing are composed of
@@ -213,10 +199,7 @@ VL53L4ED_Error VL53L4ED_CheckForDataReady(
  * @return (uint8_t) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_SetRangeTiming(
-		Dev_t dev,
-		uint32_t timing_budget_ms,
-		uint32_t inter_measurement_ms);
+VL53L4ED_Error VL53L4ED_SetRangeTiming(Dev_t dev, uint32_t timing_budget_ms, uint32_t inter_measurement_ms);
 
 /**
  * @brief This function gets the current range timing. Timing are composed of
@@ -232,10 +215,7 @@ VL53L4ED_Error VL53L4ED_SetRangeTiming(
  * @return (uint8_t) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_GetRangeTiming(
-		Dev_t dev,
-		uint32_t *p_timing_budget_ms,
-		uint32_t *p_inter_measurement_ms);
+VL53L4ED_Error VL53L4ED_GetRangeTiming(Dev_t dev, uint32_t *p_timing_budget_ms, uint32_t *p_inter_measurement_ms);
 
 /**
  * @brief This function gets the results reported by the sensor.
@@ -310,11 +290,7 @@ VL53L4ED_Error VL53L4ED_GetXtalk(Dev_t dev, uint16_t *p_xtalk_kcps);
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_SetDetectionThresholds(Dev_t dev,
-		uint16_t distance_low_mm,
-		uint16_t distance_high_mm,
-		uint8_t window);
-
+VL53L4ED_Error VL53L4ED_SetDetectionThresholds(Dev_t dev, uint16_t distance_low_mm, uint16_t distance_high_mm, uint8_t window);
 
 /**
  * @brief This function gets the current detection thresholds. The detection
@@ -330,10 +306,7 @@ VL53L4ED_Error VL53L4ED_SetDetectionThresholds(Dev_t dev,
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_GetDetectionThresholds(Dev_t dev,
-		uint16_t *p_distance_low_mm,
-		uint16_t *p_distance_high_mm,
-		uint8_t *p_window);
+VL53L4ED_Error VL53L4ED_GetDetectionThresholds(Dev_t dev, uint16_t *p_distance_low_mm, uint16_t *p_distance_high_mm, uint8_t *p_window);
 
 /**
  * @brief This function sets a new signal threshold in kcps. If a
@@ -357,8 +330,7 @@ VL53L4ED_Error VL53L4ED_SetSignalThreshold(Dev_t dev, uint16_t signal_kcps);
  * @return (VL53L4ED_ERROR) status : 0 if OK.
  */
 
-VL53L4ED_Error VL53L4ED_GetSignalThreshold(Dev_t dev,
-		uint16_t *p_signal_kcps);
+VL53L4ED_Error VL53L4ED_GetSignalThreshold(Dev_t dev, uint16_t *p_signal_kcps);
 
 /**
  * @brief This function programs a new sigma threshold. The sigma corresponds to
@@ -372,9 +344,7 @@ VL53L4ED_Error VL53L4ED_GetSignalThreshold(Dev_t dev,
  * high.
  */
 
-VL53L4ED_Error VL53L4ED_SetSigmaThreshold(
-		Dev_t dev,
-		uint16_t 	sigma_mm);
+VL53L4ED_Error VL53L4ED_SetSigmaThreshold(Dev_t dev, uint16_t sigma_mm);
 
 /**
  * @brief This function gets the current sigma threshold. The sigma corresponds
@@ -386,9 +356,7 @@ VL53L4ED_Error VL53L4ED_SetSigmaThreshold(
  * @return (VL53L4ED_ERROR) status : 0 if programming is OK.
  */
 
-VL53L4ED_Error VL53L4ED_GetSigmaThreshold(
-		Dev_t dev,
-		uint16_t 	*p_sigma_mm);
+VL53L4ED_Error VL53L4ED_GetSigmaThreshold(Dev_t dev, uint16_t *p_sigma_mm);
 
 /**
  * @brief This function can be called when the temperature might have changed by
@@ -402,4 +370,4 @@ VL53L4ED_Error VL53L4ED_GetSigmaThreshold(
 
 VL53L4ED_Error VL53L4ED_StartTemperatureUpdate(Dev_t dev);
 
-#endif  //VL53L4ED_API_H_
+#endif // VL53L4ED_API_H_

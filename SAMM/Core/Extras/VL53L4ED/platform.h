@@ -1,14 +1,14 @@
 /**
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 
 #ifndef _PLATFORM_H_
 #define _PLATFORM_H_
@@ -18,8 +18,8 @@
 #include <string.h>
 
 /**
-* VL53L4ED device instance.
-*/
+ * VL53L4ED device instance.
+ */
 
 typedef uint16_t Dev_t;
 
@@ -33,8 +33,7 @@ typedef uint8_t VL53L4ED_Error;
  * with I2C Fast Mode Plus (up to 1MHz). Otherwise, default max value is 400kHz.
  */
 
-//#define VL53L4ED_I2C_FAST_MODE_PLUS
-
+// #define VL53L4ED_I2C_FAST_MODE_PLUS
 
 /**
  * @brief Read 32 bits through I2C.
@@ -77,4 +76,4 @@ uint8_t VL53L4ED_WrDWord(Dev_t dev, uint16_t RegisterAdress, uint32_t value);
 
 uint8_t VL53L4ED_WaitMs(Dev_t dev, uint32_t TimeMs);
 
-#endif	// _PLATFORM_H_
+#endif // _PLATFORM_H_
