@@ -22,60 +22,62 @@ $content .= "typedef enum {\n";
 
 open my $fh, '<', $yaml_path or die "Could not open $yaml_path: $OS_ERROR";
 
-my $in_section = 0;
+my $in_section   = 0;
 my $current_name = '';
 
-while (my $line = <$fh>) {
-    chomp $line;
+while ( my $line = <$fh> ) {
+	chomp $line;
 
-    # Identify Section (Looking for "Custom CAN ID:")
-    if ($line =~ /^Custom\s+CAN\s+ID:/i) {
-        $in_section = 1;
-        next;
-    }
+	# Identify Section (Looking for "Custom CAN ID:")
+	if ( $line =~ /^Custom\s+CAN\s+ID:/i ) {
+		$in_section = 1;
+		next;
+	}
 
-    # Exit section if we hit a new top-level category (no leading whitespace)
-    if ($in_section && $line =~ /^\S/ && $line !~ /^Custom/i) {
-        $in_section = 0;
-    }
+	# Exit section if we hit a new top-level category (no leading whitespace)
+	if ( $in_section && $line =~ /^\S/ && $line !~ /^Custom/i ) {
+		$in_section = 0;
+	}
 
-    next unless $in_section;
+	next unless $in_section;
 
-    # Capture Message Name (Indented by 2 spaces)
-    if ($line =~ /^\s{2}([^:#\s][^:]+):/x) {
-        $current_name = $1;
-        $current_name =~ s/^\s+|\s+$//g; # Trim whitespace
-    }
+	# Capture Message Name (Indented by 2 spaces)
+	if ( $line =~ /^\s{2}([^:#\s][^:]+):/x ) {
+		$current_name = $1;
+		$current_name =~ s/^\s+|\s+$//g;    # Trim whitespace
+	}
 
-    # Capture CAN ID (Indented by 4 spaces)
-    if ($current_name && $line =~ /^\s{4}CAN\s+ID:\s*([x[:xdigit:]]+d?|\d+)/i) {
-        my $raw_id = $1;
+	# Capture CAN ID (Indented by 4 spaces)
+	if ( $current_name && $line =~ /^\s{4}CAN\s+ID:\s*([x[:xdigit:]]+d?|\d+)/i ) {
+		my $raw_id = $1;
 
-        # Clean the ID (Convert 10d or raw hex to 0x format)
-        my $clean_id = $raw_id;
-        if ($clean_id =~ /^([[:xdigit:]]+)d$/i) { $clean_id = "0x" . lc($1); }
-        elsif ($clean_id =~ /^[[:xdigit:]]+$/ && $clean_id !~ /^\d+$/) { $clean_id = "0x" . lc($clean_id); }
+		# Clean the ID (Convert 10d or raw hex to 0x format)
+		my $clean_id = $raw_id;
+		if    ( $clean_id =~ /^([[:xdigit:]]+)d$/i )                     { $clean_id = "0x" . lc($1); }
+		elsif ( $clean_id =~ /^[[:xdigit:]]+$/ && $clean_id !~ /^\d+$/ ) { $clean_id = "0x" . lc($clean_id); }
 
-        # Clean the Enum Name (Standardize to GRCAN_..._CAN_ID)
-        my $clean_label = uc $current_name;
-        $clean_label =~ s/[^A-Z0-9]/_/g;
-        $clean_label =~ s/_+/_/g;
-        $clean_label =~ s/^_|_$//g;
-        my $enum_name = "${clean_label}_CAN_ID";
+		# Clean the Enum Name (Standardize to GRCAN_..._CAN_ID)
+		my $clean_label = uc $current_name;
+		$clean_label =~ s/[^A-Z0-9]/_/g;
+		$clean_label =~ s/_+/_/g;
+		$clean_label =~ s/^_|_$//g;
+		my $enum_name = "${clean_label}_CAN_ID";
 
-        # GATEKEEPER CHECK: Duplicate ID or Name
-        if ($seen_ids{$clean_id}) {
-            warn "Skipping duplicate ID $clean_id ($current_name)\n";
-        } elsif ($seen_names{$enum_name}) {
-            warn "Skipping duplicate Name $enum_name\n";
-        } else {
-            $content .= "    $enum_name = $clean_id,\n";
-            $seen_ids{$clean_id} = 1;
-            $seen_names{$enum_name} = 1;
-        }
+		# GATEKEEPER CHECK: Duplicate ID or Name
+		if ( $seen_ids{$clean_id} ) {
+			warn "Skipping duplicate ID $clean_id ($current_name)\n";
+		}
+		elsif ( $seen_names{$enum_name} ) {
+			warn "Skipping duplicate Name $enum_name\n";
+		}
+		else {
+			$content .= "    $enum_name = $clean_id,\n";
+			$seen_ids{$clean_id}    = 1;
+			$seen_names{$enum_name} = 1;
+		}
 
-        $current_name = ''; # Reset for next message
-    }
+		$current_name = '';    # Reset for next message
+	}
 }
 close $fh;
 
@@ -84,18 +86,13 @@ $content .= "#endif // GRCAN_CUSTOM_ID_H\n";
 
 # --- 4. Write Output ---
 my $dir = dirname($output_path);
-make_path($dir) if ($dir && !-d $dir);
+make_path($dir) if ( $dir && !-d $dir );
 
 open my $out, '>', $output_path or die "Cannot write to $output_path: $OS_ERROR";
 print {$out} $content;
 close $out;
 
 print "Successfully parsed $yaml_path and updated $output_path (No YAML::XS used).\n";
-
-
-
-
-
 
 # #!/usr/bin/env perl
 # use strict;

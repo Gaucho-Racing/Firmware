@@ -21,35 +21,36 @@ $content .= "#ifndef GRCAN_MSG_DATA_H\n#define GRCAN_MSG_DATA_H\n\n#include <std
 open my $fh, '<', $yaml_path or die "Could not open $yaml_path: $OS_ERROR";
 
 my $current_msg = '';
-my @fields = ();
+my @fields      = ();
 
-while (my $line = <$fh>) {
-    chomp $line;
+while ( my $line = <$fh> ) {
+	chomp $line;
 
-    # Match Message Name (Indented by 2 spaces)
-    if ($line =~ /^\s{2}([^:#\s][^:]+):/x) {
-        # Process the previous message before starting the new one
-        if ($current_msg && @fields) {
-            $content .= generate_struct($current_msg, \@fields);
-        }
+	# Match Message Name (Indented by 2 spaces)
+	if ( $line =~ /^\s{2}([^:#\s][^:]+):/x ) {
 
-        $current_msg = $1;
-        $current_msg =~ s/^\s+|\s+$//g;
-        @fields = ();
-        next;
-    }
+		# Process the previous message before starting the new one
+		if ( $current_msg && @fields ) {
+			$content .= generate_struct( $current_msg, \@fields );
+		}
 
-    # Match Field Name (Indented by 4 spaces)
-    if ($current_msg && $line =~ /^\s{4}([^:#\s][^:]+):/x) {
-        my $field_name = $1;
-        $field_name =~ s/^\s+|\s+$//g;
-        push(@fields, $field_name);
-    }
+		$current_msg = $1;
+		$current_msg =~ s/^\s+|\s+$//g;
+		@fields = ();
+		next;
+	}
+
+	# Match Field Name (Indented by 4 spaces)
+	if ( $current_msg && $line =~ /^\s{4}([^:#\s][^:]+):/x ) {
+		my $field_name = $1;
+		$field_name =~ s/^\s+|\s+$//g;
+		push( @fields, $field_name );
+	}
 }
 
 # Process the very last message in the file
-if ($current_msg && @fields) {
-    $content .= generate_struct($current_msg, \@fields);
+if ( $current_msg && @fields ) {
+	$content .= generate_struct( $current_msg, \@fields );
 }
 
 close $fh;
@@ -58,47 +59,48 @@ $content .= "#endif // GRCAN_MSG_DATA_H\n";
 
 # --- 4. Helper Function: Struct Generation ---
 sub generate_struct {
-    my ($msg_name, $fields_ref) = @_;
+	my ( $msg_name, $fields_ref ) = @_;
 
-    # Standardize Struct Name: GRCAN_NAME_t
-    my $clean_name = uc $msg_name;
-    $clean_name =~ s/[^A-Z0-9]/_/g;
-    $clean_name =~ s/_+/_/g;
-    $clean_name =~ s/^_|_$//g;
+	# Standardize Struct Name: GRCAN_NAME_t
+	my $clean_name = uc $msg_name;
+	$clean_name =~ s/[^A-Z0-9]/_/g;
+	$clean_name =~ s/_+/_/g;
+	$clean_name =~ s/^_|_$//g;
 
-    my $struct_name = "GRCAN_${clean_name}_t";
+	my $struct_name = "GRCAN_${clean_name}_t";
 
-    # GATEKEEPER: Prevent duplicate struct definitions
-    if ($seen_structs{$struct_name}) {
-        warn "Skipping duplicate struct definition: $struct_name\n";
-        return "";
-    }
-    $seen_structs{$struct_name} = 1;
+	# GATEKEEPER: Prevent duplicate struct definitions
+	if ( $seen_structs{$struct_name} ) {
+		warn "Skipping duplicate struct definition: $struct_name\n";
+		return "";
+	}
+	$seen_structs{$struct_name} = 1;
 
-    # Build the C Struct
-    my $str = "typedef struct {\n";
-    for my $field (@{$fields_ref}) {
-        # Clean the field name
-        $field = lc $field;
-        $field =~ s/[^a-z0-9]/_/g;
-        $field =~ s/_+/_/g;
-        $field =~ s/^_|_$//g;
+	# Build the C Struct
+	my $str = "typedef struct {\n";
+	for my $field ( @{$fields_ref} ) {
 
-        # THE FIX: If field starts with a number, add leading underscore for C compatibility
-        if ($field =~ /^\d/) {
-            $field = "_" . $field;
-        }
+		# Clean the field name
+		$field = lc $field;
+		$field =~ s/[^a-z0-9]/_/g;
+		$field =~ s/_+/_/g;
+		$field =~ s/^_|_$//g;
 
-        $str .= "    uint8_t    $field;\n";
-    }
-    $str .= "} $struct_name;\n\n";
+		# THE FIX: If field starts with a number, add leading underscore for C compatibility
+		if ( $field =~ /^\d/ ) {
+			$field = "_" . $field;
+		}
 
-    return $str;
+		$str .= "    uint8_t    $field;\n";
+	}
+	$str .= "} $struct_name;\n\n";
+
+	return $str;
 }
 
 # --- 5. Write Output (Overwrites existing file) ---
 my $dir = dirname($output_path);
-make_path($dir) if ($dir && !-d $dir);
+make_path($dir) if ( $dir && !-d $dir );
 
 open my $out, '>', $output_path or die "Cannot write to $output_path: $OS_ERROR";
 print {$out} $content;
@@ -106,12 +108,6 @@ close $out;
 
 print "Successfully updated $output_path (Fixed illegal identifiers).\n";
 exit 0;
-
-
-
-
-
-
 
 # #!/usr/bin/env perl
 # use strict;
@@ -421,15 +417,6 @@ exit 0;
 #     my $suffix = ( $len > 1 ) ? "[$len]"                     : $EMPTY_STR;
 #     return sprintf "    uint8_t    %s%s;\n", $v_name, $suffix;
 # }
-
-
-
-
-
-
-
-
-
 
 # # #!/usr/bin/perl
 # # use strict;
