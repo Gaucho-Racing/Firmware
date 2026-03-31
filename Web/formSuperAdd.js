@@ -429,25 +429,36 @@
 			if (!ok) return;
 
 			let changed = false;
+			const doc = window.GrcanDocument;
 
-			if (createSender && insertGrIdEntry(editor, sender, senderId)) {
+			if (createSender && !doc.deviceExists(sender)) {
+				const r = doc.addDevice(sender, senderId);
+				if (!r.ok) {
+					senderF.error.textContent = r.error;
+					return;
+				}
 				editor.markNew("routeNode:" + sender);
 				changed = true;
 			}
 			if (
 				createReceiver &&
 				receiver !== sender &&
-				insertGrIdEntry(editor, receiver, receiverId)
+				!doc.deviceExists(receiver)
 			) {
+				const r = doc.addDevice(receiver, receiverId);
+				if (!r.ok) {
+					receiverF.error.textContent = r.error;
+					return;
+				}
 				editor.markNew("routeNode:" + receiver);
 				changed = true;
 			}
 
 			if (creatingMsg) {
-				const msgYaml = editor.generateMessageIdYaml({
+				const msgDef = {
 					name: msgName,
 					msgId: msgIdF.input.value.trim(),
-					msgLength: parseInt(msgLenF.input.value.trim(), 10),
+					msgLength: msgLenF.input.value.trim(),
 					fields: [
 						{
 							name: fieldNameF.input.value.trim(),
@@ -460,35 +471,33 @@
 							mapEquation: "",
 						},
 					],
-				});
-				const lines = editor.getLines();
-				const msgStart = editor.findSectionStart(lines, "Message ID");
-				if (msgStart !== -1) {
-					const msgEnd = editor.findSectionEnd(lines, msgStart);
-					editor.insertAtLine(msgEnd, msgYaml);
-					editor.markNew("msgDef:" + msgName);
-					changed = true;
+				};
+				const r = doc.addMessageDef(msgDef);
+				if (!r.ok) {
+					msgNameF.error.textContent = r.error;
+					return;
 				}
+				editor.markNew("msgDef:" + msgName);
+				changed = true;
 			}
 
 			if (routeOn) {
-				const routeResult = appendRoute(
-					editor,
+				const r = doc.addRoute(
 					sender,
 					bus,
 					receiver,
 					msgName,
 					overrideId || null,
 				);
-				if (routeResult.changed) {
-					if (routeResult.createdNode) editor.markNew("routeNode:" + sender);
-					else editor.markEdited("routeNode:" + sender);
-					if (routeResult.createdBus)
-						editor.markNew("routeBus:" + sender + "|" + bus);
-					else editor.markEdited("routeBus:" + sender + "|" + bus);
-					editor.markNew("routeMsg:" + sender + "|" + bus + "|" + msgName);
-					changed = true;
+				if (!r.ok) {
+					msgNameF.error.textContent = r.error;
+					return;
 				}
+				if (!doc.deviceExists(sender)) editor.markNew("routeNode:" + sender);
+				else editor.markEdited("routeNode:" + sender);
+				editor.markNew("routeBus:" + sender + "|" + bus);
+				editor.markNew("routeMsg:" + sender + "|" + bus + "|" + msgName);
+				changed = true;
 			}
 
 			fu.closeOverlay(overlay, { force: true });
