@@ -3,5 +3,4 @@
 #define CANDLER_H
 void CAN_Configure(void);
 void SendPrechargeStatus(CCU_StateData *state_data);
-void SendDebugReport(char *data);
 #endif
