@@ -84,7 +84,7 @@ sub parse_descriptions {
 
 sub extract_desc_from_array {
 	my ( $lines_ref, $index ) = @_;
-	my $description      = '';
+	my $description      = q{};
 	my $i                = $index;
 	my $in_comment_block = 0;
 
@@ -95,8 +95,8 @@ sub extract_desc_from_array {
 		if ( $sub =~ /^\s+ comment: \s* (.*)/smx ) {
 			my $text = $1;
 			$in_comment_block = 1;
-			if ( $text ne '' ) {
-				$description .= ( $description ? ' ' : '' ) . $text;
+			if ( $text ne q{} ) {
+				$description .= ( $description ? q{ } : q{} ) . $text;
 			}
 			next;
 		}
@@ -114,7 +114,7 @@ sub extract_desc_from_array {
 			# Otherwise, if it's indented text, it's part of our sentence!
 			if ( $sub =~ /^\s{6,} (.+)/smx ) {
 				my $line_text = $1;
-				$description .= ( $description ? ' ' : '' ) . $line_text;
+				$description .= ( $description ? q{ } : q{} ) . $line_text;
 				next;
 			}
 		}
