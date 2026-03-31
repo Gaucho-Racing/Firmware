@@ -78,6 +78,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 // CAN
 
 #define CAN_TX_BUFFER_LENGTH 10
+
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
