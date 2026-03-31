@@ -22,6 +22,8 @@
 
 #include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
+#include "bitManipulations.h"
+
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -44,7 +46,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -239,12 +240,67 @@ void EXTI4_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
 
+		uint8_t pin_a;
+		uint8_t pin_c;
+
 		// Blame Electronics if hardware debounce doesn't work
 
-		dashStatus.RTDButton = 1;
-		canReadyToSend = true;
-		LOGOMATIC("RTD Pressed!");
+		pin_a = LL_GPIO_IsInputPinSet(GPIOA, GPIO_PIN_4);
+		pin_c = LL_GPIO_IsInputPinSet(GPIOC, GPIO_PIN_4);
+
+		if (pin_a) {
+
+			// A4 Triggered
+			dashStatus.RTDButton = 1;
+			canReadyToSend = true;
+			LOGOMATIC("RTD Pressed!");
+
+		}
+		if (pin_c) {
+
+			// C4 Triggered
+			dashStatus.button1 = 1;
+			LOGOMATIC("Button 1 Pressed!");
+
+		}
+
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
+	}
+}
+
+void EXTI5_IRQHandler(void)
+{
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5)) {
+
+		dashStatus.button2 = 1;
+		LOGOMATIC("Button 2 Pressed!");
+
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
+	}
+}
+
+void EXTI6_IRQHandler(void)
+{
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6)) {
+
+		dashStatus.button3 = 1;
+		LOGOMATIC("Button 3 Pressed!");
+
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
+	}
+}
+
+void EXTI7_IRQHandler(void)
+{
+
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7)) {
+
+		dashStatus.button4 = 1;
+		LOGOMATIC("Button 4 Pressed!");
+
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_7);
 	}
 }
 /* USER CODE END 1 */

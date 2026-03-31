@@ -198,6 +198,11 @@ typedef struct {
 	uint8_t rtd_button; /** RTD button state & time (MSB=pressed, 7b=0.1s) */
 } GR_OLD_DASH_STATUS_MSG;
 
+typedef struct {
+	uint8_t led_bits;   /** BMS/IMD/BSPD LED states */
+	uint8_t button_bits;
+} GR_MEDIUM_DASH_STATUS_MSG;
+
 /** Dashboard Config */
 typedef struct {
 	uint8_t led_bits; /** BMS/IMD/BSPD LED cmds (0=off, 1=on) */

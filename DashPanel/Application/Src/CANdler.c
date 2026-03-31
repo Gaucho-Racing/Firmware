@@ -46,7 +46,6 @@ void CANInitialize()
 	canCfg.rx_callback = CAN_callback;
 	canCfg.rx_interrupt_priority = 15;
 	canCfg.tx_interrupt_priority = 15;
-	// canCfg.tx_buffer_length = 3;
 
 	canCfg.fdcan_instance = FDCAN1;
 	canCfg.rx_gpio = GPIOA;
@@ -82,7 +81,7 @@ void CAN_sendPing(GR_OLD_NODE_ID to, uint32_t data)
 	can_send(can_handler, &pingMsg);
 }
 
-void CAN_sendECU(CANHandle *c, GR_OLD_DASH_STATUS_MSG *msg, GR_OLD_NODE_ID to)
+void CAN_sendECU(CANHandle *c, GR_MEDIUM_DASH_STATUS_MSG *msg, GR_OLD_NODE_ID to)
 {
 
 	FDCANTxMessage sendECUMsg;
@@ -90,7 +89,7 @@ void CAN_sendECU(CANHandle *c, GR_OLD_DASH_STATUS_MSG *msg, GR_OLD_NODE_ID to)
 	sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	sendECUMsg.tx_header.DataLength = sizeof(GR_OLD_DASH_STATUS_MSG);
+	sendECUMsg.tx_header.DataLength = sizeof(GR_MEDIUM_DASH_STATUS_MSG);
 	sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	sendECUMsg.tx_header.MessageMarker = 0;
