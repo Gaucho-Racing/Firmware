@@ -80,7 +80,7 @@ int main(void)
 		// ## Step 0.0              ##
 		// ###########################
 		LOGOMATIC("State Ticks test started\n");
-		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2};
+		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2, .bspd_sense = 2};
 		LOGOMATIC("Check GLV ON at boot\n");
 		stateLumpTest.ecu_state = GR_GLV_ON;
 		stateLumpTest.bcu_software_latch = 1;
@@ -453,7 +453,7 @@ int main(void)
 		// ## Step 1.0             ##
 		// ##########################
 		LOGOMATIC("Reset system\n");
-		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2};
+		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2, .bspd_sense = 2};
 		LOGOMATIC("State Tick Test 1 started\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
