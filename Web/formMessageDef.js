@@ -33,6 +33,7 @@
 		const lines = editor.getLines().slice(range.startLine, range.endLine);
 		const result = { name: msgName, msgId: "", msgLength: "", fields: [] };
 		let cur = null;
+		let _inComment = false;
 
 		for (const line of lines) {
 			const indent = line.search(/\S/);
@@ -40,6 +41,7 @@
 			const c = line.trim();
 
 			if (indent === 4) {
+				_inComment = false;
 				if (c.startsWith("MSG ID:")) {
 					result.msgId = c.slice(7).trim();
 				} else if (c.startsWith("MSG LENGTH:")) {
@@ -60,6 +62,7 @@
 				}
 			} else if (indent >= 6 && cur) {
 				if (c.startsWith("bit_start:")) {
+					_inComment = false;
 					const v = c.slice(10).trim();
 					const rm = v.match(/^(\d+)\s*-\s*(\d+)$/);
 					if (rm) {
@@ -72,27 +75,37 @@
 							cur.bitEnd = n;
 						}
 					}
+				} else if (c.startsWith("comment:")) {
+					const raw = c.slice("comment:".length).trim();
+					const inline = (raw === "|" || raw === ">") ? "" : raw;
+					cur.comment = inline || "";
+					_inComment = true;
 				} else if (c.startsWith("#")) {
+					// backward compat: old # format
+					_inComment = false;
 					const t = c.replace(/^#\s*/, "").trim();
 					if (t) cur.comment = cur.comment ? cur.comment + "\n" + t : t;
-				} else if (c.startsWith("data type:")) {
+				} else if (!_inComment && c.startsWith("data type:")) {
 					const rawType = c.slice(10).trim();
 					// Backward compatibility for older aliases while keeping
 					// canonical signed type labels in the editor UI.
 					if (rawType === "i16") cur.rawDataType = "s16";
 					else if (rawType === "i32") cur.rawDataType = "s32";
 					else cur.rawDataType = rawType;
-				} else if (c.startsWith("units:")) {
+				} else if (!_inComment && c.startsWith("units:")) {
 					cur.units = c.slice(6).trim();
-				} else if (c.startsWith("scaled min:")) {
+				} else if (!_inComment && c.startsWith("scaled min:")) {
 					cur.scaledMin = c.slice(11).trim();
-				} else if (c.startsWith("scaled max:")) {
+				} else if (!_inComment && c.startsWith("scaled max:")) {
 					cur.scaledMax = c.slice(11).trim();
-				} else if (c.startsWith("map equation:")) {
+				} else if (!_inComment && c.startsWith("map equation:")) {
 					cur.mapEquation = c
 						.slice(13)
 						.trim()
 						.replace(/^["']|["']$/g, "");
+				} else if (_inComment) {
+					// continuation lines of the comment: block
+					cur.comment = cur.comment ? cur.comment + "\n" + c : c;
 				}
 			}
 		}

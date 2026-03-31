@@ -165,12 +165,14 @@
 	function _parseMsgIds(lines, start, end) {
 		let curMsg = null,
 			curField = null;
+		let _inFieldComment = false;
 
 		function flushField() {
 			if (curField && curMsg) {
 				curMsg.fields.push(curField);
 			}
 			curField = null;
+			_inFieldComment = false;
 		}
 		function flushMsg() {
 			flushField();
@@ -186,6 +188,7 @@
 
 			if (indent === 2 && content.endsWith(":")) {
 				flushMsg();
+				_inFieldComment = false;
 				curMsg = {
 					name: content.slice(0, -1),
 					msgId: "",
@@ -193,6 +196,7 @@
 					fields: [],
 				};
 			} else if (indent === 4 && curMsg) {
+				_inFieldComment = false;
 				if (content.startsWith("MSG ID:")) {
 					flushField();
 					curMsg.msgId = content.slice("MSG ID:".length).trim();
@@ -213,24 +217,39 @@
 					};
 				}
 			} else if (indent >= 6 && curField) {
-				if (content.startsWith("bit_start:")) {
-					curField.bitStart = content.slice("bit_start:".length).trim();
-				} else if (content.startsWith("#")) {
-					const t = content.slice(1).trim();
-					curField.comment = curField.comment ? curField.comment + "\n" + t : t;
-				} else if (content.startsWith("data type:")) {
-					curField.dataType = content.slice("data type:".length).trim();
-				} else if (content.startsWith("units:")) {
-					curField.units = content.slice("units:".length).trim();
-				} else if (content.startsWith("scaled min:")) {
-					curField.scaledMin = content.slice("scaled min:".length).trim();
-				} else if (content.startsWith("scaled max:")) {
-					curField.scaledMax = content.slice("scaled max:".length).trim();
-				} else if (content.startsWith("map equation:")) {
-					curField.mapEquation = content
-						.slice("map equation:".length)
-						.trim()
-						.replace(/^["']|["']$/g, "");
+				if (indent === 6) {
+					// All field keywords live at indent 6 — always reset comment flag here
+					_inFieldComment = false;
+					if (content.startsWith("bit_start:")) {
+						curField.bitStart = content.slice("bit_start:".length).trim();
+					} else if (content.startsWith("comment:")) {
+						const raw = content.slice("comment:".length).trim();
+						const inline = (raw === "|" || raw === ">") ? "" : raw;
+						curField.comment = inline || null;
+						_inFieldComment = true;
+					} else if (content.startsWith("#")) {
+						// backward compat: old # comment format
+						const t = content.slice(1).trim();
+						curField.comment = curField.comment ? curField.comment + "\n" + t : t;
+					} else if (content.startsWith("data type:")) {
+						curField.dataType = content.slice("data type:".length).trim();
+					} else if (content.startsWith("units:")) {
+						curField.units = content.slice("units:".length).trim();
+					} else if (content.startsWith("scaled min:")) {
+						curField.scaledMin = content.slice("scaled min:".length).trim();
+					} else if (content.startsWith("scaled max:")) {
+						curField.scaledMax = content.slice("scaled max:".length).trim();
+					} else if (content.startsWith("map equation:")) {
+						curField.mapEquation = content
+							.slice("map equation:".length)
+							.trim()
+							.replace(/^["']|["']$/g, "");
+					}
+				} else if (_inFieldComment) {
+					// indent > 6: continuation lines of the comment: block
+					curField.comment = curField.comment
+						? curField.comment + "\n" + content
+						: content;
 				}
 			}
 		}
@@ -256,12 +275,14 @@
 	function _parseCustomCanIds(lines, start, end) {
 		let curEntry = null;
 		let curSignal = null;
+		let _inSignalComment = false;
 
 		function flushSignal() {
 			if (curSignal && curEntry) {
 				curEntry.signals.push(curSignal);
 			}
 			curSignal = null;
+			_inSignalComment = false;
 		}
 		function flushEntry() {
 			flushSignal();
@@ -277,6 +298,7 @@
 
 			if (indent === 2 && content.endsWith(":")) {
 				flushEntry();
+				_inSignalComment = false;
 				curEntry = {
 					name: content.slice(0, -1),
 					canId: "",
@@ -284,6 +306,7 @@
 					signals: [],
 				};
 			} else if (indent === 4 && curEntry) {
+				_inSignalComment = false;
 				if (content.startsWith("CAN ID:")) {
 					curEntry.canId = content.slice("CAN ID:".length).trim();
 				} else if (content.startsWith("Length:")) {
@@ -294,19 +317,31 @@
 					// signals array follows on subsequent lines
 				}
 			} else if (indent === 6 && content.startsWith("- name:") && curEntry) {
-				flushSignal();
+				flushSignal(); // also resets _inSignalComment
 				let nameVal = content.slice("- name:".length).trim();
 				nameVal = nameVal.replace(/^["']|["']$/g, "");
 				curSignal = { name: nameVal, bitStart: "", comment: null };
 			} else if (indent === 8 && curSignal) {
+				_inSignalComment = false;
 				if (content.startsWith("bit_start:")) {
 					curSignal.bitStart = content.slice("bit_start:".length).trim();
+				} else if (content.startsWith("comment:")) {
+					const raw = content.slice("comment:".length).trim();
+					const inline = (raw === "|" || raw === ">") ? "" : raw;
+					curSignal.comment = inline || null;
+					_inSignalComment = true;
 				} else if (content.startsWith("#")) {
+					// backward compat: old # format
 					const t = content.slice(1).trim();
 					curSignal.comment = curSignal.comment
 						? curSignal.comment + "\n" + t
 						: t;
 				}
+			} else if (indent > 8 && _inSignalComment && curSignal) {
+				// continuation lines of the comment: block
+				curSignal.comment = curSignal.comment
+					? curSignal.comment + "\n" + content
+					: content;
 			}
 		}
 		flushEntry();
@@ -346,8 +381,9 @@
 				out += "    " + field.name + ":\n";
 				out += "      bit_start: " + field.bitStart + "\n";
 				if (field.comment) {
-					for (const commentLine of field.comment.split("\n")) {
-						out += "      # " + commentLine + "\n";
+					out += "      comment: |\n";
+					for (const line of field.comment.split("\n")) {
+						out += "        " + line + "\n";
 					}
 				}
 				if (field.dataType !== null) {
@@ -379,8 +415,9 @@
 					out += '      - name: "' + sig.name + '"\n';
 					out += "        bit_start: " + sig.bitStart + "\n";
 					if (sig.comment) {
-						for (const commentLine of sig.comment.split("\n")) {
-							out += "        # " + commentLine + "\n";
+						out += "        comment: |\n";
+						for (const line of sig.comment.split("\n")) {
+							out += "            " + line + "\n";
 						}
 					}
 				}
