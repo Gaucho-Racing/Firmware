@@ -203,8 +203,7 @@ void USART2_IRQHandler(void)
 			LOGOMATIC("Received charge command\n");
 			state_data.recv_charge_cmd = true;
 			LL_USART_TransmitData8(USART2, 'C');
-		 }
-		else if (receivedData == '?') {
+		} else if (receivedData == '?') {
 
 			LOGOMATIC("Received State Dump command\n");
 			LOGOMATIC("\n========== CCU STATE DUMP ==========\n");
@@ -239,8 +238,7 @@ void USART2_IRQHandler(void)
 
 			LL_USART_TransmitData8(USART2, '?');
 
-		}
-		 else {
+		} else {
 			state_data.recv_charge_cmd = false;
 			LL_USART_TransmitData8(USART2, 'X');
 		}
