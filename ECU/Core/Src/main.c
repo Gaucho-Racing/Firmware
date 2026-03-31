@@ -78,7 +78,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 // CAN
 
 #define CAN_TX_BUFFER_LENGTH 10
-
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
@@ -88,7 +87,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
-uint16_t *adcDataValues[NUM_SIGNALS] = {0};	  // 2D Array
 
 // DIGITAL
 
@@ -418,9 +416,6 @@ int main(void)
 	CAN_Configure();
 
 	ADC_Configure();
-	for (int i = 0; i < NUM_SIGNALS; i++) {
-		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
-	}
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
