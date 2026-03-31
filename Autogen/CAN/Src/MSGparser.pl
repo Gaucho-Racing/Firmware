@@ -9,119 +9,265 @@ use English    qw(-no_match_vars);
 main();
 
 sub main {
-	my $yaml_file   = $ARGV[0] // 'format.CANdo';
-	my $output_file = $ARGV[1] // 'can_msg_ids.h';
+    my $yaml_file   = $ARGV[0] // 'Doc/format.CANdo';
+    my $output_file = $ARGV[1] // 'Inc/can_msg_ids.h';
 
-	my $dir = dirname($output_file);
-	if ( $dir && $dir ne q{.} && !-d $dir ) {
-		make_path($dir);
-	}
+    my $dir = dirname($output_file);
+    if ( $dir && $dir ne q{.} && !-d $dir ) {
+        make_path($dir);
+    }
 
-	if ( !-e $yaml_file ) {
-		die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n";
-	}
+    if ( !-e $yaml_file ) {
+        die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n";
+    }
 
-	my $msg_ids_ref = parse_msg_yaml($yaml_file);
-	write_msg_header( $output_file, $msg_ids_ref );
+    my $msg_ids_ref = parse_msg_yaml($yaml_file);
+    write_msg_header( $output_file, $msg_ids_ref );
 
-	my $count       = scalar @{$msg_ids_ref};
-	my $log_success = print "CANfigurator: Generated $output_file with $count message IDs\n";
-	if ( !$log_success ) {
-		die "Failed to write to STDOUT: $OS_ERROR";
-	}
-	return;
+    my $count = scalar @{$msg_ids_ref};
+    print "CANfigurator: Generated $output_file with $count unique message IDs\n";
+    return;
 }
 
 sub parse_msg_yaml {
-	my ($path) = @_;
+    my ($path) = @_;
 
-	open my $fh, '<', $path;
-	my @lines = <$fh>;
-	close $fh;
+    open my $fh, '<', $path;
+    my @lines = <$fh>;
+    close $fh;
 
-	my @msg_ids;
-	my $i   = 0;
-	my $max = $#lines;
+    my @msg_ids;
+    my %seen_names; # Tracker to handle the "Ping" duplicate issue (#367)
+    my $i   = 0;
+    my $max = $#lines;
 
-	# Use 'while' instead of C-style 'for' to satisfy the linter
-	# while allowing manual index manipulation.
-	while ( $i <= $max ) {
-		my $line = $lines[$i];
+    while ( $i <= $max ) {
+        my $line = $lines[$i];
 
-		if ( $line =~ /^ (Custom[ ]CAN[ ]ID | GR[ ]ID) : /smx ) {
-			last;
-		}
+        # Stop if we hit the hardware or custom sections to avoid cross-contamination
+        if ( $line =~ /^ (Custom[ ]CAN[ ]ID | GR[ ]ID) : /smx ) {
+            last;
+        }
 
-		if ( $line =~ /^ \s{2} ( \w [\w\s\d.]+ ) : \s* $/smx ) {
-			my $name = $1;
+        # Look for Message Names (indented by 2 spaces)
+        if ( $line =~ /^ \s{2} ( \w [\w\s\d.]+ ) : \s* $/smx ) {
+            my $name = $1;
 
-			# Pass by reference so we can skip lines in the array
-			my $entry = find_id_in_lines( \@lines, \$i, $name );
-			if ($entry) {
-				push @msg_ids, $entry;
-			}
-		}
-		$i++;
-	}
-	return \@msg_ids;
+            # Clean name for the tracker
+            my $clean_check = uc $name;
+            $clean_check =~ s/\W+/_/gsmx;
+
+            # If we've seen this message name before (like Ping), skip the duplicate block
+            if ($seen_names{$clean_check}) {
+                $i++;
+                next;
+            }
+
+            my $entry = find_id_in_lines( \@lines, \$i, $name );
+            if ($entry) {
+                push @msg_ids, $entry;
+                $seen_names{$clean_check} = 1;
+            }
+        }
+        $i++;
+    }
+    return \@msg_ids;
 }
 
 sub find_id_in_lines {
-	my ( $lines_ref, $idx_ref, $msg_name ) = @_;
+    my ( $lines_ref, $idx_ref, $msg_name ) = @_;
 
-	my $start = ${$idx_ref} + 1;
-	my $end   = $#{$lines_ref};
+    my $start = ${$idx_ref} + 1;
+    my $end   = $#{$lines_ref};
 
-	# Standard Perlish range loop satisfies ControlStructures::ProhibitCStyleForLoops
-	for my $j ( $start .. $end ) {
-		my $next_line = $lines_ref->[$j];
+    for my $j ( $start .. $end ) {
+        my $next_line = $lines_ref->[$j];
 
-		if ( $next_line =~ /^ \s{4} MSG[ ]ID : \s* (0x[[:xdigit:]]+) /smx ) {
+        # Capture the MSG ID value
+        if ( $next_line =~ /^ \s{4} MSG[ ]ID : \s* (0x[[:xdigit:]]+ | \d+) /smx ) {
+            ${$idx_ref} = $j;
 
-			# Update the outer index
-			${$idx_ref} = $j;
+            my $id = $1;
 
-			my $id        = $1;
-			my $enum_name = 'MSG_' . uc $msg_name;
-			$enum_name =~ s/\W+/_/gsmx;
-			$enum_name =~ s/_+/_/gsmx;
-			$enum_name =~ s/^_|_$//gsmx;
+            # Standardizing Naming: MSG_NAME_CAN_ID (per Issue #338/339)
+            my $enum_name = uc $msg_name;
+            $enum_name =~ s/\W+/_/gsmx;
+            $enum_name =~ s/_+/_/gsmx;
+            $enum_name =~ s/^_|_$//gsmx;
+            $enum_name = "MSG_" . $enum_name . "_CAN_ID";
 
-			return { name => $enum_name, id => $id };
-		}
+            return { name => $enum_name, id => $id };
+        }
 
-		# Break if we hit a new message block
-		if ( $next_line =~ /^ \s{2} \w /smx || $next_line =~ /^ \w /smx ) {
-			return;
-		}
-	}
-	return;
+        # Safety break: stop if we accidentally wander into a new message block
+        if ( $next_line =~ /^ \s{2} \w /smx || $next_line =~ /^ \w /smx ) {
+            return;
+        }
+    }
+    return;
 }
 
 sub write_msg_header {
-	my ( $path, $msg_ids_ref ) = @_;
+    my ( $path, $msg_ids_ref ) = @_;
+    my %seen_ids;
 
-	my @header_lines;
-	push @header_lines, "// Auto-generated CAN Message IDs\n";
-	push @header_lines, "#ifndef CAN_MSG_IDS_H\n";
-	push @header_lines, "#define CAN_MSG_IDS_H\n\n";
-	push @header_lines, "typedef enum {\n";
+    my @header_lines;
+    push @header_lines, "// Auto-generated CAN Message IDs\n";
+    push @header_lines, "#ifndef CAN_MSG_IDS_H\n";
+    push @header_lines, "#define CAN_MSG_IDS_H\n\n";
+    push @header_lines, "typedef enum {\n";
 
-	foreach my $msg ( @{$msg_ids_ref} ) {
-		push @header_lines, sprintf "    %-40s = %s,\n", $msg->{name}, $msg->{id};
-	}
+    # Sort alphabetically for a clean header
+    my @sorted = sort { $a->{name} cmp $b->{name} } @{$msg_ids_ref};
 
-	push @header_lines, "} GRCAN_MSG_ID;\n\n";
-	push @header_lines, "#endif // CAN_MSG_IDS_H\n";
+    foreach my $msg ( @sorted ) {
+        # Final safety check for duplicate hex IDs
+        if ($seen_ids{$msg->{id}}) {
+            warn "MSGparser: Skipping duplicate Hex ID $msg->{id} for $msg->{name}\n";
+            next;
+        }
 
-	open my $out, '>', $path;
-	for my $line (@header_lines) {
-		my $success = print {$out} $line;
-		if ( !$success ) {
-			die "Failed to write to $path: $OS_ERROR";
-		}
-	}
-	close $out;
+        push @header_lines, sprintf "    %-40s = %s,\n", $msg->{name}, $msg->{id};
+        $seen_ids{$msg->{id}} = 1;
+    }
 
-	return;
+    push @header_lines, "} GRCAN_MSG_ID_t;\n\n";
+    push @header_lines, "#endif // CAN_MSG_IDS_H\n";
+
+    open my $out, '>', $path;
+    print {$out} join(q{}, @header_lines);
+    close $out;
+
+    return;
 }
+
+
+
+
+# #!/usr/bin/env perl
+# use strict;
+# use warnings;
+# use autodie qw(open close);
+# use File::Basename;
+# use File::Path qw(make_path);
+# use English    qw(-no_match_vars);
+
+# main();
+
+# sub main {
+# 	my $yaml_file   = $ARGV[0] // 'format.CANdo';
+# 	my $output_file = $ARGV[1] // 'can_msg_ids.h';
+
+# 	my $dir = dirname($output_file);
+# 	if ( $dir && $dir ne q{.} && !-d $dir ) {
+# 		make_path($dir);
+# 	}
+
+# 	if ( !-e $yaml_file ) {
+# 		die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n";
+# 	}
+
+# 	my $msg_ids_ref = parse_msg_yaml($yaml_file);
+# 	write_msg_header( $output_file, $msg_ids_ref );
+
+# 	my $count       = scalar @{$msg_ids_ref};
+# 	my $log_success = print "CANfigurator: Generated $output_file with $count message IDs\n";
+# 	if ( !$log_success ) {
+# 		die "Failed to write to STDOUT: $OS_ERROR";
+# 	}
+# 	return;
+# }
+
+# sub parse_msg_yaml {
+# 	my ($path) = @_;
+
+# 	open my $fh, '<', $path;
+# 	my @lines = <$fh>;
+# 	close $fh;
+
+# 	my @msg_ids;
+# 	my $i   = 0;
+# 	my $max = $#lines;
+
+# 	# Use 'while' instead of C-style 'for' to satisfy the linter
+# 	# while allowing manual index manipulation.
+# 	while ( $i <= $max ) {
+# 		my $line = $lines[$i];
+
+# 		if ( $line =~ /^ (Custom[ ]CAN[ ]ID | GR[ ]ID) : /smx ) {
+# 			last;
+# 		}
+
+# 		if ( $line =~ /^ \s{2} ( \w [\w\s\d.]+ ) : \s* $/smx ) {
+# 			my $name = $1;
+
+# 			# Pass by reference so we can skip lines in the array
+# 			my $entry = find_id_in_lines( \@lines, \$i, $name );
+# 			if ($entry) {
+# 				push @msg_ids, $entry;
+# 			}
+# 		}
+# 		$i++;
+# 	}
+# 	return \@msg_ids;
+# }
+
+# sub find_id_in_lines {
+# 	my ( $lines_ref, $idx_ref, $msg_name ) = @_;
+
+# 	my $start = ${$idx_ref} + 1;
+# 	my $end   = $#{$lines_ref};
+
+# 	# Standard Perlish range loop satisfies ControlStructures::ProhibitCStyleForLoops
+# 	for my $j ( $start .. $end ) {
+# 		my $next_line = $lines_ref->[$j];
+
+# 		if ( $next_line =~ /^ \s{4} MSG[ ]ID : \s* (0x[[:xdigit:]]+) /smx ) {
+
+# 			# Update the outer index
+# 			${$idx_ref} = $j;
+
+# 			my $id        = $1;
+# 			my $enum_name = 'MSG_' . uc $msg_name;
+# 			$enum_name =~ s/\W+/_/gsmx;
+# 			$enum_name =~ s/_+/_/gsmx;
+# 			$enum_name =~ s/^_|_$//gsmx;
+
+# 			return { name => $enum_name, id => $id };
+# 		}
+
+# 		# Break if we hit a new message block
+# 		if ( $next_line =~ /^ \s{2} \w /smx || $next_line =~ /^ \w /smx ) {
+# 			return;
+# 		}
+# 	}
+# 	return;
+# }
+
+# sub write_msg_header {
+# 	my ( $path, $msg_ids_ref ) = @_;
+
+# 	my @header_lines;
+# 	push @header_lines, "// Auto-generated CAN Message IDs\n";
+# 	push @header_lines, "#ifndef CAN_MSG_IDS_H\n";
+# 	push @header_lines, "#define CAN_MSG_IDS_H\n\n";
+# 	push @header_lines, "typedef enum {\n";
+
+# 	foreach my $msg ( @{$msg_ids_ref} ) {
+# 		push @header_lines, sprintf "    %-40s = %s,\n", $msg->{name}, $msg->{id};
+# 	}
+
+# 	push @header_lines, "} GRCAN_MSG_ID;\n\n";
+# 	push @header_lines, "#endif // CAN_MSG_IDS_H\n";
+
+# 	open my $out, '>', $path;
+# 	for my $line (@header_lines) {
+# 		my $success = print {$out} $line;
+# 		if ( !$success ) {
+# 			die "Failed to write to $path: $OS_ERROR";
+# 		}
+# 	}
+# 	close $out;
+
+# 	return;
+# }
