@@ -87,6 +87,10 @@ CAN_STATUS can_stop(CANHandle *handle);
 CAN_STATUS can_send(CANHandle *handle, FDCANTxMessage *buffer);
 CAN_STATUS can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
 CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
+
+//pass in a buffer to store the status string
+//int can_info(char* );
+
 // alternatively use
 // HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
 // HAL_FDCAN_ConfigFilter()

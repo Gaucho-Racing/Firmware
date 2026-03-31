@@ -4,25 +4,19 @@
 #include "can_tests.h"
 
 // TODO:
-static volatile uint32_t can_stress_test_received = 0;
-void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
+static volatile uint32_t can_rx_received = 0;
+void can_lost_rx_callback(uint32_t id, void *data, uint32_t size)
 {
-	can_stress_test_received++;
+	can_rx_received++;
 	UNUSED(id);
 	UNUSED(data);
 	UNUSED(size);
 	return;
 }
 
-int can_stress_test(void)
+int can_lost_rx_test(void)
 {
-	LOGOMATIC("running can_stress_test\n");
-
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	//DWT->LAR = 0xC5ACCE55;    // May be optional depending on your CPU
-	//DWT->CYCCNT = 0;
-	//DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-
+	LOGOMATIC("running can_lost_rx\n");
 	uint32_t status, loop;
 	UNUSED(status);
 
@@ -32,7 +26,7 @@ int can_stress_test(void)
 	primary_can = data_can = NULL;
 	CANConfig cfg1;
 
-	if (get_cfg(FDCAN1, can_stress_test_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
+	if (get_cfg(FDCAN1, can_lost_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
@@ -71,13 +65,15 @@ int can_stress_test(void)
 	size_t rounds = 5;
 	size_t messages = primary_can->tx_capacity * 2;
 	uint32_t successes = 0;
+	uint32_t total_received = 0;
+	uint32_t total_sent = 0;
 	while (loop < rounds) {
 		loop++;
-		can_stress_test_received = 0;
+		can_rx_received = 0;
 		i = 0;
 		while (i < messages) {
 			if (can_send(primary_can, &msg) != CAN_SUCCESS) {
-				LOGOMATIC("can_stress_test: FAIL: sending CAN msg at %u-th consecutive send.\n", (unsigned int)i + 1);
+				LOGOMATIC("can_lost_rx: FAIL: sending CAN msg at %u-th consecutive send.\n", (unsigned int)i + 1);
 				break;
 			}
 			i++;
@@ -85,17 +81,21 @@ int can_stress_test(void)
 		LOGOMATIC("Sent %u/%u CAN msgs...\n", (unsigned int)i, (unsigned int)messages);
 		HAL_Delay(1000);
 
-		LOGOMATIC("Received %u/%u CAN msgs after 1 second.\n", (unsigned int)can_stress_test_received, (unsigned int)messages);
+		LOGOMATIC("Received %u/%u CAN msgs after 1 second.\n", (unsigned int)can_rx_received, (unsigned int)messages);
+
+		total_sent += i;
+		total_received += can_rx_received;
 
 		LOGOMATIC("finished loop %ld\n", loop);
 
 		if (primary_can->tx_elements > 0) {
-			LOGOMATIC("can_stress_test: FAIL: did not send all messages from tx_buffer\n");
+			LOGOMATIC("can_lost_rx: FAIL: did not send all messages from tx_buffer\n");
 			continue;
 		}
 		LOGOMATIC("\n");
 
-		if (can_stress_test_received == messages) {
+		//check that all message were sent and received
+		if (can_rx_received == messages) {
 			successes += 1;
 		}
 		// msg.data[0] = 0x10;
@@ -104,22 +104,25 @@ int can_stress_test(void)
 	}
 
 	if (can_release(primary_can)) {
-		LOGOMATIC("can_stress_test: FAIL: could not release primary_can\n");
+		LOGOMATIC("can_lost_rx: FAIL: could not release primary_can\n");
 		return ERROR;
 	}
 
 	// FINAL CHECK
-	LOGOMATIC("can_stress_test: succeeded %u/%u rounds\n", (unsigned int)successes, (unsigned int)rounds);
-	if (successes < rounds) {
-		LOGOMATIC("can_stress_test: FAIL\n");
+	LOGOMATIC("can_lost_rx: succeeded %u/%u rounds\n", (unsigned int)successes, (unsigned int)rounds);
+	LOGOMATIC("can_lost_rx: instance logged %ld missed messages\n", primary_can->lost_rx);
+
+	if (primary_can->lost_rx + total_received != total_sent) {
+		LOGOMATIC("can_lost_rx: FAIL, did not log all missed messages\n");
 	} else {
-		LOGOMATIC("can_stress_test: SUCCESS\n");
+		LOGOMATIC("can_lost_rx: SUCCESS - logged all missed messages\n");
 	}
 
-
-	//Disable DWT Counter
-	DWT->CYCCNT = 0;
-	DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
+	/*if (successes < rounds) {
+		LOGOMATIC("can_lost_rx: FAIL\n");
+	} else {
+		LOGOMATIC("can_lost_rx: SUCCESS\n");
+	}*/
 
 	return SUCCESS;
 }
