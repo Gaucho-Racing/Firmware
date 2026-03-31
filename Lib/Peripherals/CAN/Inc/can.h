@@ -73,6 +73,7 @@ typedef struct {
 	bool started;
 
 	// error states
+	uint32_t lost_rx;
 } CANHandle;
 
 typedef enum {
@@ -95,7 +96,11 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 
 // TODO: Add thread mode vs handler mode checking (None of these functions should be called in handler mode)
 
+//TODO: sanitize this later if needed
+//const char *can_get_handle_name(CANHandle *handle);
+
 // Configuration helpers
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t FDCAN_Mode, uint32_t numStdFilters, uint32_t numExtFilters);
+
 
 #endif

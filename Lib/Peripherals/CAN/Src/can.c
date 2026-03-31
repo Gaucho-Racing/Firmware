@@ -114,11 +114,13 @@ static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
 
+
+
 inline void can_set_clksource(uint32_t clksource)
 {
 	LL_RCC_SetFDCANClockSource(clksource);
 }
-// static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
+static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance);
 // static inline void gpio_clk_enable(GPIO_TypeDef *gpio)
 // static inline void gpio_clk_disable(GPIO_TypeDef *gpio)
 
@@ -202,6 +204,9 @@ CANHandle *can_init(const CANConfig *config)
 	// canHandle->tx_capacity = TX_BUFFER_SIZE_1; //dependent on can instance
 	canHandle->tx_tail = 0;
 	canHandle->tx_elements = 0;
+
+	//error
+	canHandle->lost_rx = 0;
 
 	// alternately -> have can_msp_init setup state for HAL_FDCAN_MspInit to work correctly
 	// have can_msp_deinit setup state for HAL_FDCAN_MspDeInit to work correctly
@@ -317,6 +322,7 @@ CAN_STATUS can_release(CANHandle *canHandle)
 	canHandle->rx_pin = 0;
 	canHandle->tx_pin = 0;
 	canHandle->tx_tail = 0;
+	canHandle->lost_rx = 0;
 
 	// memset(canHandle, 0, sizeof(*canHandle));
 	// canHandle->hal_fdcanP = temp;
@@ -470,10 +476,14 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	} */ // no rx buffer at the moment
 
 	if (RxFifo0ITs & FDCAN_IT_RX_FIFO0_MESSAGE_LOST) {
-		// TODO: Implement lost message counters
-		//  lost_rx++;
+		// TODO: Synchronize access to message counters
+		if (__builtin_uaddl_overflow(handle->lost_rx, 1, &handle->lost_rx)) {
+			handle->lost_rx = 0;
+			LOGOMATIC("%s: lost message counter overflowed\n",can_get_instance_name(handle->hal_fdcanP->Instance));
+		}
 	}
 
+	//If nothing else happened besides message loss
 	if (!(RxFifo0ITs & ~FDCAN_IT_RX_FIFO0_MESSAGE_LOST)) {
 		return;
 	}
@@ -838,17 +848,20 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 }
 
 // valid only for STM32G4
-/*static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
+static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 {
- if (instance == FDCAN1) {
-     return "FDCAN1";
- } else if (instance == FDCAN2) {
-     return "FDCAN2";
- } else if (instance == FDCAN3) {
-     return "FDCAN3";
- }
+	#ifdef STM32G474xx
+
+	if (instance == FDCAN1) {
+		return "FDCAN1";
+	} else if (instance == FDCAN2) {
+		return "FDCAN2";
+	} else if (instance == FDCAN3) {
+		return "FDCAN3";
+	}
+	#endif
  return "UNKNOWN";
-}*/
+}
 
 // ===================================== HAL Callbacks ================================
 // TODO: Implement Family Checks
