@@ -103,4 +103,7 @@ void lightControl(ECU_StateData *stateData)
 	RTDButtonLightControl(stateData);
 	TSActiveButtonLightControl(stateData);
 	SoftwareOKLightControl(stateData);
+	BMSLights(stateData);
+	IMDLights(stateData);
+	BSPDLights(stateData);
 }
