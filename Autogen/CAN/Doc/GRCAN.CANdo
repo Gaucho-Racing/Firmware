@@ -303,43 +303,19 @@ Message ID:
       units: Bool
     Reserved:
       bit_start: 6-7
-    BCU Node Status:
+    status_flags:
       bit_start: 8
-      comment: 1: OK, 0: Timeout
+      comment:
+        [Byte 1 / Bits 8-15]
+        8: BCU Node Status (1: OK, 0: Timeout)
+        9: GR Inverter Status (1: OK, 0: Timeout)
+        10: Fan Controller 1 Status (1: OK, 0: Timeout)
+        11: Fan Controller 2 Status (1: OK, 0: Timeout)
+        12: Fan Controller 3 Status (1: OK, 0: Timeout)
+        13: Dash Panel Status (1: OK, 0: Timeout)
+        14: TCM Node Status (1: OK, 0: Timeout)
+        15: Reserved
       data type: b
-      units: Bool
-    GR Inverter Status:
-      bit_start: 9
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 1 Status:
-      bit_start: 10
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 2 Status:
-      bit_start: 11
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 3 Status:
-      bit_start: 12
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Dash Panel Status:
-      bit_start: 13
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    TCM Node Status:
-      bit_start: 14
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 15
     Power Level:
       bit_start: 16
       comment:
@@ -481,107 +457,77 @@ Message ID:
     MSG LENGTH: 7
     20v Voltage:
       bit_start: 0
-      comment: 20v GLV voltage
+      comment:
+        20v GLV voltage
+        data type: u8
+        units: Volts
+        scaled min: 0
+        scaled max: 25.5
+        map equation: "0.1x"
       data type: u8
-      units: Volts
-      scaled min: 0
-      scaled max: 25.5
-      map equation: "0.1x"
     12v Voltage:
       bit_start: 8
-      comment: 12v supply voltage
+      comment:
+        12v supply voltage
+        data type: u8
+        units: Volts
+        scaled min: 0
+        scaled max: 25.5
+        map equation: "0.1x"
       data type: u8
-      units: Volts
-      scaled min: 0
-      scaled max: 25.5
-      map equation: "0.1x"
     SDC Voltage:
       bit_start: 16
-      comment: Voltage before BCU Latch
+      comment:
+        Voltage before BCU Latch
+        data type: u8
+        units: Volts
+        scaled min: 0
+        scaled max: 25.5
+        map equation: "0.1x"
       data type: u8
-      units: Volts
-      scaled min: 0
-      scaled max: 25.5
-      map equation: "0.1x"
     Min Cell Voltage:
       bit_start: 24
-      comment: Lowest cell voltage in accumulator
+      comment:
+        Lowest cell voltage in accumulator
+        data type: u8
+        units: Volts
+        scaled min: 2
+        scaled max: 4.55
+        map equation: "0.01x+2"
       data type: u8
-      units: Volts
-      scaled min: 2
-      scaled max: 4.55
-      map equation: "0.01x+2"
     Max Cell Temp:
       bit_start: 32
-      comment: Hottest cell in accumulator
+      comment:
+        Hottest cell in accumulator
+        data type: u8
+        units: Celsius
+        scaled min: 0
+        scaled max: 63.75
+        map equation: "0.25x"
       data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 63.75
-      map equation: "0.25x"
     status_flags:
       bit_start: 40
-      comment: Over temp (>60c)
+      comment:
+        [Byte 5 / Bits 40-47]
+        40: Over Temp (>60C)
+        41: Over Voltage (>4.2V/cell)
+        42: Under Volt (<2.5V/cell)
+        43: Over Current (Discharge)
+        44: Under Current (Charge)
+        45: 20V GLV Warning
+        46: 12V Supply Warning
+        47: SDC Warning
       data type: b
-      units: Bool
-    Over Voltage Error:
-      bit_start: 41
-      comment: Over voltage (>4.2v per cell)
-      data type: b
-      units: Bool
-    Under Voltage Error:
-      bit_start: 42
-      comment: Under voltage (<2.5v per cell)
-      data type: b
-      units: Bool
-    Over Current Error:
-      bit_start: 43
-      comment: Over current (discharge)
-      data type: b
-      units: Bool
-    Under Current Error:
-      bit_start: 44
-      comment: Over current (charging)
-      data type: b
-      units: Bool
-    Under Voltage 20v Warning:
-      bit_start: 45
-      comment: 20v GLV too low (<15?)
-      data type: b
-      units: Bool
-    Under Voltage 12v Warning:
-      bit_start: 46
-      comment: 12v supply too low (<10?)
-      data type: b
-      units: Bool
-    Under Voltage SDC Warning:
-      bit_start: 47
-      comment: SDC too low (<9?)
-      data type: b
-      units: Bool
-    Precharge Error:
+    precharge_latch_flags:
       bit_start: 48
-      comment: Precharge timed out
+      comment:
+        [Byte 6 / Bits 48-55]
+        48: Precharge Timeout
+        49: IR- / Precharge State (0:Open, 1:Closed)
+        50: IR+ State (0:Open, 1:Closed)
+        51: Software Latch (0:Open, 1:Closed)
+        52-55: Reserved
       data type: b
-      units: Bool
-    IR- / Precharge State:
-      bit_start: 49
-      comment: 0: Open           1: Closed
-      data type: b
-      units: Bool
-    IR+ State:
-      bit_start: 50
-      comment: 0: Open           1: Closed
-      data type: b
-      units: Bool
-    Software Latch:
-      bit_start: 51
-      comment: 0: Open           1: Closed
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 52-55
-      data type: u4
   BCU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8

@@ -41,6 +41,7 @@ sub parse_descriptions {
 	my ($path) = @_;
 	my %map;
 	my $in_msg_section = 0;
+	my $current_msg    = $EMPTY_STR;
 
 	open my $in, '<', $path;
 	my @lines = <$in>;
@@ -61,13 +62,19 @@ sub parse_descriptions {
 			next;
 		}
 
+		# Track current message name (matches "  Msg Name:")
+		if ( $line =~ /^\s{2} ([^:#\s][^:]+) :$/smx ) {
+			$current_msg = $1;
+		}
+
 		# Use explicit \s{2,4} because /x ignores literal spaces
 		if ( $line =~ /^\s{2,4} ([^:#\s][^:]+) :/smx ) {
 			my $raw_name = $1;
 			my $f_name   = clean_field_name($raw_name);
 			my ( $desc, $new_i ) = extract_desc_from_array( \@lines, $i );
 			if ($desc) {
-				$map{$f_name} = $desc;
+				my $key = $current_msg . q{::} . $f_name;
+				$map{$key} = $desc;
 			}
 			$i = $new_i;
 		}
@@ -243,14 +250,14 @@ sub process_message {
 	my @sorted = sort { $a <=> $b } keys %byte_map;
 
 	for my $i ( 0 .. $#sorted ) {
-		push @buf, process_byte_entry( \@sorted, \%byte_map, \$i, $d_map );
+		push @buf, process_byte_entry( $name, \@sorted, \%byte_map, \$i, $d_map );
 	}
 	push @buf, "} ${prefix}_${tag}_MSG;\n\n";
 	return join $EMPTY_STR, @buf;
 }
 
 sub process_byte_entry {
-	my ( $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
+	my ( $msg_name, $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
 	my @out;
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
@@ -271,7 +278,9 @@ sub process_byte_entry {
 		    ( ${$fields}[0]->{type} =~ /32/smx ) ? 'uint32_t'
 		  : ( ${$fields}[0]->{type} =~ /16/smx ) ? 'uint16_t'
 		  :                                        'uint8_t';
-		my $desc = join $SPACE_STR, map { ${$d_map}{ clean_field_name( $_->{name} ) } // () } @{$fields};
+		my $desc = join $SPACE_STR,
+		  map { ${$d_map}{ $msg_name . q{::} . clean_field_name( $_->{name} ) } // () }
+		  @{$fields};
 
 		push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . q{;};
 	}

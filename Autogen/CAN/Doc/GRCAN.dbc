@@ -23,23 +23,13 @@ BO_ 2147682050 BCU_BCU_Status_1_to_ECU: 8 BCU
  SG_ GLV_SOC : 56|8@1+ (0.392157,0) [0|100] "%" ECU
 
 BO_ 2147682306 BCU_BCU_Status_2_to_ECU: 7 BCU
- SG_ 20v_Voltage : 0|8@1+ (0.1,0) [0|25.5] "Volts" ECU
- SG_ 12v_Voltage : 8|8@1+ (0.1,0) [0|25.5] "Volts" ECU
- SG_ SDC_Voltage : 16|8@1+ (0.1,0) [0|25.5] "Volts" ECU
- SG_ Min_Cell_Voltage : 24|8@1+ (0.01,2) [2|4.55] "Volts" ECU
- SG_ Max_Cell_Temp : 32|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
- SG_ status_flags : 40|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Over_Voltage_Error : 41|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Under_Voltage_Error : 42|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Over_Current_Error : 43|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Under_Current_Error : 44|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Under_Voltage_20v_Warning : 45|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Under_Voltage_12v_Warning : 46|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Under_Voltage_SDC_Warning : 47|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Precharge_Error : 48|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ IR__Precharge_State : 49|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ IR_State : 50|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Software_Latch : 51|1@1+ (1,0) [0|0] "Bool" ECU
+ SG_ 20v_Voltage : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ 12v_Voltage : 8|8@1+ (1,0) [0|0] "" ECU
+ SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] "" ECU
+ SG_ Min_Cell_Voltage : 24|8@1+ (1,0) [0|0] "" ECU
+ SG_ Max_Cell_Temp : 32|8@1+ (1,0) [0|0] "" ECU
+ SG_ status_flags : 40|1@1+ (1,0) [0|0] "" ECU
+ SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] "" ECU
 
 BO_ 2147682562 BCU_BCU_Status_3_to_ECU: 8 BCU
  SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" ECU
@@ -624,13 +614,7 @@ BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ Precharge_Complete_State : 3|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ Drive_Active_ECU_State : 4|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ TS_Discharge_ECU_State : 5|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ BCU_Node_Status : 8|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ GR_Inverter_Status : 9|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Fan_Controller_1_Status : 10|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Fan_Controller_2_Status : 11|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Fan_Controller_3_Status : 12|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Dash_Panel_Status : 13|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ TCM_Node_Status : 14|1@1+ (1,0) [0|0] "Bool" ALL
+ SG_ status_flags : 8|1@1+ (1,0) [0|0] "" ALL
  SG_ Power_Level : 16|4@1+ (1,0) [0|0] "" ALL
  SG_ Torque_Map : 20|4@1+ (1,0) [0|0] "" ALL
  SG_ Max_Cell_Temp : 24|8@1+ (0.25,0) [0|63.75] "Celsius" ALL
