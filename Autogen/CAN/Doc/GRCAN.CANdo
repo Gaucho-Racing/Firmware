@@ -2,7 +2,7 @@ Bus ID:
   Testing: 0
   Primary: 1
   Data: 2
-  Charger: 3 
+  Charger: 3
 
 routing:
   messages:
@@ -570,83 +570,10 @@ Message ID:
       comment: See diagram
       data type: u8
       units: Enum
-    ACU Node Status:
+    ping_block:
       bit_start: 8
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    GR Inv 1 Status:
-      bit_start: 9
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    GR Inv 2 Status:
-      bit_start: 10
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    GR Inv 3 Status:
-      bit_start: 11
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    GR Inv 4 Status:
-      bit_start: 12
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 1:
-      bit_start: 13
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 2:
-      bit_start: 14
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 3:
-      bit_start: 15
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 4:
-      bit_start: 16
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 5:
-      bit_start: 17
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 6:
-      bit_start: 18
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 7:
-      bit_start: 19
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Fan Controller 8:
-      bit_start: 20
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Dash:
-      bit_start: 21
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Steering:
-      bit_start: 22
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 23-31
+      comment: " ACU (at bit 8), Inv 1-4 (bits 9 - 12), Fan 1-8 (bits 13 - 20), Dash (bits 21), Steering (bits 22), Reserved (23 - 31)"
+      data type: u32
     Power Level:
       bit_start: 32
       comment:
