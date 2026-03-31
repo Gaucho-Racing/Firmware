@@ -115,9 +115,9 @@ int can_external_test(void)
 	msg.data[0] = 0x80;
 	msg.tx_header = TxHeader;
 
-	LOGOMATIC("Sending %ld messages on each bus...\n", NUM_MESSAGES);
+	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
 
-	uint32_t node_target = 0;
+	//uint32_t node_target = 0;
 	uint32_t i = 0;
 
 	while (i < NUM_MESSAGES) {
