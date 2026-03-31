@@ -129,7 +129,7 @@ int main(void)
 		*(pins_spi2.GPIOx + i) = GPIOB;
 	}
 	pins_spi2.num_pins = 4;
-	pins_spi2.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
+	// pins_spi2.pin_nums;
 	pins_spi2.pin_nums[0] = LL_GPIO_PIN_15; // COPI
 	pins_spi2.pin_nums[1] = LL_GPIO_PIN_14; // CIPO
 	pins_spi2.pin_nums[2] = LL_GPIO_PIN_13; // SCK
@@ -158,7 +158,7 @@ int main(void)
 	}
 	pins_spi3.GPIOx[3] = GPIOA;
 	pins_spi3.num_pins = 4;
-	pins_spi3.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
+	// pins_spi3.pin_nums;
 	pins_spi3.pin_nums[0] = LL_GPIO_PIN_12; // COPI
 	pins_spi3.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
 	pins_spi3.pin_nums[2] = LL_GPIO_PIN_10; // SCK
@@ -168,32 +168,43 @@ int main(void)
 	GR_SPI_Initialize(&handle_spi3, &config_spi3, &pins_spi3);
 
 	LOGOMATIC("Starting message transaction...\n");
+	LOGOMATIC("Mode is: ");
+	LOGOMATIC(config_spi2.Mode == LL_SPI_MODE_MASTER? "Master\n" : "slave\n");
+
 
 	GR_SPI_Message msg;
-	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
-	msg.size = 1;
+	if(config_spi2.Mode == LL_SPI_MODE_MASTER){
 
-	for (int i = 0; i < msg.size; i++) {
-		msg.data[i] = 'A' + i;
+		msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
+		msg.size = 1;
+
+		for (int i = 0; i < msg.size; i++) {
+			msg.data[i] = 'A' + i;
+		}
+
+		GR_SPI_Send(&handle_spi3, &msg);
 	}
 
-	GR_SPI_Send(&handle_spi3, &msg);
+	if(config_spi2.Mode == LL_SPI_MODE_SLAVE){
+		LOGOMATIC("receiving...\n");
 
-	LOGOMATIC("Sent message, now receiving...\n");
+		for (int i = 0; i < msg.size; i++) {
+			msg.data[i] = '#';
+		}
 
-	for (int i = 0; i < msg.size; i++) {
-		msg.data[i] = '#';
+		while (GR_SPI_IsRxEmpty(&handle_spi2)) {}
+		// while(true){}
+
+		GR_SPI_Receive(&handle_spi2, &msg);
+
+		char str[33];
+		memcpy(str, msg.data, msg.size * sizeof(uint8_t));
+		str[msg.size] = '\0';
+
+		LOGOMATIC("Received: %s\n", str);
+
 	}
 
-	while (GR_SPI_IsRxEmpty(&handle_spi2)) {}
-
-	GR_SPI_Receive(&handle_spi2, &msg);
-
-	char str[33];
-	memcpy(str, msg.data, msg.size * sizeof(uint8_t));
-	str[msg.size] = '\0';
-
-	LOGOMATIC("Received: %s\n", str);
 
 	free(msg.data);
 	GR_SPI_Close(&handle_spi2);
