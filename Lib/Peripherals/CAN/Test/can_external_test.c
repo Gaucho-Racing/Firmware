@@ -15,6 +15,16 @@
 
 #define NUM_NODES 2    // total number of nodes on the bus (including this one)
 #define NUM_MESSAGES 5 // number of messages each node sends to every other node
+// #define OLD_SAM
+
+#if defined(OLD_SAM)
+#define NODE_ID 1 // change for each node you flash
+#else
+#define NODE_ID 2
+#endif
+
+#define NUM_NODES 2    // total number of nodes on the bus (including this one)
+#define NUM_MESSAGES 5 // number of messages each node sends to every other node
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
