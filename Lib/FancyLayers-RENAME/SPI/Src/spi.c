@@ -66,7 +66,7 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	*handle->spi_config = *config;
 
 	// Deep copy of pins struct
-	handle->pins = (GR_SPI_Pins *)malloc(sizeof(GR_SPI_Pins));				    // Make memory for GR_SPI_Pins struct
+	handle->pins = (GR_SPI_Pins *)malloc(sizeof(GR_SPI_Pins)); // Make memory for GR_SPI_Pins struct
 	// handle->pins->pin_nums = (uint32_t *)malloc(pin_config->num_pins * sizeof(uint32_t));	    // Make memory for pin_nums[num_pins]
 	handle->pins->GPIOx = (GPIO_TypeDef **)malloc(pin_config->num_pins * sizeof(GPIO_TypeDef)); // Make memory for GPIOx[num_pins]
 	for (uint32_t i = 0; i < pin_config->num_pins; i++) {

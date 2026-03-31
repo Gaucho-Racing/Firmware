@@ -169,11 +169,10 @@ int main(void)
 
 	LOGOMATIC("Starting message transaction...\n");
 	LOGOMATIC("Mode is: ");
-	LOGOMATIC(config_spi2.Mode == LL_SPI_MODE_MASTER? "Master\n" : "slave\n");
-
+	LOGOMATIC(config_spi2.Mode == LL_SPI_MODE_MASTER ? "Master\n" : "slave\n");
 
 	GR_SPI_Message msg;
-	if(config_spi2.Mode == LL_SPI_MODE_MASTER){
+	if (config_spi2.Mode == LL_SPI_MODE_MASTER) {
 
 		msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
 		msg.size = 1;
@@ -185,7 +184,7 @@ int main(void)
 		GR_SPI_Send(&handle_spi3, &msg);
 	}
 
-	if(config_spi2.Mode == LL_SPI_MODE_SLAVE){
+	if (config_spi2.Mode == LL_SPI_MODE_SLAVE) {
 		LOGOMATIC("receiving...\n");
 
 		for (int i = 0; i < msg.size; i++) {
@@ -202,9 +201,7 @@ int main(void)
 		str[msg.size] = '\0';
 
 		LOGOMATIC("Received: %s\n", str);
-
 	}
-
 
 	free(msg.data);
 	GR_SPI_Close(&handle_spi2);
