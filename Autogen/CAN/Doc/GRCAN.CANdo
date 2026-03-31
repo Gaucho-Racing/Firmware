@@ -753,68 +753,29 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-    Over Temp Error:
+    status_flags:
       bit_start: 40
-      comment: Over temp (>60c)
       data type: b
-      units: Bool
-    Over Voltage Error:
-      bit_start: 41
-      comment: Over voltage (>4.2v per cell)
-      data type: b
-      units: Bool
-    Under Voltage Error:
-      bit_start: 42
-      comment: Under voltage (<2.5v per cell)
-      data type: b
-      units: Bool
-    Over Current Error:
-      bit_start: 43
-      comment: Over current (discharge)
-      data type: b
-      units: Bool
-    Under Current Error:
-      bit_start: 44
-      comment: Over current (charging)
-      data type: b
-      units: Bool
-    Under Voltage 20v Warning:
-      bit_start: 45
-      comment: 20v GLV too low (<15?)
-      data type: b
-      units: Bool
-    Under Voltage 12v Warning:
-      bit_start: 46
-      comment: 12v supply too low (<10?)
-      data type: b
-      units: Bool
-    Under Voltage SDC Warning:
-      bit_start: 47
-      comment: SDC too low (<9?)
-      data type: b
-      units: Bool
-    Precharge Error:
+      comment: >
+        [Byte 5 / Bits 40-47]:
+        40: Over Temp (>60C),
+        41: Over Voltage (>4.2V/cell),
+        42: Under Volt (<2.5V/cell),
+        43: Over Current (Discharge),
+        44: Under Current (Charge),
+        45: 20V GLV Warning,
+        46: 12V Supply Warning,
+        47: SDC Warning.
+    precharge_latch_flags:
       bit_start: 48
-      comment: Precharge timed out
       data type: b
-      units: Bool
-    IR- / Precharge State:
-      bit_start: 49
-      comment: 0: Open           1: Closed
-      data type: b
-      units: Bool
-    IR+ State:
-      bit_start: 50
-      comment: 0: Open           1: Closed
-      data type: b
-      units: Bool
-    Software Latch:
-      bit_start: 51
-      comment: 0: Open           1: Closed
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 52-55
+      comment: >
+        [Byte 6 / Bits 48-55]:
+        48: Precharge Timeout,
+        49: IR- / Precharge State (0:Open, 1:Closed),
+        50: IR+ State (0:Open, 1:Closed),
+        51: Software Latch (0:Open, 1:Closed),
+        52-55: Reserved.
   ACU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
