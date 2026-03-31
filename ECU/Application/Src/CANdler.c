@@ -107,7 +107,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 				break;
 			}
 			GR_OLD_SAM_REAR_WHEELSPEED_MSG *encoder_status = (GR_OLD_SAM_REAR_WHEELSPEED_MSG *)data;
-			state_data->rr_wheel_rpm = encoder_status->wheel_speed * 0.1 - 32768; // TODO: find out which wheel this actually measures
+			state_data->rr_wheel_rpm = encoder_status->wheel_speed * 0.1 - 32768; // TODO: find out which wheel this actually measures: sender_id???
 			state_data->vehicle_speed_mph = state_data->rr_wheel_rpm * WHEEL_RPM_TO_MPH_RATIO;
 			break;
 		default:
