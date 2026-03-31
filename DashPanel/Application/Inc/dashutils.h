@@ -14,4 +14,4 @@ void NeoPixel_Init();
 void Neopixel_LEDWrite();
 void Neopixel_ButtonWrite();
 
-#endif // DASHPANEL_UTILS_H
+#endif

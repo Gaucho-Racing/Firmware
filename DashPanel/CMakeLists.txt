@@ -42,6 +42,7 @@ target_link_libraries(
 		PERIPHERAL_CAN_LIB
 		CircularBuffer_Lib
 		GR_NEOPIXEL
+		BitManipulations_Lib
 )
 
 target_include_directories(
