@@ -93,6 +93,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			GR_OLD_INVERTER_STATUS_3_MSG *inverter_status_3 = (GR_OLD_INVERTER_STATUS_3_MSG *)data;
 			state_data->inverter_fault_map = inverter_status_3->fault_bits;
 			break;
+		/*
 		case MSG_STEERING_STATUS:
 			if (data_length != sizeof(GR_OLD_STEERING_STATUS_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
@@ -101,13 +102,14 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			GR_OLD_STEERING_STATUS_MSG *steering_status = (GR_OLD_STEERING_STATUS_MSG *)data;
 			state_data->powerlevel_torquemap = steering_status->encoder_bits;
 			break;
+		*/
 		case MSG_SAM_REAR_WHEELSPEED:
 			if (data_length != sizeof(GR_OLD_SAM_REAR_WHEELSPEED_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
 			GR_OLD_SAM_REAR_WHEELSPEED_MSG *encoder_status = (GR_OLD_SAM_REAR_WHEELSPEED_MSG *)data;
-			state_data->rr_wheel_rpm = encoder_status->wheel_speed * 0.1 - 32768; // TODO: find out which wheel this actually measures: sender_id???
+			state_data->rr_wheel_rpm = encoder_status->wheel_speed * 0.1 - 32768; // TODO: find out which wheel this actually measures: one or 4 sensors?
 			state_data->vehicle_speed_mph = state_data->rr_wheel_rpm * WHEEL_RPM_TO_MPH_RATIO;
 			break;
 		default:
