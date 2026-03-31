@@ -116,7 +116,7 @@ int can_external_test(void)
 
 	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
 
-	//uint32_t node_target = 0;
+	// uint32_t node_target = 0;
 	uint32_t i = 0;
 
 	while (i < NUM_MESSAGES) {
