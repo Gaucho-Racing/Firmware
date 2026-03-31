@@ -278,9 +278,7 @@ sub process_byte_entry {
 		    ( ${$fields}[0]->{type} =~ /32/smx ) ? 'uint32_t'
 		  : ( ${$fields}[0]->{type} =~ /16/smx ) ? 'uint16_t'
 		  :                                        'uint8_t';
-		my $desc = join $SPACE_STR,
-		  map { ${$d_map}{ $msg_name . q{::} . clean_field_name( $_->{name} ) } // () }
-		  @{$fields};
+		my $desc = join $SPACE_STR, map { ${$d_map}{ $msg_name . q{::} . clean_field_name( $_->{name} ) } // () } @{$fields};
 
 		push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . q{;};
 	}
