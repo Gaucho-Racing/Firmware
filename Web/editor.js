@@ -408,7 +408,10 @@
 	// ==================== Download ====================
 
 	function downloadCando() {
-		const blob = new Blob([rawCandoText], { type: "text/plain" });
+		const serialized = window.GrcanDocument
+			? window.GrcanDocument.getSerializedText()
+			: null;
+		const blob = new Blob([serialized ?? rawCandoText], { type: "text/plain" });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;

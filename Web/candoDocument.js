@@ -383,9 +383,13 @@
 				out += "    " + field.name + ":\n";
 				out += "      bit_start: " + field.bitStart + "\n";
 				if (field.comment) {
-					out += "      comment: |\n";
-					for (const line of field.comment.split("\n")) {
-						out += "        " + line + "\n";
+					if (field.comment.includes("\n")) {
+						out += "      comment:\n";
+						for (const line of field.comment.split("\n")) {
+							out += "        " + line + "\n";
+						}
+					} else {
+						out += "      comment: " + field.comment + "\n";
 					}
 				}
 				if (field.dataType !== null) {
@@ -417,9 +421,13 @@
 					out += '      - name: "' + sig.name + '"\n';
 					out += "        bit_start: " + sig.bitStart + "\n";
 					if (sig.comment) {
-						out += "        comment: |\n";
-						for (const line of sig.comment.split("\n")) {
-							out += "            " + line + "\n";
+						if (sig.comment.includes("\n")) {
+							out += "        comment:\n";
+							for (const line of sig.comment.split("\n")) {
+								out += "          " + line + "\n";
+							}
+						} else {
+							out += "        comment: " + sig.comment + "\n";
 						}
 					}
 				}
@@ -1247,6 +1255,15 @@
 		return _serialize();
 	}
 
+	// Returns the canonical serialized form of the current editor text.
+	// Parse → serialize without side effects (does not update editor state).
+	function getSerializedText() {
+		const editor = _getEditor();
+		if (!editor) return null;
+		_parse(editor.getRawText());
+		return _serialize();
+	}
+
 	// ==================== Public API ====================
 
 	return {
@@ -1279,6 +1296,7 @@
 		routeEntryExists,
 		getRouteReceivers,
 		getGraphDataForBus,
+		getSerializedText,
 		// Test hooks
 		_parseForTest,
 		_serializeFromState,
