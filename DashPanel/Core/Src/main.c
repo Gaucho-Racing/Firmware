@@ -138,9 +138,6 @@ int main(void)
 		if (canReadyToSend || timer * tick_freq >= 100) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
-
-			// MSB, PLEASE CHANGE IF LSB
-			msg_struct.button_bits = dashStatus.TSActiveButton << 7 | dashStatus.RTDButton << 6 | dashStatus.button1 << 5 | dashStatus.button2 << 4 | dashStatus.button3 << 3 | dashStatus.button4 << 2
 			msg_struct.led_bits = dashStatus.led_bits;
 			msg_struct.button_flags = dashStatus.button_flags;
 
@@ -334,6 +331,9 @@ static void GPIO_Interrupt_Init(void)
 	// Enable Interrupt
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
+	NVIC_EnableIRQ(EXTI5_IRQn);
+	NVIC_EnableIRQ(EXTI6_IRQn);
+	NVIC_EnableIRQ(EXTI7_IRQn);
 	NVIC_EnableIRQ(EXTI5_IRQn);
 	NVIC_EnableIRQ(EXTI6_IRQn);
 	NVIC_EnableIRQ(EXTI7_IRQn);
