@@ -77,7 +77,7 @@
 					}
 				} else if (c.startsWith("comment:")) {
 					const raw = c.slice("comment:".length).trim();
-					const inline = (raw === "|" || raw === ">") ? "" : raw;
+					const inline = raw === "|" || raw === ">" ? "" : raw;
 					cur.comment = inline || "";
 					_inComment = true;
 				} else if (c.startsWith("#")) {

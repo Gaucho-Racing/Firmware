@@ -224,13 +224,15 @@
 						curField.bitStart = content.slice("bit_start:".length).trim();
 					} else if (content.startsWith("comment:")) {
 						const raw = content.slice("comment:".length).trim();
-						const inline = (raw === "|" || raw === ">") ? "" : raw;
+						const inline = raw === "|" || raw === ">" ? "" : raw;
 						curField.comment = inline || null;
 						_inFieldComment = true;
 					} else if (content.startsWith("#")) {
 						// backward compat: old # comment format
 						const t = content.slice(1).trim();
-						curField.comment = curField.comment ? curField.comment + "\n" + t : t;
+						curField.comment = curField.comment
+							? curField.comment + "\n" + t
+							: t;
 					} else if (content.startsWith("data type:")) {
 						curField.dataType = content.slice("data type:".length).trim();
 					} else if (content.startsWith("units:")) {
@@ -327,7 +329,7 @@
 					curSignal.bitStart = content.slice("bit_start:".length).trim();
 				} else if (content.startsWith("comment:")) {
 					const raw = content.slice("comment:".length).trim();
-					const inline = (raw === "|" || raw === ">") ? "" : raw;
+					const inline = raw === "|" || raw === ">" ? "" : raw;
 					curSignal.comment = inline || null;
 					_inSignalComment = true;
 				} else if (content.startsWith("#")) {
