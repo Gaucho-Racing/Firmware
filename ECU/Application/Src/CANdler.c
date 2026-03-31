@@ -84,6 +84,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 				break;
 			}
 			GR_OLD_INVERTER_STATUS_1_MSG *inverter_status_1 = (GR_OLD_INVERTER_STATUS_1_MSG *)data;
+			UNUSED(inverter_status_1);
 			break;
 		case MSG_INVERTER_STATUS_3:
 			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_3_MSG)) {
