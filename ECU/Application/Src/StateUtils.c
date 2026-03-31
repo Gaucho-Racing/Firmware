@@ -29,6 +29,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 					    stateData->ecu_state == GR_DRIVE_ACTIVE); // ensures precharge has begun with ir- latch
 	problem |= imdFailure(stateData);
 	problem |= bmsFailure(stateData);
+	problem |= bspdFailure(stateData);
 	return problem;
 }
 
