@@ -3963,7 +3963,7 @@ Message ID:
       units: Bool map
   ECU Pedals Data:
     MSG ID: 0x02E
-    MSG LENGTH: 10
+    MSG LENGTH: 12
     APPS1_SIGNAL:
       bit_start: 0
       # APPS 1 Signal
@@ -3997,13 +3997,17 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     BRAKE_R_SIGNAL:
-      bit_start: 48
+      bit_start: 64
       # Brake Pressure Signal
       data type: u16
       units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
+    STEERING_ANGLE:
+      bit_start: 80
+      data type: u16
+      units: percentage
   GPS LAT:
     MSG ID: 0x031
     MSG LENGTH: 8
