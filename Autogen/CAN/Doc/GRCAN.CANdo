@@ -3506,7 +3506,7 @@ Message ID:
     MSG LENGTH: 3
     button_flags:
       bit_start: 0
-      # TS Active = bit 0, RTD = bit 1, bits 2–7 reserved
+      # TS Active = bit 0, RTD = bit 1, Button 1 = bit 2, Button 2 = bit 3, Button 3 = bit  4, Button 4 = bit 5, bit 6-7 reserved
       data type: u8
     led_bits:
       bit_start: 8
