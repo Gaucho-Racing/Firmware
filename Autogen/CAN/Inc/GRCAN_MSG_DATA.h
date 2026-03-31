@@ -24,38 +24,36 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	/** See diagram (Byte 0) */
-	uint8_t ecu_state;
-	/** " ACU (at bit 8), Inv 1-4 (bits 9 - 12), Fan 1-8 (bits 13 - 20), Dash (bits 21), Steering (bits 22), Reserved (23 - 31)" (Byte 1) */
-	uint32_t ping_block;
+	uint8_t ping_block[2];
+	uint8_t ping_block;
 	/** Controls the AC current limits to each of the inverters
-Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
+Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 2) */
 	uint8_t power_level_torque_map;
-	/** Hottest cell in accumulator (Byte 5) */
+	/** Hottest cell in accumulator (Byte 3) */
 	uint8_t max_cell_temp;
-	/** % charged of the Accumulator (Byte 6) */
+	/** % charged of the Accumulator (Byte 4) */
 	uint8_t accumulator_state_of_charge;
-	/** % charged of the Low Voltage Bat (Byte 7) */
+	/** % charged of the Low Voltage Bat (Byte 5) */
 	uint8_t glv_state_of_charge;
+	/** Output terminal voltage of accumulator (Byte 6) */
+	uint16_t tractive_system_voltage;
 } GR_OLD_ECU_STATUS_1_MSG;
 
 /** ECU Status 2 */
 typedef struct {
-	/** Output terminal voltage of accumulator (Byte 0) */
-	uint16_t tractive_system_voltage;
-	/** Absolute value of speed (Byte 2) */
+	/** Absolute value of speed (Byte 0) */
 	uint16_t vehicle_speed;
-	/** Wheel RPM (Byte 4) */
+	/** Wheel RPM (Byte 2) */
 	uint16_t fr_wheel_rpm;
-	/** Wheel RPM (Byte 6) */
+	/** Wheel RPM (Byte 4) */
 	uint16_t fl_wheel_rpm;
+	/** Wheel RPM (Byte 6) */
+	uint16_t rr_wheel_rpm;
 } GR_OLD_ECU_STATUS_2_MSG;
 
 /** ECU Status 3 */
 typedef struct {
 	/** Wheel RPM (Byte 0) */
-	uint16_t rr_wheel_rpm;
-	/** Wheel RPM (Byte 2) */
 	uint16_t rl_wheel_rpm;
 } GR_OLD_ECU_STATUS_3_MSG;
 
@@ -65,7 +63,7 @@ typedef struct {
 	uint8_t reserved;
 } GR_OLD_ECU_CONFIG_MSG;
 
-/** ACU Status 1 */
+/** BCU Status 1 */
 typedef struct {
 	/** All cell voltages added up (Byte 0) */
 	uint16_t accumulator_voltage;
@@ -77,42 +75,25 @@ typedef struct {
 	uint8_t accumulator_soc;
 	/** GLV state of charge (Byte 7) */
 	uint8_t glv_soc;
-} GR_OLD_ACU_STATUS_1_MSG;
+} GR_OLD_BCU_STATUS_1_MSG;
 
-/** ACU Status 2 */
+/** BCU Status 2 */
 typedef struct {
 	/** 20v GLV voltage (Byte 0) */
 	uint8_t _20v_voltage;
 	/** 12v supply voltage (Byte 1) */
 	uint8_t _12v_voltage;
-	/** Voltage before ACU Latch (Byte 2) */
+	/** Voltage before BCU Latch (Byte 2) */
 	uint8_t sdc_voltage;
 	/** Lowest cell voltage in accumulator (Byte 3) */
 	uint8_t min_cell_voltage;
 	/** Hottest cell in accumulator (Byte 4) */
 	uint8_t max_cell_temp;
-	/** >
-[Byte 5 / Bits 40-47]:
-40: Over Temp (>60C),
-41: Over Voltage (>4.2V/cell),
-42: Under Volt (<2.5V/cell),
-43: Over Current (Discharge),
-44: Under Current (Charge),
-45: 20V GLV Warning,
-46: 12V Supply Warning,
-47: SDC Warning. (Byte 5) */
-	uint8_t status_flags;
-	/** >
-[Byte 6 / Bits 48-55]:
-48: Precharge Timeout,
-49: IR- / Precharge State (0:Open, 1:Closed),
-50: IR+ State (0:Open, 1:Closed),
-51: Software Latch (0:Open, 1:Closed),
-52-55: Reserved. (Byte 6) */
-	uint8_t precharge_latch_flags;
-} GR_OLD_ACU_STATUS_2_MSG;
+	uint8_t error_fault_violation_bits[2];
+	uint8_t error_fault_violation_bits;
+} GR_OLD_BCU_STATUS_2_MSG;
 
-/** ACU Status 3 */
+/** BCU Status 3 */
 typedef struct {
 	/** 600v input voltage (Byte 0) */
 	uint16_t hv_input_voltage;
@@ -122,69 +103,69 @@ typedef struct {
 	uint16_t hv_input_current;
 	/** 20v output current (Byte 6) */
 	uint16_t hv_output_current;
-} GR_OLD_ACU_STATUS_3_MSG;
+} GR_OLD_BCU_STATUS_3_MSG;
 
-/** ACU Precharge */
+/** BCU Precharge */
 typedef struct {
 	/** 0: shutdown, 1: go TS Active/Precharge (Byte 0) */
 	uint8_t set_ts_active;
-} GR_OLD_ACU_PRECHARGE_MSG;
+} GR_OLD_BCU_PRECHARGE_MSG;
 
-/** ACU Config Charge Parameters */
+/** BCU Config Charge Parameters */
 typedef struct {
 	/** Sets the Target Charging voltage (Byte 0) */
 	uint16_t charge_voltage;
 	/** Sets the Target Charging Current (Byte 2) */
 	uint16_t charge_current;
-} GR_OLD_ACU_CONFIG_CHARGE_PARAMETERS_MSG;
+} GR_OLD_BCU_CONFIG_CHARGE_PARAMETERS_MSG;
 
-/** ACU Config Operational Parameters */
+/** BCU Config Operational Parameters */
 typedef struct {
 	/** Sets the threshold for Minimum Cell Voltage before Shutdown (Byte 0) */
 	uint8_t minimium_cell_voltage;
 	/** Sets the threshold for Max Cell Temperature before Shutdown (Byte 1) */
 	uint8_t max_cell_temperature;
-} GR_OLD_ACU_CONFIG_OPERATIONAL_PARAMETERS_MSG;
+} GR_OLD_BCU_CONFIG_OPERATIONAL_PARAMETERS_MSG;
 
-/** ACU Cell Data 1 */
+/** BCU Cell Data 1 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GR_OLD_ACU_CELL_DATA_1_MSG;
+} GR_OLD_BCU_CELL_DATA_1_MSG;
 
-/** ACU Cell Data 2 */
+/** BCU Cell Data 2 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GR_OLD_ACU_CELL_DATA_2_MSG;
+} GR_OLD_BCU_CELL_DATA_2_MSG;
 
-/** ACU Cell Data 3 */
+/** BCU Cell Data 3 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GR_OLD_ACU_CELL_DATA_3_MSG;
+} GR_OLD_BCU_CELL_DATA_3_MSG;
 
-/** ACU Cell Data 4 */
+/** BCU Cell Data 4 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GR_OLD_ACU_CELL_DATA_4_MSG;
+} GR_OLD_BCU_CELL_DATA_4_MSG;
 
-/** ACU Cell Data 5 */
+/** BCU Cell Data 5 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GR_OLD_ACU_CELL_DATA_5_MSG;
+} GR_OLD_BCU_CELL_DATA_5_MSG;
 
 /** DC-DC Status */
 typedef struct {
@@ -271,13 +252,10 @@ typedef struct {
 
 /** Dash Status */
 typedef struct {
-	uint8_t ping_block;
-	/** MSB is state (1: pressed)
-Other 7 bits represent the time in 0.1s that it has been in that state (Byte 1) */
-	uint8_t ts_button_data;
-	/** MSB is state (1: pressed)
-Other 7 bits represent the time in 0.1s that it has been in that state (Byte 2) */
-	uint8_t rtd_button_data;
+	/** TS Active = bit 0, RTD = bit 1, bits 2–7 reserved (Byte 0) */
+	uint8_t button_flags;
+	/** BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved (Byte 1) */
+	uint8_t led_bits;
 } GR_OLD_DASH_STATUS_MSG;
 
 /** Dash Config */
