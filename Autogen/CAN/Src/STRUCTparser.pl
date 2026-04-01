@@ -206,7 +206,7 @@ sub parse_field_details {
 
 	while ( ++$i < scalar @{$lines_ref} ) {
 		my $sub = ${$lines_ref}[$i];
-		if ( $sub =~ /bit_start: \s* (\d+)/smx ) {
+		if ( $sub =~ /bit[\s_]start: \s* (\d+)/smx ) {
 			$start = $1;
 		}
 		if ( $sub =~ /data \s type: \s* (\w+)/smx ) {
@@ -262,7 +262,7 @@ sub process_byte_entry {
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
 
-	if ( scalar @{$fields} > 2 ) {
+	if ( scalar @{$fields} > 2 && ${$fields}[0]->{name} =~ /reserved|ping|byte/ismx) {
 		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
 	}
 	else {
@@ -293,13 +293,12 @@ sub handle_multi_field_range {
 	while ( ${$idx_ref} + 1 < scalar @{$bytes_ref} ) {
 		my $next_byte = ${$bytes_ref}[ ${$idx_ref} + 1 ];
 		my $next_f    = ${$map_ref}{$next_byte};
-		if ( scalar @{$next_f} <= 2 ) {
-			my $first_name = ${$next_f}[0]->{name};
-			if ( $first_name !~ /reserved/ismx ) {
-				last;
-			}
-		}
-		${$idx_ref}++;
+		if ( scalar @{$next_f} > 2 || ${$next_f}[0]->{name} =~ /reserved/ismx ) {
+        	${$idx_ref}++;
+    	}
+    	else {
+        	last;
+    	}
 	}
 
 	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;

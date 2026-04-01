@@ -271,38 +271,28 @@ Message ID:
   ECU Status 1:
     MSG ID: 0x003
     MSG LENGTH: 8
-    GLV Off State:
+    state_messages:
       bit_start: 0
-      comment: See diagram in StateMachine.h
       data type: b
       units: Bool
-    GLV On State:
-      bit_start: 1
-      comment: See diagram in StateMachine.h
-      data type: b
-      units: Bool
-    Precharge Engaged State:
-      bit_start: 2
-      comment: See diagram in StateMachine.h
-      data type: b
-      units: Bool
-    Precharge Complete State:
-      bit_start: 3
-      comment: See diagram in StateMachine.h
-      data type: b
-      units: Bool
-    Drive Active ECU State:
-      bit_start: 4
-      comment: See diagram in StateMachine.h
-      data type: b
-      units: Bool
-    TS Discharge ECU State:
-      bit_start: 5
-      comment: See diagram in StateMachine.h
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 6-7
+      comment: >
+        [Byte 0 / Bits 0-1] GLV States
+        0: GLV Off State,
+        1: GLV On State.
+        See diagram in StateMachine.
+
+        [Byte 0 / Bits 2-3] Precharge States
+        2: Precharge Engaged State
+        3: Precharge Complete State
+        See diagram in StateMachine.h
+
+        [Byte 0 / Bits 4-5] ECU States
+        4: Drive Active ECU State
+        5: TS Discharge ECU State
+
+        6-7: Reserved
+
+        See diagram in StateMachine.h
     status_flags:
       bit_start: 8
       comment:
