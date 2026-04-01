@@ -14,6 +14,10 @@
 #include "Logomatic.h"
 #include "profile.h"
 
+//TODO: define DMA usage in a better way
+#define USEDMA
+#include "STM32G4_hal_fdcan_defines.h"
+
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
 #ifndef CAN_CFG_H
@@ -29,6 +33,8 @@
 // #define TX_BUFFER_1_SIZE 10
 
 // #endif
+
+
 
 // HAL handles
 #ifdef USECAN1
@@ -121,6 +127,11 @@ static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
 
+
+//DMA Shenanigans
+void DMA_M2M_StartTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
+void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority);
+CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData);
 
 
 inline void can_set_clksource(uint32_t clksource)
@@ -271,6 +282,10 @@ CANHandle *can_init(const CANConfig *config)
 
 		return NULL;
 	}
+
+	#ifdef USEDMA
+	DMA_M2M_Init(canHandle->rx_interrupt_priority, 0);
+	#endif
 
 	canHandle->init = true;
 	canHandle->started = false;
@@ -525,10 +540,14 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	// TODO: maybe also use a timer for this?
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
-		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
 		//Takes less time to fetch 64 bytes than it does to get 1 byte???
+
 		//dwt_timer_start_measurement(&rx_timer);
-		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+
+		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
+		//HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+
+		FDCAN_GetRxMessage_StartDMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 
 		//dwt_timer_end_measurement(&rx_timer);
 
@@ -568,8 +587,209 @@ void can_read_rx_buffer(CANHandle* canHandle) {
 
 }*/
 
+CAN_STATUS FDCAN_GetRxMessage_FinishDMACallback() {
 
-void DMA_M2M_Init(void)
+}
+
+CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
+{
+	uint32_t *RxAddress;
+	uint8_t *pData;
+	uint32_t ByteCounter;
+	uint32_t GetIndex;
+
+	//FDCAN_HandleTypeDef* hfdcan = handle->hal_fdcanP;
+	HAL_FDCAN_StateTypeDef state = hfdcan->State;
+
+	/* Check function parameters */
+	assert_param(IS_FDCAN_RX_FIFO(RxLocation));
+
+	if (state == HAL_FDCAN_STATE_BUSY) {
+		if (RxLocation == FDCAN_RX_FIFO0) /* Rx element is assigned to the Rx FIFO 0 */
+		{
+			/* Check that the Rx FIFO 0 is not empty */
+			if ((hfdcan->Instance->RXF0S & FDCAN_RXF0S_F0FL) == 0U) {
+				/* Update error code */
+				hfdcan->ErrorCode |= HAL_FDCAN_ERROR_FIFO_EMPTY;
+
+				return HAL_ERROR;
+			} else {
+				/* Calculate Rx FIFO 0 element index */
+				GetIndex = ((hfdcan->Instance->RXF0S & FDCAN_RXF0S_F0GI) >> FDCAN_RXF0S_F0GI_Pos);
+
+				/* Check that the Rx FIFO 0 is full & overwrite mode is on */
+				if (((hfdcan->Instance->RXF0S & FDCAN_RXF0S_F0F) >> FDCAN_RXF0S_F0F_Pos) == 1U) {
+					if (((hfdcan->Instance->RXGFC & FDCAN_RXGFC_F0OM) >> FDCAN_RXGFC_F0OM_Pos) == FDCAN_RX_FIFO_OVERWRITE) {
+						/* When overwrite status is on discard first message in FIFO */
+						/* GetIndex is incremented by one and wraps to 0 in case it overflows the FIFO size */
+						GetIndex = (GetIndex + 1U) & SRAMCAN_RF0_NBR;
+					}
+				}
+
+				/* Calculate Rx FIFO 0 element address */
+				RxAddress = (uint32_t *)(hfdcan->msgRam.RxFIFO0SA + (GetIndex * SRAMCAN_RF0_SIZE));
+			}
+		} else /* Rx element is assigned to the Rx FIFO 1 */
+		{
+			/* Check that the Rx FIFO 1 is not empty */
+			if ((hfdcan->Instance->RXF1S & FDCAN_RXF1S_F1FL) == 0U) {
+				/* Update error code */
+				hfdcan->ErrorCode |= HAL_FDCAN_ERROR_FIFO_EMPTY;
+
+				return HAL_ERROR;
+			} else {
+				/* Calculate Rx FIFO 1 element index */
+				GetIndex = ((hfdcan->Instance->RXF1S & FDCAN_RXF1S_F1GI) >> FDCAN_RXF1S_F1GI_Pos);
+
+				/* Check that the Rx FIFO 1 is full & overwrite mode is on */
+				if (((hfdcan->Instance->RXF1S & FDCAN_RXF1S_F1F) >> FDCAN_RXF1S_F1F_Pos) == 1U) {
+					if (((hfdcan->Instance->RXGFC & FDCAN_RXGFC_F1OM) >> FDCAN_RXGFC_F1OM_Pos) == FDCAN_RX_FIFO_OVERWRITE) {
+						/* When overwrite status is on discard first message in FIFO */
+						/* GetIndex is incremented by one and wraps to 0 in case it overflows the FIFO size */
+						GetIndex = (GetIndex + 1U) & SRAMCAN_RF1_NBR;
+					}
+				}
+
+				/* Calculate Rx FIFO 1 element address */
+				RxAddress = (uint32_t *)(hfdcan->msgRam.RxFIFO1SA + (GetIndex * SRAMCAN_RF1_SIZE));
+			}
+		}
+
+		/* Retrieve IdType */
+		pRxHeader->IdType = *RxAddress & FDCAN_ELEMENT_MASK_XTD;
+
+		/* Retrieve Identifier */
+		if (pRxHeader->IdType == FDCAN_STANDARD_ID) /* Standard ID element */
+		{
+			pRxHeader->Identifier = ((*RxAddress & FDCAN_ELEMENT_MASK_STDID) >> 18U);
+		} else /* Extended ID element */
+		{
+			pRxHeader->Identifier = (*RxAddress & FDCAN_ELEMENT_MASK_EXTID);
+		}
+
+		/* Retrieve RxFrameType */
+		pRxHeader->RxFrameType = (*RxAddress & FDCAN_ELEMENT_MASK_RTR);
+
+		/* Retrieve ErrorStateIndicator */
+		pRxHeader->ErrorStateIndicator = (*RxAddress & FDCAN_ELEMENT_MASK_ESI);
+
+		/* Increment RxAddress pointer to second word of Rx FIFO element */
+		RxAddress++;
+
+		/* Retrieve RxTimestamp */
+		pRxHeader->RxTimestamp = (*RxAddress & FDCAN_ELEMENT_MASK_TS);
+
+		/* Retrieve DataLength */
+		pRxHeader->DataLength = ((*RxAddress & FDCAN_ELEMENT_MASK_DLC) >> 16U);
+
+		/* Retrieve BitRateSwitch */
+		pRxHeader->BitRateSwitch = (*RxAddress & FDCAN_ELEMENT_MASK_BRS);
+
+		/* Retrieve FDFormat */
+		pRxHeader->FDFormat = (*RxAddress & FDCAN_ELEMENT_MASK_FDF);
+
+		/* Retrieve FilterIndex */
+		pRxHeader->FilterIndex = ((*RxAddress & FDCAN_ELEMENT_MASK_FIDX) >> 24U);
+
+		/* Retrieve NonMatchingFrame */
+		pRxHeader->IsFilterMatchingFrame = ((*RxAddress & FDCAN_ELEMENT_MASK_ANMF) >> 31U);
+
+		/* Increment RxAddress pointer to payload of Rx FIFO element */
+		RxAddress++;
+
+		/* Retrieve Rx payload with DMA*/
+
+		pData = (uint8_t *)RxAddress;
+		DMA_M2M_StartTransfer(pData, pRxData, DLCtoBytes[pRxHeader->DataLength] );
+
+		/*for (ByteCounter = 0; ByteCounter < DLCtoBytes[pRxHeader->DataLength]; ByteCounter++) {
+			pRxData[ByteCounter] = pData[ByteCounter];
+		}*/
+
+		/* Return function status */
+		return CAN_SUCCESS;
+
+
+	} else {
+		/* Update error code */
+		hfdcan->ErrorCode |= HAL_FDCAN_ERROR_NOT_STARTED;
+
+		return HAL_ERROR;
+	}
+}
+
+
+#define RxFifoElementsNumber 3
+bool is_valid_rxfifo0_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress)
+{
+    uint32_t fifo_start = hfdcan->msgRam.RxFIFO0SA;
+    uint32_t fifo_end   = fifo_start + (RxFifoElementsNumber * SRAMCAN_RF0_SIZE);
+
+    uint32_t addr = (uint32_t)RxAddress;
+
+    return (addr >= fifo_start) && (addr + SRAMCAN_RF0_SIZE <= fifo_end);
+}
+
+bool is_valid_rxfifo1_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress) {
+	uint32_t fifo_start = hfdcan->msgRam.RxFIFO0SA;
+    uint32_t fifo_end   = fifo_start + (RxFifoElementsNumber * SRAMCAN_RF0_SIZE);
+
+    uint32_t addr = (uint32_t)RxAddress;
+
+    return (addr >= fifo_start) && (addr + SRAMCAN_RF0_SIZE <= fifo_end);
+	return false;
+}
+
+//TODO: Abstract out to handle other FDCAN instances besides FDCAN1 and FDCAN2
+void FDCAN1_DMA_TC(uint8_t *src_addr) {
+	if (!is_valid_rxfifo0_address(&hal_fdcan1, (uint32_t*)src_addr)) {
+		LOGOMATIC("DMA src addr des not correspond to rx fifo 0");
+		return;
+	}
+
+	uint32_t GetIndex = ((FDCAN1->RXF0S & FDCAN_RXF0S_F0GI) >> FDCAN_RXF0S_F0GI_Pos);
+
+	/* Acknowledge the Rx FIFO 0 that the oldest element is read so that it increments the GetIndex */
+	//hal_fdcan1.Instance->RXF0A = GetIndex;
+	FDCAN1->RXF0A = GetIndex;
+
+	//HAL_FDCAN_RxFifo0Callback()
+
+	//else /* Rx element is assigned to the Rx FIFO 1 */
+	//{
+		/* Acknowledge the Rx FIFO 1 that the oldest element is read so that it increments the GetIndex */
+	//	hfdcan->Instance->RXF1A = GetIndex;
+	//}
+
+}
+
+void FDCAN2_DMA2_TC() {
+
+}
+
+static volatile uint8_t* dma_src_start;
+void DMA1_Channel1_IRQHandler(void)
+{
+    if (LL_DMA_IsActiveFlag_TC1(DMA1))
+    {
+        LL_DMA_ClearFlag_TC1(DMA1);
+        LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+        /* transfer complete - notify application */
+		FDCAN1_DMA_TC(dma_src_start);
+    }
+
+    if (LL_DMA_IsActiveFlag_TE1(DMA1))
+    {
+        LL_DMA_ClearFlag_TE1(DMA1);
+        LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+        /* handle error */
+		//TODO: Handle DMA Transfer error
+    }
+}
+
+void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority)
 {
     /* Enable DMA1 clock */
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
@@ -580,22 +800,31 @@ void DMA_M2M_Init(void)
         LL_DMA_MODE_NORMAL                |
         LL_DMA_PERIPH_INCREMENT           |   /* src increment */
         LL_DMA_MEMORY_INCREMENT           |   /* dst increment */
-        LL_DMA_PDATAALIGN_WORD            |   /* src word (32-bit) */
-        LL_DMA_MDATAALIGN_WORD            |   /* dst word (32-bit) */
+        LL_DMA_PDATAALIGN_BYTE            |   /* src word (32-bit) */
+        LL_DMA_MDATAALIGN_BYTE            |   /* dst word (32-bit) */
         LL_DMA_PRIORITY_HIGH);
 
     /* For M2M, DMAMUX must be set to a software request line (0) */
     LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_MEM2MEM);
+
+	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
+    LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_1);
+
+	NVIC_SetPriority(DMA1_Channel1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), preempt, subpriority));
+    NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 }
 
-void DMA_M2M_Transfer(uint32_t *src, uint32_t *dst, uint32_t word_count)
+void DMA_M2M_StartTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 {
     /* Disable channel before reconfiguring */
     LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 
     LL_DMA_SetMemoryAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)dst);
-    LL_DMA_SetPeriphAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)src);
-    LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, word_count);
+
+	LL_DMA_SetPeriphAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)src);
+	dma_src_start = src;
+
+	LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, byte_count);
 
     /* Clear any pending flags before enabling */
     LL_DMA_ClearFlag_TC1(DMA1);
