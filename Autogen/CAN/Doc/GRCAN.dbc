@@ -608,12 +608,7 @@ BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
  SG_ BSPD_LED : 2|1@1+ (1,0) [0|0] "Bool" Dash_Panel
 
 BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
- SG_ GLV_Off_State : 0|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ GLV_On_State : 1|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Precharge_Engaged_State : 2|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Precharge_Complete_State : 3|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ Drive_Active_ECU_State : 4|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ TS_Discharge_ECU_State : 5|1@1+ (1,0) [0|0] "Bool" ALL
+ SG_ state_messages : 0|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ status_flags : 8|1@1+ (1,0) [0|0] "" ALL
  SG_ Power_Level : 16|4@1+ (1,0) [0|0] "" ALL
  SG_ Torque_Map : 20|4@1+ (1,0) [0|0] "" ALL
