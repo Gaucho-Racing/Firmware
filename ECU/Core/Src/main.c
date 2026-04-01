@@ -81,13 +81,12 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
-#define NUM_SIGNALS_ADC2 4
+#define NUM_SIGNALS_ADC2 3
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
-uint16_t *adcDataValues[NUM_SIGNALS] = {0};	  // 2D Array
 
 // DIGITAL
 
@@ -125,10 +124,11 @@ void write_adc_values_to_state_data()
 	stateLump.Brake_F_Signal = ADC_outputs[4];
 	stateLump.Brake_R_Signal = ADC_outputs[5];
 	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
-	stateLump.STEERING_ANGLE_SIGNAL = ADC_outputs[6];
-	stateLump.bspd_sense = ADC_outputs[7];
-	stateLump.imd_sense = ADC_outputs[8];
-	stateLump.ams_sense = ADC_outputs[9];
+
+	// TODO: determine conversion factors for all of these (uint to float)
+	stateLump.bspd_sense = ADC_outputs[6];
+	stateLump.imd_sense = ADC_outputs[7];
+	stateLump.ams_sense = ADC_outputs[8];
 }
 
 void ADC_Configure(void)
@@ -199,10 +199,10 @@ void ADC_Configure(void)
 	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
-	Pin_Ports p2[2] = {{.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA}, {.pin = STEERING_ANGLE_Pin, .port = STEERING_ANGLE_GPIO_Port}};
-	Init_Vals_ADC2.Pins = p2;
-	Init_Vals_ADC2.Num_Channels = 4; // check multiple GPIO stuff
-	Channel c2[] = {ADC_CHANNEL_15, ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
+	Pin_Ports p2 = {.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA};
+	Init_Vals_ADC2.Pins = &p2;
+	Init_Vals_ADC2.Num_Channels = 3; // check multiple GPIO stuff
+	Channel c2[] = {ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
 	Init_Vals_ADC2.Channels = c2;
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
@@ -417,9 +417,6 @@ int main(void)
 	CAN_Configure();
 
 	ADC_Configure();
-	for (int i = 0; i < NUM_SIGNALS; i++) {
-		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
-	}
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 

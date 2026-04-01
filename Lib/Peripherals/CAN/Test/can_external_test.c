@@ -5,6 +5,16 @@
 #include "can_tests.h"
 
 // CAN Configuration
+// #define OLD_SAM
+
+#if defined(OLD_SAM)
+#define NODE_ID 1 // change for each node you flash
+#else
+#define NODE_ID 2
+#endif
+
+#define NUM_NODES 2    // total number of nodes on the bus (including this one)
+#define NUM_MESSAGES 5 // number of messages each node sends to every other node
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
@@ -31,7 +41,7 @@ static void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 int can_external_test(void)
 {
 	FDCAN_TxHeaderTypeDef TxHeader = {
-	    .Identifier = 1,
+	    .Identifier = NODE_ID,
 
 	    .IdType = FDCAN_STANDARD_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
@@ -52,10 +62,28 @@ int can_external_test(void)
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
+	/*cfg1.rx_gpio = GPIOA;
+	cfg1.init_rx_gpio.Pin = GPIO_PIN_11;
+	cfg1.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+	cfg1.tx_gpio = GPIOA;
+	cfg1.init_tx_gpio.Pin = GPIO_PIN_12;
+	cfg1.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+	*/
+
 	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_NORMAL, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN2\n");
 		return ERROR;
 	}
+#ifdef OLD_SAM
+	cfg2.rx_gpio = GPIOB;
+	cfg2.init_rx_gpio.Pin = GPIO_PIN_13;
+	cfg2.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	cfg2.tx_gpio = GPIOB;
+	cfg2.init_tx_gpio.Pin = GPIO_PIN_5;
+	cfg2.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
+#endif
 
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
@@ -86,11 +114,12 @@ int can_external_test(void)
 	msg.data[0] = 0x80;
 	msg.tx_header = TxHeader;
 
-	uint32_t i = 0;
-	uint32_t num_messages = 5;
+	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
 
-	LOGOMATIC("Sending %ld messages on each bus...\n", num_messages);
-	while (i < num_messages) {
+	// uint32_t node_target = 0;
+	uint32_t i = 0;
+
+	while (i < NUM_MESSAGES) {
 		HAL_Delay(100);
 		msg.data[0] = 0x2;
 		can_send(primary_can, &msg);
@@ -99,27 +128,32 @@ int can_external_test(void)
 		can_send(data_can, &msg);
 		i += 1;
 	}
+
+	HAL_Delay(5000);
 	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
 	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
 
 	uint32_t error = false;
 
 	// TODO: Create testing functions to check state of can instance
-	if ((rx_1_received != num_messages)) {
+	if (rx_1_received != NUM_MESSAGES * (NUM_NODES - 1)) {
 		error = true;
-		LOGOMATIC("FAIL: can_internal_test: did not receive all rx1\n");
+		LOGOMATIC("FAIL: can_external_test: did not receive all rx1\n");
 	} else {
-		LOGOMATIC("SUCCESS: can_internal_test: received all rx1\n");
+		LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
 	}
-	if ((rx_2_received != num_messages)) {
+	if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
 		error = true;
-		LOGOMATIC("FAIL: can_internal_test: did not receive all rx2\n");
+		LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
 	} else {
-		LOGOMATIC("SUCCESS: can_internal_test: received all rx2\n");
+		LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
 	}
 
 	if (primary_can->tx_elements > 0) {
-		LOGOMATIC("can_internal_test: FAIL: did not send all messages from tx_buffer\n");
+		LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
+	}
+	if (data_can->tx_elements > 0) {
+		LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
 	}
 	LOGOMATIC("\n");
 
