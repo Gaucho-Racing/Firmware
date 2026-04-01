@@ -262,7 +262,7 @@ sub process_byte_entry {
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
 
-	if ( scalar @{$fields} > 2 && ${$fields}[0]->{name} =~ /reserved|ping|byte/ismx) {
+	if ( scalar @{$fields} > 2 && ${$fields}[0]->{name} =~ /reserved|ping|byte/ismx ) {
 		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
 	}
 	else {
@@ -294,11 +294,11 @@ sub handle_multi_field_range {
 		my $next_byte = ${$bytes_ref}[ ${$idx_ref} + 1 ];
 		my $next_f    = ${$map_ref}{$next_byte};
 		if ( scalar @{$next_f} > 2 || ${$next_f}[0]->{name} =~ /reserved/ismx ) {
-        	${$idx_ref}++;
-    	}
-    	else {
-        	last;
-    	}
+			${$idx_ref}++;
+		}
+		else {
+			last;
+		}
 	}
 
 	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
