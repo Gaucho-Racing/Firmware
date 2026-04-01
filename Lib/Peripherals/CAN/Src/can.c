@@ -5,7 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+//TODO: make the profiler cleaner
+
 #include "Logomatic.h"
+#include "profile.h"
 
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
@@ -462,6 +465,9 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 	can_tx_dequeue_helper(handle);
 }
 
+//#define PROFILE
+//uint32_t PROFILE_AVG_RX_CYCLES = 0;
+//uint32_t PROFILE_AVG_RX_CYCLES_SAMPLES = 0;
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
 	CANHandle *handle = can_get_handle(hfdcan);
@@ -491,19 +497,37 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
 	FDCAN_RxHeaderTypeDef rx_header;
 
-	// TODO: Stack allocation may be unsafe, (but not unsafer than heap)
+
+	//TIMING RX TRANSFER ===========================================================
+	#ifdef PROFILE
+	DWT->CYCCNT = 0;
+	ELAPSED_CYCLES = 0;
+	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	#endif
+
+	// TODO: Stack allocation should be safe - CAN messages are infrequent enough
 	uint8_t rx_data[64] = {0};
 
 	// TODO: maybe also use a timer for this?
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 
-		// stack allocation should be fine? Callback needs to terminate first before stack is popped
-		// should switch this over to malloc at some point to avoid double copies?
+		#ifdef PROFILE
+		ELAPSED_CYCLES = DWT->CYCCNT;
+		PROFILE_RX_SAMPLES++;
+		PROFILE_AVG_RX_CYCLES+= ELAPSED_CYCLES;
+		AVG = PROFILE_AVG_RX_CYCLES/((float)PROFILE_RX_SAMPLES);
+		//UNUSED(elapsed_cycles);
+		DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
+		#endif
+
 		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 		handle->rx_callback(rx_header.Identifier, rx_data, rx_header.DataLength);
 	}
+
+	//END TIMING
+
 	/*
 	    if (GR_CircularBuffer_IsEmpty(handle->rx_buffer)) handle->rx_callback(rx_data, rx_header.DataLength);
 	    else {

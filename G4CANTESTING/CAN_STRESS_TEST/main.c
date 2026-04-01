@@ -33,6 +33,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+//#include "profile.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

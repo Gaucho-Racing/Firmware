@@ -2,6 +2,9 @@
 
 #include "can.h"
 #include "can_tests.h"
+#include "profile.h"
+
+#define SIZE 64
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
@@ -17,6 +20,7 @@ void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 int can_stress_test(void)
 {
 	LOGOMATIC("running can_stress_test\n");
+
 
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 	//DWT->LAR = 0xC5ACCE55;    // May be optional depending on your CPU
@@ -47,7 +51,7 @@ int can_stress_test(void)
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
 						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 20,
+	    .DataLength = SIZE,
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
@@ -71,6 +75,8 @@ int can_stress_test(void)
 	size_t rounds = 5;
 	size_t messages = primary_can->tx_capacity * 2;
 	uint32_t successes = 0;
+	LOGOMATIC("Sending CAN msgs of size %d bytes...\n", SIZE);
+
 	while (loop < rounds) {
 		loop++;
 		can_stress_test_received = 0;
@@ -102,6 +108,9 @@ int can_stress_test(void)
 		// can_send(data_can, &msg);
 		// HAL_Delay(1000);
 	}
+	LOGOMATIC("AVG: %f\n",AVG);
+	LOGOMATIC("Total Cycles: %ld\n",PROFILE_AVG_RX_CYCLES);
+	LOGOMATIC("Total Samples: %ld\n",PROFILE_RX_SAMPLES);
 
 	if (can_release(primary_can)) {
 		LOGOMATIC("can_stress_test: FAIL: could not release primary_can\n");
