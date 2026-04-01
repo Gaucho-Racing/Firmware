@@ -569,46 +569,6 @@ void can_read_rx_buffer(CANHandle* canHandle) {
 }*/
 
 
-void DMA_M2M_Init(void)
-{
-    /* Enable DMA1 clock */
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
-
-    LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_1,
-        LL_DMA_DIRECTION_MEMORY_TO_MEMORY |
-        LL_DMA_MODE_NORMAL                |
-        LL_DMA_PERIPH_INCREMENT           |   /* src increment */
-        LL_DMA_MEMORY_INCREMENT           |   /* dst increment */
-        LL_DMA_PDATAALIGN_WORD            |   /* src word (32-bit) */
-        LL_DMA_MDATAALIGN_WORD            |   /* dst word (32-bit) */
-        LL_DMA_PRIORITY_HIGH);
-
-    /* For M2M, DMAMUX must be set to a software request line (0) */
-    LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_MEM2MEM);
-}
-
-void DMA_M2M_Transfer(uint32_t *src, uint32_t *dst, uint32_t word_count)
-{
-    /* Disable channel before reconfiguring */
-    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
-
-    LL_DMA_SetMemoryAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)dst);
-    LL_DMA_SetPeriphAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)src);
-    LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, word_count);
-
-    /* Clear any pending flags before enabling */
-    LL_DMA_ClearFlag_TC1(DMA1);
-    LL_DMA_ClearFlag_TE1(DMA1);
-
-    LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-
-    /* Poll for transfer complete */
-    while (!LL_DMA_IsActiveFlag_TC1(DMA1));
-
-    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
-}
-
 
 // Just alternatively just use the HAL_FDCAN_ConfigFilter directly with the canHandle->hal_fdcan
 CAN_STATUS can_add_filter(CANHandle *canHandle, FDCAN_FilterTypeDef *filter)
