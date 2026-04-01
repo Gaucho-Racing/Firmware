@@ -18,8 +18,7 @@ static CANHandle *grcan_charging;
 
 static GR_OLD_NODE_ID grcan_local_node_id;
 
-
-//can change rx callback settings to custom callback, check message size and count errors
+// can change rx callback settings to custom callback, check message size and count errors
 /*
 EXAMPLE USAGE:
 
