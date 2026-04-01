@@ -110,6 +110,8 @@ uint32_t GRCAN_ToHAL_ClockDivider(GRCAN_ClockDivider div);
 uint32_t GRCAN_ToHAL_FrameFormat(GRCAN_FrameFormat fmt);
 uint32_t GRCAN_ToHAL_OperatingMode(GRCAN_OperatingMode mode);
 uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state);
+GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus);
+CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus);
 
 uint32_t GRCAN_to_DLC(uint32_t size);
 uint32_t DLC_to_GRCAN(uint32_t dlc);

@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "grcan_utils.h"
 
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
@@ -11,10 +12,6 @@ typedef struct {
 	GR_OLD_NODE_ID destNode;
 	GR_OLD_MSG_ID messageID;
 } GRCAN_Fancy_ID;
-typedef enum {
-	GRCAN_MODE_CLASSIC,
-	GRCAN_MODE_FD
-} GRCAN_BusMode;
 
 GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus);
 void GRCAN_ConfigureBus(GR_OLD_BUS_ID bus, CANConfig *config);

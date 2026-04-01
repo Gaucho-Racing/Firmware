@@ -17,6 +17,8 @@ static CANHandle *grcan_charging;
 
 static GR_OLD_NODE_ID grcan_local_node_id;
 
+
+//can change rx callback settings to custom callback, check message size and count errors
 /*
 EXAMPLE USAGE:
 
@@ -98,39 +100,6 @@ void GRCAN_Abstracted_Config(GRCAN_BusConfig *bus_config){
 
 }
 
-GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus)
-{
-	switch (bus) {
-		case GR_OLD_BUS_PRIMARY:
-			return GRCAN_MODE_FD;
-		case GR_OLD_BUS_TESTING:
-			return GRCAN_MODE_FD;
-		case GR_OLD_BUS_DATA:
-			return GRCAN_MODE_CLASSIC;
-		case GR_OLD_BUS_CHARGING:
-			return GRCAN_MODE_CLASSIC; // update later
-		default:
-			LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
-			return GRCAN_MODE_CLASSIC;
-	}
-}
-
-CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus)
-{
-	switch (bus) {
-		case GR_OLD_BUS_PRIMARY:
-			return grcan_primary;
-		case GR_OLD_BUS_DATA:
-			return grcan_data;
-		case GR_OLD_BUS_TESTING:
-			return grcan_testing;
-		case GR_OLD_BUS_CHARGING:
-			return grcan_charging;
-		default:
-			return NULL;
-	}
-}
-
 void GRCAN_ConfigureBus(GR_OLD_BUS_ID bus, CANConfig *config)
 {
 	CANHandle **h = NULL;
@@ -187,20 +156,20 @@ void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *
 	grcan_charging = chargingCAN;
 } // different version of init function, keeping both architectures to see which works better
 
-uint32_t GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id)
+uint32_t GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id)
 {
 	if (id == NULL) {
-		LOGOMATIC("GRCAN_Fancy_Decode: Received NULL pointer\n");
+		LOGOMATIC("GRCAN_Fancy_Encode: Received NULL pointer\n");
 		return 0;
 	}
 
 	return ((0xFF & id->srcID) << 20) | ((0xFFF & id->messageID) << 8) | (0xFF & id->destNode);
 }
 
-void GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id, uint32_t rawID)
+void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID)
 {
 	if (id == NULL) {
-		LOGOMATIC("GRCAN_Fancy_Encode: Received NULL pointer\n");
+		LOGOMATIC("GRCAN_Fancy_Decode: Received NULL pointer\n");
 		return;
 	}
 
