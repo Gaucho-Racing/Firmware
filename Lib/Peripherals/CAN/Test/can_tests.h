@@ -4,6 +4,7 @@
 #include "Logomatic.h"
 #include "can.h"
 #include "can_platform_deps.h"
+#include "profile.h"
 
 // abstract families
 // extern int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode);

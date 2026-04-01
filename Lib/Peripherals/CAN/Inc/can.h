@@ -106,5 +106,10 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 // Configuration helpers
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t FDCAN_Mode, uint32_t numStdFilters, uint32_t numExtFilters);
 
+//Profiler stuff
+#include "profile.h"
+
+extern dwt_timer_t rx_timer;
+extern dwt_timer_t send_timer;
 
 #endif

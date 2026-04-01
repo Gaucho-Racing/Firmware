@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+#include "stm32g4xx_ll_dma.h"
+#include "stm32g4xx_ll_bus.h"
+
 //TODO: make the profiler cleaner
 
 #include "Logomatic.h"
@@ -349,7 +353,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 	__set_BASEPRI(handle->tx_interrupt_priority << 4);
 	// single consumer shouldn't affect state of circular buffer
 	if (handle->tx_elements == 0) {
-		__set_BASEPRI(basepri << 4);
+		__set_BASEPRI(basepri);
 		return;
 	}
 
@@ -362,7 +366,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 		if (status != HAL_OK) {
 			// LOGOMATIC("CAN_tx_helper: failed to add message to FIFO\n"); //FIXME: Logomatic may not work with interrupts disabled
-			__set_BASEPRI(basepri << 4);
+			__set_BASEPRI(basepri);
 			return; // Stop trying to send more
 		}
 		// free(msg); // Successfully sent, free the entry in the circular buffer (which is pointed to by tail)
@@ -373,11 +377,13 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 	} // alternatively, if fifo is full, tx_dequeue should get called anyways, and we don't need the else statement
 
-	__set_BASEPRI(basepri << 4);
+	__set_BASEPRI(basepri);
 }
 
+dwt_timer_t send_timer = {0};
 CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 {
+
 	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
 		return CAN_ERROR;
 	}
@@ -403,6 +409,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	// If circular buffer is full, return an error code
 
 	// stop can_tx_dequeue_helper from from interleaving
+	//TODO: Check BASEPRI register
 	uint32_t basepri = __get_BASEPRI();
 	__set_BASEPRI((canHandle->tx_interrupt_priority) << 4);
 
@@ -417,7 +424,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		} else {
 			val = CAN_SUCCESS;
 		}
-		__set_BASEPRI(basepri << 4);
+		__set_BASEPRI(basepri);
 		return val;
 	}
 	//}
@@ -431,7 +438,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		canHandle->tx_elements++;
 		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
-		__set_BASEPRI(basepri << 4);
+		__set_BASEPRI(basepri);
 		return CAN_SUCCESS; // added to software buffer
 
 		/*if (result != 0) {
@@ -443,9 +450,10 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	} else {
 		LOGOMATIC("CAN_send: all buffers full\n"); // p
 	}
-	__set_BASEPRI(basepri << 4);
+	__set_BASEPRI(basepri);
 	// Both buffers full
 	return CAN_ERROR;
+
 }
 
 void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
@@ -468,8 +476,15 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 //#define PROFILE
 //uint32_t PROFILE_AVG_RX_CYCLES = 0;
 //uint32_t PROFILE_AVG_RX_CYCLES_SAMPLES = 0;
+
+dwt_timer_t rx_timer = {0};
+//1238 Cycles
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
+	dwt_timer_start_measurement(&rx_timer);
+
+	//dwt_timer_start_measurement(&rx_timer);
+
 	CANHandle *handle = can_get_handle(hfdcan);
 
 	if (!handle || !handle->init || !handle->rx_callback) {
@@ -499,27 +514,29 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 
 	//TIMING RX TRANSFER ===========================================================
-	#ifdef PROFILE
-	DWT->CYCCNT = 0;
-	ELAPSED_CYCLES = 0;
-	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-	#endif
+	//global_dwt_timer_start_measurement();
+	//GLOBAL_DWT_TIMER.start_cycle = DWT->CYCCNT;
+	//global_dwt_timer_end_measurement();
+
 
 	// TODO: Stack allocation should be safe - CAN messages are infrequent enough
 	uint8_t rx_data[64] = {0};
 
+
 	// TODO: maybe also use a timer for this?
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
+		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
+		//Takes less time to fetch 64 bytes than it does to get 1 byte???
+		//dwt_timer_start_measurement(&rx_timer);
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 
-		#ifdef PROFILE
-		ELAPSED_CYCLES = DWT->CYCCNT;
-		PROFILE_RX_SAMPLES++;
-		PROFILE_AVG_RX_CYCLES+= ELAPSED_CYCLES;
-		AVG = PROFILE_AVG_RX_CYCLES/((float)PROFILE_RX_SAMPLES);
-		//UNUSED(elapsed_cycles);
-		DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
-		#endif
+		//dwt_timer_end_measurement(&rx_timer);
+
+
+		//global_dwt_timer_end_measurement();
+		//GLOBAL_DWT_TIMER.total_cycles += DWT->CYCCNT - GLOBAL_DWT_TIMER.start_cycle;
+    	//GLOBAL_DWT_TIMER.total_samples++;
+
 
 		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
@@ -535,6 +552,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	    }
 	}*/
 	//__set_BASEPRI(prev_priority);
+	dwt_timer_end_measurement(&rx_timer);
+
 }
 
 /*
@@ -548,6 +567,51 @@ void can_read_rx_buffer(CANHandle* canHandle) {
 /*void HAL_FDCAN_RxFifo1Callback(FDCAN_HandleTypeDef * hfdcan, uint32_t RxFifo0ITs) {
 
 }*/
+
+
+void DMA_M2M_Init(void)
+{
+    /* Enable DMA1 clock */
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
+
+    LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_1,
+        LL_DMA_DIRECTION_MEMORY_TO_MEMORY |
+        LL_DMA_MODE_NORMAL                |
+        LL_DMA_PERIPH_INCREMENT           |   /* src increment */
+        LL_DMA_MEMORY_INCREMENT           |   /* dst increment */
+        LL_DMA_PDATAALIGN_WORD            |   /* src word (32-bit) */
+        LL_DMA_MDATAALIGN_WORD            |   /* dst word (32-bit) */
+        LL_DMA_PRIORITY_HIGH);
+
+    /* For M2M, DMAMUX must be set to a software request line (0) */
+    LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_MEM2MEM);
+}
+
+void DMA_M2M_Transfer(uint32_t *src, uint32_t *dst, uint32_t word_count)
+{
+    /* Disable channel before reconfiguring */
+    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+    LL_DMA_SetMemoryAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)dst);
+    LL_DMA_SetPeriphAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)src);
+    LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, word_count);
+
+    /* Clear any pending flags before enabling */
+    LL_DMA_ClearFlag_TC1(DMA1);
+    LL_DMA_ClearFlag_TE1(DMA1);
+
+    LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+
+
+
+    /* Poll for transfer complete */
+    while (!LL_DMA_IsActiveFlag_TC1(DMA1));
+
+    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+}
+
 
 // Just alternatively just use the HAL_FDCAN_ConfigFilter directly with the canHandle->hal_fdcan
 CAN_STATUS can_add_filter(CANHandle *canHandle, FDCAN_FilterTypeDef *filter)
@@ -623,7 +687,7 @@ CAN_STATUS can_stop(CANHandle *canHandle)
 	}
 
 	// stop can interrupts from activating
-	uint32_t prev_priority = __get_BASEPRI();
+	uint32_t base_pri = __get_BASEPRI();
 	__set_BASEPRI(MIN(canHandle->rx_interrupt_priority, canHandle->tx_interrupt_priority) << 4);
 
 	if (HAL_FDCAN_Stop(canHandle->hal_fdcanP) != HAL_OK) {
@@ -641,7 +705,7 @@ CAN_STATUS can_stop(CANHandle *canHandle)
 	HAL_NVIC_ClearPendingIRQ(rx0it);
 	HAL_NVIC_ClearPendingIRQ(txit);
 
-	__set_BASEPRI(prev_priority << 4);
+	__set_BASEPRI(base_pri);
 
 	GPIOx_CLK_DISABLE(canHandle->rx_gpio);
 	GPIOx_CLK_DISABLE(canHandle->tx_gpio);

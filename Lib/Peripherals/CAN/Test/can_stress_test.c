@@ -4,7 +4,7 @@
 #include "can_tests.h"
 #include "profile.h"
 
-#define SIZE 64
+#define SIZE 1
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
@@ -21,11 +21,7 @@ int can_stress_test(void)
 {
 	LOGOMATIC("running can_stress_test\n");
 
-
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	//DWT->LAR = 0xC5ACCE55;    // May be optional depending on your CPU
-	//DWT->CYCCNT = 0;
-	//DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	start_dwt();
 
 	uint32_t status, loop;
 	UNUSED(status);
@@ -68,7 +64,7 @@ int can_stress_test(void)
 
 	FDCANTxMessage msg;
 	memset(&(msg.data), 0, sizeof(msg.data));
-	msg.data[0] = 0x80;
+	for (int i = 0; i < SIZE; i++) { msg.data[i] = 0x80; }
 	msg.tx_header = TxHeader;
 
 	size_t i = 0;
@@ -82,7 +78,12 @@ int can_stress_test(void)
 		can_stress_test_received = 0;
 		i = 0;
 		while (i < messages) {
-			if (can_send(primary_can, &msg) != CAN_SUCCESS) {
+
+			dwt_timer_start_measurement(&send_timer);
+			CAN_STATUS res = can_send(primary_can, &msg);
+			dwt_timer_end_measurement(&send_timer);
+
+			if (res != CAN_SUCCESS) {
 				LOGOMATIC("can_stress_test: FAIL: sending CAN msg at %u-th consecutive send.\n", (unsigned int)i + 1);
 				break;
 			}
@@ -108,9 +109,19 @@ int can_stress_test(void)
 		// can_send(data_can, &msg);
 		// HAL_Delay(1000);
 	}
-	LOGOMATIC("AVG: %f\n",AVG);
-	LOGOMATIC("Total Cycles: %ld\n",PROFILE_AVG_RX_CYCLES);
-	LOGOMATIC("Total Samples: %ld\n",PROFILE_RX_SAMPLES);
+
+
+	LOGOMATIC("SIZE: %d\n", SIZE);
+
+	LOGOMATIC("Receive Stats ===================\n");
+	dwt_timer_print_info(&rx_timer);
+	LOGOMATIC("\n");
+
+
+	LOGOMATIC("Send Stats ====================== \n");
+	dwt_timer_print_info(&send_timer);
+	LOGOMATIC("\n");
+
 
 	if (can_release(primary_can)) {
 		LOGOMATIC("can_stress_test: FAIL: could not release primary_can\n");
@@ -125,10 +136,10 @@ int can_stress_test(void)
 		LOGOMATIC("can_stress_test: SUCCESS\n");
 	}
 
-
 	//Disable DWT Counter
-	DWT->CYCCNT = 0;
-	DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
+	stop_dwt();
+	//DWT->CYCCNT = 0;
+	//DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
 
 	return SUCCESS;
 }

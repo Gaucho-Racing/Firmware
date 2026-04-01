@@ -206,6 +206,14 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_LOST_RX_TEST"
+		},{
+			"label": "CMake: configure and build PROFILER_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target PROFILER_TEST"
 		}
 	]
 }
