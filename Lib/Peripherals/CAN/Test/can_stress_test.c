@@ -4,7 +4,7 @@
 #include "can_tests.h"
 #include "profile.h"
 
-#define SIZE 4
+#define SIZE 64
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;

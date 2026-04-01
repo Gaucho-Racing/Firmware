@@ -1,11 +1,22 @@
+
+#include "stm32g4xx_ll_dma.h"
+#include "stm32g4xx_ll_bus.h"
+#include <stdbool.h>
+
+#include "can_dma.h"
+
+//#include "can_platform_deps.h"
 #include "STM32G4_hal_fdcan_defines.h"
 
 
-CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
+static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
+
+
+HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
 {
 	uint32_t *RxAddress;
 	uint8_t *pData;
-	uint32_t ByteCounter;
+	uint32_t ByteCounter; UNUSED(ByteCounter);
 	uint32_t GetIndex;
 
 	//FDCAN_HandleTypeDef* hfdcan = handle->hal_fdcanP;
@@ -110,7 +121,8 @@ CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxL
 		/* Retrieve Rx payload with DMA*/
 
 		pData = (uint8_t *)RxAddress;
-		DMA_M2M_StartTransfer(pData, pRxData, DLCtoBytes[pRxHeader->DataLength] );
+		uint32_t bytes = DLCtoBytes[pRxHeader->DataLength];
+		DMA_M2M_BlockingTransfer(pData, pRxData, bytes);
 
 		/*for (ByteCounter = 0; ByteCounter < DLCtoBytes[pRxHeader->DataLength]; ByteCounter++) {
 			pRxData[ByteCounter] = pData[ByteCounter];
@@ -126,7 +138,7 @@ CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxL
 			hfdcan->Instance->RXF1A = GetIndex;
 		}
 		/* Return function status */
-		return CAN_SUCCESS;
+		return HAL_OK;
 
 
 	} else {
@@ -138,6 +150,39 @@ CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxL
 }
 
 
+void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority)
+{
+    //Enable DMA1 clock
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
+
+    LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_1,
+        LL_DMA_DIRECTION_MEMORY_TO_MEMORY |
+        LL_DMA_MODE_NORMAL                |
+        LL_DMA_PERIPH_INCREMENT           |   // src increment
+        LL_DMA_MEMORY_INCREMENT           |   // dst increment
+        LL_DMA_PDATAALIGN_BYTE            |   // src word (32-bit)
+        LL_DMA_MDATAALIGN_BYTE            |   // dst word (32-bit)
+        LL_DMA_PRIORITY_HIGH);
+
+    //For M2M, DMAMUX must be set to a software request line (0)
+    LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_MEM2MEM);
+
+	UNUSED(preempt);
+	UNUSED(subpriority);
+	/*LL_DMA_ClearFlag_TC1(DMA1);
+    LL_DMA_ClearFlag_TE1(DMA1);
+
+	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
+    LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_1);
+
+	NVIC_SetPriority(DMA1_Channel1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), preempt, subpriority));
+    NVIC_EnableIRQ(DMA1_Channel1_IRQn);*/
+}
+
+
+
+/*
 #define RxFifoElementsNumber 3
 bool is_valid_rxfifo0_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress)
 {
@@ -157,8 +202,9 @@ bool is_valid_rxfifo1_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress) 
 
     return (addr >= fifo_start) && (addr + SRAMCAN_RF0_SIZE <= fifo_end);
 	return false;
-}
+}*/
 
+/*
 //TODO: Abstract out to handle other FDCAN instances besides FDCAN1 and FDCAN2
 void FDCAN1_DMA_TC(uint8_t *src_addr) {
 	if (!is_valid_rxfifo0_address(&hal_fdcan1, (uint32_t*)src_addr)) {
@@ -180,12 +226,13 @@ void FDCAN1_DMA_TC(uint8_t *src_addr) {
 	//	hfdcan->Instance->RXF1A = GetIndex;
 	//}
 
-}
-
+}*/
+/*
 void FDCAN2_DMA2_TC() {
 
-}
+}*/
 
+/*
 static volatile uint8_t* dma_src_start;
 void DMA1_Channel1_IRQHandler(void)
 {
@@ -207,41 +254,20 @@ void DMA1_Channel1_IRQHandler(void)
 		//TODO: Handle DMA Transfer error
     }
 }
+*/
 
-void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority)
+void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 {
-    //Enable DMA1 clock
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
 
-    LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_1,
-        LL_DMA_DIRECTION_MEMORY_TO_MEMORY |
-        LL_DMA_MODE_NORMAL                |
-        LL_DMA_PERIPH_INCREMENT           |   // src increment
-        LL_DMA_MEMORY_INCREMENT           |   // dst increment
-        LL_DMA_PDATAALIGN_BYTE            |   // src word (32-bit)
-        LL_DMA_MDATAALIGN_BYTE            |   // dst word (32-bit)
-        LL_DMA_PRIORITY_HIGH);
+	if (byte_count == 0) return;
 
-    //For M2M, DMAMUX must be set to a software request line (0)
-    LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_MEM2MEM);
-
-	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
-    LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_1);
-
-	NVIC_SetPriority(DMA1_Channel1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), preempt, subpriority));
-    NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-}
-
-void DMA_M2M_StartTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
-{
     /* Disable channel before reconfiguring */
     LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 
     LL_DMA_SetMemoryAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)dst);
 
 	LL_DMA_SetPeriphAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)src);
-	dma_src_start = src;
+	//dma_src_start = src;
 
 	LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, byte_count);
 

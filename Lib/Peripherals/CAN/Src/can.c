@@ -16,9 +16,9 @@
 
 //TODO: define DMA usage in a better way
 //#define USEDMA
-//#ifdef USEDMA
-//#undef USEDMA
-//#endif
+#ifdef USEDMA
+#include "can_dma.h"
+#endif
 
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
@@ -128,12 +128,6 @@ static inline void fdcan_disable_shared_clock(void);
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
-
-
-//DMA Shenanigans
-void DMA_M2M_StartTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
-void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority);
-CAN_STATUS FDCAN_GetRxMessage_StartDMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData);
 
 
 inline void can_set_clksource(uint32_t clksource)
@@ -286,7 +280,8 @@ CANHandle *can_init(const CANConfig *config)
 	}
 
 	#ifdef USEDMA
-	//DMA_M2M_Init(canHandle->rx_interrupt_priority, 0);
+		for(int i = 0; i < 10; i++);
+	DMA_M2M_Init(canHandle->rx_interrupt_priority, 0);
 	#endif
 
 	canHandle->init = true;
@@ -546,12 +541,14 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 		//dwt_timer_start_measurement(&rx_timer);
 
+		#ifdef USEDMA
+		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		#else
+
 		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
-		//#ifndef USEDMA
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		//#else
-		//FDCAN_GetRxMessage_StartDMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		//#endif
+		#endif
+
 		//dwt_timer_end_measurement(&rx_timer);
 
 

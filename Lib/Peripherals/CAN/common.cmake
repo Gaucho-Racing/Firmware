@@ -12,6 +12,8 @@ target_sources(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_cfg_helpers.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
+
 )
 
 # Make headers accessible as #include "Peripherals/CAN/can.h"
