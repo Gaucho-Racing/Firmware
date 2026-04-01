@@ -14,6 +14,12 @@
 #include "Logomatic.h"
 #include "profile.h"
 
+//TODO: define DMA usage in a better way
+//#define USEDMA
+#ifdef USEDMA
+#include "can_dma.h"
+#endif
+
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
 #ifndef CAN_CFG_H
@@ -29,6 +35,8 @@
 // #define TX_BUFFER_1_SIZE 10
 
 // #endif
+
+
 
 // HAL handles
 #ifdef USECAN1
@@ -120,7 +128,6 @@ static inline void fdcan_disable_shared_clock(void);
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
-
 
 
 inline void can_set_clksource(uint32_t clksource)
@@ -271,6 +278,11 @@ CANHandle *can_init(const CANConfig *config)
 
 		return NULL;
 	}
+
+	#ifdef USEDMA
+		for(int i = 0; i < 10; i++);
+	DMA_M2M_Init(canHandle->rx_interrupt_priority, 0);
+	#endif
 
 	canHandle->init = true;
 	canHandle->started = false;
@@ -525,10 +537,17 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	// TODO: maybe also use a timer for this?
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
-		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
 		//Takes less time to fetch 64 bytes than it does to get 1 byte???
+
 		//dwt_timer_start_measurement(&rx_timer);
+
+		#ifdef USEDMA
+		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		#else
+
+		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		#endif
 
 		//dwt_timer_end_measurement(&rx_timer);
 

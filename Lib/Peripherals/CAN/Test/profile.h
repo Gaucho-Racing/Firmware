@@ -7,11 +7,9 @@
 #include "Logomatic.h"
 #include <stdbool.h>
 
-#define MAX(a, b) ({        \
-    __typeof__(a) _a = (a); \
-    __typeof__(b) _b = (b); \
-    _a > _b ? _a : _b;      \
-})
+static inline uint32_t max_u32(uint32_t a, uint32_t b) {
+    return a > b ? a : b;
+}
 typedef struct dwt_timer_t {
     uint32_t total_cycles;
     uint32_t total_samples;
@@ -65,7 +63,7 @@ static inline void dwt_timer_end_measurement(dwt_timer_t *dt) {
 
     dt->measuring = false;
 
-    dt->max_cycles = MAX(dt->max_cycles, elapsed_cycle);
+    dt->max_cycles = max_u32(dt->max_cycles, elapsed_cycle);
     __DSB();
 }
 

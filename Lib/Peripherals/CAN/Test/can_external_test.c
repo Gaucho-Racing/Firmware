@@ -14,11 +14,6 @@
 #define NODE_ID 2
 #endif
 
-#define NUM_NODES 2    // total number of nodes on the bus (including this one)
-#define NUM_MESSAGES 5 // number of messages each node sends to every other node
-// #define OLD_SAM
-
-
 
 #define NUM_NODES 2    // total number of nodes on the bus (including this one)
 #define NUM_MESSAGES 64 // number of messages each node sends to every other node

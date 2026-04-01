@@ -4,13 +4,18 @@
 #include "can_tests.h"
 #include "profile.h"
 
-#define SIZE 1
+#define SIZE 64
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
+static volatile uint8_t can_data[64] = {0};
 void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 {
 	can_stress_test_received++;
+	//simulate a copy using CPU only
+	uint8_t* data_bytes = (uint8_t*) data;
+	for (uint32_t i = 0; i < size; i++) can_data[i] = data_bytes[i];
+
 	UNUSED(id);
 	UNUSED(data);
 	UNUSED(size);

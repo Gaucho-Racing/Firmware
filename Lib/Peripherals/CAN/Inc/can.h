@@ -10,7 +10,8 @@
 
 // #include "can_cfg.h"
 #include "can_platform_deps.h"
-#include "circularBuffer.h"
+//#include "circularBuffer.h"
+#include <stdbool.h>
 
 // RX Callback must perform a deep copy of the data
 //
