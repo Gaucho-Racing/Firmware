@@ -66,11 +66,11 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
+bool SecondaryChecks(const CCU_StateData *state_data)
+{
 
-bool SecondaryChecks(const CCU_StateData *state_data){
-
-	//TODO: Implement secondary checks based of rules (This may be a different file entirely)
-	//FIXME: Double check what that actually looks like and means
+	// TODO: Implement secondary checks based of rules (This may be a different file entirely)
+	// FIXME: Double check what that actually looks like and means
 
 	/** Check 1:
 	 * TS Voltage Discharge
@@ -78,9 +78,6 @@ bool SecondaryChecks(const CCU_StateData *state_data){
 	 * TS voltage must decrease below 60VDC in 5 sec.
 	 * Allow team to set pace of tests to prevent overheating precharge/discharge resistors.
 	 */
-
-
-
 
 	/** Check 2:
 	 * Maximum Power/Voltage Violation
@@ -92,9 +89,4 @@ bool SecondaryChecks(const CCU_StateData *state_data){
 		• Continuously for 100 ms or more
 		• After a moving average over 500 ms is applied
 	 */
-
-
-
-
-
 }
