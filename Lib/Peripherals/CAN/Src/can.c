@@ -603,9 +603,6 @@ void DMA_M2M_Transfer(uint32_t *src, uint32_t *dst, uint32_t word_count)
 
     LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
-
-
-
     /* Poll for transfer complete */
     while (!LL_DMA_IsActiveFlag_TC1(DMA1));
 

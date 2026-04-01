@@ -4,6 +4,7 @@
 #include "can.h"
 #include "can_tests.h"
 
+#include "profile.h"
 // CAN Configuration
 // #define OLD_SAM
 
@@ -17,14 +18,12 @@
 #define NUM_MESSAGES 5 // number of messages each node sends to every other node
 // #define OLD_SAM
 
-#if defined(OLD_SAM)
-#define NODE_ID 1 // change for each node you flash
-#else
-#define NODE_ID 2
-#endif
+
 
 #define NUM_NODES 2    // total number of nodes on the bus (including this one)
-#define NUM_MESSAGES 5 // number of messages each node sends to every other node
+#define NUM_MESSAGES 64 // number of messages each node sends to every other node
+
+#define CAN_PACKET_SIZE 8 //max is 64
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
@@ -57,7 +56,7 @@ int can_external_test(void)
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
 						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 1,
+	    .DataLength = CAN_PACKET_SIZE,
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
@@ -121,7 +120,9 @@ int can_external_test(void)
 	}
 
 	FDCANTxMessage msg = {0};
-	msg.data[0] = 0x80;
+	//msg.data[0] = 0x80;
+	for (int i = 0; i < CAN_PACKET_SIZE; i++) { msg.data[i] = 0x80; }
+
 	msg.tx_header = TxHeader;
 
 	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
@@ -129,17 +130,32 @@ int can_external_test(void)
 	//uint32_t node_target = 0;
 	uint32_t i = 0;
 
+	dwt_timer_t send1_timer = {0}, send2_timer = {0};
+
+	start_dwt();
+
 	while (i < NUM_MESSAGES) {
 		HAL_Delay(100);
 		msg.data[0] = 0x2;
+
+		dwt_timer_start_measurement(&send1_timer);
 		can_send(primary_can, &msg);
+		dwt_timer_end_measurement(&send1_timer);
+
 		HAL_Delay(100);
 		msg.data[0] = 0x10;
+
+		dwt_timer_start_measurement(&send2_timer);
 		can_send(data_can, &msg);
+		//for(int i = 0; i < 100; i++);
+		dwt_timer_end_measurement(&send2_timer);
+
 		i += 1;
 	}
 
-	HAL_Delay(5000);
+	stop_dwt();
+
+	HAL_Delay(1000);
 	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
 	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
 
@@ -180,6 +196,13 @@ int can_external_test(void)
 	if (error) {
 		return ERROR;
 	}
+
+	LOGOMATIC("CAN PACKET SIZE: %ud\n", CAN_PACKET_SIZE);
+	LOGOMATIC("Send1 ===========\n");
+	dwt_timer_print_info(&send1_timer);
+
+	LOGOMATIC("Send2 ===============\n");
+	dwt_timer_print_info(&send2_timer);
 
 	LOGOMATIC("can_external_test: SUCCESS\n");
 
