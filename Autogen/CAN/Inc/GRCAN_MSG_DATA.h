@@ -267,9 +267,7 @@ typedef struct {
 typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
 	uint8_t motor_temperature;
-	/** TS above set max voltage TS below set min voltage Inverter over set max temp Motor over set max temp Mosfet or mosfet drive error Encoder communication or calc error CAN message error or
-	 * timeout (Byte 2) */
-	uint8_t over_voltage_faults_under_voltage_fault_inv_overtemp_fault_motor_overtemp_fault_transistor_fault_encoder_fault_can_fault_future_use;
+	uint8_t error_fault_violation_bits_b2;
 } GRCAN_INVERTER_STATUS_3_MSG;
 
 /** Inverter Config */
@@ -324,16 +322,14 @@ typedef struct {
 
 /** Dash Config */
 typedef struct {
-	/** LED command (0: off, 1: on) LED command (0: off, 1: on) LED command (0: off, 1: on) (Byte 0) */
-	uint8_t bms_led_imd_led_bspd_led;
+	uint8_t ping_block_b0;
 } GRCAN_DASH_CONFIG_MSG;
 
 /** Steering Status */
 typedef struct {
 	/** Position of knob (1-16) Position of knob (1-16) (Byte 0) */
 	uint8_t current_encoder_torque_map_encoder;
-	/** Position of knob (1-16) Button State Button State Button State Button State (Byte 1) */
-	uint8_t regen_button_1_button_2_button_3_button_4;
+	uint8_t ping_block_b1;
 } GRCAN_STEERING_STATUS_MSG;
 
 /** Steering Config */
@@ -432,8 +428,7 @@ typedef struct {
 
 /** TCM Status */
 typedef struct {
-	/** 1: OK, 0: Timeout 1: OK, 0: Timeout 1: In Progress, 0: Idle 1: Recording, 0: Idle (Byte 0) */
-	uint8_t connection_status_mqtt_status_epic_shelter_status_camera_status_reserved;
+	uint8_t ping_block_b0;
 	/** Mapache ping (upload) (Byte 1) */
 	uint16_t ping;
 	/** # of messages on cache (non-synced) (Byte 3) */
@@ -500,8 +495,7 @@ typedef struct {
 
 /** Dash Warning Flags */
 typedef struct {
-	/** 1: Violation, 0: OK (Byte 0) */
-	uint8_t bse_apps_violation_reserved_reserved_reserved_reserved_reserved_reserved_reserved;
+	uint8_t error_fault_violation_bits_b0;
 } GRCAN_DASH_WARNING_FLAGS_MSG;
 
 /** Specific Brake IR */
