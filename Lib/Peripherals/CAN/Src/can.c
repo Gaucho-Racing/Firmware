@@ -15,7 +15,7 @@
 #include "profile.h"
 
 //TODO: define DMA usage in a better way
-//#define USEDMA
+#define USEDMA
 #ifdef USEDMA
 #include "can_dma.h"
 #endif

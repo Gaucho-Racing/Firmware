@@ -69,7 +69,7 @@ int can_stress_test(void)
 
 	FDCANTxMessage msg;
 	memset(&(msg.data), 0, sizeof(msg.data));
-	for (int i = 0; i < SIZE; i++) { msg.data[i] = 0x80; }
+	for (int i = 0; i < SIZE; i++) { msg.data[i] = i; }
 	msg.tx_header = TxHeader;
 
 	size_t i = 0;

@@ -1,6 +1,8 @@
 #ifndef CAN_CFG_H
 #define CAN_CFG_H
 
+//#define USEDMA
+
 #define USECAN1
 #define TX_BUFFER_1_SIZE 10
 
