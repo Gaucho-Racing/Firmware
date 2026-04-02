@@ -262,7 +262,7 @@ sub process_byte_entry {
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
 
-	if ( scalar @{$fields} > 2 && ${$fields}[0]->{name} =~ /reserved|ping|byte/ismx ) {
+	if ( scalar @{$fields} > 2 ) {
 		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
 	}
 	else {
@@ -301,8 +301,9 @@ sub handle_multi_field_range {
 		}
 	}
 
-	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
-	my $v_name = $has_error   ? 'error_fault_violation_bits' : 'ping_block';
-	my $suffix = ( $len > 1 ) ? "[$len]"                     : $EMPTY_STR;
-	return sprintf "\tuint8_t    %s%s;\n", $v_name, $suffix;
+	my $len        = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
+	my $base       = $has_error ? 'error_fault_violation_bits' : 'ping_block';
+	my $identifier = $base . '_b' . $start_byte;
+	my $suffix     = ( $len > 1 ) ? "[$len]" : $EMPTY_STR;
+	return sprintf "\tuint8_t    %s%s;\n", $identifier, $suffix;
 }
