@@ -438,7 +438,7 @@ typedef struct {
 	 * bit 3: camera_status; bit 4: reserved; */
 	uint8_t ping_block_b0;
 	/** Mapache ping (upload) (Byte 1) */
-	uint16_t ping;
+	uint16_t mapache_ping;
 	/** # of messages on cache (non-synced) (Byte 3) */
 	uint32_t cache_size;
 	/** Byte 7 (Byte 7) */
