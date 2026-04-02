@@ -35,10 +35,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		CCUStateTicksTests
 		PRIVATE
 			GLOBALSHARE_LIB
-			#GR_OLD_CAN_MESSAGES
 			LOGOMATIC_LIB
-			#GR_ADC
-			#PERIPHERAL_CAN_LIB
 			BitManipulations_Lib
 	)
 	add_test(CCUStateTicksTests CCUStateTicksTests)
