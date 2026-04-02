@@ -7,6 +7,7 @@
 
 //#include "can_platform_deps.h"
 #include "STM32G4_hal_fdcan_defines.h"
+#include "Logomatic.h"
 
 //#define DMA_INTERRUPT
 
@@ -15,7 +16,7 @@ static void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 
 typedef struct dma_transfer_t {
 	uint32_t can_id;
-	uint8_t data[64];
+    uint8_t data[64] __attribute__((aligned(4)));  // ← add this
 	uint32_t size;
 
 	uint32_t RxLocation;
@@ -27,6 +28,8 @@ typedef struct dma_transfer_t {
 } dma_transfer_t;
 
 static volatile dma_transfer_t dma1_ch1 = {0};
+
+static uint32_t msg_count = 0;
 
 
 HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
@@ -93,6 +96,10 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t R
 			}
 		}
 
+		msg_count++;
+
+
+
 		/* Retrieve IdType */
 		pRxHeader->IdType = *RxAddress & FDCAN_ELEMENT_MASK_XTD;
 
@@ -135,6 +142,16 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t R
 		/* Increment RxAddress pointer to payload of Rx FIFO element */
 		RxAddress++;
 
+
+		LOGOMATIC("msg#%lu F0GI=%lu GetIndex=%lu RxFIFO0SA=0x%08lx PayloadAddr=0x%08lx\n",
+		msg_count,
+		(hfdcan->Instance->RXF0S & FDCAN_RXF0S_F0GI) >> FDCAN_RXF0S_F0GI_Pos,
+		GetIndex,
+		hfdcan->msgRam.RxFIFO0SA,
+		(uint32_t)RxAddress);  // after the two RxAddress++ increments
+
+		uint8_t *dbg = (uint8_t*)RxAddress;  // after the two increments
+		LOGOMATIC("src byte48=0x%02x\n", dbg[48]);
 		/* Retrieve Rx payload with DMA*/
 
 		pData = (uint8_t *)RxAddress;
@@ -146,7 +163,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t R
 
 		dma1_ch1.unconsumed = true;
 		dma1_ch1.can_id = pRxHeader->Identifier;
-		dma1_ch1.size = pRxHeader->DataLength;
+		dma1_ch1.size = DLCtoBytes[pRxHeader->DataLength];
 		dma1_ch1.RxLocation = RxLocation;
 		dma1_ch1.hfdcan = hfdcan;
 		dma1_ch1.GetIndex = GetIndex;
@@ -196,8 +213,8 @@ void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority, CAN_RXCallback callbac
         LL_DMA_MODE_NORMAL                |
         LL_DMA_PERIPH_INCREMENT           |   // src increment
         LL_DMA_MEMORY_INCREMENT           |   // dst increment
-        LL_DMA_PDATAALIGN_BYTE            |   // src word (32-bit)
-        LL_DMA_MDATAALIGN_BYTE            |   // dst word (32-bit)
+        LL_DMA_PDATAALIGN_WORD            |   // src word (32-bit)
+        LL_DMA_MDATAALIGN_WORD            |   // dst word (32-bit)
         LL_DMA_PRIORITY_HIGH);
 
     //For M2M, DMAMUX must be set to a software request line (0)
@@ -331,7 +348,8 @@ void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 	LL_DMA_SetPeriphAddress(DMA1,  LL_DMA_CHANNEL_1, (uint32_t)src);
 	//dma_src_start = src;
 
-	LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, byte_count);
+	//access FDDCAN Message RAM in 32-bit words, not in bytes
+	LL_DMA_SetDataLength(DMA1,     LL_DMA_CHANNEL_1, byte_count >> 2);
 
 	#ifdef DMA_INTERRUPT
     /* Clear any pending flags before enabling */
@@ -344,6 +362,7 @@ void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 	#ifndef DMA_INTERRUPT
     /* Poll for transfer complete */
     while (!LL_DMA_IsActiveFlag_TC1(DMA1));
+	__DSB();
 	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 	#endif
 

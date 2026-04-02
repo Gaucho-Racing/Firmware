@@ -4,7 +4,7 @@
 #include "can_tests.h"
 #include "profile.h"
 
-#define SIZE 4
+#define SIZE FDCAN_DLC_BYTES_64
 
 // TODO:
 static volatile uint32_t can_stress_test_received = 0;
@@ -14,7 +14,17 @@ void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 	can_stress_test_received++;
 	//simulate a copy using CPU only
 	uint8_t* data_bytes = (uint8_t*) data;
-	for (uint32_t i = 0; i < size; i++) can_data[i] = data_bytes[i];
+
+	bool failure = false;
+	for (uint32_t i = 0; i < size; i++) {
+		can_data[i] = data_bytes[i];
+
+		if (can_data[i] != i) failure = true;
+	}
+
+	//reset
+	for (uint32_t i = 0; i < size; i++) can_data[i] = 0;
+	if (failure) LOGOMATIC("FAIL: did not copy data correctly\n");
 
 	UNUSED(id);
 	UNUSED(data);
@@ -37,7 +47,7 @@ int can_stress_test(void)
 	primary_can = data_can = NULL;
 	CANConfig cfg1;
 
-	if (get_cfg(FDCAN1, can_stress_test_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK, 0, 0)) {
+	if (get_cfg(FDCAN1, can_stress_test_rx_callback, &cfg1, FDCAN_MODE_EXTERNAL_LOOPBACK, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN1\n");
 		return ERROR;
 	}
@@ -47,13 +57,13 @@ int can_stress_test(void)
 	// TODO: Make the stress test more stressful
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
-
+		.FDFormat = FDCAN_FD_CAN,
 	    .IdType = FDCAN_STANDARD_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
 						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
 	    .DataLength = SIZE,
-	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .BitRateSwitch = FDCAN_BRS_ON,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
@@ -67,16 +77,18 @@ int can_stress_test(void)
 		return ERROR;
 	}
 
-	FDCANTxMessage msg;
-	memset(&(msg.data), 0, sizeof(msg.data));
-	for (int i = 0; i < SIZE; i++) { msg.data[i] = i; }
+	FDCANTxMessage msg = {0};
+	//memset(&(msg.data), 0, sizeof(msg.data));
+	for (int i = 0; i < DLCtoBytes[SIZE]; i++) { msg.data[i] = i; }
 	msg.tx_header = TxHeader;
 
 	size_t i = 0;
-	size_t rounds = 5;
-	size_t messages = primary_can->tx_capacity * 2;
+	size_t rounds = 1;
+	//size_t messages = primary_can->tx_capacity * 2;
+	size_t messages = 10;
+
 	uint32_t successes = 0;
-	LOGOMATIC("Sending CAN msgs of size %d bytes...\n", SIZE);
+	LOGOMATIC("Sending CAN msgs of size %d bytes...\n", DLCtoBytes[SIZE]);
 
 	while (loop < rounds) {
 		loop++;
@@ -116,7 +128,7 @@ int can_stress_test(void)
 	}
 
 
-	LOGOMATIC("SIZE: %d\n", SIZE);
+	LOGOMATIC("SIZE: %d\n", DLCtoBytes[SIZE]);
 
 	LOGOMATIC("Receive Stats ===================\n");
 	dwt_timer_print_info(&rx_timer);

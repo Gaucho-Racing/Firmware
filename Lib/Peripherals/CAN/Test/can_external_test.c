@@ -16,9 +16,9 @@
 
 
 #define NUM_NODES 2    // total number of nodes on the bus (including this one)
-#define NUM_MESSAGES 64 // number of messages each node sends to every other node
+#define NUM_MESSAGES 5 // number of messages each node sends to every other node
 
-#define CAN_PACKET_SIZE 8 //max is 64
+#define CAN_PACKET_SIZE FDCAN_DLC_BYTES_64 //max is 64
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
@@ -44,7 +44,7 @@ static void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 //  TODO: G4 tests are dependent on the System clock configuration??
 int can_external_test(void)
 {
-	FDCAN_TxHeaderTypeDef TxHeader = {
+	/*FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = NODE_ID,
 
 	    .IdType = FDCAN_STANDARD_ID,
@@ -53,6 +53,19 @@ int can_external_test(void)
 						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
 	    .DataLength = CAN_PACKET_SIZE,
 	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
+	};*/
+
+	FDCAN_TxHeaderTypeDef TxHeader = {
+	    .Identifier = 1,
+		.FDFormat = FDCAN_FD_CAN,
+	    .IdType = FDCAN_STANDARD_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .DataLength = CAN_PACKET_SIZE,
+	    .BitRateSwitch = FDCAN_BRS_ON,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};

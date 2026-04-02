@@ -107,10 +107,16 @@ void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 
 // Configuration helpers
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t FDCAN_Mode, uint32_t numStdFilters, uint32_t numExtFilters);
 
+
+static const uint8_t DLCtoBytes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 32, 48, 64};
+
+
+
 //Profiler stuff
 #include "profile.h"
 
 extern dwt_timer_t rx_timer;
 extern dwt_timer_t send_timer;
+
 
 #endif

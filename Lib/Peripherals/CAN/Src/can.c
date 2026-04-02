@@ -10,6 +10,7 @@
 #include "stm32g4xx_ll_bus.h"
 
 //TODO: make the profiler cleaner
+#include "STM32G4_hal_fdcan_defines.h"
 
 #include "Logomatic.h"
 #include "profile.h"
@@ -200,6 +201,8 @@ CANHandle *can_init(const CANConfig *config)
 
 	// Initialize handle
 	assert(config->hal_fdcan_init.TxFifoQueueMode == FDCAN_TX_FIFO_OPERATION);
+	//assert(config->hal_fdcan_init.FrameFormat == FDCAME);
+
 
 	canHandle->hal_fdcanP->Init = config->hal_fdcan_init; // copy FDCAN parameters from user
 	// canHandle->hal_fdcanP->Instance = config->fdcan_instance //handles initialized with correct base instance addresses
@@ -521,6 +524,10 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		return;
 	}
 
+	if ( !(RxFifo0ITs & (FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL)) ) {
+		return;
+	}
+
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
 	FDCAN_RxHeaderTypeDef rx_header;
 
@@ -532,7 +539,9 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 
 	// TODO: Stack allocation should be safe - CAN messages are infrequent enough
-	uint8_t rx_data[64] = {0};
+	//uint8_t rx_data[64] = {0};
+	uint8_t rx_data[64] __attribute__((aligned(4))) = {0};
+
 
 
 	// TODO: maybe also use a timer for this?
@@ -561,7 +570,9 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
-		handle->rx_callback(rx_header.Identifier, rx_data, rx_header.DataLength);
+
+		//TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
+		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
 	}
 
 	//END TIMING
