@@ -16,17 +16,31 @@
 
 
 #define NUM_NODES 2    // total number of nodes on the bus (including this one)
-#define NUM_MESSAGES 5 // number of messages each node sends to every other node
+#define NUM_MESSAGES 200 // number of messages each node sends to every other node
 
 #define CAN_PACKET_SIZE FDCAN_DLC_BYTES_64 //max is 64
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
+static volatile uint8_t can2_data[64] = {0};
 static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
 	rx_2_received++;
-	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
+	//LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
 	// Is within an ISR, so needs to exit quickly
+	uint8_t* data_bytes = (uint8_t*) data;
+
+	bool failure = false;
+	for (uint32_t i = 0; i < size; i++) {
+		can2_data[i] = data_bytes[i];
+
+		if (can2_data[i] != i) failure = true;
+	}
+
+	//reset
+	for (uint32_t i = 0; i < size; i++) can2_data[i] = 0;
+	if (failure) LOGOMATIC("FAIL: did not copy data correctly\n");
+
 	return;
 }
 
@@ -44,19 +58,6 @@ static void can_test_rx_callback1(uint32_t id, void *data, uint32_t size)
 //  TODO: G4 tests are dependent on the System clock configuration??
 int can_external_test(void)
 {
-	/*FDCAN_TxHeaderTypeDef TxHeader = {
-	    .Identifier = NODE_ID,
-
-	    .IdType = FDCAN_STANDARD_ID,
-	    .TxFrameType = FDCAN_DATA_FRAME,
-	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = CAN_PACKET_SIZE,
-	    .BitRateSwitch = FDCAN_BRS_OFF,
-	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
-	};*/
-
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
 		.FDFormat = FDCAN_FD_CAN,
@@ -129,7 +130,7 @@ int can_external_test(void)
 
 	FDCANTxMessage msg = {0};
 	//msg.data[0] = 0x80;
-	for (int i = 0; i < CAN_PACKET_SIZE; i++) { msg.data[i] = 0x80; }
+	for (int i = 0; i < DLCtoBytes[CAN_PACKET_SIZE]; i++) { msg.data[i] = i; }
 
 	msg.tx_header = TxHeader;
 
@@ -143,15 +144,15 @@ int can_external_test(void)
 	start_dwt();
 
 	while (i < NUM_MESSAGES) {
-		HAL_Delay(100);
-		msg.data[0] = 0x2;
+		HAL_Delay(10);
+		//msg.data[0] = 0x2;
 
 		dwt_timer_start_measurement(&send1_timer);
 		can_send(primary_can, &msg);
 		dwt_timer_end_measurement(&send1_timer);
 
-		HAL_Delay(100);
-		msg.data[0] = 0x10;
+		HAL_Delay(10);
+		//msg.data[0] = 0x10;
 
 		dwt_timer_start_measurement(&send2_timer);
 		can_send(data_can, &msg);
@@ -205,12 +206,17 @@ int can_external_test(void)
 		return ERROR;
 	}
 
-	LOGOMATIC("CAN PACKET SIZE: %ud\n", CAN_PACKET_SIZE);
+	//LOGOMATIC("NORMAL MODE - timing entire Rx callback (not just fifo copy)\n");
+	LOGOMATIC("CAN PACKET SIZE: %u\n", DLCtoBytes[CAN_PACKET_SIZE]);
 	LOGOMATIC("Send1 ===========\n");
 	dwt_timer_print_info(&send1_timer);
 
 	LOGOMATIC("Send2 ===============\n");
 	dwt_timer_print_info(&send2_timer);
+
+	LOGOMATIC("Rx ===============\n");
+	dwt_timer_print_info(&rx_timer);
+
 
 	LOGOMATIC("can_external_test: SUCCESS\n");
 

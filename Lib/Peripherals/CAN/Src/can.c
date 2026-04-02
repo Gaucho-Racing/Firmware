@@ -16,10 +16,10 @@
 #include "profile.h"
 
 //TODO: define DMA usage in a better way
-#define USEDMA
-#ifdef USEDMA
-#include "can_dma.h"
-#endif
+#//#define USEDMA
+//#ifdef USEDMA
+//#include "can_dma.h"
+//#endif
 
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
@@ -496,7 +496,7 @@ dwt_timer_t rx_timer = {0};
 //1238 Cycles
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
-	dwt_timer_start_measurement(&rx_timer);
+	//dwt_timer_start_measurement(&rx_timer);
 
 	//dwt_timer_start_measurement(&rx_timer);
 
@@ -542,23 +542,19 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	//uint8_t rx_data[64] = {0};
 	uint8_t rx_data[64] __attribute__((aligned(4))) = {0};
 
-
-
 	// TODO: maybe also use a timer for this?
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
 		//Takes less time to fetch 64 bytes than it does to get 1 byte???
-
-		//dwt_timer_start_measurement(&rx_timer);
-
 		#ifdef USEDMA
-		//while (!LL_DMA_IsActiveFlag_TC1(DMA1));
-
 		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 		#else
 
-		//Takes about 370 - 400 cycles, dependent on 1 byte to 64 bytes
+		dwt_timer_start_measurement(&rx_timer);
+
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 		#endif
+
+		dwt_timer_end_measurement(&rx_timer);
 
 		//dwt_timer_end_measurement(&rx_timer);
 
@@ -571,8 +567,11 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 
+
 		//TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
 		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
+
+
 	}
 
 	//END TIMING
