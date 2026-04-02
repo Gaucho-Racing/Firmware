@@ -132,21 +132,29 @@ routing:
           - msg: BCU Precharge
           - msg: BCU Config Charge Parameters
           - msg: BCU Config Operational Parameters
+          - msg: Ping
         GR Inverter:
           - msg: Inverter Config
           - msg: Inverter Command
+          - msg: Ping
         Fan Controller 1:
           - msg: Fan Command
+          - msg: Ping
         Fan Controller 2:
           - msg: Fan Command
+          - msg: Ping
         Fan Controller 3:
           - msg: Fan Command
+          - msg: Ping
         Dash Panel:
           - msg: Dash Config
+          - msg: Ping
         ALL:
           - msg: ECU Status 1
           - msg: ECU Status 2
           - msg: ECU Status 3
+        TCM:
+          - msg: Ping
       CAN2:
         Debugger:
           - msg: Debug FD
@@ -221,6 +229,8 @@ routing:
       CAN1:
         Debugger:
           - msg: Ping
+        ECU:
+          - msg: Ping
       CAN2:
         Debugger:
           - msg: Ping
@@ -273,26 +283,22 @@ Message ID:
     MSG LENGTH: 8
     state_messages:
       bit_start: 0
-      data type: b
-      units: Bool
-      comment: >
+      comment:
         [Byte 0 / Bits 0-1] GLV States
         0: GLV Off State,
         1: GLV On State.
         See diagram in StateMachine.
-
         [Byte 0 / Bits 2-3] Precharge States
         2: Precharge Engaged State
         3: Precharge Complete State
         See diagram in StateMachine.h
-
         [Byte 0 / Bits 4-5] ECU States
         4: Drive Active ECU State
         5: TS Discharge ECU State
-
         6-7: Reserved
-
         See diagram in StateMachine.h
+      data type: b
+      units: Bool
     status_flags:
       bit_start: 8
       comment:
@@ -3899,44 +3905,68 @@ Message ID:
       units: Bool map
   ECU Pedals Data:
     MSG ID: 0x02E
-    MSG LENGTH: 10
-    APPS1_SIGNAL:
+    MSG LENGTH: 16
+    BSPD Signal:
       bit_start: 0
-      comment: APPS 1 Signal
+      comment: 4-20 mA signal
       data type: u16
-      units: '%'
+      units: %
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    APPS2_SIGNAL:
+    BSE Signal:
       bit_start: 16
-      comment: APPS 2 Signal
+      comment: 4-20 mA signal
       data type: u16
-      units: '%'
+      units: %
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    BSE_SIGNAL:
+    APPS 1 Signal:
       bit_start: 32
-      comment: Brake Force Signal
+      comment: 4-20 mA signal
       data type: u16
-      units: '%'
+      units: %
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    BRAKE_F_SIGNAL:
+    APPS 2 Signal:
       bit_start: 48
-      comment: Brake Pressure Signal
+      comment: 4-20 mA signal
       data type: u16
-      units: '%'
+      units: %
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    BRAKE_R_SIGNAL:
-      bit_start: 48
-      comment: Brake Pressure Signal
+    Brakeline F Signal:
+      bit_start: 64
+      comment: 4-20 mA signal
       data type: u16
-      units: '%'
+      units: %
+      scaled min: 0
+      scaled max: 100
+      map equation: "x/655.35"
+    Brakeline R Signal:
+      bit_start: 80
+      comment: 4-20 mA signal
+      data type: u16
+      units: %
+      scaled min: 0
+      scaled max: 100
+      map equation: "x/655.35"
+    Steering Angle Signal:
+      bit_start: 96
+      comment: 4-20 mA signal
+      data type: u16
+      units: %
+      scaled min: 0
+      scaled max: 100
+      map equation: "x/655.35"
+    AUX Signal:
+      bit_start: 112
+      comment: 4-20 mA signal
+      data type: u16
+      units: %
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
