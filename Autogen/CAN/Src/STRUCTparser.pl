@@ -18,7 +18,7 @@ main();
 sub main {
 	my $yaml_path   = $ARGV[0] // 'format.CANdo';
 	my $output_path = $ARGV[1] // 'CANDler.h';
-	my $prefix      = 'GR_OLD';
+	my $prefix      = 'GRCAN';
 
 	ensure_directory_exists($output_path);
 
