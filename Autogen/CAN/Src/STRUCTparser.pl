@@ -8,10 +8,11 @@ use File::Path qw(make_path);
 use Readonly;
 
 # Brutal-compliant constants
-Readonly::Scalar my $BITS_PER_BYTE => 8;
-Readonly::Scalar my $CELL_COUNT    => 32;
-Readonly::Scalar my $EMPTY_STR     => q{};
-Readonly::Scalar my $SPACE_STR     => q{ };
+Readonly::Scalar my $BITS_PER_BYTE       => 8;
+Readonly::Scalar my $CELL_COUNT          => 32;
+Readonly::Scalar my $EMPTY_STR           => q{};
+Readonly::Scalar my $SPACE_STR           => q{};
+Readonly::Scalar my $PACKED_COMMENT_WRAP => 100;
 
 main();
 
@@ -231,6 +232,42 @@ sub clean_field_name {
 	return $clean || 'unknown_field';
 }
 
+sub _packed_member_comment {
+	my ( $start_byte, $end_byte, $sorted_fields_ref ) = @_;
+	my @clauses = map { sprintf 'bit %u: %s;', $_->{start}, clean_field_name( $_->{name} ) } @{$sorted_fields_ref};
+	my $head    = sprintf 'Packed: bytes %u-%u.', $start_byte, $end_byte;
+
+	if ( !@clauses ) {
+		return "\t/** $head */\n";
+	}
+
+	my @wrap_lines;
+	my $line = $head;
+	for my $cl (@clauses) {
+		my $with = "$line $cl";
+		if ( length $with > $PACKED_COMMENT_WRAP && $line !~ /^Packed:/smx ) {
+			push @wrap_lines, $line;
+			$line = $cl;
+		}
+		elsif ( length $with > $PACKED_COMMENT_WRAP ) {
+			push @wrap_lines, $line;
+			$line = $cl;
+		}
+		else {
+			$line = $with;
+		}
+	}
+	push @wrap_lines, $line;
+
+	my $first = shift @wrap_lines;
+	my $out   = "\t/** $first";
+	for my $wl (@wrap_lines) {
+		$out .= "\n\t * $wl";
+	}
+	$out .= " */\n";
+	return $out;
+}
+
 sub process_message {
 	my ( $name, $f_ref, $d_map, $prefix ) = @_;
 	my @buf;
@@ -301,9 +338,21 @@ sub handle_multi_field_range {
 		}
 	}
 
-	my $len        = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
+	my $end_byte = ${$bytes_ref}[ ${$idx_ref} ];
+	my $len      = ( $end_byte - $start_byte ) + 1;
+
+	my @span_fields;
+	for my $b ( $start_byte .. $end_byte ) {
+		my $bucket = ${$map_ref}{$b};
+		if ($bucket) {
+			push @span_fields, @{$bucket};
+		}
+	}
+	my @sorted_span = sort { $a->{start} <=> $b->{start} } @span_fields;
+
+	my $comment    = _packed_member_comment( $start_byte, $end_byte, \@sorted_span );
 	my $base       = $has_error ? 'error_fault_violation_bits' : 'ping_block';
 	my $identifier = $base . '_b' . $start_byte;
 	my $suffix     = ( $len > 1 ) ? "[$len]" : $EMPTY_STR;
-	return sprintf "\tuint8_t    %s%s;\n", $identifier, $suffix;
+	return $comment . sprintf "\tuint8_t    %s%s;\n", $identifier, $suffix;
 }
