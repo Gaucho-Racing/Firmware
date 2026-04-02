@@ -3732,7 +3732,7 @@ Message ID:
       units: Bool
     Reserved:
       bit_start: 4-7
-    Ping:
+    Mapache Ping:
       bit_start: 8
       comment: Mapache ping (upload)
       data type: u16
