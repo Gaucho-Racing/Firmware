@@ -24,8 +24,7 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	/** >
-[Byte 0 / Bits 0-1] GLV States
+	/** [Byte 0 / Bits 0-1] GLV States
 0: GLV Off State,
 1: GLV On State.
 See diagram in StateMachine.
@@ -521,14 +520,22 @@ typedef struct {
 
 /** ECU Pedals Data */
 typedef struct {
-	/** APPS 1 Signal (Byte 0) */
-	uint16_t apps1_signal;
-	/** APPS 2 Signal (Byte 2) */
-	uint16_t apps2_signal;
-	/** Brake Force Signal (Byte 4) */
+	/** 4-20 mA signal (Byte 0) */
+	uint16_t bspd_signal;
+	/** 4-20 mA signal (Byte 2) */
 	uint16_t bse_signal;
-	/** Brake Pressure Signal Brake Pressure Signal (Byte 6) */
-	uint16_t brake_f_signal_brake_r_signal;
+	/** 4-20 mA signal (Byte 4) */
+	uint16_t apps_1_signal;
+	/** 4-20 mA signal (Byte 6) */
+	uint16_t apps_2_signal;
+	/** 4-20 mA signal (Byte 8) */
+	uint16_t brakeline_f_signal;
+	/** 4-20 mA signal (Byte 10) */
+	uint16_t brakeline_r_signal;
+	/** 4-20 mA signal (Byte 12) */
+	uint16_t steering_angle_signal;
+	/** 4-20 mA signal (Byte 14) */
+	uint16_t aux_signal;
 } GR_OLD_ECU_PEDALS_DATA_MSG;
 
 /** GPS LAT */

@@ -580,6 +580,9 @@ BO_ 2147617795 ECU_BCU_Config_Operational_Parameters_to_BCU: 2 ECU
  SG_ Minimium_Cell_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" BCU
  SG_ Max_Cell_Temperature : 8|8@1+ (0.25,0) [0|63.75] "Celsius" BCU
 
+BO_ 2147615235 ECU_Ping_to_BCU: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" BCU
+
 BO_ 2147620360 ECU_Inverter_Config_to_GR_Inverter: 7 ECU
  SG_ Max_AC_Current : 0|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
  SG_ Max_DC_Current : 16|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
@@ -593,19 +596,34 @@ BO_ 2147620616 ECU_Inverter_Command_to_GR_Inverter: 8 ECU
  SG_ Field_weakening : 48|8@1+ (0.1,0) [0|25.5] "Amps" GR_Inverter
  SG_ Drive_enable : 56|1@1+ (1,0) ["-"|"-"] "Enable" GR_Inverter
 
+BO_ 2147615240 ECU_Ping_to_GR_Inverter: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" GR_Inverter
+
 BO_ 2147621133 ECU_Fan_Command_to_Fan_Controller_1: 1 ECU
  SG_ Fan_Command : 0|8@1+ (1,0) [0|255] "%" Fan_Controller_1
+
+BO_ 2147615245 ECU_Ping_to_Fan_Controller_1: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_1
 
 BO_ 2147621134 ECU_Fan_Command_to_Fan_Controller_2: 1 ECU
  SG_ Fan_Command : 0|8@1+ (1,0) [0|255] "%" Fan_Controller_2
 
+BO_ 2147615246 ECU_Ping_to_Fan_Controller_2: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_2
+
 BO_ 2147621135 ECU_Fan_Command_to_Fan_Controller_3: 1 ECU
  SG_ Fan_Command : 0|8@1+ (1,0) [0|255] "%" Fan_Controller_3
+
+BO_ 2147615247 ECU_Ping_to_Fan_Controller_3: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_3
 
 BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
  SG_ BMS_LED : 0|1@1+ (1,0) [0|0] "Bool" Dash_Panel
  SG_ IMD_LED : 1|1@1+ (1,0) [0|0] "Bool" Dash_Panel
  SG_ BSPD_LED : 2|1@1+ (1,0) [0|0] "Bool" Dash_Panel
+
+BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Dash_Panel
 
 BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ state_messages : 0|1@1+ (1,0) [0|0] "Bool" ALL
@@ -626,18 +644,24 @@ BO_ 2147615999 ECU_ECU_Status_2_to_ALL: 8 ECU
 BO_ 2147616255 ECU_ECU_Status_3_to_ALL: 2 ECU
  SG_ RL_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
+BO_ 2147615236 ECU_Ping_to_TCM: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TCM
+
 BO_ 2147614977 ECU_Debug_FD_to_Debugger: 64 ECU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
 BO_ 2147615233 ECU_Ping_to_Debugger: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Debugger
 
-BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 10 ECU
- SG_ APPS1_SIGNAL : 0|16@1+ (0.0015259,0) [0|100] "%" TCM
- SG_ APPS2_SIGNAL : 16|16@1+ (0.0015259,0) [0|100] "%" TCM
- SG_ BSE_SIGNAL : 32|16@1+ (0.0015259,0) [0|100] "%" TCM
- SG_ BRAKE_F_SIGNAL : 48|16@1+ (0.0015259,0) [0|100] "%" TCM
- SG_ BRAKE_R_SIGNAL : 48|16@1+ (0.0015259,0) [0|100] "%" TCM
+BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 16 ECU
+ SG_ BSPD_Signal : 0|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ BSE_Signal : 16|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ APPS_1_Signal : 32|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ APPS_2_Signal : 48|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ Brakeline_F_Signal : 64|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ Brakeline_R_Signal : 80|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259,0) [0|100] "%" TCM
+ SG_ AUX_Signal : 112|16@1+ (0.0015259,0) [0|100] "%" TCM
 
 BO_ 269 Energy_Meter_EM_Measurement_to_BCU: 8 Energy_Meter
  SG_ Current : 0|8@1+ (1,0) [0|0] "" BCU
@@ -760,6 +784,9 @@ BO_ 2566849012 IMD_IMD_general_to_BCU: 8 IMD
 
 BO_ 2147746305 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2147746306 TCM_Ping_to_ECU: 4 TCM
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
 
 BO_ 2147746305 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Debugger
