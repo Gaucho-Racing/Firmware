@@ -7,7 +7,7 @@
 #include "can_platform_deps.h"
 
 HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData);
-void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority);
+void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority, CAN_RXCallback callback);
 
 
 #define RxFifoElementsNumber 3

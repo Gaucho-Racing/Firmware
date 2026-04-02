@@ -280,8 +280,8 @@ CANHandle *can_init(const CANConfig *config)
 	}
 
 	#ifdef USEDMA
-		for(int i = 0; i < 10; i++);
-	DMA_M2M_Init(canHandle->rx_interrupt_priority, 0);
+	//	for(int i = 0; i < 10; i++);
+	DMA_M2M_Init(canHandle->rx_interrupt_priority, 0, canHandle->rx_callback);
 	#endif
 
 	canHandle->init = true;
@@ -542,6 +542,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		//dwt_timer_start_measurement(&rx_timer);
 
 		#ifdef USEDMA
+		//while (!LL_DMA_IsActiveFlag_TC1(DMA1));
+
 		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
 		#else
 
