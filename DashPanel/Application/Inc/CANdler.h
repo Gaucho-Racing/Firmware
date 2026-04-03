@@ -1,8 +1,8 @@
 #ifndef CANDLER_H
 #define CANDLER_H
-#include "GR_OLD_MSG_DAT.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "can.h"
 
 typedef struct {
@@ -17,8 +17,8 @@ extern CANHandle *can_handler;
 extern bool canReadyToSend;
 
 void CANInitialize();
-void CAN_sendPing(GR_OLD_NODE_ID to, uint32_t data);
+void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data);
 void CAN_callback(uint32_t ID, void *data, uint32_t size);
-void CAN_sendECU(CANHandle *c, GR_OLD_DASH_STATUS_MSG *msg, GR_OLD_NODE_ID to);
+void CAN_sendECU(CANHandle *c, GRCAN_DASH_STATUS_MSG *msg, GRCAN_NODE_ID to);
 
 #endif

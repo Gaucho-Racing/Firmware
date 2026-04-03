@@ -129,11 +129,10 @@ int main(void)
 
 		if (canReadyToSend) {
 
-			GR_OLD_DASH_STATUS_MSG msg_struct;
+			GRCAN_DASH_STATUS_MSG msg_struct;
 
 			msg_struct.led_bits = dashStatus.led_bits;
-			msg_struct.ts_button = dashStatus.TSActiveButton;
-			msg_struct.rtd_button = dashStatus.RTDButton;
+			msg_struct.button_flags = dashStatus.;# TODO add button flags
 
 			if (dashStatus.TSActiveButton) {
 				dashStatus.TSActiveButton = 0;
