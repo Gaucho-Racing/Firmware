@@ -135,8 +135,7 @@ int main(void)
 			msg_struct.button_flags = dashStatus.;
 #TODO add button flags
 
-			    if (dashStatus.TSActiveButton)
-			{
+			if (dashStatus.TSActiveButton) {
 				dashStatus.TSActiveButton = 0;
 			}
 			if (dashStatus.RTDButton) {
