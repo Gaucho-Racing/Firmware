@@ -1,5 +1,6 @@
 #include <stdint.h>
-
+#include "can.h"
+#include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 
@@ -36,35 +37,23 @@ typedef enum {
 	GRCAN_OPMODE_INTERNAL_LOOPBACK,
 	GRCAN_OPMODE_EXTERNAL_LOOPBACK
 } GRCAN_OperatingMode;
+typedef struct {
+    uint32_t prescaler;
+    uint32_t sjw;
+    uint32_t seg1;
+    uint32_t seg2;
+} GRCAN_BitTimingPhase;
 
 typedef struct {
-	uint32_t nominal_prescaler;
-	uint32_t nominal_sjw;
-	uint32_t nominal_seg1;
-	uint32_t nominal_seg2;
-
-	uint32_t data_prescaler;
-	uint32_t data_sjw;
-	uint32_t data_seg1;
-	uint32_t data_seg2;
+    GRCAN_BitTimingPhase nominal;
+    GRCAN_BitTimingPhase data;
 } GRCAN_BitTiming;
-typedef struct {
-	uint32_t prescaler;
-	uint32_t sjw;
-	uint32_t seg1;
-	uint32_t seg2;
-} GRCAN_PhaseTiming;
 
 typedef struct {
 	GPIO_TypeDef *port;
 	uint32_t pin;
 	uint32_t alternate_function;
 } GRCAN_PinConfig;
-
-typedef struct {
-	GRCAN_PhaseTiming nominal;
-	GRCAN_PhaseTiming data;
-} GRCAN_BitTiming;
 
 typedef struct {
 	uint32_t id_type;
@@ -74,6 +63,11 @@ typedef struct {
 	uint32_t filter_id1;
 	uint32_t filter_id2;
 } GRCAN_FilterConfig;
+
+typedef enum {
+    GRCAN_Feature_DISABLE = 0,
+    GRCAN_Feature_ENABLE = 1
+} GRCAN_FeatureState;
 
 typedef struct {
 	GR_OLD_BUS_ID bus;
@@ -87,7 +81,6 @@ typedef struct {
 	GRCAN_FeatureState auto_retransmission;
 	GRCAN_FeatureState transmit_pause;
 	GRCAN_FeatureState protocol_exception;
-
 	GRCAN_BitTiming bit_timing;
 
 	uint32_t std_filters_nbr;
@@ -102,7 +95,7 @@ typedef struct {
 	uint32_t tx_interrupt_priority;
 	uint32_t tx_buffer_length;
 
-	GRCAN_FilterConfigFn filter_config_fn;
+	GRCAN_FilterConfig *filter_config;
 } GRCAN_BusConfig;
 
 uint32_t GRCAN_ToHAL_ClockSource(GRCAN_ClockSource src);
@@ -112,7 +105,6 @@ uint32_t GRCAN_ToHAL_OperatingMode(GRCAN_OperatingMode mode);
 uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state);
 GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus);
 CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus);
-
 uint32_t GRCAN_to_DLC(uint32_t size);
 uint32_t DLC_to_GRCAN(uint32_t dlc);
 

@@ -1,5 +1,9 @@
 #include <stdint.h>
+#include "grcan_utils.h"
+#include <stdbool.h>
 
+#include "can.h"
+#include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
 #include "grcan_utils.h"
@@ -14,9 +18,9 @@ typedef struct {
 } GRCAN_Fancy_ID;
 
 GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus);
-void GRCAN_ConfigureBus(GR_OLD_BUS_ID bus, CANConfig *config);
+bool GRCAN_InitBus(GRCAN_BusConfig *bus_config);
 
-uint32_t GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id);
-void GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id, uint32_t rawID);
+uint32_t GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id);
+void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID);
 
 #endif

@@ -1,12 +1,8 @@
 #include <stdint.h>
 #include <string.h>
-
+#include "grcan_utils.h"
 #include "GRCAN_FancyLayer.h"
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
 #include "Logomatic.h"
-#include "can.h"
 #include "main.h"
 
 GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus)
@@ -23,22 +19,6 @@ GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus)
 		default:
 			LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
 			return GRCAN_MODE_CLASSIC;
-	}
-}
-
-CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus)
-{
-	switch (bus) {
-		case GR_OLD_BUS_PRIMARY:
-			return grcan_primary;
-		case GR_OLD_BUS_DATA:
-			return grcan_data;
-		case GR_OLD_BUS_TESTING:
-			return grcan_testing;
-		case GR_OLD_BUS_CHARGING:
-			return grcan_charging;
-		default:
-			return NULL;
 	}
 }
 
@@ -112,19 +92,6 @@ uint32_t GRCAN_ToHAL_OperatingMode(GRCAN_OperatingMode mode)
 	// internal loopback for testing
 }
 
-uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state)
-{
-	switch (state) {
-		case GRCAN_FEATURE_DISABLE:
-			return DISABLE;
-		case GRCAN_FEATURE_ENABLE:
-			return ENABLE;
-		default:
-			LOGOMATIC("GRCAN_ToHAL_FeatureState: default feature state %d, defaulting to ENABLE\n", state);
-			return ENABLE;
-	}
-}
-
 static void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
 {
 	if (timing == NULL) {
@@ -143,23 +110,26 @@ static void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
 	timing->data.seg2 = 5;
 }
 
-void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg)
+void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GR_OLD_BUS_ID bus)
 {
 	if (busCfg == NULL) {
 		LOGOMATIC("GRCAN_SetDefaultBusConfig: NULL busCfg pointer\n");
 		return;
 	}
 
+
 	memset(busCfg, 0, sizeof(*busCfg));
+
+	busCfg->bus = bus;
 
 	busCfg->clock_source = GRCAN_CLKSRC_PCLK1;
 	busCfg->clock_divider = GRCAN_CLK_DIV1;
 	busCfg->frame_format = GRCAN_FRAME_FD_NO_BRS;
 	busCfg->operating_mode = GRCAN_OPMODE_NORMAL;
 
-	busCfg->auto_retransmission = GRCAN_FEATURE_ENABLE;
-	busCfg->transmit_pause = GRCAN_FEATURE_DISABLE;
-	busCfg->protocol_exception = GRCAN_FEATURE_ENABLE;
+	busCfg->auto_retransmission = GRCAN_Feature_ENABLE;
+	busCfg->transmit_pause = GRCAN_Feature_DISABLE;
+	busCfg->protocol_exception = GRCAN_Feature_ENABLE;
 
 	GRCAN_SetDefaultBitTiming(&busCfg->bit_timing);
 
@@ -170,7 +140,7 @@ void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg)
 	busCfg->tx_interrupt_priority = 15;
 	busCfg->tx_buffer_length = 5;
 
-	busCfg->filter_config_fn = NULL;
+	busCfg->filter_config = NULL;
 }
 
 uint32_t GRCAN_to_DLC(uint32_t size)
@@ -210,48 +180,32 @@ uint32_t GRCAN_to_DLC(uint32_t size)
 			return FDCAN_DLC_BYTES_64;
 
 		default:
-			LOGOMATIC("Invalid CAN FD size: %lu\n, defaulting to 8", size);
+			LOGOMATIC("Invalid CAN FD size: %lu\n, defaulting to 8 \n", size);
 			return FDCAN_DLC_BYTES_8;
 	}
 }
 
-uint32_t FDCAN_DLC_SIZE(uint32_t dlc)
+uint32_t DLC_to_GRCAN(uint32_t dlc)
 {
 	switch (dlc) {
-		case FDCAN_DLC_BYTES_0:
-			return 0;
-		case FDCAN_DLC_BYTES_1:
-			return 1;
-		case FDCAN_DLC_BYTES_2:
-			return 2;
-		case FDCAN_DLC_BYTES_3:
-			return 3;
-		case FDCAN_DLC_BYTES_4:
-			return 4;
-		case FDCAN_DLC_BYTES_5:
-			return 5;
-		case FDCAN_DLC_BYTES_6:
-			return 6;
-		case FDCAN_DLC_BYTES_7:
-			return 7;
-		case FDCAN_DLC_BYTES_8:
-			return 8;
-		case FDCAN_DLC_BYTES_12:
-			return 12;
-		case FDCAN_DLC_BYTES_16:
-			return 16;
-		case FDCAN_DLC_BYTES_20:
-			return 20;
-		case FDCAN_DLC_BYTES_24:
-			return 24;
-		case FDCAN_DLC_BYTES_32:
-			return 32;
-		case FDCAN_DLC_BYTES_48:
-			return 48;
-		case FDCAN_DLC_BYTES_64:
-			return 64;
-		default:
-			LOGOMATIC("Invalid CAN FD DLC code: %lu\n, defaulting to 8", dlc);
+		case FDCAN_DLC_BYTES_0: return 0;
+		case FDCAN_DLC_BYTES_1: return 1;
+		case FDCAN_DLC_BYTES_2: return 2;
+		case FDCAN_DLC_BYTES_3: return 3;
+		case FDCAN_DLC_BYTES_4: return 4;
+		case FDCAN_DLC_BYTES_5: return 5;
+		case FDCAN_DLC_BYTES_6: return 6;
+		case FDCAN_DLC_BYTES_7: return 7;
+		case FDCAN_DLC_BYTES_8: return 8;
+		case FDCAN_DLC_BYTES_12: return 12;
+		case FDCAN_DLC_BYTES_16: return 16;
+		case FDCAN_DLC_BYTES_20: return 20;
+		case FDCAN_DLC_BYTES_24: return 24;
+		case FDCAN_DLC_BYTES_32: return 32;
+		case FDCAN_DLC_BYTES_48: return 48;
+		case FDCAN_DLC_BYTES_64: return 64;
+        default:
+			LOGOMATIC("Invalid CAN FD DLC code: %lu\n, defaulting to 8 \n", dlc);
 			return 8;
 	}
 }
