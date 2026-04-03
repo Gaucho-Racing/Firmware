@@ -41,7 +41,7 @@ void pingAll(void)
 		}
 
 		sentTimestamps[i] = timestamp;
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], MSG_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 	}
 }
 

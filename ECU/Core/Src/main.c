@@ -401,7 +401,7 @@ int main(void)
 			elapsed_cycles = DWT->CYCCNT;
 			LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
 			GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
-			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, MSG_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
+			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
 			cycle_counter_accumulator = 0;
 			DWT->CYCCNT = 0;
 		} else {

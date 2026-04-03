@@ -112,7 +112,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 
 	LOGOMATIC("Sending ECU State Data over CAN");
 
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, MSG_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, MSG_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, MSG_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
 }

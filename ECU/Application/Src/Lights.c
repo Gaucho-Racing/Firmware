@@ -75,7 +75,7 @@ void BMSLights(ECU_StateData *stateLump)
 	light |= bmsFailure(stateLump);
 	// TODO: interrupted/missing BMS vals
 	GRCAN_DASH_CONFIG_MSG message = {.led_bits = light};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, MSG_DASH_CONFIG, &message, sizeof(message));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void IMDLights(ECU_StateData *stateLump)
@@ -84,7 +84,7 @@ void IMDLights(ECU_StateData *stateLump)
 	// TODO: isolation failure?
 	light |= imdFailure(stateLump);
 	GRCAN_DASH_CONFIG_MSG message = {.led_bits = (light << 1)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, MSG_DASH_CONFIG, &message, sizeof(message));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void BSPDLights(ECU_StateData *stateLump)
@@ -93,7 +93,7 @@ void BSPDLights(ECU_StateData *stateLump)
 	// TODO: isolation failure?
 	light |= bspdFailure(stateLump);
 	GRCAN_DASH_CONFIG_MSG message = {.led_bits = (light << 2)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, MSG_DASH_CONFIG, &message, sizeof(message));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void lightControl(ECU_StateData *stateData)

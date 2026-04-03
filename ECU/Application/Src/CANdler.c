@@ -30,7 +30,7 @@ void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
 {
 	switch (msg_id) {
-		case MSG_DEBUG_2_0:
+		case GRCAN_DEBUG_2_0:
 			if (data_length > sizeof(GRCAN_DEBUG_2_0_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -38,7 +38,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
-		case MSG_DEBUG_FD:
+		case GRCAN_DEBUG_FD:
 			if (data_length > sizeof(GRCAN_DEBUG_FD_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -46,7 +46,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
-		case MSG_PING:
+		case GRCAN_PING:
 			if (data_length != sizeof(GRCAN_PING_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -54,7 +54,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			respondToPing(sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
 			break;
 
-		case MSG_BCU_STATUS_1:
+		case GRCAN_BCU_STATUS_1:
 			if (data_length != sizeof(GRCAN_BCU_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -65,7 +65,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01;
 			break;
 
-		case MSG_BCU_STATUS_2:
+		case GRCAN_BCU_STATUS_2:
 			if (data_length != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -78,7 +78,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->bcu_software_latch = GETBIT(bcu_status_2->precharge_latch_flags, 3);
 			break;
 
-		case MSG_INVERTER_STATUS_1:
+		case GRCAN_INVERTER_STATUS_1:
 			if (data_length != sizeof(GRCAN_INVERTER_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -86,7 +86,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_INVERTER_STATUS_1_MSG *inverter_status_1 = (GRCAN_INVERTER_STATUS_1_MSG *)data;
 			UNUSED(inverter_status_1);
 			break;
-		case MSG_INVERTER_STATUS_3:
+		case GRCAN_INVERTER_STATUS_3:
 			if (data_length != sizeof(GRCAN_INVERTER_STATUS_3_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -95,7 +95,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->inverter_fault_map = inverter_status_3->fault_bits;
 			break;
 		/*
-		case MSG_STEERING_STATUS:
+		case GRCAN_STEERING_STATUS:
 			if (data_length != sizeof(GRCAN_STEERING_STATUS_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
@@ -107,7 +107,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 
 		// TODO: fix when sensors done
 		/*
-		case MSG_SAM_REAR_WHEELSPEED:
+		case GRCAN_SAM_REAR_WHEELSPEED:
 			if (data_length != sizeof(GRCAN_SAM_REAR_WHEELSPEED_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;

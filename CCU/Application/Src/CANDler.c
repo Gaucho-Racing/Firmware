@@ -22,7 +22,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
 	switch (messageId) {
-		case MSG_BCU_STATUS_2:
+		case GRCAN_BCU_STATUS_2:
 			// FIXME: if bad message do a thing
 
 			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
@@ -161,7 +161,7 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 {
 
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
+	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
