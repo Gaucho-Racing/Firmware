@@ -96,7 +96,6 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_INVERTER_STATUS_3_MSG *inverter_status_3 = (GRCAN_INVERTER_STATUS_3_MSG *)data;
 			state_data->inverter_fault_map = inverter_status_3->fault_bits;
 			break;
-
 		/*
 		case MSG_STEERING_STATUS:
 			if (data_length != sizeof(GRCAN_STEERING_STATUS_MSG)) {
