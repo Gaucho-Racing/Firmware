@@ -927,7 +927,6 @@ static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 
 // ===================================== HAL Callbacks ================================
 // TODO: Implement Family Checks
-// Probably is safe from races
 void FDCAN1_IT0_IRQHandler(void)
 {
 #ifdef USECAN1
