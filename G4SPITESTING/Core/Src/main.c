@@ -79,9 +79,9 @@ int main(void)
 {
 
 	/* USER CODE BEGIN 1 */
-	static GR_SPI_Handler handle_spi2;
-	static LL_SPI_InitTypeDef config_spi2;
-	static GR_SPI_Pins pins_spi2;
+	static GR_SPI_Handler handle_spi3;
+	static LL_SPI_InitTypeDef config_spi3;
+	static GR_SPI_Pins pins_spi3;
 	/*HAL_OSPI_HandleTypeDef hospi;
 	HAL_StatusTypeDef status;*/
 
@@ -110,55 +110,51 @@ int main(void)
 	LL_mDelay(1000); // Wait for peripherals to stabilize
 	LOGOMATIC("Booted!\n");
 
-	// ========== RECEIVER CONFIGURATION ==========
-	config_spi2.Mode = LL_SPI_MODE_SLAVE;
-	config_spi2.NSS = LL_SPI_NSS_SOFT;
-	config_spi2.TransferDirection = LL_SPI_FULL_DUPLEX;
-	config_spi2.DataWidth = LL_SPI_DATAWIDTH_8BIT;
-	config_spi2.ClockPolarity = LL_SPI_POLARITY_LOW;
-	config_spi2.ClockPhase = LL_SPI_PHASE_1EDGE;
-	config_spi2.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
-	config_spi2.BitOrder = LL_SPI_MSB_FIRST;
-	config_spi2.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
-	config_spi2.CRCPoly = 0x1D;
 
-	pins_spi2.SPIx = SPI2;
-	pins_spi2.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
+	// ========== SENDER CONFIGURATION ==========
+	config_spi3.Mode = LL_SPI_MODE_MASTER;
+	config_spi3.NSS = LL_SPI_NSS_SOFT;
+	config_spi3.TransferDirection = LL_SPI_FULL_DUPLEX;
+	config_spi3.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+	config_spi3.ClockPolarity = LL_SPI_POLARITY_LOW;
+	config_spi3.ClockPhase = LL_SPI_PHASE_1EDGE;
+	config_spi3.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+	config_spi3.BitOrder = LL_SPI_MSB_FIRST;
+	config_spi3.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
+	config_spi3.CRCPoly = 0x1D;
+
+	pins_spi3.SPIx = SPI3;
+	pins_spi3.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
 	// All pins are in the A clock port
-	for (int i = 0; i < 4; i++) {
-		*(pins_spi2.GPIOx + i) = GPIOB;
+	for (int i = 0; i < 3; i++) {
+		*(pins_spi3.GPIOx + i) = GPIOC;
 	}
-	pins_spi2.num_pins = 4;
-	// pins_spi2.pin_nums;
-	pins_spi2.pin_nums[0] = LL_GPIO_PIN_15; // COPI
-	pins_spi2.pin_nums[1] = LL_GPIO_PIN_14; // CIPO
-	pins_spi2.pin_nums[2] = LL_GPIO_PIN_13; // SCK
-	pins_spi2.pin_nums[3] = LL_GPIO_PIN_12; // NSS
-	pins_spi2.alternate_function_number = 5;
+	pins_spi3.GPIOx[3] = GPIOA;
+	pins_spi3.num_pins = 4;
+	// pins_spi3.pin_nums;
+	pins_spi3.pin_nums[0] = LL_GPIO_PIN_12; // COPI
+	pins_spi3.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
+	pins_spi3.pin_nums[2] = LL_GPIO_PIN_10; // SCK
+	pins_spi3.pin_nums[3] = LL_GPIO_PIN_4;	// NSS
+	pins_spi3.alternate_function_number = 6;
 
-	GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);
+	GR_SPI_Initialize(&handle_spi3, &config_spi3, &pins_spi3);
 
 	GR_SPI_Message msg;
+
+	msg.data = (uint8_t *)malloc(32 * sizeof(uint8_t));
 	msg.size = 1;
 
 	for (int i = 0; i < msg.size; i++) {
-		msg.data[i] = '#';
+		msg.data[i] = 'A' + i;
 	}
 
-	LOGOMATIC("Receiving message...\n");
+	GR_SPI_Send(&handle_spi3, &msg);
 
-	while (GR_SPI_IsRxEmpty(&handle_spi2)) {}
-
-	GR_SPI_Receive(&handle_spi2, &msg);
-
-	char str[33];
-	memcpy(str, msg.data, msg.size * sizeof(uint8_t));
-	str[msg.size] = '\0';
-
-	LOGOMATIC("Received: %s\n", str);
+	while (GR_SPI_IsRxEmpty(&handle_spi3)) {}
 
 	free(msg.data);
-	GR_SPI_Close(&handle_spi2);
+	GR_SPI_Close(&handle_spi3);
 
 	/* USER CODE END 2 */
 
