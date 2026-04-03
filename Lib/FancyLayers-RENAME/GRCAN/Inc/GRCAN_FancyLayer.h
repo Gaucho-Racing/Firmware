@@ -1,14 +1,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "can.h"
-
 #include "GRCAN_BUS_ID.h"
-#include "GRCAN_MSG_ID.h"
-#include "GRCAN_MSG_DATA.h"
-#include "GRCAN_NODE_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
-
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
+#include "can.h"
 #include "grcan_utils.h"
 
 #ifndef GRCAN_FANCYLAYER_H

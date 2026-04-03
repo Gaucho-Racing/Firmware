@@ -219,23 +219,23 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 	cfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	cfg.init_tx_gpio.Alternate = bus_config->tx_pin.alternate_function;
 
-    switch (bus_config->bus) {
-        case GRCAN_BUS_PRIMARY:
-            slot = &grcan_primary;
-            break;
-        case GRCAN_BUS_DATA:
-            slot = &grcan_data;
-            break;
-        case GRCAN_BUS_TESTING:
-            slot = &grcan_testing;
-            break;
-        case GRCAN_BUS_CHARGER:
-            slot = &grcan_charging;
-            break;
-        default:
-            LOGOMATIC("GRCAN_InitBus: invalid bus %d\n", bus_config->bus);
-            return false;
-    }
+	switch (bus_config->bus) {
+		case GRCAN_BUS_PRIMARY:
+			slot = &grcan_primary;
+			break;
+		case GRCAN_BUS_DATA:
+			slot = &grcan_data;
+			break;
+		case GRCAN_BUS_TESTING:
+			slot = &grcan_testing;
+			break;
+		case GRCAN_BUS_CHARGER:
+			slot = &grcan_charging;
+			break;
+		default:
+			LOGOMATIC("GRCAN_InitBus: invalid bus %d\n", bus_config->bus);
+			return false;
+	}
 
 	handle = can_init(&cfg);
 	if (handle == NULL) {
@@ -297,7 +297,8 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 // 	grcan_charging = chargingCAN;
 // }
 
-void GRCAN_SetLocalNodeID(GRCAN_NODE_ID localID) {
+void GRCAN_SetLocalNodeID(GRCAN_NODE_ID localID)
+{
 	if (localID == ALL) {
 		LOGOMATIC("GRCAN_SetLocalNodeID: Local node ID cannot be GR_ALL\n");
 		return;
