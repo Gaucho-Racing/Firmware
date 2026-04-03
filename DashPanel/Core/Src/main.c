@@ -161,7 +161,7 @@ int main(void)
 				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
 			// CAN_sendPing(Dash_Panel);
-			CAN_sendECU(can_handler, &msg_struct, ECU);
+			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			LOGOMATIC("CAN\n");
 
