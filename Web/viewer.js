@@ -17,8 +17,11 @@ window.addEventListener("DOMContentLoaded", function () {
 	const refInputRow = document.getElementById("ref-input-row");
 	const firstHeader = document.querySelector("#bus-panel .panel-header");
 	const secondHeader = document.querySelector("#node-panel .panel-header");
+	const searchInput = document.getElementById("viewer-search");
 	let nodeIdMap = new Map();
 	let currentRef = "";
+	let _allNodes = []; // persisted node→bus→messages index for search
+	let _searchDropdown = null;
 
 	let currentDeviceName = null;
 	let currentBusCanonical = null;
@@ -157,6 +160,144 @@ window.addEventListener("DOMContentLoaded", function () {
 		else item.appendChild(icons);
 	}
 
+	function applySearchFilter() {
+		const term = (searchInput ? searchInput.value : "").trim().toLowerCase();
+		[firstList, secondList, msgList].forEach((list) => {
+			list.querySelectorAll(".panel-item").forEach((item) => {
+				const text = item.textContent.toLowerCase();
+				item.style.display = term && !text.includes(term) ? "none" : "";
+			});
+		});
+	}
+
+	function buildMessageIndex() {
+		const results = [];
+		for (const node of _allNodes) {
+			for (const bus of node.buses) {
+				for (const msg of bus.messages) {
+					results.push({
+						msgName: msg.msgName,
+						deviceName: node.name,
+						canonicalBus: bus.canonicalBus,
+						busDisplayName: bus.busName,
+					});
+				}
+			}
+		}
+		return results;
+	}
+
+	function getSearchDropdown() {
+		if (_searchDropdown) return _searchDropdown;
+		_searchDropdown = document.createElement("div");
+		_searchDropdown.id = "search-dropdown";
+		const row = document.getElementById("viewer-search-row");
+		if (row) row.appendChild(_searchDropdown);
+		return _searchDropdown;
+	}
+
+	function highlightMessage(msgName) {
+		const items = msgList.querySelectorAll(".msg-item");
+		for (const item of items) {
+			const nameEl = item.querySelector(".msg-name");
+			if (nameEl && nameEl.textContent === msgName) {
+				item.scrollIntoView({ block: "nearest" });
+				item.classList.add("msg-highlight");
+				setTimeout(() => item.classList.remove("msg-highlight"), 1800);
+				break;
+			}
+		}
+	}
+
+	function navigateToMessage(result) {
+		if (_searchDropdown) _searchDropdown.style.display = "none";
+		if (searchInput) searchInput.value = "";
+		applySearchFilter();
+		const nodeEl = firstList.querySelector(
+			'[data-node-name="' + CSS.escape(result.deviceName) + '"]',
+		);
+		if (!nodeEl) return;
+		nodeEl.scrollIntoView({ block: "nearest" });
+		nodeEl.click();
+		requestAnimationFrame(() => {
+			const busEl = secondList.querySelector(
+				'[data-bus-canonical="' + CSS.escape(result.canonicalBus) + '"]',
+			);
+			if (!busEl) return;
+			busEl.scrollIntoView({ block: "nearest" });
+			busEl.click();
+			requestAnimationFrame(() => highlightMessage(result.msgName));
+		});
+	}
+
+	function applySearch() {
+		applySearchFilter();
+		const dropdown = getSearchDropdown();
+		const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
+		if (!term || _allNodes.length === 0) {
+			dropdown.style.display = "none";
+			return;
+		}
+		const index = buildMessageIndex();
+		const seen = new Set();
+		const matches = index.filter((r) => {
+			if (!r.msgName.toLowerCase().includes(term)) return false;
+			const key = r.msgName + "|" + r.deviceName + "|" + r.canonicalBus;
+			if (seen.has(key)) return false;
+			seen.add(key);
+			return true;
+		});
+		if (matches.length === 0) {
+			dropdown.style.display = "none";
+			return;
+		}
+		dropdown.innerHTML = "";
+		matches.slice(0, 12).forEach((result) => {
+			const row = document.createElement("div");
+			row.className = "search-result-row";
+			const nameEl = document.createElement("span");
+			nameEl.className = "sr-name";
+			nameEl.textContent = result.msgName;
+			const pathEl = document.createElement("span");
+			pathEl.className = "sr-path";
+			pathEl.textContent =
+				result.deviceName + " \u203a " + result.busDisplayName;
+			row.appendChild(nameEl);
+			row.appendChild(pathEl);
+			row.addEventListener("mousedown", (e) => {
+				e.preventDefault();
+				navigateToMessage(result);
+			});
+			dropdown.appendChild(row);
+		});
+		dropdown.style.display = "block";
+	}
+
+	if (searchInput) {
+		searchInput.addEventListener("input", applySearch);
+		searchInput.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				searchInput.value = "";
+				applySearch();
+				searchInput.blur();
+			} else if (e.key === "Enter") {
+				const dd = _searchDropdown;
+				if (dd && dd.firstElementChild) {
+					dd.firstElementChild.dispatchEvent(new MouseEvent("mousedown"));
+				}
+			}
+		});
+		document.addEventListener("click", (e) => {
+			if (
+				_searchDropdown &&
+				!_searchDropdown.contains(e.target) &&
+				e.target !== searchInput
+			) {
+				_searchDropdown.style.display = "none";
+			}
+		});
+	}
+
 	async function loadNodeIds(ref) {
 		const result = await window.GrcanApi.fetchNodeIds(ref);
 		nodeIdMap = new Map();
@@ -269,6 +410,12 @@ window.addEventListener("DOMContentLoaded", function () {
 						editor.showMessageEditForm(null, true);
 					}),
 				);
+				msgList.appendChild(
+					editor.createAddBtn("Add Custom CAN ID", () => {
+						editor.setNavSnapshot(navSnapshot());
+						editor.showCustomCanIdEditForm(null, true);
+					}),
+				);
 			}
 			return;
 		}
@@ -291,13 +438,42 @@ window.addEventListener("DOMContentLoaded", function () {
 			name.textContent = msg.msgName;
 			nameRow.appendChild(name);
 
+			// Determine preview content: standard byte mappings or Custom CAN ID signals
+			const hasByteMappings = msg.byteMappings && msg.byteMappings.length > 0;
+			let customCanIdDef = null;
+			if (
+				!hasByteMappings &&
+				editor &&
+				editor.isCustomCanIdMessage(msg.msgName)
+			) {
+				customCanIdDef =
+					window.GrcanDocument &&
+					window.GrcanDocument.getCustomCanIdDef(msg.msgName);
+			}
+			const hasPreview =
+				hasByteMappings ||
+				(customCanIdDef &&
+					customCanIdDef.signals &&
+					customCanIdDef.signals.length > 0);
+
+			if (hasPreview) {
+				const expandBtn = document.createElement("span");
+				expandBtn.className = "msg-expand-btn";
+				expandBtn.textContent = "›";
+				nameRow.appendChild(expandBtn);
+			}
+
 			if (editing) {
 				const icons = document.createElement("span");
 				icons.className = "editor-icons";
 				icons.appendChild(
 					editor.createEditBtn(() => {
 						editor.setNavSnapshot(navSnapshot());
-						editor.showMessageEditForm(msg.msgName, false);
+						if (editor.isCustomCanIdMessage(msg.msgName)) {
+							editor.showCustomCanIdEditForm(msg.msgName, false);
+						} else {
+							editor.showMessageEditForm(msg.msgName, false);
+						}
 					}),
 				);
 				if (busPort && currentDeviceName) {
@@ -305,17 +481,11 @@ window.addEventListener("DOMContentLoaded", function () {
 						editor.createDeleteBtn(() => {
 							editor.setNavSnapshot(navSnapshot());
 							editor.confirmAndDelete(msg.msgName, () => {
-								const entries = editor.findRoutingMsgEntries(
+								window.GrcanDocument.deleteRouteEntry(
 									currentDeviceName,
 									busPort,
 									msg.msgName,
 								);
-								for (let i = entries.length - 1; i >= 0; i--) {
-									editor.deleteLineRange(
-										entries[i].startLine,
-										entries[i].endLine,
-									);
-								}
 								editor.markEdited(
 									"routeMsg:" +
 										(currentDeviceName || "") +
@@ -357,42 +527,86 @@ window.addEventListener("DOMContentLoaded", function () {
 				item.appendChild(meta);
 			}
 
-			if (msg.byteMappings && msg.byteMappings.length > 0) {
+			if (hasPreview) {
+				const details = document.createElement("div");
+				details.className = "msg-details";
+
 				const bytesWrap = document.createElement("div");
 				bytesWrap.className = "msg-bytes";
-				msg.byteMappings.forEach((mapping) => {
-					const row = document.createElement("div");
-					row.className = "msg-byte-row";
 
-					const main = document.createElement("span");
-					main.className = "msg-byte-main";
-					main.textContent = `Byte ${mapping.byteLabel} -> ${mapping.fieldName}`;
-					row.appendChild(main);
+				if (hasByteMappings) {
+					msg.byteMappings.forEach((mapping) => {
+						const row = document.createElement("div");
+						row.className = "msg-byte-row";
 
-					if (mapping.dataType) {
-						const typeChip = document.createElement("span");
-						typeChip.className = "msg-type-chip";
-						typeChip.textContent = mapping.dataType;
-						row.appendChild(typeChip);
-					}
+						const main = document.createElement("span");
+						main.className = "msg-byte-main";
+						main.textContent = `Byte ${mapping.byteLabel} -> ${mapping.fieldName}`;
+						row.appendChild(main);
 
-					if (mapping.bitLabel) {
-						const bit = document.createElement("span");
-						bit.className = "msg-byte-bits";
-						bit.textContent = ` (bits ${mapping.bitLabel})`;
-						row.appendChild(bit);
-					}
+						if (mapping.dataType) {
+							const typeChip = document.createElement("span");
+							typeChip.className = "msg-type-chip";
+							typeChip.textContent = mapping.dataType;
+							row.appendChild(typeChip);
+						}
 
-					if (mapping.comment) {
-						const c = document.createElement("div");
-						c.className = "msg-byte-comment";
-						c.textContent = mapping.comment;
-						row.appendChild(c);
-					}
+						if (mapping.bitLabel) {
+							const bit = document.createElement("span");
+							bit.className = "msg-byte-bits";
+							bit.textContent = ` (bits ${mapping.bitLabel})`;
+							row.appendChild(bit);
+						}
 
-					bytesWrap.appendChild(row);
-				});
-				item.appendChild(bytesWrap);
+						if (mapping.comment) {
+							const c = document.createElement("div");
+							c.className = "msg-byte-comment";
+							c.textContent = mapping.comment;
+							row.appendChild(c);
+						}
+
+						bytesWrap.appendChild(row);
+					});
+				} else if (customCanIdDef) {
+					customCanIdDef.signals.forEach((signal) => {
+						const row = document.createElement("div");
+						row.className = "msg-byte-row";
+
+						const main = document.createElement("span");
+						main.className = "msg-byte-main";
+						main.textContent = `Signal: ${signal.name || "(unnamed)"}`;
+						row.appendChild(main);
+
+						if (signal.bitStart !== undefined && signal.bitStart !== null) {
+							const bit = document.createElement("span");
+							bit.className = "msg-byte-bits";
+							bit.textContent = ` (bits ${signal.bitStart})`;
+							row.appendChild(bit);
+						}
+
+						if (signal.comment) {
+							const c = document.createElement("div");
+							c.className = "msg-byte-comment";
+							c.textContent = signal.comment;
+							row.appendChild(c);
+						}
+
+						bytesWrap.appendChild(row);
+					});
+				}
+
+				details.appendChild(bytesWrap);
+				item.appendChild(details);
+
+				// Wire expand/collapse toggle
+				const expandBtn = nameRow.querySelector(".msg-expand-btn");
+				if (expandBtn) {
+					expandBtn.addEventListener("click", (e) => {
+						e.stopPropagation();
+						const collapsed = details.classList.toggle("collapsed");
+						expandBtn.classList.toggle("collapsed", collapsed);
+					});
+				}
 			}
 			msgList.appendChild(item);
 		});
@@ -410,7 +624,14 @@ window.addEventListener("DOMContentLoaded", function () {
 					editor.showMessageEditForm(null, true);
 				}),
 			);
+			msgList.appendChild(
+				editor.createAddBtn("Add Custom CAN ID", () => {
+					editor.setNavSnapshot(navSnapshot());
+					editor.showCustomCanIdEditForm(null, true);
+				}),
+			);
 		}
+		applySearchFilter();
 	}
 
 	// ==================== BUS_NODE mode ====================
@@ -460,9 +681,7 @@ window.addEventListener("DOMContentLoaded", function () {
 							editor.confirmAndDelete(
 								node.name + " on " + currentBusCanonical,
 								() => {
-									const range = editor.findRoutingBusRange(node.name, busPort);
-									if (range)
-										editor.deleteLineRange(range.startLine, range.endLine);
+									window.GrcanDocument.deleteBusBlock(node.name, busPort);
 									editor.markEdited("routeBus:" + node.name + "|" + busPort);
 								},
 							);
@@ -563,7 +782,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					return;
 				}
 				const nodesOnBus = (nodesResult.nodes || []).filter(
-					(node) => (node.messages || []).length > 0,
+					(node) => node.hasBus || (node.messages || []).length > 0,
 				);
 				renderBusNodeSecondary(nodesOnBus);
 			});
@@ -582,14 +801,14 @@ window.addEventListener("DOMContentLoaded", function () {
 			if (editing) {
 				const hint = document.createElement("div");
 				hint.className = "placeholder";
-				hint.textContent = "Use Add Bus to create this node's first route.";
+				hint.textContent = "Use Add Bus to create this node's first bus.";
 				secondList.appendChild(hint);
 			}
 			if (editing && deviceName) {
 				secondList.appendChild(
 					editor.createAddBtn("Add Bus", () => {
 						editor.setNavSnapshot(navSnapshot());
-						editor.showRoutingAddForm(deviceName, null);
+						editor.showRoutingBusAddForm(deviceName);
 					}),
 				);
 			}
@@ -629,9 +848,7 @@ window.addEventListener("DOMContentLoaded", function () {
 							editor.confirmAndDelete(
 								deviceName + " > " + entry.busName,
 								() => {
-									const range = editor.findRoutingBusRange(deviceName, busPort);
-									if (range)
-										editor.deleteLineRange(range.startLine, range.endLine);
+									window.GrcanDocument.deleteBusBlock(deviceName, busPort);
 									editor.markEdited("routeBus:" + deviceName + "|" + busPort);
 								},
 							);
@@ -656,13 +873,15 @@ window.addEventListener("DOMContentLoaded", function () {
 			secondList.appendChild(
 				editor.createAddBtn("Add Bus", () => {
 					editor.setNavSnapshot(navSnapshot());
-					editor.showRoutingAddForm(deviceName, null);
+					editor.showRoutingBusAddForm(deviceName);
 				}),
 			);
 		}
+		applySearchFilter();
 	}
 
 	async function renderNodeBus(ref, localText) {
+		_allNodes = [];
 		const isLocal = !!localText;
 		setPlaceholder(firstList, "Loading nodes...");
 		setPlaceholder(secondList, "Select a node");
@@ -722,7 +941,8 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 			if (nodesResult.error || !nodesResult.nodes) continue;
 			for (const node of nodesResult.nodes) {
-				if (!node.messages || node.messages.length === 0) continue;
+				if (!node.hasBus && (!node.messages || node.messages.length === 0))
+					continue;
 				if (!nodeMap.has(node.name)) nodeMap.set(node.name, []);
 				nodeMap.get(node.name).push({
 					busName: bus.display,
@@ -734,7 +954,15 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		const nodes = [...nodeMap.entries()]
 			.map(([name, buses]) => ({ name, buses }))
-			.sort((a, b) => a.name.localeCompare(b.name));
+			.sort((a, b) => {
+				const idA = nodeIdForName(a.name);
+				const idB = nodeIdForName(b.name);
+				const numA = idA ? parseInt(idA, 16) : Infinity;
+				const numB = idB ? parseInt(idB, 16) : Infinity;
+				if (numA !== numB) return numA - numB;
+				return a.name.localeCompare(b.name);
+			});
+		_allNodes = nodes;
 
 		firstList.innerHTML = "";
 		if (nodes.length === 0) {
@@ -771,8 +999,11 @@ window.addEventListener("DOMContentLoaded", function () {
 					editor.createDeleteBtn(() => {
 						editor.setNavSnapshot(navSnapshot());
 						editor.confirmAndDelete(nodeEntry.name + " (all routes)", () => {
-							const range = editor.findRoutingDeviceRange(nodeEntry.name);
-							if (range) editor.deleteLineRange(range.startLine, range.endLine);
+							const result = window.GrcanDocument.deleteDevice(nodeEntry.name);
+							if (!result.ok) {
+								console.error("deleteDevice failed:", result.error);
+								return;
+							}
 							editor.markEdited("routeNode:" + nodeEntry.name);
 						});
 					}),
@@ -805,22 +1036,38 @@ window.addEventListener("DOMContentLoaded", function () {
 				}),
 			);
 		}
+		applySearchFilter();
 	}
 
 	// ==================== Hierarchy entry points ====================
 
 	async function renderHierarchy(ref) {
-		await loadNodeIds(ref);
-
 		const candoResult = await window.GrcanApi.fetchCando(ref);
+		const localText = candoResult.notFound ? null : candoResult.content;
+
+		if (localText) {
+			loadNodeIdsFromText(localText);
+		} else {
+			await loadNodeIds(ref);
+		}
+
 		if (!candoResult.notFound && editor) {
 			editor.setRawText(candoResult.content);
+			if (window.GrcanDocument) {
+				const violations = window.GrcanDocument.validate();
+				if (violations.length > 0) {
+					console.warn(
+						"[GrcanDocument] CANdo validation issues on load:",
+						violations,
+					);
+				}
+			}
 		}
 
 		if (HIERARCHY_MODE === "NODE_BUS") {
-			await renderNodeBus(ref);
+			await renderNodeBus(ref, localText);
 		} else {
-			await renderBusNode(ref);
+			await renderBusNode(ref, localText);
 		}
 	}
 
@@ -973,6 +1220,48 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 
 	refSelect.addEventListener("change", onRefInputChange);
+
+	// ==================== Local-file toggle ====================
+	const localToggle = document.getElementById("local-toggle");
+	const localFileInput = document.getElementById("local-file-input");
+
+	if (localToggle && localFileInput) {
+		localToggle.addEventListener("change", function () {
+			if (localToggle.checked) {
+				localFileInput.style.display = "block";
+				localFileInput.click();
+			} else {
+				localFileInput.style.display = "none";
+				localFileInput.value = "";
+				window.GrcanApi.setLocalCandoText(null);
+				refSelect.disabled = false;
+				if (currentRef) renderHierarchy(currentRef);
+			}
+		});
+
+		localFileInput.addEventListener("change", function () {
+			const file = localFileInput.files[0];
+			if (!file) {
+				localToggle.checked = false;
+				localFileInput.style.display = "none";
+				window.GrcanApi.setLocalCandoText(null);
+				refSelect.disabled = false;
+				return;
+			}
+			const reader = new FileReader();
+			reader.onload = function (e) {
+				window.GrcanApi.setLocalCandoText(e.target.result);
+				refSelect.disabled = true;
+				renderHierarchy(currentRef || "local");
+			};
+			reader.readAsText(file);
+		});
+
+		localFileInput.addEventListener("cancel", function () {
+			localToggle.checked = false;
+			localFileInput.style.display = "none";
+		});
+	}
 
 	init();
 });

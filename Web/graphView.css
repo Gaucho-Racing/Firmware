@@ -1,0 +1,256 @@
+/* ==================== Graph View Overlay ==================== */
+
+.graph-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 3000;
+	background: #07090f;
+	display: flex;
+	flex-direction: column;
+}
+
+/* ==================== Toolbar ==================== */
+
+.graph-toolbar {
+	height: 52px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 0 20px;
+	background: rgba(14, 16, 23, 0.96);
+	border-bottom: 1px solid #1f2439;
+}
+
+.graph-back-btn {
+	background: transparent;
+	border: 1px solid #2c3350;
+	border-radius: 7px;
+	color: #94a3b8;
+	font-size: 0.82rem;
+	font-family: inherit;
+	padding: 6px 12px;
+	cursor: pointer;
+	transition:
+		background 0.12s,
+		border-color 0.12s,
+		color 0.12s;
+	white-space: nowrap;
+}
+
+.graph-back-btn:hover {
+	background: #131729;
+	border-color: #3d4872;
+	color: #f1f5f9;
+}
+
+.graph-title {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #e2e8f0;
+	white-space: nowrap;
+}
+
+/* ==================== Bus Tabs ==================== */
+
+.graph-bus-tabs {
+	display: flex;
+	gap: 4px;
+	margin: 0 auto;
+}
+
+.graph-bus-tab {
+	background: transparent;
+	border: 1px solid #2c3350;
+	border-radius: 7px;
+	color: #67728b;
+	font-size: 0.8rem;
+	font-family: inherit;
+	font-weight: 500;
+	padding: 5px 14px;
+	cursor: pointer;
+	transition:
+		background 0.12s,
+		border-color 0.12s,
+		color 0.12s;
+}
+
+.graph-bus-tab:hover {
+	background: #131729;
+	border-color: #3d4872;
+	color: #b8c3d8;
+}
+
+.graph-bus-tab.active {
+	background: rgba(14, 165, 233, 0.14);
+	border-color: #0ea5e9;
+	color: #7dd3fc;
+}
+
+/* ==================== Focus Pill ==================== */
+
+.graph-focus-pill {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	background: rgba(14, 165, 233, 0.15);
+	border: 1px solid #0ea5e9;
+	border-radius: 20px;
+	padding: 4px 10px 4px 14px;
+	font-size: 0.78rem;
+	color: #7dd3fc;
+	white-space: nowrap;
+}
+
+.graph-pill-label {
+	font-weight: 600;
+}
+
+.graph-pill-close {
+	background: transparent;
+	border: none;
+	color: #7dd3fc;
+	font-size: 1rem;
+	line-height: 1;
+	cursor: pointer;
+	padding: 0 2px;
+	opacity: 0.7;
+	font-family: inherit;
+	transition: opacity 0.1s;
+}
+
+.graph-pill-close:hover {
+	opacity: 1;
+}
+
+/* ==================== Fit Button ==================== */
+
+.graph-fit-btn {
+	background: transparent;
+	border: 1px solid #2c3350;
+	border-radius: 7px;
+	color: #67728b;
+	font-size: 0.8rem;
+	font-family: inherit;
+	padding: 5px 12px;
+	cursor: pointer;
+	transition:
+		background 0.12s,
+		border-color 0.12s,
+		color 0.12s;
+}
+
+.graph-fit-btn:hover {
+	background: #131729;
+	border-color: #3d4872;
+	color: #b8c3d8;
+}
+
+/* ==================== Canvas Area ==================== */
+
+.graph-canvas-area {
+	flex: 1;
+	position: relative;
+	overflow: hidden;
+}
+
+#graph-cy-container {
+	width: 100%;
+	height: 100%;
+}
+
+/* ==================== Node Detail Panel ==================== */
+
+.graph-node-panel {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 280px;
+	background: rgba(11, 13, 20, 0.97);
+	border-left: 1px solid #1f2439;
+	overflow-y: auto;
+	padding: 20px 18px;
+	transform: translateX(100%);
+	transition: transform 0.18s ease-out;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.graph-node-panel.open {
+	transform: translateX(0);
+}
+
+.graph-panel-title {
+	font-size: 1rem;
+	font-weight: 700;
+	color: #e2e8f0;
+	margin: 0 0 4px 0;
+}
+
+.graph-panel-grid {
+	font-size: 0.78rem;
+	color: #67728b;
+	margin-bottom: 16px;
+}
+
+.graph-panel-divider {
+	height: 1px;
+	background: #1f2439;
+	margin: 12px 0;
+}
+
+.graph-panel-section-label {
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #4b5568;
+	margin-bottom: 8px;
+}
+
+.graph-panel-peer {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #7dd3fc;
+	cursor: pointer;
+	padding: 4px 0;
+	border-radius: 4px;
+	transition: color 0.1s;
+	background: transparent;
+	border: none;
+	font-family: inherit;
+	text-align: left;
+	width: 100%;
+}
+
+.graph-panel-peer:hover {
+	color: #bae6fd;
+}
+
+.graph-panel-peer-arrow {
+	font-size: 0.75rem;
+	color: #4b5568;
+	flex-shrink: 0;
+}
+
+.graph-panel-msgs {
+	padding-left: 18px;
+	margin: 2px 0 8px;
+}
+
+.graph-panel-msg {
+	font-size: 0.75rem;
+	color: #94a3b8;
+	padding: 1px 0;
+}
+
+.graph-panel-empty {
+	font-size: 0.8rem;
+	color: #4b5568;
+	font-style: italic;
+}

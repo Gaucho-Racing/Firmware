@@ -373,6 +373,10 @@ sub parse_message_id {
 	if ( $ind == 4 && $line =~ /^ ([^:]+) : /smx ) {
 		my $sig = $1;
 		$sig =~ s/\s+$//smx;
+
+		# Skip if the "signal name" is actually the comment field
+		return if $sig eq 'comment';
+
 		$state_ref->{cur_sig} = $sig;
 		$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} } = {};
 		return;
@@ -382,6 +386,9 @@ sub parse_message_id {
 		my $v = $2;
 		$k =~ s/\s+$//smx;
 		$v =~ s/\s+$//smx;
+
+		# Skip comment fields at the property level
+		return if $k eq 'comment';
 
 		if ( $k eq 'bit_start' || $k eq 'bit start' ) {
 			$v =~ s/-.*//smx;
@@ -415,6 +422,11 @@ sub parse_custom_id {
 		my $len = $1;
 		$len =~ s/\s+$//smx;
 		$data_ref->{custom}{ $state_ref->{cur_msg} }{len} = $len;
+		return;
+	}
+
+	# Skip standalone comment fields in custom section
+	if ( $line =~ /^ comment \s* : /ixsm ) {
 		return;
 	}
 	if ( $line =~ /^ [-] \s+ name \s* : \s* ["']? ([^"']+) ["']? /smx ) {
