@@ -7,9 +7,9 @@
 #include "StateUtils.h"
 
 // add new pingable devices here, arrays are updated automagically
-#define PING_LIST(OP)                                                                                                                                                                              \
-	OP(BCU, 0)                                                                                                                                                                                  \
-	OP(Dash_Panel, 1)                                                                                                                                                                           \
+#define PING_LIST(OP)                                                                                                                                                                                  \
+	OP(BCU, 0)                                                                                                                                                                                     \
+	OP(Dash_Panel, 1)
 
 // Converts PING_LIST into a list of the first column (IDs)
 #define PING_LIST_AS_ID(id, index) id,
