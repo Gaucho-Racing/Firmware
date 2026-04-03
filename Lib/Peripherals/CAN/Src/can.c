@@ -16,10 +16,10 @@
 #include "profile.h"
 
 //TODO: define DMA usage in a better way
-#//#define USEDMA
-//#ifdef USEDMA
-//#include "can_dma.h"
-//#endif
+#define USEDMA
+#ifdef USEDMA
+#include "can_dma.h"
+#endif
 
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
@@ -493,7 +493,6 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 //uint32_t PROFILE_AVG_RX_CYCLES_SAMPLES = 0;
 
 dwt_timer_t rx_timer = {0};
-//1238 Cycles
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
 	//dwt_timer_start_measurement(&rx_timer);
@@ -538,35 +537,28 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	//global_dwt_timer_end_measurement();
 
 
-	// TODO: Stack allocation should be safe - CAN messages are infrequent enough
+	// TODO: Stack allocation should be safe
 	//uint8_t rx_data[64] = {0};
-	uint8_t rx_data[64] __attribute__((aligned(4))) = {0};
+	uint8_t rx_data[64] __attribute__((aligned(4))) = {0}; //align to word boundary for safe DMA transfer
 
-	// TODO: maybe also use a timer for this?
+	//TODO: Copying takes a while, may have to spread these out over multiple ISRs
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
-		//Takes less time to fetch 64 bytes than it does to get 1 byte???
 		#ifdef USEDMA
+
+		dwt_timer_start_measurement(&rx_timer);
 		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		dwt_timer_end_measurement(&rx_timer);
+
 		#else
 
 		dwt_timer_start_measurement(&rx_timer);
-
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		#endif
-
 		dwt_timer_end_measurement(&rx_timer);
 
-		//dwt_timer_end_measurement(&rx_timer);
-
-
-		//global_dwt_timer_end_measurement();
-		//GLOBAL_DWT_TIMER.total_cycles += DWT->CYCCNT - GLOBAL_DWT_TIMER.start_cycle;
-    	//GLOBAL_DWT_TIMER.total_samples++;
-
+		#endif
 
 		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
-
 
 		//TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
 		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
@@ -574,14 +566,6 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	}
 
-	//END TIMING
-
-	/*
-	    if (GR_CircularBuffer_IsEmpty(handle->rx_buffer)) handle->rx_callback(rx_data, rx_header.DataLength);
-	    else {
-	    GR_CircularBuffer_Push(handle->rx_buffer, rx_data, rx_header.DataLength);
-	    }
-	}*/
 	//__set_BASEPRI(prev_priority);
 	dwt_timer_end_measurement(&rx_timer);
 
@@ -699,6 +683,8 @@ CAN_STATUS can_stop(CANHandle *canHandle)
 	GPIOx_CLK_DISABLE(canHandle->tx_gpio);
 
 	canHandle->started = false;
+
+	//TODO: stop a DMA transfer if its in progress
 
 	return CAN_SUCCESS;
 }

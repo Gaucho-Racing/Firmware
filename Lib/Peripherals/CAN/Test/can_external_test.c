@@ -37,6 +37,8 @@ static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 		if (can2_data[i] != i) failure = true;
 	}
 
+	//dwt_timer_end_measurement();
+
 	//reset
 	for (uint32_t i = 0; i < size; i++) can2_data[i] = 0;
 	if (failure) LOGOMATIC("FAIL: did not copy data correctly\n");

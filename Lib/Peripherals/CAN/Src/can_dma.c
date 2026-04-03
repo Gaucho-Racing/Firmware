@@ -14,9 +14,10 @@
 //static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 static void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 
+/*
 typedef struct dma_transfer_t {
 	uint32_t can_id;
-    uint8_t data[64] __attribute__((aligned(4)));  // ← add this
+    uint8_t data[64] __attribute__((aligned(4)));
 	uint32_t size;
 
 	uint32_t RxLocation;
@@ -26,8 +27,9 @@ typedef struct dma_transfer_t {
 	volatile bool unconsumed;
 
 } dma_transfer_t;
+*/
 
-static volatile dma_transfer_t dma1_ch1 = {0};
+//static volatile dma_transfer_t dma1_ch1 = {0};
 
 static uint32_t msg_count = 0;
 
@@ -143,17 +145,19 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef* hfdcan, uint32_t R
 		RxAddress++;
 
 
-		LOGOMATIC("msg#%lu F0GI=%lu GetIndex=%lu RxFIFO0SA=0x%08lx PayloadAddr=0x%08lx\n",
+		/*LOGOMATIC("msg#%lu F0GI=%lu GetIndex=%lu RxFIFO0SA=0x%08lx PayloadAddr=0x%08lx\n",
 		msg_count,
 		(hfdcan->Instance->RXF0S & FDCAN_RXF0S_F0GI) >> FDCAN_RXF0S_F0GI_Pos,
 		GetIndex,
 		hfdcan->msgRam.RxFIFO0SA,
 		(uint32_t)RxAddress);  // after the two RxAddress++ increments
 
+
 		uint8_t *dbg = (uint8_t*)RxAddress;  // after the two increments
 		LOGOMATIC("src byte48=0x%02x\n", dbg[48]);
-		/* Retrieve Rx payload with DMA*/
+		*/
 
+		/* Retrieve Rx payload with DMA*/
 		pData = (uint8_t *)RxAddress;
 		uint32_t bytes = DLCtoBytes[pRxHeader->DataLength];
 		//DMA_M2M_BlockingTransfer(pData, pRxData, bytes);
