@@ -3458,21 +3458,10 @@ Message ID:
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
-    BMS LED:
+    led_bits:
       bit_start: 0
-      comment: LED command (0: off, 1: on)
-      data type: b
-      units: Bool
-    IMD LED:
-      bit_start: 1
-      comment: LED command (0: off, 1: on)
-      data type: b
-      units: Bool
-    BSPD LED:
-      bit_start: 2
-      comment: LED command (0: off, 1: on)
-      data type: b
-      units: Bool
+      comment: BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved
+      data type: u8
   Steering Status:
     MSG ID: 0x01C
     MSG LENGTH: 2
@@ -3711,29 +3700,10 @@ Message ID:
   TCM Status:
     MSG ID: 0x029
     MSG LENGTH: 8
-    Connection Status:
+    status_bits:
       bit_start: 0
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    MQTT Status:
-      bit_start: 1
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Epic Shelter Status:
-      bit_start: 2
-      comment: 1: In Progress, 0: Idle
-      data type: b
-      units: Bool
-    Camera Status:
-      bit_start: 3
-      comment: 1: Recording, 0: Idle
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 4-7
-    Ping:
+      comment: "Connection Status = bit 0, MQTT Status = bit 1, Epic Shelter Status = bit 2, Camera Status = bit 3, bits 4-7 reserved"
+    Mapache Ping:
       bit_start: 8
       comment: Mapache ping (upload)
       data type: u16
@@ -3859,28 +3829,6 @@ Message ID:
       comment: power draw in mW
       data type: u16
       units: Celsius
-  Dash Warning Flags:
-    MSG ID: 0x02B
-    MSG LENGTH: 1
-    BSE APPS Violation:
-      bit_start: 0
-      comment: 1: Violation, 0: OK
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 1
-    Reserved:
-      bit_start: 2
-    Reserved:
-      bit_start: 3
-    Reserved:
-      bit_start: 4
-    Reserved:
-      bit_start: 5
-    Reserved:
-      bit_start: 6
-    Reserved:
-      bit_start: 7
   Specific Brake IR:
     MSG ID: 0x02C
     MSG LENGTH: 2
