@@ -20,10 +20,8 @@ target_link_libraries(
 	GRCAN_FANCYLAYER
 	INTERFACE
 		GLOBALSHARE_LIB
-		#GRCAN_LIB #maybe add back
+	#GRCAN_LIB #maybe add back
 )
-
-
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	# target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
