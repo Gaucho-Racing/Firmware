@@ -88,58 +88,30 @@
 		// name lists). Usage ranking is bus-local: currentBusPort narrows which
 		// routing entries count as "already used" so unused-first sorting is
 		// meaningful in context.
-		async function loadCatalogSuggestions() {
+		function loadCatalogSuggestions() {
 			const rawText = editor.getRawText ? editor.getRawText() : "";
 			// Read the live bus value so filtering updates when the user changes it.
 			const currentBusPort = busF.input.value || null;
 			buildRouteUsageMap(rawText, currentBusPort);
 			const routingNames = buildRoutingReceiverSet(rawText, currentBusPort);
-			const fallbackMessages =
+			const messages =
 				window.GrcanApi && window.GrcanApi.parseMessageCatalogFromText
 					? window.GrcanApi.parseMessageCatalogFromText(rawText)
 					: [];
-			const fallbackNodes =
+			const nodes =
 				window.GrcanApi && window.GrcanApi.parseNodeCatalogFromText
 					? window.GrcanApi.parseNodeCatalogFromText(rawText)
 					: [];
-			const refEl = document.getElementById("ref-select");
-			const ref = refEl ? refEl.value : "";
-			if (!window.GrcanApi || !ref) {
-				allMessageNames = [...new Set(fallbackMessages)];
-				receiverList = [...new Set([...fallbackNodes, ...routingNames])].sort(
-					(a, b) => a.localeCompare(b),
-				);
-				return;
-			}
-			const [messageCatalog, nodeCatalog] = await Promise.all([
-				window.GrcanApi.fetchMessageCatalog(ref),
-				window.GrcanApi.fetchNodeCatalog(ref),
-			]);
-			const headerNames =
-				!messageCatalog.error && messageCatalog.messages
-					? messageCatalog.messages
-					: [];
-			// Merge header-derived and current-text-derived names so that new
-			// message definitions created in this edit session are immediately
-			// available in autocomplete. Header names remain the long-term
-			// source of truth; text names add local, in-session additions.
-			const messageCandidates = [
-				...new Set([...headerNames, ...fallbackMessages]),
-			];
-			// For receivers: use catalog node names ONLY when no bus is selected,
-			// so we don't suggest nodes from other buses. When a bus is locked,
-			// routingNames already contains the bus-local receivers.
-			const nodeCandidates =
-				!nodeCatalog.error && nodeCatalog.nodes
-					? nodeCatalog.nodes
-					: fallbackNodes;
+			allMessageNames = [...new Set(messages)];
+			// For receivers: when a bus is locked, routingNames already contains
+			// the bus-local receivers; don't mix in nodes from other buses.
 			const baseReceivers = currentBusPort
 				? [...routingNames]
-				: [...new Set([...nodeCandidates, ...routingNames])];
-			allMessageNames = [...new Set(messageCandidates)];
+				: [...new Set([...nodes, ...routingNames])];
 			receiverList = [...new Set(baseReceivers)].sort((a, b) =>
 				a.localeCompare(b),
 			);
+			if (!receiverList.includes("ALL")) receiverList.unshift("ALL");
 		}
 
 		const devF = fu.makeFormRow(
@@ -149,6 +121,25 @@
 		);
 		if (deviceName) devF.input.disabled = true;
 		body.appendChild(devF.row);
+
+		// GR ID field: only shown (and required) when the typed device name is new.
+		const grIdF = fu.makeFormRow(
+			"GR ID (new device)",
+			fu.makeInput("text", "", "e.g. 0x2B"),
+			false,
+		);
+		grIdF.row.style.display = "none";
+		body.appendChild(grIdF.row);
+
+		function updateGrIdVisibility() {
+			const isNew =
+				!devF.input.disabled &&
+				!window.GrcanDocument.deviceExists(devF.input.value.trim());
+			grIdF.row.style.display = isNew && devF.input.value.trim() ? "" : "none";
+		}
+		devF.input.addEventListener("input", updateGrIdVisibility);
+		// Run once on open in case a device name was pre-filled.
+		if (!devF.input.disabled) updateGrIdVisibility();
 
 		const busF = fu.makeFormRow(
 			"Bus",
@@ -166,6 +157,10 @@
 			});
 		}
 		body.appendChild(busF.row);
+
+		// Eagerly populate suggestions so "ALL" and other candidates are ready
+		// before the user focuses the receiver field.
+		loadCatalogSuggestions();
 
 		const recF = fu.makeFormRow(
 			"Receiver",
@@ -224,7 +219,6 @@
 			renderReceiverSuggestions(recF.input.value);
 		});
 		recF.input.addEventListener("focus", () => {
-			if (!receiverList.length) loadCatalogSuggestions();
 			renderReceiverSuggestions(recF.input.value);
 		});
 		recF.input.addEventListener("blur", () => {
@@ -312,6 +306,7 @@
 					e.preventDefault();
 					msgF.input.value = name;
 					suggestBox.classList.add("hidden");
+					syncOverrideForMessage(name);
 				});
 				suggestBox.appendChild(item);
 			});
@@ -345,6 +340,7 @@
 				if (suggestIndex >= 0 && suggestIndex < items.length) {
 					const name = items[suggestIndex].textContent || "";
 					msgF.input.value = name;
+					syncOverrideForMessage(name);
 				}
 				suggestBox.classList.add("hidden");
 				return;
@@ -361,6 +357,36 @@
 			fu.makeInput("text", "", "0x1806E5F4 (optional)"),
 		);
 		body.appendChild(ovrF.row);
+
+		// Auto-fill the override field when the selected message is a Custom CAN ID
+		// message (whose canId is stored as bare hex, e.g. "2416"). The routing
+		// section requires 0x-prefixed format, so we prefix it here.
+		// _autoFilled tracks whether the current value was set programmatically so
+		// we can clear it when the user switches to a non-custom message, without
+		// ever clearing a value the user typed themselves.
+		ovrF.input._autoFilled = false;
+		ovrF.input.addEventListener("input", () => {
+			ovrF.input._autoFilled = false;
+		});
+
+		function syncOverrideForMessage(name) {
+			if (!name) return;
+			if (window.GrcanEditor.isCustomCanIdMessage(name)) {
+				const def =
+					window.GrcanDocument && window.GrcanDocument.getCustomCanIdDef(name);
+				if (def && def.canId && !ovrF.input.value.trim()) {
+					ovrF.input.value = "0x" + def.canId.toUpperCase();
+					ovrF.input._autoFilled = true;
+				}
+			} else if (ovrF.input._autoFilled) {
+				ovrF.input.value = "";
+				ovrF.input._autoFilled = false;
+			}
+		}
+
+		msgF.input.addEventListener("blur", () =>
+			syncOverrideForMessage(msgF.input.value.trim()),
+		);
 
 		const cancelBtn = fu.makeBtn("Cancel");
 		cancelBtn.addEventListener("click", () => fu.closeOverlay(overlay));
@@ -403,86 +429,37 @@
 			} else ovrF.error.textContent = "";
 
 			if (!ok) return;
-			if (editor.routeEntryExists(dev, bus, rec, msg, ovr || null)) {
-				fu.closeOverlay(overlay, { force: true });
-				return;
-			}
 
-			const lines = editor.getLines();
-			const devRange = editor.findRoutingDeviceRange(dev);
-			let createdNode = false;
-			let createdBus = false;
-
-			if (!devRange) {
-				createdNode = true;
-				createdBus = true;
-				const rStart = editor.findSectionStart(lines, "routing");
-				if (rStart === -1) return;
-				const rEnd = editor.findSectionEnd(lines, rStart);
-				editor.insertAtLine(
-					rEnd,
-					"    " +
-						dev +
-						":\n      " +
-						bus +
-						":\n        " +
-						rec +
-						":\n" +
-						editor.generateRoutingMsgYaml(msg, ovr || null),
-				);
-			} else {
-				const busRange = editor.findRoutingBusRange(dev, bus);
-				if (!busRange) {
-					createdBus = true;
-					editor.insertAtLine(
-						devRange.endLine,
-						"      " +
-							bus +
-							":\n        " +
-							rec +
-							":\n" +
-							editor.generateRoutingMsgYaml(msg, ovr || null),
-					);
-				} else {
-					let recFound = false;
-					const freshLines = editor.getLines();
-					for (let i = busRange.startLine + 1; i < busRange.endLine; i++) {
-						if (
-							freshLines[i].search(/\S/) === 8 &&
-							freshLines[i].trim() === rec + ":"
-						) {
-							// findBlockEnd locates the end of this receiver block
-							// (indent ≤ 8), bounded by the parent bus block end.
-							const recEnd = editor.findBlockEnd(
-								freshLines,
-								i,
-								busRange.endLine,
-								8,
-							);
-							editor.insertAtLine(
-								recEnd,
-								editor.generateRoutingMsgYaml(msg, ovr || null),
-							);
-							recFound = true;
-							break;
-						}
-					}
-					if (!recFound) {
-						editor.insertAtLine(
-							busRange.endLine,
-							"        " +
-								rec +
-								":\n" +
-								editor.generateRoutingMsgYaml(msg, ovr || null),
-						);
-					}
+			// If device is new, validate and create it with a GR ID first.
+			const isNewDevice = !window.GrcanDocument.deviceExists(dev);
+			if (isNewDevice) {
+				const grId = grIdF.input.value.trim();
+				if (!grId || !/^0x[0-9a-fA-F]+$/i.test(grId)) {
+					grIdF.error.textContent = "Required for new device (hex, e.g. 0x2B)";
+					return;
+				}
+				const addResult = window.GrcanDocument.addDevice(dev, grId);
+				if (!addResult.ok) {
+					devF.error.textContent = addResult.error;
+					return;
 				}
 			}
 
-			if (createdNode) editor.markNew("routeNode:" + dev);
+			const routeResult = window.GrcanDocument.addRoute(
+				dev,
+				bus,
+				rec,
+				msg,
+				ovr || null,
+			);
+			if (!routeResult.ok) {
+				msgF.error.textContent = routeResult.error;
+				return;
+			}
+
+			if (isNewDevice) editor.markNew("routeNode:" + dev);
 			else editor.markEdited("routeNode:" + dev);
-			if (createdBus) editor.markNew("routeBus:" + dev + "|" + bus);
-			else editor.markEdited("routeBus:" + dev + "|" + bus);
+			editor.markNew("routeBus:" + dev + "|" + bus);
 			editor.markNew("routeMsg:" + dev + "|" + bus + "|" + msg);
 
 			fu.closeOverlay(overlay, { force: true });
