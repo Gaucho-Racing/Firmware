@@ -11,6 +11,7 @@
 #include "dashutils.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
+#include "bitManipulations.h"
 
 #define ECU_ID ECU
 #define PING_ID MSG_PING
@@ -103,18 +104,24 @@ void CAN_sendECU(CANHandle *c, GRCAN_DASH_STATUS_MSG *msg, GRCAN_NODE_ID to)
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
 
-	GRCAN_MSG_ID msg_id = (0x000FFF00 & ID) >> 8;
-	GRCAN_NODE_ID node_id = (0x0FF00000 & ID) >> 20;
+	GRCAN_MSG_ID msg_id = GETBITS(ID, 12, 12);
+	GRCAN_NODE_ID node_id = GETBITS(ID, 4, 8);
 
 	// Process data
+	// ECU Status
 	if (msg_id == MSG_ECU_STATUS_1 && size == sizeof(GRCAN_ECU_STATUS_1_MSG)) {
 		GRCAN_ECU_STATUS_1_MSG *ecu_data = (GRCAN_ECU_STATUS_1_MSG *)data;
 		dashStatus.ECUState = ecu_data->ecu_state; // Get ECU Status
+
+	// Dash Config
 	} else if (msg_id == MSG_DASH_CONFIG && size == sizeof(GRCAN_DASH_CONFIG_MSG)) {
 		GRCAN_DASH_CONFIG_MSG *dash_data = (GRCAN_DASH_CONFIG_MSG *)data;
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bits
-	} else if (msg_id == PING_ID && size == sizeof(GRCAN_PING_MSG)) {
+
+	// Ping
+	} else if (msg_id == MSG_PING && size == sizeof(GRCAN_PING_MSG)) {
 		CAN_sendPing(node_id, *(uint32_t *)data);
+
 	} else {
 		// Check that you are sending the correct sizes if you get this message
 		LOGOMATIC("Unrecognized CAN message.\n");

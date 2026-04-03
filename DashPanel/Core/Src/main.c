@@ -135,13 +135,24 @@ int main(void)
 			msg_struct.led_bits = dashStatus.led_bits;
 			msg_struct.button_flags = dashStatus.button_flags;
 
-			if (GETBIT(dashStatus.button_flags, 0)) {
+			if (GETBIT(dashStatus.button_flags, 0)) { // TSActive
 				SetBitInByte(dashStatus.button_flags, 0, false);
 			}
-			if (GETBIT(dashStatus.button_flags, 1)) {
+			if (GETBIT(dashStatus.button_flags, 1)) { // RTD
 				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
-
+			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons(this through the end)
+				SetBitInByte(dashStatus.button_flags, 2, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 3)) {
+				SetBitInByte(dashStatus.button_flags, 3, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 4)) {
+				SetBitInByte(dashStatus.button_flags, 4, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 5)) {
+				SetBitInByte(dashStatus.button_flags, 5, false);
+			}
 			// CAN_sendPing(Dash_Panel);
 			CAN_sendECU(can_handler, &msg_struct, ECU);
 
