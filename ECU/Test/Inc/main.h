@@ -1,2 +1,2 @@
 #include "GRCAN_NODE_ID.h"
-#define LOCAL_GR_ID GR_ECU
+#define LOCAL_GR_ID ECU
