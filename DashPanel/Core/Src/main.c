@@ -102,6 +102,7 @@ int main(void)
 	LL_PWR_DisableUCPDDeadBattery();
 
 	/* USER CODE BEGIN Init */
+	HAL_Init();
 	CANInitialize();
 	GPIO_Interrupt_Init();
 	Setup_Logomatic(&logomaticConfig);
