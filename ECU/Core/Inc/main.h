@@ -43,7 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "GR_OLD_NODE_ID.h"
+#include "GRCAN_NODE_ID.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -58,7 +58,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define LOCAL_GR_ID GR_ECU
+#define LOCAL_GR_ID ECU
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

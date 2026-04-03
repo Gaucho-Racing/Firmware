@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "GR_OLD_BUS_ID.h"
+#include "GRCAN_BUS_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
 #include "adc.h"
@@ -139,44 +139,6 @@ void ADC_Configure(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
-	// OLD ADC (FOR REF)
-	/*
-	// Initialize the ADC1
-	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
-	ADC_Regular_Group_Init(ADC1, RANKS_7);
-
-	// Initialize the pins and channels
-	Pin_Ports p1 = {0};
-	p1.port = GPIOC;
-	p1.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3;
-	ADC_Init_Pins(&p1);
-	Pin_Ports p2 = {0};
-	p2.port = GPIOB;
-	p2.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14;
-	ADC_Init_Pins(&p2);
-	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_6, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_2, ADC_CHANNEL_7, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_3, ADC_CHANNEL_8, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_4, ADC_CHANNEL_9, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_5, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_6, ADC_CHANNEL_12, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC1, RANK_7, ADC_CHANNEL_5, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-
-	// Initialize ADC2
-	ADC_Init(ADC2, RESOLUTION_12, RIGHT);
-	ADC_Regular_Group_Init(ADC2, RANKS_4);
-
-	// Initialize the pins and channels
-	Pin_Ports p3 = {0};
-	p3.port = GPIOA;
-	p3.pin = LL_GPIO_PIN_15;
-	ADC_Init_Pins(&p3);
-	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_2, ADC_CHANNEL_13, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_3, ADC_CHANNEL_3, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	ADC_Channel_Init(ADC2, RANK_4, ADC_CHANNEL_4, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
-	*/
-
 	// ADC 1
 	ADC_Init_Values Init_Vals_ADC1 = {0};
 	Init_Vals_ADC1.ADC = ADC1;
@@ -245,14 +207,14 @@ void ADC_Configure(void)
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
+	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_PRIMARY,
 			       (0x000FFF00 & ID) >> 8, // TODO: Double check
 			       (0xFF00000 & ID) >> 20, data, size);
 }
 
 void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
+	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
 }
 
 void CAN_Configure()
@@ -434,13 +396,13 @@ int main(void)
 			pingAll();
 
 			if (nextPing != 0) {
-				if (getRTT(GR_BCU) == PINGTIMEOUT_VALUE) {
+				if (getRTT(BCU) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
 				}
-				if (getRTT(GR_DASH_PANEL) == PINGTIMEOUT_VALUE) {
+				if (getRTT(Dash_Panel) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
 				}
-				if (getRTT(GR_CCU) != PINGTIMEOUT_VALUE) {
+				if (getRTT(CCU) != PINGTIMEOUT_VALUE) {
 					// halt if CCU is connected
 					return 1;
 				}

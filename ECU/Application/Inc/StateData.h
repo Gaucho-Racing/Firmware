@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "GR_OLD_MSG_DAT.h"
+#include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
 
 #ifndef _STATEDATA_H_
