@@ -431,9 +431,6 @@ void GR_SPI_Close(GR_SPI_Handler *handle)
 	if (handle->pins->GPIOx) {
 		free(handle->pins->GPIOx);
 	}
-	if (handle->pins->pin_nums) {
-		free(handle->pins->pin_nums);
-	}
 	if (handle->pins) {
 		free(handle->pins);
 	}
