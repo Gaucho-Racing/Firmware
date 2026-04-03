@@ -41,7 +41,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
 			state_data.BCU_S2_20Volt = bcu_status_2->_20v_voltage;
 			state_data.BCU_S2_12Volt = bcu_status_2->_12v_voltage;
-			state_data.BCU_S2_SDC_Volt = bcu_stats_2->sdc_voltage;
+			state_data.BCU_S2_SDC_Volt = bcu_status_2->sdc_voltage;
 			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
 			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
 
@@ -172,9 +172,8 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 
 	msg.data[0] = (state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
-	if (msg != sizeof(GRCAN_BCU_PRECHARGE_MSG)) {
-		LOGOMATIC("Bad CCU CAN Tx length! ID: %lu, Size %lu\n", ID, sizeof(msg));
-		break;
+	if (sizeof(msg) != sizeof(GRCAN_BCU_PRECHARGE_MSG)) {
+		LOGOMATIC("Bad CCU CAN Tx length!, Size %u\n", sizeof(msg));
 	}
 	LOGOMATIC("PRECHARGE SET: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
