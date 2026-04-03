@@ -20,6 +20,7 @@
 #include "main.h"
 
 #include "CANdler.h"
+#include "bitManipulations.h"
 #include "dashutils.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -129,21 +130,31 @@ int main(void)
 
 		if (canReadyToSend) {
 
-			GR_OLD_DASH_STATUS_MSG msg_struct;
+			GRCAN_DASH_STATUS_MSG msg_struct;
 
 			msg_struct.led_bits = dashStatus.led_bits;
-			msg_struct.ts_button = dashStatus.TSActiveButton;
-			msg_struct.rtd_button = dashStatus.RTDButton;
+			msg_struct.button_flags = dashStatus.button_flags;
 
-			if (dashStatus.TSActiveButton) {
-				dashStatus.TSActiveButton = 0;
+			if (GETBIT(dashStatus.button_flags, 0)) { // TSActive
+				SetBitInByte(dashStatus.button_flags, 0, false);
 			}
-			if (dashStatus.RTDButton) {
-				dashStatus.RTDButton = 0;
+			if (GETBIT(dashStatus.button_flags, 1)) { // RTD
+				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
-
-			// CAN_sendPing(GR_DASH_PANEL);
-			CAN_sendECU(can_handler, &msg_struct, GR_ECU);
+			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons(this through the end)
+				SetBitInByte(dashStatus.button_flags, 2, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 3)) {
+				SetBitInByte(dashStatus.button_flags, 3, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 4)) {
+				SetBitInByte(dashStatus.button_flags, 4, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 5)) {
+				SetBitInByte(dashStatus.button_flags, 5, false);
+			}
+			// CAN_sendPing(Dash_Panel);
+			CAN_sendECU(can_handler, &msg_struct, ECU);
 
 			canReadyToSend = false;
 		}
