@@ -110,7 +110,6 @@ int main(void)
 	LL_mDelay(1000); // Wait for peripherals to stabilize
 	LOGOMATIC("Booted!\n");
 
-
 	// ========== RECEIVER CONFIGURATION ==========
 	config_spi2.Mode = LL_SPI_MODE_SLAVE;
 	config_spi2.NSS = LL_SPI_NSS_SOFT;

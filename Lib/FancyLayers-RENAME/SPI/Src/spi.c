@@ -461,7 +461,8 @@ bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle)
 	return GR_MsgBuffer_IsEmpty(handle->rx_buffer);
 }
 
-uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle) {
+uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle)
+{
 	if (!handle || GR_MsgBuffer_IsEmpty(handle->rx_buffer)) {
 		return 0;
 	}
