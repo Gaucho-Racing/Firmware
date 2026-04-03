@@ -160,7 +160,7 @@ routing:
           - msg: Debug FD
           - msg: Ping
         TCM:
-          - msg: ECU Pedals Data
+          - msg: ECU Analog Data
           - msg: ECU Performance
     Energy Meter:
       CAN3:
@@ -3904,7 +3904,7 @@ Message ID:
       comment: Literal copy of ECU Status's status bit map
       data type: b[24]
       units: Bool map
-  ECU Pedals Data:
+  ECU Analog Data:
     MSG ID: 0x02E
     MSG LENGTH: 16
     BSPD Signal:
