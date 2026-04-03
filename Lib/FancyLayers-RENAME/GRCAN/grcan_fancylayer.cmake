@@ -4,10 +4,10 @@ target_include_directories(
 	GRCAN_FANCYLAYER
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Inc
-		#${CMAKE_CURRENT_LIST_DIR}/TemporaryHoldover/Inc
-		#${Project_SOURCE_DIR}/Autogen/CAN//Inc
-		#${PROJECT_SOURCE_DIR}/Lib/Peripherals/CAN/Inc
-		#${PROJECT_SOURCE_DIR}/Lib/Utils/CircularBuffer/Inc
+	#${CMAKE_CURRENT_LIST_DIR}/TemporaryHoldover/Inc
+	#${Project_SOURCE_DIR}/Autogen/CAN//Inc
+	#${PROJECT_SOURCE_DIR}/Lib/Peripherals/CAN/Inc
+	#${PROJECT_SOURCE_DIR}/Lib/Utils/CircularBuffer/Inc
 )
 
 target_sources(
@@ -26,7 +26,7 @@ target_link_libraries(
 		PERIPHERAL_CAN_LIB
 		GR_OLD_CAN_MESSAGES
 		STM32_HAL_LL_G4xx
-		#GRCAN_LIB #maybe add back
+	#GRCAN_LIB #maybe add back
 )
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
