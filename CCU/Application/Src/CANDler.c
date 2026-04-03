@@ -165,7 +165,7 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	msg.tx_header.DataLength = 1;
+	msg.tx_header.DataLength = FDCAN_DLC_BYTES_1;
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
