@@ -123,8 +123,8 @@ int main(void)
 	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
-	uint32_t previous_time = HAL_GetTick();
-	uint32_t current_time;
+	// uint32_t previous_time = HAL_GetTick();
+	// uint32_t current_time;
 	uint8_t tick_freq = HAL_GetTickFreq();
 
 	/* USER CODE END 2 */
