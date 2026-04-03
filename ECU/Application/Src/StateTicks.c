@@ -211,10 +211,14 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	// placeholder for pedal data
 	if (stateData->millisSinceBoot - last_can_tcm_request_millis > 10) {
-		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal, .bse_signal = stateData->bse_signal, .apps_1_signal = stateData->APPS1_Signal,
-			.apps_2_signal = stateData->APPS2_Signal, .brakeline_f_signal = stateData->Brake_F_Signal,
-			.brakeline_r_signal = stateData->Brake_R_Signal, .aux_signal = stateData->aux_signal};
-			// TODO: include steering wheel data
+		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
+						     .bse_signal = stateData->bse_signal,
+						     .apps_1_signal = stateData->APPS1_Signal,
+						     .apps_2_signal = stateData->APPS2_Signal,
+						     .brakeline_f_signal = stateData->Brake_F_Signal,
+						     .brakeline_r_signal = stateData->Brake_R_Signal,
+						     .aux_signal = stateData->aux_signal};
+		// TODO: include steering wheel data
 		ECU_CAN_Send(GRCAN_BUS_DATA, TCM, MSG_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		last_can_inverter_request_millis = stateData->millisSinceBoot;
 	}
