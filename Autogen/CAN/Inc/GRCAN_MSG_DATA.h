@@ -7,13 +7,13 @@
 /** Debug 2.0 */
 typedef struct {
 	/** Essentially a print statement up to 8 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug;
+	uint8_t debug[8];
 } GRCAN_DEBUG_2_0_MSG;
 
 /** Debug FD */
 typedef struct {
 	/** Essentially a print statement up to 64 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug;
+	uint8_t debug[64];
 } GRCAN_DEBUG_FD_MSG;
 
 /** Ping */
@@ -325,7 +325,7 @@ typedef struct {
 /** Dash Config */
 typedef struct {
 	/** LED command (0: off, 1: on) LED command (0: off, 1: on) LED command (0: off, 1: on) (Byte 0) */
-	uint8_t bms_led_imd_led_bspd_led;
+	uint8_t led_bits;
 } GRCAN_DASH_CONFIG_MSG;
 
 /** Steering Status */
@@ -432,10 +432,15 @@ typedef struct {
 
 /** TCM Status */
 typedef struct {
-	/** 1: OK, 0: Timeout 1: OK, 0: Timeout 1: In Progress, 0: Idle 1: Recording, 0: Idle (Byte 0) */
-	uint8_t connection_status_mqtt_status_epic_shelter_status_camera_status_reserved;
+	/**
+	 * Connection Status - 1: OK, 0: Timeout (bit 0)
+	 * MQTT Status - 1: OK, 0: Timeout (bit 1)
+	 * Epic Shelter Status - 1: In Progress, 0: Idle (bit 2)
+	 * Camera Status - 1: Recording, 0: Idle (bit 3)
+	*/
+	uint8_t status_bits;
 	/** Mapache ping (upload) (Byte 1) */
-	uint16_t ping;
+	uint16_t mapache_ping;
 	/** # of messages on cache (non-synced) (Byte 3) */
 	uint32_t cache_size;
 	/** Byte 7 (Byte 7) */
