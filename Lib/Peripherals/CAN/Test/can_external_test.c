@@ -26,7 +26,7 @@ static volatile uint8_t can2_data[64] = {0};
 static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
 	rx_2_received++;
-	//LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
+	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
 	// Is within an ISR, so needs to exit quickly
 	uint8_t* data_bytes = (uint8_t*) data;
 
