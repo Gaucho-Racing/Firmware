@@ -401,12 +401,12 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_conf
 	}
 
 	// Universal settings for all SPI pins
-	LL_GPIO_StructInit(pin_config);					 // Default config values
-	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;		 // Very high output speed
-	pin_config->Pull = LL_GPIO_PULL_NO;				 // No pull-up or pull-down
-	pin_config->OutputType = LL_GPIO_OUTPUT_PUSHPULL;		 // Push-pull output (not open-drain)
-	pin_config->Mode = LL_GPIO_MODE_ALTERNATE;			 // Alternate pin function mode
-	pin_config->Alternate = handle->pins->AFN; // Alternate function number
+	LL_GPIO_StructInit(pin_config);			  // Default config values
+	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH; // Very high output speed
+	pin_config->Pull = LL_GPIO_PULL_NO;		  // No pull-up or pull-down
+	pin_config->OutputType = LL_GPIO_OUTPUT_PUSHPULL; // Push-pull output (not open-drain)
+	pin_config->Mode = LL_GPIO_MODE_ALTERNATE;	  // Alternate pin function mode
+	pin_config->Alternate = handle->pins->AFN;	  // Alternate function number
 
 	// COPI
 	pin_config->Pin = handle->pins->COPI_pin;

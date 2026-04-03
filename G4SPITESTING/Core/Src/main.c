@@ -132,7 +132,7 @@ int main(void)
 	pins_spi2.COPI_pin = LL_GPIO_PIN_15; // COPI
 	pins_spi2.CIPO_pin = LL_GPIO_PIN_14; // CIPO
 	pins_spi2.SCLK_pin = LL_GPIO_PIN_13; // SCK
-	pins_spi2.NCS_pin = LL_GPIO_PIN_12;	// NSS
+	pins_spi2.NCS_pin = LL_GPIO_PIN_12;  // NSS
 	pins_spi2.AFN = 5;
 
 	GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);

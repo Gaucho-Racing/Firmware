@@ -19,12 +19,12 @@ typedef struct {
 } GR_SPI_Message;
 
 typedef struct {
-	SPI_TypeDef *SPIx;    // Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
+	SPI_TypeDef *SPIx; // Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
 	// Pointers to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
-	GPIO_TypeDef *COPI_port;  // Controller Out Peripheral In (same as MOSI)
-	GPIO_TypeDef *CIPO_port;  // Controller In Peripheral Out (same as MISO)
-	GPIO_TypeDef *SCLK_port;  // Serial (SPI) Clock
-	GPIO_TypeDef *NCS_port;	  // Negative Chip Select (same as NSS) --> active low
+	GPIO_TypeDef *COPI_port; // Controller Out Peripheral In (same as MOSI)
+	GPIO_TypeDef *CIPO_port; // Controller In Peripheral Out (same as MISO)
+	GPIO_TypeDef *SCLK_port; // Serial (SPI) Clock
+	GPIO_TypeDef *NCS_port;	 // Negative Chip Select (same as NSS) --> active low
 	// SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
 	uint32_t COPI_pin;
 	uint32_t CIPO_pin;
