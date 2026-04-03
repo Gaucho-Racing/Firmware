@@ -132,9 +132,11 @@ int main(void)
 			GRCAN_DASH_STATUS_MSG msg_struct;
 
 			msg_struct.led_bits = dashStatus.led_bits;
-			msg_struct.button_flags = dashStatus.;# TODO add button flags
+			msg_struct.button_flags = dashStatus.;
+#TODO add button flags
 
-			if (dashStatus.TSActiveButton) {
+			    if (dashStatus.TSActiveButton)
+			{
 				dashStatus.TSActiveButton = 0;
 			}
 			if (dashStatus.RTDButton) {
