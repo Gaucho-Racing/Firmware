@@ -10,7 +10,7 @@ main();
 
 sub main {
 	my $yaml_path   = $ARGV[0] // q{format.CANdo};
-	my $output_path = $ARGV[1] // q{GR_CAN_BUS_ID.h};
+	my $output_path = $ARGV[1] // q{GRCAN_BUS_ID.h};
 	my $dir         = dirname($output_path);
 
 	if ( $dir && $dir ne q{.} && !-d $dir ) {
@@ -105,8 +105,8 @@ sub generate_bus_header_content {
 	my @header_lines;
 
 	push @header_lines, "// Auto-generated Bus ID enum header\n";
-	push @header_lines, "#ifndef GR_CAN_BUS_ID_H\n";
-	push @header_lines, "#define GR_CAN_BUS_ID_H\n\n";
+	push @header_lines, "#ifndef GRCAN_BUS_ID_H\n";
+	push @header_lines, "#define GRCAN_BUS_ID_H\n\n";
 	push @header_lines, "/** GR CAN Bus IDs */\n";
 	push @header_lines, "typedef enum {\n";
 
@@ -122,11 +122,11 @@ sub generate_bus_header_content {
 		if ( $item->{comment} ne q{} ) {
 			push @header_lines, sprintf "    /** %s */\n", $item->{comment};
 		}
-		push @header_lines, sprintf "    GR_CAN_BUS_%s = %s,\n", uc $const_name, $item->{id};
+		push @header_lines, sprintf "    GRCAN_BUS_%s = %s,\n", uc $const_name, $item->{id};
 	}
 
-	push @header_lines, "} GR_CAN_BUS_ID;\n\n";
-	push @header_lines, "#endif // GR_CAN_BUS_ID_H\n";
+	push @header_lines, "} GRCAN_BUS_ID;\n\n";
+	push @header_lines, "#endif // GRCAN_BUS_ID_H\n";
 
 	return @header_lines;
 }
