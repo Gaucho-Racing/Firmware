@@ -55,7 +55,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
 			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
 
-
 			break;
 
 		default:
