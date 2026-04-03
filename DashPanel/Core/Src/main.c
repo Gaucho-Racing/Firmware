@@ -20,8 +20,8 @@
 #include "main.h"
 
 #include "CANdler.h"
-#include "dashutils.h"
 #include "bitManipulations.h"
+#include "dashutils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

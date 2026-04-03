@@ -22,8 +22,8 @@
 
 #include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
-#include "main.h"
 #include "bitManipulations.h"
+#include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
