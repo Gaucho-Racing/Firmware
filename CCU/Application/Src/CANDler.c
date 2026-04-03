@@ -4,10 +4,10 @@
 #include "CANDler.h"
 
 #include "CCUStateData.h"
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_DAT.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "Unused.h"
 #include "bitManipulations.h"
@@ -19,8 +19,8 @@ CANHandle *primary_can = {0};
 void Read_CAN(uint32_t ID, void *data, uint32_t size)
 {
 
-	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
-	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
+	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
+	GRCAN_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
 
 	UNUSED(nodeId); // TODO Determine if calculating this value is actually needed
 
@@ -28,7 +28,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 		case MSG_BCU_STATUS_2:
 			// FIXME: if bad message do a thing
 
-			if (size != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
+			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				break;
 			}
@@ -41,7 +41,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			// What the rewrite would look like: STATUS 2
 
-			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
+			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
 			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
 			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
 
