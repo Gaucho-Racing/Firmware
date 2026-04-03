@@ -229,20 +229,6 @@ typedef struct {
 	} cells[32];
 } GRCAN_BCU_CELL_DATA_5_MSG;
 
-/** DC-DC Status */
-typedef struct {
-	/** ~20v for LV (LV only. Send 0 for HV) (Byte 0) */
-	uint16_t input_voltage;
-	/** ~12v for LV and ~20v for HV (Byte 2) */
-	uint16_t output_voltage;
-	/** Input current (LV only. Send 0 for HV) (Byte 4) */
-	uint8_t input_current;
-	/** Output current (Byte 5) */
-	uint8_t output_current;
-	/** Temp of DC-DC converter (Byte 6) */
-	uint8_t dc_dc_temp;
-} GRCAN_DC_DC_STATUS_MSG;
-
 /** Inverter Status 1 */
 typedef struct {
 	/** 0.01 * current, int16_t (Byte 0) */
