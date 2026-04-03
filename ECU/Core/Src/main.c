@@ -117,18 +117,18 @@ void read_digital(void)
 void write_adc_values_to_state_data()
 {
 	// analog
-	// TODO: bse signal idk what to do ADC_outputs[0]
-	// TODO: bspd signal --> ADC_outputs[1], find use
+	stateLump.bse_signal = ADC_outputs[0];
+	stateLump.bspd_signal = ADC_outputs[1];
 	stateLump.APPS1_Signal = ADC_outputs[2];
 	stateLump.APPS2_Signal = ADC_outputs[3];
 	stateLump.Brake_F_Signal = ADC_outputs[4];
 	stateLump.Brake_R_Signal = ADC_outputs[5];
-	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
+	stateLump.aux_signal = ADC_outputs[6];
 
 	// TODO: determine conversion factors for all of these (uint to float)
-	stateLump.bspd_sense = ADC_outputs[6];
-	stateLump.imd_sense = ADC_outputs[7];
-	stateLump.ams_sense = ADC_outputs[8];
+	stateLump.bspd_sense = ADC_outputs[7];
+	stateLump.imd_sense = ADC_outputs[8];
+	stateLump.ams_sense = ADC_outputs[9];
 }
 
 void ADC_Configure(void)
@@ -375,6 +375,11 @@ int main(void)
 	MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
 
+	// Initialize DWT
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	DWT->CYCCNT = 0;
+	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+
 	// Initialize CAN
 	CAN_Configure();
 
@@ -387,10 +392,25 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		if(cycle_counter_accumulator == 10) {
+			elapsed_cycles = DWT->CYCCNT;
+			LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
+			GRCAN_ECU_PERFORMANCE_MSG performance_message = {
+				.elapsed_cycles = elapsed_cycles
+			};
+			ECU_CAN_Send(GRCAN_BUS_DATA, TCM, MSG_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
+			cycle_counter_accumulator = 0;
+			DWT->CYCCNT = 0;
+		}
+		else {
+			cycle_counter_accumulator++;
+		}
+
 		static uint32_t nextPing;
 		if (MillisecondsSinceBoot() >= nextPing) {
 			pingAll();

@@ -28,6 +28,7 @@
 ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
 static uint32_t buzzer_start_millis;
 static uint32_t last_can_inverter_request_millis;
+static uint32_t last_can_tcm_request_millis; // TODO: implement
 
 CANHandle *primary_can;
 CANHandle *data_can;
@@ -141,8 +142,10 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 
 	if (PressingBrake(stateData) && stateData->rtd_button_active) {
-		GRCAN_INVERTER_CONFIG_MSG message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_CONFIG, &message, sizeof(message));
+		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
+		GRCAN_ECU_PEDALS_DATA_MSG pedals_message = {.brakeline_f_signal = stateData->Brake_F_Signal, .brakeline_r_signal = stateData->Brake_R_Signal};
+		ECU_CAN_Send(GRCAN_BUS_DATA, TCM, MSG_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
 		return;
@@ -207,9 +210,12 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	// placeholder for pedal data
-	if (stateData->millisSinceBoot - last_can_inverter_request_millis > 10) {
-		GRCAN_ECU_PEDALS_DATA_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_COMMAND, &message, sizeof(message));
+	if (stateData->millisSinceBoot - last_can_tcm_request_millis > 10) {
+		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal, .bse_signal = stateData->bse_signal, .apps_1_signal = stateData->APPS1_Signal,
+			.apps_2_signal = stateData->APPS2_Signal, .brakeline_f_signal = stateData->Brake_F_Signal,
+			.brakeline_r_signal = stateData->Brake_R_Signal, .aux_signal = stateData->aux_signal};
+			// TODO: include steering wheel data
+		ECU_CAN_Send(GRCAN_BUS_DATA, TCM, MSG_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		last_can_inverter_request_millis = stateData->millisSinceBoot;
 	}
 }
