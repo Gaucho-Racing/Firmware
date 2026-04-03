@@ -43,6 +43,18 @@
 	color: #e9d5ff;
 }
 
+.sidebar-btn-graph {
+	background: rgba(14, 165, 233, 0.1);
+	border-color: #0ea5e9;
+	color: #7dd3fc;
+}
+
+.sidebar-btn-graph:hover {
+	background: rgba(14, 165, 233, 0.22);
+	border-color: #38bdf8;
+	color: #bae6fd;
+}
+
 /* ==================== Editor Icon Buttons ==================== */
 
 .editor-icons {
@@ -299,6 +311,9 @@
 
 .editor-modal {
 	width: min(680px, 92vw);
+}
+
+.editor-modal {
 	max-height: 88vh;
 	display: flex;
 	flex-direction: column;
