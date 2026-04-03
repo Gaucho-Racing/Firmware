@@ -7,8 +7,7 @@
 
 typedef struct {
 	uint8_t ECUState;
-	uint8_t TSActiveButton;
-	uint8_t RTDButton;
+	uint8_t button_flags;
 	uint8_t led_bits;
 } DashStatus;
 

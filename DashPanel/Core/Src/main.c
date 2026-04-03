@@ -21,6 +21,7 @@
 
 #include "CANdler.h"
 #include "dashutils.h"
+#include "bitManipulations.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -132,17 +133,17 @@ int main(void)
 			GRCAN_DASH_STATUS_MSG msg_struct;
 
 			msg_struct.led_bits = dashStatus.led_bits;
-			msg_struct.button_flags = dashStatus.;# TODO add button flags
+			msg_struct.button_flags = dashStatus.button_flags;
 
-			if (dashStatus.TSActiveButton) {
-				dashStatus.TSActiveButton = 0;
+			if (GETBIT(dashStatus.button_flags, 0)) {
+				SetBitInByte(dashStatus.button_flags, 0, false);
 			}
-			if (dashStatus.RTDButton) {
-				dashStatus.RTDButton = 0;
+			if (GETBIT(dashStatus.button_flags, 1)) {
+				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
 
-			// CAN_sendPing(GR_DASH_PANEL);
-			CAN_sendECU(can_handler, &msg_struct, GR_ECU);
+			// CAN_sendPing(Dash_Panel);
+			CAN_sendECU(can_handler, &msg_struct, ECU);
 
 			canReadyToSend = false;
 		}

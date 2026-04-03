@@ -12,7 +12,7 @@
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 
-#define ECU_ID GR_ECU
+#define ECU_ID ECU
 #define PING_ID MSG_PING
 
 CANHandle *can_handler;
@@ -67,7 +67,7 @@ void CANInitialize()
 void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 {
 	FDCANTxMessage pingMsg;
-	pingMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_PING << 8) | to;
+	pingMsg.tx_header.Identifier = (Dash_Panel << 20) | (MSG_PING << 8) | to;
 	pingMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
@@ -86,7 +86,7 @@ void CAN_sendECU(CANHandle *c, GRCAN_DASH_STATUS_MSG *msg, GRCAN_NODE_ID to)
 {
 
 	FDCANTxMessage sendECUMsg;
-	sendECUMsg.tx_header.Identifier = (GR_DASH_PANEL << 20) | (MSG_DASH_STATUS << 8) | to;
+	sendECUMsg.tx_header.Identifier = (Dash_Panel << 20) | (MSG_DASH_STATUS << 8) | to;
 	sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
