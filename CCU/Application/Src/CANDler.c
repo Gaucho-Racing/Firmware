@@ -42,7 +42,7 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.BCU_S2_20Volt = bcu_status_2->_20v_voltage;
 			state_data.BCU_S2_12Volt = bcu_status_2->_12v_voltage;
 			state_data.BCU_S2_SDC_Volt = bcu_status_2->sdc_voltage;
-			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
+			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->min_cell_voltage;
 			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
 
 			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->status_flags, 0);
