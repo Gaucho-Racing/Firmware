@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   canfigurator:
-    if: false  # FIXME Enable when compilation of header files succeeds
+    if: false # FIXME Temporarily disable CANfigurator pipeline until we can address the issues with it
     name: CANfigurator
     runs-on: ubuntu-latest
     permissions:
