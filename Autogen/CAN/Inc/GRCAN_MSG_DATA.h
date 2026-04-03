@@ -267,8 +267,8 @@ typedef struct {
 typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
 	uint8_t motor_temperature;
-	/** TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or
-	 * timeout (Byte 2) */
+	/** TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message
+	 * error or timeout (Byte 2) */
 	uint8_t fault_bits;
 } GRCAN_INVERTER_STATUS_3_MSG;
 
