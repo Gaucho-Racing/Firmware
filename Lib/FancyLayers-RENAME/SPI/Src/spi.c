@@ -158,7 +158,7 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 
 void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg)
 {
-	if (!handle || !dest_msg || dest_msg->size != GR_MsgBuffer_PeekMsgSize(handle->rx_buffer)) {
+	if (!handle || !dest_msg || !dest_msg->data || dest_msg->size != GR_MsgBuffer_PeekMsgSize(handle->rx_buffer)) {
 		return;
 	}
 
@@ -459,4 +459,12 @@ bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle)
 	}
 
 	return GR_MsgBuffer_IsEmpty(handle->rx_buffer);
+}
+
+uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle) {
+	if (!handle || GR_MsgBuffer_IsEmpty(handle->rx_buffer)) {
+		return 0;
+	}
+
+	return GR_MsgBuffer_PeekMsgSize(handle->rx_buffer);
 }

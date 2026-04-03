@@ -111,6 +111,13 @@ void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg);
  */
 bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle);
 
+/**
+ * @brief Returns the size of a message on the top of the rx circular buffer
+ * @param handle
+ * @return 0 if rx buffer is empty and nonzero for msg size
+ */
+uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle);
+
 // ============================= Helper Functions =============================
 
 /**
