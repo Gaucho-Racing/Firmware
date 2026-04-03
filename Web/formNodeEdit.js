@@ -35,8 +35,7 @@
 				ok = false;
 			} else if (
 				newName !== oldDeviceName &&
-				(editor.findRoutingDeviceRange(newName) ||
-					(!!editor.grIdNameExists && editor.grIdNameExists(newName)))
+				window.GrcanDocument.deviceExists(newName)
 			) {
 				nameF.error.textContent = "Node already exists";
 				ok = false;
@@ -50,14 +49,11 @@
 				return;
 			}
 
-			const range = editor.findRoutingDeviceRange(oldDeviceName);
-			if (!range) return;
-			editor.replaceLineRange(
-				range.startLine,
-				range.startLine + 1,
-				"    " + newName + ":\n",
-			);
-			if (editor.renameGrIdNode) editor.renameGrIdNode(oldDeviceName, newName);
+			const result = window.GrcanDocument.renameDevice(oldDeviceName, newName);
+			if (!result.ok) {
+				nameF.error.textContent = result.error;
+				return;
+			}
 			editor.markEdited("routeNode:" + newName);
 			fu.closeOverlay(overlay, { force: true });
 			editor.triggerReRender();
