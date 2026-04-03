@@ -332,7 +332,8 @@ static void GPIO_Interrupt_Init(void)
 	NVIC_EnableIRQ(EXTI4_IRQn);
 }
 
-void timer_inc(void) {
+void timer_inc(void)
+{
 	timer++;
 }
 
