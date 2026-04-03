@@ -5,6 +5,7 @@
 typedef enum {
 	ALL = 0xFF,
 	BCU = 0x03,
+	ECU = 0x02,
 	CCU = 0x02,
 	Charger = 0x00,
 	Charging_SDC = 0x0C,
