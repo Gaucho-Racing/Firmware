@@ -205,6 +205,13 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_COMMAND, &message, sizeof(message));
 		last_can_inverter_request_millis = stateData->millisSinceBoot;
 	}
+
+	// placeholder for pedal data
+	if (stateData->millisSinceBoot - last_can_inverter_request_millis > 10) {
+		GRCAN_ECU_PEDALS_DATA_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_COMMAND, &message, sizeof(message));
+		last_can_inverter_request_millis = stateData->millisSinceBoot;
+	}
 }
 
 void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
