@@ -37,7 +37,7 @@ See diagram in StateMachine.h
 5: TS Discharge ECU State
 6-7: Reserved
 See diagram in StateMachine.h (Byte 0) */
-	uint8_t state_messages;
+	uint8_t ecu_state;
 	/** [Byte 1 / Bits 8-15]
 8: BCU Node Status (1: OK, 0: Timeout)
 9: GR Inverter Status (1: OK, 0: Timeout)
