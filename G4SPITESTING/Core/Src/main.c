@@ -110,7 +110,6 @@ int main(void)
 	LL_mDelay(1000); // Wait for peripherals to stabilize
 	LOGOMATIC("Booted!\n");
 
-
 	// ========== SENDER CONFIGURATION ==========
 	config_spi3.Mode = LL_SPI_MODE_MASTER;
 	config_spi3.NSS = LL_SPI_NSS_SOFT;
