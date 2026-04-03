@@ -34,13 +34,13 @@ static CANHandle *grcan_charging = NULL;
 // 	// error states
 // } CANHandle;
 
-static GR_OLD_NODE_ID grcan_local_node_id = GR_ALL;
+static GRCAN_NODE_ID grcan_local_node_id = ALL;
 
 void GRCAN_ApplyDefaults(GRCAN_BusConfig *bus_config);
 bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config);
 
-void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
-void GRCAN_Raw_Send_FD(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
+void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
+void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
 
 // typedef struct {
 // 	FDCAN_HandleTypeDef *hal_fdcanP;
@@ -121,16 +121,16 @@ GRCAN_BusConfig ecu_primary_cfg = {
 
 */
 
-CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus)
+CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 {
 	switch (bus) {
-		case GR_OLD_BUS_PRIMARY:
+		case GRCAN_BUS_PRIMARY:
 			return grcan_primary;
-		case GR_OLD_BUS_DATA:
+		case GRCAN_BUS_DATA:
 			return grcan_data;
-		case GR_OLD_BUS_TESTING:
+		case GRCAN_BUS_TESTING:
 			return grcan_testing;
-		case GR_OLD_BUS_CHARGING:
+		case GRCAN_BUS_CHARGER:
 			return grcan_charging;
 		default:
 			return NULL;
@@ -219,23 +219,23 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 	cfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	cfg.init_tx_gpio.Alternate = bus_config->tx_pin.alternate_function;
 
-	switch (bus_config->bus) {
-		case GR_OLD_BUS_PRIMARY:
-			slot = &grcan_primary;
-			break;
-		case GR_OLD_BUS_DATA:
-			slot = &grcan_data;
-			break;
-		case GR_OLD_BUS_TESTING:
-			slot = &grcan_testing;
-			break;
-		case GR_OLD_BUS_CHARGING:
-			slot = &grcan_charging;
-			break;
-		default:
-			LOGOMATIC("GRCAN_InitBus: invalid bus %d\n", bus_config->bus);
-			return false;
-	}
+    switch (bus_config->bus) {
+        case GRCAN_BUS_PRIMARY:
+            slot = &grcan_primary;
+            break;
+        case GRCAN_BUS_DATA:
+            slot = &grcan_data;
+            break;
+        case GRCAN_BUS_TESTING:
+            slot = &grcan_testing;
+            break;
+        case GRCAN_BUS_CHARGER:
+            slot = &grcan_charging;
+            break;
+        default:
+            LOGOMATIC("GRCAN_InitBus: invalid bus %d\n", bus_config->bus);
+            return false;
+    }
 
 	handle = can_init(&cfg);
 	if (handle == NULL) {
@@ -297,9 +297,8 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 // 	grcan_charging = chargingCAN;
 // }
 
-void GRCAN_SetLocalNodeID(GR_OLD_NODE_ID localID)
-{
-	if (localID == GR_ALL) {
+void GRCAN_SetLocalNodeID(GRCAN_NODE_ID localID) {
+	if (localID == ALL) {
 		LOGOMATIC("GRCAN_SetLocalNodeID: Local node ID cannot be GR_ALL\n");
 		return;
 	}
@@ -333,16 +332,16 @@ void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID)
 	id->destNode = rawID & 0xFF;
 	id->messageID = (rawID >> 8) & 0xFFF;
 
-	if (id->srcID == GR_ALL) {
+	if (id->srcID == ALL) {
 		LOGOMATIC("GRCAN_Fancy_Decode: Source ID cannot be GR_ALL\n");
 	}
 
-	if (id->destNode == GR_ALL) {
+	if (id->destNode == ALL) {
 		LOGOMATIC("GRCAN_Fancy_Decode: Destination ID cannot be GR_ALL\n");
 	}
 }
 
-void GRCAN_Fancy_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID messageID, void *data, uint32_t size)
+void GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 {
 	GRCAN_Fancy_ID id = {
 	    .srcID = grcan_local_node_id,
@@ -350,7 +349,7 @@ void GRCAN_Fancy_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID 
 	    .messageID = messageID,
 	};
 
-	if (id.srcID == GR_ALL) {
+	if (id.srcID == ALL) {
 		LOGOMATIC("GRCAN_Fancy_Send: Source ID cannot be GR_ALL\n");
 		return;
 	}
@@ -381,7 +380,7 @@ TxEventFifoControl can be set to generate events on transmission
 MessageMarker can be used to identify the message in the Tx event FIFO
 */
 
-void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
+void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
 {
 	if (size > 8) {
 		LOGOMATIC("GRCAN_Raw_Send_Classic: size %lu > 8 (classic CAN)\n", size);
@@ -445,7 +444,7 @@ void GRCAN_Raw_Send_Classic(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint3
 	// }
 }
 
-void GRCAN_Raw_Send_FD(GR_OLD_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) // FDCAN funciton allows for modification with different settings
+void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) // FDCAN funciton allows for modification with different settings
 {
 	if (size > 64) {
 		LOGOMATIC("GRCAN_Raw_Send_FD: size %lu > 64 (CAN FD)\n", size);

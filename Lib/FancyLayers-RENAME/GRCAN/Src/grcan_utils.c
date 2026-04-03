@@ -7,16 +7,16 @@
 #include "Logomatic.h"
 #include "main.h"
 
-GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus)
+GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 {
 	switch (bus) {
-		case GR_OLD_BUS_PRIMARY:
+		case GRCAN_BUS_PRIMARY:
 			return GRCAN_MODE_FD;
-		case GR_OLD_BUS_TESTING:
+		case GRCAN_BUS_TESTING:
 			return GRCAN_MODE_FD;
-		case GR_OLD_BUS_DATA:
+		case GRCAN_BUS_DATA:
 			return GRCAN_MODE_CLASSIC;
-		case GR_OLD_BUS_CHARGING:
+		case GRCAN_BUS_CHARGER:
 			return GRCAN_MODE_CLASSIC; // update later
 		default:
 			LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
@@ -112,7 +112,7 @@ static void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
 	timing->data.seg2 = 5;
 }
 
-void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GR_OLD_BUS_ID bus)
+void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 {
 	if (busCfg == NULL) {
 		LOGOMATIC("GRCAN_SetDefaultBusConfig: NULL busCfg pointer\n");

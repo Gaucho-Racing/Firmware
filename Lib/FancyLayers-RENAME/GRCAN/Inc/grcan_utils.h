@@ -1,9 +1,11 @@
 #include <stdint.h>
-
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
 #include "can.h"
+
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_NODE_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
 
 #ifndef GRCAN_UTILS_H
 #define GRCAN_UTILS_H
@@ -71,7 +73,7 @@ typedef enum {
 } GRCAN_FeatureState;
 
 typedef struct {
-	GR_OLD_BUS_ID bus;
+	GRCAN_BUS_ID bus;
 	FDCAN_GlobalTypeDef *fdcan_instance;
 
 	GRCAN_ClockSource clock_source;
@@ -104,8 +106,8 @@ uint32_t GRCAN_ToHAL_ClockDivider(GRCAN_ClockDivider div);
 uint32_t GRCAN_ToHAL_FrameFormat(GRCAN_FrameFormat fmt);
 uint32_t GRCAN_ToHAL_OperatingMode(GRCAN_OperatingMode mode);
 uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state);
-GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus);
-CANHandle *GRCAN_GetHandle(GR_OLD_BUS_ID bus);
+GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus);
+CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus);
 uint32_t GRCAN_to_DLC(uint32_t size);
 uint32_t DLC_to_GRCAN(uint32_t dlc);
 

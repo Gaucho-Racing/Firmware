@@ -1,22 +1,26 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
 #include "can.h"
+
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_NODE_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
+
 #include "grcan_utils.h"
 
 #ifndef GRCAN_FANCYLAYER_H
 #define GRCAN_FANCYLAYER_H
 
 typedef struct {
-	GR_OLD_NODE_ID srcID;
-	GR_OLD_NODE_ID destNode;
-	GR_OLD_MSG_ID messageID;
+	GRCAN_NODE_ID srcID;
+	GRCAN_NODE_ID destNode;
+	GRCAN_MSG_ID messageID;
 } GRCAN_Fancy_ID;
 
-GRCAN_BusMode GRCAN_BusModeForBus(GR_OLD_BUS_ID bus);
+GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus);
 bool GRCAN_InitBus(GRCAN_BusConfig *bus_config);
 
 uint32_t GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id);
