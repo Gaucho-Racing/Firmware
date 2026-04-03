@@ -11,6 +11,18 @@ const GR_NAVY = "#195297";
 const GR_GRAY = "#9AA3B0";
 
 const GITHUB_API = "https://api.github.com/repos/Gaucho-Racing/Firmware";
+
+// Local-file mode: when set, fetchCando returns this content instead of hitting the API.
+let _localCandoText = null;
+function setLocalCandoText(text) {
+	_localCandoText = text;
+}
+function getLocalCandoText() {
+	return _localCandoText;
+}
+function isLocalMode() {
+	return _localCandoText !== null;
+}
 const CANDO_PATH = "Autogen/CAN/Doc/GRCAN.CANdo";
 const BUS_ID_PATH = "Autogen/CAN/Inc/GRCAN_BUS_ID.h";
 const NODE_ID_PATH = "Autogen/CAN/Inc/GRCAN_NODE_ID.h";
@@ -278,6 +290,11 @@ function reconcileCatalogNames(preferredNames, canonicalNames) {
 	return resolved;
 }
 
+function decodeBase64Utf8(b64) {
+	const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+	return new TextDecoder().decode(bytes);
+}
+
 async function fetchRepoText(path, ref) {
 	const res = await fetch(
 		`${GITHUB_API}/contents/${path}?ref=${encodeURIComponent(ref)}`,
@@ -287,7 +304,10 @@ async function fetchRepoText(path, ref) {
 	if (!res.ok) return { text: null, error: "fetch_failed" };
 	const data = await res.json();
 	if (data.encoding !== "base64") return { text: null, error: "encoding" };
-	return { text: atob(data.content.replace(/\n/g, "")), error: null };
+	return {
+		text: decodeBase64Utf8(data.content.replace(/\n/g, "")),
+		error: null,
+	};
 }
 
 async function fetchBranches() {
@@ -317,6 +337,9 @@ async function fetchTags() {
 }
 
 async function fetchCando(ref) {
+	if (_localCandoText !== null) {
+		return { content: _localCandoText, notFound: false };
+	}
 	try {
 		const res = await fetch(
 			`${GITHUB_API}/contents/${CANDO_PATH}?ref=${encodeURIComponent(ref)}`,
@@ -333,7 +356,7 @@ async function fetchCando(ref) {
 		if (!res.ok) throw new Error("File not found");
 		const data = await res.json();
 		if (data.encoding === "base64") {
-			const decoded = atob(data.content.replace(/\n/g, ""));
+			const decoded = decodeBase64Utf8(data.content.replace(/\n/g, ""));
 			return { content: decoded, notFound: false };
 		} else {
 			return { content: "[Unsupported file encoding]", notFound: true };
@@ -356,7 +379,7 @@ async function fetchBus(ref) {
 		if (!res.ok) throw new Error("Unexpected response");
 		const data = await res.json();
 		if (data.encoding !== "base64") return { buses: null, error: "encoding" };
-		const text = atob(data.content.replace(/\n/g, ""));
+		const text = decodeBase64Utf8(data.content.replace(/\n/g, ""));
 		const buses = [];
 		const enumBody = text.match(/typedef\s+enum\s*\{([^}]*)\}/s);
 		if (enumBody) {
@@ -401,7 +424,7 @@ async function fetchNodeIds(ref) {
 		if (!res.ok) throw new Error("Unexpected response");
 		const data = await res.json();
 		if (data.encoding !== "base64") return { nodeIds: null, error: "encoding" };
-		const text = atob(data.content.replace(/\n/g, ""));
+		const text = decodeBase64Utf8(data.content.replace(/\n/g, ""));
 
 		const nodeIds = [];
 		const enumBody = text.match(/typedef\s+enum\s*\{([^}]*)\}/s);
@@ -520,13 +543,18 @@ function parseMessageByBusFromText(text, busName) {
 		if (indent === 4) {
 			const senderName = content.replace(/:$/, "");
 			if (!nodeMap.has(senderName))
-				nodeMap.set(senderName, { name: senderName, messages: [] });
+				nodeMap.set(senderName, {
+					name: senderName,
+					messages: [],
+					hasBus: false,
+				});
 			currentNode = nodeMap.get(senderName);
 			onTargetPort = false;
 			receiver = null;
 			pendingMsg = null;
 		} else if (indent === 6) {
 			onTargetPort = content.replace(/:$/, "") === targetPort;
+			if (onTargetPort && currentNode) currentNode.hasBus = true;
 			receiver = null;
 			pendingMsg = null;
 		} else if (onTargetPort && indent === 8) {
@@ -566,6 +594,9 @@ function parseMessageByBusFromText(text, busName) {
 }
 
 async function fetchMessageByBus(ref, busName) {
+	if (_localCandoText !== null) {
+		return parseMessageByBusFromText(_localCandoText, busName);
+	}
 	try {
 		const res = await fetch(
 			`${GITHUB_API}/contents/${CANDO_PATH}?ref=${encodeURIComponent(ref)}`,
@@ -575,7 +606,7 @@ async function fetchMessageByBus(ref, busName) {
 		if (!res.ok) throw new Error("Unexpected response");
 		const data = await res.json();
 		if (data.encoding !== "base64") return { nodes: null, error: "encoding" };
-		const text = atob(data.content.replace(/\n/g, ""));
+		const text = decodeBase64Utf8(data.content.replace(/\n/g, ""));
 		return parseMessageByBusFromText(text, busName);
 	} catch (e) {
 		return { nodes: null, error: "fetch_failed" };
@@ -630,9 +661,13 @@ function busToPort(canonicalBus) {
 window.GrcanApi = {
 	CAN_PORT_TO_BUS,
 	isValidSha,
+	decodeBase64Utf8,
 	fetchBranches,
 	fetchTags,
 	fetchCando,
+	setLocalCandoText,
+	getLocalCandoText,
+	isLocalMode,
 	fetchBus,
 	fetchNodeIds,
 	fetchMessageCatalog,

@@ -18,7 +18,7 @@ main();
 sub main {
 	my $yaml_path   = $ARGV[0] // 'format.CANdo';
 	my $output_path = $ARGV[1] // 'CANDler.h';
-	my $prefix      = 'GR_OLD';
+	my $prefix      = 'GRCAN';
 
 	ensure_directory_exists($output_path);
 
@@ -41,6 +41,7 @@ sub parse_descriptions {
 	my ($path) = @_;
 	my %map;
 	my $in_msg_section = 0;
+	my $current_msg    = $EMPTY_STR;
 
 	open my $in, '<', $path;
 	my @lines = <$in>;
@@ -61,13 +62,19 @@ sub parse_descriptions {
 			next;
 		}
 
+		# Track current message name (matches "  Msg Name:")
+		if ( $line =~ /^\s{2} ([^:#\s][^:]+) :$/smx ) {
+			$current_msg = $1;
+		}
+
 		# Use explicit \s{2,4} because /x ignores literal spaces
 		if ( $line =~ /^\s{2,4} ([^:#\s][^:]+) :/smx ) {
 			my $raw_name = $1;
 			my $f_name   = clean_field_name($raw_name);
 			my ( $desc, $new_i ) = extract_desc_from_array( \@lines, $i );
 			if ($desc) {
-				$map{$f_name} = $desc;
+				my $key = $current_msg . q{::} . $f_name;
+				$map{$key} = $desc;
 			}
 			$i = $new_i;
 		}
@@ -77,23 +84,49 @@ sub parse_descriptions {
 
 sub extract_desc_from_array {
 	my ( $lines_ref, $index ) = @_;
-	my $description = $EMPTY_STR;
-	my $i           = $index;
+	my $description      = q{};
+	my $i                = $index;
+	my $in_comment_block = 0;
 
 	while ( ++$i < scalar @{$lines_ref} ) {
 		my $sub = ${$lines_ref}[$i];
-		if ( $sub =~ /^\s+ \# \s* (.*)/smx ) {
-			my $comment_text = $1;
-			$description .= $SPACE_STR . $comment_text;
+
+		# 1. Match the start of the comment block
+		if ( $sub =~ /^\s+ comment: \s* (.*)/smx ) {
+			my $text = $1;
+			$in_comment_block = 1;
+			if ( $text ne q{} ) {
+				$description .= ( $description ? q{ } : q{} ) . $text;
+			}
+			next;
 		}
 
-		# Check for new field or message start
-		if ( $sub =~ /^\s{2,4} [^#\s]/smx || $sub =~ /^\S/smx ) {
+		# 2. If we are in the block, grab lines that ARE NOT new YAML keys
+		if ($in_comment_block) {
+
+			# A YAML key usually looks like: "    units:" or "    data type:"
+			# This regex says: Stop if the line starts with 4-6 spaces,
+			# followed by a word, and then a colon + space/newline.
+			if ( $sub =~ /^\s{4,6} \w+[\w\s]*:(\s|$)/smx ) {
+				last;
+			}
+
+			# Otherwise, if it's indented text, it's part of our sentence!
+			if ( $sub =~ /^\s{6,} (.+)/smx ) {
+				my $line_text = $1;
+				$description .= ( $description ? q{ } : q{} ) . $line_text;
+				next;
+			}
+		}
+
+		# 3. Global break if we hit a new message or field entirely
+		if ( $sub =~ /^\s{0,4} \S/smx ) {
 			last;
 		}
 	}
 
-	$description =~ s/^\s+//smx;
+	# Clean up any trailing/leading whitespace
+	$description =~ s/^\s+|\s+$//gsmx;
 	return ( $description, $i - 1 );
 }
 
@@ -173,7 +206,7 @@ sub parse_field_details {
 
 	while ( ++$i < scalar @{$lines_ref} ) {
 		my $sub = ${$lines_ref}[$i];
-		if ( $sub =~ /bit_start: \s* (\d+)/smx ) {
+		if ( $sub =~ /bit[\s_]start: \s* (\d+)/smx ) {
 			$start = $1;
 		}
 		if ( $sub =~ /data \s type: \s* (\w+)/smx ) {
@@ -217,19 +250,19 @@ sub process_message {
 	my @sorted = sort { $a <=> $b } keys %byte_map;
 
 	for my $i ( 0 .. $#sorted ) {
-		push @buf, process_byte_entry( \@sorted, \%byte_map, \$i, $d_map );
+		push @buf, process_byte_entry( $name, \@sorted, \%byte_map, \$i, $d_map );
 	}
 	push @buf, "} ${prefix}_${tag}_MSG;\n\n";
 	return join $EMPTY_STR, @buf;
 }
 
 sub process_byte_entry {
-	my ( $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
+	my ( $msg_name, $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
 	my @out;
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
 
-	if ( scalar @{$fields} > 2 ) {
+	if ( scalar @{$fields} > 2 && ${$fields}[0]->{name} =~ /reserved|ping|byte/ismx ) {
 		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
 	}
 	else {
@@ -245,7 +278,7 @@ sub process_byte_entry {
 		    ( ${$fields}[0]->{type} =~ /32/smx ) ? 'uint32_t'
 		  : ( ${$fields}[0]->{type} =~ /16/smx ) ? 'uint16_t'
 		  :                                        'uint8_t';
-		my $desc = join $SPACE_STR, map { ${$d_map}{ clean_field_name( $_->{name} ) } // () } @{$fields};
+		my $desc = join $SPACE_STR, map { ${$d_map}{ $msg_name . q{::} . clean_field_name( $_->{name} ) } // () } @{$fields};
 
 		push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . q{;};
 	}
@@ -260,13 +293,12 @@ sub handle_multi_field_range {
 	while ( ${$idx_ref} + 1 < scalar @{$bytes_ref} ) {
 		my $next_byte = ${$bytes_ref}[ ${$idx_ref} + 1 ];
 		my $next_f    = ${$map_ref}{$next_byte};
-		if ( scalar @{$next_f} <= 2 ) {
-			my $first_name = ${$next_f}[0]->{name};
-			if ( $first_name !~ /reserved/ismx ) {
-				last;
-			}
+		if ( scalar @{$next_f} > 2 || ${$next_f}[0]->{name} =~ /reserved/ismx ) {
+			${$idx_ref}++;
 		}
-		${$idx_ref}++;
+		else {
+			last;
+		}
 	}
 
 	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
