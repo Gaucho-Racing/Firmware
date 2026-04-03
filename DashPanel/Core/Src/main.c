@@ -120,6 +120,10 @@ int main(void)
 	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
+	uint32_t previous_time = HAL_GetTick();
+	uint32_t current_time;
+	uint8_t tick_freq = HAL_GetTickFreq();
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -128,7 +132,9 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		if (canReadyToSend) {
+		current_time = HAL_GetTick();
+
+		if (canReadyToSend || (current_time - previous_time) * tick_freq >= 100) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
 
@@ -156,7 +162,10 @@ int main(void)
 			// CAN_sendPing(Dash_Panel);
 			CAN_sendECU(can_handler, &msg_struct, ECU);
 
+			LOGOMATIC("CAN\n");
+
 			canReadyToSend = false;
+			previous_time = current_time;
 		}
 
 		// Neopixel
@@ -239,37 +248,37 @@ static void MX_GPIO_Init(void)
 	/**/
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_4);
 
-	/**/
+	/*TSActive*/
 	GPIO_InitStruct.Pin = TS_ACTIVE_BTN_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(TS_ACTIVE_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/**/
+	/*RTD*/
 	GPIO_InitStruct.Pin = RTD_BTN_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(RTD_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/**/
+	/*Button 1*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/**/
+	/*Button 2*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/**/
+	/*Button 3*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_7;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/**/
+	/*Button 4*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
