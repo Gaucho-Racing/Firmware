@@ -4,6 +4,39 @@ This library establishes an easy interface to implement SPI in any GR Project (t
 
 To use this library with CMake, one must link the library `SPI_Lib` as an `INTERFACE` to their targets with `target_link_libraries()`.
 
+When using SPI, it is important to understand how the protocol works and what each pin does. For Nucleo STM32 boards, each pin has a port (clock channel) and a pin number (i.e. B13 is port B and pin 13). Common SPI-related acronyms are as follows:
+
+1. COPI - Controller Out Peripheral In (same as MOSI)
+2. CIPO - Controller In Peripheral Out (same as MISO)
+3. SCLK - Serial (SPI) Clock (same as SCK)
+4. NCS - Negative Chip Select (same as NSS and the complement of CS/SS)
+
+Other acronyms:
+
+1. AFN - Alternate Function Number (specific to STM32 architecture)
+2. GND - Electrical Ground (reference voltage)
+
+When you are wiring SPI pins together, always connect COPI to COPI, CIPO to CIPO, GND to GND, SCLK to SCLK, and NCS to NCS.
+
+Make sure to read through the SPI library header file and check which functions return an error value.
+The error name to integer value mappings are as follows:
+
+```c
+#define GR_SPI_ERR_NONE 0
+#define GR_SPI_ERR_FRE -1
+#define GR_SPI_ERR_OVR -2
+#define GR_SPI_ERR_MODF -3
+#define GR_SPI_ERR_CRCERR -4
+#define GR_SPI_ERR_RXFULL -5
+#define GR_SPI_ERR_BAD_INIT_NVIC -6
+#define GR_SPI_ERR_BAD_INIT_RXBUF -7
+#define GR_SPI_ERR_BAD_INIT_TXBUF -8
+#define GR_SPI_ERR_BAD_SPIX -9
+#define GR_SPI_ERR_BAD_ADD -10
+#define GR_SPI_ERR_FULL_TRANSMIT -11
+#define GR_SPI_ERR_BAD_INIT_CONFIG -12
+```
+
 ## How To Use
 
 How to use GR_SPI library:
@@ -25,11 +58,16 @@ How to use GR_SPI library:
 
 4. Set the GR_SPI_Pins struct values:
 
-• SPI_TypeDef * SPIx
-• GPIO_TypeDef ** GPIOx (this is an array of GPIOx pointers!)
-• uint32_t pin_nums[4]
-• uint32_t num_pins
-• uint32_t alternate_function_number
+• SPI_TypeDef *SPIx
+• GPIO_TypeDef *COPI_port
+• GPIO_TypeDef *CIPO_port
+• GPIO_TypeDef *SCLK_port
+• GPIO_TypeDef *NCS_port
+• uint32_t COPI_pin
+• uint32_t CIPO_pin
+• uint32_t CLK_pin
+• uint32_t NCS_pin
+• uint32_t AFN
 
 5. Call GR_SPI_Initialize() with handle, config, and pins arguments. This function sets the handle struct you created earlier with the values in the config and enables all necessary hardware configuration and clocks.
 6. Make a GR_SPI_Message struct and populate the values:
@@ -68,17 +106,15 @@ config_spi3.CRCPoly = 0x1D;
 
 // Configure GR_SPI_Pins struct
 pins_spi3.SPIx = SPI3;
-pins_spi3.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
-for (int i = 0; i < 3; i++) {
-    *(pins_spi3.GPIOx + i) = GPIOC;
-}
-pins_spi3.GPIOx[3] = GPIOA;
-pins_spi3.num_pins = 4;
-pins_spi3.pin_nums[0] = LL_GPIO_PIN_12; // COPI
-pins_spi3.pin_nums[1] = LL_GPIO_PIN_11; // CIPO
-pins_spi3.pin_nums[2] = LL_GPIO_PIN_10; // SCK
-pins_spi3.pin_nums[3] = LL_GPIO_PIN_4;	// NSS
-pins_spi3.alternate_function_number = 6;
+pins_spi3.COPI_port = GPIOC;
+pins_spi3.CIPO_port = GPIOC;
+pins_spi3.SCLK_port = GPIOC;
+pins_spi3.NCS_port = GPIOA;
+pins_spi3.COPI_pin = LL_GPIO_PIN_12; // COPI
+pins_spi3.CIPO_pin = LL_GPIO_PIN_11; // CIPO
+pins_spi3.SCLK_pin = LL_GPIO_PIN_10; // SCK
+pins_spi3.NCS_pin = LL_GPIO_PIN_4;	// NSS
+pins_spi3.AFN = 6;
 
 // Initialize SPI
 GR_SPI_Initialize(&handle_spi3, &config_spi3, &pins_spi3);
@@ -121,17 +157,15 @@ config_spi2.CRCPoly = 0x1D;
 
 // Pins values
 pins_spi2.SPIx = SPI2;
-pins_spi2.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
-// All pins are in the B clock port
-for (int i = 0; i < 4; i++) {
-    *(pins_spi2.GPIOx + i) = GPIOB;
-}
-pins_spi2.num_pins = 4;
-pins_spi2.pin_nums[0] = LL_GPIO_PIN_15; // COPI
-pins_spi2.pin_nums[1] = LL_GPIO_PIN_14; // CIPO
-pins_spi2.pin_nums[2] = LL_GPIO_PIN_13; // SCK
-pins_spi2.pin_nums[3] = LL_GPIO_PIN_12; // NSS
-pins_spi2.alternate_function_number = 5;
+pins_spi2.COPI_port = GPIOB;
+pins_spi2.CIPO_port = GPIOB;
+pins_spi2.SCLK_port = GPIOB;
+pins_spi2.NCS_port = GPIOB;
+pins_spi2.COPI_pin = LL_GPIO_PIN_15; // COPI
+pins_spi2.CIPO_pin = LL_GPIO_PIN_14; // CIPO
+pins_spi2.SCLK_pin = LL_GPIO_PIN_13; // SCK
+pins_spi2.NCS_pin = LL_GPIO_PIN_12;	// NSS
+pins_spi2.AFN = 5;
 
 GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);
 

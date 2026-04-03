@@ -2,6 +2,7 @@
 #include "spi.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "msgBuffer.h"
 
@@ -65,17 +66,8 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 										       // config struct
 	*handle->spi_config = *config;
 
-	// Deep copy of pins struct
-	handle->pins = (GR_SPI_Pins *)malloc(sizeof(GR_SPI_Pins)); // Make memory for GR_SPI_Pins struct
-	// handle->pins->pin_nums = (uint32_t *)malloc(pin_config->num_pins * sizeof(uint32_t));	    // Make memory for pin_nums[num_pins]
-	handle->pins->GPIOx = (GPIO_TypeDef **)malloc(pin_config->num_pins * sizeof(GPIO_TypeDef)); // Make memory for GPIOx[num_pins]
-	for (uint32_t i = 0; i < pin_config->num_pins; i++) {
-		handle->pins->pin_nums[i] = pin_config->pin_nums[i];
-		handle->pins->GPIOx[i] = pin_config->GPIOx[i];
-	}
-	handle->pins->SPIx = pin_config->SPIx;
-	handle->pins->num_pins = pin_config->num_pins;
-	handle->pins->alternate_function_number = pin_config->alternate_function_number;
+	// Deep copy of pins config struct to internal handle pin struct
+	memcpy(handle->pins, pin_config, sizeof(GR_SPI_Pins));
 
 	// Store handle in lookup table for interrupts
 	if (handle->pins->SPIx == SPI1) {
@@ -141,19 +133,23 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	LL_SPI_EnableIT_RXNE(handle->pins->SPIx); // Not empty Rx buffer
 }
 
-void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
+bool GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 {
 	if (!handle || !msg || msg->size > GR_SPI_MAX_MSG_BYTE_SIZE) {
-		return;
+		return false;
 	}
 
-	// Push the new message (copy) onto the Tx circular buffer
-	GR_MsgBuffer_Push(handle->tx_buffer, msg->data, msg->size);
+	// Push the new message (copy) onto the Tx circular buffer. Fails if not enough space or bad args.
+	if (!GR_MsgBuffer_Push(handle->tx_buffer, msg->data, msg->size)) {
+		return false;
+	}
 
 	// Check if there is no message in progress
 	if (handle->msg_status != GR_SPI_MSG_IN_PROGRESS) {
 		GR_SPI_Begin_New_Tx(handle);
 	}
+
+	return true;
 }
 
 void GR_SPI_Receive(GR_SPI_Handler *handle, GR_SPI_Message *dest_msg)
@@ -241,7 +237,7 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 			GR_MsgBuffer_Push(handle->rx_buffer, handle->current_msg->data, handle->current_msg->size);
 			if (handle->spi_config->Mode == LL_SPI_MODE_MASTER) {
 				// Finish transaction
-				LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
+				LL_GPIO_SetOutputPin(handle->pins->NCS_port, handle->pins->NCS_pin);
 				// Only go to IDLE when no additional messages are in pipeline
 				if (GR_MsgBuffer_IsEmpty(handle->tx_buffer)) {
 					handle->msg_status = GR_SPI_MSG_IDLE;
@@ -260,8 +256,7 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 	}
 }
 
-// SPIx_IRQn is defined in stm32 libraries
-uint32_t GR_SPI_Get_IRQn(SPI_TypeDef *SPIx)
+int GR_SPI_Get_IRQn(SPI_TypeDef *SPIx)
 {
 	if (SPIx == SPI1) {
 		return SPI1_IRQn; // 35
@@ -274,39 +269,50 @@ uint32_t GR_SPI_Get_IRQn(SPI_TypeDef *SPIx)
 	}
 }
 
+uint32_t GR_SPI_Get_GPIO_Clock(GPIO_TypeDef *GPIOx)
+{
+	if (GPIOx == GPIOA) {
+		return LL_AHB2_GRP1_PERIPH_GPIOA;
+	} else if (GPIOx == GPIOB) {
+		return LL_AHB2_GRP1_PERIPH_GPIOB;
+	} else if (GPIOx == GPIOC) {
+		return LL_AHB2_GRP1_PERIPH_GPIOC;
+	} else if (GPIOx == GPIOD) {
+		return LL_AHB2_GRP1_PERIPH_GPIOD;
+	} else if (GPIOx == GPIOE) {
+		return LL_AHB2_GRP1_PERIPH_GPIOE;
+	} else if (GPIOx == GPIOF) {
+		return LL_AHB2_GRP1_PERIPH_GPIOF;
+	} else if (GPIOx == GPIOG) {
+		return LL_AHB2_GRP1_PERIPH_GPIOG;
+	}
+	// Note: GPIOH does not exist on G4 board
+	else {
+		return GR_SPI_UNKNOWN_CLOCK;
+	}
+}
+
 void GR_SPI_Enable_Clocks(GR_SPI_Handler *handle)
 {
 	if (!handle) {
 		return;
 	}
 
-	uint32_t GPIOx_Port;
+	uint32_t COPI_clock, CIPO_clock, SCLK_clock, NCS_clock;
 
-	for (uint32_t i = 0; i < handle->pins->num_pins; i++) {
-		GPIO_TypeDef *gpio = handle->pins->GPIOx[i];
+	COPI_clock = GR_SPI_Get_GPIO_Clock(handle->pins->COPI_port);
+	CIPO_clock = GR_SPI_Get_GPIO_Clock(handle->pins->CIPO_port);
+	SCLK_clock = GR_SPI_Get_GPIO_Clock(handle->pins->SCLK_port);
+	NCS_clock = GR_SPI_Get_GPIO_Clock(handle->pins->NCS_port);
 
-		if (gpio == GPIOA) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOA;
-		} else if (gpio == GPIOB) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOB;
-		} else if (gpio == GPIOC) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOC;
-		} else if (gpio == GPIOD) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOD;
-		} else if (gpio == GPIOE) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOE;
-		} else if (gpio == GPIOF) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOF;
-		} else if (gpio == GPIOG) {
-			GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOG;
-		}
-		// Note: GPIOH does not exist on G4 board
-		else {
-			continue; // unknown GPIOx
-		}
-
-		LL_AHB2_GRP1_EnableClock(GPIOx_Port);
+	if (!COPI_clock || !CIPO_clock || !SCLK_clock || !NCS_clock) {
+		return;
 	}
+
+	LL_AHB2_GRP1_EnableClock(COPI_clock);
+	LL_AHB2_GRP1_EnableClock(CIPO_clock);
+	LL_AHB2_GRP1_EnableClock(SCLK_clock);
+	LL_AHB2_GRP1_EnableClock(NCS_clock);
 
 	// Enable SPI clock
 	if (handle->pins->SPIx == SPI1) {
@@ -342,7 +348,7 @@ void GR_SPI_Begin_New_Tx(GR_SPI_Handler *handle)
 	handle->current_rx_msg_index = 0;
 
 	// Pull chip select to active low
-	LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
+	LL_GPIO_ResetOutputPin(handle->pins->NCS_port, handle->pins->NCS_pin);
 
 	// Enable TXE interrupts for loading bytes into TX buffer
 	LL_SPI_EnableIT_TXE(handle->pins->SPIx); // Empty Tx buffer
@@ -394,16 +400,29 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_conf
 		return;
 	}
 
+	// Universal settings for all SPI pins
 	LL_GPIO_StructInit(pin_config);					 // Default config values
 	pin_config->Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;		 // Very high output speed
 	pin_config->Pull = LL_GPIO_PULL_NO;				 // No pull-up or pull-down
 	pin_config->OutputType = LL_GPIO_OUTPUT_PUSHPULL;		 // Push-pull output (not open-drain)
 	pin_config->Mode = LL_GPIO_MODE_ALTERNATE;			 // Alternate pin function mode
-	pin_config->Alternate = handle->pins->alternate_function_number; // Alternate function number
-	for (uint32_t i = 0; i < handle->pins->num_pins; i++) {
-		pin_config->Pin = handle->pins->pin_nums[i];
-		LL_GPIO_Init(handle->pins->GPIOx[i], pin_config);
-	}
+	pin_config->Alternate = handle->pins->AFN; // Alternate function number
+
+	// COPI
+	pin_config->Pin = handle->pins->COPI_pin;
+	LL_GPIO_Init(handle->pins->COPI_port, pin_config);
+
+	// CIPO
+	pin_config->Pin = handle->pins->CIPO_pin;
+	LL_GPIO_Init(handle->pins->CIPO_port, pin_config);
+
+	// SCLK
+	pin_config->Pin = handle->pins->SCLK_pin;
+	LL_GPIO_Init(handle->pins->SCLK_port, pin_config);
+
+	// NCS
+	pin_config->Pin = handle->pins->NCS_pin;
+	LL_GPIO_Init(handle->pins->NCS_port, pin_config);
 }
 
 void GR_SPI_Close(GR_SPI_Handler *handle)
@@ -413,11 +432,11 @@ void GR_SPI_Close(GR_SPI_Handler *handle)
 	}
 
 	// Safety Checks
-	LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]); // Set CS high
+	LL_GPIO_SetOutputPin(handle->pins->NCS_port, handle->pins->NCS_pin); // Set CS high
 
 	// Set all the pins analog
 	for (int i = 0; i < 3; i++) {
-		LL_GPIO_SetPinMode(handle->pins->GPIOx[i], handle->pins->pin_nums[i], LL_GPIO_MODE_ANALOG);
+		LL_GPIO_SetPinMode(handle->pins->NCS_port, handle->pins->NCS_pin, LL_GPIO_MODE_ANALOG);
 	}
 
 	// Disable and DeInit
@@ -427,9 +446,6 @@ void GR_SPI_Close(GR_SPI_Handler *handle)
 	// Deallocate memory
 	if (handle->spi_config) {
 		free(handle->spi_config);
-	}
-	if (handle->pins->GPIOx) {
-		free(handle->pins->GPIOx);
 	}
 	if (handle->pins) {
 		free(handle->pins);

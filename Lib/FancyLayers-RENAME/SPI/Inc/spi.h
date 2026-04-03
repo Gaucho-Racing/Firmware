@@ -8,6 +8,7 @@
 #include "msgBuffer.h"
 
 #define GR_SPI_UNKNOWN_IRQN -64
+#define GR_SPI_UNKNOWN_CLOCK 0
 #define GR_SPI_BUFFER_BYTE_CAPACITY 256
 #define GR_SPI_MAX_MSG_BYTE_SIZE 64
 
@@ -19,11 +20,18 @@ typedef struct {
 
 typedef struct {
 	SPI_TypeDef *SPIx;    // Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
-	GPIO_TypeDef **GPIOx; // Pointer to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
-			      // COPI, CIPO, SCLK, CS
-	uint32_t pin_nums[4];		    // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
-	uint32_t num_pins;		    // Number of SPI pins
-	uint32_t alternate_function_number; // Refer to the datasheet for the correct number (based on SPIx)
+	// Pointers to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
+	GPIO_TypeDef *COPI_port;  // Controller Out Peripheral In (same as MOSI)
+	GPIO_TypeDef *CIPO_port;  // Controller In Peripheral Out (same as MISO)
+	GPIO_TypeDef *SCLK_port;  // Serial (SPI) Clock
+	GPIO_TypeDef *NCS_port;	  // Negative Chip Select (same as NSS) --> active low
+	// SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
+	uint32_t COPI_pin;
+	uint32_t CIPO_pin;
+	uint32_t SCLK_pin;
+	uint32_t NCS_pin;
+	// Refer to the datasheet for the correct number (based on SPIx)
+	uint32_t AFN; // Alternate Function Number
 } GR_SPI_Pins;
 
 typedef struct GR_SPI_Handler_struct {
@@ -93,9 +101,10 @@ void SPI3_IRQHandler(void);
 /**
  * @brief The SPI message is sent via SPI and will likely interrupt the program immediately to finish the transaction. Msg is untouched and should be reused in GR_SPI_Receive or freed.
  * @param handle
- * @param data
+ * @param msg
+ * @return 1 if successful and 0 if failed (i.e. not enough space or invalid args)
  */
-void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg);
+bool GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg);
 
 /**
  * @brief The dest_msg will be destroyed and overwritten if there is a message to receive; otherwise, nothing happens.
@@ -123,9 +132,16 @@ uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle);
 /**
  * @brief Returns the interrupt request number for a given SPIx peripheral
  * @param SPIx
- * @return IRQ Number for SPIx
+ * @return GR_SPI_UNKNOWN_IRQN or a valid IRQ number for SPIx
  */
-uint32_t GR_SPI_Get_IRQn(SPI_TypeDef *SPIx);
+int GR_SPI_Get_IRQn(SPI_TypeDef *SPIx);
+
+/**
+ * @brief Returns the clock mask for a given GPIOx port
+ * @param GPIOx
+ * @return GR_SPI_UNKNOWN_CLOCK or a valid bit flag that corresponds to the clock for the GPIOx port
+ */
+uint32_t GR_SPI_Get_GPIO_Clock(GPIO_TypeDef *GPIOx);
 
 /**
  * @brief Enables the GPIO port clocks and SPI clock needed for the given pins

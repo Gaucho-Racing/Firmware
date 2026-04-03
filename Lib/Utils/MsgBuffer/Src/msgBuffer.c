@@ -8,7 +8,8 @@
 
 GR_MsgBuffer *GR_MsgBuffer_Create(uint32_t size)
 {
-	if (size < 1) {
+	// A buffer of size = 1 is functionally useless because one byte is always used for message size
+	if (size < 2) {
 		return NULL;
 	}
 

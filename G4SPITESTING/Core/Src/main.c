@@ -111,6 +111,7 @@ int main(void)
 	LOGOMATIC("Booted!\n");
 
 	// ========== RECEIVER CONFIGURATION ==========
+	// Config values
 	config_spi2.Mode = LL_SPI_MODE_SLAVE;
 	config_spi2.NSS = LL_SPI_NSS_SOFT;
 	config_spi2.TransferDirection = LL_SPI_FULL_DUPLEX;
@@ -122,42 +123,44 @@ int main(void)
 	config_spi2.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
 	config_spi2.CRCPoly = 0x1D;
 
+	// Pins values
 	pins_spi2.SPIx = SPI2;
-	pins_spi2.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
-	// All pins are in the A clock port
-	for (int i = 0; i < 4; i++) {
-		*(pins_spi2.GPIOx + i) = GPIOB;
-	}
-	pins_spi2.num_pins = 4;
-	// pins_spi2.pin_nums;
-	pins_spi2.pin_nums[0] = LL_GPIO_PIN_15; // COPI
-	pins_spi2.pin_nums[1] = LL_GPIO_PIN_14; // CIPO
-	pins_spi2.pin_nums[2] = LL_GPIO_PIN_13; // SCK
-	pins_spi2.pin_nums[3] = LL_GPIO_PIN_12; // NSS
-	pins_spi2.alternate_function_number = 5;
+	pins_spi2.COPI_port = GPIOB;
+	pins_spi2.CIPO_port = GPIOB;
+	pins_spi2.SCLK_port = GPIOB;
+	pins_spi2.NCS_port = GPIOB;
+	pins_spi2.COPI_pin = LL_GPIO_PIN_15; // COPI
+	pins_spi2.CIPO_pin = LL_GPIO_PIN_14; // CIPO
+	pins_spi2.SCLK_pin = LL_GPIO_PIN_13; // SCK
+	pins_spi2.NCS_pin = LL_GPIO_PIN_12;	// NSS
+	pins_spi2.AFN = 5;
 
 	GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);
 
+	// Create message struct
 	GR_SPI_Message msg = {0};
 	msg.size = 1;
 	msg.data = (uint8_t *)malloc(msg.size * sizeof(uint8_t));
-
+	// Set default values (to check if nothing was changed on receive)
 	for (int i = 0; i < msg.size; i++) {
 		msg.data[i] = '#';
 	}
 
-	LOGOMATIC("Receiving message...\n");
-
+	// Wait until something is received
 	while (GR_SPI_IsRxEmpty(&handle_spi2)) {}
 
+	// Parse the message (this will be 1 byte in current implementation since it was unsolicited)
 	GR_SPI_Receive(&handle_spi2, &msg);
 
+	// Make a c-string to print the message byte array
 	char str[33];
 	memcpy(str, msg.data, msg.size * sizeof(uint8_t));
 	str[msg.size] = '\0';
 
+	// Print the byte array
 	LOGOMATIC("Received: %s\n", str);
 
+	// Clean up
 	free(msg.data);
 	GR_SPI_Close(&handle_spi2);
 
