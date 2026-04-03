@@ -437,7 +437,7 @@ typedef struct {
 	 * MQTT Status - 1: OK, 0: Timeout (bit 1)
 	 * Epic Shelter Status - 1: In Progress, 0: Idle (bit 2)
 	 * Camera Status - 1: Recording, 0: Idle (bit 3)
-	*/
+	 */
 	uint8_t status_bits;
 	/** Mapache ping (upload) (Byte 1) */
 	uint16_t mapache_ping;
