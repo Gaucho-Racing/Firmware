@@ -4,10 +4,10 @@
 
 #include "CANutils.h"
 #include "ComparatorMacros.h"
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_DAT.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
@@ -28,6 +28,7 @@
 ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
 static uint32_t buzzer_start_millis;
 static uint32_t last_can_inverter_request_millis;
+static uint32_t last_can_tcm_request_millis; // TODO: implement
 
 CANHandle *primary_can;
 CANHandle *data_can;
@@ -88,7 +89,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: TS Voltage >= %d!\n", SAFE_VOLTAGE_LIMIT);
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-Runwy", 8);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, Debugger, MSG_DEBUG_2_0, "TS-Runwy", 8);
 		return;
 	}
 
@@ -102,8 +103,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 {
 	/*send message to BCU to start precharging*/
-	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 1}; // Go TS Active/Precharge
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
+	GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 1}; // Go TS Active/Precharge
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
 	return;
@@ -120,7 +121,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	if (!stateData->ts_active_button_active || CommunicationError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("ERROR or ts_active OFF! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-P-ITR", 8);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, Debugger, MSG_DEBUG_2_0, "TS-P-ITR", 8);
 		return;
 	}
 }
@@ -136,13 +137,23 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (CriticalError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.\n");
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "HV-CritE", 8);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, Debugger, MSG_DEBUG_2_0, "HV-CritE", 8);
 		return;
 	}
 
 	if (PressingBrake(stateData) && stateData->rtd_button_active) {
-		GR_OLD_INVERTER_CONFIG_MSG message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .abs_max_motor_rpm = 0xFFFF, .motor_direction = 0};
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_CONFIG, &message, sizeof(message));
+		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
+		GRCAN_ECU_ANALOG_DATA_MSG pedals_message = {.bspd_signal = stateData->bspd_signal,
+							    .bse_signal = stateData->bse_signal,
+							    .apps_1_signal = stateData->APPS1_Signal,
+							    .apps_2_signal = stateData->APPS2_Signal,
+							    .brakeline_f_signal = stateData->Brake_F_Signal,
+							    .brakeline_r_signal = stateData->Brake_R_Signal,
+							    // TODO: include steering wheel data
+							    .steering_angle_signal = 0,
+							    .aux_signal = stateData->aux_signal};
+		ECU_CAN_Send(GRCAN_BUS_DATA, TCM, MSG_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
 		return;
@@ -161,7 +172,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	if (!stateData->ts_active_button_active || CriticalError(stateData)) {
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.\n");
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "DA-CritE", 8);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, Debugger, MSG_DEBUG_2_0, "DA-CritE", 8);
 		return;
 	}
 
@@ -201,8 +212,23 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	if (stateData->millisSinceBoot - last_can_inverter_request_millis > 10) {
-		GR_OLD_INVERTER_COMMAND_MSG message = {.ac_current = torque_request * 100 + 32768, .dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
+		GRCAN_INVERTER_COMMAND_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GR_Inverter, MSG_INVERTER_COMMAND, &message, sizeof(message));
+		last_can_inverter_request_millis = stateData->millisSinceBoot;
+	}
+
+	// placeholder for pedal data
+	if (stateData->millisSinceBoot - last_can_tcm_request_millis > 10) {
+		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
+						     .bse_signal = stateData->bse_signal,
+						     .apps_1_signal = stateData->APPS1_Signal,
+						     .apps_2_signal = stateData->APPS2_Signal,
+						     .brakeline_f_signal = stateData->Brake_F_Signal,
+						     .brakeline_r_signal = stateData->Brake_R_Signal,
+						     // TODO: include steering wheel data
+						     .steering_angle_signal = 0,
+						     .aux_signal = stateData->aux_signal};
+		ECU_CAN_Send(GRCAN_BUS_DATA, TCM, MSG_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_inverter_request_millis = stateData->millisSinceBoot;
 	}
 }
@@ -211,8 +237,8 @@ void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
 	LOGOMATIC("ECU: BCU discharge Tractive System\n");
-	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
+	GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 0};
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->dischargeStartMillis = stateData->millisSinceBoot;
 }
 
@@ -232,6 +258,6 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	*/
 	if (stateData->millisSinceBoot - stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
 		LOGOMATIC("Warning: Tractive System fails to discharge in time.\n");
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_DEBUGGER, MSG_DEBUG_2_0, "TS-D-TLE", 8);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, Debugger, MSG_DEBUG_2_0, "TS-D-TLE", 8);
 	}
 }
