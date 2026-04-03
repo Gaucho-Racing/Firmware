@@ -7,11 +7,11 @@
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "Unused.h"
+#include "bitManipulations.h"
 #include "can.h"
 #include "dashutils.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
-#include "bitManipulations.h"
 
 #define ECU_ID ECU
 #define PING_ID MSG_PING
@@ -113,12 +113,12 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 		GRCAN_ECU_STATUS_1_MSG *ecu_data = (GRCAN_ECU_STATUS_1_MSG *)data;
 		dashStatus.ECUState = ecu_data->ecu_state; // Get ECU Status
 
-	// Dash Config
+		// Dash Config
 	} else if (msg_id == MSG_DASH_CONFIG && size == sizeof(GRCAN_DASH_CONFIG_MSG)) {
 		GRCAN_DASH_CONFIG_MSG *dash_data = (GRCAN_DASH_CONFIG_MSG *)data;
 		dashStatus.led_bits = dash_data->led_bits; // Get LED bits
 
-	// Ping
+		// Ping
 	} else if (msg_id == MSG_PING && size == sizeof(GRCAN_PING_MSG)) {
 		CAN_sendPing(node_id, *(uint32_t *)data);
 
