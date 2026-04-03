@@ -1,14 +1,14 @@
 /**
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 
 /**
  * @file  vl53l4ed_calibration.h
@@ -38,12 +38,7 @@
  * invalid nb of samples).
  */
 
-VL53L4ED_Error VL53L4ED_CalibrateOffset(
-		Dev_t dev,
-		int16_t TargetDistInMm,
-		int16_t *p_measured_offset_mm,
-		int16_t nb_samples);
-
+VL53L4ED_Error VL53L4ED_CalibrateOffset(Dev_t dev, int16_t TargetDistInMm, int16_t *p_measured_offset_mm, int16_t nb_samples);
 
 /**
  * @brief This function can be used to perform a Xtalk calibration. Xtalk
@@ -63,11 +58,7 @@ VL53L4ED_Error VL53L4ED_CalibrateOffset(
  * @return (VL53L4ED_ERROR) status : 0 if OK, or 255 if something occurred (e.g
  * invalid nb of samples).
  */
-   
-VL53L4ED_Error VL53L4ED_CalibrateXtalk(
-		Dev_t dev,
-		int16_t TargetDistInMm,
-		uint16_t *p_measured_xtalk_kcps,
-		int16_t nb_samples);
 
-#endif //VL53L4ED_CALIBRATION_H_
+VL53L4ED_Error VL53L4ED_CalibrateXtalk(Dev_t dev, int16_t TargetDistInMm, uint16_t *p_measured_xtalk_kcps, int16_t nb_samples);
+
+#endif // VL53L4ED_CALIBRATION_H_

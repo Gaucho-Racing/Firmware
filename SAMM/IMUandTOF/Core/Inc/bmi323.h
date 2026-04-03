@@ -1,14 +1,13 @@
 #ifndef BMI323_H
 #define BMI323_H
 
-//includes 
-
+// includes
 
 #include "main.h"
 #include "spi.h"
 #include "stm32g474xx.h"
 
-//BMI323 register defines
+// BMI323 register defines
 
 #define BMI323_CHIP_ID 0x00
 #define BMI323_ERR_REG 0x01
@@ -54,11 +53,11 @@
 #define BMI323_CMD 0x7E
 #define BMI323_CFG_RES 0x7F
 
-//BMI323 potential spi address
+// BMI323 potential spi address
 #define BMI323_I2C_ADDR 0x68
 #define BMI323_I2C_ADDR_ALT 0x69
 
-//BMI323 sub-defines for registers
+// BMI323 sub-defines for registers
 #define BMI323_CHIP_ID_RESET_VAL 0x0043
 #define BMI323_ERR_REG_RESET_VAL 0x0000
 #define BMI323_STATUS_RESET_VAL 0x0001
@@ -95,25 +94,24 @@
 #define BMI323_CMD_RESET_VAL 0x0000
 #define BMI323_CFG_RES_RESET_VAL 0x0000
 
-//defines for commands
+// defines for commands
 #define BMI323_CMD_SOFT_RESET 0xDEAF
 #define BMI323_CMD_CALIB 0x0101
 #define BMI323_CMD_CALIB_ABORT 0x0200
 
-//defines for features
+// defines for features
 #define BMI323_FEATURE_IO2_EN 0x012C
 #define BMI323_FEATURE_IO_STS 0x0001
 #define BMI323_FEATURE_CTRL_ENGINE_EN 0x0001
 #define BMI323_FEATURE_IO1_STATUS 0x0001
 
-
-//defines for acc and gyro conf
+// defines for acc and gyro conf
 #define SUSPEND 0b000
 #define LOW_POWER 0b011
 #define HIGH_PERF 0b111
 #define NORMAL 0b100
 
-//these are the values that are used for the polling frequency
+// these are the values that are used for the polling frequency
 #define ODR_0_78 0x1
 #define ODR_1_56 0x2
 #define ODR_3_12 0x3
@@ -129,11 +127,11 @@
 #define ODR_3200 0xD
 #define ODR_6400 0xE
 
-//these are the values that are used for the -3dB bandwidth 
+// these are the values that are used for the -3dB bandwidth
 #define ODR_DIV_2 0x0
 #define ODR_DIV_4 0x1
 
-//these are defines for the sample averaging
+// these are defines for the sample averaging
 #define AVG_0 0x0
 #define AVG_2 0x1
 #define AVG_4 0x2
@@ -142,14 +140,14 @@
 #define AVG_32 0x5
 #define AVG_64 0x6
 
-//acc specific defines for range
+// acc specific defines for range
 #define ACC_RANGE_2G 0x0
 #define ACC_RANGE_4G 0x1
 #define ACC_RANGE_8G 0x2
 #define ACC_RANGE_16G 0x3
 
-//gyro specific defines for range
-//WRONG VALUES
+// gyro specific defines for range
+// WRONG VALUES
 #define GYR_RANGE_2000 0x0
 #define GYR_RANGE_1000 0x1
 #define GYR_RANGE_500 0x2
@@ -157,14 +155,13 @@
 
 #define BMI323_TIMEOUT 1000
 
-typedef struct
-{
-    SPI_HandleTypeDef *spi_port;
-    uint16_t chip_id;
-    GPIO_TypeDef  *port;
-    uint16_t pin;
-    /* data */
-} bmi323 ;
+typedef struct {
+	SPI_HandleTypeDef *spi_port;
+	uint16_t chip_id;
+	GPIO_TypeDef *port;
+	uint16_t pin;
+	/* data */
+} bmi323;
 
 uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin);
 uint16_t bmi323_read(bmi323 *bmi323_dev, uint8_t reg);
@@ -194,7 +191,5 @@ uint8_t bmi323_enable_acc(bmi323 *bmi323_dev, uint8_t acc_mode, uint8_t acc_avg_
 uint8_t bmi323_read_acc(bmi323 *bmi323_dev, int16_t *acc_data);
 uint8_t bmi323_read_gyr(bmi323 *bmi323_dev, int16_t *gyr_data);
 uint8_t bmi323_read_all(bmi323 *bmi323_dev, int16_t *temp_data);
-
-
 
 #endif // BMI323_H
