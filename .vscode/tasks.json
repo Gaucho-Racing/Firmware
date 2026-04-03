@@ -206,6 +206,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_STRESS_TEST"
+		},
+		{
+			"label": "CMake: configure and build CAN_LOOPBACK_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_LOOPBACK_TEST"
 		}
 	]
 }
