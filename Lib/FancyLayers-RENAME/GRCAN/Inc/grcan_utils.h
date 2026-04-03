@@ -1,8 +1,9 @@
 #include <stdint.h>
-#include "can.h"
+
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
+#include "can.h"
 
 #ifndef GRCAN_UTILS_H
 #define GRCAN_UTILS_H
@@ -38,15 +39,15 @@ typedef enum {
 	GRCAN_OPMODE_EXTERNAL_LOOPBACK
 } GRCAN_OperatingMode;
 typedef struct {
-    uint32_t prescaler;
-    uint32_t sjw;
-    uint32_t seg1;
-    uint32_t seg2;
+	uint32_t prescaler;
+	uint32_t sjw;
+	uint32_t seg1;
+	uint32_t seg2;
 } GRCAN_BitTimingPhase;
 
 typedef struct {
-    GRCAN_BitTimingPhase nominal;
-    GRCAN_BitTimingPhase data;
+	GRCAN_BitTimingPhase nominal;
+	GRCAN_BitTimingPhase data;
 } GRCAN_BitTiming;
 
 typedef struct {
@@ -65,8 +66,8 @@ typedef struct {
 } GRCAN_FilterConfig;
 
 typedef enum {
-    GRCAN_Feature_DISABLE = 0,
-    GRCAN_Feature_ENABLE = 1
+	GRCAN_Feature_DISABLE = 0,
+	GRCAN_Feature_ENABLE = 1
 } GRCAN_FeatureState;
 
 typedef struct {
