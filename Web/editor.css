@@ -191,6 +191,50 @@
 	vertical-align: middle;
 }
 
+.download-notice {
+	position: fixed;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 2300;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: #1e293b;
+	color: #e2e8f0;
+	border: 1px solid #334155;
+	border-left: 4px solid #38bdf8;
+	border-radius: 6px;
+	padding: 10px 14px;
+	font-size: 13px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+	max-width: 480px;
+	pointer-events: all;
+}
+
+.download-notice-icon {
+	flex-shrink: 0;
+}
+
+.download-notice-msg {
+	flex: 1;
+}
+
+.download-notice-close {
+	flex-shrink: 0;
+	background: none;
+	border: none;
+	color: #94a3b8;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1;
+	padding: 0 2px;
+}
+
+.download-notice-close:hover {
+	color: #e2e8f0;
+}
+
 .dv-overlay {
 	position: fixed;
 	inset: 0;

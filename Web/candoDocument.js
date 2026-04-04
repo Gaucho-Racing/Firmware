@@ -373,9 +373,10 @@
 		return out;
 	}
 
-	function _serializeMessageIds() {
+	function _serializeMessageIds(routedOnly = null) {
 		let out = "Message ID:\n";
 		for (const msg of _messageIds.values()) {
+			if (routedOnly && !routedOnly.has(msg.name)) continue;
 			out += "  " + msg.name + ":\n";
 			out += "    MSG ID: " + msg.msgId + "\n";
 			out += "    MSG LENGTH: " + msg.msgLength + "\n";
@@ -409,9 +410,10 @@
 		return out;
 	}
 
-	function _serializeCustomCanIds() {
+	function _serializeCustomCanIds(routedOnly = null) {
 		let out = "Custom CAN ID:\n";
 		for (const entry of _customCanIds.values()) {
+			if (routedOnly && !routedOnly.has(entry.name)) continue;
 			out += "  " + entry.name + ":\n";
 			out += "    CAN ID: " + entry.canId + "\n";
 			out += "    Length: " + entry.length + "\n";
@@ -448,13 +450,28 @@
 		return out;
 	}
 
-	function _serialize() {
+	function _getRoutedMessageNames() {
+		const routed = new Set();
+		for (const device of _devices.values()) {
+			for (const bus of device.buses.values()) {
+				for (const receiver of bus.receivers.values()) {
+					for (const route of receiver.routes) {
+						routed.add(route.msgName);
+					}
+				}
+			}
+		}
+		return routed;
+	}
+
+	function _serialize(pruneUnrouted = false) {
+		const routedOnly = pruneUnrouted ? _getRoutedMessageNames() : null;
 		const parts = [
 			_busIdsText,
 			_serializeRouting(),
 			_byteOrderText,
-			_serializeMessageIds(),
-			_serializeCustomCanIds(),
+			_serializeMessageIds(routedOnly),
+			_serializeCustomCanIds(routedOnly),
 			_serializeGrIds(),
 		];
 		// Strip trailing newlines from each part, join with exactly one blank line,
@@ -623,7 +640,16 @@
 		_parse(editor.getRawText());
 		const result = fn();
 		if (result.ok !== false) {
-			editor.updateRawText(_serialize());
+			const newText = _serialize();
+			editor.updateRawText(newText);
+			// If the post-mutation canonical text matches the canonical original,
+			// the user has undone all their changes — clear the changed indicators.
+			_parse(editor.getOriginalRawText());
+			const canonicalOriginal = _serialize();
+			_parse(newText); // restore internal state to current
+			if (newText === canonicalOriginal) {
+				editor.resetEditState();
+			}
 		}
 		return result;
 	}
@@ -1259,13 +1285,24 @@
 		return _serialize();
 	}
 
+	function _serializeFromStatePruned() {
+		return _serialize(true);
+	}
+
 	// Returns the canonical serialized form of the current editor text.
 	// Parse → serialize without side effects (does not update editor state).
 	function getSerializedText() {
 		const editor = _getEditor();
 		if (!editor) return null;
 		_parse(editor.getRawText());
-		return _serialize();
+		return _serialize(true);
+	}
+
+	// Parse an arbitrary raw text and serialize it with pruning — used to compute
+	// the canonical download form of any snapshot (e.g. the original file).
+	function getSerializedTextFrom(rawText) {
+		_parse(rawText || "");
+		return _serialize(true);
 	}
 
 	// ==================== Public API ====================
@@ -1301,8 +1338,10 @@
 		getRouteReceivers,
 		getGraphDataForBus,
 		getSerializedText,
+		getSerializedTextFrom,
 		// Test hooks
 		_parseForTest,
 		_serializeFromState,
+		_serializeFromStatePruned,
 	};
 });

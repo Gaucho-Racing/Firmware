@@ -113,6 +113,22 @@ window.addEventListener("DOMContentLoaded", function () {
 		el.innerHTML = `<span class="placeholder">${text}</span>`;
 	}
 
+	function showDownloadNotice(message) {
+		const existing = document.getElementById("download-notice");
+		if (existing) existing.remove();
+		const notice = document.createElement("div");
+		notice.id = "download-notice";
+		notice.className = "download-notice";
+		notice.innerHTML =
+			'<span class="download-notice-icon">\u2139\ufe0f</span>' +
+			'<span class="download-notice-msg"></span>' +
+			'<button class="download-notice-close" aria-label="Dismiss">&times;</button>';
+		notice.querySelector(".download-notice-msg").textContent = message;
+		notice.querySelector(".download-notice-close").addEventListener("click", () => notice.remove());
+		document.body.appendChild(notice);
+		setTimeout(() => { if (notice.parentNode) notice.remove(); }, 5000);
+	}
+
 	function makeItem(labelText, hasChevron) {
 		const item = document.createElement("div");
 		item.className = "panel-item";
@@ -369,17 +385,30 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 
 		dlBtn.addEventListener("click", function () {
-			const oldText = editor.getOriginalRawText
-				? editor.getOriginalRawText()
-				: "";
-			const newText = editor.getRawText ? editor.getRawText() : "";
-			if (!window.DiffViewer || oldText === newText) {
+			const doc = window.GrcanDocument;
+			const origRaw = editor.getOriginalRawText ? editor.getOriginalRawText() : "";
+			const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
+			const newDownload = doc ? doc.getSerializedText() : (editor.getRawText ? editor.getRawText() : "");
+			if (origDownload === newDownload) {
+				// Download content unchanged — check if there are unsaved working changes
+				// (e.g. unrouted message definitions) and surface a notice.
+				const rawChanged = editor.getRawText && editor.getRawText() !== origRaw;
+				if (rawChanged) {
+					showDownloadNotice(
+						"Nothing new to export \u2014 message definitions without routes are excluded. Add a route to include them.",
+					);
+				} else {
+					editor.downloadCando();
+				}
+				return;
+			}
+			if (!window.DiffViewer) {
 				editor.downloadCando();
 				return;
 			}
 			window.DiffViewer.show({
-				oldText,
-				newText,
+				oldText: origDownload,
+				newText: newDownload,
 				onConfirm: function () {
 					editor.downloadCando();
 				},
@@ -1142,14 +1171,14 @@ window.addEventListener("DOMContentLoaded", function () {
 				"You have unsaved changes. Download your changes before switching reference?",
 			);
 			if (wantsDownload) {
-				const oldText = editor.getOriginalRawText
-					? editor.getOriginalRawText()
-					: "";
-				const newText = editor.getRawText ? editor.getRawText() : "";
-				if (window.DiffViewer && oldText !== newText) {
+				const doc = window.GrcanDocument;
+				const origRaw = editor.getOriginalRawText ? editor.getOriginalRawText() : "";
+				const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
+				const newDownload = doc ? doc.getSerializedText() : (editor.getRawText ? editor.getRawText() : "");
+				if (window.DiffViewer && origDownload !== newDownload) {
 					window.DiffViewer.show({
-						oldText,
-						newText,
+						oldText: origDownload,
+						newText: newDownload,
 						onConfirm: function () {
 							editor.downloadCando();
 						},
