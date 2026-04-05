@@ -32,6 +32,10 @@ routing:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
+        CCU:
+          - msg: BCU Status 1
+          - msg: BCU Status 2
+          - msg: BCU Status 3
     Charger:
       CAN3:
         BCU:
