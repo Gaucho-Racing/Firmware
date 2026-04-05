@@ -218,6 +218,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	// placeholder for pedal data
+	// TODO: determine send time (15, 20 ms?)
 	if (stateData->millisSinceBoot - last_can_tcm_request_millis > 10) {
 		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
 						     .bse_signal = stateData->bse_signal,
