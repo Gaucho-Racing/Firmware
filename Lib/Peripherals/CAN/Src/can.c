@@ -247,7 +247,7 @@ CANHandle *can_init(const CANConfig *config)
 	// Active FDCAN callbacks - rxcalback uses line0, txcallback uses line1
 	// uint32_t rxevents = FDCAN_IT_RX_FIFO0_NEW_MESSAGE;
 	uint32_t status = 0;
-	uint32_t rx_events = FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL;
+	uint32_t rx_events = FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL | FDCAN_IT_RX_FIFO0_MESSAGE_LOST;
 	status |= HAL_FDCAN_ActivateNotification(canHandle->hal_fdcanP, rx_events, 0);
 	status |= HAL_FDCAN_ConfigInterruptLines(canHandle->hal_fdcanP, rx_events, FDCAN_INTERRUPT_LINE0);
 
