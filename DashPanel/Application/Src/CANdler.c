@@ -104,8 +104,8 @@ void CAN_sendECU(CANHandle *c, GRCAN_DASH_STATUS_MSG *msg, GRCAN_NODE_ID to)
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
 
-	GRCAN_MSG_ID msg_id = GETBITS(ID, 12, 12);
-	GRCAN_NODE_ID node_id = GETBITS(ID, 4, 8);
+	GRCAN_MSG_ID msg_id = (0x000FFF00 & ID) >> 8;
+	GRCAN_NODE_ID node_id = (0x0FF00000 & ID) >> 20;
 
 	// Process data
 	// ECU Status
