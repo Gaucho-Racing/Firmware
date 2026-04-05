@@ -9,7 +9,7 @@
 #include "STM32G4_hal_fdcan_defines.h"
 #include "Logomatic.h"
 
-//#define DMA_INTERRUPT //can't even think about trying this yet
+#define DMA_INTERRUPT //can't even think about trying this yet
 
 //static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 static void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
