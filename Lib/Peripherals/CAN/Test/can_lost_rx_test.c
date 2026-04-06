@@ -94,7 +94,7 @@ int can_lost_rx_test(void)
 		}
 		LOGOMATIC("\n");
 
-		//check that all message were sent and received
+		// check that all message were sent and received
 		if (can_rx_received == messages) {
 			successes += 1;
 		}

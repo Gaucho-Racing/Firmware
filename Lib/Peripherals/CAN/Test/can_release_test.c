@@ -78,7 +78,7 @@ int can_release_test()
 
 	// TODO: use a stack canary to see if memory was cleared safely??
 	//  test state of canHandle after release
-	if (temp != can->hal_fdcanP || cap != can->tx_capacity || buff != can->tx_buffer || can->init || can->started || can->tx_elements || can->tx_tail || can->rx_callback || (can->lost_rx != 0) ) {
+	if (temp != can->hal_fdcanP || cap != can->tx_capacity || buff != can->tx_buffer || can->init || can->started || can->tx_elements || can->tx_tail || can->rx_callback || (can->lost_rx != 0)) {
 		LOGOMATIC("can_release: FAIL: cleared handle incorrectly\n");
 		return ERROR;
 	}

@@ -12,19 +12,25 @@ static volatile uint8_t can_data[64] = {0};
 void can_stress_test_rx_callback(uint32_t id, void *data, uint32_t size)
 {
 	can_stress_test_received++;
-	//simulate a copy using CPU only
-	uint8_t* data_bytes = (uint8_t*) data;
+	// simulate a copy using CPU only
+	uint8_t *data_bytes = (uint8_t *)data;
 
 	bool failure = false;
 	for (uint32_t i = 0; i < size; i++) {
 		can_data[i] = data_bytes[i];
 
-		if (can_data[i] != i) failure = true;
+		if (can_data[i] != i) {
+			failure = true;
+		}
 	}
 
-	//reset
-	for (uint32_t i = 0; i < size; i++) can_data[i] = 0;
-	if (failure) LOGOMATIC("FAIL: did not copy data correctly\n");
+	// reset
+	for (uint32_t i = 0; i < size; i++) {
+		can_data[i] = 0;
+	}
+	if (failure) {
+		LOGOMATIC("FAIL: did not copy data correctly\n");
+	}
 
 	UNUSED(id);
 	UNUSED(data);
@@ -57,7 +63,7 @@ int can_stress_test(void)
 	// TODO: Make the stress test more stressful
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = 1,
-		.FDFormat = FDCAN_FD_CAN,
+	    .FDFormat = FDCAN_FD_CAN,
 	    .IdType = FDCAN_STANDARD_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
@@ -78,13 +84,15 @@ int can_stress_test(void)
 	}
 
 	FDCANTxMessage msg = {0};
-	//memset(&(msg.data), 0, sizeof(msg.data));
-	for (int i = 0; i < DLCtoBytes[SIZE]; i++) { msg.data[i] = i; }
+	// memset(&(msg.data), 0, sizeof(msg.data));
+	for (int i = 0; i < DLCtoBytes[SIZE]; i++) {
+		msg.data[i] = i;
+	}
 	msg.tx_header = TxHeader;
 
 	size_t i = 0;
 	size_t rounds = 1;
-	//size_t messages = primary_can->tx_capacity * 2;
+	// size_t messages = primary_can->tx_capacity * 2;
 	size_t messages = 10;
 
 	uint32_t successes = 0;
@@ -127,18 +135,15 @@ int can_stress_test(void)
 		// HAL_Delay(1000);
 	}
 
-
 	LOGOMATIC("SIZE: %d\n", DLCtoBytes[SIZE]);
 
 	LOGOMATIC("Receive Stats ===================\n");
 	dwt_timer_print_info(&rx_timer);
 	LOGOMATIC("\n");
 
-
 	LOGOMATIC("Send Stats ====================== \n");
 	dwt_timer_print_info(&send_timer);
 	LOGOMATIC("\n");
-
 
 	if (can_release(primary_can)) {
 		LOGOMATIC("can_stress_test: FAIL: could not release primary_can\n");
@@ -153,10 +158,10 @@ int can_stress_test(void)
 		LOGOMATIC("can_stress_test: SUCCESS\n");
 	}
 
-	//Disable DWT Counter
+	// Disable DWT Counter
 	stop_dwt();
-	//DWT->CYCCNT = 0;
-	//DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
+	// DWT->CYCCNT = 0;
+	// DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
 
 	return SUCCESS;
 }
