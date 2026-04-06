@@ -159,9 +159,12 @@ window.addEventListener("DOMContentLoaded", function () {
 	function appendNodeIdAccent(item, nodeName) {
 		const nodeId = nodeIdForName(nodeName);
 		if (!nodeId) return;
+		const isCustom = nodeId === "0x00";
 		const accent = document.createElement("span");
-		accent.className = "item-accent";
-		accent.textContent = nodeId;
+		accent.className = isCustom
+			? "item-accent item-accent-custom"
+			: "item-accent";
+		accent.textContent = isCustom ? "Custom" : nodeId;
 		const chev = item.querySelector(".item-chevron");
 		if (chev) {
 			item.insertBefore(accent, chev);
@@ -1217,6 +1220,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		setHierarchyHeaders();
 		wireEditModeButtons();
 		setPlaceholder(firstList, "Loading...");
+		// Load physical topology in the background; non-blocking.
+		if (window.PhysicalTopology) window.PhysicalTopology.load();
 
 		const [branches, tags] = await Promise.all([
 			window.GrcanApi.fetchBranches(),
