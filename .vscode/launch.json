@@ -591,7 +591,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CAN_LOST_RX_TEST.elf",
 			"name": "CAN_LOST_RX_TEST",
@@ -652,7 +653,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/PROFILER_TEST.elf",
 			"name": "PROFILER_TEST",
