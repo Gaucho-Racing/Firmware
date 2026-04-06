@@ -15,22 +15,22 @@
 // static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 static void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 
-/*
-typedef struct dma_transfer_t {
-	uint32_t can_id;
-    uint8_t data[64] __attribute__((aligned(4)));
-	uint32_t size;
+enum dma_flags {
+	DMA_FLAG_IN_PROGRESS = 1,
+	DMA_FLAG_DONE = 2,
+	DMA_FLAG_ERROR = 4
+};
 
+typedef struct dma_transfer_t {
 	uint32_t RxLocation;
-	FDCAN_HandleTypeDef* hfdcan;
+	FDCAN_HandleTypeDef *hfdcan;
 	uint32_t GetIndex;
 
-	volatile bool unconsumed;
+	volatile uint8_t flags;
 
 } dma_transfer_t;
-*/
 
-// static volatile dma_transfer_t dma1_ch1 = {0};
+static volatile dma_transfer_t dma1_ch1 = {0};
 
 static uint32_t msg_count = 0;
 HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
@@ -161,17 +161,21 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 
 // ====================== THIS SECTION IS DIFFERENT FROM HAL_FDCAN_GetRxMessage()===========================
 #ifdef DMA_INTERRUPT
-		while (dma1_ch1.unconsumed)
-			;
+		while (dma1_ch1.flags & DMA_FLAG_IN_PROGRESS) {}
 
-		dma1_ch1.unconsumed = true;
-		dma1_ch1.can_id = pRxHeader->Identifier;
-		dma1_ch1.size = DLCtoBytes[pRxHeader->DataLength];
 		dma1_ch1.RxLocation = RxLocation;
 		dma1_ch1.hfdcan = hfdcan;
 		dma1_ch1.GetIndex = GetIndex;
+		dma1_ch1.flags = DMA_FLAG_IN_PROGRESS;
 
-		DMA_M2M_Transfer(pData, dma1_ch1.data, bytes);
+		DMA_M2M_Transfer(pData, pRxData, bytes);
+
+		while (!(dma1_ch1.flags & (DMA_FLAG_DONE | DMA_FLAG_ERROR))) {}
+
+		if (dma1_ch1.flags & DMA_FLAG_ERROR) {
+			hfdcan->ErrorCode |= HAL_FDCAN_ERROR_TIMEOUT;
+			return HAL_ERROR;
+		}
 
 #else
 		DMA_M2M_Transfer(pData, pRxData, bytes);
@@ -204,7 +208,6 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 	}
 }
 
-CAN_RXCallback DMA1_rx_callback = 0;
 void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority, CAN_RXCallback callback)
 {
 	// Enable DMA1 clock
@@ -226,8 +229,7 @@ void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority, CAN_RXCallback callbac
 	UNUSED(subpriority);
 	UNUSED(callback);
 #else
-
-	DMA1_rx_callback = callback;
+	UNUSED(callback);
 
 	LL_DMA_ClearFlag_TC1(DMA1);
 	LL_DMA_ClearFlag_TE1(DMA1);
@@ -235,7 +237,9 @@ void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority, CAN_RXCallback callbac
 	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
 	LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_1);
 
-	NVIC_SetPriority(DMA1_Channel1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), preempt, subpriority));
+	/* DMA IRQ must preempt FDCAN IRQ because FDCAN ISR waits on dma1_ch1.done. */
+	uint32_t dma_preempt = (preempt > 0U) ? (preempt - 1U) : 0U;
+	NVIC_SetPriority(DMA1_Channel1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), dma_preempt, subpriority));
 	NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 #endif
 }
@@ -264,10 +268,15 @@ bool is_valid_rxfifo1_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress) 
 
 void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 {
+	uint32_t word_count;
+	uint32_t tail_bytes;
+	uint32_t i;
 
 	if (byte_count == 0) {
 		return;
 	}
+	word_count = byte_count >> 2;
+	tail_bytes = byte_count & 0x3U;
 
 	/* Disable channel before reconfiguring */
 	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
@@ -278,7 +287,7 @@ void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 	// dma_src_start = src;
 
 	// access FDDCAN Message RAM in 32-bit words, not in bytes
-	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, byte_count >> 2);
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, word_count);
 
 #ifdef DMA_INTERRUPT
 	/* Clear any pending flags before enabling */
@@ -294,6 +303,10 @@ void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 	__DSB();
 	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 #endif
+
+	for (i = 0; i < tail_bytes; i++) {
+		dst[(word_count << 2) + i] = src[(word_count << 2) + i];
+	}
 }
 
 /*
@@ -318,18 +331,17 @@ void FDCAN1_DMA_TC(uint8_t *src_addr) {
 	//	hfdcan->Instance->RXF1A = GetIndex;
 	//}
 
-}
+}*/
 
 uint32_t transfer_errors = 0;
 void DMA1_Channel1_IRQHandler(void)
 {
-    if (LL_DMA_IsActiveFlag_TC1(DMA1))
-    {
-	LL_DMA_ClearFlag_TC1(DMA1);
-	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+	if (LL_DMA_IsActiveFlag_TC1(DMA1)) {
+		LL_DMA_ClearFlag_TC1(DMA1);
+		LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 
-	// transfer complete - notify application
-		//FDCAN1_DMA_TC(dma_src_start);
+		// transfer complete - notify application
+		// FDCAN1_DMA_TC(dma_src_start);
 		if (dma1_ch1.RxLocation == FDCAN_RX_FIFO0) // Rx element is assigned to the Rx FIFO 0
 		{
 			// Acknowledge the Rx FIFO 0 that the oldest element is read so that it increments the GetIndex
@@ -340,21 +352,17 @@ void DMA1_Channel1_IRQHandler(void)
 			dma1_ch1.hfdcan->Instance->RXF1A = dma1_ch1.GetIndex;
 		}
 
-		//
-		DMA1_rx_callback(dma1_ch1.can_id, dma1_ch1.data,  dma1_ch1.size);
+		dma1_ch1.flags = DMA_FLAG_DONE;
+	}
 
-		dma1_ch1.unconsumed = false;
-    }
+	if (LL_DMA_IsActiveFlag_TE1(DMA1)) {
+		LL_DMA_ClearFlag_TE1(DMA1);
+		LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 
-    if (LL_DMA_IsActiveFlag_TE1(DMA1))
-    {
-	LL_DMA_ClearFlag_TE1(DMA1);
-	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
-
-	// handle error
-		//TODO: Handle DMA Transfer error
+		// handle error
+		// TODO: Handle DMA Transfer error
 		transfer_errors++;
 
-		dma1_ch1.unconsumed = false;
-    }
-}*/
+		dma1_ch1.flags = DMA_FLAG_ERROR;
+	}
+}
