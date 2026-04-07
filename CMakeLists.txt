@@ -42,6 +42,7 @@ include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/Logomatic/logomatic.cmake")
 include("${lib_path}/Utils/VirtualComPort/vcp.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
+include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
@@ -52,6 +53,7 @@ include("Autogen/CAN/CANfigurator.cmake")
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
+include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
 include("${lib_path}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 
 message(
@@ -77,8 +79,10 @@ add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 TireTemp)
 
 # Development
-add_gr_project(STM32G474xE G4ADCTESTING)
 add_gr_project(STM32G474xE G4PERTESTING)
+add_gr_project(STM32G474xE G4SPITESTING)
+add_gr_project(STM32G474xE G4ADCTESTING)
+add_gr_project(STM32G474xE G4NEOTESTING)
 
 # CAN Peripheral Testing
 add_gr_project(STM32G474xE G4CANTESTING CAN_EXTERNAL_TEST)
@@ -86,8 +90,6 @@ add_gr_project(STM32G474xE G4CANTESTING CAN_INTERNAL_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_RELEASE_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_STRESS_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_FILTER_TEST)
-
-add_gr_project(STM32G474xE G4NEOTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4BLINKY)

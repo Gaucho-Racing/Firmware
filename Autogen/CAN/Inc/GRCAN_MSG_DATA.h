@@ -12,9 +12,29 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	/** Byte 0 (Byte 0) */
-	uint8_t state_messages;
-	/** Byte 1 (Byte 1) */
+	/** [Byte 0 / Bits 0-1] GLV States
+0: GLV Off State,
+1: GLV On State.
+See diagram in StateMachine.
+[Byte 0 / Bits 2-3] Precharge States
+2: Precharge Engaged State
+3: Precharge Complete State
+See diagram in StateMachine.h
+[Byte 0 / Bits 4-5] ECU States
+4: Drive Active ECU State
+5: TS Discharge ECU State
+6-7: Reserved
+See diagram in StateMachine.h (Byte 0) */
+	uint8_t ecu_state;
+	/** [Byte 1 / Bits 8-15]
+8: BCU Node Status (1: OK, 0: Timeout)
+9: GR Inverter Status (1: OK, 0: Timeout)
+10: Fan Controller 1 Status (1: OK, 0: Timeout)
+11: Fan Controller 2 Status (1: OK, 0: Timeout)
+12: Fan Controller 3 Status (1: OK, 0: Timeout)
+13: Dash Panel Status (1: OK, 0: Timeout)
+14: TCM Node Status (1: OK, 0: Timeout)
+15: Reserved (Byte 1) */
 	uint8_t status_flags;
 	/** Byte 2 (Byte 2) */
 	uint8_t power_level_torque_map;
@@ -524,6 +544,15 @@ typedef struct {
 	/** Byte 0 (Byte 0) */
 	uint8_t elapsed_cycles;
 } GR_OLD_ECU_PERFORMANCE_MSG;
+
+/** ECU Performance */
+typedef struct {
+	/**
+	 * Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+	 * data type: u32
+	 * units: Clock Cycles (Byte 0) */
+	uint32_t elapsed_cycles;
+} GRCAN_ECU_PERFORMANCE_MSG;
 
 /** ECU Performance */
 typedef struct {

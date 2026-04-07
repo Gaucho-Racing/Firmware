@@ -1,0 +1,55 @@
+	LOGOMATIC("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
+	/* ---------------- SPI ---------------- */
+	LOGOMATIC("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
+	LOGOMATIC("Mode              = %lu | %lu\n", LL_SPI_GetMode(ex_pins.SPIx), ex_config.Mode);
+	LOGOMATIC("DataWidth         = %lu | %lu\n", LL_SPI_GetDataWidth(ex_pins.SPIx), ex_config.DataWidth);
+	LOGOMATIC("ClockPolarity     = %lu | %lu\n", LL_SPI_GetClockPolarity(ex_pins.SPIx), ex_config.ClockPolarity);
+	LOGOMATIC("ClockPhase        = %lu | %lu\n", LL_SPI_GetClockPhase(ex_pins.SPIx), ex_config.ClockPhase);
+	LOGOMATIC("NSS               = %lu | %lu\n", LL_SPI_GetNSSMode(ex_pins.SPIx), ex_config.NSS);
+	LOGOMATIC("BaudRate          = %lu | %lu\n", LL_SPI_GetBaudRatePrescaler(ex_pins.SPIx), ex_config.BaudRate);
+	LOGOMATIC("BitOrder          = %lu | %lu\n", LL_SPI_GetTransferBitOrder(ex_pins.SPIx), ex_config.BitOrder);
+	LOGOMATIC("CRC Enable        = %lu | 1\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx));
+	LOGOMATIC("CRC Polynomial    = 0x%lx | 0x%lx\n", ex_pins.SPIx->CRCPR, ex_config.CRCPoly);
+	LOGOMATIC("SPI Enable        = %lu | 1\n", LL_SPI_IsEnabled(ex_pins.SPIx));
+
+	uint32_t spi_clk_en = 0;
+	if (ex_handler.pins->SPIx == SPI1) {
+		spi_clk_en = LL_APB2_GRP1_IsEnabledClock(LL_APB2_GRP1_PERIPH_SPI1);
+	} else if (ex_handler.pins->SPIx == SPI2) {
+		spi_clk_en = LL_APB1_GRP1_IsEnabledClock(LL_APB1_GRP1_PERIPH_SPI2);
+	} else if (ex_handler.pins->SPIx == SPI3) {
+		spi_clk_en = LL_APB1_GRP1_IsEnabledClock(LL_APB1_GRP1_PERIPH_SPI3);
+	}
+	LOGOMATIC("SPI Clock Enable  = %lu | 1\n", spi_clk_en);
+	/* ---------------- GPIO CLOCKS ---------------- */
+	for (int i = 0; i < ex_pins.num_pins; i++) {
+		uint32_t clk_en = 0;
+
+		if (ex_pins.GPIOx[i] == GPIOA) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+		} else if (ex_pins.GPIOx[i] == GPIOB) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+		} else if (ex_pins.GPIOx[i] == GPIOC) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+		} else if (ex_pins.GPIOx[i] == GPIOD) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOD);
+		} else if (ex_pins.GPIOx[i] == GPIOE) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOE);
+		} else if (ex_pins.GPIOx[i] == GPIOF) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOF);
+		} else if (ex_pins.GPIOx[i] == GPIOG) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOG);
+		}
+
+		LOGOMATIC("GPIO Clock [%p] = %lu | 1\n", (void *)ex_pins.GPIOx[i], clk_en);
+	}
+	/* ---------------- GPIO MODE + AF ---------------- */
+	for (int i = 0; i < ex_pins.num_pins; i++) {
+		uint32_t pin = ex_pins.pin_nums[i];
+
+		LOGOMATIC("GPIO[%d] Mode     = %lu | %lu\n", pin, LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
+
+		LOGOMATIC("GPIO[%d] AF       = %lu | %lu\n", pin, (ex_pins.pin_nums[i] < LL_GPIO_PIN_8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
+			  ex_pins.alternate_function_number);
+	}
+	LOGOMATIC("-= End Verification =-\n");

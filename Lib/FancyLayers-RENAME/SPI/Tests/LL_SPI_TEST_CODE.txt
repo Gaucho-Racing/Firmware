@@ -1,0 +1,60 @@
+/* 1. Enable Clocks for GPIO and SPI */
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI3);
+
+	/* 2. Configure SPI3 Pins (A4, C10, C11, C12) - AF6 */
+	LL_GPIO_InitTypeDef gpio_spi3 = {0};
+	gpio_spi3.Pin = LL_GPIO_PIN_4; // NSS (A4)
+	gpio_spi3.Mode = LL_GPIO_MODE_ALTERNATE;
+	gpio_spi3.Alternate = LL_GPIO_AF_6;
+	LL_GPIO_Init(GPIOA, &gpio_spi3);
+
+	gpio_spi3.Pin = LL_GPIO_PIN_10 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12; // SCK, MISO, MOSI
+	LL_GPIO_Init(GPIOC, &gpio_spi3);
+
+	/* 3. Configure SPI2 Pins (B12, B13, B14, B15) - AF5 */
+	LL_GPIO_InitTypeDef gpio_spi2 = {0};
+	gpio_spi2.Pin = LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
+	gpio_spi2.Mode = LL_GPIO_MODE_ALTERNATE;
+	gpio_spi2.Alternate = LL_GPIO_AF_5;
+	LL_GPIO_Init(GPIOB, &gpio_spi2);
+
+	/* 4. Configure SPI3 (Master) */
+	LL_SPI_InitTypeDef config_spi3 = {0};
+	config_spi3.TransferDirection = LL_SPI_FULL_DUPLEX;
+	config_spi3.Mode = LL_SPI_MODE_MASTER;
+	config_spi3.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+	config_spi3.ClockPolarity = LL_SPI_POLARITY_LOW;
+	config_spi3.ClockPhase = LL_SPI_PHASE_1EDGE;
+	config_spi3.NSS = LL_SPI_NSS_SOFT; // Using software NSS for simplicity
+	config_spi3.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+	config_spi3.BitOrder = LL_SPI_MSB_FIRST;
+	config_spi3.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
+	config_spi3.CRCPoly = 0x1D;
+	LL_SPI_Init(SPI3, &config_spi3);
+	LL_SPI_SetRxFIFOThreshold(SPI3, LL_SPI_RX_FIFO_TH_QUARTER); // Important for 8-bit
+
+	/* 5. Configure SPI2 (Slave) */
+	LL_SPI_InitTypeDef config_spi2 = config_spi3; // Copy settings
+	config_spi2.Mode = LL_SPI_MODE_SLAVE;
+	config_spi2.NSS = LL_SPI_NSS_HARD_INPUT; // Listens to the Master pin
+	LL_SPI_Init(SPI2, &config_spi2);
+	LL_SPI_SetRxFIFOThreshold(SPI2, LL_SPI_RX_FIFO_TH_QUARTER);
+
+	/* 6. Enable and Transmit */
+	LL_SPI_Enable(SPI2);
+	LL_SPI_Enable(SPI3);
+
+	// Master NSS Low (Manual if using Soft NSS)
+	// For this example, ensure pins A4 and B12 are physically jumped.
+
+	// Send 'a'
+	while (!LL_SPI_IsActiveFlag_TXE(SPI3));
+	LL_SPI_TransmitData8(SPI3, 'a');
+
+	// Wait for Slave to receive
+	while (!LL_SPI_IsActiveFlag_RXNE(SPI2));
+	uint8_t received_data = LL_SPI_ReceiveData8(SPI2);
