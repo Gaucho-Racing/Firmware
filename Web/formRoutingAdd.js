@@ -18,7 +18,8 @@
 		// Current routing usage is still derived from in-memory text for unused-first ranking.
 		let allMessageNames = [];
 		const hasRoute = new Map();
-		let receiverList = [];
+		let receiverList = []; // topology-filtered; drives the autocomplete dropdown
+		let _fullReceiverList = []; // all known nodes pre-filter; used for inline topology warning
 
 		function routingSectionBounds(lines) {
 			const routingStart = lines.findIndex((l) => l.startsWith("routing:"));
@@ -108,7 +109,15 @@
 			const baseReceivers = currentBusPort
 				? [...routingNames]
 				: [...new Set([...nodes, ...routingNames])];
-			receiverList = [...new Set(baseReceivers)].sort((a, b) =>
+			// Store the full pre-filter list for inline topology warning checks.
+			_fullReceiverList = [...new Set(baseReceivers)];
+			// Apply physical topology filter: only show nodes physically on the selected bus.
+			const _topo = window.PhysicalTopology;
+			const filteredReceivers =
+				currentBusPort && _topo && _topo.isLoaded()
+					? baseReceivers.filter((name) => _topo.isOnBus(name, currentBusPort))
+					: baseReceivers;
+			receiverList = [...new Set(filteredReceivers)].sort((a, b) =>
 				a.localeCompare(b),
 			);
 			if (!receiverList.includes("ALL")) receiverList.unshift("ALL");
@@ -141,9 +150,22 @@
 		// Run once on open in case a device name was pre-filled.
 		if (!devF.input.disabled) updateGrIdVisibility();
 
+		// Filter available buses to only those the device is physically wired to.
+		// Only applies when bus is NOT already locked (busPort provided) — if the
+		// bus is pre-selected, the select is disabled anyway, so filtering its
+		// option list would cause the locked value to have no matching option and
+		// the browser would silently default to the first entry (wrong bus).
+		const _allBuses = ["CAN1", "CAN2", "CAN3"];
+		const _topoForBus = window.PhysicalTopology;
+		const _availableBuses =
+			!busPort && deviceName && _topoForBus && _topoForBus.isLoaded()
+				? _allBuses.filter((b) => _topoForBus.isOnBus(deviceName, b))
+				: _allBuses;
+		const _busChoices =
+			_availableBuses.length > 0 ? _availableBuses : _allBuses;
 		const busF = fu.makeFormRow(
 			"Bus",
-			fu.makeSelect(["CAN1", "CAN2", "CAN3"], busPort || "CAN1"),
+			fu.makeSelect(_busChoices, busPort || _busChoices[0] || "CAN1"),
 			true,
 		);
 		if (busPort) {
@@ -215,8 +237,26 @@
 			recSuggestBox.classList.remove("hidden");
 		}
 
+		// Warn (but do not block) when the user manually types a node that is
+		// recognized but not physically wired to the selected bus.
+		function checkReceiverTopology() {
+			const val = recF.input.value.trim();
+			const currentBus = busF.input.value || null;
+			const topo = window.PhysicalTopology;
+			if (!val || !currentBus || !topo || !topo.isLoaded()) {
+				recF.error.textContent = "";
+				return;
+			}
+			if (_fullReceiverList.includes(val) && !topo.isOnBus(val, currentBus)) {
+				recF.error.textContent = `"${val}" is not physically on ${currentBus}.`;
+			} else {
+				recF.error.textContent = "";
+			}
+		}
+
 		recF.input.addEventListener("input", () => {
 			renderReceiverSuggestions(recF.input.value);
+			checkReceiverTopology();
 		});
 		recF.input.addEventListener("focus", () => {
 			renderReceiverSuggestions(recF.input.value);
@@ -407,11 +447,41 @@
 			} else devF.error.textContent = "";
 
 			const bus = busF.input.value;
+
+			// Check that the sender device is physically wired to the selected bus.
+			// Only enforced for existing devices — new devices aren't in the topology file yet.
+			const _isExistingDev =
+				dev && window.GrcanDocument && window.GrcanDocument.deviceExists(dev);
+			const _topo = window.PhysicalTopology;
+			if (
+				_isExistingDev &&
+				_topo &&
+				_topo.isLoaded() &&
+				!_topo.isOnBus(dev, bus)
+			) {
+				busF.error.textContent = `"${dev}" is not physically wired to ${bus}`;
+				ok = false;
+			} else {
+				busF.error.textContent = "";
+			}
+
 			const rec = recF.input.value.trim();
 			if (!rec) {
 				recF.error.textContent = "Required";
 				ok = false;
-			} else recF.error.textContent = "";
+			} else if (
+				window.GrcanDocument &&
+				!window.GrcanDocument.grIdExists(rec)
+			) {
+				// Receiver must be registered in GR ID before it can be used as a route target.
+				recF.error.textContent = "Node does not exist";
+				ok = false;
+			} else if (_topo && _topo.isLoaded() && !_topo.isOnBus(rec, bus)) {
+				recF.error.textContent = `"${rec}" is not physically on ${bus}`;
+				ok = false;
+			} else {
+				recF.error.textContent = "";
+			}
 
 			const msg = msgF.input.value.trim();
 			if (!msg) {

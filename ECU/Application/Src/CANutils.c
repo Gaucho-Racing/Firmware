@@ -1,8 +1,8 @@
 #include "CANutils.h"
 
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_DAT.h"
-#include "GR_OLD_MSG_ID.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateTicks.h"
@@ -13,7 +13,7 @@
 
 uint32_t lastTickECUStateDataSent = 0;
 
-void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID messageID, void *data, uint32_t size)
+void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 {
 	if (size > FDCAN_MAX_DATA_BYTES) {
 		size = FDCAN_MAX_DATA_BYTES;
@@ -39,10 +39,10 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
 	memcpy(&(msg.data), data, size);
 
 	switch (bus) {
-		case GR_OLD_BUS_PRIMARY:
+		case GRCAN_BUS_PRIMARY:
 			can_send(primary_can, &msg);
 			break;
-		case GR_OLD_BUS_DATA:
+		case GRCAN_BUS_DATA:
 			can_send(data_can, &msg);
 			break;
 		default:
@@ -112,7 +112,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 
 	LOGOMATIC("Sending ECU State Data over CAN");
 
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
 }

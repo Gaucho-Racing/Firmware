@@ -607,6 +607,42 @@
 			}
 		}
 
+		// V8: PHYSICAL_BUS_VIOLATION
+		// Only runs when PhysicalTopology has successfully loaded can_topology.txt.
+		const _topo = (typeof window !== "undefined" ? window : {})
+			.PhysicalTopology;
+		if (_topo && _topo.isLoaded()) {
+			for (const device of _devices.values()) {
+				for (const bus of device.buses.values()) {
+					if (!_topo.isOnBus(device.deviceName, bus.busPort)) {
+						results.push({
+							severity: "warning",
+							code: "PHYSICAL_BUS_VIOLATION",
+							message: `Device "${device.deviceName}" is not physically wired to ${bus.busPort}`,
+							context: {
+								device: device.deviceName,
+								bus: bus.busPort,
+							},
+						});
+					}
+					for (const receiverName of bus.receivers.keys()) {
+						if (!_topo.isOnBus(receiverName, bus.busPort)) {
+							results.push({
+								severity: "warning",
+								code: "PHYSICAL_BUS_VIOLATION",
+								message: `Receiver "${receiverName}" in "${device.deviceName}" > ${bus.busPort} is not physically on ${bus.busPort}`,
+								context: {
+									device: device.deviceName,
+									bus: bus.busPort,
+									receiver: receiverName,
+								},
+							});
+						}
+					}
+				}
+			}
+		}
+
 		return results;
 	}
 

@@ -66,6 +66,7 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void timer_inc(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -95,6 +96,7 @@ void Error_Handler(void);
 #endif
 
 /* USER CODE BEGIN Private defines */
+extern uint32_t timer;
 
 /* USER CODE END Private defines */
 

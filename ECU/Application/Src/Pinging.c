@@ -1,16 +1,20 @@
 #include "Pinging.h"
 
 #include "CANutils.h"
-#include "GR_OLD_MSG_DAT.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "StateUtils.h"
 
 // add new pingable devices here, arrays are updated automagically
 #define PING_LIST(OP)                                                                                                                                                                                  \
-	OP(GR_BCU, 0)                                                                                                                                                                                  \
-	OP(GR_DASH_PANEL, 1)                                                                                                                                                                           \
-	OP(GR_CCU, 2)
+	OP(GRCAN_BCU, 0)                                                                                                                                                                               \
+	OP(GRCAN_GR_Inverter, 1)                                                                                                                                                                       \
+	OP(GRCAN_Fan_Controller_1, 2)                                                                                                                                                                  \
+	OP(GRCAN_Fan_Controller_2, 3)                                                                                                                                                                  \
+	OP(GRCAN_Fan_Controller_3, 4)                                                                                                                                                                  \
+	OP(GRCAN_Dash_Panel, 5)                                                                                                                                                                        \
+	OP(GRCAN_TCM, 6)
 
 // Converts PING_LIST into a list of the first column (IDs)
 #define PING_LIST_AS_ID(id, index) id,
@@ -42,7 +46,7 @@ void pingAll(void)
 		}
 
 		sentTimestamps[i] = timestamp;
-		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, IDsToBePinged[i], MSG_PING, &(GR_OLD_PING_MSG){timestamp}, sizeof(GR_OLD_PING_MSG));
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 	}
 }
 

@@ -59,6 +59,8 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+uint32_t timer = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,8 +123,8 @@ int main(void)
 	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
-	uint32_t previous_time = HAL_GetTick();
-	uint32_t current_time;
+	// uint32_t previous_time = HAL_GetTick();
+	// uint32_t current_time;
 	uint8_t tick_freq = HAL_GetTickFreq();
 
 	/* USER CODE END 2 */
@@ -133,9 +135,7 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		current_time = HAL_GetTick();
-
-		if (canReadyToSend || (current_time - previous_time) * tick_freq >= 100) {
+		if (canReadyToSend || timer * tick_freq >= 100) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
 
@@ -161,12 +161,12 @@ int main(void)
 				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
 			// CAN_sendPing(Dash_Panel);
-			CAN_sendECU(can_handler, &msg_struct, ECU);
+			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			LOGOMATIC("CAN\n");
 
 			canReadyToSend = false;
-			previous_time = current_time;
+			timer = 0;
 		}
 
 		// Neopixel
@@ -330,6 +330,11 @@ static void GPIO_Interrupt_Init(void)
 	// NVIC_EnableIRQ(EXTI15_10_IRQn);
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
+}
+
+void timer_inc(void)
+{
+	timer++;
 }
 
 /* USER CODE END 4 */
