@@ -7,6 +7,10 @@
 #include "can.h"
 #include "can_platform_deps.h"
 
+#ifdef USEDMA
+#error "Please redefine the entire implementation (can_dma.c) to not use DMA1 Channels 1 or 2, as this conflicts with existing peripherals (primarily ADC)"
+#endif
+
 HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData);
 void DMA_M2M_Init(uint32_t preempt, uint32_t subpriority, CAN_RXCallback callback);
 

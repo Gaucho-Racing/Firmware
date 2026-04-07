@@ -10,6 +10,7 @@
 #include "Logomatic.h"
 #include "STM32G4_hal_fdcan_defines.h"
 
+
 #define DMA_INTERRUPT //for some reason interrupts are more stable than polling for the transfer complete, so don't comment this
 
 // static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
