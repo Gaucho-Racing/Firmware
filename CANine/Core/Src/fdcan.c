@@ -106,7 +106,7 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 		/* USER CODE BEGIN FDCAN1_MspInit 1 */
 
 		/* USER CODE END FDCAN1_MspInit 1 */
-    }
+	}
 }
 
 void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle)

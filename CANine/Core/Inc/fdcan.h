@@ -34,13 +34,11 @@ extern "C" {
 
 extern FDCAN_HandleTypeDef hfdcan1;
 
-
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
 void MX_FDCAN1_Init(void);
-
 
 /* USER CODE BEGIN Prototypes */
 

@@ -58,7 +58,6 @@
 /* External variables --------------------------------------------------------*/
 extern FDCAN_HandleTypeDef hfdcan1;
 
-
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -188,10 +187,10 @@ void SysTick_Handler(void)
 	/* USER CODE END SysTick_IRQn 1 */
 }
 
-void FDCAN1_IT0_IRQHandler(void){
+void FDCAN1_IT0_IRQHandler(void)
+{
 
 	HAL_FDCAN_IRQHandler(&hfdcan1);
-
 }
 
 /******************************************************************************/
