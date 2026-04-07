@@ -110,5 +110,8 @@ GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus);
 CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus);
 uint32_t GRCAN_to_DLC(uint32_t size);
 uint32_t DLC_to_GRCAN(uint32_t dlc);
+void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing);
+void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus);
+void GRCAN_SetLocalNodeID(GRCAN_NODE_ID localID);
 
 #endif

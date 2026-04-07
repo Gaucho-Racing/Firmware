@@ -41,6 +41,8 @@ target_sources(
 		../Core/Src/stm32g4xx_it.c
 		../Core/Src/tim.c
 		../Core/Src/usart.c
+		../Core/Src/FancyCAN_LoopbackTest.c
+		../Core/Src/fdcan.c
 )
 
 set_target_properties(
@@ -56,5 +58,4 @@ target_include_directories(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 		../Core/Inc
-		.
 )

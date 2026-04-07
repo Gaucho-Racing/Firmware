@@ -24,4 +24,6 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config);
 uint32_t GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id);
 void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID);
 
+void GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size);
+
 #endif

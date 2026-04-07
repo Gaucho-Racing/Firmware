@@ -15,6 +15,7 @@
  *
  ******************************************************************************
  */
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -33,6 +34,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+#include "grcan_fancylayer.h"
+#include "FancyCAN_LoopbackTest.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -121,8 +124,7 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	MX_DMA_Init();
-	// MX_FDCAN2_Init();
-
+	//MX_FDCAN2_Init(); //might make own init for hfdcan for use for multiple hfdcan busses
 	MX_ADC1_Init();
 	MX_LPUART1_UART_Init();
 	MX_I2C2_Init();
@@ -135,7 +137,14 @@ int main(void)
 	LOGOMATIC("Booted!\n");
 
 	// LOGOMATIC("running can_external_test:\n");
-	can_external_test();
+	// can_external_test();
+
+	int result = FancyCAN_LoopbackTest();
+	if (result) {
+		LOGOMATIC("CAN Loopback Test Passed!\n");
+	} else {
+		LOGOMATIC("CAN Loopback Test Failed!\n");
+	}
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */

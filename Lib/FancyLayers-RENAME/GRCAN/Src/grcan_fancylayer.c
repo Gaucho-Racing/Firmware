@@ -36,8 +36,9 @@ static CANHandle *grcan_charging = NULL;
 
 static GRCAN_NODE_ID grcan_local_node_id = ALL;
 
-void GRCAN_ApplyDefaults(GRCAN_BusConfig *bus_config);
-bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config);
+bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config) {
+	return true; // TODO: implement more validation checks, like valid pin numbers, valid filter counts, etc.
+}
 
 void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
 void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
@@ -168,7 +169,9 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 		return false;
 	}
 
-	GRCAN_ApplyDefaults(bus_config);
+	if (bus_config == NULL) {
+		GRCAN_SetDefaultBusConfig(bus_config, bus_config->bus);
+	}
 
 	if (!GRCAN_ValidateBusConfig(bus_config)) {
 		LOGOMATIC("GRCAN_InitBus: invalid config for bus %d\n", bus_config->bus);

@@ -94,7 +94,7 @@ uint32_t GRCAN_ToHAL_OperatingMode(GRCAN_OperatingMode mode)
 	// internal loopback for testing
 }
 
-static void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
+void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
 {
 	if (timing == NULL) {
 		LOGOMATIC("GRCAN_SetDefaultBitTiming: NULL timing pointer\n");
@@ -112,12 +112,26 @@ static void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
 	timing->data.seg2 = 5;
 }
 
+uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state) {
+	switch (state) {
+		case GRCAN_Feature_DISABLE:
+			return 0;
+		case GRCAN_Feature_ENABLE:
+			return 1;
+		default:
+			LOGOMATIC("GRCAN_ToHAL_FeatureState: default state %d, defaulting to DISABLE\n", state);
+			return 0;
+	}
+}
+
 void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 {
 	if (busCfg == NULL) {
 		LOGOMATIC("GRCAN_SetDefaultBusConfig: NULL busCfg pointer\n");
 		return;
 	}
+
+	busCfg->fdcan_instance = FDCAN2;
 
 	memset(busCfg, 0, sizeof(*busCfg));
 
