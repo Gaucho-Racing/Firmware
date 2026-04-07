@@ -5,7 +5,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "stm32g4xx_ll_bus.h"
+#include "stm32g4xx_ll_dma.h"
+
+// TODO: make the profiler cleaner
 #include "Logomatic.h"
+#include "STM32G4_hal_fdcan_defines.h"
+#include "profile.h"
+
+// TODO: define DMA usage in a better way
+// #define USEDMA
+#ifdef USEDMA
+#include "can_dma.h"
+
+#endif
 
 // CAN CONFIGURATION HEADER
 #include "can_cfg.h"
@@ -118,7 +131,7 @@ inline void can_set_clksource(uint32_t clksource)
 {
 	LL_RCC_SetFDCANClockSource(clksource);
 }
-// static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
+static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance);
 // static inline void gpio_clk_enable(GPIO_TypeDef *gpio)
 // static inline void gpio_clk_disable(GPIO_TypeDef *gpio)
 
@@ -184,6 +197,7 @@ CANHandle *can_init(const CANConfig *config)
 
 	// Initialize handle
 	assert(config->hal_fdcan_init.TxFifoQueueMode == FDCAN_TX_FIFO_OPERATION);
+	// assert(config->hal_fdcan_init.FrameFormat == FDCAME);
 
 	canHandle->hal_fdcanP->Init = config->hal_fdcan_init; // copy FDCAN parameters from user
 	// canHandle->hal_fdcanP->Instance = config->fdcan_instance //handles initialized with correct base instance addresses
@@ -202,6 +216,9 @@ CANHandle *can_init(const CANConfig *config)
 	// canHandle->tx_capacity = TX_BUFFER_SIZE_1; //dependent on can instance
 	canHandle->tx_tail = 0;
 	canHandle->tx_elements = 0;
+
+	// error
+	canHandle->lost_rx = 0;
 
 	// alternately -> have can_msp_init setup state for HAL_FDCAN_MspInit to work correctly
 	// have can_msp_deinit setup state for HAL_FDCAN_MspDeInit to work correctly
@@ -225,7 +242,7 @@ CANHandle *can_init(const CANConfig *config)
 	// Active FDCAN callbacks - rxcalback uses line0, txcallback uses line1
 	// uint32_t rxevents = FDCAN_IT_RX_FIFO0_NEW_MESSAGE;
 	uint32_t status = 0;
-	uint32_t rx_events = FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL;
+	uint32_t rx_events = FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL | FDCAN_IT_RX_FIFO0_MESSAGE_LOST;
 	status |= HAL_FDCAN_ActivateNotification(canHandle->hal_fdcanP, rx_events, 0);
 	status |= HAL_FDCAN_ConfigInterruptLines(canHandle->hal_fdcanP, rx_events, FDCAN_INTERRUPT_LINE0);
 
@@ -259,6 +276,11 @@ CANHandle *can_init(const CANConfig *config)
 
 		return NULL;
 	}
+
+#ifdef USEDMA
+	//	for(int i = 0; i < 10; i++);
+	DMA_M2M_Init(canHandle->rx_interrupt_priority, 0, canHandle->rx_callback);
+#endif
 
 	canHandle->init = true;
 	canHandle->started = false;
@@ -317,6 +339,7 @@ CAN_STATUS can_release(CANHandle *canHandle)
 	canHandle->rx_pin = 0;
 	canHandle->tx_pin = 0;
 	canHandle->tx_tail = 0;
+	canHandle->lost_rx = 0;
 
 	// memset(canHandle, 0, sizeof(*canHandle));
 	// canHandle->hal_fdcanP = temp;
@@ -340,7 +363,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 	__set_BASEPRI(handle->tx_interrupt_priority << 4);
 	// single consumer shouldn't affect state of circular buffer
 	if (handle->tx_elements == 0) {
-		__set_BASEPRI(basepri << 4);
+		__set_BASEPRI(basepri);
 		return;
 	}
 
@@ -353,7 +376,7 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 		if (status != HAL_OK) {
 			// LOGOMATIC("CAN_tx_helper: failed to add message to FIFO\n"); //FIXME: Logomatic may not work with interrupts disabled
-			__set_BASEPRI(basepri << 4);
+			__set_BASEPRI(basepri);
 			return; // Stop trying to send more
 		}
 		// free(msg); // Successfully sent, free the entry in the circular buffer (which is pointed to by tail)
@@ -364,11 +387,16 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 
 	} // alternatively, if fifo is full, tx_dequeue should get called anyways, and we don't need the else statement
 
-	__set_BASEPRI(basepri << 4);
+	__set_BASEPRI(basepri);
 }
+
+#ifdef PROFILE
+dwt_timer_t send_timer = {0};
+#endif
 
 CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 {
+
 	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
 		return CAN_ERROR;
 	}
@@ -394,6 +422,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	// If circular buffer is full, return an error code
 
 	// stop can_tx_dequeue_helper from from interleaving
+	// TODO: Check BASEPRI register
 	uint32_t basepri = __get_BASEPRI();
 	__set_BASEPRI((canHandle->tx_interrupt_priority) << 4);
 
@@ -408,7 +437,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		} else {
 			val = CAN_SUCCESS;
 		}
-		__set_BASEPRI(basepri << 4);
+		__set_BASEPRI(basepri);
 		return val;
 	}
 	//}
@@ -422,7 +451,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		canHandle->tx_elements++;
 		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
-		__set_BASEPRI(basepri << 4);
+		__set_BASEPRI(basepri);
 		return CAN_SUCCESS; // added to software buffer
 
 		/*if (result != 0) {
@@ -434,7 +463,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	} else {
 		LOGOMATIC("CAN_send: all buffers full\n"); // p
 	}
-	__set_BASEPRI(basepri << 4);
+	__set_BASEPRI(basepri);
 	// Both buffers full
 	return CAN_ERROR;
 }
@@ -456,8 +485,20 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 	can_tx_dequeue_helper(handle);
 }
 
+// #define PROFILE
+// uint32_t PROFILE_AVG_RX_CYCLES = 0;
+// uint32_t PROFILE_AVG_RX_CYCLES_SAMPLES = 0;
+
+#ifdef PROFILE
+dwt_timer_t rx_timer = {0};
+#endif
+
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
+	dwt_timer_start_measurement(&rx_timer);
+
+	// dwt_timer_start_measurement(&rx_timer);
+
 	CANHandle *handle = can_get_handle(hfdcan);
 
 	if (!handle || !handle->init || !handle->rx_callback) {
@@ -470,37 +511,54 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	} */ // no rx buffer at the moment
 
 	if (RxFifo0ITs & FDCAN_IT_RX_FIFO0_MESSAGE_LOST) {
-		// TODO: Implement lost message counters
-		//  lost_rx++;
+		// TODO: Synchronize access to message counters
+		if (__builtin_uaddl_overflow(handle->lost_rx, 1, &handle->lost_rx)) {
+			handle->lost_rx = 0;
+			LOGOMATIC("%s: lost message counter overflowed\n", can_get_instance_name(handle->hal_fdcanP->Instance));
+		}
 	}
 
+	// If nothing else happened besides message loss
 	if (!(RxFifo0ITs & ~FDCAN_IT_RX_FIFO0_MESSAGE_LOST)) {
+		return;
+	}
+
+	if (!(RxFifo0ITs & (FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL))) {
 		return;
 	}
 
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
 	FDCAN_RxHeaderTypeDef rx_header;
 
-	// TODO: Stack allocation may be unsafe, (but not unsafer than heap)
-	uint8_t rx_data[64] = {0};
+	// TODO: Stack allocation should be safe
+	// uint8_t rx_data[64] = {0};
+	uint8_t rx_data[64] __attribute__((aligned(4))) = {0}; // align to word boundary for safe DMA transfer
 
-	// TODO: maybe also use a timer for this?
+	// TODO: Copying takes a while, may have to spread these out over multiple ISRs
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
-		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+#ifdef USEDMA
 
-		// stack allocation should be fine? Callback needs to terminate first before stack is popped
-		// should switch this over to malloc at some point to avoid double copies?
+		// dwt_timer_start_measurement(&rx_timer);
+		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		// dwt_timer_end_measurement(&rx_timer);
+
+#else
+
+		// dwt_timer_start_measurement(&rx_timer);
+		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		// dwt_timer_end_measurement(&rx_timer);
+
+#endif
+
 		// GR_OLD_NODE_ID sendingID = (rx_header.Identifier & (0xFF << 20)) >> 20;
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
-		handle->rx_callback(rx_header.Identifier, rx_data, rx_header.DataLength);
+
+		// TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
+		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
 	}
-	/*
-	    if (GR_CircularBuffer_IsEmpty(handle->rx_buffer)) handle->rx_callback(rx_data, rx_header.DataLength);
-	    else {
-	    GR_CircularBuffer_Push(handle->rx_buffer, rx_data, rx_header.DataLength);
-	    }
-	}*/
+
 	//__set_BASEPRI(prev_priority);
+	// dwt_timer_end_measurement(&rx_timer);
 }
 
 /*
@@ -589,7 +647,7 @@ CAN_STATUS can_stop(CANHandle *canHandle)
 	}
 
 	// stop can interrupts from activating
-	uint32_t prev_priority = __get_BASEPRI();
+	uint32_t base_pri = __get_BASEPRI();
 	__set_BASEPRI(MIN(canHandle->rx_interrupt_priority, canHandle->tx_interrupt_priority) << 4);
 
 	if (HAL_FDCAN_Stop(canHandle->hal_fdcanP) != HAL_OK) {
@@ -607,12 +665,14 @@ CAN_STATUS can_stop(CANHandle *canHandle)
 	HAL_NVIC_ClearPendingIRQ(rx0it);
 	HAL_NVIC_ClearPendingIRQ(txit);
 
-	__set_BASEPRI(prev_priority << 4);
+	__set_BASEPRI(base_pri);
 
 	GPIOx_CLK_DISABLE(canHandle->rx_gpio);
 	GPIOx_CLK_DISABLE(canHandle->tx_gpio);
 
 	canHandle->started = false;
+
+	// TODO: stop a DMA transfer if its in progress
 
 	return CAN_SUCCESS;
 }
@@ -838,21 +898,23 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 }
 
 // valid only for STM32G4
-/*static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
+static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 {
- if (instance == FDCAN1) {
-     return "FDCAN1";
- } else if (instance == FDCAN2) {
-     return "FDCAN2";
- } else if (instance == FDCAN3) {
-     return "FDCAN3";
- }
- return "UNKNOWN";
-}*/
+#ifdef STM32G474xx
+
+	if (instance == FDCAN1) {
+		return "FDCAN1";
+	} else if (instance == FDCAN2) {
+		return "FDCAN2";
+	} else if (instance == FDCAN3) {
+		return "FDCAN3";
+	}
+#endif
+	return "UNKNOWN";
+}
 
 // ===================================== HAL Callbacks ================================
 // TODO: Implement Family Checks
-// Probably is safe from races
 void FDCAN1_IT0_IRQHandler(void)
 {
 #ifdef USECAN1

@@ -12,6 +12,7 @@ target_sources(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_cfg_helpers.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
 )
 
 # Make headers accessible as #include "Peripherals/CAN/can.h"
@@ -31,6 +32,8 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_release_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_stress_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_filter_test.c
+		${CMAKE_CURRENT_LIST_DIR}/Test/can_lost_rx_test.c
+		${CMAKE_CURRENT_LIST_DIR}/Test/profile.c
 	#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
 	#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
 )
