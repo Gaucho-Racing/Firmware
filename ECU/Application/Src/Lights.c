@@ -3,6 +3,7 @@
 #include "CANutils.h"
 #include "StateData.h"
 #include "StateUtils.h"
+#include "bitManipulations.h"
 #include "adc.h"
 #include "can.h"
 #include "main.h"
@@ -74,7 +75,7 @@ void BMSLights(ECU_StateData *stateLump)
 	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
 	light |= bmsFailure(stateLump);
 	// TODO: interrupted/missing BMS vals
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = light};
+	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light)};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
@@ -83,7 +84,7 @@ void IMDLights(ECU_StateData *stateLump)
 	uint8_t light = 0;
 	// TODO: isolation failure?
 	light |= imdFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = (light << 1)};
+	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 1, light)};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
@@ -92,7 +93,7 @@ void BSPDLights(ECU_StateData *stateLump)
 	uint8_t light = 0;
 	// TODO: isolation failure?
 	light |= bspdFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = (light << 2)};
+	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 2, light)};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
