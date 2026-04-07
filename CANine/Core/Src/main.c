@@ -23,6 +23,9 @@
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
 #include "vcp.h"
+#include "can.h"
+#include "fdcan.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -83,6 +86,16 @@ VCP_Config vcp_config = {.baud_rate = 4000000,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
 			 .usart_instance = USART2,
 			 .alternate_function = LL_GPIO_AF_7};
+
+
+static CANHandle *can1;
+
+static void can_rx_callback(uint32_t id, void *data, uint32_t size){
+	uint8_t buf[FDCAN_MAX_DATA_BYTES];
+	memcpy(buf, data, size);
+	LOGOMATIC("CAN RX: id = 0x%1x size = %1u data[0]=0x%x\n", id, size, buf[0]);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -113,13 +126,37 @@ int main(void)
 	/* USER CODE BEGIN SysInit */
 	Setup_Logomatic(&logomaticConfig);
 	Setup_VCP(&vcp_config);
+
+	LOGOMATIC("Logomatic initialization complete\n");
+	VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
-	LOGOMATIC("Logomatic initialization complete\n");
-	VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+	CANConfig cfg1;
+	if (get_cfg(FDCAN1, can_rx_callback, &cfg1, FDCAN_MODE_NORMAL, 0, 0)){
+		LOGOMATIC("CAN: failed to get config\n");
+		Error_Handler();
+	}
+	can1 = can_init(&cfg1);
+	if (can1 == NULL){
+		LOGOMATIC("CAN: init failed\n");
+		Error_Handler();
+	}
+
+	HAL_FDCAN_ConfigGlobalFilter(can1->hal_fdcanP, 0, 0, 0, 0);
+
+	if (can_start(can1)){
+		LOGOMATIC("CAN: start failed\n");
+		Error_Handler();
+	}
+
+	LOGOMATIC("CAN: ready\n");
+
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
