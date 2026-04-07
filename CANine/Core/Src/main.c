@@ -21,11 +21,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
+
 #include "Logomatic.h"
-#include "vcp.h"
 #include "can.h"
 #include "fdcan.h"
-#include <string.h>
+#include "vcp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,10 +88,10 @@ VCP_Config vcp_config = {.baud_rate = 4000000,
 			 .usart_instance = USART2,
 			 .alternate_function = LL_GPIO_AF_7};
 
-
 static CANHandle *can1;
 
-static void can_rx_callback(uint32_t id, void *data, uint32_t size){
+static void can_rx_callback(uint32_t id, void *data, uint32_t size)
+{
 	uint8_t buf[FDCAN_MAX_DATA_BYTES];
 	memcpy(buf, data, size);
 	LOGOMATIC("CAN RX: id = 0x%1x size = %1u data[0]=0x%x\n", id, size, buf[0]);
@@ -137,25 +138,24 @@ int main(void)
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
 	CANConfig cfg1;
-	if (get_cfg(FDCAN1, can_rx_callback, &cfg1, FDCAN_MODE_NORMAL, 0, 0)){
+	if (get_cfg(FDCAN1, can_rx_callback, &cfg1, FDCAN_MODE_NORMAL, 0, 0)) {
 		LOGOMATIC("CAN: failed to get config\n");
 		Error_Handler();
 	}
 	can1 = can_init(&cfg1);
-	if (can1 == NULL){
+	if (can1 == NULL) {
 		LOGOMATIC("CAN: init failed\n");
 		Error_Handler();
 	}
 
 	HAL_FDCAN_ConfigGlobalFilter(can1->hal_fdcanP, 0, 0, 0, 0);
 
-	if (can_start(can1)){
+	if (can_start(can1)) {
 		LOGOMATIC("CAN: start failed\n");
 		Error_Handler();
 	}
 
 	LOGOMATIC("CAN: ready\n");
-
 
 	/* USER CODE END 2 */
 
