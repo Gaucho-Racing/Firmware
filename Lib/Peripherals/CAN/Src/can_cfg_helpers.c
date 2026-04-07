@@ -29,7 +29,7 @@ CAN_STATUS defaultSTM32G4_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback c
 	// canCfg.fdcan_instance = FDCAN2;
 
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
-	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 	canCfg.hal_fdcan_init.Mode = Mode;
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;

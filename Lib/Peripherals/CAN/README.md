@@ -12,12 +12,27 @@ In your application*, add a file called `can_cfg.h`, containing at least:
 #ifndef CAN_CFG_H
 #define CAN_CFG_H
 
-#define USECAN<1/2/3>
-#define TX_BUFFER_<1/2/3>_SIZE <size>
+//#define USEDMA //unsafe atm
+
+#define USECAN1
+#define TX_BUFFER_1_SIZE 10
+
+//not using
+//#define CAN1_RX_GPIO_PORT
+//#define CAN1_RX_GPIO_PIN
+//#define CAN1_TX_GPIO_PORT
+//#define CAN1_TX_GPIO_PIN
+
+//#define CAN
+
+#define USECAN2
+#define TX_BUFFER_2_SIZE 10
 
 // ... potentially other USECANM + TX_BUFFER_M_SIZE defines...
 
 #endif
+
+
 ```
 
 for each CAN peripheral you want to use.
