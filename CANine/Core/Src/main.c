@@ -89,12 +89,112 @@ VCP_Config vcp_config = {.baud_rate = 4000000,
 
 static CANHandle *can1;
 
-static void can_rx_callback(uint32_t id, void *data, uint32_t size)
+void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	uint8_t buf[FDCAN_MAX_DATA_BYTES];
-	memcpy(buf, data, size);
-	LOGOMATIC("CAN RX: id = 0x%lx size = %lu data[0]=0x%x\n", id, size, buf[0]);
+	// ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
+	// 		       (0x000FFF00 & ID) >> 8, // TODO: Double check
+	// 		       (0xFF00000 & ID) >> 20, data, size);
 }
+
+	//CANConfig cfg1;
+	void CAN_Configure() {
+
+
+		CANConfig canCfg;
+		can1 = can_init(&canCfg);
+
+
+		// SHARED config ddata for CAN1 and CAN2
+		canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
+		canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
+		canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+		canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
+		canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
+		canCfg.hal_fdcan_init.TransmitPause = DISABLE;
+		canCfg.hal_fdcan_init.ProtocolException = ENABLE;
+		canCfg.hal_fdcan_init.NominalPrescaler = 1;
+		canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
+		canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
+		canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
+		canCfg.hal_fdcan_init.DataPrescaler = 2;
+		canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
+		canCfg.hal_fdcan_init.DataTimeSeg1 = 12; // Updated for 170MHz: 170 MHz/((1+12+4)*2) = 5 Mbps
+		canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
+		canCfg.hal_fdcan_init.StdFiltersNbr = 1;
+		canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+
+		canCfg.rx_callback = NULL;
+		canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
+		canCfg.tx_interrupt_priority = 15;
+		// canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
+
+		// RX shared settings
+		canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
+		canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
+		canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+		// TX Shared settings
+		canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
+		canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
+		canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+		/*FDCAN_TxHeaderTypeDef TxHeader = {
+			.Identifier = 1,
+
+			.IdType = FDCAN_STANDARD_ID,
+			.TxFrameType = FDCAN_DATA_FRAME,
+			.ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+								// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+			.DataLength = 1,
+			.BitRateSwitch = FDCAN_BRS_OFF,
+			.TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+			.MessageMarker = 0			      // also change this to a real address if you change fifo control
+		};
+
+		FDCANTxMessage msg = {.data = {0x80}, .tx_header = TxHeader};
+		*/
+
+		// PCLK1 from SYSCLK
+		can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+		// CAN1 =====================================================================
+		canCfg.fdcan_instance = FDCAN1;
+		canCfg.rx_gpio = GPIOA;
+		canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+		canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+		canCfg.tx_gpio = GPIOA;
+		canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+		canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+		// RX Callback CAN1
+		canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
+
+		//primary_can = can_init(&canCfg);
+
+		// // Filter 1 Definitions
+		// FDCAN_FilterTypeDef fdcan1_filter;
+
+		// fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
+		// fdcan1_filter.FilterIndex = 0;
+		// fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
+		// fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+		// fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
+		// fdcan1_filter.FilterID2 = 0x00000FF;
+
+		// fdcan1_filter.FilterIndex = 1;
+		// fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
+		// HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
+
+		//data_can = can_init(&canCfg);
+
+		// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
+
+		can_start(can1);
+}
+
+
+
 
 /* USER CODE END 0 */
 
@@ -102,6 +202,11 @@ static void can_rx_callback(uint32_t id, void *data, uint32_t size)
  * @brief  The application entry point.
  * @retval int
  */
+
+
+
+
+
 int main(void)
 {
 
@@ -134,28 +239,8 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
-	CANConfig cfg1;
-	if (get_cfg(FDCAN1, can_rx_callback, &cfg1, FDCAN_MODE_NORMAL, 0, 0)) {
-		LOGOMATIC("CAN: failed to get config\n");
-		Error_Handler();
-	}
-	can1 = can_init(&cfg1);
-	if (can1 == NULL) {
-		LOGOMATIC("CAN: init failed\n");
-		Error_Handler();
-	}
-
-	HAL_FDCAN_ConfigGlobalFilter(can1->hal_fdcanP, 0, 0, 0, 0);
-
-	if (can_start(can1)) {
-		LOGOMATIC("CAN: start failed\n");
-		Error_Handler();
-	}
-
-	LOGOMATIC("CAN: ready\n");
-
+	CAN_Configure();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
