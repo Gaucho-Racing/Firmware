@@ -157,7 +157,7 @@ int can_external_test(void)
 
 	start_dwt();
 
-	for (uint32_t data_length_code = 0; data_length_code < FDCAN_DLC_BYTES_64+1; data_length_code++ ) {
+	for (uint32_t data_length_code = 0; data_length_code < FDCAN_DLC_BYTES_64 + 1; data_length_code++) {
 		msg.tx_header.DataLength = data_length_code;
 		dwt_timer_t send1_timer = {0}, send2_timer = {0};
 
