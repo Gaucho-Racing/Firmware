@@ -36,7 +36,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		StateTicksTest
 		PRIVATE
 			GLOBALSHARE_LIB
-			GR_OLD_CAN_MESSAGES
+			CANfigurator
 			LOGOMATIC_LIB
 			# GR_ADC
 			# PERIPHERAL_CAN_LIB
@@ -84,7 +84,7 @@ target_sources(
 target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
-		GR_OLD_CAN_MESSAGES
+		CANfigurator
 		GR_ADC
 		PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
