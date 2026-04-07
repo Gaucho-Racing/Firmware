@@ -10,8 +10,7 @@
 #include "Logomatic.h"
 #include "STM32G4_hal_fdcan_defines.h"
 
-
-#define DMA_INTERRUPT //for some reason interrupts are more stable than polling for the transfer complete, so don't comment this
+#define DMA_INTERRUPT // for some reason interrupts are more stable than polling for the transfer complete, so don't comment this
 
 // static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 static void DMA_M2M_WordTransfer(uint8_t *src, uint8_t *dst, uint32_t word_count);
@@ -158,7 +157,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 		/* Retrieve Rx payload with DMA*/
 		pData = (uint8_t *)RxAddress;
 
-		//TODO: sanitize this because a lot can go wrong here
+		// TODO: sanitize this because a lot can go wrong here
 		uint32_t bytes = DLCtoBytes[pRxHeader->DataLength];
 		uint32_t wordCount = bytes >> 2;
 		uint32_t tailBytes = bytes & 0x3U;
@@ -169,9 +168,9 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 #ifdef DMA_INTERRUPT
 		while (dma1_ch1.flags & DMA_FLAG_IN_PROGRESS) {}
 
-		//copy over tail bytes using CPU
+		// copy over tail bytes using CPU
 		for (uint32_t i = 0; i < tailBytes; i++) {
-			pRxData[ wordsToBytes + i] = pData[wordsToBytes + i];
+			pRxData[wordsToBytes + i] = pData[wordsToBytes + i];
 		}
 
 		if (wordCount > 0) {
@@ -187,7 +186,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 				hfdcan->ErrorCode |= HAL_FDCAN_ERROR_TIMEOUT;
 				return HAL_ERROR;
 			}
-		} else { //Must acknowledge rx when CPU is finished, otherwise the DMA transfer does it.
+		} else {				  // Must acknowledge rx when CPU is finished, otherwise the DMA transfer does it.
 			if (RxLocation == FDCAN_RX_FIFO0) /* Rx element is assigned to the Rx FIFO 0 */
 			{
 				/* Acknowledge the Rx FIFO 0 that the oldest element is read so that it increments the GetIndex */
@@ -200,7 +199,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 		}
 
 #else
-		DMA_M2M_WordTransfer(pData, pRxData, wordCount); //CPU does a polling wait //NOT STABLE
+		DMA_M2M_WordTransfer(pData, pRxData, wordCount); // CPU does a polling wait //NOT STABLE
 		//===============================================================================
 		if (RxLocation == FDCAN_RX_FIFO0) /* Rx element is assigned to the Rx FIFO 0 */
 		{
@@ -288,16 +287,16 @@ bool is_valid_rxfifo1_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress) 
 
 void DMA_M2M_WordTransfer(uint8_t *src, uint8_t *dst, uint32_t word_count)
 {
-	//uint32_t word_count;
-	//uint32_t tail_bytes;
-	//uint32_t i;
+	// uint32_t word_count;
+	// uint32_t tail_bytes;
+	// uint32_t i;
 
 	if (word_count == 0) {
 		return;
 	}
 
-	//word_count = byte_count >> 2;
-	//tail_bytes = byte_count & 0x3U;
+	// word_count = byte_count >> 2;
+	// tail_bytes = byte_count & 0x3U;
 
 	/* Disable channel before reconfiguring */
 	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);

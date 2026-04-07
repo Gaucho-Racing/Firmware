@@ -14,7 +14,7 @@
 #include "profile.h"
 
 // TODO: define DMA usage in a better way
-//#define USEDMA
+// #define USEDMA
 #ifdef USEDMA
 #include "can_dma.h"
 
@@ -538,15 +538,15 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
 #ifdef USEDMA
 
-		//dwt_timer_start_measurement(&rx_timer);
+		// dwt_timer_start_measurement(&rx_timer);
 		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		//dwt_timer_end_measurement(&rx_timer);
+		// dwt_timer_end_measurement(&rx_timer);
 
 #else
 
-		//dwt_timer_start_measurement(&rx_timer);
+		// dwt_timer_start_measurement(&rx_timer);
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		//dwt_timer_end_measurement(&rx_timer);
+		// dwt_timer_end_measurement(&rx_timer);
 
 #endif
 
@@ -558,7 +558,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	}
 
 	//__set_BASEPRI(prev_priority);
-	//dwt_timer_end_measurement(&rx_timer);
+	// dwt_timer_end_measurement(&rx_timer);
 }
 
 /*

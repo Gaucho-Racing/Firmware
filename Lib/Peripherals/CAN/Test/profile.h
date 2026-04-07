@@ -53,8 +53,6 @@ static inline void dwt_timer_start_measurement(dwt_timer_t *dt)
 	__ISB();
 }
 
-
-
 static inline void dwt_timer_end_measurement(dwt_timer_t *dt)
 {
 	if (!dt->measuring) {
