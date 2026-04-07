@@ -62,7 +62,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 
 uint32_t timer = 0;
 
-uint32_t timer = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,7 +106,6 @@ int main(void)
 
 	/* USER CODE BEGIN Init */
 	HAL_Init();
-	HAL_Init();
 	CANInitialize();
 	GPIO_Interrupt_Init();
 	Setup_Logomatic(&logomaticConfig);
@@ -130,10 +128,6 @@ int main(void)
 	// uint32_t current_time;
 	uint8_t tick_freq = HAL_GetTickFreq();
 
-	// uint32_t previous_time = HAL_GetTick();
-	// uint32_t current_time;
-	uint8_t tick_freq = HAL_GetTickFreq();
-
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -143,7 +137,6 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		if (canReadyToSend || timer * tick_freq >= 100) {
-			if (canReadyToSend || timer * tick_freq >= 100) {
 
 				GRCAN_DASH_STATUS_MSG msg_struct;
 				msg_struct.led_bits = dashStatus.led_bits;
@@ -170,10 +163,9 @@ int main(void)
 
 				CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
-				canReadyToSend = false;
-				timer = 0;
-				timer = 0;
-			}
+			canReadyToSend = false;
+			timer = 0;
+		}
 
 			// Neopixel
 			LL_mDelay(NEOPIXEL_DELAY);
