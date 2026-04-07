@@ -115,9 +115,7 @@
 			const _topo = window.PhysicalTopology;
 			const filteredReceivers =
 				currentBusPort && _topo && _topo.isLoaded()
-					? baseReceivers.filter((name) =>
-							_topo.isOnBus(name, currentBusPort),
-						)
+					? baseReceivers.filter((name) => _topo.isOnBus(name, currentBusPort))
 					: baseReceivers;
 			receiverList = [...new Set(filteredReceivers)].sort((a, b) =>
 				a.localeCompare(b),
@@ -163,7 +161,8 @@
 			!busPort && deviceName && _topoForBus && _topoForBus.isLoaded()
 				? _allBuses.filter((b) => _topoForBus.isOnBus(deviceName, b))
 				: _allBuses;
-		const _busChoices = _availableBuses.length > 0 ? _availableBuses : _allBuses;
+		const _busChoices =
+			_availableBuses.length > 0 ? _availableBuses : _allBuses;
 		const busF = fu.makeFormRow(
 			"Bus",
 			fu.makeSelect(_busChoices, busPort || _busChoices[0] || "CAN1"),

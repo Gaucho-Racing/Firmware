@@ -609,8 +609,8 @@
 
 		// V8: PHYSICAL_BUS_VIOLATION
 		// Only runs when PhysicalTopology has successfully loaded can_topology.txt.
-		const _topo =
-			(typeof window !== "undefined" ? window : {}).PhysicalTopology;
+		const _topo = (typeof window !== "undefined" ? window : {})
+			.PhysicalTopology;
 		if (_topo && _topo.isLoaded()) {
 			for (const device of _devices.values()) {
 				for (const bus of device.buses.values()) {

@@ -124,9 +124,13 @@ window.addEventListener("DOMContentLoaded", function () {
 			'<span class="download-notice-msg"></span>' +
 			'<button class="download-notice-close" aria-label="Dismiss">&times;</button>';
 		notice.querySelector(".download-notice-msg").textContent = message;
-		notice.querySelector(".download-notice-close").addEventListener("click", () => notice.remove());
+		notice
+			.querySelector(".download-notice-close")
+			.addEventListener("click", () => notice.remove());
 		document.body.appendChild(notice);
-		setTimeout(() => { if (notice.parentNode) notice.remove(); }, 5000);
+		setTimeout(() => {
+			if (notice.parentNode) notice.remove();
+		}, 5000);
 	}
 
 	function makeItem(labelText, hasChevron) {
@@ -389,9 +393,15 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		dlBtn.addEventListener("click", function () {
 			const doc = window.GrcanDocument;
-			const origRaw = editor.getOriginalRawText ? editor.getOriginalRawText() : "";
+			const origRaw = editor.getOriginalRawText
+				? editor.getOriginalRawText()
+				: "";
 			const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
-			const newDownload = doc ? doc.getSerializedText() : (editor.getRawText ? editor.getRawText() : "");
+			const newDownload = doc
+				? doc.getSerializedText()
+				: editor.getRawText
+					? editor.getRawText()
+					: "";
 			if (origDownload === newDownload) {
 				// Download content unchanged — check if there are unsaved working changes
 				// (e.g. unrouted message definitions) and surface a notice.
@@ -1175,9 +1185,15 @@ window.addEventListener("DOMContentLoaded", function () {
 			);
 			if (wantsDownload) {
 				const doc = window.GrcanDocument;
-				const origRaw = editor.getOriginalRawText ? editor.getOriginalRawText() : "";
+				const origRaw = editor.getOriginalRawText
+					? editor.getOriginalRawText()
+					: "";
 				const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
-				const newDownload = doc ? doc.getSerializedText() : (editor.getRawText ? editor.getRawText() : "");
+				const newDownload = doc
+					? doc.getSerializedText()
+					: editor.getRawText
+						? editor.getRawText()
+						: "";
 				if (window.DiffViewer && origDownload !== newDownload) {
 					window.DiffViewer.show({
 						oldText: origDownload,

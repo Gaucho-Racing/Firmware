@@ -32,7 +32,7 @@
 			"Bus",
 			fu.makeSelect(
 				_busChoices.length > 0 ? _busChoices : _allBuses,
-				(_busChoices[0] || "CAN1"),
+				_busChoices[0] || "CAN1",
 			),
 			true,
 		);
