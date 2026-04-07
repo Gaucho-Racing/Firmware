@@ -20,7 +20,7 @@
 #define CAN_PACKET_SIZE FDCAN_DLC_BYTES_64 // max is 64
 
 #define NUM_TESTS FDCAN_DLC_BYTES_64
-float rx_stats[NUM_TESTS+1] = {0};
+float rx_stats[NUM_TESTS + 1] = {0};
 
 // FDCAN_DLC_BYTES_
 
