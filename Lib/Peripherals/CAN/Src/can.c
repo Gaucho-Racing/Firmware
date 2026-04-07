@@ -389,7 +389,10 @@ static void can_tx_dequeue_helper(CANHandle *handle)
 	__set_BASEPRI(basepri);
 }
 
+#ifdef PROFILE
 dwt_timer_t send_timer = {0};
+#endif
+
 CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 {
 
@@ -485,10 +488,13 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 // uint32_t PROFILE_AVG_RX_CYCLES = 0;
 // uint32_t PROFILE_AVG_RX_CYCLES_SAMPLES = 0;
 
+#ifdef PROFILE
 dwt_timer_t rx_timer = {0};
+#endif
+
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
-	// dwt_timer_start_measurement(&rx_timer);
+	dwt_timer_start_measurement(&rx_timer);
 
 	// dwt_timer_start_measurement(&rx_timer);
 
@@ -523,11 +529,6 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
 	FDCAN_RxHeaderTypeDef rx_header;
 
-	// TIMING RX TRANSFER ===========================================================
-	// global_dwt_timer_start_measurement();
-	// GLOBAL_DWT_TIMER.start_cycle = DWT->CYCCNT;
-	// global_dwt_timer_end_measurement();
-
 	// TODO: Stack allocation should be safe
 	// uint8_t rx_data[64] = {0};
 	uint8_t rx_data[64] __attribute__((aligned(4))) = {0}; // align to word boundary for safe DMA transfer
@@ -536,15 +537,15 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0) {
 #ifdef USEDMA
 
-		dwt_timer_start_measurement(&rx_timer);
+		//dwt_timer_start_measurement(&rx_timer);
 		FDCAN_GetRxMessage_DMA(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		dwt_timer_end_measurement(&rx_timer);
+		//dwt_timer_end_measurement(&rx_timer);
 
 #else
 
-		dwt_timer_start_measurement(&rx_timer);
+		//dwt_timer_start_measurement(&rx_timer);
 		HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		dwt_timer_end_measurement(&rx_timer);
+		//dwt_timer_end_measurement(&rx_timer);
 
 #endif
 
@@ -556,7 +557,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	}
 
 	//__set_BASEPRI(prev_priority);
-	dwt_timer_end_measurement(&rx_timer);
+	//dwt_timer_end_measurement(&rx_timer);
 }
 
 /*

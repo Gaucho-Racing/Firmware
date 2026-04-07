@@ -10,10 +10,10 @@
 #include "Logomatic.h"
 #include "STM32G4_hal_fdcan_defines.h"
 
-#define DMA_INTERRUPT // can't even think about trying this yet
+#define DMA_INTERRUPT //for some reason interrupts are more stable than polling for the transfer complete, so don't comment this
 
 // static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
-static void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
+static void DMA_M2M_WordTransfer(uint8_t *src, uint8_t *dst, uint32_t word_count);
 
 enum dma_flags {
 	DMA_FLAG_IN_PROGRESS = 1,
@@ -156,32 +156,51 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 
 		/* Retrieve Rx payload with DMA*/
 		pData = (uint8_t *)RxAddress;
+
+		//TODO: sanitize this because a lot can go wrong here
 		uint32_t bytes = DLCtoBytes[pRxHeader->DataLength];
+		uint32_t wordCount = bytes >> 2;
+		uint32_t tailBytes = bytes & 0x3U;
+		uint32_t wordsToBytes = wordCount << 2;
 // DMA_M2M_BlockingTransfer(pData, pRxData, bytes);
 
 // ====================== THIS SECTION IS DIFFERENT FROM HAL_FDCAN_GetRxMessage()===========================
 #ifdef DMA_INTERRUPT
 		while (dma1_ch1.flags & DMA_FLAG_IN_PROGRESS) {}
 
-		dma1_ch1.RxLocation = RxLocation;
-		dma1_ch1.hfdcan = hfdcan;
-		dma1_ch1.GetIndex = GetIndex;
-		dma1_ch1.flags = DMA_FLAG_IN_PROGRESS;
+		//copy over tail bytes using CPU
+		for (uint32_t i = 0; i < tailBytes; i++) {
+			pRxData[ wordsToBytes + i] = pData[wordsToBytes + i];
+		}
 
-		DMA_M2M_Transfer(pData, pRxData, bytes);
+		if (wordCount > 0) {
+			dma1_ch1.RxLocation = RxLocation;
+			dma1_ch1.hfdcan = hfdcan;
+			dma1_ch1.GetIndex = GetIndex;
+			dma1_ch1.flags = DMA_FLAG_IN_PROGRESS;
+			DMA_M2M_WordTransfer(pData, pRxData, wordCount);
 
-		while (!(dma1_ch1.flags & (DMA_FLAG_DONE | DMA_FLAG_ERROR))) {}
+			while (!(dma1_ch1.flags & (DMA_FLAG_DONE | DMA_FLAG_ERROR))) {}
 
-		if (dma1_ch1.flags & DMA_FLAG_ERROR) {
-			hfdcan->ErrorCode |= HAL_FDCAN_ERROR_TIMEOUT;
-			return HAL_ERROR;
+			if (dma1_ch1.flags & DMA_FLAG_ERROR) {
+				hfdcan->ErrorCode |= HAL_FDCAN_ERROR_TIMEOUT;
+				return HAL_ERROR;
+			}
+		} else { //Must acknowledge rx when CPU is finished, otherwise the DMA transfer does it.
+			if (RxLocation == FDCAN_RX_FIFO0) /* Rx element is assigned to the Rx FIFO 0 */
+			{
+				/* Acknowledge the Rx FIFO 0 that the oldest element is read so that it increments the GetIndex */
+				hfdcan->Instance->RXF0A = GetIndex;
+			} else /* Rx element is assigned to the Rx FIFO 1 */
+			{
+				/* Acknowledge the Rx FIFO 1 that the oldest element is read so that it increments the GetIndex */
+				hfdcan->Instance->RXF1A = GetIndex;
+			}
 		}
 
 #else
-		DMA_M2M_Transfer(pData, pRxData, bytes);
-
+		DMA_M2M_WordTransfer(pData, pRxData, wordCount); //CPU does a polling wait //NOT STABLE
 		//===============================================================================
-
 		if (RxLocation == FDCAN_RX_FIFO0) /* Rx element is assigned to the Rx FIFO 0 */
 		{
 			/* Acknowledge the Rx FIFO 0 that the oldest element is read so that it increments the GetIndex */
@@ -266,17 +285,18 @@ bool is_valid_rxfifo1_address(FDCAN_HandleTypeDef *hfdcan, uint32_t *RxAddress) 
 	return false;
 }*/
 
-void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
+void DMA_M2M_WordTransfer(uint8_t *src, uint8_t *dst, uint32_t word_count)
 {
-	uint32_t word_count;
-	uint32_t tail_bytes;
-	uint32_t i;
+	//uint32_t word_count;
+	//uint32_t tail_bytes;
+	//uint32_t i;
 
-	if (byte_count == 0) {
+	if (word_count == 0) {
 		return;
 	}
-	word_count = byte_count >> 2;
-	tail_bytes = byte_count & 0x3U;
+
+	//word_count = byte_count >> 2;
+	//tail_bytes = byte_count & 0x3U;
 
 	/* Disable channel before reconfiguring */
 	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
@@ -299,14 +319,12 @@ void DMA_M2M_Transfer(uint8_t *src, uint8_t *dst, uint32_t byte_count)
 
 #ifndef DMA_INTERRUPT
 	/* Poll for transfer complete */
-	while (!LL_DMA_IsActiveFlag_TC1(DMA1)) {}
+	while (!(LL_DMA_IsActiveFlag_TC1(DMA1) || LL_DMA_IsActiveFlag_TE1(DMA1))) {}
 	__DSB();
+	__DMB();
+	__ISB();
 	LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
 #endif
-
-	for (i = 0; i < tail_bytes; i++) {
-		dst[(word_count << 2) + i] = src[(word_count << 2) + i];
-	}
 }
 
 /*

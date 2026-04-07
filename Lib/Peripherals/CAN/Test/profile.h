@@ -53,6 +53,8 @@ static inline void dwt_timer_start_measurement(dwt_timer_t *dt)
 	__ISB();
 }
 
+
+
 static inline void dwt_timer_end_measurement(dwt_timer_t *dt)
 {
 	if (!dt->measuring) {
@@ -71,6 +73,17 @@ static inline void dwt_timer_end_measurement(dwt_timer_t *dt)
 
 	dt->max_cycles = max_u32(dt->max_cycles, elapsed_cycle);
 	__DSB();
+}
+
+static inline void dwt_timer_reset(dwt_timer_t *dt)
+{
+	dwt_timer_end_measurement(dt);
+
+	dt->start_cycle = 0;
+	dt->end_cycle = 0;
+	dt->measuring = false;
+	dt->total_cycles = 0;
+	dt->total_samples = 0;
 }
 
 static inline void dwt_timer_print_info(dwt_timer_t *dt)

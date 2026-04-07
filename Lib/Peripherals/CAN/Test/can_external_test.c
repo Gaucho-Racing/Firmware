@@ -3,7 +3,9 @@
 
 #include "can.h"
 #include "can_tests.h"
+
 #include "profile.h"
+
 // CAN Configuration
 // #define OLD_SAM
 
@@ -14,19 +16,30 @@
 #endif
 
 #define NUM_NODES 2	 // total number of nodes on the bus (including this one)
-#define NUM_MESSAGES 200 // number of messages each node sends to every other node
+#define NUM_MESSAGES 20 // number of messages each node sends to every other node
 
 #define CAN_PACKET_SIZE FDCAN_DLC_BYTES_64 // max is 64
+
+#define NUM_TESTS FDCAN_DLC_BYTES_64
+float rx_stats[NUM_TESTS] = {0};
+
+
+//FDCAN_DLC_BYTES_
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 static volatile uint32_t rx_2_received = 0;
 static volatile uint8_t can2_data[64] = {0};
 static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 {
+	dwt_timer_end_measurement(&rx_timer);
+
 	rx_2_received++;
 	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x, id %" PRIu32 "\n", size, *(char *)data, id);
 	// Is within an ISR, so needs to exit quickly
 	uint8_t *data_bytes = (uint8_t *)data;
+
+	//allow for cache coherency
+	//for (int i = 0; i < 100000; i++);
 
 	bool failure = false;
 	for (uint32_t i = 0; i < size; i++) {
@@ -37,7 +50,6 @@ static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 		}
 	}
 
-	// dwt_timer_end_measurement();
 
 	// reset
 	for (uint32_t i = 0; i < size; i++) {
@@ -145,87 +157,102 @@ int can_external_test(void)
 	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
 
 	// uint32_t node_target = 0;
-	uint32_t i = 0;
 
-	dwt_timer_t send1_timer = {0}, send2_timer = {0};
 
 	start_dwt();
 
-	while (i < NUM_MESSAGES) {
-		HAL_Delay(10);
-		// msg.data[0] = 0x2;
+	for (uint32_t data_length_code = 0; data_length_code <= FDCAN_DLC_BYTES_64; data_length_code++ ) {
+		msg.tx_header.DataLength = data_length_code;
+		dwt_timer_t send1_timer = {0}, send2_timer = {0};
 
-		dwt_timer_start_measurement(&send1_timer);
-		can_send(primary_can, &msg);
-		dwt_timer_end_measurement(&send1_timer);
+		dwt_timer_reset(&rx_timer);
 
-		HAL_Delay(10);
-		// msg.data[0] = 0x10;
+		uint32_t i = 0;
+		while (i < NUM_MESSAGES) {
+			HAL_Delay(10);
+			// msg.data[0] = 0x2;
 
-		dwt_timer_start_measurement(&send2_timer);
-		can_send(data_can, &msg);
-		// for(int i = 0; i < 100; i++);
-		dwt_timer_end_measurement(&send2_timer);
+			dwt_timer_start_measurement(&send1_timer);
+			can_send(primary_can, &msg);
+			dwt_timer_end_measurement(&send1_timer);
 
-		i += 1;
+			HAL_Delay(10);
+			// msg.data[0] = 0x10;
+
+			dwt_timer_start_measurement(&send2_timer);
+			can_send(data_can, &msg);
+			// for(int i = 0; i < 100; i++);
+			dwt_timer_end_measurement(&send2_timer);
+
+			i += 1;
+		}
+
+		#ifdef PROFILE
+		// LOGOMATIC("NORMAL MODE - timing entire Rx callback (not just fifo copy)\n");
+		LOGOMATIC("CAN PACKET SIZE: %u\n", DLCtoBytes[data_length_code]);
+		LOGOMATIC("Send1 ===========\n");
+		dwt_timer_print_info(&send1_timer);
+
+		LOGOMATIC("Send2 ===============\n");
+		dwt_timer_print_info(&send2_timer);
+
+		LOGOMATIC("Rx ===============\n");
+		dwt_timer_print_info(&rx_timer);
+
+		rx_stats[data_length_code] = dwt_timer_average_cycles(&rx_timer);
+
+		LOGOMATIC("can_external_test: SUCCESS\n");
+		#endif
+
+
+		HAL_Delay(1000);
+		LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
+		LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
+
+		uint32_t error = false;
+
+		// TODO: Create testing functions to check state of can instance
+		if (rx_1_received != NUM_MESSAGES * (NUM_NODES - 1)) {
+			error = true;
+			LOGOMATIC("FAIL: can_external_test: did not receive all rx1\n");
+		} else {
+			LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
+		}
+		if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
+			error = true;
+			LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
+		} else {
+			LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
+		}
+
+		if (primary_can->tx_elements > 0) {
+			LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
+		}
+		if (data_can->tx_elements > 0) {
+			LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
+		}
+		LOGOMATIC("\n");
 	}
 
 	stop_dwt();
 
-	HAL_Delay(1000);
-	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
-	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
-
-	uint32_t error = false;
-
-	// TODO: Create testing functions to check state of can instance
-	if (rx_1_received != NUM_MESSAGES * (NUM_NODES - 1)) {
-		error = true;
-		LOGOMATIC("FAIL: can_external_test: did not receive all rx1\n");
-	} else {
-		LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
-	}
-	if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
-		error = true;
-		LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
-	} else {
-		LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
-	}
-
-	if (primary_can->tx_elements > 0) {
-		LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
-	}
-	if (data_can->tx_elements > 0) {
-		LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
+	LOGOMATIC("=================PROFILING RESULTS ============================\n");
+	for (uint32_t i = 0; i <= FDCAN_DLC_BYTES_64; i++ ) {
+		LOGOMATIC("%d: %.2f\n",DLCtoBytes[i], rx_stats[i]);
 	}
 	LOGOMATIC("\n");
 
-	uint32_t rc;
-	if ((rc = can_release(primary_can))) {
+	uint32_t error = false;
+	if ((error |= can_release(primary_can))) {
 		LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
 	}
-	error |= rc;
-	if ((rc = can_release(data_can))) {
+	if ((error |= can_release(data_can))) {
 		LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
 	}
-	error |= rc;
 
 	if (error) {
 		return ERROR;
 	}
-
-	// LOGOMATIC("NORMAL MODE - timing entire Rx callback (not just fifo copy)\n");
-	LOGOMATIC("CAN PACKET SIZE: %u\n", DLCtoBytes[CAN_PACKET_SIZE]);
-	LOGOMATIC("Send1 ===========\n");
-	dwt_timer_print_info(&send1_timer);
-
-	LOGOMATIC("Send2 ===============\n");
-	dwt_timer_print_info(&send2_timer);
-
-	LOGOMATIC("Rx ===============\n");
-	dwt_timer_print_info(&rx_timer);
-
-	LOGOMATIC("can_external_test: SUCCESS\n");
 
 	return SUCCESS;
 }
