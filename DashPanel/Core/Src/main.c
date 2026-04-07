@@ -59,6 +59,8 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+uint32_t timer = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,6 +104,7 @@ int main(void)
 	LL_PWR_DisableUCPDDeadBattery();
 
 	/* USER CODE BEGIN Init */
+	HAL_Init();
 	CANInitialize();
 	GPIO_Interrupt_Init();
 	Setup_Logomatic(&logomaticConfig);
@@ -120,6 +123,10 @@ int main(void)
 	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
+	// uint32_t previous_time = HAL_GetTick();
+	// uint32_t current_time;
+	uint8_t tick_freq = HAL_GetTickFreq();
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -128,24 +135,38 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		if (canReadyToSend) {
+		if (canReadyToSend || timer * tick_freq >= 100) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
 
 			msg_struct.led_bits = dashStatus.led_bits;
 			msg_struct.button_flags = dashStatus.button_flags;
 
-			if (GETBIT(dashStatus.button_flags, 0)) {
+			if (GETBIT(dashStatus.button_flags, 0)) { // TSActive
 				SetBitInByte(dashStatus.button_flags, 0, false);
 			}
-			if (GETBIT(dashStatus.button_flags, 1)) {
+			if (GETBIT(dashStatus.button_flags, 1)) { // RTD
 				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
-
+			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons(this through the end)
+				SetBitInByte(dashStatus.button_flags, 2, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 3)) {
+				SetBitInByte(dashStatus.button_flags, 3, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 4)) {
+				SetBitInByte(dashStatus.button_flags, 4, false);
+			}
+			if (GETBIT(dashStatus.button_flags, 5)) {
+				SetBitInByte(dashStatus.button_flags, 5, false);
+			}
 			// CAN_sendPing(Dash_Panel);
-			CAN_sendECU(can_handler, &msg_struct, ECU);
+			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
+
+			LOGOMATIC("CAN\n");
 
 			canReadyToSend = false;
+			timer = 0;
 		}
 
 		// Neopixel
@@ -228,37 +249,37 @@ static void MX_GPIO_Init(void)
 	/**/
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_4);
 
-	/**/
+	/*TSActive*/
 	GPIO_InitStruct.Pin = TS_ACTIVE_BTN_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(TS_ACTIVE_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/**/
+	/*RTD*/
 	GPIO_InitStruct.Pin = RTD_BTN_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(RTD_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/**/
+	/*Button 1*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/**/
+	/*Button 2*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/**/
+	/*Button 3*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_7;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/**/
+	/*Button 4*/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
@@ -309,6 +330,11 @@ static void GPIO_Interrupt_Init(void)
 	// NVIC_EnableIRQ(EXTI15_10_IRQn);
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
+}
+
+void timer_inc(void)
+{
+	timer++;
 }
 
 /* USER CODE END 4 */
