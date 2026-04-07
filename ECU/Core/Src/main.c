@@ -419,10 +419,6 @@ int main(void)
 				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
 				}
-				if (getRTT(GRCAN_CCU) != PINGTIMEOUT_VALUE) {
-					// halt if CCU is connected
-					return 1;
-				}
 			}
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 		}
