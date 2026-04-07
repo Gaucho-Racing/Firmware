@@ -252,6 +252,7 @@ Message ID:
   Debug 2.0:
     MSG ID: 0x000
     MSG LENGTH: 8
+    generate: false
     Debug:
       bit_start: 0
       comment: Essentially a print statement up to 8 bytes long that whichever targeted can parse
@@ -259,6 +260,7 @@ Message ID:
   Debug FD:
     MSG ID: 0x001
     MSG LENGTH: 64
+    generate: false
     Debug:
       bit_start: 0
       comment: Essentially a print statement up to 64 bytes long that whichever targeted can parse
