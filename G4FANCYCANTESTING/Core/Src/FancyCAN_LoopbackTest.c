@@ -1,9 +1,9 @@
 #include <inttypes.h>
 #include <string.h>
-#include "stdlib.h"
+
 #include "Logomatic.h"
 #include "grcan_fancylayer.h"
-
+#include "stdlib.h"
 
 // CAN Configuration
 // #define OLD_SAM
@@ -41,8 +41,8 @@
 //  TODO: G4 tests are dependent on the System clock configuration??
 int FancyCAN_LoopbackTest(void)
 {
-    //internal don't need pins
-    LOGOMATIC("Starting CAN Loopback Test...\n");
+	// internal don't need pins
+	LOGOMATIC("Starting CAN Loopback Test...\n");
 
 	GRCAN_BusConfig *bus_config = malloc(sizeof(GRCAN_BusConfig));
 	GRCAN_SetDefaultBusConfig(bus_config, GRCAN_BUS_TESTING);
@@ -54,19 +54,19 @@ int FancyCAN_LoopbackTest(void)
 		LOGOMATIC("Failed to initialize GRCAN bus\n");
 	}
 
-    bool result = GRCAN_InitBus(bus_config);
-    if (result) {
-        LOGOMATIC("GRCAN bus initialized successfully in loopback mode\n");
-    } else {
-        LOGOMATIC("Failed to initialize GRCAN bus in loopback mode\n");
-    }
-    GRCAN_SetLocalNodeID(NODE_ID);
+	bool result = GRCAN_InitBus(bus_config);
+	if (result) {
+		LOGOMATIC("GRCAN bus initialized successfully in loopback mode\n");
+	} else {
+		LOGOMATIC("Failed to initialize GRCAN bus in loopback mode\n");
+	}
+	GRCAN_SetLocalNodeID(NODE_ID);
 
-    GRCAN_Fancy_Send(GRCAN_BUS_TESTING, NODE_ID, 0x12, (uint8_t*)"Hello", 5);
+	GRCAN_Fancy_Send(GRCAN_BUS_TESTING, NODE_ID, 0x12, (uint8_t *)"Hello", 5);
 
-    LOGOMATIC("CAN Loopback Test completed\n");
+	LOGOMATIC("CAN Loopback Test completed\n");
 
-    return 0; // TODO: actually check if the message was received correctly and return true if so
+	return 0; // TODO: actually check if the message was received correctly and return true if so
 
 	// FDCAN_TxHeaderTypeDef TxHeader = {
 	//     .Identifier = NODE_ID,
@@ -99,107 +99,107 @@ int FancyCAN_LoopbackTest(void)
 	cfg1.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 	*/
 
-// 	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_NORMAL, 0, 0)) {
-// 		LOGOMATIC("Could not get config for FDCAN2\n");
-// 		return ERROR;
-// 	}
-// #ifdef OLD_SAM
-// 	cfg2.rx_gpio = GPIOB;
-// 	cfg2.init_rx_gpio.Pin = GPIO_PIN_13;
-// 	cfg2.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
+	// 	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, FDCAN_MODE_NORMAL, 0, 0)) {
+	// 		LOGOMATIC("Could not get config for FDCAN2\n");
+	// 		return ERROR;
+	// 	}
+	// #ifdef OLD_SAM
+	// 	cfg2.rx_gpio = GPIOB;
+	// 	cfg2.init_rx_gpio.Pin = GPIO_PIN_13;
+	// 	cfg2.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
-// 	cfg2.tx_gpio = GPIOB;
-// 	cfg2.init_tx_gpio.Pin = GPIO_PIN_5;
-// 	cfg2.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
-// #endif
+	// 	cfg2.tx_gpio = GPIOB;
+	// 	cfg2.init_tx_gpio.Pin = GPIO_PIN_5;
+	// 	cfg2.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
+	// #endif
 
-// 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	// 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
-// 	//=============================================================================================
-// 	if ((primary_can = can_init(&cfg1)) == NULL) {
-// 		LOGOMATIC("Could not initialize primary_can\n");
-// 		return ERROR;
-// 	}
-// 	HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
+	// 	//=============================================================================================
+	// 	if ((primary_can = can_init(&cfg1)) == NULL) {
+	// 		LOGOMATIC("Could not initialize primary_can\n");
+	// 		return ERROR;
+	// 	}
+	// 	HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
 
-// 	if ((data_can = can_init(&cfg2)) == NULL) {
-// 		LOGOMATIC("Could not initialize data_can\n");
-// 		return ERROR;
-// 	}
-// 	HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0);
+	// 	if ((data_can = can_init(&cfg2)) == NULL) {
+	// 		LOGOMATIC("Could not initialize data_can\n");
+	// 		return ERROR;
+	// 	}
+	// 	HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0);
 
-// 	//=============================================================================================
-// 	if (can_start(primary_can)) {
-// 		LOGOMATIC("Could not start primary_can\n");
-// 		return ERROR;
-// 	}
-// 	if (can_start(data_can)) {
-// 		LOGOMATIC("Could not start data_can\n");
-// 		return ERROR;
-// 	}
+	// 	//=============================================================================================
+	// 	if (can_start(primary_can)) {
+	// 		LOGOMATIC("Could not start primary_can\n");
+	// 		return ERROR;
+	// 	}
+	// 	if (can_start(data_can)) {
+	// 		LOGOMATIC("Could not start data_can\n");
+	// 		return ERROR;
+	// 	}
 
-// 	FDCANTxMessage msg = {0};
-// 	msg.data[0] = 0x80;
-// 	msg.tx_header = TxHeader;
+	// 	FDCANTxMessage msg = {0};
+	// 	msg.data[0] = 0x80;
+	// 	msg.tx_header = TxHeader;
 
-// 	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
+	// 	LOGOMATIC("Sending %d messages on each bus...\n", NUM_MESSAGES);
 
-// 	// uint32_t node_target = 0;
-// 	uint32_t i = 0;
+	// 	// uint32_t node_target = 0;
+	// 	uint32_t i = 0;
 
-// 	while (i < NUM_MESSAGES) {
-// 		HAL_Delay(100);
-// 		msg.data[0] = 0x2;
-// 		can_send(primary_can, &msg);
-// 		HAL_Delay(100);
-// 		msg.data[0] = 0x10;
-// 		can_send(data_can, &msg);
-// 		i += 1;
-// 	}
+	// 	while (i < NUM_MESSAGES) {
+	// 		HAL_Delay(100);
+	// 		msg.data[0] = 0x2;
+	// 		can_send(primary_can, &msg);
+	// 		HAL_Delay(100);
+	// 		msg.data[0] = 0x10;
+	// 		can_send(data_can, &msg);
+	// 		i += 1;
+	// 	}
 
-// 	HAL_Delay(5000);
-// 	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
-// 	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
+	// 	HAL_Delay(5000);
+	// 	LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
+	// 	LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
 
-// 	uint32_t error = false;
+	// 	uint32_t error = false;
 
-// 	// TODO: Create testing functions to check state of can instance
-// 	if (rx_1_received != NUM_MESSAGES * (NUM_NODES - 1)) {
-// 		error = true;
-// 		LOGOMATIC("FAIL: can_external_test: did not receive all rx1\n");
-// 	} else {
-// 		LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
-// 	}
-// 	if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
-// 		error = true;
-// 		LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
-// 	} else {
-// 		LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
-// 	}
+	// 	// TODO: Create testing functions to check state of can instance
+	// 	if (rx_1_received != NUM_MESSAGES * (NUM_NODES - 1)) {
+	// 		error = true;
+	// 		LOGOMATIC("FAIL: can_external_test: did not receive all rx1\n");
+	// 	} else {
+	// 		LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
+	// 	}
+	// 	if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
+	// 		error = true;
+	// 		LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
+	// 	} else {
+	// 		LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
+	// 	}
 
-// 	if (primary_can->tx_elements > 0) {
-// 		LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
-// 	}
-// 	if (data_can->tx_elements > 0) {
-// 		LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
-// 	}
-// 	LOGOMATIC("\n");
+	// 	if (primary_can->tx_elements > 0) {
+	// 		LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
+	// 	}
+	// 	if (data_can->tx_elements > 0) {
+	// 		LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
+	// 	}
+	// 	LOGOMATIC("\n");
 
-// 	uint32_t rc;
-// 	if ((rc = can_release(primary_can))) {
-// 		LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
-// 	}
-// 	error |= rc;
-// 	if ((rc = can_release(data_can))) {
-// 		LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
-// 	}
-// 	error |= rc;
+	// 	uint32_t rc;
+	// 	if ((rc = can_release(primary_can))) {
+	// 		LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
+	// 	}
+	// 	error |= rc;
+	// 	if ((rc = can_release(data_can))) {
+	// 		LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
+	// 	}
+	// 	error |= rc;
 
-// 	if (error) {
-// 		return ERROR;
-// 	}
+	// 	if (error) {
+	// 		return ERROR;
+	// 	}
 
-// 	LOGOMATIC("can_external_test: SUCCESS\n");
+	// 	LOGOMATIC("can_external_test: SUCCESS\n");
 
 	return SUCCESS;
 }

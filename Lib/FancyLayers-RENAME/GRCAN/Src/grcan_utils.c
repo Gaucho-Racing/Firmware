@@ -112,7 +112,8 @@ void GRCAN_SetDefaultBitTiming(GRCAN_BitTiming *timing)
 	timing->data.seg2 = 5;
 }
 
-uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state) {
+uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state)
+{
 	switch (state) {
 		case GRCAN_Feature_DISABLE:
 			return 0;
