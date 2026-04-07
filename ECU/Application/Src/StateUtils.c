@@ -93,7 +93,7 @@ bool BSE_Implausible(volatile const ECU_StateData *stateData)
 {
 	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
 	// T.4.3.3
-	if (stateData->BSE_Signal < BSE_DEADZONE) { // TODO: fix deadzone l8r
+	if (stateData->bse_signal < BSE_DEADZONE) { // TODO: fix deadzone l8r
 		return true;
 	}
 	return false;

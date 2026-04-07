@@ -37,7 +37,7 @@ See diagram in StateMachine.h
 5: TS Discharge ECU State
 6-7: Reserved
 See diagram in StateMachine.h (Byte 0) */
-	uint8_t state_messages;
+	uint8_t ecu_state;
 	/** [Byte 1 / Bits 8-15]
 8: BCU Node Status (1: OK, 0: Timeout)
 9: GR Inverter Status (1: OK, 0: Timeout)
@@ -405,7 +405,7 @@ typedef struct {
 	uint16_t steering_angle_signal;
 	/** 4-20 mA signal (Byte 14) */
 	uint16_t aux_signal;
-} GRCAN_ECU_PEDALS_DATA_MSG;
+} GRCAN_ECU_ANALOG_DATA_MSG;
 
 /** GPS LAT */
 typedef struct {
@@ -464,5 +464,14 @@ typedef struct {
 	/** W (Byte 4) */
 	uint16_t dgps_w;
 } GRCAN_UVW_DGPS_MSG;
+
+/** ECU Performance */
+typedef struct {
+	/**
+	 * Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+	 * data type: u32
+	 * units: Clock Cycles (Byte 0) */
+	uint32_t elapsed_cycles;
+} GRCAN_ECU_PERFORMANCE_MSG;
 
 #endif
