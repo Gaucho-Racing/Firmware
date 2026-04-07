@@ -20,7 +20,7 @@
 #define CAN_PACKET_SIZE FDCAN_DLC_BYTES_64 // max is 64
 
 #define NUM_TESTS FDCAN_DLC_BYTES_64
-float rx_stats[NUM_TESTS] = {0};
+float rx_stats[NUM_TESTS+1] = {0};
 
 // FDCAN_DLC_BYTES_
 
@@ -227,6 +227,7 @@ int can_external_test(void)
 			LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
 		}
 		LOGOMATIC("\n");
+		UNUSED(error);
 	}
 
 	stop_dwt();
