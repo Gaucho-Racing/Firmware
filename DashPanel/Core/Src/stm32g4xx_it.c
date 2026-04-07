@@ -22,6 +22,7 @@
 
 #include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
+#include "bitManipulations.h"
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -180,7 +181,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	/* USER CODE BEGIN SysTick_IRQn 0 */
-
+	timer_inc();
 	/* USER CODE END SysTick_IRQn 0 */
 
 	/* USER CODE BEGIN SysTick_IRQn 1 */
@@ -222,7 +223,8 @@ void EXTI3_IRQHandler(void)
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
 
 		// Blame Electronics if hardware debounce doesn't work
-		dashStatus.TSActiveButton = 1;
+		SetBitInByte(dashStatus.button_flags, 0, true);
+		// dashStatus = 1;
 		canReadyToSend = true;
 		LOGOMATIC("TS Active Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
@@ -241,7 +243,7 @@ void EXTI4_IRQHandler(void)
 
 		// Blame Electronics if hardware debounce doesn't work
 
-		dashStatus.RTDButton = 1;
+		SetBitInByte(dashStatus.button_flags, 1, true);
 		canReadyToSend = true;
 		LOGOMATIC("RTD Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);

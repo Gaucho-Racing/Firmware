@@ -91,6 +91,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
 		},
 		{
+			"label": "CMake: configure and build G4SPITESTING",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4SPITESTING"
+		},
+		{
 			"label": "CMake: configure and build G4NEOTESTING",
 			"type": "shell",
 			"dependsOrder": "sequence",
