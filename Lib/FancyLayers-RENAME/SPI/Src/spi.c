@@ -127,7 +127,7 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	}
 
 	// Enable interrupts at peripheral level (TXE is enabled in GR_SPI_Begin_New_Tx and disabled in GR_SPI_Transfer_Tx_Bytes)
-	LL_SPI_EnableIT_ERR(handle->pins.SPIx);  // Error interrupt
+	LL_SPI_EnableIT_ERR(handle->pins.SPIx);	 // Error interrupt
 	LL_SPI_EnableIT_RXNE(handle->pins.SPIx); // Not empty Rx buffer
 }
 
@@ -401,12 +401,12 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler *handle)
 	LL_GPIO_InitTypeDef pin_config;
 
 	// Universal settings for all SPI pins
-	LL_GPIO_StructInit(&pin_config);			  // Default config values
+	LL_GPIO_StructInit(&pin_config);		 // Default config values
 	pin_config.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH; // Very high output speed
-	pin_config.Pull = LL_GPIO_PULL_NO;		  // No pull-up or pull-down
+	pin_config.Pull = LL_GPIO_PULL_NO;		 // No pull-up or pull-down
 	pin_config.OutputType = LL_GPIO_OUTPUT_PUSHPULL; // Push-pull output (not open-drain)
-	pin_config.Mode = LL_GPIO_MODE_ALTERNATE;	  // Alternate pin function mode
-	pin_config.Alternate = handle->pins.AFN;	  // Alternate function number
+	pin_config.Mode = LL_GPIO_MODE_ALTERNATE;	 // Alternate pin function mode
+	pin_config.Alternate = handle->pins.AFN;	 // Alternate function number
 
 	// COPI
 	pin_config.Pin = handle->pins.COPI_pin;
@@ -444,7 +444,9 @@ void GR_SPI_Close(GR_SPI_Handler *handle)
 	LL_SPI_DeInit(handle->pins.SPIx);
 
 	// Deallocate memory
-	if (handle->current_msg.data) free(handle->current_msg.data);
+	if (handle->current_msg.data) {
+		free(handle->current_msg.data);
+	}
 	GR_MsgBuffer_Free(handle->rx_buffer);
 	GR_MsgBuffer_Free(handle->tx_buffer);
 }
@@ -477,7 +479,8 @@ uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle)
 	return GR_MsgBuffer_PeekMsgSize(handle->rx_buffer);
 }
 
-uint8_t GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle) {
+uint8_t GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle)
+{
 	if (!handle) {
 		return GR_SPI_ERR_BAD_ARGS;
 	}
