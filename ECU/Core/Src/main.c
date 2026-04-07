@@ -75,9 +75,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 /* USER CODE END PV */
 
-// CAN
-
-#define CAN_TX_BUFFER_LENGTH 16
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
@@ -418,10 +415,6 @@ int main(void)
 				}
 				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
-				}
-				if (getRTT(GRCAN_CCU) != PINGTIMEOUT_VALUE) {
-					// halt if CCU is connected
-					return 1;
 				}
 			}
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
