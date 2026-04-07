@@ -33,6 +33,7 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/stm32g4xx_hal_msp.c
+		Core/Src/fdcan.c
 )
 
 target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE VCP_LIB)
