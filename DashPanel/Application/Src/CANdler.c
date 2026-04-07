@@ -72,7 +72,7 @@ void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 	pingMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	pingMsg.tx_header.DataLength = FDCAN_DLC_BYTES_32;
+	pingMsg.tx_header.DataLength = FDCAN_DLC_BYTES_4;
 	pingMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
@@ -91,7 +91,7 @@ void CAN_sendECU(CANHandle *c, GRCAN_DASH_STATUS_MSG *msg, GRCAN_NODE_ID to)
 	sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	sendECUMsg.tx_header.DataLength = FDCAN_DLC_BYTES_16;
+	sendECUMsg.tx_header.DataLength = FDCAN_DLC_BYTES_2;
 	sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	sendECUMsg.tx_header.MessageMarker = 0;
