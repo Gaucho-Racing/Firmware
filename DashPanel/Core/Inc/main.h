@@ -27,6 +27,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32g4xx.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_cortex.h"
 #include "stm32g4xx_ll_crs.h"
@@ -39,7 +40,6 @@ extern "C" {
 #include "stm32g4xx_ll_spi.h"
 #include "stm32g4xx_ll_system.h"
 #include "stm32g4xx_ll_utils.h"
-#include "stm32g4xx.h"
 
 #if defined(USE_FULL_ASSERT)
 #include "stm32_assert.h"

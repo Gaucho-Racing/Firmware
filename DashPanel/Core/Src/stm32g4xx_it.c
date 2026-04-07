@@ -23,7 +23,6 @@
 #include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
 #include "bitManipulations.h"
-
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -255,7 +254,6 @@ void EXTI4_IRQHandler(void)
 			SetBitInByte(dashStatus.button_flags, 1, true);
 			canReadyToSend = true;
 			LOGOMATIC("RTD Pressed!");
-
 		}
 		if (pin_c) {
 
@@ -263,14 +261,14 @@ void EXTI4_IRQHandler(void)
 			SetBitInByte(dashStatus.button_flags, 5, true);
 			canReadyToSend = true;
 			LOGOMATIC("Button 4 Pressed!");
-
 		}
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
 }
 
-void EXTI9_5_IRQHandler(void) {
+void EXTI9_5_IRQHandler(void)
+{
 
 	// EXTI 5
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5)) {
