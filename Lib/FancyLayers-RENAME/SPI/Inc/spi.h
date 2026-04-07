@@ -36,15 +36,15 @@ typedef struct {
 
 typedef struct GR_SPI_Handler_struct {
 	// Contains all configuration information
-	LL_SPI_InitTypeDef *spi_config;
-	GR_SPI_Pins *pins;
+	LL_SPI_InitTypeDef spi_config;
+	GR_SPI_Pins pins;
 	// GR structs
 	GR_MsgBuffer *rx_buffer;
 	GR_MsgBuffer *tx_buffer;
 	// Tx-Rx parameters
 	uint8_t transfer_size;
 	// Tx-Rx current messages
-	GR_SPI_Message *current_msg;
+	GR_SPI_Message current_msg;
 	volatile uint16_t current_tx_msg_index, current_rx_msg_index;
 	volatile uint8_t msg_status;
 	volatile int8_t error_status;
@@ -127,6 +127,13 @@ bool GR_SPI_IsRxEmpty(GR_SPI_Handler *handle);
  */
 uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle);
 
+/**
+ * @brief Returns the most recently stored error value
+ * @param handle
+ * @return 0 if there is no error and -ERROR_VAL otherwise
+ */
+uint8_t GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle);
+
 // ============================= Helper Functions =============================
 
 /**
@@ -150,11 +157,10 @@ uint32_t GR_SPI_Get_GPIO_Clock(GPIO_TypeDef *GPIOx);
 void GR_SPI_Enable_Clocks(GR_SPI_Handler *handle);
 
 /**
- * @brief Configures GPIO pins for SPI
+ * @brief Configures GPIO pins for SPI based on GR_SPI_Pins struct within the handler
  * @param handle
- * @param pin_config
  */
-void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_config);
+void GR_SPI_Configure_Pins(GR_SPI_Handler *handle);
 
 /**
  * @brief Continues sending the next byte(s) within an SPI message
