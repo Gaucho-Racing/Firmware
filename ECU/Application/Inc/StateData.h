@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "GR_OLD_MSG_DAT.h"
+#include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
 
 #ifndef _STATEDATA_H_
@@ -79,10 +79,13 @@ typedef volatile struct ECU_StateData {
 	float estop_sense;
 	float driving_heat_capacity_1;
 	float driving_heat_capacity_2;
+	uint16_t bse_signal;
+	uint16_t bspd_signal;
 	uint16_t APPS1_Signal;
 	uint16_t APPS2_Signal;
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
+	uint16_t aux_signal;
 	uint8_t status_bits[3];
 	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */

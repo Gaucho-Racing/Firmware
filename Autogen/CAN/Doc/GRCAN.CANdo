@@ -32,6 +32,10 @@ routing:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
+        CCU:
+          - msg: BCU Status 1
+          - msg: BCU Status 2
+          - msg: BCU Status 3
     Charger:
       CAN3:
         BCU:
@@ -160,7 +164,8 @@ routing:
           - msg: Debug FD
           - msg: Ping
         TCM:
-          - msg: ECU Pedals Data
+          - msg: ECU Analog Data
+          - msg: ECU Performance
     Energy Meter:
       CAN3:
         BCU:
@@ -3903,7 +3908,7 @@ Message ID:
       comment: Literal copy of ECU Status's status bit map
       data type: b[24]
       units: Bool map
-  ECU Pedals Data:
+  ECU Analog Data:
     MSG ID: 0x02E
     MSG LENGTH: 16
     BSPD Signal:
@@ -4051,6 +4056,16 @@ Message ID:
       comment: W
       data type: i16
       map equation: "x/100"
+  ECU Performance:
+    MSG ID: 0x123
+    MSG LENGTH: 4
+    Elapsed Cycles:
+      bit_start: 0
+      comment:
+        Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+        data type: u32
+        units: Clock Cycles
+      data type: u8
 
 Custom CAN ID:
   DTI Control 1:
