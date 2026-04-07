@@ -300,6 +300,10 @@
 		return !!findMessageDefRange(msgName) || !!findCustomCanIdRange(msgName);
 	}
 
+	function isCustomCanIdMessage(msgName) {
+		return !!findCustomCanIdRange(msgName);
+	}
+
 	function renameRoutingMessageRefs(oldName, newName) {
 		if (!oldName || !newName || oldName === newName) return false;
 		const lines = getLines();
@@ -394,14 +398,20 @@
 		const btn = document.createElement("button");
 		btn.className = "editor-add-btn";
 		btn.innerHTML = window.FormUtils.PLUS_SVG + " " + label;
-		btn.addEventListener("click", onClick);
+		btn.addEventListener("click", (e) => {
+			e.stopPropagation();
+			onClick();
+		});
 		return btn;
 	}
 
 	// ==================== Download ====================
 
 	function downloadCando() {
-		const blob = new Blob([rawCandoText], { type: "text/plain" });
+		const serialized = window.GrcanDocument
+			? window.GrcanDocument.getSerializedText()
+			: null;
+		const blob = new Blob([serialized ?? rawCandoText], { type: "text/plain" });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;
@@ -432,6 +442,12 @@
 			hasEdits = false;
 			editedKeys.clear();
 			newKeys.clear();
+		},
+		// Update working text without resetting original or edit state.
+		// Used by GrcanDocument after semantic mutations.
+		updateRawText(text) {
+			rawCandoText = text;
+			hasEdits = true;
 		},
 		getRawText() {
 			return rawCandoText;
@@ -477,6 +493,7 @@
 		grIdNameExists,
 		renameGrIdNode,
 		messageNameExists,
+		isCustomCanIdMessage,
 		renameRoutingMessageRefs,
 		generateMessageIdYaml,
 		generateRoutingMsgYaml,

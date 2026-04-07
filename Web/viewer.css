@@ -3,7 +3,7 @@
 	flex-direction: row;
 	align-items: stretch;
 	width: 100%;
-	height: min(72vh, 660px);
+	height: calc(100vh - 160px);
 	min-height: 420px;
 	background: #0a0c12;
 	border: 1px solid #1f2439;
@@ -108,9 +108,7 @@
 .item-label {
 	flex: 1 1 auto;
 	min-width: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	word-break: break-word;
 }
 
 .item-chevron {
@@ -215,4 +213,123 @@
 	margin-top: 1px;
 	color: #7f8ca6;
 	font-style: italic;
+}
+
+#viewer-search-row {
+	padding: 0 0 8px;
+	position: relative;
+}
+
+#viewer-search {
+	width: 100%;
+	font-family: inherit;
+	font-size: 0.82rem;
+	padding: 8px 12px;
+	border-radius: 8px;
+	border: 1px solid #2c3350;
+	background: #0a0c13;
+	color: #ecf2ff;
+	outline: none;
+	transition:
+		border-color 0.16s,
+		box-shadow 0.16s;
+}
+
+#viewer-search:focus {
+	border-color: #7c3aed;
+	box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+#viewer-search::placeholder {
+	color: #667189;
+}
+
+#search-dropdown {
+	display: none;
+	position: absolute;
+	top: calc(100% - 8px);
+	left: 0;
+	right: 0;
+	z-index: 50;
+	background: #0d1020;
+	border: 1px solid #2c3350;
+	border-top: none;
+	border-radius: 0 0 8px 8px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+	max-height: 280px;
+	overflow-y: auto;
+}
+
+.search-result-row {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 8px 12px;
+	cursor: pointer;
+	border-bottom: 1px solid #1a1f35;
+	transition: background 0.1s;
+}
+
+.search-result-row:last-child {
+	border-bottom: none;
+}
+
+.search-result-row:hover {
+	background: #151d33;
+}
+
+.sr-name {
+	font-size: 0.84rem;
+	font-weight: 500;
+	color: #f0f4ff;
+}
+
+.sr-path {
+	font-size: 0.72rem;
+	color: #667189;
+}
+
+@keyframes highlight-fade {
+	0% {
+		background: rgba(139, 92, 246, 0.35);
+	}
+	100% {
+		background: transparent;
+	}
+}
+
+.msg-highlight {
+	animation: highlight-fade 1.8s ease-out forwards;
+	border-radius: 4px;
+}
+
+/* ── Message expand/collapse toggle ── */
+.msg-expand-btn {
+	flex-shrink: 0;
+	color: #8b5cf6;
+	cursor: pointer;
+	font-size: 0.82rem;
+	line-height: 1;
+	padding: 0 2px;
+	transform: rotate(90deg);
+	transition:
+		transform 0.12s,
+		color 0.12s;
+	user-select: none;
+}
+
+.msg-expand-btn.collapsed {
+	transform: rotate(0deg);
+	color: #67728b;
+}
+
+.msg-details {
+	width: 100%;
+	overflow: hidden;
+	max-height: 600px;
+	transition: max-height 0.15s ease-out;
+}
+
+.msg-details.collapsed {
+	max-height: 0;
 }
