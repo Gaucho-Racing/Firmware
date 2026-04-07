@@ -130,7 +130,7 @@ int main(void)
 	pins_spi2.COPI_pin = LL_GPIO_PIN_15; // COPI
 	pins_spi2.CIPO_pin = LL_GPIO_PIN_14; // CIPO
 	pins_spi2.SCLK_pin = LL_GPIO_PIN_13; // SCK
-	pins_spi2.NCS_pin = LL_GPIO_PIN_12;	// NSS
+	pins_spi2.NCS_pin = LL_GPIO_PIN_12;  // NSS
 	pins_spi2.AFN = 5;
 
 	GR_SPI_Initialize(&handle_spi2, &config_spi2, &pins_spi2);
@@ -156,7 +156,7 @@ int main(void)
 	pins_spi3.COPI_pin = LL_GPIO_PIN_12; // COPI
 	pins_spi3.CIPO_pin = LL_GPIO_PIN_11; // CIPO
 	pins_spi3.SCLK_pin = LL_GPIO_PIN_10; // SCK
-	pins_spi3.NCS_pin = LL_GPIO_PIN_4;	// NSS
+	pins_spi3.NCS_pin = LL_GPIO_PIN_4;   // NSS
 	pins_spi3.AFN = 6;
 
 	GR_SPI_Initialize(&handle_spi3, &config_spi3, &pins_spi3);
@@ -180,7 +180,8 @@ int main(void)
 	}
 
 	for (int i = 0; i < msg.size; i++) {
-		while (GR_SPI_IsRxEmpty(&handle_spi2));
+		while (GR_SPI_IsRxEmpty(&handle_spi2))
+			;
 		uint8_t temp_byte;
 		GR_SPI_Message temp_msg = {0};
 		temp_msg.data = &temp_byte;
