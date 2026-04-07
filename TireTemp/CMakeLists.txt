@@ -44,7 +44,7 @@ target_sources(
 target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
-		GR_OLD_CAN_MESSAGES
+		CANfigurator
 		BitManipulations_Lib
 		MLX90640_LIB
 )
