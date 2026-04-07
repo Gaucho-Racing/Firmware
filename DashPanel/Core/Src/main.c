@@ -159,7 +159,7 @@ int main(void)
 			if (GETBIT(dashStatus.button_flags, 5)) {
 				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
-			// CAN_sendPing(Dash_Panel);
+
 			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			canReadyToSend = false;
@@ -234,16 +234,16 @@ static void MX_GPIO_Init(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
-	/**/
+	/* Button 1 Reset */
 	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_5);
 
-	/**/
+	/* Button 2 Reset */
 	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_6);
 
-	/**/
+	/* Button 3 Reset */
 	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_7);
 
-	/**/
+	/* Button 4 Reset */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_4);
 
 	/* TS Active */
@@ -324,19 +324,12 @@ static void GPIO_Interrupt_Init(void)
 	// Set default priority
 	NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 	NVIC_SetPriority(EXTI4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
-	NVIC_SetPriority(EXTI5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
-	NVIC_SetPriority(EXTI6_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
-	NVIC_SetPriority(EXTI7_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+	NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 
 	// Enable Interrupt
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
-	NVIC_EnableIRQ(EXTI5_IRQn);
-	NVIC_EnableIRQ(EXTI6_IRQn);
-	NVIC_EnableIRQ(EXTI7_IRQn);
-	NVIC_EnableIRQ(EXTI5_IRQn);
-	NVIC_EnableIRQ(EXTI6_IRQn);
-	NVIC_EnableIRQ(EXTI7_IRQn);
+	NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 
 void timer_inc(void)

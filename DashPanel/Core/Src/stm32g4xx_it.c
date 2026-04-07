@@ -270,9 +270,9 @@ void EXTI4_IRQHandler(void)
 	}
 }
 
-void EXTI5_IRQHandler(void)
-{
+void EXTI9_5_IRQHandler(void) {
 
+	// EXTI 5
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5)) {
 
 		SetBitInByte(dashStatus.button_flags, 2, true);
@@ -281,11 +281,8 @@ void EXTI5_IRQHandler(void)
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
 	}
-}
 
-void EXTI6_IRQHandler(void)
-{
-
+	// EXTI 6
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6)) {
 
 		SetBitInByte(dashStatus.button_flags, 3, true);
@@ -294,11 +291,8 @@ void EXTI6_IRQHandler(void)
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
 	}
-}
 
-void EXTI7_IRQHandler(void)
-{
-
+	// EXTI 7
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7)) {
 
 		SetBitInByte(dashStatus.button_flags, 4, true);
@@ -308,4 +302,5 @@ void EXTI7_IRQHandler(void)
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_7);
 	}
 }
+
 /* USER CODE END 1 */
