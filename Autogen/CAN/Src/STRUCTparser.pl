@@ -122,17 +122,18 @@ sub generate_header {
 			my $msg_name = $1;
 
 			my $skip_msg = 0;
-            my $j = $i + 1;
-            while ( $j < scalar @{$lines_ref} ) {
-                my $next_l = ${$lines_ref}[$j];
-                # Stop if we hit a new message or start of a new section
-                last if $next_l =~ /^\s{2} [^#\s]/smx || $next_l =~ /^\S/smx;
-                if ( $next_l =~ /^\s{4} generate: \s* false/smx ) {
-                    $skip_msg = 1;
-                    last;
-                }
-                $j++;
-            }
+			my $j        = $i + 1;
+			while ( $j < scalar @{$lines_ref} ) {
+				my $next_l = ${$lines_ref}[$j];
+
+				# Stop if we hit a new message or start of a new section
+				last if $next_l =~ /^\s{2} [^#\s]/smx || $next_l =~ /^\S/smx;
+				if ( $next_l =~ /^\s{4} generate: \s* false/smx ) {
+					$skip_msg = 1;
+					last;
+				}
+				$j++;
+			}
 
 			if ($current_msg) {
 				push @output, process_message( $current_msg, \@fields, $d_map, $prefix );
@@ -184,7 +185,7 @@ sub write_file {
 
 sub parse_field_details {
 	my ( $lines_ref, $index, $name ) = @_;
-	my ( $start, $data_type) = ( undef, 'u8');
+	my ( $start, $data_type ) = ( undef, 'u8' );
 	my $i = $index;
 
 	while ( ++$i < scalar @{$lines_ref} ) {
@@ -199,7 +200,7 @@ sub parse_field_details {
 			last;
 		}
 	}
-	my %res = defined $start ? ( name => $name, start => $start, type => $data_type) : ();
+	my %res = defined $start ? ( name => $name, start => $start, type => $data_type ) : ();
 	return ( \%res, $i - 1 );
 }
 
