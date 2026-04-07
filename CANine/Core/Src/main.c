@@ -94,7 +94,7 @@ static void can_rx_callback(uint32_t id, void *data, uint32_t size)
 {
 	uint8_t buf[FDCAN_MAX_DATA_BYTES];
 	memcpy(buf, data, size);
-	LOGOMATIC("CAN RX: id = 0x%1x size = %1u data[0]=0x%x\n", id, size, buf[0]);
+	LOGOMATIC("CAN RX: id = 0x%lx size = %lu data[0]=0x%x\n", id, size, buf[0]);
 }
 
 /* USER CODE END 0 */
