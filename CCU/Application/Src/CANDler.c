@@ -4,10 +4,10 @@
 #include "CANDler.h"
 
 #include "CCUStateData.h"
-#include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_DAT.h"
-#include "GR_OLD_MSG_ID.h"
-#include "GR_OLD_NODE_ID.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "Unused.h"
 #include "bitManipulations.h"
@@ -19,16 +19,13 @@ CANHandle *primary_can = {0};
 void Read_CAN(uint32_t ID, void *data, uint32_t size)
 {
 
-	GR_OLD_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
-	GR_OLD_NODE_ID nodeId = (0xFF00000 & ID) >> 20;
-
-	UNUSED(nodeId); // TODO Determine if calculating this value is actually needed
+	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
 	switch (messageId) {
-		case MSG_BCU_STATUS_2:
+		case GRCAN_BCU_STATUS_2:
 			// FIXME: if bad message do a thing
 
-			if (size != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
+			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				break;
 			}
@@ -41,19 +38,22 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			// What the rewrite would look like: STATUS 2
 
-			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
-			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->voltage_min_cell;
+			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
+			state_data.BCU_S2_20Volt = bcu_status_2->_20v_voltage;
+			state_data.BCU_S2_12Volt = bcu_status_2->_12v_voltage;
+			state_data.BCU_S2_SDC_Volt = bcu_status_2->sdc_voltage;
+			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->min_cell_voltage;
 			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
 
-			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->error_bits, 0);
-			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 1);
-			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->error_bits, 2);
-			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 3);
-			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->error_bits, 4);
+			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->status_flags, 0);
+			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 1);
+			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 2);
+			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 3);
+			state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 4);
 
-			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->error_bits, 5);
-			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->error_bits, 6);
-			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->error_bits, 7);
+			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->status_flags, 5);
+			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
+			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
 
 			break;
 
@@ -159,17 +159,22 @@ void CAN_Configure(void)
 
 void SendPrechargeStatus(CCU_StateData *state_data)
 {
+
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & MSG_BCU_PRECHARGE) << 8) | (0xFF & GR_BCU);
+	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	msg.tx_header.DataLength = 1;
+	msg.tx_header.DataLength = FDCAN_DLC_BYTES_1;
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
 
 	msg.data[0] = (state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+
+	if (sizeof(msg) != sizeof(GRCAN_BCU_PRECHARGE_MSG)) {
+		LOGOMATIC("Bad CCU CAN Tx length!, Size %u\n", sizeof(msg));
+	}
 	LOGOMATIC("PRECHARGE SET: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);

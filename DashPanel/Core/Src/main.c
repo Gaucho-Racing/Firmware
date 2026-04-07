@@ -20,6 +20,7 @@
 #include "main.h"
 
 #include "CANdler.h"
+#include "bitManipulations.h"
 #include "dashutils.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -58,6 +59,8 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+uint32_t timer = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,6 +104,7 @@ int main(void)
 	LL_PWR_DisableUCPDDeadBattery();
 
 	/* USER CODE BEGIN Init */
+	HAL_Init();
 	CANInitialize();
 	GPIO_Interrupt_Init();
 	Setup_Logomatic(&logomaticConfig);
@@ -119,6 +123,10 @@ int main(void)
 	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
+	// uint32_t previous_time = HAL_GetTick();
+	// uint32_t current_time;
+	uint8_t tick_freq = HAL_GetTickFreq();
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -127,38 +135,38 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		if (canReadyToSend) {
+		if (canReadyToSend || timer * tick_freq >= 100) {
 
-			GR_MEDIUM_DASH_STATUS_MSG msg_struct;
+			GRCAN_DASH_STATUS_MSG msg_struct;
 
 			// MSB, PLEASE CHANGE IF LSB
 			msg_struct.button_bits = dashStatus.TSActiveButton << 7 | dashStatus.RTDButton << 6 | dashStatus.button1 << 5 | dashStatus.button2 << 4 | dashStatus.button3 << 3 | dashStatus.button4 << 2
 			msg_struct.led_bits = dashStatus.led_bits;
+			msg_struct.button_flags = dashStatus.button_flags;
 
-			if (dashStatus.TSActiveButton) {
-				dashStatus.TSActiveButton = 0;
+			if (GETBIT(dashStatus.button_flags, 0)) { // TSActive
+				SetBitInByte(dashStatus.button_flags, 0, false);
 			}
-			if (dashStatus.RTDButton) {
-				dashStatus.RTDButton = 0;
+			if (GETBIT(dashStatus.button_flags, 1)) { // RTD
+				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
-
-			if (dashStatus.button1) {
-				dashStatus.button1 = 0;
+			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons(this through the end)
+				SetBitInByte(dashStatus.button_flags, 2, false);
 			}
-			if (dashStatus.button2) {
-				dashStatus.button2 = 0;
+			if (GETBIT(dashStatus.button_flags, 3)) {
+				SetBitInByte(dashStatus.button_flags, 3, false);
 			}
-			if (dashStatus.button3) {
-				dashStatus.button3 = 0;
+			if (GETBIT(dashStatus.button_flags, 4)) {
+				SetBitInByte(dashStatus.button_flags, 4, false);
 			}
-			if (dashStatus.button3) {
-				dashStatus.button3 = 0;
+			if (GETBIT(dashStatus.button_flags, 5)) {
+				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
-
-			// CAN_sendPing(GR_DASH_PANEL);
-			CAN_sendECU(can_handler, &msg_struct, GR_ECU);
+			// CAN_sendPing(Dash_Panel);
+			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			canReadyToSend = false;
+			timer = 0;
 		}
 
 		// Neopixel
@@ -329,6 +337,11 @@ static void GPIO_Interrupt_Init(void)
 	NVIC_EnableIRQ(EXTI5_IRQn);
 	NVIC_EnableIRQ(EXTI6_IRQn);
 	NVIC_EnableIRQ(EXTI7_IRQn);
+}
+
+void timer_inc(void)
+{
+	timer++;
 }
 
 /* USER CODE END 4 */

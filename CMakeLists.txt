@@ -24,9 +24,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
-# FIXME Temporary holdover for CAN messages until URCA is ready for merge
-include("${lib_path}/FancyLayers-RENAME/GRCAN/TemporaryHoldover/temp.cmake")
-
 # Vendor
 include("${lib_path}/Vendor/CMSIS_5/cmsis_5.cmake")
 include("${lib_path}/Vendor/STM32_HAL_LL/cube.cmake")

@@ -181,7 +181,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	/* USER CODE BEGIN SysTick_IRQn 0 */
-
+	timer_inc();
 	/* USER CODE END SysTick_IRQn 0 */
 
 	/* USER CODE BEGIN SysTick_IRQn 1 */
@@ -223,7 +223,8 @@ void EXTI3_IRQHandler(void)
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3)) {
 
 		// Blame Electronics if hardware debounce doesn't work
-		dashStatus.TSActiveButton = 1;
+		SetBitInByte(dashStatus.button_flags, 0, true);
+		// dashStatus = 1;
 		canReadyToSend = true;
 		LOGOMATIC("TS Active Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
@@ -251,7 +252,7 @@ void EXTI4_IRQHandler(void)
 		if (pin_a) {
 
 			// A4 Triggered
-			dashStatus.RTDButton = 1;
+			SetBitInByte(dashStatus.button_flags, 1, true);
 			canReadyToSend = true;
 			LOGOMATIC("RTD Pressed!");
 
@@ -259,8 +260,9 @@ void EXTI4_IRQHandler(void)
 		if (pin_c) {
 
 			// C4 Triggered
-			dashStatus.button1 = 1;
-			LOGOMATIC("Button 1 Pressed!");
+			SetBitInByte(dashStatus.button_flags, 5, true);
+			canReadyToSend = true;
+			LOGOMATIC("Button 4 Pressed!");
 
 		}
 
@@ -273,8 +275,9 @@ void EXTI5_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5)) {
 
-		dashStatus.button2 = 1;
-		LOGOMATIC("Button 2 Pressed!");
+		SetBitInByte(dashStatus.button_flags, 2, true);
+		canReadyToSend = true;
+		LOGOMATIC("Button 1 Pressed!");
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
 	}
@@ -285,8 +288,9 @@ void EXTI6_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6)) {
 
-		dashStatus.button3 = 1;
-		LOGOMATIC("Button 3 Pressed!");
+		SetBitInByte(dashStatus.button_flags, 3, true);
+		canReadyToSend = true;
+		LOGOMATIC("Button 2 Pressed!");
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
 	}
@@ -297,8 +301,9 @@ void EXTI7_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7)) {
 
-		dashStatus.button4 = 1;
-		LOGOMATIC("Button 4 Pressed!");
+		SetBitInByte(dashStatus.button_flags, 4, true);
+		canReadyToSend = true;
+		LOGOMATIC("Button 3 Pressed!");
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_7);
 	}
