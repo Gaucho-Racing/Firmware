@@ -286,8 +286,9 @@ sub handle_multi_field_range {
 		${$idx_ref}++;
 	}
 
-	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
-	my $v_name = $has_error   ? 'error_fault_violation_bits' : 'ping_block';
-	my $suffix = ( $len > 1 ) ? "[$len]"                     : $EMPTY_STR;
-	return sprintf "\tuint8_t    %s%s;\n", $v_name, $suffix;
+	my $len        = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
+	my $base       = $has_error ? 'error_fault_violation_bits' : 'ping_block';
+	my $identifier = $base . '_b' . $start_byte;
+	my $suffix     = ( $len > 1 ) ? "[$len]" : $EMPTY_STR;
+	return sprintf "\tuint8_t    %s%s;\n", $identifier, $suffix;
 }

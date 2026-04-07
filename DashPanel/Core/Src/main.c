@@ -123,8 +123,8 @@ int main(void)
 	NeoPixel_Init();
 	/* USER CODE BEGIN 2 */
 
-	uint32_t previous_time = HAL_GetTick();
-	uint32_t current_time;
+	// uint32_t previous_time = HAL_GetTick();
+	// uint32_t current_time;
 	uint8_t tick_freq = HAL_GetTickFreq();
 
 	/* USER CODE END 2 */
@@ -161,7 +161,7 @@ int main(void)
 				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
 			// CAN_sendPing(Dash_Panel);
-			CAN_sendECU(can_handler, &msg_struct, ECU);
+			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			LOGOMATIC("CAN\n");
 

@@ -443,23 +443,23 @@ typedef struct {
 
 /** ECU Pedals Data */
 typedef struct {
-	/** Byte 0 (Byte 0) */
-	uint16_t   bspd_signal;
-	/** Byte 2 (Byte 2) */
-	uint16_t   bse_signal;
-	/** Byte 4 (Byte 4) */
-	uint16_t   apps_1_signal;
-	/** Byte 6 (Byte 6) */
-	uint16_t   apps_2_signal;
-	/** Byte 8 (Byte 8) */
-	uint16_t   brakeline_f_signal;
-	/** Byte 10 (Byte 10) */
-	uint16_t   brakeline_r_signal;
-	/** Byte 12 (Byte 12) */
-	uint16_t   steering_angle_signal;
-	/** Byte 14 (Byte 14) */
-	uint16_t   aux_signal;
-} GR_OLD_ECU_PEDALS_DATA_MSG;
+	/** 4-20 mA signal (Byte 0) */
+	uint16_t bspd_signal;
+	/** 4-20 mA signal (Byte 2) */
+	uint16_t bse_signal;
+	/** 4-20 mA signal (Byte 4) */
+	uint16_t apps_1_signal;
+	/** 4-20 mA signal (Byte 6) */
+	uint16_t apps_2_signal;
+	/** 4-20 mA signal (Byte 8) */
+	uint16_t brakeline_f_signal;
+	/** 4-20 mA signal (Byte 10) */
+	uint16_t brakeline_r_signal;
+	/** 4-20 mA signal (Byte 12) */
+	uint16_t steering_angle_signal;
+	/** 4-20 mA signal (Byte 14) */
+	uint16_t aux_signal;
+} GRCAN_ECU_ANALOG_DATA_MSG;
 
 /** GPS LAT */
 typedef struct {
@@ -524,5 +524,14 @@ typedef struct {
 	/** Byte 0 (Byte 0) */
 	uint8_t    elapsed_cycles;
 } GR_OLD_ECU_PERFORMANCE_MSG;
+
+/** ECU Performance */
+typedef struct {
+	/**
+	 * Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+	 * data type: u32
+	 * units: Clock Cycles (Byte 0) */
+	uint32_t elapsed_cycles;
+} GRCAN_ECU_PERFORMANCE_MSG;
 
 #endif

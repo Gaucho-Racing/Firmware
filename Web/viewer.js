@@ -113,6 +113,26 @@ window.addEventListener("DOMContentLoaded", function () {
 		el.innerHTML = `<span class="placeholder">${text}</span>`;
 	}
 
+	function showDownloadNotice(message) {
+		const existing = document.getElementById("download-notice");
+		if (existing) existing.remove();
+		const notice = document.createElement("div");
+		notice.id = "download-notice";
+		notice.className = "download-notice";
+		notice.innerHTML =
+			'<span class="download-notice-icon">\u2139\ufe0f</span>' +
+			'<span class="download-notice-msg"></span>' +
+			'<button class="download-notice-close" aria-label="Dismiss">&times;</button>';
+		notice.querySelector(".download-notice-msg").textContent = message;
+		notice
+			.querySelector(".download-notice-close")
+			.addEventListener("click", () => notice.remove());
+		document.body.appendChild(notice);
+		setTimeout(() => {
+			if (notice.parentNode) notice.remove();
+		}, 5000);
+	}
+
 	function makeItem(labelText, hasChevron) {
 		const item = document.createElement("div");
 		item.className = "panel-item";
@@ -143,9 +163,12 @@ window.addEventListener("DOMContentLoaded", function () {
 	function appendNodeIdAccent(item, nodeName) {
 		const nodeId = nodeIdForName(nodeName);
 		if (!nodeId) return;
+		const isCustom = nodeId === "0x00";
 		const accent = document.createElement("span");
-		accent.className = "item-accent";
-		accent.textContent = nodeId;
+		accent.className = isCustom
+			? "item-accent item-accent-custom"
+			: "item-accent";
+		accent.textContent = isCustom ? "Custom" : nodeId;
 		const chev = item.querySelector(".item-chevron");
 		if (chev) {
 			item.insertBefore(accent, chev);
@@ -369,17 +392,36 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 
 		dlBtn.addEventListener("click", function () {
-			const oldText = editor.getOriginalRawText
+			const doc = window.GrcanDocument;
+			const origRaw = editor.getOriginalRawText
 				? editor.getOriginalRawText()
 				: "";
-			const newText = editor.getRawText ? editor.getRawText() : "";
-			if (!window.DiffViewer || oldText === newText) {
+			const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
+			const newDownload = doc
+				? doc.getSerializedText()
+				: editor.getRawText
+					? editor.getRawText()
+					: "";
+			if (origDownload === newDownload) {
+				// Download content unchanged — check if there are unsaved working changes
+				// (e.g. unrouted message definitions) and surface a notice.
+				const rawChanged = editor.getRawText && editor.getRawText() !== origRaw;
+				if (rawChanged) {
+					showDownloadNotice(
+						"Nothing new to export \u2014 message definitions without routes are excluded. Add a route to include them.",
+					);
+				} else {
+					editor.downloadCando();
+				}
+				return;
+			}
+			if (!window.DiffViewer) {
 				editor.downloadCando();
 				return;
 			}
 			window.DiffViewer.show({
-				oldText,
-				newText,
+				oldText: origDownload,
+				newText: newDownload,
 				onConfirm: function () {
 					editor.downloadCando();
 				},
@@ -1142,14 +1184,20 @@ window.addEventListener("DOMContentLoaded", function () {
 				"You have unsaved changes. Download your changes before switching reference?",
 			);
 			if (wantsDownload) {
-				const oldText = editor.getOriginalRawText
+				const doc = window.GrcanDocument;
+				const origRaw = editor.getOriginalRawText
 					? editor.getOriginalRawText()
 					: "";
-				const newText = editor.getRawText ? editor.getRawText() : "";
-				if (window.DiffViewer && oldText !== newText) {
+				const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
+				const newDownload = doc
+					? doc.getSerializedText()
+					: editor.getRawText
+						? editor.getRawText()
+						: "";
+				if (window.DiffViewer && origDownload !== newDownload) {
 					window.DiffViewer.show({
-						oldText,
-						newText,
+						oldText: origDownload,
+						newText: newDownload,
 						onConfirm: function () {
 							editor.downloadCando();
 						},
@@ -1188,6 +1236,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		setHierarchyHeaders();
 		wireEditModeButtons();
 		setPlaceholder(firstList, "Loading...");
+		// Load physical topology in the background; non-blocking.
+		if (window.PhysicalTopology) window.PhysicalTopology.load();
 
 		const [branches, tags] = await Promise.all([
 			window.GrcanApi.fetchBranches(),
