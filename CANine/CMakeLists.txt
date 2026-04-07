@@ -36,6 +36,11 @@ target_sources(
 		Core/Src/fdcan.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE VCP_LIB PERIPHERAL_CAN_LIB)
+target_link_libraries(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		VCP_LIB
+		PERIPHERAL_CAN_LIB
+)
 
 target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
