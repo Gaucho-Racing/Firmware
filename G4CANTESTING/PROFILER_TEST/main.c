@@ -135,14 +135,14 @@ int main(void)
 	LOGOMATIC("Booted!\n");
 
 	// LOGOMATIC("running can_stress_test:\n");
-	can_stress_test();
+	profiler_test();
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
 		LOGOMATIC("Main Loop\n");
-		LL_mDelay(10000);
+		LL_mDelay(1000);
 
 		// Receive on GPIOs
 		// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET
