@@ -31,7 +31,7 @@ bool BCU_Warnings(const CCU_StateData *state_data)
 		LOGOMATIC("Under 12v Warning\n");
 		return true;
 	} else if (state_data->BCU_S2_UNDERVOLTSDC_WARNING) {
-		LOGOMATIC("Undervolt TSDC Wanring\n");
+		LOGOMATIC("Undervolt TSDC Warning\n");
 		return true;
 	} else {
 		return false;
@@ -72,14 +72,7 @@ bool SecondaryChecks(const CCU_StateData *state_data)
 	// TODO: Implement secondary checks based of rules (This may be a different file entirely)
 	// FIXME: Double check what that actually looks like and means
 
-	/** Check 1:
-	 * TS Voltage Discharge
-	 *
-	 * TS voltage must decrease below 60VDC in 5 sec.
-	 * Allow team to set pace of tests to prevent overheating precharge/discharge resistors.
-	 */
-
-	/** Check 2:
+	/**
 	 * Maximum Power/Voltage Violation
 	 *
 	 *EV.3.4.1 A Violation occurs when one or two of these exist:
@@ -88,5 +81,14 @@ bool SecondaryChecks(const CCU_StateData *state_data)
 		for one or the two conditions:
 		• Continuously for 100 ms or more
 		• After a moving average over 500 ms is applied
+		The maximum power measured by the Energy Meter must not exceed 80 kW
+		The maximum permitted voltage that may occur between any two points must not exceed 600 V DC
 	 */
+
+	/**
+	 * Maximum Temperatures
+	 *Temperatures (considering measurement accuracy) must stay below the lower of the two:
+		• The maximum cell temperature limit stated in the cell data sheet
+		• 60°C
+	*/
 }
