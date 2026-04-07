@@ -1,7 +1,0 @@
-add_library(GR_OLD_CAN_MESSAGES INTERFACE)
-
-target_include_directories(
-	GR_OLD_CAN_MESSAGES
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
-)
