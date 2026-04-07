@@ -25,7 +25,6 @@
 
 #include "Logomatic.h"
 #include "can.h"
-#include "fdcan.h"
 #include "vcp.h"
 /* USER CODE END Includes */
 
