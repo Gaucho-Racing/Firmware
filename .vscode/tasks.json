@@ -190,15 +190,6 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_FILTER_TEST"
 		},
 		{
-			"label": "CMake: configure and build CAN_INTERNAL_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_INTERNAL_TEST"
-		},
-		{
 			"label": "CMake: configure and build CAN_RELEASE_TEST",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -226,13 +217,13 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target PROFILER_TEST"
 		},
 		{
-			"label": "CMake: configure and build G431x8_CAN_EXTERNAL_TWO_NODE",
+			"label": "CMake: configure and build G431x8_CAN_EXTERNAL_TEST",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G431x8_CAN_EXTERNAL_TWO_NODE"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G431x8_CAN_EXTERNAL_TEST"
 		}
 	]
 }

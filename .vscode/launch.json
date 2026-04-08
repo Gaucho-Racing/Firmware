@@ -532,37 +532,6 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CAN_INTERNAL_TEST.elf",
-			"name": "CAN_INTERNAL_TEST",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CAN_INTERNAL_TEST",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CAN_FILTER_TEST.elf",
 			"name": "CAN_FILTER_TEST",
 			"request": "launch",
@@ -717,8 +686,8 @@
 			}
 		},{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G431x8_CAN_EXTERNAL_TWO_NODE.elf",
-			"name": "G431x8_CAN_EXTERNAL_TWO_NODE",
+			"executable": "${command:cmake.buildDirectory}/G431x8_CAN_EXTERNAL_TEST.elf",
+			"name": "G431x8_CAN_EXTERNAL_TEST",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -727,7 +696,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G431x8_CAN_EXTERNAL_TWO_NODE",
+			"preLaunchTask": "CMake: configure and build G431x8_CAN_EXTERNAL_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {

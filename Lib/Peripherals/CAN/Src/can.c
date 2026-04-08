@@ -180,6 +180,21 @@ CANHandle *can_init(const CANConfig *config)
 		}
 	}
 #endif
+
+//TODO: figure out a better way to extend this to other families besides ifdef soup
+#elif defined(STM32G431xx)
+#ifdef USECAN1
+if (config->fdcan_instance == FDCAN1) {
+	if (CAN1.init) {
+		LOGOMATIC("CAN: CAN1 is already initialized\n");
+		return CAN_SUCCESS;
+	} else {
+		canHandle = &CAN1;
+		canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+	}
+}
+#endif
+
 #endif
 
 	// #elif defined(STM32L476xx)
@@ -554,7 +569,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 
 		// TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
-		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
+		handle->rx_callback(rx_header.Identifier, rx_data, CANFD_DLCtoBytes[rx_header.DataLength]);
 	}
 
 	//__set_BASEPRI(prev_priority);
@@ -701,7 +716,7 @@ static inline void fdcan_disable_shared_clock(void)
 // valid only for STM32G4
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1)
 {
-#ifdef STM32G4
+#ifdef STM32G474xx
 	if (instance == FDCAN1) {
 		*it0 = FDCAN1_IT0_IRQn;
 		*it1 = FDCAN1_IT1_IRQn;
@@ -717,7 +732,16 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 		*it1 = FDCAN3_IT1_IRQn;
 		return CAN_SUCCESS;
 	}
+
+	//TODO: START of possible ifdef soup
+#elif defined(STM32G431xx)
+if (instance == FDCAN1) {
+		*it0 = FDCAN1_IT0_IRQn;
+		*it1 = FDCAN1_IT1_IRQn;
+		return CAN_SUCCESS;
+}
 #endif
+
 
 	LOGOMATIC("can_get_irqs: could not obtain irq #s\n");
 	return CAN_ERROR; // invalid instance
@@ -908,6 +932,10 @@ static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 		return "FDCAN2";
 	} else if (instance == FDCAN3) {
 		return "FDCAN3";
+	}
+#elif defined(STM32G431xx)
+	if (instance == FDCAN1) {
+		return "FDCAN1";
 	}
 #endif
 	return "UNKNOWN";
