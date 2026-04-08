@@ -9,8 +9,14 @@
 
 typedef CAN_STATUS can_cfg_helper(FDCAN_GlobalTypeDef*, CAN_RXCallback, CANConfig*, uint32_t, uint32_t, uint32_t);
 
+#ifdef STM32G431xx
 static can_cfg_helper defaultSTM32G431x8_CANCfg;
+#endif
+
+//TODO: its looking a little soupy
+#ifdef STM32G474xx
 static can_cfg_helper defaultSTM32G474xE_CANCfg;
+#endif
 
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
