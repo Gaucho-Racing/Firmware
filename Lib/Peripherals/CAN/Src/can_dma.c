@@ -163,7 +163,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 		pData = (uint8_t *)RxAddress;
 
 		// TODO: sanitize this because a lot can go wrong here
-		uint32_t bytes = DLCtoBytes[pRxHeader->DataLength];
+		uint32_t bytes = CANFD_DLCtoBytes[pRxHeader->DataLength];
 		uint32_t wordCount = bytes >> 2;
 		uint32_t tailBytes = bytes & 0x3U;
 		uint32_t wordsToBytes = wordCount << 2;
@@ -217,7 +217,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 		}
 #endif
 
-		/*for (ByteCounter = 0; ByteCounter < DLCtoBytes[pRxHeader->DataLength]; ByteCounter++) {
+		/*for (ByteCounter = 0; ByteCounter < CANFD_DLCtoBytes[pRxHeader->DataLength]; ByteCounter++) {
 			pRxData[ByteCounter] = pData[ByteCounter];
 		}*/
 

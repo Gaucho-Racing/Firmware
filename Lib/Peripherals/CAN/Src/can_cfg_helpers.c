@@ -14,9 +14,9 @@ static can_cfg_helper defaultSTM32G474xE_CANCfg;
 
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
-#ifdef STM32G474xE
+#ifdef STM32G474xx
 	return defaultSTM32G474xE_CANCfg(instance, callback, out_cfg, Mode, numStdFilters, numExtFilters);
-#elif defined(STM32G431x8)
+#elif defined(STM32G431xx)
 	return defaultSTM32G431x8_CANCfg(instance, callback, out_cfg, Mode, numStdFilters, numExtFilters);
 #elif defined(STM32L4)
 #error "STM32L4 is untested"
@@ -29,6 +29,7 @@ int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *o
 
 // TODO: Abstract out the system clock calculation
 // Abstracts out everything but the mode and callback
+#ifdef STM32G474xx
 CAN_STATUS defaultSTM32G474xE_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
 	CANConfig canCfg;
@@ -115,8 +116,9 @@ CAN_STATUS defaultSTM32G474xE_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 
 	return CAN_ERROR;
 }
+#endif
 
-
+#ifdef STM32G431xx
 CAN_STATUS defaultSTM32G431x8_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
 	CANConfig canCfg;
@@ -183,3 +185,4 @@ CAN_STATUS defaultSTM32G431x8_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 
 	return CAN_ERROR;
 }
+#endif

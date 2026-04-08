@@ -8,7 +8,7 @@
 #error "Unsupported STM32 Family"
 #endif
 
-// #include "can_cfg.h"
+#include "can_cfg.h"
 #include "can_platform_deps.h"
 // #include "circularBuffer.h"
 #include <stdbool.h>
@@ -37,6 +37,8 @@ typedef struct {
 } CANConfig;
 
 #define FDCAN_MAX_DATA_BYTES 64
+// TODO - allow user to send data without needing to construct a header for the buffer
+//  TODO: G4 tests are dependent on the System clock configuration??
 typedef struct {
 	FDCAN_TxHeaderTypeDef tx_header;
 	uint8_t data[FDCAN_MAX_DATA_BYTES];
