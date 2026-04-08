@@ -224,6 +224,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target PROFILER_TEST"
+		},
+		{
+			"label": "CMake: configure and build G431x8_CAN_EXTERNAL_TWO_NODE",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G431x8_CAN_EXTERNAL_TWO_NODE"
 		}
 	]
 }
