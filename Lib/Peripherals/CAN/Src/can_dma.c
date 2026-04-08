@@ -8,9 +8,14 @@
 
 // #include "can_platform_deps.h"
 #include "Logomatic.h"
-#include "STM32G4_hal_fdcan_defines.h"
 
-#define DMA_INTERRUPT // for some reason interrupts are more stable than polling for the transfer complete, so don't comment this
+#ifdef STM32G4
+#include "STM32G4_hal_fdcan_defines.h"
+#else
+#error "CAN with DMA not yet supported for this family"
+#endif
+
+#define DMA_INTERRUPT // for some reason interrupts are more stable than polling for the transfer complete, so don't comment this out
 
 // static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 static void DMA_M2M_WordTransfer(uint8_t *src, uint8_t *dst, uint32_t word_count);
