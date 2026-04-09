@@ -30,27 +30,12 @@ set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp -MMD -MP")
 
 # Compiler Flags for Build Types
 set(CMAKE_C_FLAGS_DEBUG "-O0 -g3")
-set(
-	CMAKE_C_FLAGS_RELWITHDEBINFO
-	"-Og -g3 -Werror"
-)
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "-Og -g3 -Werror")
 set(CMAKE_C_FLAGS_RELEASE "-O2 -g0 -Werror -flto=auto")
-set(
-	CMAKE_C_FLAGS_MINSIZEREL
-	"-Os -g0 -Werror -flto=auto"
-)
+set(CMAKE_C_FLAGS_MINSIZEREL "-Os -g0 -Werror -flto=auto")
 
 # Linker Flags for Build Types
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-fno-lto")
-set(
-	CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
-	"-Wl,--fatal-warnings"
-)
-set(
-	CMAKE_EXE_LINKER_FLAGS_RELEASE
-	"-Wl,--fatal-warnings -flto=auto"
-)
-set(
-	CMAKE_EXE_LINKER_FLAGS_MINSIZEREL
-	"-Wl,--fatal-warnings -flto=auto"
-)
+set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "-Wl,--fatal-warnings")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,--fatal-warnings -flto=auto")
+set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "-Wl,--fatal-warnings -flto=auto")
