@@ -28,17 +28,14 @@ set(
 )
 set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp -MMD -MP")
 
-# Build Type Configuration
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g3")
-elseif(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Og -g3 -Werror")
-elseif(CMAKE_BUILD_TYPE MATCHES Release)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -g0 -Werror -flto=auto")
-	set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -flto=auto")
-elseif(CMAKE_BUILD_TYPE MATCHES MinSizeRel)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os -g0 -Werror -flto=auto")
-	set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -flto=auto")
-else()
-	message(SEND_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
-endif()
+# Compiler Flags for Build Types
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -g3")
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} -Og -g3 -Werror")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -g0 -Werror -flto=auto")
+set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} -Os -g0 -Werror -flto=auto")
+
+# Linker Flags for Build Types
+# set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} APPLICABLE_FLAGS_GO_HERE")
+set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} -Wl,--fatal-warnings")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--fatal-warnings -flto=auto")
+set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -Wl,--fatal-warnings -flto=auto")
