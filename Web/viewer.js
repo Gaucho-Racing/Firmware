@@ -86,7 +86,10 @@ window.addEventListener("DOMContentLoaded", function () {
 		const url = new URL(window.location.href);
 		const isCustomFile = !!window.GrcanApi.isLocalMode();
 		const hasEdits =
-			!isCustomFile && !!editor && !!editor.hasUnsavedEdits && editor.hasUnsavedEdits();
+			!isCustomFile &&
+			!!editor &&
+			!!editor.hasUnsavedEdits &&
+			editor.hasUnsavedEdits();
 
 		if (isCustomFile) {
 			url.search = "";
