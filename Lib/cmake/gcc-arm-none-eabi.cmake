@@ -26,24 +26,15 @@ set(
 	CMAKE_C_FLAGS
 	"${CMAKE_C_FLAGS} ${TARGET_FLAGS} -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -fstack-usage"
 )
-set(
-	CMAKE_ASM_FLAGS
-	"${CMAKE_C_FLAGS} -x assembler-with-cpp -MMD -MP"
-)
+set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp -MMD -MP")
 
 # Compiler Flags for Build Types
-set(
-	CMAKE_C_FLAGS_DEBUG
-	"${CMAKE_C_FLAGS_DEBUG} -O0 -g3"
-)
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -g3")
 set(
 	CMAKE_C_FLAGS_RELWITHDEBINFO
 	"${CMAKE_C_FLAGS_RELWITHDEBINFO} -Og -g3 -Werror"
 )
-set(
-	CMAKE_C_FLAGS_RELEASE
-	"${CMAKE_C_FLAGS_RELEASE} -O2 -g0 -Werror -flto=auto"
-)
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -g0 -Werror -flto=auto")
 set(
 	CMAKE_C_FLAGS_MINSIZEREL
 	"${CMAKE_C_FLAGS_MINSIZEREL} -Os -g0 -Werror -flto=auto"
