@@ -63,7 +63,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	if (spiHandle->Instance == spi1) {
+	if (spiHandle->Instance == SPI1) {
 		/* USER CODE BEGIN spi1_MspInit 0 */
 
 		/* USER CODE END spi1_MspInit 0 */
@@ -80,14 +80,14 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-		GPIO_InitStruct.Alternate = GPIO_AF5_spi1;
+		GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 		GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_7;
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-		GPIO_InitStruct.Alternate = GPIO_AF5_spi1;
+		GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 		/* USER CODE BEGIN spi1_MspInit 1 */
@@ -99,7 +99,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef *spiHandle)
 {
 
-	if (spiHandle->Instance == spi1) {
+	if (spiHandle->Instance == SPI1) {
 		/* USER CODE BEGIN spi1_MspDeInit 0 */
 
 		/* USER CODE END spi1_MspDeInit 0 */
