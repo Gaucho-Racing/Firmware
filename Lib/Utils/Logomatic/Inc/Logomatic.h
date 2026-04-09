@@ -113,8 +113,10 @@ void Setup_Logomatic(LogomaticConfig *config);
  */
 #define LOGOMATIC(...)                                                                                                                                                                                 \
 	do {                                                                                                                                                                                           \
-		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"") printf(__VA_ARGS__);                                                                           \
-		_Pragma("GCC diagnostic pop")                                                                                                                                                          \
+		_Pragma("GCC diagnostic push");                                                                                                                                                        \
+		_Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"");                                                                                                                              \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+		_Pragma("GCC diagnostic pop");                                                                                                                                                         \
 	} while (0)
 
 #else
@@ -127,10 +129,10 @@ void Setup_Logomatic(LogomaticConfig *config);
 #define LOGOMATIC(...)                                                                                                                                                                                 \
 	do {                                                                                                                                                                                           \
 		if (0) {                                                                                                                                                                               \
-			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"") printf(__VA_ARGS__);                                                                   \
-			_Pragma(                                                                                                                                                                       \
-			    "GCC diagnostic pop") \                                                                                                                                                  
-		  \
+			_Pragma("GCC diagnostic push");                                                                                                                                                \
+			_Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"");                                                                                                                      \
+			printf(__VA_ARGS__);                                                                                                                                                           \
+			_Pragma("GCC diagnostic pop");                                                                                                                                                 \
 		}                                                                                                                                                                                      \
 	} while (0)
 #endif
