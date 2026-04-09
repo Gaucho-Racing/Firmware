@@ -7,21 +7,10 @@
 
 //#include "can_external_test_cfg.h"
 
-// CAN Configuration
-// #define OLD_SAM
-
-//define
+//=========== Test Configuration ================
 #define LOOPBACK_MODE FDCAN_MODE_NORMAL
 //#define RELEASE_AFTER_TEST
-#ifdef RELEASE_AFTER_TEST
-#pragma message "RELEASING CAN AFTER TESTS"
-#endif
-
-#define NODE_ID 2
-
-#ifndef NODE_ID
-#error "can_external_test.c: please define node in can_external_test_cfg.h"
-#endif
+#define NODE_ID 1
 
 //TODO: Decide how much of these parameters should go into config
 #define NUM_NODES 2	// total number of nodes on the bus (including this one)
@@ -29,10 +18,19 @@
 
 #define CAN_PACKET_SIZE FDCAN_DLC_BYTES_64 // max is 64
 
+
+// ======= CONFIG CHECKS ==========
+#ifdef RELEASE_AFTER_TEST
+#pragma message "RELEASING CAN AFTER TESTS"
+#endif
+
+#ifndef NODE_ID
+#error "can_external_test.c: please define node in can_external_test_cfg.h"
+#endif
+
+
 #define NUM_TESTS FDCAN_DLC_BYTES_64
 static float rx_stats[NUM_TESTS + 1] = {0};
-
-
 
 
 //TODO: figure out if ifdef soup is avoidable
