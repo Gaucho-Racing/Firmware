@@ -1,17 +1,18 @@
 #ifndef __MAG_H__
 #define __MAG_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "spi.h"
+#include "stm32g474xx.h"
 
+typedef struct {
+	SPI_HandleTypeDef *spi_port;
+	uint16_t chip_id;
+	GPIO_TypeDef *port;
+	uint16_t pin;
+	/* data */
+} mag;
 
-#ifdef __cplusplus
-}
 #endif
-
-
-#endif // __MAG_H__

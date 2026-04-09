@@ -70,7 +70,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 		/* spi1 clock enable */
 		__HAL_RCC_spi1_CLK_ENABLE();
 
-		__HAL_RCC_GPIOC_CLK_ENABLE();
+		__HAL_RCC_GPIOA_CLK_ENABLE();
 		/**spi1 GPIO Configuration
 		PA5     ------> spi1_SCK
 		PA6     ------> spi1_MISO
@@ -107,9 +107,9 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef *spiHandle)
 		__HAL_RCC_spi1_CLK_DISABLE();
 
 		/**spi1 GPIO Configuration
-		PC10     ------> spi1_SCK
-		PC11     ------> spi1_MISO
-		PC12     ------> spi1_MOSI
+		PA5     ------> spi1_SCK
+		PA6     ------> spi1_MISO
+		PA7     ------> spi1_MOSI
 		*/
 		HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
 

@@ -17,21 +17,135 @@ uint8_t mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, 
 	tx_word[1] |= 0x80;
 	tx_word[0] = 0x69;
 	/*
-	Okay so for one of these transmits we need to follow the following operation:bmi323_dev
+	Okay so for one of these transmits we need to follow the following operation:mag_dev
 	1. to read the register we want to:
 	  transmit first 8 bytes, then transmit a fake 8 bytes
 	  after we want to read 16 bytes. This should complete a single read
 	*/
 	// first we read do the dummy read to switch to spi mode
-	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_RESET);
-	status = HAL_SPI_TransmitReceive(bmi323_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
-	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	status = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 	// rx_word = 0;
-	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_RESET);
-	status = HAL_SPI_TransmitReceive(bmi323_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
-	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	status = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 	if (rx_word[3] == 0x43) {
 		return HAL_OK;
 	}
 	return HAL_ERROR;
+}
+
+uint16_t mag_read(mag *mag_dev, uint8_t reg)
+{
+	uint16_t data;
+	// i2c_read_single(mag_I2C_ADDR, reg, &data, mag_dev->i2c_port);
+	return data;
+}
+
+uint8_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
+{
+	// i2c_write(mag_I2C_ADDR, reg, data, mag_dev->i2c_port);
+	return 1;
+}
+
+uint8_t mag_calib_abort(mag *mag_dev)
+{
+	mag_write(mag_dev, mag_CMD, mag_CMD_CALIB_ABORT);
+	return 1;
+}
+
+/*
+TODO:
+Check the status of the acc, gyro and temp before returning the values
+    if they are not ready return 0
+    if they are ready return 1
+    need to pass by reference the values to be returned
+
+*/
+
+uint16_t mag_read_acc_x(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_ACC_X);
+}
+
+uint16_t mag_read_acc_y(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_ACC_Y);
+}
+
+uint16_t mag_read_acc_z(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_ACC_Z);
+}
+
+uint16_t mag_read_gyr_x(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_GYR_X);
+}
+
+uint16_t mag_read_gyr_y(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_GYR_Y);
+}
+
+uint16_t mag_read_gyr_z(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_GYR_Z);
+}
+
+uint16_t mag_read_temp_data(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_TEMP_DATA);
+}
+
+uint16_t mag_read_status(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_STATUS);
+}
+
+uint16_t mag_read_err_reg(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_ERR_REG);
+}
+
+uint16_t mag_read_chip_id(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_CHIP_ID);
+}
+
+uint16_t mag_read_acc_conf(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_ACC_CONF);
+}
+
+uint16_t mag_read_gyr_conf(mag *mag_dev)
+{
+	return mag_read(mag_dev, mag_GYR_CONF);
+}
+
+uint8_t mag_enable_acc(mag *mag_dev, uint8_t acc_mode, uint8_t acc_avg_num, uint8_t acc_bw, uint8_t acc_range, uint8_t acc_odr)
+{
+	// uint16_t acc_conf = mag_read_acc_conf(mag_dev);
+	uint16_t new_conf = 0;
+	new_conf |= acc_mode << 12;
+	new_conf |= acc_avg_num << 8;
+	new_conf |= acc_bw << 7;
+	new_conf |= acc_range << 4;
+	new_conf |= acc_odr;
+	mag_write(mag_dev, mag_ACC_CONF, new_conf);
+	return 1;
+}
+
+uint8_t mag_enable_gyro(mag *mag_dev, uint8_t gyr_mode, uint8_t gyr_avg_num, uint8_t gyr_bw, uint8_t gyr_range, uint8_t gyr_odr)
+{
+	// uint16_t acc_conf = mag_read_acc_conf(mag_dev);
+	uint16_t new_conf = 0;
+	new_conf |= gyr_mode << 12;
+	new_conf |= gyr_avg_num << 8;
+	new_conf |= gyr_bw << 7;
+	new_conf |= gyr_range << 4;
+	new_conf |= gyr_odr;
+	mag_write(mag_dev, mag_GYR_CONF, new_conf);
+	return 1;
 }
