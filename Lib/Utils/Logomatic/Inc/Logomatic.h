@@ -113,8 +113,11 @@ void Setup_Logomatic(LogomaticConfig *config);
  */
 #define LOGOMATIC(...)                                                                                                                                                                                 \
 	do {                                                                                                                                                                                           \
-		printf(__VA_ARGS__);                                                                                                                                                                   \
-	} while (0)
+	_Pragma("GCC diagnostic push")                              \
+	_Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"")                                                                                                                                                       \
+printf(__VA_ARGS__);                   \
+_Pragma("GCC diagnostic pop") \
+} while (0)
 
 #else
 /**
@@ -126,7 +129,10 @@ void Setup_Logomatic(LogomaticConfig *config);
 #define LOGOMATIC(...)                                                                                                                                                                                 \
 	do {                                                                                                                                                                                           \
 		if (0) {                                                                                                                                                                               \
-			printf(__VA_ARGS__);                                                                                                                                                           \
+			_Pragma("GCC diagnostic push") \
+			_Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"") \
+			printf(__VA_ARGS__);                                                                   \
+			_Pragma("GCC diagnostic pop") \                                                                                                                                                  
 		}                                                                                                                                                                                      \
 	} while (0)
 #endif
