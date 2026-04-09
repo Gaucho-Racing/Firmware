@@ -1,4 +1,5 @@
 #include "mag.h"
+
 #include <stdio.h>
 
 #include "stm32g474xx.h"

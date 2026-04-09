@@ -1,7 +1,6 @@
 #ifndef __MAG_H__
 #define __MAG_H__
 
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
