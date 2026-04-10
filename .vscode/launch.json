@@ -684,7 +684,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/G431x8_CAN_EXTERNAL_TEST.elf",
 			"name": "G431x8_CAN_EXTERNAL_TEST",
