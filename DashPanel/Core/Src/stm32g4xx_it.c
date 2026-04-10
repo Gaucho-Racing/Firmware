@@ -45,7 +45,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -226,7 +225,7 @@ void EXTI3_IRQHandler(void)
 		SetBitInByte(dashStatus.button_flags, 0, true);
 		// dashStatus = 1;
 		canReadyToSend = true;
-		LOGOMATIC("TS Active Pressed!");
+		// LOGOMATIC("TS Active Pressed!");
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
 	}
 }
@@ -243,10 +242,56 @@ void EXTI4_IRQHandler(void)
 
 		// Blame Electronics if hardware debounce doesn't work
 
+		// A4 Triggered
 		SetBitInByte(dashStatus.button_flags, 1, true);
 		canReadyToSend = true;
-		LOGOMATIC("RTD Pressed!");
+		// LOGOMATIC("RTD Pressed!");
+
+		// This should never trigger because a single EXTI line cannot be configured for more than 1 pin
+		// if (pin_c) {
+
+		// 	// C4 Triggered
+		// 	SetBitInByte(dashStatus.button_flags, 5, true);
+		// 	canReadyToSend = true;
+		// 	// LOGOMATIC("Button 4 Pressed!");
+		// }
+
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
 }
+
+void EXTI9_5_IRQHandler(void)
+{
+
+	// EXTI 5
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5)) {
+
+		SetBitInByte(dashStatus.button_flags, 2, true);
+		canReadyToSend = true;
+		// LOGOMATIC("Button 1 Pressed!");
+
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
+	}
+
+	// EXTI 6
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6)) {
+
+		SetBitInByte(dashStatus.button_flags, 3, true);
+		canReadyToSend = true;
+		// LOGOMATIC("Button 2 Pressed!");
+
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
+	}
+
+	// EXTI 7
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7)) {
+
+		SetBitInByte(dashStatus.button_flags, 4, true);
+		canReadyToSend = true;
+		// LOGOMATIC("Button 3 Pressed!");
+
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_7);
+	}
+}
+
 /* USER CODE END 1 */

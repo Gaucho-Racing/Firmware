@@ -38,7 +38,7 @@ void Neopixel_LEDWrite()
 	LED_colors[2] = GETBIT(dashStatus.led_bits, 2) ? COLOR_RED : COLOR_OFF;
 
 	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
-	// LOGOMATIC("LED Flashing\n");
+
 	return;
 }
 
