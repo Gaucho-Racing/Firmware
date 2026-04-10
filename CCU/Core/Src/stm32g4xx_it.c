@@ -208,7 +208,6 @@ void USART2_IRQHandler(void)
 
 			VCP_StateDump(&state_data);
 
-
 			LL_USART_TransmitData8(USART2, '?');
 
 		} else {
