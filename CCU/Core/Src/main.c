@@ -124,7 +124,6 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_FDCAN1_Init();
 	/* USER CODE BEGIN 2 */
 
 	// Initialize CAN
@@ -139,12 +138,12 @@ int main(void)
 	setSoftwareLatch(1, &state_data);
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
-		LL_mDelay(100);
+
 
 		// Initialize SoftwareLatch High
 		CCU_State_Tick(&state_data);
 
-		LL_mDelay(200);
+		LL_mDelay(5);
 
 		/* USER CODE END 3 */
 	}
