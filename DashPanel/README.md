@@ -1,27 +1,35 @@
 # Button mappings
 
-## Butt1
+## butt1(TSActiveButton)
 
 TS-Active
 Connected to PA3
 
-## Butt2
+## butt2(RTDButton)
 
 RTD(Ready to Drive)
 Connected to PA4
 
-## D1
+## D1-D4(button1-button4)
 
-idk
+All used for possible screen navigation
 
-## D2
+## D1(button1)
 
-idk
+Eventual Screen Navigation
+Connected to __
 
-## D3
+## D2(button2)
 
-idk
+Eventual Screen Navigation
+Connected to __
 
-## D4
+## D3(button3)
 
-idk
+Eventual Screen Navigation
+Connected to __
+
+## D4(button4)
+
+Eventual Screen Navigation
+Connected to __
