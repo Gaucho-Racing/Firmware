@@ -157,6 +157,24 @@ void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 	busCfg->tx_buffer_length = 5;
 
 	busCfg->filter_config = NULL;
+
+	//PB 12 RD
+
+	GRCAN_PinConfig rx_pin_cfg = {
+		.port = GPIOB,
+		.pin = GPIO_PIN_12,
+		.alternate_function = GPIO_AF9_FDCAN2
+	};
+	busCfg->rx_pin = rx_pin_cfg;
+
+	//PB 13 TD
+
+	GRCAN_PinConfig tx_pin_cfg = {
+		.port = GPIOB,
+		.pin = GPIO_PIN_13,
+		.alternate_function = GPIO_AF9_FDCAN2
+	};
+	busCfg->tx_pin = tx_pin_cfg;
 }
 
 uint32_t GRCAN_to_DLC(uint32_t size)

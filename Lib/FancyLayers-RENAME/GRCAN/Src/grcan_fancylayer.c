@@ -34,7 +34,7 @@ static CANHandle *grcan_charging = NULL;
 // 	// error states
 // } CANHandle;
 
-static GRCAN_NODE_ID grcan_local_node_id = ALL;
+static GRCAN_NODE_ID grcan_local_node_id = GRCAN_ALL;
 
 bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config)
 {
@@ -179,6 +179,24 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 		return false;
 	}
 
+	if (FDCAN_TX_PORT == FDCAN_RX_PORT) {
+		GPIOx_CLK_ENABLE(FDCAN_TX_PORT);
+	}
+	else {
+		GPIOx_CLK_ENABLE(FDCAN_TX_PORT);
+		GPIOx_CLK_ENABLE(FDCAN_RX_PORT);
+	}
+
+	if (FDCAN_TX_PORT != bus_config->tx_pin.port) {
+		LOGOMATIC("GRCAN_InitBus: FDCAN_TX_PORT does not match bus_config tx pin port for bus %d\n", bus_config->bus);
+		return false;
+	}
+
+	if (FDCAN_RX_PORT != bus_config->rx_pin.port) {
+		LOGOMATIC("GRCAN_InitBus: FDCAN_RX_PORT does not match bus_config rx pin port for bus %d\n", bus_config->bus);
+		return false;
+	}
+
 	can_set_clksource(GRCAN_ToHAL_ClockSource(bus_config->clock_source));
 
 	cfg.fdcan_instance = bus_config->fdcan_instance;
@@ -243,7 +261,7 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 
 	handle = can_init(&cfg);
 	if (handle == NULL) {
-		LOGOMATIC("GRCAN_InitBus: can_init failed for bus %d\n", bus_config->bus);
+		LOGOMATIC("\nGRCAN_InitBus: can_init failed for bus %d\n", bus_config->bus);
 		return false;
 	}
 
@@ -303,8 +321,8 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 
 void GRCAN_SetLocalNodeID(GRCAN_NODE_ID localID)
 {
-	if (localID == ALL) {
-		LOGOMATIC("GRCAN_SetLocalNodeID: Local node ID cannot be GR_ALL\n");
+	if (localID == GRCAN_ALL) {
+		LOGOMATIC("GRCAN_SetLocalNodeID: Local node ID cannot be GRCAN_ALL\n");
 		return;
 	}
 
@@ -337,11 +355,10 @@ void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID)
 	id->destNode = rawID & 0xFF;
 	id->messageID = (rawID >> 8) & 0xFFF;
 
-	if (id->srcID == ALL) {
+	if (id->srcID == GRCAN_ALL) {
 		LOGOMATIC("GRCAN_Fancy_Decode: Source ID cannot be GR_ALL\n");
 	}
-
-	if (id->destNode == ALL) {
+	if (id->destNode == GRCAN_ALL) {
 		LOGOMATIC("GRCAN_Fancy_Decode: Destination ID cannot be GR_ALL\n");
 	}
 }
@@ -354,8 +371,8 @@ void GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID mes
 	    .messageID = messageID,
 	};
 
-	if (id.srcID == ALL) {
-		LOGOMATIC("GRCAN_Fancy_Send: Source ID cannot be GR_ALL\n");
+	if (id.srcID == GRCAN_ALL) {
+		LOGOMATIC("GRCAN_Fancy_Send: Source ID cannot be GRCAN_ALL\n");
 		return;
 	}
 

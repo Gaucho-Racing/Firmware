@@ -91,6 +91,21 @@ static void ITM_Enable(void)
 	ITM->TER |= (1UL << 0);
 	ITM->TCR |= (ITM_TCR_ITMENA_Msk | ITM_TCR_SWOENA_Msk);
 }
+
+LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
+				   .bus = LOGOMATIC_BUS,
+				   .gpio_port = LOGOMATIC_GPIOA,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .baud_rate = 115200,
+				   .data_width = LOGOMATIC_DATAWIDTH_8B,
+				   .stop_bits = LOGOMATIC_STOPBITS_1,
+				   .parity = LOGOMATIC_PARITY_NONE,
+				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
+				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
+				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
 // static int toggleze = 0;
 /* USER CODE END 0 */
 
@@ -134,24 +149,31 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 
+	Setup_Logomatic(&logomaticConfig);
+
 	LOGOMATIC("Booted!\n");
+
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    HAL_Delay(200);
 
 	// LOGOMATIC("running can_external_test:\n");
 	// can_external_test();
 
 	int result = FancyCAN_LoopbackTest();
+	LOGOMATIC("\n");
 	if (result) {
-		LOGOMATIC("CAN Loopback Test Passed!\n");
+		LOGOMATIC("CAN Loopback Test PASSED!\n");
 	} else {
-		LOGOMATIC("CAN Loopback Test Failed!\n");
+		LOGOMATIC("CAN Loopback Test FAILED!\n");
 	}
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-		LOGOMATIC("Main Loop\n");
+		// LOGOMATIC("Main Loop\n");
 		LL_mDelay(1000);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 
 		// Receive on GPIOs
 		// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET

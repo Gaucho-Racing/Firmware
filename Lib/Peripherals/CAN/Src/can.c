@@ -81,30 +81,6 @@ static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
 
 */
 
-#define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
-	do {                                                                                                                                                                                           \
-		if (GPIOX == GPIOA)                                                                                                                                                                    \
-			__HAL_RCC_GPIOA_CLK_ENABLE();                                                                                                                                                  \
-		else if (GPIOX == GPIOB)                                                                                                                                                               \
-			__HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                                                                  \
-		else if (GPIOX == GPIOD)                                                                                                                                                               \
-			__HAL_RCC_GPIOD_CLK_ENABLE();                                                                                                                                                  \
-		else                                                                                                                                                                                   \
-			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
-	} while (0)
-
-#define GPIOx_CLK_DISABLE(GPIOX)                                                                                                                                                                       \
-	do {                                                                                                                                                                                           \
-		if (GPIOX == GPIOA)                                                                                                                                                                    \
-			__HAL_RCC_GPIOA_CLK_DISABLE();                                                                                                                                                 \
-		else if (GPIOX == GPIOB)                                                                                                                                                               \
-			__HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                                                                 \
-		else if (GPIOX == GPIOD)                                                                                                                                                               \
-			__HAL_RCC_GPIOD_CLK_DISABLE();                                                                                                                                                 \
-		else                                                                                                                                                                                   \
-			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
-	} while (0)
-
 // TODO: Modify helpers to work across families
 // helpers =================
 static int fdcan_shared_clock_ref = 0;
@@ -153,6 +129,7 @@ CANHandle *can_init(const CANConfig *config)
 		} else {
 			canHandle = &CAN2;
 			canHandle->tx_capacity = TX_BUFFER_2_SIZE;
+			LOGOMATIC("CAN: CAN2 selected with tx capacity %lu\n", canHandle->tx_capacity);
 		}
 	}
 #endif

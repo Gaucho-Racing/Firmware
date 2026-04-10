@@ -5,14 +5,16 @@
 #include "grcan_fancylayer.h"
 #include "stdlib.h"
 
+#include <assert.h>
+
 // CAN Configuration
 // #define OLD_SAM
 
-// #if defined(OLD_SAM)
-// #define NODE_ID 1 // change for each node you flash
-// #else
-// #define NODE_ID 2
-// #endif
+#if defined(OLD_SAM)
+#define NODE_ID 1 // change for each node you flash
+#else
+#define NODE_ID 2
+#endif
 
 // #define NUM_NODES 2    // total number of nodes on the bus (including this one)
 // #define NUM_MESSAGES 5 // number of messages each node sends to every other node
@@ -44,36 +46,66 @@ void GRCAN_Test_InitBus() {
     GRCAN_BusConfig bus_config;
     GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
     bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
+    bus_config.fdcan_instance = FDCAN2;
 
-    LOGOMATIC("Testing GRCAN_InitBus...");
+    LOGOMATIC("Testing GRCAN_InitBus...\n");
     bool result = GRCAN_InitBus(&bus_config);
-    assert(result == true);
-    LOGOMATIC("GRCAN_InitBus passed.");
+    if (result == true) {
+        LOGOMATIC("GRCAN_InitBus PASSED.\n");
+    }
+    else {
+        LOGOMATIC("GRCAN_InitBus FAILED.\n");
+    }
+}
+
+// Static variable to track received messages
+static volatile uint32_t rx_received = 0;
+
+// Callback function to verify received data
+static void can_test_rx_callback(uint32_t id, void *data, uint32_t size) {
+    rx_received++;
+    LOGOMATIC("\nCallback triggered: ID=%" PRIu32 ", Size=%ld, Data[0]=0x%x\n", id, size, *(uint8_t *)data);
 }
 
 void GRCAN_Test_SendReceive() {
     GRCAN_BusConfig bus_config;
     GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
     bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
+    bus_config.fdcan_instance = FDCAN2;
 
-    LOGOMATIC("Testing GRCAN_Fancy_Send...");
+    // Define CANConfig with callback
+    CANConfig can_config = {0};
+    can_config.rx_callback = can_test_rx_callback; // Register the callback
+
+    LOGOMATIC("\nTesting GRCAN_Fancy_Send...\n");
     GRCAN_InitBus(&bus_config);
     GRCAN_SetLocalNodeID(1);
 
     uint8_t data[] = "Hello";
     GRCAN_Fancy_Send(GRCAN_BUS_TESTING, 2, 0x12, data, sizeof(data));
 
-    // Add callback verification here
-    LOGOMATIC("GRCAN_Fancy_Send passed.");
+    // Wait for the callback to be triggered
+    HAL_Delay(1000); // Simulate waiting for message processing
+
+    // Verify the callback was triggered
+    if (rx_received > 0) {
+        LOGOMATIC("GRCAN_Fancy_Send PASSED. Callback verified.\n");
+    } else {
+        LOGOMATIC("GRCAN_Fancy_Send FAILED. Callback not triggered.\n");
+    }
 }
 
 void GRCAN_Test_ErrorHandling() {
     GRCAN_BusConfig invalid_config = {0};
 
-    LOGOMATIC("Testing GRCAN_InitBus with invalid config...");
+    LOGOMATIC("\nTesting GRCAN_InitBus with invalid config...\n");
     bool result = GRCAN_InitBus(&invalid_config);
-    assert(result == false);
-    LOGOMATIC("GRCAN_InitBus error handling passed.");
+    if (result == false) {
+        LOGOMATIC("GRCAN_InitBus error handling PASSED.\n");
+    }
+    else {
+       LOGOMATIC("GRCAN_InitBus error handling FAILED.\n");
+    }
 }
 
 int FancyCAN_LoopbackTest(void)
@@ -83,35 +115,9 @@ int FancyCAN_LoopbackTest(void)
     GRCAN_Test_SendReceive();
     GRCAN_Test_ErrorHandling();
 
-    LOGOMATIC("All tests passed.");
     return 0;
 
-    //internal don't need pins
-    LOGOMATIC("Starting CAN Loopback Test...\n");
-
-	GRCAN_BusConfig *bus_config = malloc(sizeof(GRCAN_BusConfig));
-	GRCAN_SetDefaultBusConfig(bus_config, GRCAN_BUS_TESTING);
-	bus_config->bus = GRCAN_BUS_TESTING;
-	bus_config->operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
-
-	LOGOMATIC("Initializing GRCAN bus with internal loopback mode for testing...\n");
-	if (!GRCAN_InitBus(bus_config)) {
-		LOGOMATIC("Failed to initialize GRCAN bus\n");
-	}
-
-	bool result = GRCAN_InitBus(bus_config);
-	if (result) {
-		LOGOMATIC("GRCAN bus initialized successfully in loopback mode\n");
-	} else {
-		LOGOMATIC("Failed to initialize GRCAN bus in loopback mode\n");
-	}
-	GRCAN_SetLocalNodeID(NODE_ID);
-
-	GRCAN_Fancy_Send(GRCAN_BUS_TESTING, NODE_ID, 0x12, (uint8_t *)"Hello", 5);
-
-	LOGOMATIC("CAN Loopback Test completed\n");
-
-	return 0; // TODO: actually check if the message was received correctly and return true if so
+    // TODO: actually check if the message was received correctly and return true if so
 
 	// FDCAN_TxHeaderTypeDef TxHeader = {
 	//     .Identifier = NODE_ID,
