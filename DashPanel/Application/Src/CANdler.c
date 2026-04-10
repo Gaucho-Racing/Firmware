@@ -28,7 +28,7 @@ void CANInitialize()
 
 	CANConfig my_cfg;
 
-	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
+	get_cfg(FDCAN1, CAN_callback, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
 
 	CANHandle *h1 = can_init(&my_cfg);
 }

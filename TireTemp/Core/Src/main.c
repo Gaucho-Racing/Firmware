@@ -173,8 +173,10 @@ int main(void)
 		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
-		CAN_sendTemp(tr);
-		// HAL_Delay(16);
+		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
+			CAN_sendTemp(mlx90640To, i);
+			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
+		}
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
