@@ -39,9 +39,6 @@ bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config)
 	return true; // TODO: implement more validation checks, like valid pin numbers, valid filter counts, etc.
 }
 
-void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
-void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
-
 CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 {
 	switch (bus) {
@@ -83,11 +80,11 @@ bool enable_port_clock(GPIO_TypeDef *port) {
 		GPIOx_CLK_ENABLE(GPIOA);
 		return true;
 	}
-	if(port == GPIOB) {
+	else if(port == GPIOB) {
 		GPIOx_CLK_ENABLE(GPIOB);
 		return true;
 	}
-	if(port == GPIOD) {
+	else if(port == GPIOD) {
 		GPIOx_CLK_ENABLE(GPIOD);
 		return true;
 	}
@@ -125,10 +122,6 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 	if (bus_config == NULL) {
 		LOGOMATIC("GRCAN_InitBus: NULL bus_config\n");
 		return false;
-	}
-
-	if (bus_config == NULL) {
-		GRCAN_SetDefaultBusConfig(bus_config, bus_config->bus);
 	}
 
 	if (!GRCAN_ValidateBusConfig(bus_config)) {
@@ -240,13 +233,16 @@ bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus)
 		return false;
 	}
 
-	deactivate_port_clock(handle->rx_gpio);
-	deactivate_port_clock(handle->tx_gpio);
+	GPIO_TypeDef *rx = handle->rx_gpio;
+	GPIO_TypeDef *tx = handle->tx_gpio;
 
 	if (can_release(handle) != 0) {
 		LOGOMATIC("GRCAN_DeactivateBus: can_release failed for bus %d\n", bus);
 		return false;
 	}
+
+	deactivate_port_clock(rx);
+	deactivate_port_clock(tx);
 
 	switch (bus) {
 		case GRCAN_BUS_PRIMARY:
@@ -313,7 +309,84 @@ void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID)
 	}
 }
 
-void GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
+uint32_t GRCAN_BRS_Setting(GRCAN_BUS_ID bus)
+{
+	CANHandle *handle = GRCAN_GetHandle(bus);
+
+	if (handle == NULL || handle->hal_fdcanP == NULL) {
+		return FDCAN_BRS_OFF;
+	}
+
+	if (handle->hal_fdcanP->Init.FrameFormat== FDCAN_FRAME_CLASSIC || handle->hal_fdcanP->Init.FrameFormat == FDCAN_FRAME_FD_NO_BRS) {
+		return FDCAN_BRS_OFF;
+	}
+
+	if (handle->hal_fdcanP->Init.FrameFormat == FDCAN_FRAME_FD_BRS) {
+		return FDCAN_BRS_ON;
+	}
+
+	LOGOMATIC("GRCAN_GetBRSSetting: Invalid FDCAN configuration for bus %d\n", bus);
+	return FDCAN_BRS_OFF;
+}
+
+bool GRCAN_Raw_Send(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) {
+	CANHandle *handle = GRCAN_GetHandle(bus);
+	GRCAN_BusMode mode;
+
+	if (handle == NULL) {
+		LOGOMATIC("GRCAN_Raw_Send: bus %d not configured\n", bus);
+		return false;
+	}
+
+	if ((data == NULL) && (size > 0)) {
+		LOGOMATIC("GRCAN_Raw_Send: NULL data with nonzero size\n");
+		return false;
+	}
+
+	mode = GRCAN_BusModeForBus(bus);
+
+	if (mode == GRCAN_MODE_CLASSIC) {
+		if (size > 8) {
+			LOGOMATIC("GRCAN_Raw_Send: size %lu > 8 (classic CAN)\n", (unsigned long)size);
+			return false;
+		}
+	} else if (mode == GRCAN_MODE_FD) {
+		if (size > 64) {
+			LOGOMATIC("GRCAN_Raw_Send: size %lu > 64 (CAN FD)\n", (unsigned long)size);
+			return false;
+		}
+	} else {
+		LOGOMATIC("GRCAN_Raw_Send: invalid bus mode for bus %d\n", bus);
+		return false;
+	}
+
+	FDCAN_TxHeaderTypeDef header = {
+	    .Identifier = rawID,
+	    .IdType = FDCAN_EXTENDED_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+	    .DataLength = GRCAN_to_DLC(size),
+	    .BitRateSwitch = GRCAN_BRS_Setting(bus),
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+	    .MessageMarker = 0,
+	};
+
+	FDCANTxMessage msg = {0};
+	msg.tx_header = header;
+
+	if ((data != NULL) && (size > 0)) {
+		memcpy(msg.data, data, size);
+	}
+
+	if (can_send(handle, &msg) != 0) {
+		LOGOMATIC("GRCAN_Raw_Send: can_send failed on bus %d\n", bus);
+		return false;
+	}
+
+	return true;
+}
+
+bool GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 {
 	GRCAN_Fancy_ID id = {
 	    .srcID = grcan_local_node_id,
@@ -323,20 +396,10 @@ void GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID mes
 
 	if (id.srcID == GRCAN_ALL) {
 		LOGOMATIC("GRCAN_Fancy_Send: Source ID cannot be GRCAN_ALL\n");
-		return;
+		return false;
 	}
 
-	GRCAN_BusMode mode = GRCAN_BusModeForBus(bus);
-	if (mode == GRCAN_MODE_FD) {
-		GRCAN_Raw_Send_FD(bus, GRCAN_Fancy_EncodeID(&id), data, size);
-		return;
-	} else if (mode == GRCAN_MODE_CLASSIC) {
-		GRCAN_Raw_Send_Classic(bus, GRCAN_Fancy_EncodeID(&id), data, size);
-		return;
-	} else {
-		LOGOMATIC("GRCAN_Fancy_Send: invalid bus mode for bus %d\n", bus);
-		return;
-	}
+	return GRCAN_Raw_Send(bus, GRCAN_Fancy_EncodeID(&id), data, size);
 }
 
 /*
@@ -351,87 +414,3 @@ BitRateSwitch can be on or off, but we will always set it to off
 TxEventFifoControl can be set to generate events on transmission
 MessageMarker can be used to identify the message in the Tx event FIFO
 */
-
-void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
-{
-	if (size > 8) {
-		LOGOMATIC("GRCAN_Raw_Send_Classic: size %lu > 8 (classic CAN)\n", size);
-		return;
-	}
-
-	if ((data == NULL) && (size > 0)) {
-		LOGOMATIC("GRCAN_Raw_Send_Classic: NULL data with nonzero size\n");
-		return;
-	}
-
-	if (GRCAN_BusModeForBus(bus) != GRCAN_MODE_CLASSIC) {
-		LOGOMATIC("GRCAN_Raw_Send_Classic: bus %d is not in classic mode\n", bus);
-		return;
-	}
-
-	FDCAN_TxHeaderTypeDef header = {
-	    .Identifier = rawID,
-	    .IdType = FDCAN_EXTENDED_ID,     // using extended ID -- src << 20 | msgID << 8 | dest
-	    .TxFrameType = FDCAN_DATA_FRAME, // data frame
-	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-	    .DataLength = GRCAN_to_DLC(size),
-	    .BitRateSwitch = FDCAN_BRS_OFF,
-	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
-	    .MessageMarker = 0,
-	};
-
-	FDCANTxMessage msg = {0};
-	msg.tx_header = header;
-	memcpy(msg.data, data, size);
-
-	CANHandle *handle = GRCAN_GetHandle(bus);
-
-	if (!handle) {
-		LOGOMATIC("GRCAN_Raw_Send_Classic: bus %d not configured\n", bus);
-		return;
-	}
-
-	can_send(handle, &msg);
-}
-
-void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) // FDCAN funciton allows for modification with different settings
-{
-	if (size > 64) {
-		LOGOMATIC("GRCAN_Raw_Send_FD: size %lu > 64 (CAN FD)\n", size);
-		return;
-	}
-
-	if ((data == NULL) && (size > 0)) {
-		LOGOMATIC("GRCAN_Raw_Send_FD: NULL data with nonzero size\n");
-		return;
-	}
-
-	if (GRCAN_BusModeForBus(bus) != GRCAN_MODE_FD) {
-		LOGOMATIC("GRCAN_Raw_Send_FD: bus %d is not in FD mode\n", bus);
-		return;
-	}
-
-	FDCAN_TxHeaderTypeDef header = {
-	    .Identifier = rawID,
-	    .IdType = FDCAN_EXTENDED_ID,     // using extended ID -- src << 20 | msgID << 8 | dest
-	    .TxFrameType = FDCAN_DATA_FRAME, // data frame
-	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-	    .DataLength = GRCAN_to_DLC(size),
-	    .BitRateSwitch = FDCAN_BRS_OFF,
-	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
-	    .MessageMarker = 0,
-	};
-
-	FDCANTxMessage msg = {0};
-	msg.tx_header = header;
-	memcpy(msg.data, data, size);
-
-	CANHandle *handle = GRCAN_GetHandle(bus);
-
-	if (!handle) {
-		LOGOMATIC("GRCAN_Raw_Send_FD: bus %d not configured\n", bus);
-		return;
-	}
-
-	can_send(handle, &msg);
-}

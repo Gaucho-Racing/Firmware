@@ -168,11 +168,16 @@ int GRCAN_SendReceive(GRCAN_BUS_ID bus, GRCAN_NODE_ID nodeID, GRCAN_NODE_ID dest
 	GRCAN_SetLocalNodeID(nodeID);
 
     memcpy(expected_data, data, size);
-    GRCAN_Fancy_Send(bus, dest_nodeID, messageID, data, size);
+    bool send_result = GRCAN_Fancy_Send(bus, dest_nodeID, messageID, data, size);
 
-    HAL_Delay(1000);
+	if (!send_result) {
+		LOGOMATIC("GRCAN_Fancy_Send failed to send message on bus %d\n", bus);
+		return 0;
+	}
 
-    if (rx_received > 0 && data_valid) {
+    HAL_Delay(1);
+
+    if (rx_received > 0 && data_valid && id_valid) {
         LOGOMATIC("GRCAN_Fancy_Send PASSED. Callback verified and data is valid.\n");
         return 1;
     } else {
@@ -271,9 +276,9 @@ int GRCAN_InitDeactivateStressTest(GRCAN_BUS_ID bus, GRCAN_NODE_ID nodeID, GRCAN
 
 int FancyCAN_LoopbackTest(void)
 {
-	GRCAN_BUS_ID bus = GRCAN_BUS_TESTING;
+	GRCAN_BUS_ID bus;
 
-	for (bus; bus <= GRCAN_BUS_CHARGER; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER; bus++) {
 		LOGOMATIC("\n--- Testing bus %d ---\n", bus);
 		int res1 = GRCAN_Validate_InitBus(bus, GRCAN_OPMODE_INTERNAL_LOOPBACK, FDCAN2);
 		//GRCAN_OPMODE_EXTERNAL_LOOPBACK needs to be tested, can change FDCAN: make sure to #define USECANx
@@ -359,18 +364,18 @@ int FancyCAN_LoopbackTest(void)
 	}
 
 	//The next tests takes a while, completely fine to remove
-	bus = GRCAN_BUS_TESTING;
-	for (bus; bus <= GRCAN_BUS_CHARGER; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER; bus++) {
 		LOGOMATIC("\n--- Testing burst send on bus %d ---\n", bus);
+		GRCAN_Validate_InitBus(bus, GRCAN_OPMODE_INTERNAL_LOOPBACK, FDCAN2);
 		int burst_result = GRCAN_BurstSendTest(bus, get_nodeID(bus), get_nodeID(bus), get_messageID(bus), 100);
 		if (!burst_result) {
 			LOGOMATIC("\nLoopback Test FAILED during burst send test on bus %d.\n", bus);
 			return 0;
 		}
-	} //Doesn't necessarily have to pass these, a little arbitrary
+		GRCAN_DeactivateBus(bus);
+	}
 
-	bus = GRCAN_BUS_TESTING;
-	for (bus; bus <= GRCAN_BUS_CHARGER; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER; bus++) {
 		LOGOMATIC("\n--- Testing init/deactivate stress test on bus %d ---\n", bus);
 		int stress_result = GRCAN_InitDeactivateStressTest(bus, get_nodeID(bus), get_nodeID(bus), get_messageID(bus), FDCAN2, 50);
 		if (!stress_result) {

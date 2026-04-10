@@ -26,6 +26,6 @@ bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus);
 uint32_t GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id);
 void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID);
 
-void GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size);
+bool GRCAN_Fancy_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size);
 
 #endif
