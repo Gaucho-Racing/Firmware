@@ -62,7 +62,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_BCU_STATUS_1_MSG *bcu_status_1 = (GRCAN_BCU_STATUS_1_MSG *)data;
 			state_data->tractivebattery_soc = bcu_status_1->accumulator_soc;
 			state_data->glv_soc = bcu_status_1->glv_soc;
-			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01;
+			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01f;
 			break;
 
 		case GRCAN_BCU_STATUS_2:
@@ -71,7 +71,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				break;
 			}
 			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
-			state_data->max_cell_temp_c = bcu_status_2->max_cell_temp * 0.25;
+			state_data->max_cell_temp_c = bcu_status_2->max_cell_temp * 0.25f;
 			state_data->bcu_error_warning_bits = bcu_status_2->status_flags;
 			state_data->ir_minus = GETBIT(bcu_status_2->precharge_latch_flags, 1);
 			state_data->ir_plus = GETBIT(bcu_status_2->precharge_latch_flags, 2);
