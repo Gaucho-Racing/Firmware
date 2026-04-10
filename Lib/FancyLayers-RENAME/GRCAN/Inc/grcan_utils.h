@@ -6,6 +6,7 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "can.h"
+#include "can_cfg.h"
 
 #ifndef GRCAN_UTILS_H
 #define GRCAN_UTILS_H
