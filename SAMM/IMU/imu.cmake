@@ -9,5 +9,5 @@ target_include_directories(
 target_sources(
 	SAMM_IMU_Lib
 	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Src/setBits.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/bmi323.c
 )

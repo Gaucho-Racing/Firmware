@@ -34,7 +34,7 @@ target_sources(
         Src/dma.c
         Src/fdcan.c
         Src/gpio.c
-        Src/i2c.c
+        Src/mag.c
         Src/main.c
         Src/spi.c
         Src/stm32h5xx_hal_msp.c
