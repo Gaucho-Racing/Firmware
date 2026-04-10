@@ -232,19 +232,19 @@ int FancyCAN_LoopbackTest(void)
 				uint8_t data_value = *(uint8_t *)data;
 				switch (bus) {
 					case GRCAN_BUS_PRIMARY:
-						LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED for message %d.\n", data_value);
+						LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
 					case GRCAN_BUS_DATA:
-						LOGOMATIC("Testing Bus:DATA Loopback Test FAILED for message %d.\n", data_value);
+						LOGOMATIC("Testing Bus:DATA Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
 					case GRCAN_BUS_CHARGER:
-						LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED for message %d.\n", data_value);
+						LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
 					case GRCAN_BUS_TESTING:
-						LOGOMATIC("Testing Bus:TESTING Loopback Test FAILED for message %d.\n", data_value);
+						LOGOMATIC("Testing Bus:TESTING Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
 					default:
-						LOGOMATIC("Testing Bus:UNKNOWN Loopback Test FAILED for message %d.\n", data_value);
+						LOGOMATIC("Testing Bus:UNKNOWN Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
 				}
 				break;
