@@ -24,13 +24,17 @@ if(
 			"RelWithDebInfo"
 )
 	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
-	add_compile_options(
-		-u
-		_printf_float
+	target_compile_options(
+		LOGOMATIC_LIB
+		INTERFACE
+			-u
+			_printf_float
 	)
-	add_link_options(
-		-u
-		_printf_float
+	target_link_options(
+		LOGOMATIC_LIB
+		INTERFACE
+			-u
+			_printf_float
 	)
 endif()
 
