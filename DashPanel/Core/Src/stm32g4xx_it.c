@@ -240,28 +240,21 @@ void EXTI4_IRQHandler(void)
 
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_4)) {
 
-		uint8_t pin_a;
-		uint8_t pin_c;
-
 		// Blame Electronics if hardware debounce doesn't work
 
-		pin_a = LL_GPIO_IsInputPinSet(GPIOA, GPIO_PIN_4);
-		pin_c = LL_GPIO_IsInputPinSet(GPIOC, GPIO_PIN_4);
+		// A4 Triggered
+		SetBitInByte(dashStatus.button_flags, 1, true);
+		canReadyToSend = true;
+		// LOGOMATIC("RTD Pressed!");
 
-		if (pin_a) {
+		// This should never trigger because a single EXTI line cannot be configured for more than 1 pin
+		// if (pin_c) {
 
-			// A4 Triggered
-			SetBitInByte(dashStatus.button_flags, 1, true);
-			canReadyToSend = true;
-			// LOGOMATIC("RTD Pressed!");
-		}
-		if (pin_c) {
-
-			// C4 Triggered
-			SetBitInByte(dashStatus.button_flags, 5, true);
-			canReadyToSend = true;
-			// LOGOMATIC("Button 4 Pressed!");
-		}
+		// 	// C4 Triggered
+		// 	SetBitInByte(dashStatus.button_flags, 5, true);
+		// 	canReadyToSend = true;
+		// 	// LOGOMATIC("Button 4 Pressed!");
+		// }
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
