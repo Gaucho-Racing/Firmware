@@ -18,5 +18,4 @@ extern int can_release_test(void);
 extern int can_filter_test(void);
 extern int can_lost_rx_test(void);
 
-
 #endif

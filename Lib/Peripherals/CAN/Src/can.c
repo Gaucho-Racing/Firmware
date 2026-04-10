@@ -181,18 +181,18 @@ CANHandle *can_init(const CANConfig *config)
 	}
 #endif
 
-//TODO: figure out a better way to extend this to other families besides ifdef soup
+// TODO: figure out a better way to extend this to other families besides ifdef soup
 #elif defined(STM32G431xx)
 #ifdef USECAN1
-if (config->fdcan_instance == FDCAN1) {
-	if (CAN1.init) {
-		LOGOMATIC("CAN: CAN1 is already initialized\n");
-		return CAN_SUCCESS;
-	} else {
-		canHandle = &CAN1;
-		canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+	if (config->fdcan_instance == FDCAN1) {
+		if (CAN1.init) {
+			LOGOMATIC("CAN: CAN1 is already initialized\n");
+			return CAN_SUCCESS;
+		} else {
+			canHandle = &CAN1;
+			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+		}
 	}
-}
 #endif
 
 #endif
@@ -733,15 +733,14 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 		return CAN_SUCCESS;
 	}
 
-	//TODO: START of possible ifdef soup
+	// TODO: START of possible ifdef soup
 #elif defined(STM32G431xx)
-if (instance == FDCAN1) {
+	if (instance == FDCAN1) {
 		*it0 = FDCAN1_IT0_IRQn;
 		*it1 = FDCAN1_IT1_IRQn;
 		return CAN_SUCCESS;
-}
+	}
 #endif
-
 
 	LOGOMATIC("can_get_irqs: could not obtain irq #s\n");
 	return CAN_ERROR; // invalid instance

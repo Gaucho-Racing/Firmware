@@ -5,14 +5,14 @@
 #include "can_tests.h"
 #include "profile.h"
 
-//#include "can_external_test_cfg.h"
+// #include "can_external_test_cfg.h"
 
 // CAN Configuration
 // #define OLD_SAM
 
-//define
+// define
 #define LOOPBACK_MODE FDCAN_MODE_NORMAL
-//#define RELEASE_AFTER_TEST
+// #define RELEASE_AFTER_TEST
 #ifdef RELEASE_AFTER_TEST
 #pragma message "RELEASING CAN AFTER TESTS"
 #endif
@@ -23,7 +23,7 @@
 #error "can_external_test.c: please define node in can_external_test_cfg.h"
 #endif
 
-//TODO: Decide how much of these parameters should go into config
+// TODO: Decide how much of these parameters should go into config
 #define NUM_NODES 2	// total number of nodes on the bus (including this one)
 #define NUM_MESSAGES 20 // number of messages each node sends to every other node
 
@@ -32,14 +32,10 @@
 #define NUM_TESTS FDCAN_DLC_BYTES_64
 static float rx_stats[NUM_TESTS + 1] = {0};
 
-
-
-
-//TODO: figure out if ifdef soup is avoidable
+// TODO: figure out if ifdef soup is avoidable
 #ifdef FDCAN2
 #define DATA_CAN
 #endif
-
 
 // FDCAN_DLC_BYTES_
 
@@ -107,16 +103,14 @@ int can_external_test(void)
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
 
-
 	CANHandle *primary_can = NULL;
 	primary_can = NULL;
 	CANConfig cfg1;
 
-	#ifdef DATA_CAN
+#ifdef DATA_CAN
 	CANHandle *data_can = NULL;
 	CANConfig cfg2;
-	#endif
-
+#endif
 
 	LOGOMATIC("Initializing primary and data CAN Bus in Normal mode.\n");
 	if (get_cfg(FDCAN1, can_test_rx_callback1, &cfg1, LOOPBACK_MODE, 0, 0)) {
@@ -132,12 +126,12 @@ int can_external_test(void)
 	cfg1.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 	*/
 
-	#ifdef DATA_CAN
+#ifdef DATA_CAN
 	if (get_cfg(FDCAN2, can_test_rx_callback2, &cfg2, LOOPBACK_MODE, 0, 0)) {
 		LOGOMATIC("Could not get config for FDCAN2\n");
 		return ERROR;
 	}
-	#endif
+#endif
 
 #ifdef OLD_SAM
 	cfg2.rx_gpio = GPIOB;
@@ -158,14 +152,13 @@ int can_external_test(void)
 	}
 	HAL_FDCAN_ConfigGlobalFilter(primary_can->hal_fdcanP, 0, 0, 0, 0);
 
-	#ifdef DATA_CAN
+#ifdef DATA_CAN
 	if ((data_can = can_init(&cfg2)) == NULL) {
 		LOGOMATIC("Could not initialize data_can\n");
 		return ERROR;
 	}
 	HAL_FDCAN_ConfigGlobalFilter(data_can->hal_fdcanP, 0, 0, 0, 0);
-	#endif
-
+#endif
 
 	//=============================================================================================
 	if (can_start(primary_can)) {
@@ -173,12 +166,12 @@ int can_external_test(void)
 		return ERROR;
 	}
 
-	#ifdef DATA_CAN
+#ifdef DATA_CAN
 	if (can_start(data_can)) {
 		LOGOMATIC("Could not start data_can\n");
 		return ERROR;
 	}
-	#endif
+#endif
 
 	FDCANTxMessage msg = {0};
 	// msg.data[0] = 0x80;
@@ -197,9 +190,9 @@ int can_external_test(void)
 	for (uint32_t data_length_code = 0; data_length_code < FDCAN_DLC_BYTES_64 + 1; data_length_code++) {
 		msg.tx_header.DataLength = data_length_code;
 		dwt_timer_t send1_timer = {0};
-		#ifdef DATA_CAN
+#ifdef DATA_CAN
 		dwt_timer_t send2_timer = {0};
-		#endif
+#endif
 
 		dwt_timer_reset(&rx_timer);
 
@@ -215,12 +208,12 @@ int can_external_test(void)
 			HAL_Delay(10);
 			// msg.data[0] = 0x10;
 
-			#ifdef DATA_CAN
+#ifdef DATA_CAN
 			dwt_timer_start_measurement(&send2_timer);
 			can_send(data_can, &msg);
 			// for(int i = 0; i < 100; i++);
 			dwt_timer_end_measurement(&send2_timer);
-			#endif
+#endif
 
 			i += 1;
 		}
@@ -231,10 +224,10 @@ int can_external_test(void)
 		LOGOMATIC("Send1 ===========\n");
 		dwt_timer_print_info(&send1_timer);
 
-		#ifdef DATA_CAN
+#ifdef DATA_CAN
 		LOGOMATIC("Send2 ===============\n");
 		dwt_timer_print_info(&send2_timer);
-		#endif
+#endif
 
 		LOGOMATIC("Rx ===============\n");
 		dwt_timer_print_info(&rx_timer);
@@ -247,9 +240,9 @@ int can_external_test(void)
 		HAL_Delay(100);
 		LOGOMATIC("Received %ld messages on bus1...\n", rx_1_received);
 
-		#ifdef DATA_CAN
+#ifdef DATA_CAN
 		LOGOMATIC("Received %ld messages on bus2...\n", rx_2_received);
-		#endif
+#endif
 
 		uint32_t error = false;
 
@@ -261,24 +254,24 @@ int can_external_test(void)
 			LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
 		}
 
-		#ifdef DATA_CAN
+#ifdef DATA_CAN
 		if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
 			error = true;
 			LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
 		} else {
 			LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
 		}
-		#endif
+#endif
 
 		if (primary_can->tx_elements > 0) {
 			LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
 		}
 
-		#ifdef DATA_CAN
+#ifdef DATA_CAN
 		if (data_can->tx_elements > 0) {
 			LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
 		}
-		#endif
+#endif
 
 		LOGOMATIC("\n");
 		UNUSED(error);
@@ -292,27 +285,26 @@ int can_external_test(void)
 	}
 	LOGOMATIC("\n");
 
-
 	uint32_t error = false;
 
-	#ifdef RELEASE_AFTER_TEST
+#ifdef RELEASE_AFTER_TEST
 	if ((error |= can_release(primary_can))) {
 		LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
 	}
 
-	#ifdef DATA_CAN
+#ifdef DATA_CAN
 	if ((error |= can_release(data_can))) {
 		LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
 	}
-	#endif
-	#endif
+#endif
+#endif
 
-	#ifndef RELEASE_AFTER_TEST
+#ifndef RELEASE_AFTER_TEST
 	while (true) {
 		can_send(primary_can, &msg);
 		HAL_Delay(100);
 	}
-	#endif
+#endif
 
 	if (error) {
 		return ERROR;
