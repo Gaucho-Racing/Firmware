@@ -24,8 +24,6 @@
 #include "StateMachine.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "dma.h"
-#include "fdcan.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -157,11 +155,11 @@ void SystemClock_Config(void)
 	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
 	LL_PWR_EnableRange1BoostMode();
-	LL_RCC_HSI_Enable();
+	LL_RCC_HSE_Enable();
 	/* Wait till HSI is ready */
 	while (LL_RCC_HSI_IsReady() != 1) {}
 
-	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_HSE_SetCalibTrimming(64);
 	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
