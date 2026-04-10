@@ -8,9 +8,9 @@
 // init spi port before calling this function
 void mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)
 {
-    mag_dev->spi_port = spi_port;
-    mag_dev->port = port;
-    mag_dev->pin = pin;
+	mag_dev->spi_port = spi_port;
+	mag_dev->port = port;
+	mag_dev->pin = pin;
 }
 
 uint16_t mag_transmit(mag *mag_dev, uint16_t data)
@@ -36,11 +36,9 @@ uint16_t mag_read(mag *mag_dev, uint8_t reg)
 uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
 	uint16_t msb = data >> 8 | (uint16_t(reg) << 8) | 0x4000;
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb)
-	reg += 1;
+	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb) reg += 1;
 	uint16_t lsb = (data & 0x00FF) | (uint16_t(reg) << 8) | 0x4000;
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb)
-	return 0;
+	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb) return 0;
 }
 
 uint8_t mag_calib_abort(mag *mag_dev)
