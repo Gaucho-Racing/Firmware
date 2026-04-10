@@ -15,17 +15,14 @@ void CCU_State_Tick(CCU_StateData *state_data)
 
 	LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
-	// FIXME:
 	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 				     // General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
-			// TODO: Create IDLE func elsewhere & Call state IDLE function
 			STATE_IDLE(state_data);
 			break;
 
 		case CCU_STATE_CHARGING:
-			// TODO: Create Charging func elsewhere & Call charging func
 			STATE_CHARGING(state_data);
 			break;
 
