@@ -19,8 +19,6 @@ enable_language(
 	ASM
 )
 
-include("../IMU/imu.cmake")
-
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 

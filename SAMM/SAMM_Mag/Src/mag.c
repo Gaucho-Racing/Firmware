@@ -6,11 +6,12 @@
 #include "stm32h5xx_hal_spi.h"
 
 // init spi port before calling this function
-uint8_t mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)
+uint16_t mag_transmit(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin, uint16_t data)
 {
 
-	uint8_t tx_word[4];
-	uint8_t rx_word[4] = {0} mag_dev->spi_port = spi_port;
+	uint8_t tx_word[2] = {data >> 8, data & 0xFF};
+	uint8_t rx_word[2] = {0}
+	mag_dev->spi_port = spi_port;
 	mag_dev->port = port;
 	mag_dev->pin = pin;
 
@@ -18,22 +19,23 @@ uint8_t mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, 
 	status = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
-	return HAL_OK;
-
-	return HAL_ERROR;
+	return (uint16_t(rx_word[0]) << 8) | rx_word[1];
 }
 
 uint16_t mag_read(mag *mag_dev, uint8_t reg)
 {
-	uint16_t data;
-	// i2c_read_single(mag_I2C_ADDR, reg, &data, mag_dev->i2c_port);
-	return data;
+	uint16_t data = uint16_t(reg) << 8;
+	uint16_t dummy = mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, data)
+	uint16_t read = mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, data)
+	return read;
 }
 
-uint8_t mag_write(mag *mag_dev, uint8_t reg, uint8_t data)
+uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
-	// i2c_write(mag_I2C_ADDR, reg, data, mag_dev->i2c_port);
-	return 1;
+	uint16_t msb = data >> 8 | (uint16_t(reg) << 8) | 0x4000;
+	uint16_t dummy = mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb)
+
+	return 0;
 }
 
 uint8_t mag_calib_abort(mag *mag_dev)
