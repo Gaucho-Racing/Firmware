@@ -66,7 +66,8 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
-void VCP_StateDump(const CCU_StateData *state_data) {
+void VCP_StateDump(const CCU_StateData *state_data)
+{
 	LOGOMATIC("\n========== CCU STATE DUMP ==========\n");
 
 	LOGOMATIC("state: %d\n", state_data->state);
@@ -96,6 +97,4 @@ void VCP_StateDump(const CCU_StateData *state_data) {
 	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	LOGOMATIC("====================================\n\n");
-
-
 }
