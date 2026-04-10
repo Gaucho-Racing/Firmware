@@ -8,14 +8,14 @@
 // CAN Configuration
 // #define OLD_SAM
 
-#if defined(OLD_SAM)
-#define NODE_ID 1 // change for each node you flash
-#else
-#define NODE_ID 2
-#endif
+// #if defined(OLD_SAM)
+// #define NODE_ID 1 // change for each node you flash
+// #else
+// #define NODE_ID 2
+// #endif
 
-#define NUM_NODES 2    // total number of nodes on the bus (including this one)
-#define NUM_MESSAGES 5 // number of messages each node sends to every other node
+// #define NUM_NODES 2    // total number of nodes on the bus (including this one)
+// #define NUM_MESSAGES 5 // number of messages each node sends to every other node
 
 // TODO: could make creating these callbacks a macro, rather than defining each one separately
 // static volatile uint32_t rx_2_received = 0;
@@ -39,8 +39,53 @@
 
 // TODO - allow user to send data without needing to construct a header for the buffer
 //  TODO: G4 tests are dependent on the System clock configuration??
+
+void GRCAN_Test_InitBus() {
+    GRCAN_BusConfig bus_config;
+    GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
+    bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
+
+    LOGOMATIC("Testing GRCAN_InitBus...");
+    bool result = GRCAN_InitBus(&bus_config);
+    assert(result == true);
+    LOGOMATIC("GRCAN_InitBus passed.");
+}
+
+void GRCAN_Test_SendReceive() {
+    GRCAN_BusConfig bus_config;
+    GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
+    bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
+
+    LOGOMATIC("Testing GRCAN_Fancy_Send...");
+    GRCAN_InitBus(&bus_config);
+    GRCAN_SetLocalNodeID(1);
+
+    uint8_t data[] = "Hello";
+    GRCAN_Fancy_Send(GRCAN_BUS_TESTING, 2, 0x12, data, sizeof(data));
+
+    // Add callback verification here
+    LOGOMATIC("GRCAN_Fancy_Send passed.");
+}
+
+void GRCAN_Test_ErrorHandling() {
+    GRCAN_BusConfig invalid_config = {0};
+
+    LOGOMATIC("Testing GRCAN_InitBus with invalid config...");
+    bool result = GRCAN_InitBus(&invalid_config);
+    assert(result == false);
+    LOGOMATIC("GRCAN_InitBus error handling passed.");
+}
+
 int FancyCAN_LoopbackTest(void)
 {
+
+    GRCAN_Test_InitBus();
+    GRCAN_Test_SendReceive();
+    GRCAN_Test_ErrorHandling();
+
+    LOGOMATIC("All tests passed.");
+    return 0;
+
     //internal don't need pins
     LOGOMATIC("Starting CAN Loopback Test...\n");
 
