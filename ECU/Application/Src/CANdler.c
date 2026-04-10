@@ -10,7 +10,7 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 
-#define WHEEL_RPM_TO_MPH_RATIO 0.0476
+#define WHEEL_RPM_TO_MPH_RATIO 0.0476f
 
 extern ECU_StateData stateLump;
 
