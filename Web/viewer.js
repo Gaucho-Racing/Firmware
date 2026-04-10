@@ -20,6 +20,25 @@ window.addEventListener("DOMContentLoaded", function () {
 	const searchInput = document.getElementById("viewer-search");
 	let nodeIdMap = new Map();
 	let currentRef = "";
+	const requestedQueryKey = (() => {
+		try {
+			const params = new URLSearchParams(window.location.search);
+			if (params.has("ref")) return "ref";
+			if (params.has("branch")) return "branch";
+			return "ref";
+		} catch (_err) {
+			return "ref";
+		}
+	})();
+	const requestedRefFromUrl = (() => {
+		try {
+			const params = new URLSearchParams(window.location.search);
+			const ref = params.get("ref") || params.get("branch");
+			return ref ? ref.trim() : "";
+		} catch (_err) {
+			return "";
+		}
+	})();
 	let _allNodes = []; // persisted node→bus→messages index for search
 	let _searchDropdown = null;
 
@@ -61,6 +80,31 @@ window.addEventListener("DOMContentLoaded", function () {
 		d.className = "changed-dot";
 		d.title = "Changed";
 		container.appendChild(d);
+	}
+
+	function updateLocationState(ref) {
+		const url = new URL(window.location.href);
+		const isCustomFile = !!window.GrcanApi.isLocalMode();
+		const hasEdits =
+			!isCustomFile &&
+			!!editor &&
+			!!editor.hasUnsavedEdits &&
+			editor.hasUnsavedEdits();
+
+		if (isCustomFile) {
+			url.search = "";
+			url.hash = "custom";
+		} else {
+			if (ref) {
+				url.searchParams.set(requestedQueryKey, ref);
+			} else {
+				url.searchParams.delete("ref");
+				url.searchParams.delete("branch");
+			}
+			url.hash = hasEdits ? "edited" : "";
+		}
+
+		window.history.replaceState(null, "", url);
 	}
 
 	function messageChangeState(msgName, deviceName, busCanonical) {
@@ -1155,6 +1199,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			await renderBusNode(null, text);
 		}
 		restoreSelection(snapshot || navSnapshot());
+		updateLocationState(currentRef);
 	}
 
 	if (editor) {
@@ -1227,6 +1272,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 		await renderHierarchy(ref);
 		currentRef = ref;
+		updateLocationState(currentRef);
 		if (typeof window.regenerateAndDrawBg === "function") {
 			window.regenerateAndDrawBg();
 		}
@@ -1260,12 +1306,21 @@ window.addEventListener("DOMContentLoaded", function () {
 			refSelect.appendChild(opt);
 		});
 
-		if (branches.includes("main")) {
-			refSelect.value = "main";
-			await renderHierarchy("main");
-			currentRef = "main";
+		const availableRefs = new Set([...branches, ...tags]);
+		const initialRef = availableRefs.has(requestedRefFromUrl)
+			? requestedRefFromUrl
+			: branches.includes("main")
+				? "main"
+				: "";
+
+		if (initialRef) {
+			refSelect.value = initialRef;
+			await renderHierarchy(initialRef);
+			currentRef = initialRef;
+			updateLocationState(currentRef);
 		} else {
 			setPlaceholder(firstList, "Select a ref");
+			updateLocationState("");
 		}
 	}
 
@@ -1285,6 +1340,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				localFileInput.value = "";
 				window.GrcanApi.setLocalCandoText(null);
 				refSelect.disabled = false;
+				updateLocationState(currentRef);
 				if (currentRef) renderHierarchy(currentRef);
 			}
 		});
@@ -1296,6 +1352,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				localFileInput.style.display = "none";
 				window.GrcanApi.setLocalCandoText(null);
 				refSelect.disabled = false;
+				updateLocationState(currentRef);
 				return;
 			}
 			const reader = new FileReader();
@@ -1303,6 +1360,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				window.GrcanApi.setLocalCandoText(e.target.result);
 				refSelect.disabled = true;
 				renderHierarchy(currentRef || "local");
+				updateLocationState(currentRef);
 			};
 			reader.readAsText(file);
 		});
@@ -1310,6 +1368,9 @@ window.addEventListener("DOMContentLoaded", function () {
 		localFileInput.addEventListener("cancel", function () {
 			localToggle.checked = false;
 			localFileInput.style.display = "none";
+			window.GrcanApi.setLocalCandoText(null);
+			refSelect.disabled = false;
+			updateLocationState(currentRef);
 		});
 	}
 
