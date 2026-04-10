@@ -1,9 +1,8 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * @file           : main.h
- * @brief          : Header for main.c file.
- *                   This file contains the common defines of the application.
+ * @file    stm32h5xx_it.h
+ * @brief   This file contains the headers of the interrupt handlers.
  ******************************************************************************
  * @attention
  *
@@ -19,25 +18,12 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MAIN_H
-#define __MAIN_H
+#ifndef __STM32H5xx_IT_H
+#define __STM32H5xx_IT_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/* Includes ------------------------------------------------------------------*/
-#include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_bus.h"
-#include "stm32g4xx_ll_cortex.h"
-#include "stm32g4xx_ll_crs.h"
-#include "stm32g4xx_ll_dma.h"
-#include "stm32g4xx_ll_exti.h"
-#include "stm32g4xx_ll_gpio.h"
-#include "stm32g4xx_ll_pwr.h"
-#include "stm32g4xx_ll_rcc.h"
-#include "stm32g4xx_ll_system.h"
-#include "stm32g4xx_ll_utils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -60,20 +46,22 @@ extern "C" {
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-void Error_Handler(void);
-
+void NMI_Handler(void);
+void HardFault_Handler(void);
+void MemManage_Handler(void);
+void BusFault_Handler(void);
+void UsageFault_Handler(void);
+void SVC_Handler(void);
+void DebugMon_Handler(void);
+void PendSV_Handler(void);
+void SysTick_Handler(void);
+void TIM1_UP_TIM16_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
-
-/* Private defines -----------------------------------------------------------*/
-
-/* USER CODE BEGIN Private defines */
-
-/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __MAIN_H */
+#endif /* __STM32H5xx_IT_H */

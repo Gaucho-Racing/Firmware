@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * @file    spi.h
+ * @file    crc.h
  * @brief   This file contains all the function prototypes for
- *          the spi.c file
+ *          the crc.c file
  ******************************************************************************
  * @attention
  *
@@ -18,8 +18,8 @@
  */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SPI_H__
-#define __SPI_H__
+#ifndef __CRC_H__
+#define __CRC_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,13 +32,13 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern SPI_HandleTypeDef hspi1;
+extern CRC_HandleTypeDef hcrc;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_SPI1_Init(void);
+void MX_CRC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -48,4 +48,4 @@ void MX_SPI1_Init(void);
 }
 #endif
 
-#endif /* __SPI_H__ */
+#endif /* __CRC_H__ */

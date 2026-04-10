@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * @file    stm32g4xx_it.c
+ * @file    stm32h5xx_it.c
  * @brief   Interrupt Service Routines.
  ******************************************************************************
  * @attention
@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g4xx_it.h"
+#include "stm32h5xx_it.h"
 
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
@@ -188,10 +188,10 @@ void SysTick_Handler(void)
 }
 
 /******************************************************************************/
-/* STM32G4xx Peripheral Interrupt Handlers                                    */
+/* STM32H5xx Peripheral Interrupt Handlers                                    */
 /* Add here the Interrupt Handlers for the used peripherals.                  */
 /* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32g4xx.s).                    */
+/* please refer to the startup file (startup_stm32h5xx.s).                    */
 /******************************************************************************/
 
 /**

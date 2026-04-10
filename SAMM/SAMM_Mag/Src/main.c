@@ -22,14 +22,14 @@
 #include "crc.h"
 #include "fdcan.h"
 #include "gpio.h"
-#include "i2c.h"
+//#include "i2c.h"
 #include "spi.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
-#include "VL53L4ED_api.h"
+//#include "VL53L4ED_api.h"
 #include "bmi323.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
@@ -154,27 +154,27 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	// begin VL53L4ED
-	HAL_Delay(100);					      // wait for 5ms to power up the device
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
-	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
-	HAL_Delay(100);					    // wait for 5ms to reset the device
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
-	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
-	HAL_Delay(100); // wait for 5ms to power up the device
+	// HAL_Delay(100);					      // wait for 5ms to power up the device
+	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
+	// // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
+	// HAL_Delay(100);					    // wait for 5ms to reset the device
+	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
+	// // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
+	// HAL_Delay(100); // wait for 5ms to power up the device
 
-	uint16_t status = 0;
+	// uint16_t status = 0;
 
-	uint16_t sensor_id = 0;
-	VL53L4ED_ResultsData_t results;
-	uint8_t p_data_ready;
+	// uint16_t sensor_id = 0;
+	// VL53L4ED_ResultsData_t results;
+	// uint8_t p_data_ready;
 
-	int TOF_ID = 0x52;
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-	status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
-	printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
-	status = VL53L4ED_StartRanging(TOF_ID);
-	status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
-	status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
+	// int TOF_ID = 0x52;
+	// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+	// status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
+	// printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
+	// status = VL53L4ED_StartRanging(TOF_ID);
+	// status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
+	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
@@ -183,25 +183,25 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		// begin VL53L4ED
-		status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
-		if (p_data_ready) {
-			/* (Mandatory) Clear HW interrupt to restart measurements */
-			VL53L4ED_ClearInterrupt(TOF_ID);
-			/* Read measured distance. RangeStatus = 0 means valid data */
-			VL53L4ED_GetResult(TOF_ID, &results);
-			printf("Status = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, results.distance_mm - 67, results.signal_per_spad_kcps);
-		} else {
-			HAL_Delay(10);
-			__disable_irq();
-			__enable_irq();
-		}
+		// status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
+		// if (p_data_ready) {
+		// 	/* (Mandatory) Clear HW interrupt to restart measurements */
+		// 	VL53L4ED_ClearInterrupt(TOF_ID);
+		// 	/* Read measured distance. RangeStatus = 0 means valid data */
+		// 	VL53L4ED_GetResult(TOF_ID, &results);
+		// 	printf("Status = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, results.distance_mm - 67, results.signal_per_spad_kcps);
+		// } else {
+		// 	HAL_Delay(10);
+		// 	__disable_irq();
+		// 	__enable_irq();
+		// }
 
 		// begin BMI323
 		//  int16_t ax, ay, az;
 		//  if (BMI323_ReadAccel(&ax, &ay, &az) == HAL_OK) {
 		//      printf("Accel: X=%d, Y=%d, Z=%d\r\n", ax, ay, az);
 		//  }
-		HAL_Delay(100); // Read every 100ms
+		//HAL_Delay(100); // Read every 100ms
 	}
 	/* USER CODE END 3 */
 }
