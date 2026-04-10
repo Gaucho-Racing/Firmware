@@ -133,11 +133,9 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	// Initialize SoftwareLatch High
 	setSoftwareLatch(1, &state_data);
 	while (1) {
-		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
-
-		// Initialize SoftwareLatch High
 		CCU_State_Tick(&state_data);
 
 		LL_mDelay(5);
