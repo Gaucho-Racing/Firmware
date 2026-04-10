@@ -134,9 +134,10 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	// Initialize SoftwareLatch High
-	setSoftwareLatch(1, &state_data);
+	setSoftwareLatch(true, &state_data);
 	while (1) {
 		CCU_State_Tick(&state_data);
+		CheckDebuggerPrint(&state_data);
 
 		LL_mDelay(5);
 

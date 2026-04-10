@@ -206,7 +206,7 @@ void USART2_IRQHandler(void)
 			LL_USART_TransmitData8(USART2, 'C');
 		} else if (receivedData == '?') {
 
-			VCP_StateDump(&state_data);
+			request_print_statedata = true;
 
 			LL_USART_TransmitData8(USART2, '?');
 

@@ -13,11 +13,11 @@ void setSoftwareLatch(bool close, CCU_StateData *state_data)
 
 	if (close && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-		state_data->BCU_S2_SOFTWARE_LATCH = 1;
+		state_data->BCU_S2_SOFTWARE_LATCH = true;
 		LOGOMATIC("Software Latch: High\n");
 	} else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-		state_data->BCU_S2_SOFTWARE_LATCH = 0;
+		state_data->BCU_S2_SOFTWARE_LATCH = false;
 		LOGOMATIC("Software Latch: Low\n");
 	}
 }
@@ -66,8 +66,14 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
-void VCP_StateDump(const CCU_StateData *state_data)
+volatile bool request_print_statedata;
+
+void CheckDebuggerPrint(const CCU_StateData *state_data)
 {
+	if (!request_print_statedata){
+		return;
+	}
+
 	LOGOMATIC("\n========== CCU STATE DUMP ==========\n");
 
 	LOGOMATIC("state: %d\n", state_data->state);
@@ -97,4 +103,6 @@ void VCP_StateDump(const CCU_StateData *state_data)
 	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	LOGOMATIC("====================================\n\n");
+
+	request_print_statedata = false;
 }
