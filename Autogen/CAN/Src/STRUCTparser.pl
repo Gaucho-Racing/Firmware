@@ -158,7 +158,7 @@ sub generate_header {
 			}
 
 			# Debug payload structs are intentionally excluded.
-			$current_msg = ( $msg_name =~ /^Debug(?:\s+(?:2\.0|FD))?$/ismx ) ? $EMPTY_STR : $msg_name;
+			$current_msg = ( $msg_name =~ /^Debug(?:\s+(?:2[.]0|FD))?$/ismx ) ? $EMPTY_STR : $msg_name;
 			@fields      = ();
 		}
 
@@ -254,14 +254,28 @@ sub process_message {
 	my %used_field_names;
 
 	for my $i ( 0 .. $#sorted ) {
-		push @buf, process_byte_entry( $name, \@sorted, \%byte_map, \$i, $d_map, \%used_field_names );
+		my %byte_ctx = (
+			msg_name   => $name,
+			sorted_ref => \@sorted,
+			map_ref    => \%byte_map,
+			idx_ref    => \$i,
+			d_map      => $d_map,
+			seen_ref   => \%used_field_names,
+		);
+		push @buf, process_byte_entry( \%byte_ctx );
 	}
 	push @buf, "} ${prefix}_${tag}_MSG;\n\n";
 	return join $EMPTY_STR, @buf;
 }
 
 sub process_byte_entry {
-	my ( $msg_name, $sorted_ref, $map_ref, $idx_ref, $d_map, $seen_ref ) = @_;
+	my ($ctx_ref)  = @_;
+	my $msg_name   = $ctx_ref->{msg_name};
+	my $sorted_ref = $ctx_ref->{sorted_ref};
+	my $map_ref    = $ctx_ref->{map_ref};
+	my $idx_ref    = $ctx_ref->{idx_ref};
+	my $d_map      = $ctx_ref->{d_map};
+	my $seen_ref   = $ctx_ref->{seen_ref};
 	my @out;
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
