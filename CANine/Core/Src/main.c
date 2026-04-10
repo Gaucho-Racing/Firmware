@@ -63,7 +63,7 @@ static void MX_GPIO_Init(void);
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
 				   .baud_rate = 115200,
 				   .data_width = LOGOMATIC_DATAWIDTH_8B,
 				   .stop_bits = LOGOMATIC_STOPBITS_1,
@@ -101,7 +101,6 @@ void CAN_Configure()
 {
 
 	CANConfig canCfg;
-	can1 = can_init(&canCfg);
 
 	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
@@ -188,6 +187,7 @@ void CAN_Configure()
 	// data_can = can_init(&canCfg);
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
+	can1 = can_init(&canCfg);
 
 	can_start(can1);
 }
@@ -224,8 +224,8 @@ int main(void)
 	Setup_Logomatic(&logomaticConfig);
 	Setup_VCP(&vcp_config);
 
-	LOGOMATIC("Logomatic initialization complete\n");
-	VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
+	// LOGOMATIC("Logomatic initialization complete\n");
+	// VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
@@ -241,8 +241,8 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		LOGOMATIC("Hello, LOGOMATIC! Great to be here\n");
-		VCP_Send((uint8_t *)"Hello, VCP! Great to be here\n", 30);
+		// LOGOMATIC("Hello, LOGOMATIC! Great to be here\n");
+		// VCP_Send((uint8_t *)"Hello, VCP! Great to be here\n", 30);
 
 		LL_mDelay(750);
 	}
