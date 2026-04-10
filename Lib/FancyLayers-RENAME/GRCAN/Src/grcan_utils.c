@@ -90,7 +90,6 @@ uint32_t GRCAN_ToHAL_OperatingMode(GRCAN_OperatingMode mode)
 			LOGOMATIC("GRCAN_ToHAL_OperatingMode: default mode %d, defaulting to NORMAL\n", mode);
 			return FDCAN_MODE_NORMAL;
 	}
-
 	// internal loopback for testing
 }
 

@@ -6,8 +6,6 @@
 #include "Logomatic.h"
 #include "grcan_utils.h"
 #include "main.h"
-// #include "stm32g4xx_hal_fdcan.h"
-// #include "stm32g4xx_hal_gpio.h"
 
 static CANHandle *grcan_primary = NULL;
 static CANHandle *grcan_data = NULL;
@@ -43,85 +41,6 @@ bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config)
 
 void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
 void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size);
-
-// typedef struct {
-// 	FDCAN_HandleTypeDef *hal_fdcanP;
-// 	CircularBuffer *tx_buffer;
-// 	uint32_t tx_buffer_length;
-
-// 	CAN_RXCallback rx_callback;
-
-// 	// for release
-// 	GPIO_TypeDef *rx_gpio;
-// 	GPIO_TypeDef *tx_gpio;
-// 	uint32_t Clock_Source;
-
-// 	// state
-// 	bool init;
-// 	bool started;
-
-// 	// error states
-// } CANHandle;
-
-// static GR_OLD_NODE_ID grcan_local_node_id;
-
-// can change rx callback settings to custom callback, check message size and count errors
-
-/*
-EXAMPLE USAGE:
-
-GRCAN_BusConfig ecu_primary_cfg = {
-    .bus = GR_OLD_BUS_PRIMARY,
-    .fdcan_instance = FDCAN1,
-
-    .clock_source = GRCAN_CLKSRC_PCLK1,
-    .clock_divider = GRCAN_CLK_DIV1,
-    .frame_format = GRCAN_FRAME_FD_NO_BRS,
-    .operating_mode = GRCAN_OPMODE_NORMAL,
-
-    .auto_retransmission = GRCAN_FEATURE_ENABLE,
-    .transmit_pause = GRCAN_FEATURE_DISABLE,
-    .protocol_exception = GRCAN_FEATURE_ENABLE,
-
-    .bit_timing = {
-	.nominal = {
-	    .prescaler = 1,
-	    .sjw = 16,
-	    .seg1 = 127,
-	    .seg2 = 42
-	},
-	.data = {
-	    .prescaler = 8,
-	    .sjw = 16,
-	    .seg1 = 15,
-	    .seg2 = 5
-	}
-    },
-
-    .std_filters_nbr = 0,
-    .ext_filters_nbr = 2,
-
-    .rx_pin = {
-	.port = GPIOA,
-	.pin = GPIO_PIN_11,
-	.alternate_function = GPIO_AF9_FDCAN1
-    },
-
-    .tx_pin = {
-	.port = GPIOA,
-	.pin = GPIO_PIN_12,
-	.alternate_function = GPIO_AF9_FDCAN1
-    },
-
-    .rx_callback = Read_CAN,
-    .rx_interrupt_priority = 15,
-    .tx_interrupt_priority = 15,
-    .tx_buffer_length = 5,
-
-    .filter_config_fn = ECU_PrimaryFilters
-};
-
-*/
 
 CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 {
@@ -159,6 +78,44 @@ CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 // 	// additional parameters
 // } CANConfig;
 
+bool enable_port_clock(GPIO_TypeDef *port) {
+	if(port == GPIOA) {
+		GPIOx_CLK_ENABLE(GPIOA);
+		return true;
+	}
+	if(port == GPIOB) {
+		GPIOx_CLK_ENABLE(GPIOB);
+		return true;
+	}
+	if(port == GPIOD) {
+		GPIOx_CLK_ENABLE(GPIOD);
+		return true;
+	}
+	else {
+		LOGOMATIC("GRCAN_InitBus: invalid GPIO port\n");
+		return false;
+	}
+}
+
+bool deactivate_port_clock(GPIO_TypeDef *port) {
+	if(port == GPIOA) {
+		GPIOx_CLK_DISABLE(GPIOA);
+		return true;
+	}
+	if(port == GPIOB) {
+		GPIOx_CLK_DISABLE(GPIOB);
+		return true;
+	}
+	if(port == GPIOD) {
+		GPIOx_CLK_DISABLE(GPIOD);
+		return true;
+	}
+	else {
+		LOGOMATIC("GRCAN_DeactivateBus: invalid GPIO port\n");
+		return false;
+	}
+}
+
 bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 {
 	CANConfig cfg = {0};
@@ -179,23 +136,8 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 		return false;
 	}
 
-	if (FDCAN_TX_PORT == FDCAN_RX_PORT) {
-		GPIOx_CLK_ENABLE(FDCAN_TX_PORT);
-	}
-	else {
-		GPIOx_CLK_ENABLE(FDCAN_TX_PORT);
-		GPIOx_CLK_ENABLE(FDCAN_RX_PORT);
-	}
-
-	if (FDCAN_TX_PORT != bus_config->tx_pin.port) {
-		LOGOMATIC("GRCAN_InitBus: FDCAN_TX_PORT does not match bus_config tx pin port for bus %d\n", bus_config->bus);
-		return false;
-	}
-
-	if (FDCAN_RX_PORT != bus_config->rx_pin.port) {
-		LOGOMATIC("GRCAN_InitBus: FDCAN_RX_PORT does not match bus_config rx pin port for bus %d\n", bus_config->bus);
-		return false;
-	}
+	enable_port_clock(bus_config->rx_pin.port);
+	enable_port_clock(bus_config->tx_pin.port);
 
 	can_set_clksource(GRCAN_ToHAL_ClockSource(bus_config->clock_source));
 
@@ -225,7 +167,6 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 	cfg.rx_callback = bus_config->rx_callback;
 	cfg.rx_interrupt_priority = bus_config->rx_interrupt_priority;
 	cfg.tx_interrupt_priority = bus_config->tx_interrupt_priority;
-	// cfg.tx_buffer_length = bus_config->tx_buffer_length;
 
 	cfg.rx_gpio = bus_config->rx_pin.port;
 	cfg.init_rx_gpio.Pin = bus_config->rx_pin.pin;
@@ -299,6 +240,9 @@ bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus)
 		return false;
 	}
 
+	deactivate_port_clock(handle->rx_gpio);
+	deactivate_port_clock(handle->tx_gpio);
+
 	if (can_release(handle) != 0) {
 		LOGOMATIC("GRCAN_DeactivateBus: can_release failed for bus %d\n", bus);
 		return false;
@@ -324,34 +268,6 @@ bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus)
 
 	return true;
 }
-
-// void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *dataCAN, CANHandle *testingCAN, CANHandle *chargingCAN)
-// {
-
-// 	grcan_local_node_id = localID;
-
-// 	if (primaryCAN == NULL) {
-// 		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for primary CAN handle\n");
-// 	}
-
-// 	if (dataCAN == NULL) {
-// 		LOGOMATIC("GRCAN_Fancy_Ini
-// 			t: Received NULL pointer for data CAN handle\n");
-// 	}
-
-// 	if (testingCAN == NULL) {
-// 		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for testing CAN handle\n");
-// 	}
-
-// 	if (chargingCAN == NULL) {
-// 		LOGOMATIC("GRCAN_Fancy_Init: Received NULL pointer for charging CAN handle\n");
-// 	}
-
-// 	grcan_primary = primaryCAN;
-// 	grcan_data = dataCAN;
-// 	grcan_testing = testingCAN;
-// 	grcan_charging = chargingCAN;
-// }
 
 void GRCAN_SetLocalNodeID(GRCAN_NODE_ID localID)
 {
@@ -466,7 +382,6 @@ void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = header;
-	// memcpy(&(msg.data), data, size);
 	memcpy(msg.data, data, size);
 
 	CANHandle *handle = GRCAN_GetHandle(bus);
@@ -477,27 +392,6 @@ void GRCAN_Raw_Send_Classic(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32
 	}
 
 	can_send(handle, &msg);
-	// switch (bus) {
-	// 	case GR_OLD_BUS_PRIMARY:
-	// 		if (!grcan_primary) { LOGOMATIC("ERROR: Primary CAN not configured. Primary Should use FDCAN:\n"); return; }
-	// 		can_send(grcan_primary, &msg);
-	// 		break;
-	// 	case GR_OLD_BUS_DATA:
-	// 		if (!grcan_data) { LOGOMATIC("Data CAN not configured\n"); return; }
-	// 		can_send(grcan_data, &msg);
-	// 		break;
-	// 	case GR_OLD_BUS_TESTING:
-	// 		if (!grcan_testing) { LOGOMATIC("ERROR: Testing CAN not configured. Testing Should use FDCAN:\n"); return; }
-	// 		can_send(grcan_testing, &msg);
-	// 		break;
-	// 	case GR_OLD_BUS_CHARGING:
-	// 		if (!grcan_charging) { LOGOMATIC("Charging CAN not configured\n"); return; }
-	// 		can_send(grcan_charging, &msg);
-	// 		break;
-	// 	default:
-	// 		LOGOMATIC("GRCAN_Raw_Send_Classic: Invalid bus ID %d\n", bus);
-	// 		break;
-	// }
 }
 
 void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) // FDCAN funciton allows for modification with different settings
@@ -530,7 +424,6 @@ void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t si
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = header;
-	// memcpy(&(msg.data), data, size);
 	memcpy(msg.data, data, size);
 
 	CANHandle *handle = GRCAN_GetHandle(bus);
@@ -541,25 +434,4 @@ void GRCAN_Raw_Send_FD(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t si
 	}
 
 	can_send(handle, &msg);
-	// switch (bus) {
-	// 	case GR_OLD_BUS_PRIMARY:
-	// 		if (!grcan_primary) { LOGOMATIC("Primary CAN not configured\n"); return; }
-	// 		can_send(grcan_primary, &msg);
-	// 		break;
-	// 	case GR_OLD_BUS_DATA:
-	// 		if (!grcan_data) { LOGOMATIC("ERROR: Data CAN not configured. Data Should use FDCAN:\n"); return; }
-	// 		can_send(grcan_data, &msg);
-	// 		break;
-	// 	case GR_OLD_BUS_TESTING:
-	// 		if (!grcan_testing) { LOGOMATIC("Testing CAN not configured\n"); return; }
-	// 		can_send(grcan_testing, &msg);
-	// 		break;
-	// 	case GR_OLD_BUS_CHARGING:
-	// 		if (!grcan_charging) { LOGOMATIC("ERROR: Charging CAN not configured. Charging Should use FDCAN:\n"); return; }
-	// 		can_send(grcan_charging, &msg);
-	// 		break;
-	// 	default:
-	// 		LOGOMATIC("GRCAN_Raw_Send_FD: Invalid bus ID %d\n", bus);
-	// 		break;
-	// }
 }
