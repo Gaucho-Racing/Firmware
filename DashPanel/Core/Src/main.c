@@ -36,6 +36,8 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define NEOPIXEL_DELAY 200
+#define CAN_TIMER_DELAY 100
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -60,7 +62,8 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
-uint32_t timer = 0;
+volatile uint32_t timer = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -135,10 +138,9 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		if (canReadyToSend || timer * tick_freq >= 100) {
+		if (canReadyToSend || timer * tick_freq >= CAN_TIMER_DELAY) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
-
 			msg_struct.led_bits = dashStatus.led_bits;
 			msg_struct.button_flags = dashStatus.button_flags;
 
@@ -148,7 +150,7 @@ int main(void)
 			if (GETBIT(dashStatus.button_flags, 1)) { // RTD
 				SetBitInByte(dashStatus.button_flags, 1, false);
 			}
-			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons(this through the end)
+			if (GETBIT(dashStatus.button_flags, 2)) { // Mystery Meat Buttons (this through the end)
 				SetBitInByte(dashStatus.button_flags, 2, false);
 			}
 			if (GETBIT(dashStatus.button_flags, 3)) {
@@ -160,10 +162,9 @@ int main(void)
 			if (GETBIT(dashStatus.button_flags, 5)) {
 				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
-			// CAN_sendPing(Dash_Panel);
-			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
-			LOGOMATIC("CAN\n");
+			LOGOMATIC("CAN Send Triggered!\n");
+			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			canReadyToSend = false;
 			timer = 0;
@@ -237,58 +238,53 @@ static void MX_GPIO_Init(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
-	/**/
+	/* Button 1 Reset */
 	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_5);
 
-	/**/
+	/* Button 2 Reset */
 	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_6);
 
-	/**/
+	/* Button 3 Reset */
 	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_7);
 
-	/**/
+	/* Button 4 Reset */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_4);
 
-	/*TSActive*/
+	/* TS Active */
 	GPIO_InitStruct.Pin = TS_ACTIVE_BTN_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(TS_ACTIVE_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/*RTD*/
+	/* RTD */
 	GPIO_InitStruct.Pin = RTD_BTN_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(RTD_BTN_GPIO_Port, &GPIO_InitStruct);
 
-	/*Button 1*/
+	/* Button 1 */
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/*Button 2*/
+	/* Button 2 */
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/*Button 3*/
+	/* Button 3 */
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_7;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/*Button 4*/
+	/* Button 4 */
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-	// GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
-	// GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
-	// GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	// LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	/* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -305,31 +301,39 @@ static void MX_GPIO_Init(void)
 static void GPIO_Interrupt_Init(void)
 {
 	// Map pins to External Lines
-	// LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13); // PC13 --> EXTI 13
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE3); // PA3 --> EXTI 3
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE4); // PA4 --> EXTI 4
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE5); // PA5 --> EXTI 5
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE6); // PA6 --> EXTI 6
+	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE7); // PA7 --> EXTI 7
+	// LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE4); // PC4 --> EXTI 4
 
 	// Initialize the Interrupts
 	LL_EXTI_InitTypeDef EXTI_Init = {0};
-	// EXTI_Init.Line_0_31 = LL_EXTI_LINE_13; // EXTI 13
 	EXTI_Init.LineCommand = ENABLE;
 	EXTI_Init.Mode = LL_EXTI_MODE_IT;
 	EXTI_Init.Trigger = LL_EXTI_TRIGGER_RISING;
-	// LL_EXTI_Init(&EXTI_Init);
+
 	EXTI_Init.Line_0_31 = LL_EXTI_LINE_3; // EXTI 3
 	LL_EXTI_Init(&EXTI_Init);
 	EXTI_Init.Line_0_31 = LL_EXTI_LINE_4; // EXTI 4
 	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_5; // EXTI 5
+	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_6; // EXTI 6
+	LL_EXTI_Init(&EXTI_Init);
+	EXTI_Init.Line_0_31 = LL_EXTI_LINE_7; // EXTI 7
+	LL_EXTI_Init(&EXTI_Init);
 
 	// Set default priority
-	// NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 	NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 	NVIC_SetPriority(EXTI4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+	NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 
 	// Enable Interrupt
-	// NVIC_EnableIRQ(EXTI15_10_IRQn);
 	NVIC_EnableIRQ(EXTI3_IRQn);
 	NVIC_EnableIRQ(EXTI4_IRQn);
+	NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 
 void timer_inc(void)
