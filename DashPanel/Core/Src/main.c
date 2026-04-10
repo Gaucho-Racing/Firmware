@@ -36,6 +36,8 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define NEOPIXEL_DELAY 200
+#define CAN_TIMER_DELAY 100
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -60,7 +62,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
-uint32_t timer = 0;
+volatile uint32_t timer = 0;
 
 /* USER CODE END PV */
 
@@ -136,7 +138,7 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		if (canReadyToSend || timer * tick_freq >= 100) {
+		if (canReadyToSend || timer * tick_freq >= CAN_TIMER_DELAY) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
 			msg_struct.led_bits = dashStatus.led_bits;

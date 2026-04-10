@@ -97,7 +97,7 @@ void timer_inc(void);
 #endif
 
 /* USER CODE BEGIN Private defines */
-extern uint32_t timer;
+extern volatile uint32_t timer;
 
 /* USER CODE END Private defines */
 

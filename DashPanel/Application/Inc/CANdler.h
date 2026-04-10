@@ -9,10 +9,6 @@ typedef struct {
 	uint8_t ECUState;
 	uint8_t button_flags;
 	uint8_t led_bits;
-	uint8_t button1;
-	uint8_t button2;
-	uint8_t button3;
-	uint8_t button4;
 } DashStatus;
 
 extern DashStatus dashStatus;
