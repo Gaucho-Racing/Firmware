@@ -161,6 +161,7 @@ int main(void)
 				SetBitInByte(dashStatus.button_flags, 5, false);
 			}
 
+			LOGOMATIC("CAN Send Triggered!\n");
 			CAN_sendECU(can_handler, &msg_struct, GRCAN_ECU);
 
 			canReadyToSend = false;
@@ -303,7 +304,7 @@ static void GPIO_Interrupt_Init(void)
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE5); // PA5 --> EXTI 5
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE6); // PA6 --> EXTI 6
 	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE7); // PA7 --> EXTI 7
-	LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE4); // PC4 --> EXTI 4
+	// LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE4); // PC4 --> EXTI 4
 
 	// Initialize the Interrupts
 	LL_EXTI_InitTypeDef EXTI_Init = {0};
