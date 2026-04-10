@@ -528,7 +528,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	}
 
 	// if (GR_CircularBuffer_IsFull(handle->rx_buffer)) return;
-	FDCAN_RxHeaderTypeDef rx_header;
+	FDCAN_RxHeaderTypeDef rx_header = {0};
 
 	// TODO: Stack allocation should be safe
 	// uint8_t rx_data[64] = {0};
