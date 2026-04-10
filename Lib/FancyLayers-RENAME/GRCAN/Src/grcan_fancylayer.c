@@ -291,6 +291,40 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 	return true;
 }
 
+bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus)
+{
+	CANHandle *handle = GRCAN_GetHandle(bus);
+	if (handle == NULL) {
+		LOGOMATIC("GRCAN_DeactivateBus: invalid bus %d\n", bus);
+		return false;
+	}
+
+	if (can_release(handle) != 0) {
+		LOGOMATIC("GRCAN_DeactivateBus: can_release failed for bus %d\n", bus);
+		return false;
+	}
+
+	switch (bus) {
+		case GRCAN_BUS_PRIMARY:
+			grcan_primary = NULL;
+			break;
+		case GRCAN_BUS_DATA:
+			grcan_data = NULL;
+			break;
+		case GRCAN_BUS_TESTING:
+			grcan_testing = NULL;
+			break;
+		case GRCAN_BUS_CHARGER:
+			grcan_charging = NULL;
+			break;
+		default:
+			LOGOMATIC("GRCAN_DeactivateBus: invalid bus %d\n", bus);
+			return false;
+	}
+
+	return true;
+}
+
 // void GRCAN_Fancy_Init(GR_OLD_NODE_ID localID, CANHandle *primaryCAN, CANHandle *dataCAN, CANHandle *testingCAN, CANHandle *chargingCAN)
 // {
 

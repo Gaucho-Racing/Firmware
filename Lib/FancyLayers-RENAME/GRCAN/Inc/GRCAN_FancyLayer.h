@@ -21,6 +21,7 @@ typedef struct {
 
 GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus);
 bool GRCAN_InitBus(GRCAN_BusConfig *bus_config);
+bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus);
 
 uint32_t GRCAN_Fancy_EncodeID(GRCAN_Fancy_ID *id);
 void GRCAN_Fancy_DecodeID(GRCAN_Fancy_ID *id, uint32_t rawID);

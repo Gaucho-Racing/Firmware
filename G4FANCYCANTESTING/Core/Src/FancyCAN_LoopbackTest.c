@@ -60,9 +60,9 @@ static void can_test_rx_callback(uint32_t id, void *data, uint32_t size) {
 // TODO - allow user to send data without needing to construct a header for the buffer
 //  TODO: G4 tests are dependent on the System clock configuration??
 
-int GRCAN_Test_InitBus() {
+int GRCAN_Validate_InitBus(GRCAN_BUS_ID bus) {
     GRCAN_BusConfig bus_config;
-    GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
+    GRCAN_SetDefaultBusConfig(&bus_config, bus);
     bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
     bus_config.fdcan_instance = FDCAN2;
 	bus_config.rx_callback = can_test_rx_callback; //test loopback
@@ -79,13 +79,48 @@ int GRCAN_Test_InitBus() {
     }
 }
 
+// GRCAN_ALL = 0xFF,
+// 	GRCAN_BCU = 0x03,
+// 	GRCAN_ECU = 0x02,
+// 	GRCAN_CCU = 0x02,
+// 	GRCAN_Charger = 0x00,
+// 	GRCAN_Charging_SDC = 0x0C,
+// 	GRCAN_DGPS = 0x30,
+// 	GRCAN_Dash_Panel = 0x05,
+// 	GRCAN_Debugger = 0x01,
+// 	GRCAN_Fan_Controller_1 = 0x0D,
+// 	GRCAN_Fan_Controller_2 = 0x0E,
+// 	GRCAN_Fan_Controller_3 = 0x0F,
+// 	GRCAN_GR_Inverter = 0x08,
+// 	GRCAN_TCM = 0x04,
+int GRCAN_SendReceive(GRCAN_BUS_ID bus) {
+	rx_received = 0;
+	data_valid = false;
 
-int GRCAN_Test_SendReceive() {
-    GRCAN_SetLocalNodeID(1);
+	if (bus == GRCAN_BUS_TESTING) {
+		LOGOMATIC("Testing GRCAN_SendReceive on TESTING bus...\n");
+		GRCAN_SetLocalNodeID(0x01);
+	}
+	else if (bus == GRCAN_BUS_DATA) {
+		LOGOMATIC("Testing GRCAN_SendReceive on DATA bus...\n");
+		GRCAN_SetLocalNodeID(0x02);
+	}
+	else if (bus == GRCAN_BUS_CHARGER) {
+		LOGOMATIC("Testing GRCAN_SendReceive on CHARGER bus...\n");
+		GRCAN_SetLocalNodeID(0x00);
+	}
+	else if (bus == GRCAN_BUS_PRIMARY) {
+		LOGOMATIC("Testing GRCAN_SendReceive on PRIMARY bus...\n");
+		GRCAN_SetLocalNodeID(0x03);
+	}
+	else {
+		LOGOMATIC("Testing GRCAN_SendReceive on UNKNOWN bus...\n");
+		return 0;
+	}
 
     uint8_t data[] = "Hello";
     memcpy(expected_data, data, sizeof(data)); // Set the expected data
-    GRCAN_Fancy_Send(GRCAN_BUS_TESTING, 2, 0x12, data, sizeof(data));
+    GRCAN_Fancy_Send(bus, 2, 0x12, data, sizeof(data));
 
     // Wait for the callback to be triggered
     HAL_Delay(1000); // Simulate waiting for message processing
@@ -100,7 +135,7 @@ int GRCAN_Test_SendReceive() {
     }
 }
 
-int GRCAN_Test_ErrorHandling() {
+int GRCAN_ErrorHandling() {
     GRCAN_BusConfig invalid_config = {0};
 
     LOGOMATIC("\nTesting GRCAN_InitBus with invalid config...\n");
@@ -118,11 +153,65 @@ int GRCAN_Test_ErrorHandling() {
 int FancyCAN_LoopbackTest(void)
 {
 
-    int res1 = GRCAN_Test_InitBus();
-    int res2 = GRCAN_Test_SendReceive();
-    int res3 = GRCAN_Test_ErrorHandling();
+    int res1 = GRCAN_Validate_InitBus(GRCAN_BUS_TESTING);
+    int res2 = GRCAN_SendReceive(GRCAN_BUS_TESTING);
+    int res3 = GRCAN_ErrorHandling();
 
-    return res1 == 1 && res2 == 1 && res3 == 1;
+	bool res4 = GRCAN_DeactivateBus(GRCAN_BUS_TESTING);
+
+	if (!res1 || !res2 || !res3) {
+		LOGOMATIC("Testing Bus:TESTING Loopback Test FAILED during initialization or send/receive test.\n");
+		return 0;
+	}
+	if (!res4) {
+		LOGOMATIC("Testing Bus:TESTING Loopback Test FAILED during bus deactivation.\n");
+		return 0;
+	}
+
+	res1 = GRCAN_Validate_InitBus(GRCAN_BUS_DATA);
+	res2 = GRCAN_SendReceive(GRCAN_BUS_DATA);
+
+	res4 = GRCAN_DeactivateBus(GRCAN_BUS_DATA);
+
+	if (!res1 || !res2) {
+		LOGOMATIC("Testing Bus:DATA Loopback Test FAILED during initialization or send/receive test.\n");
+		return 0;
+	}
+
+	if (!res3) {
+		LOGOMATIC("Testing Bus:DATA Loopback Test FAILED during bus deactivation.\n");
+		return 0;
+	}
+
+	res1 = GRCAN_Validate_InitBus(GRCAN_BUS_CHARGER);
+	res2 = GRCAN_SendReceive(GRCAN_BUS_CHARGER);
+	res4 = GRCAN_DeactivateBus(GRCAN_BUS_CHARGER);
+
+	if (!res1 || !res2) {
+		LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED during initialization or send/receive test.\n");
+		return 0;
+	}
+
+	if (!res4) {
+		LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED during bus deactivation.\n");
+		return 0;
+	}
+
+	res1 = GRCAN_Validate_InitBus(GRCAN_BUS_PRIMARY);
+	res2 = GRCAN_SendReceive(GRCAN_BUS_PRIMARY);
+
+	res4 = GRCAN_DeactivateBus(GRCAN_BUS_PRIMARY);
+	if (!res1 || !res2) {
+		LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED during initialization or send/receive test.\n");
+		return 0;
+	}
+
+	if (!res4) {
+		LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED during bus deactivation.\n");
+		return 0;
+	}
+
+    return 1;
 
     // TODO: actually check if the message was received correctly and return true if so
 
