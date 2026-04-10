@@ -37,13 +37,6 @@ BO_ 2147682562 BCU_BCU_Status_3_to_ECU: 8 BCU
  SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" ECU
  SG_ HV_Output_Current : 48|16@1+ (0.001,0) [0|65.535] "Amps" ECU
 
-BO_ 2147684866 BCU_DC_DC_Status_to_ECU: 7 BCU
- SG_ Input_Voltage : 0|16@1+ (0.001,0) [0|65.535] "Volts" ECU
- SG_ Output_Voltage : 16|16@1+ (0.001,0) [0|65.535] "Volts" ECU
- SG_ Input_Current : 32|8@1+ (0.1,0) [0|25.5] "Amps" ECU
- SG_ Output_Current : 40|8@1+ (0.1,0) [0|25.5] "Amps" ECU
- SG_ DC_DC_Temp : 48|8@1+ (1,0) [0|255] "Celsius" ECU
-
 BO_ 2147680513 BCU_Debug_FD_to_Debugger: 64 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
@@ -388,6 +381,28 @@ BO_ 2550588916 BCU_Charger_Control_to_Charger: 5 BCU
  SG_ Set_Current : 16|8@1+ (1,0) [0|0] "" Charger
  SG_ Charge_Enable : 17|8@1+ (1,0) [0|0] "" Charger
 
+BO_ 2147682050 BCU_BCU_Status_1_to_CCU: 8 BCU
+ SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps" CCU
+ SG_ Accumulator_SOC : 48|8@1+ (0.392157,0) [0|100] "%" CCU
+ SG_ GLV_SOC : 56|8@1+ (0.392157,0) [0|100] "%" CCU
+
+BO_ 2147682306 BCU_BCU_Status_2_to_CCU: 7 BCU
+ SG_ 20v_Voltage : 0|8@1+ (1,0) [0|0] "" CCU
+ SG_ 12v_Voltage : 8|8@1+ (1,0) [0|0] "" CCU
+ SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] "" CCU
+ SG_ Min_Cell_Voltage : 24|8@1+ (1,0) [0|0] "" CCU
+ SG_ Max_Cell_Temp : 32|8@1+ (1,0) [0|0] "" CCU
+ SG_ status_flags : 40|1@1+ (1,0) [0|0] "" CCU
+ SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] "" CCU
+
+BO_ 2147682562 BCU_BCU_Status_3_to_CCU: 8 BCU
+ SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ HV_Output_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" CCU
+ SG_ HV_Output_Current : 48|16@1+ (0.001,0) [0|65.535] "Amps" CCU
+
 BO_ 2566869221 Charger_Charger_Data_to_BCU: 8 Charger
  SG_ Output_Voltage : 0|8@1+ (1,0) [0|0] "" BCU
  SG_ Output_Current : 16|8@1+ (1,0) [0|0] "" BCU
@@ -618,15 +633,13 @@ BO_ 2147615247 ECU_Ping_to_Fan_Controller_3: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_3
 
 BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
- SG_ BMS_LED : 0|1@1+ (1,0) [0|0] "Bool" Dash_Panel
- SG_ IMD_LED : 1|1@1+ (1,0) [0|0] "Bool" Dash_Panel
- SG_ BSPD_LED : 2|1@1+ (1,0) [0|0] "Bool" Dash_Panel
+ SG_ led_bits : 0|8@1+ (1,0) [0|0] "" Dash_Panel
 
 BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Dash_Panel
 
 BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
- SG_ state_messages : 0|1@1+ (1,0) [0|0] "Bool" ALL
+ SG_ ecu_state : 0|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ status_flags : 8|1@1+ (1,0) [0|0] "" ALL
  SG_ Power_Level : 16|4@1+ (1,0) [0|0] "" ALL
  SG_ Torque_Map : 20|4@1+ (1,0) [0|0] "" ALL
@@ -653,7 +666,7 @@ BO_ 2147614977 ECU_Debug_FD_to_Debugger: 64 ECU
 BO_ 2147615233 ECU_Ping_to_Debugger: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Debugger
 
-BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 16 ECU
+BO_ 2147626500 ECU_ECU_Analog_Data_to_TCM: 16 ECU
  SG_ BSPD_Signal : 0|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ BSE_Signal : 16|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ APPS_1_Signal : 32|16@1+ (0.0015259,0) [0|100] "%" TCM
@@ -662,6 +675,9 @@ BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 16 ECU
  SG_ Brakeline_R_Signal : 80|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ AUX_Signal : 112|16@1+ (0.0015259,0) [0|100] "%" TCM
+
+BO_ 2147689220 ECU_ECU_Performance_to_TCM: 4 ECU
+ SG_ Elapsed_Cycles : 0|32@1+ (1,0) [0|0] "Clock Cycles" TCM
 
 BO_ 269 Energy_Meter_EM_Measurement_to_BCU: 8 Energy_Meter
  SG_ Current : 0|8@1+ (1,0) [0|0] "" BCU
@@ -752,16 +768,9 @@ BO_ 2148013058 GR_Inverter_Inverter_Status_2_to_ECU: 6 GR_Inverter
  SG_ V_MOSFET_temperature : 16|8@1+ (1,-40) [-40|215] "Celsius" ECU
  SG_ W_MOSFET_temperature : 32|8@1+ (1,-40) [-40|215] "Celsius" ECU
 
-BO_ 2148013314 GR_Inverter_Inverter_Status_3_to_ECU: 2 GR_Inverter
+BO_ 2148013314 GR_Inverter_Inverter_Status_3_to_ECU: 3 GR_Inverter
  SG_ Motor_temperature : 0|8@1+ (1,-40) [-40|215] "Celsius" ECU
- SG_ Over_voltage_faults : 16|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Under_voltage_fault : 17|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Inv_overtemp_fault : 18|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Motor_overtemp_fault : 19|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Transistor_fault : 20|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Encoder_fault : 21|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ CAN_fault : 22|1@1+ (1,0) [0|0] "Bool" ECU
- SG_ Future_use : 23|1@1+ (1,0) [0|0] "Bool" ECU
+ SG_ fault_bits : 16|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 35 IMD_IMD_response_to_BCU: 0 IMD
 
