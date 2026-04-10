@@ -140,6 +140,7 @@ int main(void)
 		CheckDebuggerPrint(&state_data);
 
 		LL_mDelay(5);
+		LL_mDelay(5);
 
 		/* USER CODE END 3 */
 	}
@@ -155,9 +156,13 @@ void SystemClock_Config(void)
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
 	LL_PWR_EnableRange1BoostMode();
 	LL_RCC_HSE_Enable();
+	LL_RCC_HSE_Enable();
 	/* Wait till HSI is ready */
 	while (LL_RCC_HSE_IsReady() != 1) {}
+	while (LL_RCC_HSE_IsReady() != 1) {}
 
+	LL_RCC_HSE_EnableCSS();
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
 	LL_RCC_HSE_EnableCSS();
 	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
