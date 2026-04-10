@@ -70,7 +70,7 @@ volatile bool request_print_statedata;
 
 void CheckDebuggerPrint(const CCU_StateData *state_data)
 {
-	if (!request_print_statedata){
+	if (!request_print_statedata) {
 		return;
 	}
 
