@@ -54,8 +54,4 @@ set_target_properties(
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE GRCAN_FANCYLAYER)
 
-target_include_directories(
-	${PROJECT_NAME}_USER_CODE
-	INTERFACE
-		../Core/Inc
-)
+target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE ../Core/Inc)
