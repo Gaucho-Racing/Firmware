@@ -16,6 +16,24 @@
 #define NODE_ID 2
 #endif
 
+// Static variable to track received messages
+static volatile uint32_t rx_received = 0;
+
+// Static variable to track if the received data matches the expected data
+static volatile bool data_valid = false;
+static uint8_t expected_data[] = "Hello";
+
+// Updated callback function to verify received data
+static void can_test_rx_callback(uint32_t id, void *data, uint32_t size) {
+    rx_received++;
+    if (size == sizeof(expected_data) && memcmp(data, expected_data, size) == 0) {
+        data_valid = true;
+    } else {
+        data_valid = false;
+    }
+    LOGOMATIC("\nCallback triggered: ID=%" PRIu32 ", Size=%ld, Data[0]=0x%x\n", id, size, *(uint8_t *)data);
+}
+
 // #define NUM_NODES 2    // total number of nodes on the bus (including this one)
 // #define NUM_MESSAGES 5 // number of messages each node sends to every other node
 
@@ -42,80 +60,69 @@
 // TODO - allow user to send data without needing to construct a header for the buffer
 //  TODO: G4 tests are dependent on the System clock configuration??
 
-void GRCAN_Test_InitBus() {
+int GRCAN_Test_InitBus() {
     GRCAN_BusConfig bus_config;
     GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
     bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
     bus_config.fdcan_instance = FDCAN2;
+	bus_config.rx_callback = can_test_rx_callback; //test loopback
 
     LOGOMATIC("Testing GRCAN_InitBus...\n");
     bool result = GRCAN_InitBus(&bus_config);
     if (result == true) {
         LOGOMATIC("GRCAN_InitBus PASSED.\n");
+		return 1;
     }
     else {
         LOGOMATIC("GRCAN_InitBus FAILED.\n");
+		return 0;
     }
 }
 
-// Static variable to track received messages
-static volatile uint32_t rx_received = 0;
 
-// Callback function to verify received data
-static void can_test_rx_callback(uint32_t id, void *data, uint32_t size) {
-    rx_received++;
-    LOGOMATIC("\nCallback triggered: ID=%" PRIu32 ", Size=%ld, Data[0]=0x%x\n", id, size, *(uint8_t *)data);
-}
-
-void GRCAN_Test_SendReceive() {
-    GRCAN_BusConfig bus_config;
-    GRCAN_SetDefaultBusConfig(&bus_config, GRCAN_BUS_TESTING);
-    bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
-    bus_config.fdcan_instance = FDCAN2;
-
-    // Define CANConfig with callback
-    CANConfig can_config = {0};
-    can_config.rx_callback = can_test_rx_callback; // Register the callback
-
-    LOGOMATIC("\nTesting GRCAN_Fancy_Send...\n");
-    GRCAN_InitBus(&bus_config);
+int GRCAN_Test_SendReceive() {
     GRCAN_SetLocalNodeID(1);
 
     uint8_t data[] = "Hello";
+    memcpy(expected_data, data, sizeof(data)); // Set the expected data
     GRCAN_Fancy_Send(GRCAN_BUS_TESTING, 2, 0x12, data, sizeof(data));
 
     // Wait for the callback to be triggered
     HAL_Delay(1000); // Simulate waiting for message processing
 
-    // Verify the callback was triggered
-    if (rx_received > 0) {
-        LOGOMATIC("GRCAN_Fancy_Send PASSED. Callback verified.\n");
+    // Verify the callback was triggered and data is valid
+    if (rx_received > 0 && data_valid) {
+        LOGOMATIC("GRCAN_Fancy_Send PASSED. Callback verified and data is valid.\n");
+        return 1;
     } else {
-        LOGOMATIC("GRCAN_Fancy_Send FAILED. Callback not triggered.\n");
+        LOGOMATIC("GRCAN_Fancy_Send FAILED. Callback not triggered or data is invalid.\n");
+        return 0;
     }
 }
 
-void GRCAN_Test_ErrorHandling() {
+int GRCAN_Test_ErrorHandling() {
     GRCAN_BusConfig invalid_config = {0};
 
     LOGOMATIC("\nTesting GRCAN_InitBus with invalid config...\n");
     bool result = GRCAN_InitBus(&invalid_config);
     if (result == false) {
         LOGOMATIC("GRCAN_InitBus error handling PASSED.\n");
+		return 1;
     }
     else {
        LOGOMATIC("GRCAN_InitBus error handling FAILED.\n");
+	   return 0;
     }
 }
 
 int FancyCAN_LoopbackTest(void)
 {
 
-    GRCAN_Test_InitBus();
-    GRCAN_Test_SendReceive();
-    GRCAN_Test_ErrorHandling();
+    int res1 = GRCAN_Test_InitBus();
+    int res2 = GRCAN_Test_SendReceive();
+    int res3 = GRCAN_Test_ErrorHandling();
 
-    return 0;
+    return res1 == 1 && res2 == 1 && res3 == 1;
 
     // TODO: actually check if the message was received correctly and return true if so
 
