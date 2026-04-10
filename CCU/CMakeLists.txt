@@ -60,8 +60,6 @@ target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
-		Core/Src/dma.c
-		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
