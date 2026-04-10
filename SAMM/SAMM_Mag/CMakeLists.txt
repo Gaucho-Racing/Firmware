@@ -29,17 +29,17 @@ target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
-        Src/adc.c
-        Src/crc.c
-        Src/dma.c
-        Src/fdcan.c
-        Src/gpio.c
-        Src/mag.c
-        Src/main.c
-        Src/spi.c
-        Src/stm32h5xx_hal_msp.c
-        Src/stm32h5xx_hal_timebase_tim.c
-        Src/stm32h5xx_it.c
+		Src/adc.c
+		Src/crc.c
+		Src/dma.c
+		Src/fdcan.c
+		Src/gpio.c
+		Src/mag.c
+		Src/main.c
+		Src/spi.c
+		Src/stm32h5xx_hal_msp.c
+		Src/stm32h5xx_hal_timebase_tim.c
+		Src/stm32h5xx_it.c
 	# TODO
 )
 
@@ -49,12 +49,12 @@ target_link_libraries(
 		CANfigurator
 		PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
-        SAMM_IMU_Lib
+		SAMM_IMU_Lib
 )
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Inc
-#TODO: Figure out how to set up Extras folder
+	#TODO: Figure out how to set up Extras folder
 )
