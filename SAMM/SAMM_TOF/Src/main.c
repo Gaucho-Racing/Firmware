@@ -19,8 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-//#include "crc.h"
-//#include "fdcan.h"
+// #include "crc.h"
+// #include "fdcan.h"
 #include "gpio.h"
 #include "i2c.h"
 #include "spi.h"
@@ -36,8 +36,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-//#define BMI323_CS_GPIO_Port GPIOA
-//#define BMI323_CS_Pin GPIO_PIN_4
+// #define BMI323_CS_GPIO_Port GPIOA
+// #define BMI323_CS_Pin GPIO_PIN_4
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -110,9 +110,9 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	//MX_CRC_Init();
-	//MX_FDCAN1_Init();
-	//MX_FDCAN2_Init();
+	// MX_CRC_Init();
+	// MX_FDCAN1_Init();
+	// MX_FDCAN2_Init();
 	MX_I2C1_Init();
 	MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
 	/* USER CODE BEGIN 2 */

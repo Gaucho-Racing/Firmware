@@ -19,8 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-//#include "crc.h"
-//#include "fdcan.h"
+// #include "crc.h"
+// #include "fdcan.h"
 #include "gpio.h"
 #include "spi.h"
 
@@ -28,7 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
-//#include "VL53L4ED_api.h"
+// #include "VL53L4ED_api.h"
 #include "bmi323.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
@@ -103,9 +103,9 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	//MX_CRC_Init();
-	//MX_FDCAN1_Init();
-	//MX_FDCAN2_Init();
+	// MX_CRC_Init();
+	// MX_FDCAN1_Init();
+	// MX_FDCAN2_Init();
 	MX_I2C1_Init();
 	MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
 	/* USER CODE BEGIN 2 */
@@ -194,7 +194,7 @@ int main(void)
 		//  if (BMI323_ReadAccel(&ax, &ay, &az) == HAL_OK) {
 		//      printf("Accel: X=%d, Y=%d, Z=%d\r\n", ax, ay, az);
 		//  }
-		//HAL_Delay(100); // Read every 100ms
+		// HAL_Delay(100); // Read every 100ms
 	}
 	/* USER CODE END 3 */
 }

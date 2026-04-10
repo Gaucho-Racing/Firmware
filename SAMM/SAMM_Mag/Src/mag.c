@@ -10,8 +10,7 @@ uint8_t mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, 
 {
 
 	uint8_t tx_word[4];
-	uint8_t rx_word[4] = {0}
-	mag_dev->spi_port = spi_port;
+	uint8_t rx_word[4] = {0} mag_dev->spi_port = spi_port;
 	mag_dev->port = port;
 	mag_dev->pin = pin;
 
@@ -19,7 +18,7 @@ uint8_t mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, 
 	status = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
-		return HAL_OK;
+	return HAL_OK;
 
 	return HAL_ERROR;
 }
