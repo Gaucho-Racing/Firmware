@@ -156,6 +156,7 @@ sub generate_header {
 			if ($current_msg) {
 				push @output, process_message( $current_msg, \@fields, $d_map, $prefix );
 			}
+
 			# Debug payload structs are intentionally excluded.
 			$current_msg = ( $msg_name =~ /^Debug(?:\s+(?:2\.0|FD))?$/ismx ) ? $EMPTY_STR : $msg_name;
 			@fields      = ();
@@ -317,9 +318,9 @@ sub handle_multi_field_range {
 	}
 
 	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
-	my $v_name = $has_error   ? 'error_fault_violation_bits' : 'ping_block';
+	my $v_name = $has_error ? 'error_fault_violation_bits' : 'ping_block';
 	$v_name = assign_unique_field_name( $v_name, $seen_ref );
-	my $suffix = ( $len > 1 ) ? "[$len]"                     : $EMPTY_STR;
+	my $suffix = ( $len > 1 ) ? "[$len]" : $EMPTY_STR;
 	return sprintf "\tuint8_t    %s%s;\n", $v_name, $suffix;
 }
 
