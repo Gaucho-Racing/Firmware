@@ -19,17 +19,18 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "crc.h"
-#include "fdcan.h"
+//#include "crc.h"
+//#include "fdcan.h"
 #include "gpio.h"
 #include "i2c.h"
+#include "spi.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
 #include "VL53L4ED_api.h"
-//#include "bmi323.h"
+#include "bmi323.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 
@@ -109,20 +110,20 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_CRC_Init();
-	MX_FDCAN1_Init();
-	MX_FDCAN2_Init();
+	//MX_CRC_Init();
+	//MX_FDCAN1_Init();
+	//MX_FDCAN2_Init();
 	MX_I2C1_Init();
-	//MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
+	MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
 	/* USER CODE BEGIN 2 */
 
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
-	//bmi323 bmi323_dev;
-	//HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	//bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin);
+	bmi323 bmi323_dev;
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin);
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);

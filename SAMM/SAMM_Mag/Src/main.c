@@ -19,10 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "crc.h"
-#include "fdcan.h"
+//#include "crc.h"
+//#include "fdcan.h"
 #include "gpio.h"
-//#include "i2c.h"
 #include "spi.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -73,12 +72,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/*
-I2C2 - is meant for thermal sensor MLX90640 and is ran using DMA to offload CPU for calculations
-     - still need to fully test but ideally implmentation is done
-
-
- */
 /* USER CODE END 0 */
 
 /**
@@ -110,9 +103,9 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_CRC_Init();
-	MX_FDCAN1_Init();
-	MX_FDCAN2_Init();
+	//MX_CRC_Init();
+	//MX_FDCAN1_Init();
+	//MX_FDCAN2_Init();
 	MX_I2C1_Init();
 	MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
 	/* USER CODE BEGIN 2 */

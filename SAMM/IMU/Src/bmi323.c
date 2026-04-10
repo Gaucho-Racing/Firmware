@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-#include "stm32g474xx.h"
-#include "stm32g4xx_hal_spi.h"
+#include "stm32h574xx.h"
+#include "stm32h5xx_hal_spi.h"
 
 // init spi port before calling this function
 uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)

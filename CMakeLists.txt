@@ -78,6 +78,10 @@ add_gr_project(STM32G474xE AnalogCalibration)
 add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 TireTemp)
 
+# SAMM
+add_gr_project(STM32H523xE SAMM SAMM_TOF)
+add_gr_project(STM32H523xE SAMM SAMM_MAG)
+
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)
 add_gr_project(STM32G474xE G4SPITESTING)

@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * @file    stm32g4xx_it.c
+ * @file    stm32h5xx_it.c
  * @brief   Interrupt Service Routines.
  ******************************************************************************
  * @attention
@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g4xx_it.h"
+#include "stm32h5xx_it.h"
 
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/

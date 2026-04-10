@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * @file    stm32g4xx_hal_timebase_tim.c
+ * @file    stm32h5xx_hal_timebase_tim.c
  * @brief   HAL time base based on the hardware TIM.
  ******************************************************************************
  * @attention
@@ -18,8 +18,8 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g4xx_hal.h"
-#include "stm32g4xx_hal_tim.h"
+#include "stm32h5xx_hal.h"
+#include "stm32h5xx_hal_tim.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/

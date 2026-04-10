@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * @file    stm32g4xx_hal_conf.h
+ * @file    stm32h5xx_hal_conf.h
  * @author  MCD Application Team
  * @brief   HAL configuration file
  ******************************************************************************
@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STM32G4xx_HAL_CONF_H
-#define STM32G4xx_HAL_CONF_H
+#ifndef STM32H5xx_HAL_CONF_H
+#define STM32H5xx_HAL_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -210,151 +210,151 @@ The real value may vary depending on the variations in voltage and temperature.*
  */
 
 #ifdef HAL_RCC_MODULE_ENABLED
-#include "stm32g4xx_hal_rcc.h"
+#include "stm32h5xx_hal_rcc.h"
 #endif /* HAL_RCC_MODULE_ENABLED */
 
 #ifdef HAL_GPIO_MODULE_ENABLED
-#include "stm32g4xx_hal_gpio.h"
+#include "stm32h5xx_hal_gpio.h"
 #endif /* HAL_GPIO_MODULE_ENABLED */
 
 #ifdef HAL_DMA_MODULE_ENABLED
-#include "stm32g4xx_hal_dma.h"
+#include "stm32h5xx_hal_dma.h"
 #endif /* HAL_DMA_MODULE_ENABLED */
 
 #ifdef HAL_CORTEX_MODULE_ENABLED
-#include "stm32g4xx_hal_cortex.h"
+#include "stm32h5xx_hal_cortex.h"
 #endif /* HAL_CORTEX_MODULE_ENABLED */
 
 #ifdef HAL_ADC_MODULE_ENABLED
-#include "stm32g4xx_hal_adc.h"
+#include "stm32h5xx_hal_adc.h"
 #endif /* HAL_ADC_MODULE_ENABLED */
 
 #ifdef HAL_COMP_MODULE_ENABLED
-#include "stm32g4xx_hal_comp.h"
+#include "stm32h5xx_hal_comp.h"
 #endif /* HAL_COMP_MODULE_ENABLED */
 
 #ifdef HAL_CORDIC_MODULE_ENABLED
-#include "stm32g4xx_hal_cordic.h"
+#include "stm32h5xx_hal_cordic.h"
 #endif /* HAL_CORDIC_MODULE_ENABLED */
 
 #ifdef HAL_CRC_MODULE_ENABLED
-#include "stm32g4xx_hal_crc.h"
+#include "stm32h5xx_hal_crc.h"
 #endif /* HAL_CRC_MODULE_ENABLED */
 
 #ifdef HAL_CRYP_MODULE_ENABLED
-#include "stm32g4xx_hal_cryp.h"
+#include "stm32h5xx_hal_cryp.h"
 #endif /* HAL_CRYP_MODULE_ENABLED */
 
 #ifdef HAL_DAC_MODULE_ENABLED
-#include "stm32g4xx_hal_dac.h"
+#include "stm32h5xx_hal_dac.h"
 #endif /* HAL_DAC_MODULE_ENABLED */
 
 #ifdef HAL_EXTI_MODULE_ENABLED
-#include "stm32g4xx_hal_exti.h"
+#include "stm32h5xx_hal_exti.h"
 #endif /* HAL_EXTI_MODULE_ENABLED */
 
 #ifdef HAL_FDCAN_MODULE_ENABLED
-#include "stm32g4xx_hal_fdcan.h"
+#include "stm32h5xx_hal_fdcan.h"
 #endif /* HAL_FDCAN_MODULE_ENABLED */
 
 #ifdef HAL_FLASH_MODULE_ENABLED
-#include "stm32g4xx_hal_flash.h"
+#include "stm32h5xx_hal_flash.h"
 #endif /* HAL_FLASH_MODULE_ENABLED */
 
 #ifdef HAL_FMAC_MODULE_ENABLED
-#include "stm32g4xx_hal_fmac.h"
+#include "stm32h5xx_hal_fmac.h"
 #endif /* HAL_FMAC_MODULE_ENABLED */
 
 #ifdef HAL_HRTIM_MODULE_ENABLED
-#include "stm32g4xx_hal_hrtim.h"
+#include "stm32h5xx_hal_hrtim.h"
 #endif /* HAL_HRTIM_MODULE_ENABLED */
 
 #ifdef HAL_IRDA_MODULE_ENABLED
-#include "stm32g4xx_hal_irda.h"
+#include "stm32h5xx_hal_irda.h"
 #endif /* HAL_IRDA_MODULE_ENABLED */
 
 #ifdef HAL_IWDG_MODULE_ENABLED
-#include "stm32g4xx_hal_iwdg.h"
+#include "stm32h5xx_hal_iwdg.h"
 #endif /* HAL_IWDG_MODULE_ENABLED */
 
 #ifdef HAL_I2C_MODULE_ENABLED
-#include "stm32g4xx_hal_i2c.h"
+#include "stm32h5xx_hal_i2c.h"
 #endif /* HAL_I2C_MODULE_ENABLED */
 
 #ifdef HAL_I2S_MODULE_ENABLED
-#include "stm32g4xx_hal_i2s.h"
+#include "stm32h5xx_hal_i2s.h"
 #endif /* HAL_I2S_MODULE_ENABLED */
 
 #ifdef HAL_LPTIM_MODULE_ENABLED
-#include "stm32g4xx_hal_lptim.h"
+#include "stm32h5xx_hal_lptim.h"
 #endif /* HAL_LPTIM_MODULE_ENABLED */
 
 #ifdef HAL_NAND_MODULE_ENABLED
-#include "stm32g4xx_hal_nand.h"
+#include "stm32h5xx_hal_nand.h"
 #endif /* HAL_NAND_MODULE_ENABLED */
 
 #ifdef HAL_NOR_MODULE_ENABLED
-#include "stm32g4xx_hal_nor.h"
+#include "stm32h5xx_hal_nor.h"
 #endif /* HAL_NOR_MODULE_ENABLED */
 
 #ifdef HAL_OPAMP_MODULE_ENABLED
-#include "stm32g4xx_hal_opamp.h"
+#include "stm32h5xx_hal_opamp.h"
 #endif /* HAL_OPAMP_MODULE_ENABLED */
 
 #ifdef HAL_PCD_MODULE_ENABLED
-#include "stm32g4xx_hal_pcd.h"
+#include "stm32h5xx_hal_pcd.h"
 #endif /* HAL_PCD_MODULE_ENABLED */
 
 #ifdef HAL_PWR_MODULE_ENABLED
-#include "stm32g4xx_hal_pwr.h"
+#include "stm32h5xx_hal_pwr.h"
 #endif /* HAL_PWR_MODULE_ENABLED */
 
 #ifdef HAL_QSPI_MODULE_ENABLED
-#include "stm32g4xx_hal_qspi.h"
+#include "stm32h5xx_hal_qspi.h"
 #endif /* HAL_QSPI_MODULE_ENABLED */
 
 #ifdef HAL_RNG_MODULE_ENABLED
-#include "stm32g4xx_hal_rng.h"
+#include "stm32h5xx_hal_rng.h"
 #endif /* HAL_RNG_MODULE_ENABLED */
 
 #ifdef HAL_RTC_MODULE_ENABLED
-#include "stm32g4xx_hal_rtc.h"
+#include "stm32h5xx_hal_rtc.h"
 #endif /* HAL_RTC_MODULE_ENABLED */
 
 #ifdef HAL_SAI_MODULE_ENABLED
-#include "stm32g4xx_hal_sai.h"
+#include "stm32h5xx_hal_sai.h"
 #endif /* HAL_SAI_MODULE_ENABLED */
 
 #ifdef HAL_SMARTCARD_MODULE_ENABLED
-#include "stm32g4xx_hal_smartcard.h"
+#include "stm32h5xx_hal_smartcard.h"
 #endif /* HAL_SMARTCARD_MODULE_ENABLED */
 
 #ifdef HAL_SMBUS_MODULE_ENABLED
-#include "stm32g4xx_hal_smbus.h"
+#include "stm32h5xx_hal_smbus.h"
 #endif /* HAL_SMBUS_MODULE_ENABLED */
 
 #ifdef HAL_SPI_MODULE_ENABLED
-#include "stm32g4xx_hal_spi.h"
+#include "stm32h5xx_hal_spi.h"
 #endif /* HAL_SPI_MODULE_ENABLED */
 
 #ifdef HAL_SRAM_MODULE_ENABLED
-#include "stm32g4xx_hal_sram.h"
+#include "stm32h5xx_hal_sram.h"
 #endif /* HAL_SRAM_MODULE_ENABLED */
 
 #ifdef HAL_TIM_MODULE_ENABLED
-#include "stm32g4xx_hal_tim.h"
+#include "stm32h5xx_hal_tim.h"
 #endif /* HAL_TIM_MODULE_ENABLED */
 
 #ifdef HAL_UART_MODULE_ENABLED
-#include "stm32g4xx_hal_uart.h"
+#include "stm32h5xx_hal_uart.h"
 #endif /* HAL_UART_MODULE_ENABLED */
 
 #ifdef HAL_USART_MODULE_ENABLED
-#include "stm32g4xx_hal_usart.h"
+#include "stm32h5xx_hal_usart.h"
 #endif /* HAL_USART_MODULE_ENABLED */
 
 #ifdef HAL_WWDG_MODULE_ENABLED
-#include "stm32g4xx_hal_wwdg.h"
+#include "stm32h5xx_hal_wwdg.h"
 #endif /* HAL_WWDG_MODULE_ENABLED */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -378,4 +378,4 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* STM32G4xx_HAL_CONF_H */
+#endif /* STM32H5xx_HAL_CONF_H */

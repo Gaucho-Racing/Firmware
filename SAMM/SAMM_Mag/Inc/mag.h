@@ -4,7 +4,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
-#include "stm32g474xx.h"
+#include "stm32h574xx.h"
 
 typedef struct {
 	SPI_HandleTypeDef *spi_port;

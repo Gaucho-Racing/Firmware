@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    system_stm32g4xx.c
+ * @file    system_stm32h5xx.c
  * @author  MCD Application Team
  * @brief   CMSIS Cortex-M4 Device Peripheral Access Layer System Source File
  *
@@ -67,11 +67,11 @@
  * @{
  */
 
-/** @addtogroup stm32g4xx_system
+/** @addtogroup stm32h5xx_system
  * @{
  */
 
-/** @addtogroup STM32G4xx_System_Private_Includes
+/** @addtogroup STM32H5xx_System_Private_Includes
  * @{
  */
 
@@ -89,7 +89,7 @@
  * @}
  */
 
-/** @addtogroup STM32G4xx_System_Private_TypesDefinitions
+/** @addtogroup STM32H5xx_System_Private_TypesDefinitions
  * @{
  */
 
@@ -97,7 +97,7 @@
  * @}
  */
 
-/** @addtogroup STM32G4xx_System_Private_Defines
+/** @addtogroup STM32H5xx_System_Private_Defines
  * @{
  */
 
@@ -162,7 +162,7 @@ const uint8_t APBPrescTable[8] = {0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U};
  * @}
  */
 
-/** @addtogroup STM32G4xx_System_Private_FunctionPrototypes
+/** @addtogroup STM32H5xx_System_Private_FunctionPrototypes
  * @{
  */
 
@@ -170,7 +170,7 @@ const uint8_t APBPrescTable[8] = {0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U};
  * @}
  */
 
-/** @addtogroup STM32G4xx_System_Private_Functions
+/** @addtogroup STM32H5xx_System_Private_Functions
  * @{
  */
 
@@ -214,11 +214,11 @@ void SystemInit(void)
  *           - If SYSCLK source is PLL, SystemCoreClock will contain the HSE_VALUE(***)
  *             or HSI_VALUE(*) multiplied/divided by the PLL factors.
  *
- *         (**) HSI_VALUE is a constant defined in stm32g4xx_hal.h file (default value
+ *         (**) HSI_VALUE is a constant defined in stm32h5xx_hal.h file (default value
  *              16 MHz) but the real value may vary depending on the variations
  *              in voltage and temperature.
  *
- *         (***) HSE_VALUE is a constant defined in stm32g4xx_hal.h file (default value
+ *         (***) HSE_VALUE is a constant defined in stm32h5xx_hal.h file (default value
  *              24 MHz), user has to ensure that HSE_VALUE is same as the real
  *              frequency of the crystal used. Otherwise, this function may
  *              have wrong result.
