@@ -35,18 +35,18 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->ams_sense >= 2.7) || (stateData->ams_sense <= 1.45); // TODO: find better range
+	return (stateData->ams_sense >= 2.7f) || (stateData->ams_sense <= 1.45f); // TODO: find better range
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->imd_sense >= 2.7) || (stateData->imd_sense <= 1.45); // TODO: find better range
+	return (stateData->imd_sense >= 2.7f) || (stateData->imd_sense <= 1.45f); // TODO: find better range
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->bspd_sense >= 2.7) || (stateData->bspd_sense <= 1.45); // TODO: find better range
-										  // TODO: shutdown switch stuff
+	return (stateData->bspd_sense >= 2.7f) || (stateData->bspd_sense <= 1.45f); // TODO: find better range
+										    // TODO: shutdown switch stuff
 }
 
 bool CommunicationError(volatile const ECU_StateData *stateData)
@@ -86,18 +86,18 @@ float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
 	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
 	float travel = total_signal_value / total_signal_range;
-	return travel > 0.05 ? (travel - 0.05f) / 0.95f : 0;
+	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
 	float diviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	return diviation < 0.1 && diviation > -0.1;
+	return diviation < 0.1f && diviation > -0.1f;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)
 {
-	const float tolerance = 0.1; // In MPH
+	const float tolerance = 0.1f; // In MPH
 	return stateData->vehicle_speed_mph > tolerance;
 }
