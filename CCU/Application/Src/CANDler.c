@@ -170,7 +170,6 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 
 	msg.data[0] = (state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
-
 	LOGOMATIC("PRECHARGE SET: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);
