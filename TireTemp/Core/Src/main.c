@@ -29,6 +29,8 @@
 #include <arm_math.h>
 #include <stdio.h>
 
+#include "can.h"
+#include "CANdler.h"
 #include "MLX90640_API.h"
 #include "MLX90640_I2C_Driver.h"
 /* USER CODE END Includes */
@@ -136,6 +138,9 @@ int main(void)
 	/* Configure LED2 */
 	// BSP_LED_Init(LED2);
 
+	CANInitialize();
+	can_start(can_handler);
+
 	/*##-1- Start the Full Duplex Communication process ########################*/
 	/* While the SPI in TransmitReceive process, user can transmit data through
 	   "aTxBuffer" buffer & receive data through "aRxBuffer" */
@@ -143,15 +148,15 @@ int main(void)
 
 	status = MLX90640_SetRefreshRate(MLX90640_address, 0x07);
 
-	status = MLX90640_DumpEE(MLX90640_address, eeMLX90640);
-	if (status != 0) {
-		Error_Handler();
-	}
+    status = MLX90640_DumpEE(MLX90640_address, eeMLX90640);
+    if(status != 0){
+      Error_Handler();
+    }
 
-	status = MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
-	if (status != 0) {
-		Error_Handler();
-	}
+    status = MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
+    if(status != 0){
+      Error_Handler();
+    }
 
 	/* USER CODE END 2 */
 
@@ -167,6 +172,8 @@ int main(void)
 		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
 		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
+
+		CAN_sendTemp(tr);
 		// HAL_Delay(16);
 		/* USER CODE END WHILE */
 

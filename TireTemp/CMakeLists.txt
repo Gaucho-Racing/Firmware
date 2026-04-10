@@ -47,6 +47,7 @@ target_link_libraries(
 		CANfigurator
 		BitManipulations_Lib
 		MLX90640_LIB
+		PERIPHERAL_CAN_LIB
 )
 
 target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
