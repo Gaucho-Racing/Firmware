@@ -31,7 +31,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 {
 	switch (msg_id) {
 		case GRCAN_DEBUG_2_0:
-			if (data_length > sizeof(GRCAN_DEBUG_2_0_MSG)) {
+			if (data_length > 8) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -39,7 +39,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			break;
 
 		case GRCAN_DEBUG_FD:
-			if (data_length > sizeof(GRCAN_DEBUG_FD_MSG)) {
+			if (data_length > 64) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
