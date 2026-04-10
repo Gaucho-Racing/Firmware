@@ -10,30 +10,36 @@
 
 static volatile uint32_t rx_received = 0;
 static volatile bool data_valid = false;
-static uint8_t expected_data[] = "Hello";
+static uint8_t expected_data[TX_BUFFER_2_SIZE];
+static volatile uint32_t expected_size = 0;
 
 static void can_test_rx_callback(uint32_t id, void *data, uint32_t size) {
     rx_received++;
-    if (size == sizeof(expected_data) && memcmp(data, expected_data, size) == 0) {
+	if (size > sizeof(expected_data)) {
+		data_valid = false;
+		return;
+	}
+    if (size == expected_size && memcmp(data, expected_data, size) == 0) {
         data_valid = true;
     } else {
         data_valid = false;
     }
-    LOGOMATIC("\nCallback triggered: ID=%" PRIu32 ", Size=%ld, Data[0]=0x%x\n", id, size, *(uint8_t *)data);
+   LOGOMATIC("\nCallback triggered: ID=%" PRIu32 ", Size=%lu, Data[0]=0x%x\n", id, (unsigned long)size, *(uint8_t *)data);
 }
 
 // TODO - allow user to send data without needing to construct a header for the buffer
 //  TODO: G4 tests are dependent on the System clock configuration??
 
-int GRCAN_Validate_InitBus(GRCAN_BUS_ID bus) {
+int GRCAN_Validate_InitBus(GRCAN_BUS_ID bus, GRCAN_OperatingMode mode, FDCAN_GlobalTypeDef *fdcan_instance) {
     GRCAN_BusConfig bus_config;
     GRCAN_SetDefaultBusConfig(&bus_config, bus);
-    bus_config.operating_mode = GRCAN_OPMODE_INTERNAL_LOOPBACK;
-    bus_config.fdcan_instance = FDCAN2;
+    bus_config.operating_mode = mode; //GRCAN_OPMODE_INTERNAL_LOOPBACK is only one tested so far
+    bus_config.fdcan_instance = fdcan_instance;
 	bus_config.rx_callback = can_test_rx_callback; //test loopback
 
     LOGOMATIC("Testing GRCAN_InitBus...\n");
     bool result = GRCAN_InitBus(&bus_config);
+
     if (result == true) {
         LOGOMATIC("GRCAN_InitBus PASSED.\n");
 		return 1;
@@ -58,34 +64,99 @@ int GRCAN_Validate_InitBus(GRCAN_BUS_ID bus) {
 // 	GRCAN_Fan_Controller_3 = 0x0F,
 // 	GRCAN_GR_Inverter = 0x08,
 // 	GRCAN_TCM = 0x04,
-int GRCAN_SendReceive(GRCAN_BUS_ID bus) {
-	rx_received = 0;
-	data_valid = false;
 
-	if (bus == GRCAN_BUS_TESTING) {
-		LOGOMATIC("Testing GRCAN_SendReceive on TESTING bus...\n");
-		GRCAN_SetLocalNodeID(0x01);
+GRCAN_NODE_ID get_nodeID(GRCAN_BUS_ID bus) {
+	switch(bus) {
+		case GRCAN_BUS_PRIMARY:
+			return GRCAN_BCU;
+		case GRCAN_BUS_DATA:
+			return GRCAN_ECU;
+		case GRCAN_BUS_TESTING:
+			return GRCAN_Debugger;
+		case GRCAN_BUS_CHARGER:
+			return GRCAN_Charger;
+		default:
+			return GRCAN_ALL; //All causes error
 	}
-	else if (bus == GRCAN_BUS_DATA) {
-		LOGOMATIC("Testing GRCAN_SendReceive on DATA bus...\n");
-		GRCAN_SetLocalNodeID(0x02);
+}
+
+// typedef enum {
+// 	GRCAN_DEBUG_2_0 = 0x000,
+// 	GRCAN_DEBUG_FD = 0x001,
+// 	GRCAN_PING = 0x002,
+// 	GRCAN_ECU_STATUS_1 = 0x003,
+// 	GRCAN_ECU_STATUS_2 = 0x004,
+// 	GRCAN_ECU_STATUS_3 = 0x005,
+// 	GRCAN_ECU_CONFIG = 0x006,
+// 	GRCAN_BCU_STATUS_1 = 0x007,
+// 	GRCAN_BCU_STATUS_2 = 0x008,
+// 	GRCAN_BCU_STATUS_3 = 0x009,
+// 	GRCAN_BCU_PRECHARGE = 0x00A,
+// 	GRCAN_BCU_CONFIG_CHARGE_PARAMETERS = 0x00B,
+// 	GRCAN_BCU_CONFIG_OPERATIONAL_PARAMETERS = 0x00C,
+// 	GRCAN_BCU_CELL_DATA_1 = 0x00D,
+// 	GRCAN_BCU_CELL_DATA_2 = 0x00E,
+// 	GRCAN_BCU_CELL_DATA_3 = 0x00F,
+// 	GRCAN_BCU_CELL_DATA_4 = 0x010,
+// 	GRCAN_BCU_CELL_DATA_5 = 0x011,
+// 	GRCAN_INVERTER_STATUS_1 = 0x013,
+// 	GRCAN_INVERTER_STATUS_2 = 0x014,
+// 	GRCAN_INVERTER_STATUS_3 = 0x015,
+// 	GRCAN_INVERTER_CONFIG = 0x016,
+// 	GRCAN_INVERTER_COMMAND = 0x017,
+// 	GRCAN_FAN_STATUS = 0x018,
+// 	GRCAN_FAN_COMMAND = 0x019,
+// 	GRCAN_DASH_STATUS = 0x01A,
+// 	GRCAN_DASH_CONFIG = 0x01B,
+// 	GRCAN_TCM_STATUS = 0x029,
+// 	GRCAN_TCM_RESOURCE_UTILIZATION = 0x02A,
+// 	GRCAN_DASH_WARNING_FLAGS = 0x02B,
+// 	GRCAN_ECU_ANALOG_DATA = 0x02E,
+// 	GRCAN_GPS_LAT = 0x031,
+// 	GRCAN_GPS_LON = 0x032,
+// 	GRCAN_GPS_ALT = 0x033,
+// 	GRCAN_GPS_PX = 0x034,
+// 	GRCAN_GPS_QY = 0x035,
+// 	GRCAN_GPS_RZ = 0x036,
+// 	GRCAN_UVW_DGPS = 0x030,
+// 	GRCAN_ECU_PERFORMANCE = 0x123,
+// } GRCAN_MSG_ID;
+
+GRCAN_MSG_ID get_messageID(GRCAN_BUS_ID bus) {
+	switch(bus) {
+		case GRCAN_BUS_PRIMARY:
+			return GRCAN_BCU_STATUS_1;
+		case GRCAN_BUS_DATA:
+			return GRCAN_ECU_STATUS_1;
+		case GRCAN_BUS_TESTING:
+			return GRCAN_DEBUG_2_0;
+		case GRCAN_BUS_CHARGER:
+			return GRCAN_BCU_CONFIG_CHARGE_PARAMETERS;
+		default:
+			return 0xFFFF; //Invalid message ID
 	}
-	else if (bus == GRCAN_BUS_CHARGER) {
-		LOGOMATIC("Testing GRCAN_SendReceive on CHARGER bus...\n");
-		GRCAN_SetLocalNodeID(0x00);
+}
+
+int GRCAN_SendReceive(GRCAN_BUS_ID bus, GRCAN_NODE_ID nodeID, GRCAN_NODE_ID dest_nodeID,GRCAN_MSG_ID messageID, void *data, uint32_t size) {
+	if (data == NULL) {
+		data = "Hello";
+		size = sizeof("Hello");
 	}
-	else if (bus == GRCAN_BUS_PRIMARY) {
-		LOGOMATIC("Testing GRCAN_SendReceive on PRIMARY bus...\n");
-		GRCAN_SetLocalNodeID(0x03);
-	}
-	else {
-		LOGOMATIC("Testing GRCAN_SendReceive on UNKNOWN bus...\n");
+
+	if (size > sizeof(expected_data)) {
+		LOGOMATIC("Data size exceeds expected_data buffer size. Test cannot proceed.\n");
 		return 0;
 	}
 
-    uint8_t data[] = "Hello";
-    memcpy(expected_data, data, sizeof(data));
-    GRCAN_Fancy_Send(bus, 2, 0x12, data, sizeof(data));
+	expected_size = size;
+
+	rx_received = 0;
+	data_valid = false;
+
+	GRCAN_SetLocalNodeID(nodeID);
+
+    memcpy(expected_data, data, size);
+    GRCAN_Fancy_Send(bus, dest_nodeID, messageID, data, size);
 
     HAL_Delay(1000);
 
@@ -115,14 +186,74 @@ int GRCAN_ErrorHandling() {
 
 int FancyCAN_LoopbackTest(void)
 {
-	for (GRCAN_BUS_ID bus = GRCAN_BUS_PRIMARY; bus <= GRCAN_BUS_CHARGER; bus++) {
-		LOGOMATIC("\n--- Testing bus %d ---\n", bus);
+	GRCAN_BUS_ID bus = GRCAN_BUS_TESTING;
+	uint8_t msg1[] = "Hello";
+	uint8_t msg2[] = "World";
+	uint8_t msg3[] = {12};
+	uint8_t msg4[] = {23};
 
-		int res1 = GRCAN_Validate_InitBus(GRCAN_BUS_TESTING);
-		int res2 = GRCAN_SendReceive(GRCAN_BUS_TESTING);
-		int res3 = GRCAN_ErrorHandling();
-		bool res4 = GRCAN_DeactivateBus(GRCAN_BUS_TESTING);
-		if (!res1 || !res2 || !res3) {
+	for (bus; bus <= GRCAN_BUS_CHARGER; bus++) {
+		LOGOMATIC("\n--- Testing bus %d ---\n", bus);
+		int res1 = GRCAN_Validate_InitBus(bus, GRCAN_OPMODE_INTERNAL_LOOPBACK, FDCAN2);
+		//GRCAN_OPMODE_EXTERNAL_LOOPBACK needs to be tested, can change FDCAN: make sure to #define USECANx
+		GRCAN_NODE_ID nodeID = get_nodeID(bus);
+		GRCAN_MSG_ID messageID = get_messageID(bus);
+		GRCAN_NODE_ID dest_nodeID = nodeID; //Loopback to self for internal
+		int res2 = 1;
+		for (int i = 0; i < 4; i ++) {
+			void *data;
+			uint32_t size;
+			switch(i) {
+				case 0:
+					data = msg1;
+					size = sizeof(msg1);
+					break;
+				case 1:
+					data = msg2;
+					size = sizeof(msg2);
+					break;
+				case 2:
+					data = msg3;
+					size = sizeof(msg3);
+					break;
+				case 3:
+					data = msg4;
+					size = sizeof(msg4);
+					break;
+				default:
+					data = NULL;
+					size = 0;
+					break;
+			}
+
+			LOGOMATIC("Testing GRCAN_SendReceive on bus %d...\n", bus);
+			res2 = GRCAN_SendReceive(bus, nodeID, dest_nodeID, messageID, data, size);//
+			if (res2 == 0) {
+				uint8_t data_value = *(uint8_t *)data;
+				switch (bus) {
+					case GRCAN_BUS_PRIMARY:
+						LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED for message %d.\n", data_value);
+						break;
+					case GRCAN_BUS_DATA:
+						LOGOMATIC("Testing Bus:DATA Loopback Test FAILED for message %d.\n", data_value);
+						break;
+					case GRCAN_BUS_CHARGER:
+						LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED for message %d.\n", data_value);
+						break;
+					case GRCAN_BUS_TESTING:
+						LOGOMATIC("Testing Bus:TESTING Loopback Test FAILED for message %d.\n", data_value);
+						break;
+					default:
+						LOGOMATIC("Testing Bus:UNKNOWN Loopback Test FAILED for message %d.\n", data_value);
+						break;
+				}
+				break;
+			}
+		}
+
+		bool res4 = GRCAN_DeactivateBus(bus);
+
+		if (!res1 || !res2) {
 			switch(bus) {
 				case GRCAN_BUS_PRIMARY:
 					LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED during initialization or send/receive test.\n");
@@ -161,5 +292,17 @@ int FancyCAN_LoopbackTest(void)
 			}
 		}
 	}
+
+	if (bus < 4) {
+		LOGOMATIC("\nLoopback Test FAILED. Not all buses were tested.\n");
+		return 0;
+	}
+
+	int res3 = GRCAN_ErrorHandling();
+	if (!res3) {
+		LOGOMATIC("\nLoopback Test FAILED during error handling test.\n");
+		return 0;
+	}
+
     return 1;
 }
