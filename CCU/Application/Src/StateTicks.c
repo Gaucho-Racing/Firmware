@@ -30,7 +30,10 @@ void CCU_State_Tick(CCU_StateData *state_data)
 			break;
 
 		default:
+			state_data->BCU_PRECHARGE_SET_TS_ACTIVE = 0;
 			state_data->state = CCU_STATE_IDLE;
+			SendPrechargeStatus(state_data);
+			setSoftwareLatch(0, state_data);
 			break;
 	};
 }
