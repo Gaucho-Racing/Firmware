@@ -154,7 +154,7 @@ int main(void)
 	LOGOMATIC("Booted!\n");
 
 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    HAL_Delay(200);
+	HAL_Delay(200);
 
 	// LOGOMATIC("running can_external_test:\n");
 	// can_external_test();

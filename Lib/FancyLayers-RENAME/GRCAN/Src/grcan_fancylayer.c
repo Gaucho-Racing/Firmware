@@ -75,39 +75,37 @@ CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 // 	// additional parameters
 // } CANConfig;
 
-bool enable_port_clock(GPIO_TypeDef *port) {
-	if(port == GPIOA) {
+bool enable_port_clock(GPIO_TypeDef *port)
+{
+	if (port == GPIOA) {
 		GPIOx_CLK_ENABLE(GPIOA);
 		return true;
-	}
-	else if(port == GPIOB) {
+	} else if (port == GPIOB) {
 		GPIOx_CLK_ENABLE(GPIOB);
 		return true;
-	}
-	else if(port == GPIOD) {
+	} else if (port == GPIOD) {
 		GPIOx_CLK_ENABLE(GPIOD);
 		return true;
-	}
-	else {
+	} else {
 		LOGOMATIC("GRCAN_InitBus: invalid GPIO port\n");
 		return false;
 	}
 }
 
-bool deactivate_port_clock(GPIO_TypeDef *port) {
-	if(port == GPIOA) {
+bool deactivate_port_clock(GPIO_TypeDef *port)
+{
+	if (port == GPIOA) {
 		GPIOx_CLK_DISABLE(GPIOA);
 		return true;
 	}
-	if(port == GPIOB) {
+	if (port == GPIOB) {
 		GPIOx_CLK_DISABLE(GPIOB);
 		return true;
 	}
-	if(port == GPIOD) {
+	if (port == GPIOD) {
 		GPIOx_CLK_DISABLE(GPIOD);
 		return true;
-	}
-	else {
+	} else {
 		LOGOMATIC("GRCAN_DeactivateBus: invalid GPIO port\n");
 		return false;
 	}
@@ -317,7 +315,7 @@ uint32_t GRCAN_BRS_Setting(GRCAN_BUS_ID bus)
 		return FDCAN_BRS_OFF;
 	}
 
-	if (handle->hal_fdcanP->Init.FrameFormat== FDCAN_FRAME_CLASSIC || handle->hal_fdcanP->Init.FrameFormat == FDCAN_FRAME_FD_NO_BRS) {
+	if (handle->hal_fdcanP->Init.FrameFormat == FDCAN_FRAME_CLASSIC || handle->hal_fdcanP->Init.FrameFormat == FDCAN_FRAME_FD_NO_BRS) {
 		return FDCAN_BRS_OFF;
 	}
 
@@ -329,7 +327,8 @@ uint32_t GRCAN_BRS_Setting(GRCAN_BUS_ID bus)
 	return FDCAN_BRS_OFF;
 }
 
-bool GRCAN_Raw_Send(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size) {
+bool GRCAN_Raw_Send(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
+{
 	CANHandle *handle = GRCAN_GetHandle(bus);
 	GRCAN_BusMode mode;
 

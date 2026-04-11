@@ -7,8 +7,8 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "can.h"
-#include "grcan_utils.h"
 #include "can_cfg.h"
+#include "grcan_utils.h"
 
 #ifndef GRCAN_FANCYLAYER_H
 #define GRCAN_FANCYLAYER_H

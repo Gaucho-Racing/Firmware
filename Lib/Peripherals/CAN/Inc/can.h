@@ -96,7 +96,6 @@ CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
 // HAL_FDCAN_ConfigFilter()
 
-
 #define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
 	do {                                                                                                                                                                                           \
 		if (GPIOX == GPIOA)                                                                                                                                                                    \
