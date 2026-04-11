@@ -81,7 +81,7 @@ int can_filter_test(void)
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
 						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 1,
+	    .DataLength = FDCAN_DLC_BYTES_1,
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
