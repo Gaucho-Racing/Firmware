@@ -42,7 +42,6 @@ target_sources(
 		../Core/Src/tim.c
 		../Core/Src/usart.c
 		../Core/Src/FancyCAN_LoopbackTest.c
-		../Core/Src/fdcan.c
 )
 
 set_target_properties(

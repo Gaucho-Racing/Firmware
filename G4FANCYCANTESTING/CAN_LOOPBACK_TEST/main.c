@@ -24,7 +24,6 @@
 #include "can.h" // Assume this works
 #include "can_tests.h"
 #include "dma.h"
-#include "fdcan.h"
 #include "gpio.h"
 #include "i2c.h"
 #include "spi.h"
