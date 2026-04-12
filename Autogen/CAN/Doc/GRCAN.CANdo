@@ -3374,25 +3374,45 @@ Message ID:
     MSG LENGTH: 3
     button_flags:
       bit_start: 0
-      comment: TS Active = bit 0, RTD = bit 1, bits 2–7 reserved
+      comment:
+        [Byte 0 / Bits 0-7]
+        0: TS Active
+        1: RTD
+        2-7: Reserved
       data type: u8
     led_bits:
       bit_start: 8
-      comment: BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved
+      comment:
+        [Byte 1 / Bits 8-15]
+        0: BMS
+        1: IMD
+        2: BSPD
+        3-7: Reserved
       data type: u8
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
     led_bits:
       bit_start: 0
-      comment: BMS LED command = bit 0, IMD LED command = bit 1, BSPD LED command = bit 2, bits 3-7 reserved
+      comment:
+        [Byte 0 / Bits 0-7]
+        0: BMS LED command
+        1: IMD LED command
+        2: BSPD LED command
+        3-7: Reserved
       data type: u8
   TCM Status:
     MSG ID: 0x029
     MSG LENGTH: 8
     status_bits:
       bit_start: 0
-      comment: "Connection Status = bit 0, MQTT Status = bit 1, Epic Shelter Status = bit 2, Camera Status = bit 3, bits 4-7 reserved"
+      comment:
+        [Byte 0 / Bits 0-7]
+        0: Connection Status
+        1: MQTT Status
+        2: Epic Shelter Status
+        3: Camera Status
+        4-7: Reserved
     mapache_ping:
       bit_start: 8
       comment: Mapache ping (upload)
