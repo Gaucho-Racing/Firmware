@@ -29,11 +29,13 @@ typedef enum {
 	GRCAN_FRAME_FD_NO_BRS, // every FD CAN uses this right now
 	GRCAN_FRAME_FD_BRS
 } GRCAN_FrameFormat;
+
 typedef enum {
 	GRCAN_CLKSRC_PCLK1,
 	GRCAN_CLKSRC_PLL,
 	GRCAN_CLKSRC_HSE
 } GRCAN_ClockSource;
+
 typedef enum {
 	GRCAN_OPMODE_NORMAL,
 	GRCAN_OPMODE_RESTRICTED,
@@ -41,6 +43,7 @@ typedef enum {
 	GRCAN_OPMODE_INTERNAL_LOOPBACK,
 	GRCAN_OPMODE_EXTERNAL_LOOPBACK
 } GRCAN_OperatingMode;
+
 typedef struct {
 	uint32_t prescaler;
 	uint32_t sjw;
