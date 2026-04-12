@@ -35,7 +35,7 @@
 /* USER CODE BEGIN Includes */
 #include "FancyCAN_LoopbackTest.h"
 #include "Logomatic.h"
-#include "grcan_fancylayer.h"
+#include "GRCAN_FancyLayer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "Logomatic.h"
-#include "grcan_fancylayer.h"
+#include "GRCAN_FancyLayer.h"
 #include "stdlib.h"
 
 static volatile uint32_t rx_received = 0;
