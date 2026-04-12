@@ -36,6 +36,7 @@ static GRCAN_NODE_ID grcan_local_node_id = GRCAN_ALL;
 
 bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config)
 {
+	UNUSED(bus_config);
 	return true; // TODO: implement more validation checks, like valid pin numbers, valid filter counts, etc.
 }
 
