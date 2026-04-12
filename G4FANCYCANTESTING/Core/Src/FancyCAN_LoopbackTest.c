@@ -2,8 +2,8 @@
 #include <inttypes.h>
 #include <string.h>
 
-#include "Logomatic.h"
 #include "GRCAN_FancyLayer.h"
+#include "Logomatic.h"
 #include "stdlib.h"
 
 static volatile uint32_t rx_received = 0;
