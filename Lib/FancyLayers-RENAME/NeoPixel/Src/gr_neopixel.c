@@ -117,7 +117,7 @@ NeopixelContext Neopixel_Setup(NeopixelConfig *neopixelConfiguration)
 	    .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
 	    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
 	    .Pull = LL_GPIO_PULL_NO,
-	    .Alternate = neopixelConfiguration->Neopixel_Count,
+	    .Alternate = neopixelConfiguration->GPIO_AlternateFunction,
 	};
 
 	LL_GPIO_Init(gpio_port, &copi_pin);
@@ -192,7 +192,7 @@ void Neopixel_WriteAll(NeopixelContext *context, const Neopixel_Color *colors, u
 	if (context->INTERNAL.config.Neopixel_Count * sizeof(Neopixel_Color) != sizeofColors) {
 		LOGOMATIC("Number of colors provided does not match number of Neopixels configured!\n");
 		LOGOMATIC("\tExpected %lu colors, got %lu colors\n", context->INTERNAL.config.Neopixel_Count, sizeofColors / sizeof(Neopixel_Color));
-		assert_param(context->INTERNAL.config.NumberOfNeopixels * sizeof(Neopixel_Color) == sizeofColors);
+		assert_param(context->INTERNAL.config.Neopixel_Count * sizeof(Neopixel_Color) == sizeofColors);
 		return;
 	}
 
