@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+
 #include "CANdler.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_MSG_ID.h"
@@ -87,11 +88,11 @@ static CANHandle *can1;
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	#ifdef EXTERNAL_LOOPBACK_TEST
+#ifdef EXTERNAL_LOOPBACK_TEST
 	LoopbackTest(ID, data, size);
-	#else
-	// FIXME Put a call to the actual callback here
-	#endif
+#else
+// FIXME Put a call to the actual callback here
+#endif
 }
 
 // CANConfig cfg1;
@@ -104,11 +105,11 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	#ifdef EXTERNAL_LOOPBACK_TEST
+#ifdef EXTERNAL_LOOPBACK_TEST
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_EXTERNAL_LOOPBACK;
-	#else
+#else
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
-	#endif
+#endif
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
@@ -244,7 +245,7 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Main loop iteration\n");
 
-		#ifdef EXTERNAL_LOOPBACK_TEST
+#ifdef EXTERNAL_LOOPBACK_TEST
 		LOGOMATIC("Sending CAN message in external loopback mode\n");
 		FDCANTxMessage sendECUMsg;
 		sendECUMsg.tx_header.Identifier = 0x12345678;
@@ -259,7 +260,7 @@ int main(void)
 		sendECUMsg.data[1] = 0xCD;
 		sendECUMsg.data[2] = 0xEF;
 		can_send(can1, &sendECUMsg);
-		#endif
+#endif
 
 		LL_mDelay(750);
 	}
