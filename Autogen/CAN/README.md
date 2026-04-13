@@ -125,6 +125,9 @@ Mark unused bit ranges as `Reserved`:
     Reserved:
       bit_start: 23-31
 ```
+If you have a data type for a field not divisible by 8 (ex: not a u8, u16, u32, etc..), then make sure you have padding to ensure the next field starts at a bit value that IS divisble by 8. Make sure to follow general memory padding conventions
+within bytes as well.
+
 No sub-properties are needed. The parsers will skip or collapse reserved ranges.
 
 #### Adding a New Message

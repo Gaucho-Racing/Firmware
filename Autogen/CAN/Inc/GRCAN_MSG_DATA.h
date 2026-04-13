@@ -4,18 +4,6 @@
 
 #include <stdint.h>
 
-/** Debug 2.0 */
-typedef struct {
-	/** Essentially a print statement up to 8 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug[8];
-} GRCAN_DEBUG_2_0_MSG;
-
-/** Debug FD */
-typedef struct {
-	/** Essentially a print statement up to 64 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug[64];
-} GRCAN_DEBUG_FD_MSG;
-
 /** Ping */
 typedef struct {
 	/** Time in millis (Byte 0) */
@@ -310,18 +298,13 @@ typedef struct {
 
 /** Dash Config */
 typedef struct {
-	/** BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved (Byte 1) */
+	/** BMS LED command = bit 0, IMD LED command = bit 1, BSPD LED command = bit 2, bits 3-7 reserved (Byte 0) */
 	uint8_t led_bits;
 } GRCAN_DASH_CONFIG_MSG;
 
 /** TCM Status */
 typedef struct {
-	/**
-	 * Connection Status - 1: OK, 0: Timeout (bit 0)
-	 * MQTT Status - 1: OK, 0: Timeout (bit 1)
-	 * Epic Shelter Status - 1: In Progress, 0: Idle (bit 2)
-	 * Camera Status - 1: Recording, 0: Idle (bit 3)
-	 */
+	/** "Connection Status = bit 0, MQTT Status = bit 1, Epic Shelter Status = bit 2, Camera Status = bit 3, bits 4-7 reserved" (Byte 0) */
 	uint8_t status_bits;
 	/** Mapache ping (upload) (Byte 1) */
 	uint16_t mapache_ping;
@@ -387,7 +370,7 @@ typedef struct {
 	uint16_t power_draw;
 } GRCAN_TCM_RESOURCE_UTILIZATION_MSG;
 
-/** ECU Pedals Data */
+/** ECU Analog Data */
 typedef struct {
 	/** 4-20 mA signal (Byte 0) */
 	uint16_t bspd_signal;
@@ -467,10 +450,7 @@ typedef struct {
 
 /** ECU Performance */
 typedef struct {
-	/**
-	 * Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-	 * data type: u32
-	 * units: Clock Cycles (Byte 0) */
+	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop (Byte 0) */
 	uint32_t elapsed_cycles;
 } GRCAN_ECU_PERFORMANCE_MSG;
 
