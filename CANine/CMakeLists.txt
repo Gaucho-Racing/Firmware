@@ -45,4 +45,9 @@ target_link_libraries(
 		BitManipulations_Lib
 )
 
-target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc Application/Inc)
+target_include_directories(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		Core/Inc
+		Application/Inc
+)
