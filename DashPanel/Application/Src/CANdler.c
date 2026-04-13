@@ -47,7 +47,6 @@ void CANInitialize()
 	canCfg.rx_callback = CAN_callback;
 	canCfg.rx_interrupt_priority = 15;
 	canCfg.tx_interrupt_priority = 15;
-	// canCfg.tx_buffer_length = 3;
 
 	canCfg.fdcan_instance = FDCAN1;
 	canCfg.rx_gpio = GPIOA;

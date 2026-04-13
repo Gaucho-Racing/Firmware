@@ -23,9 +23,18 @@
 /* USER CODE BEGIN Includes */
 #include <string.h>
 
+<<<<<<< HEAD
 #include "Logomatic.h"
 #include "can.h"
 #include "vcp.h"
+=======
+#include "CANdler.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
+#include "Logomatic.h"
+#include "can.h"
+>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,11 +45,18 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+// TODO Comment and uncomment this line as relevant
+#define EXTERNAL_LOOPBACK_TEST
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#ifdef EXTERNAL_LOOPBACK_TEST
+#pragma message("Testing with external loopback")
+#else
+#pragma message("Testing with external CAN bus")
+#endif
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -74,6 +90,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
+<<<<<<< HEAD
 VCP_Config vcp_config = {.baud_rate = 4000000,
 			 .clock_source = VCP_CLOCK_PCLK,
 			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
@@ -87,16 +104,26 @@ VCP_Config vcp_config = {.baud_rate = 4000000,
 			 .usart_instance = USART2,
 			 .alternate_function = LL_GPIO_AF_7};
 
+=======
+>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 static CANHandle *can1;
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
+<<<<<<< HEAD
 	UNUSED(ID);
 	UNUSED(data);
 	UNUSED(size);
 	// ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
 	// 		       (0x000FFF00 & ID) >> 8, // TODO: Double check
 	// 		       (0xFF00000 & ID) >> 20, data, size);
+=======
+#ifdef EXTERNAL_LOOPBACK_TEST
+	LoopbackTest(ID, data, size);
+#else
+// FIXME Put a call to the actual callback here
+#endif
+>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 }
 
 // CANConfig cfg1;
@@ -109,7 +136,15 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+<<<<<<< HEAD
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
+=======
+#ifdef EXTERNAL_LOOPBACK_TEST
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_EXTERNAL_LOOPBACK;
+#else
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
+#endif
+>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
@@ -225,7 +260,10 @@ int main(void)
 
 	/* USER CODE BEGIN SysInit */
 	Setup_Logomatic(&logomaticConfig);
+<<<<<<< HEAD
 	Setup_VCP(&vcp_config);
+=======
+>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 
 	// LOGOMATIC("Logomatic initialization complete\n");
 	// VCP_Send((uint8_t *)"VCP initialization complete\n", 29);
@@ -244,8 +282,29 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+<<<<<<< HEAD
 		// LOGOMATIC("Hello, LOGOMATIC! Great to be here\n");
 		// VCP_Send((uint8_t *)"Hello, VCP! Great to be here\n", 30);
+=======
+		LOGOMATIC("Main loop iteration\n");
+
+#ifdef EXTERNAL_LOOPBACK_TEST
+		LOGOMATIC("Sending CAN message in external loopback mode\n");
+		FDCANTxMessage sendECUMsg;
+		sendECUMsg.tx_header.Identifier = 0x12345678;
+		sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
+		sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+		sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+		sendECUMsg.tx_header.DataLength = FDCAN_DLC_BYTES_3;
+		sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+		sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+		sendECUMsg.tx_header.MessageMarker = 0;
+		sendECUMsg.data[0] = 0xAB;
+		sendECUMsg.data[1] = 0xCD;
+		sendECUMsg.data[2] = 0xEF;
+		can_send(can1, &sendECUMsg);
+#endif
+>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 
 		LL_mDelay(750);
 	}
