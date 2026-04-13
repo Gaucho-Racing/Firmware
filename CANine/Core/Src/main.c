@@ -27,14 +27,14 @@
 #include "Logomatic.h"
 #include "can.h"
 #include "vcp.h"
-=======
+    =======
 #include "CANdler.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "can.h"
->>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
+    >>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,16 +57,17 @@
 #else
 #pragma message("Testing with external CAN bus")
 #endif
-/* USER CODE END PM */
+    /* USER CODE END PM */
 
-/* Private variables ---------------------------------------------------------*/
+    /* Private variables ---------------------------------------------------------*/
 
-/* USER CODE BEGIN PV */
+    /* USER CODE BEGIN PV */
 
-/* USER CODE END PV */
+    /* USER CODE END PV */
 
-/* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
+    /* Private function prototypes -----------------------------------------------*/
+    void
+    SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -123,7 +124,7 @@ void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 #else
 // FIXME Put a call to the actual callback here
 #endif
->>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
+	>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 }
 
 // CANConfig cfg1;
@@ -144,8 +145,7 @@ void CAN_Configure()
 #else
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
 #endif
->>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
-	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
+	>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8 canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
@@ -304,9 +304,9 @@ int main(void)
 		sendECUMsg.data[2] = 0xEF;
 		can_send(can1, &sendECUMsg);
 #endif
->>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
+		>>>>>>> 4b3241da6dd5e5206552b7107c037dd5f1593bf8
 
-		LL_mDelay(750);
+		    LL_mDelay(750);
 	}
 	/* USER CODE END 3 */
 }
