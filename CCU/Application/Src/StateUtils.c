@@ -31,7 +31,7 @@ bool BCU_Warnings(const CCU_StateData *state_data)
 		LOGOMATIC("Under 12v Warning\n");
 		return true;
 	} else if (state_data->BCU_S2_UNDERVOLTSDC_WARNING) {
-		LOGOMATIC("Undervolt TSDC Wanring\n");
+		LOGOMATIC("Undervolt TSDC Warning\n");
 		return true;
 	} else {
 		return false;
