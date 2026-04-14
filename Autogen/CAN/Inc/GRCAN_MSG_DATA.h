@@ -59,22 +59,20 @@ Discrete Mapping, actual values TBD (16 possible values) The torque map selected
 typedef struct {
 	/** Absolute value of speed (Byte 0) */
 	uint16_t vehicle_speed;
-	/** Output terminal voltage of accumulator (Byte 6) */
+	/** Output terminal voltage of accumulator (Byte 2) */
 	uint16_t tractive_system_voltage;
-	/** Wheel RPM (Byte 2) */
-	uint16_t fr_wheel_rpm;
 	/** Wheel RPM (Byte 4) */
+	uint16_t fr_wheel_rpm;
+	/** Wheel RPM (Byte 6) */
 	uint16_t fl_wheel_rpm;
-
 } GRCAN_ECU_STATUS_2_MSG;
 
 /** ECU Status 3 */
 typedef struct {
-	/** Wheel RPM (Byte 2) */
-	uint16_t rr_wheel_rpm;
 	/** Wheel RPM (Byte 0) */
+	uint16_t rr_wheel_rpm;
+	/** Wheel RPM (Byte 2) */
 	uint16_t rl_wheel_rpm;
-
 } GRCAN_ECU_STATUS_3_MSG;
 
 /** ECU config */

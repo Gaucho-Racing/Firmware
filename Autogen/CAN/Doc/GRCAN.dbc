@@ -647,13 +647,13 @@ BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
 
 BO_ 2147615999 ECU_ECU_Status_2_to_ALL: 8 ECU
  SG_ Vehicle_Speed : 0|16@1+ (0.01,0) [0|655.35] "MPH" ALL
- SG_ FR_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
- SG_ FL_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
- SG_ Tractive_System_Voltage : 48|16@1+ (0.01,0) [0|655.35] "Volts" ALL
+ SG_ Tractive_System_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ALL
+ SG_ FR_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ FL_Wheel_RPM : 48|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
 BO_ 2147616255 ECU_ECU_Status_3_to_ALL: 4 ECU
- SG_ RL_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
- SG_ RR_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ RR_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ RL_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
 BO_ 2147615236 ECU_Ping_to_TCM: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TCM
