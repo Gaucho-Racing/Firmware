@@ -91,7 +91,7 @@ void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 #ifdef EXTERNAL_LOOPBACK_TEST
 	LoopbackTest(ID, data, size);
 #else
-// FIXME Put a call to the actual callback here
+    CAN_MessageHandler(GRCAN_BUS_PRIMARY, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, (uint8_t*)data, size);
 #endif
 }
 
