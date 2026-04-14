@@ -82,7 +82,7 @@ sub find_id_in_lines {
 			${$idx_ref} = $j;
 
 			my $id        = $1;
-			my $enum_name = 'MSG_' . uc $msg_name;
+			my $enum_name = 'GRCAN_' . uc $msg_name;
 			$enum_name =~ s/\W+/_/gsmx;
 			$enum_name =~ s/_+/_/gsmx;
 			$enum_name =~ s/^_|_$//gsmx;
