@@ -57,6 +57,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+extern uint8_t tick_freq;
 
 /* USER CODE END EC */
 
@@ -68,6 +69,7 @@ extern "C" {
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 void timer_inc(void);
+void pollingTimer_inc(void);
 
 /* USER CODE BEGIN EFP */
 
