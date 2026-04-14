@@ -4,18 +4,6 @@
 
 #include <stdint.h>
 
-/** Debug 2.0 */
-typedef struct {
-	/** Essentially a print statement up to 8 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug;
-} GRCAN_DEBUG_2_0_MSG;
-
-/** Debug FD */
-typedef struct {
-	/** Essentially a print statement up to 64 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug;
-} GRCAN_DEBUG_FD_MSG;
-
 /** Ping */
 typedef struct {
 	/** Time in millis (Byte 0) */
@@ -316,16 +304,27 @@ typedef struct {
 
 /** Dash Status */
 typedef struct {
-	/** TS Active = bit 0, RTD = bit 1, bits 2–7 reserved (Byte 0) */
+	/** [Byte 0 / Bits 0-7]
+0: TS Active
+1: RTD
+2-7: Reserved (Byte 0) */
 	uint8_t button_flags;
-	/** BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved (Byte 1) */
+	/** [Byte 1 / Bits 8-15]
+0: BMS
+1: IMD
+2: BSPD
+3-7: Reserved (Byte 1) */
 	uint8_t led_bits;
 } GRCAN_DASH_STATUS_MSG;
 
 /** Dash Config */
 typedef struct {
-	/** LED command (0: off, 1: on) LED command (0: off, 1: on) LED command (0: off, 1: on) (Byte 0) */
-	uint8_t bms_led_imd_led_bspd_led;
+	/** [Byte 0 / Bits 0-7]
+0: BMS LED command
+1: IMD LED command
+2: BSPD LED command
+3-7: Reserved (Byte 0) */
+	uint8_t led_bits;
 } GRCAN_DASH_CONFIG_MSG;
 
 /** Steering Status */
@@ -432,8 +431,13 @@ typedef struct {
 
 /** TCM Status */
 typedef struct {
-	/** 1: OK, 0: Timeout 1: OK, 0: Timeout 1: In Progress, 0: Idle 1: Recording, 0: Idle (Byte 0) */
-	uint8_t connection_status_mqtt_status_epic_shelter_status_camera_status_reserved;
+	/** [Byte 0 / Bits 0-7]
+0: Connection Status
+1: MQTT Status
+2: Epic Shelter Status
+3: Camera Status
+4-7: Reserved (Byte 0) */
+	uint8_t status_bits;
 	/** Mapache ping (upload) (Byte 1) */
 	uint16_t ping;
 	/** # of messages on cache (non-synced) (Byte 3) */
@@ -497,26 +501,6 @@ typedef struct {
 	/** power draw in mW (Byte 42) */
 	uint16_t power_draw;
 } GRCAN_TCM_RESOURCE_UTILIZATION_MSG;
-
-/** Dash Warning Flags */
-typedef struct {
-	/** 1: Violation, 0: OK (Byte 0) */
-	uint8_t bse_apps_violation_reserved_reserved_reserved_reserved_reserved_reserved_reserved;
-} GRCAN_DASH_WARNING_FLAGS_MSG;
-
-/** Specific Brake IR */
-typedef struct {
-	/** Wheel identifier according to the wiki (Byte 0) */
-	uint8_t wheel_identifier;
-	/** IR Temp of Brakes (Byte 1) */
-	uint8_t temp;
-} GRCAN_SPECIFIC_BRAKE_IR_MSG;
-
-/** ECU Ping Information */
-typedef struct {
-	/** Literal copy of ECU Status's status bit map (Byte 0) */
-	uint8_t online_pings;
-} GRCAN_ECU_PING_INFORMATION_MSG;
 
 /** ECU Analog Data */
 typedef struct {
@@ -600,7 +584,8 @@ typedef struct {
 typedef struct {
 	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop
 data type: u32
-units: Clock Cycles (Byte 0) */
+units: Clock Cycles
+data type: u8 (Byte 0) */
 	uint8_t elapsed_cycles;
 } GRCAN_ECU_PERFORMANCE_MSG;
 
