@@ -4,6 +4,9 @@ run-name: Publish Web - ${{ github.ref_name }}
 on:
   push:
     branches: ["main"]
+    paths:
+      - 'Web/**'
+      - '.github/workflows/PublishWeb.yml'
   workflow_dispatch:
 
 concurrency:
