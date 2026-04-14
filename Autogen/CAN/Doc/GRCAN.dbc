@@ -636,7 +636,7 @@ BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
 BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Dash_Panel
 
-BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 9 ECU
+BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ status_flags : 0|16@1+ (1,0) [0|0] "" ALL
  SG_ ecu_state : 16|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ Power_Level : 24|4@1+ (1,0) [0|0] "" ALL
@@ -644,16 +644,16 @@ BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 9 ECU
  SG_ Max_Cell_Temp : 32|8@1+ (0.25,0) [0|63.75] "Celsius" ALL
  SG_ Accumulator_State_of_Charge : 40|8@1+ (0.392157,0) [0|100] "%" ALL
  SG_ GLV_State_of_Charge : 48|8@1+ (0.392157,0) [0|100] "%" ALL
- SG_ Tractive_System_Voltage : 56|16@1+ (0.01,0) [0|655.35] "Volts" ALL
 
 BO_ 2147615999 ECU_ECU_Status_2_to_ALL: 8 ECU
  SG_ Vehicle_Speed : 0|16@1+ (0.01,0) [0|655.35] "MPH" ALL
  SG_ FR_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
  SG_ FL_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
- SG_ RR_Wheel_RPM : 48|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ Tractive_System_Voltage : 48|16@1+ (0.01,0) [0|655.35] "Volts" ALL
 
-BO_ 2147616255 ECU_ECU_Status_3_to_ALL: 2 ECU
+BO_ 2147616255 ECU_ECU_Status_3_to_ALL: 4 ECU
  SG_ RL_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ RR_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
 BO_ 2147615236 ECU_Ping_to_TCM: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TCM
