@@ -25,7 +25,14 @@ CAN2:
   TCM
   BCU
   DGPS
-  # Add digital sensor nodes here as they are registered in GR ID
+  SAMM_Mag_1
+  SAMM_Mag_2
+  SAMM_ToF_1
+  SAMM_ToF_2
+  TireTemp_1
+  TireTemp_2
+  TireTemp_3
+  TireTemp_4
 
 CAN3:
   CCU
