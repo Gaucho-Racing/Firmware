@@ -26,7 +26,7 @@ Two States: CCU_STATE_IDLE and CCU_STATE_CHARGING
 
 - Calls `BCU_Warnings()`
 - Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set `SoftwareLatch` to lower (False) and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+- If there are error(s), set `SoftwareLatch` to low (False) and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
   - Sets state to `CCU_STATE_IDLE`
   - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 - If `recv_charge_cmd` set to False
