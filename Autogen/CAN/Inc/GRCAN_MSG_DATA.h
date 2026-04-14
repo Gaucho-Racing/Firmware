@@ -53,28 +53,28 @@ Discrete Mapping, actual values TBD (16 possible values) The torque map selected
 	uint8_t accumulator_state_of_charge;
 	/** % charged of the Low Voltage Bat (Byte 6) */
 	uint8_t glv_state_of_charge;
-	/** Byte 7 (Byte 7) */
-	uint8_t reserved;
 } GRCAN_ECU_STATUS_1_MSG;
 
 /** ECU Status 2 */
 typedef struct {
 	/** Absolute value of speed (Byte 0) */
 	uint16_t vehicle_speed;
+	/** Output terminal voltage of accumulator (Byte 6) */
+	uint16_t tractive_system_voltage;
 	/** Wheel RPM (Byte 2) */
 	uint16_t fr_wheel_rpm;
 	/** Wheel RPM (Byte 4) */
 	uint16_t fl_wheel_rpm;
-	/** Output terminal voltage of accumulator (Byte 6) */
-	uint16_t tractive_system_voltage;
+
 } GRCAN_ECU_STATUS_2_MSG;
 
 /** ECU Status 3 */
 typedef struct {
-	/** Wheel RPM (Byte 0) */
-	uint16_t rl_wheel_rpm;
 	/** Wheel RPM (Byte 2) */
 	uint16_t rr_wheel_rpm;
+	/** Wheel RPM (Byte 0) */
+	uint16_t rl_wheel_rpm;
+
 } GRCAN_ECU_STATUS_3_MSG;
 
 /** ECU config */
