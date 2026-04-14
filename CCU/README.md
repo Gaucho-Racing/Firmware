@@ -4,8 +4,6 @@ Charging Control Unit
 
 Compile and flash CCU.elf
 
-FIXME For testing on a Nucleo, use HSI; otherwise use HSE whenever possible
-
 GR26 CCU is the GR25 ECU (aka GR25 Big Bird)
 
 ## State Transitions
@@ -35,15 +33,18 @@ Two States: CCU_STATE_IDLE and CCU_STATE_CHARGING
 
 ## Initializations and Implementations
 
-State: Initialized to `CCU_STATE_IDLE`
+State_Data: Stores data given from 'GR_CAN_BCU_STATUS_2'
+
+
+CCU State: Initialized to `CCU_STATE_IDLE`
 Software Latch: Initialized to high (True)
 
-In infinite while loop in main:
+In main infinite while loop:
 
 - `CCU_State_Tick()`:
   - Checks for state transition for every "tick"
 - `CheckDebuggerPrint()`:
-  - Checks boolean for VCP state data dump \\
+  - Dumps a full log of the current CCU state, including errors and warnings, when a print request flag is set to True.
 
 ## State Utils and State Data
 
@@ -52,10 +53,10 @@ In infinite while loop in main:
 - Purpose: Controls hardware GPIO Pins that act as a software-controlled latch, while keeping the 'state_data' in sync. If any critical errors occur, 'SetSoftwareLatch()' is tripped and set to low, and Emergency Shutdown Circuit is also tripped.
 
 - Parameters:
-  - State: boolean value, desired latch state
+  - state: boolean value, desired latch state
     - True: drive pin High
     - False: drive pin Low
-  - state_data: const ptr of CCU_StateData
+  - 'state_data': const ptr of CCU_StateData
 - Behaviour:
 
 | `state` | Current Pin | Action | `BCU_S2_SOFTWARE_LATCH` | Log Output |
@@ -65,14 +66,14 @@ In infinite while loop in main:
 
 `BCU_Warnings()`
 
-- Purpose: logs if any `GR_CAN_BCU_STATUS_2` warnings are true
+- Purpose: logs if any `GR_CAN_BCU_STATUS_2` warning bits are true
 - Parameters:
   - state_data: const pointer to `state_data`
 - Behavior: does not affect state data or state transitions
 
 `CriticalError()`
 
-- Purpose: logs if any `GR_CAN_BCU_STATUS_2` errors are true
+- Purpose: logs if any `GR_CAN_BCU_STATUS_2` error bits are true
 - Parameters:
   - state_data: const pointer to `state_data`
 - Behavior: function returns boolean, does not affect state_data
@@ -88,9 +89,8 @@ In infinite while loop in main:
 | `request_print_statedata` | Action |
 | --- | --- |
 | `true` | Logs All 'state_data', then 'request_print_statedata' set to false|
-| `false` | Does nothing|
+| `false` | Does nothing |
 
-State Data is casting `GR_CAN_BCU_STATUS_2` \\
 
 ### VCP
 
