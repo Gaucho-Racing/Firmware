@@ -12,11 +12,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["c", "actions"]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 1
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13  # v4.35.1
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: 'none'
+
+      - name: Analyze CodeQL
+        uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
+        with:
+          category: '${{ matrix.language }}'
+
   configs:
     name: Configuration Files
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    # permissions:
+    #   contents: read
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -143,7 +167,7 @@ jobs:
 
   all:
     name: Completed All Linting
-    needs: [ configs, codeql, perllinter, web ]
+    needs: [ configs, actions, perllinter, web ]
     runs-on: ubuntu-slim
     permissions: { }
     if: always()
@@ -152,7 +176,7 @@ jobs:
         if: >
           ${{
             needs.configs.result != 'success' ||
-            needs.codeql.result != 'success' ||
+            needs.actions.result != 'success' ||
             needs.perllinter.result != 'success' ||
             needs.web.result != 'success'
           }}
