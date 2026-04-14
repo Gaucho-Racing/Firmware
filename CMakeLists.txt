@@ -52,6 +52,8 @@ if(CCACHE_PROGRAM AND NOT CMAKE_C_COMPILER_LAUNCHER)
 		"${CCACHE_PROGRAM}"
 	)
 	message(STATUS "ccache directory: ${CCACHE_DIR_PATH}")
+elseif(CMAKE_C_COMPILER_LAUNCHER)
+	message(STATUS "Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to ${CMAKE_C_COMPILER_LAUNCHER}")
 else()
 	message(STATUS "Not using ccache: ccache not found in PATH")
 endif()
