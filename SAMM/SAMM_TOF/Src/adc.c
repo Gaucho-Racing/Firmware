@@ -44,10 +44,9 @@ void MX_ADC1_Init(void)
 	/** Common config
 	 */
 	hadc1.Instance = ADC1;
-	hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+	hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4; // TODO: possibly change????
 	hadc1.Init.Resolution = ADC_RESOLUTION_12B;
 	hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-	hadc1.Init.GainCompensation = 0;
 	hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
 	hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
 	hadc1.Init.LowPowerAutoWait = DISABLE;
@@ -94,14 +93,28 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 	if (adcHandle->Instance == ADC1) {
 		/* USER CODE BEGIN ADC1_MspInit 0 */
 
 		/* USER CODE END ADC1_MspInit 0 */
-		LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
+		//LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
 
 		/* ADC1 clock enable */
-		__HAL_RCC_ADC12_CLK_ENABLE();
+		//__HAL_RCC_ADC12_CLK_ENABLE();
+
+
+		/** Initializes the peripherals clock
+  		*/
+		PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADCDAC;
+		PeriphClkInitStruct.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_HCLK;
+		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+		{
+		Error_Handler();
+		}
+
+    /* Peripheral clock enable */
+    __HAL_RCC_ADC_CLK_ENABLE();
 
 		__HAL_RCC_GPIOC_CLK_ENABLE();
 		/**ADC1 GPIO Configuration
@@ -128,7 +141,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef *adcHandle)
 
 		/* USER CODE END ADC1_MspDeInit 0 */
 		/* Peripheral clock disable */
-		__HAL_RCC_ADC12_CLK_DISABLE();
+		__HAL_RCC_ADC_CLK_DISABLE();
 
 		/**ADC1 GPIO Configuration
 		PC0     ------> ADC1_IN6
