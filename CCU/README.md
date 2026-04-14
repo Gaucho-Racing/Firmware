@@ -16,26 +16,26 @@ Two States: CCU_STATE_IDLE and CCU_STATE_CHARGING
 
 - Calls `BCU_Warnings()`
 - Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set SoftwareLatch to low (False) and TS_ACTIVE to False
-  - Sends CAN message GR_CAN_PRECHARGE_MSG
-- If no errors and recv_charge_cmd set to True
-  - switches state to CCU_STATE_CHARGING and set TS_ACTIVE to True
-  - Sends CAN message GR_CAN_PRECHARGE_MSG
+- If there are error(s), set `SoftwareLatch` to low (False) and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
+- If no errors and `recv_charge_cmd` set to True
+  - switches state to `CCU_STATE_CHARGING` and set `BCU_PRECHARGE_SET_TS_ACTIVE` to True
+  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 
 `STATE_CHARGING()`:
 
 - Calls `BCU_Warnings()`
 - Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set SoftwareLatch to lower (False) and TS_ACTIVE to False
-  - Sets state to CCU_STATE_IDLE
-  - Sends CAN message GR_CAN_PRECHARGE_MSG
-- If recv_charge_cmd set to False
-  - set state to CCU_STATE_IDLE and TS_ACTIVE to False
-  - Sends CAN message GR_CAN_PRECHARGE_MSG
+- If there are error(s), set `SoftwareLatch` to lower (False) and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+  - Sets state to `CCU_STATE_IDLE`
+  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
+- If `recv_charge_cmd` set to False
+  - set state to `CCU_STATE_IDLE` and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 
 ## Initializations and Implementations
 
-State: Initialized to CCU_STATE_IDLE
+State: Initialized to `CCU_STATE_IDLE`
 Software Latch: Initialized to high (True)
 
 In infinite while loop in main:
