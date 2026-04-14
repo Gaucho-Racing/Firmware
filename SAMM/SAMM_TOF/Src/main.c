@@ -29,8 +29,8 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
-#include "VL53L4ED_api.h"
 #include "IMU/bmi323.h"
+#include "VL53L4ED_api.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 

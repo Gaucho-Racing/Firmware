@@ -123,12 +123,12 @@ extern "C" {
 #endif				    /* HSE_STARTUP_TIMEOUT */
 
 /**
-  * @brief Internal Core Speed oscillator (CSI) default value.
-  *        This value is the default CSI range value after Reset.
-  */
-#if !defined  (CSI_VALUE)
-  #define CSI_VALUE (4000000UL) /*!< Value of the Internal oscillator in Hz*/
-#endif /* CSI_VALUE */
+ * @brief Internal Core Speed oscillator (CSI) default value.
+ *        This value is the default CSI range value after Reset.
+ */
+#if !defined(CSI_VALUE)
+#define CSI_VALUE (4000000UL) /*!< Value of the Internal oscillator in Hz*/
+#endif			      /* CSI_VALUE */
 
 /**
  * @brief Internal High Speed oscillator (HSI) value.
