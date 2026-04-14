@@ -164,6 +164,22 @@ routing:
         TCM:
           - msg: ECU Analog Data
           - msg: ECU Performance
+        SAMM_Mag_1:
+          - msg: Ping
+        SAMM_Mag_2:
+          - msg: Ping
+        SAMM_ToF_1:
+          - msg: Ping
+        SAMM_ToF_2:
+          - msg: Ping
+        TireTemp_1:
+          - msg: Ping
+        TireTemp_2:
+          - msg: Ping
+        TireTemp_3:
+          - msg: Ping
+        TireTemp_4:
+          - msg: Ping
     Energy Meter:
       CAN3:
         BCU:
@@ -252,6 +268,38 @@ routing:
           - msg: GPS QY
           - msg: GPS RZ
           - msg: UVW DGPS
+    SAMM_Mag_1:
+      CAN2:
+        ECU:
+          - msg: Ping
+    SAMM_Mag_2:
+      CAN2:
+        ECU:
+          - msg: Ping
+    SAMM_ToF_1:
+      CAN2:
+        ECU:
+          - msg: Ping
+    SAMM_ToF_2:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_1:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_2:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_3:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_4:
+      CAN2:
+        ECU:
+          - msg: Ping
 
 byte order: little_endian
 
@@ -283,50 +331,58 @@ Message ID:
       map equation: "1x"
   ECU Status 1:
     MSG ID: 0x003
-    MSG LENGTH: 8
-    ecu_state:
+    MSG LENGTH: 9
+    status_flags:
       bit_start: 0
       comment:
-        [Byte 0 / Bits 0-1] GLV States
+        [Bytes 0-1 / Bits 0-15]
+        0: BCU Node Status (1: OK, 0: Timeout)
+        1: GR Inverter Status (1: OK, 0: Timeout)
+        2: Fan Controller 1 Status (1: OK, 0: Timeout)
+        3: Fan Controller 2 Status (1: OK, 0: Timeout)
+        4: Fan Controller 3 Status (1: OK, 0: Timeout)
+        5: Dash Panel Status (1: OK, 0: Timeout)
+        6: TCM Node Status (1: OK, 0: Timeout)
+        7: SAMM_Mag_1 Status (1: OK, 0: Timeout)
+        8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
+        9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
+        10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
+        11: TireTemp_1 Status (1: OK, 0: Timeout)
+        12: TireTemp_2 Status (1: OK, 0: Timeout)
+        13: TireTemp_3 Status (1: OK, 0: Timeout)
+        14: TireTemp_4 Status (1: OK, 0: Timeout)
+        15: Reserved
+      data type: u16
+    ecu_state:
+      bit_start: 16
+      comment:
+        [Byte 2 / Bits 16-17] GLV States
         0: GLV Off State,
         1: GLV On State.
         See diagram in StateMachine.
-        [Byte 0 / Bits 2-3] Precharge States
+        [Byte 2 / Bits 18-19] Precharge States
         2: Precharge Engaged State
         3: Precharge Complete State
         See diagram in StateMachine.h
-        [Byte 0 / Bits 4-5] ECU States
+        [Byte 2 / Bits 20-21] ECU States
         4: Drive Active ECU State
         5: TS Discharge ECU State
         6-7: Reserved
         See diagram in StateMachine.h
       data type: b
       units: Bool
-    status_flags:
-      bit_start: 8
-      comment:
-        [Byte 1 / Bits 8-15]
-        8: BCU Node Status (1: OK, 0: Timeout)
-        9: GR Inverter Status (1: OK, 0: Timeout)
-        10: Fan Controller 1 Status (1: OK, 0: Timeout)
-        11: Fan Controller 2 Status (1: OK, 0: Timeout)
-        12: Fan Controller 3 Status (1: OK, 0: Timeout)
-        13: Dash Panel Status (1: OK, 0: Timeout)
-        14: TCM Node Status (1: OK, 0: Timeout)
-        15: Reserved
-      data type: b
     Power Level:
-      bit_start: 16
+      bit_start: 24
       comment:
         Controls the AC current limits to each of the inverters
         Discrete Mapping, actual values TBD (16 possible values)
       data type: u4
     Torque Map:
-      bit_start: 20
+      bit_start: 28
       comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
       data type: u4
     Max Cell Temp:
-      bit_start: 24
+      bit_start: 32
       comment: the temperature of the hottest cell of the accumulator
       data type: u8
       units: Celsius
@@ -334,7 +390,7 @@ Message ID:
       scaled max: 63.75
       map equation: "0.25x"
     Accumulator State of Charge:
-      bit_start: 32
+      bit_start: 40
       comment: % charged of the Accumulator
       data type: u8
       units: '%'
@@ -342,7 +398,7 @@ Message ID:
       scaled max: 100
       map equation: "20x/51"
     GLV State of Charge:
-      bit_start: 40
+      bit_start: 48
       comment: % charged of the Low Voltage Bat
       data type: u8
       units: '%'
@@ -350,7 +406,7 @@ Message ID:
       scaled max: 100
       map equation: "20x/51"
     Tractive System Voltage:
-      bit_start: 48
+      bit_start: 56
       comment: Output terminal voltage of accumulator
       data type: u16
       units: Volts
@@ -4215,4 +4271,12 @@ GR ID:
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
   DGPS: "0x30"
+  SAMM_Mag_1: "0x20"
+  SAMM_Mag_2: "0x21"
+  SAMM_ToF_1: "0x22"
+  SAMM_ToF_2: "0x23"
+  TireTemp_1: "0x24"
+  TireTemp_2: "0x25"
+  TireTemp_3: "0x26"
+  TireTemp_4: "0x27"
   ALL: "0xFF"

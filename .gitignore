@@ -76,3 +76,5 @@ Icon\r
 
 # Perl
 local
+
+*.md
