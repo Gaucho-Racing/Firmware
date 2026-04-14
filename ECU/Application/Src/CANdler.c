@@ -10,7 +10,7 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 
-#define WHEEL_RPM_TO_MPH_RATIO 0.0476
+#define WHEEL_RPM_TO_MPH_RATIO 0.0476f
 
 extern ECU_StateData stateLump;
 
@@ -31,7 +31,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 {
 	switch (msg_id) {
 		case GRCAN_DEBUG_2_0:
-			if (data_length > sizeof(GRCAN_DEBUG_2_0_MSG)) {
+			if (data_length > 8) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -39,7 +39,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			break;
 
 		case GRCAN_DEBUG_FD:
-			if (data_length > sizeof(GRCAN_DEBUG_FD_MSG)) {
+			if (data_length > 64) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -62,7 +62,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_BCU_STATUS_1_MSG *bcu_status_1 = (GRCAN_BCU_STATUS_1_MSG *)data;
 			state_data->tractivebattery_soc = bcu_status_1->accumulator_soc;
 			state_data->glv_soc = bcu_status_1->glv_soc;
-			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01;
+			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01f;
 			break;
 
 		case GRCAN_BCU_STATUS_2:
@@ -71,7 +71,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				break;
 			}
 			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
-			state_data->max_cell_temp_c = bcu_status_2->max_cell_temp * 0.25;
+			state_data->max_cell_temp_c = bcu_status_2->max_cell_temp * 0.25f;
 			state_data->bcu_error_warning_bits = bcu_status_2->status_flags;
 			state_data->ir_minus = GETBIT(bcu_status_2->precharge_latch_flags, 1);
 			state_data->ir_plus = GETBIT(bcu_status_2->precharge_latch_flags, 2);
