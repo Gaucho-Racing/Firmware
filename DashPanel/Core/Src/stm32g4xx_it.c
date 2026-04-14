@@ -182,6 +182,7 @@ void SysTick_Handler(void)
 {
 	/* USER CODE BEGIN SysTick_IRQn 0 */
 	timer_inc();
+	pollingTimer_inc();
 	/* USER CODE END SysTick_IRQn 0 */
 
 	/* USER CODE BEGIN SysTick_IRQn 1 */
