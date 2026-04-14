@@ -40,7 +40,7 @@
 /* USER CODE BEGIN PD */
 
 // TODO Comment and uncomment this line as relevant
-#define EXTERNAL_LOOPBACK_TEST
+// #define EXTERNAL_LOOPBACK_TEST
 
 /* USER CODE END PD */
 
@@ -244,9 +244,10 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Main loop iteration\n");
+		sendMSG();
 
 #ifdef EXTERNAL_LOOPBACK_TEST
-		LOGOMATIC("Sending CAN message in external loopback mode\n");
+	LOGOMATIC("Sending CAN message in external loopback mode\n");
 		FDCANTxMessage sendECUMsg;
 		sendECUMsg.tx_header.Identifier = 0x12345678;
 		sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
@@ -260,12 +261,23 @@ int main(void)
 		sendECUMsg.data[1] = 0xCD;
 		sendECUMsg.data[2] = 0xEF;
 		can_send(can1, &sendECUMsg);
+
 #endif
 
 		LL_mDelay(750);
 	}
 	/* USER CODE END 3 */
 }
+
+void sendMSG(){
+		LOGOMATIC("Sending CAN message in external loopback mode\n");
+		GRCAN_GPS_QY_MSG testDashConfig;
+		testDashConfig.theta = "hi";
+		testDashConfig.acc = "yo";
+		testDashConfig.acc = "cora";
+		can_send(can1, &testDashConfig);
+
+	}
 
 /**
  * @brief System Clock Configuration
