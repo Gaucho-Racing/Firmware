@@ -51,9 +51,36 @@ In infinite while loop in main:
 
 `BCU_Warnings()`
 
+- Purpose: logs if any `GR_CAN_BCU_STATUS_2` warnings are true
+- Parameters: const pointer to `state_data`
+- States: does not affect state data or state transitions
+
 `CriticalError()`
 
+- Purpose: logs if any `GR_CAN_BCU_STATUS_2` errors are true
+- Parameters: const pointer to `state_data`
+- States: the function does not change state data or state transitions
+
 `CheckDebuggerPrint()`
+
+- Purpose: logs all information in `state_data` if `request_print_statedata` is True
+- Parameters: const pointer to `state_data`, also uses `request_print_statedata`
+- States: does not affect state dat or state transitions
+
+State Data is casting `GR_CAN_BCU_STATUS_2` \\
+
+### VCP
+
+- Receives/Transmits data with USART (receives user input)
+- If the data received is `C` and `recv_charge_cmd` is False:
+  - Change `recv_charge_cmd` to True (used in State Transitions)
+  - Transmit `C`
+- If data received is `?`:
+  - Change `request_print_statedata` to True (used in `CheckDebuggerPrint()`)
+  - Transmit `?`
+- Else:
+  - Change `recv_charge_cmd` to False (used in State Transitions)
+  - Tranmist `X`
 
 ## Usage
 
