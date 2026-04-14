@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   codeql:
-    name: CodeQL Analysis
+    name: CodeQL
     runs-on: ubuntu-latest
     permissions:
       contents: read
