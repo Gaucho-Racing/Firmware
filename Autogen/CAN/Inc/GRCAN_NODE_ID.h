@@ -5,17 +5,20 @@
 typedef enum {
 	GRCAN_ALL = 0xFF,
 	GRCAN_BCU = 0x03,
-	GRCAN_ECU = 0x02,
 	GRCAN_CCU = 0x02,
 	GRCAN_Charger = 0x00,
 	GRCAN_Charging_SDC = 0x0C,
 	GRCAN_DGPS = 0x30,
+	GRCAN_DTI_Inverter = 0x00,
 	GRCAN_Dash_Panel = 0x05,
 	GRCAN_Debugger = 0x01,
+	GRCAN_ECU = 0x02,
+	GRCAN_Energy_Meter = 0x00,
 	GRCAN_Fan_Controller_1 = 0x0D,
 	GRCAN_Fan_Controller_2 = 0x0E,
 	GRCAN_Fan_Controller_3 = 0x0F,
 	GRCAN_GR_Inverter = 0x08,
+	GRCAN_IMD = 0x00,
 	GRCAN_TCM = 0x04,
 } GRCAN_NODE_ID;
 

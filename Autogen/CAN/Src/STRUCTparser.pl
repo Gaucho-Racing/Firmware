@@ -156,7 +156,9 @@ sub generate_header {
 			if ($current_msg) {
 				push @output, process_message( $current_msg, \@fields, $d_map, $prefix );
 			}
-			$current_msg = $msg_name;
+
+			# Debug payload structs are intentionally excluded.
+			$current_msg = ( $msg_name =~ /^Debug(?:\s+(?:2[.]0|FD))?$/ismx ) ? $EMPTY_STR : $msg_name;
 			@fields      = ();
 		}
 
@@ -233,6 +235,7 @@ sub clean_field_name {
 
 sub process_message {
 	my ( $name, $f_ref, $d_map, $prefix ) = @_;
+
 	my @buf;
 	my $tag = uc $name =~ s/[^[:alpha:][:digit:]]/_/grsmx =~ s/_+/_/grsmx =~ s/^_|_$//grsmx;
 
@@ -248,45 +251,72 @@ sub process_message {
 
 	push @buf, "/** $name */\ntypedef struct {\n";
 	my @sorted = sort { $a <=> $b } keys %byte_map;
+	my %used_field_names;
 
 	for my $i ( 0 .. $#sorted ) {
-		push @buf, process_byte_entry( $name, \@sorted, \%byte_map, \$i, $d_map );
+		my %byte_ctx = (
+			msg_name   => $name,
+			sorted_ref => \@sorted,
+			map_ref    => \%byte_map,
+			idx_ref    => \$i,
+			d_map      => $d_map,
+			seen_ref   => \%used_field_names,
+		);
+		push @buf, process_byte_entry( \%byte_ctx );
 	}
 	push @buf, "} ${prefix}_${tag}_MSG;\n\n";
 	return join $EMPTY_STR, @buf;
 }
 
 sub process_byte_entry {
-	my ( $msg_name, $sorted_ref, $map_ref, $idx_ref, $d_map ) = @_;
+	my ($ctx_ref)  = @_;
+	my $msg_name   = $ctx_ref->{msg_name};
+	my $sorted_ref = $ctx_ref->{sorted_ref};
+	my $map_ref    = $ctx_ref->{map_ref};
+	my $idx_ref    = $ctx_ref->{idx_ref};
+	my $d_map      = $ctx_ref->{d_map};
+	my $seen_ref   = $ctx_ref->{seen_ref};
 	my @out;
 	my $b_idx  = ${$sorted_ref}[ ${$idx_ref} ];
 	my $fields = ${$map_ref}{$b_idx};
 
 	if ( scalar @{$fields} > 2 && ${$fields}[0]->{name} =~ /reserved|ping|byte/ismx ) {
-		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref );
+		push @out, handle_multi_field_range( $sorted_ref, $map_ref, $idx_ref, $seen_ref );
 	}
 	else {
-		my $f_var =
-		  ( scalar @{$fields} == 1 )
-		  ? clean_field_name( ${$fields}[0]->{name} )
-		  : join q{_}, map { clean_field_name( $_->{name} ) } @{$fields};
-		if ( $f_var =~ /^[[:digit:]]/smx ) {
-			$f_var = q{_} . $f_var;
+		# For dense semantic bytes, emit each explicit CANdo field separately.
+		if ( scalar @{$fields} > 2 ) {
+			for my $f ( @{$fields} ) {
+				my $f_var = assign_unique_field_name( clean_field_name( $f->{name} ), $seen_ref );
+				my $type =
+				    ( $f->{type} =~ /32/smx ) ? 'uint32_t'
+				  : ( $f->{type} =~ /16/smx ) ? 'uint16_t'
+				  :                             'uint8_t';
+				my $desc = ${$d_map}{ $msg_name . q{::} . clean_field_name( $f->{name} ) } // "Byte $b_idx";
+				push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", $desc, $b_idx, $type, $f_var . q{;};
+			}
 		}
+		else {
+			my $f_var =
+			  ( scalar @{$fields} == 1 )
+			  ? clean_field_name( ${$fields}[0]->{name} )
+			  : join q{_}, map { clean_field_name( $_->{name} ) } @{$fields};
+			$f_var = assign_unique_field_name( $f_var, $seen_ref );
 
-		my $type =
-		    ( ${$fields}[0]->{type} =~ /32/smx ) ? 'uint32_t'
-		  : ( ${$fields}[0]->{type} =~ /16/smx ) ? 'uint16_t'
-		  :                                        'uint8_t';
-		my $desc = join $SPACE_STR, map { ${$d_map}{ $msg_name . q{::} . clean_field_name( $_->{name} ) } // () } @{$fields};
+			my $type =
+			    ( ${$fields}[0]->{type} =~ /32/smx ) ? 'uint32_t'
+			  : ( ${$fields}[0]->{type} =~ /16/smx ) ? 'uint16_t'
+			  :                                        'uint8_t';
+			my $desc = join $SPACE_STR, map { ${$d_map}{ $msg_name . q{::} . clean_field_name( $_->{name} ) } // () } @{$fields};
 
-		push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . q{;};
+			push @out, sprintf "\t/** %s (Byte %d) */\n\t%-10s %-30s\n", ( $desc || "Byte $b_idx" ), $b_idx, $type, $f_var . q{;};
+		}
 	}
 	return join $EMPTY_STR, @out;
 }
 
 sub handle_multi_field_range {
-	my ( $bytes_ref, $map_ref, $idx_ref ) = @_;
+	my ( $bytes_ref, $map_ref, $idx_ref, $seen_ref ) = @_;
 	my $start_byte = ${$bytes_ref}[ ${$idx_ref} ];
 	my $has_error  = grep { $_->{name} =~ /error|fault|violation/ismx } @{ ${$map_ref}{$start_byte} };
 
@@ -302,7 +332,27 @@ sub handle_multi_field_range {
 	}
 
 	my $len    = ( ${$bytes_ref}[ ${$idx_ref} ] - $start_byte ) + 1;
-	my $v_name = $has_error   ? 'error_fault_violation_bits' : 'ping_block';
-	my $suffix = ( $len > 1 ) ? "[$len]"                     : $EMPTY_STR;
+	my $v_name = $has_error ? 'error_fault_violation_bits' : 'ping_block';
+	$v_name = assign_unique_field_name( $v_name, $seen_ref );
+	my $suffix = ( $len > 1 ) ? "[$len]" : $EMPTY_STR;
 	return sprintf "\tuint8_t    %s%s;\n", $v_name, $suffix;
+}
+
+sub assign_unique_field_name {
+	my ( $base_name, $seen_ref ) = @_;
+	my $name = $base_name // 'unknown_field';
+	if ( $name =~ /^[[:digit:]]/smx ) {
+		$name = q{_} . $name;
+	}
+	if ( !$seen_ref->{$name} ) {
+		$seen_ref->{$name} = 1;
+		return $name;
+	}
+	my $idx = 1;
+	while ( $seen_ref->{ $name . q{_} . $idx } ) {
+		$idx++;
+	}
+	my $unique = $name . q{_} . $idx;
+	$seen_ref->{$unique} = 1;
+	return $unique;
 }

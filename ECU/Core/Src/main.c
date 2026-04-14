@@ -20,6 +20,8 @@
 #include "main.h"
 
 #include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_NODE_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
 #include "adc.h"
@@ -27,7 +29,6 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "gr_adc.h"
-#include "malloc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -409,9 +410,11 @@ int main(void)
 		if (MillisecondsSinceBoot() >= nextPing) {
 			pingAll();
 
+			// TODO: implement error handling
 			if (nextPing != 0) {
 				if (getRTT(GRCAN_BCU) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
+					ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "ECU-P-ITR", 8);
 				}
 				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
 					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
@@ -428,7 +431,7 @@ int main(void)
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
 		lightControl(&stateLump);
-		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
+		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */
 }
