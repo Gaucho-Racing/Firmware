@@ -87,8 +87,6 @@ void PollingStateMachine() {
             if (LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
                 // ACTION TRIGGERED HERE
                 SetBitInByte(dashStatus.button_flags, 5, true);
-                LOGOMATIC("PC4 Set!");
-
                 pollingTimer = 0;
                 pollingState = DebouncePress;
             }

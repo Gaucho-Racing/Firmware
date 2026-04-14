@@ -1,7 +1,7 @@
 # Button mappings
 
 > [!CAUTION]
-> All buttons EXCEPT Button 4 (mapped to PC4) run through a GPIO interrupt handler. Button 4 runs by polling the pin input every tick, debounced by a state machine in software. This is due to a EXTI line conflict between PA4 and PC4, which both map to EXTI line 4, but only one pin can use the line at a time. Since PA4 is mapped to the RTD button, which is crucial, we decided to "sacrifice" PC4 to the polling.
+> All buttons EXCEPT Button 4 (mapped to PC4) run through a GPIO interrupt handler. Button 4 runs by polling the pin input every tick, debounced by a state machine in software. This is due to a EXTI line conflict between PA4 and PC4, which both map to EXTI line 4, but only one pin can use the line at a time. Since PA4 is mapped to the RTD button, which is crucial to the car, we decided to "sacrifice" PC4 to the polling.
 
 
 ## butt1(TSActiveButton)
