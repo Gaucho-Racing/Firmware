@@ -8,7 +8,6 @@
 typedef struct {
 	CCU_STATE state;
 
-	// name lwk might be too long
 	bool recv_charge_cmd;
 
 	// BCU_STATUS_2
