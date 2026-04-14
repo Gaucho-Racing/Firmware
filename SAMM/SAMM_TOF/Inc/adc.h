@@ -27,8 +27,8 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32h5xx_ll_adc.h"
 #include "stm32h5xx_hal_adc.h"
+#include "stm32h5xx_ll_adc.h"
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
