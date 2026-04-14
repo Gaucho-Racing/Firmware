@@ -23,6 +23,7 @@
 #include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
 #include "bitManipulations.h"
+#include "stm32g4xx_ll_gpio.h"
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -242,19 +243,19 @@ void EXTI4_IRQHandler(void)
 
 		// Blame Electronics if hardware debounce doesn't work
 
-		// A4 Triggered
-		SetBitInByte(dashStatus.button_flags, 1, true);
-		canReadyToSend = true;
-		// LOGOMATIC("RTD Pressed!");
+		if (LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_4)){
+			// A4 Triggered
+			SetBitInByte(dashStatus.button_flags, 1, true);
+			canReadyToSend = true;
+			LOGOMATIC("RTD Pressed!");
+		}
 
-		// This should never trigger because a single EXTI line cannot be configured for more than 1 pin
-		// if (pin_c) {
-
-		// 	// C4 Triggered
-		// 	SetBitInByte(dashStatus.button_flags, 5, true);
-		// 	canReadyToSend = true;
-		// 	// LOGOMATIC("Button 4 Pressed!");
-		// }
+		if (LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_4)) {
+			// C4 Triggered
+			SetBitInByte(dashStatus.button_flags, 5, true);
+			canReadyToSend = true;
+			LOGOMATIC("Button 4 Pressed!");
+		}
 
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_4);
 	}
