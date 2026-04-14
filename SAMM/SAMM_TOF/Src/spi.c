@@ -97,7 +97,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	if (spiHandle->Instance == spi3) {
+	if (spiHandle->Instance == SPI3) {
 		/* USER CODE BEGIN spi3_MspInit 0 */
 
 		/* USER CODE END spi3_MspInit 0 */

@@ -30,7 +30,7 @@
 #include <stdio.h>
 
 #include "VL53L4ED_api.h"
-#include "bmi323.h"
+#include "IMU/bmi323.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 

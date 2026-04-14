@@ -2,43 +2,47 @@
 
 #include <stdio.h>
 
-#include "stm32h574xx.h"
+#include "stm32h5xx.h"
 #include "stm32h5xx_hal_spi.h"
 
-// init spi port before calling this function
-void mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)
+void mag_init(mag mag_dev, SPI_HandleTypeDefspi_port, GPIO_TypeDef port, uint16_t pin)
 {
-	mag_dev->spi_port = spi_port;
-	mag_dev->port = port;
-	mag_dev->pin = pin;
+    mag_dev->spi_port = spi_port;
+    mag_dev->port = port;
+    mag_dev->pin = pin;
+
+    uint16_t sta = mag_read(mag_dev, 0x22);
+    if (!(sta & 0x0001)) {return HAL_ERROR; }
+
+    mag_write(mag_dev, 0x1E, 0x01);
+
+    return HAL_OK;
 }
-
-uint16_t mag_transmit(mag *mag_dev, uint16_t data)
+uint16_t mag_transmit(magmag_dev, uint16_t data)
 {
+    uint8_t tx_word[2] = {data >> 8, data & 0xFF};
+    uint8_t rx_word[2] = {0};
 
-	uint8_t tx_word[2] = {data >> 8, data & 0xFF};
-	uint8_t rx_word[2] = {0};
+    HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+    HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
+    HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
-	status = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
-
-	return ((uint16_t)rx_word[0] << 8) | rx_word[1];
+    return ((uint16_t)rx_word[0] << 8) | rx_word[1];
 }
-
-uint16_t mag_read(mag *mag_dev, uint8_t reg)
+uint16_t mag_read(mag mag_dev, uint8_t reg)
 {
-	uint16_t data = (uint16_t)reg << 8;
-	uint16_t dummy = mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, data);
-	return mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, 0);
+    uint16_t cmd = (uint16_t)reg << 8;         // read: bit 14 = 0, address in bits 13:8
+    mag_transmit(mag_dev, cmd);                 // frame 1: send command, discard response
+    return mag_transmit(mag_dev, 0x0000);       // frame 2: NOP, receive data
 }
-
-uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
+uint16_t mag_write(mag mag_dev, uint8_t reg, uint16_t data)
 {
-	uint16_t msb = data >> 8 | (uint16_t(reg) << 8) | 0x4000;
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb) reg += 1;
-	uint16_t lsb = (data & 0x00FF) | (uint16_t(reg) << 8) | 0x4000;
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb) return 0;
+    uint16_t msb = data >> 8 | (uint16_t(reg) << 8) | 0x4000;
+    mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb)
+    reg += 1;
+    uint16_t lsb = (data & 0x00FF) | (uint16_t(reg) << 8) | 0x4000;
+    mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb)
+    return 0;
 }
 
 uint8_t mag_calib_abort(mag *mag_dev)
