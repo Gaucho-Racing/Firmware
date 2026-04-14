@@ -45,7 +45,7 @@ extern "C" {
 #include "stm32h5xx_ll_utils.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdint.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
