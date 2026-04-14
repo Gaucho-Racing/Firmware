@@ -20,9 +20,20 @@
 		nodeF.input.disabled = true;
 		body.appendChild(nodeF.row);
 
+		// Filter the bus dropdown to only buses the device is physically wired to.
+		// If the topology file isn't loaded yet, all three buses are shown.
+		const _allBuses = ["CAN1", "CAN2", "CAN3"];
+		const _topo = window.PhysicalTopology;
+		const _busChoices =
+			deviceName && _topo && _topo.isLoaded()
+				? _allBuses.filter((b) => _topo.isOnBus(deviceName, b))
+				: _allBuses;
 		const busF = fu.makeFormRow(
 			"Bus",
-			fu.makeSelect(["CAN1", "CAN2", "CAN3"], "CAN1"),
+			fu.makeSelect(
+				_busChoices.length > 0 ? _busChoices : _allBuses,
+				_busChoices[0] || "CAN1",
+			),
 			true,
 		);
 		body.appendChild(busF.row);
@@ -35,6 +46,14 @@
 
 		saveBtn.addEventListener("click", () => {
 			const bus = busF.input.value;
+
+			// Hard-block: device must be physically wired to the selected bus.
+			const topo = window.PhysicalTopology;
+			if (topo && topo.isLoaded() && !topo.isOnBus(deviceName, bus)) {
+				busF.error.textContent = `"${deviceName}" is not physically wired to ${bus}`;
+				return;
+			}
+
 			const result = window.GrcanDocument.addBus(deviceName, bus);
 			if (!result.ok) {
 				busF.error.textContent = result.error;
