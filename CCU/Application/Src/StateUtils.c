@@ -8,14 +8,14 @@
 #include "can.h"
 #include "gpio.h"
 
-void setSoftwareLatch(bool close, CCU_StateData *state_data)
+void setSoftwareLatch(bool state, CCU_StateData *state_data)
 {
 
-	if (close && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	if (state && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
+		LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		state_data->BCU_S2_SOFTWARE_LATCH = true;
 		LOGOMATIC("Software Latch: High\n");
-	} else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
+	} else if (!state && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		state_data->BCU_S2_SOFTWARE_LATCH = false;
 		LOGOMATIC("Software Latch: Low\n");
