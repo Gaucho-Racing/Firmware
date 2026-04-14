@@ -53,13 +53,13 @@ jobs:
 
     - name: Install Arm Toolchain
       if: matrix.build_mode == 'manual'
-      uses: carlosperate/arm-none-eabi-gcc-action@7153327ecfbc421a0b4268058e4bb3d5d6e5df2c  # v1.12.1
+      uses: carlosperate/arm-none-eabi-gcc-action@0725d97b026acf7fc8e22dfd5bee912998879ba8  # v1.12.3
       with:
         release: '12.2.Rel1'
 
     - name: Setup Shared Compilation Cache
       if: matrix.build_mode == 'manual'
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  # v5.0.4
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae  # v5.0.5
       with:
         path: ${{ env.SCCACHE_DIR }}
         key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -111,7 +111,7 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@dea55ec1f85d42d13106b8e8263b9b7199eaef09  # v1.39.0
+        uses: shogo82148/actions-setup-perl@5a2f3b681f2e2fa0db6cc52c7608d9916527aa58  # v1.40.0
         with:
           install-modules: 'Perl::Critic'
 
