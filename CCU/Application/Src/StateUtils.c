@@ -8,14 +8,14 @@
 #include "can.h"
 #include "gpio.h"
 
-void setSoftwareLatch(bool state, CCU_StateData *state_data)
+void setSoftwareLatch(bool close, CCU_StateData *state_data)
 {
 
-	if (state && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
-		LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	if (close && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
+		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		state_data->BCU_S2_SOFTWARE_LATCH = true;
 		LOGOMATIC("Software Latch: High\n");
-	} else if (!state && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
+	} else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 		state_data->BCU_S2_SOFTWARE_LATCH = false;
 		LOGOMATIC("Software Latch: Low\n");
@@ -31,7 +31,7 @@ bool BCU_Warnings(const CCU_StateData *state_data)
 		LOGOMATIC("Under 12v Warning\n");
 		return true;
 	} else if (state_data->BCU_S2_UNDERVOLTSDC_WARNING) {
-		LOGOMATIC("Undervolt TSDC Warning\n");
+		LOGOMATIC("Undervolt TSDC Wanring\n");
 		return true;
 	} else {
 		return false;
@@ -70,7 +70,7 @@ volatile bool request_print_statedata;
 
 void CheckDebuggerPrint(const CCU_StateData *state_data)
 {
-	if (!request_print_statedata) {
+	if (!request_print_statedata){
 		return;
 	}
 
