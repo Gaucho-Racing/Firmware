@@ -23,8 +23,8 @@
 #include "CANdler.h"   // For CAN stuff
 #include "Logomatic.h" // For Logomatic
 #include "bitManipulations.h"
-#include "stm32g4xx_ll_gpio.h"
 #include "main.h"
+#include "stm32g4xx_ll_gpio.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -243,7 +243,7 @@ void EXTI4_IRQHandler(void)
 
 		// Blame Electronics if hardware debounce doesn't work
 
-		if (LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_4)){
+		if (LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_4)) {
 			// A4 Triggered
 			SetBitInByte(dashStatus.button_flags, 1, true);
 			canReadyToSend = true;
