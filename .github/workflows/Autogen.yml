@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   canfigurator:
-    if: false # FIXME Temporarily disable CANfigurator pipeline until we can address the issues with it
+    # if: false # FIXME Temporarily disable CANfigurator pipeline until we can address the issues with it
     name: CANfigurator
     runs-on: ubuntu-latest
     permissions:
@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@dea55ec1f85d42d13106b8e8263b9b7199eaef09  # v1.39.0
+        uses: shogo82148/actions-setup-perl@5a2f3b681f2e2fa0db6cc52c7608d9916527aa58  # v1.40.0
         with:
           install-modules: |
             Readonly

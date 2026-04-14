@@ -53,7 +53,6 @@ routing:
         ECU:
           - msg: Debug 2.0
           - msg: Ping
-          - msg: ECU config
         BCU:
           - msg: Debug 2.0
           - msg: Ping
@@ -3688,14 +3687,16 @@ Message ID:
       data type: i16
       map equation: "x/100"
   ECU Performance:
-    MSG ID: 0x123
+    MSG ID: 0x2F
     MSG LENGTH: 4
     Elapsed Cycles:
       bit_start: 0
       comment:
         Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-      data type: u32
-      units: Clock Cycles
+        data type: u32
+        units: Clock Cycles
+        data type: u8
+      data type: u8
 
 Custom CAN ID:
   DTI Control 1:

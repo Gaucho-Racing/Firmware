@@ -134,8 +134,8 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	/* USER CODE BEGIN 2 */
-	NeopixelContext *neopixel_context_1 = Neopixel_Setup(&neopixelConfig1);
-	NeopixelContext *neopixel_context_2 = Neopixel_Setup(&neopixelConfig2);
+	NeopixelContext neopixel_context_1 = Neopixel_Setup(&neopixelConfig1);
+	NeopixelContext neopixel_context_2 = Neopixel_Setup(&neopixelConfig2);
 
 	/* USER CODE END 2 */
 
@@ -147,8 +147,8 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LL_mDelay(500);
 
-		Neopixel_WriteAll(neopixel_context_1, neopixelColors1, sizeof(neopixelColors1));
-		Neopixel_WriteAll(neopixel_context_2, neopixelColors2, sizeof(neopixelColors2));
+		Neopixel_WriteAll(&neopixel_context_1, neopixelColors1, sizeof(neopixelColors1));
+		Neopixel_WriteAll(&neopixel_context_2, neopixelColors2, sizeof(neopixelColors2));
 
 		for (uint32_t i = 0; i < NEOPIXEL_LED_COUNT; i++) {
 			neopixelColors1[i] = neopixelColors1[(i + 1) % NEOPIXEL_LED_COUNT];
