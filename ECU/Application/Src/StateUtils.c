@@ -30,7 +30,9 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= imdFailure(stateData);
 	problem |= bmsFailure(stateData);
 	problem |= bspdFailure(stateData);
-	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	if(problem) {
+		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	}
 	return problem;
 }
 
