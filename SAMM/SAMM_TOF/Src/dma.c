@@ -41,15 +41,14 @@ void MX_DMA_Init(void)
 
 	/* DMA controller clock enable */
 	__HAL_RCC_GPDMA1_CLK_ENABLE();
-	__HAL_RCC_DMAMUX1_CLK_ENABLE();
 
 	/* DMA interrupt init */
 	/* DMA1_Channel1_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+	HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
 	/* DMA1_Channel2_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
+	HAL_NVIC_SetPriority(GPDMA1_Channel2_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(GPDMA1_Channel2_IRQn);
 }
 
 /* USER CODE BEGIN 2 */

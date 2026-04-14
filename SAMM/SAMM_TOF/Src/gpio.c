@@ -81,12 +81,14 @@ void MX_GPIO_Init(void)
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : PC8 PC9 */
+	/*
 	GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_9;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	GPIO_InitStruct.Alternate = GPIO_AF8_I2C3;
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	*/
 }
 
 /* USER CODE BEGIN 2 */
