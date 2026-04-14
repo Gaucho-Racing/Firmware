@@ -57,8 +57,9 @@ In infinite while loop in main:
     - False: drive pin Low
   - state_data: const ptr of CCU_StateData
 - Behaviour:
+
 | `state` | Current Pin | Action | `BCU_S2_SOFTWARE_LATCH` | Log Output |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `true` | Low | Pin driven HIGH | `true` | `"Software Latch: High"` |
 | `false` | High | Pin driven LOW | `false` | `"Software Latch: Low"` |
 
@@ -83,8 +84,9 @@ In infinite while loop in main:
 - Parameters:
   - state_data: const pointer to `state_data`,
 - Behavior:
+
 | `request_print_statedata` | Action |
-|---|---|
+| --- | --- |
 | `true` | Logs All 'state_data', then 'request_print_statedata' set to false|
 | `false` | Does nothing|
 
