@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter IMD TCM ALL
+BU_: BCU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter IMD SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_1 TireTemp_2 TireTemp_3 TireTemp_4 ALL
 
 BO_ 2147680257 BCU_Debug_2_0_to_Debugger: 8 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -636,15 +636,15 @@ BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
 BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Dash_Panel
 
-BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
- SG_ ecu_state : 0|1@1+ (1,0) [0|0] "Bool" ALL
- SG_ status_flags : 8|1@1+ (1,0) [0|0] "" ALL
- SG_ Power_Level : 16|4@1+ (1,0) [0|0] "" ALL
- SG_ Torque_Map : 20|4@1+ (1,0) [0|0] "" ALL
- SG_ Max_Cell_Temp : 24|8@1+ (0.25,0) [0|63.75] "Celsius" ALL
- SG_ Accumulator_State_of_Charge : 32|8@1+ (0.392157,0) [0|100] "%" ALL
- SG_ GLV_State_of_Charge : 40|8@1+ (0.392157,0) [0|100] "%" ALL
- SG_ Tractive_System_Voltage : 48|16@1+ (0.01,0) [0|655.35] "Volts" ALL
+BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 9 ECU
+ SG_ status_flags : 0|16@1+ (1,0) [0|0] "" ALL
+ SG_ ecu_state : 16|1@1+ (1,0) [0|0] "Bool" ALL
+ SG_ Power_Level : 24|4@1+ (1,0) [0|0] "" ALL
+ SG_ Torque_Map : 28|4@1+ (1,0) [0|0] "" ALL
+ SG_ Max_Cell_Temp : 32|8@1+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Accumulator_State_of_Charge : 40|8@1+ (0.392157,0) [0|100] "%" ALL
+ SG_ GLV_State_of_Charge : 48|8@1+ (0.392157,0) [0|100] "%" ALL
+ SG_ Tractive_System_Voltage : 56|16@1+ (0.01,0) [0|655.35] "Volts" ALL
 
 BO_ 2147615999 ECU_ECU_Status_2_to_ALL: 8 ECU
  SG_ Vehicle_Speed : 0|16@1+ (0.01,0) [0|655.35] "MPH" ALL
@@ -676,6 +676,30 @@ BO_ 2147626500 ECU_ECU_Analog_Data_to_TCM: 16 ECU
 
 BO_ 2147626756 ECU_ECU_Performance_to_TCM: 4 ECU
  SG_ Elapsed_Cycles : 0|8@1+ (1,0) [0|0] "" TCM
+
+BO_ 2147615264 ECU_Ping_to_SAMM_Mag_1: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" SAMM_Mag_1
+
+BO_ 2147615265 ECU_Ping_to_SAMM_Mag_2: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" SAMM_Mag_2
+
+BO_ 2147615266 ECU_Ping_to_SAMM_ToF_1: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" SAMM_ToF_1
+
+BO_ 2147615267 ECU_Ping_to_SAMM_ToF_2: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" SAMM_ToF_2
+
+BO_ 2147615268 ECU_Ping_to_TireTemp_1: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TireTemp_1
+
+BO_ 2147615269 ECU_Ping_to_TireTemp_2: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TireTemp_2
+
+BO_ 2147615270 ECU_Ping_to_TireTemp_3: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TireTemp_3
+
+BO_ 2147615271 ECU_Ping_to_TireTemp_4: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" TireTemp_4
 
 BO_ 269 Energy_Meter_EM_Measurement_to_BCU: 8 Energy_Meter
  SG_ Current : 0|8@1+ (1,0) [0|0] "" BCU
@@ -832,4 +856,28 @@ BO_ 2150641668 DGPS_UVW_DGPS_to_TCM: 6 DGPS
  SG_ DGPS_U : 0|16@1- (0.01,0) [0|0] "" TCM
  SG_ DGPS_V : 16|16@1- (0.01,0) [0|0] "" TCM
  SG_ DGPS_W : 32|16@1- (0.01,0) [0|0] "" TCM
+
+BO_ 2149581314 SAMM_Mag_1_Ping_to_ECU: 4 SAMM_Mag_1
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2149646850 SAMM_Mag_2_Ping_to_ECU: 4 SAMM_Mag_2
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2149712386 SAMM_ToF_1_Ping_to_ECU: 4 SAMM_ToF_1
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2149777922 SAMM_ToF_2_Ping_to_ECU: 4 SAMM_ToF_2
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2149843458 TireTemp_1_Ping_to_ECU: 4 TireTemp_1
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2149908994 TireTemp_2_Ping_to_ECU: 4 TireTemp_2
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2149974530 TireTemp_3_Ping_to_ECU: 4 TireTemp_3
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2150040066 TireTemp_4_Ping_to_ECU: 4 TireTemp_4
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" ECU
 
