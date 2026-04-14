@@ -63,6 +63,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
 volatile uint32_t timer = 0;
+uint8_t tick_freq;
 
 /* USER CODE END PV */
 
@@ -115,6 +116,8 @@ int main(void)
 
 	/* Configure the system clock */
 	SystemClock_Config();
+	tick_freq = HAL_GetTickFreq();
+
 
 	/* USER CODE BEGIN SysInit */
 	LL_mDelay(150);
@@ -128,7 +131,6 @@ int main(void)
 
 	// uint32_t previous_time = HAL_GetTick();
 	// uint32_t current_time;
-	uint8_t tick_freq = HAL_GetTickFreq();
 
 	/* USER CODE END 2 */
 
@@ -138,7 +140,7 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 
-		if (canReadyToSend || timer * tick_freq >= CAN_TIMER_DELAY) {
+		if (canReadyToSend || timer >= CAN_TIMER_DELAY * tick_freq) {
 
 			GRCAN_DASH_STATUS_MSG msg_struct;
 			msg_struct.led_bits = dashStatus.led_bits;
@@ -174,6 +176,9 @@ int main(void)
 		LL_mDelay(NEOPIXEL_DELAY);
 		Neopixel_ButtonWrite();
 		Neopixel_LEDWrite();
+
+		// Polling Button
+		PollingStateMachine();
 
 		/* USER CODE BEGIN 3 */
 	}
@@ -249,6 +254,9 @@ static void MX_GPIO_Init(void)
 
 	/* Button 4 Reset */
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_4);
+
+	// Necessary for Button 4 Debouncing
+	LL_GPIO_SetPinPull(GPIOC, LL_GPIO_PIN_4, LL_GPIO_PULL_DOWN);
 
 	/* TS Active */
 	GPIO_InitStruct.Pin = TS_ACTIVE_BTN_Pin;
@@ -339,6 +347,11 @@ static void GPIO_Interrupt_Init(void)
 void timer_inc(void)
 {
 	timer++;
+}
+
+void pollingTimer_inc(void)
+{
+	pollingTimer++;
 }
 
 /* USER CODE END 4 */
