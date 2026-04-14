@@ -40,7 +40,7 @@
 /* USER CODE BEGIN PD */
 
 // TODO Comment and uncomment this line as relevant
-// #define EXTERNAL_LOOPBACK_TEST
+#define EXTERNAL_LOOPBACK_TEST
 
 /* USER CODE END PD */
 
@@ -94,6 +94,27 @@ void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
     CAN_MessageHandler(GRCAN_BUS_PRIMARY, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, (uint8_t*)data, size);
 #endif
 }
+
+void sendMSG(){
+		FDCANTxMessage sendECUMsg;
+
+		sendECUMsg.tx_header.Identifier = (0x000FFF00 & GRCAN_GPS_RZ) >> 8;
+		sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
+		sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+		sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+		sendECUMsg.tx_header.DataLength = FDCAN_DLC_BYTES_8;
+		sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+		sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+		sendECUMsg.tx_header.MessageMarker = 0;
+
+		GRCAN_GPS_RZ_MSG message = {.theta = 0xABCD, .acc = 0x1234, .status = 0x12345678};
+
+		memcpy(sendECUMsg.data, &message, sizeof(message));
+
+		can_send(can1, &sendECUMsg);
+
+
+	}
 
 // CANConfig cfg1;
 void CAN_Configure()
@@ -246,38 +267,34 @@ int main(void)
 		LOGOMATIC("Main loop iteration\n");
 		sendMSG();
 
-#ifdef EXTERNAL_LOOPBACK_TEST
-	LOGOMATIC("Sending CAN message in external loopback mode\n");
-		FDCANTxMessage sendECUMsg;
-		sendECUMsg.tx_header.Identifier = 0x12345678;
-		sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
-		sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
-		sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-		sendECUMsg.tx_header.DataLength = FDCAN_DLC_BYTES_3;
-		sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-		sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-		sendECUMsg.tx_header.MessageMarker = 0;
-		sendECUMsg.data[0] = 0xAB;
-		sendECUMsg.data[1] = 0xCD;
-		sendECUMsg.data[2] = 0xEF;
-		can_send(can1, &sendECUMsg);
+// #ifdef EXTERNAL_LOOPBACK_TEST
+// 	LOGOMATIC("Sending CAN message in external loopback mode\n");
+// 		FDCANTxMessage sendECUMsg;
 
-#endif
+// 		sendECUMsg.tx_header.Identifier = (0x000FFF00 & GRCAN_GPS_RZ) >> 8;
+// 		sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
+// 		sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+// 		sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+// 		sendECUMsg.tx_header.DataLength = FDCAN_DLC_BYTES_8;
+// 		sendECUMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+// 		sendECUMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+// 		sendECUMsg.tx_header.MessageMarker = 0;
+
+// 		GRCAN_GPS_RZ_MSG message = {.theta = 0xABCD, .acc = 0x1234, .status = 0x12345678};
+
+// 		memcpy(sendECUMsg.data, &message, sizeof(message));
+
+// 		can_send(can1, &sendECUMsg);
+
+// #endif
 
 		LL_mDelay(750);
 	}
+
 	/* USER CODE END 3 */
 }
 
-void sendMSG(){
-		LOGOMATIC("Sending CAN message in external loopback mode\n");
-		GRCAN_GPS_QY_MSG testDashConfig;
-		testDashConfig.theta = "hi";
-		testDashConfig.acc = "yo";
-		testDashConfig.acc = "cora";
-		can_send(can1, &testDashConfig);
 
-	}
 
 /**
  * @brief System Clock Configuration
