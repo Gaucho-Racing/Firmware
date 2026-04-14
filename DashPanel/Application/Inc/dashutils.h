@@ -13,10 +13,10 @@
 #define PIN_POLLING LL_GPIO_PIN_4
 #define DEBOUNCE_TIME 10 // in ms
 typedef enum {
-    Ready,
-    DebouncePress,
-    WaitRelease,
-    DebounceRelease
+	Ready,
+	DebouncePress,
+	WaitRelease,
+	DebounceRelease
 } PollingState;
 
 extern uint32_t pollingTimer;

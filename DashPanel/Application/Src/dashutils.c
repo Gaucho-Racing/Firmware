@@ -80,37 +80,38 @@ void Neopixel_ButtonWrite()
 	return;
 }
 
-void PollingStateMachine() {
-    switch (pollingState) {
+void PollingStateMachine()
+{
+	switch (pollingState) {
 
-        case Ready:
-            if (LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
-                // ACTION TRIGGERED HERE
-                SetBitInByte(dashStatus.button_flags, 5, true);
-                pollingTimer = 0;
-                pollingState = DebouncePress;
-            }
-            break;
+		case Ready:
+			if (LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
+				// ACTION TRIGGERED HERE
+				SetBitInByte(dashStatus.button_flags, 5, true);
+				pollingTimer = 0;
+				pollingState = DebouncePress;
+			}
+			break;
 
-        case DebouncePress:
-            if (pollingTimer >= DEBOUNCE_TIME * tick_freq) {
-                pollingState = WaitRelease;
-            }
-            break;
+		case DebouncePress:
+			if (pollingTimer >= DEBOUNCE_TIME * tick_freq) {
+				pollingState = WaitRelease;
+			}
+			break;
 
-        case WaitRelease:
-            // Wait for the pin to go Low (wire removed)
-            if (!LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
-                pollingTimer = 0;
-                pollingState = DebounceRelease;
-            }
-            break;
+		case WaitRelease:
+			// Wait for the pin to go Low (wire removed)
+			if (!LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
+				pollingTimer = 0;
+				pollingState = DebounceRelease;
+			}
+			break;
 
-        case DebounceRelease:
-            // Wait for the "Removal Noise" to settle before allowing a new trigger
-            if (pollingTimer >= DEBOUNCE_TIME * tick_freq) {
-                pollingState = Ready;
-            }
-            break;
-    }
+		case DebounceRelease:
+			// Wait for the "Removal Noise" to settle before allowing a new trigger
+			if (pollingTimer >= DEBOUNCE_TIME * tick_freq) {
+				pollingState = Ready;
+			}
+			break;
+	}
 }

@@ -118,7 +118,6 @@ int main(void)
 	SystemClock_Config();
 	tick_freq = HAL_GetTickFreq();
 
-
 	/* USER CODE BEGIN SysInit */
 	LL_mDelay(150);
 	LOGOMATIC("\nBoot completed\n");
