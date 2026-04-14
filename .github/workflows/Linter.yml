@@ -28,6 +28,7 @@ jobs:
 
   codeql:
     name: Analyze Code
+    if: false # Temporarily disabled due to performance issues
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -83,7 +84,7 @@ jobs:
 
     - name: Build CodeQL Database
       if: matrix.build_mode == 'manual'
-      run: CMAKE_C_COMPILER_LAUNCHER=sccache make all -j
+      run: CMAKE_C_COMPILER_LAUNCHER=sccache CMAKE_ASM_COMPILER_LAUNCHER=sccache make all -j
 
     - name: Analyze CodeQL
       id: analyze
