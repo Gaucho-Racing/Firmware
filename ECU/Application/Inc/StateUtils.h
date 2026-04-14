@@ -20,6 +20,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define THROTTLE_MIN_2 0    // TODO: need to be determined
 #define THROTTLE_MAX_2 4095 // TODO: need to be determined
 #define BSE_DEADZONE 0.05f
+#define MAX_BSE_FAILURE_TIME 100
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
@@ -29,17 +30,22 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
+#define MAX_PRECHARGE_TIME 15000 // in ms
+
+#define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
+#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
+
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
 bool bmsFailure(volatile const ECU_StateData *stateData);
 bool imdFailure(volatile const ECU_StateData *stateData);
 bool bspdFailure(volatile const ECU_StateData *stateData);
-bool CommunicationError(volatile const ECU_StateData *stateData);
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData);
 bool PressingBrake(volatile const ECU_StateData *stateData);
 float CalcBrakePercent(volatile const ECU_StateData *stateData);
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
 bool APPS_Plausible(volatile const ECU_StateData *stateData);
+bool BSE_Implausible(volatile const ECU_StateData *stateData);
 bool vehicle_is_moving(volatile const ECU_StateData *stateData);
 
 #endif
