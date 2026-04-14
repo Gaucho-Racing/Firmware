@@ -48,6 +48,15 @@ In infinite while loop in main:
 ## State Utils and State Data
 
 `SetSoftwareLatch()`
+Purpose: Controls hardware GPIO Pins that act as a software-controlled latch, while keeping the 'state_data' in sync. If any critical errors occur, 'SetSoftwareLatch()' is tripped and set to low, and Emergency Shutdown Circuit is also tripped.
+- Parameters:
+  - Close: boolean value
+  - state_data: const ptr of CCU_StateData
+- Behaviour:
+|close|Pin State|Action|
+|-----|---------|------|
+|true|Set to low| Resets Pin, sets 'BCU_S2_SOFTWARE_LATCH' to True|
+|false|Set | Resets Pin, sets 'BCU_S2_SOFTWARE_LATCH' to False|
 
 `BCU_Warnings()`
 
