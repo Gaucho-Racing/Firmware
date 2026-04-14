@@ -12,18 +12,48 @@ GR26 CCU is the GR25 ECU (aka GR25 Big Bird)
 
 Two States: CCU_STATE_IDLE and CCU_STATE_CHARGING
 
+`STATE_IDLE()`:
+
+- Calls `BCU_Warnings()`
+- Checks state_data for errors by calling `CriticalErrors()`
+- If there are error(s), set SoftwareLatch to low (False) and TS_ACTIVE to False
+  - Sends CAN message GR_CAN_PRECHARGE_MSG
+- If no errors and recv_charge_cmd set to True
+  - switches state to CCU_STATE_CHARGING and set TS_ACTIVE to True
+  - Sends CAN message GR_CAN_PRECHARGE_MSG
+
+`STATE_CHARGING()`:
+
+- Calls `BCU_Warnings()`
+- Checks state_data for errors by calling `CriticalErrors()`
+- If there are error(s), set SoftwareLatch to lower (False) and TS_ACTIVE to False
+  - Sets state to CCU_STATE_IDLE
+  - Sends CAN message GR_CAN_PRECHARGE_MSG
+- If recv_charge_cmd set to False
+  - set state to CCU_STATE_IDLE and TS_ACTIVE to False
+  - Sends CAN message GR_CAN_PRECHARGE_MSG
+
 ## Initializations and Implementations
 
 State: Initialized to CCU_STATE_IDLE
-Software Latch: Initialized to True
+Software Latch: Initialized to high (True)
 
 In infinite while loop in main:
--CCU_State_Tick():
-    -Checks for state transition for every "tick"
--CheckDebuggerPrint():
-    -Checks boolean for VCP state data dump \\
+
+- `CCU_State_Tick()`:
+  - Checks for state transition for every "tick"
+- `CheckDebuggerPrint()`:
+  - Checks boolean for VCP state data dump \\
 
 ## State Utils and State Data
+
+`SetSoftwareLatch()`
+
+`BCU_Warnings()`
+
+`CriticalError()`
+
+`CheckDebuggerPrint()`
 
 ## Usage
 
