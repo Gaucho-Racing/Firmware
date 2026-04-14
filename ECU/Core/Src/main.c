@@ -106,8 +106,6 @@ void SystemClock_Config(void);
 // TODO: TS and RTD button signals will come over CAN
 void read_digital(void)
 {
-	// TODO: implement CAN button messenge receiving
-
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
 }
