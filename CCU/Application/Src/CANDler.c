@@ -23,8 +23,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 	switch (messageId) {
 		case GRCAN_BCU_STATUS_2:
-			// FIXME: if bad message do a thing
-
 			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				break;
@@ -172,9 +170,6 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 
 	msg.data[0] = (state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
-	if (sizeof(msg) != sizeof(GRCAN_BCU_PRECHARGE_MSG)) {
-		LOGOMATIC("Bad CCU CAN Tx length!, Size %u\n", sizeof(msg));
-	}
 	LOGOMATIC("PRECHARGE SET: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);
