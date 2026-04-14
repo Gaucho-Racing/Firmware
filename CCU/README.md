@@ -48,33 +48,46 @@ In infinite while loop in main:
 ## State Utils and State Data
 
 `SetSoftwareLatch()`
-Purpose: Controls hardware GPIO Pins that act as a software-controlled latch, while keeping the 'state_data' in sync. If any critical errors occur, 'SetSoftwareLatch()' is tripped and set to low, and Emergency Shutdown Circuit is also tripped.
+
+- Purpose: Controls hardware GPIO Pins that act as a software-controlled latch, while keeping the 'state_data' in sync. If any critical errors occur, 'SetSoftwareLatch()' is tripped and set to low, and Emergency Shutdown Circuit is also tripped.
+
 - Parameters:
-  - Close: boolean value
+  - State: boolean value, desired latch state
+    - True: drive pin High
+    - False: drive pin Low
   - state_data: const ptr of CCU_StateData
 - Behaviour:
-|close|Pin State|Action|
-|-----|---------|------|
-|true|Set to low| Resets Pin, sets 'BCU_S2_SOFTWARE_LATCH' to True|
-|false|Set | Resets Pin, sets 'BCU_S2_SOFTWARE_LATCH' to False|
+| `state` | Current Pin | Action | `BCU_S2_SOFTWARE_LATCH` | Log Output |
+|---|---|---|---|---|
+| `true` | Low | Pin driven HIGH | `true` | `"Software Latch: High"` |
+| `false` | High | Pin driven LOW | `false` | `"Software Latch: Low"` |
 
 `BCU_Warnings()`
 
 - Purpose: logs if any `GR_CAN_BCU_STATUS_2` warnings are true
-- Parameters: const pointer to `state_data`
-- States: does not affect state data or state transitions
+- Parameters:
+  - state_data: const pointer to `state_data`
+- Behavior: does not affect state data or state transitions
 
 `CriticalError()`
 
 - Purpose: logs if any `GR_CAN_BCU_STATUS_2` errors are true
-- Parameters: const pointer to `state_data`
-- States: the function does not change state data or state transitions
+- Parameters:
+  - state_data: const pointer to `state_data`
+- Behavior: function returns boolean, does not affect state_data
 
 `CheckDebuggerPrint()`
 
-- Purpose: logs all information in `state_data` if `request_print_statedata` is True
-- Parameters: const pointer to `state_data`, also uses `request_print_statedata`
-- States: does not affect state dat or state transitions
+- Purpose: logs all information in `state_data` if extern boolean `request_print_statedata` is True
+
+- Parameters:
+  - state_data: const pointer to `state_data`,
+- Behavior:
+| `request_print_statedata` | Action |
+|---|---|
+| `true` | Logs All 'state_data', then 'request_print_statedata' set to false|
+| `false` | Does nothing|
+
 
 State Data is casting `GR_CAN_BCU_STATUS_2` \\
 
