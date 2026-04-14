@@ -7,13 +7,13 @@
 /** Debug 2.0 */
 typedef struct {
 	/** Essentially a print statement up to 8 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug[8];
+	uint8_t debug;
 } GRCAN_DEBUG_2_0_MSG;
 
 /** Debug FD */
 typedef struct {
 	/** Essentially a print statement up to 64 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug[64];
+	uint8_t debug;
 } GRCAN_DEBUG_FD_MSG;
 
 /** Ping */
@@ -37,7 +37,7 @@ See diagram in StateMachine.h
 5: TS Discharge ECU State
 6-7: Reserved
 See diagram in StateMachine.h (Byte 0) */
-	uint8_t ecu_state;
+	uint8_t state_messages;
 	/** [Byte 1 / Bits 8-15]
 8: BCU Node Status (1: OK, 0: Timeout)
 9: GR Inverter Status (1: OK, 0: Timeout)
@@ -229,6 +229,20 @@ typedef struct {
 	} cells[32];
 } GRCAN_BCU_CELL_DATA_5_MSG;
 
+/** DC-DC Status */
+typedef struct {
+	/** ~20v for LV (LV only. Send 0 for HV) (Byte 0) */
+	uint16_t input_voltage;
+	/** ~12v for LV and ~20v for HV (Byte 2) */
+	uint16_t output_voltage;
+	/** Input current (LV only. Send 0 for HV) (Byte 4) */
+	uint8_t input_current;
+	/** Output current (Byte 5) */
+	uint8_t output_current;
+	/** Temp of DC-DC converter (Byte 6) */
+	uint8_t dc_dc_temp;
+} GRCAN_DC_DC_STATUS_MSG;
+
 /** Inverter Status 1 */
 typedef struct {
 	/** 0.01 * current, int16_t (Byte 0) */
@@ -253,9 +267,9 @@ typedef struct {
 typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
 	uint8_t motor_temperature;
-	/** TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message
-	 * error or timeout (Byte 2) */
-	uint8_t fault_bits;
+	/** TS above set max voltage TS below set min voltage Inverter over set max temp Motor over set max temp Mosfet or mosfet drive error Encoder communication or calc error CAN message error or
+	 * timeout (Byte 2) */
+	uint8_t over_voltage_faults_under_voltage_fault_inv_overtemp_fault_motor_overtemp_fault_transistor_fault_encoder_fault_can_fault_future_use;
 } GRCAN_INVERTER_STATUS_3_MSG;
 
 /** Inverter Config */
@@ -310,21 +324,118 @@ typedef struct {
 
 /** Dash Config */
 typedef struct {
-	/** BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved (Byte 1) */
-	uint8_t led_bits;
+	/** LED command (0: off, 1: on) LED command (0: off, 1: on) LED command (0: off, 1: on) (Byte 0) */
+	uint8_t bms_led_imd_led_bspd_led;
 } GRCAN_DASH_CONFIG_MSG;
+
+/** Steering Status */
+typedef struct {
+	/** Position of knob (1-16) Position of knob (1-16) (Byte 0) */
+	uint8_t current_encoder_torque_map_encoder;
+	/** Position of knob (1-16) Button State Button State Button State Button State (Byte 1) */
+	uint8_t regen_button_1_button_2_button_3_button_4;
+} GRCAN_STEERING_STATUS_MSG;
+
+/** Steering Config */
+typedef struct {
+	/** Byte 0 (Byte 0) */
+	uint8_t reserved;
+} GRCAN_STEERING_CONFIG_MSG;
+
+/** SAM Brake IR */
+typedef struct {
+	/** IR Temp of Brakes (Byte 0) */
+	uint8_t temp;
+} GRCAN_SAM_BRAKE_IR_MSG;
+
+/** SAM Tire Temp */
+typedef struct {
+	/** Furthest from chassis (Byte 0) */
+	uint8_t outside_temp;
+	/** Middle of tire (Byte 1) */
+	uint8_t outside_middle_temp;
+	/** Middle of tire (Byte 2) */
+	uint8_t inside_middle_temp;
+	/** Closest to chassis (Byte 3) */
+	uint8_t inside_temp;
+} GRCAN_SAM_TIRE_TEMP_MSG;
+
+/** SAM IMU */
+typedef struct {
+	/** Acceleration in X-axis (Byte 0) */
+	uint16_t accel_x;
+	/** Acceleration in Y-axis (Byte 2) */
+	uint16_t accel_y;
+	/** Acceleration in Z-axis (Byte 4) */
+	uint16_t accel_z;
+	/** Angular velocity in X-axis (Byte 6) */
+	uint16_t gyro_x;
+	/** Angular velocity in Y-axis (Byte 8) */
+	uint16_t gyro_y;
+	/** Angular velocity in Z-axis (Byte 10) */
+	uint16_t gyro_z;
+} GRCAN_SAM_IMU_MSG;
+
+/** SAM GPS 1 */
+typedef struct {
+	/** Latitude in decimal degrees (Byte 0) */
+	uint32_t latitude;
+	/** Longitude in decimal degrees (Byte 4) */
+	uint32_t longitude;
+} GRCAN_SAM_GPS_1_MSG;
+
+/** SAM GPS 2 */
+typedef struct {
+	/** GPS position accuracy (Byte 0) */
+	uint32_t accuracy;
+	/** Vehicle attitude (Byte 4) */
+	uint32_t attitude;
+} GRCAN_SAM_GPS_2_MSG;
+
+/** SAM GPS Time */
+typedef struct {
+	/** Time in seconds since GPS Epoch (Byte 0) */
+	uint32_t time;
+	/** Time of week in milliseconds (Byte 4) */
+	uint32_t time_of_week_ms;
+} GRCAN_SAM_GPS_TIME_MSG;
+
+/** SAM GPS Heading */
+typedef struct {
+	/** Heading angle relative to true North (Byte 0) */
+	uint32_t heading_from_north;
+} GRCAN_SAM_GPS_HEADING_MSG;
+
+/** SAM Sus Pots */
+typedef struct {
+	/** Pot Pos (Byte 0) */
+	uint8_t suspension_angle;
+} GRCAN_SAM_SUS_POTS_MSG;
+
+/** SAM TOF */
+typedef struct {
+	/** Ride Height (Byte 0) */
+	uint16_t height;
+} GRCAN_SAM_TOF_MSG;
+
+/** SAM Rear Wheelspeed */
+typedef struct {
+	/** Wheel RPM (Byte 0) */
+	uint16_t speed;
+} GRCAN_SAM_REAR_WHEELSPEED_MSG;
+
+/** SAM Pushrod Force */
+typedef struct {
+	/** Pushrod Force (Byte 0) */
+	uint16_t load_force;
+} GRCAN_SAM_PUSHROD_FORCE_MSG;
 
 /** TCM Status */
 typedef struct {
-	/**
-	 * Connection Status - 1: OK, 0: Timeout (bit 0)
-	 * MQTT Status - 1: OK, 0: Timeout (bit 1)
-	 * Epic Shelter Status - 1: In Progress, 0: Idle (bit 2)
-	 * Camera Status - 1: Recording, 0: Idle (bit 3)
-	 */
-	uint8_t status_bits;
+	/** 1: OK, 0: Timeout 1: OK, 0: Timeout 1: In Progress, 0: Idle 1: Recording, 0: Idle (Byte 0) */
+	uint8_t connection_status_mqtt_status_epic_shelter_status_camera_status_reserved;
 	/** Mapache ping (upload) (Byte 1) */
-	uint16_t mapache_ping;
+	uint16_t ping;
 	/** # of messages on cache (non-synced) (Byte 3) */
 	uint32_t cache_size;
 	/** Byte 7 (Byte 7) */
@@ -387,7 +498,27 @@ typedef struct {
 	uint16_t power_draw;
 } GRCAN_TCM_RESOURCE_UTILIZATION_MSG;
 
-/** ECU Pedals Data */
+/** Dash Warning Flags */
+typedef struct {
+	/** 1: Violation, 0: OK (Byte 0) */
+	uint8_t bse_apps_violation_reserved_reserved_reserved_reserved_reserved_reserved_reserved;
+} GRCAN_DASH_WARNING_FLAGS_MSG;
+
+/** Specific Brake IR */
+typedef struct {
+	/** Wheel identifier according to the wiki (Byte 0) */
+	uint8_t wheel_identifier;
+	/** IR Temp of Brakes (Byte 1) */
+	uint8_t temp;
+} GRCAN_SPECIFIC_BRAKE_IR_MSG;
+
+/** ECU Ping Information */
+typedef struct {
+	/** Literal copy of ECU Status's status bit map (Byte 0) */
+	uint8_t online_pings;
+} GRCAN_ECU_PING_INFORMATION_MSG;
+
+/** ECU Analog Data */
 typedef struct {
 	/** 4-20 mA signal (Byte 0) */
 	uint16_t bspd_signal;
@@ -467,11 +598,10 @@ typedef struct {
 
 /** ECU Performance */
 typedef struct {
-	/**
-	 * Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-	 * data type: u32
-	 * units: Clock Cycles (Byte 0) */
-	uint32_t elapsed_cycles;
+	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+data type: u32
+units: Clock Cycles (Byte 0) */
+	uint8_t elapsed_cycles;
 } GRCAN_ECU_PERFORMANCE_MSG;
 
 #endif

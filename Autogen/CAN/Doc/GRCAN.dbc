@@ -388,6 +388,28 @@ BO_ 2550588916 BCU_Charger_Control_to_Charger: 5 BCU
  SG_ Set_Current : 16|8@1+ (1,0) [0|0] "" Charger
  SG_ Charge_Enable : 17|8@1+ (1,0) [0|0] "" Charger
 
+BO_ 2147682050 BCU_BCU_Status_1_to_CCU: 8 BCU
+ SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps" CCU
+ SG_ Accumulator_SOC : 48|8@1+ (0.392157,0) [0|100] "%" CCU
+ SG_ GLV_SOC : 56|8@1+ (0.392157,0) [0|100] "%" CCU
+
+BO_ 2147682306 BCU_BCU_Status_2_to_CCU: 7 BCU
+ SG_ 20v_Voltage : 0|8@1+ (1,0) [0|0] "" CCU
+ SG_ 12v_Voltage : 8|8@1+ (1,0) [0|0] "" CCU
+ SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] "" CCU
+ SG_ Min_Cell_Voltage : 24|8@1+ (1,0) [0|0] "" CCU
+ SG_ Max_Cell_Temp : 32|8@1+ (1,0) [0|0] "" CCU
+ SG_ status_flags : 40|1@1+ (1,0) [0|0] "" CCU
+ SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] "" CCU
+
+BO_ 2147682562 BCU_BCU_Status_3_to_CCU: 8 BCU
+ SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ HV_Output_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" CCU
+ SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" CCU
+ SG_ HV_Output_Current : 48|16@1+ (0.001,0) [0|65.535] "Amps" CCU
+
 BO_ 2566869221 Charger_Charger_Data_to_BCU: 8 Charger
  SG_ Output_Voltage : 0|8@1+ (1,0) [0|0] "" BCU
  SG_ Output_Current : 16|8@1+ (1,0) [0|0] "" BCU
@@ -653,7 +675,7 @@ BO_ 2147614977 ECU_Debug_FD_to_Debugger: 64 ECU
 BO_ 2147615233 ECU_Ping_to_Debugger: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" Debugger
 
-BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 16 ECU
+BO_ 2147626500 ECU_ECU_Analog_Data_to_TCM: 16 ECU
  SG_ BSPD_Signal : 0|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ BSE_Signal : 16|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ APPS_1_Signal : 32|16@1+ (0.0015259,0) [0|100] "%" TCM
@@ -662,6 +684,9 @@ BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 16 ECU
  SG_ Brakeline_R_Signal : 80|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ AUX_Signal : 112|16@1+ (0.0015259,0) [0|100] "%" TCM
+
+BO_ 2147689220 ECU_ECU_Performance_to_TCM: 4 ECU
+ SG_ Elapsed_Cycles : 0|8@1+ (1,0) [0|0] "" TCM
 
 BO_ 269 Energy_Meter_EM_Measurement_to_BCU: 8 Energy_Meter
  SG_ Current : 0|8@1+ (1,0) [0|0] "" BCU
