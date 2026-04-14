@@ -88,7 +88,6 @@ In infinite while loop in main:
 | `true` | Logs All 'state_data', then 'request_print_statedata' set to false|
 | `false` | Does nothing|
 
-
 State Data is casting `GR_CAN_BCU_STATUS_2` \\
 
 ### VCP
