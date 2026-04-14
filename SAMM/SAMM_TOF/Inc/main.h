@@ -28,6 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
+#include "stm32h5xx_ll_adc.h"
 #include "stm32h5xx_ll_bus.h"
 #include "stm32h5xx_ll_cortex.h"
 #include "stm32h5xx_ll_crs.h"
@@ -38,7 +39,11 @@ extern "C" {
 #include "stm32h5xx_ll_rcc.h"
 #include "stm32h5xx_ll_system.h"
 #include "stm32h5xx_ll_utils.h"
-
+#include "stm32h5xx_ll_lpuart.h"
+#include "stm32h5xx_hal_dma.h"
+#include "stm32h5xx_hal_rcc.h"
+#include "stm32h5xx_hal_i2c.h"
+#include "stm32h5xx_hal_rcc.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
