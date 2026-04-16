@@ -134,7 +134,7 @@ GRCAN_MSG_ID get_messageID(GRCAN_BUS_ID bus)
 		case GRCAN_BUS_CHARGER:
 			return GRCAN_BCU_CONFIG_CHARGE_PARAMETERS;
 		default:
-			return 0xFFFF; // Invalid message ID
+			return (GRCAN_MSG_ID)0xFF; // Invalid message ID
 	}
 }
 
