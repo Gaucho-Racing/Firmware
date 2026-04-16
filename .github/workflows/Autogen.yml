@@ -3,6 +3,9 @@ run-name: Autogen - ${{ github.ref_name }}
 
 on:
   pull_request:
+    paths:
+      - 'Autogen/**'
+      - '.github/workflows/Autogen.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
