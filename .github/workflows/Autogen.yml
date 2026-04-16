@@ -3,6 +3,9 @@ run-name: Autogen - ${{ github.ref_name }}
 
 on:
   pull_request:
+    paths:
+      - 'Autogen/**'
+      - '.github/workflows/Autogen.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -10,7 +13,7 @@ concurrency:
 
 jobs:
   canfigurator:
-    if: false # FIXME Temporarily disable CANfigurator pipeline until we can address the issues with it
+    # if: false # FIXME Temporarily disable CANfigurator pipeline until we can address the issues with it
     name: CANfigurator
     runs-on: ubuntu-latest
     permissions:

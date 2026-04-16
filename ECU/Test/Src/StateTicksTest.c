@@ -7,6 +7,7 @@
 #include "StateUtils.h"
 #include "can.h"
 #include "stm32g4xx_hal.h"
+#include "stm32g4xx_hal_fdcan.h"
 
 /*
 - GLV ON
@@ -21,18 +22,10 @@
 - TS DISCHARGE (ts voltage > 60), then less than 60 -> GLV ON
 */
 
-#define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
-// EV.5.6.3: The Discharge Circuit must be designed to handle the maximum Tractive System voltage for minimum 15 seconds
-#define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (15000)
-
 // static void ECU_Pseudo_Time_Progress(uint32_t dt) { stateLumpTest.millisSinceBoot += dt; }
 
 static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 {
-	if (stateLumpTest->millisSinceBoot - stateLumpTest->lastECUStatusMsgMillis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
-		LOGOMATIC("ECU Current State: %d\n", stateLumpTest->ecu_state);
-		stateLumpTest->lastECUStatusMsgMillis = stateLumpTest->millisSinceBoot;
-	}
 
 	if (bmsFailure(stateLumpTest) || imdFailure(stateLumpTest)) {
 		stateLumpTest->tssi_fault = true;

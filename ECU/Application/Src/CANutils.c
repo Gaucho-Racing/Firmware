@@ -9,6 +9,7 @@
 #include "StateUtils.h"
 #include "can.h"
 #include "main.h"
+#include "stm32g4xx_hal_fdcan.h"
 #include "string.h"
 
 uint32_t lastTickECUStateDataSent = 0;
@@ -24,7 +25,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 
 	FDCAN_TxHeaderTypeDef header = {
 	    .Identifier = ID,
-	    .IdType = FDCAN_STANDARD_ID,
+	    .IdType = FDCAN_EXTENDED_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 	    .DataLength = size,
