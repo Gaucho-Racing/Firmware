@@ -12,6 +12,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["c", "actions"]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 1
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13  # v4.35.1
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: 'none'
+
+      - name: Analyze CodeQL
+        uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
+        with:
+          category: '${{ matrix.language }}'
+
   configs:
     name: Configuration Files
     runs-on: ubuntu-latest
@@ -25,78 +52,6 @@ jobs:
 
       - name: Validate Configuration Files
         uses: kehoecj/validate-configs-action@55242af1509991b2b18e2cf120eb4083a33e5c4b  # v4.0.1
-
-  codeql:
-    name: Analyze Code
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - languages: 'c'
-          build_mode: 'manual'
-        - languages: 'actions'
-          build_mode: 'none'
-    env:
-      SCCACHE_DIR: ${{ github.workspace }}/sccache
-      SCCACHE_LOG: "info"
-      SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      with:
-        fetch-depth: 1
-
-    - name: Install Arm Toolchain
-      if: matrix.build_mode == 'manual'
-      uses: carlosperate/arm-none-eabi-gcc-action@0725d97b026acf7fc8e22dfd5bee912998879ba8  # v1.12.3
-      with:
-        release: '12.2.Rel1'
-
-    - name: Setup Shared Compilation Cache
-      if: matrix.build_mode == 'manual'
-      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae  # v5.0.5
-      with:
-        path: ${{ env.SCCACHE_DIR }}
-        key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
-        restore-keys: |
-            sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-
-            sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-
-
-    - name: Setup Shared Compilation Cache
-      if: matrix.build_mode == 'manual'
-      uses: mozilla-actions/sccache-action@7d986dd989559c6ecdb630a3fd2557667be217ad  # v0.0.9
-
-    - name: Setup Trap Cache Directory
-      if: matrix.build_mode == 'manual'
-      run: mkdir -p /home/runner/work/_temp/trapCaches/cpp/tarballs
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13  # v4.35.1
-      with:
-        languages: ${{ matrix.languages }}
-        build-mode: ${{ matrix.build_mode }}
-
-    - name: Build CodeQL Database
-      if: matrix.build_mode == 'manual'
-      run: CMAKE_C_COMPILER_LAUNCHER=sccache make all -j
-
-    - name: Analyze CodeQL
-      id: analyze
-      uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
-      with:
-        category: ${{ matrix.languages }}
-        upload: never
-
-    - name: Upload CodeQL Results
-      if: always()
-      uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13  # v4.35.1
-      with:
-        sarif_file: ${{ steps.analyze.outputs.sarif-output }}
 
   perllinter:
     name: Perl Linter
