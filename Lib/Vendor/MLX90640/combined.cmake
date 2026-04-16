@@ -12,4 +12,9 @@ target_sources(
 target_link_libraries(MLX90640_LIB INTERFACE m)
 
 # FIXME Figure out an alternative to this down the road as it is quite a drastic speed reduction to not use the FPU
-target_compile_options(MLX90640_LIB INTERFACE -Wno-double-promotion -Wno-float-conversion)
+target_compile_options(
+	MLX90640_LIB
+	INTERFACE
+		-Wno-double-promotion
+		-Wno-float-conversion
+)
