@@ -474,11 +474,8 @@ typedef struct {
 
 /** ECU Performance */
 typedef struct {
-	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-data type: u32
-units: Clock Cycles
-data type: u8 (Byte 0) */
-	uint8_t elapsed_cycles;
+	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop (Byte 0) */
+	uint32_t elapsed_cycles;
 } GRCAN_ECU_PERFORMANCE_MSG;
 
 #endif
