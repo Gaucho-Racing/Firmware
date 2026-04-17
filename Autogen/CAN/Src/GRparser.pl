@@ -76,7 +76,7 @@ sub generate_gr_header_content {
 	# Track emitted names to avoid exact duplicate enum symbols.
 	my %seen_names;
 
-	my @sorted = sort { $a->{name} cmp $b->{name} } @{$ids_ref};
+	my @sorted = sort { hex $a->{id} <=> hex $b->{id} || $a->{name} cmp $b->{name} } @{$ids_ref};
 
 	for my $item (@sorted) {
 		my $const_name = 'GRCAN_' . $item->{name};
