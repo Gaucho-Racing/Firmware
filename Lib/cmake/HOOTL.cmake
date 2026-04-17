@@ -31,14 +31,10 @@ add_compile_options(
 	-g
 )
 
-if(APPLE)	# MacOS has a different syntax for linker fatal warnings
-	add_link_options(
-		-Wl,-fatal_warnings
-	)
+if(APPLE) # MacOS has a different syntax for linker fatal warnings
+	add_link_options(-Wl,-fatal_warnings)
 else()
-	add_link_options(
-		-Wl,--fatal-warnings
-	)
+	add_link_options(-Wl,--fatal-warnings)
 endif()
 
 if(ADDRESS_SANITIZER)
