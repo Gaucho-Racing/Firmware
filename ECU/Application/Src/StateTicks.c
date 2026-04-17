@@ -149,7 +149,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 							    .brakeline_f_signal = stateData->Brake_F_Signal,
 							    .brakeline_r_signal = stateData->Brake_R_Signal,
 							    // TODO: include steering wheel data a
-							    .steering_angle_signal = 0,
+							    .steering_angle_signal = stateData->steering_angle_signal,
 							    .aux_signal = stateData->aux_signal};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
@@ -233,8 +233,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 						     .apps_2_signal = stateData->APPS2_Signal,
 						     .brakeline_f_signal = stateData->Brake_F_Signal,
 						     .brakeline_r_signal = stateData->Brake_R_Signal,
-						     // TODO: include steering wheel data
-						     .steering_angle_signal = 0,
+						     .steering_angle_signal = stateData->steering_angle_signal,
 						     .aux_signal = stateData->aux_signal};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_inverter_request_millis = millis_since_boot;
