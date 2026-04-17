@@ -29,10 +29,10 @@
 #include <arm_math.h>
 #include <stdio.h>
 
-#include "can.h"
 #include "CANdler.h"
 #include "MLX90640_API.h"
 #include "MLX90640_I2C_Driver.h"
+#include "can.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -148,15 +148,15 @@ int main(void)
 
 	status = MLX90640_SetRefreshRate(MLX90640_address, 0x07);
 
-    status = MLX90640_DumpEE(MLX90640_address, eeMLX90640);
-    if(status != 0){
-      Error_Handler();
-    }
+	status = MLX90640_DumpEE(MLX90640_address, eeMLX90640);
+	if (status != 0) {
+		Error_Handler();
+	}
 
-    status = MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
-    if(status != 0){
-      Error_Handler();
-    }
+	status = MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
+	if (status != 0) {
+		Error_Handler();
+	}
 
 	/* USER CODE END 2 */
 

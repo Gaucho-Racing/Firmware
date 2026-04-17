@@ -18,11 +18,8 @@
 
 CANHandle *can_handler;
 
-static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {
-	GRCAN_TTS_FRAME0, GRCAN_TTS_FRAME1, GRCAN_TTS_FRAME2, GRCAN_TTS_FRAME3,
-	GRCAN_TTS_FRAME4, GRCAN_TTS_FRAME5, GRCAN_TTS_FRAME6, GRCAN_TTS_FRAME7,
-	GRCAN_TTS_FRAME8, GRCAN_TTS_FRAME9, GRCAN_TTS_FRAME10, GRCAN_TTS_FRAME11
-};
+static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TTS_FRAME0, GRCAN_TTS_FRAME1, GRCAN_TTS_FRAME2, GRCAN_TTS_FRAME3, GRCAN_TTS_FRAME4,	GRCAN_TTS_FRAME5,
+						     GRCAN_TTS_FRAME6, GRCAN_TTS_FRAME7, GRCAN_TTS_FRAME8, GRCAN_TTS_FRAME9, GRCAN_TTS_FRAME10, GRCAN_TTS_FRAME11};
 
 void CANInitialize()
 {
@@ -32,24 +29,26 @@ void CANInitialize()
 	can_handler = can_init(&my_cfg);
 }
 
-inline uint8_t _temp_f2u8(float temp) {
-	return (uint8_t) (((temp + 40.) / 125.0) * 255.0);
+inline uint8_t _temp_f2u8(float temp)
+{
+	return (uint8_t)(((temp + 40.) / 125.0) * 255.0);
 }
 
-void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber) {
+void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
+{
 
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = (GRCAN_TireTemp << 20) | (canMsgNumber[msgNumber] << 8) | GRCAN_TCM; // do this
 	msg.tx_header.IdType = FDCAN_STANDARD_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE; // honestly this might be a value you have to read from a node
-							// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+							      // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
 	msg.tx_header.DataLength = FDCAN_DLC_BYTES_64;
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-	msg.tx_header.MessageMarker = 0;			      // also change this to a real address if you change fifo control
+	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
 
-	for(int i = (msgNumber << 6); i < ((msgNumber+1) << 6); i++){
+	for (int i = (msgNumber << 6); i < ((msgNumber + 1) << 6); i++) {
 		msg.data[i] = _temp_f2u8(data[i]);
 	}
 
