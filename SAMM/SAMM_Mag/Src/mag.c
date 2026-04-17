@@ -24,7 +24,6 @@ void mag_init(mag mag_dev, SPI_HandleTypeDefspi_port, GPIO_TypeDef port, uint16_
 		return HAL_ERROR;
 	}
 
-
 	mag_write(mag_dev, 0x1E, 0x01);
 
 	return HAL_OK;
@@ -88,11 +87,11 @@ uint8_t mag_calib_abort(mag *mag_dev)
 	return 1;
 }
 
-//Address 0x32:0x33 (ANG15)—Current Angle Reading (15 bits)
+// Address 0x32:0x33 (ANG15)—Current Angle Reading (15 bits)
 float mag_read_encoder_angle(mag mag_dev)
 {
-	uint16_t read_angle = mag_transmit(mag_dev, 0x32); // 0x32 is angle register
-	return ((uint16_t)(read_angle & 0x7FFF) * 360.0f / 32768);	   // Mask to 15 bits (valid angle data)
+	uint16_t read_angle = mag_transmit(mag_dev, 0x32);	   // 0x32 is angle register
+	return ((uint16_t)(read_angle & 0x7FFF) * 360.0f / 32768); // Mask to 15 bits (valid angle data)
 }
 
 // Address 0x22:0x23 (STA)—Device Status
@@ -145,18 +144,19 @@ uint16_t mag_read_acc_x(mag *mag_dev)
 uint16_t mag_read_acc_y(mag *mag_dev)
 {
 	int16_t read_turns = mag_transmit(mag_dev, 0x2C); // 0x2C is turn counter
-	return ((int16_t)(read_angle & 0x0FFF));;	   // Mask to 12 bits (valid angle data)
+	return ((int16_t)(read_angle & 0x0FFF));
+	; // Mask to 12 bits (valid angle data)
 }
 
-//Address 0x24:0x25 (ERR)—Device Error Flags
-	// FIXME: add error handling
+// Address 0x24:0x25 (ERR)—Device Error Flags
+//  FIXME: add error handling
 
-//Address 0x30:0x31 (HANG)—Hysteresis Angle Value (12 bits)
+// Address 0x30:0x31 (HANG)—Hysteresis Angle Value (12 bits)
 float mag_read_HANG(mag mag_dev)
 {
-	int16_t read_HANG = mag_transmit(mag_dev, 0x30); // 0x30 is Hysteresis Angle Value
-	return ((uint16_t)(read_HANG & 0x0FFF) * 360.0f / 32768);	   // Mask to 12 bits (valid angle data)
+	int16_t read_HANG = mag_transmit(mag_dev, 0x30);	  // 0x30 is Hysteresis Angle Value
+	return ((uint16_t)(read_HANG & 0x0FFF) * 360.0f / 32768); // Mask to 12 bits (valid angle data)
 }
 
-//Address 0x1E:0x1F (CTRL)—Device Control
-	// FIXME: add error flag handling
+// Address 0x1E:0x1F (CTRL)—Device Control
+//  FIXME: add error flag handling

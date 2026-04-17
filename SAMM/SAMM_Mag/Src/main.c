@@ -114,9 +114,9 @@ int main(void)
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
-	//bmi323 bmi323_dev;
-	//HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	//bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin);
+	// bmi323 bmi323_dev;
+	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	// bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin);
 
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
