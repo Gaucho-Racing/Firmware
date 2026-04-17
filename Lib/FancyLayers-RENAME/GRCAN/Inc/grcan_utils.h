@@ -1,8 +1,3 @@
-/*
-For changing GRCAN_BusConfig settings only touch the structs,
-the initialization is handled internally
-*/
-
 #include <stdint.h>
 
 #include "GRCAN_BUS_ID.h"
