@@ -31,9 +31,7 @@ add_compile_options(
 	-g
 )
 
-add_link_options(
-	-Wl,--fatal-warnings
-)
+add_link_options(-Wl,--fatal-warnings)
 
 if(ADDRESS_SANITIZER)
 	message(STATUS "Address sanitizer enabled for tests")
