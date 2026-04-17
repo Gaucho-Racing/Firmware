@@ -17,12 +17,25 @@ option(
 )
 
 add_compile_options(
+	-fshort-enums
+	-fdata-sections
+	-ffunction-sections
+	-fstack-usage
+	-fno-lto
 	-Wall
 	-Wextra
 	-Werror
-	-pedantic
+	-Wpedantic
+	-Wvla
+	-Wdouble-promotion
 	-g
 )
+
+if(APPLE) # MacOS has a different syntax for linker fatal warnings
+	add_link_options(-Wl,-fatal_warnings)
+else()
+	add_link_options(-Wl,--fatal-warnings)
+endif()
 
 if(ADDRESS_SANITIZER)
 	message(STATUS "Address sanitizer enabled for tests")
