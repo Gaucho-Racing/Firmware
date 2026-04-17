@@ -88,8 +88,8 @@ float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float diviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	return diviation < 0.1f && diviation > -0.1f;
+	float deviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
+	return deviation < 0.1f && deviation > -0.1f;
 }
 
 bool BSE_Implausible(volatile const ECU_StateData *stateData)
