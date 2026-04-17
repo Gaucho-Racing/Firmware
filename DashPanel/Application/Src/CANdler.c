@@ -61,11 +61,7 @@ void CANInitialize()
 	HAL_FDCAN_ConfigGlobalFilter(can_handler->hal_fdcanP, 0, 0, 0, 0);
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
-	CANConfig my_cfg;
-
-	get_cfg(FDCAN1, CAN_callback, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
-
-	CANHandle *h1 = can_init(&my_cfg);
+	can_start(can_handler);
 }
 
 void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
