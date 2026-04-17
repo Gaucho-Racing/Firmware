@@ -85,7 +85,7 @@ int can_stress_test(void)
 
 	FDCANTxMessage msg = {0};
 	// memset(&(msg.data), 0, sizeof(msg.data));
-	for (int i = 0; i < DLCtoBytes[SIZE]; i++) {
+	for (int i = 0; i < CANFD_DLCtoBytes[SIZE]; i++) {
 		msg.data[i] = i;
 	}
 	msg.tx_header = TxHeader;
@@ -96,7 +96,7 @@ int can_stress_test(void)
 	size_t messages = 10;
 
 	uint32_t successes = 0;
-	LOGOMATIC("Sending CAN msgs of size %d bytes...\n", DLCtoBytes[SIZE]);
+	LOGOMATIC("Sending CAN msgs of size %d bytes...\n", CANFD_DLCtoBytes[SIZE]);
 
 	while (loop < rounds) {
 		loop++;
@@ -135,7 +135,7 @@ int can_stress_test(void)
 		// HAL_Delay(1000);
 	}
 
-	LOGOMATIC("SIZE: %d\n", DLCtoBytes[SIZE]);
+	LOGOMATIC("SIZE: %d\n", CANFD_DLCtoBytes[SIZE]);
 
 	LOGOMATIC("Receive Stats ===================\n");
 	dwt_timer_print_info(&rx_timer);
