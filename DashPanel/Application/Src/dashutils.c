@@ -6,11 +6,14 @@
 #include "gr_neopixel.h"
 #include "main.h"
 
-NeopixelContext *NeoPixel_LED_Context;
-NeopixelContext *NeoPixel_Button_Context;
+static NeopixelContext NeoPixel_LED_Context;
+static NeopixelContext NeoPixel_Button_Context;
 
 static Neopixel_Color LED_colors[NUM_LEDS];
 static Neopixel_Color button_colors[NUM_BUTTONS];
+
+uint32_t pollingTimer = 0;
+static PollingState pollingState = Ready;
 
 void NeoPixel_Init()
 {
@@ -37,8 +40,7 @@ void Neopixel_LEDWrite()
 	LED_colors[1] = GETBIT(dashStatus.led_bits, 1) ? COLOR_RED : COLOR_OFF;
 	LED_colors[2] = GETBIT(dashStatus.led_bits, 2) ? COLOR_RED : COLOR_OFF;
 
-	Neopixel_WriteAll(NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
-	// LOGOMATIC("LED Flashing\n");
+	Neopixel_WriteAll(&NeoPixel_LED_Context, LED_colors, sizeof(LED_colors));
 	return;
 }
 
@@ -74,6 +76,42 @@ void Neopixel_ButtonWrite()
 			break;
 	}
 
-	Neopixel_WriteAll(NeoPixel_Button_Context, button_colors, sizeof(button_colors));
+	Neopixel_WriteAll(&NeoPixel_Button_Context, button_colors, sizeof(button_colors));
 	return;
+}
+
+void PollingStateMachine()
+{
+	switch (pollingState) {
+
+		case Ready:
+			if (LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
+				// ACTION TRIGGERED HERE
+				SetBitInByte(dashStatus.button_flags, 5, true);
+				pollingTimer = 0;
+				pollingState = DebouncePress;
+			}
+			break;
+
+		case DebouncePress:
+			if (pollingTimer >= DEBOUNCE_TIME * tick_freq) {
+				pollingState = WaitRelease;
+			}
+			break;
+
+		case WaitRelease:
+			// Wait for the pin to go Low (wire removed)
+			if (!LL_GPIO_IsInputPinSet(GPIO_POLLING, PIN_POLLING)) {
+				pollingTimer = 0;
+				pollingState = DebounceRelease;
+			}
+			break;
+
+		case DebounceRelease:
+			// Wait for the "Removal Noise" to settle before allowing a new trigger
+			if (pollingTimer >= DEBOUNCE_TIME * tick_freq) {
+				pollingState = Ready;
+			}
+			break;
+	}
 }

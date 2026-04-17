@@ -94,30 +94,6 @@ static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
 
 */
 
-#define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
-	do {                                                                                                                                                                                           \
-		if (GPIOX == GPIOA)                                                                                                                                                                    \
-			__HAL_RCC_GPIOA_CLK_ENABLE();                                                                                                                                                  \
-		else if (GPIOX == GPIOB)                                                                                                                                                               \
-			__HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                                                                  \
-		else if (GPIOX == GPIOD)                                                                                                                                                               \
-			__HAL_RCC_GPIOD_CLK_ENABLE();                                                                                                                                                  \
-		else                                                                                                                                                                                   \
-			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
-	} while (0)
-
-#define GPIOx_CLK_DISABLE(GPIOX)                                                                                                                                                                       \
-	do {                                                                                                                                                                                           \
-		if (GPIOX == GPIOA)                                                                                                                                                                    \
-			__HAL_RCC_GPIOA_CLK_DISABLE();                                                                                                                                                 \
-		else if (GPIOX == GPIOB)                                                                                                                                                               \
-			__HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                                                                 \
-		else if (GPIOX == GPIOD)                                                                                                                                                               \
-			__HAL_RCC_GPIOD_CLK_DISABLE();                                                                                                                                                 \
-		else                                                                                                                                                                                   \
-			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
-	} while (0)
-
 // TODO: Modify helpers to work across families
 // helpers =================
 static int fdcan_shared_clock_ref = 0;
@@ -166,6 +142,7 @@ CANHandle *can_init(const CANConfig *config)
 		} else {
 			canHandle = &CAN2;
 			canHandle->tx_capacity = TX_BUFFER_2_SIZE;
+			LOGOMATIC("CAN: CAN2 selected with tx capacity %lu\n", canHandle->tx_capacity);
 		}
 	}
 #endif
@@ -180,6 +157,21 @@ CANHandle *can_init(const CANConfig *config)
 		}
 	}
 #endif
+
+// TODO: figure out a better way to extend this to other families besides ifdef soup
+#elif defined(STM32G431xx)
+#ifdef USECAN1
+	if (config->fdcan_instance == FDCAN1) {
+		if (CAN1.init) {
+			LOGOMATIC("CAN: CAN1 is already initialized\n");
+			return CAN_SUCCESS;
+		} else {
+			canHandle = &CAN1;
+			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+		}
+	}
+#endif
+
 #endif
 
 	// #elif defined(STM32L476xx)
@@ -554,7 +546,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 
 		// TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
-		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
+		handle->rx_callback(rx_header.Identifier, rx_data, CANFD_DLCtoBytes[rx_header.DataLength]);
 	}
 
 	//__set_BASEPRI(prev_priority);
@@ -701,7 +693,7 @@ static inline void fdcan_disable_shared_clock(void)
 // valid only for STM32G4
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1)
 {
-#ifdef STM32G4
+#ifdef STM32G474xx
 	if (instance == FDCAN1) {
 		*it0 = FDCAN1_IT0_IRQn;
 		*it1 = FDCAN1_IT1_IRQn;
@@ -715,6 +707,14 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 	if (instance == FDCAN3) {
 		*it0 = FDCAN3_IT0_IRQn;
 		*it1 = FDCAN3_IT1_IRQn;
+		return CAN_SUCCESS;
+	}
+
+	// TODO: START of possible ifdef soup
+#elif defined(STM32G431xx)
+	if (instance == FDCAN1) {
+		*it0 = FDCAN1_IT0_IRQn;
+		*it1 = FDCAN1_IT1_IRQn;
 		return CAN_SUCCESS;
 	}
 #endif
@@ -908,6 +908,10 @@ static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 		return "FDCAN2";
 	} else if (instance == FDCAN3) {
 		return "FDCAN3";
+	}
+#elif defined(STM32G431xx)
+	if (instance == FDCAN1) {
+		return "FDCAN1";
 	}
 #endif
 	return "UNKNOWN";

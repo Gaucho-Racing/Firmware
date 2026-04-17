@@ -82,7 +82,7 @@ sub find_id_in_lines {
 			${$idx_ref} = $j;
 
 			my $id        = $1;
-			my $enum_name = 'MSG_' . uc $msg_name;
+			my $enum_name = 'GRCAN_' . uc $msg_name;
 			$enum_name =~ s/\W+/_/gsmx;
 			$enum_name =~ s/_+/_/gsmx;
 			$enum_name =~ s/^_|_$//gsmx;
@@ -107,8 +107,10 @@ sub write_msg_header {
 	push @header_lines, "#define CAN_MSG_IDS_H\n\n";
 	push @header_lines, "typedef enum {\n";
 
-	foreach my $msg ( @{$msg_ids_ref} ) {
-		push @header_lines, sprintf "    %-40s = %s,\n", $msg->{name}, $msg->{id};
+	my @sorted_msgs = sort { hex $a->{id} <=> hex $b->{id} } @{$msg_ids_ref};
+
+	foreach my $msg (@sorted_msgs) {
+		push @header_lines, sprintf "%s = %s,\n", $msg->{name}, $msg->{id};
 	}
 
 	push @header_lines, "} GRCAN_MSG_ID;\n\n";

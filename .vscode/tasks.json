@@ -163,13 +163,13 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
 		},
 		{
-			"label": "CMake: configure and build CAN_EXTERNAL_TEST",
+			"label": "CMake: configure and build CAN_BASIC_TEST",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_EXTERNAL_TEST"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_BASIC_TEST"
 		},
 		{
 			"label": "CMake: configure and build CAN_STRESS_TEST",
@@ -190,15 +190,6 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_FILTER_TEST"
 		},
 		{
-			"label": "CMake: configure and build CAN_INTERNAL_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_INTERNAL_TEST"
-		},
-		{
 			"label": "CMake: configure and build CAN_RELEASE_TEST",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -217,6 +208,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_LOST_RX_TEST"
 		},
 		{
+			"label": "CMake: configure and build CAN_LOOPBACK_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_LOOPBACK_TEST"
+		},
+		{
 			"label": "CMake: configure and build PROFILER_TEST",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -224,6 +224,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target PROFILER_TEST"
+		},
+		{
+			"label": "CMake: configure and build G431x8_CAN_BASIC_TEST",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G431x8_CAN_BASIC_TEST"
 		}
 	]
 }

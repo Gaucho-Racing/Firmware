@@ -27,6 +27,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32g4xx.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_cortex.h"
 #include "stm32g4xx_ll_crs.h"
@@ -56,17 +57,19 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+extern uint8_t tick_freq;
 
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define GR_NEOPIXEL_MAX_LEDS (3)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 void timer_inc(void);
+void pollingTimer_inc(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -96,7 +99,7 @@ void timer_inc(void);
 #endif
 
 /* USER CODE BEGIN Private defines */
-extern uint32_t timer;
+extern volatile uint32_t timer;
 
 /* USER CODE END Private defines */
 
