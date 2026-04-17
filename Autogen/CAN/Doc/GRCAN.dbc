@@ -675,7 +675,7 @@ BO_ 2147626500 ECU_ECU_Analog_Data_to_TCM: 16 ECU
  SG_ AUX_Signal : 112|16@1+ (0.0015259,0) [0|100] "%" TCM
 
 BO_ 2147626756 ECU_ECU_Performance_to_TCM: 4 ECU
- SG_ Elapsed_Cycles : 0|8@1+ (1,0) [0|0] "" TCM
+ SG_ Elapsed_Cycles : 0|32@1+ (1,0) [0|0] "Clock Cycles" TCM
 
 BO_ 2147615264 ECU_Ping_to_SAMM_Mag_1: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4,294,967,296] "ms" SAMM_Mag_1
