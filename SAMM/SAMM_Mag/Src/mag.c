@@ -53,17 +53,16 @@ uint8_t mag_calib_abort(mag *mag_dev)
 	return 1;
 }
 
-//may ormay not work
+// may ormay not work
 uint16_t mag_read_encoder_angle(mag mag_dev)
 {
-    uint16_t read_angle = mag_transmit(mag_dev, 0x32);  //0x32 is angle register
-    return ((uint16_t)(read_angle & 0x7FFF));  // Mask to 15 bits (valid angle data)
+	uint16_t read_angle = mag_transmit(mag_dev, 0x32); // 0x32 is angle register
+	return ((uint16_t)(read_angle & 0x7FFF));	   // Mask to 15 bits (valid angle data)
 }
 
-//Address 0x22:0x23 (STA)—Device Status
-	//read bit 0 AOK [0]
-//Address 0x28:0x29 (TSEN)—Temperature Sensor
-
+// Address 0x22:0x23 (STA)—Device Status
+// read bit 0 AOK [0]
+// Address 0x28:0x29 (TSEN)—Temperature Sensor
 
 /*
 TODO:

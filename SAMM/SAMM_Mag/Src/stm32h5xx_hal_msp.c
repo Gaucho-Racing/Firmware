@@ -66,7 +66,7 @@ void HAL_MspInit(void)
 	/* USER CODE BEGIN MspInit 0 */
 
 	/* USER CODE END MspInit 0 */
-//there should be an error here- like in TOF
+	// there should be an error here- like in TOF
 	__HAL_RCC_SYSCFG_CLK_ENABLE();
 	__HAL_RCC_PWR_CLK_ENABLE();
 
