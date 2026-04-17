@@ -30,7 +30,6 @@ target_sources(
 		Src/adc.c
 		Src/crc.c
 		Src/dma.c
-		Src/fdcan.c
 		Src/gpio.c
 		Src/mag.c
 		Src/main.c
