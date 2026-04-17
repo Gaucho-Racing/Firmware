@@ -19,7 +19,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -50,7 +50,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -81,7 +81,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -112,7 +112,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -132,6 +132,7 @@
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
+			"runToEntryPoint": "main",
 			"configFiles": [
 				"interface/stlink.cfg",
 				"target/stm32g4x.cfg"
@@ -143,7 +144,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -174,7 +175,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -205,7 +206,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -236,7 +237,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -267,7 +268,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -329,7 +330,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 80000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -393,7 +394,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -424,7 +425,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -455,7 +456,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -486,7 +487,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -517,7 +518,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -548,7 +549,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -579,7 +580,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -610,7 +611,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -641,7 +642,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -672,7 +673,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -703,7 +704,7 @@
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
+				"swoFrequency": 500000,
 				"source": "probe",
 				"decoders": [
 					{
