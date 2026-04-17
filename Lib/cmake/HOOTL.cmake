@@ -17,11 +17,22 @@ option(
 )
 
 add_compile_options(
+	-fshort-enums
+	-fdata-sections
+	-ffunction-sections
+	-fstack-usage
+	-fno-lto
 	-Wall
 	-Wextra
 	-Werror
-	-pedantic
+	-Wpedantic
+	-Wvla
+	-Wdouble-promotion
 	-g
+)
+
+add_link_options(
+	-Wl,--fatal-warnings
 )
 
 if(ADDRESS_SANITIZER)
