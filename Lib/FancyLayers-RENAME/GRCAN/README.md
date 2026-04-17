@@ -6,7 +6,7 @@ Make sure to #define USECANx in your can_cfg.h
 void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus);
 -- grcan_utils.c
 -- applies default settings for CAN based on ECU CAN
--- default uses PB12 RD, PB13 TD, and FDCAN2
+-- default uses PB12 RX, PB13 TX, and FDCAN2
 -- change the necessary items in GRCAN_BusConfig struct
 
 GRCAN_BusConfig is defined in grcan_utils.h
