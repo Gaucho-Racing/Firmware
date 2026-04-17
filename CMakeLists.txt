@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-
 project(Firmware)
-
 enable_language(
 	C
 	ASM
@@ -11,16 +9,59 @@ enable_language(
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
+# Messages
 if(NOT DEFINED CMAKE_PRESET_NAME)
 	message(
 		FATAL_ERROR
 		"This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE."
 	)
 endif()
+message(
+	STATUS
+	"Build type: "
+	${CMAKE_BUILD_TYPE}
+)
+message(STATUS "Target type: ${TARGET_TYPE}")
+message(
+	STATUS
+	"Active CMake Preset: "
+	${CMAKE_PRESET_NAME}
+)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+# Compiler Cache Configuration
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM AND NOT CMAKE_C_COMPILER_LAUNCHER)
+	message(STATUS "Found ccache: ${CCACHE_PROGRAM}")
+	set(CCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/ccache")
+	set(
+		CMAKE_C_COMPILER_LAUNCHER
+		"${CMAKE_COMMAND}"
+		-E
+		env
+		"CCACHE_DIR=${CCACHE_DIR_PATH}"
+		"${CCACHE_PROGRAM}"
+	)
+	set(
+		CMAKE_ASM_COMPILER_LAUNCHER
+		"${CMAKE_COMMAND}"
+		-E
+		env
+		"CCACHE_DIR=${CCACHE_DIR_PATH}"
+		"${CCACHE_PROGRAM}"
+	)
+	message(STATUS "ccache directory: ${CCACHE_DIR_PATH}")
+elseif(CMAKE_C_COMPILER_LAUNCHER)
+	message(
+		STATUS
+		"Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to ${CMAKE_C_COMPILER_LAUNCHER}"
+	)
+else()
+	message(STATUS "Not using ccache: ccache not found in PATH")
+endif()
 
+# Globals
 set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
@@ -52,23 +93,11 @@ include("Autogen/CAN/CANfigurator.cmake")
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
+
+include("${lib_path}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
 include("${lib_path}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
-
-message(
-	STATUS
-	"Build type: "
-	${CMAKE_BUILD_TYPE}
-)
-
-message(STATUS "Target type: ${TARGET_TYPE}")
-
-message(
-	STATUS
-	"Active CMake Preset: "
-	${CMAKE_PRESET_NAME}
-)
 
 # Projects
 add_gr_project(STM32G474xE ECU)
@@ -92,6 +121,8 @@ add_gr_project(STM32G474xE G4CANTESTING CAN_STRESS_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_LOST_RX_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_FILTER_TEST)
 add_gr_project(STM32G474xE G4CANTESTING PROFILER_TEST)
+
+add_gr_project(STM32G474xE G4FANCYCANTESTING CAN_LOOPBACK_TEST)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4BLINKY)

@@ -4,18 +4,6 @@
 
 #include <stdint.h>
 
-/** Debug 2.0 */
-typedef struct {
-	/** Essentially a print statement up to 8 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug[8];
-} GRCAN_DEBUG_2_0_MSG;
-
-/** Debug FD */
-typedef struct {
-	/** Essentially a print statement up to 64 bytes long that whichever targeted can parse (Byte 0) */
-	uint8_t debug[64];
-} GRCAN_DEBUG_FD_MSG;
-
 /** Ping */
 typedef struct {
 	/** Time in millis (Byte 0) */
@@ -24,58 +12,66 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	/** [Byte 0 / Bits 0-1] GLV States
+	/** [Bytes 0-1 / Bits 0-15]
+0: BCU Node Status (1: OK, 0: Timeout)
+1: GR Inverter Status (1: OK, 0: Timeout)
+2: Fan Controller 1 Status (1: OK, 0: Timeout)
+3: Fan Controller 2 Status (1: OK, 0: Timeout)
+4: Fan Controller 3 Status (1: OK, 0: Timeout)
+5: Dash Panel Status (1: OK, 0: Timeout)
+6: TCM Node Status (1: OK, 0: Timeout)
+7: SAMM_Mag_1 Status (1: OK, 0: Timeout)
+8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
+9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
+10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
+11: TireTemp_1 Status (1: OK, 0: Timeout)
+12: TireTemp_2 Status (1: OK, 0: Timeout)
+13: TireTemp_3 Status (1: OK, 0: Timeout)
+14: TireTemp_4 Status (1: OK, 0: Timeout)
+15: Reserved (Byte 0) */
+	uint16_t status_flags;
+	/** [Byte 2 / Bits 16-17] GLV States
 0: GLV Off State,
 1: GLV On State.
 See diagram in StateMachine.
-[Byte 0 / Bits 2-3] Precharge States
+[Byte 2 / Bits 18-19] Precharge States
 2: Precharge Engaged State
 3: Precharge Complete State
 See diagram in StateMachine.h
-[Byte 0 / Bits 4-5] ECU States
+[Byte 2 / Bits 20-21] ECU States
 4: Drive Active ECU State
 5: TS Discharge ECU State
 6-7: Reserved
-See diagram in StateMachine.h (Byte 0) */
+See diagram in StateMachine.h (Byte 2) */
 	uint8_t ecu_state;
-	/** [Byte 1 / Bits 8-15]
-8: BCU Node Status (1: OK, 0: Timeout)
-9: GR Inverter Status (1: OK, 0: Timeout)
-10: Fan Controller 1 Status (1: OK, 0: Timeout)
-11: Fan Controller 2 Status (1: OK, 0: Timeout)
-12: Fan Controller 3 Status (1: OK, 0: Timeout)
-13: Dash Panel Status (1: OK, 0: Timeout)
-14: TCM Node Status (1: OK, 0: Timeout)
-15: Reserved (Byte 1) */
-	uint8_t status_flags;
 	/** Controls the AC current limits to each of the inverters
-Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 2) */
+Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 3) */
 	uint8_t power_level_torque_map;
-	/** the temperature of the hottest cell of the accumulator (Byte 3) */
+	/** the temperature of the hottest cell of the accumulator (Byte 4) */
 	uint8_t max_cell_temp;
-	/** % charged of the Accumulator (Byte 4) */
+	/** % charged of the Accumulator (Byte 5) */
 	uint8_t accumulator_state_of_charge;
-	/** % charged of the Low Voltage Bat (Byte 5) */
+	/** % charged of the Low Voltage Bat (Byte 6) */
 	uint8_t glv_state_of_charge;
-	/** Output terminal voltage of accumulator (Byte 6) */
-	uint16_t tractive_system_voltage;
 } GRCAN_ECU_STATUS_1_MSG;
 
 /** ECU Status 2 */
 typedef struct {
 	/** Absolute value of speed (Byte 0) */
 	uint16_t vehicle_speed;
-	/** Wheel RPM (Byte 2) */
-	uint16_t fr_wheel_rpm;
+	/** Output terminal voltage of accumulator (Byte 2) */
+	uint16_t tractive_system_voltage;
 	/** Wheel RPM (Byte 4) */
-	uint16_t fl_wheel_rpm;
+	uint16_t fr_wheel_rpm;
 	/** Wheel RPM (Byte 6) */
-	uint16_t rr_wheel_rpm;
+	uint16_t fl_wheel_rpm;
 } GRCAN_ECU_STATUS_2_MSG;
 
 /** ECU Status 3 */
 typedef struct {
 	/** Wheel RPM (Byte 0) */
+	uint16_t rr_wheel_rpm;
+	/** Wheel RPM (Byte 2) */
 	uint16_t rl_wheel_rpm;
 } GRCAN_ECU_STATUS_3_MSG;
 
@@ -302,26 +298,37 @@ typedef struct {
 
 /** Dash Status */
 typedef struct {
-	/** TS Active = bit 0, RTD = bit 1, bits 2–7 reserved (Byte 0) */
+	/** [Byte 0 / Bits 0-7]
+0: TS Active
+1: RTD
+2-7: Reserved (Byte 0) */
 	uint8_t button_flags;
-	/** BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved (Byte 1) */
+	/** [Byte 1 / Bits 8-15]
+0: BMS
+1: IMD
+2: BSPD
+3-7: Reserved (Byte 1) */
 	uint8_t led_bits;
 } GRCAN_DASH_STATUS_MSG;
 
 /** Dash Config */
 typedef struct {
-	/** BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved (Byte 1) */
+	/** [Byte 0 / Bits 0-7]
+0: BMS LED command
+1: IMD LED command
+2: BSPD LED command
+3-7: Reserved (Byte 0) */
 	uint8_t led_bits;
 } GRCAN_DASH_CONFIG_MSG;
 
 /** TCM Status */
 typedef struct {
-	/**
-	 * Connection Status - 1: OK, 0: Timeout (bit 0)
-	 * MQTT Status - 1: OK, 0: Timeout (bit 1)
-	 * Epic Shelter Status - 1: In Progress, 0: Idle (bit 2)
-	 * Camera Status - 1: Recording, 0: Idle (bit 3)
-	 */
+	/** [Byte 0 / Bits 0-7]
+0: Connection Status
+1: MQTT Status
+2: Epic Shelter Status
+3: Camera Status
+4-7: Reserved (Byte 0) */
 	uint8_t status_bits;
 	/** Mapache ping (upload) (Byte 1) */
 	uint16_t mapache_ping;
@@ -387,7 +394,7 @@ typedef struct {
 	uint16_t power_draw;
 } GRCAN_TCM_RESOURCE_UTILIZATION_MSG;
 
-/** ECU Pedals Data */
+/** ECU Analog Data */
 typedef struct {
 	/** 4-20 mA signal (Byte 0) */
 	uint16_t bspd_signal;
@@ -467,10 +474,7 @@ typedef struct {
 
 /** ECU Performance */
 typedef struct {
-	/**
-	 * Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-	 * data type: u32
-	 * units: Clock Cycles (Byte 0) */
+	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop (Byte 0) */
 	uint32_t elapsed_cycles;
 } GRCAN_ECU_PERFORMANCE_MSG;
 

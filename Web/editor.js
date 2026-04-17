@@ -155,6 +155,12 @@
 		return !!key && newKeys.has(key);
 	}
 
+	function resetEditState() {
+		hasEdits = false;
+		editedKeys.clear();
+		newKeys.clear();
+	}
+
 	function deleteLineRange(startLine, endLine) {
 		spliceLines(startLine, endLine - startLine, null);
 	}
@@ -468,6 +474,7 @@
 		isEdited,
 		markNew,
 		isNew,
+		resetEditState,
 		downloadCando,
 		triggerReRender,
 		createEditBtn,

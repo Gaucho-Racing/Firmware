@@ -16,7 +16,6 @@ routing:
           - msg: BCU Status 1
           - msg: BCU Status 2
           - msg: BCU Status 3
-          - msg: DC-DC Status
       CAN2:
         Debugger:
           - msg: Debug FD
@@ -54,7 +53,6 @@ routing:
         ECU:
           - msg: Debug 2.0
           - msg: Ping
-          - msg: ECU config
         BCU:
           - msg: Debug 2.0
           - msg: Ping
@@ -166,6 +164,22 @@ routing:
         TCM:
           - msg: ECU Analog Data
           - msg: ECU Performance
+        SAMM_Mag_1:
+          - msg: Ping
+        SAMM_Mag_2:
+          - msg: Ping
+        SAMM_ToF_1:
+          - msg: Ping
+        SAMM_ToF_2:
+          - msg: Ping
+        TireTemp_1:
+          - msg: Ping
+        TireTemp_2:
+          - msg: Ping
+        TireTemp_3:
+          - msg: Ping
+        TireTemp_4:
+          - msg: Ping
     Energy Meter:
       CAN3:
         BCU:
@@ -254,6 +268,38 @@ routing:
           - msg: GPS QY
           - msg: GPS RZ
           - msg: UVW DGPS
+    SAMM_Mag_1:
+      CAN2:
+        ECU:
+          - msg: Ping
+    SAMM_Mag_2:
+      CAN2:
+        ECU:
+          - msg: Ping
+    SAMM_ToF_1:
+      CAN2:
+        ECU:
+          - msg: Ping
+    SAMM_ToF_2:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_1:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_2:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_3:
+      CAN2:
+        ECU:
+          - msg: Ping
+    TireTemp_4:
+      CAN2:
+        ECU:
+          - msg: Ping
 
 byte order: little_endian
 
@@ -286,49 +332,57 @@ Message ID:
   ECU Status 1:
     MSG ID: 0x003
     MSG LENGTH: 8
-    state_messages:
+    status_flags:
       bit_start: 0
       comment:
-        [Byte 0 / Bits 0-1] GLV States
+        [Bytes 0-1 / Bits 0-15]
+        0: BCU Node Status (1: OK, 0: Timeout)
+        1: GR Inverter Status (1: OK, 0: Timeout)
+        2: Fan Controller 1 Status (1: OK, 0: Timeout)
+        3: Fan Controller 2 Status (1: OK, 0: Timeout)
+        4: Fan Controller 3 Status (1: OK, 0: Timeout)
+        5: Dash Panel Status (1: OK, 0: Timeout)
+        6: TCM Node Status (1: OK, 0: Timeout)
+        7: SAMM_Mag_1 Status (1: OK, 0: Timeout)
+        8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
+        9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
+        10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
+        11: TireTemp_1 Status (1: OK, 0: Timeout)
+        12: TireTemp_2 Status (1: OK, 0: Timeout)
+        13: TireTemp_3 Status (1: OK, 0: Timeout)
+        14: TireTemp_4 Status (1: OK, 0: Timeout)
+        15: Reserved
+      data type: u16
+    ecu_state:
+      bit_start: 16
+      comment:
+        [Byte 2 / Bits 16-17] GLV States
         0: GLV Off State,
         1: GLV On State.
         See diagram in StateMachine.
-        [Byte 0 / Bits 2-3] Precharge States
+        [Byte 2 / Bits 18-19] Precharge States
         2: Precharge Engaged State
         3: Precharge Complete State
         See diagram in StateMachine.h
-        [Byte 0 / Bits 4-5] ECU States
+        [Byte 2 / Bits 20-21] ECU States
         4: Drive Active ECU State
         5: TS Discharge ECU State
         6-7: Reserved
         See diagram in StateMachine.h
       data type: b
       units: Bool
-    status_flags:
-      bit_start: 8
-      comment:
-        [Byte 1 / Bits 8-15]
-        8: BCU Node Status (1: OK, 0: Timeout)
-        9: GR Inverter Status (1: OK, 0: Timeout)
-        10: Fan Controller 1 Status (1: OK, 0: Timeout)
-        11: Fan Controller 2 Status (1: OK, 0: Timeout)
-        12: Fan Controller 3 Status (1: OK, 0: Timeout)
-        13: Dash Panel Status (1: OK, 0: Timeout)
-        14: TCM Node Status (1: OK, 0: Timeout)
-        15: Reserved
-      data type: b
     Power Level:
-      bit_start: 16
+      bit_start: 24
       comment:
         Controls the AC current limits to each of the inverters
         Discrete Mapping, actual values TBD (16 possible values)
       data type: u4
     Torque Map:
-      bit_start: 20
+      bit_start: 28
       comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
       data type: u4
     Max Cell Temp:
-      bit_start: 24
+      bit_start: 32
       comment: the temperature of the hottest cell of the accumulator
       data type: u8
       units: Celsius
@@ -336,7 +390,7 @@ Message ID:
       scaled max: 63.75
       map equation: "0.25x"
     Accumulator State of Charge:
-      bit_start: 32
+      bit_start: 40
       comment: % charged of the Accumulator
       data type: u8
       units: '%'
@@ -344,21 +398,13 @@ Message ID:
       scaled max: 100
       map equation: "20x/51"
     GLV State of Charge:
-      bit_start: 40
+      bit_start: 48
       comment: % charged of the Low Voltage Bat
       data type: u8
       units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "20x/51"
-    Tractive System Voltage:
-      bit_start: 48
-      comment: Output terminal voltage of accumulator
-      data type: u16
-      units: Volts
-      scaled min: 0
-      scaled max: 655.35
-      map equation: "0.01x"
   ECU Status 2:
     MSG ID: 0x004
     MSG LENGTH: 8
@@ -370,15 +416,15 @@ Message ID:
       scaled min: 0
       scaled max: 655.35
       map equation: "0.01x"
-    FR Wheel RPM:
+    Tractive System Voltage:
       bit_start: 16
-      comment: Wheel RPM
+      comment: Output terminal voltage of accumulator
       data type: u16
-      units: RPM
-      scaled min: -3276.8
-      scaled max: 3276.7
-      map equation: "0.1x-3276.8"
-    FL Wheel RPM:
+      units: Volts
+      scaled min: 0
+      scaled max: 655.35
+      map equation: "0.01x"
+    FR Wheel RPM:
       bit_start: 32
       comment: Wheel RPM
       data type: u16
@@ -386,7 +432,7 @@ Message ID:
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-    RR Wheel RPM:
+    FL Wheel RPM:
       bit_start: 48
       comment: Wheel RPM
       data type: u16
@@ -396,9 +442,17 @@ Message ID:
       map equation: "0.1x-3276.8"
   ECU Status 3:
     MSG ID: 0x005
-    MSG LENGTH: 2
-    RL Wheel RPM:
+    MSG LENGTH: 4
+    RR Wheel RPM:
       bit_start: 0
+      comment: Wheel RPM
+      data type: u16
+      units: RPM
+      scaled min: -3276.8
+      scaled max: 3276.7
+      map equation: "0.1x-3276.8"
+    RL Wheel RPM:
+      bit_start: 16
       comment: Wheel RPM
       data type: u16
       units: RPM
@@ -3185,49 +3239,6 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  DC-DC Status:
-    MSG ID: 0x012
-    MSG LENGTH: 7
-    Input Voltage:
-      bit_start: 0
-      comment: ~20v for LV (LV only. Send 0 for HV)
-      data type: u16
-      units: Volts
-      scaled min: 0
-      scaled max: 65.535
-      map equation: "x/1000"
-    Output Voltage:
-      bit_start: 16
-      comment: ~12v for LV and ~20v for HV
-      data type: u16
-      units: Volts
-      scaled min: 0
-      scaled max: 65.535
-      map equation: "x/1000"
-    Input Current:
-      bit_start: 32
-      comment: Input current (LV only. Send 0 for HV)
-      data type: u8
-      units: Amps
-      scaled min: 0
-      scaled max: 25.5
-      map equation: "0.1x"
-    Output Current:
-      bit_start: 40
-      comment: Output current
-      data type: u8
-      units: Amps
-      scaled min: 0
-      scaled max: 25.5
-      map equation: "0.1x"
-    DC-DC Temp:
-      bit_start: 48
-      comment: Temp of DC-DC converter
-      data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
   Inverter Status 1:
     MSG ID: 0x013
     MSG LENGTH: 6
@@ -3284,7 +3295,7 @@ Message ID:
       map equation: "x-40"
   Inverter Status 3:
     MSG ID: 0x015
-    MSG LENGTH: 2
+    MSG LENGTH: 3
     Motor temperature:
       bit_start: 0
       comment: Celsius + 40, uint8_t
@@ -3293,45 +3304,10 @@ Message ID:
       scaled min: -40
       scaled max: 215
       map equation: "x-40"
-    Over voltage faults:
+    fault_bits:
       bit_start: 16
-      comment: TS above set max voltage
-      data type: b
-      units: Bool
-    Under voltage fault:
-      bit_start: 17
-      comment: TS below set min voltage
-      data type: b
-      units: Bool
-    Inv. overtemp fault:
-      bit_start: 18
-      comment: Inverter over set max temp
-      data type: b
-      units: Bool
-    Motor overtemp fault:
-      bit_start: 19
-      comment: Motor over set max temp
-      data type: b
-      units: Bool
-    Transistor fault:
-      bit_start: 20
-      comment: Mosfet or mosfet drive error
-      data type: b
-      units: Bool
-    Encoder fault:
-      bit_start: 21
-      comment: Encoder communication or calc error
-      data type: b
-      units: Bool
-    CAN fault:
-      bit_start: 22
-      comment: CAN message error or timeout
-      data type: b
-      units: Bool
-    Future use:
-      bit_start: 23
-      data type: b
-      units: Bool
+      comment: TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or timeout
+      data type: u8
   Inverter Config:
     MSG ID: 0x016
     MSG LENGTH: 7
@@ -3453,291 +3429,46 @@ Message ID:
     MSG LENGTH: 3
     button_flags:
       bit_start: 0
-      comment: TS Active = bit 0, RTD = bit 1, bits 2–7 reserved
+      comment:
+        [Byte 0 / Bits 0-7]
+        0: TS Active
+        1: RTD
+        2-7: Reserved
       data type: u8
     led_bits:
       bit_start: 8
-      comment: BMS = bit 0 of this byte, IMD = bit 1, BSPD = bit 2, bits 3–7 reserved
+      comment:
+        [Byte 1 / Bits 8-15]
+        0: BMS
+        1: IMD
+        2: BSPD
+        3-7: Reserved
       data type: u8
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
-    BMS LED:
+    led_bits:
       bit_start: 0
-      comment: LED command (0: off, 1: on)
-      data type: b
-      units: Bool
-    IMD LED:
-      bit_start: 1
-      comment: LED command (0: off, 1: on)
-      data type: b
-      units: Bool
-    BSPD LED:
-      bit_start: 2
-      comment: LED command (0: off, 1: on)
-      data type: b
-      units: Bool
-  Steering Status:
-    MSG ID: 0x01C
-    MSG LENGTH: 2
-    Current Encoder:
-      bit_start: 0
-      comment: Position of knob (1-16)
-      data type: u4
-      units: Position
-      scaled min: 1
-      scaled max: 16
-      map equation: "1x"
-    Torque Map Encoder:
-      bit_start: 4
-      comment: Position of knob (1-16)
-      data type: u4
-      units: Position
-      scaled min: 1
-      scaled max: 16
-      map equation: "1x"
-    Regen:
-      bit_start: 8
-      comment: Position of knob (1-16)
-      data type: u4
-      units: Position
-      scaled min: 1
-      scaled max: 16
-      map equation: "1x"
-    Button 1:
-      bit_start: 12
-      comment: Button State
-      data type: b
-      units: Bool
-    Button 2:
-      bit_start: 13
-      comment: Button State
-      data type: b
-      units: Bool
-    Button 3:
-      bit_start: 14
-      comment: Button State
-      data type: b
-      units: Bool
-    Button 4:
-      bit_start: 15
-      comment: Button State
-      data type: b
-      units: Bool
-  Steering Config:
-    MSG ID: 0x01D
-    MSG LENGTH: 0
-    Reserved:
-      bit_start: 0
-  SAM Brake IR:
-    MSG ID: 0x01E
-    MSG LENGTH: 1
-    Temp:
-      bit_start: 0
-      comment: IR Temp of Brakes
+      comment:
+        [Byte 0 / Bits 0-7]
+        0: BMS LED command
+        1: IMD LED command
+        2: BSPD LED command
+        3-7: Reserved
       data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-  SAM Tire Temp:
-    MSG ID: 0x01F
-    MSG LENGTH: 4
-    Outside Temp:
-      bit_start: 0
-      comment: Furthest from chassis
-      data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Outside Middle Temp:
-      bit_start: 8
-      comment: Middle of tire
-      data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Inside Middle Temp:
-      bit_start: 16
-      comment: Middle of tire
-      data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-    Inside Temp:
-      bit_start: 24
-      comment: Closest to chassis
-      data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-  SAM IMU:
-    MSG ID: 0x020
-    MSG LENGTH: 12
-    Accel X:
-      bit_start: 0
-      comment: Acceleration in X-axis
-      data type: u16
-      units: Meters/s^2
-      scaled min: -327.68
-      scaled max: 327.67
-      map equation: "0.01x-327.68"
-    Accel Y:
-      bit_start: 16
-      comment: Acceleration in Y-axis
-      data type: u16
-      units: Meters/s^2
-      scaled min: -327.68
-      scaled max: 327.67
-      map equation: "0.01x-327.68"
-    Accel Z:
-      bit_start: 32
-      comment: Acceleration in Z-axis
-      data type: u16
-      units: Meters/s^2
-      scaled min: -327.68
-      scaled max: 327.67
-      map equation: "0.01x-327.68"
-    Gyro X:
-      bit_start: 48
-      comment: Angular velocity in X-axis
-      data type: u16
-      units: Meters/s^2
-      scaled min: -32.768
-      scaled max: 32.767
-      map equation: "0.001x-32.768"
-    Gyro Y:
-      bit_start: 64
-      comment: Angular velocity in Y-axis
-      data type: u16
-      units: Meters/s^2
-      scaled min: -32.768
-      scaled max: 32.767
-      map equation: "0.001x-32.768"
-    Gyro Z:
-      bit_start: 80
-      comment: Angular velocity in Z-axis
-      data type: u16
-      units: Meters/s^2
-      scaled min: -32.768
-      scaled max: 32.767
-      map equation: "0.001x-32.768"
-  SAM GPS 1:
-    MSG ID: 0x021
-    MSG LENGTH: 8
-    Latitude:
-      bit_start: 0
-      comment: Latitude in decimal degrees
-      data type: u32
-      units: Degrees
-    Longitude:
-      bit_start: 32
-      comment: Longitude in decimal degrees
-      data type: u32
-      units: Degrees
-  SAM GPS 2:
-    MSG ID: 0x022
-    MSG LENGTH: 8
-    Accuracy:
-      bit_start: 0
-      comment: GPS position accuracy
-      data type: u32
-    Attitude:
-      bit_start: 32
-      comment: Vehicle attitude
-      data type: u32
-  SAM GPS Time:
-    MSG ID: 0x023
-    MSG LENGTH: 8
-    Time:
-      bit_start: 0
-      comment: Time in seconds since GPS Epoch
-      data type: u32
-    Time of Week Ms:
-      bit_start: 32
-      comment: Time of week in milliseconds
-      data type: u32
-  SAM GPS Heading:
-    MSG ID: 0x024
-    MSG LENGTH: 4
-    Heading from North:
-      bit_start: 0
-      comment: Heading angle relative to true North
-      data type: u32
-  SAM Sus Pots:
-    MSG ID: 0x025
-    MSG LENGTH: 1
-    Suspension Angle:
-      bit_start: 0
-      comment: Pot Pos
-      data type: u8
-      units: degrees
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-  SAM TOF:
-    MSG ID: 0x026
-    MSG LENGTH: 2
-    Height:
-      bit_start: 0
-      comment: Ride Height
-      data type: u16
-      units: mm
-      scaled min: 0
-      scaled max: 255
-      map equation: "x/256"
-  SAM Rear Wheelspeed:
-    MSG ID: 0x027
-    MSG LENGTH: 2
-    Speed:
-      bit_start: 0
-      comment: Wheel RPM
-      data type: u16
-      units: RPM
-      scaled min: -3276.8
-      scaled max: 3276.7
-      map equation: "0.1x--3276.8"
-  SAM Pushrod Force:
-    MSG ID: 0x028
-    MSG LENGTH: 2
-    Load Force:
-      bit_start: 0
-      comment: Pushrod Force
-      data type: u16
-      units: N
-      scaled min: -3276.8
-      scaled max: 3276.7
-      map equation: "0.1x--3276.8"
   TCM Status:
     MSG ID: 0x029
     MSG LENGTH: 8
-    Connection Status:
+    status_bits:
       bit_start: 0
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    MQTT Status:
-      bit_start: 1
-      comment: 1: OK, 0: Timeout
-      data type: b
-      units: Bool
-    Epic Shelter Status:
-      bit_start: 2
-      comment: 1: In Progress, 0: Idle
-      data type: b
-      units: Bool
-    Camera Status:
-      bit_start: 3
-      comment: 1: Recording, 0: Idle
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 4-7
-    Ping:
+      comment:
+        [Byte 0 / Bits 0-7]
+        0: Connection Status
+        1: MQTT Status
+        2: Epic Shelter Status
+        3: Camera Status
+        4-7: Reserved
+    mapache_ping:
       bit_start: 8
       comment: Mapache ping (upload)
       data type: u16
@@ -3863,51 +3594,6 @@ Message ID:
       comment: power draw in mW
       data type: u16
       units: Celsius
-  Dash Warning Flags:
-    MSG ID: 0x02B
-    MSG LENGTH: 1
-    BSE APPS Violation:
-      bit_start: 0
-      comment: 1: Violation, 0: OK
-      data type: b
-      units: Bool
-    Reserved:
-      bit_start: 1
-    Reserved:
-      bit_start: 2
-    Reserved:
-      bit_start: 3
-    Reserved:
-      bit_start: 4
-    Reserved:
-      bit_start: 5
-    Reserved:
-      bit_start: 6
-    Reserved:
-      bit_start: 7
-  Specific Brake IR:
-    MSG ID: 0x02C
-    MSG LENGTH: 2
-    Wheel identifier:
-      bit_start: 0
-      comment: Wheel identifier according to the wiki
-      data type: u8
-    Temp:
-      bit_start: 8
-      comment: IR Temp of Brakes
-      data type: u8
-      units: Celsius
-      scaled min: 0
-      scaled max: 255
-      map equation: "1x"
-  ECU Ping Information:
-    MSG ID: 0x02D
-    MSG LENGTH: 3
-    Online pings:
-      bit_start: 0
-      comment: Literal copy of ECU Status's status bit map
-      data type: b[24]
-      units: Bool map
   ECU Analog Data:
     MSG ID: 0x02E
     MSG LENGTH: 16
@@ -4057,15 +3743,14 @@ Message ID:
       data type: i16
       map equation: "x/100"
   ECU Performance:
-    MSG ID: 0x123
+    MSG ID: 0x2F
     MSG LENGTH: 4
     Elapsed Cycles:
       bit_start: 0
       comment:
         Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-        data type: u32
-        units: Clock Cycles
-      data type: u8
+      data type: u32
+      units: Clock Cycles
 
 Custom CAN ID:
   DTI Control 1:
@@ -4584,4 +4269,12 @@ GR ID:
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
   DGPS: "0x30"
+  SAMM_Mag_1: "0x20"
+  SAMM_Mag_2: "0x21"
+  SAMM_ToF_1: "0x22"
+  SAMM_ToF_2: "0x23"
+  TireTemp_1: "0x24"
+  TireTemp_2: "0x25"
+  TireTemp_3: "0x26"
+  TireTemp_4: "0x27"
   ALL: "0xFF"
