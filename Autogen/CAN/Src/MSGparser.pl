@@ -110,7 +110,7 @@ sub write_msg_header {
 	my @sorted_msgs = sort { hex $a->{id} <=> hex $b->{id} } @{$msg_ids_ref};
 
 	foreach my $msg (@sorted_msgs) {
-		push @header_lines, sprintf "    %-40s = %s,\n", $msg->{name}, $msg->{id};
+		push @header_lines, sprintf "%s = %s,\n", $msg->{name}, $msg->{id};
 	}
 
 	push @header_lines, "} GRCAN_MSG_ID;\n\n";
