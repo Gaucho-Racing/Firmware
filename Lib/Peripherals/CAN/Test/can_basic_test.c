@@ -5,7 +5,7 @@
 #include "can_tests.h"
 #include "profile.h"
 
-// #include "can_external_test_cfg.h"
+// #include "can_basic_test_cfg.h"
 
 // CAN Configuration
 // #define OLD_SAM
@@ -20,7 +20,7 @@
 #define NODE_ID 2
 
 #ifndef NODE_ID
-#error "can_external_test.c: please define node in can_external_test_cfg.h"
+#error "can_basic_test.c: please define node in can_basic_test_cfg.h"
 #endif
 
 // TODO: Decide how much of these parameters should go into config
@@ -88,7 +88,7 @@ static void can_test_rx_callback2(uint32_t id, void *data, uint32_t size)
 
 // TODO - allow user to send data without needing to construct a header for the buffer
 //  TODO: G4 tests are dependent on the System clock configuration??
-int can_external_test(void)
+int can_basic_test(void)
 {
 	FDCAN_TxHeaderTypeDef TxHeader = {
 	    .Identifier = NODE_ID,
@@ -234,7 +234,7 @@ int can_external_test(void)
 
 		rx_stats[data_length_code] = dwt_timer_average_cycles(&rx_timer);
 
-		LOGOMATIC("can_external_test: SUCCESS\n");
+		LOGOMATIC("can_basic_test: SUCCESS\n");
 #endif
 
 		HAL_Delay(100);
@@ -249,27 +249,27 @@ int can_external_test(void)
 		// TODO: Create testing functions to check state of can instance
 		if (rx_1_received != NUM_MESSAGES * (NUM_NODES - 1)) {
 			error = true;
-			LOGOMATIC("FAIL: can_external_test: did not receive all rx1\n");
+			LOGOMATIC("FAIL: can_basic_test: did not receive all rx1\n");
 		} else {
-			LOGOMATIC("SUCCESS: can_external_test: received all rx1\n");
+			LOGOMATIC("SUCCESS: can_basic_test: received all rx1\n");
 		}
 
 #ifdef DATA_CAN
 		if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
 			error = true;
-			LOGOMATIC("FAIL: can_external_test: did not receive all rx2\n");
+			LOGOMATIC("FAIL: can_basic_test: did not receive all rx2\n");
 		} else {
-			LOGOMATIC("SUCCESS: can_external_test: received all rx2\n");
+			LOGOMATIC("SUCCESS: can_basic_test: received all rx2\n");
 		}
 #endif
 
 		if (primary_can->tx_elements > 0) {
-			LOGOMATIC("can_external_test: FAIL: did not send all messages from primary tx_buffer\n");
+			LOGOMATIC("can_basic_test: FAIL: did not send all messages from primary tx_buffer\n");
 		}
 
 #ifdef DATA_CAN
 		if (data_can->tx_elements > 0) {
-			LOGOMATIC("can_external_test: FAIL: did not send all messages from data tx_buffer\n");
+			LOGOMATIC("can_basic_test: FAIL: did not send all messages from data tx_buffer\n");
 		}
 #endif
 
@@ -289,12 +289,12 @@ int can_external_test(void)
 
 #ifdef RELEASE_AFTER_TEST
 	if ((error |= can_release(primary_can))) {
-		LOGOMATIC("FAIL: can_external_test; could not release primary_can\n");
+		LOGOMATIC("FAIL: can_basic_test; could not release primary_can\n");
 	}
 
 #ifdef DATA_CAN
 	if ((error |= can_release(data_can))) {
-		LOGOMATIC("FAIL: can_external_test; could not release data_can\n");
+		LOGOMATIC("FAIL: can_basic_test; could not release data_can\n");
 	}
 #endif
 #endif

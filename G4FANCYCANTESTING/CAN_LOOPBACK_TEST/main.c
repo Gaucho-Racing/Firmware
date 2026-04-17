@@ -155,8 +155,8 @@ int main(void)
 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 	HAL_Delay(200);
 
-	// LOGOMATIC("running can_external_test:\n");
-	// can_external_test();
+	// LOGOMATIC("running can_basic_test:\n");
+	// can_basic_test();
 
 	int result = FancyCAN_LoopbackTest();
 	LOGOMATIC("\n");

@@ -11,8 +11,7 @@
 
 // testing functions
 extern int can_external_two_node(void);
-extern int can_external_test(void);
-extern int can_internal_test(void);
+extern int can_basic_test(void);
 extern int can_stress_test(void);
 extern int can_release_test(void);
 extern int can_filter_test(void);

@@ -501,8 +501,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CAN_EXTERNAL_TEST.elf",
-			"name": "CAN_EXTERNAL_TEST",
+			"executable": "${command:cmake.buildDirectory}/CAN_BASIC_TEST.elf",
+			"name": "CAN_BASIC_TEST",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -511,7 +511,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CAN_EXTERNAL_TEST",
+			"preLaunchTask": "CMake: configure and build CAN_BASIC_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
@@ -718,8 +718,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G431x8_CAN_EXTERNAL_TEST.elf",
-			"name": "G431x8_CAN_EXTERNAL_TEST",
+			"executable": "${command:cmake.buildDirectory}/G431x8_CAN_BASIC_TEST.elf",
+			"name": "G431x8_CAN_BASIC_TEST",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -728,7 +728,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G431x8_CAN_EXTERNAL_TEST",
+			"preLaunchTask": "CMake: configure and build G431x8_CAN_BASIC_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {

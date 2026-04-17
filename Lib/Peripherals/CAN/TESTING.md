@@ -29,8 +29,7 @@ This line instructs CMake to:
 Other CAN test variants are defined in the same section:
 
 ```
-add_gr_project(STM32G474xE G4CANTESTING CAN_EXTERNAL_TEST)
-add_gr_project(STM32G474xE G4CANTESTING CAN_INTERNAL_TEST)
+add_gr_project(STM32G474xE G4CANTESTING CAN_BASIC_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_RELEASE_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_STRESS_TEST)
 ```
