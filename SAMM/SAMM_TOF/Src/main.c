@@ -30,14 +30,14 @@
 #include <stdio.h>
 
 #include "IMU/bmi323.h"
-#include "VL53L4ED_api.h"
+#include "../Extras/VL53L4ED/VL53L4ED_api.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-// #define BMI323_CS_GPIO_Port GPIOA
-// #define BMI323_CS_Pin GPIO_PIN_4
+ #define BMI323_CS_GPIO_Port GPIOA		//Uncommented 4/16/26 to fix reference errors
+ #define BMI323_CS_Pin GPIO_PIN_4		//Uncommented 4/16/26 to fix reference errors
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/

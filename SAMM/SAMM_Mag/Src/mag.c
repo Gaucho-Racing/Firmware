@@ -20,7 +20,8 @@ void mag_init(mag mag_dev, SPI_HandleTypeDefspi_port, GPIO_TypeDef port, uint16_
 
 	return HAL_OK;
 }
-uint16_t mag_transmit(magmag_dev, uint16_t data)
+
+uint16_t mag_transmit(mag mag_dev, uint16_t data)
 {
 	uint8_t tx_word[2] = {data >> 8, data & 0xFF};
 	uint8_t rx_word[2] = {0};
@@ -31,6 +32,7 @@ uint16_t mag_transmit(magmag_dev, uint16_t data)
 
 	return ((uint16_t)rx_word[0] << 8) | rx_word[1];
 }
+
 uint16_t mag_read(mag mag_dev, uint8_t reg)
 {
 	uint16_t cmd = (uint16_t)reg << 8;    // read: bit 14 = 0, address in bits 13:8
@@ -50,6 +52,18 @@ uint8_t mag_calib_abort(mag *mag_dev)
 	mag_write(mag_dev, mag_CMD, mag_CMD_CALIB_ABORT);
 	return 1;
 }
+
+//may ormay not work
+uint16_t mag_read_encoder_angle(mag mag_dev)
+{
+    uint16_t read_angle = mag_transmit(mag_dev, 0x32);  //0x32 is angle register
+    return ((uint16_t)(read_angle & 0x7FFF));  // Mask to 15 bits (valid angle data)
+}
+
+//Address 0x22:0x23 (STA)—Device Status
+	//read bit 0 AOK [0]
+//Address 0x28:0x29 (TSEN)—Temperature Sensor
+
 
 /*
 TODO:
