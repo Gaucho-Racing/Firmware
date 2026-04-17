@@ -8,9 +8,14 @@
 
 // #include "can_platform_deps.h"
 #include "Logomatic.h"
-#include "STM32G4_hal_fdcan_defines.h"
 
-#define DMA_INTERRUPT // for some reason interrupts are more stable than polling for the transfer complete, so don't comment this
+#ifdef STM32G4
+#include "STM32G4_hal_fdcan_defines.h"
+#else
+#error "CAN with DMA not yet supported for this family"
+#endif
+
+#define DMA_INTERRUPT // for some reason interrupts are more stable than polling for the transfer complete, so don't comment this out
 
 // static void DMA_M2M_BlockingTransfer(uint8_t *src, uint8_t *dst, uint32_t byte_count);
 static void DMA_M2M_WordTransfer(uint8_t *src, uint8_t *dst, uint32_t word_count);
@@ -158,7 +163,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 		pData = (uint8_t *)RxAddress;
 
 		// TODO: sanitize this because a lot can go wrong here
-		uint32_t bytes = DLCtoBytes[pRxHeader->DataLength];
+		uint32_t bytes = CANFD_DLCtoBytes[pRxHeader->DataLength];
 		uint32_t wordCount = bytes >> 2;
 		uint32_t tailBytes = bytes & 0x3U;
 		uint32_t wordsToBytes = wordCount << 2;
@@ -212,7 +217,7 @@ HAL_StatusTypeDef FDCAN_GetRxMessage_DMA(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 		}
 #endif
 
-		/*for (ByteCounter = 0; ByteCounter < DLCtoBytes[pRxHeader->DataLength]; ByteCounter++) {
+		/*for (ByteCounter = 0; ByteCounter < CANFD_DLCtoBytes[pRxHeader->DataLength]; ByteCounter++) {
 			pRxData[ByteCounter] = pData[ByteCounter];
 		}*/
 
