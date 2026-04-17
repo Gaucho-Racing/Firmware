@@ -98,6 +98,30 @@ CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
 // HAL_FDCAN_ConfigFilter()
 
+#define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		if (GPIOX == GPIOA)                                                                                                                                                                    \
+			__HAL_RCC_GPIOA_CLK_ENABLE();                                                                                                                                                  \
+		else if (GPIOX == GPIOB)                                                                                                                                                               \
+			__HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                                                                  \
+		else if (GPIOX == GPIOD)                                                                                                                                                               \
+			__HAL_RCC_GPIOD_CLK_ENABLE();                                                                                                                                                  \
+		else                                                                                                                                                                                   \
+			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
+	} while (0)
+
+#define GPIOx_CLK_DISABLE(GPIOX)                                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		if (GPIOX == GPIOA)                                                                                                                                                                    \
+			__HAL_RCC_GPIOA_CLK_DISABLE();                                                                                                                                                 \
+		else if (GPIOX == GPIOB)                                                                                                                                                               \
+			__HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                                                                 \
+		else if (GPIOX == GPIOD)                                                                                                                                                               \
+			__HAL_RCC_GPIOD_CLK_DISABLE();                                                                                                                                                 \
+		else                                                                                                                                                                                   \
+			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
+	} while (0)
+
 // doesn't need a handle, CAN cores share peripheral clock
 void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
