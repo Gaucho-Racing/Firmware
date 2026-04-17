@@ -24,6 +24,7 @@ void mag_init(mag mag_dev, SPI_HandleTypeDefspi_port, GPIO_TypeDef port, uint16_
 		return HAL_ERROR;
 	}
 
+
 	mag_write(mag_dev, 0x1E, 0x01);
 
 	return HAL_OK;
@@ -87,11 +88,11 @@ uint8_t mag_calib_abort(mag *mag_dev)
 	return 1;
 }
 
-// may ormay not work
-uint16_t mag_read_encoder_angle(mag mag_dev)
+//Address 0x32:0x33 (ANG15)—Current Angle Reading (15 bits)
+float mag_read_encoder_angle(mag mag_dev)
 {
 	uint16_t read_angle = mag_transmit(mag_dev, 0x32); // 0x32 is angle register
-	return ((uint16_t)(read_angle & 0x7FFF));	   // Mask to 15 bits (valid angle data)
+	return ((uint16_t)(read_angle & 0x7FFF) * 360.0f / 32768);	   // Mask to 15 bits (valid angle data)
 }
 
 // Address 0x22:0x23 (STA)—Device Status
@@ -143,81 +144,19 @@ uint16_t mag_read_acc_x(mag *mag_dev)
 
 uint16_t mag_read_acc_y(mag *mag_dev)
 {
-	return mag_read(mag_dev, mag_ACC_Y);
+	int16_t read_turns = mag_transmit(mag_dev, 0x2C); // 0x2C is turn counter
+	return ((int16_t)(read_angle & 0x0FFF));;	   // Mask to 12 bits (valid angle data)
 }
 
-uint16_t mag_read_acc_z(mag *mag_dev)
+//Address 0x24:0x25 (ERR)—Device Error Flags
+	// FIXME: add error handling
+
+//Address 0x30:0x31 (HANG)—Hysteresis Angle Value (12 bits)
+float mag_read_HANG(mag mag_dev)
 {
-	return mag_read(mag_dev, mag_ACC_Z);
+	int16_t read_HANG = mag_transmit(mag_dev, 0x30); // 0x30 is Hysteresis Angle Value
+	return ((uint16_t)(read_HANG & 0x0FFF) * 360.0f / 32768);	   // Mask to 12 bits (valid angle data)
 }
 
-uint16_t mag_read_gyr_x(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_GYR_X);
-}
-
-uint16_t mag_read_gyr_y(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_GYR_Y);
-}
-
-uint16_t mag_read_gyr_z(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_GYR_Z);
-}
-
-uint16_t mag_read_temp_data(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_TEMP_DATA);
-}
-
-uint16_t mag_read_status(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_STATUS);
-}
-
-uint16_t mag_read_err_reg(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_ERR_REG);
-}
-
-uint16_t mag_read_chip_id(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_CHIP_ID);
-}
-
-uint16_t mag_read_acc_conf(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_ACC_CONF);
-}
-
-uint16_t mag_read_gyr_conf(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_GYR_CONF);
-}
-
-uint8_t mag_enable_acc(mag *mag_dev, uint8_t acc_mode, uint8_t acc_avg_num, uint8_t acc_bw, uint8_t acc_range, uint8_t acc_odr)
-{
-	// uint16_t acc_conf = mag_read_acc_conf(mag_dev);
-	uint16_t new_conf = 0;
-	new_conf |= acc_mode << 12;
-	new_conf |= acc_avg_num << 8;
-	new_conf |= acc_bw << 7;
-	new_conf |= acc_range << 4;
-	new_conf |= acc_odr;
-	mag_write(mag_dev, mag_ACC_CONF, new_conf);
-	return 1;
-}
-
-uint8_t mag_enable_gyro(mag *mag_dev, uint8_t gyr_mode, uint8_t gyr_avg_num, uint8_t gyr_bw, uint8_t gyr_range, uint8_t gyr_odr)
-{
-	// uint16_t acc_conf = mag_read_acc_conf(mag_dev);
-	uint16_t new_conf = 0;
-	new_conf |= gyr_mode << 12;
-	new_conf |= gyr_avg_num << 8;
-	new_conf |= gyr_bw << 7;
-	new_conf |= gyr_range << 4;
-	new_conf |= gyr_odr;
-	mag_write(mag_dev, mag_GYR_CONF, new_conf);
-	return 1;
-}
+//Address 0x1E:0x1F (CTRL)—Device Control
+	// FIXME: add error flag handling

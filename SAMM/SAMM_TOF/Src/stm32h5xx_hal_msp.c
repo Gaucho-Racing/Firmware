@@ -67,7 +67,7 @@ void HAL_MspInit(void)
 
 	/* USER CODE END MspInit 0 */
 
-	// __HAL_RCC_SYSCFG_CLK_ENABLE();
+	//__HAL_RCC_SYS_CFG_CLK_ENABLE();
 	__HAL_RCC_SBS_CLK_ENABLE();
 	__HAL_RCC_PWR_CLK_ENABLE();
 
