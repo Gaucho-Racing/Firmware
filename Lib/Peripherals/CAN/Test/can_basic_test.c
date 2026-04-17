@@ -253,6 +253,7 @@ int can_basic_test(void)
 		} else {
 			LOGOMATIC("SUCCESS: can_basic_test: received all rx1\n");
 		}
+		rx_1_received = 0;
 
 #ifdef DATA_CAN
 		if ((rx_2_received != NUM_MESSAGES * (NUM_NODES - 1))) {
@@ -261,6 +262,7 @@ int can_basic_test(void)
 		} else {
 			LOGOMATIC("SUCCESS: can_basic_test: received all rx2\n");
 		}
+		rx_2_received = 0;
 #endif
 
 		if (primary_can->tx_elements > 0) {
