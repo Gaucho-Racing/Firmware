@@ -24,7 +24,7 @@ set(
 )
 set(
 	CMAKE_C_FLAGS
-	"${TARGET_FLAGS} -Wall -Wextra -Wpedantic -Wvla -Wdouble-promotion -fdata-sections -ffunction-sections -fstack-usage"
+	"${TARGET_FLAGS} -Wall -Wextra -Wpedantic -Wvla -Wdouble-promotion -fshort-enums -fdata-sections -ffunction-sections -fstack-usage"
 )
 set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp -MMD -MP")
 
