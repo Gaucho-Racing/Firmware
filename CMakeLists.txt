@@ -93,6 +93,8 @@ include("Autogen/CAN/CANfigurator.cmake")
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
+
+include("${lib_path}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
 include("${lib_path}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
@@ -119,6 +121,8 @@ add_gr_project(STM32G474xE G4CANTESTING CAN_STRESS_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_LOST_RX_TEST)
 add_gr_project(STM32G474xE G4CANTESTING CAN_FILTER_TEST)
 add_gr_project(STM32G474xE G4CANTESTING PROFILER_TEST)
+
+add_gr_project(STM32G474xE G4FANCYCANTESTING CAN_LOOPBACK_TEST)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4BLINKY)
