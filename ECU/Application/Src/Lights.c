@@ -53,21 +53,6 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 	}
 }
 
-void SoftwareOKLightControl(ECU_StateData *stateLump)
-{
-	if (stateLump->ecu_state == GR_GLV_ON) {
-		LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-	}
-	if (stateLump->ecu_state == GR_PRECHARGE_COMPLETE && (!stateLump->ts_active_button_active || CriticalError(stateLump))) {
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-	}
-	if (stateLump->ecu_state == GR_DRIVE_ACTIVE && (!stateLump->ts_active_button_active || CriticalError(stateLump))) {
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-	}
-}
-
-// TODO: add BCU, IMS, and BSPD lights
-
 void BMSLights(ECU_StateData *stateLump)
 {
 	bool light = 0;
@@ -103,7 +88,6 @@ void lightControl(ECU_StateData *stateData)
 	TSSILightControl(stateData);
 	RTDButtonLightControl(stateData);
 	TSActiveButtonLightControl(stateData);
-	SoftwareOKLightControl(stateData);
 	BMSLights(stateData);
 	IMDLights(stateData);
 	BSPDLights(stateData);

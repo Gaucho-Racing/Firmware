@@ -88,9 +88,10 @@ void ECU_GLV_On(ECU_StateData *stateData)
 		return;
 	}
 
-	if (stateData->ts_active_button_active /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
+	if (stateData->ts_active_button_pressed /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
 		LOGOMATIC("GLV ON to PRECHARGE START!\n");
 		ECU_Transition_To_Precharge_Engaged(stateData);
+		stateData->ts_active_button_pressed = false;
 		return;
 	}
 }
@@ -116,10 +117,17 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (!stateData->ts_active_button_active || CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= MAX_PRECHARGE_TIME) {
-		LOGOMATIC("ERROR or ts_active OFF! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
+	if (CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= MAX_PRECHARGE_TIME) {
+		LOGOMATIC("CRITICAL ERROR! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
+		return;
+	}
+	if (stateData->ts_active_button_pressed) {
+		LOGOMATIC("ERROR: ts_active PRESSED! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
+		ECU_Transition_To_Tractive_System_Discharge(stateData);
+		stateData->ts_active_button_pressed = false;
 		return;
 	}
 }
@@ -127,9 +135,10 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 // TODO: change for CAN button messenging
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
-	if (!stateData->ts_active_button_active) {
+	if (stateData->ts_active_button_pressed) {
 		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
+		stateData->ts_active_button_pressed = false;
 		return;
 	}
 	if (CriticalError(stateData)) {
@@ -139,7 +148,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		return;
 	}
 
-	if (PressingBrake(stateData) && stateData->rtd_button_active) {
+	if (PressingBrake(stateData) && stateData->rtd_button_pressed) {
 		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
 		GRCAN_ECU_ANALOG_DATA_MSG pedals_message = {.bspd_signal = stateData->bspd_signal,
@@ -153,6 +162,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
+		stateData->rtd_button_pressed = false;
 		return;
 	}
 }
@@ -167,10 +177,17 @@ void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 
 void ECU_Drive_Active(ECU_StateData *stateData)
 {
-	if (!stateData->ts_active_button_active || CriticalError(stateData)) {
+	if (CriticalError(stateData)) {
 		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
+		return;
+	}
+	if (stateData->ts_active_button_pressed) {
+		LOGOMATIC("Error: TS active button pressed in Drive Active state. Discharging Tractive System.\n");
+		ECU_Transition_To_Tractive_System_Discharge(stateData);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
+		stateData->ts_active_button_pressed = false;
 		return;
 	}
 
@@ -181,11 +198,12 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		LOGOMATIC("buzz!\n");
 	}
 
-	if (!stateData->rtd_button_active) {
+	if (stateData->rtd_button_pressed) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		if (vehicle_is_moving(stateData)) {
 			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
 		}
+		stateData->rtd_button_pressed = false;
 		return;
 	}
 

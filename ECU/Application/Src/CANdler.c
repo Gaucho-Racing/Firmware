@@ -94,6 +94,24 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_INVERTER_STATUS_3_MSG *inverter_status_3 = (GRCAN_INVERTER_STATUS_3_MSG *)data;
 			state_data->inverter_fault_map = inverter_status_3->fault_bits;
 			break;
+		case GRCAN_DASH_STATUS:
+			if (data_length != sizeof(GRCAN_DASH_STATUS_MSG)) {
+				ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
+			if (state_data->ecu_state != GR_TS_DISCHARGE) {
+				state_data->ts_active_button_pressed = GETBIT(dash_data->button_flags, 0);
+			} else {
+				state_data->ts_active_button_pressed = false;
+			}
+			if (state_data->ecu_state == GR_DRIVE_ACTIVE || state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
+				state_data->rtd_button_pressed = GETBIT(dash_data->button_flags, 1);
+			} else {
+				state_data->rtd_button_pressed = false;
+			}
+
+			break;
 		/*
 		case GRCAN_STEERING_STATUS:
 			if (data_length != sizeof(GRCAN_STEERING_STATUS_MSG)) {
