@@ -420,21 +420,16 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	uint32_t basepri = __get_BASEPRI();
 	__set_BASEPRI((canHandle->tx_interrupt_priority) << 4);
 
-	uint32_t free = 0;
-	if ((free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
-		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
+	CAN_STATUS recovery_status = can_try_recover_tx_path(canHandle);
 
-		uint32_t val = 0;
-		if (status != HAL_OK) {
-			LOGOMATIC("CAN_send: failed to add to HW FIFO\n");
-			val = CAN_ERROR;
-		} else {
-			val = CAN_SUCCESS;
+	uint32_t free = 0;
+	if (recovery_status == CAN_SUCCESS && (free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
+		if (HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data) == HAL_OK) {
+			__set_BASEPRI(basepri);
+			return CAN_SUCCESS;
 		}
-		__set_BASEPRI(basepri);
-		return val;
+		LOGOMATIC("CAN_send: failed to add to HW FIFO, queueing instead\n");
 	}
-	//}
 
 	// Hardware FIFO full, try software buffer
 	if (canHandle->tx_elements < canHandle->tx_capacity) {
@@ -444,6 +439,10 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		canHandle->tx_buffer[idx] = *message;
 		canHandle->tx_elements++;
 		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
+
+		if (recovery_status == CAN_SUCCESS) {
+			can_tx_dequeue_helper(canHandle);
+		}
 
 		__set_BASEPRI(basepri);
 		return CAN_SUCCESS; // added to software buffer
