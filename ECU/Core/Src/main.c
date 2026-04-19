@@ -184,6 +184,7 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC1.Dest_Address = ADC_buffers;
 	DMA_Init_Vals_ADC1.Data_Size = Half_Word;
 	DMA_Init_Vals_ADC1.Priority = HIGH; // TODO: check what this does
+	DMA_Init_Vals_ADC1.Num_Data = NUM_SIGNALS_ADC1;
 	DMA_Init(&DMA_Init_Vals_ADC1);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
@@ -195,6 +196,7 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC2.Dest_Address = ADC_buffers + NUM_SIGNALS_ADC1;
 	DMA_Init_Vals_ADC2.Data_Size = Half_Word;
 	DMA_Init_Vals_ADC2.Priority = HIGH; // TODO: check what this does
+	DMA_Init_Vals_ADC2.Num_Data = NUM_SIGNALS_ADC2;
 	DMA_Init(&DMA_Init_Vals_ADC2);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
 
