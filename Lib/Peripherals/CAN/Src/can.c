@@ -1143,6 +1143,8 @@ void FDCAN3_IT1_IRQHandler(void)
 }
 
 #ifdef CAN_ENABLE_RECOVERY_TIMER
+// If we need to support other timers we can add the handler here
+#ifdef CAN_RECOVERY_TIMER_TIM7
 void TIM7_IRQHandler(void)
 {
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM7)) {
@@ -1150,4 +1152,5 @@ void TIM7_IRQHandler(void)
 		can_recovery_timer_tick();
 	}
 }
+#endif
 #endif
