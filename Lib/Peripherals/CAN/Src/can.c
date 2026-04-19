@@ -507,6 +507,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		return;
 	}
 
+	(void)can_try_recover_tx_path(handle);
+
 	/*if (!handle->rx_buffer) {
 	    LOGOMATIC("CAN: RX Complete, but %s Buffer was released\n", can_get_instance_name(hfdcan->Instance));
 	    return;
