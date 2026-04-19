@@ -431,7 +431,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		LOGOMATIC("CAN_send: failed to add to HW FIFO, queueing instead\n");
 	}
 
-	// Hardware FIFO full, try software buffer
+	// Hardware FIFO full or controller is recovering, try software buffer
 	if (canHandle->tx_elements < canHandle->tx_capacity) {
 		// int result = GR_CircularBuffer_Push(canHandle->tx_buffer, message, sizeof(FDCANTxMessage));
 
