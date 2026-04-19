@@ -1,6 +1,6 @@
 # Gaucho Racing CAN API Reference
 
-This document provides an overview of the Gaucho Racing CAN API, a simplified wrapper for STM32 FDCAN peripherals (specifically STM32G4). It handles hardware initialization, interrupt-driven message transmission with software buffering, and simplified receiver callbacks.
+This document provides an overview of the Gaucho Racing CAN API, a simplified wrapper for STM32 FDCAN peripherals (specifically STM32G4). It handles hardware initialization, bus-off recovery, interrupt-driven message transmission with software buffering, and simplified receiver callbacks.
 
 ---
 
@@ -199,6 +199,49 @@ Adds a hardware-level filter to the instance.
 Must be called while the peripheral is initialized but **not yet started**.
 
 
+---
+
+# 7. Recovery Behavior
+
+The CAN peripheral includes automatic TX-path recovery attempts when the controller enters restricted operation mode (such as after temporary bus faults/disconnect events).
+
+## Recovery Triggers
+
+Recovery is attempted from:
+
+- `can_send` (before direct Tx enqueue)
+- `HAL_FDCAN_ErrorStatusCallback` (on error-status interrupt events)
+- `HAL_FDCAN_RxFifo0Callback` (opportunistic recovery on Rx activity)
+
+## Recovery Strategy
+
+- If controller is **not** in restricted mode, normal TX flow continues.
+- If in restricted mode, protocol status is checked.
+- If **Bus-Off** is active, recovery is deferred (controller is not forced out).
+- If Bus-Off is clear, `HAL_FDCAN_ExitRestrictedOperationMode` is attempted.
+- On successful exit, queued software TX messages are dequeued back to HW TX FIFO.
+
+## Optional Periodic Recovery Timer
+
+An optional compile-time timer path can periodically trigger recovery attempts, even when no RX/TX/error callback activity is occurring.
+
+Define in `can_cfg.h`:
+
+```c
+#define CAN_ENABLE_RECOVERY_TIMER
+#define CAN_RECOVERY_TIMER_USE_TIM7
+#define CAN_RECOVERY_TIMER_PERIOD_MS 1000U
+```
+
+Constraints:
+
+- `CAN_RECOVERY_TIMER_PERIOD_MS` must be at least `100` ms.
+- TIM7 ownership should be considered reserved when this feature is enabled.
+
+Boot/runtime safety notes:
+
+- TIM7 counter starts from `can_start` (not global boot init).
+- Recovery tick logic only acts on CAN handles that are both initialized and started.
 
 # Implementation Notes and Constraints
 
