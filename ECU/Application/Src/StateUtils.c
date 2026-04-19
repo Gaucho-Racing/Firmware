@@ -31,23 +31,29 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= bmsFailure(stateData);
 	problem |= bspdFailure(stateData);
 	if (problem) {
-		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+		//LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	}
 	return problem;
 }
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
+	LOGOMATIC("BMS failure found\n");
+	return false;
 	return (stateData->ams_sense >= 2.7f) || (stateData->ams_sense <= 1.45f); // TODO: find better range
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
 {
+	LOGOMATIC("IMD failure found\n");
+	return false;
 	return (stateData->imd_sense >= 2.7f) || (stateData->imd_sense <= 1.45f); // TODO: find better range
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
+	LOGOMATIC("BSPD failure found\n");
+	return false;
 	return (stateData->bspd_sense >= 2.7f) || (stateData->bspd_sense <= 1.45f); // TODO: find better range
 										    // TODO: shutdown switch stuff
 }

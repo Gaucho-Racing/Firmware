@@ -182,7 +182,7 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC1.Channel = DMA_CHANNEL_1;
 	DMA_Init_Vals_ADC1.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
 	DMA_Init_Vals_ADC1.Dest_Address = ADC_buffers;
-	DMA_Init_Vals_ADC1.Data_Size = Word;
+	DMA_Init_Vals_ADC1.Data_Size = Half_Word;
 	DMA_Init_Vals_ADC1.Priority = HIGH; // TODO: check what this does
 	DMA_Init(&DMA_Init_Vals_ADC1);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
@@ -191,9 +191,9 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC2.DMA = DMA1;
 	DMA_Init_Vals_ADC2.ADC = ADC2;
 	DMA_Init_Vals_ADC2.Channel = DMA_CHANNEL_2;
-	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA);
 	DMA_Init_Vals_ADC2.Dest_Address = ADC_buffers + NUM_SIGNALS_ADC1;
-	DMA_Init_Vals_ADC2.Data_Size = Word;
+	DMA_Init_Vals_ADC2.Data_Size = Half_Word;
 	DMA_Init_Vals_ADC2.Priority = HIGH; // TODO: check what this does
 	DMA_Init(&DMA_Init_Vals_ADC2);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
@@ -366,10 +366,10 @@ int main(void)
 	// TODO: do we need these?
 	MX_GPIO_Init();
 	MX_DMA_Init();
-	MX_FDCAN1_Init();
+	//MX_FDCAN1_Init();
 	MX_ADC1_Init();
 	MX_ADC2_Init();
-	MX_FDCAN2_Init();
+	//MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
 
 	// Initialize DWT
@@ -395,7 +395,7 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		if (cycle_counter_accumulator == 10) {
 			elapsed_cycles = DWT->CYCCNT;
-			LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
+			//LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
 			GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
 			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
 			cycle_counter_accumulator = 0;
