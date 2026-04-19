@@ -170,7 +170,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build TireTemp",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -730,7 +730,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G431x8_CAN_BASIC_TEST",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
