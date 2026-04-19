@@ -7,6 +7,7 @@
 
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_dma.h"
+#include "stm32g4xx_ll_tim.h"
 
 // TODO: make the profiler cleaner
 #include "Logomatic.h"
@@ -24,6 +25,19 @@
 #include "can_cfg.h"
 #ifndef CAN_CFG_H
 #error "can.c: Please define CAN_CFG_H and define at least one USECANx and TX_BUFFER_X_SIZE"
+#endif
+
+#ifdef CAN_ENABLE_RECOVERY_TIMER
+#ifndef CAN_RECOVERY_TIMER_USE_TIM7
+#error "Define CAN_RECOVERY_TIMER_USE_TIM7 in can_cfg.h to enable periodic recovery using TIM7"
+#endif
+#ifndef CAN_RECOVERY_TIMER_PERIOD_MS
+#warning "Define CAN_RECOVERY_TIMER_PERIOD_MS in can_cfg.h, defaulting to 1000ms"
+#define CAN_RECOVERY_TIMER_PERIOD_MS 1000U
+#endif
+#if CAN_RECOVERY_TIMER_PERIOD_MS < 100U
+#error "CAN_RECOVERY_TIMER_PERIOD_MS must be at least 100ms"
+#endif
 #endif
 // ===============================
 
@@ -104,6 +118,13 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
 static CAN_STATUS can_try_recover_tx_path(CANHandle *canHandle);
 static void can_tx_dequeue_helper(CANHandle *handle);
+#ifdef CAN_ENABLE_RECOVERY_TIMER
+static CAN_STATUS can_recovery_timer_init(void);
+static void can_recovery_timer_start(void);
+static void can_recovery_timer_stop_if_unused(void);
+static bool can_any_started(void);
+static void can_recovery_timer_tick(void);
+#endif
 
 inline void can_set_clksource(uint32_t clksource)
 {
@@ -632,6 +653,10 @@ CAN_STATUS can_start(CANHandle *canHandle)
 	HAL_NVIC_EnableIRQ(rx0it);
 	HAL_NVIC_EnableIRQ(txit);
 
+#ifdef CAN_ENABLE_RECOVERY_TIMER
+	can_recovery_timer_start();
+#endif
+
 	return CAN_SUCCESS;
 }
 
@@ -676,6 +701,10 @@ CAN_STATUS can_stop(CANHandle *canHandle)
 
 	canHandle->started = false;
 
+#ifdef CAN_ENABLE_RECOVERY_TIMER
+	can_recovery_timer_stop_if_unused();
+#endif
+
 	// TODO: stop a DMA transfer if its in progress
 
 	return CAN_SUCCESS;
@@ -701,6 +730,122 @@ static inline void fdcan_disable_shared_clock(void)
 		}
 	}
 }
+
+#ifdef CAN_ENABLE_RECOVERY_TIMER
+static bool can_recovery_timer_any_started(void)
+{
+#ifdef USECAN1
+	if (CAN1.init && CAN1.started) {
+		return true;
+	}
+#endif
+#ifdef USECAN2
+	if (CAN2.init && CAN2.started) {
+		return true;
+	}
+#endif
+#ifdef USECAN3
+	if (CAN3.init && CAN3.started) {
+		return true;
+	}
+#endif
+	return false;
+}
+
+static CAN_STATUS can_recovery_timer_init(void)
+{
+	static bool initialized = false;
+
+	if (initialized) {
+		return CAN_SUCCESS;
+	}
+
+	RCC_ClkInitTypeDef clkconfig = {0};
+	uint32_t latency = 0;
+	HAL_RCC_GetClockConfig(&clkconfig, &latency);
+
+	uint32_t apb1_div = clkconfig.APB1CLKDivider;
+	uint32_t tim_clock = (apb1_div == RCC_HCLK_DIV1) ? HAL_RCC_GetPCLK1Freq() : (2U * HAL_RCC_GetPCLK1Freq());
+
+	// 10 kHz counter clock keeps both PSC/ARR in range for a 1 second period.
+	const uint32_t counter_hz = 10000U;
+	if (tim_clock < counter_hz) {
+		return CAN_ERROR;
+	}
+
+	uint32_t prescaler = (tim_clock / counter_hz) - 1U;
+	if (prescaler > 0xFFFFU) {
+		return CAN_ERROR;
+	}
+
+	uint32_t autoreload = ((CAN_RECOVERY_TIMER_PERIOD_MS * counter_hz) / 1000U) - 1U;
+	if (autoreload > 0xFFFFU) {
+		return CAN_ERROR;
+	}
+
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM7);
+
+	LL_TIM_InitTypeDef tim_init = {0};
+	tim_init.Prescaler = prescaler;
+	tim_init.CounterMode = LL_TIM_COUNTERMODE_UP;
+	tim_init.Autoreload = autoreload;
+	tim_init.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
+
+	if (LL_TIM_Init(TIM7, &tim_init) != SUCCESS) {
+		return CAN_ERROR;
+	}
+
+	LL_TIM_SetClockSource(TIM7, LL_TIM_CLOCKSOURCE_INTERNAL);
+	LL_TIM_ClearFlag_UPDATE(TIM7);
+	LL_TIM_EnableIT_UPDATE(TIM7);
+
+	HAL_NVIC_SetPriority(TIM7_IRQn, 15U, 0U);
+	HAL_NVIC_EnableIRQ(TIM7_IRQn);
+
+	initialized = true;
+	return CAN_SUCCESS;
+}
+
+static void can_recovery_timer_start(void)
+{
+	if (can_recovery_timer_init() != CAN_SUCCESS) {
+		return;
+	}
+
+	LL_TIM_SetCounter(TIM7, 0U);
+	LL_TIM_ClearFlag_UPDATE(TIM7);
+	LL_TIM_EnableCounter(TIM7);
+}
+
+static void can_recovery_timer_stop_if_unused(void)
+{
+	if (can_recovery_timer_any_started()) {
+		return;
+	}
+
+	LL_TIM_DisableCounter(TIM7);
+	LL_TIM_ClearFlag_UPDATE(TIM7);
+}
+
+static void can_recovery_timer_tick(void)
+{
+#ifdef USECAN1
+	if (CAN1.init && CAN1.started) {
+		(void)can_try_recover_tx_path(&CAN1);
+	}
+#endif
+#ifdef USECAN2
+	if (CAN2.init && CAN2.started) {
+		(void)can_try_recover_tx_path(&CAN2);
+	}
+#endif
+#ifdef USECAN3
+	if (CAN3.init && CAN3.started) {
+		(void)can_try_recover_tx_path(&CAN3);
+	}
+#endif
+}
+#endif
 
 // valid only for STM32G4
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1)
@@ -996,3 +1141,13 @@ void FDCAN3_IT1_IRQHandler(void)
 	HAL_FDCAN_IRQHandler(&hal_fdcan3);
 #endif
 }
+
+#ifdef CAN_ENABLE_RECOVERY_TIMER
+void TIM7_IRQHandler(void)
+{
+	if (LL_TIM_IsActiveFlag_UPDATE(TIM7)) {
+		LL_TIM_ClearFlag_UPDATE(TIM7);
+		can_recovery_timer_tick();
+	}
+}
+#endif
