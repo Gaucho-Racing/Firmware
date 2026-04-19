@@ -102,6 +102,8 @@ static inline void fdcan_disable_shared_clock(void);
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
+static CAN_STATUS can_try_recover_tx_path(CANHandle *canHandle);
+static void can_tx_dequeue_helper(CANHandle *handle);
 
 inline void can_set_clksource(uint32_t clksource)
 {
@@ -460,6 +462,21 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	return CAN_ERROR;
 }
 
+void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs)
+{
+	// Put below during init
+	//	HAL_FDCAN_RegisterErrorStatusCallback(FDCAN_HandleTypeDef * hfdcan, pFDCAN_ErrorStatusCallbackTypeDef pCallback)
+
+	CANHandle *handle = can_get_handle(hfdcan);
+	if (!handle) {
+		return;
+	}
+
+	if (ErrorStatusITs & (FDCAN_IT_BUS_OFF | FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR)) {
+		(void)can_try_recover_tx_path(handle);
+	}
+}
+
 void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
 {
 	UNUSED(BufferIndexes);
@@ -746,6 +763,33 @@ static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan)
 	LOGOMATIC("CAN_get_handle: was given invalid FDCAN instance\n");
 	UNUSED(hfdcan);
 	return NULL;
+}
+
+static CAN_STATUS can_try_recover_tx_path(CANHandle *canHandle)
+{
+	if (!canHandle || !canHandle->init || !canHandle->started) {
+		return CAN_ERROR;
+	}
+
+	if (!HAL_FDCAN_IsRestrictedOperationMode(canHandle->hal_fdcanP)) {
+		return CAN_SUCCESS;
+	}
+
+	FDCAN_ProtocolStatusTypeDef protocol_status = {0};
+	if (HAL_FDCAN_GetProtocolStatus(canHandle->hal_fdcanP, &protocol_status) != HAL_OK) {
+		return CAN_ERROR;
+	}
+
+	if (protocol_status.BusOff) {
+		return CAN_ERROR;
+	}
+
+	if (HAL_FDCAN_ExitRestrictedOperationMode(canHandle->hal_fdcanP) != HAL_OK) {
+		return CAN_ERROR;
+	}
+
+	can_tx_dequeue_helper(canHandle);
+	return CAN_SUCCESS;
 }
 
 static CAN_STATUS validate_can_handle(CANHandle *canHandle)
