@@ -83,7 +83,7 @@ int main(void)
 		// ## Step 0.1             ##
 		// ##########################
 		LOGOMATIC("Press and release RTD -> STAY IN GLV ON\n");
-		stateLumpTest.rtd_button_active = true;
+		stateLumpTest.rtd_button_pressed = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.1 Failure: ecu state not in GLV ON\n");
@@ -142,7 +142,7 @@ int main(void)
 		// ## Step 0.3             ##
 		// ##########################
 		LOGOMATIC("Press TS ACTIVE: Go to PRECHARGE ENGAGE\n");
-		stateLumpTest.ts_active_button_active = true;
+		stateLumpTest.ts_active_button_pressed = true;
 		stateLumpTest.ir_minus = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_ENGAGED) {
@@ -182,7 +182,7 @@ int main(void)
 		// ## Step 0.6             ##
 		// ##########################
 		LOGOMATIC("Press RTD -> STAY IN PRECHARGE COMPLETE\n");
-		stateLumpTest.rtd_button_active = true;
+		stateLumpTest.rtd_button_pressed = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 			LOGOMATIC("0.6 Failure: ecu state not in precharge complete\n");
@@ -193,7 +193,7 @@ int main(void)
 			return 6;
 		}
 		LOGOMATIC("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
-		stateLumpTest.rtd_button_active = false;
+		stateLumpTest.rtd_button_pressed = false;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 			LOGOMATIC("0.6 Failure: ecu state not in precharge complete\n");
@@ -211,7 +211,7 @@ int main(void)
 		stateLumpTest.Brake_F_Signal = BRAKE_F_MAX;
 		stateLumpTest.Brake_R_Signal = BRAKE_R_MAX;
 		LOGOMATIC("Press RTD\n");
-		stateLumpTest.rtd_button_active = true;
+		stateLumpTest.rtd_button_pressed = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		LOGOMATIC("Release RTD\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
@@ -344,7 +344,7 @@ int main(void)
 		// ## Step 0.15            ##
 		// ##########################
 		LOGOMATIC("Press RTD -> MOVE TO PRECHARGE COMPLETE\n");
-		stateLumpTest.rtd_button_active = !stateLumpTest.rtd_button_active;
+		stateLumpTest.rtd_button_pressed = !stateLumpTest.rtd_button_pressed;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 			LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
@@ -401,7 +401,7 @@ int main(void)
 		// ## Step 0.18            ##
 		// ##########################
 		LOGOMATIC("Press TS Active Button -> MOVE to TS DISCHARGE\n");
-		stateLumpTest.ts_active_button_active = !stateLumpTest.ts_active_button_active;
+		stateLumpTest.ts_active_button_pressed = !stateLumpTest.ts_active_button_pressed;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_TS_DISCHARGE) {
 			LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");
