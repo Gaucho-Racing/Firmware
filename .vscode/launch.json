@@ -170,7 +170,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build TireTemp",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -501,8 +501,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CAN_EXTERNAL_TEST.elf",
-			"name": "CAN_EXTERNAL_TEST",
+			"executable": "${command:cmake.buildDirectory}/CAN_BASIC_TEST.elf",
+			"name": "CAN_BASIC_TEST",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -511,38 +511,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CAN_EXTERNAL_TEST",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CAN_INTERNAL_TEST.elf",
-			"name": "CAN_INTERNAL_TEST",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CAN_INTERNAL_TEST",
+			"preLaunchTask": "CMake: configure and build CAN_BASIC_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
@@ -731,6 +700,37 @@
 			"preLaunchTask": "CMake: configure and build PROFILER_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/G431x8_CAN_BASIC_TEST.elf",
+			"name": "G431x8_CAN_BASIC_TEST",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build G431x8_CAN_BASIC_TEST",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,

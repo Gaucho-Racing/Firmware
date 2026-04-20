@@ -7,7 +7,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2025 STMicroelectronics.
+ * Copyright (c) 2024 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -33,14 +33,19 @@
 /* USER CODE END 1 */
 
 /** Configure pins as
- * Analog
- * Input
- * Output
- * EVENT_OUT
- * EXTI
- * Free pins are configured automatically as Analog (this feature is enabled
- * through the Code Generation settings)
- */
+	* Analog
+	* Input
+	* Output
+	* EVENT_OUT
+	* EXTI
+	* Free pins are configured automatically as Analog (this feature is
+   enabled through
+	* the Code Generation settings)
+     PA6   ------> ADC2_IN3
+     PA7   ------> ADC2_IN4
+     PB15   ------> ADC2_IN15
+     PB7   ------> UART4_CTS
+*/
 void MX_GPIO_Init(void)
 {
 
@@ -55,6 +60,9 @@ void MX_GPIO_Init(void)
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOD);
 
 	/**/
+	LL_GPIO_ResetOutputPin(BLINKY_GPIO_Port, BLINKY_Pin);
+
+	/**/
 	LL_GPIO_ResetOutputPin(LED_TEST_GPIO_Port, LED_TEST_Pin);
 
 	/**/
@@ -64,16 +72,10 @@ void MX_GPIO_Init(void)
 	LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 
 	/**/
-	LL_GPIO_ResetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);
-
-	/**/
-	LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-
-	/**/
 	LL_GPIO_ResetOutputPin(AUX_CONTROL_GPIO_Port, AUX_CONTROL_Pin);
 
 	/**/
-	LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
@@ -103,7 +105,7 @@ void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_0;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
@@ -118,16 +120,24 @@ void MX_GPIO_Init(void)
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	/**/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+	GPIO_InitStruct.Pin = BLINKY_Pin;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	LL_GPIO_Init(BLINKY_GPIO_Port, &GPIO_InitStruct);
 
 	/**/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
+	GPIO_InitStruct.Pin = IMD_SENSE_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	LL_GPIO_Init(IMD_SENSE_GPIO_Port, &GPIO_InitStruct);
+
+	/**/
+	GPIO_InitStruct.Pin = AMS_SENSE_Pin;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+	LL_GPIO_Init(AMS_SENSE_GPIO_Port, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
@@ -148,6 +158,12 @@ void MX_GPIO_Init(void)
 	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(LED_TEST_GPIO_Port, &GPIO_InitStruct);
+
+	/**/
+	GPIO_InitStruct.Pin = STEERING_ANGLE_Pin;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+	LL_GPIO_Init(STEERING_ANGLE_GPIO_Port, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
@@ -174,12 +190,6 @@ void MX_GPIO_Init(void)
 	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	/**/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_8;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
@@ -196,24 +206,6 @@ void MX_GPIO_Init(void)
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-	/**/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_10;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-	/**/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_11;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-	/**/
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_12;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
@@ -238,20 +230,13 @@ void MX_GPIO_Init(void)
 	LL_GPIO_Init(TSSI_G_CONTROL_GPIO_Port, &GPIO_InitStruct);
 
 	/**/
-	GPIO_InitStruct.Pin = TSSI_R_CONTROL_Pin;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_7;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
 	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
 	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(TSSI_R_CONTROL_GPIO_Port, &GPIO_InitStruct);
-
-	/**/
-	GPIO_InitStruct.Pin = RTD_CONTROL_Pin;
-	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-	LL_GPIO_Init(RTD_CONTROL_GPIO_Port, &GPIO_InitStruct);
+	GPIO_InitStruct.Alternate = LL_GPIO_AF_14;
+	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/**/
 	GPIO_InitStruct.Pin = AUX_CONTROL_Pin;
