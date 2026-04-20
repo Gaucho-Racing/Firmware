@@ -266,10 +266,14 @@ CANHandle *can_init(const CANConfig *config)
 	uint32_t tx_events = FDCAN_IT_TX_COMPLETE | FDCAN_IT_TX_FIFO_EMPTY;
 	status |= HAL_FDCAN_ActivateNotification(canHandle->hal_fdcanP, tx_events, destinations);
 	status |= HAL_FDCAN_ConfigInterruptLines(canHandle->hal_fdcanP, tx_events, FDCAN_INTERRUPT_LINE1);
+
+	uint32_t err_events = FDCAN_IT_BUS_OFF | FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR;
+	status |= HAL_FDCAN_ActivateNotification(canHandle->hal_fdcanP, err_events, 0);
+	status |= HAL_FDCAN_ConfigInterruptLines(canHandle->hal_fdcanP, err_events, FDCAN_INTERRUPT_LINE1);
 	// Callbacks redefined later
 
 	if (status & HAL_ERROR) {
-		LOGOMATIC("CAN: Could not activate rx and tx interrupts\n");
+		LOGOMATIC("CAN: Could not activate rx, tx, and error interrupts\n");
 		failure |= status;
 	}
 
