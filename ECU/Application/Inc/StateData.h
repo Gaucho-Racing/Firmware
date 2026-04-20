@@ -78,6 +78,7 @@ typedef volatile struct ECU_StateData {
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
 	uint16_t aux_signal;
+	uint16_t steering_angle_signal;
 	uint8_t status_bits[3];
 	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
@@ -85,8 +86,8 @@ typedef volatile struct ECU_StateData {
 	uint8_t glv_soc;
 	uint8_t bcu_error_warning_bits;
 	uint8_t inverter_fault_map;
-	bool ts_active_button_active;
-	bool rtd_button_active;
+	bool ts_active_button_pressed;
+	bool rtd_button_pressed;
 	bool ir_plus;
 	bool ir_minus;
 	bool bcu_software_latch;
