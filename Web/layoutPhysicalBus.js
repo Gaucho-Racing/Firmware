@@ -64,10 +64,7 @@
 			b.group.nodes.forEach((nodeId, i) => {
 				const col = i % cols;
 				const row = Math.floor(i / cols);
-				const nx =
-					cursorX +
-					GROUP_INNER_PAD +
-					col * (NODE_WIDTH + NODE_GAP_X);
+				const nx = cursorX + GROUP_INNER_PAD + col * (NODE_WIDTH + NODE_GAP_X);
 				const ny =
 					topY +
 					GROUP_TITLE_HEIGHT +

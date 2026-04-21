@@ -24,9 +24,7 @@
 			const line = raw.replace(/#.*$/, "").trimEnd();
 			if (!line.trim()) continue;
 			// Group header: "NAME: side" where side is top | bottom | bus.
-			const headerMatch = line.match(
-				/^([^\s].*?):\s*(top|bottom|bus)\s*$/,
-			);
+			const headerMatch = line.match(/^([^\s].*?):\s*(top|bottom|bus)\s*$/);
 			if (headerMatch) {
 				current = {
 					name: headerMatch[1].trim(),

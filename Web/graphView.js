@@ -493,9 +493,7 @@ window.GrcanGraphView = (() => {
 			partition = groupsApi.getGroupsForBus(currentBus, presentIds);
 		} else {
 			// Fallback: everything into one "Other" group; Debugger/ALL on spine.
-			const spine = ["Debugger", "ALL"].filter((s) =>
-				presentIds.includes(s),
-			);
+			const spine = ["Debugger", "ALL"].filter((s) => presentIds.includes(s));
 			const rest = presentIds.filter((n) => !spine.includes(n));
 			partition = {
 				top: [],
@@ -540,11 +538,7 @@ window.GrcanGraphView = (() => {
 			if (e.target === id) related.add(e.source);
 		}
 		for (const [nid, g] of _nodeEls) {
-			g.classList.remove(
-				"gv-node-active",
-				"gv-node-dim",
-				"gv-node-focused",
-			);
+			g.classList.remove("gv-node-active", "gv-node-dim", "gv-node-focused");
 			if (nid === id) {
 				g.classList.add("gv-node-focused", "gv-node-active");
 			} else if (related.has(nid)) {
@@ -563,11 +557,7 @@ window.GrcanGraphView = (() => {
 		_focusedNodeId = null;
 		if (svgEl) svgEl.classList.remove("gv-focused");
 		for (const g of _nodeEls.values()) {
-			g.classList.remove(
-				"gv-node-active",
-				"gv-node-dim",
-				"gv-node-focused",
-			);
+			g.classList.remove("gv-node-active", "gv-node-dim", "gv-node-focused");
 		}
 		if (overlayLayerG) overlayLayerG.innerHTML = "";
 		_hideFocusPill();

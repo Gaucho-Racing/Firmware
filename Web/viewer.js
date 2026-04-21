@@ -255,8 +255,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			for (const bus of node.buses) {
 				const msgSeen = new Set();
 				for (const msg of bus.messages) {
-					const msgKey =
-						msg.msgName + "|" + node.name + "|" + bus.canonicalBus;
+					const msgKey = msg.msgName + "|" + node.name + "|" + bus.canonicalBus;
 					if (!msgSeen.has(msgKey)) {
 						msgSeen.add(msgKey);
 						const msgHaystackParts = [
@@ -268,8 +267,7 @@ window.addEventListener("DOMContentLoaded", function () {
 						results.push({
 							kind: "message",
 							primary: msg.msgName,
-							secondary:
-								node.name + " \u203a " + bus.busName,
+							secondary: node.name + " \u203a " + bus.busName,
 							deviceName: node.name,
 							canonicalBus: bus.canonicalBus,
 							busDisplayName: bus.busName,
@@ -423,9 +421,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 		while (hit !== -1) {
 			if (hit > cursor) {
-				container.appendChild(
-					document.createTextNode(text.slice(cursor, hit)),
-				);
+				container.appendChild(document.createTextNode(text.slice(cursor, hit)));
 			}
 			const mark = document.createElement("span");
 			mark.className = "sr-match";
