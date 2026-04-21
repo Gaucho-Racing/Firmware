@@ -5,7 +5,7 @@
 #ifndef STATE_STATEDATA_H
 #define STATE_STATEDATA_H
 
-typedef struct {
+typedef volatile struct {
 	CCU_STATE state;
 
 	bool recv_charge_cmd;
