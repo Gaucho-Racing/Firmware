@@ -54,11 +54,11 @@ bool CriticalError(const CCU_StateData *state_data)
 		return true;
 
 	} else if (state_data->BCU_S2_UNDERCURR_ERROR) {
-		LOGOMATIC("UNDECURR\n");
+		LOGOMATIC("UNDERCURR\n");
 		return true;
 
 	} else if (state_data->BCU_S2_UNDERVOLT_ERROR) {
-		LOGOMATIC("UNDEVOLT\n");
+		LOGOMATIC("UNDERVOLT\n");
 		return true;
 
 	} else {
