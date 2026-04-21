@@ -28,8 +28,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 				break;
 			}
 
-			LOGOMATIC("Received a BCU STATUS 2 msg\n");
-
 			// FIXME: Might need to double check we are doing this v
 			//  cast *data to whatever msg dti control 10 struct there is
 			//  copy data from that struct into the ccu state data struct (eg GETBIT)
