@@ -1,5 +1,4 @@
-# All files require code owner approval from the firmware lead
-
-## Previous firmware leads are not marked as Code Owners to not get notifications / called on for every PR, but they will have admin on GitHub and can merge PRs without approval
-
 * @dchansen06
+
+# Out of band blanket approval permissions
+ECU/ @kzwicker
