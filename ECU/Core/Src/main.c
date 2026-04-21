@@ -393,6 +393,7 @@ int main(void)
 	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
+		//ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
 
 		/* USER CODE BEGIN 3 */
 		if (cycle_counter_accumulator == 10) {
@@ -422,6 +423,7 @@ int main(void)
 			}
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 		}
+
 
 		read_digital();
 		// TODO: determine alpha
