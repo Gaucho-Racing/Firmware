@@ -108,9 +108,10 @@ void dashLights(ECU_StateData *stateLump) {
 	light = 0;
 
 	// TODO: determine moving millis_since_boot to statedata?
-	if (RATE_LIMIT_10_HZ(MillisecondsSinceBoot(), last_dash_can_send)) {
+	uint32_t currTime = MillisecondsSinceBoot();
+	if (RATE_LIMIT_10_HZ(currTime, last_dash_can_send)) {
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
-		last_dash_can_send = MillisecondsSinceBoot();
+		last_dash_can_send = currTime;
 	}
 }
 
