@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="index.css?v=2" />
 		<link rel="stylesheet" href="viewer.css?v=5" />
 		<link rel="stylesheet" href="editor.css?v=6" />
-		<link rel="stylesheet" href="graphView.css?v=2" />
+		<link rel="stylesheet" href="graphView.css?v=3" />
 	</head>
 	<body>
 		<canvas id="bg-canvas"></canvas>
@@ -105,6 +105,7 @@
 		     viewer.js     → main controller (rendering + edit-mode wiring)
 		     background.js → decorative canvas (no dependencies) -->
 		<script src="physicalTopology.js"></script>
+		<script src="physicalGroups.js"></script>
 		<script src="logic.js?v=5"></script>
 		<script src="formUtils.js?v=2"></script>
 		<script src="editor.js?v=5"></script>
@@ -118,9 +119,9 @@
 		<script src="formConfirmDelete.js?v=1"></script>
 		<script src="formSuperAdd.js?v=1"></script>
 		<script src="diffViewer.js?v=2"></script>
-		<script src="cytoscape.min.js"></script>
 		<script src="viewer.js?v=15"></script>
-		<script src="graphView.js?v=3"></script>
+		<script src="layoutPhysicalBus.js"></script>
+		<script src="graphView.js?v=5"></script>
 		<script src="background.js?v=3"></script>
 	</body>
 </html>

@@ -1,0 +1,48 @@
+# Functional groupings for the Graph View physical-bus rendering.
+# Each group header is "GROUP NAME: side" where side is one of:
+#   top     — group sits above the bus
+#   bottom  — group sits below the bus
+#   bus     — group members render on the bus spine itself
+# Nodes not listed in any group fall into an implicit "Other" group
+# on the bottom side.
+# "Debugger" and "ALL" are auto-placed on the bus spine.
+# Lines starting with # are comments. Blank lines are ignored.
+# Node names must exactly match GR ID entries in GRCAN.CANdo (same
+# convention as can_topology.txt).
+
+POWER/HV: top
+  DTI Inverter
+  GR Inverter
+
+CORE CONTROL (Top): top
+  ECU
+
+THERMAL CONTROL: top
+  Fan Controller 1
+  Fan Controller 2
+  Fan Controller 3
+
+SENSORS: top
+  SAMM_Mag_1
+  SAMM_Mag_2
+  SAMM_ToF_1
+  SAMM_ToF_2
+  TireTemp_1
+  TireTemp_2
+  TireTemp_3
+  TireTemp_4
+
+SUBSYSTEMS: bottom
+  DGPS
+  Dash Panel
+  Energy Meter
+
+CORE CONTROL (Bottom): bottom
+  TCM
+  BCU
+
+OTHER LOGIC: bottom
+  Charging SDC
+  IMD
+  CCU
+  Charger

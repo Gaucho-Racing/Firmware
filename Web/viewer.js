@@ -1464,8 +1464,10 @@ window.addEventListener("DOMContentLoaded", function () {
 		setHierarchyHeaders();
 		wireEditModeButtons();
 		setPlaceholder(firstList, "Loading...");
-		// Load physical topology in the background; non-blocking.
+		// Load physical topology + functional groups in the background;
+		// non-blocking. Both feed the Graph View renderer.
 		if (window.PhysicalTopology) window.PhysicalTopology.load();
+		if (window.PhysicalGroups) window.PhysicalGroups.load();
 
 		const [branches, tags] = await Promise.all([
 			window.GrcanApi.fetchBranches(),

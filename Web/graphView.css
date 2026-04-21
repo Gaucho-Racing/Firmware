@@ -154,9 +154,179 @@
 	overflow: hidden;
 }
 
-#graph-cy-container {
+#graph-svg-host {
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
+}
+
+/* ==================== SVG Physical-Bus Renderer ==================== */
+
+.gv-svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	cursor: grab;
+	user-select: none;
+}
+
+.gv-svg.grabbing {
+	cursor: grabbing;
+}
+
+.gv-bus-rail {
+	stroke: #6b7a9c;
+	stroke-width: 3;
+	fill: none;
+}
+
+.gv-bus-rail-label {
+	font-size: 10px;
+	fill: #67728b;
+	font-family: monospace;
+	letter-spacing: 0.08em;
+	font-weight: 600;
+}
+
+.gv-bus-terminator {
+	stroke: #4b5568;
+	stroke-width: 3;
+	stroke-linecap: round;
+}
+
+.gv-bus-speed {
+	font-size: 10px;
+	fill: #67728b;
+	font-family: monospace;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.gv-group-box {
+	fill: none;
+	stroke: #2c3350;
+	stroke-dasharray: 4 4;
+	stroke-width: 1;
+}
+
+.gv-group-title {
+	font-size: 10px;
+	fill: #67728b;
+	font-family: monospace;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.gv-stub {
+	stroke: #3d4872;
+	stroke-width: 1.5;
+	fill: none;
+}
+
+.gv-stub-drop {
+	fill: #6b7a9c;
+	stroke: #1f2439;
+	stroke-width: 0.5;
+}
+
+.gv-node {
+	cursor: pointer;
+}
+
+.gv-node-rect {
+	fill: #13172a;
+	stroke: #2c3350;
+	stroke-width: 1.5;
+	transition:
+		stroke 0.12s,
+		fill 0.12s;
+}
+
+.gv-node:hover .gv-node-rect {
+	stroke: #3d4872;
+	fill: #181d30;
+}
+
+.gv-node-label {
+	fill: #e2e8f0;
+	font-size: 12px;
+	font-family: monospace;
+	font-weight: 600;
+	pointer-events: none;
+}
+
+.gv-node-grid {
+	fill: #94a3b8;
+	font-size: 11px;
+	font-family: monospace;
+	pointer-events: none;
+}
+
+.gv-node-bus .gv-node-rect {
+	fill: #0f2a35;
+	stroke: #0ea5e9;
+	stroke-width: 2;
+}
+
+.gv-node-bus .gv-node-label {
+	fill: #7dd3fc;
+}
+
+.gv-node-bus .gv-node-grid {
+	fill: #67728b;
+}
+
+/* Focus-mode dimming of bus furniture + unrelated nodes. */
+.gv-svg.gv-focused .gv-bus-rail,
+.gv-svg.gv-focused .gv-stub,
+.gv-svg.gv-focused .gv-stub-drop,
+.gv-svg.gv-focused .gv-group-box,
+.gv-svg.gv-focused .gv-group-title,
+.gv-svg.gv-focused .gv-bus-rail-label,
+.gv-svg.gv-focused .gv-bus-speed,
+.gv-svg.gv-focused .gv-bus-terminator {
+	opacity: 0.35;
+}
+
+.gv-node-dim {
+	opacity: 0.28;
+	transition: opacity 0.15s;
+}
+
+.gv-node-active {
+	opacity: 1;
+	transition: opacity 0.15s;
+}
+
+.gv-node-focused .gv-node-rect {
+	stroke: #0ea5e9;
+	stroke-width: 2.5;
+	fill: #0f2a35;
+}
+
+.gv-node-focused .gv-node-label {
+	fill: #bae6fd;
+}
+
+.gv-edge {
+	fill: none;
+	pointer-events: none;
+}
+
+.gv-edge-label {
+	font-size: 11px;
+	font-family: monospace;
+	font-weight: 600;
+	pointer-events: none;
+}
+
+.gv-empty {
+	fill: #4b5568;
+	font-family: inherit;
+	font-size: 14px;
 }
 
 /* ==================== Node Detail Panel ==================== */
