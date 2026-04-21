@@ -31,7 +31,7 @@ void CANInitialize()
 
 inline uint8_t _temp_f2u8(float temp)
 {
-	return (uint8_t)(((temp + 40.) / 125.0) * 255.0);
+	return (uint8_t)(((temp + 40.) / 340.0) * 255.0);
 }
 
 void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
