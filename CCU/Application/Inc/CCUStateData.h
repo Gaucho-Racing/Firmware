@@ -11,7 +11,7 @@ typedef struct {
 	bool recv_charge_cmd;
 
 	// BCU_STATUS_2
-	
+
 	// Error & Warnings
 	// uint8_t BCU_S2_ERROR_BITS;
 	bool BCU_S2_OVERTEMP_ERROR;
