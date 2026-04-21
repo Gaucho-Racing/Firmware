@@ -6,29 +6,6 @@
 
 #include "msgBuffer.h"
 
-// Transfer sizes
-#define GR_SPI_TRANSFER_SIZE_8 8
-#define GR_SPI_TRANSFER_SIZE_16 16
-
-// Current message status codes
-#define GR_SPI_MSG_IN_PROGRESS 1
-#define GR_SPI_MSG_IDLE 0
-#define GR_SPI_INVALID_TX_SIZE 65535 // max message size is 2^16 bytes
-
-#define GR_SPI_ERR_NONE 0
-#define GR_SPI_ERR_FRE -1
-#define GR_SPI_ERR_OVR -2
-#define GR_SPI_ERR_MODF -3
-#define GR_SPI_ERR_CRCERR -4
-#define GR_SPI_ERR_RXFULL -5
-#define GR_SPI_ERR_BAD_INIT_NVIC -6
-#define GR_SPI_ERR_BAD_INIT_RXBUF -7
-#define GR_SPI_ERR_BAD_INIT_TXBUF -8
-#define GR_SPI_ERR_BAD_SPIX -9
-#define GR_SPI_ERR_BAD_ADD -10
-#define GR_SPI_ERR_FULL_TRANSMIT -11
-#define GR_SPI_ERR_BAD_ARGS -12
-
 static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handle structs for SPI1
 					      // (0), SPI2 (1), & SPI3 (2)
 
@@ -478,7 +455,7 @@ uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle)
 	return GR_MsgBuffer_PeekMsgSize(handle->rx_buffer);
 }
 
-uint8_t GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle)
+GR_SPI_ERR GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle)
 {
 	if (!handle) {
 		return GR_SPI_ERR_BAD_ARGS;

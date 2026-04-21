@@ -11,6 +11,63 @@
 #define GR_SPI_UNKNOWN_CLOCK 0
 #define GR_SPI_BUFFER_BYTE_CAPACITY 256
 #define GR_SPI_MAX_MSG_BYTE_SIZE 64
+#define GR_SPI_INVALID_TX_SIZE 65535 // max message size is 2^16 bytes
+
+/**
+ * @brief Error status codes for SPI transactions and initialization
+ *
+ * @note Negative values indicate an error, and 0 indicates no error. The specific negative value can be used to identify the type of error that occurred.
+ */
+typedef enum {
+	/** No error */
+	GR_SPI_ERR_NONE = 0,
+	/** Frame format error */
+	GR_SPI_ERR_FRE = -1,
+	/** Overrun error */
+	GR_SPI_ERR_OVR = -2,
+	/** Fault mode error */
+	GR_SPI_ERR_MODF = -3,
+	/** CRC error */
+	GR_SPI_ERR_CRCERR = -4,
+	/** Rx buffer full */
+	GR_SPI_ERR_RXFULL = -5,
+	/** Bad NVIC initialization */
+	GR_SPI_ERR_BAD_INIT_NVIC = -6,
+	/** Bad RX buffer initialization */
+	GR_SPI_ERR_BAD_INIT_RXBUF = -7,
+	/** Bad TX buffer initialization */
+	GR_SPI_ERR_BAD_INIT_TXBUF = -8,
+	/** Bad SPIx peripheral in pin config */
+	GR_SPI_ERR_BAD_SPIX = -9,
+	/** Bad SPI address */
+	GR_SPI_ERR_BAD_ADD = -10,
+	/** Full transmit buffer */
+	GR_SPI_ERR_FULL_TRANSMIT = -11,
+	/** Bad arguments */
+	GR_SPI_ERR_BAD_ARGS = -12
+} GR_SPI_ERR;
+
+/**
+ * @brief SPI transfer sizes
+ *
+ * @note The value of the enum corresponds to the number of bits in the transfer size, but that should not be relied upon
+ */
+typedef enum {
+	/** 8-bit transfer size */
+	GR_SPI_TRANSFER_SIZE_8 = 8,
+	/** 16-bit transfer size */
+	GR_SPI_TRANSFER_SIZE_16 = 16
+} GR_SPI_TransferSize;
+
+/**
+ * @brief SPI message status codes
+ */
+typedef enum {
+	/** No ongoing message transaction */
+	GR_SPI_MSG_IDLE = 0,
+	/** Ongoing message transaction */
+	GR_SPI_MSG_IN_PROGRESS = 1,
+} GR_SPI_MsgStatus;
 
 // Generic type
 typedef struct {
@@ -42,12 +99,12 @@ typedef struct GR_SPI_Handler_struct {
 	GR_MsgBuffer *rx_buffer;
 	GR_MsgBuffer *tx_buffer;
 	// Tx-Rx parameters
-	uint8_t transfer_size;
+	GR_SPI_TransferSize transfer_size;
 	// Tx-Rx current messages
 	GR_SPI_Message current_msg;
 	volatile uint16_t current_tx_msg_index, current_rx_msg_index;
-	volatile uint8_t msg_status;
-	volatile int8_t error_status;
+	volatile GR_SPI_MsgStatus msg_status;
+	volatile GR_SPI_ERR error_status;
 } GR_SPI_Handler;
 
 // ============================= handle Functions =============================
@@ -132,7 +189,7 @@ uint32_t GR_SPI_Get_RxMsgSize(GR_SPI_Handler *handle);
  * @param handle
  * @return 0 if there is no error and -ERROR_VAL otherwise
  */
-uint8_t GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle);
+GR_SPI_ERR GR_SPI_Get_ErrorStatus(GR_SPI_Handler *handle);
 
 // ============================= Helper Functions =============================
 
