@@ -106,8 +106,7 @@ int main(void)
 	// MX_CRC_Init();
 	// MX_FDCAN1_Init();
 	// MX_FDCAN2_Init();
-	MX_I2C1_Init();
-	MX_SPI3_Init(); // TODO: change all instances of spi1 -> SPI1
+	MX_SPI3_Init();
 	/* USER CODE BEGIN 2 */
 
 	// HAL_FDCAN_Start(&hfdcan1);
@@ -117,7 +116,7 @@ int main(void)
 	// bmi323 bmi323_dev;
 	mag mag_dev;
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
-	mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin);
+	mag_init(&mag_dev, SPI3, MAG_CS_GPIO_Port, MAG_CS_Pin);
 
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
@@ -126,7 +125,7 @@ int main(void)
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 	// HAL_Delay(1);  // Short delay after mode switch
 
-	if (mag_init() != HAL_OK) {
+	if (mag_init(&mag_dev, SPI3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
 		printf("MAG initialization failed!\r\n");
 		Error_Handler();
 	}
@@ -173,17 +172,17 @@ int main(void)
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
 		/* USER CODE END WHILE */
-		float temp = mag_read_temp(mag_dev);
-		float angle = mag_read_encoder_angle(mag_dev);
-		int16_t turns = mag_read_turns(mag_dev);
+		float temp = mag_read_temp(&mag_dev);
+		float angle = mag_read_encoder_angle(&mag_dev);
+		int16_t turns = mag_read_turns(&mag_dev);
 		// float hang = mag_read_HANG(mag_dev);
-		bool bad = check_status(mag_dev);
+		bool bad = check_status(&mag_dev);
 		printf("Temperature is %f\n", temp);
 		printf("Angle is %f\n", angle);
 		printf("Number of turns is %d\n", turns);
 		if (!bad) {
 			printf("67 69 420 something is cooked");
-			mag_write_error(mag_dev);
+			mag_write_error(&mag_dev);
 		}
 	}
 	/* USER CODE END 3 */
@@ -195,34 +194,48 @@ int main(void)
  */
 void SystemClock_Config(void)
 {
-	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
-	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
-	LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-	LL_RCC_HSE_EnableBypass();
-	LL_RCC_HSE_Enable();
-	/* Wait till HSE is ready */
-	while (LL_RCC_HSE_IsReady() != 1) {}
+	LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_1) {}
 
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 32, LL_RCC_PLLR_DIV_2);
-	LL_RCC_PLL_EnableDomain_SYS();
-	LL_RCC_PLL_Enable();
+	LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
+	while (LL_PWR_IsActiveFlag_VOS() == 0) {}
+	LL_RCC_HSI_Enable();
+
+	/* Wait till HSI is ready */
+	while (LL_RCC_HSI_IsReady() != 1) {}
+
+	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_HSI_SetDivider(LL_RCC_HSI_DIV_2);
+	LL_RCC_CSI_Enable();
+
+	/* Wait till CSI is ready */
+	while (LL_RCC_CSI_IsReady() != 1) {}
+
+	LL_RCC_CSI_SetCalibTrimming(32);
+	LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_CSI);
+	LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_4_8);
+	LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
+	LL_RCC_PLL1_SetM(1);
+	LL_RCC_PLL1_SetN(32);
+	LL_RCC_PLL1_SetP(2);
+	LL_RCC_PLL1_SetQ(2);
+	LL_RCC_PLL1_SetR(2);
+	LL_RCC_PLL1Q_Enable();
+	LL_RCC_PLL1_Enable();
+
 	/* Wait till PLL is ready */
-	while (LL_RCC_PLL_IsReady() != 1) {}
+	while (LL_RCC_PLL1_IsReady() != 1) {}
 
-	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
+	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
+
 	/* Wait till System clock is ready */
-	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
+	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {}
 
-	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (170 >> 1); i != 0; i--)
-		;
-
-	/* Set AHB prescaler*/
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(128000000);
+	LL_RCC_SetAPB3Prescaler(LL_RCC_APB3_DIV_1);
+	LL_SetSystemCoreClock(32000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {

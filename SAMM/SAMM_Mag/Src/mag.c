@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#include "stdbool.h"
+#include "main.h"
 #include "stm32h5xx.h"
 #include "stm32h5xx_hal_spi.h"
 
@@ -75,10 +75,21 @@ crc (4 bits -- optional)
 
 uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
-	uint16_t msb = (data & mag_msb) >> 8 | ((uint16_t(reg) & mag_addr_mask) << 8) | 0x4000;
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb) reg += 1; // increment from 0x22 to 0x23 for lsb
-	uint16_t lsb = ((data & mag_lsb) | ((uint16_t(reg) & mag_addr_mask) << 8)) | 0x4000;
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb) return 0;
+    uint16_t msb = ((data & mag_msb) >> 8) |
+                   (((uint16_t)reg & mag_addr_mask) << 8) |
+                   0x4000;
+
+    mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb);
+
+    reg += 1; // increment from 0x22 to 0x23 for lsb
+
+    uint16_t lsb = (data & mag_lsb) |
+                   (((uint16_t)reg & mag_addr_mask) << 8) |
+                   0x4000;
+
+    mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb);
+
+    return 0;
 }
 
 uint8_t mag_calib_abort(mag *mag_dev)
@@ -143,13 +154,13 @@ bool check_status(mag *mag_dev)
 
 	// fix-me add LOGOMATIC
 
-	return (voltage_error && magnetic_err && angle_error && invalid_spi_len && temp_out_of_range && turn_counter_saturated && excessive_magnet_vel);
+	return (voltage_err && magnetic_err && angle_error && invalid_spi_len && temp_out_of_range && turn_counter_saturated && excessive_magnet_vel);
 }
 
 int16_t mag_read_turns(mag *mag_dev)
 {
 	int16_t read_turns = mag_transmit(mag_dev, 0x2C); // 0x2C is turn counter
-	return ((int16_t)(read_angle & 0x0FFF));	  // Mask to 12 bits (valid angle data)
+	return ((int16_t)(read_turns & 0x0FFF));	  // Mask to 12 bits (valid angle data)
 }
 
 // Address 0x24:0x25 (ERR)—Device Error Flags
