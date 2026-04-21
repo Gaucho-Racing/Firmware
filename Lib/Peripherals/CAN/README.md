@@ -221,28 +221,6 @@ Recovery is attempted from:
 - If Bus-Off is clear, `HAL_FDCAN_ExitRestrictedOperationMode` is attempted.
 - On successful exit, queued software TX messages are dequeued back to HW TX FIFO.
 
-## Optional Periodic Recovery Timer
-
-An optional compile-time timer path can periodically trigger recovery attempts, even when no RX/TX/error callback activity is occurring.
-
-Define in `can_cfg.h`:
-
-```c
-#define CAN_ENABLE_RECOVERY_TIMER
-#define CAN_RECOVERY_TIMER_USE_TIM7
-#define CAN_RECOVERY_TIMER_PERIOD_MS 1000U
-```
-
-Constraints:
-
-- `CAN_RECOVERY_TIMER_PERIOD_MS` must be at least `100` ms.
-- TIM7 ownership should be considered reserved when this feature is enabled.
-
-Boot/runtime safety notes:
-
-- TIM7 counter starts from `can_start` (not global boot init).
-- Recovery tick logic only acts on CAN handles that are both initialized and started.
-
 # Implementation Notes and Constraints
 
 - `RX Callback` must perform a **deep copy** of the data supplied to it.
