@@ -139,7 +139,7 @@ void ADC_Configure(void)
 	// ADC 1
 	ADC_Init_Values Init_Vals_ADC1 = {0};
 	Init_Vals_ADC1.ADC = ADC1;
-	Init_Vals_ADC1.PS_Value = PS_256;	    // TODO: change later
+	Init_Vals_ADC1.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
 	Pin_Ports p1[2] = {{.pin = BSE_SIGNAL_Pin | BSPD_SENSE_Pin | APPS1_SIGNAL_Pin | APPS2_SIGNAL_Pin, .port = GPIOC},
@@ -148,14 +148,14 @@ void ADC_Configure(void)
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
 	Init_Vals_ADC1.Channels = c1;
-	SamplingTime s1 = SAMPLINGTIME_640CYCLES_5;
+	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC1.SamplingTimes = &s1;
 	ADC_Init(&Init_Vals_ADC1);
 
 	// ADC 2
 	ADC_Init_Values Init_Vals_ADC2 = {0};
 	Init_Vals_ADC2.ADC = ADC2;
-	Init_Vals_ADC2.PS_Value = PS_256;	    // TODO: change later
+	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
 	Pin_Ports p2[2] = {{.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA}, {.pin = STEERING_ANGLE_Pin, .port = GPIOB}};
@@ -163,7 +163,7 @@ void ADC_Configure(void)
 	Init_Vals_ADC2.Num_Channels = 4;
 	Channel c2[] = {ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4, ADC_CHANNEL_15};
 	Init_Vals_ADC2.Channels = c2;
-	SamplingTime s2 = SAMPLINGTIME_640CYCLES_5;
+	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
 	ADC_Init(&Init_Vals_ADC2);
 
@@ -393,7 +393,7 @@ int main(void)
 	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
-		//ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
 
 		/* USER CODE BEGIN 3 */
 		if (cycle_counter_accumulator == 10) {
@@ -407,6 +407,7 @@ int main(void)
 			cycle_counter_accumulator++;
 		}
 
+		/*
 		static uint32_t nextPing;
 		if (MillisecondsSinceBoot() >= nextPing) {
 			pingAll();
@@ -423,6 +424,7 @@ int main(void)
 			}
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 		}
+		*/
 
 
 		read_digital();
@@ -432,7 +434,7 @@ int main(void)
 
 		write_adc_values_to_state_data();
 		ECU_State_Tick();
-		lightControl(&stateLump);
+		//lightControl(&stateLump);
 		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */

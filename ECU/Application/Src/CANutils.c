@@ -44,7 +44,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 			can_send(primary_can, &msg);
 			break;
 		case GRCAN_BUS_DATA:
-			can_send(data_can, &msg);
+			//can_send(data_can, &msg);
 			break;
 		default:
 			LOGOMATIC("CAN: Invalid bus ID %d\n", bus);
