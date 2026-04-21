@@ -21,6 +21,8 @@ uint32_t MillisecondsSinceBoot(void);
 #define THROTTLE_MAX_2 4095 // TODO: need to be determined
 #define BSE_DEADZONE 0.05f
 #define MAX_BSE_FAILURE_TIME 100
+#define MAX_APPS_FAILURE_TIME 100
+#define MAX_BUZZER_TIME 100
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
@@ -34,6 +36,10 @@ uint32_t MillisecondsSinceBoot(void);
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
+
+// Rate Limiting Macros
+#define RATE_LIMIT_100_HZ(x, y) (x - y > 10)
+#define RATE_LIMIT_10_HZ(x, y) (x - y > 100)
 
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
