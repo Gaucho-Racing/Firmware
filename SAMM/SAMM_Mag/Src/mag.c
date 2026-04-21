@@ -75,21 +75,17 @@ crc (4 bits -- optional)
 
 uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
-    uint16_t msb = ((data & mag_msb) >> 8) |
-                   (((uint16_t)reg & mag_addr_mask) << 8) |
-                   0x4000;
+	uint16_t msb = ((data & mag_msb) >> 8) | (((uint16_t)reg & mag_addr_mask) << 8) | 0x4000;
 
-    mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb);
+	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb);
 
-    reg += 1; // increment from 0x22 to 0x23 for lsb
+	reg += 1; // increment from 0x22 to 0x23 for lsb
 
-    uint16_t lsb = (data & mag_lsb) |
-                   (((uint16_t)reg & mag_addr_mask) << 8) |
-                   0x4000;
+	uint16_t lsb = (data & mag_lsb) | (((uint16_t)reg & mag_addr_mask) << 8) | 0x4000;
 
-    mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb);
+	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb);
 
-    return 0;
+	return 0;
 }
 
 uint8_t mag_calib_abort(mag *mag_dev)
