@@ -32,6 +32,7 @@ target_sources(
 	INTERFACE
 		# Core
 		Core/Src/adc.c
+		Core/Src/CANdler.c
 		Core/Src/crc.c
 		Core/Src/gpio.c
 		Core/Src/i2c.c

@@ -32,6 +32,8 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_ll_lpuart.h"
+#include "stm32g4xx_hal_fdcan.h"
+#include "stm32g4xx_ll_bus.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

@@ -9,7 +9,6 @@
 #include "Unused.h"
 #include "bitManipulations.h"
 #include "can.h"
-#include "dashutils.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 
@@ -25,7 +24,7 @@ void CANInitialize()
 {
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 	CANConfig my_cfg;
-	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
+	get_cfg(FDCAN1, CAN_callback, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
 	can_handler = can_init(&my_cfg);
 }
 
@@ -65,7 +64,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 {
 	FDCANTxMessage pingMsg;
-	pingMsg.tx_header.Identifier = (GRCAN_TireTemp << 20) | (GRCAN_PING << 8) | to;
+	pingMsg.tx_header.Identifier = (GRCAN_TireTemp_1 << 20) | (GRCAN_PING << 8) | to;
 	pingMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
@@ -82,7 +81,9 @@ void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
 {
-
+	UNUSED(ID);
+	UNUSED(data);
+	UNUSED(size);
 	// GRCAN_MSG_ID msg_id = (0x000FFF00 & ID) >> 8;
 	// GRCAN_NODE_ID node_id = (0x0FF00000 & ID) >> 20;
 
