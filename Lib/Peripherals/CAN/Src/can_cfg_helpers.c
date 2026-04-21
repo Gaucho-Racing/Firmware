@@ -18,6 +18,10 @@ static can_cfg_helper defaultSTM32G431x8_CANCfg;
 static can_cfg_helper defaultSTM32G474xE_CANCfg;
 #endif
 
+#ifdef STM32H523xx
+static can_cfg_helper defaultSTM32H523xx_CANCfg;
+#endif
+
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
 #ifdef STM32G474xx
