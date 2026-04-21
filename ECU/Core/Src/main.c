@@ -395,12 +395,12 @@ int main(void)
 		/* USER CODE END WHILE */
 		static uint32_t lastSend;
 		if(MillisecondsSinceBoot() >= lastSend + 20) {
-			lastSend = MillisecondsSinceBoot;
+			lastSend = MillisecondsSinceBoot();
 
-			if(HAL_FDCAN_IsRestrictedOperationMode(&hfdcan1)){
-				HAL_FDCAN_ExitRestrictedOperationMode(&hfdcan1);
+			if(HAL_FDCAN_IsRestrictedOperationMode(primary_can->hal_fdcanP)) {
+				HAL_FDCAN_ExitRestrictedOperationMode(primary_can->hal_fdcanP);
 			}
-			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
+			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
 		}
 
 		/* USER CODE BEGIN 3 */
