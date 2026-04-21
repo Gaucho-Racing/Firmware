@@ -34,8 +34,6 @@ target_sources(
 		Src/i2c.c
 		Src/main.c
 		Src/spi.c
-		Src/stm32h5xx_hal_msp.c
-		Src/stm32h5xx_hal_timebase_tim.c
 		Src/stm32h5xx_it.c
 	# TODO
 )

@@ -26,10 +26,16 @@ uint8_t mag_calib_abort(mag *mag_dev);
 
 float mag_read_encoder_angle(mag *mag_dev);
 
+bool mag_read_device_status(mag *mag_dev);
+
+float mag_read_temp(mag *mag_dev);
+
 bool check_status(mag *mag_dev);
 
 uint16_t mag_read_turns(mag *mag_dev);
 
 float mag_read_HANG(mag *mag_dev);
+
+void mag_write_error(mag *mag_dev);
 
 #endif

@@ -77,7 +77,7 @@ uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
 	uint16_t msb = (data & mag_msb) >> 8 | ((uint16_t(reg) & mag_addr_mask) << 8) | 0x4000;
 	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb) reg += 1; // increment from 0x22 to 0x23 for lsb
-	uint16_t lsb = (data & mag_lsb) | ((uint16_t(reg) & mag_addr_mask) << 8)) | 0x4000;
+	uint16_t lsb = ((data & mag_lsb) | ((uint16_t(reg) & mag_addr_mask) << 8)) | 0x4000;
 	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb) return 0;
 }
 
@@ -144,7 +144,7 @@ bool check_status(mag *mag_dev)
 
 	// fix-me add LOGOMATIC
 
-	return true;
+	return (voltage_error && magnetic_err && angle_error && invalid_spi_len && temp_out_of_range && turn_counter_saturated && excessive_magnet_vel);
 }
 
 int16_t mag_read_turns(mag *mag_dev)
@@ -160,8 +160,12 @@ int16_t mag_read_turns(mag *mag_dev)
 float mag_read_HANG(mag *mag_dev)
 {
 	int16_t read_HANG = mag_transmit(mag_dev, 0x30);	  // 0x30 is Hysteresis Angle Value
-	return ((uint16_t)(read_HANG & 0x0FFF) * 360.0f / 32768); // Mask to 12 bits (valid angle data)
+	return ((int16_t)(read_HANG & 0x0FFF) * 360.0f / 32768); // Mask to 12 bits (valid angle data)
 }
 
 // Address 0x1E:0x1F (CTRL)—Device Control
+void mag_write_error(mag *mag_dev) {
+	mag_write(mag_dev, 0x1E, 0x0300);
+	return;
+}
 //  FIXME: add error flag handling

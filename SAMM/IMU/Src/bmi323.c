@@ -1,8 +1,7 @@
-#include "bmi323.h"
-
 #include <stdio.h>
 
-#include "stm32h574xx.h"
+#include "bmi323.h"
+#include "stm32h5xx.h"
 #include "stm32h5xx_hal_spi.h"
 
 // init spi port before calling this function

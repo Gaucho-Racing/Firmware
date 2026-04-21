@@ -115,8 +115,8 @@ extern "C" {
  *        (when HSE is used as system clock source, directly or through the PLL).
  */
 #if !defined(HSE_VALUE)
-#define HSE_VALUE (25000000UL) /*!< Value of the External oscillator in Hz */
-#endif			       /* HSE_VALUE */
+#define HSE_VALUE (8000000UL) /*!< Value of the External oscillator in Hz */
+#endif			      /* HSE_VALUE */
 
 #if !defined(HSE_STARTUP_TIMEOUT)
 #define HSE_STARTUP_TIMEOUT (100UL) /*!< Time out for HSE start up, in ms */
@@ -136,7 +136,7 @@ extern "C" {
  *        (when HSI is used as system clock source, directly or through the PLL).
  */
 #if !defined(HSI_VALUE)
-#define HSI_VALUE (64000000UL) /*!< Value of the Internal oscillator in Hz*/
+#define HSI_VALUE (16000000UL) /*!< Value of the Internal oscillator in Hz*/
 #endif			       /* HSI_VALUE */
 
 /**

@@ -176,11 +176,15 @@ int main(void)
 		float temp = mag_read_temp(mag_dev);
 		float angle = mag_read_encoder_angle(mag_dev);
 		int16_t turns = mag_read_turns(mag_dev);
-		float hang = mag_read_HANG(mag_dev);
-		check_status(mag_dev);
+		//float hang = mag_read_HANG(mag_dev);
+		bool bad = check_status(mag_dev);
 		printf("Temperature is %f\n", temp);
 		printf("Angle is %f\n", angle);
-		printf("Number of turns is ")
+		printf("Number of turns is %d\n", turns);
+		if(!bad){
+			printf("67 69 420 something is cooked");
+			mag_write_error(mag_dev);
+		}
 	}
 	/* USER CODE END 3 */
 }
