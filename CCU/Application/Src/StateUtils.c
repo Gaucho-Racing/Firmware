@@ -66,7 +66,7 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
-void CheckDebuggerPrint(const CCU_StateData *state_data)
+void CheckDebuggerPrint(CCU_StateData *state_data)
 {
 	if (!(state_data->request_print_statedata)) {
 		return;
@@ -97,5 +97,5 @@ void CheckDebuggerPrint(const CCU_StateData *state_data)
 
 	LOGOMATIC("====================================\n\n");
 
-	request_print_statedata = false;
+	state_data->request_print_statedata = false;
 }
