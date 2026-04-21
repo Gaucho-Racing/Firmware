@@ -11,11 +11,7 @@ typedef struct {
 	bool recv_charge_cmd;
 
 	// BCU_STATUS_2
-	uint8_t BCU_S2_20Volt;
-	uint8_t BCU_S2_12Volt;
-	uint8_t BCU_S2_SDC_Volt;
-	uint8_t BCU_S2_MIN_CELL_Volt;
-	uint8_t BCU_S2_MAX_CELL_TEMP;
+	
 	// Error & Warnings
 	// uint8_t BCU_S2_ERROR_BITS;
 	bool BCU_S2_OVERTEMP_ERROR;
