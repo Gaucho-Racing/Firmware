@@ -13,11 +13,11 @@ void setSoftwareLatch(bool state, CCU_StateData *state_data)
 
 	if (state && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-		state_data->BCU_S2_SOFTWARE_LATCH = true;
+		state_data->SOFTWARE_LATCH = true;
 		LOGOMATIC("Software Latch: High\n");
 	} else if (!state && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-		state_data->BCU_S2_SOFTWARE_LATCH = false;
+		state_data->SOFTWARE_LATCH = false;
 		LOGOMATIC("Software Latch: Low\n");
 	}
 }
@@ -31,7 +31,7 @@ bool BCU_Warnings(const CCU_StateData *state_data)
 		LOGOMATIC("Under 12v Warning\n");
 		return true;
 	} else if (state_data->BCU_S2_UNDERVOLTSDC_WARNING) {
-		LOGOMATIC("Undervolt TSDC Wanring\n");
+		LOGOMATIC("Undervolt TSDC Warning\n");
 		return true;
 	} else {
 		return false;
@@ -92,7 +92,7 @@ void CheckDebuggerPrint(CCU_StateData *state_data)
 	LOGOMATIC("UNDERVOLT SDC: %d\n", state_data->BCU_S2_UNDERVOLTSDC_WARNING);
 
 	LOGOMATIC("\n--- State Bits ---\n");
-	LOGOMATIC("SOFTWARE LATCH: %d\n", state_data->BCU_S2_SOFTWARE_LATCH);
+	LOGOMATIC("SOFTWARE LATCH: %d\n", state_data->SOFTWARE_LATCH);
 	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->CCU_PRECHARGE_SET_TS_ACTIVE);
 
 	LOGOMATIC("====================================\n\n");
