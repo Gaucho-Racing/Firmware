@@ -3,10 +3,11 @@
 
 // includes
 
+#include <stdint.h>
+
 #include "main.h"
 #include "spi.h"
 #include "stm32h5xx.h"
-#include <stdint.h>
 
 // BMI323 register defines
 

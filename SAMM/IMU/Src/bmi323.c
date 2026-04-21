@@ -1,6 +1,7 @@
+#include "bmi323.h"
+
 #include <stdio.h>
 
-#include "bmi323.h"
 #include "stm32h5xx.h"
 #include "stm32h5xx_hal_spi.h"
 

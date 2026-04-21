@@ -127,8 +127,8 @@ int main(void)
 	// HAL_Delay(1);  // Short delay after mode switch
 
 	if (mag_init() != HAL_OK) {
-	   printf("MAG initialization failed!\r\n");
-	   Error_Handler();
+		printf("MAG initialization failed!\r\n");
+		Error_Handler();
 	}
 
 	// static uint16_t eeMLX90640[832];
@@ -176,12 +176,12 @@ int main(void)
 		float temp = mag_read_temp(mag_dev);
 		float angle = mag_read_encoder_angle(mag_dev);
 		int16_t turns = mag_read_turns(mag_dev);
-		//float hang = mag_read_HANG(mag_dev);
+		// float hang = mag_read_HANG(mag_dev);
 		bool bad = check_status(mag_dev);
 		printf("Temperature is %f\n", temp);
 		printf("Angle is %f\n", angle);
 		printf("Number of turns is %d\n", turns);
-		if(!bad){
+		if (!bad) {
 			printf("67 69 420 something is cooked");
 			mag_write_error(mag_dev);
 		}

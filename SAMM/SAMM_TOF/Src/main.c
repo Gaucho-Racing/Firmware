@@ -206,71 +206,58 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_1)
-  {
-  }
+	LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_1) {}
 
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
-  while (LL_PWR_IsActiveFlag_VOS() == 0)
-  {
-  }
-  LL_RCC_HSI_Enable();
+	LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
+	while (LL_PWR_IsActiveFlag_VOS() == 0) {}
+	LL_RCC_HSI_Enable();
 
-   /* Wait till HSI is ready */
-  while(LL_RCC_HSI_IsReady() != 1)
-  {
-  }
+	/* Wait till HSI is ready */
+	while (LL_RCC_HSI_IsReady() != 1) {}
 
-  LL_RCC_HSI_SetCalibTrimming(64);
-  LL_RCC_HSI_SetDivider(LL_RCC_HSI_DIV_2);
-  LL_RCC_CSI_Enable();
+	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_HSI_SetDivider(LL_RCC_HSI_DIV_2);
+	LL_RCC_CSI_Enable();
 
-   /* Wait till CSI is ready */
-  while(LL_RCC_CSI_IsReady() != 1)
-  {
-  }
+	/* Wait till CSI is ready */
+	while (LL_RCC_CSI_IsReady() != 1) {}
 
-  LL_RCC_CSI_SetCalibTrimming(32);
-  LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_CSI);
-  LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_4_8);
-  LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
-  LL_RCC_PLL1_SetM(1);
-  LL_RCC_PLL1_SetN(32);
-  LL_RCC_PLL1_SetP(2);
-  LL_RCC_PLL1_SetQ(2);
-  LL_RCC_PLL1_SetR(2);
-  LL_RCC_PLL1Q_Enable();
-  LL_RCC_PLL1_Enable();
+	LL_RCC_CSI_SetCalibTrimming(32);
+	LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_CSI);
+	LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_4_8);
+	LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
+	LL_RCC_PLL1_SetM(1);
+	LL_RCC_PLL1_SetN(32);
+	LL_RCC_PLL1_SetP(2);
+	LL_RCC_PLL1_SetQ(2);
+	LL_RCC_PLL1_SetR(2);
+	LL_RCC_PLL1Q_Enable();
+	LL_RCC_PLL1_Enable();
 
-   /* Wait till PLL is ready */
-  while(LL_RCC_PLL1_IsReady() != 1)
-  {
-  }
+	/* Wait till PLL is ready */
+	while (LL_RCC_PLL1_IsReady() != 1) {}
 
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
+	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
 
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
-  {
-  }
+	/* Wait till System clock is ready */
+	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {}
 
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-  LL_RCC_SetAPB3Prescaler(LL_RCC_APB3_DIV_1);
-  LL_SetSystemCoreClock(32000000);
+	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
+	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+	LL_RCC_SetAPB3Prescaler(LL_RCC_APB3_DIV_1);
+	LL_SetSystemCoreClock(32000000);
 
-   /* Update the time base */
-  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	/* Update the time base */
+	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
+		Error_Handler();
+	}
 }
 
 /* USER CODE BEGIN 4 */
