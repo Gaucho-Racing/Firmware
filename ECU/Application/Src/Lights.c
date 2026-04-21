@@ -83,7 +83,8 @@ void BSPDLights(ECU_StateData *stateLump)
 }
 
 static uint32_t last_dash_can_send;
-void dashLights(ECU_StateData *stateLump) {
+void dashLights(ECU_StateData *stateLump)
+{
 	// BMS
 	bool light = 0;
 	GRCAN_DASH_CONFIG_MSG message = {};
