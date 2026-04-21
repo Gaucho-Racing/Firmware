@@ -13,7 +13,7 @@
 #define mag_msb 0xFF00
 #define mag_lsb 0x00FF
 
-void mag_init(mag mag_dev, SPI_HandleTypeDefspi_port, GPIO_TypeDef port, uint16_t pin)
+void mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)
 {
 	mag_dev->spi_port = spi_port;
 	mag_dev->port = port;
@@ -29,16 +29,16 @@ void mag_init(mag mag_dev, SPI_HandleTypeDefspi_port, GPIO_TypeDef port, uint16_
 	return HAL_OK;
 }
 
-uint16_t mag_transmit(mag mag_dev, uint16_t data)
+uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 {
 	uint8_t tx_word[2] = {data >> 8, data & 0xFF};
 	uint8_t rx_word[2] = {0};
 
 	// HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); //A1113 chip select active low
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET); // disable
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); // disable
 	bool res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
 	// fix-me add error handling
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 	// HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
 	return ((uint16_t)rx_word[0] << 8) | rx_word[1];
@@ -57,7 +57,7 @@ addr
 0x00
 crc
 */
-uint16_t mag_read(mag mag_dev, uint8_t reg)
+uint16_t mag_read(mag *mag_dev, uint8_t reg)
 {
 	uint16_t cmd = (uint16_t)((reg & mag_addr_mask) << 8); // read: bit 14 = 0, address in bits 13:8
 	mag_transmit(mag_dev, cmd);			       // frame 1: send command, discard response
@@ -73,7 +73,7 @@ data (8 bits)
 crc (4 bits -- optional)
 */
 
-uint16_t mag_write(mag mag_dev, uint8_t reg, uint16_t data)
+uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
 	uint16_t msb = (data & mag_msb) >> 8 | ((uint16_t(reg) & mag_addr_mask) << 8) | 0x4000;
 	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb) reg += 1; // increment from 0x22 to 0x23 for lsb
@@ -88,7 +88,7 @@ uint8_t mag_calib_abort(mag *mag_dev)
 }
 
 // Address 0x32:0x33 (ANG15)—Current Angle Reading (15 bits)
-float mag_read_encoder_angle(mag mag_dev)
+float mag_read_encoder_angle(mag *mag_dev)
 {
 	uint16_t read_angle = mag_transmit(mag_dev, 0x32);	   // 0x32 is angle register
 	return ((uint16_t)(read_angle & 0x7FFF) * 360.0f / 32768); // Mask to 15 bits (valid angle data)
@@ -111,7 +111,7 @@ Check the status of the acc, gyro and temp before returning the values
 0x0D : extended read status
 */
 
-bool check_status(mag mag_dev)
+bool check_status(mag *mag_dev)
 {
 	// Device Error Flags
 	uint32_t error25 = mag_read(mag_dev, 0x25);
@@ -136,12 +136,7 @@ bool check_status(mag mag_dev)
 	return true;
 }
 
-uint16_t mag_read_acc_x(mag *mag_dev)
-{
-	return mag_read(mag_dev, mag_ACC_X);
-}
-
-uint16_t mag_read_acc_y(mag *mag_dev)
+uint16_t mag_read_turns(mag *mag_dev)
 {
 	int16_t read_turns = mag_transmit(mag_dev, 0x2C); // 0x2C is turn counter
 	return ((int16_t)(read_angle & 0x0FFF));
@@ -152,7 +147,7 @@ uint16_t mag_read_acc_y(mag *mag_dev)
 //  FIXME: add error handling
 
 // Address 0x30:0x31 (HANG)—Hysteresis Angle Value (12 bits)
-float mag_read_HANG(mag mag_dev)
+float mag_read_HANG(mag *mag_dev)
 {
 	int16_t read_HANG = mag_transmit(mag_dev, 0x30);	  // 0x30 is Hysteresis Angle Value
 	return ((uint16_t)(read_HANG & 0x0FFF) * 360.0f / 32768); // Mask to 12 bits (valid angle data)

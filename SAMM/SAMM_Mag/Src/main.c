@@ -35,8 +35,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define MAG_CS_GPIO_Port GPIOA
-#define MAG_CS_Pin GPIO_PIN_4
+#define MAG_CS_GPIO_Port GPIOB
+#define MAG_CS_Pin GPIO_PIN_10
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -107,7 +107,7 @@ int main(void)
 	// MX_FDCAN1_Init();
 	// MX_FDCAN2_Init();
 	MX_I2C1_Init();
-	MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
+	MX_SPI3_Init(); // TODO: change all instances of spi1 -> SPI1
 	/* USER CODE BEGIN 2 */
 
 	// HAL_FDCAN_Start(&hfdcan1);
@@ -115,8 +115,9 @@ int main(void)
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// bmi323 bmi323_dev;
-	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	// bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin);
+	mag mag_dev;
+	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
+	mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin);
 
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
@@ -125,12 +126,10 @@ int main(void)
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 	// HAL_Delay(1);  // Short delay after mode switch
 
-	// Initialize BMI323 sensor
-
-	// if (BMI323_Init() != HAL_OK) {
-	//   printf("BMI323 initialization failed!\r\n");
-	//   Error_Handler();
-	// }
+	if (mag_init() != HAL_OK) {
+	   printf("MAG initialization failed!\r\n");
+	   Error_Handler();
+	}
 
 	// static uint16_t eeMLX90640[832];
 	// static paramsMLX90640 mlx90640;

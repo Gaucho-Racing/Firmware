@@ -115,7 +115,7 @@ int main(void)
 	// MX_FDCAN2_Init();
 	MX_I2C1_Init();
 	MX_SPI1_Init(); // TODO: change all instances of spi1 -> SPI1
-	MX_SPI3_Init();
+
 	/* USER CODE BEGIN 2 */
 
 	// HAL_FDCAN_Start(&hfdcan1);
@@ -124,7 +124,7 @@ int main(void)
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	bmi323 bmi323_dev;
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin); // TODO:
+	bmi323_init(&bmi323_dev, &hspi1, &BMI323_CS_GPIO_Port, BMI323_CS_Pin); // TODO:
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
@@ -208,44 +208,71 @@ int main(void)
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
-	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
-	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
-	LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-	LL_RCC_HSE_EnableBypass();
-	LL_RCC_HSE_Enable();
-	/* Wait till HSE is ready */
-	while (LL_RCC_HSE_IsReady() != 1) {}
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_1)
+  {
+  }
 
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 32, LL_RCC_PLLR_DIV_2);
-	LL_RCC_PLL_EnableDomain_SYS();
-	LL_RCC_PLL_Enable();
-	/* Wait till PLL is ready */
-	while (LL_RCC_PLL_IsReady() != 1) {}
+  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
+  while (LL_PWR_IsActiveFlag_VOS() == 0)
+  {
+  }
+  LL_RCC_HSI_Enable();
 
-	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-	/* Wait till System clock is ready */
-	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
+   /* Wait till HSI is ready */
+  while(LL_RCC_HSI_IsReady() != 1)
+  {
+  }
 
-	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (170 >> 1); i != 0; i--)
-		;
+  LL_RCC_HSI_SetCalibTrimming(64);
+  LL_RCC_HSI_SetDivider(LL_RCC_HSI_DIV_2);
+  LL_RCC_CSI_Enable();
 
-	/* Set AHB prescaler*/
-	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(128000000);
+   /* Wait till CSI is ready */
+  while(LL_RCC_CSI_IsReady() != 1)
+  {
+  }
 
-	/* Update the time base */
-	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
-		Error_Handler();
-	}
+  LL_RCC_CSI_SetCalibTrimming(32);
+  LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_CSI);
+  LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_4_8);
+  LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
+  LL_RCC_PLL1_SetM(1);
+  LL_RCC_PLL1_SetN(32);
+  LL_RCC_PLL1_SetP(2);
+  LL_RCC_PLL1_SetQ(2);
+  LL_RCC_PLL1_SetR(2);
+  LL_RCC_PLL1Q_Enable();
+  LL_RCC_PLL1_Enable();
+
+   /* Wait till PLL is ready */
+  while(LL_RCC_PLL1_IsReady() != 1)
+  {
+  }
+
+  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
+
+   /* Wait till System clock is ready */
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
+  {
+  }
+
+  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
+  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+  LL_RCC_SetAPB3Prescaler(LL_RCC_APB3_DIV_1);
+  LL_SetSystemCoreClock(32000000);
+
+   /* Update the time base */
+  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /* USER CODE BEGIN 4 */
