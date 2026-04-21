@@ -440,7 +440,7 @@ int main(void)
 		read_digital();
 		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
-		SendECUStateDataOverCAN(&stateLump);
+		// SendECUStateDataOverCAN(&stateLump);
 
 		write_adc_values_to_state_data();
 		// ECU_State_Tick();
