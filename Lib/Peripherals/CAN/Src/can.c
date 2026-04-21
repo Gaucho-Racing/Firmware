@@ -470,7 +470,7 @@ void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorSt
 	CANHandle *handle = can_get_handle(hfdcan);
 
 	if (ErrorStatusITs & (FDCAN_IT_BUS_OFF | FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR)) {
-		(void)can_try_recover_tx_path(handle);
+		can_try_recover_tx_path(handle);
 	}
 }
 
