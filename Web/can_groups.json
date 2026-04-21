@@ -1,48 +1,69 @@
 {
-  "groups": [
-    {
-      "name": "POWER/HV",
-      "side": "top",
-      "nodes": ["DTI Inverter", "GR Inverter"]
-    },
-    {
-      "name": "CORE CONTROL (Top)",
-      "side": "top",
-      "nodes": ["ECU"]
-    },
-    {
-      "name": "THERMAL CONTROL",
-      "side": "top",
-      "nodes": ["Fan Controller 1", "Fan Controller 2", "Fan Controller 3"]
-    },
-    {
-      "name": "SENSORS",
-      "side": "top",
-      "nodes": [
-        "SAMM_Mag_1",
-        "SAMM_Mag_2",
-        "SAMM_ToF_1",
-        "SAMM_ToF_2",
-        "TireTemp_1",
-        "TireTemp_2",
-        "TireTemp_3",
-        "TireTemp_4"
-      ]
-    },
-    {
-      "name": "SUBSYSTEMS",
-      "side": "bottom",
-      "nodes": ["DGPS", "Dash Panel", "Energy Meter"]
-    },
-    {
-      "name": "CORE CONTROL (Bottom)",
-      "side": "bottom",
-      "nodes": ["TCM", "BCU"]
-    },
-    {
-      "name": "OTHER LOGIC",
-      "side": "bottom",
-      "nodes": ["Charging SDC", "IMD", "CCU", "Charger"]
-    }
-  ]
+	"groups": [
+		{
+			"name": "POWER/HV",
+			"side": "top",
+			"nodes": [
+				"DTI Inverter",
+				"GR Inverter"
+			]
+		},
+		{
+			"name": "CORE CONTROL (Top)",
+			"side": "top",
+			"nodes": [
+				"ECU"
+			]
+		},
+		{
+			"name": "THERMAL CONTROL",
+			"side": "top",
+			"nodes": [
+				"Fan Controller 1",
+				"Fan Controller 2",
+				"Fan Controller 3"
+			]
+		},
+		{
+			"name": "SENSORS",
+			"side": "top",
+			"nodes": [
+				"SAMM_Mag_1",
+				"SAMM_Mag_2",
+				"SAMM_ToF_1",
+				"SAMM_ToF_2",
+				"TireTemp_1",
+				"TireTemp_2",
+				"TireTemp_3",
+				"TireTemp_4"
+			]
+		},
+		{
+			"name": "SUBSYSTEMS",
+			"side": "bottom",
+			"nodes": [
+				"DGPS",
+				"Dash Panel",
+				"Energy Meter"
+			]
+		},
+		{
+			"name": "CORE CONTROL (Bottom)",
+			"side": "bottom",
+			"nodes": [
+				"TCM",
+				"BCU"
+			]
+		},
+		{
+			"name": "OTHER LOGIC",
+			"side": "bottom",
+			"nodes": [
+				"Charging SDC",
+				"IMD",
+				"CCU",
+				"Charger"
+			]
+		}
+	]
 }
