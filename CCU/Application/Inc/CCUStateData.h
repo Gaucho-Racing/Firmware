@@ -33,6 +33,8 @@ typedef struct {
 	// BCU_PRECHARGE
 	bool CCU_PRECHARGE_SET_TS_ACTIVE;
 
+	volatile bool request_print_statedata;
+
 } CCU_StateData;
 
 extern volatile CCU_StateData state_data;

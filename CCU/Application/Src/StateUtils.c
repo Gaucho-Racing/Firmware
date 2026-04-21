@@ -66,11 +66,9 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
-volatile bool request_print_statedata;
-
 void CheckDebuggerPrint(const CCU_StateData *state_data)
 {
-	if (!request_print_statedata) {
+	if (!(state_data->request_print_statedata)) {
 		return;
 	}
 
@@ -80,11 +78,6 @@ void CheckDebuggerPrint(const CCU_StateData *state_data)
 	LOGOMATIC("recv_charge_cmd: %d\n", state_data->recv_charge_cmd);
 
 	LOGOMATIC("\n--- BCU_STATUS_2 ---\n");
-	LOGOMATIC("20V: %u\n", state_data->BCU_S2_20Volt);
-	LOGOMATIC("12V: %u\n", state_data->BCU_S2_12Volt);
-	LOGOMATIC("SDC Volt: %u\n", state_data->BCU_S2_SDC_Volt);
-	LOGOMATIC("Min Cell Volt: %u\n", state_data->BCU_S2_MIN_CELL_Volt);
-	LOGOMATIC("Max Cell Temp: %u\n", state_data->BCU_S2_MAX_CELL_TEMP);
 
 	LOGOMATIC("\n--- Errors ---\n");
 	LOGOMATIC("OVERTEMP: %d\n", state_data->BCU_S2_OVERTEMP_ERROR);
