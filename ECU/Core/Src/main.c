@@ -393,9 +393,18 @@ int main(void)
 	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
+		static uint32_t lastSend;
+		if(MillisecondsSinceBoot() >= lastSend + 20) {
+			lastSend = MillisecondsSinceBoot;
+
+			if(HAL_FDCAN_IsRestrictedOperationMode(&hfdcan1)){
+				HAL_FDCAN_ExitRestrictedOperationMode(&hfdcan1);
+			}
+			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
+		}
 
 		/* USER CODE BEGIN 3 */
+		/*
 		if (cycle_counter_accumulator == 10) {
 			elapsed_cycles = DWT->CYCCNT;
 			//LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
@@ -406,6 +415,7 @@ int main(void)
 		} else {
 			cycle_counter_accumulator++;
 		}
+		*/
 
 		/*
 		static uint32_t nextPing;
@@ -433,8 +443,8 @@ int main(void)
 		SendECUStateDataOverCAN(&stateLump);
 
 		write_adc_values_to_state_data();
-		ECU_State_Tick();
-		//lightControl(&stateLump);
+		// ECU_State_Tick();
+		// lightControl(&stateLump);
 		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */
