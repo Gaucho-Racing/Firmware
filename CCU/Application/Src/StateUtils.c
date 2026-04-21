@@ -100,7 +100,7 @@ void CheckDebuggerPrint(const CCU_StateData *state_data)
 
 	LOGOMATIC("\n--- State Bits ---\n");
 	LOGOMATIC("SOFTWARE LATCH: %d\n", state_data->BCU_S2_SOFTWARE_LATCH);
-	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->CCU_PRECHARGE_SET_TS_ACTIVE);
 
 	LOGOMATIC("====================================\n\n");
 

@@ -35,10 +35,10 @@ typedef struct {
 	bool BCU_S2_SOFTWARE_LATCH;
 
 	// BCU_PRECHARGE
-	bool BCU_PRECHARGE_SET_TS_ACTIVE;
+	bool CCU_PRECHARGE_SET_TS_ACTIVE;
 
 } CCU_StateData;
 
-extern CCU_StateData state_data;
+extern volatile CCU_StateData state_data;
 
 #endif

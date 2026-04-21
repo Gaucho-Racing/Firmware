@@ -25,7 +25,7 @@ void CCU_State_Tick(CCU_StateData *state_data)
 			break;
 
 		default:
-			state_data->BCU_PRECHARGE_SET_TS_ACTIVE = false;
+			state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 			state_data->state = CCU_STATE_IDLE;
 			SendPrechargeStatus(state_data);
 			setSoftwareLatch(false, state_data);
@@ -46,7 +46,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 	else if (!anyErrors && state_data->recv_charge_cmd) {
 
 		state_data->state = CCU_STATE_CHARGING;
-		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = true;
+		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = true;
 		SendPrechargeStatus(state_data);
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
@@ -61,7 +61,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 		setSoftwareLatch(false, state_data);
 
-		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = false;
+		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 		SendPrechargeStatus(state_data);
 
 		state_data->state = CCU_STATE_IDLE;
@@ -71,7 +71,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 	else if (!(state_data->recv_charge_cmd)) {
 		state_data->state = CCU_STATE_IDLE;
-		state_data->BCU_PRECHARGE_SET_TS_ACTIVE = false;
+		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 		SendPrechargeStatus(state_data);
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
