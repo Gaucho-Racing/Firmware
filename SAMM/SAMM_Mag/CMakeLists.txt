@@ -27,7 +27,6 @@ target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
-		Src/adc.c
 		Src/crc.c
 		Src/dma.c
 		Src/gpio.c
