@@ -1,5 +1,5 @@
 // Purpose: Functional grouping metadata for the Graph View physical-bus
-// renderer. Loads and parses Web/can_groups.txt — human-editable mapping
+// renderer. Loads and parses Web/can_groups.json — human-editable mapping
 // of device names to functional groups (POWER/HV, THERMAL CONTROL, …).
 // Each group declares a side: "top", "bottom", or "bus".
 // Exposed as: window.PhysicalGroups.
@@ -7,7 +7,7 @@
 (function () {
 	"use strict";
 
-	// Nodes always placed on the bus spine, regardless of can_groups.txt.
+	// Nodes always placed on the bus spine, regardless of can_groups.json.
 	const _BUS_SPINE = ["Debugger", "ALL"];
 
 	// Array of { name, side, nodes: Set<string> }, preserving declaration order.
@@ -15,26 +15,20 @@
 	let _loaded = false;
 
 	// ==================== Parser ====================
-	// Pure function: text → Array<{name, side, nodes: Set<string>}>
+	// Pure function: JSON text → Array<{name, side, nodes: Set<string>}>
 
 	function _parse(text) {
+		const data = JSON.parse(text);
 		const result = [];
-		let current = null;
-		for (const raw of String(text || "").split("\n")) {
-			const line = raw.replace(/#.*$/, "").trimEnd();
-			if (!line.trim()) continue;
-			// Group header: "NAME: side" where side is top | bottom | bus.
-			const headerMatch = line.match(/^([^\s].*?):\s*(top|bottom|bus)\s*$/);
-			if (headerMatch) {
-				current = {
-					name: headerMatch[1].trim(),
-					side: headerMatch[2],
-					nodes: new Set(),
-				};
-				result.push(current);
-			} else if (current && /^\s+\S/.test(line)) {
-				current.nodes.add(line.trim());
-			}
+		const groups = Array.isArray(data.groups) ? data.groups : [];
+		for (const group of groups) {
+			if (!group || typeof group.name !== "string") continue;
+			if (group.side !== "top" && group.side !== "bottom" && group.side !== "bus") continue;
+			result.push({
+				name: group.name,
+				side: group.side,
+				nodes: new Set(Array.isArray(group.nodes) ? group.nodes : []),
+			});
 		}
 		return result;
 	}
@@ -42,17 +36,18 @@
 	// ==================== Public API ====================
 
 	window.PhysicalGroups = {
-		// Fetch and parse can_groups.txt. Resolves even on failure;
+		// Fetch and parse can_groups.json. Resolves even on failure;
 		// isLoaded() tells you whether it succeeded.
 		load: async function () {
 			try {
-				const resp = await fetch("can_groups.txt");
+				const resp = await fetch("can_groups.json");
 				if (!resp.ok) return;
 				const text = await resp.text();
 				_groups = _parse(text);
 				_loaded = true;
 			} catch (_) {
-				// Silently no-op (e.g. file:// local mode).
+				// Silently no-op: fetch unavailable or malformed JSON
+				// (e.g. file:// local mode, or hand-edit syntax error).
 			}
 		},
 

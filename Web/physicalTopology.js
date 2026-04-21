@@ -1,5 +1,5 @@
 // Purpose: Physical CAN bus topology enforcement module.
-// Loads and parses Web/can_topology.txt — the human-editable source of truth
+// Loads and parses Web/can_topology.json — the human-editable source of truth
 // for which devices are physically wired to which CAN bus.
 // All exemption logic (Debugger, ALL) lives here and nowhere else.
 // No other file knows about storage, parsing, or fetch internals.
@@ -17,21 +17,13 @@
 	let _loaded = false;
 
 	// ==================== Parser ====================
-	// Pure function: text → Map<bus, Set<name>>
+	// Pure function: JSON text → Map<bus, Set<name>>
 
 	function _parse(text) {
 		const result = new Map();
-		let currentBus = null;
-		for (const raw of String(text || "").split("\n")) {
-			const line = raw.replace(/#.*$/, "").trimEnd(); // strip inline comments
-			if (!line.trim()) continue;
-			const busMatch = line.match(/^(CAN\d+)\s*:/);
-			if (busMatch) {
-				currentBus = busMatch[1];
-				result.set(currentBus, new Set());
-			} else if (currentBus && /^\s+\S/.test(line)) {
-				result.get(currentBus).add(line.trim());
-			}
+		const data = JSON.parse(text);
+		for (const [bus, nodes] of Object.entries(data)) {
+			if (Array.isArray(nodes)) result.set(bus, new Set(nodes));
 		}
 		return result;
 	}
@@ -39,17 +31,18 @@
 	// ==================== Public API ====================
 
 	window.PhysicalTopology = {
-		// Fetch and parse can_topology.txt. Call once at startup.
+		// Fetch and parse can_topology.json. Call once at startup.
 		// Resolves even on failure — isLoaded() will return false in that case.
 		load: async function () {
 			try {
-				const resp = await fetch("can_topology.txt");
+				const resp = await fetch("can_topology.json");
 				if (!resp.ok) return;
 				const text = await resp.text();
 				_topology = _parse(text);
 				_loaded = true;
 			} catch (_) {
-				// Silently no-op: fetch not available (e.g. file:// local mode).
+				// Silently no-op: fetch unavailable or malformed JSON
+				// (e.g. file:// local mode, or hand-edit syntax error).
 			}
 		},
 

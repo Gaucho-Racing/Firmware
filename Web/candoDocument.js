@@ -608,7 +608,7 @@
 		}
 
 		// V8: PHYSICAL_BUS_VIOLATION
-		// Only runs when PhysicalTopology has successfully loaded can_topology.txt.
+		// Only runs when PhysicalTopology has successfully loaded can_topology.json.
 		const _topo = (typeof window !== "undefined" ? window : {})
 			.PhysicalTopology;
 		if (_topo && _topo.isLoaded()) {

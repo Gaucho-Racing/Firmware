@@ -15,8 +15,8 @@ Edits are **not** saved to a backend. They exist in browser memory until the use
 | `candoDocument.js` | Semantic document model with cross-section invariants (`window.GrcanDocument`) |
 | `editor.js` | In-memory mutation engine, raw text state (`window.GrcanEditor`) |
 | `viewer.js` | Main controller: rendering, navigation, edit/delete wiring |
-| `physicalTopology.js` | Parses `can_topology.txt` to enforce physical bus-to-node constraints |
-| `physicalGroups.js` | Parses `can_groups.txt` — functional groupings used by the Graph View renderer (`window.PhysicalGroups`) |
+| `physicalTopology.js` | Parses `can_topology.json` to enforce physical bus-to-node constraints |
+| `physicalGroups.js` | Parses `can_groups.json` — functional groupings used by the Graph View renderer (`window.PhysicalGroups`) |
 | `layoutPhysicalBus.js` | Pure SVG layout for the physical-bus Graph View (`window.LayoutPhysicalBus`) |
 | `graphView.js` | Physical-bus SVG graph visualization (`window.GrcanGraphView`) |
 | `diffViewer.js` | Side-by-side text diff modal shown before download |
@@ -50,8 +50,8 @@ Edits are **not** saved to a backend. They exist in browser memory until the use
 
 | File | Purpose |
 |---|---|
-| `can_topology.txt` | Physical CAN bus topology: which nodes are wired to which bus. Node names must match `GR ID` entries in `GRCAN.CANdo`. |
-| `can_groups.txt` | Functional groupings (POWER/HV, THERMAL CONTROL, …) used by the Graph View renderer. Each group declares a side: `top`, `bottom`, or `bus`. Node names must match `GR ID` entries. |
+| `can_topology.json` | Physical CAN bus topology: which nodes are wired to which bus. Node names must match `GR ID` entries in `GRCAN.CANdo`. |
+| `can_groups.json` | Functional groupings (POWER/HV, THERMAL CONTROL, …) used by the Graph View renderer. Each group declares a side: `top`, `bottom`, or `bus`. Node names must match `GR ID` entries. |
 
 ### Vendored (retained for rollback, no longer loaded)
 
@@ -91,22 +91,37 @@ Tests live in `tests/` and run under Node.js:
 - `logic.test.js` — parser/API utility tests
 - `manual/` — manual test scenarios
 
-## Editing `can_topology.txt`
+## Editing `can_topology.json`
 
-This file defines which devices are physically connected to each CAN bus. The format is:
+This file defines which devices are physically connected to each CAN bus. The format is a JSON object keyed by bus name, with arrays of node names:
 
-```
-CAN1:
-  ECU
-  BCU
-  ...
-
-CAN2:
-  ECU
-  SAMM_Mag_1
-  ...
+```json
+{
+  "CAN1": ["ECU", "BCU", "..."],
+  "CAN2": ["ECU", "SAMM_Mag_1", "..."]
+}
 ```
 
 - Node names must exactly match `GR ID` entries in `GRCAN.CANdo`.
 - `Debugger` and `ALL` are always exempt and should not be listed.
-- Lines starting with `#` are comments.
+- JSON has no comment syntax. Rationale for entries should go in this README instead.
+- Hardware note: both `GR Inverter` and `DTI Inverter` share `CAN1`. Whichever isn't physically connected has its messages go nowhere — no firmware switch needed.
+
+## Editing `can_groups.json`
+
+This file defines functional groupings for the Graph View physical-bus renderer. Each group has a name, a `side` (`top`, `bottom`, or `bus`), and an array of node names:
+
+```json
+{
+  "groups": [
+    { "name": "POWER/HV", "side": "top", "nodes": ["DTI Inverter", "GR Inverter"] },
+    { "name": "CORE CONTROL (Bottom)", "side": "bottom", "nodes": ["TCM", "BCU"] }
+  ]
+}
+```
+
+- `side` semantics: `top` sits above the bus, `bottom` sits below, `bus` renders on the bus spine itself.
+- Nodes not listed in any group fall into an implicit `Other` group on the bottom side.
+- `Debugger` and `ALL` are always auto-placed on the bus spine.
+- Node names must exactly match `GR ID` entries in `GRCAN.CANdo` (same convention as `can_topology.json`).
+- Group order in the array is the render order.
