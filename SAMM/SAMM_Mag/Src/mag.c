@@ -96,7 +96,18 @@ float mag_read_encoder_angle(mag *mag_dev)
 
 // Address 0x22:0x23 (STA)—Device Status
 // read bit 0 AOK [0]
-// Address 0x28:0x29 (TSEN)—Temperature Sensor
+bool mag_read_device_status(mag *mag_dev)
+{
+	uint16_t read = mag_transmit(mag_dev, 0x22);	   // 0x22 is device status
+	return read[0]; // read aok
+}
+
+
+float mag_read_temp(mag *mag_dev)
+{
+	uint16_t read_temp = mag_transmit(mag_dev, 0x28);	   // 0x28 is temp register
+	return ((uint16_t)(read_temp & 0x0FFF) / 8.0 + 25); // Mask to 12 bits (valid temp data)
+}
 
 /*
 TODO:
@@ -136,11 +147,10 @@ bool check_status(mag *mag_dev)
 	return true;
 }
 
-uint16_t mag_read_turns(mag *mag_dev)
+int16_t mag_read_turns(mag *mag_dev)
 {
 	int16_t read_turns = mag_transmit(mag_dev, 0x2C); // 0x2C is turn counter
-	return ((int16_t)(read_angle & 0x0FFF));
-	; // Mask to 12 bits (valid angle data)
+	return ((int16_t)(read_angle & 0x0FFF)); // Mask to 12 bits (valid angle data)
 }
 
 // Address 0x24:0x25 (ERR)—Device Error Flags

@@ -64,7 +64,7 @@ void MX_I2C1_Init(void)
 
 	/** I2C Fast mode Plus enable
 	 */
-	HAL_I2CEx_EnableFastModePlus(I2C_FASTMODEPLUS_I2C1);
+	LL_I2C_EnableFastModePlus(I2C1);
 	/* USER CODE BEGIN I2C1_Init 2 */
 
 	/* USER CODE END I2C1_Init 2 */

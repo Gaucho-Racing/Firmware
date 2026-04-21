@@ -173,28 +173,14 @@ int main(void)
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
 		/* USER CODE END WHILE */
-
-		/* USER CODE BEGIN 3 */
-		// begin VL53L4ED
-		// status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
-		// if (p_data_ready) {
-		// 	/* (Mandatory) Clear HW interrupt to restart measurements */
-		// 	VL53L4ED_ClearInterrupt(TOF_ID);
-		// 	/* Read measured distance. RangeStatus = 0 means valid data */
-		// 	VL53L4ED_GetResult(TOF_ID, &results);
-		// 	printf("Status = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, results.distance_mm - 67, results.signal_per_spad_kcps);
-		// } else {
-		// 	HAL_Delay(10);
-		// 	__disable_irq();
-		// 	__enable_irq();
-		// }
-
-		// begin BMI323
-		//  int16_t ax, ay, az;
-		//  if (BMI323_ReadAccel(&ax, &ay, &az) == HAL_OK) {
-		//      printf("Accel: X=%d, Y=%d, Z=%d\r\n", ax, ay, az);
-		//  }
-		// HAL_Delay(100); // Read every 100ms
+		float temp = mag_read_temp(mag_dev);
+		float angle = mag_read_encoder_angle(mag_dev);
+		int16_t turns = mag_read_turns(mag_dev);
+		float hang = mag_read_HANG(mag_dev);
+		check_status(mag_dev);
+		printf("Temperature is %f\n", temp);
+		printf("Angle is %f\n", angle);
+		printf("Number of turns is ")
 	}
 	/* USER CODE END 3 */
 }
