@@ -23,7 +23,12 @@
 		const groups = Array.isArray(data.groups) ? data.groups : [];
 		for (const group of groups) {
 			if (!group || typeof group.name !== "string") continue;
-			if (group.side !== "top" && group.side !== "bottom" && group.side !== "bus") continue;
+			if (
+				group.side !== "top" &&
+				group.side !== "bottom" &&
+				group.side !== "bus"
+			)
+				continue;
 			result.push({
 				name: group.name,
 				side: group.side,
