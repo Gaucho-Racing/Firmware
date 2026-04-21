@@ -139,6 +139,8 @@ int main(void)
 		CCU_State_Tick(&state_data);
 		CheckDebuggerPrint(&state_data);
 
+		LL_mDelay(10);
+
 		/* USER CODE END 3 */
 	}
 }
