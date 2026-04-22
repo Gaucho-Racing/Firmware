@@ -3,11 +3,11 @@
 
 #include <stdbool.h>
 
-//#include "stm32g4xx_ll_bus.h"
-//#include "stm32g4xx_ll_dma.h"
+// #include "stm32g4xx_ll_bus.h"
+// #include "stm32g4xx_ll_dma.h"
 
-#include "can_platform_deps.h"
 #include "Logomatic.h"
+#include "can_platform_deps.h"
 
 #ifdef STM32G4
 #include "STM32G4_hal_fdcan_defines.h"

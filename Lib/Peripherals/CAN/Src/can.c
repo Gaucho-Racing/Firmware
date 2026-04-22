@@ -927,8 +927,6 @@ static CAN_STATUS can_msp_deinit(CANHandle *canHandle)
 	return CAN_SUCCESS;
 }
 
-
-
 static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 {
 	// Enter INIT mode
@@ -1029,4 +1027,4 @@ void FDCAN3_IT1_IRQHandler(void)
 #endif
 }
 
-#endif 
+#endif

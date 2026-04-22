@@ -22,14 +22,14 @@ static can_cfg_helper defaultSTM32G474xE_CANCfg;
 static can_cfg_helper defaultSTM32H523xx_CANCfg;
 #endif
 
-void set_default_can_clksource() {
-	#ifdef STM32G4
+void set_default_can_clksource()
+{
+#ifdef STM32G4
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
-	#elif defined(STM32H5)
+#elif defined(STM32H5)
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
-	#endif
+#endif
 }
-
 
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
@@ -222,7 +222,7 @@ CAN_STATUS defaultSTM32H523xx_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 187; //at 250 MHz, a 75% sampling time leads to (187+1)/(1+187+62) ~ 0.75
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 187; // at 250 MHz, a 75% sampling time leads to (187+1)/(1+187+62) ~ 0.75
 	canCfg.hal_fdcan_init.NominalTimeSeg2 = 62;
 	canCfg.hal_fdcan_init.DataPrescaler = 1;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;

@@ -145,7 +145,6 @@ int can_basic_test(void)
 
 	set_default_can_clksource();
 
-
 	//=============================================================================================
 	if ((primary_can = can_init(&cfg1)) == NULL) {
 		LOGOMATIC("Could not initialize primary_can\n");
