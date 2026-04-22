@@ -23,6 +23,7 @@
 #include "crc.h"
 #include "gpio.h"
 #include "i2c.h"
+#include "NodeID.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

@@ -72,7 +72,7 @@
 			"dependsOn": [
 				"CMake: configure NODE=FL"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp -DNODE:STRING=FL"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
 		},
 		{
 			"label": "CMake: configure and build TireTemp FR",
@@ -81,7 +81,7 @@
 			"dependsOn": [
 				"CMake: configure NODE=FR"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp -DNODE:STRING=FR"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
 		},
 		{
 			"label": "CMake: configure and build TireTemp RL",
@@ -90,7 +90,7 @@
 			"dependsOn": [
 				"CMake: configure NODE=RL"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp -DNODE:STRING=RL"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
 		},
 		{
 			"label": "CMake: configure and build TireTemp RR",
@@ -99,7 +99,7 @@
 			"dependsOn": [
 				"CMake: configure NODE=RR"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp -DNODE:STRING=RR"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
 		},
 		{
 			"label": "CMake: configure and build AnalogCalibration",

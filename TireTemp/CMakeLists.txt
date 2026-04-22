@@ -50,3 +50,9 @@ target_link_libraries(
 )
 
 target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc GRCAN)
+
+target_compile_definitions(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		NODE=${NODE}
+)
