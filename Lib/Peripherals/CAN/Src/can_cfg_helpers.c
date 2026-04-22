@@ -213,12 +213,12 @@ CAN_STATUS defaultSTM32H523xx_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127;
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
-	canCfg.hal_fdcan_init.DataPrescaler = 8;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 187; //at 250 MHz, a 75% sampling time leads to (187+1)/(1+187+62) ~ 0.75
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 62;
+	canCfg.hal_fdcan_init.DataPrescaler = 1;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 15;
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 37; // at 250 MHz, for 5 MbPs, (37+1)/(37+1 + 12)
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 12;
 	canCfg.hal_fdcan_init.StdFiltersNbr = numStdFilters;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = numExtFilters;
 
@@ -255,12 +255,12 @@ CAN_STATUS defaultSTM32H523xx_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 #ifdef USECAN2
 	if (instance == FDCAN2) {
 		canCfg.fdcan_instance = FDCAN2;
-		canCfg.rx_gpio = GPIOB;
-		canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
+		canCfg.rx_gpio = GPIOA;
+		canCfg.init_rx_gpio.Pin = GPIO_PIN_0;
 		canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
-		canCfg.tx_gpio = GPIOB;
-		canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
+		canCfg.tx_gpio = GPIOA;
+		canCfg.init_tx_gpio.Pin = GPIO_PIN_10;
 		canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
 		*out_cfg = canCfg;

@@ -927,6 +927,8 @@ static CAN_STATUS can_msp_deinit(CANHandle *canHandle)
 	return CAN_SUCCESS;
 }
 
+
+
 static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 {
 	// Enter INIT mode
@@ -964,7 +966,6 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 {
 #ifdef STM32G474xx
-
 	if (instance == FDCAN1) {
 		return "FDCAN1";
 	} else if (instance == FDCAN2) {
@@ -1014,6 +1015,7 @@ void FDCAN2_IT1_IRQHandler(void)
 #endif
 }
 
+#ifdef STM32G4
 void FDCAN3_IT0_IRQHandler(void)
 {
 #ifdef USECAN3
@@ -1026,3 +1028,5 @@ void FDCAN3_IT1_IRQHandler(void)
 	HAL_FDCAN_IRQHandler(&hal_fdcan3);
 #endif
 }
+
+#endif 

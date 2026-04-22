@@ -94,7 +94,11 @@ CANHandle *can_init(const CANConfig *config); // user must supply an rx callback
 CAN_STATUS can_start(CANHandle *handle);
 CAN_STATUS can_stop(CANHandle *handle);
 CAN_STATUS can_send(CANHandle *handle, FDCANTxMessage *buffer);
+
+#ifdef STM32G4
 CAN_STATUS can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
+#endif
+
 CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 
 // pass in a buffer to store the status string
