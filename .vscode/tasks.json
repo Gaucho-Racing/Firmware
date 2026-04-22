@@ -242,7 +242,8 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G431x8_CAN_BASIC_TEST"
-		},{
+		},
+		{
 			"label": "CMake: configure and build H523xx_CAN_BASIC_TEST",
 			"type": "shell",
 			"dependsOrder": "sequence",

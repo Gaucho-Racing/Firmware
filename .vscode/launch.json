@@ -728,24 +728,6 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G431x8_CAN_BASIC_TEST",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}, "searchDir": [],
 			"preLaunchTask": "CMake: configure and build H523xx_CAN_BASIC_TEST",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd",
