@@ -19,11 +19,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "NodeID.h"
 #include "adc.h"
 #include "crc.h"
 #include "gpio.h"
 #include "i2c.h"
-#include "NodeID.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
