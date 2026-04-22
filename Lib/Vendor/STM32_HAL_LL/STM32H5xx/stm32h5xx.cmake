@@ -44,7 +44,7 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_i2c.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_i2c_ex.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_i2s.c
-		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_i2s_ex.c
+		#${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_i2s_ex.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_i3c.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_icache.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32h5xx_hal_irda.c
