@@ -4,14 +4,23 @@ target_link_libraries(
 	PERIPHERAL_CAN_LIB
 	INTERFACE
 		PERIPHERAL_CAN_TEST_LIB
+		#PERIPHERAL_CAN_DMA
 		CircularBuffer_Lib
+)
+
+
+
+add_library(PERIPHERAL_CAN_DMA INTERFACE)
+target_sources(PERIPHERAL_CAN_DMA
+	INTERFACE
+	${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
 )
 
 target_sources(
 	PERIPHERAL_CAN_LIB
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can.c
-		${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
+		#${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_cfg_helpers.c
 )
 
@@ -33,8 +42,6 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_filter_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/can_lost_rx_test.c
 		${CMAKE_CURRENT_LIST_DIR}/Test/profile.c
-	#${CMAKE_CURRENT_LIST_DIR}/Test/can.c
-	#${CMAKE_CURRENT_LIST_DIR}/Test/can_tests.c
 )
 target_include_directories(
 	PERIPHERAL_CAN_TEST_LIB
