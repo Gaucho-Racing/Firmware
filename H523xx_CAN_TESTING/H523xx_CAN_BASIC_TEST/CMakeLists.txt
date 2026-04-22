@@ -39,8 +39,8 @@ target_sources(
 		#../Core/Src/spi.c
 		../Core/Src/stm32h5xx_hal_msp.c
 		../Core/Src/stm32h5xx_it.c
-	#../Core/Src/tim.c
-	#../Core/Src/usart.c
+		#../Core/Src/tim.c
+		../Core/Src/usart.c
 )
 
 set_target_properties(
