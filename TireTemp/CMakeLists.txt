@@ -28,11 +28,7 @@ project(${CMAKE_PROJECT_NAME})
 
 add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_compile_definitions(
-	${GR_PROJECT_NAME}_USER_CODE
-	INTERFACE
-		NODE=${NODE}
-)
+target_compile_definitions(${GR_PROJECT_NAME}_USER_CODE INTERFACE NODE=${NODE})
 
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
@@ -56,4 +52,9 @@ target_link_libraries(
 		MLX90640_LIB
 )
 
-target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc GRCAN)
+target_include_directories(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		Core/Inc
+		GRCAN
+)
