@@ -8,12 +8,11 @@ target_link_libraries(
 		CircularBuffer_Lib
 )
 
-
-
 add_library(PERIPHERAL_CAN_DMA INTERFACE)
-target_sources(PERIPHERAL_CAN_DMA
+target_sources(
+	PERIPHERAL_CAN_DMA
 	INTERFACE
-	${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
 )
 
 target_sources(
