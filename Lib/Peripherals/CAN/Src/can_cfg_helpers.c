@@ -22,6 +22,15 @@ static can_cfg_helper defaultSTM32G474xE_CANCfg;
 static can_cfg_helper defaultSTM32H523xx_CANCfg;
 #endif
 
+void set_default_can_clksource() {
+	#ifdef STM32G4
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	#elif defined(STM32H5)
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
+	#endif
+}
+
+
 int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
 {
 #ifdef STM32G474xx

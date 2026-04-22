@@ -3,14 +3,16 @@
 
 #include <stdbool.h>
 
-#include "stm32g4xx_ll_bus.h"
-#include "stm32g4xx_ll_dma.h"
+//#include "stm32g4xx_ll_bus.h"
+//#include "stm32g4xx_ll_dma.h"
 
-// #include "can_platform_deps.h"
+#include "can_platform_deps.h"
 #include "Logomatic.h"
 
 #ifdef STM32G4
 #include "STM32G4_hal_fdcan_defines.h"
+#elif defined(STM32H5)
+#include "STM32H5_hal_fdcan_defines.h"
 #else
 #error "CAN with DMA not yet supported for this family"
 #endif

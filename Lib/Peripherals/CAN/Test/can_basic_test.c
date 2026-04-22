@@ -143,7 +143,8 @@ int can_basic_test(void)
 	cfg2.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 #endif
 
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	set_default_can_clksource();
+
 
 	//=============================================================================================
 	if ((primary_can = can_init(&cfg1)) == NULL) {
