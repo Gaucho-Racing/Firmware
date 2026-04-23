@@ -176,13 +176,13 @@ void SystemClock_Config(void)
 	 */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV4;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-	RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSI;
-	RCC_OscInitStruct.PLL.PLLM = 4;
-	RCC_OscInitStruct.PLL.PLLN = 125;
-	RCC_OscInitStruct.PLL.PLLP = 2;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSI; //64 MHz initially
+	RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV4; //16 MHz
+	RCC_OscInitStruct.PLL.PLLM = 4; //4 MHz
+	RCC_OscInitStruct.PLL.PLLN = 90; //360 MHz
+	RCC_OscInitStruct.PLL.PLLP = 2; //180 MHz
 	RCC_OscInitStruct.PLL.PLLQ = 2;
 	RCC_OscInitStruct.PLL.PLLR = 2;
 	RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_2;
