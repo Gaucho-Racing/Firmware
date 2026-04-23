@@ -141,7 +141,7 @@ int main(void)
 	//  MX_FDCAN2_Init();
 	//  MX_ADC1_Init();
 
-	MX_LPUART1_UART_Init();
+	//MX_LPUART1_UART_Init();
 	Setup_Logomatic(&logomatic_config);
 	// MX_I2C2_Init();
 	// MX_USART1_UART_Init();

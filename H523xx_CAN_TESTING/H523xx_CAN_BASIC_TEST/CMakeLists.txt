@@ -33,14 +33,14 @@ target_sources(
 		#../Core/Src/adc.c
 		#../Core/Src/crc.c
 		#../Core/Src/dma.c
-		../Core/Src/gpio.c
+		#../Core/Src/gpio.c
 		#../Core/Src/i2c.c
 		main.c
 		#../Core/Src/spi.c
 		../Core/Src/stm32h5xx_hal_msp.c
 		../Core/Src/stm32h5xx_it.c
 		#../Core/Src/tim.c
-		../Core/Src/usart.c
+		#../Core/Src/usart.c
 )
 
 set_target_properties(
