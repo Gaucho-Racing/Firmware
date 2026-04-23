@@ -19,7 +19,7 @@
  ******************************************************************************
  */
 
-typedef int make_iso_compilers_happy_by_providing_a_dummy_declaration;  // Resolve compiler warnings about no symbols being defined in this file
+typedef int make_iso_compilers_happy_by_providing_a_dummy_declaration; // Resolve compiler warnings about no symbols being defined in this file
 
 /**
   ******************************************************************************
