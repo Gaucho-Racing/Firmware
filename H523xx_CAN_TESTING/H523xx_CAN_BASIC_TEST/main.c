@@ -64,6 +64,23 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 /* Enable ITM for SWO output */
+LogomaticConfig logomatic_config = {
+    .baud_rate = 115200,
+    .clock_source = LOGOMATIC_PCLK3,
+    .data_width = LOGOMATIC_DATAWIDTH_8B,
+    .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+    .gpio_port = LOGOMATIC_GPIOA,
+    .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+    .parity = LOGOMATIC_PARITY_NONE,
+    .prescaler = LOGOMATIC_PRESCALER_DIV1,
+    .stop_bits = LOGOMATIC_STOPBITS_1,
+    .transfer_direction = LOGOMATIC_DIRECTION_TX,
+    .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+    .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+    .bus = LOGOMATIC_BUS,
+};
+
+
 static void ITM_Enable(void)
 {
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
@@ -125,6 +142,7 @@ int main(void)
 	//  MX_ADC1_Init();
 
 	MX_LPUART1_UART_Init();
+	Setup_Logomatic(&logomatic_config);
 	// MX_I2C2_Init();
 	// MX_USART1_UART_Init();
 	// MX_SPI3_Init();
