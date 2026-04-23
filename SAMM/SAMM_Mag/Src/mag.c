@@ -33,15 +33,17 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 
 uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 {
-	uint8_t tx_word[2] = {data >> 8, data & 0xFF};
+	uint8_t tx_word[2] = {data >> 8, data & 0xFF}; // Separate into two bytes
 	uint8_t rx_word[2] = {0};
 
-	// HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); //A1113 chip select active low
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); // disable
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); // A1113 chip select active low
+
 	HAL_StatusTypeDef res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
-	// fix-me add error handling
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
-	// HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET); // Release chip select back to high
+
+	if (res != HAL_OK) {
+		return 0xFFFF; // TODO: Find appropriate error indicator
+	}
 
 	return ((uint16_t)rx_word[0] << 8) | rx_word[1];
 }
@@ -102,7 +104,7 @@ float mag_read_encoder_angle(mag *mag_dev)
 bool mag_read_device_status(mag *mag_dev)
 {
 	uint16_t read = mag_transmit(mag_dev, 0x22); // 0x22 is device status
-	return read[0];				     // read aok
+	return (read & 0x0001);				     // read aok
 }
 
 float mag_read_temp(mag *mag_dev)
