@@ -122,7 +122,7 @@
  */
 ErrorStatus LL_DAC_DeInit(const DAC_TypeDef *DACx)
 {
-	UNUSED(DACx);	// Resolve compiler warnings on unused parameters
+	UNUSED(DACx); // Resolve compiler warnings on unused parameters
 
 	/* Check the parameters */
 	assert_param(IS_DAC_ALL_INSTANCE(DACx));
