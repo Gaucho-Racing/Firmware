@@ -41,6 +41,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	})();
 	let _allNodes = []; // persisted node→bus→messages index for search
 	let _searchDropdown = null;
+	let _searchFocusIdx = -1;
 
 	let currentDeviceName = null;
 	let currentBusCanonical = null;
@@ -237,22 +238,94 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	function buildMessageIndex() {
+	function buildSearchIndex() {
 		const results = [];
+		const seenNodes = new Set();
 		for (const node of _allNodes) {
+			if (!seenNodes.has(node.name)) {
+				seenNodes.add(node.name);
+				results.push({
+					kind: "node",
+					primary: node.name,
+					secondary: "",
+					deviceName: node.name,
+					haystack: node.name.toLowerCase(),
+				});
+			}
 			for (const bus of node.buses) {
+				const msgSeen = new Set();
 				for (const msg of bus.messages) {
-					results.push({
-						msgName: msg.msgName,
-						deviceName: node.name,
-						canonicalBus: bus.canonicalBus,
-						busDisplayName: bus.busName,
-					});
+					const msgKey = msg.msgName + "|" + node.name + "|" + bus.canonicalBus;
+					if (!msgSeen.has(msgKey)) {
+						msgSeen.add(msgKey);
+						const msgHaystackParts = [
+							msg.msgName,
+							msg.msgId || "",
+							msg.canIdOverride || "",
+							(msg.receivers || []).join(" "),
+						];
+						results.push({
+							kind: "message",
+							primary: msg.msgName,
+							secondary: node.name + " \u203a " + bus.busName,
+							deviceName: node.name,
+							canonicalBus: bus.canonicalBus,
+							busDisplayName: bus.busName,
+							msgName: msg.msgName,
+							haystack: msgHaystackParts.join(" ").toLowerCase(),
+						});
+					}
+					const signalSeen = new Set();
+					for (const mapping of msg.byteMappings || []) {
+						if (!mapping.fieldName) continue;
+						const sigKey =
+							mapping.fieldName +
+							"|" +
+							msg.msgName +
+							"|" +
+							node.name +
+							"|" +
+							bus.canonicalBus;
+						if (signalSeen.has(sigKey)) continue;
+						signalSeen.add(sigKey);
+						const sigHaystackParts = [
+							mapping.fieldName,
+							mapping.comment || "",
+							mapping.dataType || "",
+						];
+						results.push({
+							kind: "signal",
+							primary: mapping.fieldName,
+							secondary:
+								msg.msgName +
+								"  \u2022  " +
+								node.name +
+								" \u203a " +
+								bus.busName,
+							deviceName: node.name,
+							canonicalBus: bus.canonicalBus,
+							busDisplayName: bus.busName,
+							msgName: msg.msgName,
+							fieldName: mapping.fieldName,
+							haystack: sigHaystackParts.join(" ").toLowerCase(),
+						});
+					}
 				}
 			}
 		}
 		return results;
 	}
+
+	function scoreEntry(entry, term) {
+		const primaryLower = entry.primary.toLowerCase();
+		if (primaryLower === term) return 0;
+		if (primaryLower.startsWith(term)) return 1;
+		if (primaryLower.includes(term)) return 2;
+		if (entry.haystack.includes(term)) return 3;
+		return -1;
+	}
+
+	const KIND_ORDER = { node: 0, message: 1, signal: 2 };
 
 	function getSearchDropdown() {
 		if (_searchDropdown) return _searchDropdown;
@@ -263,38 +336,103 @@ window.addEventListener("DOMContentLoaded", function () {
 		return _searchDropdown;
 	}
 
-	function highlightMessage(msgName) {
+	function setSearchFocus(idx) {
+		const dd = _searchDropdown;
+		if (!dd) return;
+		const rows = dd.querySelectorAll(".search-result-row");
+		rows.forEach((r) => r.classList.remove("sr-focused"));
+		_searchFocusIdx = Math.max(-1, Math.min(idx, rows.length - 1));
+		if (_searchFocusIdx >= 0) {
+			rows[_searchFocusIdx].classList.add("sr-focused");
+			rows[_searchFocusIdx].scrollIntoView({ block: "nearest" });
+		}
+	}
+
+	function findMsgItem(msgName) {
 		const items = msgList.querySelectorAll(".msg-item");
 		for (const item of items) {
 			const nameEl = item.querySelector(".msg-name");
-			if (nameEl && nameEl.textContent === msgName) {
-				item.scrollIntoView({ block: "nearest" });
-				item.classList.add("msg-highlight");
-				setTimeout(() => item.classList.remove("msg-highlight"), 1800);
+			if (nameEl && nameEl.textContent === msgName) return item;
+		}
+		return null;
+	}
+
+	function highlightMessage(msgName, fieldName) {
+		const item = findMsgItem(msgName);
+		if (!item) return;
+		item.scrollIntoView({ block: "nearest" });
+		item.classList.add("msg-highlight");
+		setTimeout(() => item.classList.remove("msg-highlight"), 1800);
+		if (!fieldName) return;
+		const details = item.querySelector(".msg-details");
+		if (details && details.classList.contains("collapsed")) {
+			const btn = item.querySelector(".msg-expand-btn");
+			if (btn) btn.click();
+		}
+		const rows = item.querySelectorAll(".msg-byte-row");
+		for (const row of rows) {
+			const main = row.querySelector(".msg-byte-main");
+			if (!main) continue;
+			if (main.textContent.includes("-> " + fieldName)) {
+				row.scrollIntoView({ block: "nearest" });
+				row.classList.add("msg-highlight");
+				setTimeout(() => row.classList.remove("msg-highlight"), 1800);
 				break;
 			}
 		}
 	}
 
-	function navigateToMessage(result) {
+	function navigateToEntry(entry) {
 		if (_searchDropdown) _searchDropdown.style.display = "none";
 		if (searchInput) searchInput.value = "";
 		applySearchFilter();
 		const nodeEl = firstList.querySelector(
-			'[data-node-name="' + CSS.escape(result.deviceName) + '"]',
+			'[data-node-name="' + CSS.escape(entry.deviceName) + '"]',
 		);
 		if (!nodeEl) return;
 		nodeEl.scrollIntoView({ block: "nearest" });
 		nodeEl.click();
+		if (entry.kind === "node") return;
 		requestAnimationFrame(() => {
 			const busEl = secondList.querySelector(
-				'[data-bus-canonical="' + CSS.escape(result.canonicalBus) + '"]',
+				'[data-bus-canonical="' + CSS.escape(entry.canonicalBus) + '"]',
 			);
 			if (!busEl) return;
 			busEl.scrollIntoView({ block: "nearest" });
 			busEl.click();
-			requestAnimationFrame(() => highlightMessage(result.msgName));
+			requestAnimationFrame(() =>
+				highlightMessage(entry.msgName, entry.fieldName || null),
+			);
 		});
+	}
+
+	function renderHighlighted(container, text, term) {
+		if (!text) return;
+		if (!term) {
+			container.textContent = text;
+			return;
+		}
+		const lower = text.toLowerCase();
+		let cursor = 0;
+		let hit = lower.indexOf(term, cursor);
+		if (hit === -1) {
+			container.textContent = text;
+			return;
+		}
+		while (hit !== -1) {
+			if (hit > cursor) {
+				container.appendChild(document.createTextNode(text.slice(cursor, hit)));
+			}
+			const mark = document.createElement("span");
+			mark.className = "sr-match";
+			mark.textContent = text.slice(hit, hit + term.length);
+			container.appendChild(mark);
+			cursor = hit + term.length;
+			hit = lower.indexOf(term, cursor);
+		}
+		if (cursor < text.length) {
+			container.appendChild(document.createTextNode(text.slice(cursor)));
+		}
 	}
 
 	function applySearch() {
@@ -303,41 +441,66 @@ window.addEventListener("DOMContentLoaded", function () {
 		const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
 		if (!term || _allNodes.length === 0) {
 			dropdown.style.display = "none";
+			_searchFocusIdx = -1;
 			return;
 		}
-		const index = buildMessageIndex();
-		const seen = new Set();
-		const matches = index.filter((r) => {
-			if (!r.msgName.toLowerCase().includes(term)) return false;
-			const key = r.msgName + "|" + r.deviceName + "|" + r.canonicalBus;
-			if (seen.has(key)) return false;
-			seen.add(key);
-			return true;
+		const index = buildSearchIndex();
+		const scored = [];
+		for (const entry of index) {
+			const score = scoreEntry(entry, term);
+			if (score < 0) continue;
+			scored.push({ entry, score });
+		}
+		scored.sort((a, b) => {
+			if (a.score !== b.score) return a.score - b.score;
+			const ka = KIND_ORDER[a.entry.kind] ?? 9;
+			const kb = KIND_ORDER[b.entry.kind] ?? 9;
+			if (ka !== kb) return ka - kb;
+			if (a.entry.primary.length !== b.entry.primary.length)
+				return a.entry.primary.length - b.entry.primary.length;
+			return a.entry.primary.localeCompare(b.entry.primary);
 		});
+		const matches = scored.slice(0, 15).map((s) => s.entry);
 		if (matches.length === 0) {
 			dropdown.style.display = "none";
+			_searchFocusIdx = -1;
 			return;
 		}
 		dropdown.innerHTML = "";
-		matches.slice(0, 12).forEach((result) => {
+		matches.forEach((entry) => {
 			const row = document.createElement("div");
 			row.className = "search-result-row";
+
+			const nameRow = document.createElement("div");
+			nameRow.className = "sr-name-row";
+
+			const kindEl = document.createElement("span");
+			kindEl.className = "sr-kind sr-kind-" + entry.kind;
+			kindEl.textContent = entry.kind;
+			nameRow.appendChild(kindEl);
+
 			const nameEl = document.createElement("span");
 			nameEl.className = "sr-name";
-			nameEl.textContent = result.msgName;
-			const pathEl = document.createElement("span");
-			pathEl.className = "sr-path";
-			pathEl.textContent =
-				result.deviceName + " \u203a " + result.busDisplayName;
-			row.appendChild(nameEl);
-			row.appendChild(pathEl);
+			renderHighlighted(nameEl, entry.primary, term);
+			nameRow.appendChild(nameEl);
+
+			row.appendChild(nameRow);
+
+			if (entry.secondary) {
+				const pathEl = document.createElement("span");
+				pathEl.className = "sr-path";
+				renderHighlighted(pathEl, entry.secondary, term);
+				row.appendChild(pathEl);
+			}
+
 			row.addEventListener("mousedown", (e) => {
 				e.preventDefault();
-				navigateToMessage(result);
+				navigateToEntry(entry);
 			});
 			dropdown.appendChild(row);
 		});
 		dropdown.style.display = "block";
+		setSearchFocus(0);
 	}
 
 	if (searchInput) {
@@ -347,10 +510,24 @@ window.addEventListener("DOMContentLoaded", function () {
 				searchInput.value = "";
 				applySearch();
 				searchInput.blur();
+			} else if (e.key === "ArrowDown") {
+				e.preventDefault();
+				const dd = _searchDropdown;
+				if (dd && dd.style.display !== "none") {
+					setSearchFocus(_searchFocusIdx + 1);
+				}
+			} else if (e.key === "ArrowUp") {
+				e.preventDefault();
+				const dd = _searchDropdown;
+				if (dd && dd.style.display !== "none") {
+					setSearchFocus(_searchFocusIdx - 1);
+				}
 			} else if (e.key === "Enter") {
 				const dd = _searchDropdown;
-				if (dd && dd.firstElementChild) {
-					dd.firstElementChild.dispatchEvent(new MouseEvent("mousedown"));
+				if (dd && dd.style.display !== "none") {
+					const rows = dd.querySelectorAll(".search-result-row");
+					const target = rows[_searchFocusIdx >= 0 ? _searchFocusIdx : 0];
+					if (target) target.dispatchEvent(new MouseEvent("mousedown"));
 				}
 			}
 		});
@@ -361,6 +538,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				e.target !== searchInput
 			) {
 				_searchDropdown.style.display = "none";
+				_searchFocusIdx = -1;
 			}
 		});
 	}
