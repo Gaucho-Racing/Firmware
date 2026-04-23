@@ -63,7 +63,6 @@ void MX_SPI1_Init(void)
 	/* USER CODE END spi1_Init 2 */
 }
 
-
 /**
  * @brief SPI MSP Initialization
  * This function configures the hardware resources used in this example

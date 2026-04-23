@@ -104,12 +104,12 @@ float mag_read_encoder_angle(mag *mag_dev)
 bool mag_read_device_status(mag *mag_dev)
 {
 	uint16_t read = mag_transmit(mag_dev, 0x22); // 0x22 is device status
-	return (read & 0x0001);				     // read aok
+	return (read & 0x0001);			     // read aok
 }
 
 float mag_read_temp(mag *mag_dev)
 {
-	uint16_t read_temp = mag_transmit(mag_dev, 0x28);   // 0x28 is temp register
+	uint16_t read_temp = mag_transmit(mag_dev, 0x28);    // 0x28 is temp register
 	return ((uint16_t)(read_temp & 0x0FFF) / 8.0f + 25); // Mask to 12 bits (valid temp data)
 }
 
