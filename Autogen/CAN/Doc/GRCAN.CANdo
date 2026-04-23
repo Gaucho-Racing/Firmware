@@ -7,7 +7,7 @@ Bus ID:
 routing:
   messages:
     BCU:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -16,7 +16,7 @@ routing:
           - msg: BCU Status 1
           - msg: BCU Status 2
           - msg: BCU Status 3
-      CAN2:
+      Data_Bus:
         Debugger:
           - msg: Debug FD
           - msg: Ping
@@ -27,7 +27,7 @@ routing:
           - msg: BCU Cell Data 3
           - msg: BCU Cell Data 4
           - msg: BCU Cell Data 5
-      CAN3:
+      Charger_Bus:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
@@ -36,12 +36,12 @@ routing:
           - msg: BCU Status 2
           - msg: BCU Status 3
     Charger:
-      CAN3:
+      Charger_Bus:
         BCU:
           - msg: Charger Data
             can_id_override: 0x18FF50E5
     Dash Panel:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -49,7 +49,7 @@ routing:
           - msg: Ping
           - msg: Dash Status
     Debugger:
-      CAN1:
+      Primary_Bus:
         ECU:
           - msg: Debug 2.0
           - msg: Ping
@@ -74,7 +74,7 @@ routing:
         Fan Controller 3:
           - msg: Debug 2.0
           - msg: Ping
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Debug FD
           - msg: Ping
@@ -84,11 +84,11 @@ routing:
         TCM:
           - msg: Debug FD
           - msg: Ping
-      CAN3:
+      Charger_Bus:
         Charging SDC:
           - msg: Ping
     DTI Inverter:
-      CAN1:
+      Primary_Bus:
         ECU:
           - msg: DTI Data 1
             can_id_override: 0x2016
@@ -101,7 +101,7 @@ routing:
           - msg: DTI Data 5
             can_id_override: 0x2416
     ECU:
-      CAN1:
+      Primary_Bus:
         DTI Inverter:
           - msg: DTI Control 1
             can_id_override: 0x116
@@ -157,7 +157,7 @@ routing:
           - msg: ECU Status 3
         TCM:
           - msg: Ping
-      CAN2:
+      Data_Bus:
         Debugger:
           - msg: Debug FD
           - msg: Ping
@@ -181,7 +181,7 @@ routing:
         TireTemp_RR:
           - msg: Ping
     Energy Meter:
-      CAN3:
+      Charger_Bus:
         BCU:
           - msg: EM Measurement
             can_id_override: 0x10d
@@ -194,7 +194,7 @@ routing:
           - msg: EM Temperature
             can_id_override: 0x60d
     Fan Controller 1:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -202,7 +202,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     Fan Controller 2:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -210,7 +210,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     Fan Controller 3:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -218,7 +218,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     GR Inverter:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -228,7 +228,7 @@ routing:
           - msg: Inverter Status 2
           - msg: Inverter Status 3
     IMD:
-      CAN3:
+      Charger_Bus:
         BCU:
           - msg: IMD response
             can_id_override: 0x23
@@ -245,21 +245,21 @@ routing:
           - msg: IMD general
             can_id_override: 0x18FF01F4
     TCM:
-      CAN1:
+      Primary_Bus:
         Debugger:
           - msg: Ping
         ECU:
           - msg: Ping
-      CAN2:
+      Data_Bus:
         Debugger:
           - msg: Ping
     CCU:
-      CAN3:
+      Charger_Bus:
         BCU:
           - msg: BCU Precharge
           - msg: Debug 2.0
     DGPS:
-      CAN2:
+      Data_Bus:
         TCM:
           - msg: GPS ALT
           - msg: GPS LAT
@@ -269,35 +269,35 @@ routing:
           - msg: GPS RZ
           - msg: UVW DGPS
     SAMM_Mag_1:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     SAMM_Mag_2:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     SAMM_ToF_1:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     SAMM_ToF_2:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     TireTemp_FL:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     TireTemp_FR:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     TireTemp_RL:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
     TireTemp_RR:
-      CAN2:
+      Data_Bus:
         ECU:
           - msg: Ping
 
@@ -3991,10 +3991,10 @@ Custom CAN ID:
     signals:
       - name: "Throttle"
         bit_start: 0
-        comment: Throttle signal derived from analog inputs or CAN2
+        comment: Throttle signal derived from analog inputs or data CAN
       - name: "Brake"
         bit_start: 8
-        comment: Brake signal derived from analog inputs or CAN2
+        comment: Brake signal derived from analog inputs or data CAN
       - name: "Digital input 1"
         bit_start: 16
         comment:
@@ -4023,7 +4023,7 @@ Custom CAN ID:
           1: Drive enabled
           0: Drive disabled
           Drive can be enabled/disbled by the digital input or/and via
-          CAN2 interface
+          Data_Bus interface
       - name: "Capacitor temp limit"
         bit_start: 32
         comment:
