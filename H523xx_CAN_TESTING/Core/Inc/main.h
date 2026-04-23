@@ -72,7 +72,6 @@ void Error_Handler(void);
 
 /* USER CODE END EFP */
 
-/*
 /* Private defines -----------------------------------------------------------*/
 #define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
 #define BSPD_SIGNAL_GPIO_Port GPIOC
