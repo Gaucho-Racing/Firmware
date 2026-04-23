@@ -32,6 +32,7 @@ extern "C" {
 #include "stm32h5xx_hal_dma.h"
 #include "stm32h5xx_hal_i2c.h"
 #include "stm32h5xx_hal_rcc.h"
+#include "stm32h5xx_hal_spi.h"
 #include "stm32h5xx_ll_bus.h"
 #include "stm32h5xx_ll_cortex.h"
 #include "stm32h5xx_ll_crs.h"

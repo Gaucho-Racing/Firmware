@@ -34,6 +34,9 @@ target_sources(
 		Src/main.c
 		Src/spi.c
 		Src/stm32h5xx_it.c
+		Src/platform.c
+		Src/VL53L4ED_api.c
+		Src/VL53L4ED_calibration.c
 	# TODO
 )
 

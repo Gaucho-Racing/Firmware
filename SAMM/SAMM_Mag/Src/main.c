@@ -106,6 +106,7 @@ int main(void)
 	// MX_CRC_Init();
 	// MX_FDCAN1_Init();
 	// MX_FDCAN2_Init();
+	MX_SPI1_Init();
 	MX_SPI3_Init();
 	/* USER CODE BEGIN 2 */
 
@@ -116,7 +117,7 @@ int main(void)
 	// bmi323 bmi323_dev;
 	mag mag_dev;
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
-	mag_init(&mag_dev, SPI3, MAG_CS_GPIO_Port, MAG_CS_Pin);
+	mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin);
 
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
@@ -125,7 +126,7 @@ int main(void)
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 	// HAL_Delay(1);  // Short delay after mode switch
 
-	if (mag_init(&mag_dev, SPI3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
+	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
 		printf("MAG initialization failed!\r\n");
 		Error_Handler();
 	}

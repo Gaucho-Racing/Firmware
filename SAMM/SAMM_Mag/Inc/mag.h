@@ -14,7 +14,7 @@ typedef struct {
 	/* data */
 } mag;
 
-void mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin);
+HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin);
 
 uint16_t mag_transmit(mag *mag_dev, uint16_t data);
 

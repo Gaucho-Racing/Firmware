@@ -4,7 +4,6 @@
 
 #include "main.h"
 #include "stm32h5xx.h"
-#include "stm32h5xx_hal_spi.h"
 
 #define mag_write_address_msb 22
 #define mag_write_address_lsb 23
@@ -13,14 +12,17 @@
 #define mag_msb 0xFF00
 #define mag_lsb 0x00FF
 
-void mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)
+HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin)
 {
 	mag_dev->spi_port = spi_port;
 	mag_dev->port = port;
 	mag_dev->pin = pin;
 
-	uint16_t sta = mag_read(mag_dev, 0x22);
-	if (!(sta & 0x0001)) {
+	uint16_t status = mag_read(mag_dev, 0x22);
+
+	// Check AOK=1 (bit 0) and BIP=0 (bit 1)
+	// If either not true, return error
+	if (!(status & 0x0001) || (status & 0x0002)) {
 		return HAL_ERROR;
 	}
 
@@ -36,7 +38,7 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 
 	// HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); //A1113 chip select active low
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); // disable
-	bool res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
+	HAL_StatusTypeDef res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
 	// fix-me add error handling
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 	// HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
@@ -77,21 +79,15 @@ uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
 	uint16_t msb = ((data & mag_msb) >> 8) | (((uint16_t)reg & mag_addr_mask) << 8) | 0x4000;
 
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, msb);
+	mag_transmit(mag_dev, msb);
 
 	reg += 1; // increment from 0x22 to 0x23 for lsb
 
 	uint16_t lsb = (data & mag_lsb) | (((uint16_t)reg & mag_addr_mask) << 8) | 0x4000;
 
-	mag_transmit(mag_dev, mag_dev->spi_port, mag_dev->port, mag_dev->pin, lsb);
+	mag_transmit(mag_dev, lsb);
 
 	return 0;
-}
-
-uint8_t mag_calib_abort(mag *mag_dev)
-{
-	mag_write(mag_dev, mag_CMD, mag_CMD_CALIB_ABORT);
-	return 1;
 }
 
 // Address 0x32:0x33 (ANG15)—Current Angle Reading (15 bits)
@@ -112,7 +108,7 @@ bool mag_read_device_status(mag *mag_dev)
 float mag_read_temp(mag *mag_dev)
 {
 	uint16_t read_temp = mag_transmit(mag_dev, 0x28);   // 0x28 is temp register
-	return ((uint16_t)(read_temp & 0x0FFF) / 8.0 + 25); // Mask to 12 bits (valid temp data)
+	return ((uint16_t)(read_temp & 0x0FFF) / 8.0f + 25); // Mask to 12 bits (valid temp data)
 }
 
 /*
