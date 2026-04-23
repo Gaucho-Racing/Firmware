@@ -222,12 +222,12 @@ CAN_STATUS defaultSTM32H523xx_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 187; // at 250 MHz, a 75% sampling time leads to (187+1)/(1+187+62) ~ 0.75
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 62;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 134; // at 180 MHz, a 75% sampling time leads to (134+1)/(1+134+45) ~ 0.75
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 45;
 	canCfg.hal_fdcan_init.DataPrescaler = 1;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 37; // at 250 MHz, for 5 MbPs, (37+1)/(37+1 + 12)
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 12;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 26; // at 180 MHz, for 5 MbPs, (26+1)/(26 + 1 + 9)
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 9;
 	canCfg.hal_fdcan_init.StdFiltersNbr = numStdFilters;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = numExtFilters;
 
