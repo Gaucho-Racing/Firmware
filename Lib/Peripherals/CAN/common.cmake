@@ -46,11 +46,7 @@ target_sources(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_dma.c
 )
-target_link_libraries(
-	PERIPHERAL_CAN_DMA
-	INTERFACE
-		PERIPHERAL_CAN_LIB
-)
+target_link_libraries(PERIPHERAL_CAN_DMA INTERFACE PERIPHERAL_CAN_LIB)
 
 # link test to this library
 #if(CMAKE_BUILD_TYPE STREQUAL "Test")
