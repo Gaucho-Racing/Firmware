@@ -13,7 +13,6 @@ void setSoftwareLatch(CCU_StateData *state_data)
 	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	state_data->SOFTWARE_LATCH = false;
 	LOGOMATIC("Software Latch: Low\n");
-
 }
 
 bool BCU_Warnings(const CCU_StateData *state_data)
