@@ -111,7 +111,8 @@ uint8_t mag_read_temp(mag *mag_dev)
 {
 	uint16_t read_temp = mag_read(mag_dev, 0x28);			     // 0x28 is temp register
 	float masked_temp = ((uint16_t)(read_temp & 0x0FFF) / 8.0f) + 25.0f; // Mask to 12 bits (valid temp data)
-	return ((uint8_t)masked_temp / 16);				     //
+	float offset_temp = masked_temp + 60.0f;
+	return (uint8_t)offset_temp;
 }
 
 /*
