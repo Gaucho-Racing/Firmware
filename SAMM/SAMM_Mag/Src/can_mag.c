@@ -34,7 +34,7 @@ int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 
 #if defined(STM32H5)
 	busCfg.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz
-	// defaults should work
+						  // defaults should work
 #endif
 
 	if (mag_ID == GRCAN_SAMM_Mag_1) {
