@@ -46,9 +46,6 @@ void ECU_State_Tick(void)
 	}
 
 	switch (stateLump.ecu_state) {
-		case GR_GLV_OFF:
-			ECU_GLV_Off(&stateLump);
-			break;
 		case GR_GLV_ON:
 			ECU_GLV_On(&stateLump);
 			break;
@@ -70,13 +67,6 @@ void ECU_State_Tick(void)
 			stateLump.ecu_state = GR_GLV_ON;
 			break;
 	}
-}
-
-void ECU_GLV_Off(ECU_StateData *stateData)
-{
-	UNUSED(stateData);
-	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!\n");
-	// TODO ERROR --> GLV_OFF should never be reached
 }
 
 void ECU_GLV_On(ECU_StateData *stateData)

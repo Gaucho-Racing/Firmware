@@ -80,6 +80,10 @@ void Error_Handler(void);
 #define APPS1_SIGNAL_GPIO_Port GPIOC
 #define APPS2_SIGNAL_Pin LL_GPIO_PIN_3
 #define APPS2_SIGNAL_GPIO_Port GPIOC
+#define RTD_BTN_Pin LL_GPIO_PIN_12
+#define RTD_BTN_Port GPIOC
+#define TS_ACTIVE_BTN_Pin LL_GPIO_PIN_12
+#define TS_ACTIVE_BTN_Port GPIOC
 
 // GPIOA
 #define BSPD_SENSE_Pin LL_GPIO_PIN_5
@@ -118,6 +122,8 @@ void Error_Handler(void);
 #define AUX_CONTROL_GPIO_Port GPIOB
 #define SOFTWARE_OK_CONTROL_Pin LL_GPIO_PIN_9
 #define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
+
+#define MAX_PRESS_TIME_TICKS 100
 
 /* USER CODE END Private defines */
 
