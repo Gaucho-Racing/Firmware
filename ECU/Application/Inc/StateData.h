@@ -90,6 +90,7 @@ typedef volatile struct ECU_StateData {
 	bool curr_ts_active_state; // TEMPORARY: LATCHING!!!
 	bool rtd_button_pressed; // TEMPORARY: LATCHING!!! // TODO: change variable name? keeping in case not latching
 	bool curr_rtd_state; // TEMPORARY: LATCHING!!!
+
 	bool ir_plus;
 	bool ir_minus;
 	bool bcu_software_latch;
