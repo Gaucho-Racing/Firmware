@@ -32,7 +32,7 @@ float mag_read_temp(mag *mag_dev);
 
 bool check_status(mag *mag_dev);
 
-uint16_t mag_read_turns(mag *mag_dev);
+int16_t mag_read_turns(mag *mag_dev);
 
 float mag_read_HANG(mag *mag_dev);
 
