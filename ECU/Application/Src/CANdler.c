@@ -112,6 +112,23 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 
 			break;
+
+		case GRCAN_ECU_ANALOG_DATA:
+			if (data_length != sizeof(GRCAN_ECU_ANALOG_DATA_MSG)) {
+				ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+			GRCAN_ECU_ANALOG_DATA_MSG *analog_data = (GRCAN_ECU_ANALOG_DATA_MSG*) data;
+			state_data->bspd_signal = analog_data->bspd_signal;
+			state_data->bse_signal = analog_data->bse_signal;
+			state_data->APPS1_Signal = analog_data->apps_1_signal;
+			state_data->APPS2_Signal = analog_data->apps_2_signal;
+			state_data->Brake_F_Signal = analog_data->brakeline_f_signal;
+			state_data->Brake_R_Signal = analog_data->brakeline_r_signal;
+			state_data->steering_angle_signal = analog_data->steering_angle_signal;
+			state_data->aux_signal = analog_data->aux_signal;
+			break;
+
 		/*
 		case GRCAN_STEERING_STATUS:
 			if (data_length != sizeof(GRCAN_STEERING_STATUS_MSG)) {
