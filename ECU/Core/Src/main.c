@@ -81,7 +81,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
-#define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
@@ -104,10 +103,20 @@ void SystemClock_Config(void);
 
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 // TODO: TS and RTD button signals will come over CAN
+
+uint32_t rtd_button_pressed_time = 0;
+uint32_t ts_active_button_pressed_time = 0;
 void read_digital(void)
 {
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
+	if (stateLump.rtd_button_pressed != LL_GPIO_IsInputPinSet(RTD_BTN_Port, RTD_BTN_Pin)) {
+		stateLump.rtd_button_pressed = 1;
+	}
+	if (stateLump.ts_active_button_pressed != LL_GPIO_IsInputPinSet(TS_ACTIVE_BTN_Port, TS_ACTIVE_BTN_Pin)) {
+		stateLump.last_ts_active_state = stateLump.ts_active_button_pressed;
+		stateLump.ts_active_button_pressed = LL_GPIO_IsInputPinSet(TS_ACTIVE_BTN_Port, TS_ACTIVE_BTN_Pin);
+	}
 }
 
 void write_adc_values_to_state_data()
@@ -120,7 +129,7 @@ void write_adc_values_to_state_data()
 	stateLump.Brake_F_Signal = ADC_outputs[4];
 	stateLump.Brake_R_Signal = ADC_outputs[5];
 	stateLump.aux_signal = ADC_outputs[6];
-	stateLump.steering_angle_signal = ADC_outputs[10]; // TODO: convert to rad/deg...?
+	stateLump.steering_angle_signal = ADC_outputs[10];
 
 	// TODO: determine conversion factors for all of these (uint to float)
 	stateLump.bspd_sense = ADC_outputs[7];
