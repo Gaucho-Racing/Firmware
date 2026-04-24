@@ -9,6 +9,7 @@
 #include "can.h"
 #include "can_cfg.h"
 #include "grcan_utils.h"
+#include "main.h"
 
 #ifndef GRCAN_FANCYLAYER_H
 #define GRCAN_FANCYLAYER_H

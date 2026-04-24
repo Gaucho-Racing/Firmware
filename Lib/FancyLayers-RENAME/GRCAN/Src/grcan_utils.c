@@ -26,17 +26,43 @@ GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 
 uint32_t GRCAN_ToHAL_ClockSource(GRCAN_ClockSource src)
 {
+#if defined(STM32H5)
+
+	switch (src) {
+		case GRCAN_CLKSRC_PLL1Q:
+			return LL_RCC_FDCAN_CLKSOURCE_PLL1Q;
+
+		case GRCAN_CLKSRC_PLL2Q:
+			return LL_RCC_FDCAN_CLKSOURCE_PLL2Q;
+
+		case GRCAN_CLKSRC_HSE:
+			return LL_RCC_FDCAN_CLKSOURCE_HSE;
+
+		default:
+			LOGOMATIC("GRCAN_ToHAL_ClockSource: default source %d, defaulting to PLL2Q\n", src);
+			return LL_RCC_FDCAN_CLKSOURCE_PLL2Q;
+	}
+
+#elif defined(STM32G4) || defined(STM32L4) || defined(STM32U5)
+
 	switch (src) {
 		case GRCAN_CLKSRC_PCLK1:
 			return LL_RCC_FDCAN_CLKSOURCE_PCLK1;
+
 		case GRCAN_CLKSRC_PLL:
 			return LL_RCC_FDCAN_CLKSOURCE_PLL;
+
 		case GRCAN_CLKSRC_HSE:
 			return LL_RCC_FDCAN_CLKSOURCE_HSE;
+
 		default:
 			LOGOMATIC("GRCAN_ToHAL_ClockSource: default source %d, defaulting to PCLK1\n", src);
 			return LL_RCC_FDCAN_CLKSOURCE_PCLK1;
 	}
+
+#else
+#error "Unsupported STM32 Family"
+#endif
 }
 
 uint32_t GRCAN_ToHAL_ClockDivider(GRCAN_ClockDivider div)
@@ -124,6 +150,17 @@ uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state)
 	}
 }
 
+GRCAN_ClockSource GRCAN_DefaultClockSource(void)
+{
+#if defined(STM32H5)
+	return GRCAN_CLKSRC_PLL2Q;
+#elif defined(STM32G4) || defined(STM32L4) || defined(STM32U5)
+	return GRCAN_CLKSRC_PCLK1;
+#else
+#error "Unsupported STM32 Family"
+#endif
+}
+
 void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 {
 	if (busCfg == NULL) {
@@ -137,7 +174,7 @@ void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 
 	busCfg->bus = bus;
 
-	busCfg->clock_source = GRCAN_CLKSRC_PCLK1;
+	busCfg->clock_source = GRCAN_DefaultClockSource();
 	busCfg->clock_divider = GRCAN_CLK_DIV1;
 	busCfg->frame_format = GRCAN_FRAME_FD_NO_BRS;
 	busCfg->operating_mode = GRCAN_OPMODE_NORMAL;

@@ -33,6 +33,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+#include "GRCAN_FancyLayer.h"
+#include "FancyCAN_LoopbackTest.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -146,6 +148,13 @@ int main(void)
 	// MX_USART1_UART_Init();
 	// MX_SPI3_Init();
 	// MX_TIM2_Init();
+	int result = FancyCAN_LoopbackTest();
+	LOGOMATIC("\n");
+	if (result) {
+		LOGOMATIC("CAN Loopback Test PASSED!\n");
+	} else {
+		LOGOMATIC("CAN Loopback Test FAILED!\n");
+	}
 
 	/* USER CODE BEGIN 2 */
 

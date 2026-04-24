@@ -3,5 +3,6 @@
 
 #define USECAN1
 #define TX_BUFFER_1_SIZE 10
+#define TX_BUFFER_2_SIZE 10
 
 #endif

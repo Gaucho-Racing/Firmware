@@ -39,6 +39,7 @@ target_sources(
 		#../Core/Src/spi.c
 		../Core/Src/stm32h5xx_hal_msp.c
 		../Core/Src/stm32h5xx_it.c
+		../Core/Src/FancyCAN_LoopbackTest.c
 	#../Core/Src/tim.c
 	#../Core/Src/usart.c
 )
@@ -58,3 +59,5 @@ target_include_directories(
 		../Core/Inc
 		.
 )
+
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE GRCAN_FANCYLAYER)
