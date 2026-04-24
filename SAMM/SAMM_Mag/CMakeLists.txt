@@ -34,6 +34,7 @@ target_sources(
 		Src/main.c
 		Src/spi.c
 		Src/stm32h5xx_it.c
+		Src/can_mag.c
 	# TODO
 )
 
@@ -44,11 +45,13 @@ target_link_libraries(
 		PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
 		SAMM_IMU_Lib
+		GRCAN_FANCYLAYER
 )
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Inc
+		.
 	#TODO: Figure out how to set up Extras folder
 )
