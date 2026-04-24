@@ -3,20 +3,38 @@
 static GRCAN_NODE_ID destNode = GRCAN_TCM;
 static GRCAN_NODE_ID localNode = GRCAN_ALL;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
-static GRCAN_MSG_ID msgID = CAN_MAG_DEFAULT_MSG_ID;
 
-int can_mag_init(GRCAN_NODE_ID mag_ID)
+static CAN_MAG_MSG_ID msgID = CAN_MAG_MSG_DATA;
+
+int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {
     if (localNode != GRCAN_ALL) {
         LOGOMATIC("CAN MAG already initialized\n");
         return 0;
     }
 
+    switch (init_msgID) {
+        case CAN_MAG_MSG_DATA:
+            msgID = init_msgID;
+            break;
+        case CAN_MAG_MSG_STATUS:
+            msgID = init_msgID;
+            break;
+        case CAN_MAG_MSG_FAULT:
+            msgID = init_msgID;
+            break;
+        default:
+            LOGOMATIC("Invalid MAG message ID, defaulting to DATA\n");
+            msgID = CAN_MAG_MSG_DATA;
+            break;
+    }
+
     GRCAN_BusConfig busCfg = {0};
     GRCAN_SetDefaultBusConfig(&busCfg, busMode);
 
 #if defined(STM32H5)
-    busCfg.clock_source = GRCAN_CLKSRC_PLL1Q;
+    busCfg.clock_source = GRCAN_CLKSRC_PLL1Q; //should be 180MHz
+    //defaults should work
 #endif
 
     if (mag_ID == GRCAN_SAMM_Mag_1) {
