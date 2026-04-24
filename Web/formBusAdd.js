@@ -1,6 +1,8 @@
 // Purpose: "Add Bus" modal form.
-// Allows creating a new bus block (CAN1/CAN2/CAN3) for an existing routing node
-// without requiring receiver/message route details.
+// Allows creating a new bus block for an existing routing node without
+// requiring receiver/message route details. The list of available buses is
+// pulled from the "Bus ID:" section via GrcanDocument.getBusNames(),
+// so adding a new bus to the CANdo file requires no changes here.
 // Depends on: formUtils.js (FormUtils), editor.js (GrcanEditor).
 // Registers: window.GrcanEditor.showRoutingBusAddForm
 
@@ -21,19 +23,18 @@
 		body.appendChild(nodeF.row);
 
 		// Filter the bus dropdown to only buses the device is physically wired to.
-		// If the topology file isn't loaded yet, all three buses are shown.
-		const _allBuses = ["CAN1", "CAN2", "CAN3"];
+		// If the topology file isn't loaded yet, every declared bus is shown.
+		const _allBuses = window.GrcanDocument.getBusNames();
 		const _topo = window.PhysicalTopology;
 		const _busChoices =
 			deviceName && _topo && _topo.isLoaded()
 				? _allBuses.filter((b) => _topo.isOnBus(deviceName, b))
 				: _allBuses;
+		const _effectiveChoices =
+			_busChoices.length > 0 ? _busChoices : _allBuses;
 		const busF = fu.makeFormRow(
 			"Bus",
-			fu.makeSelect(
-				_busChoices.length > 0 ? _busChoices : _allBuses,
-				_busChoices[0] || "CAN1",
-			),
+			fu.makeSelect(_effectiveChoices, _effectiveChoices[0] || ""),
 			true,
 		);
 		body.appendChild(busF.row);

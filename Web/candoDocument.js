@@ -29,6 +29,7 @@
 	let _busIdsText = ""; // verbatim Bus ID section text
 	let _byteOrderText = ""; // verbatim byte order line text
 	let _customCanIds = new Map(); // Map<name, {name, canId, length, signals[]}>
+	let _busIds = new Map(); // Map<busName, numericId: number> derived from Bus ID section
 
 	// ==================== CAN ID format utilities ====================
 	// Custom CAN ID section canonical form: bare uppercase hex, no 0x prefix (e.g. "2416").
@@ -57,6 +58,7 @@
 		_busIdsText = "";
 		_byteOrderText = "";
 		_customCanIds = new Map();
+		_busIds = new Map();
 
 		if (!rawText) return;
 		const lines = rawText.split("\n");
@@ -80,6 +82,7 @@
 		// Verbatim: Bus ID = everything before routing section header.
 		if (routingStart > 0) {
 			_busIdsText = lines.slice(0, routingStart).join("\n").replace(/\n+$/, "");
+			_parseBusIdsSection(lines, 0, routingStart);
 		}
 
 		// Verbatim: byte order line through the blank line before Message ID.
@@ -113,6 +116,26 @@
 		}
 		if (grIdStart > -1) {
 			_parseGrIds(lines, grIdStart, lines.length);
+		}
+	}
+
+	// Parses the "Bus ID:" header block into _busIds (name → numeric id).
+	// Mirrors parseBusIdsFromText in logic.js so candoDocument has its own
+	// authoritative copy without depending on window.GrcanApi.
+	function _parseBusIdsSection(lines, start, end) {
+		let inSection = false;
+		for (let i = start; i < end; i++) {
+			const line = lines[i];
+			if (!inSection) {
+				if (line.startsWith("Bus ID:")) inSection = true;
+				continue;
+			}
+			// Stop at next top-level (non-indented, non-blank) line.
+			if (/^\S/.test(line) && line.trim() !== "") break;
+			const match = line.match(/^\s+([^:]+):\s*(\d+)\s*(?:#.*)?$/);
+			if (match) {
+				_busIds.set(match[1].trim(), parseInt(match[2], 10));
+			}
 		}
 	}
 
@@ -808,8 +831,16 @@
 			deviceName = (deviceName || "").trim();
 			busPort = (busPort || "").trim();
 			if (!deviceName) return { ok: false, error: "Device name is required" };
-			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
-				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
+			if (!_isValidBusPort(busPort)) {
+				const valid = getBusNames();
+				return {
+					ok: false,
+					error:
+						valid.length > 0
+							? `Bus must be one of: ${valid.join(", ")}`
+							: "No buses are declared in the Bus ID section",
+				};
+			}
 
 			const warnings = [];
 			let device = _devices.get(deviceName);
@@ -838,8 +869,16 @@
 					error:
 						'"ALL" is a reserved broadcast receiver and cannot be used as a sender device',
 				};
-			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
-				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
+			if (!_isValidBusPort(busPort)) {
+				const valid = getBusNames();
+				return {
+					ok: false,
+					error:
+						valid.length > 0
+							? `Bus must be one of: ${valid.join(", ")}`
+							: "No buses are declared in the Bus ID section",
+				};
+			}
 			if (!receiverName)
 				return { ok: false, error: "Receiver name is required" };
 			if (!msgName) return { ok: false, error: "Message name is required" };
@@ -1228,6 +1267,21 @@
 		return [..._devices.keys()];
 	}
 
+	// Returns bus names declared in the "Bus ID:" section, sorted by their
+	// numeric id (lowest first). This is the single source of truth for
+	// "what buses exist" — used by forms, graph view, and validation.
+	function getBusNames() {
+		_ensureParsed();
+		return [..._busIds.entries()]
+			.sort((a, b) => a[1] - b[1])
+			.map(([name]) => name);
+	}
+
+	// True if busPort is a name declared in the "Bus ID:" section.
+	function _isValidBusPort(busPort) {
+		return _busIds.has(busPort);
+	}
+
 	function getGrIds() {
 		_ensureParsed();
 		return new Map(_grIds);
@@ -1364,6 +1418,7 @@
 		deviceExists,
 		grIdExists,
 		getDeviceNames,
+		getBusNames,
 		getGrIds,
 		getGrId,
 		getMessageDef,

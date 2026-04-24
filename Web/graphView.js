@@ -12,12 +12,10 @@ window.GrcanGraphView = (() => {
 		"#f97316",
 	];
 
-	const BUS_LABELS = { CAN1: "Primary", CAN2: "Data", CAN3: "Charger" };
-
 	// ==================== State ====================
 
 	let cy = null;
-	let currentBus = "CAN1";
+	let currentBus = null;
 	let overlayEl = null;
 	let nodePanelEl = null;
 	let focusPillEl = null;
@@ -25,6 +23,14 @@ window.GrcanGraphView = (() => {
 	let _focusedNodeId = null; // null = full graph view
 	let _savedPositions = null; // node positions before entering focus
 	let _currentGraphData = null;
+	// Bus list active for the current overlay session: [{ name, label }, ...].
+	// Set in open() and read by _buildOverlay/_loadBus to render tab labels and titles.
+	let _busList = [];
+
+	function _busLabel(busName) {
+		const entry = _busList.find((b) => b.name === busName);
+		return (entry && entry.label) || busName;
+	}
 
 	// ==================== Color Assignment ====================
 
@@ -179,11 +185,11 @@ window.GrcanGraphView = (() => {
 
 		const tabs = document.createElement("div");
 		tabs.className = "graph-bus-tabs";
-		["CAN1", "CAN2", "CAN3"].forEach((bus) => {
+		_busList.forEach((bus) => {
 			const btn = document.createElement("button");
 			btn.className = "graph-bus-tab";
-			btn.dataset.bus = bus;
-			btn.textContent = BUS_LABELS[bus];
+			btn.dataset.bus = bus.name;
+			btn.textContent = bus.label || bus.name;
 			tabs.appendChild(btn);
 		});
 
@@ -363,7 +369,7 @@ window.GrcanGraphView = (() => {
 			btn.classList.toggle("active", btn.dataset.bus === busPort);
 		});
 		overlayEl.querySelector(".graph-title").textContent =
-			`CAN Graph — ${BUS_LABELS[busPort]}`;
+			`CAN Graph — ${_busLabel(busPort)}`;
 
 		_hideFocusPill();
 		_hideNodePanel();
@@ -557,8 +563,25 @@ window.GrcanGraphView = (() => {
 
 	// ==================== Open / Close ====================
 
-	function open() {
+	// busList: optional [{ name, label }, ...]. If omitted, falls back to
+	// GrcanDocument.getBusNames() with name === label. The first entry is
+	// loaded by default.
+	function open(busList) {
 		if (overlayEl) return;
+
+		_busList = Array.isArray(busList) && busList.length > 0
+			? busList.map((b) =>
+				typeof b === "string"
+					? { name: b, label: b }
+					: { name: b.name, label: b.label || b.name },
+			)
+			: ((window.GrcanDocument &&
+					typeof window.GrcanDocument.getBusNames === "function" &&
+					window.GrcanDocument.getBusNames()) ||
+					[]
+				).map((name) => ({ name, label: name }));
+
+		if (_busList.length === 0) return;
 
 		overlayEl = _buildOverlay();
 		document.body.appendChild(overlayEl);
@@ -593,7 +616,7 @@ window.GrcanGraphView = (() => {
 		};
 		document.addEventListener("keydown", _escHandler);
 
-		_loadBus("CAN1");
+		_loadBus(_busList[0].name);
 	}
 
 	function _close() {
@@ -618,7 +641,7 @@ window.GrcanGraphView = (() => {
 	// ==================== Init ====================
 
 	const graphBtn = document.getElementById("graph-view-btn");
-	if (graphBtn) graphBtn.addEventListener("click", open);
+	if (graphBtn) graphBtn.addEventListener("click", () => open());
 
 	return { open };
 })();
