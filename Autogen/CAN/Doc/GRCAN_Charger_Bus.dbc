@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter IMD SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_1 TireTemp_2 TireTemp_3 TireTemp_4 ALL
+BU_: BCU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter IMD SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR ALL
 
 BO_ 2550588916 BCU_Charger_Control_to_Charger: 5 BCU
  SG_ Set_Voltage : 0|16@1+ (1,0) [0|0] "" Charger
