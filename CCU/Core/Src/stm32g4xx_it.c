@@ -59,8 +59,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern FDCAN_HandleTypeDef hfdcan1;
-extern FDCAN_HandleTypeDef hfdcan2;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
