@@ -110,7 +110,7 @@ void read_digital(void)
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
 }
 
-void write_adc_values_to_state_data()
+void write_adc_values_to_state_data(void)
 {
 	// analog
 	stateLump.bse_signal = ADC_outputs[0];
@@ -216,7 +216,7 @@ void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)
 	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
 }
 
-void CAN_Configure()
+void CAN_Configure(void)
 {
 	CANConfig canCfg;
 
