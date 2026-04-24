@@ -32,9 +32,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Logomatic.h"
-#include "GRCAN_FancyLayer.h"
 #include "FancyCAN_LoopbackTest.h"
+#include "GRCAN_FancyLayer.h"
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
