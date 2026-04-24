@@ -174,12 +174,12 @@ int main(void)
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
 		/* USER CODE END WHILE */
 		float temp = mag_read_temp(&mag_dev);
-		float angle = mag_read_encoder_angle(&mag_dev);
+		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
 		// float hang = mag_read_HANG(mag_dev);
 		bool bad = check_status(&mag_dev);
 		printf("Temperature is %d\n", (double)temp);
-		printf("Angle is %d\n", (double)angle);
+		printf("Angle is %d\n", angle);
 		printf("Number of turns is %d\n", turns);
 		if (!bad) {
 			printf("something is cooked");
