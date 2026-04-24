@@ -66,7 +66,6 @@ void MX_GPIO_Init(void)
 	// GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
 	// LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-
 	/**/
 	GPIO_InitStruct.Pin = LED_TEST_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
