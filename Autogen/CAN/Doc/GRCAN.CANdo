@@ -172,13 +172,13 @@ routing:
           - msg: Ping
         SAMM_ToF_2:
           - msg: Ping
-        TireTemp_1:
+        TireTemp_FL:
           - msg: Ping
-        TireTemp_2:
+        TireTemp_FR:
           - msg: Ping
-        TireTemp_3:
+        TireTemp_RL:
           - msg: Ping
-        TireTemp_4:
+        TireTemp_RR:
           - msg: Ping
     Energy Meter:
       Charger_Bus:
@@ -284,19 +284,19 @@ routing:
       Data_Bus:
         ECU:
           - msg: Ping
-    TireTemp_1:
+    TireTemp_FL:
       Data_Bus:
         ECU:
           - msg: Ping
-    TireTemp_2:
+    TireTemp_FR:
       Data_Bus:
         ECU:
           - msg: Ping
-    TireTemp_3:
+    TireTemp_RL:
       Data_Bus:
         ECU:
           - msg: Ping
-    TireTemp_4:
+    TireTemp_RR:
       Data_Bus:
         ECU:
           - msg: Ping
@@ -347,10 +347,10 @@ Message ID:
         8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
         9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
         10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-        11: TireTemp_1 Status (1: OK, 0: Timeout)
-        12: TireTemp_2 Status (1: OK, 0: Timeout)
-        13: TireTemp_3 Status (1: OK, 0: Timeout)
-        14: TireTemp_4 Status (1: OK, 0: Timeout)
+        11: TireTemp_FL Status (1: OK, 0: Timeout)
+        12: TireTemp_FR Status (1: OK, 0: Timeout)
+        13: TireTemp_RL Status (1: OK, 0: Timeout)
+        14: TireTemp_RR Status (1: OK, 0: Timeout)
         15: Reserved
       data type: u16
     ecu_state:
@@ -4273,8 +4273,8 @@ GR ID:
   SAMM_Mag_2: "0x21"
   SAMM_ToF_1: "0x22"
   SAMM_ToF_2: "0x23"
-  TireTemp_1: "0x24"
-  TireTemp_2: "0x25"
-  TireTemp_3: "0x26"
-  TireTemp_4: "0x27"
+  TireTemp_FL: "0x24"
+  TireTemp_FR: "0x25"
+  TireTemp_RL: "0x26"
+  TireTemp_RR: "0x27"
   ALL: "0xFF"
