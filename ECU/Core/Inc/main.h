@@ -123,7 +123,7 @@ void Error_Handler(void);
 #define SOFTWARE_OK_CONTROL_Pin LL_GPIO_PIN_9
 #define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
 
-#define MAX_PRESS_TIME_TICKS 100
+#define MAX_PRESS_TIME_MS 100 // latching buttons
 
 /* USER CODE END Private defines */
 

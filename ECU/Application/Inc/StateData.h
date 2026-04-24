@@ -87,9 +87,9 @@ typedef volatile struct ECU_StateData {
 	uint8_t bcu_error_warning_bits;
 	uint8_t inverter_fault_map;
 	bool ts_active_button_pressed; // TEMPORARY: LATCHING!!! // TODO: change variable name? keeping in case not latching
-	bool last_ts_active_state; // TEMPORARY: LATCHING!!!
+	bool curr_ts_active_state; // TEMPORARY: LATCHING!!!
 	bool rtd_button_pressed; // TEMPORARY: LATCHING!!! // TODO: change variable name? keeping in case not latching
-	bool last_rtd_state; // TEMPORARY: LATCHING!!!
+	bool curr_rtd_state; // TEMPORARY: LATCHING!!!
 	bool ir_plus;
 	bool ir_minus;
 	bool bcu_software_latch;
