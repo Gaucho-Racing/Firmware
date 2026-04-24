@@ -28,18 +28,18 @@ void CCU_State_Tick(CCU_StateData *state_data)
 			state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 			state_data->state = CCU_STATE_IDLE;
 			SendPrechargeStatus(state_data);
-			setSoftwareLatch(false, state_data);
+			setSoftwareLatch(state_data);
 			break;
 	};
 }
 
 void STATE_IDLE(CCU_StateData *state_data)
 {
-	bool anyErrors = false;
+
 	BCU_Warnings(state_data);
-	if (CriticalError(state_data)) {
-		anyErrors = true;
-		setSoftwareLatch(false, state_data);
+	bool anyErrors = CriticalError(state_data);
+	if (anyErrors) {
+		setSoftwareLatch(state_data);
 		LOGOMATIC("Critical Error Occured!\n");
 	}
 
@@ -59,7 +59,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	BCU_Warnings(state_data);
 	if (CriticalError(state_data)) {
 
-		setSoftwareLatch(false, state_data);
+		setSoftwareLatch(state_data);
 
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 		SendPrechargeStatus(state_data);

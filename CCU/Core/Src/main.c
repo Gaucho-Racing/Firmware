@@ -50,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-CCU_StateData state_data = {0};
+CCU_StateData state_data = {0, .SOFTWARE_LATCH = 1};
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
@@ -134,7 +134,10 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	// Initialize SoftwareLatch High
-	setSoftwareLatch(true, &state_data);
+
+	LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	LOGOMATIC("Software Latch: High");
+
 	while (1) {
 		CCU_State_Tick(&state_data);
 		CheckDebuggerPrint(&state_data);
