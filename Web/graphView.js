@@ -569,17 +569,19 @@ window.GrcanGraphView = (() => {
 	function open(busList) {
 		if (overlayEl) return;
 
-		_busList = Array.isArray(busList) && busList.length > 0
-			? busList.map((b) =>
-				typeof b === "string"
-					? { name: b, label: b }
-					: { name: b.name, label: b.label || b.name },
-			)
-			: ((window.GrcanDocument &&
-					typeof window.GrcanDocument.getBusNames === "function" &&
-					window.GrcanDocument.getBusNames()) ||
-					[]
-				).map((name) => ({ name, label: name }));
+		_busList =
+			Array.isArray(busList) && busList.length > 0
+				? busList.map((b) =>
+						typeof b === "string"
+							? { name: b, label: b }
+							: { name: b.name, label: b.label || b.name },
+					)
+				: (
+						(window.GrcanDocument &&
+							typeof window.GrcanDocument.getBusNames === "function" &&
+							window.GrcanDocument.getBusNames()) ||
+						[]
+					).map((name) => ({ name, label: name }));
 
 		if (_busList.length === 0) return;
 

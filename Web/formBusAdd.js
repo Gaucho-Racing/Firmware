@@ -30,8 +30,7 @@
 			deviceName && _topo && _topo.isLoaded()
 				? _allBuses.filter((b) => _topo.isOnBus(deviceName, b))
 				: _allBuses;
-		const _effectiveChoices =
-			_busChoices.length > 0 ? _busChoices : _allBuses;
+		const _effectiveChoices = _busChoices.length > 0 ? _busChoices : _allBuses;
 		const busF = fu.makeFormRow(
 			"Bus",
 			fu.makeSelect(_effectiveChoices, _effectiveChoices[0] || ""),
