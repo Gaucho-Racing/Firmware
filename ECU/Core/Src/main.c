@@ -414,9 +414,6 @@ int main(void)
 					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
 					ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "ECU-P-ITR", 8);
 				}
-				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
-					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
-				}
 			}
 			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
 		}
