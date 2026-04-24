@@ -111,80 +111,81 @@ extern "C" {
 /* ####################################### Oscillator Values adaptation ##############################################*/
 
 /**
-  * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
-  *        This value is used by the RCC HAL module to compute the system frequency
-  *        (when HSE is used as system clock source, directly or through the PLL).
-  */
-#if !defined  (HSE_VALUE)
-  #define HSE_VALUE    25000000U /*!< Value of the External oscillator in Hz */
-#endif /* HSE_VALUE */
+ * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
+ *        This value is used by the RCC HAL module to compute the system frequency
+ *        (when HSE is used as system clock source, directly or through the PLL).
+ */
+#if !defined(HSE_VALUE)
+#define HSE_VALUE 25000000U /*!< Value of the External oscillator in Hz */
+#endif			    /* HSE_VALUE */
 
-#if !defined  (HSE_STARTUP_TIMEOUT)
-  #define HSE_STARTUP_TIMEOUT    100U   /*!< Time out for HSE start up, in ms */
-#endif /* HSE_STARTUP_TIMEOUT */
-
-/**
-  * @brief Internal Core Speed oscillator (CSI) default value.
-  *        This value is the default CSI range value after Reset.
-  */
-#if !defined  (CSI_VALUE)
-  #define CSI_VALUE              4000000UL /*!< Value of the Internal oscillator in Hz*/
-#endif /* CSI_VALUE */
+#if !defined(HSE_STARTUP_TIMEOUT)
+#define HSE_STARTUP_TIMEOUT 100U /*!< Time out for HSE start up, in ms */
+#endif				 /* HSE_STARTUP_TIMEOUT */
 
 /**
-  * @brief Internal High Speed oscillator (HSI) value.
-  *        This value is used by the RCC HAL module to compute the system frequency
-  *        (when HSI is used as system clock source, directly or through the PLL).
-  */
-#if !defined  (HSI_VALUE)
-  #define HSI_VALUE              64000000UL /*!< Value of the Internal oscillator in Hz*/
-#endif /* HSI_VALUE */
+ * @brief Internal Core Speed oscillator (CSI) default value.
+ *        This value is the default CSI range value after Reset.
+ */
+#if !defined(CSI_VALUE)
+#define CSI_VALUE 4000000UL /*!< Value of the Internal oscillator in Hz*/
+#endif			    /* CSI_VALUE */
 
 /**
-  * @brief Internal High Speed oscillator (HSI48) value for USB FS, SDMMC and RNG.
-  *        This internal oscillator is mainly dedicated to provide a high precision clock to
-  *        the USB peripheral by means of a special Clock Recovery System (CRS) circuitry.
-  *        When the CRS is not used, the HSI48 RC oscillator runs on it default frequency
-  *        which is subject to manufacturing process variations.
-  */
-#if !defined  (HSI48_VALUE)
-  #define HSI48_VALUE             48000000UL /*!< Value of the Internal High Speed oscillator for USB FS/SDMMC/RNG in Hz.
-                                                  The real value my vary depending on manufacturing process variations.*/
-#endif /* HSI48_VALUE */
+ * @brief Internal High Speed oscillator (HSI) value.
+ *        This value is used by the RCC HAL module to compute the system frequency
+ *        (when HSI is used as system clock source, directly or through the PLL).
+ */
+#if !defined(HSI_VALUE)
+#define HSI_VALUE 64000000UL /*!< Value of the Internal oscillator in Hz*/
+#endif			     /* HSI_VALUE */
 
 /**
-  * @brief Internal Low Speed oscillator (LSI) value.
-  */
-#if !defined  (LSI_VALUE)
-  #define LSI_VALUE  32000UL    /*!< LSI Typical Value in Hz*/
-#endif /* LSI_VALUE */                     /*!< Value of the Internal Low Speed oscillator in Hz
-                                                The real value may vary depending on the variations
-                                                in voltage and temperature.*/
-
-#if !defined  (LSI_STARTUP_TIME)
-  #define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in us */
-#endif /* LSI_STARTUP_TIME */
+ * @brief Internal High Speed oscillator (HSI48) value for USB FS, SDMMC and RNG.
+ *        This internal oscillator is mainly dedicated to provide a high precision clock to
+ *        the USB peripheral by means of a special Clock Recovery System (CRS) circuitry.
+ *        When the CRS is not used, the HSI48 RC oscillator runs on it default frequency
+ *        which is subject to manufacturing process variations.
+ */
+#if !defined(HSI48_VALUE)
+#define HSI48_VALUE                                                                                                                                                                                    \
+	48000000UL /*!< Value of the Internal High Speed oscillator for USB FS/SDMMC/RNG in Hz.                                                                                                        \
+			The real value my vary depending on manufacturing process variations.*/
+#endif		   /* HSI48_VALUE */
 
 /**
-  * @brief External Low Speed oscillator (LSE) value.
-  *        This value is used by the UART, RTC HAL module to compute the system frequency
-  */
-#if !defined  (LSE_VALUE)
-  #define LSE_VALUE  32768UL    /*!< Value of the External oscillator in Hz*/
-#endif /* LSE_VALUE */
+ * @brief Internal Low Speed oscillator (LSI) value.
+ */
+#if !defined(LSI_VALUE)
+#define LSI_VALUE 32000UL /*!< LSI Typical Value in Hz*/
+#endif /* LSI_VALUE */	  /*!< Value of the Internal Low Speed oscillator in Hz                                                                                                                        \
+			       The real value may vary depending on the variations                                                                                                                     \
+			       in voltage and temperature.*/
 
-#if !defined  (LSE_STARTUP_TIMEOUT)
-  #define LSE_STARTUP_TIMEOUT    5000UL     /*!< Time out for LSE start up, in ms */
-#endif /* LSE_STARTUP_TIMEOUT */
+#if !defined(LSI_STARTUP_TIME)
+#define LSI_STARTUP_TIME 130UL /*!< Time out for LSI start up, in us */
+#endif			       /* LSI_STARTUP_TIME */
+
+/**
+ * @brief External Low Speed oscillator (LSE) value.
+ *        This value is used by the UART, RTC HAL module to compute the system frequency
+ */
+#if !defined(LSE_VALUE)
+#define LSE_VALUE 32768UL /*!< Value of the External oscillator in Hz*/
+#endif			  /* LSE_VALUE */
+
+#if !defined(LSE_STARTUP_TIMEOUT)
+#define LSE_STARTUP_TIMEOUT 5000UL /*!< Time out for LSE start up, in ms */
+#endif				   /* LSE_STARTUP_TIMEOUT */
 /**
   * @brief External clock source for SPI peripheral
   *        This value is used by the SPI HAL module to compute the SPI clock source
   *        frequency, this source is inserted directly through I2S_CKIN pad.
 
   */
-#if !defined  (EXTERNAL_CLOCK_VALUE)
-  #define EXTERNAL_CLOCK_VALUE    12288000UL /*!< Value of the External clock in Hz*/
-#endif /* EXTERNAL_CLOCK_VALUE */
+#if !defined(EXTERNAL_CLOCK_VALUE)
+#define EXTERNAL_CLOCK_VALUE 12288000UL /*!< Value of the External clock in Hz*/
+#endif					/* EXTERNAL_CLOCK_VALUE */
 
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
