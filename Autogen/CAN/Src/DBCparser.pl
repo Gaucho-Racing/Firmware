@@ -61,6 +61,15 @@ Readonly::Hash my %WIDTH_TO_TYPE => (
 	64 => 'u64',
 );
 
+Readonly::Hash my %BUS_NAME_MAP => (
+	'CAN1'        => 'primary_bus',
+	'CAN2'        => 'data_bus',
+	'CAN3'        => 'charger_bus',
+	'Primary_Bus' => 'primary_bus',
+	'Data_Bus'    => 'data_bus',
+	'Charger_Bus' => 'charger_bus',
+);
+
 Readonly::Hash my %NONASCII_XLAT => (
 	chr 0x2018 => q{'},
 	chr 0x2019 => q{'},
@@ -139,7 +148,7 @@ sub _build_header {
 
 sub _bus_path {
 	my ( $base, $bus ) = @_;
-	my $safe_bus = $bus;
+	my $safe_bus = $BUS_NAME_MAP{$bus} // $bus;
 	$safe_bus =~ s/\W//gsmx;
 	if ( $safe_bus eq $EMPTY_STR ) {
 		$safe_bus = 'unknown';

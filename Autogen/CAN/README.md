@@ -1,4 +1,5 @@
 # CANfigurator
+
 #### By Aarnav, Caroline, Kartik, Nandini
 
 ## Workflow: How to Apply Changes
@@ -16,21 +17,23 @@
 
 All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never need to run them manually.
 
-- **`CANparser.pl`** — Reads the `Custom CAN ID` section. Produces `GRCAN_CUSTOM_ID.h`, a single enum mapping each third-party message name to its CAN ID.
-- **`GRparser.pl`** — Reads the `GR ID` section. Produces `GRCAN_NODE_ID.h`, a single enum of device/node network addresses.
-- **`MSGparser.pl`** — Reads the `Message ID` section. Produces `GRCAN_MSG_ID.h`, a single enum of every team-defined message name to its MSG ID.
-- **`STRUCTparser.pl`** — Reads the `Message ID` section. Produces `GRCAN_MSG_DATA.h`, packed C structs for each message with typed fields, byte-level layout, and description comments.
-- **`DBCparser.pl`** — Reads the `routing`, `Message ID`, `Custom CAN ID`, and `GR ID` sections. Produces `Doc/GRCAN.dbc`, a DBC file for use with CAN analysis tools.
-- **`BusParser.pl`** — Reads the `Bus ID` section. Produces `GRCAN_BUS_ID.h`, an enum of logical CAN bus identifiers.
+- `**CANparser.pl`** — Reads the `Custom CAN ID` section. Produces `GRCAN_CUSTOM_ID.h`, a single enum mapping each third-party message name to its CAN ID.
+- `**GRparser.pl**` — Reads the `GR ID` section. Produces `GRCAN_NODE_ID.h`, a single enum of device/node network addresses.
+- `**MSGparser.pl**` — Reads the `Message ID` section. Produces `GRCAN_MSG_ID.h`, a single enum of every team-defined message name to its MSG ID.
+- `**STRUCTparser.pl**` — Reads the `Message ID` section. Produces `GRCAN_MSG_DATA.h`, packed C structs for each message with typed fields, byte-level layout, and description comments.
+- `**DBCparser.pl**` — Reads the `routing`, `Message ID`, `Custom CAN ID`, and `GR ID` sections. Produces `Doc/GRCAN.dbc`, a DBC file for use with CAN analysis tools.
+- `**BusParser.pl**` — Reads the `Bus ID` section. Produces `GRCAN_BUS_ID.h`, an enum of logical CAN bus identifiers.
 
-| Parser | Section(s) Read | Key Fields Consumed | Output |
-|---|---|---|---|
-| `CANparser.pl` | `Custom CAN ID` | Message name, `CAN ID` | `GRCAN_CUSTOM_ID.h` |
-| `GRparser.pl` | `GR ID` | Device name, hex ID value | `GRCAN_NODE_ID.h` |
-| `MSGparser.pl` | `Message ID` | Message name, `MSG ID` | `GRCAN_MSG_ID.h` |
-| `STRUCTparser.pl` | `Message ID` | Message name, fields, `bit_start`, `data type`, `comment:` blocks | `GRCAN_MSG_DATA.h` |
-| `DBCparser.pl` | `routing`, `Message ID`, `Custom CAN ID`, `GR ID` | Sender, target, bus, message defs, signal layout | `GRCAN.dbc` |
-| `BusParser.pl` | `Bus ID` | Bus name, numeric ID | `GRCAN_BUS_ID.h` |
+
+| Parser            | Section(s) Read                                   | Key Fields Consumed                                               | Output              |
+| ----------------- | ------------------------------------------------- | ----------------------------------------------------------------- | ------------------- |
+| `CANparser.pl`    | `Custom CAN ID`                                   | Message name, `CAN ID`                                            | `GRCAN_CUSTOM_ID.h` |
+| `GRparser.pl`     | `GR ID`                                           | Device name, hex ID value                                         | `GRCAN_NODE_ID.h`   |
+| `MSGparser.pl`    | `Message ID`                                      | Message name, `MSG ID`                                            | `GRCAN_MSG_ID.h`    |
+| `STRUCTparser.pl` | `Message ID`                                      | Message name, fields, `bit_start`, `data type`, `comment:` blocks | `GRCAN_MSG_DATA.h`  |
+| `DBCparser.pl`    | `routing`, `Message ID`, `Custom CAN ID`, `GR ID` | Sender, target, bus, message defs, signal layout                  | `GRCAN.dbc`         |
+| `BusParser.pl`    | `Bus ID`                                          | Bus name, numeric ID                                              | `GRCAN_BUS_ID.h`    |
+
 
 ---
 
@@ -40,14 +43,16 @@ All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never
 
 ### Top-Level Sections
 
-| Section | Consumed By | Generated Output |
-|---|---|---|
-| `Bus ID` | `BusParser.pl` -> `GRCAN_BUS_ID.h` | Logical bus ID enum |
-| `routing` | `DBCparser.pl` -> `GRCAN.dbc` | DBC message routing |
-| `byte order` | *(shared config, not consumed by any parser directly)* | Endianness reference |
-| `Message ID` | `MSGparser.pl` -> `GRCAN_MSG_ID.h`, `STRUCTparser.pl` -> `GRCAN_MSG_DATA.h` | MSG ID enum, packed C structs |
-| `Custom CAN ID` | `CANparser.pl` -> `GRCAN_CUSTOM_ID.h` | Custom CAN ID enum |
-| `GR ID` | `GRparser.pl` -> `GRCAN_NODE_ID.h` | Device/node ID enum |
+
+| Section         | Consumed By                                                                 | Generated Output              |
+| --------------- | --------------------------------------------------------------------------- | ----------------------------- |
+| `Bus ID`        | `BusParser.pl` -> `GRCAN_BUS_ID.h`                                          | Logical bus ID enum           |
+| `routing`       | `DBCparser.pl` -> `GRCAN.dbc`                                               | DBC message routing           |
+| `byte order`    | *(shared config, not consumed by any parser directly)*                      | Endianness reference          |
+| `Message ID`    | `MSGparser.pl` -> `GRCAN_MSG_ID.h`, `STRUCTparser.pl` -> `GRCAN_MSG_DATA.h` | MSG ID enum, packed C structs |
+| `Custom CAN ID` | `CANparser.pl` -> `GRCAN_CUSTOM_ID.h`                                       | Custom CAN ID enum            |
+| `GR ID`         | `GRparser.pl` -> `GRCAN_NODE_ID.h`                                          | Device/node ID enum           |
+
 
 ---
 
@@ -119,37 +124,41 @@ Message ID:
 
 #### Data Types
 
-| Type | Meaning | C Equivalent |
-|---|---|---|
-| `b` | Boolean (1 bit) | bit field |
-| `u4` | Unsigned 4-bit | nibble |
-| `u8` | Unsigned 8-bit | `uint8_t` |
-| `u16` | Unsigned 16-bit | `uint16_t` |
-| `u32` | Unsigned 32-bit | `uint32_t` |
-| `i16` | Signed 16-bit | `int16_t` |
-| `s8` | Signed 8-bit | `int8_t` |
-| `s` | String (variable length, up to MSG LENGTH) | `char[]` |
+
+| Type  | Meaning                                    | C Equivalent |
+| ----- | ------------------------------------------ | ------------ |
+| `b`   | Boolean (1 bit)                            | bit field    |
+| `u4`  | Unsigned 4-bit                             | nibble       |
+| `u8`  | Unsigned 8-bit                             | `uint8_t`    |
+| `u16` | Unsigned 16-bit                            | `uint16_t`   |
+| `u32` | Unsigned 32-bit                            | `uint32_t`   |
+| `i16` | Signed 16-bit                              | `int16_t`    |
+| `s8`  | Signed 8-bit                               | `int8_t`     |
+| `s`   | String (variable length, up to MSG LENGTH) | `char[]`     |
+
 
 #### Field Attributes
 
-- **`bit_start`** (REQUIRED REQUIRED REQUIRED REQUIRED) — the bit offset of the field within the message. Must be the first sub-key under each field name. Parsers calculate message size based on bit starts — nothing will work without it.
-- **`data type`** (required) — one of the types listed above.
-- **`comment:`** (optional) — description of the field. `STRUCTparser.pl` extracts this as a doxygen-style comment in the generated struct. Supports multi-line continuation:
+- `**bit_start**` (REQUIRED REQUIRED REQUIRED REQUIRED) — the bit offset of the field within the message. Must be the first sub-key under each field name. Parsers calculate message size based on bit starts — nothing will work without it.
+- `**data type**` (required) — one of the types listed above.
+- `**comment:**` (optional) — description of the field. `STRUCTparser.pl` extracts this as a doxygen-style comment in the generated struct. Supports multi-line continuation:
   ```yaml
       comment: First line of description
         Continuation line joined to the same comment.
   ```
-- **`units`** (optional) — human-readable unit (e.g. `Volts`, `RPM`, `'%'`, `Celsius`, `Bool`, `Enum`, `ms`).
-- **`scaled min` / `scaled max`** (optional) — the real-world range after the map equation is applied.
-- **`map equation`** (optional) — the formula to convert the raw value to engineering units (e.g. `"0.01x"`, `"0.1x-3276.8"`).
+- `**units**` (optional) — human-readable unit (e.g. `Volts`, `RPM`, `'%'`, `Celsius`, `Bool`, `Enum`, `ms`).
+- `**scaled min` / `scaled max**` (optional) — the real-world range after the map equation is applied.
+- `**map equation**` (optional) — the formula to convert the raw value to engineering units (e.g. `"0.01x"`, `"0.1x-3276.8"`).
 
 #### Reserved Fields
 
 Mark unused bit ranges as `Reserved`:
+
 ```yaml
     Reserved:
       bit_start: 23-31
 ```
+
 If you have a data type for a field not divisible by 8 (ex: not a u8, u16, u32, etc..), then make sure you have padding to ensure the next field starts at a bit value that IS divisble by 8. Make sure to follow general memory padding conventions within bytes as well.
 (Ex: only start a u4 on bit 0 or 4 of a byte, u2 on anything space divisible by 2, etc.)
 
@@ -190,6 +199,7 @@ Custom CAN ID:
 ```
 
 **Key differences from `Message ID`:**
+
 - Uses `CAN ID` (not `MSG ID`) and the value can be decimal or bare hex (e.g. `A16`).
 - Uses `Length` (not `MSG LENGTH`).
 - Fields are listed under a `signals:` array with `name:` and `bit_start:` keys, rather than direct field names with `bit_start:` as a sub-key.
@@ -217,6 +227,8 @@ GR ID:
 #### Adding a New Device
 
 Add a single line with the device name and a unique hex ID string:
+
 ```yaml
   My New Board: "0x2A"
 ```
+
