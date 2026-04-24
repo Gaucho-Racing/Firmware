@@ -40,14 +40,6 @@ routing:
         BCU:
           - msg: Charger Data
             can_id_override: 0x18FF50E5
-    Dash Panel:
-      Primary_Bus:
-        Debugger:
-          - msg: Debug 2.0
-          - msg: Ping
-        ECU:
-          - msg: Ping
-          - msg: Dash Status
     Debugger:
       Primary_Bus:
         ECU:
@@ -57,9 +49,6 @@ routing:
           - msg: Debug 2.0
           - msg: Ping
         TCM:
-          - msg: Debug 2.0
-          - msg: Ping
-        Dash Panel:
           - msg: Debug 2.0
           - msg: Ping
         GR Inverter:
@@ -147,9 +136,6 @@ routing:
           - msg: Ping
         Fan Controller 3:
           - msg: Fan Command
-          - msg: Ping
-        Dash Panel:
-          - msg: Dash Config
           - msg: Ping
         ALL:
           - msg: ECU Status 1
@@ -459,11 +445,6 @@ Message ID:
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-  ECU config:
-    MSG ID: 0x006
-    MSG LENGTH: 0
-    Reserved:
-      bit_start: 0
   BCU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
@@ -3424,176 +3405,6 @@ Message ID:
       scaled min: 0
       scaled max: 255
       map equation: "1x"
-  Dash Status:
-    MSG ID: 0x01A
-    MSG LENGTH: 3
-    button_flags:
-      bit_start: 0
-      comment:
-        [Byte 0 / Bits 0-7]
-        0: TS Active
-        1: RTD
-        2-7: Reserved
-      data type: u8
-    led_bits:
-      bit_start: 8
-      comment:
-        [Byte 1 / Bits 8-15]
-        0: BMS
-        1: IMD
-        2: BSPD
-        3-7: Reserved
-      data type: u8
-  Dash Config:
-    MSG ID: 0x01B
-    MSG LENGTH: 1
-    led_bits:
-      bit_start: 0
-      comment:
-        [Byte 0 / Bits 0-7]
-        0: BMS LED command
-        1: IMD LED command
-        2: BSPD LED command
-        3-7: Reserved
-      data type: u8
-  TCM Status:
-    MSG ID: 0x029
-    MSG LENGTH: 8
-    status_bits:
-      bit_start: 0
-      comment:
-        [Byte 0 / Bits 0-7]
-        0: Connection Status
-        1: MQTT Status
-        2: Epic Shelter Status
-        3: Camera Status
-        4-7: Reserved
-    mapache_ping:
-      bit_start: 8
-      comment: Mapache ping (upload)
-      data type: u16
-      units: ms
-    Cache Size:
-      bit_start: 24
-      comment: # of messages on cache (non-synced)
-      data type: u32
-      units: #
-    Reserved:
-      bit_start: 56
-  TCM Resource Utilization:
-    MSG ID: 0x02A
-    MSG LENGTH: 44
-    CPU 0 Freq:
-      bit_start: 0
-      comment: core 0 frequency in MHz
-      data type: u16
-      units: '%'
-    CPU 0 Util:
-      bit_start: 16
-      comment: core 0 utilization in %
-      data type: u8
-      units: '%'
-    CPU 1 Freq:
-      bit_start: 24
-      comment: core 1 frequency in MHz
-      data type: u16
-      units: '%'
-    CPU 1 Util:
-      bit_start: 40
-      comment: core 1 utilization in %
-      data type: u8
-    CPU 2 Freq:
-      bit_start: 48
-      comment: core 2 frequency in MHz
-      data type: u16
-      units: '%'
-    CPU 2 Util:
-      bit_start: 64
-      comment: core 2 utilization in %
-      data type: u8
-    CPU 3 Freq:
-      bit_start: 72
-      comment: core 3 frequency in MHz
-      data type: u16
-    CPU 3 Util:
-      bit_start: 88
-      comment: core 3 utilization in %
-      data type: u8
-    CPU 4 Freq:
-      bit_start: 96
-      comment: core 4 frequency in MHz
-      data type: u16
-    CPU 4 Util:
-      bit_start: 112
-      comment: core 4 utilization in %
-      data type: u8
-    CPU 5 Freq:
-      bit_start: 120
-      comment: core 5 frequency in MHz
-      data type: u16
-    CPU 5 Util:
-      bit_start: 136
-      comment: core 5 utilization in %
-      data type: u8
-      units: Watts
-    CPU Total Util:
-      bit_start: 144
-      comment: total cpu utilization in %
-      data type: u8
-    RAM Total:
-      bit_start: 152
-      comment: total memory in MB
-      data type: u16
-    RAM Used:
-      bit_start: 168
-      comment: used memory in MB
-      data type: u16
-    RAM Util:
-      bit_start: 184
-      comment: memory utilization in %
-      data type: u8
-    GPU Util:
-      bit_start: 192
-      comment: gpu utilization in %
-      data type: u8
-    GPU Freq:
-      bit_start: 200
-      comment: gpu frequency in MHz
-      data type: u16
-    Disk Total:
-      bit_start: 216
-      comment: total disk space in MB
-      data type: u32
-    Disk Used:
-      bit_start: 248
-      comment: used disk space in MB
-      data type: u32
-    Disk Util:
-      bit_start: 280
-      comment: disk utilization in %
-      data type: u8
-      units: Celsius
-    CPU Temp:
-      bit_start: 288
-      comment: cpu temp in ˚C
-      data type: u8
-    GPU Temp:
-      bit_start: 296
-      comment: gpu temp in ˚C
-      data type: u8
-    Voltage Draw:
-      bit_start: 304
-      comment: voltage draw in mV
-      data type: u16
-    Current Draw:
-      bit_start: 320
-      comment: current draw in mA
-      data type: u16
-    Power Draw:
-      bit_start: 336
-      comment: power draw in mW
-      data type: u16
-      units: Celsius
   ECU Analog Data:
     MSG ID: 0x02E
     MSG LENGTH: 16
@@ -3747,8 +3558,7 @@ Message ID:
     MSG LENGTH: 4
     Elapsed Cycles:
       bit_start: 0
-      comment:
-        Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+      comment: Represents the total number of clock cycles elapsed for 10 iterations of the main loop
       data type: u32
       units: Clock Cycles
 
@@ -4262,7 +4072,6 @@ GR ID:
   ECU: "0x02"
   BCU: "0x03"
   TCM: "0x04"
-  Dash Panel: "0x05"
   GR Inverter: "0x08"
   Charging SDC: "0x0C"
   Fan Controller 1: "0x0D"
