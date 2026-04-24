@@ -47,7 +47,14 @@ void STATE_IDLE(CCU_StateData *state_data)
 
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = true;
-		SendPrechargeStatus(state_data);
+		SendPrechargeStatus(state_data); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
+		if (!IR_Sanity_Check(state_data)){
+			LOGOMATIC("IR Sanity Check Failed! Transitioning back to IDLE\n");
+			state_data->state = CCU_STATE_IDLE;
+			state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+			SendPrechargeStatus(state_data);
+
+		};
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	}
@@ -56,6 +63,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 void STATE_CHARGING(CCU_StateData *state_data)
 {
 
+
 	BCU_Warnings(state_data);
 	if (CriticalError(state_data)) {
 
@@ -63,6 +71,13 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 		SendPrechargeStatus(state_data);
+		if (!IR_Sanity_Check(state_data)){
+			LOGOMATIC("IR Sanity Check Failed! Transitioning back to IDLE\n");
+			state_data->state = CCU_STATE_IDLE;
+			state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+			SendPrechargeStatus(state_data);
+
+		};
 
 		state_data->state = CCU_STATE_IDLE;
 
@@ -70,10 +85,24 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	}
 
 	else if (!(state_data->recv_charge_cmd)) {
-		state_data->state = CCU_STATE_IDLE;
-		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
-		SendPrechargeStatus(state_data);
+		if (!IR_Sanity_Check(state_data)){
+			LOGOMATIC("IR Sanity Check Failed! Transitioning back to IDLE\n");
+			state_data->state = CCU_STATE_IDLE;
+			state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+			SendPrechargeStatus(state_data);
+
+		} else {
+			state_data->state = CCU_STATE_IDLE;
+			state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+			SendPrechargeStatus(state_data);
+
+		}
+
+
+
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	}
+
+
 }

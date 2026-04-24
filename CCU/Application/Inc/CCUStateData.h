@@ -26,8 +26,8 @@ typedef volatile struct {
 
 	// State
 	uint8_t BCU_S2_PRECHARGE_BITS;
-	// bool BCU_S2_PRECHARGE_STATE;
-	// bool BCU_S2_IR_STATE;
+	bool BCU_S2_PRECHARGE_STATE; // IR- State
+	bool BCU_S2_IR_STATE; // IR+ State
 	bool SOFTWARE_LATCH;
 
 	// BCU_PRECHARGE

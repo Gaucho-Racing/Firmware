@@ -92,3 +92,29 @@ void CheckDebuggerPrint(CCU_StateData *state_data)
 
 	state_data->request_print_statedata = false;
 }
+
+bool IR_Sanity_Check(CCU_StateData *state_data)
+{
+
+	if (state_data->BCU_S2_PRECHARGE_STATE && !state_data->BCU_S2_IR_STATE) {
+		if (state_data->CCU_PRECHARGE_SET_TS_ACTIVE == false){
+			LOGOMATIC("IR- is off but Precharge is active. This should not be possible.");
+			return false;
+		}
+		else {
+			LOGOMATIC("Precharge in progress"); //don't know if this logging is necessary, but doing for debugging rn
+			return true;
+
+		}
+
+	} else if (!state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
+		LOGOMATIC("This shouldn't be possible");
+		return false;
+	} else if (!state_data->BCU_S2_PRECHARGE_STATE && !state_data->BCU_S2_IR_STATE) {
+		LOGOMATIC("Not charging"); //don't know if this logging is necessary, but doing for debugging rn
+		return true;
+	} else if (state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
+		LOGOMATIC("Charging should be complete");
+		return true;
+	}
+}
