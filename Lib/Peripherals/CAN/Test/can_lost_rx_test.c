@@ -31,7 +31,7 @@ int can_lost_rx_test(void)
 		return ERROR;
 	}
 
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	set_default_can_clksource();
 
 	// TODO: Make the stress test more stressful
 	FDCAN_TxHeaderTypeDef TxHeader = {

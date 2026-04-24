@@ -31,8 +31,16 @@ typedef enum {
 } GRCAN_FrameFormat;
 
 typedef enum {
+#if defined(STM32G4) || defined(STM32L4) || defined(STM32U5)
 	GRCAN_CLKSRC_PCLK1,
 	GRCAN_CLKSRC_PLL,
+#endif
+
+#if defined(STM32H5)
+	GRCAN_CLKSRC_PLL1Q,
+	GRCAN_CLKSRC_PLL2Q,
+#endif
+
 	GRCAN_CLKSRC_HSE
 } GRCAN_ClockSource;
 
