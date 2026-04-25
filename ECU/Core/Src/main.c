@@ -110,12 +110,22 @@ void read_digital(void)
 {
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
-	if (stateLump.rtd_button_pressed != LL_GPIO_IsInputPinSet(RTD_BTN_Port, RTD_BTN_Pin)) {
+	if (stateLump.curr_rtd_state != LL_GPIO_IsInputPinSet(RTD_BTN_Port, RTD_BTN_Pin)) {
 		stateLump.rtd_button_pressed = 1;
+		stateLump.curr_rtd_state = LL_GPIO_IsInputPinSet(RTD_BTN_Port, RTD_BTN_Pin);
+		rtd_button_pressed_time = MillisecondsSinceBoot();
 	}
-	if (stateLump.ts_active_button_pressed != LL_GPIO_IsInputPinSet(TS_ACTIVE_BTN_Port, TS_ACTIVE_BTN_Pin)) {
-		stateLump.last_ts_active_state = stateLump.ts_active_button_pressed;
-		stateLump.ts_active_button_pressed = LL_GPIO_IsInputPinSet(TS_ACTIVE_BTN_Port, TS_ACTIVE_BTN_Pin);
+	if (MillisecondsSinceBoot() - rtd_button_pressed_time >= MAX_PRESS_TIME_MS) {
+		stateLump.rtd_button_pressed = 0;
+	}
+
+	if (stateLump.curr_ts_active_state != LL_GPIO_IsInputPinSet(TS_ACTIVE_BTN_Port, TS_ACTIVE_BTN_Pin)) {
+		stateLump.ts_active_button_pressed = 1;
+		stateLump.curr_ts_active_state = LL_GPIO_IsInputPinSet(TS_ACTIVE_BTN_Port, TS_ACTIVE_BTN_Pin);
+		ts_active_button_pressed_time = MillisecondsSinceBoot();
+	}
+	if (MillisecondsSinceBoot() - ts_active_button_pressed_time >= MAX_PRESS_TIME_MS) {
+		stateLump.ts_active_button_pressed = 0;
 	}
 }
 
