@@ -3,6 +3,7 @@
 #define GR_IDS_H
 
 typedef enum {
+	GRCAN_ALL = 0x00,
 	GRCAN_Charger = 0x00,
 	GRCAN_DTI_Inverter = 0x00,
 	GRCAN_Energy_Meter = 0x00,
@@ -27,7 +28,6 @@ typedef enum {
 	GRCAN_TireTemp_RL = 0x26,
 	GRCAN_TireTemp_RR = 0x27,
 	GRCAN_DGPS = 0x30,
-	GRCAN_ALL = 0xFF,
 } GRCAN_NODE_ID;
 
 #endif // GR_IDS_H
