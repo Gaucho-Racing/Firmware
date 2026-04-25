@@ -25,9 +25,11 @@
 		for (const raw of String(text || "").split("\n")) {
 			const line = raw.replace(/#.*$/, "").trimEnd(); // strip inline comments
 			if (!line.trim()) continue;
-			const busMatch = line.match(/^(CAN\d+)\s*:/);
+			// Bus header: any non-whitespace name at column 0 followed by ":".
+			// Accepts "Primary:", "CAN1:", "Aux_2:", etc.
+			const busMatch = line.match(/^(\S(?:[^:\n]*\S)?)\s*:\s*$/);
 			if (busMatch) {
-				currentBus = busMatch[1];
+				currentBus = busMatch[1].trim();
 				result.set(currentBus, new Set());
 			} else if (currentBus && /^\s+\S/.test(line)) {
 				result.get(currentBus).add(line.trim());

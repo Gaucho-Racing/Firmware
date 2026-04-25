@@ -109,9 +109,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function messageChangeState(msgName, deviceName, busCanonical) {
-		const busPort = busCanonical
-			? window.GrcanApi.busToPort(busCanonical)
-			: null;
+		const busPort = busCanonical || null;
 		const defStatus = keyStatus("msgDef:" + msgName);
 		const routeStatus =
 			!!busPort && !!deviceName
@@ -122,9 +120,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function busChangeState(deviceName, busCanonical, messages) {
-		const busPort = busCanonical
-			? window.GrcanApi.busToPort(busCanonical)
-			: null;
+		const busPort = busCanonical || null;
 		if (!deviceName || !busPort)
 			return { directStatus: null, bubbled: false, any: false };
 		const directStatus = keyStatus("routeBus:" + deviceName + "|" + busPort);
@@ -565,15 +561,6 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	function canonicalBusName(text) {
-		const value = String(text || "").toLowerCase();
-		if (value.includes("primary")) return "Primary";
-		if (value.includes("data")) return "Data";
-		if (value.includes("charg")) return "Charger";
-		if (value.includes("testing")) return "Testing";
-		return null;
-	}
-
 	function setHierarchyHeaders() {
 		if (!firstHeader || !secondHeader) return;
 		if (HIERARCHY_MODE === "NODE_BUS") {
@@ -656,9 +643,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	function renderMessages(messages) {
 		msgList.innerHTML = "";
 		const editing = isEditing();
-		const busPort = currentBusCanonical
-			? window.GrcanApi.busToPort(currentBusCanonical)
-			: null;
+		const busPort = currentBusCanonical || null;
 		if (!messages || messages.length === 0) {
 			setPlaceholder(msgList, "No messages");
 			if (editing && busPort && currentDeviceName) {
@@ -937,9 +922,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				);
 				icons.appendChild(
 					editor.createDeleteBtn(() => {
-						const busPort = currentBusCanonical
-							? window.GrcanApi.busToPort(currentBusCanonical)
-							: null;
+						const busPort = currentBusCanonical || null;
 						if (busPort) {
 							editor.setNavSnapshot(navSnapshot());
 							editor.confirmAndDelete(
@@ -993,10 +976,10 @@ window.addEventListener("DOMContentLoaded", function () {
 		firstList.innerHTML = "";
 		result.buses.forEach((bus) => {
 			const display = bus.label || bus.name;
-			const busName = canonicalBusName(display) || canonicalBusName(bus.name);
+			const busName = bus.name;
 			const item = makeItem(display, true);
 			item.dataset.busCanonical = busName || "";
-			if (isLocal && busName && busName !== "Testing") {
+			if (isLocal && busName) {
 				const nr = window.GrcanApi.parseMessageByBusFromText(
 					localText,
 					busName,
@@ -1096,7 +1079,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 
 			if (editing && entry.canonicalBus) {
-				const busPort = window.GrcanApi.busToPort(entry.canonicalBus);
+				const busPort = entry.canonicalBus;
 				if (busPort) {
 					const icons = document.createElement("span");
 					icons.className = "editor-icons";
@@ -1169,12 +1152,11 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 
 		const routingBuses = busesResult.buses
+			.filter((b) => b.name)
 			.map((bus) => ({
 				display: bus.label || bus.name,
-				name:
-					canonicalBusName(bus.label || bus.name) || canonicalBusName(bus.name),
-			}))
-			.filter((b) => b.name && b.name !== "Testing");
+				name: bus.name,
+			}));
 
 		const nodeMap = new Map();
 		let nodeCatalogResult;
