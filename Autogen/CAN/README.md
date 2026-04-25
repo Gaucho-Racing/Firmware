@@ -80,7 +80,7 @@ Defines which messages each device sends on each CAN bus, and to which receiver.
 routing:
   messages:
     <Device Name>:
-      <CAN Bus>:           # CAN1, CAN2, CAN3
+      <CAN Bus>:           # must match a name in the Bus ID section (e.g. Primary, Data, Charger)
         <Receiver Name>:
           - msg: <Message Name>
           - msg: <Message Name>

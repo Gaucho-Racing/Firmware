@@ -169,9 +169,10 @@
 			"Receiver Node ID",
 			fu.makeInput("text", "", "e.g. 0x32"),
 		);
+		const _allBuses = window.GrcanDocument.getBusNames();
 		const busF = fu.makeFormRow(
 			"Bus",
-			fu.makeSelect(["CAN1", "CAN2", "CAN3"], "CAN1"),
+			fu.makeSelect(_allBuses, _allBuses[0] || ""),
 			true,
 		);
 		const msgNameF = fu.makeFormRow(
