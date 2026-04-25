@@ -4,7 +4,9 @@
 #
 # Output: one DBC per CAN bus discovered in the routing section. The user
 # supplies a base name (e.g. GRCAN.dbc); each file is written as
-# <base>_<busname>.dbc (e.g. GRCAN_CAN1.dbc, GRCAN_CAN2.dbc, GRCAN_CAN3.dbc).
+# <base>_<busname>.dbc (e.g. GRCAN_Primary.dbc, GRCAN_Data.dbc,
+# GRCAN_Charger.dbc), where <busname> is the routing-section bus key
+# (which equals the corresponding "Bus ID:" name).
 #
 # Per-file DBC validity is enforced by:
 #   - numeric ranges stripped of thousands separators (no commas in numbers)
