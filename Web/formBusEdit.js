@@ -1,6 +1,8 @@
 // Purpose: "Edit Bus" modal form.
-// Allows changing the CAN port (CAN1/CAN2/CAN3) assigned to a routing bus block
-// for a given device. Prevents renaming to a port that the device already has.
+// Allows changing the bus assigned to a routing bus block for a given device.
+// The list of choices is sourced dynamically from the "Bus ID:" section via
+// GrcanDocument.getBusNames(), so adding/renaming a bus there propagates
+// automatically. Prevents renaming to a port that the device already has.
 // A no-op save (same bus port) closes without marking any change.
 // Depends on: formUtils.js (FormUtils), editor.js (GrcanEditor).
 // Registers: window.GrcanEditor.showRoutingBusEditForm
@@ -13,9 +15,10 @@
 		const fu = window.FormUtils;
 		const { overlay, body, footer } = fu.createModal("Edit Bus");
 
+		const _allBuses = window.GrcanDocument.getBusNames();
 		const busF = fu.makeFormRow(
 			"Bus",
-			fu.makeSelect(["CAN1", "CAN2", "CAN3"], oldBusPort || "CAN1"),
+			fu.makeSelect(_allBuses, oldBusPort || _allBuses[0] || ""),
 			true,
 		);
 		body.appendChild(busF.row);

@@ -33,7 +33,7 @@
 			};
 		}
 
-		// busPortFilter: if provided (e.g. "CAN3"), only marks messages as used
+		// busPortFilter: if provided (e.g. "Charger"), only marks messages as used
 		// when they appear under that specific bus port block. This makes the
 		// "unused first" ranking bus-local rather than global.
 		function buildRouteUsageMap(rawText, busPortFilter) {
@@ -48,7 +48,7 @@
 				const indent = line.search(/\S/);
 				const content = line.trim();
 				if (indent === 6) {
-					// "      CANx:" — toggle tracking based on bus match
+					// "      <BusName>:" — toggle tracking based on bus match
 					activeBus = !busPortFilter || content === busPortFilter + ":";
 				} else if (indent === 4) {
 					activeBus = !busPortFilter;
@@ -155,7 +155,7 @@
 		// bus is pre-selected, the select is disabled anyway, so filtering its
 		// option list would cause the locked value to have no matching option and
 		// the browser would silently default to the first entry (wrong bus).
-		const _allBuses = ["CAN1", "CAN2", "CAN3"];
+		const _allBuses = window.GrcanDocument.getBusNames();
 		const _topoForBus = window.PhysicalTopology;
 		const _availableBuses =
 			!busPort && deviceName && _topoForBus && _topoForBus.isLoaded()
@@ -165,7 +165,7 @@
 			_availableBuses.length > 0 ? _availableBuses : _allBuses;
 		const busF = fu.makeFormRow(
 			"Bus",
-			fu.makeSelect(_busChoices, busPort || _busChoices[0] || "CAN1"),
+			fu.makeSelect(_busChoices, busPort || _busChoices[0] || ""),
 			true,
 		);
 		if (busPort) {
