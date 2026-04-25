@@ -123,9 +123,9 @@ void write_adc_values_to_state_data(void)
 	stateLump.steering_angle_signal = ADC_outputs[10]; // TODO: convert to rad/deg...?
 
 	// TODO: determine conversion factors for all of these (uint to float)
-	stateLump.bspd_sense = ADC_outputs[7];
-	stateLump.imd_sense = ADC_outputs[8];
-	stateLump.ams_sense = ADC_outputs[9];
+	stateLump.bspd_sense = ADC_outputs[7] / 4095.0 * 3.3;
+	stateLump.imd_sense = ADC_outputs[8]  / 4095.0 * 3.3;
+	stateLump.ams_sense = ADC_outputs[9] / 4095.0 * 3.3;
 }
 
 void ADC_Configure(void)
@@ -393,15 +393,15 @@ int main(void)
 	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
-		static uint32_t lastSend;
-		if(MillisecondsSinceBoot() >= lastSend + 20) {
-			lastSend = MillisecondsSinceBoot();
+		// static uint32_t lastSend;
+		// if(MillisecondsSinceBoot() >= lastSend + 20) {
+		// 	lastSend = MillisecondsSinceBoot();
 
-			if(HAL_FDCAN_IsRestrictedOperationMode(primary_can->hal_fdcanP)) {
-				HAL_FDCAN_ExitRestrictedOperationMode(primary_can->hal_fdcanP);
-			}
-			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
-		}
+		// 	if(HAL_FDCAN_IsRestrictedOperationMode(primary_can->hal_fdcanP)) {
+		// 		HAL_FDCAN_ExitRestrictedOperationMode(primary_can->hal_fdcanP);
+		// 	}
+		// 	// ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
+		// }
 
 		/* USER CODE BEGIN 3 */
 		/*
@@ -436,15 +436,20 @@ int main(void)
 		}
 		*/
 
+		static uint32_t delay_timer;
+		if (MillisecondsSinceBoot() >= delay_timer) {
+			delay_timer = MillisecondsSinceBoot() + 33; // TODO: determine how long
 
-		read_digital();
-		// TODO: determine alpha
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
-		// SendECUStateDataOverCAN(&stateLump);
-
-		write_adc_values_to_state_data();
-		// ECU_State_Tick();
-		// lightControl(&stateLump);
+			read_digital();
+			// TODO: determine alpha
+			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
+			// SendECUStateDataOverCAN(&stateLump);
+			write_adc_values_to_state_data();
+			ECU_State_Tick();
+			SendECUStateDataOverCAN(&stateLump);
+			pingAll();
+			lightControl(&stateLump);
+		}
 		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */

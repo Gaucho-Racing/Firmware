@@ -27,7 +27,7 @@ typedef enum {
 	GRCAN_TireTemp_RL = 0x26,
 	GRCAN_TireTemp_RR = 0x27,
 	GRCAN_DGPS = 0x30,
-	GRCAN_ALL = 0xFF,
+	GRCAN_ALL = 0x00,
 } GRCAN_NODE_ID;
 
 #endif // GR_IDS_H
