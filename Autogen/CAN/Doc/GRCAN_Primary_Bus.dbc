@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter IMD SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR ALL
+BU_: BCU DTI_Inverter Dash_Panel Debugger ECU Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter TCM ALL
 
 BO_ 2147680257 BCU_Debug_2_0_to_Debugger: 8 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -37,6 +37,19 @@ BO_ 2147682562 BCU_BCU_Status_3_to_ECU: 8 BCU
  SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" ECU
  SG_ HV_Output_Current : 48|16@1+ (0.001,0) [0|65.535] "Amps" ECU
 
+BO_ 2147811329 Dash_Panel_Debug_2_0_to_Debugger: 8 Dash_Panel
+ SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
+
+BO_ 2147811841 Dash_Panel_Ping_to_Debugger: 4 Dash_Panel
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
+
+BO_ 2147811842 Dash_Panel_Ping_to_ECU: 4 Dash_Panel
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
+
+BO_ 2147817986 Dash_Panel_Dash_Status_to_ECU: 3 Dash_Panel
+ SG_ button_flags : 0|8@1+ (1,0) [0|0] "" ECU
+ SG_ led_bits : 8|8@1+ (1,0) [0|0] "" ECU
+
 BO_ 2147549186 Debugger_Debug_2_0_to_ECU: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" ECU
 
@@ -54,6 +67,12 @@ BO_ 2147549188 Debugger_Debug_2_0_to_TCM: 8 Debugger
 
 BO_ 2147549700 Debugger_Ping_to_TCM: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TCM
+
+BO_ 2147549189 Debugger_Debug_2_0_to_Dash_Panel: 8 Debugger
+ SG_ Debug : 0|64@1- (1,0) [0|0] "" Dash_Panel
+
+BO_ 2147549701 Debugger_Ping_to_Dash_Panel: 4 Debugger
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Dash_Panel
 
 BO_ 2147549192 Debugger_Debug_2_0_to_GR_Inverter: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" GR_Inverter
@@ -215,6 +234,12 @@ BO_ 2147621135 ECU_Fan_Command_to_Fan_Controller_3: 1 ECU
 BO_ 2147615247 ECU_Ping_to_Fan_Controller_3: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_3
 
+BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
+ SG_ led_bits : 0|8@1+ (1,0) [0|0] "" Dash_Panel
+
+BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Dash_Panel
+
 BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ status_flags : 0|16@1+ (1,0) [0|0] "" ALL
  SG_ ecu_state : 16|1@1+ (1,0) [0|0] "Bool" ALL
@@ -327,12 +352,19 @@ CM_ SG_ 2147682562 HV_Input_Voltage "600v input voltage";
 CM_ SG_ 2147682562 HV_Output_Voltage "20v output voltage";
 CM_ SG_ 2147682562 HV_Input_Current "600v input current";
 CM_ SG_ 2147682562 HV_Output_Current "20v output current";
+CM_ SG_ 2147811329 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2147811841 Timestamp "Time in millis";
+CM_ SG_ 2147811842 Timestamp "Time in millis";
+CM_ SG_ 2147817986 button_flags "[Byte 0 / Bits 0-7] 0: TS Active 1: RTD 2-7: Reserved";
+CM_ SG_ 2147817986 led_bits "[Byte 1 / Bits 8-15] 0: BMS 1: IMD 2: BSPD 3-7: Reserved";
 CM_ SG_ 2147549186 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2147549698 Timestamp "Time in millis";
 CM_ SG_ 2147549187 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2147549699 Timestamp "Time in millis";
 CM_ SG_ 2147549188 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2147549700 Timestamp "Time in millis";
+CM_ SG_ 2147549189 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2147549701 Timestamp "Time in millis";
 CM_ SG_ 2147549192 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2147549704 Timestamp "Time in millis";
 CM_ SG_ 2147549197 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
@@ -407,7 +439,6 @@ CM_ SG_ 2147621134 Fan_Command "0-100 Percent";
 CM_ SG_ 2147615246 Timestamp "Time in millis";
 CM_ SG_ 2147621135 Fan_Command "0-100 Percent";
 CM_ SG_ 2147615247 Timestamp "Time in millis";
-CM_ SG_ 2147615743 status_flags "[Bytes 0-1 / Bits 0-15] 0: BCU Node Status (1: OK, 0: Timeout) 1: GR Inverter Status (1: OK, 0: Timeout) 2: Fan Controller 1 Status (1: OK, 0: Timeout) 3: Fan Controller 2 Status (1: OK, 0: Timeout) 4: Fan Controller 3 Status (1: OK, 0: Timeout) 5: Dash Panel Status (1: OK, 0: Timeout) 6: TCM Node Status (1: OK, 0: Timeout) 7: SAMM_Mag_1 Status (1: OK, 0: Timeout) 8: SAMM_Mag_2 Status (1: OK, 0: Timeout) 9: SAMM_ToF_1 Status (1: OK, 0: Timeout) 10: SAMM_ToF_2 Status (1: OK, 0: Timeout) 11: TireTemp_1 Status (1: OK, 0: Timeout) 12: TireTemp_2 Status (1: OK, 0: Timeout) 13: TireTemp_3 Status (1: OK, 0: Timeout) 14: TireTemp_4 Status (1: OK, 0: Timeout) 15: Reserved";
 CM_ SG_ 2147621637 led_bits "[Byte 0 / Bits 0-7] 0: BMS LED command 1: IMD LED command 2: BSPD LED command 3-7: Reserved";
 CM_ SG_ 2147615237 Timestamp "Time in millis";
 CM_ SG_ 2147615743 status_flags "[Bytes 0-1 / Bits 0-15] 0: BCU Node Status (1: OK, 0: Timeout) 1: GR Inverter Status (1: OK, 0: Timeout) 2: Fan Controller 1 Status (1: OK, 0: Timeout) 3: Fan Controller 2 Status (1: OK, 0: Timeout) 4: Fan Controller 3 Status (1: OK, 0: Timeout) 5: Dash Panel Status (1: OK, 0: Timeout) 6: TCM Node Status (1: OK, 0: Timeout) 7: SAMM_Mag_1 Status (1: OK, 0: Timeout) 8: SAMM_Mag_2 Status (1: OK, 0: Timeout) 9: SAMM_ToF_1 Status (1: OK, 0: Timeout) 10: SAMM_ToF_2 Status (1: OK, 0: Timeout) 11: TireTemp_FL Status (1: OK, 0: Timeout) 12: TireTemp_FR Status (1: OK, 0: Timeout) 13: TireTemp_RL Status (1: OK, 0: Timeout) 14: TireTemp_RR Status (1: OK, 0: Timeout) 15: Reserved";
