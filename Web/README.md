@@ -89,20 +89,21 @@ Tests live in `tests/` and run under Node.js:
 
 ## Editing `can_topology.txt`
 
-This file defines which devices are physically connected to each CAN bus. The format is:
+This file defines which devices are physically connected to each CAN bus. Bus headers must match the bus names declared in the `Bus ID:` section of `GRCAN.CANdo`. The format is:
 
 ```
-CAN1:
+Primary:
   ECU
   BCU
   ...
 
-CAN2:
+Data:
   ECU
   SAMM_Mag_1
   ...
 ```
 
+- Bus headers must exactly match `Bus ID` names in `GRCAN.CANdo` (e.g. `Primary`, `Data`, `Charger`).
 - Node names must exactly match `GR ID` entries in `GRCAN.CANdo`.
 - `Debugger` and `ALL` are always exempt and should not be listed.
 - Lines starting with `#` are comments.

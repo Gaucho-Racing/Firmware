@@ -27,6 +27,9 @@ project(${CMAKE_PROJECT_NAME})
 # set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
 
 add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+
+target_compile_definitions(${GR_PROJECT_NAME}_USER_CODE INTERFACE NODE=${NODE})
+
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
@@ -49,4 +52,9 @@ target_link_libraries(
 		MLX90640_LIB
 )
 
-target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
+target_include_directories(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		Core/Inc
+		GRCAN
+)
