@@ -13,9 +13,9 @@ GR_ID = $(INC_DIR)/GRCAN_NODE_ID.h
 MSG_ID = $(INC_DIR)/GRCAN_MSG_ID.h
 CAN_ID = $(INC_DIR)/GRCAN_CUSTOM_ID.h
 BUS_ID = $(INC_DIR)/GRCAN_BUS_ID.h
-PRIMARY_DBC = $(DOC_DIR)/GRCAN_Primary_Bus.dbc
-DATA_DBC = $(DOC_DIR)/GRCAN_Data_Bus.dbc
-CHARGER_DBC = $(DOC_DIR)/GRCAN_Charger_Bus.dbc
+PRIMARY_DBC = $(DOC_DIR)/GRCAN_Primary.dbc
+DATA_DBC = $(DOC_DIR)/GRCAN_Data.dbc
+CHARGER_DBC = $(DOC_DIR)/GRCAN_Charger.dbc
 ALL_DBC = $(PRIMARY_DBC) $(DATA_DBC) $(CHARGER_DBC)
 
 .PHONY: all clean STRUCTparser CANparser DBCparser GRparser MSGparser BusParser

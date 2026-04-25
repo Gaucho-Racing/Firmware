@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "NodeID.h"
 #include "adc.h"
 #include "crc.h"
 #include "gpio.h"
