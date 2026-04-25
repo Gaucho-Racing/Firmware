@@ -4277,4 +4277,4 @@ GR ID:
   TireTemp_FR: "0x25"
   TireTemp_RL: "0x26"
   TireTemp_RR: "0x27"
-  ALL: "0xFF"
+  ALL: "0x00"
