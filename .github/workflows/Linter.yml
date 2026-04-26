@@ -51,7 +51,7 @@ jobs:
           fetch-depth: 1
 
       - name: Validate Configuration Files
-        uses: kehoecj/validate-configs-action@55242af1509991b2b18e2cf120eb4083a33e5c4b  # v4.0.1
+        uses: Boeing/validate-configs-action@a31830f9bec7d3ec001cfab7951a966d08180a72  # v2.0.0
 
   perllinter:
     name: Perl Linter
