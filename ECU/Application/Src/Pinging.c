@@ -13,7 +13,8 @@
 	OP(GRCAN_Fan_Controller_1, 2)                                                                                                                                                                  \
 	OP(GRCAN_Fan_Controller_2, 3)                                                                                                                                                                  \
 	OP(GRCAN_Fan_Controller_3, 4)                                                                                                                                                                  \
-	OP(GRCAN_TCM, 5)
+	OP(GRCAN_Dash_Panel, 5)                                                                                                                                                                        \
+	OP(GRCAN_TCM, 6)
 
 // Converts PING_LIST into a list of the first column (IDs)
 #define PING_LIST_AS_ID(id, index) id,
