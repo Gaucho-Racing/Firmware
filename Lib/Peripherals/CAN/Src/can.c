@@ -102,8 +102,6 @@ static inline void fdcan_disable_shared_clock(void);
 static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan);
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 static CAN_STATUS validate_can_handle(CANHandle *canHandle);
-static CAN_STATUS can_try_recover_tx_path(CANHandle *canHandle);
-static void can_tx_dequeue_helper(CANHandle *handle);
 
 inline void can_set_clksource(uint32_t clksource)
 {
@@ -424,29 +422,50 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	uint32_t basepri = __get_BASEPRI();
 	__set_BASEPRI((canHandle->tx_interrupt_priority) << 4);
 
-	CAN_STATUS recovery_status = can_try_recover_tx_path(canHandle);
-
-	uint32_t free = 0;
-	if (recovery_status == CAN_SUCCESS && (free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
-		if (HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data) == HAL_OK) {
+	FDCAN_ProtocolStatusTypeDef protocol_status = {0};
+	if (HAL_FDCAN_GetProtocolStatus(canHandle->hal_fdcanP, &protocol_status) == HAL_OK && protocol_status.BusOff) {
+		LOGOMATIC("CAN_send: bus off detected, attempting recovery\n");
+		if (HAL_FDCAN_Stop(canHandle->hal_fdcanP) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to stop FDCAN peripheral during bus off recovery\n");
 			__set_BASEPRI(basepri);
-			return CAN_SUCCESS;
+			return CAN_ERROR;
 		}
-		LOGOMATIC("CAN_send: failed to add to HW FIFO, queueing instead\n");
+		uint32_t abort_mask = FDCAN_TX_BUFFER0 | FDCAN_TX_BUFFER1 | FDCAN_TX_BUFFER2;
+		HAL_FDCAN_AbortTxRequest(canHandle->hal_fdcanP, abort_mask);
+		if (HAL_FDCAN_Start(canHandle->hal_fdcanP) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to restart FDCAN peripheral during bus off recovery\n");
+			__set_BASEPRI(basepri);
+			return CAN_ERROR;
+		}
 	}
 
-	// Hardware FIFO full or controller is recovering, try software buffer
+	if (HAL_FDCAN_IsRestrictedOperationMode(canHandle->hal_fdcanP)) {
+		LOGOMATIC("CAN_send: currently in restricted operation mode\n");
+		HAL_FDCAN_ExitRestrictedOperationMode(canHandle->hal_fdcanP);
+	}
+
+	uint32_t free = 0;
+	if ((free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
+		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
+
+		if (status != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to add to HW FIFO, falling back to SW queue\n");
+		} else {
+			__set_BASEPRI(basepri);
+			return CAN_SUCCESS; // Successfully added to HW FIFO
+		}
+	}
+	//}
+
+	// Hardware FIFO full, try software buffer
 	if (canHandle->tx_elements < canHandle->tx_capacity) {
 		// int result = GR_CircularBuffer_Push(canHandle->tx_buffer, message, sizeof(FDCANTxMessage));
 
 		uint32_t idx = (canHandle->tx_tail + canHandle->tx_elements) % canHandle->tx_capacity;
 		canHandle->tx_buffer[idx] = *message;
 		canHandle->tx_elements++;
-		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
-		if (recovery_status == CAN_SUCCESS) {
-			can_tx_dequeue_helper(canHandle);
-		}
+		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
 		__set_BASEPRI(basepri);
 		return CAN_SUCCESS; // added to software buffer
@@ -457,21 +476,12 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		} else {
 		    return CAN_SUCCESS;
 		}*/
-	} else {
-		LOGOMATIC("CAN_send: all buffers full\n"); // p
 	}
+
+	LOGOMATIC("CAN_send: all buffers full\n"); // p
 	__set_BASEPRI(basepri);
 	// Both buffers full
 	return CAN_ERROR;
-}
-
-void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs)
-{
-	CANHandle *handle = can_get_handle(hfdcan);
-
-	if (ErrorStatusITs & (FDCAN_IT_BUS_OFF | FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR)) {
-		can_try_recover_tx_path(handle);
-	}
 }
 
 void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
@@ -760,33 +770,6 @@ static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan)
 	LOGOMATIC("CAN_get_handle: was given invalid FDCAN instance\n");
 	UNUSED(hfdcan);
 	return NULL;
-}
-
-static CAN_STATUS can_try_recover_tx_path(CANHandle *canHandle)
-{
-	if (!canHandle || !canHandle->init || !canHandle->started) {
-		return CAN_ERROR;
-	}
-
-	if (!HAL_FDCAN_IsRestrictedOperationMode(canHandle->hal_fdcanP)) {
-		return CAN_SUCCESS;
-	}
-
-	FDCAN_ProtocolStatusTypeDef protocol_status = {0};
-	if (HAL_FDCAN_GetProtocolStatus(canHandle->hal_fdcanP, &protocol_status) != HAL_OK) {
-		return CAN_ERROR;
-	}
-
-	if (protocol_status.BusOff) {
-		return CAN_ERROR;
-	}
-
-	if (HAL_FDCAN_ExitRestrictedOperationMode(canHandle->hal_fdcanP) != HAL_OK) {
-		return CAN_ERROR;
-	}
-
-	can_tx_dequeue_helper(canHandle);
-	return CAN_SUCCESS;
 }
 
 static CAN_STATUS validate_can_handle(CANHandle *canHandle)
