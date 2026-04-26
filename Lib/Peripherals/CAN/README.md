@@ -205,21 +205,11 @@ Must be called while the peripheral is initialized but **not yet started**.
 
 The CAN peripheral includes automatic TX-path recovery attempts when the controller enters restricted operation mode (such as after temporary bus faults/disconnect events).
 
-## Recovery Triggers
-
-Recovery is attempted from:
-
-- `can_send` (before direct Tx enqueue)
-- `HAL_FDCAN_ErrorStatusCallback` (on error-status interrupt events)
-- `HAL_FDCAN_RxFifo0Callback` (opportunistic recovery on Rx activity)
-
 ## Recovery Strategy
 
-- If controller is **not** in restricted mode, normal TX flow continues.
-- If in restricted mode, protocol status is checked.
-- If **Bus-Off** is active, recovery is deferred (controller is not forced out).
-- If Bus-Off is clear, `HAL_FDCAN_ExitRestrictedOperationMode` is attempted.
-- On successful exit, queued software TX messages are dequeued back to HW TX FIFO.
+Our current CAN recovery strategy is intentionally simple: we keep robust recovery in the transmit path (`can_send`), where we attempt to recover from bus-off/restricted states before sending and then retry normal enqueue behavior.
+
+Error interrupts are used mainly for visibility and lightweight state nudging (logging plus basic mode exit), rather than as a complex recovery controller.
 
 # Implementation Notes and Constraints
 
