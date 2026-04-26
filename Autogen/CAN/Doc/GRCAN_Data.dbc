@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU CCU Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter IMD SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR ALL
+BU_: BCU DGPS Debugger ECU SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
 
 BO_ 2147680513 BCU_Debug_FD_to_Debugger: 64 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
