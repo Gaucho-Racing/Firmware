@@ -501,6 +501,20 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 	can_tx_dequeue_helper(handle);
 }
 
+void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs)
+{
+	CANHandle *handle = can_get_handle(hfdcan);
+	if (!handle || !handle->init) {
+		return;
+	}
+
+	LOGOMATIC("%s: FDCAN error status interrupt: 0x%08lX\n", can_get_instance_name(handle->hal_fdcanP->Instance), ErrorStatusITs);
+
+	if (HAL_FDCAN_IsRestrictedOperationMode(hfdcan)) {
+		HAL_FDCAN_ExitRestrictedOperationMode(hfdcan);
+	}
+}
+
 // #define PROFILE
 // uint32_t PROFILE_AVG_RX_CYCLES = 0;
 // uint32_t PROFILE_AVG_RX_CYCLES_SAMPLES = 0;
