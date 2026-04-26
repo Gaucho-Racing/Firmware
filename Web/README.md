@@ -97,15 +97,16 @@ This file defines which devices are physically connected to each CAN bus. The fo
 
 ```json
 {
-  "CAN1": ["ECU", "BCU", "..."],
-  "CAN2": ["ECU", "SAMM_Mag_1", "..."]
+  "Primary": ["ECU", "BCU", "..."],
+  "Data": ["ECU", "SAMM_Mag_1", "..."]
 }
 ```
 
+- Bus keys must exactly match entries in the `Bus ID:` section of `GRCAN.CANdo` (e.g. `Primary`, `Data`, `Charger`).
 - Node names must exactly match `GR ID` entries in `GRCAN.CANdo`.
 - `Debugger` and `ALL` are always exempt and should not be listed.
 - JSON has no comment syntax. Rationale for entries should go in this README instead.
-- Hardware note: both `GR Inverter` and `DTI Inverter` share `CAN1`. Whichever isn't physically connected has its messages go nowhere — no firmware switch needed.
+- Hardware note: both `GR Inverter` and `DTI Inverter` share `Primary`. Whichever isn't physically connected has its messages go nowhere — no firmware switch needed.
 
 ## Editing `can_groups.json`
 

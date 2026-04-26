@@ -1,5 +1,5 @@
 {
-	"CAN1": [
+	"Primary": [
 		"ECU",
 		"TCM",
 		"BCU",
@@ -12,7 +12,7 @@
 		"Energy Meter",
 		"Dash Panel"
 	],
-	"CAN2": [
+	"Data": [
 		"ECU",
 		"TCM",
 		"BCU",
@@ -21,12 +21,12 @@
 		"SAMM_Mag_2",
 		"SAMM_ToF_1",
 		"SAMM_ToF_2",
-		"TireTemp_1",
-		"TireTemp_2",
-		"TireTemp_3",
-		"TireTemp_4"
+		"TireTemp_FL",
+		"TireTemp_FR",
+		"TireTemp_RL",
+		"TireTemp_RR"
 	],
-	"CAN3": [
+	"Charger": [
 		"CCU",
 		"BCU",
 		"Charger",

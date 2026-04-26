@@ -12,15 +12,26 @@ window.GrcanGraphView = (() => {
 		"#f97316",
 	];
 
-	const BUS_LABELS = { CAN1: "Primary", CAN2: "Data", CAN3: "Charger" };
-	const BUS_SPEED = { CAN1: "1 Mbps", CAN2: "1 Mbps", CAN3: "500 kbps" };
+	// Per-bus speed annotations rendered next to the bus header. Keyed by the
+	// bus names declared in the "Bus ID:" section of GRCAN.CANdo. Falls back
+	// to "" for any bus not listed here.
+	const BUS_SPEED = { Primary: "1 Mbps", Data: "1 Mbps", Charger: "500 kbps" };
 	const SVG_NS = "http://www.w3.org/2000/svg";
 	const ZOOM_MIN = 0.4;
 	const ZOOM_MAX = 3.0;
 
 	// ==================== State ====================
 
-	let currentBus = "CAN1";
+	let currentBus = null;
+	// Bus list active for the current overlay session: [{ name, label }, ...].
+	// Populated in open() from GrcanDocument.getBusNames(); read by the tab
+	// builder and _loadBus to render labels / titles.
+	let _busList = [];
+
+	function _busLabel(busName) {
+		const entry = _busList.find((b) => b.name === busName);
+		return (entry && entry.label) || busName;
+	}
 	let overlayEl = null;
 	let svgEl = null;
 	let viewportG = null;
@@ -194,11 +205,11 @@ window.GrcanGraphView = (() => {
 
 		const tabs = document.createElement("div");
 		tabs.className = "graph-bus-tabs";
-		["CAN1", "CAN2", "CAN3"].forEach((bus) => {
+		_busList.forEach((bus) => {
 			const btn = document.createElement("button");
 			btn.className = "graph-bus-tab";
-			btn.dataset.bus = bus;
-			btn.textContent = BUS_LABELS[bus];
+			btn.dataset.bus = bus.name;
+			btn.textContent = bus.label || bus.name;
 			tabs.appendChild(btn);
 		});
 
@@ -386,9 +397,10 @@ window.GrcanGraphView = (() => {
 				"text-anchor": "end",
 			}),
 		);
+		const speedSuffix = BUS_SPEED[currentBus] ? ` · ${BUS_SPEED[currentBus]}` : "";
 		baseLayerG.appendChild(
 			_text(
-				`${BUS_LABELS[currentBus].toUpperCase()} CAN BUS · ${BUS_SPEED[currentBus]}`,
+				`${_busLabel(currentBus).toUpperCase()} CAN BUS${speedSuffix}`,
 				{
 					class: "gv-bus-speed",
 					x: bus.x2 - 8,
@@ -636,7 +648,7 @@ window.GrcanGraphView = (() => {
 			btn.classList.toggle("active", btn.dataset.bus === busPort);
 		});
 		overlayEl.querySelector(".graph-title").textContent =
-			`CAN Graph — ${BUS_LABELS[busPort]}`;
+			`CAN Graph — ${_busLabel(busPort)}`;
 
 		_hideFocusPill();
 		_hideNodePanel();
@@ -767,8 +779,29 @@ window.GrcanGraphView = (() => {
 
 	// ==================== Open / close ====================
 
-	function open() {
+	function open(busList) {
 		if (overlayEl) return;
+
+		// Resolve the bus list before building the overlay, since the tab
+		// builder reads from _busList. Fall back to the buses declared in
+		// GRCAN.CANdo when no explicit list is provided.
+		if (Array.isArray(busList) && busList.length) {
+			_busList = busList;
+		} else if (
+			window.GrcanDocument &&
+			typeof window.GrcanDocument.getBusNames === "function"
+		) {
+			_busList = window.GrcanDocument.getBusNames().map((name) => ({ name }));
+		} else {
+			_busList = [];
+		}
+
+		if (!_busList.length) {
+			console.warn(
+				"GrcanGraphView.open(): no buses available. Is GRCAN.CANdo loaded?",
+			);
+			return;
+		}
 
 		overlayEl = _buildOverlay();
 		document.body.appendChild(overlayEl);
@@ -802,7 +835,7 @@ window.GrcanGraphView = (() => {
 		};
 		document.addEventListener("keydown", _escHandler);
 
-		_loadBus("CAN1");
+		_loadBus(_busList[0].name);
 	}
 
 	function _close() {
@@ -839,7 +872,7 @@ window.GrcanGraphView = (() => {
 	// ==================== Init ====================
 
 	const graphBtn = document.getElementById("graph-view-btn");
-	if (graphBtn) graphBtn.addEventListener("click", open);
+	if (graphBtn) graphBtn.addEventListener("click", () => open());
 
 	return { open };
 })();
