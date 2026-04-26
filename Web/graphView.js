@@ -397,17 +397,16 @@ window.GrcanGraphView = (() => {
 				"text-anchor": "end",
 			}),
 		);
-		const speedSuffix = BUS_SPEED[currentBus] ? ` · ${BUS_SPEED[currentBus]}` : "";
+		const speedSuffix = BUS_SPEED[currentBus]
+			? ` · ${BUS_SPEED[currentBus]}`
+			: "";
 		baseLayerG.appendChild(
-			_text(
-				`${_busLabel(currentBus).toUpperCase()} CAN BUS${speedSuffix}`,
-				{
-					class: "gv-bus-speed",
-					x: bus.x2 - 8,
-					y: bus.yHigh - 14,
-					"text-anchor": "end",
-				},
-			),
+			_text(`${_busLabel(currentBus).toUpperCase()} CAN BUS${speedSuffix}`, {
+				class: "gv-bus-speed",
+				x: bus.x2 - 8,
+				y: bus.yHigh - 14,
+				"text-anchor": "end",
+			}),
 		);
 
 		// Stubs + drop circles.
