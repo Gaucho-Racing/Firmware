@@ -31,7 +31,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= bmsFailure(stateData);
 	problem |= bspdFailure(stateData);
 	if (problem) {
-		//LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+		// LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	}
 	return problem;
 }
@@ -49,7 +49,7 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
 	return (stateData->bspd_sense >= 2.0f) || (stateData->bspd_sense <= 1.0f); // TODO: find better range
-										    // TODO: shutdown switch stuff
+										   // TODO: shutdown switch stuff
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)

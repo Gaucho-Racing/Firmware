@@ -101,7 +101,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
 			if (state_data->ecu_state != GR_TS_DISCHARGE) {
-				state_data->ts_active_button_pressed =  dash_data->button_flags & 1;
+				state_data->ts_active_button_pressed = dash_data->button_flags & 1;
 			} else {
 				state_data->ts_active_button_pressed = false;
 			}
@@ -118,7 +118,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_ECU_ANALOG_DATA_MSG *analog_data = (GRCAN_ECU_ANALOG_DATA_MSG*) data;
+			GRCAN_ECU_ANALOG_DATA_MSG *analog_data = (GRCAN_ECU_ANALOG_DATA_MSG *)data;
 			state_data->bspd_signal = analog_data->bspd_signal;
 			state_data->bse_signal = analog_data->bse_signal;
 			state_data->APPS1_Signal = analog_data->apps_1_signal;

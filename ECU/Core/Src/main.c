@@ -84,7 +84,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {1024}; // Contains new values
-uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	  // Updated averages
+uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	     // Updated averages
 
 // DIGITAL
 
@@ -124,7 +124,7 @@ void write_adc_values_to_state_data(void)
 
 	// TODO: determine conversion factors for all of these (uint to float)
 	stateLump.bspd_sense = ADC_outputs[7] / 4095.0 * 3.3;
-	stateLump.imd_sense = ADC_outputs[8]  / 4095.0 * 3.3;
+	stateLump.imd_sense = ADC_outputs[8] / 4095.0 * 3.3;
 	stateLump.ams_sense = ADC_outputs[9] / 4095.0 * 3.3;
 }
 
@@ -368,10 +368,10 @@ int main(void)
 	// TODO: do we need these?
 	MX_GPIO_Init();
 	MX_DMA_Init();
-	//MX_FDCAN1_Init();
+	// MX_FDCAN1_Init();
 	MX_ADC1_Init();
 	MX_ADC2_Init();
-	//MX_FDCAN2_Init();
+	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
 
 	// Initialize DWT

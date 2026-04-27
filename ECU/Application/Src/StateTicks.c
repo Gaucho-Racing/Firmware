@@ -46,7 +46,6 @@ void ECU_State_Tick(void)
 	// }
 	stateLump.tssi_fault = bmsFailure(&stateLump) || imdFailure(&stateLump);
 
-
 	switch (stateLump.ecu_state) {
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
@@ -285,14 +284,14 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	*/
 	if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
 		LOGOMATIC("Warning: Tractive System fails to discharge in %d seconds.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
-		//ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
+		// ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
 	}
 
 	// Discharge the car @ 100 Hz
 	static uint32_t last_discharge_request_millis;
 	if (millis_since_boot - last_discharge_request_millis > 10) {
 		GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 0};
-		//ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
+		// ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
 	}
 } // init

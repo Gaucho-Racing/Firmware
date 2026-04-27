@@ -89,10 +89,7 @@ void DashLights(ECU_StateData *stateLump)
 	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
 	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
 	light |= bmsFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {
-		.led_bits = SetBitInByte(0, 0, light) ||
-					SetBitInByte(0, 1, light)
-	};
+	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light) || SetBitInByte(0, 1, light)};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 void lightControl(ECU_StateData *stateData)
