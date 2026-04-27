@@ -4,7 +4,9 @@
 #
 # Output: one DBC per CAN bus discovered in the routing section. The user
 # supplies a base name (e.g. GRCAN.dbc); each file is written as
-# <base>_<busname>.dbc (e.g. GRCAN_CAN1.dbc, GRCAN_CAN2.dbc, GRCAN_CAN3.dbc).
+# <base>_<busname>.dbc (e.g. GRCAN_Primary.dbc, GRCAN_Data.dbc,
+# GRCAN_Charger.dbc), where <busname> is the routing-section bus key
+# (which equals the corresponding "Bus ID:" name).
 #
 # Per-file DBC validity is enforced by:
 #   - numeric ranges stripped of thousands separators (no commas in numbers)
@@ -87,8 +89,6 @@ sub main {
 	my $lines_ref = slurp_file($input_file);
 	my $data_ref  = parse_input($lines_ref);
 
-	my $header = _build_header($data_ref);
-
 	my %bus_seen;
 	my @bus_order;
 	for my $route ( @{ $data_ref->{routing} } ) {
@@ -101,12 +101,13 @@ sub main {
 	for my $bus (@bus_order) {
 		my @routes = grep { ( ( defined $_->{bus} && $_->{bus} ne $EMPTY_STR ) ? $_->{bus} : '_unknown' ) eq $bus } @{ $data_ref->{routing} };
 
-		my @output_lines = ($header);
+		my @output_lines;
 		my @comment_lines;
 		my %seen_ids;
+		my %bus_nodes;
 
 		for my $route (@routes) {
-			my $msg_out = get_dbc_message( $route, $data_ref, \@comment_lines, \%seen_ids );
+			my $msg_out = get_dbc_message( $route, $data_ref, \@comment_lines, \%seen_ids, \%bus_nodes );
 			if ( $msg_out ne $EMPTY_STR ) {
 				push @output_lines, $msg_out;
 			}
@@ -115,6 +116,8 @@ sub main {
 		if (@comment_lines) {
 			push @output_lines, @comment_lines;
 		}
+
+		unshift @output_lines, _build_header( \%bus_nodes );
 
 		my $bus_path = _bus_path( $output_base, $bus );
 		write_file( $bus_path, \@output_lines );
@@ -129,10 +132,11 @@ sub main {
 }
 
 sub _build_header {
-	my ($data_ref)       = @_;
-	my @normalized_nodes = sort grep { $_ ne 'ALL' } map { normalize($_) } keys %{ $data_ref->{grid} };
-	my $nodes            = join $SPACE_STR, @normalized_nodes;
-	return 'VERSION ""' . "\n\n" . 'NS_ :' . "\n\n" . 'BS_:' . "\n\n" . 'BU_: ' . $nodes . " ALL\n\n";
+	my ($nodes_ref) = @_;
+	my @sorted      = sort grep { $_ ne 'ALL' } keys %{$nodes_ref};
+	my $all_suffix  = exists $nodes_ref->{ALL} ? ' ALL' : $EMPTY_STR;
+	my $nodes       = join $SPACE_STR, @sorted;
+	return 'VERSION ""' . "\n\n" . 'NS_ :' . "\n\n" . 'BS_:' . "\n\n" . 'BU_: ' . $nodes . $all_suffix . "\n\n";
 }
 
 sub _bus_path {
@@ -173,7 +177,7 @@ sub write_file {
 
 # --- DBC Generation Subroutines ---
 sub get_dbc_message {
-	my ( $r_ref, $d_ref, $comments_ref, $seen_ids_ref ) = @_;
+	my ( $r_ref, $d_ref, $comments_ref, $seen_ids_ref, $nodes_ref ) = @_;
 	my $m_name = $r_ref->{msg};
 
 	my $is_custom = exists $d_ref->{custom}{$m_name};
@@ -214,6 +218,11 @@ sub get_dbc_message {
 
 	if ($seen_ids_ref) {
 		$seen_ids_ref->{$can_id} = 1;
+	}
+
+	if ($nodes_ref) {
+		$nodes_ref->{$s_norm} = 1;
+		$nodes_ref->{$t_norm} = 1;
 	}
 
 	my $output = sprintf "BO_ %u %s: %d %s\n", $can_id, $dbc_msg_name, $msg_len, $s_norm;
