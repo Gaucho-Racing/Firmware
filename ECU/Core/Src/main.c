@@ -83,7 +83,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
-volatile uint16_t ADC_buffers[NUM_SIGNALS] = {2048}; // Contains new values
+volatile uint16_t ADC_buffers[NUM_SIGNALS] = {1024}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	  // Updated averages
 
 // DIGITAL
@@ -439,7 +439,8 @@ int main(void)
 		static uint32_t delay_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
 			delay_timer = MillisecondsSinceBoot() + 33; // TODO: determine how long
-
+			HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_11);
+			// odr = GPIOx->ODR;
 			read_digital();
 			// TODO: determine alpha
 			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
