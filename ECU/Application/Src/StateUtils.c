@@ -10,6 +10,19 @@
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
 
+/**
+ * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
+ *
+ * This is necessary because the IMD sense can read as a failure during the initial stabilization period after startup,
+ * which could lead to false critical error detections and unnecessary tractive system discharges or red car violations.
+ * By ignoring IMD sense failures for the first IMD_SENSE_FAILURE_DELAY_MS milliseconds after boot, we allow the sensor
+ * to stabilize and provide accurate readings before it can trigger a failure condition.
+ *
+ * @note The specific duration should be determined before entering a controlled environment, such as competition, to
+ * avoid triggering a red car violation due to a false critical error detection on startup.
+ */
+#define IMD_SENSE_FAILURE_DELAY_MS 5000
+
 uint32_t MillisecondsSinceBoot(void)
 {
 	// For some reason, GetTickFreq returns period in milliseconds instead of frequency
@@ -43,6 +56,12 @@ bool bmsFailure(volatile const ECU_StateData *stateData)
 
 bool imdFailure(volatile const ECU_StateData *stateData)
 {
+	if (MillisecondsSinceBoot() < IMD_SENSE_FAILURE_DELAY_MS) {
+		// Ignore IMD sense failures to allow sensor to stabilize after startup
+		// See https://discord.com/channels/756738476887638107/1254635893306953769/1498219532224041021 for more details
+		return false;
+	}
+
 	return (stateData->imd_sense >= 2.0f) || (stateData->imd_sense <= 1.0f); // TODO: find better range
 }
 
