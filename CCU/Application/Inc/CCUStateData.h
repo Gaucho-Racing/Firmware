@@ -32,7 +32,7 @@ typedef volatile struct {
 
 	// BCU_PRECHARGE
 	bool CCU_PRECHARGE_SET_TS_ACTIVE;
-	
+
 	CCU_Precharge_Step precharge_step;
 
 	volatile bool request_print_statedata;

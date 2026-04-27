@@ -44,7 +44,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 	}
 
 	else if (!anyErrors && state_data->recv_charge_cmd) {
-		state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS; //ensures that now the switch statement will actually be executed/triggered after sending precharge status message
+		state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS; // ensures that now the switch statement will actually be executed/triggered after sending precharge status message
 
 		state_data->state = CCU_STATE_CHARGING;
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = true;
@@ -68,54 +68,53 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		state_data->state = CCU_STATE_IDLE;
 
 		LOGOMATIC("Critical Error Occured; State Set to IDLE \n");
-		return; 
+		return;
 	}
 
 	else if (!(state_data->recv_charge_cmd)) {
-		
+
 		state_data->state = CCU_STATE_IDLE;
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 		SendPrechargeStatus(state_data);
-		
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-		return; 
+		return;
 	}
-	//now actual IR checks are being done in the charging state 
+	// now actual IR checks are being done in the charging state
 	switch (state_data->precharge_step) {
-    case PRECHARGE_STEP_WAIT_IR_MINUS: 
-        if (state_data->BCU_S2_PRECHARGE_STATE) {
-            LOGOMATIC("IR- confirmed closed, waiting for IR+\n");
-            state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_PLUS; //go to next phase of checking for IR+
-        }
-        break;
+		case PRECHARGE_STEP_WAIT_IR_MINUS:
+			if (state_data->BCU_S2_PRECHARGE_STATE) {
+				LOGOMATIC("IR- confirmed closed, waiting for IR+\n");
+				state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_PLUS; // go to next phase of checking for IR+
+			}
+			break;
 
-    case PRECHARGE_STEP_WAIT_IR_PLUS:
-        if (!IR_Sanity_Check(state_data)) { 
-            LOGOMATIC("IR Sanity Check Failed! Transitioning back to IDLE\n");
-            state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
-            state_data->state = CCU_STATE_IDLE;
-            SendPrechargeStatus(state_data);
-            return;
-        }
-        if (state_data->BCU_S2_IR_STATE) {
-            LOGOMATIC("IR+ confirmed closed, precharge complete\n");
-            state_data->precharge_step = PRECHARGE_STEP_COMPLETE;
-        }
-        break;
+		case PRECHARGE_STEP_WAIT_IR_PLUS:
+			if (!IR_Sanity_Check(state_data)) {
+				LOGOMATIC("IR Sanity Check Failed! Transitioning back to IDLE\n");
+				state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+				state_data->state = CCU_STATE_IDLE;
+				SendPrechargeStatus(state_data);
+				return;
+			}
+			if (state_data->BCU_S2_IR_STATE) {
+				LOGOMATIC("IR+ confirmed closed, precharge complete\n");
+				state_data->precharge_step = PRECHARGE_STEP_COMPLETE;
+			}
+			break;
 
-    case PRECHARGE_STEP_COMPLETE:
-        if (!IR_Sanity_Check(state_data)) {  
-            LOGOMATIC("IR Sanity Check Failed in steady state! Transitioning back to IDLE\n");
-            state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
-            state_data->state = CCU_STATE_IDLE;
-            SendPrechargeStatus(state_data);
-            return;
-        }
-        break;
+		case PRECHARGE_STEP_COMPLETE:
+			if (!IR_Sanity_Check(state_data)) {
+				LOGOMATIC("IR Sanity Check Failed in steady state! Transitioning back to IDLE\n");
+				state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+				state_data->state = CCU_STATE_IDLE;
+				SendPrechargeStatus(state_data);
+				return;
+			}
+			break;
 
-    default:
-        state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS;
-        break;
-}
+		default:
+			state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS;
+			break;
+	}
 }
