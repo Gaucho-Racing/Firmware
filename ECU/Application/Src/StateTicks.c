@@ -291,7 +291,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	static uint32_t last_discharge_request_millis;
 	if (millis_since_boot - last_discharge_request_millis > 10) {
 		GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 0};
-		// ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
 	}
 } // init
