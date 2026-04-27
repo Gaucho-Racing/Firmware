@@ -17,4 +17,10 @@ enum CCU_STATE { // State Machine
 	CCU_STATE_CHARGING // Transition: Told to stop OR fault
 };
 
+typedef enum {
+    PRECHARGE_STEP_WAIT_IR_MINUS = 0,
+    PRECHARGE_STEP_WAIT_IR_PLUS,
+    PRECHARGE_STEP_COMPLETE
+} CCU_Precharge_Step;
+
 #endif
