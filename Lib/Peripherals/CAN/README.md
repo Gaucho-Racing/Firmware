@@ -1,6 +1,6 @@
 # Gaucho Racing CAN API Reference
 
-This document provides an overview of the Gaucho Racing CAN API, a simplified wrapper for STM32 FDCAN peripherals (specifically STM32G4). It handles hardware initialization, interrupt-driven message transmission with software buffering, and simplified receiver callbacks.
+This document provides an overview of the Gaucho Racing CAN API, a simplified wrapper for STM32 FDCAN peripherals (specifically STM32G4). It handles hardware initialization, bus-off recovery, interrupt-driven message transmission with software buffering, and simplified receiver callbacks.
 
 ---
 
@@ -199,6 +199,17 @@ Adds a hardware-level filter to the instance.
 Must be called while the peripheral is initialized but **not yet started**.
 
 
+---
+
+# 7. Recovery Behavior
+
+The CAN peripheral includes automatic TX-path recovery attempts when the controller enters restricted operation mode (such as after temporary bus faults/disconnect events).
+
+## Recovery Strategy
+
+Our current CAN recovery strategy is intentionally simple: we keep robust recovery in the transmit path (`can_send`), where we attempt to recover from bus-off/restricted states before sending and then retry normal enqueue behavior.
+
+Error interrupts are used mainly for visibility and lightweight state nudging (logging plus basic mode exit), rather than as a complex recovery controller.
 
 # Implementation Notes and Constraints
 

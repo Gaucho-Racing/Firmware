@@ -13,7 +13,6 @@ void setSoftwareLatch(CCU_StateData *state_data)
 	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	state_data->SOFTWARE_LATCH = false;
 	LOGOMATIC("Software Latch: Low\n");
-
 }
 
 bool BCU_Warnings(const CCU_StateData *state_data)
@@ -97,4 +96,28 @@ void CheckDebuggerPrint(CCU_StateData *state_data)
 
 uint32_t MillsSinceBoot(){
 	return HAL_GetTick() * HAL_GetTickFreq();
+}
+
+bool IR_Sanity_Check(CCU_StateData *state_data)
+{
+
+	if (state_data->BCU_S2_PRECHARGE_STATE && !state_data->BCU_S2_IR_STATE) {
+		if (state_data->CCU_PRECHARGE_SET_TS_ACTIVE == false) {
+			LOGOMATIC("IR- is closed but Precharge is not active. This should not be possible.");
+			return false;
+		} else {
+			LOGOMATIC("Precharge in progress"); // don't know if this logging is necessary, but doing for debugging rn
+			return true;
+		}
+
+	} else if (!state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
+		LOGOMATIC("This shouldn't be possible");
+		return false;
+	} else if (!state_data->BCU_S2_PRECHARGE_STATE && !state_data->BCU_S2_IR_STATE) {
+		LOGOMATIC("Not charging"); // don't know if this logging is necessary, but doing for debugging rn
+		return true;
+	} else if (state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
+		LOGOMATIC("Charging should be complete");
+		return true;
+	}
 }

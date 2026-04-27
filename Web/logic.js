@@ -29,13 +29,6 @@ const NODE_ID_PATH = "Autogen/CAN/Inc/GRCAN_NODE_ID.h";
 const MSG_ID_PATH = "Autogen/CAN/Inc/GRCAN_MSG_ID.h";
 const CUSTOM_ID_PATH = "Autogen/CAN/Inc/GRCAN_CUSTOM_ID.h";
 
-// Maps CANdo CAN port names to logical bus names as used in routing section
-const CAN_PORT_TO_BUS = {
-	CAN1: "Primary",
-	CAN2: "Data",
-	CAN3: "Charger",
-};
-
 function parseBitRange(rawBitStart) {
 	const cleaned = String(rawBitStart || "")
 		.replace(/,/g, "")
@@ -509,10 +502,13 @@ async function fetchBusCatalog(ref) {
 function parseMessageByBusFromText(text, busName) {
 	const messageDefs = parseMessageDefinitions(text);
 
-	const targetPort = Object.entries(CAN_PORT_TO_BUS).find(
-		([, bus]) => bus.toLowerCase() === busName.toLowerCase(),
-	)?.[0];
-	if (!targetPort) return { nodes: null, error: "unknown_bus" };
+	if (!busName) return { nodes: null, error: "unknown_bus" };
+	const declared = parseBusIdsFromText(text).buses || [];
+	const targetBus = String(busName).toLowerCase();
+	const known = declared.some(
+		(b) => String(b.name).toLowerCase() === targetBus,
+	);
+	if (!known) return { nodes: null, error: "unknown_bus" };
 
 	const lines = text.split("\n");
 	const routingStart = lines.findIndex((l) => l.startsWith("routing:"));
@@ -553,7 +549,7 @@ function parseMessageByBusFromText(text, busName) {
 			receiver = null;
 			pendingMsg = null;
 		} else if (indent === 6) {
-			onTargetPort = content.replace(/:$/, "") === targetPort;
+			onTargetPort = content.replace(/:$/, "").toLowerCase() === targetBus;
 			if (onTargetPort && currentNode) currentNode.hasBus = true;
 			receiver = null;
 			pendingMsg = null;
@@ -652,14 +648,7 @@ function parseNodeIdsFromText(candoText) {
 	return { nodeIds, error: null };
 }
 
-function busToPort(canonicalBus) {
-	return Object.entries(CAN_PORT_TO_BUS).find(
-		([, b]) => b === canonicalBus,
-	)?.[0];
-}
-
 window.GrcanApi = {
-	CAN_PORT_TO_BUS,
 	isValidSha,
 	decodeBase64Utf8,
 	fetchBranches,
@@ -679,5 +668,4 @@ window.GrcanApi = {
 	parseBusIdsFromText,
 	parseNodeCatalogFromText,
 	parseNodeIdsFromText,
-	busToPort,
 };

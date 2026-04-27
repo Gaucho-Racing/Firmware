@@ -7,7 +7,7 @@ Bus ID:
 routing:
   messages:
     BCU:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -16,7 +16,7 @@ routing:
           - msg: BCU Status 1
           - msg: BCU Status 2
           - msg: BCU Status 3
-      Data_Bus:
+      Data:
         Debugger:
           - msg: Debug FD
           - msg: Ping
@@ -27,7 +27,7 @@ routing:
           - msg: BCU Cell Data 3
           - msg: BCU Cell Data 4
           - msg: BCU Cell Data 5
-      Charger_Bus:
+      Charger:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
@@ -36,12 +36,12 @@ routing:
           - msg: BCU Status 2
           - msg: BCU Status 3
     Charger:
-      Charger_Bus:
+      Charger:
         BCU:
           - msg: Charger Data
             can_id_override: 0x18FF50E5
     Dash Panel:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -49,7 +49,7 @@ routing:
           - msg: Ping
           - msg: Dash Status
     Debugger:
-      Primary_Bus:
+      Primary:
         ECU:
           - msg: Debug 2.0
           - msg: Ping
@@ -74,7 +74,7 @@ routing:
         Fan Controller 3:
           - msg: Debug 2.0
           - msg: Ping
-      Data_Bus:
+      Data:
         ECU:
           - msg: Debug FD
           - msg: Ping
@@ -84,11 +84,11 @@ routing:
         TCM:
           - msg: Debug FD
           - msg: Ping
-      Charger_Bus:
+      Charger:
         Charging SDC:
           - msg: Ping
     DTI Inverter:
-      Primary_Bus:
+      Primary:
         ECU:
           - msg: DTI Data 1
             can_id_override: 0x2016
@@ -101,7 +101,7 @@ routing:
           - msg: DTI Data 5
             can_id_override: 0x2416
     ECU:
-      Primary_Bus:
+      Primary:
         DTI Inverter:
           - msg: DTI Control 1
             can_id_override: 0x116
@@ -157,7 +157,7 @@ routing:
           - msg: ECU Status 3
         TCM:
           - msg: Ping
-      Data_Bus:
+      Data:
         Debugger:
           - msg: Debug FD
           - msg: Ping
@@ -172,16 +172,16 @@ routing:
           - msg: Ping
         SAMM_ToF_2:
           - msg: Ping
-        TireTemp_1:
+        TireTemp_FL:
           - msg: Ping
-        TireTemp_2:
+        TireTemp_FR:
           - msg: Ping
-        TireTemp_3:
+        TireTemp_RL:
           - msg: Ping
-        TireTemp_4:
+        TireTemp_RR:
           - msg: Ping
     Energy Meter:
-      Charger_Bus:
+      Charger:
         BCU:
           - msg: EM Measurement
             can_id_override: 0x10d
@@ -194,7 +194,7 @@ routing:
           - msg: EM Temperature
             can_id_override: 0x60d
     Fan Controller 1:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -202,7 +202,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     Fan Controller 2:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -210,7 +210,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     Fan Controller 3:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -218,7 +218,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     GR Inverter:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -228,7 +228,7 @@ routing:
           - msg: Inverter Status 2
           - msg: Inverter Status 3
     IMD:
-      Charger_Bus:
+      Charger:
         BCU:
           - msg: IMD response
             can_id_override: 0x23
@@ -245,21 +245,21 @@ routing:
           - msg: IMD general
             can_id_override: 0x18FF01F4
     TCM:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Ping
         ECU:
           - msg: Ping
-      Data_Bus:
+      Data:
         Debugger:
           - msg: Ping
     CCU:
-      Charger_Bus:
+      Charger:
         BCU:
           - msg: BCU Precharge
           - msg: Debug 2.0
     DGPS:
-      Data_Bus:
+      Data:
         TCM:
           - msg: GPS ALT
           - msg: GPS LAT
@@ -269,35 +269,35 @@ routing:
           - msg: GPS RZ
           - msg: UVW DGPS
     SAMM_Mag_1:
-      Data_Bus:
+      Data:
         ECU:
           - msg: Ping
     SAMM_Mag_2:
-      Data_Bus:
+      Data:
         ECU:
           - msg: Ping
     SAMM_ToF_1:
-      Data_Bus:
+      Data:
         ECU:
           - msg: Ping
     SAMM_ToF_2:
-      Data_Bus:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_1:
-      Data_Bus:
+    TireTemp_FL:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_2:
-      Data_Bus:
+    TireTemp_FR:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_3:
-      Data_Bus:
+    TireTemp_RL:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_4:
-      Data_Bus:
+    TireTemp_RR:
+      Data:
         ECU:
           - msg: Ping
 
@@ -347,10 +347,10 @@ Message ID:
         8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
         9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
         10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-        11: TireTemp_1 Status (1: OK, 0: Timeout)
-        12: TireTemp_2 Status (1: OK, 0: Timeout)
-        13: TireTemp_3 Status (1: OK, 0: Timeout)
-        14: TireTemp_4 Status (1: OK, 0: Timeout)
+        11: TireTemp_FL Status (1: OK, 0: Timeout)
+        12: TireTemp_FR Status (1: OK, 0: Timeout)
+        13: TireTemp_RL Status (1: OK, 0: Timeout)
+        14: TireTemp_RR Status (1: OK, 0: Timeout)
         15: Reserved
       data type: u16
     ecu_state:
@@ -4273,8 +4273,8 @@ GR ID:
   SAMM_Mag_2: "0x21"
   SAMM_ToF_1: "0x22"
   SAMM_ToF_2: "0x23"
-  TireTemp_1: "0x24"
-  TireTemp_2: "0x25"
-  TireTemp_3: "0x26"
-  TireTemp_4: "0x27"
+  TireTemp_FL: "0x24"
+  TireTemp_FR: "0x25"
+  TireTemp_RL: "0x26"
+  TireTemp_RR: "0x27"
   ALL: "0xFF"
