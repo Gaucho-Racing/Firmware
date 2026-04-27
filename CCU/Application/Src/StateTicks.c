@@ -10,11 +10,17 @@
 #include "Unused.h"
 #include "bitManipulations.h"
 
+#define MINTIME
+
+
+static uint32_t mills_since_boot;
+static uint32_t last_PRECHARGE_msg_millis;
 void CCU_State_Tick(CCU_StateData *state_data)
 {
-
-	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
-				     // General checks for State Transition, if any error detected, transition back to IDLE state
+	mills_since_boot = MillsSinceBoot();
+	switch (state_data->state) {
+		// if given an error, switch state to IDLE; warnings will remain placeholders until better understood
+		// General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
 			STATE_IDLE(state_data);
@@ -72,6 +78,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	else if (!(state_data->recv_charge_cmd)) {
 		state_data->state = CCU_STATE_IDLE;
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
+
 		SendPrechargeStatus(state_data);
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);

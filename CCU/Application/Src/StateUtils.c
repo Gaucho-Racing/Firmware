@@ -93,3 +93,8 @@ void CheckDebuggerPrint(CCU_StateData *state_data)
 
 	state_data->request_print_statedata = false;
 }
+
+
+uint32_t MillsSinceBoot(){
+	return HAL_GetTick() * HAL_GetTickFreq();
+}
