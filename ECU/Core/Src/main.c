@@ -83,8 +83,8 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
-volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
-uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
+volatile uint16_t ADC_buffers[NUM_SIGNALS] = {2048}; // Contains new values
+uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	  // Updated averages
 
 // DIGITAL
 

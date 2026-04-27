@@ -38,17 +38,17 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->ams_sense >= 2.7f) || (stateData->ams_sense <= 1.45f); // TODO: find better range
+	return (stateData->ams_sense >= 2.0f) || (stateData->ams_sense <= 1.0f); // TODO: find better range
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->imd_sense >= 2.7f) || (stateData->imd_sense <= 1.45f); // TODO: find better range
+	return (stateData->imd_sense >= 2.0f) || (stateData->imd_sense <= 1.0f); // TODO: find better range
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->bspd_sense >= 2.7f) || (stateData->bspd_sense <= 1.45f); // TODO: find better range
+	return (stateData->bspd_sense >= 2.0f) || (stateData->bspd_sense <= 1.0f); // TODO: find better range
 										    // TODO: shutdown switch stuff
 }
 
@@ -61,11 +61,12 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
-	uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
-	uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
-	bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
-	bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
-	return brakeFpress || brakeRpress;
+	// uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
+	// uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
+	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
+	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
+	// return brakeFpress || brakeRpress;
+	return ((stateData->bse_signal) / 4096.0 * 3.3) > BSE_DEADZONE;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 

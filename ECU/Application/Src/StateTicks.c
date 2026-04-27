@@ -41,9 +41,11 @@ void ECU_State_Tick(void)
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
 
-	if (bmsFailure(&stateLump) || imdFailure(&stateLump)) {
-		stateLump.tssi_fault = true;
-	}
+	// if (bmsFailure(&stateLump) || imdFailure(&stateLump)) {
+	// 	stateLump.tssi_fault = true;
+	// }
+	stateLump.tssi_fault = bmsFailure(&stateLump) || imdFailure(&stateLump);
+
 
 	switch (stateLump.ecu_state) {
 		case GR_GLV_OFF:
