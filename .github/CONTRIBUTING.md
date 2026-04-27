@@ -1,8 +1,6 @@
 # Contributing
 
-All changes must go through a pull request.
-
-PRs will be reviewed prior to merge and must
+All changes must go through a pull request, these will be reviewed prior to merge and must:
 
 - Have a filled-in title and description
 - Contain accurate labels
