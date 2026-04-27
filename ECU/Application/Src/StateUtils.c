@@ -66,7 +66,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
-	return ((stateData->bse_signal) / 4096.0 * 3.3) > BSE_DEADZONE;
+	return ((stateData->bse_signal) / 4096.0f * 3.3f) > BSE_DEADZONE;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
