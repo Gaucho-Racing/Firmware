@@ -26,6 +26,7 @@
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateUtils.h"
+#include <ctype.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -199,16 +200,12 @@ void USART2_IRQHandler(void)
 		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
 		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
 		LOGOMATIC("VCP: %c\n", receivedData);
-		if (receivedData == 'C' && !state_data.recv_charge_cmd) {
+		if (receivedData == 'C' || receivedData == 'c') {
 			LOGOMATIC("Received charge command\n");
 			state_data.recv_charge_cmd = true;
-			LL_USART_TransmitData8(USART2, 'C');
-		} else if (receivedData == '?') {
-
-			state_data.request_print_statedata = true;
-
-			LL_USART_TransmitData8(USART2, '?');
-
+			LL_USART_TransmitData8(USART2, receivedData);
+		} else if (isspace(receivedData)) {
+			LL_USART_TransmitData8(USART2, receivedData);
 		} else {
 			state_data.recv_charge_cmd = false;
 			LL_USART_TransmitData8(USART2, 'X');
