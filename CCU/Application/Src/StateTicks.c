@@ -12,15 +12,14 @@
 
 #define MINTIME
 
-
 static uint32_t mills_since_boot;
 static uint32_t last_PRECHARGE_msg_millis;
 void CCU_State_Tick(CCU_StateData *state_data)
 {
 	mills_since_boot = MillsSinceBoot();
 	switch (state_data->state) {
-		// if given an error, switch state to IDLE; warnings will remain placeholders until better understood
-		// General checks for State Transition, if any error detected, transition back to IDLE state
+			// if given an error, switch state to IDLE; warnings will remain placeholders until better understood
+			// General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
 			STATE_IDLE(state_data);
