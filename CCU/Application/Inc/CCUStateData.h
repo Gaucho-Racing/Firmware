@@ -6,6 +6,10 @@
 #define STATE_STATEDATA_H
 
 typedef volatile struct {
+	uint16_t Accumulator_Voltage;
+	uint8_t Accumulator_SOC;
+	uint8_t Max_Cell_Temp;
+
 	CCU_STATE state;
 
 	bool recv_charge_cmd;
@@ -34,9 +38,6 @@ typedef volatile struct {
 	bool CCU_PRECHARGE_SET_TS_ACTIVE;
 
 	CCU_Precharge_Step precharge_step;
-
-	volatile bool request_print_statedata;
-
 } CCU_StateData;
 
 extern volatile CCU_StateData state_data;
