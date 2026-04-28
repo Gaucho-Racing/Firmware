@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU DGPS Debugger ECU SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
+BU_: BCU BrakeTemp_FL BrakeTemp_FR BrakeTemp_RL BrakeTemp_RR DGPS Debugger ECU SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM
 
 BO_ 2147680513 BCU_Debug_FD_to_Debugger: 64 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -394,17 +394,17 @@ BO_ 2147615266 ECU_Ping_to_SAMM_ToF_1: 4 ECU
 BO_ 2147615267 ECU_Ping_to_SAMM_ToF_2: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_ToF_2
 
-BO_ 2147615268 ECU_Ping_to_TireTemp_FL: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_FL
+BO_ 2147615268 ECU_Ping_to_BrakeTemp_FL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BrakeTemp_FL
 
-BO_ 2147615269 ECU_Ping_to_TireTemp_FR: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_FR
+BO_ 2147615269 ECU_Ping_to_BrakeTemp_FR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BrakeTemp_FR
 
-BO_ 2147615270 ECU_Ping_to_TireTemp_RL: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_RL
+BO_ 2147615270 ECU_Ping_to_BrakeTemp_RL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BrakeTemp_RL
 
-BO_ 2147615271 ECU_Ping_to_TireTemp_RR: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_RR
+BO_ 2147615271 ECU_Ping_to_BrakeTemp_RR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BrakeTemp_RR
 
 BO_ 2147746305 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
@@ -450,16 +450,16 @@ BO_ 2149712386 SAMM_ToF_1_Ping_to_ECU: 4 SAMM_ToF_1
 BO_ 2149777922 SAMM_ToF_2_Ping_to_ECU: 4 SAMM_ToF_2
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149843458 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
+BO_ 2149843458 BrakeTemp_FL_Ping_to_ECU: 4 BrakeTemp_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149908994 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
+BO_ 2149908994 BrakeTemp_FR_Ping_to_ECU: 4 BrakeTemp_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149974530 TireTemp_RL_Ping_to_ECU: 4 TireTemp_RL
+BO_ 2149974530 BrakeTemp_RL_Ping_to_ECU: 4 BrakeTemp_RL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150040066 TireTemp_RR_Ping_to_ECU: 4 TireTemp_RR
+BO_ 2150040066 BrakeTemp_RR_Ping_to_ECU: 4 BrakeTemp_RR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
 CM_ SG_ 2147680513 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
