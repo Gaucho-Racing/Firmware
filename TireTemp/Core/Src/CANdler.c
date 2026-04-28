@@ -11,6 +11,7 @@
 #include "can.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
+#include "NodeID.h"
 
 #define ECU_ID GRCAN_ECU
 #define PING_ID MSG_PING
@@ -28,7 +29,7 @@ void CANInitialize()
 	can_handler = can_init(&my_cfg);
 }
 
-inline uint8_t _temp_f2u8(float temp)
+uint8_t _temp_f2u8(float temp)
 {
 	float v = ((temp + 40.) / 340.0);
 	if (v < 0.0) {
@@ -44,7 +45,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 {
 
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = (GRCAN_TireTemp << 20) | (canMsgNumber[msgNumber] << 8) | GRCAN_TCM; // do this
+	msg.tx_header.Identifier = (LOCAL_GR_ID << 20) | (canMsgNumber[msgNumber] << 8) | GRCAN_TCM; // do this
 	msg.tx_header.IdType = FDCAN_STANDARD_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE; // honestly this might be a value you have to read from a node
@@ -54,8 +55,11 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
 
-	for (int i = (msgNumber << 6); i < ((msgNumber + 1) << 6); i++) {
-		msg.data[i] = _temp_f2u8(data[i]);
+
+	msgNumber <<= 6;
+
+	for (int i = 0; i < 64; i++) {
+		msg.data[i] = _temp_f2u8(data[msgNumber + i]);
 	}
 
 	can_send(can_handler, &msg);
@@ -64,7 +68,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 {
 	FDCANTxMessage pingMsg;
-	pingMsg.tx_header.Identifier = (GRCAN_TireTemp_1 << 20) | (GRCAN_PING << 8) | to;
+	pingMsg.tx_header.Identifier = (LOCAL_GR_ID << 20) | (GRCAN_PING << 8) | to;
 	pingMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
