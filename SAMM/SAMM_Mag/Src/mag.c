@@ -156,9 +156,11 @@ bool check_status(mag *mag_dev)
 int16_t mag_read_turns(mag *mag_dev)
 {
 	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
-	int16_t turns = raw & 0x0FFF;     // Mask to 12 bits (valid angle data)
-	if (turns & 0x0800) turns |= 0xF000;  // sign extend bit 11 to bits 15:12
-    return turns;
+	int16_t turns = raw & 0x0FFF;		       // Mask to 12 bits (valid angle data)
+	if (turns & 0x0800) {
+		turns |= 0xF000; // sign extend bit 11 to bits 15:12
+	}
+	return turns;
 }
 
 // Address 0x24:0x25 (ERR)—Device Error Flags
@@ -167,7 +169,7 @@ int16_t mag_read_turns(mag *mag_dev)
 // Address 0x30:0x31 (HANG)—Hysteresis Angle Value (12 bits)
 float mag_read_HANG(mag *mag_dev)
 {
-	int16_t read_HANG = mag_read(mag_dev, 0x30);		 // 0x30 is Hysteresis Angle Value
+	int16_t read_HANG = mag_read(mag_dev, 0x30);		   // 0x30 is Hysteresis Angle Value
 	return ((int16_t)(read_HANG & 0x0FFF) * 360.0f / 4096.0f); // Mask to 12 bits (valid angle data)
 }
 
