@@ -156,7 +156,7 @@ bool check_status(mag *mag_dev)
 int16_t mag_read_turns(mag *mag_dev)
 {
 	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
-	int16_t turns = read_turns & 0x0FFF;		       // Mask to 12 bits (valid angle data)
+	int16_t turns = read_turns & 0x0FFF;	       // Mask to 12 bits (valid angle data)
 	if (turns & 0x0800) {
 		turns |= 0xF000; // sign extend bit 11 to bits 15:12
 	}
