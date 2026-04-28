@@ -18,8 +18,11 @@
 
 CANHandle *can_handler;
 
-static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TTS_FRAME0, GRCAN_TTS_FRAME1, GRCAN_TTS_FRAME2, GRCAN_TTS_FRAME3, GRCAN_TTS_FRAME4,	GRCAN_TTS_FRAME5,
-						     GRCAN_TTS_FRAME6, GRCAN_TTS_FRAME7, GRCAN_TTS_FRAME8, GRCAN_TTS_FRAME9, GRCAN_TTS_FRAME10, GRCAN_TTS_FRAME11};
+static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] =
+	{GRCAN_TTS_FRAME0, GRCAN_TTS_FRAME1, GRCAN_TTS_FRAME2, GRCAN_TTS_FRAME3, GRCAN_TTS_FRAME4,	GRCAN_TTS_FRAME5,
+	GRCAN_TTS_FRAME6, GRCAN_TTS_FRAME7, GRCAN_TTS_FRAME8, GRCAN_TTS_FRAME9, GRCAN_TTS_FRAME10, GRCAN_TTS_FRAME11,
+	GRCAN_TTS_FRAME12, GRCAN_TTS_FRAME13, GRCAN_TTS_FRAME14, GRCAN_TTS_FRAME15, GRCAN_TTS_FRAME16, GRCAN_TTS_FRAME17,
+	GRCAN_TTS_FRAME18, GRCAN_TTS_FRAME19, GRCAN_TTS_FRAME20, GRCAN_TTS_FRAME21, GRCAN_TTS_FRAME22, GRCAN_TTS_FRAME23};
 
 void CANInitialize()
 {
@@ -29,7 +32,7 @@ void CANInitialize()
 	can_handler = can_init(&my_cfg);
 }
 
-uint8_t _temp_f2u8(float temp)
+uint16_t _temp_f2u16(float temp)
 {
 	float v = ((temp + 40.) / 340.0);
 	if (v < 0.0) {
@@ -38,7 +41,7 @@ uint8_t _temp_f2u8(float temp)
 	if (v > 1.0) {
 		v = 1.0;
 	}
-	return (uint8_t)(v * 255.0);
+	return (uint16_t)(v * 65535.0);
 }
 
 void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
@@ -55,10 +58,11 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
 
-	msgNumber <<= 6;
 
-	for (int i = 0; i < 64; i++) {
-		msg.data[i] = _temp_f2u8(data[msgNumber + i]);
+	msgNumber <<= 5;
+
+	for (int i = 0; i < 32; i++) {
+		((uint16_t *)(msg.data))[i] = _temp_f2u16(data[msgNumber + i]);
 	}
 
 	can_send(can_handler, &msg);
