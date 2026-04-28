@@ -10,10 +10,8 @@
 #include "Unused.h"
 #include "bitManipulations.h"
 
-
 static uint32_t mills_since_boot;
 static uint32_t last_PRECHARGE_request_millis;
-
 
 void CCU_State_Tick(CCU_StateData *state_data)
 {
@@ -55,8 +53,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 
 		state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS; // ensures that now the switch statement will actually be executed/triggered after sending precharge status message
 
-
-		if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+		if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
 			SendPrechargeStatus(state_data); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
 			last_PRECHARGE_request_millis = mills_since_boot;
 		}
@@ -74,7 +71,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 
-		if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+		if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
 			SendPrechargeStatus(state_data);
 			last_PRECHARGE_request_millis = mills_since_boot;
 		}
@@ -90,7 +87,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		state_data->state = CCU_STATE_IDLE;
 		state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 
-		if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+		if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
 			SendPrechargeStatus(state_data);
 			last_PRECHARGE_request_millis = mills_since_boot;
 		}
@@ -113,7 +110,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 				state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 				state_data->state = CCU_STATE_IDLE;
 
-				if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+				if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
 					SendPrechargeStatus(state_data); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
 					last_PRECHARGE_request_millis = mills_since_boot;
 				}
@@ -131,7 +128,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 				state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
 				state_data->state = CCU_STATE_IDLE;
 
-				if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+				if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
 					SendPrechargeStatus(state_data); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
 					last_PRECHARGE_request_millis = mills_since_boot;
 				}
