@@ -21,38 +21,36 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
-
-		if (messageId == GRCAN_BCU_STATUS_2) {
-			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
-				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
-				return;
-			}
-
-			// FIXME: Might need to double check we are doing this v
-			//  cast *data to whatever msg dti control 10 struct there is
-			//  copy data from that struct into the ccu state data struct (eg GETBIT)
-
-			// What the rewrite would look like: STATUS 2
-
-			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
-
-			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->status_flags, 0);
-			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 1);
-			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 2);
-			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 3);
-			state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 4);
-
-			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->status_flags, 5);
-			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
-			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
-
-			state_data.BCU_S2_PRECHARGE_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 1);
-			state_data.BCU_S2_IR_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 2);
-
-		} else {
-			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
+	if (messageId == GRCAN_BCU_STATUS_2) {
+		if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
+			LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
+			return;
 		}
 
+		// FIXME: Might need to double check we are doing this v
+		//  cast *data to whatever msg dti control 10 struct there is
+		//  copy data from that struct into the ccu state data struct (eg GETBIT)
+
+		// What the rewrite would look like: STATUS 2
+
+		GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
+
+		state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->status_flags, 0);
+		state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 1);
+		state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 2);
+		state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 3);
+		state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 4);
+
+		state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->status_flags, 5);
+		state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
+		state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
+
+		state_data.BCU_S2_PRECHARGE_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 1);
+		state_data.BCU_S2_IR_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 2);
+
+	} else {
+		LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
+	}
 }
 
 void CAN_Configure(void)
