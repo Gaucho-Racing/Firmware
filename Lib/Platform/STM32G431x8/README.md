@@ -1,2 +1,2 @@
 The following platform has been used for:
-- Tire Temp (GR25?, GR26)
+- Brake Temp (GR25?, GR26)

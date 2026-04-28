@@ -66,40 +66,40 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CANine"
 		},
 		{
-			"label": "CMake: configure and build TireTemp FL",
+			"label": "CMake: configure and build BrakeTemp FL",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=FL"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
 		},
 		{
-			"label": "CMake: configure and build TireTemp FR",
+			"label": "CMake: configure and build BrakeTemp FR",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=FR"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
 		},
 		{
-			"label": "CMake: configure and build TireTemp RL",
+			"label": "CMake: configure and build BrakeTemp RL",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=RL"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
 		},
 		{
-			"label": "CMake: configure and build TireTemp RR",
+			"label": "CMake: configure and build BrakeTemp RR",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=RR"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
 		},
 		{
 			"label": "CMake: configure and build AnalogCalibration",
