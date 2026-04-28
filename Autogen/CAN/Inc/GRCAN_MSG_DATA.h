@@ -24,10 +24,10 @@ typedef struct {
 8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
 9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
 10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-11: OutboardSensors_FL Status (1: OK, 0: Timeout)
-12: OutboardSensors_FR Status (1: OK, 0: Timeout)
-13: OutboardSensors_RL Status (1: OK, 0: Timeout)
-14: OutboardSensors_RR Status (1: OK, 0: Timeout)
+11: OutboardSensor_FL Status (1: OK, 0: Timeout)
+12: OutboardSensor_FR Status (1: OK, 0: Timeout)
+13: OutboardSensor_RL Status (1: OK, 0: Timeout)
+14: OutboardSensor_RR Status (1: OK, 0: Timeout)
 15: Reserved (Byte 0) */
 	uint16_t status_flags;
 	/** [Byte 2 / Bits 16-17] GLV States

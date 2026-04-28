@@ -66,40 +66,40 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CANine"
 		},
 		{
-			"label": "CMake: configure and build OutboardSensors FL",
+			"label": "CMake: configure and build OutboardSensor FL",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=FL"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensors"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensor"
 		},
 		{
-			"label": "CMake: configure and build OutboardSensors FR",
+			"label": "CMake: configure and build OutboardSensor FR",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=FR"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensors"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensor"
 		},
 		{
-			"label": "CMake: configure and build OutboardSensors RL",
+			"label": "CMake: configure and build OutboardSensor RL",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=RL"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensors"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensor"
 		},
 		{
-			"label": "CMake: configure and build OutboardSensors RR",
+			"label": "CMake: configure and build OutboardSensor RR",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure NODE=RR"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensors"
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target OutboardSensor"
 		},
 		{
 			"label": "CMake: configure and build AnalogCalibration",

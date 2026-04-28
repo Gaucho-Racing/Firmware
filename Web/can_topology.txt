@@ -29,10 +29,10 @@ Data:
   SAMM_Mag_2
   SAMM_ToF_1
   SAMM_ToF_2
-  OutboardSensors_FL
-  OutboardSensors_FR
-  OutboardSensors_RL
-  OutboardSensors_RR
+  OutboardSensor_FL
+  OutboardSensor_FR
+  OutboardSensor_RL
+  OutboardSensor_RR
 
 Charger:
   CCU

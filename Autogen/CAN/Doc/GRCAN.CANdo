@@ -172,13 +172,13 @@ routing:
           - msg: Ping
         SAMM_ToF_2:
           - msg: Ping
-        OutboardSensors_FL:
+        OutboardSensor_FL:
           - msg: Ping
-        OutboardSensors_FR:
+        OutboardSensor_FR:
           - msg: Ping
-        OutboardSensors_RL:
+        OutboardSensor_RL:
           - msg: Ping
-        OutboardSensors_RR:
+        OutboardSensor_RR:
           - msg: Ping
     Energy Meter:
       Charger:
@@ -284,19 +284,19 @@ routing:
       Data:
         ECU:
           - msg: Ping
-    OutboardSensors_FL:
+    OutboardSensor_FL:
       Data:
         ECU:
           - msg: Ping
-    OutboardSensors_FR:
+    OutboardSensor_FR:
       Data:
         ECU:
           - msg: Ping
-    OutboardSensors_RL:
+    OutboardSensor_RL:
       Data:
         ECU:
           - msg: Ping
-    OutboardSensors_RR:
+    OutboardSensor_RR:
       Data:
         ECU:
           - msg: Ping
@@ -347,10 +347,10 @@ Message ID:
         8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
         9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
         10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-        11: OutboardSensors_FL Status (1: OK, 0: Timeout)
-        12: OutboardSensors_FR Status (1: OK, 0: Timeout)
-        13: OutboardSensors_RL Status (1: OK, 0: Timeout)
-        14: OutboardSensors_RR Status (1: OK, 0: Timeout)
+        11: OutboardSensor_FL Status (1: OK, 0: Timeout)
+        12: OutboardSensor_FR Status (1: OK, 0: Timeout)
+        13: OutboardSensor_RL Status (1: OK, 0: Timeout)
+        14: OutboardSensor_RR Status (1: OK, 0: Timeout)
         15: Reserved
       data type: u16
     ecu_state:
@@ -4273,8 +4273,8 @@ GR ID:
   SAMM_Mag_2: "0x21"
   SAMM_ToF_1: "0x22"
   SAMM_ToF_2: "0x23"
-  OutboardSensors_FL: "0x24"
-  OutboardSensors_FR: "0x25"
-  OutboardSensors_RL: "0x26"
-  OutboardSensors_RR: "0x27"
+  OutboardSensor_FL: "0x24"
+  OutboardSensor_FR: "0x25"
+  OutboardSensor_RL: "0x26"
+  OutboardSensor_RR: "0x27"
   ALL: "0xFF"

@@ -1,2 +1,2 @@
 The following platform has been used for:
-- Outboard Sensors (GR25?, GR26)
+- Outboard Sensor (GR25?, GR26)
