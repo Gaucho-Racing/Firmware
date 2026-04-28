@@ -55,6 +55,11 @@ void STATE_IDLE(CCU_StateData *state_data)
 		state_data->state = CCU_STATE_CHARGING;
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
+	} else {
+
+		if (millis_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+			SendPrechargeStatus(false);
+		}
 	}
 }
 
