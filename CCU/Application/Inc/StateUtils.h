@@ -9,10 +9,10 @@
 #ifndef STATE_UTILS_H
 #define STATE_UTILS_H
 
-void setSoftwareLatch(CCU_StateData *state_data);
+void TripSoftwareLatch(CCU_StateData *state_data);
 void CheckDebuggerPrint(CCU_StateData *state_data);
 bool CriticalError(const CCU_StateData *state_data);
 bool BCU_Warnings(const CCU_StateData *state_data);
 uint32_t MillisecondsSinceBoot(void);
-bool IR_Sanity_Check(CCU_StateData *state_data);
+bool IR_Check(CCU_StateData *state_data);
 #endif

@@ -45,8 +45,8 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 		state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
 		state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
 
-		state_data.BCU_S2_PRECHARGE_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 1);
-		state_data.BCU_S2_IR_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 2);
+		state_data.BCU_S2_IR_MINUS = GETBIT(bcu_status_2->precharge_latch_flags, 1);
+		state_data.BCU_S2_IR_PLUS = GETBIT(bcu_status_2->precharge_latch_flags, 2);
 
 	} else {
 		LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
@@ -148,7 +148,7 @@ void CAN_Configure(void)
 }
 
 //FIXME: Change to take aand send a bool
-void SendPrechargeStatus(CCU_StateData *state_data)
+void SendPrechargeStatus(bool setPrecharge)
 {
 
 	FDCANTxMessage msg;
@@ -161,9 +161,9 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
 
-	msg.data[0] = (state_data->CCU_PRECHARGE_SET_TS_ACTIVE);
+	msg.data[0] = setPrecharge;
 
-	LOGOMATIC("PRECHARGE SET: %d\n", state_data->CCU_PRECHARGE_SET_TS_ACTIVE);
+	LOGOMATIC("PRECHARGE SET: %d\n", setPrecharge);
 
 	can_send(primary_can, &msg);
 

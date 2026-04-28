@@ -8,7 +8,7 @@
 #include "can.h"
 #include "gpio.h"
 
-void setSoftwareLatch(CCU_StateData *state_data)
+void TripSoftwareLatch(CCU_StateData *state_data)
 {
 	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	state_data->SOFTWARE_LATCH = false;
@@ -54,6 +54,10 @@ bool CriticalError(const CCU_StateData *state_data)
 		LOGOMATIC("UNDERVOLT\n");
 		return true;
 
+	} else if (!state_data->BCU_S2_IR_MINUS && state_data->BCU_S2_IR_PLUS) {
+		LOGOMATIC("IMPOSSIBLE IR STATE\n");
+		return true;
+
 	} else {
 		return false;
 	}
@@ -86,7 +90,6 @@ void CheckDebuggerPrint(CCU_StateData *state_data)
 
 	LOGOMATIC("\n--- State Bits ---\n");
 	LOGOMATIC("SOFTWARE LATCH: %d\n", state_data->SOFTWARE_LATCH);
-	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->CCU_PRECHARGE_SET_TS_ACTIVE);
 
 	LOGOMATIC("====================================\n\n");
 
@@ -98,29 +101,9 @@ uint32_t MillisecondsSinceBoot(void)
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
 
-bool IR_Sanity_Check(CCU_StateData *state_data)
+bool IR_Check(CCU_StateData *state_data)
 {
-
-	if (state_data->BCU_S2_PRECHARGE_STATE && !state_data->BCU_S2_IR_STATE) {
-		if (state_data->CCU_PRECHARGE_SET_TS_ACTIVE == false) {
-			LOGOMATIC("IR- is closed but Precharge is not active. This should not be possible.");
-			return false;
-		} else {
-			LOGOMATIC("Precharge in progress"); // don't know if this logging is necessary, but doing for debugging rn
-			return true;
-		}
-
-	} else if (!state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
-		LOGOMATIC("This shouldn't be possible");
-		return false;
-	} else if (!state_data->BCU_S2_PRECHARGE_STATE && !state_data->BCU_S2_IR_STATE) {
-		LOGOMATIC("Not charging"); // don't know if this logging is necessary, but doing for debugging rn
+	if (state_data->BCU_S2_IR_MINUS && state_data->BCU_S2_IR_PLUS) {
 		return true;
-	} else if (state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
-		LOGOMATIC("Charging should be complete");
-		return true;
-	} else {
-		LOGOMATIC("Unknown case has occurred");
-		return false;
 	}
 }
