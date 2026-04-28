@@ -6,12 +6,12 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
+#include "NodeID.h"
 #include "Unused.h"
 #include "bitManipulations.h"
 #include "can.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
-#include "NodeID.h"
 
 #define ECU_ID GRCAN_ECU
 #define PING_ID MSG_PING
@@ -54,7 +54,6 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
-
 
 	msgNumber <<= 6;
 
