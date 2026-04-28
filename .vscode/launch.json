@@ -283,13 +283,13 @@
 		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
-			"name": "InboardFloor FL",
+			"name": "Inboard Floor FL",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
+				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor FL",
@@ -299,13 +299,13 @@
 		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
-			"name": "InboardFloor FR",
+			"name": "Inboard Floor FR",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
+				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor FR",
@@ -315,13 +315,13 @@
 		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
-			"name": "InboardFloor RL",
+			"name": "Inboard Floor RL",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
+				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor RL",
@@ -331,18 +331,82 @@
 		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
-			"name": "InboardFloor RR",
+			"name": "Inboard Floor RR",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
+				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor RR",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd",
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node FL",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode FL",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node FR",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode FR",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node RL",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode RL",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node RR",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode RR",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",

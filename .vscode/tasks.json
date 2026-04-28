@@ -138,6 +138,42 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target InboardFloor"
 		},
 		{
+			"label": "CMake: configure and build SuspensionNode FL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode FR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode RL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode RR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
 			"label": "CMake: configure and build AnalogCalibration",
 			"type": "shell",
 			"dependsOrder": "sequence",
