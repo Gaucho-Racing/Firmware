@@ -21,9 +21,9 @@
 
 // #include "crc.h"
 // #include "fdcan.h"
+#include "NodeID.h"
 #include "gpio.h"
 #include "spi.h"
-#include "NodeID.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
