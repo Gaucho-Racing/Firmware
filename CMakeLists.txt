@@ -110,7 +110,7 @@ add_gr_project(STM32G431x8 TireTemp)
 # SAMM
 include("SAMM/samm.cmake")
 add_gr_project(STM32H523xE SAMM InboardFloor)
-add_gr_project(STM32H523xE SAMM SuspensionNodes)
+add_gr_project(STM32H523xE SAMM SuspensionNode)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)

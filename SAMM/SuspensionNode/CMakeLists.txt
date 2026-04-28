@@ -52,6 +52,6 @@ target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Inc
-		.
+		GRCAN
 	#TODO: Figure out how to set up Extras folder
 )

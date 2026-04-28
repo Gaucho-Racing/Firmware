@@ -23,6 +23,7 @@
 // #include "fdcan.h"
 #include "gpio.h"
 #include "spi.h"
+#include "NodeID.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
