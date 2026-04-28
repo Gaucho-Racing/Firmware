@@ -51,6 +51,7 @@
 
 /* USER CODE BEGIN PV */
 CCU_StateData state_data = {0, .SOFTWARE_LATCH = 1};
+
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
@@ -140,7 +141,7 @@ int main(void)
 
 	while (1) {
 		CCU_State_Tick(&state_data);
-		CheckDebuggerPrint(&state_data);
+		VCP_Oneliner(&state_data);
 
 		LL_mDelay(20);
 

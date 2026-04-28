@@ -7,6 +7,8 @@
 #include "bitManipulations.h"
 #include "can.h"
 #include "gpio.h"
+#include "vcp.h"
+#include "Stringification.h"
 
 void setSoftwareLatch(CCU_StateData *state_data)
 {
@@ -59,38 +61,34 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
-void CheckDebuggerPrint(CCU_StateData *state_data)
+void VCP_Oneliner(const CCU_StateData* state_data)
 {
-	if (!(state_data->request_print_statedata)) {
-		return;
-	}
+	static char buffer[50];	// Static to avoid allocating 50 bytes on the stack every time this function is called
+	uint8_t length = 0;
 
-	LOGOMATIC("\n========== CCU STATE DUMP ==========\n");
+	length = snprintf(buffer, sizeof(buffer), "[%lu]" , MillisecondsSinceBoot());
+	VCP_Send(buffer, length);
 
-	LOGOMATIC("state: %d\n", state_data->state);
-	LOGOMATIC("recv_charge_cmd: %d\n", state_data->recv_charge_cmd);
+	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->BCU_S2_PRECHARGE_STATE ? "Closed" : "Open");
+	VCP_Send(buffer, length);
 
-	LOGOMATIC("\n--- BCU_STATUS_2 ---\n");
+	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->BCU_S2_IR_STATE ? "Closed" : "Open");
+	VCP_Send(buffer, length);
 
-	LOGOMATIC("\n--- Errors ---\n");
-	LOGOMATIC("OVERTEMP: %d\n", state_data->BCU_S2_OVERTEMP_ERROR);
-	LOGOMATIC("OVERVOLT: %d\n", state_data->BCU_S2_OVERVOLT_ERROR);
-	LOGOMATIC("UNDERVOLT: %d\n", state_data->BCU_S2_UNDERVOLT_ERROR);
-	LOGOMATIC("OVERCURR: %d\n", state_data->BCU_S2_OVERCURR_ERROR);
-	LOGOMATIC("UNDERCURR: %d\n", state_data->BCU_S2_UNDERCURR_ERROR);
+	length = snprintf(buffer, sizeof(buffer), " | %huV", state_data->Accumulator_Voltage / 100);
+	VCP_Send(buffer, length);
 
-	LOGOMATIC("\n--- Warnings ---\n");
-	LOGOMATIC("UNDER20V: %d\n", state_data->BCU_S2_UNDER20v_WARNING);
-	LOGOMATIC("UNDER12V: %d\n", state_data->BCU_S2_UNDER12v_WARNING);
-	LOGOMATIC("UNDERVOLT SDC: %d\n", state_data->BCU_S2_UNDERVOLTSDC_WARNING);
+	length = snprintf(buffer, sizeof(buffer), " | SOC %hu%%", (uint8_t)(state_data->Accumulator_SOC * 20.0f / 51.0f));
+	VCP_Send(buffer, length);
 
-	LOGOMATIC("\n--- State Bits ---\n");
-	LOGOMATIC("SOFTWARE LATCH: %d\n", state_data->SOFTWARE_LATCH);
-	LOGOMATIC("PRECHARGE TS ACTIVE: %d\n", state_data->CCU_PRECHARGE_SET_TS_ACTIVE);
+	length = snprintf(buffer, sizeof(buffer), " | Max Cell %huC", state_data->Max_Cell_Temp / 4);
+	VCP_Send(buffer, length);
 
-	LOGOMATIC("====================================\n\n");
+	length = snprintf(buffer, sizeof(buffer), " | %s", state_data->state == CCU_STATE_IDLE ? "IDLE" : "CHARGING");
+	VCP_Send(buffer, length);
 
-	state_data->request_print_statedata = false;
+	length = snprintf(buffer, sizeof(buffer), "\n");
+	VCP_Send(buffer, length);
 }
 
 uint32_t MillisecondsSinceBoot(void)
