@@ -147,6 +147,7 @@ void CAN_Configure(void)
 	can_start(primary_can);
 }
 
+//FIXME: Change to take aand send a bool
 void SendPrechargeStatus(CCU_StateData *state_data)
 {
 

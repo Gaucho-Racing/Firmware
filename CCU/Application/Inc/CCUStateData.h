@@ -35,10 +35,10 @@ typedef volatile struct {
 
 	CCU_Precharge_Step precharge_step;
 
-	volatile bool request_print_statedata;
+	bool request_print_statedata;
 
 } CCU_StateData;
 
-extern volatile CCU_StateData state_data;
+extern CCU_StateData state_data;
 
 #endif
