@@ -119,5 +119,8 @@ bool IR_Sanity_Check(CCU_StateData *state_data)
 	} else if (state_data->BCU_S2_PRECHARGE_STATE && state_data->BCU_S2_IR_STATE) {
 		LOGOMATIC("Charging should be complete");
 		return true;
+	} else {
+		LOGOMATIC("Unknown case has occurred");
+		return false;
 	}
 }
