@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU OutboardSensors_FL OutboardSensors_FR OutboardSensors_RL OutboardSensors_RR DGPS Debugger ECU SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM
+BU_: BCU DGPS Debugger ECU OutboardSensors_FL OutboardSensors_FR OutboardSensors_RL OutboardSensors_RR SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM
 
 BO_ 2147680513 BCU_Debug_FD_to_Debugger: 64 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
