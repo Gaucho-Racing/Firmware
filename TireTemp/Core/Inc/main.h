@@ -43,7 +43,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-#define TIRETEMP_TOTAL_INTERVAL_MS 5000
+#define TIRETEMP_TOTAL_INTERVAL_MS 33
 
 #define TIRETEMP_PIXELS 768
 #define TIRETEMP_ROUNDS (TIRETEMP_PIXELS / 32)
