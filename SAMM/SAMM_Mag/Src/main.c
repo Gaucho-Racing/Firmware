@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <can.h>
 
 // #include "VL53L4ED_api.h"
 #include "mag.h"
@@ -91,7 +92,8 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
+	can_init(&FDCAN1);
+	can_start(&FDCAN1);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -117,7 +119,6 @@ int main(void)
 	// bmi323 bmi323_dev;
 	mag mag_dev;
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
-	mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin);
 
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
@@ -173,18 +174,26 @@ int main(void)
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
 		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
 		/* USER CODE END WHILE */
-		float temp = mag_read_temp(&mag_dev);
+
+		uint8_t temp = mag_read_temp(&mag_dev);
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
 		// float hang = mag_read_HANG(mag_dev);
+		FDCANTxMessage temp_can[8] = temp;
+		FDCANTxMessage angle_can[16] = angle;
+		FDCANTxMessage turns_can[16] = turns;
 		bool bad = check_status(&mag_dev);
 		printf("Temperature is %d\n", (double)temp);
 		printf("Angle is %d\n", angle);
 		printf("Number of turns is %d\n", turns);
-		if (!bad) {
+		if (bad) {
 			printf("something is cooked");
 			mag_write_error(&mag_dev);
 		}
+		can_send(&FDCAN1, temp_can);
+		can_send(&FDCAN1, angle_can);
+		cna_send(&FDCAN1, turns_can);
+		HAL_Delay(10);
 	}
 	/* USER CODE END 3 */
 }
