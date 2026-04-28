@@ -1,2 +1,2 @@
 The following platform has been used for:
-- Brake Temp (GR25?, GR26)
+- Outboard Sensors (GR25?, GR26)

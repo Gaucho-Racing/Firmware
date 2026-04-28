@@ -29,10 +29,10 @@ Data:
   SAMM_Mag_2
   SAMM_ToF_1
   SAMM_ToF_2
-  BrakeTemp_FL
-  BrakeTemp_FR
-  BrakeTemp_RL
-  BrakeTemp_RR
+  OutboardSensors_FL
+  OutboardSensors_FR
+  OutboardSensors_RL
+  OutboardSensors_RR
 
 Charger:
   CCU
