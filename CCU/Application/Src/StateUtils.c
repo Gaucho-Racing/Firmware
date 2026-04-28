@@ -4,11 +4,11 @@
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
+#include "Stringification.h"
 #include "bitManipulations.h"
 #include "can.h"
 #include "gpio.h"
 #include "vcp.h"
-#include "Stringification.h"
 
 void setSoftwareLatch(CCU_StateData *state_data)
 {
@@ -61,12 +61,12 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 }
 
-void VCP_Oneliner(const CCU_StateData* state_data)
+void VCP_Oneliner(const CCU_StateData *state_data)
 {
-	static char buffer[50];	// Static to avoid allocating 50 bytes on the stack every time this function is called
+	static char buffer[50]; // Static to avoid allocating 50 bytes on the stack every time this function is called
 	uint8_t length = 0;
 
-	length = snprintf(buffer, sizeof(buffer), "[%lu]" , MillisecondsSinceBoot());
+	length = snprintf(buffer, sizeof(buffer), "[%lu]", MillisecondsSinceBoot());
 	VCP_Send(buffer, length);
 
 	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->BCU_S2_PRECHARGE_STATE ? "Closed" : "Open");

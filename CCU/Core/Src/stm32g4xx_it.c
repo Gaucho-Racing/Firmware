@@ -23,10 +23,11 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <ctype.h>
+
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateUtils.h"
-#include <ctype.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
