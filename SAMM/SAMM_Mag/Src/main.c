@@ -92,8 +92,15 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	can_init(&FDCAN1);
-	can_start(&FDCAN1);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+	CANConfig my_cfg;
+
+	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
+
+	CANHandle *h1 = can_init(&my_cfg);
+
+	can_start(h1);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -179,9 +186,9 @@ int main(void)
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
 		// float hang = mag_read_HANG(mag_dev);
-		FDCANTxMessage temp_can[8] = temp;
-		FDCANTxMessage angle_can[16] = angle;
-		FDCANTxMessage turns_can[16] = turns;
+		FDCANTxMessage temp_can = {.tx_header = 0, .data[8] = temp};
+		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = temp};
+		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = temp};
 		bool bad = check_status(&mag_dev);
 		printf("Temperature is %d\n", (double)temp);
 		printf("Angle is %d\n", angle);
@@ -190,9 +197,9 @@ int main(void)
 			printf("something is cooked");
 			mag_write_error(&mag_dev);
 		}
-		can_send(&FDCAN1, temp_can);
-		can_send(&FDCAN1, angle_can);
-		cna_send(&FDCAN1, turns_can);
+		can_send(h1, &temp_can);
+		can_send(h1, &angle_can);
+		cna_send(h1, &turns_can);
 		HAL_Delay(10);
 	}
 	/* USER CODE END 3 */
