@@ -19,6 +19,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define THROTTLE_MAX_1 4095 // TODO: need to be determined
 #define THROTTLE_MIN_2 0    // TODO: need to be determined
 #define THROTTLE_MAX_2 4095 // TODO: need to be determined
+#define BSE_MAX 4096.0f
 #define BSE_DEADZONE 1.2f
 #define MAX_BSE_FAILURE_TIME 100
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined

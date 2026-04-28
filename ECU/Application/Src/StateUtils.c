@@ -85,15 +85,13 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
-	return ((stateData->bse_signal) / 4096.0f * 3.3f) > BSE_DEADZONE;
+	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
 float CalcBrakePercent(volatile const ECU_StateData *stateData)
 {
-	float total_brake_range = BRAKE_F_MAX - BRAKE_F_MIN + BRAKE_R_MAX - BRAKE_R_MIN;
-	float total_brake_value = stateData->Brake_F_Signal + stateData->Brake_R_Signal - BRAKE_R_MIN - BRAKE_F_MIN;
-	return total_brake_value / total_brake_range;
+	return stateData->bse_signal / BSE_MAX;
 }
 
 // TODO: reconsider deadzone
