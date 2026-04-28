@@ -21,11 +21,11 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
-	switch (messageId) {
-		case GRCAN_BCU_STATUS_2:
+
+		if (messageId == GRCAN_BCU_STATUS_2) {
 			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
-				break;
+				return;
 			}
 
 			// FIXME: Might need to double check we are doing this v
@@ -49,12 +49,10 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.BCU_S2_PRECHARGE_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 1);
 			state_data.BCU_S2_IR_STATE = GETBIT(bcu_status_2->precharge_latch_flags, 2);
 
-			break;
-
-		default:
+		} else {
 			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
-			break;
-	}
+		}
+
 }
 
 void CAN_Configure(void)
