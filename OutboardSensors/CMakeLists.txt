@@ -28,8 +28,6 @@ project(${CMAKE_PROJECT_NAME})
 
 add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_compile_definitions(${GR_PROJECT_NAME}_USER_CODE INTERFACE NODE=${NODE})
-
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
