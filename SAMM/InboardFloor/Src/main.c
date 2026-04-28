@@ -24,6 +24,7 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "spi.h"
+#include "NodeID.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
