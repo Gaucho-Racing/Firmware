@@ -65,7 +65,7 @@ target_sources(
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		# Application
-		Application/Src/CANDler.c
+		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
 )
