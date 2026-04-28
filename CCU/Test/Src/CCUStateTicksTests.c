@@ -89,7 +89,7 @@ int main(void)
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		//state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		// state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.SOFTWARE_LATCH = 1;
 		state_dataTest.BCU_S2_OVERCURR_ERROR = 1;
 
@@ -120,7 +120,7 @@ int main(void)
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		//state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		// state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.SOFTWARE_LATCH = 1;
 
@@ -154,7 +154,7 @@ int main(void)
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		//state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		// state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.SOFTWARE_LATCH = 1;
 
@@ -190,7 +190,7 @@ int main(void)
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		//state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		// state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.SOFTWARE_LATCH = 1;
 
@@ -228,7 +228,7 @@ int main(void)
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		//state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		// state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.SOFTWARE_LATCH = 1;
 
@@ -276,7 +276,7 @@ int main(void)
 		CCU_StateData state_dataTest = {0};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		//state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
+		// state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.SOFTWARE_LATCH = 1;
 

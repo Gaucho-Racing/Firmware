@@ -45,7 +45,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 	}
 
 	else if (state_data->recv_charge_cmd) {
-		//state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS; // ensures that now the switch statement will actually be executed/triggered after sending precharge status message
+		// state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS; // ensures that now the switch statement will actually be executed/triggered after sending precharge status message
 
 		if (state_data->PRECHARGE_SET_TS_ACTIVE_FLAG) {
 			SendPrechargeStatus(true); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
@@ -57,7 +57,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 	} else {
 
-		if (millis_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS){
+		if (millis_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
 			SendPrechargeStatus(false);
 		}
 	}
@@ -82,7 +82,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		return;
 	}
 
-	else if(IR_Check(state_data)){
+	else if (IR_Check(state_data)) {
 		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false;
 
 		state_data->state = CCU_STATE_IDLE;
@@ -91,27 +91,14 @@ void STATE_CHARGING(CCU_StateData *state_data)
 
 	}
 
-	else if(state_data->PRECHARGE_SET_TS_ACTIVE_FLAG){
+	else if (state_data->PRECHARGE_SET_TS_ACTIVE_FLAG) {
 		SendPrechargeStatus(true);
 		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false;
 		return;
 	}
-
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
-	//FIXME: Simplify this into a function
+// FIXME: Simplify this into a function
 
 //	switch (state_data->precharge_step) {
 //		// now actual IR checks are being done in the charging state

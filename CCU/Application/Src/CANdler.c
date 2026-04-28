@@ -56,8 +56,8 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
 			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
 
-		state_data.BCU_S2_IR_MINUS = GETBIT(bcu_status_2->precharge_latch_flags, 1);
-		state_data.BCU_S2_IR_PLUS = GETBIT(bcu_status_2->precharge_latch_flags, 2);
+			state_data.BCU_S2_IR_MINUS = GETBIT(bcu_status_2->precharge_latch_flags, 1);
+			state_data.BCU_S2_IR_PLUS = GETBIT(bcu_status_2->precharge_latch_flags, 2);
 
 			state_data.Max_Cell_Temp = bcu_status_2->max_cell_temp;
 			break;
@@ -164,7 +164,7 @@ void CAN_Configure(void)
 	can_start(primary_can);
 }
 
-//FIXME: Change to take aand send a bool
+// FIXME: Change to take aand send a bool
 void SendPrechargeStatus(bool setPrecharge)
 {
 
