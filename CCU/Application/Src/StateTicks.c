@@ -15,7 +15,7 @@ static uint32_t last_PRECHARGE_request_millis;
 
 void CCU_State_Tick(CCU_StateData *state_data)
 {
-	mills_since_boot = MillsSinceBoot();
+	mills_since_boot = MillisecondsSinceBoot();
 	switch (state_data->state) {
 			// if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 			// General checks for State Transition, if any error detected, transition back to IDLE state
