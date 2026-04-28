@@ -199,7 +199,7 @@ int main(void)
 		}
 		can_send(h1, &temp_can);
 		can_send(h1, &angle_can);
-		cna_send(h1, &turns_can);
+		can_send(h1, &turns_can);
 		HAL_Delay(10);
 	}
 	/* USER CODE END 3 */
