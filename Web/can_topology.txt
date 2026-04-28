@@ -29,10 +29,10 @@ Data:
   SAMM_Mag_2
   SAMM_ToF_1
   SAMM_ToF_2
-  TireTemp_1
-  TireTemp_2
-  TireTemp_3
-  TireTemp_4
+  TireTemp_RR
+  TireTemp_RL
+  TireTemp_FR
+  TireTemp_FL
 
 Charger:
   CCU
