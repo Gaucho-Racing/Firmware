@@ -36,6 +36,10 @@ uint32_t MillisecondsSinceBoot(void);
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
 
+// Rate Limiting Macros
+#define RATE_LIMIT_100_HZ(x, y) (x - y > 10)
+#define RATE_LIMIT_10_HZ(x, y) (x - y > 100)
+
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
 bool bmsFailure(volatile const ECU_StateData *stateData);
