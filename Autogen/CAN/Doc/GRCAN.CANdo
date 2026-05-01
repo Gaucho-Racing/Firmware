@@ -164,21 +164,21 @@ routing:
         TCM:
           - msg: ECU Analog Data
           - msg: ECU Performance
-        SAMM_Mag_1:
+        InboardFloor_FL:
           - msg: Ping
-        SAMM_Mag_2:
+        InboardFloor_FR:
           - msg: Ping
-        SAMM_ToF_1:
+        InboardFloor_RL:
           - msg: Ping
-        SAMM_ToF_2:
+        InboardFloor_RR:
           - msg: Ping
-        TireTemp_FL:
+        SuspensionNode_FL:
           - msg: Ping
-        TireTemp_FR:
+        SuspensionNode_FR:
           - msg: Ping
-        TireTemp_RL:
+        SuspensionNode_RL:
           - msg: Ping
-        TireTemp_RR:
+        SuspensionNode_RR:
           - msg: Ping
     Energy Meter:
       Charger:
@@ -4269,12 +4269,16 @@ GR ID:
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
   DGPS: "0x30"
-  SAMM_Mag_1: "0x20"
-  SAMM_Mag_2: "0x21"
-  SAMM_ToF_1: "0x22"
-  SAMM_ToF_2: "0x23"
-  TireTemp_FL: "0x24"
-  TireTemp_FR: "0x25"
-  TireTemp_RL: "0x26"
-  TireTemp_RR: "0x27"
+  InboardFloor_FL: "0x20"
+  InboardFloor_FR: "0x21"
+  InboardFloor_RL: "0x22"
+  InboardFloor_RR: "0x23"
+  SuspensionNode_FL: "0x24"
+  SuspensionNode_FR: "0x25"
+  SuspensionNode_RL: "0x26"
+  SuspensionNode_RR: "0x27"
+  TireTemp_FL: "0x28"
+  TireTemp_FR: "0x29"
+  TireTemp_RL: "0x2A"
+  TireTemp_RR: "0x2B"
   ALL: "0xFF"

@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU DGPS Debugger ECU SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
+BU_: BCU DGPS Debugger ECU InboardFloor_FL InboardFloor_FR InboardFloor_RL InboardFloor_RR SAMM_Mag_1 SuspensionNode_FL SuspensionNode_FR SuspensionNode_RL SuspensionNode_RR TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
 
 BO_ 2147680513 BCU_Debug_FD_to_Debugger: 64 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
@@ -382,29 +382,29 @@ BO_ 2147626500 ECU_ECU_Analog_Data_to_TCM: 16 ECU
 BO_ 2147626756 ECU_ECU_Performance_to_TCM: 4 ECU
  SG_ Elapsed_Cycles : 0|32@1+ (1,0) [0|0] "Clock Cycles" TCM
 
-BO_ 2147615264 ECU_Ping_to_SAMM_Mag_1: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_Mag_1
+BO_ 2147615264 ECU_Ping_to_InboardFloor_FL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_FL
 
-BO_ 2147615265 ECU_Ping_to_SAMM_Mag_2: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_Mag_2
+BO_ 2147615265 ECU_Ping_to_InboardFloor_FR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_FR
 
-BO_ 2147615266 ECU_Ping_to_SAMM_ToF_1: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_ToF_1
+BO_ 2147615266 ECU_Ping_to_InboardFloor_RL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_RL
 
-BO_ 2147615267 ECU_Ping_to_SAMM_ToF_2: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_ToF_2
+BO_ 2147615267 ECU_Ping_to_InboardFloor_RR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_RR
 
-BO_ 2147615268 ECU_Ping_to_TireTemp_FL: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_FL
+BO_ 2147615268 ECU_Ping_to_SuspensionNode_FL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_FL
 
-BO_ 2147615269 ECU_Ping_to_TireTemp_FR: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_FR
+BO_ 2147615269 ECU_Ping_to_SuspensionNode_FR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_FR
 
-BO_ 2147615270 ECU_Ping_to_TireTemp_RL: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_RL
+BO_ 2147615270 ECU_Ping_to_SuspensionNode_RL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_RL
 
-BO_ 2147615271 ECU_Ping_to_TireTemp_RR: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_RR
+BO_ 2147615271 ECU_Ping_to_SuspensionNode_RR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_RR
 
 BO_ 2147746305 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
@@ -438,28 +438,19 @@ BO_ 2150641668 DGPS_UVW_DGPS_to_TCM: 6 DGPS
  SG_ DGPS_V : 16|16@1- (0.01,0) [0|0] "" TCM
  SG_ DGPS_W : 32|16@1- (0.01,0) [0|0] "" TCM
 
-BO_ 2149581314 SAMM_Mag_1_Ping_to_ECU: 4 SAMM_Mag_1
+BO_ 514 SAMM_Mag_1_Ping_to_ECU: 4 SAMM_Mag_1
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149646850 SAMM_Mag_2_Ping_to_ECU: 4 SAMM_Mag_2
+BO_ 2150105602 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149712386 SAMM_ToF_1_Ping_to_ECU: 4 SAMM_ToF_1
+BO_ 2150171138 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149777922 SAMM_ToF_2_Ping_to_ECU: 4 SAMM_ToF_2
+BO_ 2150236674 TireTemp_RL_Ping_to_ECU: 4 TireTemp_RL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149843458 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2149908994 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2149974530 TireTemp_RL_Ping_to_ECU: 4 TireTemp_RL
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2150040066 TireTemp_RR_Ping_to_ECU: 4 TireTemp_RR
+BO_ 2150302210 TireTemp_RR_Ping_to_ECU: 4 TireTemp_RR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
 CM_ SG_ 2147680513 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
@@ -817,11 +808,8 @@ CM_ SG_ 2150642180 LON "longitude";
 CM_ SG_ 2150641668 DGPS_U "U";
 CM_ SG_ 2150641668 DGPS_V "V";
 CM_ SG_ 2150641668 DGPS_W "W";
-CM_ SG_ 2149581314 Timestamp "Time in millis";
-CM_ SG_ 2149646850 Timestamp "Time in millis";
-CM_ SG_ 2149712386 Timestamp "Time in millis";
-CM_ SG_ 2149777922 Timestamp "Time in millis";
-CM_ SG_ 2149843458 Timestamp "Time in millis";
-CM_ SG_ 2149908994 Timestamp "Time in millis";
-CM_ SG_ 2149974530 Timestamp "Time in millis";
-CM_ SG_ 2150040066 Timestamp "Time in millis";
+CM_ SG_ 514 Timestamp "Time in millis";
+CM_ SG_ 2150105602 Timestamp "Time in millis";
+CM_ SG_ 2150171138 Timestamp "Time in millis";
+CM_ SG_ 2150236674 Timestamp "Time in millis";
+CM_ SG_ 2150302210 Timestamp "Time in millis";

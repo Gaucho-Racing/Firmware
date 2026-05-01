@@ -96,7 +96,7 @@ void mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 uint16_t mag_read_encoder_angle(mag *mag_dev)
 {
 	uint16_t read_angle = mag_read(mag_dev, 0x32); // 0x32 is angle register
-	return ((uint16_t)(read_angle & 0x7FFF));      // Mask to 15 bits (valid angle data)
+	return ((uint16_t)(read_angle & 0x7FFF));      // Mask to 15 bits (valid angle data) before conversion
 }
 
 // Address 0x22:0x23 (STA)—Device Status
@@ -111,7 +111,7 @@ uint8_t mag_read_temp(mag *mag_dev)
 {
 	uint16_t read_temp = mag_read(mag_dev, 0x28);			     // 0x28 is temp register
 	float masked_temp = ((uint16_t)(read_temp & 0x0FFF) / 8.0f) + 25.0f; // Mask to 12 bits (valid temp data)
-	float offset_temp = masked_temp + 60.0f;
+	float offset_temp = masked_temp + 60.0f;			     // temperature offset by 60 degrees
 	return (uint8_t)offset_temp;
 }
 
@@ -156,7 +156,7 @@ bool check_status(mag *mag_dev)
 int16_t mag_read_turns(mag *mag_dev)
 {
 	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
-	int16_t turns = raw & 0x0FFF;		       // Mask to 12 bits (valid angle data)
+	int16_t turns = read_turns & 0x0FFF;	       // Mask to 12 bits (valid angle data)
 	if (turns & 0x0800) {
 		turns |= 0xF000; // sign extend bit 11 to bits 15:12
 	}

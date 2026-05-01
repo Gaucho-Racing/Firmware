@@ -21,23 +21,24 @@
 
 // #include "crc.h"
 // #include "fdcan.h"
+#include "NodeID.h"
 #include "gpio.h"
+#include "i2c.h"
 #include "spi.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <can.h>
 #include <stdio.h>
 
-// #include "VL53L4ED_api.h"
-#include "mag.h"
+#include "VL53L4ED_api.h"
+#include "bmi323.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define MAG_CS_GPIO_Port GPIOB
-#define MAG_CS_Pin GPIO_PIN_10
+#define BMI323_CS_GPIO_Port GPIOA
+#define BMI323_CS_Pin GPIO_PIN_4
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -73,6 +74,10 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/*
+
+
+ */
 /* USER CODE END 0 */
 
 /**
@@ -91,6 +96,7 @@ int main(void)
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
 	HAL_Init();
 
+	/* USER CODE BEGIN Init */
 
 	/* USER CODE END Init */
 
@@ -106,8 +112,9 @@ int main(void)
 	// MX_CRC_Init();
 	// MX_FDCAN1_Init();
 	// MX_FDCAN2_Init();
+	MX_I2C1_Init();
 	MX_SPI1_Init();
-	MX_SPI3_Init();
+
 	/* USER CODE BEGIN 2 */
 	/* USER CODE BEGIN Init */
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
@@ -124,10 +131,9 @@ int main(void)
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
-	// bmi323 bmi323_dev;
-	mag mag_dev;
-	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
-
+	bmi323 bmi323_dev;
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin); // TODO:
 	// Send 2 dummy bytes to switch BMI323 to SPI mode
 	// uint16_t dummy_byte = 0x8000;
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
@@ -135,10 +141,12 @@ int main(void)
 	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 	// HAL_Delay(1);  // Short delay after mode switch
 
-	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
-		printf("MAG initialization failed!\r\n");
-		Error_Handler();
-	}
+	// Initialize BMI323 sensor
+
+	// if (BMI323_Init() != HAL_OK) {
+	//   printf("BMI323 initialization failed!\r\n");
+	//   Error_Handler();
+	// }
 
 	// static uint16_t eeMLX90640[832];
 	// static paramsMLX90640 mlx90640;
@@ -156,27 +164,27 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	// begin VL53L4ED
-	// HAL_Delay(100);					      // wait for 5ms to power up the device
-	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
-	// // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
-	// HAL_Delay(100);					    // wait for 5ms to reset the device
-	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
-	// // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
-	// HAL_Delay(100); // wait for 5ms to power up the device
+	HAL_Delay(100);					      // wait for 5ms to power up the device
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
+	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
+	HAL_Delay(100);					    // wait for 5ms to reset the device
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
+	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
+	HAL_Delay(100); // wait for 5ms to power up the device
 
-	// uint16_t status = 0;
+	uint16_t status = 0;
 
-	// uint16_t sensor_id = 0;
-	// VL53L4ED_ResultsData_t results;
-	// uint8_t p_data_ready;
+	uint16_t sensor_id = 0;
+	VL53L4ED_ResultsData_t results;
+	uint8_t p_data_ready;
 
-	// int TOF_ID = 0x52;
-	// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-	// status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
-	// printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
-	// status = VL53L4ED_StartRanging(TOF_ID);
-	// status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
-	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
+	int TOF_ID = 0x52;
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+	status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
+	printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
+	status = VL53L4ED_StartRanging(TOF_ID);
+	status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
+	status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
     	uint8_t temp = mag_read_temp(&mag_dev);
@@ -184,34 +192,27 @@ int main(void)
     	int16_t turns = mag_read_turns(&mag_dev);
     	bool bad = check_status(&mag_dev);
 
-    	printf("Temperature before conversion: %d\n", temp);
-    	printf("Angle before conversion: %d\n", angle);
-    	printf("Turns: %d\n", turns);
+		/* USER CODE BEGIN 3 */
+		// begin VL53L4ED
+		status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
+		if (p_data_ready) {
+			/* (Mandatory) Clear HW interrupt to restart measurements */
+			VL53L4ED_ClearInterrupt(TOF_ID);
+			/* Read measured distance. RangeStatus = 0 means valid data */
+			VL53L4ED_GetResult(TOF_ID, &results);
+			printf("Status = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, results.distance_mm - 67, results.signal_per_spad_kcps);
+		} else {
+			HAL_Delay(10);
+			__disable_irq();
+			__enable_irq();
+		}
 
-    	if (bad) {
-        	printf("Error detected\n");
-        	mag_clear_errors(&mag_dev);
-    	}
-
-    	FDCANTxMessage temp_can;
-    	temp_can.tx_header = 0;
-    	temp_can.data[0] = temp;
-
-    	FDCANTxMessage angle_can;
-    	angle_can.tx_header = 0;
-    	angle_can.data[0] = (angle >> 8) & 0xFF;
-    	angle_can.data[1] = angle & 0xFF;
-
-    	FDCANTxMessage turns_can;
-    	turns_can.tx_header = 0;
-    	turns_can.data[0] = (turns >> 8) & 0xFF;
-    	turns_can.data[1] = turns & 0xFF;
-
-    	can_send(h1, &temp_can);
-    	can_send(h1, &angle_can);
-    	can_send(h1, &turns_can);
-
-    	HAL_Delay(10);
+		// begin BMI323
+		//  int16_t ax, ay, az;
+		//  if (BMI323_ReadAccel(&ax, &ay, &az) == HAL_OK) {
+		//      printf("Accel: X=%d, Y=%d, Z=%d\r\n", ax, ay, az);
+		//  }
+		HAL_Delay(100); // Read every 100ms
 	}
 	/* USER CODE END 3 */
 }
