@@ -41,6 +41,7 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
+#include "stm32g4xx_hal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -385,6 +386,8 @@ int main(void)
 	ADC_Configure();
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
+
+	HAL_Delay(5000); // Notes per Andrey and Ryan
 
 	/* USER CODE END 2 */
 
