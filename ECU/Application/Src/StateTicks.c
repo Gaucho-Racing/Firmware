@@ -189,7 +189,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	if (millis_since_boot - buzzer_start_millis > 2000) {
+	if (millis_since_boot - buzzer_start_millis > MAX_BUZZER_TIME_MS) {
 		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	} else {
 		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
@@ -231,7 +231,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	static uint32_t last_can_inverter_request_millis;
-	if (millis_since_boot - last_can_inverter_request_millis > 10) {
+	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_inverter_request_millis)) {
 		GRCAN_INVERTER_COMMAND_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_COMMAND, &message, sizeof(message));
 		last_can_inverter_request_millis = millis_since_boot;
@@ -241,7 +241,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	// TODO: determine send time (15, 20 ms?)
 
 	static uint32_t last_can_tcm_request_millis;
-	if (millis_since_boot - last_can_tcm_request_millis > 10) {
+	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_tcm_request_millis)) {
 		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
 						     .bse_signal = stateData->bse_signal,
 						     .apps_1_signal = stateData->APPS1_Signal,
@@ -279,6 +279,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
 	*/
+	// TODO: Rate limit
 	if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
 		LOGOMATIC("Warning: Tractive System fails to discharge in %d seconds.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
 		// ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
@@ -286,7 +287,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 
 	// Discharge the car @ 100 Hz
 	static uint32_t last_discharge_request_millis;
-	if (millis_since_boot - last_discharge_request_millis > 10) {
+	if (RATE_LIMIT_100_HZ(millis_since_boot, last_discharge_request_millis)) {
 		GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
