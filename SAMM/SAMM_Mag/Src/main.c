@@ -91,16 +91,7 @@ int main(void)
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
 	HAL_Init();
 
-	/* USER CODE BEGIN Init */
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
-	CANConfig my_cfg;
-
-	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
-
-	CANHandle *h1 = can_init(&my_cfg);
-
-	can_start(h1);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -118,6 +109,16 @@ int main(void)
 	MX_SPI1_Init();
 	MX_SPI3_Init();
 	/* USER CODE BEGIN 2 */
+	/* USER CODE BEGIN Init */
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+	CANConfig my_cfg;
+
+	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
+
+	CANHandle *h1 = can_init(&my_cfg);
+
+	can_start(h1);
 
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
@@ -178,29 +179,39 @@ int main(void)
 	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
-		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
-		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
-		/* USER CODE END WHILE */
+    	uint8_t temp = mag_read_temp(&mag_dev);
+    	uint16_t angle = mag_read_encoder_angle(&mag_dev);
+    	int16_t turns = mag_read_turns(&mag_dev);
+    	bool bad = check_status(&mag_dev);
 
-		uint8_t temp = mag_read_temp(&mag_dev);
-		uint16_t angle = mag_read_encoder_angle(&mag_dev);
-		int16_t turns = mag_read_turns(&mag_dev);
-		// float hang = mag_read_HANG(mag_dev);
-		FDCANTxMessage temp_can = {.tx_header = 0, .data[8] = temp};
-		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = temp};
-		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = temp};
-		bool bad = check_status(&mag_dev);
-		printf("Temperature is %d\n", (double)temp);
-		printf("Angle is %d\n", angle);
-		printf("Number of turns is %d\n", turns);
-		if (bad) {
-			printf("something is cooked");
-			mag_write_error(&mag_dev);
-		}
-		can_send(h1, &temp_can);
-		can_send(h1, &angle_can);
-		cna_send(h1, &turns_can);
-		HAL_Delay(10);
+    	printf("Temperature before conversion: %d\n", temp);
+    	printf("Angle before conversion: %d\n", angle);
+    	printf("Turns: %d\n", turns);
+
+    	if (bad) {
+        	printf("Error detected\n");
+        	mag_clear_errors(&mag_dev);
+    	}
+
+    	FDCANTxMessage temp_can;
+    	temp_can.tx_header = 0;
+    	temp_can.data[0] = temp;
+
+    	FDCANTxMessage angle_can;
+    	angle_can.tx_header = 0;
+    	angle_can.data[0] = (angle >> 8) & 0xFF;
+    	angle_can.data[1] = angle & 0xFF;
+
+    	FDCANTxMessage turns_can;
+    	turns_can.tx_header = 0;
+    	turns_can.data[0] = (turns >> 8) & 0xFF;
+    	turns_can.data[1] = turns & 0xFF;
+
+    	can_send(h1, &temp_can);
+    	can_send(h1, &angle_can);
+    	can_send(h1, &turns_can);
+
+    	HAL_Delay(10);
 	}
 	/* USER CODE END 3 */
 }
