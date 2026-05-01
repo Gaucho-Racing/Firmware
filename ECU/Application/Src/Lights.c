@@ -52,7 +52,7 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
 	}
 }
-
+ /*
 void BMSLights(ECU_StateData *stateLump)
 {
 	bool light = 0;
@@ -92,12 +92,47 @@ void DashLights(ECU_StateData *stateLump)
 	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light) || SetBitInByte(0, 1, light)};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
+*/
+
+static uint32_t last_dash_can_send;
+void dashLights(ECU_StateData *stateLump)
+{
+	// BMS
+	bool light = 0;
+	GRCAN_DASH_CONFIG_MSG message = {};
+
+	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
+	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
+	light |= bmsFailure(stateLump);
+	// TODO: interrupted/missing BMS vals
+	message.led_bits = SetBitInByte(0, 0, light);
+	light = 0;
+
+	// IMD
+	// TODO: isolation failure?
+	light |= imdFailure(stateLump);
+	message.led_bits = SetBitInByte(0, 1, light);
+	light = 0;
+
+	// BSPD
+	light |= bspdFailure(stateLump);
+	message.led_bits = SetBitInByte(0, 2, light);
+
+	// TODO: determine moving millis_since_boot to statedata?
+	uint32_t currTime = MillisecondsSinceBoot();
+	if (RATE_LIMIT_10_HZ(currTime, last_dash_can_send)) {
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+		last_dash_can_send = currTime;
+	}
+}
+
 void lightControl(ECU_StateData *stateData)
 {
 	BrakeLightControl(stateData);
 	TSSILightControl(stateData);
 	RTDButtonLightControl(stateData);
-	DashLights(stateData);
+	dashLights(stateData);
+	// DashLights(stateData);
 	// TSActiveButtonLightControl(stateData);
 	// BMSLights(stateData);
 	// IMDLights(stateData);
