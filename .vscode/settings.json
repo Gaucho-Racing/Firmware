@@ -23,5 +23,6 @@
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
 	"files.eol": "\n",
-	"cmake.useCMakePresets": "always"
+	"cmake.useCMakePresets": "always",
+	"C_Cpp.errorSquiggles": "disabled"
 }

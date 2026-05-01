@@ -1,15 +1,5 @@
-/* USER CODE BEGIN Header */
-/**
- ******************************************************************************
- * @file           : main.c
- * @brief          : Main program body
- ******************************************************************************
- * @attention
- *
- * Copyright (c) 2025 STMicroelectronics.
- * All rights reserved.
- *
- * This software is licensed under terms that can be found in the LICENSE file
+
+ /* This software is licensed under terms that can be found in the LICENSE file
  * in the root directory of this software component.
  * If no LICENSE file comes with this software, it is provided AS-IS.
  *
@@ -88,17 +78,17 @@ static CANHandle *can1;
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-#ifdef EXTERNAL_LOOPBACK_TEST
-	LoopbackTest(ID, data, size);
-#else
+//#ifdef EXTERNAL_LOOPBACK_TEST
+//	LoopbackTest(ID, data, size);
+//#else
     CAN_MessageHandler(GRCAN_BUS_PRIMARY, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, (uint8_t*)data, size);
-#endif
+//#endif
 }
 
 void sendMSG(){
 		FDCANTxMessage sendECUMsg;
 
-		sendECUMsg.tx_header.Identifier = (0x000FFF00 & GRCAN_GPS_RZ) >> 8;
+		sendECUMsg.tx_header.Identifier = (GRCAN_DGPS << 20) | (GRCAN_GPS_RZ << 8) | GRCAN_Debugger;
 		sendECUMsg.tx_header.IdType = FDCAN_EXTENDED_ID;
 		sendECUMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 		sendECUMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
