@@ -69,7 +69,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	BCU_Warnings(state_data);
 	if (CriticalError(state_data)) {
 		TripSoftwareLatch(state_data);
-		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false; //these might be redundent
+		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false; // these might be redundent
 		state_data->state = CCU_STATE_IDLE;
 
 		LOGOMATIC("Critical Error Occured; State Set to IDLE \n");
@@ -77,7 +77,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	}
 
 	else if (!(state_data->recv_charge_cmd)) {
-		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false; //these might be redundent
+		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false; // these might be redundent
 		state_data->state = CCU_STATE_IDLE;
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
 		return;
