@@ -37,6 +37,9 @@ void CCU_State_Tick(CCU_StateData *state_data)
 
 void STATE_IDLE(CCU_StateData *state_data)
 {
+	if (millis_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
+		SendPrechargeStatus(false);
+	}
 
 	BCU_Warnings(state_data);
 	if (CriticalError(state_data)) {
@@ -44,107 +47,49 @@ void STATE_IDLE(CCU_StateData *state_data)
 		LOGOMATIC("Critical Error Occured!\n");
 	}
 
-	else if (state_data->recv_charge_cmd) {
-		// state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS; // ensures that now the switch statement will actually be executed/triggered after sending precharge status message
+	else if (state_data->recv_charge_cmd) { //FIXME: same or nah
+		SendPrechargeStatus(true); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
+		LOGOMATIC("Set PRECHARGE TS ACTIVE = 1\n");
+		state_data->recv_charge_cmd = false;
 
-		if (state_data->PRECHARGE_SET_TS_ACTIVE_FLAG) {
-			SendPrechargeStatus(true); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
-			LOGOMATIC("Set PRECHARGE TS ACTIVE = 1\n");
-			state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false;
-		}
 
 		state_data->state = CCU_STATE_CHARGING;
 
 		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-	} else {
-
-		if (millis_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
-			SendPrechargeStatus(false);
-		}
 	}
 }
 
 void STATE_CHARGING(CCU_StateData *state_data)
 {
 	BCU_Warnings(state_data);
-	if (CriticalError(state_data)) {
+	if (state_data->recv_stop_cmd){
+		state_data->recv_stop_cmd = false;
+		LOGOMATIC("Received STOP command!\n");
+		state_data->state = CCU_STATE_IDLE;
+		return;
+	}
+
+	if(CriticalError(state_data)) {
 		TripSoftwareLatch(state_data);
-		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false; // these might be redundent
 		state_data->state = CCU_STATE_IDLE;
 
 		LOGOMATIC("Critical Error Occured; State Set to IDLE \n");
 		return;
 	}
 
-	else if (!(state_data->recv_charge_cmd)) {
-		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false; // these might be redundent
-		state_data->state = CCU_STATE_IDLE;
-		LOGOMATIC("CCU Current State: %d\n", state_data->state);
-		return;
-	}
-
-	else if (IR_Check(state_data)) {
-		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false;
-
+	//Checks if IR+/- are in done position
+	if (state_data->BCU_S2_IR_MINUS && state_data->BCU_S2_IR_PLUS) {
 		state_data->state = CCU_STATE_IDLE;
 		LOGOMATIC("CHARGING is complete, returning to IDLE state");
 		return;
 
 	}
 
-	else if (state_data->PRECHARGE_SET_TS_ACTIVE_FLAG) {
+	if (state_data->recv_charge_cmd) {
 		SendPrechargeStatus(true);
 		LOGOMATIC("Set PRECHARGE TS ACTIVE = 1\n");
-		state_data->PRECHARGE_SET_TS_ACTIVE_FLAG = false;
+		state_data->recv_charge_cmd = false;
 		return;
 	}
 }
 
-// FIXME: Simplify this into a function
-
-//	switch (state_data->precharge_step) {
-//		// now actual IR checks are being done in the charging state
-//		case PRECHARGE_STEP_WAIT_IR_MINUS:
-//			if (state_data->BCU_S2_PRECHARGE_STATE) {
-//				LOGOMATIC("IR- confirmed closed, waiting for IR+\n");
-//				state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_PLUS; // go to next phase of checking for IR+
-//			}
-//			break;
-//
-//		case PRECHARGE_STEP_WAIT_IR_PLUS:
-//			if (!IR_Sanity_Check(state_data)) {
-//				LOGOMATIC("IR Sanity Check Failed! Transitioning back to IDLE\n");
-//				state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
-//				state_data->state = CCU_STATE_IDLE;
-//
-//				if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
-//					SendPrechargeStatus(state_data); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
-//					last_PRECHARGE_request_millis = mills_since_boot;
-//				}
-//				return;
-//			}
-//			if (state_data->BCU_S2_IR_STATE) {
-//				LOGOMATIC("IR+ confirmed closed, precharge complete\n");
-//				state_data->precharge_step = PRECHARGE_STEP_COMPLETE;
-//			}
-//			break;
-//
-//		case PRECHARGE_STEP_COMPLETE:
-//			if (!IR_Sanity_Check(state_data)) {
-//				LOGOMATIC("IR Sanity Check Failed in steady state! Transitioning back to IDLE\n");
-//				state_data->CCU_PRECHARGE_SET_TS_ACTIVE = false;
-//				state_data->state = CCU_STATE_IDLE;
-//
-//				if (mills_since_boot - last_PRECHARGE_request_millis > PRECHARGE_SET_MSG_PERIOD_MILLIS) {
-//					SendPrechargeStatus(state_data); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
-//					last_PRECHARGE_request_millis = mills_since_boot;
-//				}
-//
-//				return;
-//			}
-//			break;
-//
-//		default:
-//			state_data->precharge_step = PRECHARGE_STEP_WAIT_IR_MINUS;
-//			break;
-//	}

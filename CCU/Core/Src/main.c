@@ -127,7 +127,7 @@ int main(void)
 
 	// Initialize CAN
 	CAN_Configure();
-
+	LL_mDelay(5000);
 	LOGOMATIC("Initialization complete\n");
 
 	/* USER CODE END 2 */

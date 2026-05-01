@@ -101,12 +101,3 @@ uint32_t MillisecondsSinceBoot(void)
 {
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
-
-bool IR_Check(CCU_StateData *state_data)
-{
-	if (state_data->BCU_S2_IR_MINUS && state_data->BCU_S2_IR_PLUS) {
-		return true;
-	}
-
-	return false;
-}

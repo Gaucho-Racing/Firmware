@@ -13,6 +13,7 @@ typedef volatile struct {
 	CCU_STATE state;
 
 	bool recv_charge_cmd;
+	bool recv_stop_cmd;
 
 	// BCU_STATUS_2
 
@@ -29,15 +30,15 @@ typedef volatile struct {
 	// bool BCU_S2_PRECHARGE_ERROR;
 
 	// State
-	uint8_t BCU_S2_PRECHARGE_BITS;
+	// uint8_t BCU_S2_PRECHARGE_BITS;
 	bool BCU_S2_IR_MINUS; // IR- State
 	bool BCU_S2_IR_PLUS;  // IR+ State
 	bool SOFTWARE_LATCH;
 
 	// BCU_PRECHARGE
-	bool PRECHARGE_SET_TS_ACTIVE_FLAG;
+	// bool PRECHARGE_SET_TS_ACTIVE_FLAG;
 
-	CCU_Precharge_Step precharge_step;
+	// CCU_Precharge_Step precharge_step;
 } CCU_StateData;
 
 extern CCU_StateData state_data;

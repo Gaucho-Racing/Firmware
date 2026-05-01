@@ -167,7 +167,6 @@ void CAN_Configure(void)
 // FIXME: Change to take aand send a bool
 void SendPrechargeStatus(bool setPrecharge)
 {
-
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
