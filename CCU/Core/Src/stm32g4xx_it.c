@@ -204,6 +204,7 @@ void USART2_IRQHandler(void)
 		if (receivedData == 'C' || receivedData == 'c') {
 			LOGOMATIC("Received charge command\n");
 			state_data.recv_charge_cmd = true;
+			state_data.PRECHARGE_SET_TS_ACTIVE_FLAG = true;
 			LL_USART_TransmitData8(USART2, receivedData);
 		} else if (isspace(receivedData)) {
 			LL_USART_TransmitData8(USART2, receivedData);
