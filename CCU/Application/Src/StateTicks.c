@@ -47,11 +47,10 @@ void STATE_IDLE(CCU_StateData *state_data)
 		LOGOMATIC("Critical Error Occured!\n");
 	}
 
-	else if (state_data->recv_charge_cmd) { //FIXME: same or nah
-		SendPrechargeStatus(true); // IR- should be set to 1 at this point, IR+ may become 1 if charging complete
+	else if (state_data->recv_charge_cmd) { // FIXME: same or nah
+		SendPrechargeStatus(true);	// IR- should be set to 1 at this point, IR+ may become 1 if charging complete
 		LOGOMATIC("Set PRECHARGE TS ACTIVE = 1\n");
 		state_data->recv_charge_cmd = false;
-
 
 		state_data->state = CCU_STATE_CHARGING;
 
@@ -62,14 +61,14 @@ void STATE_IDLE(CCU_StateData *state_data)
 void STATE_CHARGING(CCU_StateData *state_data)
 {
 	BCU_Warnings(state_data);
-	if (state_data->recv_stop_cmd){
+	if (state_data->recv_stop_cmd) {
 		state_data->recv_stop_cmd = false;
 		LOGOMATIC("Received STOP command!\n");
 		state_data->state = CCU_STATE_IDLE;
 		return;
 	}
 
-	if(CriticalError(state_data)) {
+	if (CriticalError(state_data)) {
 		TripSoftwareLatch(state_data);
 		state_data->state = CCU_STATE_IDLE;
 
@@ -77,12 +76,11 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		return;
 	}
 
-	//Checks if IR+/- are in done position
+	// Checks if IR+/- are in done position
 	if (state_data->BCU_S2_IR_MINUS && state_data->BCU_S2_IR_PLUS) {
 		state_data->state = CCU_STATE_IDLE;
 		LOGOMATIC("CHARGING is complete, returning to IDLE state");
 		return;
-
 	}
 
 	if (state_data->recv_charge_cmd) {
@@ -92,4 +90,3 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		return;
 	}
 }
-
