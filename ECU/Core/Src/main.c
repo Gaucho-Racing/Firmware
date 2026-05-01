@@ -439,16 +439,16 @@ int main(void)
 		}
 		*/
 
+		read_digital();
+		// TODO: determine alpha
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
+		write_adc_values_to_state_data();
+
 		static uint32_t delay_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
-			delay_timer = MillisecondsSinceBoot() + 33; // TODO: determine how long
+			delay_timer = MillisecondsSinceBoot() + 10; // TODO: determine how long
 			HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_11);
 			// odr = GPIOx->ODR;
-			read_digital();
-			// TODO: determine alpha
-			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
-			// SendECUStateDataOverCAN(&stateLump);
-			write_adc_values_to_state_data();
 			ECU_State_Tick();
 			SendECUStateDataOverCAN(&stateLump);
 			pingAll();
