@@ -1,10 +1,8 @@
-#include "StateUtils.h"
-
 #include "CCUStateData.h"
 #include "Logomatic.h"
+#include "StateUtils.h"
 #include "gpio.h"
 #include "stdint.h"
-
 
 void TripSoftwareLatch(CCU_StateData *state_data)
 {
@@ -60,7 +58,6 @@ bool CriticalError(const CCU_StateData *state_data)
 		return false;
 	}
 }
-
 
 uint32_t MillisecondsSinceBoot(void)
 {

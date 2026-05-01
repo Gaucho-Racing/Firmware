@@ -14,7 +14,6 @@ static void CCU_PSUEDO_STATE_TICK(CCU_StateData *state_data)
 
 	LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
-
 	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 				     // General checks for State Transition, if any error detected, transition back to IDLE state
 

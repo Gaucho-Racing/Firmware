@@ -45,6 +45,7 @@ void SendDebugReport(char *data)
 	return;
 }
 
-void VCP_Oneliner(const CCU_StateData *state_data){
+void VCP_Oneliner(const CCU_StateData *state_data)
+{
 	UNUSED(state_data);
 }
