@@ -73,10 +73,10 @@ void VCP_Oneliner(const CCU_StateData *state_data)
 	length = snprintf(buffer, sizeof(buffer), "[%lu]", MillisecondsSinceBoot());
 	VCP_Send(buffer, length);
 
-	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->BCU_S2_PRECHARGE_STATE ? "Closed" : "Open");
+	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->BCU_S2_IR_MINUS ? "Closed" : "Open");
 	VCP_Send(buffer, length);
 
-	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->BCU_S2_IR_STATE ? "Closed" : "Open");
+	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->BCU_S2_IR_PLUS ? "Closed" : "Open");
 	VCP_Send(buffer, length);
 
 	length = snprintf(buffer, sizeof(buffer), " | %huV", state_data->Accumulator_Voltage / 100);
