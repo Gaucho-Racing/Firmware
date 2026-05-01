@@ -37,7 +37,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			GLOBALSHARE_LIB
 			LOGOMATIC_LIB
 			BitManipulations_Lib
-
 	)
 	add_test(CCUStateTicksTests CCUStateTicksTests)
 	# FIXME Add more HOOTL tests
