@@ -44,3 +44,7 @@ void SendDebugReport(char *data)
 	LOGOMATIC("Debug should send\n");
 	return;
 }
+
+void VCP_Oneliner(const CCU_StateData *state_data){
+	UNUSED(state_data);
+}

@@ -28,8 +28,8 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			Test/Src/CCUStateTicksTests.c
 			Test/Src/stm32g4xx_hal.c
 			Test/Src/stm32g4xx_ll_gpio.c
+			Test/Src/StateUtilsTests.c
 			Application/Src/StateTicks.c
-			Application/Src/StateUtils.c
 	)
 	target_link_libraries(
 		CCUStateTicksTests
@@ -37,6 +37,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			GLOBALSHARE_LIB
 			LOGOMATIC_LIB
 			BitManipulations_Lib
+
 	)
 	add_test(CCUStateTicksTests CCUStateTicksTests)
 	# FIXME Add more HOOTL tests
