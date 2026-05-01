@@ -52,45 +52,45 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
 	}
 }
- /*
+/*
 void BMSLights(ECU_StateData *stateLump)
 {
-	bool light = 0;
-	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
-	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
-	light |= bmsFailure(stateLump);
-	// TODO: interrupted/missing BMS vals
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+       bool light = 0;
+       light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
+       light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
+       light |= bmsFailure(stateLump);
+       // TODO: interrupted/missing BMS vals
+       GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light)};
+       ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void IMDLights(ECU_StateData *stateLump)
 {
-	uint8_t light = 0;
-	// TODO: isolation failure?
-	light |= imdFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 1, light)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+       uint8_t light = 0;
+       // TODO: isolation failure?
+       light |= imdFailure(stateLump);
+       GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 1, light)};
+       ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void BSPDLights(ECU_StateData *stateLump)
 {
-	uint8_t light = 0;
-	// TODO: isolation failure?
-	light |= bspdFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 2, light)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+       uint8_t light = 0;
+       // TODO: isolation failure?
+       light |= bspdFailure(stateLump);
+       GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 2, light)};
+       ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void DashLights(ECU_StateData *stateLump)
 {
-	uint8_t light = 0;
-	light |= imdFailure(stateLump);
-	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
-	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
-	light |= bmsFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light) || SetBitInByte(0, 1, light)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+       uint8_t light = 0;
+       light |= imdFailure(stateLump);
+       light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
+       light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
+       light |= bmsFailure(stateLump);
+       GRCAN_DASH_CONFIG_MSG message = {.led_bits = SetBitInByte(0, 0, light) || SetBitInByte(0, 1, light)};
+       ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 */
 
