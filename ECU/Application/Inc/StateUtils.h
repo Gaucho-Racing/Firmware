@@ -33,7 +33,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
-#define MAX_PRECHARGE_TIME 15000 // in ms
+#define MAX_PRECHARGE_TIME 8000 // in ms
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
