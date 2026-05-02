@@ -73,9 +73,10 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
 			state_data->max_cell_temp_c = bcu_status_2->max_cell_temp * 0.25f;
 			state_data->bcu_error_warning_bits = bcu_status_2->status_flags;
-			state_data->ir_minus = GETBIT(bcu_status_2->precharge_latch_flags, 1);
-			state_data->ir_plus = GETBIT(bcu_status_2->precharge_latch_flags, 2);
-			state_data->bcu_software_latch = GETBIT(bcu_status_2->precharge_latch_flags, 3);
+			// BCU does weird stuff
+			state_data->ir_minus = GETBIT(bcu_status_2->precharge_latch_flags, 4);
+			state_data->ir_plus = GETBIT(bcu_status_2->precharge_latch_flags, 5);
+			state_data->bcu_software_latch = GETBIT(bcu_status_2->precharge_latch_flags, 6);
 			break;
 
 		case GRCAN_INVERTER_STATUS_1:
