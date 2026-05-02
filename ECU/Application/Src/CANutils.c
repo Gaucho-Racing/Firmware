@@ -18,7 +18,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 {
 	if (size > FDCAN_MAX_DATA_BYTES) {
 		size = FDCAN_MAX_DATA_BYTES;
-		LOGOMATIC("Tried to send more than 64 bytes over CAN");
+		LOGOMATIC("Tried to send more than 64 bytes over CAN\n");
 	}
 
 	uint32_t ID = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & messageID) << 8) | (0xFF & destNode);
@@ -111,7 +111,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 					.RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
 					.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 32768)};
 
-	LOGOMATIC("Sending ECU State Data over CAN");
+	// LOGOMATIC("Sending ECU State Data over CAN\n");
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
