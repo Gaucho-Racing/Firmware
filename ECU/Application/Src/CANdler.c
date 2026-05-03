@@ -101,13 +101,20 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				break;
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
-			if (state_data->ecu_state != GR_TS_DISCHARGE) {
+
+			LOGOMATIC("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n",
+				  dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1, (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
+
+			if (state_data->ecu_state == GR_TS_DISCHARGE || state_data->ecu_state == GR_GLV_ON) {
 				state_data->ts_active_button_pressed = dash_data->button_flags & 1;
 			} else {
-				state_data->ts_active_button_pressed = false;
+				state_data->ts_active_button_pressed = (dash_data->button_flags >> 2) & 1;
 			}
-			if (state_data->ecu_state == GR_DRIVE_ACTIVE || state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
-				state_data->rtd_button_pressed = dash_data->button_flags & 2;
+
+			if (state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
+				state_data->rtd_button_pressed = (dash_data->button_flags >> 1) & 1;
+			} else if (state_data->ecu_state == GR_DRIVE_ACTIVE) {
+				state_data->rtd_button_pressed = (dash_data->button_flags >> 3) & 1;
 			} else {
 				state_data->rtd_button_pressed = false;
 			}
