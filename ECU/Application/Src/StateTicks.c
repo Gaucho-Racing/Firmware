@@ -146,7 +146,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		return;
 	}
 
-	if (PressingBrake(stateData) && stateData->rtd_button_pressed) {
+	if (/*PressingBrake(stateData) &&*/ stateData->rtd_button_pressed) {	// FIXME
 		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
 		GRCAN_ECU_ANALOG_DATA_MSG pedals_message = {.bspd_signal = stateData->bspd_signal,
@@ -250,7 +250,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 						     .brakeline_r_signal = stateData->Brake_R_Signal,
 						     .steering_angle_signal = stateData->steering_angle_signal,
 						     .aux_signal = stateData->aux_signal};
-		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
+		// ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));	// FIXME
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
