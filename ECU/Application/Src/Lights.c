@@ -99,7 +99,7 @@ void dashLights(ECU_StateData *stateLump)
 {
 	// BMS
 	bool light = 0;
-	GRCAN_DASH_CONFIG_MSG message = {};
+	GRCAN_DASH_CONFIG_MSG message;
 
 	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
 	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
