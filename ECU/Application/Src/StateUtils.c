@@ -43,7 +43,8 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= bmsFailure(stateData);
 	problem |= bspdFailure(stateData);
 	if (problem) {
-		LOGOMATIC("Critical Error Detected in State %d | %f C | %f V | BCU SW %d | IR+ %d | IR- %d | IMD %d | BMS %d | BSPD %d\n", stateData->ecu_state, stateData->max_cell_temp_c, stateData->ts_voltage, stateData->bcu_software_latch, stateData->ir_plus, stateData->ir_minus, imdFailure(stateData), bmsFailure(stateData), bspdFailure(stateData));
+		LOGOMATIC("Critical Error Detected in State %d | %f C | %f V | BCU SW %d | IR+ %d | IR- %d | IMD %d | BMS %d | BSPD %d\n", stateData->ecu_state, stateData->max_cell_temp_c,
+			  stateData->ts_voltage, stateData->bcu_software_latch, stateData->ir_plus, stateData->ir_minus, imdFailure(stateData), bmsFailure(stateData), bspdFailure(stateData));
 		// LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	}
 	return problem;
