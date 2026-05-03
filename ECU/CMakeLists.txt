@@ -79,6 +79,7 @@ target_sources(
 		Application/Src/CANutils.c
 		Application/Src/Pinging.c
 		Application/Src/Lights.c
+		Application/Src/ecu_can.c
 )
 
 target_link_libraries(
@@ -86,7 +87,7 @@ target_link_libraries(
 	INTERFACE
 		CANfigurator
 		GR_ADC
-		PERIPHERAL_CAN_LIB
+		#PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
 )
 

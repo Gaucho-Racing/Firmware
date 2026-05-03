@@ -1,7 +1,7 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
-#define PROFILE 1
+#define PROFILE 0
 
 #include <stdbool.h>
 #include <stdint.h>

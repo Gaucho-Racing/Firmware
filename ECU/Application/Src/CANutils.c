@@ -7,10 +7,12 @@
 #include "StateData.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 #include "string.h"
+
+extern ECU_StateData stateLump;
 
 uint32_t lastTickECUStateDataSent = 0;
 
@@ -41,10 +43,10 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 
 	switch (bus) {
 		case GRCAN_BUS_PRIMARY:
-			can_send(primary_can, &msg);
+			can_enqueue(stateLump.primary_can, &msg);
 			break;
 		case GRCAN_BUS_DATA:
-			can_send(data_can, &msg);
+			can_enqueue(stateLump.data_can, &msg);
 			break;
 		default:
 			LOGOMATIC("CAN: Invalid bus ID %d\n", bus);

@@ -40,7 +40,7 @@
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "adc.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "stm32g4xx_hal.h"
 /* USER CODE END Includes */
 
@@ -287,7 +287,7 @@ void CAN_Configure(void)
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	primary_can = can_init(&canCfg);
+	stateLump.primary_can = can_init(&canCfg);
 
 	// Filter 1 Definitions
 	FDCAN_FilterTypeDef fdcan1_filter;
@@ -301,7 +301,7 @@ void CAN_Configure(void)
 
 	fdcan1_filter.FilterIndex = 1;
 	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
+	HAL_FDCAN_ConfigFilter(stateLump.primary_can->hal_fdcanP, &fdcan1_filter);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -328,13 +328,14 @@ void CAN_Configure(void)
 	fdcan2_filter.FilterIndex = 1;
 	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
 
-	data_can = can_init(&canCfg);
+	stateLump.data_can = can_init(&canCfg);
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigFilter(data_can->hal_fdcanP, &fdcan2_filter);
+	HAL_FDCAN_ConfigFilter(stateLump.data_can->hal_fdcanP, &fdcan2_filter);
 
-	can_start(primary_can);
-	can_start(data_can);
+	can_start(stateLump.primary_can);
+	can_start(stateLump.data_can);
+	CAN_Timer_Start();
 }
 /**
  * @brief  The application entry point.
@@ -446,8 +447,7 @@ int main(void)
 
 		static uint32_t delay_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
-			delay_timer = MillisecondsSinceBoot() + 10; // TODO: determine how long
-			HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_11);
+			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 			// odr = GPIOx->ODR;
 			ECU_State_Tick();
 			SendECUStateDataOverCAN(&stateLump);

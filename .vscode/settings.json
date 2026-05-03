@@ -24,5 +24,6 @@
 	"files.trimTrailingWhitespace": true,
 	"files.eol": "\n",
 	"cmake.useCMakePresets": "always",
-	"cortex-debug.variableUseNaturalFormat": false
+	"cortex-debug.variableUseNaturalFormat": false,
+	"cmake.sourceDirectory": "/Users/andrey/Documents/UCSB/GR/GR26/Firmware-1"
 }

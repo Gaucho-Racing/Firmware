@@ -13,7 +13,7 @@
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "stm32g4xx_ll_gpio.h"
 
 /**
@@ -26,9 +26,6 @@
  */
 
 ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
-
-CANHandle *primary_can;
-CANHandle *data_can;
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)

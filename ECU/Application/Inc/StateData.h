@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "ecu_can.h"
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
 
@@ -99,6 +100,9 @@ typedef volatile struct ECU_StateData {
 	bool apps_bse_violation;
 
 	GR_ECU_State ecu_state;
+
+	CANHandle *primary_can;
+	CANHandle *data_can;
 } ECU_StateData;
 
 #endif

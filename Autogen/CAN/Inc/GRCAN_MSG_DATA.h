@@ -317,6 +317,9 @@ typedef struct {
 0: BMS LED command
 1: IMD LED command
 2: BSPD LED command
+0: BMS_LATACH
+1: IMD_LATCH
+2: BSPD_LATCH
 3-7: Reserved (Byte 0) */
 	uint8_t led_bits;
 } GRCAN_DASH_CONFIG_MSG;

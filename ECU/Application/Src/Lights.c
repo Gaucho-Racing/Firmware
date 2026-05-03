@@ -5,7 +5,7 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 
@@ -97,18 +97,20 @@ void DashLights(ECU_StateData *stateLump)
 static uint32_t last_dash_can_send;
 void dashLights(ECU_StateData *stateLump)
 {
+	//light control for if signal goog
 	GRCAN_DASH_CONFIG_MSG message = {.led_bits = bspdFailure(stateLump) << 2 | imdFailure(stateLump) << 1 | bmsFailure(stateLump)};
+	//this is needed for the latch open control
+	message.led_bits |= (stateLump->bspd_sense >= 0.6 && stateLump->bspd_sense <= 1.35) << 5 // 0.3, 1.2, 1.6
+					| ((stateLump->imd_sense >= 0.5 && stateLump->imd_sense <= 1.6) << 4)	// 0.5 to 1.6
+					| ((stateLump->ams_sense >= 0.5 && stateLump->ams_sense <= 1.6) << 3);	// 0.5 to 1.6
 
 	// TODO: determine moving millis_since_boot to statedata?
-	uint32_t currTime = MillisecondsSinceBoot();
-	if (RATE_LIMIT_10_HZ(currTime, last_dash_can_send)) {
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
-		last_dash_can_send = currTime;
-	}
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void lightControl(ECU_StateData *stateData)
 {
+	// LOGOMATIC("Tx FIFO fill level: %d", HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1, FDCAN_TX_FIFO0));
 	BrakeLightControl(stateData);
 	TSSILightControl(stateData);
 	RTDButtonLightControl(stateData);
