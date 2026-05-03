@@ -102,8 +102,8 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
 
-			LOGOMATIC("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n",
-				  dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1, (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
+			LOGOMATIC("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
+				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
 
 			if (state_data->ecu_state == GR_TS_DISCHARGE || state_data->ecu_state == GR_GLV_ON) {
 				state_data->ts_active_button_pressed = dash_data->button_flags & 1;
