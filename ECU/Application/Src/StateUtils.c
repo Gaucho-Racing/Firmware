@@ -52,7 +52,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->ams_sense >= 2.0f) || (stateData->ams_sense <= 1.0f); // TODO: find better range
+	return stateData->ams_sense <= 0.6f;
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
@@ -63,13 +63,12 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 		return false;
 	}
 
-	return (stateData->imd_sense >= 2.0f) || (stateData->imd_sense <= 1.0f); // TODO: find better range
+	return stateData->imd_sense <= 0.6f;
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
-	return (stateData->bspd_sense >= 2.0f) || (stateData->bspd_sense <= 1.0f); // TODO: find better range
-										   // TODO: shutdown switch stuff
+	return stateData->bspd_sense <= 0.6f;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
