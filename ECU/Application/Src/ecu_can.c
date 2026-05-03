@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_dma.h"
@@ -357,8 +356,8 @@ void can_tx_dequeue_helper(CANHandle *handle)
 
 	// LOGOMATIC("CAN %s, LOAD %2.2f \n", can_get_instance_name(handle->hal_fdcanP->Instance), (float)handle->tx_elements / (float)handle->tx_capacity);
 
-	    // use interrupt masking in case any other ISRs need to lock the circular buffer
-	    uint32_t basepri = __get_BASEPRI();
+	// use interrupt masking in case any other ISRs need to lock the circular buffer
+	uint32_t basepri = __get_BASEPRI();
 	__set_BASEPRI(handle->tx_interrupt_priority << 4);
 	// single consumer shouldn't affect state of circular buffer
 	if (handle->tx_elements == 0) {
@@ -396,14 +395,14 @@ dwt_timer_t send_timer = {0};
 CAN_STATUS can_enqueue(CANHandle *canHandle, FDCANTxMessage *message)
 {
 
-    if (validate_can_handle(canHandle) != CAN_SUCCESS) {
-        return CAN_ERROR;
-    }
+	if (validate_can_handle(canHandle) != CAN_SUCCESS) {
+		return CAN_ERROR;
+	}
 
-    if (!canHandle->started) {
-        LOGOMATIC("CAN_send: instance is not started\n");
-        return CAN_ERROR;
-    }
+	if (!canHandle->started) {
+		LOGOMATIC("CAN_send: instance is not started\n");
+		return CAN_ERROR;
+	}
 
 	if (message == NULL) {
 		LOGOMATIC("CAN_enqueue: received null pointer for message\n");
@@ -415,8 +414,8 @@ CAN_STATUS can_enqueue(CANHandle *canHandle, FDCANTxMessage *message)
 		return CAN_ERROR;
 	}
 
-    // enques can message
-    if (canHandle->tx_elements < canHandle->tx_capacity){
+	// enques can message
+	if (canHandle->tx_elements < canHandle->tx_capacity) {
 		// int result = GR_CircularBuffer_Push(canHandle->tx_buffer, message, sizeof(FDCANTxMessage));
 
 		uint32_t idx = (canHandle->tx_tail + canHandle->tx_elements) % canHandle->tx_capacity;
@@ -440,7 +439,6 @@ CAN_STATUS can_enqueue(CANHandle *canHandle, FDCANTxMessage *message)
 	__set_BASEPRI(__get_BASEPRI());
 	return CAN_ERROR;
 }
-
 
 // ONLY CALLED FROM A TIMER
 CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)

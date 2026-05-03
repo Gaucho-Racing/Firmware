@@ -19,9 +19,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_it.h"
-#include "stm32g4xx_ll_tim.h"
-#include "main.h"
+
 #include "ecu_can.h"
+#include "main.h"
+#include "stm32g4xx_ll_tim.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -193,10 +194,9 @@ void TIM5_IRQHandler(void)
 {
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM5)) {
 		LL_TIM_ClearFlag_UPDATE(TIM5);
-        can_tx_dequeue_helper(stateLump.primary_can); // TODO: make this work for multiple instances if needed
+		can_tx_dequeue_helper(stateLump.primary_can); // TODO: make this work for multiple instances if needed
 		can_tx_dequeue_helper(stateLump.data_can);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_11);
-
 	}
 }
 /* USER CODE END 1 */
