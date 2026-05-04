@@ -191,7 +191,7 @@ int main(void)
 		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = temp};
 		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = temp};
 		bool bad = check_status(&mag_dev);
-		printf("Temperature is %d\n", (double)temp);
+		printf("Temperature is %d\n", temp);
 		printf("Angle is %d\n", angle);
 		printf("Number of turns is %d\n", turns);
 		if (bad) {
