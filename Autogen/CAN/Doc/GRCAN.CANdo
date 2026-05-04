@@ -402,40 +402,40 @@ Message ID:
       bit_start: 8
       comment:
         [Byte 1 / Bits 8-15] ECU ping targets
-        8: BCU
-        9: GR Inverter
-        10: Fan Controller 1
-        11: Fan Controller 2
-        12: Fan Controller 3
-        13: Dash Panel
-        14: TCM
-        15: DGPS
+        8: BCU (1: OK, 0: Timeout)
+        9: GR Inverter (1: OK, 0: Timeout)
+        10: Fan Controller 1 (1: OK, 0: Timeout)
+        11: Fan Controller 2 (1: OK, 0: Timeout)
+        12: Fan Controller 3 (1: OK, 0: Timeout)
+        13: Dash Panel (1: OK, 0: Timeout)
+        14: TCM (1: OK, 0: Timeout)
+        15: DGPS (1: OK, 0: Timeout)
       data type: u8
     Ping Group 2:
       bit_start: 16
       comment:
         [Byte 2 / Bits 16-23] ECU ping targets
-        16: Suspension FL
-        17: Suspension FR
-        18: Suspension RL
-        19: Suspension RR
-        20: InboardFloor FL
-        21: InboardFloor FR
-        22: InboardFloor RL
-        23: InboardFloor RR
+        16: Suspension FL (1: OK, 0: Timeout)
+        17: Suspension FR (1: OK, 0: Timeout)
+        18: Suspension RL (1: OK, 0: Timeout)
+        19: Suspension RR (1: OK, 0: Timeout)
+        20: InboardFloor FL (1: OK, 0: Timeout)
+        21: InboardFloor FR (1: OK, 0: Timeout)
+        22: InboardFloor RL (1: OK, 0: Timeout)
+        23: InboardFloor RR (1: OK, 0: Timeout)
       data type: u8
     Ping Group 3:
       bit_start: 24
       comment:
         [Byte 3 / Bits 24-31] ECU ping targets
-        24: TireTemp FL
-        25: TireTemp FR
-        26: TireTemp RL
-        27: TireTemp RR
-        28: BrakeTemp FL
-        29: BrakeTemp FR
-        30: BrakeTemp RL
-        31: BrakeTemp RR
+        24: TireTemp FL (1: OK, 0: Timeout)
+        25: TireTemp FR (1: OK, 0: Timeout)
+        26: TireTemp RL (1: OK, 0: Timeout)
+        27: TireTemp RR (1: OK, 0: Timeout)
+        28: BrakeTemp FL (1: OK, 0: Timeout)
+        29: BrakeTemp FR (1: OK, 0: Timeout)
+        30: BrakeTemp RL (1: OK, 0: Timeout)
+        31: BrakeTemp RR (1: OK, 0: Timeout)
       data type: u8
     Power Level:
       bit_start: 32
@@ -490,17 +490,17 @@ Message ID:
       scaled min: 0
       scaled max: 655.35
       map equation: "0.01x"
-    FR Wheel RPM:
+    FL Wheel RPM:
       bit_start: 32
-      comment: Wheel RPM
+      comment: FL Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-    FL Wheel RPM:
+    FR Wheel RPM:
       bit_start: 48
-      comment: Wheel RPM
+      comment: FR Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -509,17 +509,17 @@ Message ID:
   ECU Status 3:
     MSG ID: 0x005
     MSG LENGTH: 5
-    RR Wheel RPM:
+    RL Wheel RPM:
       bit_start: 0
-      comment: Wheel RPM
+      comment: RL Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-    RL Wheel RPM:
+    RR Wheel RPM:
       bit_start: 16
-      comment: Wheel RPM
+      comment: RR Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
