@@ -3422,35 +3422,34 @@ Message ID:
       map equation: "1x"
   Dash Status:
     MSG ID: 0x01A
-    MSG LENGTH: 3
-    button_flags:
+    MSG LENGTH: 1
+    button_led_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: TS Active
-        1: RTD
-        2-7: Reserved
-      data type: u8
-    led_bits:
-      bit_start: 8
-      comment:
-        [Byte 1 / Bits 8-15]
-        0: BMS
-        1: IMD
-        2: BSPD
-        3-7: Reserved
+        0: TS press
+        1: RTD press
+        2: TS hold
+        3: RTD hold
+        4: BSPD led
+        5: IMD led
+        6: BMS led
+        7: Reserved
       data type: u8
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
-    led_bits:
+    led_latch_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: BMS LED command
-        1: IMD LED command
-        2: BSPD LED command
-        3-7: Reserved
+        0: BSPD led
+        1: IMD led
+        2: BMS led
+        3: BSPD latch
+        4: IMD latch
+        5: BMS latch
+        6-7: Reserved
       data type: u8
   TCM Status:
     MSG ID: 0x029
