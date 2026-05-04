@@ -33,24 +33,24 @@ See diagram in StateMachine.h (Byte 0) */
 15: DGPS (Byte 1) */
 	uint8_t ping_group_1;
 	/** [Byte 2 / Bits 16-23] ECU ping targets
-16: Suspension_FL
-17: Suspension_FR
-18: Suspension_RL
-19: Suspension_RR
-20: InboardFloor_FL
-21: InboardFloor_FR
-22: InboardFloor_RL
-23: InboardFloor_RR (Byte 2) */
+16: Suspension FL
+17: Suspension FR
+18: Suspension RL
+19: Suspension RR
+20: InboardFloor FL
+21: InboardFloor FR
+22: InboardFloor RL
+23: InboardFloor RR (Byte 2) */
 	uint8_t ping_group_2;
 	/** [Byte 3 / Bits 24-31] ECU ping targets
-24: TireTemp_FL
-25: TireTemp_FR
-26: TireTemp_RL
-27: TireTemp_RR
-28: BrakeTemp_FL
-29: BrakeTemp_FR
-30: BrakeTemp_RL
-31: BrakeTemp_RR (Byte 3) */
+24: TireTemp FL
+25: TireTemp FR
+26: TireTemp RL
+27: TireTemp RR
+28: BrakeTemp FL
+29: BrakeTemp FR
+30: BrakeTemp RL
+31: BrakeTemp RR (Byte 3) */
 	uint8_t ping_group_3;
 	/** Controls the AC current limits to each of the inverters
 Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
