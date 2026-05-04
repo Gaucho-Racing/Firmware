@@ -138,12 +138,12 @@ CAN_STATUS defaultSTM32G431x8_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
-	canCfg.hal_fdcan_init.DataPrescaler = 8;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 47; // 64 MHz PLL1Q clock -> (1+47+16) = 64 tq, 1 Mbps at 75% sample point
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 16;
+	canCfg.hal_fdcan_init.DataPrescaler = 1;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 5; // 64 MHz PLL1Q clock -> (1+5+2) = 8 tq, 8 Mbps at 75% sample point
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 2;
 	canCfg.hal_fdcan_init.StdFiltersNbr = numStdFilters;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = numExtFilters;
 

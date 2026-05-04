@@ -25,7 +25,7 @@ static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TTS_FRAME0,	GRCAN_TTS
 
 void CANInitialize()
 {
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL);
 	CANConfig my_cfg;
 	get_cfg(FDCAN1, CAN_callback, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
 	can_handler = can_init(&my_cfg);
