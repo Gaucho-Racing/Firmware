@@ -98,7 +98,7 @@ CM_ SG_ 2150631426 SDC_Voltage "Voltage before BCU Latch data type: u8 units: Vo
 CM_ SG_ 2150631426 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
 CM_ SG_ 2150631426 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
 CM_ SG_ 2150631426 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Charge) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
-CM_ SG_ 2150631426 precharge_latch_flags "[Byte 6 / Bits 48-55] 48: Precharge Timeout 49: IR- / Precharge State (0:Open, 1:Closed) 50: IR+ State (0:Open, 1:Closed) 51: Software Latch (0:Open, 1:Closed) 52-55: Reserved";
+CM_ SG_ 2150631426 precharge_latch_flags "[Byte 6 / Bits 48-55] 55: Precharge Timeout 54: IR- / Precharge State (0:Open, 1:Closed) 53: IR+ State (0:Open, 1:Closed) 52: Software Latch (0:Open, 1:Closed) 48-51: Reserved";
 CM_ SG_ 2150631682 HV_Input_Voltage "600v input voltage";
 CM_ SG_ 2150631682 HV_Output_Voltage "20v output voltage";
 CM_ SG_ 2150631682 HV_Input_Current "600v input current";
