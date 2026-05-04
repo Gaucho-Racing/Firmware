@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdbool.h>
 
+#include "CANutils.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_MSG_ID.h"
@@ -13,7 +14,6 @@
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
-#include "CANutils.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
