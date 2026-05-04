@@ -4,7 +4,7 @@ NS_ :
 
 BS_:
 
-BU_: BCU DGPS Debugger ECU TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM
+BU_: BCU DGPS Debugger ECU SAMM_Mag_1 SAMM_Mag_2 SAMM_ToF_1 SAMM_ToF_2 TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
 
 BO_ 2150629633 BCU_Debug_FD_to_Debugger: 64 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
