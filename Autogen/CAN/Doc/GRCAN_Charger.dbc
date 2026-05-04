@@ -11,14 +11,14 @@ BO_ 2550588916 BCU_Charger_Control_to_Charger: 5 BCU
  SG_ Set_Current : 16|1@1+ (1,0) [0|0] "" Charger
  SG_ Charge_Enable : 17|1@1+ (1,0) [0|0] "" Charger
 
-BO_ 2147682050 BCU_BCU_Status_1_to_CCU: 8 BCU
+BO_ 2150631170 BCU_BCU_Status_1_to_CCU: 8 BCU
  SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" CCU
  SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" CCU
  SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps" CCU
  SG_ Accumulator_SOC : 48|8@1+ (0.392157,0) [0|100] "%" CCU
  SG_ GLV_SOC : 56|8@1+ (0.392157,0) [0|100] "%" CCU
 
-BO_ 2147682306 BCU_BCU_Status_2_to_CCU: 7 BCU
+BO_ 2150631426 BCU_BCU_Status_2_to_CCU: 7 BCU
  SG_ _20v_Voltage : 0|8@1+ (1,0) [0|0] "" CCU
  SG_ _12v_Voltage : 8|8@1+ (1,0) [0|0] "" CCU
  SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] "" CCU
@@ -27,7 +27,7 @@ BO_ 2147682306 BCU_BCU_Status_2_to_CCU: 7 BCU
  SG_ status_flags : 40|1@1+ (1,0) [0|0] "" CCU
  SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] "" CCU
 
-BO_ 2147682562 BCU_BCU_Status_3_to_CCU: 8 BCU
+BO_ 2150631682 BCU_BCU_Status_3_to_CCU: 8 BCU
  SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" CCU
  SG_ HV_Output_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" CCU
  SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" CCU
@@ -42,7 +42,7 @@ BO_ 2566869221 Charger_Charger_Data_to_BCU: 8 Charger
  SG_ Connection_Error : 20|1@1+ (1,0) [0|0] "" BCU
  SG_ Communication_State : 21|1@1+ (1,0) [0|0] "" BCU
 
-BO_ 2147549708 Debugger_Ping_to_Charging_SDC: 4 Debugger
+BO_ 2148532748 Debugger_Ping_to_Charging_SDC: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Charging_SDC
 
 BO_ 269 Energy_Meter_EM_Measurement_to_BCU: 8 Energy_Meter
@@ -80,35 +80,35 @@ BO_ 2566849012 IMD_IMD_general_to_BCU: 8 IMD
  SG_ Status : 32|16@1+ (1,0) [0|0] "" BCU
  SG_ Activity : 48|8@1+ (1,0) [0|0] "" BCU
 
-BO_ 2147617283 CCU_BCU_Precharge_to_BCU: 1 CCU
+BO_ 2149583363 CCU_BCU_Precharge_to_BCU: 1 CCU
  SG_ Set_TS_Active : 0|1@1+ (1,0) [0|0] "Bool" BCU
 
-BO_ 2147614723 CCU_Debug_2_0_to_BCU: 8 CCU
+BO_ 2149580803 CCU_Debug_2_0_to_BCU: 8 CCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" BCU
 
 CM_ SG_ 2550588916 Charge_Enable "1: Start Charging 0: Stop Charging";
-CM_ SG_ 2147682050 Accumulator_Voltage "All cell voltages added up";
-CM_ SG_ 2147682050 TS_Voltage "Output terminal voltage of accumulator";
-CM_ SG_ 2147682050 Accumulator_Current "Current output of accumulator";
-CM_ SG_ 2147682050 Accumulator_SOC "Accumulator state of charge (Based on lowest cell)";
-CM_ SG_ 2147682050 GLV_SOC "GLV state of charge";
-CM_ SG_ 2147682306 _20v_Voltage "20v GLV voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2147682306 _12v_Voltage "12v supply voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2147682306 SDC_Voltage "Voltage before BCU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2147682306 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
-CM_ SG_ 2147682306 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
-CM_ SG_ 2147682306 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Charge) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
-CM_ SG_ 2147682306 precharge_latch_flags "[Byte 6 / Bits 48-55] 48: Precharge Timeout 49: IR- / Precharge State (0:Open, 1:Closed) 50: IR+ State (0:Open, 1:Closed) 51: Software Latch (0:Open, 1:Closed) 52-55: Reserved";
-CM_ SG_ 2147682562 HV_Input_Voltage "600v input voltage";
-CM_ SG_ 2147682562 HV_Output_Voltage "20v output voltage";
-CM_ SG_ 2147682562 HV_Input_Current "600v input current";
-CM_ SG_ 2147682562 HV_Output_Current "20v output current";
+CM_ SG_ 2150631170 Accumulator_Voltage "All cell voltages added up";
+CM_ SG_ 2150631170 TS_Voltage "Output terminal voltage of accumulator";
+CM_ SG_ 2150631170 Accumulator_Current "Current output of accumulator";
+CM_ SG_ 2150631170 Accumulator_SOC "Accumulator state of charge (Based on lowest cell)";
+CM_ SG_ 2150631170 GLV_SOC "GLV state of charge";
+CM_ SG_ 2150631426 _20v_Voltage "20v GLV voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 _12v_Voltage "12v supply voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 SDC_Voltage "Voltage before BCU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
+CM_ SG_ 2150631426 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
+CM_ SG_ 2150631426 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Charge) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
+CM_ SG_ 2150631426 precharge_latch_flags "[Byte 6 / Bits 48-55] 48: Precharge Timeout 49: IR- / Precharge State (0:Open, 1:Closed) 50: IR+ State (0:Open, 1:Closed) 51: Software Latch (0:Open, 1:Closed) 52-55: Reserved";
+CM_ SG_ 2150631682 HV_Input_Voltage "600v input voltage";
+CM_ SG_ 2150631682 HV_Output_Voltage "20v output voltage";
+CM_ SG_ 2150631682 HV_Input_Current "600v input current";
+CM_ SG_ 2150631682 HV_Output_Current "20v output current";
 CM_ SG_ 2566869221 Hardware_Failure "Bit 0: Hardware Failure: 0-Normal, 1-Error";
 CM_ SG_ 2566869221 OverTemp "Bit 1: OverTemp: 0-Normal, 1-Error";
 CM_ SG_ 2566869221 Input_Voltage_Error "Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage";
 CM_ SG_ 2566869221 Connection_Error "Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC";
 CM_ SG_ 2566869221 Communication_State "Bit 4: Communication State: 0-Normal, 1-Timeout";
-CM_ SG_ 2147549708 Timestamp "Time in millis";
+CM_ SG_ 2148532748 Timestamp "Time in millis";
 CM_ SG_ 269 Current "TS Current";
 CM_ SG_ 269 Voltage "TS Voltage";
 CM_ SG_ 781 Team_Signal_1 "Frick if I know";
@@ -124,5 +124,5 @@ CM_ SG_ 1549 Min_Temp "Min temp of all sensors";
 CM_ SG_ 1549 Max_Temp "Max temp of all sensors";
 CM_ SG_ 1549 Temp_5n "[0,5,10,15,20,25,30] based on n above";
 CM_ SG_ 2566849012 Status "Bit 0: true = Device error active Bit 1: true = HV_pos connection failure Bit 2: true = HV_neg connection failure Bit 3: true = Earth connection failure Bit 4: true = Iso Alarm (iso value below threshold error) Bit 5: true = Iso Warning (iso value below threshold warning) Bit 6: true = Iso Outdated (value \"Time elapsed since lst measurement\" > = \"measurement timeout\") Bit 7: true = Unbalance Alarm (unbalance value below threshold) Bit 8: true = Undervoltage Alarm Bit 9: true = Unsafe to Start Bit 10: true = Earthlift open";
-CM_ SG_ 2147617283 Set_TS_Active "0: shutdown, 1: go TS Active/Precharge";
-CM_ SG_ 2147614723 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2149583363 Set_TS_Active "0: shutdown, 1: go TS Active/Precharge";
+CM_ SG_ 2149580803 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
