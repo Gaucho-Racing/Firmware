@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.25)
 
-message(FATAL_ERROR "Dash panel is no longer going to be used, it has been replaced by GR24 Arduino-based dash panel for the GR26 year")
+message(
+	FATAL_ERROR
+	"Dash panel is no longer going to be used, it has been replaced by GR24 Arduino-based dash panel for the GR26 year"
+)
 
 # Setup compiler settings
 set(CMAKE_C_STANDARD 11)
