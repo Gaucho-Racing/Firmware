@@ -382,28 +382,28 @@ BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 16 ECU
 BO_ 2149592836 ECU_ECU_Performance_to_TCM: 4 ECU
  SG_ Elapsed_Cycles : 0|32@1+ (1,0) [0|0] "Clock Cycles" TCM
 
-BO_ 2147615264 ECU_Ping_to_InboardFloor_FL: 4 ECU
+BO_ 2149581344 ECU_Ping_to_InboardFloor_FL: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_FL
 
-BO_ 2147615265 ECU_Ping_to_InboardFloor_FR: 4 ECU
+BO_ 2149581345 ECU_Ping_to_InboardFloor_FR: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_FR
 
-BO_ 2147615266 ECU_Ping_to_InboardFloor_RL: 4 ECU
+BO_ 2149581346 ECU_Ping_to_InboardFloor_RL: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_RL
 
-BO_ 2147615267 ECU_Ping_to_InboardFloor_RR: 4 ECU
+BO_ 2149581347 ECU_Ping_to_InboardFloor_RR: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" InboardFloor_RR
 
-BO_ 2147615268 ECU_Ping_to_SuspensionNode_FL: 4 ECU
+BO_ 2149581348 ECU_Ping_to_SuspensionNode_FL: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_FL
 
-BO_ 2147615269 ECU_Ping_to_SuspensionNode_FR: 4 ECU
+BO_ 2149581349 ECU_Ping_to_SuspensionNode_FR: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_FR
 
-BO_ 2147615270 ECU_Ping_to_SuspensionNode_RL: 4 ECU
+BO_ 2149581350 ECU_Ping_to_SuspensionNode_RL: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_RL
 
-BO_ 2147615271 ECU_Ping_to_SuspensionNode_RR: 4 ECU
+BO_ 2149581351 ECU_Ping_to_SuspensionNode_RR: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SuspensionNode_RR
 
 BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
@@ -441,400 +441,16 @@ BO_ 2197827588 DGPS_UVW_DGPS_to_TCM: 6 DGPS
 BO_ 514 SAMM_Mag_1_Ping_to_ECU: 4 SAMM_Mag_1
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150105602 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
+BO_ 2189427202 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150171138 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
+BO_ 2190475778 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150236674 TireTemp_RL_Ping_to_ECU: 4 TireTemp_RL
+BO_ 2191524354 TireTemp_RL_Ping_to_ECU: 4 TireTemp_RL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150302210 TireTemp_RR_Ping_to_ECU: 4 TireTemp_RR
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-CM_ SG_ 2147680513 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
-CM_ SG_ 2147680769 Timestamp "Time in millis";
-CM_ SG_ 2147680770 Timestamp "Time in millis";
-CM_ SG_ 2147683586 Cell_0_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_0_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_1_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_1_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_2_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_2_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_3_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_3_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_4_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_4_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_5_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_5_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_6_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_6_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_7_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_7_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_8_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_8_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_9_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_9_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_10_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_10_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_11_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_11_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_12_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_12_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_13_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_13_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_14_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_14_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_15_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_15_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_16_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_16_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_17_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_17_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_18_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_18_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_19_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_19_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_20_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_20_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_21_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_21_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_22_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_22_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_23_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_23_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_24_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_24_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_25_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_25_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_26_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_26_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_27_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_27_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_28_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_28_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_29_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_29_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_30_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_30_Temp "Cell n temperature";
-CM_ SG_ 2147683586 Cell_31_Voltage "Cell  n voltage";
-CM_ SG_ 2147683586 Cell_31_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_32_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_32_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_33_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_33_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_34_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_34_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_35_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_35_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_36_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_36_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_37_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_37_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_38_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_38_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_39_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_39_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_40_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_40_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_41_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_41_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_42_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_42_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_43_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_43_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_44_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_44_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_45_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_45_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_46_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_46_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_47_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_47_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_48_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_48_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_49_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_49_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_50_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_50_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_51_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_51_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_52_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_52_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_53_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_53_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_54_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_54_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_55_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_55_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_56_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_56_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_57_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_57_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_58_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_58_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_59_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_59_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_60_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_60_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_61_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_61_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_62_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_62_Temp "Cell n temperature";
-CM_ SG_ 2147683842 Cell_63_Voltage "Cell  n voltage";
-CM_ SG_ 2147683842 Cell_63_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_64_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_64_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_65_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_65_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_66_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_66_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_67_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_67_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_68_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_68_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_69_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_69_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_70_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_70_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_71_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_71_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_72_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_72_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_73_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_73_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_74_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_74_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_75_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_75_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_76_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_76_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_77_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_77_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_78_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_78_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_79_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_79_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_80_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_80_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_81_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_81_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_82_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_82_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_83_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_83_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_84_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_84_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_85_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_85_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_86_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_86_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_87_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_87_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_88_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_88_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_89_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_89_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_90_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_90_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_91_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_91_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_92_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_92_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_93_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_93_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_94_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_94_Temp "Cell n temperature";
-CM_ SG_ 2147684098 Cell_95_Voltage "Cell  n voltage";
-CM_ SG_ 2147684098 Cell_95_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_96_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_96_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_97_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_97_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_98_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_98_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_99_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_99_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_100_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_100_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_101_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_101_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_102_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_102_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_103_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_103_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_104_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_104_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_105_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_105_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_106_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_106_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_107_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_107_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_108_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_108_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_109_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_109_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_110_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_110_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_111_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_111_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_112_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_112_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_113_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_113_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_114_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_114_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_115_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_115_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_116_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_116_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_117_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_117_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_118_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_118_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_119_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_119_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_120_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_120_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_121_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_121_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_122_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_122_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_123_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_123_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_124_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_124_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_125_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_125_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_126_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_126_Temp "Cell n temperature";
-CM_ SG_ 2147684354 Cell_127_Voltage "Cell  n voltage";
-CM_ SG_ 2147684354 Cell_127_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_128_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_128_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_129_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_129_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_130_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_130_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_131_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_131_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_132_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_132_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_133_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_133_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_134_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_134_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_135_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_135_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_136_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_136_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_137_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_137_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_138_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_138_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_139_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_139_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_140_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_140_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_141_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_141_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_142_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_142_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_143_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_143_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_144_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_144_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_145_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_145_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_146_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_146_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_147_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_147_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_148_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_148_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_149_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_149_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_150_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_150_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_151_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_151_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_152_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_152_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_153_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_153_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_154_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_154_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_155_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_155_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_156_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_156_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_157_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_157_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_158_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_158_Temp "Cell n temperature";
-CM_ SG_ 2147684610 Cell_159_Voltage "Cell  n voltage";
-CM_ SG_ 2147684610 Cell_159_Temp "Cell n temperature";
-CM_ SG_ 2147549442 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549698 Timestamp "Time in millis";
-CM_ SG_ 2147549443 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549699 Timestamp "Time in millis";
-CM_ SG_ 2147549444 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549700 Timestamp "Time in millis";
-CM_ SG_ 2147614977 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
-CM_ SG_ 2147615233 Timestamp "Time in millis";
-CM_ SG_ 2147626500 BSPD_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 BSE_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 APPS_1_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 APPS_2_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 Brakeline_F_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 Brakeline_R_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 Steering_Angle_Signal "4-20 mA signal";
-CM_ SG_ 2147626500 AUX_Signal "4-20 mA signal";
-CM_ SG_ 2147626756 Elapsed_Cycles "Represents the total number of clock cycles elapsed for 10 iterations of the main loop";
-CM_ SG_ 2147615264 Timestamp "Time in millis";
-CM_ SG_ 2147615265 Timestamp "Time in millis";
-CM_ SG_ 2147615266 Timestamp "Time in millis";
-CM_ SG_ 2147615267 Timestamp "Time in millis";
-CM_ SG_ 2147615268 Timestamp "Time in millis";
-CM_ SG_ 2147615269 Timestamp "Time in millis";
-CM_ SG_ 2147615270 Timestamp "Time in millis";
-CM_ SG_ 2147615271 Timestamp "Time in millis";
-CM_ SG_ 2147746305 Timestamp "Time in millis";
-CM_ SG_ 2150642436 ALT "altitude";
-CM_ SG_ 2150641924 LAT "lattitude";
-CM_ SG_ 2150642180 LON "longitude";
-CM_ SG_ 2150641668 DGPS_U "U";
-CM_ SG_ 2150641668 DGPS_V "V";
-CM_ SG_ 2150641668 DGPS_W "W";
-CM_ SG_ 514 Timestamp "Time in millis";
-CM_ SG_ 2150105602 Timestamp "Time in millis";
-CM_ SG_ 2150171138 Timestamp "Time in millis";
-CM_ SG_ 2150236674 Timestamp "Time in millis";
-CM_ SG_ 2150302210 Timestamp "Time in millis";
-BO_ 2181038594 SAMM_Mag_1_Ping_to_ECU: 4 SAMM_Mag_1
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2182087170 SAMM_Mag_2_Ping_to_ECU: 4 SAMM_Mag_2
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2183135746 SAMM_ToF_1_Ping_to_ECU: 4 SAMM_ToF_1
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2184184322 SAMM_ToF_2_Ping_to_ECU: 4 SAMM_ToF_2
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2185232898 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2186281474 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2187330050 TireTemp_RL_Ping_to_ECU: 4 TireTemp_RL
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
-
-BO_ 2188378626 TireTemp_RR_Ping_to_ECU: 4 TireTemp_RR
+BO_ 2192572930 TireTemp_RR_Ping_to_ECU: 4 TireTemp_RR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
 CM_ SG_ 2150629633 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
@@ -1192,11 +808,8 @@ CM_ SG_ 2197828100 LON "longitude";
 CM_ SG_ 2197827588 DGPS_U "U";
 CM_ SG_ 2197827588 DGPS_V "V";
 CM_ SG_ 2197827588 DGPS_W "W";
-CM_ SG_ 2181038594 Timestamp "Time in millis";
-CM_ SG_ 2182087170 Timestamp "Time in millis";
-CM_ SG_ 2183135746 Timestamp "Time in millis";
-CM_ SG_ 2184184322 Timestamp "Time in millis";
-CM_ SG_ 2185232898 Timestamp "Time in millis";
-CM_ SG_ 2186281474 Timestamp "Time in millis";
-CM_ SG_ 2187330050 Timestamp "Time in millis";
-CM_ SG_ 2188378626 Timestamp "Time in millis";
+CM_ SG_ 514 Timestamp "Time in millis";
+CM_ SG_ 2189427202 Timestamp "Time in millis";
+CM_ SG_ 2190475778 Timestamp "Time in millis";
+CM_ SG_ 2191524354 Timestamp "Time in millis";
+CM_ SG_ 2192572930 Timestamp "Time in millis";
