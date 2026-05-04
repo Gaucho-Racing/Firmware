@@ -99,7 +99,6 @@ int main(void)
 
 	get_cfg(FDCAN1, on_receivee, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
 
-
 	CANHandle *h1 = can_init(&my_cfg);
 
 	can_start(h1);
