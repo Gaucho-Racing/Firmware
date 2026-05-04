@@ -158,8 +158,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/OutboardSensor.elf",
-			"name": "Outboard Sensor FL",
+			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
+			"name": "Tire Temp FL",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -168,7 +168,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build OutboardSensor FL",
+			"preLaunchTask": "CMake: configure and build TireTemp FL",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
@@ -189,8 +189,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/OutboardSensor.elf",
-			"name": "Outboard Sensor FR",
+			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
+			"name": "Tire Temp FR",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -199,7 +199,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build OutboardSensor FR",
+			"preLaunchTask": "CMake: configure and build TireTemp FR",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
@@ -220,8 +220,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/OutboardSensor.elf",
-			"name": "Outboard Sensor RL",
+			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
+			"name": "Tire Temp RL",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -230,7 +230,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build OutboardSensor RL",
+			"preLaunchTask": "CMake: configure and build TireTemp RL",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {
@@ -251,8 +251,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/OutboardSensor.elf",
-			"name": "Outboard Sensor RR",
+			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
+			"name": "Tire Temp RR",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -261,7 +261,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build OutboardSensor RR",
+			"preLaunchTask": "CMake: configure and build TireTemp RR",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
 			"swoConfig": {

@@ -105,7 +105,7 @@ add_gr_project(STM32G474xE CCU)
 # add_gr_project(STM32G474xE DashPanel)
 add_gr_project(STM32G474xE AnalogCalibration)
 add_gr_project(STM32G474xE CANine)
-add_gr_project(STM32G431x8 OutboardSensor)
+add_gr_project(STM32G431x8 TireTemp)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)

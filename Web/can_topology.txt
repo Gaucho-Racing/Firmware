@@ -29,10 +29,10 @@ Data:
   SAMM_Mag_2
   SAMM_ToF_1
   SAMM_ToF_2
-  OutboardSensor_FL
-  OutboardSensor_FR
-  OutboardSensor_RL
-  OutboardSensor_RR
+  TireTemp_FL
+  TireTemp_FR
+  TireTemp_RL
+  TireTemp_RR
 
 Charger:
   CCU

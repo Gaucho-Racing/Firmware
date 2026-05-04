@@ -1,2 +1,2 @@
 The following platform has been used for:
-- Outboard Sensor (GR25?, GR26)
+- Tire Temp (GR25?, GR26)

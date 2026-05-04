@@ -23,10 +23,10 @@ typedef enum {
 	GRCAN_SAMM_Mag_2 = 0x21,
 	GRCAN_SAMM_ToF_1 = 0x22,
 	GRCAN_SAMM_ToF_2 = 0x23,
-	GRCAN_OutboardSensor_FL = 0x24,
-	GRCAN_OutboardSensor_FR = 0x25,
-	GRCAN_OutboardSensor_RL = 0x26,
-	GRCAN_OutboardSensor_RR = 0x27,
+	GRCAN_TireTemp_FL = 0x24,
+	GRCAN_TireTemp_FR = 0x25,
+	GRCAN_TireTemp_RL = 0x26,
+	GRCAN_TireTemp_RR = 0x27,
 	GRCAN_DGPS = 0x30,
 } GRCAN_NODE_ID;
 
