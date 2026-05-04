@@ -236,7 +236,7 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;
-	
+
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
