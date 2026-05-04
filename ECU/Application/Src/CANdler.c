@@ -101,12 +101,12 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
 			if (state_data->ecu_state != GR_TS_DISCHARGE) {
-				state_data->ts_active_button_pressed = GETBIT(dash_data->button_flags, 0);
+				state_data->ts_active_button_pressed = GETBIT(dash_data->button_led_flags, 0);
 			} else {
 				state_data->ts_active_button_pressed = false;
 			}
 			if (state_data->ecu_state == GR_DRIVE_ACTIVE || state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
-				state_data->rtd_button_pressed = GETBIT(dash_data->button_flags, 1);
+				state_data->rtd_button_pressed = GETBIT(dash_data->button_led_flags, 1);
 			} else {
 				state_data->rtd_button_pressed = false;
 			}
