@@ -91,8 +91,8 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
 	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;
 
 	canCfg.rx_callback = Read_CAN;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
@@ -143,23 +143,24 @@ void CAN_Configure(void)
 
 	primary_can = can_init(&canCfg); // FIXME: make type *CANHANDLE, look at can.h
 
-	// Filter 1 Definitions
-	FDCAN_FilterTypeDef fdcan1_filter;
+	FDCAN_FilterTypeDef fdcan1_filter_ccu = {0};
+	fdcan1_filter_ccu.IdType = FDCAN_EXTENDED_ID;
+	fdcan1_filter_ccu.FilterIndex = 0;
+	fdcan1_filter_ccu.FilterType = FDCAN_FILTER_MASK;
+	fdcan1_filter_ccu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan1_filter_ccu.FilterID1 = GRCAN_CCU & 0xFF;
+	fdcan1_filter_ccu.FilterID2 = 0x000000FF;
 
-	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter.FilterIndex = 0;
-	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
-	fdcan1_filter.FilterID2 = 0x00000FF;
+	FDCAN_FilterTypeDef fdcan1_filter_all = {0};
+	fdcan1_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan1_filter_all.FilterIndex = 1;
+	fdcan1_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan1_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan1_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan1_filter_all.FilterID2 = 0x000000FF;
 
-	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
-
-	// CAN2 ======================================================
-
-	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
+	can_add_filter(primary_can, &fdcan1_filter_ccu);
+	can_add_filter(primary_can, &fdcan1_filter_all);
 
 	can_start(primary_can);
 }
@@ -168,7 +169,7 @@ void CAN_Configure(void)
 void SendPrechargeStatus(bool setPrecharge)
 {
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
+	msg.tx_header.Identifier = ((0xFF & GRCAN_CCU) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
