@@ -166,37 +166,37 @@ routing:
           - msg: ECU Pinging RTT
         DGPS:
           - msg: Ping
-        Suspension_FL:
+        Suspension FL:
           - msg: Ping
-        Suspension_FR:
+        Suspension FR:
           - msg: Ping
-        Suspension_RL:
+        Suspension RL:
           - msg: Ping
-        Suspension_RR:
+        Suspension RR:
           - msg: Ping
-        InboardFloor_FL:
+        InboardFloor FL:
           - msg: Ping
-        InboardFloor_FR:
+        InboardFloor FR:
           - msg: Ping
-        InboardFloor_RL:
+        InboardFloor RL:
           - msg: Ping
-        InboardFloor_RR:
+        InboardFloor RR:
           - msg: Ping
-        TireTemp_FL:
+        TireTemp FL:
           - msg: Ping
-        TireTemp_FR:
+        TireTemp FR:
           - msg: Ping
-        TireTemp_RL:
+        TireTemp RL:
           - msg: Ping
-        TireTemp_RR:
+        TireTemp RR:
           - msg: Ping
-        BrakeTemp_FL:
+        BrakeTemp FL:
           - msg: Ping
-        BrakeTemp_FR:
+        BrakeTemp FR:
           - msg: Ping
-        BrakeTemp_RL:
+        BrakeTemp RL:
           - msg: Ping
-        BrakeTemp_RR:
+        BrakeTemp RR:
           - msg: Ping
     Energy Meter:
       Charger:
@@ -288,67 +288,67 @@ routing:
           - msg: GPS QY
           - msg: GPS RZ
           - msg: UVW DGPS
-    Suspension_FL:
+    Suspension FL:
       Data:
         ECU:
           - msg: Ping
-    Suspension_FR:
+    Suspension FR:
       Data:
         ECU:
           - msg: Ping
-    Suspension_RL:
+    Suspension RL:
       Data:
         ECU:
           - msg: Ping
-    Suspension_RR:
+    Suspension RR:
       Data:
         ECU:
           - msg: Ping
-    InboardFloor_FL:
+    InboardFloor FL:
       Data:
         ECU:
           - msg: Ping
-    InboardFloor_FR:
+    InboardFloor FR:
       Data:
         ECU:
           - msg: Ping
-    InboardFloor_RL:
+    InboardFloor RL:
       Data:
         ECU:
           - msg: Ping
-    InboardFloor_RR:
+    InboardFloor RR:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_FL:
+    TireTemp FL:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_FR:
+    TireTemp FR:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_RL:
+    TireTemp RL:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_RR:
+    TireTemp RR:
       Data:
         ECU:
           - msg: Ping
-    BrakeTemp_FL:
+    BrakeTemp FL:
       Data:
         ECU:
           - msg: Ping
-    BrakeTemp_FR:
+    BrakeTemp FR:
       Data:
         ECU:
           - msg: Ping
-    BrakeTemp_RL:
+    BrakeTemp RL:
       Data:
         ECU:
           - msg: Ping
-    BrakeTemp_RR:
+    BrakeTemp RR:
       Data:
         ECU:
           - msg: Ping
@@ -415,27 +415,27 @@ Message ID:
       bit_start: 16
       comment:
         [Byte 2 / Bits 16-23] ECU ping targets
-        16: Suspension_FL
-        17: Suspension_FR
-        18: Suspension_RL
-        19: Suspension_RR
-        20: InboardFloor_FL
-        21: InboardFloor_FR
-        22: InboardFloor_RL
-        23: InboardFloor_RR
+        16: Suspension FL
+        17: Suspension FR
+        18: Suspension RL
+        19: Suspension RR
+        20: InboardFloor FL
+        21: InboardFloor FR
+        22: InboardFloor RL
+        23: InboardFloor RR
       data type: u8
     Ping Group 3:
       bit_start: 24
       comment:
         [Byte 3 / Bits 24-31] ECU ping targets
-        24: TireTemp_FL
-        25: TireTemp_FR
-        26: TireTemp_RL
-        27: TireTemp_RR
-        28: BrakeTemp_FL
-        29: BrakeTemp_FR
-        30: BrakeTemp_RL
-        31: BrakeTemp_RR
+        24: TireTemp FL
+        25: TireTemp FR
+        26: TireTemp RL
+        27: TireTemp RR
+        28: BrakeTemp FL
+        29: BrakeTemp FR
+        30: BrakeTemp RL
+        31: BrakeTemp RR
       data type: u8
     Power Level:
       bit_start: 32
@@ -4452,20 +4452,20 @@ GR ID:
   Fan Controller 1: "0x0D"
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
-  TireTemp_FL: "0x10"
-  TireTemp_FR: "0x11"
-  TireTemp_RL: "0x12"
-  TireTemp_RR: "0x13"
-  Suspension_FL: "0x14"
-  Suspension_FR: "0x15"
-  Suspension_RL: "0x16"
-  Suspension_RR: "0x17"
-  InboardFloor_FL: "0x18"
-  InboardFloor_FR: "0x19"
-  InboardFloor_RL: "0x1A"
-  InboardFloor_RR: "0x1B"
-  BrakeTemp_FL: "0x1C"
-  BrakeTemp_FR: "0x1D"
-  BrakeTemp_RL: "0x1E"
-  BrakeTemp_RR: "0x1F"
+  TireTemp FL: "0x10"
+  TireTemp FR: "0x11"
+  TireTemp RL: "0x12"
+  TireTemp RR: "0x13"
+  Suspension FL: "0x14"
+  Suspension FR: "0x15"
+  Suspension RL: "0x16"
+  Suspension RR: "0x17"
+  InboardFloor FL: "0x18"
+  InboardFloor FR: "0x19"
+  InboardFloor RL: "0x1A"
+  InboardFloor RR: "0x1B"
+  BrakeTemp FL: "0x1C"
+  BrakeTemp FR: "0x1D"
+  BrakeTemp RL: "0x1E"
+  BrakeTemp RR: "0x1F"
   DGPS: "0x20"
