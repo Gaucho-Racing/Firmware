@@ -394,17 +394,17 @@ BO_ 2149581346 ECU_Ping_to_SAMM_ToF_1: 4 ECU
 BO_ 2149581347 ECU_Ping_to_SAMM_ToF_2: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_ToF_2
 
-BO_ 2149581348 ECU_Ping_to_TireTemp_FL: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_FL
+BO_ 2149581348 ECU_Ping_to_OutboardSensor_FL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" OutboardSensor_FL
 
-BO_ 2149581349 ECU_Ping_to_TireTemp_FR: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_FR
+BO_ 2149581349 ECU_Ping_to_OutboardSensor_FR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" OutboardSensor_FR
 
-BO_ 2149581350 ECU_Ping_to_TireTemp_RL: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_RL
+BO_ 2149581350 ECU_Ping_to_OutboardSensor_RL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" OutboardSensor_RL
 
-BO_ 2149581351 ECU_Ping_to_TireTemp_RR: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TireTemp_RR
+BO_ 2149581351 ECU_Ping_to_OutboardSensor_RR: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" OutboardSensor_RR
 
 BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
@@ -450,16 +450,16 @@ BO_ 2183135746 SAMM_ToF_1_Ping_to_ECU: 4 SAMM_ToF_1
 BO_ 2184184322 SAMM_ToF_2_Ping_to_ECU: 4 SAMM_ToF_2
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149843458 OutboardSensor_FL_Ping_to_ECU: 4 OutboardSensor_FL
+BO_ 2185232898 OutboardSensor_FL_Ping_to_ECU: 4 OutboardSensor_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149908994 OutboardSensor_FR_Ping_to_ECU: 4 OutboardSensor_FR
+BO_ 2186281474 OutboardSensor_FR_Ping_to_ECU: 4 OutboardSensor_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2149974530 OutboardSensor_RL_Ping_to_ECU: 4 OutboardSensor_RL
+BO_ 2187330050 OutboardSensor_RL_Ping_to_ECU: 4 OutboardSensor_RL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150040066 OutboardSensor_RR_Ping_to_ECU: 4 OutboardSensor_RR
+BO_ 2188378626 OutboardSensor_RR_Ping_to_ECU: 4 OutboardSensor_RR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
 CM_ SG_ 2150629633 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
