@@ -1017,7 +1017,8 @@ void CAN_Timer_Start(void)
 	static bool initialized = false;
 
 	if (initialized) {
-		return CAN_SUCCESS;
+		LOGOMATIC("CAN_Timer_Start: timer is already initialized\n");
+		return;
 	}
 
 	RCC_ClkInitTypeDef clkconfig = {0};
@@ -1030,17 +1031,20 @@ void CAN_Timer_Start(void)
 	// 10 kHz counter clock keeps both PSC/ARR in range for a 1 second period.
 	const uint32_t counter_hz = 10000U;
 	if (tim_clock < counter_hz) {
-		return CAN_ERROR;
+		LOGOMATIC("CAN_Timer_Start: APB1 clock is too slow to achieve desired timer frequency\n");
+		return;
 	}
 
 	uint32_t prescaler = (tim_clock / counter_hz) - 1U;
 	if (prescaler > 0xFFFFU) {
-		return CAN_ERROR;
+		LOGOMATIC("CAN_Timer_Start: failed to initialize timer prescaler\n");
+		return;
 	}
 
 	uint32_t autoreload = ((CAN_TIMER_SEND_PERIOD_US * counter_hz) / 1000000U) - 1U;
 	if (autoreload > 0xFFFFU) {
-		return CAN_ERROR;
+		LOGOMATIC("CAN_Timer_Start: failed to initialize timer autoreload\n");
+		return;
 	}
 
 	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM5);
@@ -1052,7 +1056,8 @@ void CAN_Timer_Start(void)
 	tim_init.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
 
 	if (LL_TIM_Init(TIM5, &tim_init) != SUCCESS) {
-		return CAN_ERROR;
+		LOGOMATIC("CAN_Timer_Start: failed to initialize timer\n");
+		return;
 	}
 
 	LL_TIM_SetClockSource(TIM5, LL_TIM_CLOCKSOURCE_INTERNAL);
@@ -1065,5 +1070,6 @@ void CAN_Timer_Start(void)
 	LL_TIM_EnableCounter(TIM5);
 
 	initialized = true;
-	return CAN_SUCCESS;
+	LOGOMATIC("CAN_Timer_Start: timer initialized\n");
+	return;
 }
