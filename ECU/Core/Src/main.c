@@ -404,7 +404,6 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	// uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		// adcs
 		read_digital();
