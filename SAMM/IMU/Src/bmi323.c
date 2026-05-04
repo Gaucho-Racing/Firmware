@@ -106,7 +106,7 @@ uint8_t bmi323_calib(bmi323 *bmi323_dev)
 			}
 			continue;
 		}
-		//D_println("enabled feature engine Hooray!");
+		// D_println("enabled feature engine Hooray!");
 	}
 	// no need for an else statement as the feature engine is already enabled and we can continue
 	// now we need to check if a calibration is already in progress
@@ -126,9 +126,9 @@ calibrate:
 	uint16_t data = bmi323_read(bmi323_dev, BMI323_ACC_CONF) & 0x700F;
 	// checks if we are in the correct configuration. if not skips if statement
 	if (((data >> 12) == HIGH_PERF) && (((data & 0x000F) >= ODR_25) && ((data & 0x000F) <= ODR_200))) {
-		//D_println("Starting calibration");
-		// if it is, then we can start the calibration
-		// first we check if the alernalte configuration acc mode is set to 0:
+		// D_println("Starting calibration");
+		//  if it is, then we can start the calibration
+		//  first we check if the alernalte configuration acc mode is set to 0:
 		if (((bmi323_read(bmi323_dev, BMI323_ALT_ACC_CONF) & 0x7000) >> 11) != 0b000) {
 			// if it is, we set it to 0
 			bmi323_write(bmi323_dev, BMI323_ALT_ACC_CONF, 0x0206);
@@ -138,9 +138,9 @@ calibrate:
 			// if it is, we set it to 0
 			bmi323_write(bmi323_dev, BMI323_ALT_GYR_CONF, 0x0206);
 		}
-		//D_println("Alternate configurations set");
-		// next we can actually send the command for calibration
-		// reset all of the gyro calibration values
+		// D_println("Alternate configurations set");
+		//  next we can actually send the command for calibration
+		//  reset all of the gyro calibration values
 		bmi323_write(bmi323_dev, BMI323_GYR_DP_DGAIN_X, BMI323_ACC_DP_DGAIN_X_RESET_VAL);
 		bmi323_write(bmi323_dev, BMI323_GYR_DP_DGAIN_Y, BMI323_ACC_DP_DGAIN_Y_RESET_VAL);
 		bmi323_write(bmi323_dev, BMI323_GYR_DP_DGAIN_Z, BMI323_ACC_DP_DGAIN_Z_RESET_VAL);
@@ -148,20 +148,20 @@ calibrate:
 		bmi323_write(bmi323_dev, BMI323_GYR_DP_OFF_Y, BMI323_ACC_DP_OFF_Y_RESET_VAL);
 		bmi323_write(bmi323_dev, BMI323_GYR_DP_OFF_Z, BMI323_ACC_DP_OFF_Z_RESET_VAL);
 		// now we poll the state of the calibration untill we get 0b1
-		//D_println("Starting calibration");
+		// D_println("Starting calibration");
 		bmi323_write(bmi323_dev, BMI323_CMD, BMI323_CMD_CALIB);
 
-		//D_println("Polling calibration state");
-		// check if the feature engine is enabled
+		// D_println("Polling calibration state");
+		//  check if the feature engine is enabled
 		timeout_ref = MillisecondsSinceBoot();
 		while (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x0010) >> 4) != 0b1) {
 			if (MillisecondsSinceBoot() - timeout_ref > BMI323_TIMEOUT) {
-				//D_println("Feature engine enable timeout");
+				// D_println("Feature engine enable timeout");
 				return 0;
 			}
 			continue;
 		}
-		//D_println("Calibration complete");
+		// D_println("Calibration complete");
 		if (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x0020) >> 5) == 0b1) {
 			// //D_println("Calibration successful");
 			// //D_println("reseting values to original configuration");
