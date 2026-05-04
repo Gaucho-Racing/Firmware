@@ -21,7 +21,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 		LOGOMATIC("Tried to send more than 64 bytes over CAN");
 	}
 
-	uint32_t ID = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & messageID) << 8) | (0xFF & destNode);
+	uint32_t ID = ((0xFF & GRCAN_ECU) << 20) | ((0xFFF & messageID) << 8) | (0xFF & destNode);
 
 	FDCAN_TxHeaderTypeDef header = {
 	    .Identifier = ID,

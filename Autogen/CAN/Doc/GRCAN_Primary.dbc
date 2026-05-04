@@ -6,23 +6,23 @@ BS_:
 
 BU_: BCU DTI_Inverter Dash_Panel Debugger ECU Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter TCM ALL
 
-BO_ 2147680257 BCU_Debug_2_0_to_Debugger: 8 BCU
+BO_ 2150629377 BCU_Debug_2_0_to_Debugger: 8 BCU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2147680769 BCU_Ping_to_Debugger: 4 BCU
+BO_ 2150629889 BCU_Ping_to_Debugger: 4 BCU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2147680770 BCU_Ping_to_ECU: 4 BCU
+BO_ 2150629890 BCU_Ping_to_ECU: 4 BCU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2147682050 BCU_BCU_Status_1_to_ECU: 8 BCU
+BO_ 2150631170 BCU_BCU_Status_1_to_ECU: 8 BCU
  SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps" ECU
  SG_ Accumulator_SOC : 48|8@1+ (0.392157,0) [0|100] "%" ECU
  SG_ GLV_SOC : 56|8@1+ (0.392157,0) [0|100] "%" ECU
 
-BO_ 2147682306 BCU_BCU_Status_2_to_ECU: 7 BCU
+BO_ 2150631426 BCU_BCU_Status_2_to_ECU: 7 BCU
  SG_ _20v_Voltage : 0|8@1+ (1,0) [0|0] "" ECU
  SG_ _12v_Voltage : 8|8@1+ (1,0) [0|0] "" ECU
  SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] "" ECU
@@ -31,71 +31,71 @@ BO_ 2147682306 BCU_BCU_Status_2_to_ECU: 7 BCU
  SG_ status_flags : 40|1@1+ (1,0) [0|0] "" ECU
  SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] "" ECU
 
-BO_ 2147682562 BCU_BCU_Status_3_to_ECU: 8 BCU
+BO_ 2150631682 BCU_BCU_Status_3_to_ECU: 8 BCU
  SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ HV_Output_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" ECU
  SG_ HV_Output_Current : 48|16@1+ (0.001,0) [0|65.535] "Amps" ECU
 
-BO_ 2147811329 Dash_Panel_Debug_2_0_to_Debugger: 8 Dash_Panel
+BO_ 2152726529 Dash_Panel_Debug_2_0_to_Debugger: 8 Dash_Panel
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2147811841 Dash_Panel_Ping_to_Debugger: 4 Dash_Panel
+BO_ 2152727041 Dash_Panel_Ping_to_Debugger: 4 Dash_Panel
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2147811842 Dash_Panel_Ping_to_ECU: 4 Dash_Panel
+BO_ 2152727042 Dash_Panel_Ping_to_ECU: 4 Dash_Panel
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2147817986 Dash_Panel_Dash_Status_to_ECU: 3 Dash_Panel
+BO_ 2152733186 Dash_Panel_Dash_Status_to_ECU: 3 Dash_Panel
  SG_ button_flags : 0|8@1+ (1,0) [0|0] "" ECU
  SG_ led_bits : 8|8@1+ (1,0) [0|0] "" ECU
 
-BO_ 2147549186 Debugger_Debug_2_0_to_ECU: 8 Debugger
+BO_ 2148532226 Debugger_Debug_2_0_to_ECU: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" ECU
 
-BO_ 2147549698 Debugger_Ping_to_ECU: 4 Debugger
+BO_ 2148532738 Debugger_Ping_to_ECU: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2147549187 Debugger_Debug_2_0_to_BCU: 8 Debugger
+BO_ 2148532227 Debugger_Debug_2_0_to_BCU: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" BCU
 
-BO_ 2147549699 Debugger_Ping_to_BCU: 4 Debugger
+BO_ 2148532739 Debugger_Ping_to_BCU: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BCU
 
-BO_ 2147549188 Debugger_Debug_2_0_to_TCM: 8 Debugger
+BO_ 2148532228 Debugger_Debug_2_0_to_TCM: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" TCM
 
-BO_ 2147549700 Debugger_Ping_to_TCM: 4 Debugger
+BO_ 2148532740 Debugger_Ping_to_TCM: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TCM
 
-BO_ 2147549189 Debugger_Debug_2_0_to_Dash_Panel: 8 Debugger
+BO_ 2148532229 Debugger_Debug_2_0_to_Dash_Panel: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Dash_Panel
 
-BO_ 2147549701 Debugger_Ping_to_Dash_Panel: 4 Debugger
+BO_ 2148532741 Debugger_Ping_to_Dash_Panel: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Dash_Panel
 
-BO_ 2147549192 Debugger_Debug_2_0_to_GR_Inverter: 8 Debugger
+BO_ 2148532232 Debugger_Debug_2_0_to_GR_Inverter: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" GR_Inverter
 
-BO_ 2147549704 Debugger_Ping_to_GR_Inverter: 4 Debugger
+BO_ 2148532744 Debugger_Ping_to_GR_Inverter: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" GR_Inverter
 
-BO_ 2147549197 Debugger_Debug_2_0_to_Fan_Controller_1: 8 Debugger
+BO_ 2148532237 Debugger_Debug_2_0_to_Fan_Controller_1: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Fan_Controller_1
 
-BO_ 2147549709 Debugger_Ping_to_Fan_Controller_1: 4 Debugger
+BO_ 2148532749 Debugger_Ping_to_Fan_Controller_1: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_1
 
-BO_ 2147549198 Debugger_Debug_2_0_to_Fan_Controller_2: 8 Debugger
+BO_ 2148532238 Debugger_Debug_2_0_to_Fan_Controller_2: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Fan_Controller_2
 
-BO_ 2147549710 Debugger_Ping_to_Fan_Controller_2: 4 Debugger
+BO_ 2148532750 Debugger_Ping_to_Fan_Controller_2: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_2
 
-BO_ 2147549199 Debugger_Debug_2_0_to_Fan_Controller_3: 8 Debugger
+BO_ 2148532239 Debugger_Debug_2_0_to_Fan_Controller_3: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Fan_Controller_3
 
-BO_ 2147549711 Debugger_Ping_to_Fan_Controller_3: 4 Debugger
+BO_ 2148532751 Debugger_Ping_to_Fan_Controller_3: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_3
 
 BO_ 2147491862 DTI_Inverter_DTI_Data_1_to_ECU: 8 DTI_Inverter
@@ -180,67 +180,67 @@ BO_ 2147486486 ECU_DTI_Control_11_to_DTI_Inverter: 2 ECU
 BO_ 2147486742 ECU_DTI_Control_12_to_DTI_Inverter: 1 ECU
  SG_ Drive_Enable : 0|8@1+ (1,0) [0|0] "" DTI_Inverter
 
-BO_ 2147614721 ECU_Debug_2_0_to_Debugger: 8 ECU
+BO_ 2149580801 ECU_Debug_2_0_to_Debugger: 8 ECU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2147615233 ECU_Ping_to_Debugger: 4 ECU
+BO_ 2149581313 ECU_Ping_to_Debugger: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2147617283 ECU_BCU_Precharge_to_BCU: 1 ECU
+BO_ 2149583363 ECU_BCU_Precharge_to_BCU: 1 ECU
  SG_ Set_TS_Active : 0|1@1+ (1,0) [0|0] "Bool" BCU
 
-BO_ 2147617539 ECU_BCU_Config_Charge_Parameters_to_BCU: 4 ECU
+BO_ 2149583619 ECU_BCU_Config_Charge_Parameters_to_BCU: 4 ECU
  SG_ Charge_Voltage : 0|16@1+ (0.1,0) [0|6553.5] "Volts" BCU
  SG_ Charge_Current : 16|16@1+ (0.1,0) [0|6553.5] "Amps" BCU
 
-BO_ 2147617795 ECU_BCU_Config_Operational_Parameters_to_BCU: 2 ECU
+BO_ 2149583875 ECU_BCU_Config_Operational_Parameters_to_BCU: 2 ECU
  SG_ Minimium_Cell_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" BCU
  SG_ Max_Cell_Temperature : 8|8@1+ (0.25,0) [0|63.75] "Celsius" BCU
 
-BO_ 2147615235 ECU_Ping_to_BCU: 4 ECU
+BO_ 2149581315 ECU_Ping_to_BCU: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BCU
 
-BO_ 2147620360 ECU_Inverter_Config_to_GR_Inverter: 7 ECU
+BO_ 2149586440 ECU_Inverter_Config_to_GR_Inverter: 7 ECU
  SG_ Max_AC_Current : 0|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
  SG_ Max_DC_Current : 16|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
  SG_ Absolute_Max_RPM_Limit : 32|16@1+ (1,-32768) [-32768|32767] "RPM" GR_Inverter
  SG_ Motor_direction : 48|1@1+ (1,0) [0|0] "Enable" GR_Inverter
 
-BO_ 2147620616 ECU_Inverter_Command_to_GR_Inverter: 8 ECU
+BO_ 2149586696 ECU_Inverter_Command_to_GR_Inverter: 8 ECU
  SG_ Set_AC_Current : 0|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
  SG_ Set_DC_Current : 16|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
  SG_ RPM_Limit : 32|16@1+ (1,-32768) [-32768|32767] "RPM" GR_Inverter
  SG_ Field_weakening : 48|8@1+ (0.1,0) [0|25.5] "Amps" GR_Inverter
  SG_ Drive_enable : 56|1@1+ (1,0) [0|0] "Enable" GR_Inverter
 
-BO_ 2147615240 ECU_Ping_to_GR_Inverter: 4 ECU
+BO_ 2149581320 ECU_Ping_to_GR_Inverter: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" GR_Inverter
 
-BO_ 2147621133 ECU_Fan_Command_to_Fan_Controller_1: 1 ECU
+BO_ 2149587213 ECU_Fan_Command_to_Fan_Controller_1: 1 ECU
  SG_ Fan_Command : 0|8@1+ (1,0) [0|255] "%" Fan_Controller_1
 
-BO_ 2147615245 ECU_Ping_to_Fan_Controller_1: 4 ECU
+BO_ 2149581325 ECU_Ping_to_Fan_Controller_1: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_1
 
-BO_ 2147621134 ECU_Fan_Command_to_Fan_Controller_2: 1 ECU
+BO_ 2149587214 ECU_Fan_Command_to_Fan_Controller_2: 1 ECU
  SG_ Fan_Command : 0|8@1+ (1,0) [0|255] "%" Fan_Controller_2
 
-BO_ 2147615246 ECU_Ping_to_Fan_Controller_2: 4 ECU
+BO_ 2149581326 ECU_Ping_to_Fan_Controller_2: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_2
 
-BO_ 2147621135 ECU_Fan_Command_to_Fan_Controller_3: 1 ECU
+BO_ 2149587215 ECU_Fan_Command_to_Fan_Controller_3: 1 ECU
  SG_ Fan_Command : 0|8@1+ (1,0) [0|255] "%" Fan_Controller_3
 
-BO_ 2147615247 ECU_Ping_to_Fan_Controller_3: 4 ECU
+BO_ 2149581327 ECU_Ping_to_Fan_Controller_3: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Fan_Controller_3
 
-BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
+BO_ 2149587717 ECU_Dash_Config_to_Dash_Panel: 1 ECU
  SG_ led_bits : 0|8@1+ (1,0) [0|0] "" Dash_Panel
 
-BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
+BO_ 2149581317 ECU_Ping_to_Dash_Panel: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Dash_Panel
 
-BO_ 2147615488 ECU_ECU_Status_1_to_ALL: 8 ECU
+BO_ 2149581568 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ status_flags : 0|16@1+ (1,0) [0|0] "" ALL
  SG_ ecu_state : 16|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ Power_Level : 24|4@1+ (1,0) [0|0] "" ALL
@@ -249,130 +249,130 @@ BO_ 2147615488 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ Accumulator_State_of_Charge : 40|8@1+ (0.392157,0) [0|100] "%" ALL
  SG_ GLV_State_of_Charge : 48|8@1+ (0.392157,0) [0|100] "%" ALL
 
-BO_ 2147615744 ECU_ECU_Status_2_to_ALL: 8 ECU
+BO_ 2149581824 ECU_ECU_Status_2_to_ALL: 8 ECU
  SG_ Vehicle_Speed : 0|16@1+ (0.01,0) [0|655.35] "MPH" ALL
  SG_ Tractive_System_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ALL
  SG_ FR_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
  SG_ FL_Wheel_RPM : 48|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
-BO_ 2147616000 ECU_ECU_Status_3_to_ALL: 4 ECU
+BO_ 2149582080 ECU_ECU_Status_3_to_ALL: 4 ECU
  SG_ RR_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
  SG_ RL_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
-BO_ 2147615236 ECU_Ping_to_TCM: 4 ECU
+BO_ 2149581316 ECU_Ping_to_TCM: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" TCM
 
-BO_ 2148335617 Fan_Controller_1_Debug_2_0_to_Debugger: 8 Fan_Controller_1
+BO_ 2161115137 Fan_Controller_1_Debug_2_0_to_Debugger: 8 Fan_Controller_1
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2148336129 Fan_Controller_1_Ping_to_Debugger: 4 Fan_Controller_1
+BO_ 2161115649 Fan_Controller_1_Ping_to_Debugger: 4 Fan_Controller_1
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2148336130 Fan_Controller_1_Ping_to_ECU: 4 Fan_Controller_1
+BO_ 2161115650 Fan_Controller_1_Ping_to_ECU: 4 Fan_Controller_1
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2148341762 Fan_Controller_1_Fan_Status_to_ECU: 4 Fan_Controller_1
+BO_ 2161121282 Fan_Controller_1_Fan_Status_to_ECU: 4 Fan_Controller_1
  SG_ Fan_Speed : 0|16@1+ (1,0) [0|65535] "RPM" ECU
  SG_ Input_Voltage : 16|8@1+ (0.1,0) [0|25.5] "Volts" ECU
  SG_ Input_Current : 24|8@1+ (0.1,0) [0|25.5] "Amps" ECU
 
-BO_ 2148401153 Fan_Controller_2_Debug_2_0_to_Debugger: 8 Fan_Controller_2
+BO_ 2162163713 Fan_Controller_2_Debug_2_0_to_Debugger: 8 Fan_Controller_2
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2148401665 Fan_Controller_2_Ping_to_Debugger: 4 Fan_Controller_2
+BO_ 2162164225 Fan_Controller_2_Ping_to_Debugger: 4 Fan_Controller_2
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2148401666 Fan_Controller_2_Ping_to_ECU: 4 Fan_Controller_2
+BO_ 2162164226 Fan_Controller_2_Ping_to_ECU: 4 Fan_Controller_2
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2148407298 Fan_Controller_2_Fan_Status_to_ECU: 4 Fan_Controller_2
+BO_ 2162169858 Fan_Controller_2_Fan_Status_to_ECU: 4 Fan_Controller_2
  SG_ Fan_Speed : 0|16@1+ (1,0) [0|65535] "RPM" ECU
  SG_ Input_Voltage : 16|8@1+ (0.1,0) [0|25.5] "Volts" ECU
  SG_ Input_Current : 24|8@1+ (0.1,0) [0|25.5] "Amps" ECU
 
-BO_ 2148466689 Fan_Controller_3_Debug_2_0_to_Debugger: 8 Fan_Controller_3
+BO_ 2163212289 Fan_Controller_3_Debug_2_0_to_Debugger: 8 Fan_Controller_3
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2148467201 Fan_Controller_3_Ping_to_Debugger: 4 Fan_Controller_3
+BO_ 2163212801 Fan_Controller_3_Ping_to_Debugger: 4 Fan_Controller_3
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2148467202 Fan_Controller_3_Ping_to_ECU: 4 Fan_Controller_3
+BO_ 2163212802 Fan_Controller_3_Ping_to_ECU: 4 Fan_Controller_3
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2148472834 Fan_Controller_3_Fan_Status_to_ECU: 4 Fan_Controller_3
+BO_ 2163218434 Fan_Controller_3_Fan_Status_to_ECU: 4 Fan_Controller_3
  SG_ Fan_Speed : 0|16@1+ (1,0) [0|65535] "RPM" ECU
  SG_ Input_Voltage : 16|8@1+ (0.1,0) [0|25.5] "Volts" ECU
  SG_ Input_Current : 24|8@1+ (0.1,0) [0|25.5] "Amps" ECU
 
-BO_ 2148007937 GR_Inverter_Debug_2_0_to_Debugger: 8 GR_Inverter
+BO_ 2155872257 GR_Inverter_Debug_2_0_to_Debugger: 8 GR_Inverter
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2148008449 GR_Inverter_Ping_to_Debugger: 4 GR_Inverter
+BO_ 2155872769 GR_Inverter_Ping_to_Debugger: 4 GR_Inverter
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2148008450 GR_Inverter_Ping_to_ECU: 4 GR_Inverter
+BO_ 2155872770 GR_Inverter_Ping_to_ECU: 4 GR_Inverter
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2148012802 GR_Inverter_Inverter_Status_1_to_ECU: 6 GR_Inverter
+BO_ 2155877122 GR_Inverter_Inverter_Status_1_to_ECU: 6 GR_Inverter
  SG_ AC_current : 0|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" ECU
  SG_ DC_current : 16|16@1+ (0.01,0) [0|655.35] "Amps" ECU
  SG_ Motor_RPM : 32|16@1+ (1,-32768) [-32768|32767] "RPM" ECU
 
-BO_ 2148013058 GR_Inverter_Inverter_Status_2_to_ECU: 6 GR_Inverter
+BO_ 2155877378 GR_Inverter_Inverter_Status_2_to_ECU: 6 GR_Inverter
  SG_ U_MOSFET_temperature : 0|8@1+ (1,-40) [-40|215] "Celsius" ECU
  SG_ V_MOSFET_temperature : 16|8@1+ (1,-40) [-40|215] "Celsius" ECU
  SG_ W_MOSFET_temperature : 32|8@1+ (1,-40) [-40|215] "Celsius" ECU
 
-BO_ 2148013314 GR_Inverter_Inverter_Status_3_to_ECU: 3 GR_Inverter
+BO_ 2155877634 GR_Inverter_Inverter_Status_3_to_ECU: 3 GR_Inverter
  SG_ Motor_temperature : 0|8@1+ (1,-40) [-40|215] "Celsius" ECU
  SG_ fault_bits : 16|8@1+ (1,0) [0|0] "" ECU
 
-BO_ 2147746305 TCM_Ping_to_Debugger: 4 TCM
+BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2147746306 TCM_Ping_to_ECU: 4 TCM
+BO_ 2151678466 TCM_Ping_to_ECU: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-CM_ SG_ 2147680257 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147680769 Timestamp "Time in millis";
-CM_ SG_ 2147680770 Timestamp "Time in millis";
-CM_ SG_ 2147682050 Accumulator_Voltage "All cell voltages added up";
-CM_ SG_ 2147682050 TS_Voltage "Output terminal voltage of accumulator";
-CM_ SG_ 2147682050 Accumulator_Current "Current output of accumulator";
-CM_ SG_ 2147682050 Accumulator_SOC "Accumulator state of charge (Based on lowest cell)";
-CM_ SG_ 2147682050 GLV_SOC "GLV state of charge";
-CM_ SG_ 2147682306 _20v_Voltage "20v GLV voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2147682306 _12v_Voltage "12v supply voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2147682306 SDC_Voltage "Voltage before BCU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2147682306 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
-CM_ SG_ 2147682306 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
-CM_ SG_ 2147682306 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Charge) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
-CM_ SG_ 2147682306 precharge_latch_flags "[Byte 6 / Bits 48-55] 48: Precharge Timeout 49: IR- / Precharge State (0:Open, 1:Closed) 50: IR+ State (0:Open, 1:Closed) 51: Software Latch (0:Open, 1:Closed) 52-55: Reserved";
-CM_ SG_ 2147682562 HV_Input_Voltage "600v input voltage";
-CM_ SG_ 2147682562 HV_Output_Voltage "20v output voltage";
-CM_ SG_ 2147682562 HV_Input_Current "600v input current";
-CM_ SG_ 2147682562 HV_Output_Current "20v output current";
-CM_ SG_ 2147811329 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147811841 Timestamp "Time in millis";
-CM_ SG_ 2147811842 Timestamp "Time in millis";
-CM_ SG_ 2147817986 button_flags "[Byte 0 / Bits 0-7] 0: TS Active 1: RTD 2-7: Reserved";
-CM_ SG_ 2147817986 led_bits "[Byte 1 / Bits 8-15] 0: BMS 1: IMD 2: BSPD 3-7: Reserved";
-CM_ SG_ 2147549186 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549698 Timestamp "Time in millis";
-CM_ SG_ 2147549187 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549699 Timestamp "Time in millis";
-CM_ SG_ 2147549188 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549700 Timestamp "Time in millis";
-CM_ SG_ 2147549189 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549701 Timestamp "Time in millis";
-CM_ SG_ 2147549192 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549704 Timestamp "Time in millis";
-CM_ SG_ 2147549197 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549709 Timestamp "Time in millis";
-CM_ SG_ 2147549198 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549710 Timestamp "Time in millis";
-CM_ SG_ 2147549199 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147549711 Timestamp "Time in millis";
+CM_ SG_ 2150629377 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2150629889 Timestamp "Time in millis";
+CM_ SG_ 2150629890 Timestamp "Time in millis";
+CM_ SG_ 2150631170 Accumulator_Voltage "All cell voltages added up";
+CM_ SG_ 2150631170 TS_Voltage "Output terminal voltage of accumulator";
+CM_ SG_ 2150631170 Accumulator_Current "Current output of accumulator";
+CM_ SG_ 2150631170 Accumulator_SOC "Accumulator state of charge (Based on lowest cell)";
+CM_ SG_ 2150631170 GLV_SOC "GLV state of charge";
+CM_ SG_ 2150631426 _20v_Voltage "20v GLV voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 _12v_Voltage "12v supply voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 SDC_Voltage "Voltage before BCU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
+CM_ SG_ 2150631426 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
+CM_ SG_ 2150631426 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Charge) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
+CM_ SG_ 2150631426 precharge_latch_flags "[Byte 6 / Bits 48-55] 48: Precharge Timeout 49: IR- / Precharge State (0:Open, 1:Closed) 50: IR+ State (0:Open, 1:Closed) 51: Software Latch (0:Open, 1:Closed) 52-55: Reserved";
+CM_ SG_ 2150631682 HV_Input_Voltage "600v input voltage";
+CM_ SG_ 2150631682 HV_Output_Voltage "20v output voltage";
+CM_ SG_ 2150631682 HV_Input_Current "600v input current";
+CM_ SG_ 2150631682 HV_Output_Current "20v output current";
+CM_ SG_ 2152726529 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2152727041 Timestamp "Time in millis";
+CM_ SG_ 2152727042 Timestamp "Time in millis";
+CM_ SG_ 2152733186 button_flags "[Byte 0 / Bits 0-7] 0: TS Active 1: RTD 2-7: Reserved";
+CM_ SG_ 2152733186 led_bits "[Byte 1 / Bits 8-15] 0: BMS 1: IMD 2: BSPD 3-7: Reserved";
+CM_ SG_ 2148532226 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532738 Timestamp "Time in millis";
+CM_ SG_ 2148532227 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532739 Timestamp "Time in millis";
+CM_ SG_ 2148532228 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532740 Timestamp "Time in millis";
+CM_ SG_ 2148532229 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532741 Timestamp "Time in millis";
+CM_ SG_ 2148532232 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532744 Timestamp "Time in millis";
+CM_ SG_ 2148532237 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532749 Timestamp "Time in millis";
+CM_ SG_ 2148532238 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532750 Timestamp "Time in millis";
+CM_ SG_ 2148532239 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2148532751 Timestamp "Time in millis";
 CM_ SG_ 2147491862 ERPM "Electrical RPM Equation: ERPM = Motor RPM * number of the motor pole pairs.";
 CM_ SG_ 2147491862 Duty_Cycle "The controller duty cycle. The sign of this value will represent whether the motor is running(positive) current or regenerating (negative) current.";
 CM_ SG_ 2147491862 Input_Voltage "Input voltage is the DC voltage.";
@@ -415,74 +415,74 @@ CM_ SG_ 2147485974 Max_Brake_AC_Current "This value sets the maximum allowable b
 CM_ SG_ 2147486230 Max_DC_Current "This value determines the maximum allowable drive current on the DC side. With this command the BMS can limit the maximum allowable battery discharge current. The value has to be multiplied by 10 before sending.";
 CM_ SG_ 2147486486 Max_Brake_DC_Current "This value determines the maximum allowable brake current on the DC side. With this command the BMS can limit the maximum allowable battery charge current. The value has to be multiplied by 10 before sending. Only negative currents are accepted.";
 CM_ SG_ 2147486742 Drive_Enable "0: Drive not allowed 1: Drive allowed Only 0 and 1 values are accepted. Must be sent periodically to be enabled.";
-CM_ SG_ 2147614721 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2147615233 Timestamp "Time in millis";
-CM_ SG_ 2147617283 Set_TS_Active "0: shutdown, 1: go TS Active/Precharge";
-CM_ SG_ 2147617539 Charge_Voltage "Sets the Target Charging voltage";
-CM_ SG_ 2147617539 Charge_Current "Sets the Target Charging Current";
-CM_ SG_ 2147617795 Minimium_Cell_Voltage "Sets the threshold for Minimum Cell Voltage before Shutdown";
-CM_ SG_ 2147617795 Max_Cell_Temperature "Sets the threshold for Max Cell Temperature before Shutdown";
-CM_ SG_ 2147615235 Timestamp "Time in millis";
-CM_ SG_ 2147620360 Max_AC_Current "Max AC Current";
-CM_ SG_ 2147620360 Max_DC_Current "Max DC Current";
-CM_ SG_ 2147620360 Absolute_Max_RPM_Limit "0: No limit      n :limited at n RPM";
-CM_ SG_ 2147620360 Motor_direction "Write 1 inverts direction";
-CM_ SG_ 2147620616 Set_AC_Current "Commanded AC Current";
-CM_ SG_ 2147620616 Set_DC_Current "Commanded DC Current";
-CM_ SG_ 2147620616 RPM_Limit "0: No limit      n :limited at n RPM";
-CM_ SG_ 2147620616 Field_weakening "Field weakening strength";
-CM_ SG_ 2147620616 Drive_enable "Write this to 1 every 100ms to enable inverter";
-CM_ SG_ 2147615240 Timestamp "Time in millis";
-CM_ SG_ 2147621133 Fan_Command "0-100 Percent";
-CM_ SG_ 2147615245 Timestamp "Time in millis";
-CM_ SG_ 2147621134 Fan_Command "0-100 Percent";
-CM_ SG_ 2147615246 Timestamp "Time in millis";
-CM_ SG_ 2147621135 Fan_Command "0-100 Percent";
-CM_ SG_ 2147615247 Timestamp "Time in millis";
-CM_ SG_ 2147621637 led_bits "[Byte 0 / Bits 0-7] 0: BMS LED command 1: IMD LED command 2: BSPD LED command 3-7: Reserved";
-CM_ SG_ 2147615237 Timestamp "Time in millis";
-CM_ SG_ 2147615488 status_flags "[Bytes 0-1 / Bits 0-15] 0: BCU Node Status (1: OK, 0: Timeout) 1: GR Inverter Status (1: OK, 0: Timeout) 2: Fan Controller 1 Status (1: OK, 0: Timeout) 3: Fan Controller 2 Status (1: OK, 0: Timeout) 4: Fan Controller 3 Status (1: OK, 0: Timeout) 5: Dash Panel Status (1: OK, 0: Timeout) 6: TCM Node Status (1: OK, 0: Timeout) 7: SAMM_Mag_1 Status (1: OK, 0: Timeout) 8: SAMM_Mag_2 Status (1: OK, 0: Timeout) 9: SAMM_ToF_1 Status (1: OK, 0: Timeout) 10: SAMM_ToF_2 Status (1: OK, 0: Timeout) 11: TireTemp_FL Status (1: OK, 0: Timeout) 12: TireTemp_FR Status (1: OK, 0: Timeout) 13: TireTemp_RL Status (1: OK, 0: Timeout) 14: TireTemp_RR Status (1: OK, 0: Timeout) 15: Reserved";
-CM_ SG_ 2147615488 ecu_state "[Byte 2 / Bits 16-17] GLV States 0: GLV Off State, 1: GLV On State. See diagram in StateMachine. [Byte 2 / Bits 18-19] Precharge States 2: Precharge Engaged State 3: Precharge Complete State See diagram in StateMachine.h [Byte 2 / Bits 20-21] ECU States 4: Drive Active ECU State 5: TS Discharge ECU State 6-7: Reserved See diagram in StateMachine.h";
-CM_ SG_ 2147615488 Power_Level "Controls the AC current limits to each of the inverters Discrete Mapping, actual values TBD (16 possible values)";
-CM_ SG_ 2147615488 Torque_Map "The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor";
-CM_ SG_ 2147615488 Max_Cell_Temp "the temperature of the hottest cell of the accumulator";
-CM_ SG_ 2147615488 Accumulator_State_of_Charge "% charged of the Accumulator";
-CM_ SG_ 2147615488 GLV_State_of_Charge "% charged of the Low Voltage Bat";
-CM_ SG_ 2147615744 Vehicle_Speed "Absolute value of speed";
-CM_ SG_ 2147615744 Tractive_System_Voltage "Output terminal voltage of accumulator";
-CM_ SG_ 2147615744 FR_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2147615744 FL_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2147616000 RR_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2147616000 RL_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2147615236 Timestamp "Time in millis";
-CM_ SG_ 2148335617 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2148336129 Timestamp "Time in millis";
-CM_ SG_ 2148336130 Timestamp "Time in millis";
-CM_ SG_ 2148341762 Fan_Speed "Fan RPM";
-CM_ SG_ 2148341762 Input_Voltage "0-22";
-CM_ SG_ 2148341762 Input_Current "0-10";
-CM_ SG_ 2148401153 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2148401665 Timestamp "Time in millis";
-CM_ SG_ 2148401666 Timestamp "Time in millis";
-CM_ SG_ 2148407298 Fan_Speed "Fan RPM";
-CM_ SG_ 2148407298 Input_Voltage "0-22";
-CM_ SG_ 2148407298 Input_Current "0-10";
-CM_ SG_ 2148466689 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2148467201 Timestamp "Time in millis";
-CM_ SG_ 2148467202 Timestamp "Time in millis";
-CM_ SG_ 2148472834 Fan_Speed "Fan RPM";
-CM_ SG_ 2148472834 Input_Voltage "0-22";
-CM_ SG_ 2148472834 Input_Current "0-10";
-CM_ SG_ 2148007937 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
-CM_ SG_ 2148008449 Timestamp "Time in millis";
-CM_ SG_ 2148008450 Timestamp "Time in millis";
-CM_ SG_ 2148012802 AC_current "0.01 * current, int16_t";
-CM_ SG_ 2148012802 DC_current "0.01 * current, int16_t";
-CM_ SG_ 2148012802 Motor_RPM "RPM, int16_t";
-CM_ SG_ 2148013058 U_MOSFET_temperature "Celsius + 40, uint8_t";
-CM_ SG_ 2148013058 V_MOSFET_temperature "Celsius + 40, uint8_t";
-CM_ SG_ 2148013058 W_MOSFET_temperature "Celsius + 40, uint8_t";
-CM_ SG_ 2148013314 Motor_temperature "Celsius + 40, uint8_t";
-CM_ SG_ 2148013314 fault_bits "TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or timeout";
-CM_ SG_ 2147746305 Timestamp "Time in millis";
-CM_ SG_ 2147746306 Timestamp "Time in millis";
+CM_ SG_ 2149580801 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2149581313 Timestamp "Time in millis";
+CM_ SG_ 2149583363 Set_TS_Active "0: shutdown, 1: go TS Active/Precharge";
+CM_ SG_ 2149583619 Charge_Voltage "Sets the Target Charging voltage";
+CM_ SG_ 2149583619 Charge_Current "Sets the Target Charging Current";
+CM_ SG_ 2149583875 Minimium_Cell_Voltage "Sets the threshold for Minimum Cell Voltage before Shutdown";
+CM_ SG_ 2149583875 Max_Cell_Temperature "Sets the threshold for Max Cell Temperature before Shutdown";
+CM_ SG_ 2149581315 Timestamp "Time in millis";
+CM_ SG_ 2149586440 Max_AC_Current "Max AC Current";
+CM_ SG_ 2149586440 Max_DC_Current "Max DC Current";
+CM_ SG_ 2149586440 Absolute_Max_RPM_Limit "0: No limit      n :limited at n RPM";
+CM_ SG_ 2149586440 Motor_direction "Write 1 inverts direction";
+CM_ SG_ 2149586696 Set_AC_Current "Commanded AC Current";
+CM_ SG_ 2149586696 Set_DC_Current "Commanded DC Current";
+CM_ SG_ 2149586696 RPM_Limit "0: No limit      n :limited at n RPM";
+CM_ SG_ 2149586696 Field_weakening "Field weakening strength";
+CM_ SG_ 2149586696 Drive_enable "Write this to 1 every 100ms to enable inverter";
+CM_ SG_ 2149581320 Timestamp "Time in millis";
+CM_ SG_ 2149587213 Fan_Command "0-100 Percent";
+CM_ SG_ 2149581325 Timestamp "Time in millis";
+CM_ SG_ 2149587214 Fan_Command "0-100 Percent";
+CM_ SG_ 2149581326 Timestamp "Time in millis";
+CM_ SG_ 2149587215 Fan_Command "0-100 Percent";
+CM_ SG_ 2149581327 Timestamp "Time in millis";
+CM_ SG_ 2149587717 led_bits "[Byte 0 / Bits 0-7] 0: BMS LED command 1: IMD LED command 2: BSPD LED command 3-7: Reserved";
+CM_ SG_ 2149581317 Timestamp "Time in millis";
+CM_ SG_ 2149581568 status_flags "[Bytes 0-1 / Bits 0-15] 0: BCU Node Status (1: OK, 0: Timeout) 1: GR Inverter Status (1: OK, 0: Timeout) 2: Fan Controller 1 Status (1: OK, 0: Timeout) 3: Fan Controller 2 Status (1: OK, 0: Timeout) 4: Fan Controller 3 Status (1: OK, 0: Timeout) 5: Dash Panel Status (1: OK, 0: Timeout) 6: TCM Node Status (1: OK, 0: Timeout) 7: SAMM_Mag_1 Status (1: OK, 0: Timeout) 8: SAMM_Mag_2 Status (1: OK, 0: Timeout) 9: SAMM_ToF_1 Status (1: OK, 0: Timeout) 10: SAMM_ToF_2 Status (1: OK, 0: Timeout) 11: TireTemp_FL Status (1: OK, 0: Timeout) 12: TireTemp_FR Status (1: OK, 0: Timeout) 13: TireTemp_RL Status (1: OK, 0: Timeout) 14: TireTemp_RR Status (1: OK, 0: Timeout) 15: Reserved";
+CM_ SG_ 2149581568 ecu_state "[Byte 2 / Bits 16-17] GLV States 0: GLV Off State, 1: GLV On State. See diagram in StateMachine. [Byte 2 / Bits 18-19] Precharge States 2: Precharge Engaged State 3: Precharge Complete State See diagram in StateMachine.h [Byte 2 / Bits 20-21] ECU States 4: Drive Active ECU State 5: TS Discharge ECU State 6-7: Reserved See diagram in StateMachine.h";
+CM_ SG_ 2149581568 Power_Level "Controls the AC current limits to each of the inverters Discrete Mapping, actual values TBD (16 possible values)";
+CM_ SG_ 2149581568 Torque_Map "The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor";
+CM_ SG_ 2149581568 Max_Cell_Temp "the temperature of the hottest cell of the accumulator";
+CM_ SG_ 2149581568 Accumulator_State_of_Charge "% charged of the Accumulator";
+CM_ SG_ 2149581568 GLV_State_of_Charge "% charged of the Low Voltage Bat";
+CM_ SG_ 2149581824 Vehicle_Speed "Absolute value of speed";
+CM_ SG_ 2149581824 Tractive_System_Voltage "Output terminal voltage of accumulator";
+CM_ SG_ 2149581824 FR_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2149581824 FL_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2149582080 RR_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2149582080 RL_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2149581316 Timestamp "Time in millis";
+CM_ SG_ 2161115137 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2161115649 Timestamp "Time in millis";
+CM_ SG_ 2161115650 Timestamp "Time in millis";
+CM_ SG_ 2161121282 Fan_Speed "Fan RPM";
+CM_ SG_ 2161121282 Input_Voltage "0-22";
+CM_ SG_ 2161121282 Input_Current "0-10";
+CM_ SG_ 2162163713 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2162164225 Timestamp "Time in millis";
+CM_ SG_ 2162164226 Timestamp "Time in millis";
+CM_ SG_ 2162169858 Fan_Speed "Fan RPM";
+CM_ SG_ 2162169858 Input_Voltage "0-22";
+CM_ SG_ 2162169858 Input_Current "0-10";
+CM_ SG_ 2163212289 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2163212801 Timestamp "Time in millis";
+CM_ SG_ 2163212802 Timestamp "Time in millis";
+CM_ SG_ 2163218434 Fan_Speed "Fan RPM";
+CM_ SG_ 2163218434 Input_Voltage "0-22";
+CM_ SG_ 2163218434 Input_Current "0-10";
+CM_ SG_ 2155872257 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
+CM_ SG_ 2155872769 Timestamp "Time in millis";
+CM_ SG_ 2155872770 Timestamp "Time in millis";
+CM_ SG_ 2155877122 AC_current "0.01 * current, int16_t";
+CM_ SG_ 2155877122 DC_current "0.01 * current, int16_t";
+CM_ SG_ 2155877122 Motor_RPM "RPM, int16_t";
+CM_ SG_ 2155877378 U_MOSFET_temperature "Celsius + 40, uint8_t";
+CM_ SG_ 2155877378 V_MOSFET_temperature "Celsius + 40, uint8_t";
+CM_ SG_ 2155877378 W_MOSFET_temperature "Celsius + 40, uint8_t";
+CM_ SG_ 2155877634 Motor_temperature "Celsius + 40, uint8_t";
+CM_ SG_ 2155877634 fault_bits "TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or timeout";
+CM_ SG_ 2151678465 Timestamp "Time in millis";
+CM_ SG_ 2151678466 Timestamp "Time in millis";
