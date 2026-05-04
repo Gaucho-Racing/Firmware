@@ -406,7 +406,10 @@ BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
  SG_ Brake_Temp_FR_RTT : 160|8@1+ (1,0) [0|0] "ms" TCM
  SG_ Brake_Temp_RL_RTT : 168|8@1+ (1,0) [0|0] "ms" TCM
  SG_ Brake_Temp_RR_RTT : 176|8@1+ (1,0) [0|0] "ms" TCM
- SG_ GPS_RTT : 184|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ DGPS_RTT : 184|8@1+ (1,0) [0|0] "ms" TCM
+
+BO_ 2149581344 ECU_Ping_to_DGPS: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" DGPS
 
 BO_ 2149581332 ECU_Ping_to_Suspension_FL: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Suspension_FL
@@ -458,6 +461,9 @@ BO_ 2149581343 ECU_Ping_to_BrakeTemp_RR: 4 ECU
 
 BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
+
+BO_ 2181038594 DGPS_Ping_to_ECU: 4 DGPS
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
 BO_ 2181051140 DGPS_GPS_ALT_to_TCM: 8 DGPS
  SG_ ALT : 0|64@1+ (1,0) [0|0] "" TCM
@@ -899,7 +905,8 @@ CM_ SG_ 2149592324 Brake_Temp_FL_RTT "Round trip time";
 CM_ SG_ 2149592324 Brake_Temp_FR_RTT "Round trip time";
 CM_ SG_ 2149592324 Brake_Temp_RL_RTT "Round trip time";
 CM_ SG_ 2149592324 Brake_Temp_RR_RTT "Round trip time";
-CM_ SG_ 2149592324 GPS_RTT "Round trip time";
+CM_ SG_ 2149592324 DGPS_RTT "Round trip time";
+CM_ SG_ 2149581344 Timestamp "Time in millis";
 CM_ SG_ 2149581332 Timestamp "Time in millis";
 CM_ SG_ 2149581333 Timestamp "Time in millis";
 CM_ SG_ 2149581334 Timestamp "Time in millis";
@@ -917,6 +924,7 @@ CM_ SG_ 2149581341 Timestamp "Time in millis";
 CM_ SG_ 2149581342 Timestamp "Time in millis";
 CM_ SG_ 2149581343 Timestamp "Time in millis";
 CM_ SG_ 2151678465 Timestamp "Time in millis";
+CM_ SG_ 2181038594 Timestamp "Time in millis";
 CM_ SG_ 2181051140 ALT "altitude";
 CM_ SG_ 2181050628 LAT "lattitude";
 CM_ SG_ 2181050884 LON "longitude";

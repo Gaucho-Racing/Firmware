@@ -523,7 +523,7 @@ typedef struct {
 	/** Round trip time (Byte 22) */
 	uint8_t brake_temp_rr_rtt;
 	/** Round trip time (Byte 23) */
-	uint8_t gps_rtt;
+	uint8_t dgps_rtt;
 } GRCAN_ECU_PINGING_RTT_MSG;
 
 #endif
