@@ -134,7 +134,6 @@ int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *o
 // converts CAN FD TxHeader DataLength Field
 static const uint8_t CANFD_DLCtoBytes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 32, 48, 64};
 
-
 void CAN_Timer_Start(void);
 void can_tx_dequeue_helper(CANHandle *handle);
 

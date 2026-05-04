@@ -333,7 +333,7 @@ void CAN_Configure(void)
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
 	HAL_FDCAN_ConfigFilter(stateLump.data_can->hal_fdcanP, &fdcan2_filter);
 
-	//timer can
+	// timer can
 	can_start(stateLump.primary_can);
 	can_start(stateLump.data_can);
 	CAN_Timer_Start();
@@ -397,24 +397,23 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	// uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
-		//adcs
+		// adcs
 		read_digital();
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
 		write_adc_values_to_state_data();
 
-		//main state lopp, queues can messages within it
+		// main state lopp, queues can messages within it
 		static uint32_t delay_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 
-			//state tick
+			// state tick
 			ECU_State_Tick();
 
-			//preipheral updates
+			// preipheral updates
 			SendECUStateDataOverCAN(&stateLump);
 			pingAll();
 			lightControl(&stateLump);
-
 		}
 	}
 	/* USER CODE END 3 */

@@ -354,8 +354,6 @@ void can_tx_dequeue_helper(CANHandle *handle)
 		return;
 	}
 
-
-
 	// LOGOMATIC("CAN %s, LOAD %2.2f \n", can_get_instance_name(handle->hal_fdcanP->Instance), (float)handle->tx_elements / (float)handle->tx_capacity);
 
 	// use interrupt masking in case any other ISRs need to lock the circular buffer

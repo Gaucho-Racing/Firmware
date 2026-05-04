@@ -3,17 +3,16 @@
 #include <math.h>
 #include <stdbool.h>
 
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "Unused.h"
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
-
-#include "GRCAN_BUS_ID.h"
-#include "GRCAN_MSG_DATA.h"
-#include "GRCAN_MSG_ID.h"
-#include "GRCAN_NODE_ID.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -135,13 +134,13 @@ void SendEcuBonusInfo(const ECU_StateData *stateData)
 {
 	// All analog data
 	GRCAN_ECU_ANALOG_DATA_MSG analogData = {.bspd_signal = stateData->bspd_signal,
-					     .bse_signal = stateData->bse_signal,
-					     .apps_1_signal = stateData->APPS1_Signal,
-					     .apps_2_signal = stateData->APPS2_Signal,
-					     .brakeline_f_signal = stateData->Brake_F_Signal,
-					     .brakeline_r_signal = stateData->Brake_R_Signal,
-					     .steering_angle_signal = stateData->steering_angle_signal,
-					     .aux_signal = stateData->aux_signal};
+						.bse_signal = stateData->bse_signal,
+						.apps_1_signal = stateData->APPS1_Signal,
+						.apps_2_signal = stateData->APPS2_Signal,
+						.brakeline_f_signal = stateData->Brake_F_Signal,
+						.brakeline_r_signal = stateData->Brake_R_Signal,
+						.steering_angle_signal = stateData->steering_angle_signal,
+						.aux_signal = stateData->aux_signal};
 	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &analogData, sizeof(analogData));
 
 	// RTT ping data
