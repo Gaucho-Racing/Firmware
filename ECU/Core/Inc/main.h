@@ -58,7 +58,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define LOCAL_GR_ID GRCAN_ECU
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

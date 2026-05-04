@@ -287,21 +287,26 @@ void CAN_Configure(void)
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	stateLump.primary_can = can_init(&canCfg);
+	FDCAN_FilterTypeDef fdcan_primary_filter_ecu = {0};
+	fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_ecu.FilterIndex = 0;
+	fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_primary_filter_ecu.FilterID2 = 0x000000FF;
 
-	// Filter 1 Definitions
-	FDCAN_FilterTypeDef fdcan1_filter;
+	FDCAN_FilterTypeDef fdcan_primary_filter_all = {0};
+	fdcan_primary_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_all.FilterIndex = 1;
+	fdcan_primary_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
 
-	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter.FilterIndex = 0;
-	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
-	fdcan1_filter.FilterID2 = 0x00000FF;
+	primary_can = can_init(&canCfg);
 
-	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = GRCAN_ALL; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(stateLump.primary_can->hal_fdcanP, &fdcan1_filter);
+	can_add_filter(primary_can, &fdcan_primary_filter_ecu);
+	can_add_filter(primary_can, &fdcan_primary_filter_all);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -316,22 +321,26 @@ void CAN_Configure(void)
 	// RX Callback CAN2
 	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	// Filter definitions
-	FDCAN_FilterTypeDef fdcan2_filter;
+	FDCAN_FilterTypeDef fdcan_data_filter_ecu = {0};
+	fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_ecu.FilterIndex = 0;
+	fdcan_data_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
 
-	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan2_filter.FilterIndex = 0;
-	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
-	fdcan2_filter.FilterID2 = 0x00000FF;
-
-	fdcan2_filter.FilterIndex = 1;
-	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
+	FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
+	fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_all.FilterIndex = 1;
+	fdcan_data_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_data_filter_all.FilterID2 = 0x000000FF;
 
 	stateLump.data_can = can_init(&canCfg);
 
-	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigFilter(stateLump.data_can->hal_fdcanP, &fdcan2_filter);
+	can_add_filter(data_can, &fdcan_data_filter_ecu);
+	can_add_filter(data_can, &fdcan_data_filter_all);
 
 	// timer can
 	can_start(stateLump.primary_can);
