@@ -163,22 +163,40 @@ routing:
           - msg: Ping
         TCM:
           - msg: ECU Analog Data
-          - msg: ECU Performance
-        InboardFloor_FL:
+          - msg: ECU Pinging RTT
+        DGPS:
           - msg: Ping
-        InboardFloor_FR:
+        Suspension FL:
           - msg: Ping
-        InboardFloor_RL:
+        Suspension FR:
           - msg: Ping
-        InboardFloor_RR:
+        Suspension RL:
           - msg: Ping
-        SuspensionNode_FL:
+        Suspension RR:
           - msg: Ping
-        SuspensionNode_FR:
+        InboardFloor FL:
           - msg: Ping
-        SuspensionNode_RL:
+        InboardFloor FR:
           - msg: Ping
-        SuspensionNode_RR:
+        InboardFloor RL:
+          - msg: Ping
+        InboardFloor RR:
+          - msg: Ping
+        TireTemp FL:
+          - msg: Ping
+        TireTemp FR:
+          - msg: Ping
+        TireTemp RL:
+          - msg: Ping
+        TireTemp RR:
+          - msg: Ping
+        BrakeTemp FL:
+          - msg: Ping
+        BrakeTemp FR:
+          - msg: Ping
+        BrakeTemp RL:
+          - msg: Ping
+        BrakeTemp RR:
           - msg: Ping
     Energy Meter:
       Charger:
@@ -260,6 +278,8 @@ routing:
           - msg: Debug 2.0
     DGPS:
       Data:
+        ECU:
+          - msg: Ping
         TCM:
           - msg: GPS ALT
           - msg: GPS LAT
@@ -268,35 +288,67 @@ routing:
           - msg: GPS QY
           - msg: GPS RZ
           - msg: UVW DGPS
-    SAMM_Mag_1:
+    Suspension FL:
       Data:
         ECU:
           - msg: Ping
-    SAMM_Mag_2:
+    Suspension FR:
       Data:
         ECU:
           - msg: Ping
-    SAMM_ToF_1:
+    Suspension RL:
       Data:
         ECU:
           - msg: Ping
-    SAMM_ToF_2:
+    Suspension RR:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_FL:
+    InboardFloor FL:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_FR:
+    InboardFloor FR:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_RL:
+    InboardFloor RL:
       Data:
         ECU:
           - msg: Ping
-    TireTemp_RR:
+    InboardFloor RR:
+      Data:
+        ECU:
+          - msg: Ping
+    TireTemp FL:
+      Data:
+        ECU:
+          - msg: Ping
+    TireTemp FR:
+      Data:
+        ECU:
+          - msg: Ping
+    TireTemp RL:
+      Data:
+        ECU:
+          - msg: Ping
+    TireTemp RR:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp FL:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp FR:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp RL:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp RR:
       Data:
         ECU:
           - msg: Ping
@@ -332,57 +384,71 @@ Message ID:
   ECU Status 1:
     MSG ID: 0x003
     MSG LENGTH: 8
-    status_flags:
+    ECU State:
       bit_start: 0
       comment:
-        [Bytes 0-1 / Bits 0-15]
-        0: BCU Node Status (1: OK, 0: Timeout)
-        1: GR Inverter Status (1: OK, 0: Timeout)
-        2: Fan Controller 1 Status (1: OK, 0: Timeout)
-        3: Fan Controller 2 Status (1: OK, 0: Timeout)
-        4: Fan Controller 3 Status (1: OK, 0: Timeout)
-        5: Dash Panel Status (1: OK, 0: Timeout)
-        6: TCM Node Status (1: OK, 0: Timeout)
-        7: SAMM_Mag_1 Status (1: OK, 0: Timeout)
-        8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
-        9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
-        10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-        11: TireTemp_FL Status (1: OK, 0: Timeout)
-        12: TireTemp_FR Status (1: OK, 0: Timeout)
-        13: TireTemp_RL Status (1: OK, 0: Timeout)
-        14: TireTemp_RR Status (1: OK, 0: Timeout)
-        15: Reserved
-      data type: u16
-    ecu_state:
-      bit_start: 16
-      comment:
-        [Byte 2 / Bits 16-17] GLV States
-        0: GLV Off State,
-        1: GLV On State.
-        See diagram in StateMachine.
-        [Byte 2 / Bits 18-19] Precharge States
+        [Byte 0 / Bits 0-7] ECU state machine data
+        0: GLV Off State
+        1: GLV On State
         2: Precharge Engaged State
         3: Precharge Complete State
-        See diagram in StateMachine.h
-        [Byte 2 / Bits 20-21] ECU States
-        4: Drive Active ECU State
-        5: TS Discharge ECU State
+        4: Drive Active State
+        5: TS Discharge State
         6-7: Reserved
         See diagram in StateMachine.h
       data type: b
       units: Bool
-    Power Level:
+    Ping Group 1:
+      bit_start: 8
+      comment:
+        [Byte 1 / Bits 8-15] ECU ping targets
+        8: BCU (1: OK, 0: Timeout)
+        9: GR Inverter (1: OK, 0: Timeout)
+        10: Fan Controller 1 (1: OK, 0: Timeout)
+        11: Fan Controller 2 (1: OK, 0: Timeout)
+        12: Fan Controller 3 (1: OK, 0: Timeout)
+        13: Dash Panel (1: OK, 0: Timeout)
+        14: TCM (1: OK, 0: Timeout)
+        15: DGPS (1: OK, 0: Timeout)
+      data type: u8
+    Ping Group 2:
+      bit_start: 16
+      comment:
+        [Byte 2 / Bits 16-23] ECU ping targets
+        16: Suspension FL (1: OK, 0: Timeout)
+        17: Suspension FR (1: OK, 0: Timeout)
+        18: Suspension RL (1: OK, 0: Timeout)
+        19: Suspension RR (1: OK, 0: Timeout)
+        20: InboardFloor FL (1: OK, 0: Timeout)
+        21: InboardFloor FR (1: OK, 0: Timeout)
+        22: InboardFloor RL (1: OK, 0: Timeout)
+        23: InboardFloor RR (1: OK, 0: Timeout)
+      data type: u8
+    Ping Group 3:
       bit_start: 24
+      comment:
+        [Byte 3 / Bits 24-31] ECU ping targets
+        24: TireTemp FL (1: OK, 0: Timeout)
+        25: TireTemp FR (1: OK, 0: Timeout)
+        26: TireTemp RL (1: OK, 0: Timeout)
+        27: TireTemp RR (1: OK, 0: Timeout)
+        28: BrakeTemp FL (1: OK, 0: Timeout)
+        29: BrakeTemp FR (1: OK, 0: Timeout)
+        30: BrakeTemp RL (1: OK, 0: Timeout)
+        31: BrakeTemp RR (1: OK, 0: Timeout)
+      data type: u8
+    Power Level:
+      bit_start: 32
       comment:
         Controls the AC current limits to each of the inverters
         Discrete Mapping, actual values TBD (16 possible values)
       data type: u4
     Torque Map:
-      bit_start: 28
+      bit_start: 36
       comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
       data type: u4
     Max Cell Temp:
-      bit_start: 32
+      bit_start: 40
       comment: the temperature of the hottest cell of the accumulator
       data type: u8
       units: Celsius
@@ -390,7 +456,7 @@ Message ID:
       scaled max: 63.75
       map equation: "0.25x"
     Accumulator State of Charge:
-      bit_start: 40
+      bit_start: 48
       comment: % charged of the Accumulator
       data type: u8
       units: '%'
@@ -398,7 +464,7 @@ Message ID:
       scaled max: 100
       map equation: "20x/51"
     GLV State of Charge:
-      bit_start: 48
+      bit_start: 56
       comment: % charged of the Low Voltage Bat
       data type: u8
       units: '%'
@@ -408,33 +474,33 @@ Message ID:
   ECU Status 2:
     MSG ID: 0x004
     MSG LENGTH: 8
-    Vehicle Speed:
-      bit_start: 0
-      comment: Absolute value of speed
-      data type: u16
-      units: MPH
-      scaled min: 0
-      scaled max: 655.35
-      map equation: "0.01x"
     Tractive System Voltage:
-      bit_start: 16
+      bit_start: 0
       comment: Output terminal voltage of accumulator
       data type: u16
       units: Volts
       scaled min: 0
       scaled max: 655.35
       map equation: "0.01x"
-    FR Wheel RPM:
+    Vehicle Speed:
+      bit_start: 16
+      comment: Absolute value of speed
+      data type: u16
+      units: MPH
+      scaled min: 0
+      scaled max: 655.35
+      map equation: "0.01x"
+    FL Wheel RPM:
       bit_start: 32
-      comment: Wheel RPM
+      comment: FL Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-    FL Wheel RPM:
+    FR Wheel RPM:
       bit_start: 48
-      comment: Wheel RPM
+      comment: FR Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -442,28 +508,33 @@ Message ID:
       map equation: "0.1x-3276.8"
   ECU Status 3:
     MSG ID: 0x005
-    MSG LENGTH: 4
-    RR Wheel RPM:
-      bit_start: 0
-      comment: Wheel RPM
-      data type: u16
-      units: RPM
-      scaled min: -3276.8
-      scaled max: 3276.7
-      map equation: "0.1x-3276.8"
+    MSG LENGTH: 5
     RL Wheel RPM:
-      bit_start: 16
-      comment: Wheel RPM
+      bit_start: 0
+      comment: RL Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-  ECU config:
-    MSG ID: 0x006
-    MSG LENGTH: 0
-    Reserved:
-      bit_start: 0
+    RR Wheel RPM:
+      bit_start: 16
+      comment: RR Wheel RPM
+      data type: u16
+      units: RPM
+      scaled min: -3276.8
+      scaled max: 3276.7
+      map equation: "0.1x-3276.8"
+    Relay States:
+      bit_start: 32
+      comment:
+        [Byte 4 / Bits 32-39]
+        0: BMS OK
+        1: IMD OK
+        2: BSPD OK
+        3: Software OK
+        4-7: Reserved
+      data type: b
   BCU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
@@ -577,11 +648,11 @@ Message ID:
       bit_start: 48
       comment:
         [Byte 6 / Bits 48-55]
-        48: Precharge Timeout
-        49: IR- / Precharge State (0:Open, 1:Closed)
-        50: IR+ State (0:Open, 1:Closed)
-        51: Software Latch (0:Open, 1:Closed)
-        52-55: Reserved
+        55: Precharge Timeout
+        54: IR- / Precharge State (0:Open, 1:Closed)
+        53: IR+ State (0:Open, 1:Closed)
+        52: Software Latch (0:Open, 1:Closed)
+        48-51: Reserved
       data type: b
   BCU Status 3:
     MSG ID: 0x009
@@ -3426,35 +3497,34 @@ Message ID:
       map equation: "1x"
   Dash Status:
     MSG ID: 0x01A
-    MSG LENGTH: 3
-    button_flags:
+    MSG LENGTH: 1
+    button_led_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: TS Active
-        1: RTD
-        2-7: Reserved
-      data type: u8
-    led_bits:
-      bit_start: 8
-      comment:
-        [Byte 1 / Bits 8-15]
-        0: BMS
-        1: IMD
-        2: BSPD
-        3-7: Reserved
+        0: TS press
+        1: RTD press
+        2: TS hold
+        3: RTD hold
+        4: BSPD led
+        5: IMD led
+        6: BMS led
+        7: Reserved
       data type: u8
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
-    led_bits:
+    led_latch_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: BMS LED command
-        1: IMD LED command
-        2: BSPD LED command
-        3-7: Reserved
+        0: BSPD led
+        1: IMD led
+        2: BMS led
+        3: BSPD latch
+        4: IMD latch
+        5: BMS latch
+        6-7: Reserved
       data type: u8
   TCM Status:
     MSG ID: 0x029
@@ -3742,15 +3812,129 @@ Message ID:
       comment: W
       data type: i16
       map equation: "x/100"
-  ECU Performance:
-    MSG ID: 0x2F
-    MSG LENGTH: 4
-    Elapsed Cycles:
-      bit_start: 0
-      comment:
-        Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-      data type: u32
-      units: Clock Cycles
+  ECU Pinging RTT:
+    MSG ID: 0x2D
+    MSG LENGTH: 24
+    BCU RTT:
+      bit_start: 0-7
+      comment: Round trip time
+      data type: u8
+      units: ms
+    GR Inverter RTT:
+      bit_start: 8-15
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 1 RTT:
+      bit_start: 16-23
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 2 RTT:
+      bit_start: 24-31
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 3 RTT:
+      bit_start: 32-39
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Dash Panel RTT:
+      bit_start: 40-47
+      comment: Round trip time
+      data type: u8
+      units: ms
+    TCM RTT:
+      bit_start: 48-55
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp FL RTT:
+      bit_start: 56-63
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp FR RTT:
+      bit_start: 64-71
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp RL RTT:
+      bit_start: 72-79
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp RR RTT:
+      bit_start: 80-87
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node FL RTT:
+      bit_start: 88-95
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node FR RTT:
+      bit_start: 96-103
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node RL RTT:
+      bit_start: 104-111
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node RR RTT:
+      bit_start: 112-119
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor FL RTT:
+      bit_start: 120-127
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor FR RTT:
+      bit_start: 128-135
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor RL RTT:
+      bit_start: 136-143
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor RR RTT:
+      bit_start: 144-151
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp FL RTT:
+      bit_start: 152-159
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp FR RTT:
+      bit_start: 160-167
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp RL RTT:
+      bit_start: 168-175
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp RR RTT:
+      bit_start: 176-183
+      comment: Round trip time
+      data type: u8
+      units: ms
+    DGPS RTT:
+      bit_start: 184-191
+      comment: Round trip time
+      data type: u8
+      units: ms
 
 Custom CAN ID:
   DTI Control 1:
@@ -4252,7 +4436,7 @@ Custom CAN ID:
         comment: Frick if I know
 
 GR ID:
-
+  ALL: "0x00"
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
@@ -4268,17 +4452,20 @@ GR ID:
   Fan Controller 1: "0x0D"
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
-  DGPS: "0x30"
-  InboardFloor_FL: "0x20"
-  InboardFloor_FR: "0x21"
-  InboardFloor_RL: "0x22"
-  InboardFloor_RR: "0x23"
-  SuspensionNode_FL: "0x24"
-  SuspensionNode_FR: "0x25"
-  SuspensionNode_RL: "0x26"
-  SuspensionNode_RR: "0x27"
-  TireTemp_FL: "0x28"
-  TireTemp_FR: "0x29"
-  TireTemp_RL: "0x2A"
-  TireTemp_RR: "0x2B"
-  ALL: "0x00"
+  TireTemp FL: "0x10"
+  TireTemp FR: "0x11"
+  TireTemp RL: "0x12"
+  TireTemp RR: "0x13"
+  Suspension FL: "0x14"
+  Suspension FR: "0x15"
+  Suspension RL: "0x16"
+  Suspension RR: "0x17"
+  InboardFloor FL: "0x18"
+  InboardFloor FR: "0x19"
+  InboardFloor RL: "0x1A"
+  InboardFloor RR: "0x1B"
+  BrakeTemp FL: "0x1C"
+  BrakeTemp FR: "0x1D"
+  BrakeTemp RL: "0x1E"
+  BrakeTemp RR: "0x1F"
+  DGPS: "0x20"

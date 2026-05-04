@@ -32,6 +32,23 @@ typedef enum {
 	GRCAN_TireTemp_RL = 0x2A,
 	GRCAN_TireTemp_RR = 0x2B,
 	GRCAN_DGPS = 0x30,
+	GRCAN_TireTemp_FL = 0x10,
+	GRCAN_TireTemp_FR = 0x11,
+	GRCAN_TireTemp_RL = 0x12,
+	GRCAN_TireTemp_RR = 0x13,
+	GRCAN_Suspension_FL = 0x14,
+	GRCAN_Suspension_FR = 0x15,
+	GRCAN_Suspension_RL = 0x16,
+	GRCAN_Suspension_RR = 0x17,
+	GRCAN_InboardFloor_FL = 0x18,
+	GRCAN_InboardFloor_FR = 0x19,
+	GRCAN_InboardFloor_RL = 0x1A,
+	GRCAN_InboardFloor_RR = 0x1B,
+	GRCAN_BrakeTemp_FL = 0x1C,
+	GRCAN_BrakeTemp_FR = 0x1D,
+	GRCAN_BrakeTemp_RL = 0x1E,
+	GRCAN_BrakeTemp_RR = 0x1F,
+	GRCAN_DGPS = 0x20,
 } GRCAN_NODE_ID;
 
 #endif // GR_IDS_H

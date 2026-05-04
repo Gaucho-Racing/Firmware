@@ -397,21 +397,21 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
+	// uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		if (cycle_counter_accumulator == 10) {
-			elapsed_cycles = DWT->CYCCNT;
-			LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
-			GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
-			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
-			cycle_counter_accumulator = 0;
-			DWT->CYCCNT = 0;
-		} else {
-			cycle_counter_accumulator++;
-		}
+		// if (cycle_counter_accumulator == 10) {
+		// 	elapsed_cycles = DWT->CYCCNT;
+		// 	LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
+		// 	GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
+		// 	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
+		// 	cycle_counter_accumulator = 0;
+		// 	DWT->CYCCNT = 0;
+		// } else {
+		// 	cycle_counter_accumulator++;
+		// }
 
 		static uint32_t nextPing;
 		if (MillisecondsSinceBoot() >= nextPing) {
