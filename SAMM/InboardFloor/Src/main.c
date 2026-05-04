@@ -74,10 +74,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/*
-
-
- */
+uint32_t MillisecondsSinceBoot(void) {
+	return HAL_GetTick() * HAL_GetTickFreq();
+}
 /* USER CODE END 0 */
 
 /**
