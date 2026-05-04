@@ -36,20 +36,20 @@ void pingAll(void)
 {
 	uint32_t timestamp = MillisecondsSinceBoot();
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, 0, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
-	// for (uint8_t i = 0; i < NUMBER_OF_PING_DEVICES; i++) {
-	// 	uint32_t timestamp = MillisecondsSinceBoot();
+	for (uint8_t i = 0; i < NUMBER_OF_PING_DEVICES; i++) {
+		uint32_t timestamp = MillisecondsSinceBoot();
 
-	// 	if (receivedTimestamps[i] >= sentTimestamps[i]) {
-	// 		// no timeout
-	// 		RTTs[i] = receivedTimestamps[i] - sentTimestamps[i];
-	// 	} else {
-	// 		// timeout
-	// 		RTTs[i] = PINGTIMEOUT_VALUE;
-	// 	}
+		if (receivedTimestamps[i] >= sentTimestamps[i]) {
+			// no timeout
+			RTTs[i] = receivedTimestamps[i] - sentTimestamps[i];
+		} else {
+			// timeout
+			RTTs[i] = PINGTIMEOUT_VALUE;
+		}
 
-	// 	sentTimestamps[i] = timestamp;
-	// 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
-	// }
+		sentTimestamps[i] = timestamp;
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+	}
 }
 
 uint32_t getRTT(uint8_t ID)

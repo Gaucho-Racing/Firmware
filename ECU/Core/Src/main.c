@@ -231,14 +231,14 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
-	canCfg.hal_fdcan_init.DataPrescaler = 2;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119; // Updated for 160MHz: (1+119+40)*1 = 160 ticks -> 1 Mbps
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
+	canCfg.hal_fdcan_init.DataPrescaler = 1;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 12; // Updated for 170MHz: 170 MHz/((1+12+4)*2) = 5 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 9; // Updated for 160MHz: 160 MHz/((1+9+10)*1) = 8 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 10;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 1;
 
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
@@ -300,7 +300,7 @@ void CAN_Configure(void)
 	fdcan1_filter.FilterID2 = 0x00000FF;
 
 	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
+	fdcan1_filter.FilterID1 = GRCAN_ALL; // filter messages for all targets
 	HAL_FDCAN_ConfigFilter(stateLump.primary_can->hal_fdcanP, &fdcan1_filter);
 
 	// CAN2 ======================================================
@@ -333,6 +333,7 @@ void CAN_Configure(void)
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
 	HAL_FDCAN_ConfigFilter(stateLump.data_can->hal_fdcanP, &fdcan2_filter);
 
+	//timer can
 	can_start(stateLump.primary_can);
 	can_start(stateLump.data_can);
 	CAN_Timer_Start();
@@ -396,65 +397,25 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	// uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
-		/* USER CODE END WHILE */
-		// static uint32_t lastSend;
-		// if(MillisecondsSinceBoot() >= lastSend + 20) {
-		// 	lastSend = MillisecondsSinceBoot();
-
-		// 	if(HAL_FDCAN_IsRestrictedOperationMode(primary_can->hal_fdcanP)) {
-		// 		HAL_FDCAN_ExitRestrictedOperationMode(primary_can->hal_fdcanP);
-		// 	}
-		// 	// ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_ALL, 0x69, (uint16_t []){stateLump.APPS1_Signal, stateLump.APPS2_Signal}, 4);
-		// }
-
-		/* USER CODE BEGIN 3 */
-		/*
-		if (cycle_counter_accumulator == 10) {
-			elapsed_cycles = DWT->CYCCNT;
-			//LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
-			GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
-			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
-			cycle_counter_accumulator = 0;
-			DWT->CYCCNT = 0;
-		} else {
-			cycle_counter_accumulator++;
-		}
-		*/
-
-		/*
-		static uint32_t nextPing;
-		if (MillisecondsSinceBoot() >= nextPing) {
-			pingAll();
-
-			// TODO: implement error handling
-			if (nextPing != 0) {
-				if (getRTT(GRCAN_BCU) == PINGTIMEOUT_VALUE) {
-					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
-					ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "ECU-P-ITR", 8);
-				}
-				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
-					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
-				}
-			}
-			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
-		}
-		*/
-
+		//adcs
 		read_digital();
-		// TODO: determine alpha
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
 		write_adc_values_to_state_data();
 
+		//main state lopp, queues can messages within it
 		static uint32_t delay_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
-			// odr = GPIOx->ODR;
+
+			//state tick
 			ECU_State_Tick();
+
+			//preipheral updates
 			SendECUStateDataOverCAN(&stateLump);
 			pingAll();
 			lightControl(&stateLump);
+
 		}
-		// LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
 	}
 	/* USER CODE END 3 */
 }
@@ -473,7 +434,7 @@ void SystemClock_Config(void)
 	while (LL_RCC_HSI_IsReady() != 1) {}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 80, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
@@ -486,14 +447,14 @@ void SystemClock_Config(void)
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
 
 	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (170 >> 1); i != 0; i--)
+	for (__IO uint32_t i = (160 >> 1); i != 0; i--)
 		;
 
 	/* Set AHB prescaler*/
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(170000000);
+	LL_SetSystemCoreClock(160000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {

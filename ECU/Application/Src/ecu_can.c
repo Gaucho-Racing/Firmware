@@ -355,6 +355,8 @@ void can_tx_dequeue_helper(CANHandle *handle)
 		return;
 	}
 
+
+
 	// LOGOMATIC("CAN %s, LOAD %2.2f \n", can_get_instance_name(handle->hal_fdcanP->Instance), (float)handle->tx_elements / (float)handle->tx_capacity);
 
 	    // use interrupt masking in case any other ISRs need to lock the circular buffer
@@ -364,6 +366,28 @@ void can_tx_dequeue_helper(CANHandle *handle)
 	if (handle->tx_elements == 0) {
 		__set_BASEPRI(basepri);
 		return;
+	}
+
+	FDCAN_ProtocolStatusTypeDef protocol_status = {0};
+	if (HAL_FDCAN_GetProtocolStatus(handle->hal_fdcanP, &protocol_status) == HAL_OK && protocol_status.BusOff) {
+		LOGOMATIC("CAN_send: bus off detected, attempting recovery\n");
+		if (HAL_FDCAN_Stop(handle->hal_fdcanP) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to stop FDCAN peripheral during bus off recovery\n");
+			__set_BASEPRI(basepri);
+			return;
+		}
+		uint32_t abort_mask = FDCAN_TX_BUFFER0 | FDCAN_TX_BUFFER1 | FDCAN_TX_BUFFER2;
+		HAL_FDCAN_AbortTxRequest(handle->hal_fdcanP, abort_mask);
+		if (HAL_FDCAN_Start(handle->hal_fdcanP) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to restart FDCAN peripheral during bus off recovery\n");
+			__set_BASEPRI(basepri);
+			return;
+		}
+	}
+
+	if (HAL_FDCAN_IsRestrictedOperationMode(handle->hal_fdcanP)) {
+		LOGOMATIC("CAN_send: currently in restricted operation mode\n");
+		HAL_FDCAN_ExitRestrictedOperationMode(handle->hal_fdcanP);
 	}
 
 	// Can Add to Fifo Q
