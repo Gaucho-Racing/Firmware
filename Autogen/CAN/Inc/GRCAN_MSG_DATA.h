@@ -12,55 +12,63 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	/** [Bytes 0-1 / Bits 0-15]
-0: BCU Node Status (1: OK, 0: Timeout)
-1: GR Inverter Status (1: OK, 0: Timeout)
-2: Fan Controller 1 Status (1: OK, 0: Timeout)
-3: Fan Controller 2 Status (1: OK, 0: Timeout)
-4: Fan Controller 3 Status (1: OK, 0: Timeout)
-5: Dash Panel Status (1: OK, 0: Timeout)
-6: TCM Node Status (1: OK, 0: Timeout)
-7: SAMM_Mag_1 Status (1: OK, 0: Timeout)
-8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
-9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
-10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-11: TireTemp_FL Status (1: OK, 0: Timeout)
-12: TireTemp_FR Status (1: OK, 0: Timeout)
-13: TireTemp_RL Status (1: OK, 0: Timeout)
-14: TireTemp_RR Status (1: OK, 0: Timeout)
-15: Reserved (Byte 0) */
-	uint16_t status_flags;
-	/** [Byte 2 / Bits 16-17] GLV States
-0: GLV Off State,
-1: GLV On State.
-See diagram in StateMachine.
-[Byte 2 / Bits 18-19] Precharge States
+	/** [Byte 0 / Bits 0-7] ECU state machine data
+0: GLV Off State
+1: GLV On State
 2: Precharge Engaged State
 3: Precharge Complete State
-See diagram in StateMachine.h
-[Byte 2 / Bits 20-21] ECU States
-4: Drive Active ECU State
-5: TS Discharge ECU State
+4: Drive Active State
+5: TS Discharge State
 6-7: Reserved
-See diagram in StateMachine.h (Byte 2) */
+See diagram in StateMachine.h (Byte 0) */
 	uint8_t ecu_state;
+	/** [Byte 1 / Bits 8-15] ECU ping targets
+8: BCU
+9: GR Inverter
+10: Fan Controller 1
+11: Fan Controller 2
+12: Fan Controller 3
+13: Dash Panel
+14: TCM
+15: DGPS (Byte 1) */
+	uint8_t ping_group_1;
+	/** [Byte 2 / Bits 16-23] ECU ping targets
+16: Suspension_FL
+17: Suspension_FR
+18: Suspension_RL
+19: Suspension_RR
+20: InboardFloor_FL
+21: InboardFloor_FR
+22: InboardFloor_RL
+23: InboardFloor_RR (Byte 2) */
+	uint8_t ping_group_2;
+	/** [Byte 3 / Bits 24-31] ECU ping targets
+24: TireTemp_FL
+25: TireTemp_FR
+26: TireTemp_RL
+27: TireTemp_RR
+28: BrakeTemp_FL
+29: BrakeTemp_FR
+30: BrakeTemp_RL
+31: BrakeTemp_RR (Byte 3) */
+	uint8_t ping_group_3;
 	/** Controls the AC current limits to each of the inverters
-Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 3) */
+Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
 	uint8_t power_level_torque_map;
-	/** the temperature of the hottest cell of the accumulator (Byte 4) */
+	/** the temperature of the hottest cell of the accumulator (Byte 5) */
 	uint8_t max_cell_temp;
-	/** % charged of the Accumulator (Byte 5) */
+	/** % charged of the Accumulator (Byte 6) */
 	uint8_t accumulator_state_of_charge;
-	/** % charged of the Low Voltage Bat (Byte 6) */
+	/** % charged of the Low Voltage Bat (Byte 7) */
 	uint8_t glv_state_of_charge;
 } GRCAN_ECU_STATUS_1_MSG;
 
 /** ECU Status 2 */
 typedef struct {
-	/** Absolute value of speed (Byte 0) */
-	uint16_t vehicle_speed;
-	/** Output terminal voltage of accumulator (Byte 2) */
+	/** Output terminal voltage of accumulator (Byte 0) */
 	uint16_t tractive_system_voltage;
+	/** Absolute value of speed (Byte 2) */
+	uint16_t vehicle_speed;
 	/** Wheel RPM (Byte 4) */
 	uint16_t fr_wheel_rpm;
 	/** Wheel RPM (Byte 6) */
@@ -73,6 +81,13 @@ typedef struct {
 	uint16_t rr_wheel_rpm;
 	/** Wheel RPM (Byte 2) */
 	uint16_t rl_wheel_rpm;
+	/** [Byte 4 / Bits 32-39]
+0: BMS OK
+1: IMD OK
+2: BSPD OK
+3: Software OK
+4-7: Reserved (Byte 4) */
+	uint8_t relay_states;
 } GRCAN_ECU_STATUS_3_MSG;
 
 /** BCU Status 1 */
