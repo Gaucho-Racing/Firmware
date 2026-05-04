@@ -189,7 +189,7 @@ int main(void)
 			VL53L4ED_ClearInterrupt(TOF_ID);
 			/* Read measured distance. RangeStatus = 0 means valid data */
 			VL53L4ED_GetResult(TOF_ID, &results);
-			printf("Status = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, results.distance_mm - 67, results.signal_per_spad_kcps);
+			printf("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67, results.signal_per_spad_kcps);
 		} else {
 			HAL_Delay(10);
 			__disable_irq();
