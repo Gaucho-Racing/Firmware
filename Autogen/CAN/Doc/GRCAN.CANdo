@@ -164,6 +164,7 @@ routing:
         TCM:
           - msg: ECU Analog Data
           - msg: ECU Performance
+          - msg: ECU Pinging RTT
         SAMM_Mag_1:
           - msg: Ping
         SAMM_Mag_2:
@@ -3745,6 +3746,129 @@ Message ID:
       comment: Represents the total number of clock cycles elapsed for 10 iterations of the main loop
       data type: u32
       units: Clock Cycles
+  ECU Pinging RTT:
+    MSG ID: 0x2D
+    MSG LENGTH: 24
+    BCU RTT:
+      bit_start: 0-7
+      comment: Round trip time
+      data type: u8
+      units: ms
+    GR Inverter RTT:
+      bit_start: 8-15
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 1 RTT:
+      bit_start: 16-23
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 2 RTT:
+      bit_start: 24-31
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 3 RTT:
+      bit_start: 32-39
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Dash Panel RTT:
+      bit_start: 40-47
+      comment: Round trip time
+      data type: u8
+      units: ms
+    TCM RTT:
+      bit_start: 48-55
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp FL RTT:
+      bit_start: 56-63
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp FR RTT:
+      bit_start: 64-71
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp RL RTT:
+      bit_start: 72-79
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp RR RTT:
+      bit_start: 80-87
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node FL RTT:
+      bit_start: 88-95
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node FR RTT:
+      bit_start: 96-103
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node RL RTT:
+      bit_start: 104-111
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node RR RTT:
+      bit_start: 112-119
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor FL RTT:
+      bit_start: 120-127
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor FR RTT:
+      bit_start: 128-135
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor RL RTT:
+      bit_start: 136-143
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor RR RTT:
+      bit_start: 144-151
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp FL RTT:
+      bit_start: 152-159
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp FR RTT:
+      bit_start: 160-167
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp RL RTT:
+      bit_start: 168-175
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp RR RTT:
+      bit_start: 176-183
+      comment: Round trip time
+      data type: u8
+      units: ms
+    GPS RTT:
+      bit_start: 184-191
+      comment: Round trip time
+      data type: u8
+      units: ms
 
 Custom CAN ID:
   DTI Control 1:
