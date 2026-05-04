@@ -483,12 +483,6 @@ typedef struct {
 	uint16_t dgps_w;
 } GRCAN_UVW_DGPS_MSG;
 
-/** ECU Performance */
-typedef struct {
-	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop (Byte 0) */
-	uint32_t elapsed_cycles;
-} GRCAN_ECU_PERFORMANCE_MSG;
-
 /** ECU Pinging RTT */
 typedef struct {
 	/** Round trip time (Byte 0) */

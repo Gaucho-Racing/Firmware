@@ -379,9 +379,6 @@ BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 16 ECU
  SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259,0) [0|100] "%" TCM
  SG_ AUX_Signal : 112|16@1+ (0.0015259,0) [0|100] "%" TCM
 
-BO_ 2149592836 ECU_ECU_Performance_to_TCM: 4 ECU
- SG_ Elapsed_Cycles : 0|32@1+ (1,0) [0|0] "Clock Cycles" TCM
-
 BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
  SG_ BCU_RTT : 0|8@1+ (1,0) [0|0] "ms" TCM
  SG_ GR_Inverter_RTT : 8|8@1+ (1,0) [0|0] "ms" TCM
@@ -881,7 +878,6 @@ CM_ SG_ 2149592580 Brakeline_F_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Brakeline_R_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Steering_Angle_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 AUX_Signal "4-20 mA signal";
-CM_ SG_ 2149592836 Elapsed_Cycles "Represents the total number of clock cycles elapsed for 10 iterations of the main loop";
 CM_ SG_ 2149592324 BCU_RTT "Round trip time";
 CM_ SG_ 2149592324 GR_Inverter_RTT "Round trip time";
 CM_ SG_ 2149592324 Fan_Controller_1_RTT "Round trip time";
