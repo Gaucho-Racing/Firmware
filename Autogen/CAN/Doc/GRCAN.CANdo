@@ -3742,8 +3742,7 @@ Message ID:
     MSG LENGTH: 4
     Elapsed Cycles:
       bit_start: 0
-      comment:
-        Represents the total number of clock cycles elapsed for 10 iterations of the main loop
+      comment: Represents the total number of clock cycles elapsed for 10 iterations of the main loop
       data type: u32
       units: Clock Cycles
 
