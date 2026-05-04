@@ -108,7 +108,7 @@ void Error_Handler(void);
 #define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-#define LOCAL_GR_ID GRCAN_CCU
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
