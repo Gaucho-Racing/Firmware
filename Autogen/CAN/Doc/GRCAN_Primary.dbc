@@ -253,12 +253,12 @@ BO_ 2149581568 ECU_ECU_Status_1_to_ALL: 8 ECU
 BO_ 2149581824 ECU_ECU_Status_2_to_ALL: 8 ECU
  SG_ Tractive_System_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" ALL
  SG_ Vehicle_Speed : 16|16@1+ (0.01,0) [0|655.35] "MPH" ALL
- SG_ FR_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
- SG_ FL_Wheel_RPM : 48|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ FL_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ FR_Wheel_RPM : 48|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
 BO_ 2149582080 ECU_ECU_Status_3_to_ALL: 5 ECU
- SG_ RR_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
- SG_ RL_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ RL_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ RR_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
  SG_ Relay_States : 32|1@1+ (1,0) [0|0] "" ALL
 
 BO_ 2149581316 ECU_Ping_to_TCM: 4 ECU
@@ -443,9 +443,9 @@ CM_ SG_ 2149581327 Timestamp "Time in millis";
 CM_ SG_ 2149587717 led_latch_flags "[Byte 0 / Bits 0-7] 0: BSPD led 1: IMD led 2: BMS led 3: BSPD latch 4: IMD latch 5: BMS latch 6-7: Reserved";
 CM_ SG_ 2149581317 Timestamp "Time in millis";
 CM_ SG_ 2149581568 ECU_State "[Byte 0 / Bits 0-7] ECU state machine data 0: GLV Off State 1: GLV On State 2: Precharge Engaged State 3: Precharge Complete State 4: Drive Active State 5: TS Discharge State 6-7: Reserved See diagram in StateMachine.h";
-CM_ SG_ 2149581568 Ping_Group_1 "[Byte 1 / Bits 8-15] ECU ping targets 8: BCU 9: GR Inverter 10: Fan Controller 1 11: Fan Controller 2 12: Fan Controller 3 13: Dash Panel 14: TCM 15: DGPS";
-CM_ SG_ 2149581568 Ping_Group_2 "[Byte 2 / Bits 16-23] ECU ping targets 16: Suspension FL 17: Suspension FR 18: Suspension RL 19: Suspension RR 20: InboardFloor FL 21: InboardFloor FR 22: InboardFloor RL 23: InboardFloor RR";
-CM_ SG_ 2149581568 Ping_Group_3 "[Byte 3 / Bits 24-31] ECU ping targets 24: TireTemp FL 25: TireTemp FR 26: TireTemp RL 27: TireTemp RR 28: BrakeTemp FL 29: BrakeTemp FR 30: BrakeTemp RL 31: BrakeTemp RR";
+CM_ SG_ 2149581568 Ping_Group_1 "[Byte 1 / Bits 8-15] ECU ping targets 8: BCU (1: OK, 0: Timeout) 9: GR Inverter (1: OK, 0: Timeout) 10: Fan Controller 1 (1: OK, 0: Timeout) 11: Fan Controller 2 (1: OK, 0: Timeout) 12: Fan Controller 3 (1: OK, 0: Timeout) 13: Dash Panel (1: OK, 0: Timeout) 14: TCM (1: OK, 0: Timeout) 15: DGPS (1: OK, 0: Timeout)";
+CM_ SG_ 2149581568 Ping_Group_2 "[Byte 2 / Bits 16-23] ECU ping targets 16: Suspension FL (1: OK, 0: Timeout) 17: Suspension FR (1: OK, 0: Timeout) 18: Suspension RL (1: OK, 0: Timeout) 19: Suspension RR (1: OK, 0: Timeout) 20: InboardFloor FL (1: OK, 0: Timeout) 21: InboardFloor FR (1: OK, 0: Timeout) 22: InboardFloor RL (1: OK, 0: Timeout) 23: InboardFloor RR (1: OK, 0: Timeout)";
+CM_ SG_ 2149581568 Ping_Group_3 "[Byte 3 / Bits 24-31] ECU ping targets 24: TireTemp FL (1: OK, 0: Timeout) 25: TireTemp FR (1: OK, 0: Timeout) 26: TireTemp RL (1: OK, 0: Timeout) 27: TireTemp RR (1: OK, 0: Timeout) 28: BrakeTemp FL (1: OK, 0: Timeout) 29: BrakeTemp FR (1: OK, 0: Timeout) 30: BrakeTemp RL (1: OK, 0: Timeout) 31: BrakeTemp RR (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Power_Level "Controls the AC current limits to each of the inverters Discrete Mapping, actual values TBD (16 possible values)";
 CM_ SG_ 2149581568 Torque_Map "The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor";
 CM_ SG_ 2149581568 Max_Cell_Temp "the temperature of the hottest cell of the accumulator";
@@ -453,10 +453,10 @@ CM_ SG_ 2149581568 Accumulator_State_of_Charge "% charged of the Accumulator";
 CM_ SG_ 2149581568 GLV_State_of_Charge "% charged of the Low Voltage Bat";
 CM_ SG_ 2149581824 Tractive_System_Voltage "Output terminal voltage of accumulator";
 CM_ SG_ 2149581824 Vehicle_Speed "Absolute value of speed";
-CM_ SG_ 2149581824 FR_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2149581824 FL_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2149582080 RR_Wheel_RPM "Wheel RPM";
-CM_ SG_ 2149582080 RL_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2149581824 FL_Wheel_RPM "FL Wheel RPM";
+CM_ SG_ 2149581824 FR_Wheel_RPM "FR Wheel RPM";
+CM_ SG_ 2149582080 RL_Wheel_RPM "RL Wheel RPM";
+CM_ SG_ 2149582080 RR_Wheel_RPM "RR Wheel RPM";
 CM_ SG_ 2149582080 Relay_States "[Byte 4 / Bits 32-39] 0: BMS OK 1: IMD OK 2: BSPD OK 3: Software OK 4-7: Reserved";
 CM_ SG_ 2149581316 Timestamp "Time in millis";
 CM_ SG_ 2161115137 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";

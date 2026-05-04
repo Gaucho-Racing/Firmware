@@ -23,34 +23,34 @@ typedef struct {
 See diagram in StateMachine.h (Byte 0) */
 	uint8_t ecu_state;
 	/** [Byte 1 / Bits 8-15] ECU ping targets
-8: BCU
-9: GR Inverter
-10: Fan Controller 1
-11: Fan Controller 2
-12: Fan Controller 3
-13: Dash Panel
-14: TCM
-15: DGPS (Byte 1) */
+8: BCU (1: OK, 0: Timeout)
+9: GR Inverter (1: OK, 0: Timeout)
+10: Fan Controller 1 (1: OK, 0: Timeout)
+11: Fan Controller 2 (1: OK, 0: Timeout)
+12: Fan Controller 3 (1: OK, 0: Timeout)
+13: Dash Panel (1: OK, 0: Timeout)
+14: TCM (1: OK, 0: Timeout)
+15: DGPS (1: OK, 0: Timeout) (Byte 1) */
 	uint8_t ping_group_1;
 	/** [Byte 2 / Bits 16-23] ECU ping targets
-16: Suspension FL
-17: Suspension FR
-18: Suspension RL
-19: Suspension RR
-20: InboardFloor FL
-21: InboardFloor FR
-22: InboardFloor RL
-23: InboardFloor RR (Byte 2) */
+16: Suspension FL (1: OK, 0: Timeout)
+17: Suspension FR (1: OK, 0: Timeout)
+18: Suspension RL (1: OK, 0: Timeout)
+19: Suspension RR (1: OK, 0: Timeout)
+20: InboardFloor FL (1: OK, 0: Timeout)
+21: InboardFloor FR (1: OK, 0: Timeout)
+22: InboardFloor RL (1: OK, 0: Timeout)
+23: InboardFloor RR (1: OK, 0: Timeout) (Byte 2) */
 	uint8_t ping_group_2;
 	/** [Byte 3 / Bits 24-31] ECU ping targets
-24: TireTemp FL
-25: TireTemp FR
-26: TireTemp RL
-27: TireTemp RR
-28: BrakeTemp FL
-29: BrakeTemp FR
-30: BrakeTemp RL
-31: BrakeTemp RR (Byte 3) */
+24: TireTemp FL (1: OK, 0: Timeout)
+25: TireTemp FR (1: OK, 0: Timeout)
+26: TireTemp RL (1: OK, 0: Timeout)
+27: TireTemp RR (1: OK, 0: Timeout)
+28: BrakeTemp FL (1: OK, 0: Timeout)
+29: BrakeTemp FR (1: OK, 0: Timeout)
+30: BrakeTemp RL (1: OK, 0: Timeout)
+31: BrakeTemp RR (1: OK, 0: Timeout) (Byte 3) */
 	uint8_t ping_group_3;
 	/** Controls the AC current limits to each of the inverters
 Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
@@ -69,18 +69,18 @@ typedef struct {
 	uint16_t tractive_system_voltage;
 	/** Absolute value of speed (Byte 2) */
 	uint16_t vehicle_speed;
-	/** Wheel RPM (Byte 4) */
-	uint16_t fr_wheel_rpm;
-	/** Wheel RPM (Byte 6) */
+	/** FL Wheel RPM (Byte 4) */
 	uint16_t fl_wheel_rpm;
+	/** FR Wheel RPM (Byte 6) */
+	uint16_t fr_wheel_rpm;
 } GRCAN_ECU_STATUS_2_MSG;
 
 /** ECU Status 3 */
 typedef struct {
-	/** Wheel RPM (Byte 0) */
-	uint16_t rr_wheel_rpm;
-	/** Wheel RPM (Byte 2) */
+	/** RL Wheel RPM (Byte 0) */
 	uint16_t rl_wheel_rpm;
+	/** RR Wheel RPM (Byte 2) */
+	uint16_t rr_wheel_rpm;
 	/** [Byte 4 / Bits 32-39]
 0: BMS OK
 1: IMD OK
