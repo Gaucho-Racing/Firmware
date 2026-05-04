@@ -165,13 +165,21 @@ routing:
           - msg: ECU Analog Data
           - msg: ECU Performance
           - msg: ECU Pinging RTT
-        SAMM_Mag_1:
+        Suspension_FL:
           - msg: Ping
-        SAMM_Mag_2:
+        Suspension_FR:
           - msg: Ping
-        SAMM_ToF_1:
+        Suspension_RL:
           - msg: Ping
-        SAMM_ToF_2:
+        Suspension_RR:
+          - msg: Ping
+        InboardFloor_FL:
+          - msg: Ping
+        InboardFloor_FR:
+          - msg: Ping
+        InboardFloor_RL:
+          - msg: Ping
+        InboardFloor_RR:
           - msg: Ping
         TireTemp_FL:
           - msg: Ping
@@ -180,6 +188,14 @@ routing:
         TireTemp_RL:
           - msg: Ping
         TireTemp_RR:
+          - msg: Ping
+        BrakeTemp_FL:
+          - msg: Ping
+        BrakeTemp_FR:
+          - msg: Ping
+        BrakeTemp_RL:
+          - msg: Ping
+        BrakeTemp_RR:
           - msg: Ping
     Energy Meter:
       Charger:
@@ -269,19 +285,35 @@ routing:
           - msg: GPS QY
           - msg: GPS RZ
           - msg: UVW DGPS
-    SAMM_Mag_1:
+    Suspension_FL:
       Data:
         ECU:
           - msg: Ping
-    SAMM_Mag_2:
+    Suspension_FR:
       Data:
         ECU:
           - msg: Ping
-    SAMM_ToF_1:
+    Suspension_RL:
       Data:
         ECU:
           - msg: Ping
-    SAMM_ToF_2:
+    Suspension_RR:
+      Data:
+        ECU:
+          - msg: Ping
+    InboardFloor_FL:
+      Data:
+        ECU:
+          - msg: Ping
+    InboardFloor_FR:
+      Data:
+        ECU:
+          - msg: Ping
+    InboardFloor_RL:
+      Data:
+        ECU:
+          - msg: Ping
+    InboardFloor_RR:
       Data:
         ECU:
           - msg: Ping
@@ -298,6 +330,22 @@ routing:
         ECU:
           - msg: Ping
     TireTemp_RR:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp_FL:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp_FR:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp_RL:
+      Data:
+        ECU:
+          - msg: Ping
+    BrakeTemp_RR:
       Data:
         ECU:
           - msg: Ping
@@ -4369,7 +4417,7 @@ Custom CAN ID:
         comment: Frick if I know
 
 GR ID:
-
+  ALL: "0x00"
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
@@ -4385,13 +4433,20 @@ GR ID:
   Fan Controller 1: "0x0D"
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
-  DGPS: "0x30"
-  SAMM_Mag_1: "0x20"
-  SAMM_Mag_2: "0x21"
-  SAMM_ToF_1: "0x22"
-  SAMM_ToF_2: "0x23"
-  TireTemp_FL: "0x24"
-  TireTemp_FR: "0x25"
-  TireTemp_RL: "0x26"
-  TireTemp_RR: "0x27"
-  ALL: "0x00"
+  TireTemp_FL: "0x10"
+  TireTemp_FR: "0x11"
+  TireTemp_RL: "0x12"
+  TireTemp_RR: "0x13"
+  Suspension_FL: "0x14"
+  Suspension_FR: "0x15"
+  Suspension_RL: "0x16"
+  Suspension_RR: "0x17"
+  InboardFloor_FL: "0x18"
+  InboardFloor_FR: "0x19"
+  InboardFloor_RL: "0x1A"
+  InboardFloor_RR: "0x1B"
+  BrakeTemp_FL: "0x1C"
+  BrakeTemp_FR: "0x1D"
+  BrakeTemp_RL: "0x1E"
+  BrakeTemp_RR: "0x1F"
+  DGPS: "0x20"
