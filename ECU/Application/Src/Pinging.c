@@ -14,7 +14,24 @@
 	OP(GRCAN_Fan_Controller_2, 3)                                                                                                                                                                  \
 	OP(GRCAN_Fan_Controller_3, 4)                                                                                                                                                                  \
 	OP(GRCAN_Dash_Panel, 5)                                                                                                                                                                        \
-	OP(GRCAN_TCM, 6)
+	OP(GRCAN_TCM, 6)                                                                                                                                                                               \
+	OP(GRCAN_TireTemp_FL, 7)                                                                                                                                                                       \
+	OP(GRCAN_TireTemp_FR, 8)                                                                                                                                                                       \
+	OP(GRCAN_TireTemp_RL, 9)                                                                                                                                                                       \
+	OP(GRCAN_TireTemp_RR, 10)                                                                                                                                                                      \
+	OP(GRCAN_Suspension_FL, 11)                                                                                                                                                                    \
+	OP(GRCAN_Suspension_FR, 12)                                                                                                                                                                    \
+	OP(GRCAN_Suspension_RL, 13)                                                                                                                                                                    \
+	OP(GRCAN_Suspension_RR, 14)                                                                                                                                                                    \
+	OP(GRCAN_InboardFloor_FL, 15)                                                                                                                                                                  \
+	OP(GRCAN_InboardFloor_FR, 16)                                                                                                                                                                  \
+	OP(GRCAN_InboardFloor_RL, 17)                                                                                                                                                                  \
+	OP(GRCAN_InboardFloor_RR, 18)                                                                                                                                                                  \
+	OP(GRCAN_BrakeTemp_FL, 19)                                                                                                                                                                     \
+	OP(GRCAN_BrakeTemp_FR, 20)                                                                                                                                                                     \
+	OP(GRCAN_BrakeTemp_RL, 21)                                                                                                                                                                     \
+	OP(GRCAN_BrakeTemp_RR, 22)                                                                                                                                                                     \
+	OP(GRCAN_DGPS, 23)
 
 // Converts PING_LIST into a list of the first column (IDs)
 #define PING_LIST_AS_ID(id, index) id,
