@@ -13,6 +13,7 @@
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
+#include "CANutils.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid

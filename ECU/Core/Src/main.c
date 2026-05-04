@@ -303,10 +303,10 @@ void CAN_Configure(void)
 	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
 	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
 
-	primary_can = can_init(&canCfg);
+	stateLump.primary_can = can_init(&canCfg);
 
-	can_add_filter(primary_can, &fdcan_primary_filter_ecu);
-	can_add_filter(primary_can, &fdcan_primary_filter_all);
+	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_ecu);
+	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_all);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -339,8 +339,8 @@ void CAN_Configure(void)
 
 	stateLump.data_can = can_init(&canCfg);
 
-	can_add_filter(data_can, &fdcan_data_filter_ecu);
-	can_add_filter(data_can, &fdcan_data_filter_all);
+	can_add_filter(stateLump.data_can, &fdcan_data_filter_ecu);
+	can_add_filter(stateLump.data_can, &fdcan_data_filter_all);
 
 	// timer can
 	can_start(stateLump.primary_can);

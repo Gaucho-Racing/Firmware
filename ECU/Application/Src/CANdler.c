@@ -24,6 +24,9 @@ void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
 	// Filtering likely needs to be adjusted if this is happening often
+	UNUSED(bus_id);
+	UNUSED(msg_id);
+	UNUSED(sender_id);
 	// LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
