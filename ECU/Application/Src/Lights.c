@@ -53,7 +53,6 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 	}
 }
 
-static uint32_t last_dash_can_send;
 void dashLights(ECU_StateData *stateLump)
 {
 	// light control for if signal goog
