@@ -56,13 +56,13 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 static uint32_t last_dash_can_send;
 void dashLights(ECU_StateData *stateLump)
 {
-	//light control for if signal goog
+	// light control for if signal goog
 	GRCAN_DASH_CONFIG_MSG message = {.led_bits = bspdFailure(stateLump) << 2 | imdFailure(stateLump) << 1 | bmsFailure(stateLump)};
 
-	//this is needed for the latch open control
-	message.led_bits |= (stateLump->bspd_sense >= 0.6 && stateLump->bspd_sense <= 1.35) << 5 // 0.3, 1.2, 1.6
-					| ((stateLump->imd_sense >= 0.5 && stateLump->imd_sense <= 1.6) << 4)	// 0.5 to 1.6
-					| ((stateLump->ams_sense >= 0.5 && stateLump->ams_sense <= 1.6) << 3);	// 0.5 to 1.6
+	// this is needed for the latch open control
+	message.led_bits |= (stateLump->bspd_sense >= 0.6 && stateLump->bspd_sense <= 1.35) << 5   // 0.3, 1.2, 1.6
+			    | ((stateLump->imd_sense >= 0.5 && stateLump->imd_sense <= 1.6) << 4)  // 0.5 to 1.6
+			    | ((stateLump->ams_sense >= 0.5 && stateLump->ams_sense <= 1.6) << 3); // 0.5 to 1.6
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
