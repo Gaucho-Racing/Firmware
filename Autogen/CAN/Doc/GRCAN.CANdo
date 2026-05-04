@@ -165,6 +165,8 @@ routing:
           - msg: ECU Analog Data
           - msg: ECU Performance
           - msg: ECU Pinging RTT
+        DGPS:
+          - msg: Ping
         Suspension_FL:
           - msg: Ping
         Suspension_FR:
@@ -277,6 +279,8 @@ routing:
           - msg: Debug 2.0
     DGPS:
       Data:
+        ECU:
+          - msg: Ping
         TCM:
           - msg: GPS ALT
           - msg: GPS LAT
@@ -3911,7 +3915,7 @@ Message ID:
       comment: Round trip time
       data type: u8
       units: ms
-    GPS RTT:
+    DGPS RTT:
       bit_start: 184-191
       comment: Round trip time
       data type: u8
