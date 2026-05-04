@@ -459,11 +459,6 @@ Message ID:
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-  ECU config:
-    MSG ID: 0x006
-    MSG LENGTH: 0
-    Reserved:
-      bit_start: 0
   BCU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
