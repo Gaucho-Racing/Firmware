@@ -294,7 +294,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor FL",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -310,7 +310,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor FR",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -326,7 +326,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor RL",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -342,7 +342,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build InboardFloor RR",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
