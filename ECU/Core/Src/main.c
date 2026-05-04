@@ -235,8 +235,8 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.DataTimeSeg1 = 12; // Updated for 170MHz: 170 MHz/((1+12+4)*2) = 5 Mbps
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 2; // we'll add two extended filters: LOCAL_GR_ID and GRCAN_ALL
-
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;
+	
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
 	canCfg.tx_interrupt_priority = 15;
@@ -284,26 +284,26 @@ void CAN_Configure()
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	FDCAN_FilterTypeDef fdcan1_filter0 = {0};
-	fdcan1_filter0.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter0.FilterIndex = 0;
-	fdcan1_filter0.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter0.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter0.FilterID1 = GRCAN_ECU & 0xFF;
-	fdcan1_filter0.FilterID2 = 0x000000FF;
+	FDCAN_FilterTypeDef fdcan_primary_filter_ecu = {0};
+	fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_ecu.FilterIndex = 0;
+	fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_primary_filter_ecu.FilterID2 = 0x000000FF;
 
-	FDCAN_FilterTypeDef fdcan1_filter1 = {0};
-	fdcan1_filter1.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter1.FilterIndex = 1;
-	fdcan1_filter1.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter1.FilterID1 = GRCAN_ALL & 0xFF;
-	fdcan1_filter1.FilterID2 = 0x000000FF;
+	FDCAN_FilterTypeDef fdcan_primary_filter_all = {0};
+	fdcan_primary_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_all.FilterIndex = 1;
+	fdcan_primary_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
 
 	primary_can = can_init(&canCfg);
 
-	can_add_filter(primary_can, &fdcan1_filter0);
-	can_add_filter(primary_can, &fdcan1_filter1);
+	can_add_filter(primary_can, &fdcan_primary_filter_ecu);
+	can_add_filter(primary_can, &fdcan_primary_filter_all);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -318,26 +318,26 @@ void CAN_Configure()
 	// RX Callback CAN2
 	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	FDCAN_FilterTypeDef fdcan2_filter0 = {0};
-	fdcan2_filter0.IdType = FDCAN_EXTENDED_ID;
-	fdcan2_filter0.FilterIndex = 0;
-	fdcan2_filter0.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter0.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan2_filter0.FilterID1 = GRCAN_ECU & 0xFF;
-	fdcan2_filter0.FilterID2 = 0x000000FF;
+	FDCAN_FilterTypeDef fdcan_data_filter_ecu = {0};
+	fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_ecu.FilterIndex = 0;
+	fdcan_data_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
 
-	FDCAN_FilterTypeDef fdcan2_filter1 = {0};
-	fdcan2_filter1.IdType = FDCAN_EXTENDED_ID;
-	fdcan2_filter1.FilterIndex = 1;
-	fdcan2_filter1.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan2_filter1.FilterID1 = GRCAN_ALL & 0xFF;
-	fdcan2_filter1.FilterID2 = 0x000000FF;
+	FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
+	fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_all.FilterIndex = 1;
+	fdcan_data_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_data_filter_all.FilterID2 = 0x000000FF;
 
 	data_can = can_init(&canCfg);
 
-	can_add_filter(data_can, &fdcan2_filter0);
-	can_add_filter(data_can, &fdcan2_filter1);
+	can_add_filter(data_can, &fdcan_data_filter_ecu);
+	can_add_filter(data_can, &fdcan_data_filter_all);
 
 	can_start(primary_can);
 	can_start(data_can);
