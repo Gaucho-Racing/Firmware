@@ -4277,4 +4277,4 @@ GR ID:
   OutboardSensor_FR: "0x25"
   OutboardSensor_RL: "0x26"
   OutboardSensor_RR: "0x27"
-  ALL: "0xFF"
+  ALL: "0x00"

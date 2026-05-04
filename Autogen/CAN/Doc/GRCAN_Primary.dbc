@@ -240,7 +240,7 @@ BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 1 ECU
 BO_ 2147615237 ECU_Ping_to_Dash_Panel: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Dash_Panel
 
-BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
+BO_ 2147615488 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ status_flags : 0|16@1+ (1,0) [0|0] "" ALL
  SG_ ecu_state : 16|1@1+ (1,0) [0|0] "Bool" ALL
  SG_ Power_Level : 24|4@1+ (1,0) [0|0] "" ALL
@@ -249,13 +249,13 @@ BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ Accumulator_State_of_Charge : 40|8@1+ (0.392157,0) [0|100] "%" ALL
  SG_ GLV_State_of_Charge : 48|8@1+ (0.392157,0) [0|100] "%" ALL
 
-BO_ 2147615999 ECU_ECU_Status_2_to_ALL: 8 ECU
+BO_ 2147615744 ECU_ECU_Status_2_to_ALL: 8 ECU
  SG_ Vehicle_Speed : 0|16@1+ (0.01,0) [0|655.35] "MPH" ALL
  SG_ Tractive_System_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ALL
  SG_ FR_Wheel_RPM : 32|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
  SG_ FL_Wheel_RPM : 48|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
-BO_ 2147616255 ECU_ECU_Status_3_to_ALL: 4 ECU
+BO_ 2147616000 ECU_ECU_Status_3_to_ALL: 4 ECU
  SG_ RR_Wheel_RPM : 0|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
  SG_ RL_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
 
@@ -454,6 +454,19 @@ CM_ SG_ 2147615999 FR_Wheel_RPM "Wheel RPM";
 CM_ SG_ 2147615999 FL_Wheel_RPM "Wheel RPM";
 CM_ SG_ 2147616255 RR_Wheel_RPM "Wheel RPM";
 CM_ SG_ 2147616255 RL_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2147615488 status_flags "[Bytes 0-1 / Bits 0-15] 0: BCU Node Status (1: OK, 0: Timeout) 1: GR Inverter Status (1: OK, 0: Timeout) 2: Fan Controller 1 Status (1: OK, 0: Timeout) 3: Fan Controller 2 Status (1: OK, 0: Timeout) 4: Fan Controller 3 Status (1: OK, 0: Timeout) 5: Dash Panel Status (1: OK, 0: Timeout) 6: TCM Node Status (1: OK, 0: Timeout) 7: SAMM_Mag_1 Status (1: OK, 0: Timeout) 8: SAMM_Mag_2 Status (1: OK, 0: Timeout) 9: SAMM_ToF_1 Status (1: OK, 0: Timeout) 10: SAMM_ToF_2 Status (1: OK, 0: Timeout) 11: TireTemp_FL Status (1: OK, 0: Timeout) 12: TireTemp_FR Status (1: OK, 0: Timeout) 13: TireTemp_RL Status (1: OK, 0: Timeout) 14: TireTemp_RR Status (1: OK, 0: Timeout) 15: Reserved";
+CM_ SG_ 2147615488 ecu_state "[Byte 2 / Bits 16-17] GLV States 0: GLV Off State, 1: GLV On State. See diagram in StateMachine. [Byte 2 / Bits 18-19] Precharge States 2: Precharge Engaged State 3: Precharge Complete State See diagram in StateMachine.h [Byte 2 / Bits 20-21] ECU States 4: Drive Active ECU State 5: TS Discharge ECU State 6-7: Reserved See diagram in StateMachine.h";
+CM_ SG_ 2147615488 Power_Level "Controls the AC current limits to each of the inverters Discrete Mapping, actual values TBD (16 possible values)";
+CM_ SG_ 2147615488 Torque_Map "The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor";
+CM_ SG_ 2147615488 Max_Cell_Temp "the temperature of the hottest cell of the accumulator";
+CM_ SG_ 2147615488 Accumulator_State_of_Charge "% charged of the Accumulator";
+CM_ SG_ 2147615488 GLV_State_of_Charge "% charged of the Low Voltage Bat";
+CM_ SG_ 2147615744 Vehicle_Speed "Absolute value of speed";
+CM_ SG_ 2147615744 Tractive_System_Voltage "Output terminal voltage of accumulator";
+CM_ SG_ 2147615744 FR_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2147615744 FL_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2147616000 RR_Wheel_RPM "Wheel RPM";
+CM_ SG_ 2147616000 RL_Wheel_RPM "Wheel RPM";
 CM_ SG_ 2147615236 Timestamp "Time in millis";
 CM_ SG_ 2148335617 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2148336129 Timestamp "Time in millis";
