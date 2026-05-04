@@ -382,6 +382,32 @@ BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 16 ECU
 BO_ 2149592836 ECU_ECU_Performance_to_TCM: 4 ECU
  SG_ Elapsed_Cycles : 0|32@1+ (1,0) [0|0] "Clock Cycles" TCM
 
+BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
+ SG_ BCU_RTT : 0|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ GR_Inverter_RTT : 8|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Fan_Controller_1_RTT : 16|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Fan_Controller_2_RTT : 24|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Fan_Controller_3_RTT : 32|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Dash_Panel_RTT : 40|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ TCM_RTT : 48|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Tire_Temp_FL_RTT : 56|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Tire_Temp_FR_RTT : 64|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Tire_Temp_RL_RTT : 72|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Tire_Temp_RR_RTT : 80|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Suspension_Node_FL_RTT : 88|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Suspension_Node_FR_RTT : 96|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Suspension_Node_RL_RTT : 104|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Suspension_Node_RR_RTT : 112|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Inboard_Floor_FL_RTT : 120|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Inboard_Floor_FR_RTT : 128|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Inboard_Floor_RL_RTT : 136|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Inboard_Floor_RR_RTT : 144|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Brake_Temp_FL_RTT : 152|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Brake_Temp_FR_RTT : 160|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Brake_Temp_RL_RTT : 168|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ Brake_Temp_RR_RTT : 176|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ GPS_RTT : 184|8@1+ (1,0) [0|0] "ms" TCM
+
 BO_ 2149581344 ECU_Ping_to_SAMM_Mag_1: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" SAMM_Mag_1
 
@@ -802,6 +828,30 @@ CM_ SG_ 2149592580 Brakeline_R_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Steering_Angle_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 AUX_Signal "4-20 mA signal";
 CM_ SG_ 2149592836 Elapsed_Cycles "Represents the total number of clock cycles elapsed for 10 iterations of the main loop";
+CM_ SG_ 2149592324 BCU_RTT "Round trip time";
+CM_ SG_ 2149592324 GR_Inverter_RTT "Round trip time";
+CM_ SG_ 2149592324 Fan_Controller_1_RTT "Round trip time";
+CM_ SG_ 2149592324 Fan_Controller_2_RTT "Round trip time";
+CM_ SG_ 2149592324 Fan_Controller_3_RTT "Round trip time";
+CM_ SG_ 2149592324 Dash_Panel_RTT "Round trip time";
+CM_ SG_ 2149592324 TCM_RTT "Round trip time";
+CM_ SG_ 2149592324 Tire_Temp_FL_RTT "Round trip time";
+CM_ SG_ 2149592324 Tire_Temp_FR_RTT "Round trip time";
+CM_ SG_ 2149592324 Tire_Temp_RL_RTT "Round trip time";
+CM_ SG_ 2149592324 Tire_Temp_RR_RTT "Round trip time";
+CM_ SG_ 2149592324 Suspension_Node_FL_RTT "Round trip time";
+CM_ SG_ 2149592324 Suspension_Node_FR_RTT "Round trip time";
+CM_ SG_ 2149592324 Suspension_Node_RL_RTT "Round trip time";
+CM_ SG_ 2149592324 Suspension_Node_RR_RTT "Round trip time";
+CM_ SG_ 2149592324 Inboard_Floor_FL_RTT "Round trip time";
+CM_ SG_ 2149592324 Inboard_Floor_FR_RTT "Round trip time";
+CM_ SG_ 2149592324 Inboard_Floor_RL_RTT "Round trip time";
+CM_ SG_ 2149592324 Inboard_Floor_RR_RTT "Round trip time";
+CM_ SG_ 2149592324 Brake_Temp_FL_RTT "Round trip time";
+CM_ SG_ 2149592324 Brake_Temp_FR_RTT "Round trip time";
+CM_ SG_ 2149592324 Brake_Temp_RL_RTT "Round trip time";
+CM_ SG_ 2149592324 Brake_Temp_RR_RTT "Round trip time";
+CM_ SG_ 2149592324 GPS_RTT "Round trip time";
 CM_ SG_ 2149581344 Timestamp "Time in millis";
 CM_ SG_ 2149581345 Timestamp "Time in millis";
 CM_ SG_ 2149581346 Timestamp "Time in millis";

@@ -75,12 +75,6 @@ typedef struct {
 	uint16_t rl_wheel_rpm;
 } GRCAN_ECU_STATUS_3_MSG;
 
-/** ECU config */
-typedef struct {
-	/** Byte 0 (Byte 0) */
-	uint8_t reserved;
-} GRCAN_ECU_CONFIG_MSG;
-
 /** BCU Status 1 */
 typedef struct {
 	/** All cell voltages added up (Byte 0) */
@@ -143,11 +137,11 @@ map equation: "0.25x" (Byte 4) */
 47: SDC Warning (Byte 5) */
 	uint8_t status_flags;
 	/** [Byte 6 / Bits 48-55]
-48: Precharge Timeout
-49: IR- / Precharge State (0:Open, 1:Closed)
-50: IR+ State (0:Open, 1:Closed)
-51: Software Latch (0:Open, 1:Closed)
-52-55: Reserved (Byte 6) */
+55: Precharge Timeout
+54: IR- / Precharge State (0:Open, 1:Closed)
+53: IR+ State (0:Open, 1:Closed)
+52: Software Latch (0:Open, 1:Closed)
+48-51: Reserved (Byte 6) */
 	uint8_t precharge_latch_flags;
 } GRCAN_BCU_STATUS_2_MSG;
 
@@ -299,26 +293,28 @@ typedef struct {
 /** Dash Status */
 typedef struct {
 	/** [Byte 0 / Bits 0-7]
-0: TS Active
-1: RTD
-2-7: Reserved (Byte 0) */
-	uint8_t button_flags;
-	/** [Byte 1 / Bits 8-15]
-0: BMS
-1: IMD
-2: BSPD
-3-7: Reserved (Byte 1) */
-	uint8_t led_bits;
+0: TS press
+1: RTD press
+2: TS hold
+3: RTD hold
+4: BSPD led
+5: IMD led
+6: BMS led
+7: Reserved (Byte 0) */
+	uint8_t button_led_flags;
 } GRCAN_DASH_STATUS_MSG;
 
 /** Dash Config */
 typedef struct {
 	/** [Byte 0 / Bits 0-7]
-0: BMS LED command
-1: IMD LED command
-2: BSPD LED command
-3-7: Reserved (Byte 0) */
-	uint8_t led_bits;
+0: BSPD led
+1: IMD led
+2: BMS led
+3: BSPD latch
+4: IMD latch
+5: BMS latch
+6-7: Reserved (Byte 0) */
+	uint8_t led_latch_flags;
 } GRCAN_DASH_CONFIG_MSG;
 
 /** TCM Status */
@@ -477,5 +473,57 @@ typedef struct {
 	/** Represents the total number of clock cycles elapsed for 10 iterations of the main loop (Byte 0) */
 	uint32_t elapsed_cycles;
 } GRCAN_ECU_PERFORMANCE_MSG;
+
+/** ECU Pinging RTT */
+typedef struct {
+	/** Round trip time (Byte 0) */
+	uint8_t bcu_rtt;
+	/** Round trip time (Byte 1) */
+	uint8_t gr_inverter_rtt;
+	/** Round trip time (Byte 2) */
+	uint8_t fan_controller_1_rtt;
+	/** Round trip time (Byte 3) */
+	uint8_t fan_controller_2_rtt;
+	/** Round trip time (Byte 4) */
+	uint8_t fan_controller_3_rtt;
+	/** Round trip time (Byte 5) */
+	uint8_t dash_panel_rtt;
+	/** Round trip time (Byte 6) */
+	uint8_t tcm_rtt;
+	/** Round trip time (Byte 7) */
+	uint8_t tire_temp_fl_rtt;
+	/** Round trip time (Byte 8) */
+	uint8_t tire_temp_fr_rtt;
+	/** Round trip time (Byte 9) */
+	uint8_t tire_temp_rl_rtt;
+	/** Round trip time (Byte 10) */
+	uint8_t tire_temp_rr_rtt;
+	/** Round trip time (Byte 11) */
+	uint8_t suspension_node_fl_rtt;
+	/** Round trip time (Byte 12) */
+	uint8_t suspension_node_fr_rtt;
+	/** Round trip time (Byte 13) */
+	uint8_t suspension_node_rl_rtt;
+	/** Round trip time (Byte 14) */
+	uint8_t suspension_node_rr_rtt;
+	/** Round trip time (Byte 15) */
+	uint8_t inboard_floor_fl_rtt;
+	/** Round trip time (Byte 16) */
+	uint8_t inboard_floor_fr_rtt;
+	/** Round trip time (Byte 17) */
+	uint8_t inboard_floor_rl_rtt;
+	/** Round trip time (Byte 18) */
+	uint8_t inboard_floor_rr_rtt;
+	/** Round trip time (Byte 19) */
+	uint8_t brake_temp_fl_rtt;
+	/** Round trip time (Byte 20) */
+	uint8_t brake_temp_fr_rtt;
+	/** Round trip time (Byte 21) */
+	uint8_t brake_temp_rl_rtt;
+	/** Round trip time (Byte 22) */
+	uint8_t brake_temp_rr_rtt;
+	/** Round trip time (Byte 23) */
+	uint8_t gps_rtt;
+} GRCAN_ECU_PINGING_RTT_MSG;
 
 #endif
