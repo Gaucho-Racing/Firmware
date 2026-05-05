@@ -3,8 +3,8 @@
 #include <string.h>
 
 #include "GRCAN_MSG_DATA.h"
-#include "GRCAN_NODE_ID.h"
 #include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "NodeID.h"
 #include "Unused.h"
