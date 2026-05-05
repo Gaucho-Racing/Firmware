@@ -102,7 +102,7 @@ int main(void)
 		}
 		LOGOMATIC("\n\n\n");
 	}
-		{
+	{
 		// #########
 		//
 		// #########
@@ -113,7 +113,7 @@ int main(void)
 		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING){
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Did not move to charging\n");
 			return 6;
 		}
@@ -123,18 +123,17 @@ int main(void)
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not move to IDLE after charging complete\n");
 			return 6;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 1){
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
 			LOGOMATIC("Software latch should not have tripped\n");
 			return 6;
 		}
 
 		LOGOMATIC("\n\n\n");
-
 	}
 	{
 		// #########
@@ -147,7 +146,7 @@ int main(void)
 		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING){
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Did not move to charging\n");
 			return 7;
 		}
@@ -156,12 +155,12 @@ int main(void)
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING){
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Should not have moved to IDLE\n");
 			return 7;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 1){
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
 			LOGOMATIC("Software latch should not have tripped\n");
 			return 7;
 		}
@@ -169,19 +168,17 @@ int main(void)
 		state_dataTest.BCU_S2_IR_PLUS = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not move to IDLE after charging complete\n");
 			return 7;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 1){
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
 			LOGOMATIC("Software latch should not have tripped\n");
 			return 7;
 		}
 
 		LOGOMATIC("\n\n\n");
-
 	}
 	{
 		// #########
@@ -194,7 +191,7 @@ int main(void)
 		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING){
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Did not move to charging\n");
 			return 8;
 		}
@@ -204,18 +201,17 @@ int main(void)
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not move to IDLE after charging complete\n");
 			return 8;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 1){
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
 			LOGOMATIC("Software latch should not have tripped\n");
 			return 8;
 		}
 
 		LOGOMATIC("\n\n\n");
-
 	}
 	{
 		// #########
@@ -228,12 +224,12 @@ int main(void)
 		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING){
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Did not move to charging\n");
 			return 9;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 1){
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
 			LOGOMATIC("Software latch should not have tripped\n");
 			return 9;
 		}
@@ -242,20 +238,17 @@ int main(void)
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not move to IDLE after encountering CritError\n");
 			return 9;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 0){
+		if (state_dataTest.SOFTWARE_LATCH != 0) {
 			LOGOMATIC("Software latch should have tripped\n");
 			return 9;
 		}
 
 		LOGOMATIC("\n\n\n");
-
-
 	}
 	{
 		// #########
@@ -268,7 +261,7 @@ int main(void)
 		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING){
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Did not move to charging\n");
 			return 10;
 		}
@@ -276,7 +269,7 @@ int main(void)
 		state_dataTest.recv_stop_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not move to IDLE after receiving stop cmd\n");
 			return 10;
 		}
@@ -292,7 +285,7 @@ int main(void)
 		state_dataTest.state = CCU_STATE_IDLE;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not stay IDLE\n");
 			return 11;
 		}
@@ -300,12 +293,12 @@ int main(void)
 		state_dataTest.recv_stop_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_IDLE){
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Did not stay IDLE\n");
 			return 11;
 		}
 
-		if(state_dataTest.SOFTWARE_LATCH != 1){
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
 			LOGOMATIC("Software latch should not have tripped\n");
 			return 11;
 		}
