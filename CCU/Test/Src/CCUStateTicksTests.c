@@ -49,7 +49,7 @@ int main(void)
 		state_dataTest.recv_charge_cmd = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		if(state_dataTest.state != CCU_STATE_CHARGING) {
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
 			LOGOMATIC("Should be no errors and move to Charging\n");
 			return 1;
 		}
@@ -57,7 +57,7 @@ int main(void)
 		// Test 2: in Charging, receive stop charge command with no errors
 		state_dataTest.recv_stop_cmd = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-		if(state_dataTest.state != CCU_STATE_IDLE) {
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("Should be no errors and move to Idle\n");
 			return 2;
 		}
@@ -66,7 +66,7 @@ int main(void)
 		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
 		state_dataTest.recv_charge_cmd = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-		if(state_dataTest.state != CCU_STATE_IDLE) {
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("There should be an overtemp error and stay in state Idle\n");
 			return 3;
 		}
@@ -75,7 +75,7 @@ int main(void)
 		state_dataTest.recv_charge_cmd = 1;
 		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-		if(state_dataTest.state != CCU_STATE_IDLE) {
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("There should be a critical error and stay in state Idle\n");
 			return 4;
 		}
@@ -88,7 +88,7 @@ int main(void)
 
 		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-		if(state_dataTest.state != CCU_STATE_IDLE) {
+		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("There should be a critical error and move to Idle\n");
 			return 5;
 		}
