@@ -93,9 +93,15 @@ PUTCHAR_PROTOTYPE
 int MLX90640_FullReset(void)
 {
 	while (true) {
-		if (MLX90640_SetRefreshRate(MLX90640_address, 0x07) != 0) continue;
-		if (MLX90640_DumpEE(MLX90640_address, eeMLX90640) != 0) continue;
-		if (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) != 0) continue;
+		if (MLX90640_SetRefreshRate(MLX90640_address, 0x07) != 0) {
+			continue;
+		}
+		if (MLX90640_DumpEE(MLX90640_address, eeMLX90640) != 0) {
+			continue;
+		}
+		if (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) != 0) {
+			continue;
+		}
 		break;
 	}
 
@@ -163,7 +169,7 @@ int main(void)
 
 	// get initial
 	while ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
-		break;//MLX90640_FullReset();
+		break; // MLX90640_FullReset();
 	}
 
 	/* USER CODE END 2 */
@@ -182,7 +188,7 @@ int main(void)
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
 		while ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
-			break;//MLX90640_FullReset();
+			break; // MLX90640_FullReset();
 		}
 
 		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
