@@ -59,9 +59,9 @@ void dashLights(ECU_StateData *stateLump)
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = bspdFailure(stateLump) << 2 | imdFailure(stateLump) << 1 | bmsFailure(stateLump)};
 
 	// this is needed for the latch open control
-	message.led_latch_flags |= (stateLump->bspd_sense >= 0.6f && stateLump->bspd_sense <= 1.35f) << 5   // 0.3, 1.2, 1.6
-				   | ((stateLump->imd_sense >= 0.5f && stateLump->imd_sense <= 1.6f) << 4)  // 0.5 to 1.6
-				   | ((stateLump->ams_sense >= 0.5f && stateLump->ams_sense <= 1.6f) << 3); // 0.5 to 1.6
+	message.led_latch_flags |= ((uint8_t)!bspdFailure(stateLump) << 5)
+				   | ((uint8_t)!imdFailure(stateLump) << 4)
+				   | ((uint8_t)!bmsFailure(stateLump) << 3);
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
