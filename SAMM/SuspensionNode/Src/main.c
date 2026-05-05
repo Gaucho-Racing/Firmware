@@ -120,9 +120,8 @@ int main(void)
 	// MX_FDCAN2_Init();
 	MX_SPI1_Init();
 	MX_SPI3_Init();
-
 	/* USER CODE BEGIN 2 */
-	can_mag_init(GRCAN_SAMM_Mag_1, CAN_MAG_MSG_DATA);
+
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
@@ -182,43 +181,28 @@ int main(void)
 	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
+		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
+		// HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &TxHeader, TxData);
+		/* USER CODE END WHILE */
+
 		uint8_t temp = mag_read_temp(&mag_dev);
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
 		// float hang = mag_read_HANG(mag_dev);
 		FDCANTxMessage temp_can = {.tx_header = 0, .data[8] = temp};
-		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = temp};
-		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = temp};
+		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = angle};
+		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = turns};
 		bool bad = check_status(&mag_dev);
-
-		int8_t temp_test = temp - 60;
-		float angle_test = angle * 360.f / 4096.0f;
-
-		printf("Temperature: %d C\n", temp_test);
-		printf("Angle: %f deg\n", angle_test);
-		printf("Turns: %d\n", turns);
-
+		printf("Temperature is %d\n", temp);
+		printf("Angle is %d\n", angle);
+		printf("Number of turns is %d\n", turns);
 		if (bad) {
-			printf("Something is cooked\n");
-			mag_clear_errors(&mag_dev);
+			printf("something is cooked");
+			mag_write_error(&mag_dev);
 		}
-
-		uint8_t buffer[8] = {0};
-		buffer[0] = (angle >> 8) & 0xFF;
-		buffer[1] = angle & 0xFF;
-
-		buffer[2] = temp;
-
-		buffer[3] = (turns >> 8) & 0xFF;
-		buffer[4] = turns & 0xFF;
-
-		// status
-		buffer[5] = bad ? 0x01 : 0x00;
-		buffer[6] = 0x00;
-		buffer[7] = 0x00;
-
-		can_mag_send((unsigned int *)buffer);
-
+		can_send(h1, &temp_can);
+		can_send(h1, &angle_can);
+		can_send(h1, &turns_can);
 		HAL_Delay(10);
 	}
 	/* USER CODE END 3 */
