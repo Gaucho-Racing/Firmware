@@ -86,9 +86,7 @@ uint32_t MillisecondsSinceBoot(void)
  * @retval int
  */
 
-void on_receive(CANHandle *handle, uint8_t *data, uint32_t len)
-{
-}
+void on_receive(CANHandle *handle, uint8_t *data, uint32_t len) {}
 
 int main(void)
 {
