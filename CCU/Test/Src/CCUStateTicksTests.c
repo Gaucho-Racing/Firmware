@@ -44,8 +44,53 @@ int main(void)
 
 		state_dataTest.state = CCU_STATE_IDLE;
 
+		// Test 1: in Idle, receive charge command with no errors
+		state_dataTest.recv_charge_cmd = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-		LOGOMATIC("\n\n\n");
+
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
+			LOGOMATIC("Should be no errors and move to Charging\n");
+			return 1;
+		}
+
+		// Test 2: in Charging, receive stop charge command with no errors
+		state_dataTest.recv_stop_cmd = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("Should be no errors and move to Idle\n");
+			return 2;
+		}
+
+		// Test 3: in Idle, receive charge command, 1 error
+		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
+		state_dataTest.recv_charge_cmd = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("There should be an overtemp error and stay in state Idle\n");
+			return 3;
+		}
+
+		// Test 4: in Idle, receive charge command, 2 errors
+		state_dataTest.recv_charge_cmd = 1;
+		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("There should be a critical error and stay in state Idle\n");
+			return 4;
+		}
+
+		// Test 5: in Charging, no start or stop command, but an error
+		state_dataTest.recv_charge_cmd = 1;
+		state_dataTest.BCU_S2_OVERTEMP_ERROR = 0;
+		state_dataTest.BCU_S2_UNDERCURR_ERROR = 0;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("There should be a critical error and move to Idle\n");
+			return 5;
+		}
 	}
 
 }
