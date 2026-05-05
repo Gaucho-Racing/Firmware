@@ -85,6 +85,11 @@ uint32_t MillisecondsSinceBoot(void)
  * @brief  The application entry point.
  * @retval int
  */
+
+void on_receive(CANHandle *handle, uint8_t *data, uint32_t len)
+{
+}
+
 int main(void)
 {
 
@@ -122,7 +127,7 @@ int main(void)
 
 	CANConfig my_cfg;
 
-	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
+	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
 
 	CANHandle *h1 = can_init(&my_cfg);
 
