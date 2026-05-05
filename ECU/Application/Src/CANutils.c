@@ -1,6 +1,7 @@
 #include "CANutils.h"
 
 #include "GRCAN_BUS_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
@@ -56,39 +57,44 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 
 // TODO: If you try to send anything but control messages, you are cooked buddy
 // Doesn't actually use Motorola order for multiple fields, just sends the bytes in reverse order
-/*void ECU_CAN_Send_DTI(uint16_t msgID, uint8_t data[], uint32_t length)
+void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 {
-	if ((MSG_DTI_CONTROL_10 & 0xFF) != 0x16) {
-		LOGOMATIC("NOT A DTI MESSAGE");
-	}
+	// if ((MSG_DTI_CONTROL_10 & 0xFF) != 0x16) {
+	// 	LOGOMATIC("NOT A DTI MESSAGE");
+	// }
 
 	FDCAN_TxHeaderTypeDef TxHeader = {
-    .IdType = FDCAN_EXTENDED_ID,
-    .TxFrameType = FDCAN_DATA_FRAME,
-    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-	// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-    .BitRateSwitch = FDCAN_BRS_OFF,
-    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-    .MessageMarker = 0 // also change this to a real address if you change fifo control
+		.IdType = FDCAN_EXTENDED_ID,
+		.TxFrameType = FDCAN_DATA_FRAME,
+		.ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+		// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+		.BitRateSwitch = FDCAN_BRS_OFF,
+		.TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+		.MessageMarker = 0 // also change this to a real address if you change fifo control
 	};
 
     TxHeader.Identifier = msgID;
-    TxHeader.DataLength = length;
+    TxHeader.DataLength = size;
 
     TxHeader.IdType = FDCAN_EXTENDED_ID;
 
     TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
 
+	FDCANTxMessage msg = {0};
+	msg.tx_header = TxHeader;
+
+	memcpy(&(msg.data), data, size);
+
     uint8_t temp;
-    for(uint16_t i = 0; i < length / 2; ++i)
-    {
-	temp = data[i];
-	data[i] = data[length - i - 1];
-	data[length - i - 1] = temp;
+    for(uint16_t i = 0; i < size / 2; ++i) {
+		temp = msg.data[i];
+		msg.data[i] = msg.data[size - i - 1];
+		msg.data[size - i - 1] = temp;
     }
 
-	can_send(primary_can, &msg);
-}*/
+	// can_send(primary_can, &msg);
+	can_enqueue(stateLump.primary_can, &msg);
+}
 
 void SendECUStateDataOverCAN(ECU_StateData *stateData)
 {
