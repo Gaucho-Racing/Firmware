@@ -484,58 +484,55 @@ typedef struct {
 } GRCAN_UVW_DGPS_MSG;
 
 /** ECU Pinging RTT */
-typedef union {
-	struct {
-		/** Round trip time (Byte 0) */
-		uint8_t bcu_rtt;
-		/** Round trip time (Byte 1) */
-		uint8_t gr_inverter_rtt;
-		/** Round trip time (Byte 2) */
-		uint8_t fan_controller_1_rtt;
-		/** Round trip time (Byte 3) */
-		uint8_t fan_controller_2_rtt;
-		/** Round trip time (Byte 4) */
-		uint8_t fan_controller_3_rtt;
-		/** Round trip time (Byte 5) */
-		uint8_t dash_panel_rtt;
-		/** Round trip time (Byte 6) */
-		uint8_t tcm_rtt;
-		/** Round trip time (Byte 7) */
-		uint8_t tire_temp_fl_rtt;
-		/** Round trip time (Byte 8) */
-		uint8_t tire_temp_fr_rtt;
-		/** Round trip time (Byte 9) */
-		uint8_t tire_temp_rl_rtt;
-		/** Round trip time (Byte 10) */
-		uint8_t tire_temp_rr_rtt;
-		/** Round trip time (Byte 11) */
-		uint8_t suspension_node_fl_rtt;
-		/** Round trip time (Byte 12) */
-		uint8_t suspension_node_fr_rtt;
-		/** Round trip time (Byte 13) */
-		uint8_t suspension_node_rl_rtt;
-		/** Round trip time (Byte 14) */
-		uint8_t suspension_node_rr_rtt;
-		/** Round trip time (Byte 15) */
-		uint8_t inboard_floor_fl_rtt;
-		/** Round trip time (Byte 16) */
-		uint8_t inboard_floor_fr_rtt;
-		/** Round trip time (Byte 17) */
-		uint8_t inboard_floor_rl_rtt;
-		/** Round trip time (Byte 18) */
-		uint8_t inboard_floor_rr_rtt;
-		/** Round trip time (Byte 19) */
-		uint8_t brake_temp_fl_rtt;
-		/** Round trip time (Byte 20) */
-		uint8_t brake_temp_fr_rtt;
-		/** Round trip time (Byte 21) */
-		uint8_t brake_temp_rl_rtt;
-		/** Round trip time (Byte 22) */
-		uint8_t brake_temp_rr_rtt;
-		/** Round trip time (Byte 23) */
-		uint8_t dgps_rtt;
-	};
-	uint8_t arr[24];
+typedef struct {
+	/** Round trip time (Byte 0) */
+	uint8_t bcu_rtt;
+	/** Round trip time (Byte 1) */
+	uint8_t gr_inverter_rtt;
+	/** Round trip time (Byte 2) */
+	uint8_t fan_controller_1_rtt;
+	/** Round trip time (Byte 3) */
+	uint8_t fan_controller_2_rtt;
+	/** Round trip time (Byte 4) */
+	uint8_t fan_controller_3_rtt;
+	/** Round trip time (Byte 5) */
+	uint8_t dash_panel_rtt;
+	/** Round trip time (Byte 6) */
+	uint8_t tcm_rtt;
+	/** Round trip time (Byte 7) */
+	uint8_t tire_temp_fl_rtt;
+	/** Round trip time (Byte 8) */
+	uint8_t tire_temp_fr_rtt;
+	/** Round trip time (Byte 9) */
+	uint8_t tire_temp_rl_rtt;
+	/** Round trip time (Byte 10) */
+	uint8_t tire_temp_rr_rtt;
+	/** Round trip time (Byte 11) */
+	uint8_t suspension_node_fl_rtt;
+	/** Round trip time (Byte 12) */
+	uint8_t suspension_node_fr_rtt;
+	/** Round trip time (Byte 13) */
+	uint8_t suspension_node_rl_rtt;
+	/** Round trip time (Byte 14) */
+	uint8_t suspension_node_rr_rtt;
+	/** Round trip time (Byte 15) */
+	uint8_t inboard_floor_fl_rtt;
+	/** Round trip time (Byte 16) */
+	uint8_t inboard_floor_fr_rtt;
+	/** Round trip time (Byte 17) */
+	uint8_t inboard_floor_rl_rtt;
+	/** Round trip time (Byte 18) */
+	uint8_t inboard_floor_rr_rtt;
+	/** Round trip time (Byte 19) */
+	uint8_t brake_temp_fl_rtt;
+	/** Round trip time (Byte 20) */
+	uint8_t brake_temp_fr_rtt;
+	/** Round trip time (Byte 21) */
+	uint8_t brake_temp_rl_rtt;
+	/** Round trip time (Byte 22) */
+	uint8_t brake_temp_rr_rtt;
+	/** Round trip time (Byte 23) */
+	uint8_t dgps_rtt;
 } GRCAN_ECU_PINGING_RTT_MSG;
 
 #endif
