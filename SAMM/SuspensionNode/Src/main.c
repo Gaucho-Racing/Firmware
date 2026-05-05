@@ -171,40 +171,40 @@ int main(void)
 	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
-    	uint8_t temp = mag_read_temp(&mag_dev);
-    	uint16_t angle = mag_read_encoder_angle(&mag_dev);
-    	int16_t turns = mag_read_turns(&mag_dev);
-    	bool bad = check_status(&mag_dev);
+		uint8_t temp = mag_read_temp(&mag_dev);
+		uint16_t angle = mag_read_encoder_angle(&mag_dev);
+		int16_t turns = mag_read_turns(&mag_dev);
+		bool bad = check_status(&mag_dev);
 
 		int8_t temp_test = temp - 60;
 		float angle_test = angle * 360.f / 4096.0f;
 
-    	printf("Temperature: %d C\n", temp_test);
-    	printf("Angle: %f deg\n", angle_test);
-    	printf("Turns: %d\n", turns);
+		printf("Temperature: %d C\n", temp_test);
+		printf("Angle: %f deg\n", angle_test);
+		printf("Turns: %d\n", turns);
 
-    	if (bad) {
-        	printf("Something is cooked\n");
-        	mag_clear_errors(&mag_dev);
-    	}
+		if (bad) {
+			printf("Something is cooked\n");
+			mag_clear_errors(&mag_dev);
+		}
 
 		uint8_t buffer[8] = {0};
-    	buffer[0] = (angle >> 8) & 0xFF;
-    	buffer[1] = angle & 0xFF;
+		buffer[0] = (angle >> 8) & 0xFF;
+		buffer[1] = angle & 0xFF;
 
-    	buffer[2] = temp;
+		buffer[2] = temp;
 
-    	buffer[3] = (turns >> 8) & 0xFF;
-    	buffer[4] = turns & 0xFF;
+		buffer[3] = (turns >> 8) & 0xFF;
+		buffer[4] = turns & 0xFF;
 
-    	// status
-    	buffer[5] = bad ? 0x01 : 0x00;
-    	buffer[6] = 0x00;
+		// status
+		buffer[5] = bad ? 0x01 : 0x00;
+		buffer[6] = 0x00;
 		buffer[7] = 0x00;
 
-    	can_mag_send((unsigned int *)buffer);
+		can_mag_send((unsigned int *)buffer);
 
-    	HAL_Delay(10);
+		HAL_Delay(10);
 	}
 	/* USER CODE END 3 */
 }
