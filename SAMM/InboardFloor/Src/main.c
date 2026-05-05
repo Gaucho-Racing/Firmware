@@ -86,9 +86,7 @@ uint32_t MillisecondsSinceBoot(void)
  * @retval int
  */
 
-void on_receive(CANHandle *handle, uint8_t *data, uint32_t len)
-{
-}
+
 
 int main(void)
 {
@@ -123,15 +121,7 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 	/* USER CODE BEGIN Init */
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
 
-	CANConfig my_cfg;
-
-	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
-
-	CANHandle *h1 = can_init(&my_cfg);
-
-	can_start(h1);
 
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
