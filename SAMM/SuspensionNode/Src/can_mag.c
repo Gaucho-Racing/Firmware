@@ -1,5 +1,6 @@
-#include "can_cfg.h"
 #include "can_mag.h"
+
+#include "can_cfg.h"
 
 static GRCAN_NODE_ID destNode = GRCAN_TCM;
 static GRCAN_NODE_ID localNode = GRCAN_ALL;
@@ -11,7 +12,8 @@ static volatile bool data_valid = false;
 static volatile uint32_t expected_size = TX_BUFFER_1_SIZE;
 static volatile bool id_valid = false;
 
-void on_receive(uint32_t ID, void* data, uint32_t size) {
+void on_receive(uint32_t ID, void *data, uint32_t size)
+{
 	// GRCAN_NODE_ID sender = some bit shift;
 	// GRCAN_MSG_ID messageID = some bit shift;
 	/*switch(messageID)
@@ -28,7 +30,6 @@ void on_receive(uint32_t ID, void* data, uint32_t size) {
 		default:
 			break;
 	}*/
-
 }
 
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)

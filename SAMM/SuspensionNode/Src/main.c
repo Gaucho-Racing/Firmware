@@ -22,9 +22,9 @@
 // #include "crc.h"
 // #include "fdcan.h"
 #include "NodeID.h"
+#include "can_mag.h"
 #include "gpio.h"
 #include "spi.h"
-#include "can_mag.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -75,7 +75,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void on_receive(uint32_t ID, void* data, uint32_t size);
+void on_receive(uint32_t ID, void *data, uint32_t size);
 /* USER CODE END 0 */
 
 /**
