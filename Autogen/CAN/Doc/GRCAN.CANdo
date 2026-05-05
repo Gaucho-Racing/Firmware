@@ -3938,7 +3938,7 @@ Message ID:
 
 Custom CAN ID:
   DTI Control 1:
-    CAN ID: 116
+    CAN ID: 0x116
     Length: 2
     signals:
       - name: "Target AC Current"
@@ -3953,7 +3953,7 @@ Custom CAN ID:
           correlates with the motor AC current. (For the correlation, please
           refer to the motor parameters)
   DTI Control 2:
-    CAN ID: 216
+    CAN ID: 0x216
     Length: 2
     signals:
       - name: "Target Brake Current"
@@ -3964,7 +3964,7 @@ Custom CAN ID:
           This value must be multiplied by 10 before sending, only
           positive currents are accepted.
   DTI Control 3:
-    CAN ID: 316
+    CAN ID: 0x316
     Length: 4
     signals:
       - name: "Target ERPM"
@@ -3976,7 +3976,7 @@ Custom CAN ID:
           need to tune the PID of speed control.
           Equation: ERPM = Motor RPM * number of the motor pole pairs
   DTI Control 4:
-    CAN ID: 416
+    CAN ID: 0x416
     Length: 2
     signals:
       - name: "Target Position"
@@ -3987,7 +3987,7 @@ Custom CAN ID:
           This feature is enabled only if encoder is used as position
           sensor. The value has to be multiplied by 10 before sending.
   DTI Control 5:
-    CAN ID: 516
+    CAN ID: 0x516
     Length: 2
     signals:
       - name: "R-AC Current"
@@ -4001,7 +4001,7 @@ Custom CAN ID:
           This value must be between -100 and 100 and must be
           multiplied by 10 before sending.
   DTI Control 6:
-    CAN ID: 616
+    CAN ID: 0x616
     Length: 2
     signals:
       - name: "R-AC Brake Current"
@@ -4016,7 +4016,7 @@ Custom CAN ID:
           This value must be between 0 and 100 and has to be multiplied
           by 10 before sending
   DTI Control 7:
-    CAN ID: 716
+    CAN ID: 0x716
     Length: 1
     signals:
       - name: "Digital Output 1"
@@ -4032,7 +4032,7 @@ Custom CAN ID:
         bit_start: 3
         comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
   DTI Control 8:
-    CAN ID: 816
+    CAN ID: 0x816
     Length: 2
     signals:
       - name: "Max AC Current"
@@ -4043,7 +4043,7 @@ Custom CAN ID:
           maximum torque on the motor.
           The value must be multiplied by 10 before sending.
   DTI Control 9:
-    CAN ID: 916
+    CAN ID: 0x916
     Length: 2
     signals:
       - name: "Max Brake AC Current"
@@ -4054,7 +4054,7 @@ Custom CAN ID:
           This value must be multiplied by 10 before sending, only
           negative currents are accepted.
   DTI Control 10:
-    CAN ID: A16
+    CAN ID: 0xA16
     Length: 2
     signals:
       - name: "Max DC Current"
@@ -4065,7 +4065,7 @@ Custom CAN ID:
           maximum allowable battery discharge current.
           The value has to be multiplied by 10 before sending.
   DTI Control 11:
-    CAN ID: B16
+    CAN ID: 0xB16
     Length: 2
     signals:
       - name: "Max Brake DC Current"
@@ -4077,7 +4077,7 @@ Custom CAN ID:
           The value has to be multiplied by 10 before sending. Only
           negative currents are accepted.
   DTI Control 12:
-    CAN ID: C16
+    CAN ID: 0xC16
     Length: 1
     signals:
       - name: "Drive Enable"
@@ -4088,7 +4088,7 @@ Custom CAN ID:
           Only 0 and 1 values are accepted. Must be sent periodically to
           be enabled.
   DTI Data 1:
-    CAN ID: 2016
+    CAN ID: 0x2016
     Length: 8
     signals:
       - name: "ERPM"
@@ -4106,7 +4106,7 @@ Custom CAN ID:
         bit_start: 48
         comment: Input voltage is the DC voltage.
   DTI Data 2:
-    CAN ID: 2116
+    CAN ID: 0x2116
     Length: 8
     signals:
       - name: "AC Current"
@@ -4123,9 +4123,9 @@ Custom CAN ID:
           regenerating (negative) current.
       - name: "RESERVED"
         bit_start: 32
-        comment: Filled with FF’s. For future use.
+        comment: Filled with FF's. For future use.
   DTI Data 3:
-    CAN ID: 2216
+    CAN ID: 0x2216
     Length: 8
     signals:
       - name: "Controller Temp"
@@ -4155,12 +4155,12 @@ Custom CAN ID:
           processing the sensor signals
           0x09 : CAN Command error - CAN message received contains
           parameter out of boundaries
-          0x0A : Analog input error – Redundant output out of range
+          0x0A : Analog input error - Redundant output out of range
       - name: "RESERVED"
         bit_start: 40
-        comment: Filled with FF’s. For future use.
+        comment: Filled with FF's. For future use.
   DTI Data 4:
-    CAN ID: 2316
+    CAN ID: 0x2316
     Length: 8
     signals:
       - name: "FOC Id"
@@ -4170,7 +4170,7 @@ Custom CAN ID:
         bit_start: 32
         comment: FOC algorithm component Id\q.
   DTI Data 5:
-    CAN ID: 2416
+    CAN ID: 0x2416
     Length: 8
     signals:
       - name: "Throttle"
@@ -4273,12 +4273,12 @@ Custom CAN ID:
         comment: Set to 0.
       - name: "RESERVED"
         bit_start: 48
-        comment: Filled with FF’s. For future use.
+        comment: Filled with FF's. For future use.
       - name: "CAN Version"
         bit_start: 56
         comment: Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
   IMD general:
-    CAN ID: 18FF01F4
+    CAN ID: 0x18FF01F4
     Length: 8
     signals:
       - name: "R_Iso_Corrected"
@@ -4305,29 +4305,29 @@ Custom CAN ID:
         bit_start: 48
       - name: "RESERVED"
         bit_start: 56
-        comment: Filled with FF’s
+        comment: Filled with FF's
   IMD isolation info:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD voltage:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD IT-system:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD request:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD response:
-    CAN ID: 23
+    CAN ID: 0x23
     Length: 0
     signals: []
   Charger Data:
-    CAN ID: 18FF50E5
+    CAN ID: 0x18FF50E5
     Length: 8
     signals:
       - name: "Output Voltage"
@@ -4352,7 +4352,7 @@ Custom CAN ID:
       - name: "RESERVED"
         bit_start: 24
   Charger Control:
-    CAN ID: 1806E5F4
+    CAN ID: 0x1806E5F4
     Length: 5
     signals:
       - name: "Set Voltage"
@@ -4365,7 +4365,7 @@ Custom CAN ID:
           1: Start Charging
           0: Stop Charging
   EM Measurement:
-    CAN ID: 10d
+    CAN ID: 0x10D
     Length: 8
     signals:
       - name: "Current"
@@ -4375,7 +4375,7 @@ Custom CAN ID:
         bit_start: 32
         comment: TS Voltage
   EM Status:
-    CAN ID: 40d
+    CAN ID: 0x40D
     Length: 8
     signals:
       - name: "Violation"
@@ -4388,7 +4388,7 @@ Custom CAN ID:
         bit_start: 8
         comment: Energy used in Wh
   EM Temperature:
-    CAN ID: 60d
+    CAN ID: 0x60D
     Length: 8
     signals:
       - name: "Mux Signal"
@@ -4415,7 +4415,7 @@ Custom CAN ID:
       - name: "Temp 5n+4"
         bit_start: 56
   EM Team Data 1:
-    CAN ID: 30d
+    CAN ID: 0x30D
     Length: 8
     signals:
       - name: "Team Signal 1"
@@ -4425,7 +4425,7 @@ Custom CAN ID:
         bit_start: 32
         comment: Frick if I know
   EM Team Data 2:
-    CAN ID: 30e
+    CAN ID: 0x30E
     Length: 8
     signals:
       - name: "Team Signal 3"
