@@ -1,10 +1,36 @@
 #include "can_mag.h"
 
+#include "can_cfg.h"
+
 static GRCAN_NODE_ID destNode = GRCAN_TCM;
 static GRCAN_NODE_ID localNode = GRCAN_ALL;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
 
 static CAN_MAG_MSG_ID msgID = CAN_MAG_MSG_DATA;
+
+static volatile bool data_valid = false;
+static volatile uint32_t expected_size = TX_BUFFER_1_SIZE;
+static volatile bool id_valid = false;
+
+void on_receive(uint32_t ID, void *data, uint32_t size)
+{
+	// GRCAN_NODE_ID sender = some bit shift;
+	// GRCAN_MSG_ID messageID = some bit shift;
+	/*switch(messageID)
+	{
+		case ??:
+			if (size != sizeof(GRCAN_BCU_CELL_DATA_1_MSG)) {
+				ReportBadMessageLength(ID, size);
+			}
+			// COPY OR CHANGE THING OR SOMETHING
+			break;
+		case ??:
+			// todo
+			break;
+		default:
+			break;
+	}*/
+}
 
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {

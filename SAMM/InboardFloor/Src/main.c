@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <can.h>
 
 #include "VL53L4ED_api.h"
 #include "bmi323.h"
@@ -117,7 +118,7 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 	/* USER CODE BEGIN Init */
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
 
 	CANConfig my_cfg;
 
@@ -187,7 +188,6 @@ int main(void)
 	status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
-
 		/* USER CODE BEGIN 3 */
 		// begin VL53L4ED
 		status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
