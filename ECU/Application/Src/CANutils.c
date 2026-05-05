@@ -64,33 +64,33 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	// }
 
 	FDCAN_TxHeaderTypeDef TxHeader = {
-		.IdType = FDCAN_EXTENDED_ID,
-		.TxFrameType = FDCAN_DATA_FRAME,
-		.ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-		// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-		.BitRateSwitch = FDCAN_BRS_OFF,
-		.TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-		.MessageMarker = 0 // also change this to a real address if you change fifo control
+	    .IdType = FDCAN_EXTENDED_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+	    // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
 
-    TxHeader.Identifier = msgID;
-    TxHeader.DataLength = size;
+	TxHeader.Identifier = msgID;
+	TxHeader.DataLength = size;
 
-    TxHeader.IdType = FDCAN_EXTENDED_ID;
+	TxHeader.IdType = FDCAN_EXTENDED_ID;
 
-    TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
+	TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = TxHeader;
 
 	memcpy(&(msg.data), data, size);
 
-    uint8_t temp;
-    for(uint16_t i = 0; i < size / 2; ++i) {
+	uint8_t temp;
+	for (uint16_t i = 0; i < size / 2; ++i) {
 		temp = msg.data[i];
 		msg.data[i] = msg.data[size - i - 1];
 		msg.data[size - i - 1] = temp;
-    }
+	}
 
 	// can_send(primary_can, &msg);
 	can_enqueue(stateLump.primary_can, &msg);
