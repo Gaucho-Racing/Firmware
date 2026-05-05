@@ -24,6 +24,7 @@
 #include "NodeID.h"
 #include "gpio.h"
 #include "spi.h"
+#include "can_mag.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -74,6 +75,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void on_receive(uint32_t ID, void* data, uint32_t size);
 /* USER CODE END 0 */
 
 /**
@@ -93,6 +95,15 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
+
+	CANConfig my_cfg;
+
+	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
+
+	CANHandle *h1 = can_init(&my_cfg);
+
+	can_start(h1);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -174,6 +185,10 @@ int main(void)
 		uint8_t temp = mag_read_temp(&mag_dev);
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
+		// float hang = mag_read_HANG(mag_dev);
+		FDCANTxMessage temp_can = {.tx_header = 0, .data[8] = temp};
+		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = temp};
+		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = temp};
 		bool bad = check_status(&mag_dev);
 
 		int8_t temp_test = temp - 60;
@@ -273,6 +288,7 @@ void SystemClock_Config(void)
 //   //circularBufferPush(cb, RxData, sizeof(RxData));
 
 // }
+
 /* USER CODE END 4 */
 
 /**
