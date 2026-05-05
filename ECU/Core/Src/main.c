@@ -412,6 +412,7 @@ int main(void)
 
 		// main state lopp, queues can messages within it
 		static uint32_t delay_timer;
+		static uint32_t ping_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 
@@ -420,7 +421,10 @@ int main(void)
 
 			// preipheral updates
 			SendECUStateDataOverCAN(&stateLump);
-			pingAll();
+			if (MillisecondsSinceBoot() >= ping_timer) {
+				ping_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 500); // half period
+				pingAll();
+			}
 			lightControl(&stateLump);
 		}
 	}

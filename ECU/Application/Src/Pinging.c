@@ -53,6 +53,7 @@ void pingAll(void)
 {
 	uint32_t timestamp = MillisecondsSinceBoot();
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, 0, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+	GRCAN_ECU_PINGING_RTT_MSG tcm_msg = {};
 	for (uint8_t i = 0; i < NUMBER_OF_PING_DEVICES; i++) {
 		uint32_t timestamp = MillisecondsSinceBoot();
 
@@ -67,6 +68,7 @@ void pingAll(void)
 		sentTimestamps[i] = timestamp;
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 	}
+	memcpy(tcm_msg.arr, RTTs, NUMBER_OF_PING_DEVICES * 2);
 }
 
 uint32_t getRTT(uint8_t ID)
