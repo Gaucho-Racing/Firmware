@@ -18,10 +18,11 @@
 
 CANHandle *can_handler;
 
-static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TTS_FRAME0,	GRCAN_TTS_FRAME1,  GRCAN_TTS_FRAME2,  GRCAN_TTS_FRAME3,	 GRCAN_TTS_FRAME4,  GRCAN_TTS_FRAME5,
-						     GRCAN_TTS_FRAME6,	GRCAN_TTS_FRAME7,  GRCAN_TTS_FRAME8,  GRCAN_TTS_FRAME9,	 GRCAN_TTS_FRAME10, GRCAN_TTS_FRAME11,
-						     GRCAN_TTS_FRAME12, GRCAN_TTS_FRAME13, GRCAN_TTS_FRAME14, GRCAN_TTS_FRAME15, GRCAN_TTS_FRAME16, GRCAN_TTS_FRAME17,
-						     GRCAN_TTS_FRAME18, GRCAN_TTS_FRAME19, GRCAN_TTS_FRAME20, GRCAN_TTS_FRAME21, GRCAN_TTS_FRAME22, GRCAN_TTS_FRAME23};
+static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_Tire_Temp_Frame_0,  GRCAN_Tire_Temp_Frame_1,	 GRCAN_Tire_Temp_Frame_2,  GRCAN_Tire_Temp_Frame_3,  GRCAN_Tire_Temp_Frame_4,
+						     GRCAN_Tire_Temp_Frame_5,  GRCAN_Tire_Temp_Frame_6,	 GRCAN_Tire_Temp_Frame_7,  GRCAN_Tire_Temp_Frame_8,  GRCAN_Tire_Temp_Frame_9,
+						     GRCAN_Tire_Temp_Frame_10, GRCAN_Tire_Temp_Frame_11, GRCAN_Tire_Temp_Frame_12, GRCAN_Tire_Temp_Frame_13, GRCAN_Tire_Temp_Frame_14,
+						     GRCAN_Tire_Temp_Frame_15, GRCAN_Tire_Temp_Frame_16, GRCAN_Tire_Temp_Frame_17, GRCAN_Tire_Temp_Frame_18, GRCAN_Tire_Temp_Frame_19,
+						     GRCAN_Tire_Temp_Frame_20, GRCAN_Tire_Temp_Frame_21, GRCAN_Tire_Temp_Frame_22, GRCAN_Tire_Temp_Frame_23};
 
 void CANInitialize()
 {
