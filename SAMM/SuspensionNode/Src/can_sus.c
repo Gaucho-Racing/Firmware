@@ -8,15 +8,57 @@ static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
 
 static CAN_MAG_MSG_ID msgID = CAN_MAG_MSG_DATA;
 
+void SusNode_ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
+{
+	LOGOMATIC("Bad Suspension Node CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+}
+
+void SusNode_ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
+{
+	LOGOMATIC("Unhandled Suspension Node CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+}
+
+void SusNode_CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t* data, uint32_t data_length) {
+	switch (msg_id) {
+		case GRCAN_PING:
+			if (data_length != sizeof(GRCAN_PING_MSG)) {
+				SusMode_ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+
+			// respond to ping
+			break;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* this stuff is lwk a template/ bs i'll come back to remove/fix it - shravya
 static volatile bool data_valid = false;
 static volatile uint32_t expected_size = TX_BUFFER_1_SIZE;
 static volatile bool id_valid = false;
+
 
 void on_receive(uint32_t ID, void *data, uint32_t size)
 {
 	// GRCAN_NODE_ID sender = some bit shift;
 	// GRCAN_MSG_ID messageID = some bit shift;
-	/*switch(messageID)
+	switch(messageID)
 	{
 		case ??:
 			if (size != sizeof(GRCAN_BCU_CELL_DATA_1_MSG)) {
@@ -29,8 +71,9 @@ void on_receive(uint32_t ID, void *data, uint32_t size)
 			break;
 		default:
 			break;
-	}*/
+	}
 }
+*/
 
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {
