@@ -48,7 +48,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = (LOCAL_GR_ID << 20) | (canMsgNumber[msgNumber] << 8) | GRCAN_TCM; // do this
-	msg.tx_header.IdType = FDCAN_STANDARD_ID;
+	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE; // honestly this might be a value you have to read from a node
 							      // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
