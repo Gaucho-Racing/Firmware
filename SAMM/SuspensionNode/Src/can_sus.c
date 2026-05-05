@@ -18,17 +18,32 @@ void SusNode_ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GR
 	LOGOMATIC("Unhandled Suspension Node CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
-void SusNode_CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t* data, uint32_t data_length) {
-	switch (msg_id) {
-		case GRCAN_PING:
-			if (data_length != sizeof(GRCAN_PING_MSG)) {
-				SusMode_ReportBadMessageLength(bus_id, msg_id, sender_id);
-				break;
-			}
+void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t* data, uint32_t data_length) {
+	// switch (msg_id) {
+	// 	case GRCAN_PING:
+	// 		if (data_length != sizeof(GRCAN_PING_MSG)) {
+	// 			SusMode_ReportBadMessageLength(bus_id, msg_id, sender_id);
+	// 			break;
+	// 		}
+	// 		GRCAN_Fancy_Send(bus_id, sender_id, msg_id, data, data_length); // Respond to ping
+	// 		GRCAN_Fancy_Send // send to other bus
+	// 		break;
+	// 	default:
+	// 		GRCAN_Fancy_Send // send to other bus
+	// }
 
-			// respond to ping
-			break;
+	if (msg_id == GRCAN_PING) {
+		GR_Fancy_Send(CAN_DATAMAIN_BUS, msg_id, sender_id, data, data_length);
 	}
+	GR_Fancy_Send(CAN_SUBNET_BUS, msg_id, sender_id, data, data_length);
+	/*
+	if (PING)
+	{
+		SEND PING ON OG BUS
+	}
+
+	COPY MESSAGE TO OTHER BUS
+	*/
 }
 
 

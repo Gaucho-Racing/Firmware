@@ -12,6 +12,11 @@ typedef enum {
 	CAN_MAG_MSG_FAULT = 0x2F
 } CAN_MAG_MSG_ID; // change with updates <- fixme
 
+typedef enum {
+	CAN_SUBNET_BUS = 0,
+	CAN_DATAMAIN_BUS = 1
+} CAN_SAMM_ROUTING_BUS;
+
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID);
 int can_mag_send(unsigned int *data);
 
