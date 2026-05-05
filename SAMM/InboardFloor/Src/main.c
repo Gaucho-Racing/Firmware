@@ -28,8 +28,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
 #include <can.h>
+#include <stdio.h>
 
 #include "VL53L4ED_api.h"
 #include "bmi323.h"
