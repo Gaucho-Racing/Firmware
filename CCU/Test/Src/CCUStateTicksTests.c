@@ -43,9 +43,9 @@ int main(void)
 		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		// //state_dataTest\.CCU_PRECHARGE_SET_TS_ACTIVE = 0;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 		LOGOMATIC("\n\n\n");
 	}
+
 }
