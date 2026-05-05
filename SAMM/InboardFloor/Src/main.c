@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <can.h>
 
 #include "VL53L4ED_api.h"
 #include "bmi323.h"
@@ -117,7 +118,7 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 	/* USER CODE BEGIN Init */
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
 
 	CANConfig my_cfg;
 
@@ -187,11 +188,6 @@ int main(void)
 	status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
-		uint8_t temp = mag_read_temp(&mag_dev);
-		uint16_t angle = mag_read_encoder_angle(&mag_dev);
-		int16_t turns = mag_read_turns(&mag_dev);
-		bool bad = check_status(&mag_dev);
-
 		/* USER CODE BEGIN 3 */
 		// begin VL53L4ED
 		status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
