@@ -165,6 +165,14 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 
+		status = MLX90640_TriggerMeasurement(MLX90640_address);
+		if (status != 0) {
+			Error_Handler();
+		}
+
+		// Wait for sensor to acquire frame (typical timing depends on refresh rate)
+		HAL_Delay(15);
+
 		status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
 		if (status != 0) {
 			Error_Handler();
