@@ -34,7 +34,7 @@ target_sources(
 		Src/main.c
 		Src/spi.c
 		Src/stm32h5xx_it.c
-		Src/can_mag.c
+		Src/can_sus.c
 	# TODO
 )
 
