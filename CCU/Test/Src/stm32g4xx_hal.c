@@ -32,7 +32,6 @@ uint32_t HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState
 // Dont where else to place this
 void SendPrechargeStatus(bool setPrecharge)
 {
-	UNUSED(state_data);
 	UNUSED(setPrecharge);
 	LOGOMATIC("Precharge should send\n");
 	return;
