@@ -518,6 +518,40 @@ BO_ 2175795714 InboardFloor_RR_Ping_to_ECU: 4 InboardFloor_RR
 BO_ 2164261378 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
+BO_ 2164274948 TireTemp_FL_Tire_Temp_Frame_0_to_TCM: 64 TireTemp_FL
+ SG_ pixel0 : 0|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel1 : 16|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel2 : 32|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel3 : 48|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel4 : 64|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel5 : 80|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel6 : 96|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel7 : 112|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel8 : 128|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel9 : 144|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel10 : 160|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel11 : 176|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel12 : 192|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel13 : 208|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel14 : 224|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel15 : 240|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel16 : 256|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel17 : 272|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel18 : 288|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel19 : 304|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel20 : 320|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel21 : 336|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel22 : 352|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel23 : 368|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel24 : 384|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel25 : 400|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel26 : 416|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel27 : 432|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel28 : 448|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel29 : 464|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel30 : 480|16@1+ (1,0) [0|0] "C" TCM
+ SG_ pixel31 : 496|16@1+ (1,0) [0|0] "C" TCM
+
 BO_ 2165309954 TireTemp_FR_Ping_to_ECU: 4 TireTemp_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
@@ -936,6 +970,38 @@ CM_ SG_ 2173698562 Timestamp "Time in millis";
 CM_ SG_ 2174747138 Timestamp "Time in millis";
 CM_ SG_ 2175795714 Timestamp "Time in millis";
 CM_ SG_ 2164261378 Timestamp "Time in millis";
+CM_ SG_ 2164274948 pixel0 "Tire temperature frame 0 pixel 0";
+CM_ SG_ 2164274948 pixel1 "Tire temperature frame 0 pixel 1";
+CM_ SG_ 2164274948 pixel2 "Tire temperature frame 0 pixel 2";
+CM_ SG_ 2164274948 pixel3 "Tire temperature frame 0 pixel 3";
+CM_ SG_ 2164274948 pixel4 "Tire temperature frame 0 pixel 4";
+CM_ SG_ 2164274948 pixel5 "Tire temperature frame 0 pixel 5";
+CM_ SG_ 2164274948 pixel6 "Tire temperature frame 0 pixel 6";
+CM_ SG_ 2164274948 pixel7 "Tire temperature frame 0 pixel 7";
+CM_ SG_ 2164274948 pixel8 "Tire temperature frame 0 pixel 8";
+CM_ SG_ 2164274948 pixel9 "Tire temperature frame 0 pixel 9";
+CM_ SG_ 2164274948 pixel10 "Tire temperature frame 0 pixel 10";
+CM_ SG_ 2164274948 pixel11 "Tire temperature frame 0 pixel 11";
+CM_ SG_ 2164274948 pixel12 "Tire temperature frame 0 pixel 12";
+CM_ SG_ 2164274948 pixel13 "Tire temperature frame 0 pixel 13";
+CM_ SG_ 2164274948 pixel14 "Tire temperature frame 0 pixel 14";
+CM_ SG_ 2164274948 pixel15 "Tire temperature frame 0 pixel 15";
+CM_ SG_ 2164274948 pixel16 "Tire temperature frame 0 pixel 16";
+CM_ SG_ 2164274948 pixel17 "Tire temperature frame 0 pixel 17";
+CM_ SG_ 2164274948 pixel18 "Tire temperature frame 0 pixel 18";
+CM_ SG_ 2164274948 pixel19 "Tire temperature frame 0 pixel 19";
+CM_ SG_ 2164274948 pixel20 "Tire temperature frame 0 pixel 20";
+CM_ SG_ 2164274948 pixel21 "Tire temperature frame 0 pixel 21";
+CM_ SG_ 2164274948 pixel22 "Tire temperature frame 0 pixel 22";
+CM_ SG_ 2164274948 pixel23 "Tire temperature frame 0 pixel 23";
+CM_ SG_ 2164274948 pixel24 "Tire temperature frame 0 pixel 24";
+CM_ SG_ 2164274948 pixel25 "Tire temperature frame 0 pixel 25";
+CM_ SG_ 2164274948 pixel26 "Tire temperature frame 0 pixel 26";
+CM_ SG_ 2164274948 pixel27 "Tire temperature frame 0 pixel 27";
+CM_ SG_ 2164274948 pixel28 "Tire temperature frame 0 pixel 28";
+CM_ SG_ 2164274948 pixel29 "Tire temperature frame 0 pixel 29";
+CM_ SG_ 2164274948 pixel30 "Tire temperature frame 0 pixel 30";
+CM_ SG_ 2164274948 pixel31 "Tire temperature frame 0 pixel 31";
 CM_ SG_ 2165309954 Timestamp "Time in millis";
 CM_ SG_ 2166358530 Timestamp "Time in millis";
 CM_ SG_ 2167407106 Timestamp "Time in millis";
