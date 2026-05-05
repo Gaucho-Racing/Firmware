@@ -187,10 +187,10 @@ int main(void)
 	status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
-    	uint8_t temp = mag_read_temp(&mag_dev);
-    	uint16_t angle = mag_read_encoder_angle(&mag_dev);
-    	int16_t turns = mag_read_turns(&mag_dev);
-    	bool bad = check_status(&mag_dev);
+		uint8_t temp = mag_read_temp(&mag_dev);
+		uint16_t angle = mag_read_encoder_angle(&mag_dev);
+		int16_t turns = mag_read_turns(&mag_dev);
+		bool bad = check_status(&mag_dev);
 
 		/* USER CODE BEGIN 3 */
 		// begin VL53L4ED
