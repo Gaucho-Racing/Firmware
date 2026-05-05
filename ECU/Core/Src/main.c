@@ -234,8 +234,8 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
 	canCfg.hal_fdcan_init.DataTimeSeg1 = 12; // Updated for 170MHz: 170 MHz/((1+12+4)*2) = 5 Mbps
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;
 
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
@@ -284,21 +284,26 @@ void CAN_Configure()
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
+	FDCAN_FilterTypeDef fdcan_primary_filter_ecu = {0};
+	fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_ecu.FilterIndex = 0;
+	fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_primary_filter_ecu.FilterID2 = 0x000000FF;
+
+	FDCAN_FilterTypeDef fdcan_primary_filter_all = {0};
+	fdcan_primary_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_all.FilterIndex = 1;
+	fdcan_primary_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
+
 	primary_can = can_init(&canCfg);
 
-	// Filter 1 Definitions
-	FDCAN_FilterTypeDef fdcan1_filter;
-
-	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter.FilterIndex = 0;
-	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
-	fdcan1_filter.FilterID2 = 0x00000FF;
-
-	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
+	can_add_filter(primary_can, &fdcan_primary_filter_ecu);
+	can_add_filter(primary_can, &fdcan_primary_filter_all);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -313,22 +318,26 @@ void CAN_Configure()
 	// RX Callback CAN2
 	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	// Filter definitions
-	FDCAN_FilterTypeDef fdcan2_filter;
+	FDCAN_FilterTypeDef fdcan_data_filter_ecu = {0};
+	fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_ecu.FilterIndex = 0;
+	fdcan_data_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
 
-	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan2_filter.FilterIndex = 0;
-	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
-	fdcan2_filter.FilterID2 = 0x00000FF;
-
-	fdcan2_filter.FilterIndex = 1;
-	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
+	FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
+	fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_all.FilterIndex = 1;
+	fdcan_data_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_data_filter_all.FilterID2 = 0x000000FF;
 
 	data_can = can_init(&canCfg);
 
-	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigFilter(data_can->hal_fdcanP, &fdcan2_filter);
+	can_add_filter(data_can, &fdcan_data_filter_ecu);
+	can_add_filter(data_can, &fdcan_data_filter_all);
 
 	can_start(primary_can);
 	can_start(data_can);
@@ -388,21 +397,21 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
+	// uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		if (cycle_counter_accumulator == 10) {
-			elapsed_cycles = DWT->CYCCNT;
-			LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
-			GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
-			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
-			cycle_counter_accumulator = 0;
-			DWT->CYCCNT = 0;
-		} else {
-			cycle_counter_accumulator++;
-		}
+		// if (cycle_counter_accumulator == 10) {
+		// 	elapsed_cycles = DWT->CYCCNT;
+		// 	LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
+		// 	GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
+		// 	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
+		// 	cycle_counter_accumulator = 0;
+		// 	DWT->CYCCNT = 0;
+		// } else {
+		// 	cycle_counter_accumulator++;
+		// }
 
 		static uint32_t nextPing;
 		if (MillisecondsSinceBoot() >= nextPing) {

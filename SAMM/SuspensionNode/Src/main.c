@@ -93,11 +93,11 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);
 
 	CANConfig my_cfg;
 
-	get_cfg(FDCAN1, on_receive, &my_cfg, FDCAN_MODE_NORMAL);
+	get_cfg(FDCAN1, on_receivee, &my_cfg, FDCAN_MODE_NORMAL, 0, 0);
 
 	CANHandle *h1 = can_init(&my_cfg);
 
@@ -191,7 +191,7 @@ int main(void)
 		FDCANTxMessage angle_can = {.tx_header = 0, .data[16] = temp};
 		FDCANTxMessage turns_can = {.tx_header = 0, .data[16] = temp};
 		bool bad = check_status(&mag_dev);
-		printf("Temperature is %d\n", (double)temp);
+		printf("Temperature is %d\n", temp);
 		printf("Angle is %d\n", angle);
 		printf("Number of turns is %d\n", turns);
 		if (bad) {

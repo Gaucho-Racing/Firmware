@@ -107,6 +107,7 @@ uint8_t VL53L4ED_WrDWord(uint16_t dev, uint16_t RegisterAdress, uint32_t value)
 
 uint8_t VL53L4ED_WaitMs(Dev_t dev, uint32_t time_ms)
 {
+	UNUSED(dev);
 	HAL_Delay(time_ms);
 	return 0;
 }

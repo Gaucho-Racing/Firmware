@@ -54,5 +54,4 @@ target_include_directories(
 	INTERFACE
 		Inc
 		GRCAN
-	#TODO: Figure out how to set up Extras folder
 )

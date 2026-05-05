@@ -26,7 +26,7 @@ use Readonly;
 # --- Constants ---
 Readonly::Scalar my $BITS_PER_BYTE         => 8;
 Readonly::Scalar my $SHIFT_MSG             => 8;
-Readonly::Scalar my $SHIFT_SENDER          => 16;
+Readonly::Scalar my $SHIFT_SENDER          => 20;
 Readonly::Scalar my $EXTENDED_ID_THRESHOLD => 0x7FF;
 Readonly::Scalar my $EXTENDED_ID_MASK      => 2_147_483_648;
 Readonly::Scalar my $EMPTY_STR             => q{};
