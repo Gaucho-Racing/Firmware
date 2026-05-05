@@ -86,8 +86,6 @@ uint32_t MillisecondsSinceBoot(void)
  * @retval int
  */
 
-
-
 int main(void)
 {
 
@@ -121,7 +119,6 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 	/* USER CODE BEGIN Init */
-
 
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
