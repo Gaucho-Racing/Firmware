@@ -18,7 +18,8 @@ void SusNode_ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GR
 	LOGOMATIC("Unhandled Suspension Node CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
-void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t* data, uint32_t data_length) {
+void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
+{
 	// switch (msg_id) {
 	// 	case GRCAN_PING:
 	// 		if (data_length != sizeof(GRCAN_PING_MSG)) {
@@ -45,23 +46,6 @@ void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID
 	COPY MESSAGE TO OTHER BUS
 	*/
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* this stuff is lwk a template/ bs i'll come back to remove/fix it - shravya
 static volatile bool data_valid = false;
