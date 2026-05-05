@@ -218,7 +218,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	static uint32_t last_bse_plausible_millis;
-	if (!BSE_Implausible(stateData)) {
+	if (BSE_Plausible(stateData)) {
 		last_bse_plausible_millis = millis_since_boot;
 	}
 
