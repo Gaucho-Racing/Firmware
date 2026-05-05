@@ -179,7 +179,21 @@ int main(void)
 	while (1) {
 
 		while ((status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame)) != 0) {
-			MLX90640_FullReset();
+			break;//MLX90640_FullReset();
+		}
+
+		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
+		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
+		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
+		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
+
+		while ((status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame)) != 0) {
+			break;//MLX90640_FullReset();
+		}
+
+		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
+			CAN_sendTemp(mlx90640To, i);
+			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
 		}
 
 		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);

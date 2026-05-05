@@ -4,7 +4,7 @@
 // #define USEDMA //unsafe atm
 
 #define USECAN1
-#define TX_BUFFER_1_SIZE 10
+#define TX_BUFFER_1_SIZE 30
 
 // not using
 // #define CAN1_RX_GPIO_PORT
