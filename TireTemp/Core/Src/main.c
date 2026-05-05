@@ -90,6 +90,18 @@ PUTCHAR_PROTOTYPE
 	return ch;
 }
 
+int MLX90640_FullReset(void)
+{
+	while (true) {
+		if (MLX90640_SetRefreshRate(MLX90640_address, 0x07) != 0) continue;
+		if (MLX90640_DumpEE(MLX90640_address, eeMLX90640) != 0) continue;
+		if (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) != 0) continue;
+		break;
+	}
+
+	return 0;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -147,16 +159,11 @@ int main(void)
 	   "aTxBuffer" buffer & receive data through "aRxBuffer" */
 	/* Timeout is set to 5S */
 
-	status = MLX90640_SetRefreshRate(MLX90640_address, 0x07);
+	MLX90640_FullReset();
 
-	status = MLX90640_DumpEE(MLX90640_address, eeMLX90640);
-	if (status != 0) {
-		Error_Handler();
-	}
-
-	status = MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
-	if (status != 0) {
-		Error_Handler();
+	// get initial
+	while ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
+		break;//MLX90640_FullReset();
 	}
 
 	/* USER CODE END 2 */
@@ -165,27 +172,24 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 
-		status = MLX90640_TriggerMeasurement(MLX90640_address);
-		if (status != 0) {
-			Error_Handler();
+		while ((status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame)) != 0) {
+			MLX90640_FullReset();
 		}
 
-		// Wait for sensor to acquire frame (typical timing depends on refresh rate)
-		HAL_Delay(15);
-
-		status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
-		if (status != 0) {
-			Error_Handler();
-		}
 		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
 		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
 		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
+		while ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
+			break;//MLX90640_FullReset();
+		}
+
 		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
 			CAN_sendTemp(mlx90640To, i);
 			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
 		}
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -215,13 +219,15 @@ void SystemClock_Config(void)
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
 	RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
-	RCC_OscInitStruct.PLL.PLLN = 85;
+	RCC_OscInitStruct.PLL.PLLN = 80;
 	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
 	RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
 	RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
+
+	__HAL_RCC_PLLCLKOUT_ENABLE(RCC_PLL_48M1CLK);
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */

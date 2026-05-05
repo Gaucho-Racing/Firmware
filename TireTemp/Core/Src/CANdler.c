@@ -54,7 +54,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE; // honestly this might be a value you have to read from a node
 							      // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
 	msg.tx_header.DataLength = FDCAN_DLC_BYTES_64;
-	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	msg.tx_header.BitRateSwitch = FDCAN_BRS_ON;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
 
@@ -90,6 +90,7 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 	UNUSED(ID);
 	UNUSED(data);
 	UNUSED(size);
+	volatile int i = 0;
 	// GRCAN_MSG_ID msg_id = (0x000FFF00 & ID) >> 8;
 	// GRCAN_NODE_ID node_id = (0x0FF00000 & ID) >> 20;
 
