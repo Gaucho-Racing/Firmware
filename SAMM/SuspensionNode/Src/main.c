@@ -22,7 +22,7 @@
 // #include "crc.h"
 // #include "fdcan.h"
 #include "NodeID.h"
-#include "can_mag.h"
+#include "can_sus.h"
 #include "gpio.h"
 #include "spi.h"
 

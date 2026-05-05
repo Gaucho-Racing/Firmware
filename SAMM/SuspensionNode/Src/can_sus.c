@@ -1,4 +1,4 @@
-#include "can_mag.h"
+#include "can_sus.h"
 
 #include "can_cfg.h"
 
