@@ -35,7 +35,7 @@
  * @param msg Pointer to the frame.
  * @return Data field.
  */
-#define BCC_GET_MSG_DATA(msg) (((uint16_t)*((msg) + BCC_MSG_IDX_DATA_H) << 8U) | (uint16_t)*((msg) + BCC_MSG_IDX_DATA_L))
+#define BCC_GET_MSG_DATA(msg) (((uint16_t) * ((msg) + BCC_MSG_IDX_DATA_H) << 8U) | (uint16_t) * ((msg) + BCC_MSG_IDX_DATA_L))
 
 /*! @brief Mask for address field of frame. */
 #define BCC_MSG_ADDR_MASK 0x7FU
