@@ -43,7 +43,7 @@ extern "C" {
  * @{
  */
 /*  Health test control register information to use in CCM algorithm */
-#define LL_RNG_HTCFG 0x17590ABCU /*!< Magic number */
+#define LL_RNG_HTCFG 0x17590AACU /*!< Magic number */
 /**
  * @}
  */
