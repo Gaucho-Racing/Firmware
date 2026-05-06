@@ -97,7 +97,7 @@ This file defines which devices are physically connected to each CAN bus. The fo
 
 ```json
 {
-  "Primary": ["ECU", "BCU", "..."],
+  "Primary": ["ECU", "ACU", "..."],
   "Data": ["ECU", "SAMM_Mag_1", "..."]
 }
 ```
@@ -116,7 +116,7 @@ This file defines functional groupings for the Graph View physical-bus renderer.
 {
   "groups": [
     { "name": "POWER/HV", "side": "top", "nodes": ["DTI Inverter", "GR Inverter"] },
-    { "name": "CORE CONTROL (Bottom)", "side": "bottom", "nodes": ["TCM", "BCU"] }
+    { "name": "CORE CONTROL (Bottom)", "side": "bottom", "nodes": ["TCM", "ACU"] }
   ]
 }
 ```

@@ -2,7 +2,7 @@
 	"Primary": [
 		"ECU",
 		"TCM",
-		"BCU",
+		"ACU",
 		"DGPS",
 		"GR Inverter",
 		"DTI Inverter",
@@ -15,7 +15,7 @@
 	"Data": [
 		"ECU",
 		"TCM",
-		"BCU",
+		"ACU",
 		"DGPS",
 		"SAMM_Mag_1",
 		"SAMM_Mag_2",
@@ -28,7 +28,7 @@
 	],
 	"Charger": [
 		"CCU",
-		"BCU",
+		"ACU",
 		"Charger",
 		"IMD",
 		"Energy Meter",
