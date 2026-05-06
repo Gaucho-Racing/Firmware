@@ -94,7 +94,7 @@ This file defines which devices are physically connected to each CAN bus. Bus he
 ```
 Primary:
   ECU
-  BCU
+  ACU
   ...
 
 Data:

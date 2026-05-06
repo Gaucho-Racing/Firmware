@@ -22,18 +22,18 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
 	switch (messageId) {
-		case GRCAN_BCU_STATUS_1:
-			if (size != sizeof(GRCAN_BCU_STATUS_1_MSG)) {
+		case GRCAN_ACU_STATUS_1:
+			if (size != sizeof(GRCAN_ACU_STATUS_1_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				return;
 			}
-			GRCAN_BCU_STATUS_1_MSG *bcu_status_1 = (GRCAN_BCU_STATUS_1_MSG *)data;
-			state_data.Accumulator_Voltage = bcu_status_1->accumulator_voltage;
-			state_data.Accumulator_SOC = bcu_status_1->accumulator_soc;
+			GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (GRCAN_ACU_STATUS_1_MSG *)data;
+			state_data.Accumulator_Voltage = acu_status_1->accumulator_voltage;
+			state_data.Accumulator_SOC = acu_status_1->accumulator_soc;
 			break;
 
-		case GRCAN_BCU_STATUS_2:
-			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
+		case GRCAN_ACU_STATUS_2:
+			if (size != sizeof(GRCAN_ACU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				return;
 			}
@@ -44,24 +44,24 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			// What the rewrite would look like: STATUS 2
 
-			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
+			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
 
-			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->status_flags, 0);
-			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 1);
-			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 2);
-			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 3);
-			state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 4);
+			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(acu_status_2->status_flags, 0);
+			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 1);
+			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 2);
+			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(acu_status_2->status_flags, 3);
+			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(acu_status_2->status_flags, 4);
 
-			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->status_flags, 5);
-			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
-			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
+			state_data.ACU_S2_UNDER20v_WARNING = GETBIT(acu_status_2->status_flags, 5);
+			state_data.ACU_S2_UNDER12v_WARNING = GETBIT(acu_status_2->status_flags, 6);
+			state_data.ACU_S2_UNDERVOLTSDC_WARNING = GETBIT(acu_status_2->status_flags, 7);
 
-			state_data.BCU_S2_IR_MINUS = GETBIT(bcu_status_2->precharge_latch_flags, 1);
-			state_data.BCU_S2_IR_PLUS = GETBIT(bcu_status_2->precharge_latch_flags, 2);
+			state_data.ACU_S2_IR_MINUS = GETBIT(acu_status_2->precharge_latch_flags, 1);
+			state_data.ACU_S2_IR_PLUS = GETBIT(acu_status_2->precharge_latch_flags, 2);
 
-			state_data.Max_Cell_Temp = bcu_status_2->max_cell_temp;
+			state_data.Max_Cell_Temp = acu_status_2->max_cell_temp;
 			break;
-		case GRCAN_BCU_STATUS_3:
+		case GRCAN_ACU_STATUS_3:
 			// Currently unused
 			break;
 		default:
@@ -169,7 +169,7 @@ void CAN_Configure(void)
 void SendPrechargeStatus(bool setPrecharge)
 {
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & GRCAN_CCU) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
+	msg.tx_header.Identifier = ((0xFF & GRCAN_CCU) << 20) | ((0xFFF & GRCAN_ACU_PRECHARGE) << 8) | (0xFF & GRCAN_ACU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;

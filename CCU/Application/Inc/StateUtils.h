@@ -12,7 +12,7 @@
 void VCP_Oneliner(const CCU_StateData *state_data);
 void TripSoftwareLatch(CCU_StateData *state_data);
 bool CriticalError(const CCU_StateData *state_data);
-bool BCU_Warnings(const CCU_StateData *state_data);
+bool ACU_Warnings(const CCU_StateData *state_data);
 uint32_t MillisecondsSinceBoot(void);
 bool IR_Check(CCU_StateData *state_data);
 #endif

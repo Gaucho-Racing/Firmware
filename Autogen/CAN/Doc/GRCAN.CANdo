@@ -6,38 +6,38 @@ Bus ID:
 
 routing:
   messages:
-    BCU:
+    ACU:
       Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: BCU Status 1
-          - msg: BCU Status 2
-          - msg: BCU Status 3
+          - msg: ACU Status 1
+          - msg: ACU Status 2
+          - msg: ACU Status 3
       Data:
         Debugger:
           - msg: Debug FD
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: BCU Cell Data 1
-          - msg: BCU Cell Data 2
-          - msg: BCU Cell Data 3
-          - msg: BCU Cell Data 4
-          - msg: BCU Cell Data 5
+          - msg: ACU Cell Data 1
+          - msg: ACU Cell Data 2
+          - msg: ACU Cell Data 3
+          - msg: ACU Cell Data 4
+          - msg: ACU Cell Data 5
       Charger:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
         CCU:
-          - msg: BCU Status 1
-          - msg: BCU Status 2
-          - msg: BCU Status 3
+          - msg: ACU Status 1
+          - msg: ACU Status 2
+          - msg: ACU Status 3
     Charger:
       Charger:
-        BCU:
+        ACU:
           - msg: Charger Data
             can_id_override: 0x18FF50E5
     Dash Panel:
@@ -53,7 +53,7 @@ routing:
         ECU:
           - msg: Debug 2.0
           - msg: Ping
-        BCU:
+        ACU:
           - msg: Debug 2.0
           - msg: Ping
         TCM:
@@ -78,7 +78,7 @@ routing:
         ECU:
           - msg: Debug FD
           - msg: Ping
-        BCU:
+        ACU:
           - msg: Debug FD
           - msg: Ping
         TCM:
@@ -130,10 +130,10 @@ routing:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
-        BCU:
-          - msg: BCU Precharge
-          - msg: BCU Config Charge Parameters
-          - msg: BCU Config Operational Parameters
+        ACU:
+          - msg: ACU Precharge
+          - msg: ACU Config Charge Parameters
+          - msg: ACU Config Operational Parameters
           - msg: Ping
         GR Inverter:
           - msg: Inverter Config
@@ -200,7 +200,7 @@ routing:
           - msg: Ping
     Energy Meter:
       Charger:
-        BCU:
+        ACU:
           - msg: EM Measurement
             can_id_override: 0x10d
           - msg: EM Team Data 1
@@ -247,7 +247,7 @@ routing:
           - msg: Inverter Status 3
     IMD:
       Charger:
-        BCU:
+        ACU:
           - msg: IMD response
             can_id_override: 0x23
           - msg: IMD isolation info
@@ -273,8 +273,8 @@ routing:
           - msg: Ping
     CCU:
       Charger:
-        BCU:
-          - msg: BCU Precharge
+        ACU:
+          - msg: ACU Precharge
           - msg: Debug 2.0
     DGPS:
       Data:
@@ -402,7 +402,7 @@ Message ID:
       bit_start: 8
       comment:
         [Byte 1 / Bits 8-15] ECU ping targets
-        8: BCU (1: OK, 0: Timeout)
+        8: ACU (1: OK, 0: Timeout)
         9: GR Inverter (1: OK, 0: Timeout)
         10: Fan Controller 1 (1: OK, 0: Timeout)
         11: Fan Controller 2 (1: OK, 0: Timeout)
@@ -535,7 +535,7 @@ Message ID:
         3: Software OK
         4-7: Reserved
       data type: b
-  BCU Status 1:
+  ACU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
     Accumulator Voltage:
@@ -578,7 +578,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "20x/51"
-  BCU Status 2:
+  ACU Status 2:
     MSG ID: 0x008
     MSG LENGTH: 7
     20v Voltage:
@@ -604,7 +604,7 @@ Message ID:
     SDC Voltage:
       bit_start: 16
       comment:
-        Voltage before BCU Latch
+        Voltage before ACU Latch
         data type: u8
         units: Volts
         scaled min: 0
@@ -654,7 +654,7 @@ Message ID:
         52: Software Latch (0:Open, 1:Closed)
         48-51: Reserved
       data type: b
-  BCU Status 3:
+  ACU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
     HV Input Voltage:
@@ -689,7 +689,7 @@ Message ID:
       scaled min: 0
       scaled max: 65.535
       map equation: "0.001x"
-  BCU Precharge:
+  ACU Precharge:
     MSG ID: 0x00A
     MSG LENGTH: 1
     Set TS Active:
@@ -697,7 +697,7 @@ Message ID:
       comment: 0: shutdown, 1: go TS Active/Precharge
       data type: b
       units: Bool
-  BCU Config Charge Parameters:
+  ACU Config Charge Parameters:
     MSG ID: 0x00B
     MSG LENGTH: 4
     Charge Voltage:
@@ -716,7 +716,7 @@ Message ID:
       scaled min: 0
       scaled max: 6553.5
       map equation: "0.1x"
-  BCU Config Operational Parameters:
+  ACU Config Operational Parameters:
     MSG ID: 0x00C
     MSG LENGTH: 2
     Minimium Cell Voltage:
@@ -735,7 +735,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 1:
+  ACU Cell Data 1:
     MSG ID: 0x00D
     MSG LENGTH: 64
     Cell 0 Voltage:
@@ -1250,7 +1250,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 2:
+  ACU Cell Data 2:
     MSG ID: 0x00E
     MSG LENGTH: 64
     Cell 32 Voltage:
@@ -1765,7 +1765,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 3:
+  ACU Cell Data 3:
     MSG ID: 0x00F
     MSG LENGTH: 64
     Cell 64 Voltage:
@@ -2280,7 +2280,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 4:
+  ACU Cell Data 4:
     MSG ID: 0x010
     MSG LENGTH: 64
     Cell 96 Voltage:
@@ -2795,7 +2795,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 5:
+  ACU Cell Data 5:
     MSG ID: 0x011
     MSG LENGTH: 64
     Cell 128 Voltage:
@@ -3815,7 +3815,7 @@ Message ID:
   ECU Pinging RTT:
     MSG ID: 0x2D
     MSG LENGTH: 24
-    BCU RTT:
+    ACU RTT:
       bit_start: 0-7
       comment: Round trip time
       data type: u8
@@ -4444,7 +4444,7 @@ GR ID:
   Debugger: "0x01"
   CCU: "0x02"
   ECU: "0x02"
-  BCU: "0x03"
+  ACU: "0x03"
   TCM: "0x04"
   Dash Panel: "0x05"
   GR Inverter: "0x08"

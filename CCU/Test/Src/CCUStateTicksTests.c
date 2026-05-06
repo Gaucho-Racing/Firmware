@@ -67,7 +67,7 @@ int main(void)
 
 		// Test 3: in Idle, receive charge command, 1 error
 		LOGOMATIC("In Idle, receive charge command, 1 error\n");
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
+		state_dataTest.ACU_S2_OVERTEMP_ERROR = 1;
 		state_dataTest.recv_charge_cmd = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 		if (state_dataTest.state != CCU_STATE_IDLE) {
@@ -79,7 +79,7 @@ int main(void)
 		// Test 4: in Idle, receive charge command, 2 errors
 		LOGOMATIC("in Idle, receive charge command, 2 errors");
 		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
+		state_dataTest.ACU_S2_UNDERCURR_ERROR = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("There should be a critical error and stay in state Idle\n");
@@ -90,11 +90,11 @@ int main(void)
 		// Test 5: in Charging, no start or stop command, but an error
 		LOGOMATIC("In Charging, no start or stop command, but an error\n");
 		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 0;
-		state_dataTest.BCU_S2_UNDERCURR_ERROR = 0;
+		state_dataTest.ACU_S2_OVERTEMP_ERROR = 0;
+		state_dataTest.ACU_S2_UNDERCURR_ERROR = 0;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
-		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
+		state_dataTest.ACU_S2_UNDERCURR_ERROR = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 		if (state_dataTest.state != CCU_STATE_IDLE) {
 			LOGOMATIC("There should be a critical error and move to Idle\n");
@@ -118,8 +118,8 @@ int main(void)
 			return 6;
 		}
 
-		state_dataTest.BCU_S2_IR_MINUS = true;
-		state_dataTest.BCU_S2_IR_PLUS = true;
+		state_dataTest.ACU_S2_IR_MINUS = true;
+		state_dataTest.ACU_S2_IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -151,7 +151,7 @@ int main(void)
 			return 7;
 		}
 
-		state_dataTest.BCU_S2_IR_MINUS = true;
+		state_dataTest.ACU_S2_IR_MINUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -165,7 +165,7 @@ int main(void)
 			return 7;
 		}
 
-		state_dataTest.BCU_S2_IR_PLUS = true;
+		state_dataTest.ACU_S2_IR_PLUS = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
@@ -196,8 +196,8 @@ int main(void)
 			return 8;
 		}
 
-		state_dataTest.BCU_S2_IR_MINUS = true;
-		state_dataTest.BCU_S2_IR_PLUS = true;
+		state_dataTest.ACU_S2_IR_MINUS = true;
+		state_dataTest.ACU_S2_IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -234,7 +234,7 @@ int main(void)
 			return 9;
 		}
 
-		state_dataTest.BCU_S2_IR_PLUS = true;
+		state_dataTest.ACU_S2_IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 

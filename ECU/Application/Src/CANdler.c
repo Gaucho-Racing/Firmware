@@ -16,7 +16,7 @@ extern ECU_StateData stateLump;
 
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
-	// TODO Ideally change some state data to note a bad message, ie if BCU
+	// TODO Ideally change some state data to note a bad message, ie if ACU
 	// that can be a comms error
 	LOGOMATIC("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
@@ -54,28 +54,28 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			respondToPing(sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
 			break;
 
-		case GRCAN_BCU_STATUS_1:
-			if (data_length != sizeof(GRCAN_BCU_STATUS_1_MSG)) {
+		case GRCAN_ACU_STATUS_1:
+			if (data_length != sizeof(GRCAN_ACU_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_BCU_STATUS_1_MSG *bcu_status_1 = (GRCAN_BCU_STATUS_1_MSG *)data;
-			state_data->tractivebattery_soc = bcu_status_1->accumulator_soc;
-			state_data->glv_soc = bcu_status_1->glv_soc;
-			state_data->ts_voltage = bcu_status_1->ts_voltage * 0.01f;
+			GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (GRCAN_ACU_STATUS_1_MSG *)data;
+			state_data->tractivebattery_soc = acu_status_1->accumulator_soc;
+			state_data->glv_soc = acu_status_1->glv_soc;
+			state_data->ts_voltage = acu_status_1->ts_voltage * 0.01f;
 			break;
 
-		case GRCAN_BCU_STATUS_2:
-			if (data_length != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
+		case GRCAN_ACU_STATUS_2:
+			if (data_length != sizeof(GRCAN_ACU_STATUS_2_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
-			state_data->max_cell_temp_c = bcu_status_2->max_cell_temp * 0.25f;
-			state_data->bcu_error_warning_bits = bcu_status_2->status_flags;
-			state_data->ir_minus = GETBIT(bcu_status_2->precharge_latch_flags, 1);
-			state_data->ir_plus = GETBIT(bcu_status_2->precharge_latch_flags, 2);
-			state_data->bcu_software_latch = GETBIT(bcu_status_2->precharge_latch_flags, 3);
+			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
+			state_data->max_cell_temp_c = acu_status_2->max_cell_temp * 0.25f;
+			state_data->acu_error_warning_bits = acu_status_2->status_flags;
+			state_data->ir_minus = GETBIT(acu_status_2->precharge_latch_flags, 1);
+			state_data->ir_plus = GETBIT(acu_status_2->precharge_latch_flags, 2);
+			state_data->acu_software_latch = GETBIT(acu_status_2->precharge_latch_flags, 3);
 			break;
 
 		case GRCAN_INVERTER_STATUS_1:

@@ -17,15 +17,15 @@ void TripSoftwareLatch(CCU_StateData *state_data)
 	LOGOMATIC("Software Latch: Low\n");
 }
 
-bool BCU_Warnings(const CCU_StateData *state_data)
+bool ACU_Warnings(const CCU_StateData *state_data)
 {
-	if (state_data->BCU_S2_UNDER20v_WARNING) {
+	if (state_data->ACU_S2_UNDER20v_WARNING) {
 		LOGOMATIC("Under 20v Warning\n");
 		return true;
-	} else if (state_data->BCU_S2_UNDER12v_WARNING) {
+	} else if (state_data->ACU_S2_UNDER12v_WARNING) {
 		LOGOMATIC("Under 12v Warning\n");
 		return true;
-	} else if (state_data->BCU_S2_UNDERVOLTSDC_WARNING) {
+	} else if (state_data->ACU_S2_UNDERVOLTSDC_WARNING) {
 		LOGOMATIC("Undervolt TSDC Warning\n");
 		return true;
 	} else {
@@ -36,27 +36,27 @@ bool BCU_Warnings(const CCU_StateData *state_data)
 bool CriticalError(const CCU_StateData *state_data)
 {
 
-	if (state_data->BCU_S2_OVERCURR_ERROR) {
+	if (state_data->ACU_S2_OVERCURR_ERROR) {
 		LOGOMATIC("OVERCURR\n");
 		return true;
 
-	} else if (state_data->BCU_S2_OVERTEMP_ERROR) {
+	} else if (state_data->ACU_S2_OVERTEMP_ERROR) {
 		LOGOMATIC("OVERTEMP\n");
 		return true;
 
-	} else if (state_data->BCU_S2_OVERVOLT_ERROR) {
+	} else if (state_data->ACU_S2_OVERVOLT_ERROR) {
 		LOGOMATIC("OVERVOLT\n");
 		return true;
 
-	} else if (state_data->BCU_S2_UNDERCURR_ERROR) {
+	} else if (state_data->ACU_S2_UNDERCURR_ERROR) {
 		LOGOMATIC("UNDERCURR\n");
 		return true;
 
-	} else if (state_data->BCU_S2_UNDERVOLT_ERROR) {
+	} else if (state_data->ACU_S2_UNDERVOLT_ERROR) {
 		LOGOMATIC("UNDERVOLT\n");
 		return true;
 
-	} else if (!state_data->BCU_S2_IR_MINUS && state_data->BCU_S2_IR_PLUS) {
+	} else if (!state_data->ACU_S2_IR_MINUS && state_data->ACU_S2_IR_PLUS) {
 		LOGOMATIC("IMPOSSIBLE IR STATE\n");
 		return true;
 
@@ -73,10 +73,10 @@ void VCP_Oneliner(const CCU_StateData *state_data)
 	length = snprintf(buffer, sizeof(buffer), "[%lu]", MillisecondsSinceBoot());
 	VCP_Send(buffer, length);
 
-	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->BCU_S2_IR_MINUS ? "Closed" : "Open");
+	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->ACU_S2_IR_MINUS ? "Closed" : "Open");
 	VCP_Send(buffer, length);
 
-	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->BCU_S2_IR_PLUS ? "Closed" : "Open");
+	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->ACU_S2_IR_PLUS ? "Closed" : "Open");
 	VCP_Send(buffer, length);
 
 	length = snprintf(buffer, sizeof(buffer), " | %huV", state_data->Accumulator_Voltage / 100);
