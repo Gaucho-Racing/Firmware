@@ -440,18 +440,26 @@ routing:
       Data:
         ECU:
           - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
     BrakeTemp FR:
       Data:
         ECU:
           - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
     BrakeTemp RL:
       Data:
         ECU:
           - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
     BrakeTemp RR:
       Data:
         ECU:
           - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
 
 byte order: little_endian
 
@@ -8715,6 +8723,25 @@ Message ID:
       comment: Tire temperature frame 23 pixel 31
       units: C
       map equation: "x*340*2^-16 - 40"
+  Brake Temp:
+    MSG ID: 0x04F
+    MSG LENGTH: 16
+    temp:
+      bit_start: 0
+      data type: u16
+      comment: Brake rotor temperature
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Wheel Speed:
+    MSG ID: 0x050
+    MSG LENGTH: 16
+    speed:
+      bit_start: 0
+      data type: u16
+      comment: Wheel speed rpm
+      units: RPM
+      map equation: "x/8"
+
 Custom CAN ID:
   DTI Control 1:
     CAN ID: 0x116
