@@ -922,22 +922,22 @@ __STATIC_INLINE uint32_t LL_I3C_DMA_GetRegAddr(const I3C_TypeDef *I3Cx, uint32_t
 
 	if (Direction == LL_I3C_DMA_REG_DATA_TRANSMIT_BYTE) {
 		/* return address of TDR register */
-		data_reg_addr = (uint32_t) & (I3Cx->TDR);
+		data_reg_addr = (uint32_t)&(I3Cx->TDR);
 	} else if (Direction == LL_I3C_DMA_REG_DATA_RECEIVE_BYTE) {
 		/* return address of RDR register */
-		data_reg_addr = (uint32_t) & (I3Cx->RDR);
+		data_reg_addr = (uint32_t)&(I3Cx->RDR);
 	} else if (Direction == LL_I3C_DMA_REG_DATA_TRANSMIT_WORD) {
 		/* return address of TDWR register */
-		data_reg_addr = (uint32_t) & (I3Cx->TDWR);
+		data_reg_addr = (uint32_t)&(I3Cx->TDWR);
 	} else if (Direction == LL_I3C_DMA_REG_DATA_RECEIVE_WORD) {
 		/* return address of RDWR register */
-		data_reg_addr = (uint32_t) & (I3Cx->RDWR);
+		data_reg_addr = (uint32_t)&(I3Cx->RDWR);
 	} else if (Direction == LL_I3C_DMA_REG_STATUS) {
 		/* return address of SR register */
-		data_reg_addr = (uint32_t) & (I3Cx->SR);
+		data_reg_addr = (uint32_t)&(I3Cx->SR);
 	} else {
 		/* return address of CR register */
-		data_reg_addr = (uint32_t) & (I3Cx->CR);
+		data_reg_addr = (uint32_t)&(I3Cx->CR);
 	}
 
 	return data_reg_addr;
@@ -3103,7 +3103,7 @@ __STATIC_INLINE uint32_t LL_I3C_IsActiveFlag_CR(const I3C_TypeDef *I3Cx)
  * @brief  Indicates the status of Controller-role Request Update flag (target mode).
  *         RESET: Clear default value.
  *         SET: I3C device have gained Controller-role of the I3C Bus.
- * @rmtoll EVR          BCUPDF        LL_I3C_IsActiveFlag_CRUPD
+ * @rmtoll EVR          ACUPDF        LL_I3C_IsActiveFlag_CRUPD
  * @param  I3Cx I3C Instance.
  * @retval State of bit (1 or 0).
  */

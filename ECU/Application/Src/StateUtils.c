@@ -40,7 +40,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	bool problem = false;
 	problem |= stateData->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
 	problem |= stateData->ts_voltage > CRITICAL_TS_VOLTAGE;
-	// problem |= !stateData->bcu_software_latch; // No
+	// problem |= !stateData->acu_software_latch; // No
 	problem |= stateData->ir_plus && !stateData->ir_minus;
 	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE);  // ensured pre charge is complete via ir+ latch
 	problem |= !stateData->ir_minus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE); // ensures precharge has begun with ir- latch
@@ -48,8 +48,8 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= bmsFailure(stateData);
 	problem |= bspdFailure(stateData);
 	if (problem) {
-		LOGOMATIC("Critical Error Detected in State %d | %f C | %f V | BCU SW %d | IR+ %d | IR- %d | IMD %d | BMS %d | BSPD %d\n", stateData->ecu_state, stateData->max_cell_temp_c,
-			  stateData->ts_voltage, stateData->bcu_software_latch, stateData->ir_plus, stateData->ir_minus, imdFailure(stateData), bmsFailure(stateData), bspdFailure(stateData));
+		LOGOMATIC("Critical Error Detected in State %d | %f C | %f V | ACU SW %d | IR+ %d | IR- %d | IMD %d | BMS %d | BSPD %d\n", stateData->ecu_state, stateData->max_cell_temp_c,
+			  stateData->ts_voltage, stateData->acu_software_latch, stateData->ir_plus, stateData->ir_minus, imdFailure(stateData), bmsFailure(stateData), bspdFailure(stateData));
 		// LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	}
 	return problem;

@@ -25,7 +25,7 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .bcu_software_latch = 1};
+ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -95,9 +95,9 @@ static uint32_t time_start_precharge; // for potential comms errors while precha
 
 void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 {
-	/*send message to BCU to start precharging*/
-	GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 1}; // Go TS Active/Precharge
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
+	/*send message to ACU to start precharging*/
+	GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 1}; // Go TS Active/Precharge
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
 	time_start_precharge = millis_since_boot;
@@ -258,9 +258,9 @@ static uint32_t discharge_start_millis;
 void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
-	LOGOMATIC("ECU: BCU discharge Tractive System\n");
-	GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 0};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
+	LOGOMATIC("ECU: ACU discharge Tractive System\n");
+	GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 	discharge_start_millis = millis_since_boot;
 }
 
@@ -287,8 +287,8 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	// Discharge the car @ 100 Hz
 	static uint32_t last_discharge_request_millis;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_discharge_request_millis)) {
-		GRCAN_BCU_PRECHARGE_MSG message = {.set_ts_active = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_BCU, GRCAN_BCU_PRECHARGE, &message, sizeof(message));
+		GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
 	}
 } // init

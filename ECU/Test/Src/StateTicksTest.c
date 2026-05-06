@@ -73,7 +73,7 @@ int main(void)
 		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 1.5, .imd_sense = 1.5, .bspd_sense = 1.5};
 		LOGOMATIC("Check GLV ON at boot\n");
 		stateLumpTest.ecu_state = GR_GLV_ON;
-		stateLumpTest.bcu_software_latch = 1;
+		stateLumpTest.acu_software_latch = 1;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 
 		// ##########################

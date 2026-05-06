@@ -8,7 +8,7 @@ typedef uint8_t CCU_STATE;
 
 enum CCU_STATE { // State Machine
 	/*
-	 * The CCU is listening for BCU_STATUS_2 and 3 msgs, waiting to be told to start charging
+	 * The CCU is listening for ACU_STATUS_2 and 3 msgs, waiting to be told to start charging
 	 */
 	CCU_STATE_IDLE = 0, // Transition: Told to charge AND checks passed
 	/*
