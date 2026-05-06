@@ -4,25 +4,25 @@ NS_ :
 
 BS_:
 
-BU_: BCU DTI_Inverter Dash_Panel Debugger ECU Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter TCM ALL
+BU_: ACU DTI_Inverter Dash_Panel Debugger ECU Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 GR_Inverter TCM ALL
 
-BO_ 2150629377 BCU_Debug_2_0_to_Debugger: 8 BCU
+BO_ 2150629377 ACU_Debug_2_0_to_Debugger: 8 ACU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2150629889 BCU_Ping_to_Debugger: 4 BCU
+BO_ 2150629889 ACU_Ping_to_Debugger: 4 ACU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2150629890 BCU_Ping_to_ECU: 4 BCU
+BO_ 2150629890 ACU_Ping_to_ECU: 4 ACU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150631170 BCU_BCU_Status_1_to_ECU: 8 BCU
+BO_ 2150631170 ACU_ACU_Status_1_to_ECU: 8 ACU
  SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps" ECU
  SG_ Accumulator_SOC : 48|8@1+ (0.392157,0) [0|100] "%" ECU
  SG_ GLV_SOC : 56|8@1+ (0.392157,0) [0|100] "%" ECU
 
-BO_ 2150631426 BCU_BCU_Status_2_to_ECU: 7 BCU
+BO_ 2150631426 ACU_ACU_Status_2_to_ECU: 7 ACU
  SG_ _20v_Voltage : 0|8@1+ (1,0) [0|0] "" ECU
  SG_ _12v_Voltage : 8|8@1+ (1,0) [0|0] "" ECU
  SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] "" ECU
@@ -31,7 +31,7 @@ BO_ 2150631426 BCU_BCU_Status_2_to_ECU: 7 BCU
  SG_ status_flags : 40|1@1+ (1,0) [0|0] "" ECU
  SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] "" ECU
 
-BO_ 2150631682 BCU_BCU_Status_3_to_ECU: 8 BCU
+BO_ 2150631682 ACU_ACU_Status_3_to_ECU: 8 ACU
  SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ HV_Output_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts" ECU
  SG_ HV_Input_Current : 32|16@1+ (0.001,0) [0|65.535] "Amps" ECU
@@ -55,11 +55,11 @@ BO_ 2148532226 Debugger_Debug_2_0_to_ECU: 8 Debugger
 BO_ 2148532738 Debugger_Ping_to_ECU: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2148532227 Debugger_Debug_2_0_to_BCU: 8 Debugger
- SG_ Debug : 0|64@1- (1,0) [0|0] "" BCU
+BO_ 2148532227 Debugger_Debug_2_0_to_ACU: 8 Debugger
+ SG_ Debug : 0|64@1- (1,0) [0|0] "" ACU
 
-BO_ 2148532739 Debugger_Ping_to_BCU: 4 Debugger
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BCU
+BO_ 2148532739 Debugger_Ping_to_ACU: 4 Debugger
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ACU
 
 BO_ 2148532228 Debugger_Debug_2_0_to_TCM: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" TCM
@@ -185,19 +185,19 @@ BO_ 2149580801 ECU_Debug_2_0_to_Debugger: 8 ECU
 BO_ 2149581313 ECU_Ping_to_Debugger: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2149583363 ECU_BCU_Precharge_to_BCU: 1 ECU
- SG_ Set_TS_Active : 0|1@1+ (1,0) [0|0] "Bool" BCU
+BO_ 2149583363 ECU_ACU_Precharge_to_ACU: 1 ECU
+ SG_ Set_TS_Active : 0|1@1+ (1,0) [0|0] "Bool" ACU
 
-BO_ 2149583619 ECU_BCU_Config_Charge_Parameters_to_BCU: 4 ECU
- SG_ Charge_Voltage : 0|16@1+ (0.1,0) [0|6553.5] "Volts" BCU
- SG_ Charge_Current : 16|16@1+ (0.1,0) [0|6553.5] "Amps" BCU
+BO_ 2149583619 ECU_ACU_Config_Charge_Parameters_to_ACU: 4 ECU
+ SG_ Charge_Voltage : 0|16@1+ (0.1,0) [0|6553.5] "Volts" ACU
+ SG_ Charge_Current : 16|16@1+ (0.1,0) [0|6553.5] "Amps" ACU
 
-BO_ 2149583875 ECU_BCU_Config_Operational_Parameters_to_BCU: 2 ECU
- SG_ Minimium_Cell_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" BCU
- SG_ Max_Cell_Temperature : 8|8@1+ (0.25,0) [0|63.75] "Celsius" BCU
+BO_ 2149583875 ECU_ACU_Config_Operational_Parameters_to_ACU: 2 ECU
+ SG_ Minimium_Cell_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" ACU
+ SG_ Max_Cell_Temperature : 8|8@1+ (0.25,0) [0|63.75] "Celsius" ACU
 
-BO_ 2149581315 ECU_Ping_to_BCU: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BCU
+BO_ 2149581315 ECU_Ping_to_ACU: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ACU
 
 BO_ 2149586440 ECU_Inverter_Config_to_GR_Inverter: 7 ECU
  SG_ Max_AC_Current : 0|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter
@@ -345,7 +345,7 @@ CM_ SG_ 2150631170 Accumulator_SOC "Accumulator state of charge (Based on lowest
 CM_ SG_ 2150631170 GLV_SOC "GLV state of charge";
 CM_ SG_ 2150631426 _20v_Voltage "20v GLV voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
 CM_ SG_ 2150631426 _12v_Voltage "12v supply voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2150631426 SDC_Voltage "Voltage before BCU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
+CM_ SG_ 2150631426 SDC_Voltage "Voltage before ACU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
 CM_ SG_ 2150631426 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
 CM_ SG_ 2150631426 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
 CM_ SG_ 2150631426 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Charge) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
@@ -443,7 +443,7 @@ CM_ SG_ 2149581327 Timestamp "Time in millis";
 CM_ SG_ 2149587717 led_latch_flags "[Byte 0 / Bits 0-7] 0: BSPD led 1: IMD led 2: BMS led 3: BSPD latch 4: IMD latch 5: BMS latch 6-7: Reserved";
 CM_ SG_ 2149581317 Timestamp "Time in millis";
 CM_ SG_ 2149581568 ECU_State "[Byte 0 / Bits 0-7] ECU state machine data 0: GLV Off State 1: GLV On State 2: Precharge Engaged State 3: Precharge Complete State 4: Drive Active State 5: TS Discharge State 6-7: Reserved See diagram in StateMachine.h";
-CM_ SG_ 2149581568 Ping_Group_1 "[Byte 1 / Bits 8-15] ECU ping targets 8: BCU (1: OK, 0: Timeout) 9: GR Inverter (1: OK, 0: Timeout) 10: Fan Controller 1 (1: OK, 0: Timeout) 11: Fan Controller 2 (1: OK, 0: Timeout) 12: Fan Controller 3 (1: OK, 0: Timeout) 13: Dash Panel (1: OK, 0: Timeout) 14: TCM (1: OK, 0: Timeout) 15: DGPS (1: OK, 0: Timeout)";
+CM_ SG_ 2149581568 Ping_Group_1 "[Byte 1 / Bits 8-15] ECU ping targets 8: ACU (1: OK, 0: Timeout) 9: GR Inverter (1: OK, 0: Timeout) 10: Fan Controller 1 (1: OK, 0: Timeout) 11: Fan Controller 2 (1: OK, 0: Timeout) 12: Fan Controller 3 (1: OK, 0: Timeout) 13: Dash Panel (1: OK, 0: Timeout) 14: TCM (1: OK, 0: Timeout) 15: DGPS (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Ping_Group_2 "[Byte 2 / Bits 16-23] ECU ping targets 16: Suspension FL (1: OK, 0: Timeout) 17: Suspension FR (1: OK, 0: Timeout) 18: Suspension RL (1: OK, 0: Timeout) 19: Suspension RR (1: OK, 0: Timeout) 20: InboardFloor FL (1: OK, 0: Timeout) 21: InboardFloor FR (1: OK, 0: Timeout) 22: InboardFloor RL (1: OK, 0: Timeout) 23: InboardFloor RR (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Ping_Group_3 "[Byte 3 / Bits 24-31] ECU ping targets 24: TireTemp FL (1: OK, 0: Timeout) 25: TireTemp FR (1: OK, 0: Timeout) 26: TireTemp RL (1: OK, 0: Timeout) 27: TireTemp RR (1: OK, 0: Timeout) 28: BrakeTemp FL (1: OK, 0: Timeout) 29: BrakeTemp FR (1: OK, 0: Timeout) 30: BrakeTemp RL (1: OK, 0: Timeout) 31: BrakeTemp RR (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Power_Level "Controls the AC current limits to each of the inverters Discrete Mapping, actual values TBD (16 possible values)";

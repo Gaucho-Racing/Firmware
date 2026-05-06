@@ -11,7 +11,7 @@ typedef enum {
 	GRCAN_Debugger = 0x01,
 	GRCAN_CCU = 0x02,
 	GRCAN_ECU = 0x02,
-	GRCAN_BCU = 0x03,
+	GRCAN_ACU = 0x03,
 	GRCAN_TCM = 0x04,
 	GRCAN_Dash_Panel = 0x05,
 	GRCAN_GR_Inverter = 0x08,

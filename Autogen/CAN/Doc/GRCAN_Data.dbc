@@ -4,18 +4,18 @@ NS_ :
 
 BS_:
 
-BU_: BCU BrakeTemp_FL BrakeTemp_FR BrakeTemp_RL BrakeTemp_RR DGPS Debugger ECU InboardFloor_FL InboardFloor_FR InboardFloor_RL InboardFloor_RR Suspension_FL Suspension_FR Suspension_RL Suspension_RR TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
+BU_: ACU BrakeTemp_FL BrakeTemp_FR BrakeTemp_RL BrakeTemp_RR DGPS Debugger ECU InboardFloor_FL InboardFloor_FR InboardFloor_RL InboardFloor_RR Suspension_FL Suspension_FR Suspension_RL Suspension_RR TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR
 
-BO_ 2150629633 BCU_Debug_FD_to_Debugger: 64 BCU
+BO_ 2150629633 ACU_Debug_FD_to_Debugger: 64 ACU
  SG_ Debug : 0|64@1- (1,0) [0|0] "" Debugger
 
-BO_ 2150629889 BCU_Ping_to_Debugger: 4 BCU
+BO_ 2150629889 ACU_Ping_to_Debugger: 4 ACU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger
 
-BO_ 2150629890 BCU_Ping_to_ECU: 4 BCU
+BO_ 2150629890 ACU_Ping_to_ECU: 4 ACU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2150632706 BCU_BCU_Cell_Data_1_to_ECU: 64 BCU
+BO_ 2150632706 ACU_ACU_Cell_Data_1_to_ECU: 64 ACU
  SG_ Cell_0_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_0_Temp : 8|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
  SG_ Cell_1_Voltage : 16|8@1+ (0.01,2) [2|4.55] "Volts" ECU
@@ -81,7 +81,7 @@ BO_ 2150632706 BCU_BCU_Cell_Data_1_to_ECU: 64 BCU
  SG_ Cell_31_Voltage : 496|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_31_Temp : 504|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
 
-BO_ 2150632962 BCU_BCU_Cell_Data_2_to_ECU: 64 BCU
+BO_ 2150632962 ACU_ACU_Cell_Data_2_to_ECU: 64 ACU
  SG_ Cell_32_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_32_Temp : 8|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
  SG_ Cell_33_Voltage : 16|8@1+ (0.01,2) [2|4.55] "Volts" ECU
@@ -147,7 +147,7 @@ BO_ 2150632962 BCU_BCU_Cell_Data_2_to_ECU: 64 BCU
  SG_ Cell_63_Voltage : 496|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_63_Temp : 504|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
 
-BO_ 2150633218 BCU_BCU_Cell_Data_3_to_ECU: 64 BCU
+BO_ 2150633218 ACU_ACU_Cell_Data_3_to_ECU: 64 ACU
  SG_ Cell_64_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_64_Temp : 8|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
  SG_ Cell_65_Voltage : 16|8@1+ (0.01,2) [2|4.55] "Volts" ECU
@@ -213,7 +213,7 @@ BO_ 2150633218 BCU_BCU_Cell_Data_3_to_ECU: 64 BCU
  SG_ Cell_95_Voltage : 496|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_95_Temp : 504|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
 
-BO_ 2150633474 BCU_BCU_Cell_Data_4_to_ECU: 64 BCU
+BO_ 2150633474 ACU_ACU_Cell_Data_4_to_ECU: 64 ACU
  SG_ Cell_96_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_96_Temp : 8|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
  SG_ Cell_97_Voltage : 16|8@1+ (0.01,2) [2|4.55] "Volts" ECU
@@ -279,7 +279,7 @@ BO_ 2150633474 BCU_BCU_Cell_Data_4_to_ECU: 64 BCU
  SG_ Cell_127_Voltage : 496|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_127_Temp : 504|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
 
-BO_ 2150633730 BCU_BCU_Cell_Data_5_to_ECU: 64 BCU
+BO_ 2150633730 ACU_ACU_Cell_Data_5_to_ECU: 64 ACU
  SG_ Cell_128_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts" ECU
  SG_ Cell_128_Temp : 8|8@1+ (0.25,0) [0|63.75] "Celsius" ECU
  SG_ Cell_129_Voltage : 16|8@1+ (0.01,2) [2|4.55] "Volts" ECU
@@ -351,11 +351,11 @@ BO_ 2148532482 Debugger_Debug_FD_to_ECU: 64 Debugger
 BO_ 2148532738 Debugger_Ping_to_ECU: 4 Debugger
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ECU
 
-BO_ 2148532483 Debugger_Debug_FD_to_BCU: 64 Debugger
- SG_ Debug : 0|64@1- (1,0) [0|0] "" BCU
+BO_ 2148532483 Debugger_Debug_FD_to_ACU: 64 Debugger
+ SG_ Debug : 0|64@1- (1,0) [0|0] "" ACU
 
-BO_ 2148532739 Debugger_Ping_to_BCU: 4 Debugger
- SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" BCU
+BO_ 2148532739 Debugger_Ping_to_ACU: 4 Debugger
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" ACU
 
 BO_ 2148532484 Debugger_Debug_FD_to_TCM: 64 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] "" TCM
@@ -380,7 +380,7 @@ BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 16 ECU
  SG_ AUX_Signal : 112|16@1+ (0.0015259,0) [0|100] "%" TCM
 
 BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
- SG_ BCU_RTT : 0|8@1+ (1,0) [0|0] "ms" TCM
+ SG_ ACU_RTT : 0|8@1+ (1,0) [0|0] "ms" TCM
  SG_ GR_Inverter_RTT : 8|8@1+ (1,0) [0|0] "ms" TCM
  SG_ Fan_Controller_1_RTT : 16|8@1+ (1,0) [0|0] "ms" TCM
  SG_ Fan_Controller_2_RTT : 24|8@1+ (1,0) [0|0] "ms" TCM
@@ -4166,7 +4166,7 @@ CM_ SG_ 2149592580 Brakeline_F_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Brakeline_R_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Steering_Angle_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 AUX_Signal "4-20 mA signal";
-CM_ SG_ 2149592324 BCU_RTT "Round trip time";
+CM_ SG_ 2149592324 ACU_RTT "Round trip time";
 CM_ SG_ 2149592324 GR_Inverter_RTT "Round trip time";
 CM_ SG_ 2149592324 Fan_Controller_1_RTT "Round trip time";
 CM_ SG_ 2149592324 Fan_Controller_2_RTT "Round trip time";
