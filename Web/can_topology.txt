@@ -8,7 +8,7 @@
 Primary:
   ECU
   TCM
-  BCU
+  ACU
   DGPS
   # Both inverters share the Primary bus. Whichever isn't physically connected
   # has its messages go nowhere — no firmware switch needed.
@@ -23,7 +23,7 @@ Primary:
 Data:
   ECU
   TCM
-  BCU
+  ACU
   DGPS
   SAMM_Mag_1
   SAMM_Mag_2
@@ -36,7 +36,7 @@ Data:
 
 Charger:
   CCU
-  BCU
+  ACU
   Charger
   IMD
   Energy Meter

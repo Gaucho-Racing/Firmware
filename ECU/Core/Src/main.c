@@ -419,8 +419,8 @@ int main(void)
 
 			// TODO: implement error handling
 			if (nextPing != 0) {
-				if (getRTT(GRCAN_BCU) == PINGTIMEOUT_VALUE) {
-					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
+				if (getRTT(GRCAN_ACU) == PINGTIMEOUT_VALUE) {
+					LOGOMATIC("ERROR: ACU is not responding to pings!\n");
 					ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "ECU-P-ITR", 8);
 				}
 				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
