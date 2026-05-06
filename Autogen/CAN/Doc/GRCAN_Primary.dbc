@@ -321,13 +321,13 @@ BO_ 2155877122 GR_Inverter_Inverter_Status_1_to_ECU: 6 GR_Inverter
  SG_ Motor_RPM : 32|16@1+ (1,-32768) [-32768|32767] "RPM" ECU
 
 BO_ 2155877378 GR_Inverter_Inverter_Status_2_to_ECU: 6 GR_Inverter
- SG_ U_MOSFET_temperature : 0|8@1+ (1,-40) [-40|215] "Celsius" ECU
- SG_ V_MOSFET_temperature : 16|8@1+ (1,-40) [-40|215] "Celsius" ECU
- SG_ W_MOSFET_temperature : 32|8@1+ (1,-40) [-40|215] "Celsius" ECU
+ SG_ U_MOSFET_temperature : 0|16@1+ (1,-40) [-40|215] "Celsius" ECU
+ SG_ V_MOSFET_temperature : 16|16@1+ (1,-40) [-40|215] "Celsius" ECU
+ SG_ W_MOSFET_temperature : 32|16@1+ (1,-40) [-40|215] "Celsius" ECU
 
 BO_ 2155877634 GR_Inverter_Inverter_Status_3_to_ECU: 3 GR_Inverter
  SG_ Motor_temperature : 0|8@1+ (1,-40) [-40|215] "Celsius" ECU
- SG_ fault_bits : 16|8@1+ (1,0) [0|0] "" ECU
+ SG_ fault_bits : 8|8@1+ (1,0) [0|0] "" ECU
 
 BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4.29497e+09] "ms" Debugger

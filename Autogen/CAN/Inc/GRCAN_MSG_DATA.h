@@ -247,11 +247,11 @@ typedef struct {
 /** Inverter Status 2 */
 typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
-	uint8_t u_mosfet_temperature;
+	uint16_t u_mosfet_temperature;
 	/** Celsius + 40, uint8_t (Byte 2) */
-	uint8_t v_mosfet_temperature;
+	uint16_t v_mosfet_temperature;
 	/** Celsius + 40, uint8_t (Byte 4) */
-	uint8_t w_mosfet_temperature;
+	uint16_t w_mosfet_temperature;
 } GRCAN_INVERTER_STATUS_2_MSG;
 
 /** Inverter Status 3 */
@@ -259,7 +259,7 @@ typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
 	uint8_t motor_temperature;
 	/** TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message
-	 * error or timeout (Byte 2) */
+	 * error or timeout (Byte 1) */
 	uint8_t fault_bits;
 } GRCAN_INVERTER_STATUS_3_MSG;
 
@@ -2166,5 +2166,17 @@ typedef struct {
 	/** Tire temperature frame 23 pixel 31 (Byte 62) */
 	uint16_t pixel31;
 } GRCAN_TIRE_TEMP_FRAME_23_MSG;
+
+/** Brake Temp */
+typedef struct {
+	/** Brake rotor temperature (Byte 0) */
+	uint16_t temp;
+} GRCAN_BRAKE_TEMP_MSG;
+
+/** Wheel Speed */
+typedef struct {
+	/** Wheel speed rpm (Byte 0) */
+	uint16_t speed;
+} GRCAN_WHEEL_SPEED_MSG;
 
 #endif
