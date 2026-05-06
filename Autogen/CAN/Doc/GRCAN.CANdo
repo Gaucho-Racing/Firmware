@@ -326,18 +326,116 @@ routing:
           - msg: Ping
         TCM:
           - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
     TireTemp FR:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
     TireTemp RL:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
     TireTemp RR:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
     BrakeTemp FL:
       Data:
         ECU:
@@ -3378,7 +3476,7 @@ Message ID:
       scaled max: 215
       map equation: "x-40"
     fault_bits:
-      bit_start: 16
+      bit_start: 8
       comment: TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or timeout
       data type: u8
   Inverter Config:
