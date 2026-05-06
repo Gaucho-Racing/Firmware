@@ -114,7 +114,7 @@
  * @{
  */
 /*  Health test control register information to use in CCM algorithm */
-#define RNG_HTCFG_1 0x17590ABCU /*!< Magic number */
+#define RNG_HTCFG_1 0x17590AACU /*!< Magic number */
 #if defined(RNG_VER_3_1) || defined(RNG_VER_3_0)
 #define RNG_HTCFG 0x000CAA74U /*!< Recommended value for NIST compliance, refer to application note AN4230 */
 #else			      /* RNG_VER_3_2 */

@@ -8,7 +8,7 @@
 
 // add new pingable devices here, arrays are updated automagically
 #define PING_LIST(OP)                                                                                                                                                                                  \
-	OP(GRCAN_BCU, 0)                                                                                                                                                                               \
+	OP(GRCAN_ACU, 0)                                                                                                                                                                               \
 	OP(GRCAN_GR_Inverter, 1)                                                                                                                                                                       \
 	OP(GRCAN_Fan_Controller_1, 2)                                                                                                                                                                  \
 	OP(GRCAN_Fan_Controller_2, 3)                                                                                                                                                                  \
