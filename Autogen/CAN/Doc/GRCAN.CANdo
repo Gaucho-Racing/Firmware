@@ -3345,7 +3345,7 @@ Message ID:
     U MOSFET temperature:
       bit_start: 0
       comment: Celsius + 40, uint8_t
-      data type: u8
+      data type: u16
       units: Celsius
       scaled min: -40
       scaled max: 215
@@ -3353,7 +3353,7 @@ Message ID:
     V MOSFET temperature:
       bit_start: 16
       comment: Celsius + 40, uint8_t
-      data type: u8
+      data type: u16
       units: Celsius
       scaled min: -40
       scaled max: 215
@@ -3361,7 +3361,7 @@ Message ID:
     W MOSFET temperature:
       bit_start: 32
       comment: Celsius + 40, uint8_t
-      data type: u8
+      data type: u16
       units: Celsius
       scaled min: -40
       scaled max: 215
