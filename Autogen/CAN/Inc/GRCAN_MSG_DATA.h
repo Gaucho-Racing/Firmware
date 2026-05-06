@@ -23,7 +23,7 @@ typedef struct {
 See diagram in StateMachine.h (Byte 0) */
 	uint8_t ecu_state;
 	/** [Byte 1 / Bits 8-15] ECU ping targets
-8: BCU (1: OK, 0: Timeout)
+8: ACU (1: OK, 0: Timeout)
 9: GR Inverter (1: OK, 0: Timeout)
 10: Fan Controller 1 (1: OK, 0: Timeout)
 11: Fan Controller 2 (1: OK, 0: Timeout)
@@ -90,7 +90,7 @@ typedef struct {
 	uint8_t relay_states;
 } GRCAN_ECU_STATUS_3_MSG;
 
-/** BCU Status 1 */
+/** ACU Status 1 */
 typedef struct {
 	/** All cell voltages added up (Byte 0) */
 	uint16_t accumulator_voltage;
@@ -102,9 +102,9 @@ typedef struct {
 	uint8_t accumulator_soc;
 	/** GLV state of charge (Byte 7) */
 	uint8_t glv_soc;
-} GRCAN_BCU_STATUS_1_MSG;
+} GRCAN_ACU_STATUS_1_MSG;
 
-/** BCU Status 2 */
+/** ACU Status 2 */
 typedef struct {
 	/** 20v GLV voltage
 data type: u8
@@ -120,7 +120,7 @@ scaled min: 0
 scaled max: 25.5
 map equation: "0.1x" (Byte 1) */
 	uint8_t _12v_voltage;
-	/** Voltage before BCU Latch
+	/** Voltage before ACU Latch
 data type: u8
 units: Volts
 scaled min: 0
@@ -158,9 +158,9 @@ map equation: "0.25x" (Byte 4) */
 52: Software Latch (0:Open, 1:Closed)
 48-51: Reserved (Byte 6) */
 	uint8_t precharge_latch_flags;
-} GRCAN_BCU_STATUS_2_MSG;
+} GRCAN_ACU_STATUS_2_MSG;
 
-/** BCU Status 3 */
+/** ACU Status 3 */
 typedef struct {
 	/** 600v input voltage (Byte 0) */
 	uint16_t hv_input_voltage;
@@ -170,69 +170,69 @@ typedef struct {
 	uint16_t hv_input_current;
 	/** 20v output current (Byte 6) */
 	uint16_t hv_output_current;
-} GRCAN_BCU_STATUS_3_MSG;
+} GRCAN_ACU_STATUS_3_MSG;
 
-/** BCU Precharge */
+/** ACU Precharge */
 typedef struct {
 	/** 0: shutdown, 1: go TS Active/Precharge (Byte 0) */
 	uint8_t set_ts_active;
-} GRCAN_BCU_PRECHARGE_MSG;
+} GRCAN_ACU_PRECHARGE_MSG;
 
-/** BCU Config Charge Parameters */
+/** ACU Config Charge Parameters */
 typedef struct {
 	/** Sets the Target Charging voltage (Byte 0) */
 	uint16_t charge_voltage;
 	/** Sets the Target Charging Current (Byte 2) */
 	uint16_t charge_current;
-} GRCAN_BCU_CONFIG_CHARGE_PARAMETERS_MSG;
+} GRCAN_ACU_CONFIG_CHARGE_PARAMETERS_MSG;
 
-/** BCU Config Operational Parameters */
+/** ACU Config Operational Parameters */
 typedef struct {
 	/** Sets the threshold for Minimum Cell Voltage before Shutdown (Byte 0) */
 	uint8_t minimium_cell_voltage;
 	/** Sets the threshold for Max Cell Temperature before Shutdown (Byte 1) */
 	uint8_t max_cell_temperature;
-} GRCAN_BCU_CONFIG_OPERATIONAL_PARAMETERS_MSG;
+} GRCAN_ACU_CONFIG_OPERATIONAL_PARAMETERS_MSG;
 
-/** BCU Cell Data 1 */
+/** ACU Cell Data 1 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GRCAN_BCU_CELL_DATA_1_MSG;
+} GRCAN_ACU_CELL_DATA_1_MSG;
 
-/** BCU Cell Data 2 */
+/** ACU Cell Data 2 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GRCAN_BCU_CELL_DATA_2_MSG;
+} GRCAN_ACU_CELL_DATA_2_MSG;
 
-/** BCU Cell Data 3 */
+/** ACU Cell Data 3 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GRCAN_BCU_CELL_DATA_3_MSG;
+} GRCAN_ACU_CELL_DATA_3_MSG;
 
-/** BCU Cell Data 4 */
+/** ACU Cell Data 4 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GRCAN_BCU_CELL_DATA_4_MSG;
+} GRCAN_ACU_CELL_DATA_4_MSG;
 
-/** BCU Cell Data 5 */
+/** ACU Cell Data 5 */
 typedef struct {
 	struct {
 		uint8_t voltage;
 		uint8_t temperature;
 	} cells[32];
-} GRCAN_BCU_CELL_DATA_5_MSG;
+} GRCAN_ACU_CELL_DATA_5_MSG;
 
 /** Inverter Status 1 */
 typedef struct {
@@ -247,11 +247,11 @@ typedef struct {
 /** Inverter Status 2 */
 typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
-	uint8_t u_mosfet_temperature;
+	uint16_t u_mosfet_temperature;
 	/** Celsius + 40, uint8_t (Byte 2) */
-	uint8_t v_mosfet_temperature;
+	uint16_t v_mosfet_temperature;
 	/** Celsius + 40, uint8_t (Byte 4) */
-	uint8_t w_mosfet_temperature;
+	uint16_t w_mosfet_temperature;
 } GRCAN_INVERTER_STATUS_2_MSG;
 
 /** Inverter Status 3 */
@@ -259,7 +259,7 @@ typedef struct {
 	/** Celsius + 40, uint8_t (Byte 0) */
 	uint8_t motor_temperature;
 	/** TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message
-	 * error or timeout (Byte 2) */
+	 * error or timeout (Byte 1) */
 	uint8_t fault_bits;
 } GRCAN_INVERTER_STATUS_3_MSG;
 
@@ -486,7 +486,7 @@ typedef struct {
 /** ECU Pinging RTT */
 typedef struct {
 	/** Round trip time (Byte 0) */
-	uint8_t bcu_rtt;
+	uint8_t acu_rtt;
 	/** Round trip time (Byte 1) */
 	uint8_t gr_inverter_rtt;
 	/** Round trip time (Byte 2) */
@@ -2166,5 +2166,17 @@ typedef struct {
 	/** Tire temperature frame 23 pixel 31 (Byte 62) */
 	uint16_t pixel31;
 } GRCAN_TIRE_TEMP_FRAME_23_MSG;
+
+/** Brake Temp */
+typedef struct {
+	/** Brake rotor temperature (Byte 0) */
+	uint16_t temp;
+} GRCAN_BRAKE_TEMP_MSG;
+
+/** Wheel Speed */
+typedef struct {
+	/** Wheel speed rpm (Byte 0) */
+	uint16_t speed;
+} GRCAN_WHEEL_SPEED_MSG;
 
 #endif

@@ -22,7 +22,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	bool problem = false;
 	problem |= stateData->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
 	problem |= stateData->ts_voltage > CRITICAL_TS_VOLTAGE;
-	problem |= !stateData->bcu_software_latch; // when latch is OPEN (0), then system shut down
+	problem |= !stateData->acu_software_latch; // when latch is OPEN (0), then system shut down
 	problem |= stateData->ir_plus && !stateData->ir_minus;
 	problem |= !stateData->ir_plus && (stateData->ecu_state == GR_PRECHARGE_COMPLETE || stateData->ecu_state == GR_DRIVE_ACTIVE); // ensured pre charge is complete via ir+ latch
 	problem |= !stateData->ir_minus && (stateData->ecu_state == GR_PRECHARGE_ENGAGED || stateData->ecu_state == GR_PRECHARGE_COMPLETE ||
