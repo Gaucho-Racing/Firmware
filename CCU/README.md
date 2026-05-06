@@ -12,28 +12,28 @@ Two States: CCU_STATE_IDLE and CCU_STATE_CHARGING
 
 `STATE_IDLE()`:
 
-- Calls `BCU_Warnings()`
+- Calls `ACU_Warnings()`
 - Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set `SoftwareLatch` to low (False) and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+- If there are error(s), set `SoftwareLatch` to low (False) and `ACU_PRECHARGE_SET_TS_ACTIVE` to False
   - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 - If no errors and `recv_charge_cmd` set to True
-  - switches state to `CCU_STATE_CHARGING` and set `BCU_PRECHARGE_SET_TS_ACTIVE` to True
+  - switches state to `CCU_STATE_CHARGING` and set `ACU_PRECHARGE_SET_TS_ACTIVE` to True
   - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 
 `STATE_CHARGING()`:
 
-- Calls `BCU_Warnings()`
+- Calls `ACU_Warnings()`
 - Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set `SoftwareLatch` to low (False) and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+- If there are error(s), set `SoftwareLatch` to low (False) and `ACU_PRECHARGE_SET_TS_ACTIVE` to False
   - Sets state to `CCU_STATE_IDLE`
   - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 - If `recv_charge_cmd` set to False
-  - set state to `CCU_STATE_IDLE` and `BCU_PRECHARGE_SET_TS_ACTIVE` to False
+  - set state to `CCU_STATE_IDLE` and `ACU_PRECHARGE_SET_TS_ACTIVE` to False
   - Sends CAN message `GR_CAN_PRECHARGE_MSG`
 
 ## Initializations and Implementations
 
-State_Data: Stores data given from 'GR_CAN_BCU_STATUS_2'
+State_Data: Stores data given from 'GR_CAN_ACU_STATUS_2'
 
 
 CCU State: Initialized to `CCU_STATE_IDLE`
@@ -59,21 +59,21 @@ In main infinite while loop:
   - 'state_data': const ptr of CCU_StateData
 - Behaviour:
 
-| `state` | Current Pin | Action | `BCU_S2_SOFTWARE_LATCH` | Log Output |
+| `state` | Current Pin | Action | `ACU_S2_SOFTWARE_LATCH` | Log Output |
 | --- | --- | --- | --- | --- |
 | `true` | Low | Pin driven HIGH | `true` | `"Software Latch: High"` |
 | `false` | High | Pin driven LOW | `false` | `"Software Latch: Low"` |
 
-`BCU_Warnings()`
+`ACU_Warnings()`
 
-- Purpose: logs if any `GR_CAN_BCU_STATUS_2` warning bits are true
+- Purpose: logs if any `GR_CAN_ACU_STATUS_2` warning bits are true
 - Parameters:
   - state_data: const pointer to `state_data`
 - Behavior: does not affect state data or state transitions
 
 `CriticalError()`
 
-- Purpose: logs if any `GR_CAN_BCU_STATUS_2` error bits are true
+- Purpose: logs if any `GR_CAN_ACU_STATUS_2` error bits are true
 - Parameters:
   - state_data: const pointer to `state_data`
 - Behavior: function returns boolean, does not affect state_data
