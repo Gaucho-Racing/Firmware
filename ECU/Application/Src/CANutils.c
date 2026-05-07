@@ -1,4 +1,5 @@
 #include "CANutils.h"
+#include <stdint.h>
 
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
@@ -83,13 +84,8 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	FDCANTxMessage msg = {0};
 	msg.tx_header = TxHeader;
 
-	memcpy(&(msg.data), data, size);
-
-	uint8_t temp;
-	for (uint16_t i = 0; i < size / 2; ++i) {
-		temp = msg.data[i];
-		msg.data[i] = msg.data[size - i - 1];
-		msg.data[size - i - 1] = temp;
+	for(uint32_t i = 0; i < size; i++) {
+		msg.data[size - i - 1] = ((uint8_t*)data)[i];
 	}
 
 	// can_send(primary_can, &msg);
