@@ -38,11 +38,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 				return;
 			}
 
-			// FIXME: Might need to double check we are doing this v
-			//  cast *data to whatever msg dti control 10 struct there is
-			//  copy data from that struct into the ccu state data struct (eg GETBIT)
-
-			// What the rewrite would look like: STATUS 2
 
 			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
 
@@ -165,7 +160,7 @@ void CAN_Configure(void)
 	can_start(primary_can);
 }
 
-// FIXME: Change to take aand send a bool
+
 void SendPrechargeStatus(bool setPrecharge)
 {
 	FDCANTxMessage msg;
