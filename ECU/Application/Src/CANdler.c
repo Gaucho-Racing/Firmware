@@ -109,7 +109,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
 
 			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later
-			if (state_data->ecu_state == GR_TS_DISCHARGE || state_data->ecu_state == GR_GLV_ON) {
+			if (state_data->ecu_state == GR_GLV_ON) {
 				state_data->ts_active_button_pressed = dash_data->button_flags & 1;
 			} else {
 				state_data->ts_active_button_pressed = (dash_data->button_flags >> 2) & 1;
