@@ -1,3 +1,4 @@
+#include <string.h>
 #include "Pinging.h"
 
 #include "CANutils.h"
@@ -5,6 +6,7 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "StateUtils.h"
+
 
 // add new pingable devices here, arrays are updated automagically
 #define PING_LIST(OP)                                                                                                                                                                                  \
@@ -68,7 +70,7 @@ void pingAll(void)
 		sentTimestamps[i] = timestamp;
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 	}
-	memcpy(tcm_msg.arr, RTTs, NUMBER_OF_PING_DEVICES * 2);
+	memcpy(&tcm_msg, RTTs, NUMBER_OF_PING_DEVICES * sizeof(uint8_t));
 }
 
 uint32_t getRTT(uint8_t ID)
