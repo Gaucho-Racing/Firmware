@@ -15,7 +15,6 @@ typedef enum {
 	CAN_SUS_MSG_FAULT = 0x2F
 } Sus_MSG_ID; // change with updates <- fixme
 
-
 typedef enum {
 	TireTemp_FL = GRCAN_TireTemp_FL,
 	TireTemp_FR = GRCAN_TireTemp_FR,
@@ -23,7 +22,7 @@ typedef enum {
 	TireTemp_RR = GRCAN_TireTemp_RR
 } TireTemp_Node;
 
-typedef enum{
+typedef enum {
 	Sus_FL = GRCAN_Suspension_FL,
 	Sus_FR = GRCAN_Suspension_FR,
 	Sus_RL = GRCAN_Suspension_RL,
