@@ -54,7 +54,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			respondToPing(sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
+			respondToPing(bus_id, sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
 			break;
 
 		case GRCAN_ACU_STATUS_1:

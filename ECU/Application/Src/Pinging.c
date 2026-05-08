@@ -89,15 +89,17 @@ uint32_t getRTT(uint8_t ID)
 	return RTTs[PingsToBeIDed[ID]];
 }
 
-void respondToPing(uint8_t srcID, uint32_t timestamp)
+void respondToPing(uint8_t busID, uint8_t srcID, uint32_t timestamp)
 {
+	if (srcID == GRCAN_Debugger) {
+		// bounce ping instead of logging RTT
+		// TODO: verify if this creates a feedback-loop.
+		ECU_CAN_Send(busID, srcID, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+		return;
+	}
+
 	uint8_t index = PingsToBeIDed[srcID];
 	if (timestamp == sentTimestamps[index]) {
 		receivedTimestamps[index] = MillisecondsSinceBoot();
-	}
-	if (srcID == GRCAN_Debugger) {
-		// TODO: verify if this creates a feedback-loop.
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, srcID, GRCAN_PING, &(GRCAN_PING_MSG){receivedTimestamps[index]}, sizeof(GRCAN_PING_MSG));
-		ECU_CAN_Send(GRCAN_BUS_DATA, srcID, GRCAN_PING, &(GRCAN_PING_MSG){receivedTimestamps[index]}, sizeof(GRCAN_PING_MSG));
 	}
 }
