@@ -12,7 +12,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
-
+#include "StateMachine.h"
 #include "CANdler.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_MSG_ID.h"
@@ -86,6 +86,35 @@ void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 }
 
 void sendMSG(){
+		FDCANTxMessage sendECUStatus1;
+
+		sendECUStatus1.tx_header.Identifier = (GRCAN_ECU << 20) | (GRCAN_ECU_STATUS_1 << 8) | GRCAN_Debugger;
+		sendECUStatus1.tx_header.IdType = FDCAN_EXTENDED_ID;
+		sendECUStatus1.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+		sendECUStatus1.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+		sendECUStatus1.tx_header.DataLength = FDCAN_DLC_BYTES_8;
+		sendECUStatus1.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+		sendECUStatus1.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+		sendECUStatus1.tx_header.MessageMarker = 0;
+
+		GRCAN_ECU_STATUS_1_MSG ecu_status1_msg = {
+			.ecu_state = GR_DRIVE_ACTIVE,
+
+			.status_flags = 0x67,
+
+			.power_level_torque_map = 3,
+			.max_cell_temp = 35,
+			.accumulator_state_of_charge = 90,
+			.glv_state_of_charge = 95,
+			.tractive_system_voltage = 560
+
+		};
+
+		memcpy(sendECUStatus1.data, &ecu_status1_msg, sizeof(ecu_status1_msg));
+
+		can_send(can1, &sendECUStatus1);
+
+
 		FDCANTxMessage sendECUMsg;
 
 		sendECUMsg.tx_header.Identifier = (GRCAN_DGPS << 20) | (GRCAN_GPS_RZ << 8) | GRCAN_Debugger;
@@ -102,8 +131,6 @@ void sendMSG(){
 		memcpy(sendECUMsg.data, &message, sizeof(message));
 
 		can_send(can1, &sendECUMsg);
-
-
 	}
 
 // CANConfig cfg1;
