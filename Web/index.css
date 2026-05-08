@@ -148,8 +148,178 @@ h1 {
 	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.44);
 }
 
-@media (max-width: 980px) {
+/* ==================== Mobile App Bar (≤768px) ==================== */
+
+#mobile-appbar {
+	display: none;
+}
+
+body.is-mobile #mobile-appbar {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	height: 56px;
+	padding: 0 8px;
+	background: rgba(14, 16, 23, 0.97);
+	backdrop-filter: blur(8px);
+	border-bottom: 1px solid #1f2439;
+}
+
+body.is-mobile #appbar-back,
+body.is-mobile #appbar-menu {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	color: #cbd5f5;
+	cursor: pointer;
+	border-radius: 8px;
+	transition: background 0.12s;
+}
+
+body.is-mobile #appbar-back[hidden] {
+	display: none;
+}
+
+body.is-mobile #appbar-back:hover,
+body.is-mobile #appbar-menu:hover {
+	background: rgba(124, 58, 237, 0.14);
+}
+
+body.is-mobile #appbar-back:active,
+body.is-mobile #appbar-menu:active {
+	background: rgba(124, 58, 237, 0.24);
+}
+
+body.is-mobile #appbar-title {
+	flex: 1;
+	margin: 0;
+	font-size: 1.02rem;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	color: #f1f5f9;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* ==================== Mobile Bottom Sheet (≤768px) ==================== */
+
+.sheet-backdrop {
+	display: none;
+}
+
+.sheet {
+	display: none;
+}
+
+body.is-mobile .sheet-backdrop {
+	display: block;
+	position: fixed;
+	inset: 0;
+	z-index: 1499;
+	background: rgba(0, 0, 0, 0.55);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease-out;
+}
+
+body.is-mobile .sheet-backdrop.open {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+body.is-mobile .sheet {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1500;
+	max-height: 80dvh;
+	padding: 4px 18px max(20px, env(safe-area-inset-bottom));
+	background: #0e1017;
+	border-top: 1px solid #1f2439;
+	border-radius: 18px 18px 0 0;
+	box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.55);
+	transform: translateY(100%);
+	transition: transform 0.25s ease-out;
+	overflow-y: auto;
+}
+
+body.is-mobile .sheet.open {
+	transform: translateY(0);
+}
+
+body.is-mobile .sheet[hidden],
+body.is-mobile .sheet-backdrop[hidden] {
+	display: none;
+}
+
+.sheet-grabber {
+	flex-shrink: 0;
+	width: 40px;
+	height: 4px;
+	margin: 8px auto 14px;
+	background: #2c3350;
+	border-radius: 999px;
+}
+
+body.is-mobile #sidebar-mount h1 {
+	font-size: 1.4rem;
+	margin-top: 0;
+}
+
+body.is-mobile #sidebar-mount .sidebar-btn {
+	min-height: 44px;
+}
+
+/* ==================== Mobile Shell (≤768px) ==================== */
+
+@media (max-width: 768px) {
+	body {
+		padding-top: 0;
+	}
+
 	.app-shell {
 		grid-template-columns: 1fr;
+		width: 100%;
+		margin: 0 auto 12px;
+		gap: 0;
+	}
+
+	.app-sidebar {
+		display: none;
+	}
+
+	.viewer-host {
+		padding: 10px;
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+	}
+}
+
+/* ==================== Tablet Polish (>768px and ≤980px) ==================== */
+
+@media (max-width: 980px) and (min-width: 769px) {
+	.app-shell {
+		grid-template-columns: 240px minmax(0, 1fr);
+	}
+}
+
+/* ==================== Tiny phones (≤480px) — kill remaining padding ==================== */
+
+@media (max-width: 480px) {
+	.viewer-host {
+		padding: 8px;
 	}
 }

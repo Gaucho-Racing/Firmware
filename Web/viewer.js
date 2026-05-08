@@ -54,6 +54,83 @@ window.addEventListener("DOMContentLoaded", function () {
 		};
 	}
 
+	// ==================== Mobile drill-down (≤768px) ====================
+	// Drives the CSS-translate viewer-track. Step 0 = primary list (nodes/buses),
+	// step 1 = secondary list, step 2 = messages. Three steps are coupled to the
+	// `.viewer-track` width: 300vw in viewer.css.
+	const MobileNav = (function () {
+		const viewer = document.getElementById("viewer");
+		const titleEl = document.getElementById("appbar-title");
+		const backBtn = document.getElementById("appbar-back");
+		let step = 0;
+
+		function titleForStep(n) {
+			if (n === 0) return "GRCAN Viewer";
+			if (HIERARCHY_MODE === "NODE_BUS") {
+				if (n === 1)
+					return currentDeviceName
+						? "Buses on " + currentDeviceName
+						: "Buses";
+				if (n === 2) {
+					if (currentDeviceName && currentBusCanonical)
+						return currentDeviceName + " · " + currentBusCanonical;
+					return currentBusCanonical || "Messages";
+				}
+			} else {
+				if (n === 1)
+					return currentBusCanonical
+						? "Nodes on " + currentBusCanonical
+						: "Nodes";
+				if (n === 2) {
+					if (currentDeviceName && currentBusCanonical)
+						return currentBusCanonical + " · " + currentDeviceName;
+					return currentDeviceName || "Messages";
+				}
+			}
+			return "GRCAN Viewer";
+		}
+
+		function go(n) {
+			step = Math.max(0, Math.min(2, n));
+			if (viewer) viewer.dataset.step = String(step);
+			if (titleEl) titleEl.textContent = titleForStep(step);
+			if (backBtn) {
+				if (step > 0) backBtn.removeAttribute("hidden");
+				else backBtn.setAttribute("hidden", "");
+			}
+		}
+
+		function back() {
+			if (step > 0) go(step - 1);
+		}
+
+		function reset() {
+			go(0);
+		}
+
+		function refreshTitle() {
+			if (titleEl) titleEl.textContent = titleForStep(step);
+		}
+
+		return {
+			go,
+			back,
+			reset,
+			refreshTitle,
+			get step() {
+				return step;
+			},
+		};
+	})();
+
+	function isMobileLayout() {
+		return document.body.classList.contains("is-mobile");
+	}
+
+	function maybeStep(n) {
+		if (isMobileLayout()) MobileNav.go(n);
+	}
+
 	function isChanged(key) {
 		return !!editor && !!editor.isEdited && editor.isEdited(key);
 	}
@@ -945,6 +1022,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderMessages(node.messages);
+				maybeStep(2);
 			});
 			secondList.appendChild(item);
 		});
@@ -1032,6 +1110,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					(node) => node.hasBus || (node.messages || []).length > 0,
 				);
 				renderBusNodeSecondary(nodesOnBus);
+				maybeStep(1);
 			});
 			firstList.appendChild(item);
 		});
@@ -1112,6 +1191,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderMessages(entry.messages);
+				maybeStep(2);
 			});
 			secondList.appendChild(item);
 		});
@@ -1264,6 +1344,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderNodeBusSecondary(nodeEntry.buses, nodeEntry.name);
+				maybeStep(1);
 			});
 			firstList.appendChild(item);
 		});
@@ -1288,6 +1369,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	// ==================== Hierarchy entry points ====================
 
 	async function renderHierarchy(ref) {
+		MobileNav.reset();
 		const candoResult = await window.GrcanApi.fetchCando(ref);
 		const localText = candoResult.notFound ? null : candoResult.content;
 
@@ -1535,6 +1617,82 @@ window.addEventListener("DOMContentLoaded", function () {
 			updateLocationState(currentRef);
 		});
 	}
+
+	// ==================== Mobile responsive setup ====================
+	(function setupMobileResponsive() {
+		const mq = window.matchMedia("(max-width: 768px)");
+		const sidebar = document.querySelector(".app-sidebar");
+		const sidebarMount = document.getElementById("sidebar-mount");
+		const sheet = document.getElementById("mobile-menu-sheet");
+		const backdrop = document.getElementById("mobile-menu-backdrop");
+		const backBtn = document.getElementById("appbar-back");
+		const menuBtn = document.getElementById("appbar-menu");
+
+		function moveChildren(from, to) {
+			if (!from || !to) return;
+			const kids = Array.from(from.children);
+			kids.forEach((k) => to.appendChild(k));
+		}
+
+		function openSheet() {
+			if (!sheet || !backdrop) return;
+			sheet.removeAttribute("hidden");
+			backdrop.removeAttribute("hidden");
+			requestAnimationFrame(() =>
+				requestAnimationFrame(() => {
+					sheet.classList.add("open");
+					backdrop.classList.add("open");
+				}),
+			);
+		}
+
+		function closeSheet() {
+			if (!sheet || !backdrop) return;
+			sheet.classList.remove("open");
+			backdrop.classList.remove("open");
+			window.setTimeout(() => {
+				if (!sheet.classList.contains("open")) {
+					sheet.setAttribute("hidden", "");
+					backdrop.setAttribute("hidden", "");
+				}
+			}, 260);
+		}
+
+		function applyLayout(matches) {
+			const wasMobile = document.body.classList.contains("is-mobile");
+			if (matches === wasMobile) return;
+			document.body.classList.toggle("is-mobile", matches);
+			if (matches) {
+				moveChildren(sidebar, sidebarMount);
+				MobileNav.reset();
+			} else {
+				moveChildren(sidebarMount, sidebar);
+				closeSheet();
+			}
+		}
+
+		applyLayout(mq.matches);
+		mq.addEventListener("change", (e) => applyLayout(e.matches));
+
+		if (backBtn) backBtn.addEventListener("click", () => MobileNav.back());
+		if (menuBtn) menuBtn.addEventListener("click", openSheet);
+		if (backdrop) backdrop.addEventListener("click", closeSheet);
+
+		// Close the sheet when an action button inside it is tapped, but leave
+		// the native <select> alone so the picker can open.
+		if (sidebarMount) {
+			sidebarMount.addEventListener("click", (e) => {
+				const btn = e.target.closest("button.sidebar-btn");
+				if (btn) closeSheet();
+			});
+		}
+
+		// Closing the sheet on ref change keeps the user oriented when the
+		// viewer reloads underneath.
+		refSelect.addEventListener("change", () => {
+			if (document.body.classList.contains("is-mobile")) closeSheet();
+		});
+	})();
 
 	init();
 });

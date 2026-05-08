@@ -424,3 +424,48 @@
 	color: #4b5568;
 	font-style: italic;
 }
+
+/* ── Mobile: wrap toolbar, slide panel up from bottom ── */
+@media (max-width: 768px) {
+	.graph-toolbar {
+		height: auto;
+		flex-wrap: wrap;
+		padding: 8px 12px;
+		gap: 8px;
+		row-gap: 6px;
+	}
+
+	.graph-title {
+		flex: 1;
+	}
+
+	.graph-bus-tabs {
+		order: 3;
+		width: 100%;
+		margin: 0;
+		overflow-x: auto;
+		padding-bottom: 2px;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.graph-focus-pill {
+		order: 4;
+		width: 100%;
+	}
+
+	.graph-node-panel {
+		width: 100%;
+		height: 55vh;
+		top: auto;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		border-left: none;
+		border-top: 1px solid #1f2439;
+		transform: translateY(100%);
+	}
+
+	.graph-node-panel.open {
+		transform: translateY(0);
+	}
+}

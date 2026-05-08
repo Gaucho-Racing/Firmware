@@ -49,6 +49,7 @@ window.GrcanGraphView = (() => {
 	let _pan = { x: 0, y: 0 };
 	let _zoom = 1;
 	let _panState = null;
+	let _pinchState = null;
 	let _resizeObserver = null;
 
 	// ==================== SVG helpers ====================
@@ -172,6 +173,70 @@ window.GrcanGraphView = (() => {
 		_panState = null;
 		if (svgEl) svgEl.classList.remove("grabbing");
 		if (!moved && _focusedNodeId) _exitFocus();
+	}
+
+	// ==================== Touch pan / pinch-zoom ====================
+
+	function _onTouchStart(evt) {
+		if (evt.touches.length === 1) {
+			_pinchState = null;
+			_panState = {
+				sx: evt.touches[0].clientX,
+				sy: evt.touches[0].clientY,
+				px: _pan.x,
+				py: _pan.y,
+				moved: false,
+			};
+		} else if (evt.touches.length === 2) {
+			_panState = null;
+			const dx = evt.touches[1].clientX - evt.touches[0].clientX;
+			const dy = evt.touches[1].clientY - evt.touches[0].clientY;
+			_pinchState = {
+				dist: Math.hypot(dx, dy),
+				zoom: _zoom,
+				cx: (evt.touches[0].clientX + evt.touches[1].clientX) / 2,
+				cy: (evt.touches[0].clientY + evt.touches[1].clientY) / 2,
+				px: _pan.x,
+				py: _pan.y,
+			};
+		}
+		evt.preventDefault();
+	}
+
+	function _onTouchMove(evt) {
+		evt.preventDefault();
+		if (evt.touches.length === 1 && _panState) {
+			const dx = evt.touches[0].clientX - _panState.sx;
+			const dy = evt.touches[0].clientY - _panState.sy;
+			if (Math.hypot(dx, dy) > 3) _panState.moved = true;
+			_pan.x = _panState.px + dx;
+			_pan.y = _panState.py + dy;
+			_applyViewport();
+		} else if (evt.touches.length === 2 && _pinchState) {
+			const dx = evt.touches[1].clientX - evt.touches[0].clientX;
+			const dy = evt.touches[1].clientY - evt.touches[0].clientY;
+			const dist = Math.hypot(dx, dy);
+			const factor = dist / _pinchState.dist;
+			const newZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, _pinchState.zoom * factor));
+			const rect = svgEl.getBoundingClientRect();
+			const mx = _pinchState.cx - rect.left;
+			const my = _pinchState.cy - rect.top;
+			const applied = newZoom / _pinchState.zoom;
+			_pan.x = mx - (mx - _pinchState.px) * applied;
+			_pan.y = my - (my - _pinchState.py) * applied;
+			_zoom = newZoom;
+			_applyViewport();
+		}
+	}
+
+	function _onTouchEnd(evt) {
+		if (evt.touches.length === 0) {
+			if (_panState && !_panState.moved && _focusedNodeId) _exitFocus();
+			_panState = null;
+			_pinchState = null;
+		} else if (evt.touches.length < 2) {
+			_pinchState = null;
+		}
 	}
 
 	// ==================== Focus pill ====================
@@ -298,6 +363,9 @@ window.GrcanGraphView = (() => {
 		svgEl.addEventListener("mousedown", _onMouseDown);
 		window.addEventListener("mousemove", _onMouseMove);
 		window.addEventListener("mouseup", _onMouseUp);
+		svgEl.addEventListener("touchstart", _onTouchStart, { passive: false });
+		svgEl.addEventListener("touchmove", _onTouchMove, { passive: false });
+		svgEl.addEventListener("touchend", _onTouchEnd, { passive: false });
 
 		_resizeObserver = new ResizeObserver(() => {
 			if (_currentGraphData) _rerender();
@@ -862,6 +930,7 @@ window.GrcanGraphView = (() => {
 		_pan = { x: 0, y: 0 };
 		_zoom = 1;
 		_panState = null;
+		_pinchState = null;
 		if (_escHandler) {
 			document.removeEventListener("keydown", _escHandler);
 			_escHandler = null;
