@@ -200,7 +200,7 @@ int main(void)
 		// 	HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
 		// }
 
-		HAL_Delay(24*TIRETEMP_SEND_INTERVAL_MS);
+		HAL_Delay(24 * TIRETEMP_SEND_INTERVAL_MS);
 
 		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
 		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
