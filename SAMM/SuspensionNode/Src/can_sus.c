@@ -29,14 +29,14 @@ void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID
 	GRCAN_Fancy_Send(CAN_SUBNET_BUS, sender_id, msg_id, data, data_length);
 }
 
-void SusNode_CAN_Send(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, GRCAN_NODE_ID dest_id, void* data, uint32_t data_length) {
+void SusNode_CAN_Send(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, GRCAN_NODE_ID dest_id, void *data, uint32_t data_length)
+{
 	if (data_length > FDCAN_MAX_DATA_BYTES) {
 		LOGOMATIC("Tried to send more than 64 bytes over suspension node CAN!");
 	}
 
 	uint32_t ID = (())
 }
-
 
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {
