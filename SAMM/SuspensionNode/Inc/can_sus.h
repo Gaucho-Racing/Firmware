@@ -2,9 +2,10 @@
 #define CAN_MAG_H
 
 #include <stdint.h>
-#include "NodeID.h"
+
 #include "GRCAN_FancyLayer.h"
 #include "Logomatic.h"
+#include "NodeID.h"
 
 typedef enum {
 	CAN_MAG_MSG_DATA = 0x2C,
