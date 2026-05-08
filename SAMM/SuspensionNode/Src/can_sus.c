@@ -8,7 +8,6 @@ static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
 static GRCAN_NODE_ID sensorNode; //tire temp
-static CAN_MAG_MSG_ID msgID = CAN_MAG_MSG_DATA;
 static data_length = 64;
 
 
