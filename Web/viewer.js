@@ -68,9 +68,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			if (n === 0) return "GRCAN Viewer";
 			if (HIERARCHY_MODE === "NODE_BUS") {
 				if (n === 1)
-					return currentDeviceName
-						? "Buses on " + currentDeviceName
-						: "Buses";
+					return currentDeviceName ? "Buses on " + currentDeviceName : "Buses";
 				if (n === 2) {
 					if (currentDeviceName && currentBusCanonical)
 						return currentDeviceName + " · " + currentBusCanonical;

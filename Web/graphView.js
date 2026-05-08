@@ -217,7 +217,10 @@ window.GrcanGraphView = (() => {
 			const dy = evt.touches[1].clientY - evt.touches[0].clientY;
 			const dist = Math.hypot(dx, dy);
 			const factor = dist / _pinchState.dist;
-			const newZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, _pinchState.zoom * factor));
+			const newZoom = Math.max(
+				ZOOM_MIN,
+				Math.min(ZOOM_MAX, _pinchState.zoom * factor),
+			);
 			const rect = svgEl.getBoundingClientRect();
 			const mx = _pinchState.cx - rect.left;
 			const my = _pinchState.cy - rect.top;
