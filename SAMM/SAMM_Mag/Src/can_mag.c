@@ -2,6 +2,7 @@
 
 static GRCAN_NODE_ID destNode = GRCAN_TCM;
 static GRCAN_NODE_ID localNode = GRCAN_ALL;
+static GRCAN_NODE_ID sensorNode = ;//
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
 
 static CAN_MAG_MSG_ID msgID = CAN_MAG_MSG_DATA;
