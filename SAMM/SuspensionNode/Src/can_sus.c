@@ -16,6 +16,7 @@ static data_length = 64;
 //might need to implement logic for receiving and forwarding for specific sensor location (FL -> FL)
 //might be better way to do this
 //check if came from tire temp or tcm in the callback-- should not interfere
+//might need to get rid of TCM checking if you really want to forward everything
 //handle sensorNode logic in init, you can use enum in can_sus.h
 
 void TireTemp_callback(uint32_t ID, void *data, uint32_t size) {
