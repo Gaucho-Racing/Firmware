@@ -1,12 +1,12 @@
-#include <string.h>
 #include "Pinging.h"
+
+#include <string.h>
 
 #include "CANutils.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "StateUtils.h"
-
 
 // add new pingable devices here, arrays are updated automagically
 #define PING_LIST(OP)                                                                                                                                                                                  \
