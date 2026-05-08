@@ -11,11 +11,20 @@
 # Per-file DBC validity is enforced by:
 #   - numeric ranges stripped of thousands separators (no commas in numbers)
 #   - identifiers normalized to [A-Za-z_][A-Za-z0-9_]* (leading digits prefixed)
+#   - identifier length capped at 32 chars; long message names dedup leading
+#     tokens that already appear in the sender, and any composed name still
+#     longer than 32 chars is deterministically truncated to 32. A
+#     post-pass asserts no two BO_ names (or two SG_ names within a BO_)
+#     collide after truncation.
 #   - BO_ message IDs deduped within each bus (cross-bus duplicates allowed)
 #   - signal widths inferred so start_bit + length <= DLC * 8
 #   - empty (DLC=0, no real signals) messages dropped
 #   - comment strings: non-ASCII transliterated, then \\ and \" escaped
 #   - UTF-8 input/output so smart quotes / em-dashes are mapped, not corrupted
+#   - signal min/max printed fixed-point (Vector rejects scientific notation)
+#   - CR/LF line endings (Vector tools expect Windows endings)
+#   - CAN FD attributes (VFrameFormat / CANFD_BRS) emitted for every frame
+#     with DLC > 8 so Vector accepts the database
 
 use strict;
 use warnings;
@@ -33,6 +42,13 @@ Readonly::Scalar my $EMPTY_STR             => q{};
 Readonly::Scalar my $SPACE_STR             => q{ };
 Readonly::Scalar my $UNDERSCORE            => q{_};
 Readonly::Scalar my $HYPHEN                => q{-};
+Readonly::Scalar my $MAX_DBC_NAME_LEN      => 32;
+Readonly::Scalar my $MIN_TOKEN_DROP_LEN    => 4;
+Readonly::Scalar my $CLASSIC_DLC           => 8;
+Readonly::Scalar my $V_FRAME_EXT_FD        => 15;
+Readonly::Scalar my $V_FRAME_STD_FD        => 14;
+Readonly::Scalar my $LARGE_NUM_THRESHOLD   => 1.0e15;
+Readonly::Scalar my $RANGE_DECIMAL_DIGITS  => 10;
 
 Readonly::Hash my %TYPE_BITS => (
 	'b'      => 1,
@@ -74,6 +90,14 @@ Readonly::Hash my %NONASCII_XLAT => (
 	chr 0x00B0 => 'deg',
 );
 
+Readonly::Array my @NS_SYMBOLS => qw(
+  NS_DESC_ CM_ BA_DEF_ BA_ VAL_ CAT_DEF_ CAT_ FILTER BA_DEF_DEF_
+  EV_DATA_ ENVVAR_DATA_ SGTYPE_ SGTYPE_VAL_ BA_DEF_SGTYPE_ BA_SGTYPE_
+  SIG_TYPE_REF_ VAL_TABLE_ SIG_GROUP_ SIG_VALTYPE_ SIGTYPE_VALTYPE_
+  BO_TX_BU_ BA_DEF_REL_ BA_REL_ BA_DEF_DEF_REL_ BU_SG_REL_ BU_EV_REL_
+  BU_BO_REL_ SG_MUL_VAL_
+);
+
 main();
 
 # --- Main Execution ---
@@ -103,11 +127,19 @@ sub main {
 
 		my @output_lines;
 		my @comment_lines;
+		my @fd_frames;
 		my %seen_ids;
 		my %bus_nodes;
 
+		my %ctx = (
+			comments  => \@comment_lines,
+			fd_frames => \@fd_frames,
+			seen_ids  => \%seen_ids,
+			nodes     => \%bus_nodes,
+		);
+
 		for my $route (@routes) {
-			my $msg_out = get_dbc_message( $route, $data_ref, \@comment_lines, \%seen_ids, \%bus_nodes );
+			my $msg_out = get_dbc_message( $route, $data_ref, \%ctx );
 			if ( $msg_out ne $EMPTY_STR ) {
 				push @output_lines, $msg_out;
 			}
@@ -118,6 +150,11 @@ sub main {
 		}
 
 		unshift @output_lines, _build_header( \%bus_nodes );
+
+		push @output_lines, _build_attribute_section( \@fd_frames );
+		push @output_lines, "\n";
+
+		_self_check( \@fd_frames, \@output_lines );
 
 		my $bus_path = _bus_path( $output_base, $bus );
 		write_file( $bus_path, \@output_lines );
@@ -136,7 +173,94 @@ sub _build_header {
 	my @sorted      = sort grep { $_ ne 'ALL' } keys %{$nodes_ref};
 	my $all_suffix  = exists $nodes_ref->{ALL} ? ' ALL' : $EMPTY_STR;
 	my $nodes       = join $SPACE_STR, @sorted;
-	return 'VERSION ""' . "\n\n" . 'NS_ :' . "\n\n" . 'BS_:' . "\n\n" . 'BU_: ' . $nodes . $all_suffix . "\n\n";
+
+	my $ns_block = "NS_ :\n";
+	for my $sym (@NS_SYMBOLS) {
+		$ns_block .= "\t" . $sym . "\n";
+	}
+
+	return 'VERSION ""' . "\n\n" . $ns_block . "\n" . 'BS_:' . "\n\n" . 'BU_: ' . $nodes . $all_suffix . "\n\n";
+}
+
+sub _build_attribute_section {
+	my ($fd_frames_ref) = @_;
+	my @lines;
+
+	push @lines, q{BA_DEF_  "BusType" STRING ;} . "\n";
+	push @lines, q{BA_DEF_  "DBName" STRING ;} . "\n";
+	push @lines,
+	    'BA_DEF_ BO_  "VFrameFormat" ENUM  '
+	  . q{"StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";}
+	  . "\n";
+	push @lines, q{BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";} . "\n";
+
+	push @lines, q{BA_DEF_DEF_  "BusType" "CAN FD";} . "\n";
+	push @lines, q{BA_DEF_DEF_  "DBName" "";} . "\n";
+	push @lines, q{BA_DEF_DEF_  "VFrameFormat" "StandardCAN";} . "\n";
+	push @lines, q{BA_DEF_DEF_  "CANFD_BRS" "1";} . "\n";
+
+	for my $f ( @{$fd_frames_ref} ) {
+		my $vff = ( $f->{can_id} & $EXTENDED_ID_MASK ) ? $V_FRAME_EXT_FD : $V_FRAME_STD_FD;
+		push @lines, sprintf qq{BA_ "VFrameFormat" BO_ %u %d;\n}, $f->{can_id}, $vff;
+		push @lines, sprintf qq{BA_ "CANFD_BRS" BO_ %u 1;\n}, $f->{can_id};
+	}
+
+	return join $EMPTY_STR, @lines;
+}
+
+sub _self_check {
+	my ( $fd_frames_ref, $output_ref ) = @_;
+	my $joined = join $EMPTY_STR, @{$output_ref};
+	for my $f ( @{$fd_frames_ref} ) {
+		my $expected = sprintf 'BA_ "VFrameFormat" BO_ %u', $f->{can_id};
+		if ( index( $joined, $expected ) < 0 ) {
+			die "Self-check failed: missing VFrameFormat attribute for BO_ $f->{can_id}\n";
+		}
+	}
+	_check_name_collisions($output_ref);
+	return;
+}
+
+sub _check_name_collisions {
+	my ($output_ref) = @_;
+	my %bo_seen;
+	my %sg_seen;
+	my $current_bo = $EMPTY_STR;
+	my $current_id = 0;
+
+	for my $chunk ( @{$output_ref} ) {
+		for my $line ( split /\n/smx, $chunk ) {
+			if ( $line =~ /^BO_ \s+ (\d+) \s+ ([^:\s]+) \s* :/smx ) {
+				my $id   = $1;
+				my $name = $2;
+				if ( exists $bo_seen{$name} ) {
+					die "Self-check failed: duplicate BO_ name '$name' (CAN IDs $bo_seen{$name} and $id)\n";
+				}
+				$bo_seen{$name} = $id;
+				$current_bo     = $name;
+				$current_id     = $id;
+				%sg_seen        = ();
+				next;
+			}
+			if ( $line =~ /^\s+ SG_ \s+ ([^\s:]+) /smx ) {
+				my $name = $1;
+				if ( $current_bo eq $EMPTY_STR ) { next; }
+				if ( exists $sg_seen{$name} ) {
+					die "Self-check failed: duplicate SG_ name '$name' inside BO_ $current_id ($current_bo)\n";
+				}
+				$sg_seen{$name} = 1;
+			}
+		}
+	}
+	return;
+}
+
+sub _fit_dbc_name {
+	my ($name) = @_;
+	if ( length $name <= $MAX_DBC_NAME_LEN ) {
+		return $name;
+	}
+	return substr $name, 0, $MAX_DBC_NAME_LEN;
 }
 
 sub _bus_path {
@@ -164,21 +288,35 @@ sub slurp_file {
 
 sub write_file {
 	my ( $path, $content_ref ) = @_;
-	open my $fh, '>:encoding(UTF-8)', $path;
+	open my $fh, '>:raw:encoding(UTF-8)', $path;
 	for my $line ( @{$content_ref} ) {
-		my $print_success = print {$fh} $line;
-		if ( !$print_success ) {
-			die "Could not write to $path: $OS_ERROR";
-		}
+		_print_crlf( $fh, $line, $path );
 	}
 	close $fh;
 	return;
 }
 
+sub _print_crlf {
+	my ( $fh, $line, $path ) = @_;
+	my $out = $line;
+	$out =~ s/\r\n/\n/gsmx;
+	$out =~ s/\n/\r\n/gsmx;
+	my $print_success = print {$fh} $out;
+	if ( !$print_success ) {
+		die "Could not write to $path: $OS_ERROR";
+	}
+	return;
+}
+
 # --- DBC Generation Subroutines ---
 sub get_dbc_message {
-	my ( $r_ref, $d_ref, $comments_ref, $seen_ids_ref, $nodes_ref ) = @_;
+	my ( $r_ref, $d_ref, $ctx ) = @_;
 	my $m_name = $r_ref->{msg};
+
+	my $comments_ref = $ctx->{comments};
+	my $fd_ref       = $ctx->{fd_frames};
+	my $seen_ids_ref = $ctx->{seen_ids};
+	my $nodes_ref    = $ctx->{nodes};
 
 	my $is_custom = exists $d_ref->{custom}{$m_name};
 	my $m_def     = $is_custom ? $d_ref->{custom}{$m_name} : $d_ref->{messages}{$m_name};
@@ -197,8 +335,10 @@ sub get_dbc_message {
 	my $m_norm = normalize($m_name);
 	my $t_norm = normalize( $r_ref->{target} );
 
-	my $dbc_msg_name = $s_norm . $UNDERSCORE . $m_norm . '_to_' . $t_norm;
-	my $msg_len      = $m_def->{len} // $BITS_PER_BYTE;
+	my $shortened_m  = _shorten_against_sender( $s_norm, $m_norm );
+	my $dbc_msg_name = _fit_dbc_name( $s_norm . $UNDERSCORE . $shortened_m . '_to_' . $t_norm );
+
+	my $msg_len = $m_def->{len} // $BITS_PER_BYTE;
 
 	my @sigs;
 	if ($is_custom) {
@@ -209,7 +349,11 @@ sub get_dbc_message {
 		@sigs = map { { name => $_, %{ $m_def->{sigs}{$_} } } } keys %{ $m_def->{sigs} };
 	}
 
-	my @sorted_sigs = sort { ( $a->{start} // 0 ) <=> ( $b->{start} // 0 ) || normalize( $a->{name} ) cmp normalize( $b->{name} ) } @sigs;
+	for my $s_ref (@sigs) {
+		$s_ref->{_dbc_name} = _fit_dbc_name( normalize( $s_ref->{name} ) );
+	}
+
+	my @sorted_sigs = sort { ( $a->{start} // 0 ) <=> ( $b->{start} // 0 ) || $a->{_dbc_name} cmp $b->{_dbc_name} } @sigs;
 
 	my @real_sigs = grep { $_->{name} !~ /Reserved/ismx } @sorted_sigs;
 	if ( $msg_len == 0 && !@real_sigs ) {
@@ -225,6 +369,10 @@ sub get_dbc_message {
 		$nodes_ref->{$t_norm} = 1;
 	}
 
+	if ( $fd_ref && $msg_len > $CLASSIC_DLC ) {
+		push @{$fd_ref}, { can_id => $can_id, len => $msg_len };
+	}
+
 	my $output = sprintf "BO_ %u %s: %d %s\n", $can_id, $dbc_msg_name, $msg_len, $s_norm;
 
 	for my $s_ref (@sorted_sigs) {
@@ -233,7 +381,7 @@ sub get_dbc_message {
 
 	for my $s_ref (@sorted_sigs) {
 		if ( $s_ref->{comment} && $s_ref->{name} !~ /Reserved/ismx ) {
-			push @{$comments_ref}, sprintf "CM_ SG_ %u %s \"%s\";\n", $can_id, normalize( $s_ref->{name} ), _escape_dbc_string( $s_ref->{comment} );
+			push @{$comments_ref}, sprintf "CM_ SG_ %u %s \"%s\";\n", $can_id, $s_ref->{_dbc_name}, _escape_dbc_string( $s_ref->{comment} );
 		}
 	}
 
@@ -340,11 +488,42 @@ sub format_signal {
 	$unit =~ s/'//gsmx;
 
 	my $sign      = ( $raw_type =~ /^[is]/smx ) ? $HYPHEN : q{+};
-	my $s_min     = _to_number( $s_ref->{'scaled min'} );
-	my $s_max     = _to_number( $s_ref->{'scaled max'} );
-	my $start_bit = $s_ref->{start} // 0;
+	my $sig_name  = $s_ref->{_dbc_name} // _fit_dbc_name( normalize( $s_ref->{name} ) );
+	my $start_bit = $s_ref->{start}     // 0;
 
-	return sprintf " SG_ %s : %d|%d\@1%s (%g,%g) [%g|%g] \"%s\" %s\n", normalize( $s_ref->{name} ), $start_bit, $bits, $sign, $factor, $offset, $s_min, $s_max, $unit, $t_norm;
+	return sprintf " SG_ %s : %d|%d\@1%s (%s,%s) [%s|%s] \"%s\"  %s\n",
+	  $sig_name, $start_bit, $bits, $sign,
+	  _format_range($factor), _format_range($offset),
+	  _format_range( $s_ref->{'scaled min'} ), _format_range( $s_ref->{'scaled max'} ),
+	  $unit, $t_norm;
+}
+
+sub _format_range {
+	my ($v) = @_;
+	my $n = _to_number($v);
+	if ( $n == int $n && abs($n) < $LARGE_NUM_THRESHOLD ) {
+		return sprintf '%.0f', $n;
+	}
+	my $s = sprintf "%.${RANGE_DECIMAL_DIGITS}f", $n;
+	$s =~ s/([.]\d*?)0+$/$1/smx;
+	$s =~ s/[.]$//smx;
+	return $s;
+}
+
+sub _shorten_against_sender {
+	my ( $sender, $msg ) = @_;
+	my $sender_flat = lc $sender;
+	$sender_flat =~ s/_//gsmx;
+	my @tokens = split /_/smx, $msg;
+	for my $n ( reverse 1 .. $#tokens ) {
+		my $prefix_flat = lc join $EMPTY_STR, @tokens[ 0 .. $n - 1 ];
+		if ( length($prefix_flat) >= $MIN_TOKEN_DROP_LEN
+			&& index( $sender_flat, $prefix_flat ) >= 0 )
+		{
+			return join '_', @tokens[ $n .. $#tokens ];
+		}
+	}
+	return $msg;
 }
 
 sub _to_number {
