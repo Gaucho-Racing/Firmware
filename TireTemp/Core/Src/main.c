@@ -177,6 +177,10 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
+		// I was testing zero'd out array to verify mlx90640To updates
+		// for (int j = 0; j < 768; j++) {
+		// 	mlx90640To[j] = 0;
+		// }
 
 		while ((status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame)) != 0) {
 			break; // MLX90640_FullReset();
@@ -191,10 +195,12 @@ int main(void)
 			break; // MLX90640_FullReset();
 		}
 
-		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
-			CAN_sendTemp(mlx90640To, i);
-			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
-		}
+		// for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
+		// 	CAN_sendTemp(mlx90640To, i);
+		// 	HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
+		// }
+
+		HAL_Delay(24*TIRETEMP_SEND_INTERVAL_MS);
 
 		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
 		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
@@ -247,6 +253,7 @@ void SystemClock_Config(void)
 		Error_Handler();
 	}
 
+	// Make sure that the PLL Q output is enabled (PLL R output seems to be enabled by default because its for SysClock)
 	__HAL_RCC_PLLCLKOUT_ENABLE(RCC_PLL_48M1CLK);
 
 	/** Initializes the CPU, AHB and APB buses clocks
