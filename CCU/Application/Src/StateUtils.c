@@ -48,7 +48,6 @@ bool CriticalError(const CCU_StateData *state_data)
 	if (state_data->ACU_S2_OVERTEMP_ERROR) {
 		LOGOMATIC("OVERTEMP\n");
 		any_error = true;
-
 	}
 
 	if (state_data->ACU_S2_OVERVOLT_ERROR) {
