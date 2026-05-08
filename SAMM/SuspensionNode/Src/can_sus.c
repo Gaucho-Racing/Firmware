@@ -18,61 +18,25 @@ void SusNode_ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GR
 	LOGOMATIC("Unhandled Suspension Node CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
-void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
+void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, void *data, uint32_t data_length)
 {
-	// switch (msg_id) {
-	// 	case GRCAN_PING:
-	// 		if (data_length != sizeof(GRCAN_PING_MSG)) {
-	// 			SusMode_ReportBadMessageLength(bus_id, msg_id, sender_id);
-	// 			break;
-	// 		}
-	// 		GRCAN_Fancy_Send(bus_id, sender_id, msg_id, data, data_length); // Respond to ping
-	// 		GRCAN_Fancy_Send // send to other bus
-	// 		break;
-	// 	default:
-	// 		GRCAN_Fancy_Send // send to other bus
-	// }
-
 	if (msg_id == GRCAN_PING) {
-		GR_Fancy_Send(CAN_DATAMAIN_BUS, msg_id, sender_id, data, data_length);
-	}
-	GR_Fancy_Send(CAN_SUBNET_BUS, msg_id, sender_id, data, data_length);
-	/*
-	if (PING)
-	{
-		SEND PING ON OG BUS
+		// Send ping back to sender on main data bus
+		GRCAN_Fancy_Send(CAN_DATAMAIN_BUS, sender_id, msg_id, data, data_length);
 	}
 
-	COPY MESSAGE TO OTHER BUS
-	*/
+	// Forward all messages to subnet bus
+	GRCAN_Fancy_Send(CAN_SUBNET_BUS, sender_id, msg_id, data, data_length);
 }
 
-/* this stuff is lwk a template/ bs i'll come back to remove/fix it - shravya
-static volatile bool data_valid = false;
-static volatile uint32_t expected_size = TX_BUFFER_1_SIZE;
-static volatile bool id_valid = false;
-
-
-void on_receive(uint32_t ID, void *data, uint32_t size)
-{
-	// GRCAN_NODE_ID sender = some bit shift;
-	// GRCAN_MSG_ID messageID = some bit shift;
-	switch(messageID)
-	{
-		case ??:
-			if (size != sizeof(GRCAN_BCU_CELL_DATA_1_MSG)) {
-				ReportBadMessageLength(ID, size);
-			}
-			// COPY OR CHANGE THING OR SOMETHING
-			break;
-		case ??:
-			// todo
-			break;
-		default:
-			break;
+void SusNode_CAN_Send(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, GRCAN_NODE_ID dest_id, void* data, uint32_t data_length) {
+	if (data_length > FDCAN_MAX_DATA_BYTES) {
+		LOGOMATIC("Tried to send more than 64 bytes over suspension node CAN!");
 	}
+
+	uint32_t ID = (())
 }
-*/
+
 
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {
