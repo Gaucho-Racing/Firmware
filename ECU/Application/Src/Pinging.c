@@ -11,29 +11,29 @@
 // add new pingable devices here, arrays are updated automagically
 // MUST be in agreement with Autogen/CAN/Inc/GRCAN_MSG_DATA.h/GRCAN_ECU_PINGING_RTT_MSG
 #define PING_LIST(OP)                                                                                                                                                                                  \
-	OP(GRCAN_ACU, 0, GRCAN_BUS_PRIMARY)                                                                                                                                                                               \
-	OP(GRCAN_GR_Inverter, 1, GRCAN_BUS_PRIMARY)                                                                                                                                                                       \
-	OP(GRCAN_Fan_Controller_1, 2, GRCAN_BUS_PRIMARY)                                                                                                                                                                  \
-	OP(GRCAN_Fan_Controller_2, 3, GRCAN_BUS_PRIMARY)                                                                                                                                                                  \
-	OP(GRCAN_Fan_Controller_3, 4, GRCAN_BUS_PRIMARY)                                                                                                                                                                  \
-	OP(GRCAN_Dash_Panel, 5, GRCAN_BUS_PRIMARY)                                                                                                                                                                        \
-	OP(GRCAN_TCM, 6, GRCAN_BUS_PRIMARY)                                                                                                                                                                               \
-	OP(GRCAN_TireTemp_FL, 7, GRCAN_BUS_DATA)                                                                                                                                                                       \
-	OP(GRCAN_TireTemp_FR, 8, GRCAN_BUS_DATA)                                                                                                                                                                       \
-	OP(GRCAN_TireTemp_RL, 9, GRCAN_BUS_DATA)                                                                                                                                                                       \
-	OP(GRCAN_TireTemp_RR, 10, GRCAN_BUS_DATA)                                                                                                                                                                      \
-	OP(GRCAN_Suspension_FL, 11, GRCAN_BUS_DATA)                                                                                                                                                                    \
-	OP(GRCAN_Suspension_FR, 12, GRCAN_BUS_DATA)                                                                                                                                                                    \
-	OP(GRCAN_Suspension_RL, 13, GRCAN_BUS_DATA)                                                                                                                                                                    \
-	OP(GRCAN_Suspension_RR, 14, GRCAN_BUS_DATA)                                                                                                                                                                    \
-	OP(GRCAN_InboardFloor_FL, 15, GRCAN_BUS_DATA)                                                                                                                                                                  \
-	OP(GRCAN_InboardFloor_FR, 16, GRCAN_BUS_DATA)                                                                                                                                                                  \
-	OP(GRCAN_InboardFloor_RL, 17, GRCAN_BUS_DATA)                                                                                                                                                                  \
-	OP(GRCAN_InboardFloor_RR, 18, GRCAN_BUS_DATA)                                                                                                                                                                  \
-	OP(GRCAN_BrakeTemp_FL, 19, GRCAN_BUS_DATA)                                                                                                                                                                     \
-	OP(GRCAN_BrakeTemp_FR, 20, GRCAN_BUS_DATA)                                                                                                                                                                     \
-	OP(GRCAN_BrakeTemp_RL, 21, GRCAN_BUS_DATA)                                                                                                                                                                     \
-	OP(GRCAN_BrakeTemp_RR, 22, GRCAN_BUS_DATA)                                                                                                                                                                     \
+	OP(GRCAN_ACU, 0, GRCAN_BUS_PRIMARY)                                                                                                                                                            \
+	OP(GRCAN_GR_Inverter, 1, GRCAN_BUS_PRIMARY)                                                                                                                                                    \
+	OP(GRCAN_Fan_Controller_1, 2, GRCAN_BUS_PRIMARY)                                                                                                                                               \
+	OP(GRCAN_Fan_Controller_2, 3, GRCAN_BUS_PRIMARY)                                                                                                                                               \
+	OP(GRCAN_Fan_Controller_3, 4, GRCAN_BUS_PRIMARY)                                                                                                                                               \
+	OP(GRCAN_Dash_Panel, 5, GRCAN_BUS_PRIMARY)                                                                                                                                                     \
+	OP(GRCAN_TCM, 6, GRCAN_BUS_PRIMARY)                                                                                                                                                            \
+	OP(GRCAN_TireTemp_FL, 7, GRCAN_BUS_DATA)                                                                                                                                                       \
+	OP(GRCAN_TireTemp_FR, 8, GRCAN_BUS_DATA)                                                                                                                                                       \
+	OP(GRCAN_TireTemp_RL, 9, GRCAN_BUS_DATA)                                                                                                                                                       \
+	OP(GRCAN_TireTemp_RR, 10, GRCAN_BUS_DATA)                                                                                                                                                      \
+	OP(GRCAN_Suspension_FL, 11, GRCAN_BUS_DATA)                                                                                                                                                    \
+	OP(GRCAN_Suspension_FR, 12, GRCAN_BUS_DATA)                                                                                                                                                    \
+	OP(GRCAN_Suspension_RL, 13, GRCAN_BUS_DATA)                                                                                                                                                    \
+	OP(GRCAN_Suspension_RR, 14, GRCAN_BUS_DATA)                                                                                                                                                    \
+	OP(GRCAN_InboardFloor_FL, 15, GRCAN_BUS_DATA)                                                                                                                                                  \
+	OP(GRCAN_InboardFloor_FR, 16, GRCAN_BUS_DATA)                                                                                                                                                  \
+	OP(GRCAN_InboardFloor_RL, 17, GRCAN_BUS_DATA)                                                                                                                                                  \
+	OP(GRCAN_InboardFloor_RR, 18, GRCAN_BUS_DATA)                                                                                                                                                  \
+	OP(GRCAN_BrakeTemp_FL, 19, GRCAN_BUS_DATA)                                                                                                                                                     \
+	OP(GRCAN_BrakeTemp_FR, 20, GRCAN_BUS_DATA)                                                                                                                                                     \
+	OP(GRCAN_BrakeTemp_RL, 21, GRCAN_BUS_DATA)                                                                                                                                                     \
+	OP(GRCAN_BrakeTemp_RR, 22, GRCAN_BUS_DATA)                                                                                                                                                     \
 	OP(GRCAN_DGPS, 23, GRCAN_BUS_DATA)
 
 // Converts PING_LIST into a list of the first column (IDs)
