@@ -21,7 +21,7 @@ void BrakeLightControl(ECU_StateData *stateLump)
 void TSSILightControl(ECU_StateData *stateLump)
 {
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
-	//     Here we chose a period of 350ms
+	//     Here we chose a period of 286ms
 	if (stateLump->tssi_fault) {
 		LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 		if (MillisecondsSinceBoot() % 286 < 143) {
