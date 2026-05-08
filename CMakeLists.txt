@@ -102,15 +102,15 @@ include("${lib_path}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 # Projects
 add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
-add_gr_project(STM32G474xE DashPanel)
+# add_gr_project(STM32G474xE DashPanel)
 add_gr_project(STM32G474xE AnalogCalibration)
 add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 TireTemp)
 
 # SAMM
 include("SAMM/samm.cmake")
-add_gr_project(STM32H523xE SAMM SAMM_Mag)
-add_gr_project(STM32H523xE SAMM SAMM_TOF)
+add_gr_project(STM32H523xE SAMM InboardFloor)
+add_gr_project(STM32H523xE SAMM SuspensionNode)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)

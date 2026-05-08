@@ -6,42 +6,42 @@ Bus ID:
 
 routing:
   messages:
-    BCU:
-      Primary_Bus:
+    ACU:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: BCU Status 1
-          - msg: BCU Status 2
-          - msg: BCU Status 3
-      Data_Bus:
+          - msg: ACU Status 1
+          - msg: ACU Status 2
+          - msg: ACU Status 3
+      Data:
         Debugger:
           - msg: Debug FD
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: BCU Cell Data 1
-          - msg: BCU Cell Data 2
-          - msg: BCU Cell Data 3
-          - msg: BCU Cell Data 4
-          - msg: BCU Cell Data 5
-      Charger_Bus:
+          - msg: ACU Cell Data 1
+          - msg: ACU Cell Data 2
+          - msg: ACU Cell Data 3
+          - msg: ACU Cell Data 4
+          - msg: ACU Cell Data 5
+      Charger:
         Charger:
           - msg: Charger Control
             can_id_override: 0x1806E5F4
         CCU:
-          - msg: BCU Status 1
-          - msg: BCU Status 2
-          - msg: BCU Status 3
+          - msg: ACU Status 1
+          - msg: ACU Status 2
+          - msg: ACU Status 3
     Charger:
-      Charger_Bus:
-        BCU:
+      Charger:
+        ACU:
           - msg: Charger Data
             can_id_override: 0x18FF50E5
     Dash Panel:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -49,11 +49,11 @@ routing:
           - msg: Ping
           - msg: Dash Status
     Debugger:
-      Primary_Bus:
+      Primary:
         ECU:
           - msg: Debug 2.0
           - msg: Ping
-        BCU:
+        ACU:
           - msg: Debug 2.0
           - msg: Ping
         TCM:
@@ -74,21 +74,21 @@ routing:
         Fan Controller 3:
           - msg: Debug 2.0
           - msg: Ping
-      Data_Bus:
+      Data:
         ECU:
           - msg: Debug FD
           - msg: Ping
-        BCU:
+        ACU:
           - msg: Debug FD
           - msg: Ping
         TCM:
           - msg: Debug FD
           - msg: Ping
-      Charger_Bus:
+      Charger:
         Charging SDC:
           - msg: Ping
     DTI Inverter:
-      Primary_Bus:
+      Primary:
         ECU:
           - msg: DTI Data 1
             can_id_override: 0x2016
@@ -101,7 +101,7 @@ routing:
           - msg: DTI Data 5
             can_id_override: 0x2416
     ECU:
-      Primary_Bus:
+      Primary:
         DTI Inverter:
           - msg: DTI Control 1
             can_id_override: 0x116
@@ -130,10 +130,10 @@ routing:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
-        BCU:
-          - msg: BCU Precharge
-          - msg: BCU Config Charge Parameters
-          - msg: BCU Config Operational Parameters
+        ACU:
+          - msg: ACU Precharge
+          - msg: ACU Config Charge Parameters
+          - msg: ACU Config Operational Parameters
           - msg: Ping
         GR Inverter:
           - msg: Inverter Config
@@ -157,32 +157,50 @@ routing:
           - msg: ECU Status 3
         TCM:
           - msg: Ping
-      Data_Bus:
+      Data:
         Debugger:
           - msg: Debug FD
           - msg: Ping
         TCM:
           - msg: ECU Analog Data
-          - msg: ECU Performance
-        SAMM_Mag_1:
+          - msg: ECU Pinging RTT
+        DGPS:
           - msg: Ping
-        SAMM_Mag_2:
+        Suspension FL:
           - msg: Ping
-        SAMM_ToF_1:
+        Suspension FR:
           - msg: Ping
-        SAMM_ToF_2:
+        Suspension RL:
           - msg: Ping
-        TireTemp_1:
+        Suspension RR:
           - msg: Ping
-        TireTemp_2:
+        InboardFloor FL:
           - msg: Ping
-        TireTemp_3:
+        InboardFloor FR:
           - msg: Ping
-        TireTemp_4:
+        InboardFloor RL:
+          - msg: Ping
+        InboardFloor RR:
+          - msg: Ping
+        TireTemp FL:
+          - msg: Ping
+        TireTemp FR:
+          - msg: Ping
+        TireTemp RL:
+          - msg: Ping
+        TireTemp RR:
+          - msg: Ping
+        BrakeTemp FL:
+          - msg: Ping
+        BrakeTemp FR:
+          - msg: Ping
+        BrakeTemp RL:
+          - msg: Ping
+        BrakeTemp RR:
           - msg: Ping
     Energy Meter:
-      Charger_Bus:
-        BCU:
+      Charger:
+        ACU:
           - msg: EM Measurement
             can_id_override: 0x10d
           - msg: EM Team Data 1
@@ -194,7 +212,7 @@ routing:
           - msg: EM Temperature
             can_id_override: 0x60d
     Fan Controller 1:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -202,7 +220,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     Fan Controller 2:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -210,7 +228,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     Fan Controller 3:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -218,7 +236,7 @@ routing:
           - msg: Ping
           - msg: Fan Status
     GR Inverter:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Debug 2.0
           - msg: Ping
@@ -228,8 +246,8 @@ routing:
           - msg: Inverter Status 2
           - msg: Inverter Status 3
     IMD:
-      Charger_Bus:
-        BCU:
+      Charger:
+        ACU:
           - msg: IMD response
             can_id_override: 0x23
           - msg: IMD isolation info
@@ -245,21 +263,23 @@ routing:
           - msg: IMD general
             can_id_override: 0x18FF01F4
     TCM:
-      Primary_Bus:
+      Primary:
         Debugger:
           - msg: Ping
         ECU:
           - msg: Ping
-      Data_Bus:
+      Data:
         Debugger:
           - msg: Ping
     CCU:
-      Charger_Bus:
-        BCU:
-          - msg: BCU Precharge
+      Charger:
+        ACU:
+          - msg: ACU Precharge
           - msg: Debug 2.0
     DGPS:
-      Data_Bus:
+      Data:
+        ECU:
+          - msg: Ping
         TCM:
           - msg: GPS ALT
           - msg: GPS LAT
@@ -268,38 +288,178 @@ routing:
           - msg: GPS QY
           - msg: GPS RZ
           - msg: UVW DGPS
-    SAMM_Mag_1:
-      Data_Bus:
+    Suspension FL:
+      Data:
         ECU:
           - msg: Ping
-    SAMM_Mag_2:
-      Data_Bus:
+    Suspension FR:
+      Data:
         ECU:
           - msg: Ping
-    SAMM_ToF_1:
-      Data_Bus:
+    Suspension RL:
+      Data:
         ECU:
           - msg: Ping
-    SAMM_ToF_2:
-      Data_Bus:
+    Suspension RR:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_1:
-      Data_Bus:
+    InboardFloor FL:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_2:
-      Data_Bus:
+    InboardFloor FR:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_3:
-      Data_Bus:
+    InboardFloor RL:
+      Data:
         ECU:
           - msg: Ping
-    TireTemp_4:
-      Data_Bus:
+    InboardFloor RR:
+      Data:
         ECU:
           - msg: Ping
+    TireTemp FL:
+      Data:
+        ECU:
+          - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
+    TireTemp FR:
+      Data:
+        ECU:
+          - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
+    TireTemp RL:
+      Data:
+        ECU:
+          - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
+    TireTemp RR:
+      Data:
+        ECU:
+          - msg: Ping
+        TCM:
+          - msg: Tire Temp Frame 0
+          - msg: Tire Temp Frame 1
+          - msg: Tire Temp Frame 2
+          - msg: Tire Temp Frame 3
+          - msg: Tire Temp Frame 4
+          - msg: Tire Temp Frame 5
+          - msg: Tire Temp Frame 6
+          - msg: Tire Temp Frame 7
+          - msg: Tire Temp Frame 8
+          - msg: Tire Temp Frame 9
+          - msg: Tire Temp Frame 10
+          - msg: Tire Temp Frame 11
+          - msg: Tire Temp Frame 12
+          - msg: Tire Temp Frame 13
+          - msg: Tire Temp Frame 14
+          - msg: Tire Temp Frame 15
+          - msg: Tire Temp Frame 16
+          - msg: Tire Temp Frame 17
+          - msg: Tire Temp Frame 18
+          - msg: Tire Temp Frame 19
+          - msg: Tire Temp Frame 20
+          - msg: Tire Temp Frame 21
+          - msg: Tire Temp Frame 22
+          - msg: Tire Temp Frame 23
+    BrakeTemp FL:
+      Data:
+        ECU:
+          - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
+    BrakeTemp FR:
+      Data:
+        ECU:
+          - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
+    BrakeTemp RL:
+      Data:
+        ECU:
+          - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
+    BrakeTemp RR:
+      Data:
+        ECU:
+          - msg: Ping
+          - msg: Wheel Speed
+          - msg: Brake Temp
 
 byte order: little_endian
 
@@ -332,57 +492,71 @@ Message ID:
   ECU Status 1:
     MSG ID: 0x003
     MSG LENGTH: 8
-    status_flags:
+    ECU State:
       bit_start: 0
       comment:
-        [Bytes 0-1 / Bits 0-15]
-        0: BCU Node Status (1: OK, 0: Timeout)
-        1: GR Inverter Status (1: OK, 0: Timeout)
-        2: Fan Controller 1 Status (1: OK, 0: Timeout)
-        3: Fan Controller 2 Status (1: OK, 0: Timeout)
-        4: Fan Controller 3 Status (1: OK, 0: Timeout)
-        5: Dash Panel Status (1: OK, 0: Timeout)
-        6: TCM Node Status (1: OK, 0: Timeout)
-        7: SAMM_Mag_1 Status (1: OK, 0: Timeout)
-        8: SAMM_Mag_2 Status (1: OK, 0: Timeout)
-        9: SAMM_ToF_1 Status (1: OK, 0: Timeout)
-        10: SAMM_ToF_2 Status (1: OK, 0: Timeout)
-        11: TireTemp_1 Status (1: OK, 0: Timeout)
-        12: TireTemp_2 Status (1: OK, 0: Timeout)
-        13: TireTemp_3 Status (1: OK, 0: Timeout)
-        14: TireTemp_4 Status (1: OK, 0: Timeout)
-        15: Reserved
-      data type: u16
-    ecu_state:
-      bit_start: 16
-      comment:
-        [Byte 2 / Bits 16-17] GLV States
-        0: GLV Off State,
-        1: GLV On State.
-        See diagram in StateMachine.
-        [Byte 2 / Bits 18-19] Precharge States
+        [Byte 0 / Bits 0-7] ECU state machine data
+        0: GLV Off State
+        1: GLV On State
         2: Precharge Engaged State
         3: Precharge Complete State
-        See diagram in StateMachine.h
-        [Byte 2 / Bits 20-21] ECU States
-        4: Drive Active ECU State
-        5: TS Discharge ECU State
+        4: Drive Active State
+        5: TS Discharge State
         6-7: Reserved
         See diagram in StateMachine.h
       data type: b
       units: Bool
-    Power Level:
+    Ping Group 1:
+      bit_start: 8
+      comment:
+        [Byte 1 / Bits 8-15] ECU ping targets
+        8: ACU (1: OK, 0: Timeout)
+        9: GR Inverter (1: OK, 0: Timeout)
+        10: Fan Controller 1 (1: OK, 0: Timeout)
+        11: Fan Controller 2 (1: OK, 0: Timeout)
+        12: Fan Controller 3 (1: OK, 0: Timeout)
+        13: Dash Panel (1: OK, 0: Timeout)
+        14: TCM (1: OK, 0: Timeout)
+        15: DGPS (1: OK, 0: Timeout)
+      data type: u8
+    Ping Group 2:
+      bit_start: 16
+      comment:
+        [Byte 2 / Bits 16-23] ECU ping targets
+        16: Suspension FL (1: OK, 0: Timeout)
+        17: Suspension FR (1: OK, 0: Timeout)
+        18: Suspension RL (1: OK, 0: Timeout)
+        19: Suspension RR (1: OK, 0: Timeout)
+        20: InboardFloor FL (1: OK, 0: Timeout)
+        21: InboardFloor FR (1: OK, 0: Timeout)
+        22: InboardFloor RL (1: OK, 0: Timeout)
+        23: InboardFloor RR (1: OK, 0: Timeout)
+      data type: u8
+    Ping Group 3:
       bit_start: 24
+      comment:
+        [Byte 3 / Bits 24-31] ECU ping targets
+        24: TireTemp FL (1: OK, 0: Timeout)
+        25: TireTemp FR (1: OK, 0: Timeout)
+        26: TireTemp RL (1: OK, 0: Timeout)
+        27: TireTemp RR (1: OK, 0: Timeout)
+        28: BrakeTemp FL (1: OK, 0: Timeout)
+        29: BrakeTemp FR (1: OK, 0: Timeout)
+        30: BrakeTemp RL (1: OK, 0: Timeout)
+        31: BrakeTemp RR (1: OK, 0: Timeout)
+      data type: u8
+    Power Level:
+      bit_start: 32
       comment:
         Controls the AC current limits to each of the inverters
         Discrete Mapping, actual values TBD (16 possible values)
       data type: u4
     Torque Map:
-      bit_start: 28
+      bit_start: 36
       comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
       data type: u4
     Max Cell Temp:
-      bit_start: 32
+      bit_start: 40
       comment: the temperature of the hottest cell of the accumulator
       data type: u8
       units: Celsius
@@ -390,7 +564,7 @@ Message ID:
       scaled max: 63.75
       map equation: "0.25x"
     Accumulator State of Charge:
-      bit_start: 40
+      bit_start: 48
       comment: % charged of the Accumulator
       data type: u8
       units: '%'
@@ -398,7 +572,7 @@ Message ID:
       scaled max: 100
       map equation: "20x/51"
     GLV State of Charge:
-      bit_start: 48
+      bit_start: 56
       comment: % charged of the Low Voltage Bat
       data type: u8
       units: '%'
@@ -408,33 +582,33 @@ Message ID:
   ECU Status 2:
     MSG ID: 0x004
     MSG LENGTH: 8
-    Vehicle Speed:
-      bit_start: 0
-      comment: Absolute value of speed
-      data type: u16
-      units: MPH
-      scaled min: 0
-      scaled max: 655.35
-      map equation: "0.01x"
     Tractive System Voltage:
-      bit_start: 16
+      bit_start: 0
       comment: Output terminal voltage of accumulator
       data type: u16
       units: Volts
       scaled min: 0
       scaled max: 655.35
       map equation: "0.01x"
-    FR Wheel RPM:
+    Vehicle Speed:
+      bit_start: 16
+      comment: Absolute value of speed
+      data type: u16
+      units: MPH
+      scaled min: 0
+      scaled max: 655.35
+      map equation: "0.01x"
+    FL Wheel RPM:
       bit_start: 32
-      comment: Wheel RPM
+      comment: FL Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-    FL Wheel RPM:
+    FR Wheel RPM:
       bit_start: 48
-      comment: Wheel RPM
+      comment: FR Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
@@ -442,29 +616,34 @@ Message ID:
       map equation: "0.1x-3276.8"
   ECU Status 3:
     MSG ID: 0x005
-    MSG LENGTH: 4
-    RR Wheel RPM:
-      bit_start: 0
-      comment: Wheel RPM
-      data type: u16
-      units: RPM
-      scaled min: -3276.8
-      scaled max: 3276.7
-      map equation: "0.1x-3276.8"
+    MSG LENGTH: 5
     RL Wheel RPM:
-      bit_start: 16
-      comment: Wheel RPM
+      bit_start: 0
+      comment: RL Wheel RPM
       data type: u16
       units: RPM
       scaled min: -3276.8
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
-  ECU config:
-    MSG ID: 0x006
-    MSG LENGTH: 0
-    Reserved:
-      bit_start: 0
-  BCU Status 1:
+    RR Wheel RPM:
+      bit_start: 16
+      comment: RR Wheel RPM
+      data type: u16
+      units: RPM
+      scaled min: -3276.8
+      scaled max: 3276.7
+      map equation: "0.1x-3276.8"
+    Relay States:
+      bit_start: 32
+      comment:
+        [Byte 4 / Bits 32-39]
+        0: BMS OK
+        1: IMD OK
+        2: BSPD OK
+        3: Software OK
+        4-7: Reserved
+      data type: b
+  ACU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
     Accumulator Voltage:
@@ -507,7 +686,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "20x/51"
-  BCU Status 2:
+  ACU Status 2:
     MSG ID: 0x008
     MSG LENGTH: 7
     20v Voltage:
@@ -533,7 +712,7 @@ Message ID:
     SDC Voltage:
       bit_start: 16
       comment:
-        Voltage before BCU Latch
+        Voltage before ACU Latch
         data type: u8
         units: Volts
         scaled min: 0
@@ -577,13 +756,13 @@ Message ID:
       bit_start: 48
       comment:
         [Byte 6 / Bits 48-55]
-        48: Precharge Timeout
-        49: IR- / Precharge State (0:Open, 1:Closed)
-        50: IR+ State (0:Open, 1:Closed)
-        51: Software Latch (0:Open, 1:Closed)
-        52-55: Reserved
+        55: Precharge Timeout
+        54: IR- / Precharge State (0:Open, 1:Closed)
+        53: IR+ State (0:Open, 1:Closed)
+        52: Software Latch (0:Open, 1:Closed)
+        48-51: Reserved
       data type: b
-  BCU Status 3:
+  ACU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
     HV Input Voltage:
@@ -618,7 +797,7 @@ Message ID:
       scaled min: 0
       scaled max: 65.535
       map equation: "0.001x"
-  BCU Precharge:
+  ACU Precharge:
     MSG ID: 0x00A
     MSG LENGTH: 1
     Set TS Active:
@@ -626,7 +805,7 @@ Message ID:
       comment: 0: shutdown, 1: go TS Active/Precharge
       data type: b
       units: Bool
-  BCU Config Charge Parameters:
+  ACU Config Charge Parameters:
     MSG ID: 0x00B
     MSG LENGTH: 4
     Charge Voltage:
@@ -645,7 +824,7 @@ Message ID:
       scaled min: 0
       scaled max: 6553.5
       map equation: "0.1x"
-  BCU Config Operational Parameters:
+  ACU Config Operational Parameters:
     MSG ID: 0x00C
     MSG LENGTH: 2
     Minimium Cell Voltage:
@@ -664,7 +843,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 1:
+  ACU Cell Data 1:
     MSG ID: 0x00D
     MSG LENGTH: 64
     Cell 0 Voltage:
@@ -1179,7 +1358,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 2:
+  ACU Cell Data 2:
     MSG ID: 0x00E
     MSG LENGTH: 64
     Cell 32 Voltage:
@@ -1694,7 +1873,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 3:
+  ACU Cell Data 3:
     MSG ID: 0x00F
     MSG LENGTH: 64
     Cell 64 Voltage:
@@ -2209,7 +2388,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 4:
+  ACU Cell Data 4:
     MSG ID: 0x010
     MSG LENGTH: 64
     Cell 96 Voltage:
@@ -2724,7 +2903,7 @@ Message ID:
       scaled min: 0
       scaled max: 63.75
       map equation: "0.25x"
-  BCU Cell Data 5:
+  ACU Cell Data 5:
     MSG ID: 0x011
     MSG LENGTH: 64
     Cell 128 Voltage:
@@ -3272,7 +3451,7 @@ Message ID:
     U MOSFET temperature:
       bit_start: 0
       comment: Celsius + 40, uint8_t
-      data type: u8
+      data type: u16
       units: Celsius
       scaled min: -40
       scaled max: 215
@@ -3280,7 +3459,7 @@ Message ID:
     V MOSFET temperature:
       bit_start: 16
       comment: Celsius + 40, uint8_t
-      data type: u8
+      data type: u16
       units: Celsius
       scaled min: -40
       scaled max: 215
@@ -3288,7 +3467,7 @@ Message ID:
     W MOSFET temperature:
       bit_start: 32
       comment: Celsius + 40, uint8_t
-      data type: u8
+      data type: u16
       units: Celsius
       scaled min: -40
       scaled max: 215
@@ -3305,7 +3484,7 @@ Message ID:
       scaled max: 215
       map equation: "x-40"
     fault_bits:
-      bit_start: 16
+      bit_start: 8
       comment: TS above set max voltage, TS below set min voltage, Inverter over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or timeout
       data type: u8
   Inverter Config:
@@ -3426,35 +3605,34 @@ Message ID:
       map equation: "1x"
   Dash Status:
     MSG ID: 0x01A
-    MSG LENGTH: 3
-    button_flags:
+    MSG LENGTH: 1
+    button_led_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: TS Active
-        1: RTD
-        2-7: Reserved
-      data type: u8
-    led_bits:
-      bit_start: 8
-      comment:
-        [Byte 1 / Bits 8-15]
-        0: BMS
-        1: IMD
-        2: BSPD
-        3-7: Reserved
+        0: TS press
+        1: RTD press
+        2: TS hold
+        3: RTD hold
+        4: BSPD led
+        5: IMD led
+        6: BMS led
+        7: Reserved
       data type: u8
   Dash Config:
     MSG ID: 0x01B
     MSG LENGTH: 1
-    led_bits:
+    led_latch_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: BMS LED command
-        1: IMD LED command
-        2: BSPD LED command
-        3-7: Reserved
+        0: BSPD led
+        1: IMD led
+        2: BMS led
+        3: BSPD latch
+        4: IMD latch
+        5: BMS latch
+        6-7: Reserved
       data type: u8
   TCM Status:
     MSG ID: 0x029
@@ -3742,19 +3920,4831 @@ Message ID:
       comment: W
       data type: i16
       map equation: "x/100"
-  ECU Performance:
-    MSG ID: 0x2F
-    MSG LENGTH: 4
-    Elapsed Cycles:
+  ECU Pinging RTT:
+    MSG ID: 0x2D
+    MSG LENGTH: 24
+    ACU RTT:
+      bit_start: 0-7
+      comment: Round trip time
+      data type: u8
+      units: ms
+    GR Inverter RTT:
+      bit_start: 8-15
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 1 RTT:
+      bit_start: 16-23
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 2 RTT:
+      bit_start: 24-31
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Fan Controller 3 RTT:
+      bit_start: 32-39
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Dash Panel RTT:
+      bit_start: 40-47
+      comment: Round trip time
+      data type: u8
+      units: ms
+    TCM RTT:
+      bit_start: 48-55
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp FL RTT:
+      bit_start: 56-63
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp FR RTT:
+      bit_start: 64-71
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp RL RTT:
+      bit_start: 72-79
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Tire Temp RR RTT:
+      bit_start: 80-87
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node FL RTT:
+      bit_start: 88-95
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node FR RTT:
+      bit_start: 96-103
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node RL RTT:
+      bit_start: 104-111
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Suspension Node RR RTT:
+      bit_start: 112-119
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor FL RTT:
+      bit_start: 120-127
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor FR RTT:
+      bit_start: 128-135
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor RL RTT:
+      bit_start: 136-143
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Inboard Floor RR RTT:
+      bit_start: 144-151
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp FL RTT:
+      bit_start: 152-159
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp FR RTT:
+      bit_start: 160-167
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp RL RTT:
+      bit_start: 168-175
+      comment: Round trip time
+      data type: u8
+      units: ms
+    Brake Temp RR RTT:
+      bit_start: 176-183
+      comment: Round trip time
+      data type: u8
+      units: ms
+    DGPS RTT:
+      bit_start: 184-191
+      comment: Round trip time
+      data type: u8
+      units: ms
+  Tire Temp Frame 0:
+    MSG ID: 0x037
+    MSG LENGTH: 64
+    pixel0:
       bit_start: 0
-      comment:
-        Represents the total number of clock cycles elapsed for 10 iterations of the main loop
-      data type: u32
-      units: Clock Cycles
+      data type: u16
+      comment: Tire temperature frame 0 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 0 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 0 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 0 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 0 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 0 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 0 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 0 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 0 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 0 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 0 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 0 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 0 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 0 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 0 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 0 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 0 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 0 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 0 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 0 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 0 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 0 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 0 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 0 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 0 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 0 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 0 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 0 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 0 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 0 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 0 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 0 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 1:
+    MSG ID: 0x038
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 1 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 1 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 1 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 1 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 1 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 1 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 1 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 1 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 1 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 1 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 1 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 1 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 1 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 1 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 1 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 1 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 1 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 1 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 1 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 1 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 1 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 1 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 1 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 1 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 1 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 1 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 1 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 1 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 1 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 1 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 1 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 1 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 2:
+    MSG ID: 0x039
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 2 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 2 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 2 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 2 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 2 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 2 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 2 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 2 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 2 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 2 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 2 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 2 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 2 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 2 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 2 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 2 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 2 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 2 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 2 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 2 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 2 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 2 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 2 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 2 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 2 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 2 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 2 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 2 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 2 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 2 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 2 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 2 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 3:
+    MSG ID: 0x03A
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 3 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 3 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 3 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 3 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 3 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 3 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 3 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 3 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 3 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 3 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 3 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 3 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 3 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 3 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 3 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 3 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 3 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 3 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 3 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 3 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 3 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 3 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 3 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 3 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 3 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 3 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 3 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 3 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 3 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 3 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 3 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 3 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 4:
+    MSG ID: 0x03B
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 4 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 4 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 4 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 4 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 4 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 4 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 4 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 4 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 4 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 4 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 4 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 4 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 4 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 4 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 4 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 4 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 4 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 4 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 4 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 4 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 4 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 4 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 4 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 4 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 4 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 4 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 4 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 4 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 4 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 4 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 4 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 4 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 5:
+    MSG ID: 0x03C
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 5 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 5 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 5 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 5 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 5 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 5 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 5 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 5 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 5 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 5 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 5 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 5 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 5 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 5 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 5 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 5 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 5 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 5 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 5 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 5 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 5 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 5 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 5 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 5 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 5 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 5 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 5 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 5 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 5 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 5 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 5 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 5 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 6:
+    MSG ID: 0x03D
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 6 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 6 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 6 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 6 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 6 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 6 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 6 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 6 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 6 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 6 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 6 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 6 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 6 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 6 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 6 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 6 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 6 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 6 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 6 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 6 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 6 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 6 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 6 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 6 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 6 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 6 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 6 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 6 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 6 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 6 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 6 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 6 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 7:
+    MSG ID: 0x03E
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 7 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 7 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 7 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 7 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 7 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 7 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 7 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 7 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 7 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 7 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 7 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 7 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 7 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 7 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 7 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 7 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 7 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 7 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 7 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 7 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 7 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 7 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 7 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 7 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 7 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 7 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 7 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 7 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 7 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 7 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 7 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 7 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 8:
+    MSG ID: 0x03F
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 8 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 8 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 8 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 8 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 8 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 8 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 8 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 8 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 8 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 8 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 8 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 8 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 8 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 8 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 8 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 8 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 8 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 8 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 8 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 8 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 8 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 8 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 8 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 8 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 8 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 8 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 8 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 8 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 8 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 8 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 8 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 8 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 9:
+    MSG ID: 0x040
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 9 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 9 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 9 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 9 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 9 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 9 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 9 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 9 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 9 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 9 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 9 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 9 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 9 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 9 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 9 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 9 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 9 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 9 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 9 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 9 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 9 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 9 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 9 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 9 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 9 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 9 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 9 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 9 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 9 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 9 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 9 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 9 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 10:
+    MSG ID: 0x041
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 10 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 10 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 10 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 10 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 10 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 10 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 10 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 10 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 10 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 10 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 10 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 10 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 10 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 10 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 10 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 10 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 10 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 10 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 10 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 10 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 10 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 10 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 10 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 10 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 10 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 10 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 10 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 10 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 10 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 10 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 10 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 10 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 11:
+    MSG ID: 0x042
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 11 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 11 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 11 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 11 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 11 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 11 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 11 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 11 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 11 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 11 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 11 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 11 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 11 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 11 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 11 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 11 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 11 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 11 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 11 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 11 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 11 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 11 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 11 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 11 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 11 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 11 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 11 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 11 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 11 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 11 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 11 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 11 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 12:
+    MSG ID: 0x043
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 12 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 12 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 12 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 12 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 12 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 12 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 12 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 12 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 12 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 12 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 12 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 12 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 12 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 12 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 12 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 12 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 12 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 12 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 12 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 12 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 12 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 12 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 12 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 12 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 12 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 12 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 12 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 12 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 12 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 12 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 12 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 12 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 13:
+    MSG ID: 0x044
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 13 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 13 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 13 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 13 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 13 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 13 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 13 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 13 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 13 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 13 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 13 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 13 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 13 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 13 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 13 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 13 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 13 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 13 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 13 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 13 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 13 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 13 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 13 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 13 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 13 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 13 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 13 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 13 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 13 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 13 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 13 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 13 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 14:
+    MSG ID: 0x045
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 14 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 14 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 14 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 14 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 14 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 14 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 14 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 14 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 14 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 14 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 14 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 14 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 14 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 14 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 14 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 14 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 14 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 14 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 14 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 14 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 14 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 14 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 14 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 14 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 14 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 14 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 14 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 14 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 14 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 14 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 14 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 14 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 15:
+    MSG ID: 0x046
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 15 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 15 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 15 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 15 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 15 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 15 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 15 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 15 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 15 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 15 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 15 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 15 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 15 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 15 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 15 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 15 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 15 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 15 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 15 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 15 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 15 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 15 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 15 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 15 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 15 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 15 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 15 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 15 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 15 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 15 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 15 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 15 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 16:
+    MSG ID: 0x047
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 16 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 16 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 16 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 16 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 16 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 16 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 16 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 16 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 16 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 16 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 16 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 16 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 16 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 16 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 16 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 16 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 16 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 16 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 16 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 16 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 16 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 16 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 16 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 16 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 16 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 16 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 16 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 16 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 16 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 16 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 16 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 16 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 17:
+    MSG ID: 0x048
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 17 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 17 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 17 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 17 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 17 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 17 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 17 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 17 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 17 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 17 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 17 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 17 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 17 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 17 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 17 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 17 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 17 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 17 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 17 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 17 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 17 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 17 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 17 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 17 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 17 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 17 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 17 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 17 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 17 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 17 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 17 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 17 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 18:
+    MSG ID: 0x049
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 18 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 18 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 18 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 18 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 18 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 18 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 18 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 18 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 18 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 18 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 18 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 18 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 18 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 18 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 18 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 18 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 18 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 18 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 18 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 18 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 18 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 18 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 18 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 18 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 18 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 18 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 18 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 18 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 18 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 18 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 18 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 18 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 19:
+    MSG ID: 0x04A
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 19 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 19 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 19 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 19 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 19 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 19 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 19 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 19 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 19 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 19 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 19 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 19 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 19 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 19 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 19 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 19 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 19 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 19 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 19 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 19 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 19 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 19 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 19 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 19 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 19 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 19 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 19 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 19 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 19 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 19 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 19 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 19 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 20:
+    MSG ID: 0x04B
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 20 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 20 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 20 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 20 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 20 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 20 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 20 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 20 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 20 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 20 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 20 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 20 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 20 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 20 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 20 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 20 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 20 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 20 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 20 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 20 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 20 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 20 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 20 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 20 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 20 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 20 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 20 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 20 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 20 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 20 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 20 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 20 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 21:
+    MSG ID: 0x04C
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 21 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 21 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 21 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 21 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 21 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 21 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 21 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 21 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 21 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 21 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 21 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 21 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 21 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 21 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 21 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 21 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 21 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 21 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 21 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 21 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 21 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 21 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 21 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 21 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 21 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 21 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 21 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 21 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 21 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 21 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 21 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 21 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 22:
+    MSG ID: 0x04D
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 22 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 22 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 22 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 22 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 22 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 22 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 22 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 22 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 22 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 22 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 22 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 22 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 22 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 22 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 22 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 22 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 22 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 22 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 22 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 22 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 22 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 22 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 22 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 22 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 22 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 22 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 22 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 22 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 22 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 22 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 22 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 22 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Tire Temp Frame 23:
+    MSG ID: 0x04E
+    MSG LENGTH: 64
+    pixel0:
+      bit_start: 0
+      data type: u16
+      comment: Tire temperature frame 23 pixel 0
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel1:
+      bit_start: 16
+      data type: u16
+      comment: Tire temperature frame 23 pixel 1
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel2:
+      bit_start: 32
+      data type: u16
+      comment: Tire temperature frame 23 pixel 2
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel3:
+      bit_start: 48
+      data type: u16
+      comment: Tire temperature frame 23 pixel 3
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel4:
+      bit_start: 64
+      data type: u16
+      comment: Tire temperature frame 23 pixel 4
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel5:
+      bit_start: 80
+      data type: u16
+      comment: Tire temperature frame 23 pixel 5
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel6:
+      bit_start: 96
+      data type: u16
+      comment: Tire temperature frame 23 pixel 6
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel7:
+      bit_start: 112
+      data type: u16
+      comment: Tire temperature frame 23 pixel 7
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel8:
+      bit_start: 128
+      data type: u16
+      comment: Tire temperature frame 23 pixel 8
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel9:
+      bit_start: 144
+      data type: u16
+      comment: Tire temperature frame 23 pixel 9
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel10:
+      bit_start: 160
+      data type: u16
+      comment: Tire temperature frame 23 pixel 10
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel11:
+      bit_start: 176
+      data type: u16
+      comment: Tire temperature frame 23 pixel 11
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel12:
+      bit_start: 192
+      data type: u16
+      comment: Tire temperature frame 23 pixel 12
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel13:
+      bit_start: 208
+      data type: u16
+      comment: Tire temperature frame 23 pixel 13
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel14:
+      bit_start: 224
+      data type: u16
+      comment: Tire temperature frame 23 pixel 14
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel15:
+      bit_start: 240
+      data type: u16
+      comment: Tire temperature frame 23 pixel 15
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel16:
+      bit_start: 256
+      data type: u16
+      comment: Tire temperature frame 23 pixel 16
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel17:
+      bit_start: 272
+      data type: u16
+      comment: Tire temperature frame 23 pixel 17
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel18:
+      bit_start: 288
+      data type: u16
+      comment: Tire temperature frame 23 pixel 18
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel19:
+      bit_start: 304
+      data type: u16
+      comment: Tire temperature frame 23 pixel 19
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel20:
+      bit_start: 320
+      data type: u16
+      comment: Tire temperature frame 23 pixel 20
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel21:
+      bit_start: 336
+      data type: u16
+      comment: Tire temperature frame 23 pixel 21
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel22:
+      bit_start: 352
+      data type: u16
+      comment: Tire temperature frame 23 pixel 22
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel23:
+      bit_start: 368
+      data type: u16
+      comment: Tire temperature frame 23 pixel 23
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel24:
+      bit_start: 384
+      data type: u16
+      comment: Tire temperature frame 23 pixel 24
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel25:
+      bit_start: 400
+      data type: u16
+      comment: Tire temperature frame 23 pixel 25
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel26:
+      bit_start: 416
+      data type: u16
+      comment: Tire temperature frame 23 pixel 26
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel27:
+      bit_start: 432
+      data type: u16
+      comment: Tire temperature frame 23 pixel 27
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel28:
+      bit_start: 448
+      data type: u16
+      comment: Tire temperature frame 23 pixel 28
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel29:
+      bit_start: 464
+      data type: u16
+      comment: Tire temperature frame 23 pixel 29
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel30:
+      bit_start: 480
+      data type: u16
+      comment: Tire temperature frame 23 pixel 30
+      units: C
+      map equation: "x*340*2^-16 - 40"
+    pixel31:
+      bit_start: 496
+      data type: u16
+      comment: Tire temperature frame 23 pixel 31
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Brake Temp:
+    MSG ID: 0x04F
+    MSG LENGTH: 16
+    temp:
+      bit_start: 0
+      data type: u16
+      comment: Brake rotor temperature
+      units: C
+      map equation: "x*340*2^-16 - 40"
+  Wheel Speed:
+    MSG ID: 0x050
+    MSG LENGTH: 16
+    speed:
+      bit_start: 0
+      data type: u16
+      comment: Wheel speed rpm
+      units: RPM
+      map equation: "x/8"
 
 Custom CAN ID:
   DTI Control 1:
-    CAN ID: 116
+    CAN ID: 0x116
     Length: 2
     signals:
       - name: "Target AC Current"
@@ -3769,7 +8759,7 @@ Custom CAN ID:
           correlates with the motor AC current. (For the correlation, please
           refer to the motor parameters)
   DTI Control 2:
-    CAN ID: 216
+    CAN ID: 0x216
     Length: 2
     signals:
       - name: "Target Brake Current"
@@ -3780,7 +8770,7 @@ Custom CAN ID:
           This value must be multiplied by 10 before sending, only
           positive currents are accepted.
   DTI Control 3:
-    CAN ID: 316
+    CAN ID: 0x316
     Length: 4
     signals:
       - name: "Target ERPM"
@@ -3792,7 +8782,7 @@ Custom CAN ID:
           need to tune the PID of speed control.
           Equation: ERPM = Motor RPM * number of the motor pole pairs
   DTI Control 4:
-    CAN ID: 416
+    CAN ID: 0x416
     Length: 2
     signals:
       - name: "Target Position"
@@ -3803,7 +8793,7 @@ Custom CAN ID:
           This feature is enabled only if encoder is used as position
           sensor. The value has to be multiplied by 10 before sending.
   DTI Control 5:
-    CAN ID: 516
+    CAN ID: 0x516
     Length: 2
     signals:
       - name: "R-AC Current"
@@ -3817,7 +8807,7 @@ Custom CAN ID:
           This value must be between -100 and 100 and must be
           multiplied by 10 before sending.
   DTI Control 6:
-    CAN ID: 616
+    CAN ID: 0x616
     Length: 2
     signals:
       - name: "R-AC Brake Current"
@@ -3832,7 +8822,7 @@ Custom CAN ID:
           This value must be between 0 and 100 and has to be multiplied
           by 10 before sending
   DTI Control 7:
-    CAN ID: 716
+    CAN ID: 0x716
     Length: 1
     signals:
       - name: "Digital Output 1"
@@ -3848,7 +8838,7 @@ Custom CAN ID:
         bit_start: 3
         comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
   DTI Control 8:
-    CAN ID: 816
+    CAN ID: 0x816
     Length: 2
     signals:
       - name: "Max AC Current"
@@ -3859,7 +8849,7 @@ Custom CAN ID:
           maximum torque on the motor.
           The value must be multiplied by 10 before sending.
   DTI Control 9:
-    CAN ID: 916
+    CAN ID: 0x916
     Length: 2
     signals:
       - name: "Max Brake AC Current"
@@ -3870,7 +8860,7 @@ Custom CAN ID:
           This value must be multiplied by 10 before sending, only
           negative currents are accepted.
   DTI Control 10:
-    CAN ID: A16
+    CAN ID: 0xA16
     Length: 2
     signals:
       - name: "Max DC Current"
@@ -3881,7 +8871,7 @@ Custom CAN ID:
           maximum allowable battery discharge current.
           The value has to be multiplied by 10 before sending.
   DTI Control 11:
-    CAN ID: B16
+    CAN ID: 0xB16
     Length: 2
     signals:
       - name: "Max Brake DC Current"
@@ -3893,7 +8883,7 @@ Custom CAN ID:
           The value has to be multiplied by 10 before sending. Only
           negative currents are accepted.
   DTI Control 12:
-    CAN ID: C16
+    CAN ID: 0xC16
     Length: 1
     signals:
       - name: "Drive Enable"
@@ -3904,7 +8894,7 @@ Custom CAN ID:
           Only 0 and 1 values are accepted. Must be sent periodically to
           be enabled.
   DTI Data 1:
-    CAN ID: 2016
+    CAN ID: 0x2016
     Length: 8
     signals:
       - name: "ERPM"
@@ -3922,7 +8912,7 @@ Custom CAN ID:
         bit_start: 48
         comment: Input voltage is the DC voltage.
   DTI Data 2:
-    CAN ID: 2116
+    CAN ID: 0x2116
     Length: 8
     signals:
       - name: "AC Current"
@@ -3939,9 +8929,9 @@ Custom CAN ID:
           regenerating (negative) current.
       - name: "RESERVED"
         bit_start: 32
-        comment: Filled with FF’s. For future use.
+        comment: Filled with FF's. For future use.
   DTI Data 3:
-    CAN ID: 2216
+    CAN ID: 0x2216
     Length: 8
     signals:
       - name: "Controller Temp"
@@ -3971,12 +8961,12 @@ Custom CAN ID:
           processing the sensor signals
           0x09 : CAN Command error - CAN message received contains
           parameter out of boundaries
-          0x0A : Analog input error – Redundant output out of range
+          0x0A : Analog input error - Redundant output out of range
       - name: "RESERVED"
         bit_start: 40
-        comment: Filled with FF’s. For future use.
+        comment: Filled with FF's. For future use.
   DTI Data 4:
-    CAN ID: 2316
+    CAN ID: 0x2316
     Length: 8
     signals:
       - name: "FOC Id"
@@ -3986,7 +8976,7 @@ Custom CAN ID:
         bit_start: 32
         comment: FOC algorithm component Id\q.
   DTI Data 5:
-    CAN ID: 2416
+    CAN ID: 0x2416
     Length: 8
     signals:
       - name: "Throttle"
@@ -4089,12 +9079,12 @@ Custom CAN ID:
         comment: Set to 0.
       - name: "RESERVED"
         bit_start: 48
-        comment: Filled with FF’s. For future use.
+        comment: Filled with FF's. For future use.
       - name: "CAN Version"
         bit_start: 56
         comment: Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
   IMD general:
-    CAN ID: 18FF01F4
+    CAN ID: 0x18FF01F4
     Length: 8
     signals:
       - name: "R_Iso_Corrected"
@@ -4121,29 +9111,29 @@ Custom CAN ID:
         bit_start: 48
       - name: "RESERVED"
         bit_start: 56
-        comment: Filled with FF’s
+        comment: Filled with FF's
   IMD isolation info:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD voltage:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD IT-system:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD request:
-    CAN ID: 18EFF4FE
+    CAN ID: 0x18EFF4FE
     Length: 0
     signals: []
   IMD response:
-    CAN ID: 23
+    CAN ID: 0x23
     Length: 0
     signals: []
   Charger Data:
-    CAN ID: 18FF50E5
+    CAN ID: 0x18FF50E5
     Length: 8
     signals:
       - name: "Output Voltage"
@@ -4168,7 +9158,7 @@ Custom CAN ID:
       - name: "RESERVED"
         bit_start: 24
   Charger Control:
-    CAN ID: 1806E5F4
+    CAN ID: 0x1806E5F4
     Length: 5
     signals:
       - name: "Set Voltage"
@@ -4181,7 +9171,7 @@ Custom CAN ID:
           1: Start Charging
           0: Stop Charging
   EM Measurement:
-    CAN ID: 10d
+    CAN ID: 0x10D
     Length: 8
     signals:
       - name: "Current"
@@ -4191,7 +9181,7 @@ Custom CAN ID:
         bit_start: 32
         comment: TS Voltage
   EM Status:
-    CAN ID: 40d
+    CAN ID: 0x40D
     Length: 8
     signals:
       - name: "Violation"
@@ -4204,7 +9194,7 @@ Custom CAN ID:
         bit_start: 8
         comment: Energy used in Wh
   EM Temperature:
-    CAN ID: 60d
+    CAN ID: 0x60D
     Length: 8
     signals:
       - name: "Mux Signal"
@@ -4231,7 +9221,7 @@ Custom CAN ID:
       - name: "Temp 5n+4"
         bit_start: 56
   EM Team Data 1:
-    CAN ID: 30d
+    CAN ID: 0x30D
     Length: 8
     signals:
       - name: "Team Signal 1"
@@ -4241,7 +9231,7 @@ Custom CAN ID:
         bit_start: 32
         comment: Frick if I know
   EM Team Data 2:
-    CAN ID: 30e
+    CAN ID: 0x30E
     Length: 8
     signals:
       - name: "Team Signal 3"
@@ -4252,7 +9242,7 @@ Custom CAN ID:
         comment: Frick if I know
 
 GR ID:
-
+  ALL: "0x00"
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
   Charger: "0x00"
@@ -4260,7 +9250,7 @@ GR ID:
   Debugger: "0x01"
   CCU: "0x02"
   ECU: "0x02"
-  BCU: "0x03"
+  ACU: "0x03"
   TCM: "0x04"
   Dash Panel: "0x05"
   GR Inverter: "0x08"
@@ -4268,13 +9258,20 @@ GR ID:
   Fan Controller 1: "0x0D"
   Fan Controller 2: "0x0E"
   Fan Controller 3: "0x0F"
-  DGPS: "0x30"
-  SAMM_Mag_1: "0x20"
-  SAMM_Mag_2: "0x21"
-  SAMM_ToF_1: "0x22"
-  SAMM_ToF_2: "0x23"
-  TireTemp_1: "0x24"
-  TireTemp_2: "0x25"
-  TireTemp_3: "0x26"
-  TireTemp_4: "0x27"
-  ALL: "0xFF"
+  TireTemp FL: "0x10"
+  TireTemp FR: "0x11"
+  TireTemp RL: "0x12"
+  TireTemp RR: "0x13"
+  Suspension FL: "0x14"
+  Suspension FR: "0x15"
+  Suspension RL: "0x16"
+  Suspension RR: "0x17"
+  InboardFloor FL: "0x18"
+  InboardFloor FR: "0x19"
+  InboardFloor RL: "0x1A"
+  InboardFloor RR: "0x1B"
+  BrakeTemp FL: "0x1C"
+  BrakeTemp FR: "0x1D"
+  BrakeTemp RL: "0x1E"
+  BrakeTemp RR: "0x1F"
+  DGPS: "0x20"

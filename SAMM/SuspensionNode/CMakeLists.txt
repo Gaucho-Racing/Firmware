@@ -30,13 +30,11 @@ target_sources(
 		Src/crc.c
 		Src/dma.c
 		Src/gpio.c
-		Src/i2c.c
+		Src/mag.c
 		Src/main.c
 		Src/spi.c
 		Src/stm32h5xx_it.c
-		Src/platform.c
-		Src/VL53L4ED_api.c
-		Src/VL53L4ED_calibration.c
+		Src/can_sus.c
 	# TODO
 )
 
@@ -47,11 +45,12 @@ target_link_libraries(
 		PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
 		SAMM_IMU_Lib
+		GRCAN_FANCYLAYER
 )
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Inc
-	#TODO: Figure out how to set up Extras folder
+		GRCAN
 )

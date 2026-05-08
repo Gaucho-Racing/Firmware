@@ -18,6 +18,8 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 	mag_dev->port = port;
 	mag_dev->pin = pin;
 
+	HAL_Delay(20);
+
 	uint16_t status = mag_read(mag_dev, 0x22);
 
 	// Check AOK=1 (bit 0) and BIP=0 (bit 1)
@@ -77,7 +79,7 @@ data (8 bits)
 crc (4 bits -- optional)
 */
 
-uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
+void mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 {
 	uint16_t msb = ((data & mag_msb) >> 8) | (((uint16_t)reg & mag_addr_mask) << 8) | 0x4000;
 
@@ -88,15 +90,13 @@ uint16_t mag_write(mag *mag_dev, uint8_t reg, uint16_t data)
 	uint16_t lsb = (data & mag_lsb) | (((uint16_t)reg & mag_addr_mask) << 8) | 0x4000;
 
 	mag_transmit(mag_dev, lsb);
-
-	return 0;
 }
 
 // Address 0x32:0x33 (ANG15)—Current Angle Reading (15 bits)
 uint16_t mag_read_encoder_angle(mag *mag_dev)
 {
 	uint16_t read_angle = mag_read(mag_dev, 0x32); // 0x32 is angle register
-	return ((uint16_t)(read_angle & 0x7FFF));      // Mask to 15 bits (valid angle data)
+	return ((uint16_t)(read_angle & 0x7FFF));      // Mask to 15 bits (valid angle data) before conversion
 }
 
 // Address 0x22:0x23 (STA)—Device Status
@@ -111,7 +111,7 @@ uint8_t mag_read_temp(mag *mag_dev)
 {
 	uint16_t read_temp = mag_read(mag_dev, 0x28);			     // 0x28 is temp register
 	float masked_temp = ((uint16_t)(read_temp & 0x0FFF) / 8.0f) + 25.0f; // Mask to 12 bits (valid temp data)
-	float offset_temp = masked_temp + 60.0f;
+	float offset_temp = masked_temp + 60.0f;			     // temperature offset by 60 degrees
 	return (uint8_t)offset_temp;
 }
 
@@ -131,11 +131,11 @@ Check the status of the acc, gyro and temp before returning the values
 bool check_status(mag *mag_dev)
 {
 	// Device Error Flags
-	uint32_t error25 = mag_read(mag_dev, 0x25);
-	bool voltage_err = ((error25 & 0x18) > 0);
+	uint16_t error25 = mag_read(mag_dev, 0x24);
+	bool voltage_err = ((error25 & 0x0C) > 0);
 	bool magnetic_err = ((error25 & 0x02) > 0);
 
-	uint32_t error24 = mag_read(mag_dev, 0x24);
+	uint16_t error24 = mag_read(mag_dev, 0x24);
 	bool angle_error = ((error24 & 0x02) > 0);
 
 	// Device Warning Flags
@@ -145,18 +145,22 @@ bool check_status(mag *mag_dev)
 	bool invalid_spi_len = ((warning26 & 0x80) > 0);
 	bool temp_out_of_range = ((warning27 & 0x40) > 0);
 
-	bool turn_counter_saturated = ((warning27 && 0x01) > 0);
-	bool excessive_magnet_vel = ((warning27 && 0x08) > 0);
+	bool turn_counter_saturated = ((warning27 & 0x01) > 0);
+	bool excessive_magnet_vel = ((warning27 & 0x08) > 0);
 
 	// fix-me add LOGOMATIC
 
-	return (voltage_err && magnetic_err && angle_error && invalid_spi_len && temp_out_of_range && turn_counter_saturated && excessive_magnet_vel);
+	return (voltage_err || magnetic_err || angle_error || invalid_spi_len || temp_out_of_range || turn_counter_saturated || excessive_magnet_vel);
 }
 
 int16_t mag_read_turns(mag *mag_dev)
 {
-	int16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
-	return ((int16_t)(read_turns & 0x0FFF));      // Mask to 12 bits (valid angle data)
+	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
+	int16_t turns = read_turns & 0x0FFF;	       // Mask to 12 bits (valid angle data)
+	if (turns & 0x0800) {
+		turns |= 0xF000; // sign extend bit 11 to bits 15:12
+	}
+	return turns;
 }
 
 // Address 0x24:0x25 (ERR)—Device Error Flags
@@ -165,8 +169,8 @@ int16_t mag_read_turns(mag *mag_dev)
 // Address 0x30:0x31 (HANG)—Hysteresis Angle Value (12 bits)
 float mag_read_HANG(mag *mag_dev)
 {
-	int16_t read_HANG = mag_read(mag_dev, 0x30);		 // 0x30 is Hysteresis Angle Value
-	return ((int16_t)(read_HANG & 0x0FFF) * 360.0f / 32768); // Mask to 12 bits (valid angle data)
+	int16_t read_HANG = mag_read(mag_dev, 0x30);		   // 0x30 is Hysteresis Angle Value
+	return ((int16_t)(read_HANG & 0x0FFF) * 360.0f / 4096.0f); // Mask to 12 bits (valid angle data)
 }
 
 // Address 0x1E:0x1F (CTRL)—Device Control

@@ -14,5 +14,5 @@ extern volatile bool request_print_statedata;
 void setSoftwareLatch(bool state, CCU_StateData *state_data);
 void CheckDebuggerPrint(const CCU_StateData *state_data);
 bool CriticalError(const CCU_StateData *state_data);
-bool BCU_Warnings(const CCU_StateData *state_data);
+bool ACU_Warnings(const CCU_StateData *state_data);
 #endif

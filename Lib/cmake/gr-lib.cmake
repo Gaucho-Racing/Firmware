@@ -43,5 +43,9 @@ function(add_gr_project)
 			PRIVATE
 				LINKER:-Map,$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map
 		)
+
+		if(DEFINED NODE)
+			target_compile_definitions(${TARGET_NAME} PRIVATE NODE=${NODE})
+		endif()
 	endif()
 endfunction()

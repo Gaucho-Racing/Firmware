@@ -22,13 +22,13 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
 	switch (messageId) {
-		case GRCAN_BCU_STATUS_2:
-			if (size != sizeof(GRCAN_BCU_STATUS_2_MSG)) {
+		case GRCAN_ACU_STATUS_2:
+			if (size != sizeof(GRCAN_ACU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
 				break;
 			}
 
-			LOGOMATIC("Received a BCU STATUS 2 msg\n");
+			LOGOMATIC("Received a ACU STATUS 2 msg\n");
 
 			// FIXME: Might need to double check we are doing this v
 			//  cast *data to whatever msg dti control 10 struct there is
@@ -36,22 +36,22 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			// What the rewrite would look like: STATUS 2
 
-			GRCAN_BCU_STATUS_2_MSG *bcu_status_2 = (GRCAN_BCU_STATUS_2_MSG *)data;
-			state_data.BCU_S2_20Volt = bcu_status_2->_20v_voltage;
-			state_data.BCU_S2_12Volt = bcu_status_2->_12v_voltage;
-			state_data.BCU_S2_SDC_Volt = bcu_status_2->sdc_voltage;
-			state_data.BCU_S2_MIN_CELL_Volt = bcu_status_2->min_cell_voltage;
-			state_data.BCU_S2_MAX_CELL_TEMP = bcu_status_2->max_cell_temp;
+			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
+			state_data.ACU_S2_20Volt = acu_status_2->_20v_voltage;
+			state_data.ACU_S2_12Volt = acu_status_2->_12v_voltage;
+			state_data.ACU_S2_SDC_Volt = acu_status_2->sdc_voltage;
+			state_data.ACU_S2_MIN_CELL_Volt = acu_status_2->min_cell_voltage;
+			state_data.ACU_S2_MAX_CELL_TEMP = acu_status_2->max_cell_temp;
 
-			state_data.BCU_S2_OVERTEMP_ERROR = GETBIT(bcu_status_2->status_flags, 0);
-			state_data.BCU_S2_OVERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 1);
-			state_data.BCU_S2_UNDERVOLT_ERROR = GETBIT(bcu_status_2->status_flags, 2);
-			state_data.BCU_S2_OVERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 3);
-			state_data.BCU_S2_UNDERCURR_ERROR = GETBIT(bcu_status_2->status_flags, 4);
+			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(acu_status_2->status_flags, 0);
+			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 1);
+			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 2);
+			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(acu_status_2->status_flags, 3);
+			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(acu_status_2->status_flags, 4);
 
-			state_data.BCU_S2_UNDER20v_WARNING = GETBIT(bcu_status_2->status_flags, 5);
-			state_data.BCU_S2_UNDER12v_WARNING = GETBIT(bcu_status_2->status_flags, 6);
-			state_data.BCU_S2_UNDERVOLTSDC_WARNING = GETBIT(bcu_status_2->status_flags, 7);
+			state_data.ACU_S2_UNDER20v_WARNING = GETBIT(acu_status_2->status_flags, 5);
+			state_data.ACU_S2_UNDER12v_WARNING = GETBIT(acu_status_2->status_flags, 6);
+			state_data.ACU_S2_UNDERVOLTSDC_WARNING = GETBIT(acu_status_2->status_flags, 7);
 
 			break;
 
@@ -82,8 +82,8 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
 	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;
 
 	canCfg.rx_callback = Read_CAN;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
@@ -134,23 +134,24 @@ void CAN_Configure(void)
 
 	primary_can = can_init(&canCfg); // FIXME: make type *CANHANDLE, look at can.h
 
-	// Filter 1 Definitions
-	FDCAN_FilterTypeDef fdcan1_filter;
+	FDCAN_FilterTypeDef fdcan1_filter_ccu = {0};
+	fdcan1_filter_ccu.IdType = FDCAN_EXTENDED_ID;
+	fdcan1_filter_ccu.FilterIndex = 0;
+	fdcan1_filter_ccu.FilterType = FDCAN_FILTER_MASK;
+	fdcan1_filter_ccu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan1_filter_ccu.FilterID1 = GRCAN_CCU & 0xFF;
+	fdcan1_filter_ccu.FilterID2 = 0x000000FF;
 
-	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter.FilterIndex = 0;
-	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
-	fdcan1_filter.FilterID2 = 0x00000FF;
+	FDCAN_FilterTypeDef fdcan1_filter_all = {0};
+	fdcan1_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan1_filter_all.FilterIndex = 1;
+	fdcan1_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan1_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan1_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan1_filter_all.FilterID2 = 0x000000FF;
 
-	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
-
-	// CAN2 ======================================================
-
-	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
+	can_add_filter(primary_can, &fdcan1_filter_ccu);
+	can_add_filter(primary_can, &fdcan1_filter_all);
 
 	can_start(primary_can);
 }
@@ -159,7 +160,7 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 {
 
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = ((0xFF & LOCAL_GR_ID) << 20) | ((0xFFF & GRCAN_BCU_PRECHARGE) << 8) | (0xFF & GRCAN_BCU);
+	msg.tx_header.Identifier = ((0xFF & GRCAN_CCU) << 20) | ((0xFFF & GRCAN_ACU_PRECHARGE) << 8) | (0xFF & GRCAN_ACU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
@@ -168,9 +169,9 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
 
-	msg.data[0] = (state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+	msg.data[0] = (state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
 
-	LOGOMATIC("PRECHARGE SET: %d\n", state_data->BCU_PRECHARGE_SET_TS_ACTIVE);
+	LOGOMATIC("PRECHARGE SET: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
 
 	can_send(primary_can, &msg);
 

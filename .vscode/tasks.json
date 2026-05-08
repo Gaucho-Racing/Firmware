@@ -10,6 +10,26 @@
 			]
 		},
 		{
+			"label": "CMake: configure NODE=FL",
+			"type": "shell",
+			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=FL"
+		},
+		{
+			"label": "CMake: configure NODE=FR",
+			"type": "shell",
+			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=FR"
+		},
+		{
+			"label": "CMake: configure NODE=RL",
+			"type": "shell",
+			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=RL"
+		},
+		{
+			"label": "CMake: configure NODE=RR",
+			"type": "shell",
+			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=RR"
+		},
+		{
 			"label": "CMake: configure and build ECU",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -46,13 +66,112 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CANine"
 		},
 		{
-			"label": "CMake: configure and build TireTemp",
+			"label": "CMake: configure and build TireTemp FL",
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"CMake: configure"
+				"CMake: configure NODE=FL"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+		},
+		{
+			"label": "CMake: configure and build TireTemp FR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+		},
+		{
+			"label": "CMake: configure and build TireTemp RL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+		},
+		{
+			"label": "CMake: configure and build TireTemp RR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
+		},
+		{
+			"label": "CMake: configure and build InboardFloor FL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target InboardFloor"
+		},
+		{
+			"label": "CMake: configure and build InboardFloor FR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target InboardFloor"
+		},
+		{
+			"label": "CMake: configure and build InboardFloor RL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target InboardFloor"
+		},
+		{
+			"label": "CMake: configure and build InboardFloor RR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target InboardFloor"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode FL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode FR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=FR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode RL",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RL"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
+		},
+		{
+			"label": "CMake: configure and build SuspensionNode RR",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure NODE=RR"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target SuspensionNode"
 		},
 		{
 			"label": "CMake: configure and build AnalogCalibration",

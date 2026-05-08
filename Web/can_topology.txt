@@ -5,12 +5,12 @@
 # A node can appear on multiple buses.
 # Lines starting with # are comments. Blank lines are ignored.
 
-CAN1:
+Primary:
   ECU
   TCM
-  BCU
+  ACU
   DGPS
-  # Both inverters share CAN1. Whichever isn't physically connected
+  # Both inverters share the Primary bus. Whichever isn't physically connected
   # has its messages go nowhere — no firmware switch needed.
   GR Inverter
   DTI Inverter
@@ -20,10 +20,10 @@ CAN1:
   Energy Meter
   Dash Panel
 
-CAN2:
+Data:
   ECU
   TCM
-  BCU
+  ACU
   DGPS
   SAMM_Mag_1
   SAMM_Mag_2
@@ -34,9 +34,9 @@ CAN2:
   TireTemp_3
   TireTemp_4
 
-CAN3:
+Charger:
   CCU
-  BCU
+  ACU
   Charger
   IMD
   Energy Meter
