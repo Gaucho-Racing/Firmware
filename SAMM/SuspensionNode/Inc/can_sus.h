@@ -2,7 +2,7 @@
 #define CAN_MAG_H
 
 #include <stdint.h>
-
+#include "NodeID.h"
 #include "GRCAN_FancyLayer.h"
 #include "Logomatic.h"
 

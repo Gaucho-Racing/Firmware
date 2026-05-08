@@ -1,12 +1,13 @@
 #include "can_sus.h"
-
 #include "can_cfg.h"
 
 static GRCAN_NODE_ID destNode = GRCAN_TCM;
-static GRCAN_NODE_ID localNode = GRCAN_ALL;
+//static GRCAN_NODE_ID localNode = GRCAN_ALL;
+static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
-
+static GRCAN_NODE_ID sensorNode = ;//tire temp
 static CAN_MAG_MSG_ID msgID = CAN_MAG_MSG_DATA;
+static data_length = 64;
 
 void SusNode_ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
@@ -20,13 +21,13 @@ void SusNode_ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GR
 
 void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, void *data, uint32_t data_length)
 {
+	// Forward all messages to subnet bus
+	GRCAN_Fancy_Send(CAN_SUBNET_BUS, sender_id, msg_id, data, data_length);
+
 	if (msg_id == GRCAN_PING) {
 		// Send ping back to sender on main data bus
 		GRCAN_Fancy_Send(CAN_DATAMAIN_BUS, sender_id, msg_id, data, data_length);
 	}
-
-	// Forward all messages to subnet bus
-	GRCAN_Fancy_Send(CAN_SUBNET_BUS, sender_id, msg_id, data, data_length);
 }
 
 void SusNode_CAN_Send(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, GRCAN_NODE_ID dest_id, void *data, uint32_t data_length)
