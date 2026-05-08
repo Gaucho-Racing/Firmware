@@ -22,15 +22,18 @@ void CCU_State_Tick(CCU_StateData *state_data)
 
 		case CCU_STATE_IDLE:
 			STATE_IDLE(state_data);
+			LOGOMATIC("CCU Current State: Idle\n");
 			break;
 
 		case CCU_STATE_CHARGING:
 			STATE_CHARGING(state_data);
+			LOGOMATIC("CCU Current State: Charging\n");
 			break;
 
 		default:
 			state_data->state = CCU_STATE_IDLE;
 			TripSoftwareLatch(state_data);
+			LOGOMATIC("Invalid State Detected, Transitioning to IDLE\n");
 			break;
 	};
 }
