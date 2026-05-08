@@ -38,7 +38,6 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 				return;
 			}
 
-
 			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
 
 			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(acu_status_2->status_flags, 0);
@@ -159,7 +158,6 @@ void CAN_Configure(void)
 
 	can_start(primary_can);
 }
-
 
 void SendPrechargeStatus(bool setPrecharge)
 {
