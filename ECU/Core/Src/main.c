@@ -366,7 +366,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	Setup_Logomatic(&logomaticConfig);
+	// Setup_Logomatic(&logomaticConfig);
 	/* USER CODE END Init */
 
 	/* Configure the system clock */

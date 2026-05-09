@@ -15,7 +15,7 @@ if(
 			STREQUAL
 			"RelWithDebInfo"
 )
-	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
+	target_compile_definitions(GLOBALSHARE_LIB INTERFACE)
 	add_compile_options(
 		-u
 		_printf_float
