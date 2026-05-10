@@ -4,8 +4,8 @@
 			"name": "POWER/HV",
 			"side": "top",
 			"nodes": [
-				"DTI Inv",
-				"GR Inv"
+				"DTI Inverter",
+				"GR Inverter"
 			]
 		},
 		{

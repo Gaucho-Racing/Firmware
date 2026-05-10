@@ -65,13 +65,13 @@ routing:
         GR Inv:
           - msg: Debug 2.0
           - msg: Ping
-        Fan Ctrl 1:
+        Fan Controller 1:
           - msg: Debug 2.0
           - msg: Ping
-        Fan Ctrl 2:
+        Fan Controller 2:
           - msg: Debug 2.0
           - msg: Ping
-        Fan Ctrl 3:
+        Fan Controller 3:
           - msg: Debug 2.0
           - msg: Ping
       Data:
@@ -139,13 +139,13 @@ routing:
           - msg: Inv Config
           - msg: Inv Cmd
           - msg: Ping
-        Fan Ctrl 1:
+        Fan Controller 1:
           - msg: Fan Cmd
           - msg: Ping
-        Fan Ctrl 2:
+        Fan Controller 2:
           - msg: Fan Cmd
           - msg: Ping
-        Fan Ctrl 3:
+        Fan Controller 3:
           - msg: Fan Cmd
           - msg: Ping
         Dash Panel:
@@ -211,7 +211,7 @@ routing:
             can_id_override: 0x40d
           - msg: EM Temp
             can_id_override: 0x60d
-    Fan Ctrl 1:
+    Fan Controller 1:
       Primary:
         Debugger:
           - msg: Debug 2.0
@@ -219,7 +219,7 @@ routing:
         ECU:
           - msg: Ping
           - msg: Fan Status
-    Fan Ctrl 2:
+    Fan Controller 2:
       Primary:
         Debugger:
           - msg: Debug 2.0
@@ -227,7 +227,7 @@ routing:
         ECU:
           - msg: Ping
           - msg: Fan Status
-    Fan Ctrl 3:
+    Fan Controller 3:
       Primary:
         Debugger:
           - msg: Debug 2.0
@@ -512,9 +512,9 @@ Message ID:
         [Byte 1 / Bits 8-15] ECU ping targets
         8: ACU (1: OK, 0: Timeout)
         9: GR Inv (1: OK, 0: Timeout)
-        10: Fan Ctrl 1 (1: OK, 0: Timeout)
-        11: Fan Ctrl 2 (1: OK, 0: Timeout)
-        12: Fan Ctrl 3 (1: OK, 0: Timeout)
+        10: Fan Controller 1 (1: OK, 0: Timeout)
+        11: Fan Controller 2 (1: OK, 0: Timeout)
+        12: Fan Controller 3 (1: OK, 0: Timeout)
         13: Dash Panel (1: OK, 0: Timeout)
         14: TCM (1: OK, 0: Timeout)
         15: DGPS (1: OK, 0: Timeout)
@@ -3933,17 +3933,17 @@ Message ID:
       comment: Round trip time
       data type: u8
       units: ms
-    Fan Ctrl 1 RTT:
+    Fan Controller 1 RTT:
       bit_start: 16-23
       comment: Round trip time
       data type: u8
       units: ms
-    Fan Ctrl 2 RTT:
+    Fan Controller 2 RTT:
       bit_start: 24-31
       comment: Round trip time
       data type: u8
       units: ms
-    Fan Ctrl 3 RTT:
+    Fan Controller 3 RTT:
       bit_start: 32-39
       comment: Round trip time
       data type: u8
@@ -9255,9 +9255,9 @@ GR ID:
   Dash Panel: "0x05"
   GR Inv: "0x08"
   Charging SDC: "0x0C"
-  Fan Ctrl 1: "0x0D"
-  Fan Ctrl 2: "0x0E"
-  Fan Ctrl 3: "0x0F"
+  Fan Controller 1: "0x0D"
+  Fan Controller 2: "0x0E"
+  Fan Controller 3: "0x0F"
   TireTemp FL: "0x10"
   TireTemp FR: "0x11"
   TireTemp RL: "0x12"
