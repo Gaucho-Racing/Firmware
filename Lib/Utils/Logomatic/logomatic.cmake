@@ -20,6 +20,7 @@ endif()
 
 # Main compilation flag to enable logomatic
 if(CMAKE_LOGOMATIC_ENABLED)
+	message(STATUS "Logomatic enabled")
 	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
 endif()
 
