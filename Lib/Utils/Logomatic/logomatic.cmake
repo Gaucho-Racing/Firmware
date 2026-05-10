@@ -31,8 +31,6 @@ if(CMAKE_LOGOMATIC_ENABLED)
 endif()
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
-
 	add_executable(logomatic_simple)
 	target_sources(
 		logomatic_simple
