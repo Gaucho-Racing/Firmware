@@ -13,6 +13,11 @@ target_sources(
 )
 target_link_libraries(LOGOMATIC_LIB INTERFACE GLOBALSHARE_LIB)
 
+# Default logomatic to be disabled
+if(NOT DEFINED CMAKE_LOGOMATIC_ENABLED)
+	set(CMAKE_LOGOMATIC_ENABLED OFF)
+endif()
+
 # Main compilation flag to enable logomatic
 if(CMAKE_LOGOMATIC_ENABLED)
 	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
