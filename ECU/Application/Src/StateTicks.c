@@ -38,13 +38,13 @@ void ECU_State_Tick(void)
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
 
-	//light control
-	// false or imd_sense  > 0.5 -> false -> no light
-	// false or imd_sense < 0.5 -> true -> light
-	// true or imd_sense > 0.5 -> true -> light stays on
-	// stateLump.bms_light |= !(stateLump.ams_sense > 0.5f);
-	// stateLump.imd_light |= !(stateLump.imd_sense > 0.5f);
-	//lgoht control reset
+	// light control
+	//  false or imd_sense  > 0.5 -> false -> no light
+	//  false or imd_sense < 0.5 -> true -> light
+	//  true or imd_sense > 0.5 -> true -> light stays on
+	//  stateLump.bms_light |= !(stateLump.ams_sense > 0.5f);
+	//  stateLump.imd_light |= !(stateLump.imd_sense > 0.5f);
+	// lgoht control reset
 
 	// true and no failiure -> flase
 	// true and failiure -> true
@@ -55,7 +55,6 @@ void ECU_State_Tick(void)
 
 	stateLump.bms_light = (stateLump.ams_sense <= 0.5f) || (stateLump.bms_light && bmsFailure(&stateLump));
 	stateLump.imd_light = (stateLump.ams_sense <= 0.5f) || (stateLump.imd_light && imdFailure(&stateLump));
-
 
 	stateLump.tssi_fault = stateLump.bms_light || stateLump.imd_light;
 
