@@ -20,35 +20,40 @@
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
 				"TARGET_TYPE": "Host",
-				"CMAKE_PRESET_NAME": "${presetName}"
+				"CMAKE_PRESET_NAME": "${presetName}",
+				"CMAKE_LOGOMATIC_ENABLED": "ON"
 			}
 		},
 		{
 			"name": "Debug",
 			"inherits": "stm",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug"
+				"CMAKE_BUILD_TYPE": "Debug",
+				"CMAKE_LOGOMATIC_ENABLED": "ON"
 			}
 		},
 		{
 			"name": "RelWithDebInfo",
 			"inherits": "stm",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "RelWithDebInfo"
+				"CMAKE_BUILD_TYPE": "RelWithDebInfo",
+				"CMAKE_LOGOMATIC_ENABLED": "ON"
 			}
 		},
 		{
 			"name": "Release",
 			"inherits": "stm",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Release"
+				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_LOGOMATIC_ENABLED": "OFF"
 			}
 		},
 		{
 			"name": "MinSizeRel",
 			"inherits": "stm",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "MinSizeRel"
+				"CMAKE_BUILD_TYPE": "MinSizeRel",
+				"CMAKE_LOGOMATIC_ENABLED": "OFF"
 			}
 		}
 	],
