@@ -14,15 +14,7 @@ target_sources(
 
 target_link_libraries(LOGOMATIC_LIB INTERFACE GLOBALSHARE_LIB)
 
-if(
-	CMAKE_PRESET_NAME
-		STREQUAL
-		"Debug"
-	OR
-		CMAKE_PRESET_NAME
-			STREQUAL
-			"RelWithDebInfo"
-)
+if(CMAKE_LOGOMATIC_ENABLED)
 	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
 	target_compile_options(
 		LOGOMATIC_LIB
