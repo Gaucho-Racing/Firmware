@@ -52,7 +52,7 @@ See diagram in StateMachine.h (Byte 0) */
 30: BrakeTemp RL (1: OK, 0: Timeout)
 31: BrakeTemp RR (1: OK, 0: Timeout) (Byte 3) */
 	uint8_t ping_group_3;
-	/** Controls the AC current limits to each of the inv
+	/** Controls the AC current limits to each of the inverters
 Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
 	uint8_t power_level_torque_map;
 	/** the Temp of the hottest cell of the accumulator (Byte 5) */
