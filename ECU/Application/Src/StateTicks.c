@@ -149,8 +149,8 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 
 	if (PressingBrake(stateData) && stateData->rtd_button_pressed) {
-		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
+		GRCAN_INV_CONFIG_MSG inv_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CONFIG, &inv_message, sizeof(inv_message));
 		GRCAN_ECU_ANALOG_DATA_MSG pedals_message = {.bspd_signal = stateData->bspd_signal,
 							    .bse_signal = stateData->bse_signal,
 							    .apps_1_signal = stateData->APPS1_Signal,
@@ -232,11 +232,11 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		torque_request = 0;
 	}
 
-	static uint32_t last_can_inverter_request_millis;
-	if (millis_since_boot - last_can_inverter_request_millis > 10) {
-		GRCAN_INVERTER_COMMAND_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_COMMAND, &message, sizeof(message));
-		last_can_inverter_request_millis = millis_since_boot;
+	static uint32_t last_can_inv_request_millis;
+	if (millis_since_boot - last_can_inv_request_millis > 10) {
+		GRCAN_INV_CMD_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
+		last_can_inv_request_millis = millis_since_boot;
 	}
 
 	// placeholder for pedal data
@@ -253,7 +253,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 						     .steering_angle_signal = stateData->steering_angle_signal,
 						     .aux_signal = stateData->aux_signal};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
-		last_can_inverter_request_millis = millis_since_boot;
+		last_can_inv_request_millis = millis_since_boot;
 	}
 }
 

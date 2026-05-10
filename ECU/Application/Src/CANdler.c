@@ -78,21 +78,21 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->acu_software_latch = GETBIT(acu_status_2->precharge_latch_flags, 3);
 			break;
 
-		case GRCAN_INVERTER_STATUS_1:
-			if (data_length != sizeof(GRCAN_INVERTER_STATUS_1_MSG)) {
+		case GRCAN_INV_STATUS_1:
+			if (data_length != sizeof(GRCAN_INV_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_INVERTER_STATUS_1_MSG *inverter_status_1 = (GRCAN_INVERTER_STATUS_1_MSG *)data;
-			UNUSED(inverter_status_1);
+			GRCAN_INV_STATUS_1_MSG *inv_status_1 = (GRCAN_INV_STATUS_1_MSG *)data;
+			UNUSED(inv_status_1);
 			break;
-		case GRCAN_INVERTER_STATUS_3:
-			if (data_length != sizeof(GRCAN_INVERTER_STATUS_3_MSG)) {
+		case GRCAN_INV_STATUS_3:
+			if (data_length != sizeof(GRCAN_INV_STATUS_3_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_INVERTER_STATUS_3_MSG *inverter_status_3 = (GRCAN_INVERTER_STATUS_3_MSG *)data;
-			state_data->inverter_fault_map = inverter_status_3->fault_bits;
+			GRCAN_INV_STATUS_3_MSG *inv_status_3 = (GRCAN_INV_STATUS_3_MSG *)data;
+			state_data->inv_fault_map = inv_status_3->fault_bits;
 			break;
 		case GRCAN_DASH_STATUS:
 			if (data_length != sizeof(GRCAN_DASH_STATUS_MSG)) {
