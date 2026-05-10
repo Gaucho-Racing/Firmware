@@ -23,7 +23,7 @@ if(
 			STREQUAL
 			"RelWithDebInfo"
 )
-	target_compile_definitions(LOGOMATIC_LIB INTERFACE)
+	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
 	target_compile_options(
 		LOGOMATIC_LIB
 		INTERFACE
