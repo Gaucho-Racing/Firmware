@@ -54,7 +54,7 @@ int MLX90640_I2CWrite(uint8_t slaveAddr, uint16_t writeAddress, uint16_t data)
 	}
 
 	// Verify the data by reading it back and checking if the written data matches the read data.
-	MLX90640_I2CR ead(slaveAddr, writeAddress, 1, &datacheck);
+	MLX90640_I2CRead(slaveAddr, writeAddress, 1, &datacheck);
 	if (datacheck != data) {
 		return -2; // Return -2 if the data verification failed
 	}
