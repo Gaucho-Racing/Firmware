@@ -281,7 +281,7 @@
 			}
 		},
 		{
-			"cwd":"${workspaceFolder}",
+			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/BrakeTemp.elf",
 			"name": "Brake Temp FL",
 			"request": "launch",
