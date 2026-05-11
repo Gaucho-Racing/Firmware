@@ -246,7 +246,7 @@ body.is-mobile .sheet {
 	z-index: 1500;
 	max-height: 80dvh;
 	padding: 4px 18px 20px;
-	padding-bottom: env(safe-area-inset-bottom, 20px);
+	padding-bottom: var(--sab, 20px);
 	background: #0e1017;
 	border-top: 1px solid #1f2439;
 	border-radius: 18px 18px 0 0;
