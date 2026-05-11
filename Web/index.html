@@ -2,21 +2,25 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+		/>
 		<title>GRCAN Viewer</title>
 		<script>
 			(function () {
-				var s = document.createElement('style');
-				s.textContent = ':root{--_sat:env(safe-area-inset-top,0px);--_sab:env(safe-area-inset-bottom,0px)}';
+				var s = document.createElement("style");
+				s.textContent =
+					":root{--_sat:env(safe-area-inset-top,0px);--_sab:env(safe-area-inset-bottom,0px)}";
 				document.head.appendChild(s);
 				var cs = getComputedStyle(document.documentElement);
-				var top = parseFloat(cs.getPropertyValue('--_sat')) || 0;
-				var bottom = parseFloat(cs.getPropertyValue('--_sab')) || 0;
+				var top = parseFloat(cs.getPropertyValue("--_sat")) || 0;
+				var bottom = parseFloat(cs.getPropertyValue("--_sab")) || 0;
 				var root = document.documentElement.style;
-				if (top > 0) root.setProperty('--sat', top + 'px');
-				if (bottom > 0) root.setProperty('--sab', bottom + 'px');
+				if (top > 0) root.setProperty("--sat", top + "px");
+				if (bottom > 0) root.setProperty("--sab", bottom + "px");
 				s.remove();
-			}());
+			})();
 		</script>
 		<link rel="stylesheet" href="index.css?v=3" />
 		<link rel="stylesheet" href="viewer.css?v=6" />
