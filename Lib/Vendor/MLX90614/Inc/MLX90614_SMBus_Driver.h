@@ -19,9 +19,9 @@
 
 #include <stdint.h>
 
-    void MLX90614_SMBusInit(void);
-    int MLX90614_SMBusRead(uint8_t slaveAddr,uint8_t readAddress, uint16_t *data);
-    int MLX90614_SMBusWrite(uint8_t slaveAddr,uint8_t writeAddress, uint16_t data);
-    int MLX90614_SendCommand(uint8_t slaveAddr,uint8_t command);
-    void MLX90614_SMBusFreqSet(int freq);
+void MLX90614_SMBusInit(void);
+int MLX90614_SMBusRead(uint8_t slaveAddr, uint8_t readAddress, uint16_t *data);
+int MLX90614_SMBusWrite(uint8_t slaveAddr, uint8_t writeAddress, uint16_t data);
+int MLX90614_SendCommand(uint8_t slaveAddr, uint8_t command);
+void MLX90614_SMBusFreqSet(int freq);
 #endif
