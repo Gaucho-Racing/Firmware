@@ -132,7 +132,7 @@ GRCAN_MSG_ID get_messageID(GRCAN_BUS_ID bus)
 		case GRCAN_BUS_TESTING:
 			return GRCAN_DEBUG_2_0;
 		case GRCAN_BUS_CHARGER:
-			return GRCAN_ACU_CONFIG_CHARGE_PARAMETERS;
+			return GRCAN_ACU_CONFIG_CHG_PARAMS;
 		default:
 			return (GRCAN_MSG_ID)0xFF; // Invalid message ID
 	}
