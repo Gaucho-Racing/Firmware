@@ -10,9 +10,9 @@
 #define PING_LIST(OP)                                                                                                                                                                                  \
 	OP(GRCAN_ACU, 0)                                                                                                                                                                               \
 	OP(GRCAN_GR_Inv, 1)                                                                                                                                                                            \
-	OP(GRCAN_Fan_Controller_1, 2)                                                                                                                                                                  \
-	OP(GRCAN_Fan_Controller_2, 3)                                                                                                                                                                  \
-	OP(GRCAN_Fan_Controller_3, 4)                                                                                                                                                                  \
+	OP(GRCAN_Fan_Ctrl_1, 2)                                                                                                                                                                        \
+	OP(GRCAN_Fan_Ctrl_2, 3)                                                                                                                                                                        \
+	OP(GRCAN_Fan_Ctrl_3, 4)                                                                                                                                                                        \
 	OP(GRCAN_Dash_Panel, 5)                                                                                                                                                                        \
 	OP(GRCAN_TCM, 6)
 
