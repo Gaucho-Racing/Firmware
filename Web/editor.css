@@ -665,7 +665,7 @@ textarea.editor-input {
 		z-index: 2;
 		background: #0e1017;
 		padding: 14px 16px 12px;
-		padding-top: max(14px, env(safe-area-inset-top));
+		padding-top: env(safe-area-inset-top, 14px);
 	}
 
 	.editor-modal-body {
@@ -679,7 +679,7 @@ textarea.editor-input {
 		z-index: 2;
 		background: #0e1017;
 		padding: 12px 16px;
-		padding-bottom: max(12px, env(safe-area-inset-bottom));
+		padding-bottom: env(safe-area-inset-bottom, 12px);
 	}
 
 	/* iOS zoom-on-focus prevention — inputs in modals must be ≥16px */
