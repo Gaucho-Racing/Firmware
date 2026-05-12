@@ -118,8 +118,8 @@ int main(void)
 			return 6;
 		}
 
-		state_dataTest.ACU_S2_IR_MINUS = true;
-		state_dataTest.ACU_S2_IR_PLUS = true;
+		state_dataTest.IR_MINUS = true;
+		state_dataTest.IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -151,7 +151,7 @@ int main(void)
 			return 7;
 		}
 
-		state_dataTest.ACU_S2_IR_MINUS = true;
+		state_dataTest.IR_MINUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -165,7 +165,7 @@ int main(void)
 			return 7;
 		}
 
-		state_dataTest.ACU_S2_IR_PLUS = true;
+		state_dataTest.IR_PLUS = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
@@ -196,8 +196,8 @@ int main(void)
 			return 8;
 		}
 
-		state_dataTest.ACU_S2_IR_MINUS = true;
-		state_dataTest.ACU_S2_IR_PLUS = true;
+		state_dataTest.IR_MINUS = true;
+		state_dataTest.IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
@@ -234,7 +234,7 @@ int main(void)
 			return 9;
 		}
 
-		state_dataTest.ACU_S2_IR_PLUS = true;
+		state_dataTest.IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 

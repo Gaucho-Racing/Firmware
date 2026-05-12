@@ -50,8 +50,8 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.ACU_S2_UNDER12v_WARNING = GETBIT(acu_status_2->status_flags, 6);
 			state_data.ACU_S2_UNDERVOLTSDC_WARNING = GETBIT(acu_status_2->status_flags, 7);
 
-			state_data.ACU_S2_IR_MINUS = GETBIT(acu_status_2->precharge_latch_flags, 1);
-			state_data.ACU_S2_IR_PLUS = GETBIT(acu_status_2->precharge_latch_flags, 2);
+			state_data.IR_MINUS = GETBIT(acu_status_2->precharge_latch_flags, 1);
+			state_data.IR_PLUS = GETBIT(acu_status_2->precharge_latch_flags, 2);
 
 			state_data.Max_Cell_Temp = acu_status_2->max_cell_temp;
 			break;

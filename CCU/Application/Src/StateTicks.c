@@ -80,7 +80,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 	}
 
 	// Checks if IR+/- are in done position
-	if (state_data->ACU_S2_IR_MINUS && state_data->ACU_S2_IR_PLUS) {
+	if (state_data->IR_MINUS && state_data->IR_PLUS) {
 		state_data->state = CCU_STATE_IDLE;
 		LOGOMATIC("CHARGING is complete, returning to IDLE state");
 		return;

@@ -50,7 +50,7 @@ bool CriticalError(const CCU_StateData *state_data)
 		LOGOMATIC("UNDERVOLT\n");
 		return true;
 
-	} else if (!state_data->ACU_S2_IR_MINUS && state_data->ACU_S2_IR_PLUS) {
+	} else if (!state_data->IR_MINUS && state_data->IR_PLUS) {
 		LOGOMATIC("IMPOSSIBLE IR STATE\n");
 		return true;
 
