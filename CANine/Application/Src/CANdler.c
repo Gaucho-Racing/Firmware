@@ -8,6 +8,8 @@
 #include "Logomatic.h"
 #include "bitManipulations.h"
 
+
+
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
 	// TODO Ideally change some state data to note a bad message, ie if BCU
@@ -54,7 +56,9 @@ void CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID 
 				break;
 			}
         	GRCAN_PING_MSG * grcan_ping_msg = (GRCAN_PING_MSG *) data;
-			LOGOMATIC("Time in millis: %u", grcan_ping_msg->timestamp);
+
+			//comment 1
+			//LOGOMATIC("Time in millis: %u", grcan_ping_msg->timestamp);
         	break;
 		case GRCAN_ECU_STATUS_1:
 			if (data_length > sizeof(GRCAN_ECU_STATUS_1_MSG)) {
@@ -95,7 +99,8 @@ void CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID 
 			LOGOMATIC("TCM Node Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 6) ? "OK" : "Timeout");
 
 			//What is this value?????
-			LOGOMATIC("Power Level Torque Map: \n");
+			// LOGOMATIC("Power Level (in hex, Controls the AC current limits): 0x%X\n", GETBITS(grcan_ecu_status_1_msg->power_level_torque_map, 0, 4));
+			// LOGOMATIC("Torque Map (in hex): 0x%X\n", GETBITS(grcan_ecu_status_1_msg->power_level_torque_map, 4, 4));
 
 			LOGOMATIC("Max Cell Temperature: %u\n", grcan_ecu_status_1_msg->max_cell_temp);
 			LOGOMATIC("Percent of accumlator charged: %u\n", grcan_ecu_status_1_msg->accumulator_state_of_charge);
@@ -120,173 +125,195 @@ void CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID 
 
 
 
-		// case GRCAN_ECU_STATUS_3:
-		// 	if (data_length > sizeof(GRCAN_ECU_STATUS_3_MSG)) {
-		// 		ReportBadMessageLength(bus_id, msg_id, sender_id);
-		// 		break;
-		// 	}
-		// 	GRCAN_ECU_STATUS_3_MSG * grcan_ecu_status_3 = (GRCAN_ECU_STATUS_3_MSG *)data;
-		// 	LOGOMATIC("Wheel RPM: %u\n", grcan_ecu_status_3->rl_wheel_rpm);
-		// 	break;
-		// //what to do about this?
-		// case GRCAN_ECU_CONFIG:
-		// 	if (data_length > sizeof(GRCAN_ECU_CONFIG_MSG)) {
-		// 		ReportBadMessageLength(bus_id, msg_id, sender_id);
-		// 		break;
-		// 	}
-		// 	GRCAN_ECU_CONFIG_MSG * grcan_ecu_config = (GRCAN_ECU_CONFIG_MSG *)data;
-		// 	break;
-		// case GRCAN_BCU_CELL_DATA_1:
-        //     if (data_length > sizeof(GRCAN_BCU_CELL_DATA_1_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_BCU_CELL_DATA_1_MSG * grcan_bcu_cell_data_1_msg = (GRCAN_BCU_CELL_DATA_1_MSG *)data;
-        //     for (int i = 0; i < 32; i++) {
-        //         LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 1, grcan_bcu_cell_data_1_msg->cells[i].voltage, grcan_bcu_cell_data_1_msg->cells[i].temperature);
-        //     }
-        //     break;
+		case GRCAN_ECU_STATUS_3:
+			if (data_length > sizeof(GRCAN_ECU_STATUS_3_MSG)) {
+				ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+			GRCAN_ECU_STATUS_3_MSG * grcan_ecu_status_3 = (GRCAN_ECU_STATUS_3_MSG *)data;
+			LOGOMATIC("Wheel RPM: %u\n", grcan_ecu_status_3->rl_wheel_rpm);
+			break;
+		case GRCAN_BCU_CELL_DATA_1:
+            if (data_length > sizeof(GRCAN_BCU_CELL_DATA_1_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            // GRCAN_BCU_CELL_DATA_1_MSG * grcan_bcu_cell_data_1_msg = (GRCAN_BCU_CELL_DATA_1_MSG *)data;
+            // for (int i = 0; i < 32; i++) {
+            //     LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 1, grcan_bcu_cell_data_1_msg->cells[i].voltage, grcan_bcu_cell_data_1_msg->cells[i].temperature);
+            // }
+            // break;
 
-        // case GRCAN_BCU_CELL_DATA_2:
-        //     if (data_length > sizeof(GRCAN_BCU_CELL_DATA_2_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_BCU_CELL_DATA_2_MSG * grcan_bcu_cell_data_2_msg = (GRCAN_BCU_CELL_DATA_2_MSG *)data;
-        //     for (int i = 0; i < 32; i++) {
-        //         LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 33, grcan_bcu_cell_data_2_msg->cells[i].voltage, grcan_bcu_cell_data_2_msg->cells[i].temperature);
-        //     }
-        //     break;
+				for (int i = 0; i < 32; i++) {
+		// 1. Voltage Conversion (mV to V)
+		// We use %u.%03u to simulate a float: 3500mV -> "3.500 V"
+		// uint32_t v_mv = msg->cells[i].voltage;
+		// uint32_t v_whole = v_mv / 1000;
+		// uint32_t v_frac = v_mv % 1000;
 
-        // case GRCAN_BCU_CELL_DATA_3:
-        //     if (data_length > sizeof(GRCAN_BCU_CELL_DATA_3_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_BCU_CELL_DATA_3_MSG * grcan_bcu_cell_data_3_msg = (GRCAN_BCU_CELL_DATA_3_MSG *)data;
-        //     for (int i = 0; i < 32; i++) {
-        //         LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 65, grcan_bcu_cell_data_3_msg->cells[i].voltage, grcan_bcu_cell_data_3_msg->cells[i].temperature);
-        //     }
-        //     break;
+		//comment #2
 
-        // case GRCAN_BCU_CELL_DATA_4:
-        //     if (data_length > sizeof(GRCAN_BCU_CELL_DATA_4_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_BCU_CELL_DATA_4_MSG * grcan_bcu_cell_data_4_msg = (GRCAN_BCU_CELL_DATA_4_MSG *)data;
-        //     for (int i = 0; i < 32; i++) {
-        //         LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 97, grcan_bcu_cell_data_4_msg->cells[i].voltage, grcan_bcu_cell_data_4_msg->cells[i].temperature);
-        //     }
-        //     break;
+		// // 2. Temp Conversion (Offset of -40)
+		// int32_t temp_c = (int32_t)msg->cells[i].temperature - 40;
 
-        // case GRCAN_BCU_CELL_DATA_5:
-        //     if (data_length > sizeof(GRCAN_BCU_CELL_DATA_5_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_BCU_CELL_DATA_5_MSG * grcan_bcu_cell_data_5_msg = (GRCAN_BCU_CELL_DATA_5_MSG *)data;
-        //     for (int i = 0; i < 32; i++) {
-        //         LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 129, grcan_bcu_cell_data_5_msg->cells[i].voltage, grcan_bcu_cell_data_5_msg->cells[i].temperature);
-        //     }
-        //     break;
+		// LOGOMATIC("Cell %d | %u.%03u V | %ld C\n", i + 1, v_whole, v_frac, temp_c);
+	}
+		break;
+        case GRCAN_BCU_CELL_DATA_2:
+            if (data_length > sizeof(GRCAN_BCU_CELL_DATA_2_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_BCU_CELL_DATA_2_MSG * grcan_bcu_cell_data_2_msg = (GRCAN_BCU_CELL_DATA_2_MSG *)data;
+            for (int i = 0; i < 32; i++) {
+                LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 33, grcan_bcu_cell_data_2_msg->cells[i].voltage, grcan_bcu_cell_data_2_msg->cells[i].temperature);
+            }
+            break;
 
-        // case GRCAN_INVERTER_STATUS_1:
-        //     if (data_length > sizeof(GRCAN_INVERTER_STATUS_1_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_INVERTER_STATUS_1_MSG * grcan_inverter_status_1_msg = (GRCAN_INVERTER_STATUS_1_MSG *)data;
-        //     LOGOMATIC("AC Current: %u (0.01 * current)\n", grcan_inverter_status_1_msg->ac_current);
-        //     LOGOMATIC("DC Current: %u (0.01 * current)\n", grcan_inverter_status_1_msg->dc_current);
-        //     LOGOMATIC("Motor RPM: %u (RPM)\n", grcan_inverter_status_1_msg->motor_rpm);
-        //     break;
+        case GRCAN_BCU_CELL_DATA_3:
+            if (data_length > sizeof(GRCAN_BCU_CELL_DATA_3_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_BCU_CELL_DATA_3_MSG * grcan_bcu_cell_data_3_msg = (GRCAN_BCU_CELL_DATA_3_MSG *)data;
+            for (int i = 0; i < 32; i++) {
+                LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 65, grcan_bcu_cell_data_3_msg->cells[i].voltage, grcan_bcu_cell_data_3_msg->cells[i].temperature);
+            }
+            break;
 
-        // case GRCAN_INVERTER_STATUS_2:
-        //     if (data_length > sizeof(GRCAN_INVERTER_STATUS_2_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_INVERTER_STATUS_2_MSG * grcan_inverter_status_2_msg = (GRCAN_INVERTER_STATUS_2_MSG *)data;
-        //     LOGOMATIC("U MOSFET Temp: %u (Celsius + 40)\n", grcan_inverter_status_2_msg->u_mosfet_temperature);
-        //     LOGOMATIC("V MOSFET Temp: %u (Celsius + 40)\n", grcan_inverter_status_2_msg->v_mosfet_temperature);
-        //     LOGOMATIC("W MOSFET Temp: %u (Celsius + 40)\n", grcan_inverter_status_2_msg->w_mosfet_temperature);
-        //     break;
+        case GRCAN_BCU_CELL_DATA_4:
+            if (data_length > sizeof(GRCAN_BCU_CELL_DATA_4_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_BCU_CELL_DATA_4_MSG * grcan_bcu_cell_data_4_msg = (GRCAN_BCU_CELL_DATA_4_MSG *)data;
+            for (int i = 0; i < 32; i++) {
+                LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 97, grcan_bcu_cell_data_4_msg->cells[i].voltage, grcan_bcu_cell_data_4_msg->cells[i].temperature);
+            }
+            break;
 
-        // case GRCAN_INVERTER_STATUS_3:
-        //     if (data_length > sizeof(GRCAN_INVERTER_STATUS_3_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_INVERTER_STATUS_3_MSG * grcan_inverter_status_3_msg = (GRCAN_INVERTER_STATUS_3_MSG *)data;
-        //     LOGOMATIC("Motor Temp: %u (Celsius + 40)\n", grcan_inverter_status_3_msg->motor_temperature);
-        //     LOGOMATIC("TS Over Max: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 0) ? "FAIL" : "OK");
-        //     LOGOMATIC("TS Under Min: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 1) ? "FAIL" : "OK");
-        //     LOGOMATIC("Inverter Over Temp: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 2) ? "FAIL" : "OK");
-        //     LOGOMATIC("Motor Over Temp: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 3) ? "FAIL" : "OK");
-        //     LOGOMATIC("Mosfet Drive Error: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 4) ? "FAIL" : "OK");
-        //     LOGOMATIC("Encoder Error: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 5) ? "FAIL" : "OK");
-        //     LOGOMATIC("CAN Error/Timeout: %s\n", GETBIT(grcan_inverter_status_3_msg->fault_bits, 6) ? "FAIL" : "OK");
-        //     break;
+        case GRCAN_BCU_CELL_DATA_5:
+            if (data_length > sizeof(GRCAN_BCU_CELL_DATA_5_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_BCU_CELL_DATA_5_MSG * grcan_bcu_cell_data_5_msg = (GRCAN_BCU_CELL_DATA_5_MSG *)data;
+            for (int i = 0; i < 32; i++) {
+                LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 129, grcan_bcu_cell_data_5_msg->cells[i].voltage, grcan_bcu_cell_data_5_msg->cells[i].temperature);
+            }
+            break;
+		//convert to celsius
+        case GRCAN_INVERTER_STATUS_1:
+            if (data_length > sizeof(GRCAN_INVERTER_STATUS_1_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_INVERTER_STATUS_1_MSG * grcan_inverter_status_1_msg = (GRCAN_INVERTER_STATUS_1_MSG *)data;
+            LOGOMATIC("AC Current: %u (0.01 * current)\n", grcan_inverter_status_1_msg->ac_current);
+            LOGOMATIC("DC Current: %u (0.01 * current)\n", grcan_inverter_status_1_msg->dc_current);
+            LOGOMATIC("Motor RPM: %u (RPM)\n", grcan_inverter_status_1_msg->motor_rpm);
+            break;
 
-        // case GRCAN_INVERTER_CONFIG:
-        //     if (data_length > sizeof(GRCAN_INVERTER_CONFIG_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_INVERTER_CONFIG_MSG * grcan_inverter_config_msg = (GRCAN_INVERTER_CONFIG_MSG *)data;
-        //     LOGOMATIC("Max AC Current: %u\n", grcan_inverter_config_msg->max_ac_current);
-        //     LOGOMATIC("Max DC Current: %u\n", grcan_inverter_config_msg->max_dc_current);
-        //     LOGOMATIC("RPM Limit: %u (0: No limit)\n", grcan_inverter_config_msg->absolute_max_rpm_limit);
-        //     LOGOMATIC("Motor Direction: %s\n", (grcan_inverter_config_msg->motor_direction == 1) ? "Inverted" : "Normal");
-        //     break;
+        case GRCAN_INVERTER_STATUS_2:
+            if (data_length > sizeof(GRCAN_INVERTER_STATUS_2_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_INVERTER_STATUS_2_MSG * grcan_inverter_status_2_msg = (GRCAN_INVERTER_STATUS_2_MSG *)data;
+            LOGOMATIC("U MOSFET Temp: %u (Celsius + 40)\n", grcan_inverter_status_2_msg->u_mosfet_temperature);
+            LOGOMATIC("V MOSFET Temp: %u (Celsius + 40)\n", grcan_inverter_status_2_msg->v_mosfet_temperature);
+            LOGOMATIC("W MOSFET Temp: %u (Celsius + 40)\n", grcan_inverter_status_2_msg->w_mosfet_temperature);
+            break;
 
-        // case GRCAN_INVERTER_COMMAND:
-        //     if (data_length > sizeof(GRCAN_INVERTER_COMMAND_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_INVERTER_COMMAND_MSG * grcan_inverter_command_msg = (GRCAN_INVERTER_COMMAND_MSG *)data;
-        //     LOGOMATIC("Set AC Current: %u\n", grcan_inverter_command_msg->set_ac_current);
-        //     LOGOMATIC("Set DC Current: %u\n", grcan_inverter_command_msg->set_dc_current);
-        //     LOGOMATIC("RPM Limit: %u\n", grcan_inverter_command_msg->rpm_limit);
-        //     LOGOMATIC("Field Weakening: %u\n", grcan_inverter_command_msg->field_weakening);
-        //     LOGOMATIC("Drive Enable: %s\n", (grcan_inverter_command_msg->drive_enable == 1) ? "ENABLED" : "DISABLED");
-        //     break;
+        case GRCAN_INVERTER_STATUS_3:
+            if (data_length > sizeof(GRCAN_INVERTER_STATUS_3_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_INVERTER_STATUS_3_MSG * grcan_inverter_status_3_msg = (GRCAN_INVERTER_STATUS_3_MSG *)data;
+            int32_t motor_temp_c = (int32_t)grcan_inverter_status_3_msg->motor_temperature - 40;
+            LOGOMATIC("Motor Temp: %ld C\n", motor_temp_c);
 
-        // case GRCAN_FAN_STATUS:
-        //     if (data_length > sizeof(GRCAN_FAN_STATUS_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_FAN_STATUS_MSG * grcan_fan_status_msg = (GRCAN_FAN_STATUS_MSG *)data;
-        //     LOGOMATIC("Fan Speed: %u RPM\n", grcan_fan_status_msg->fan_speed);
-        //     LOGOMATIC("Input Voltage: %u (0-22)\n", grcan_fan_status_msg->input_voltage);
-        //     LOGOMATIC("Input Current: %u (0-10)\n", grcan_fan_status_msg->input_current);
-        //     break;
+            const char *fault_msgs[] = {
+                "TS Over Max",
+                "TS Under Min",
+                "Inverter Over Temp",
+                "Motor Over Temp",
+                "Mosfet Drive Error",
+                "Encoder Error",
+                "CAN Error/Timeout",
+                "Reserved/Unknown Fault"
+            };
 
-        // case GRCAN_FAN_COMMAND:
-        //     if (data_length > sizeof(GRCAN_FAN_COMMAND_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_FAN_COMMAND_MSG * grcan_fan_command_msg = (GRCAN_FAN_COMMAND_MSG *)data;
-        //     LOGOMATIC("Fan Command: %u Percent\n", grcan_fan_command_msg->fan_command);
-        //     break;
+            if (grcan_inverter_status_3_msg->fault_bits == 0) {
+                LOGOMATIC("System Status: OK\n");
+            } else {
+                for (int i = 0; i < 8; i++) {
+                    if (GETBIT(grcan_inverter_status_3_msg->fault_bits, i)) {
+                        LOGOMATIC("FAULT DETECTED: %s\n", fault_msgs[i]);
+                    }
+                }
+            }
+            break;
 
-		// //is this correct
-        // case GRCAN_DASH_STATUS:
-        //     if (data_length > sizeof(GRCAN_DASH_STATUS_MSG)) {
-        //         ReportBadMessageLength(bus_id, msg_id, sender_id);
-        //         break;
-        //     }
-        //     GRCAN_DASH_STATUS_MSG * grcan_dash_status_msg = (GRCAN_DASH_STATUS_MSG *)data;
-        //     LOGOMATIC("TS Active: %s\n", GETBIT(grcan_dash_status_msg->button_flags, 0) ? "YES" : "NO");
-        //     LOGOMATIC("RTD: %s\n", GETBIT(grcan_dash_status_msg->button_flags, 1) ? "YES" : "NO");
-        //     LOGOMATIC("LED BMS: %s\n", GETBIT(grcan_dash_status_msg->led_bits, 0) ? "ON" : "OFF");
-        //     LOGOMATIC("LED IMD: %s\n", GETBIT(grcan_dash_status_msg->led_bits, 1) ? "ON" : "OFF");
-        //     LOGOMATIC("LED BSPD: %s\n", GETBIT(grcan_dash_status_msg->led_bits, 2) ? "ON" : "OFF");
-        //     break;
+        case GRCAN_INVERTER_CONFIG:
+            if (data_length > sizeof(GRCAN_INVERTER_CONFIG_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_INVERTER_CONFIG_MSG * grcan_inverter_config_msg = (GRCAN_INVERTER_CONFIG_MSG *)data;
+            LOGOMATIC("Max AC Current: %u\n", grcan_inverter_config_msg->max_ac_current);
+            LOGOMATIC("Max DC Current: %u\n", grcan_inverter_config_msg->max_dc_current);
+            LOGOMATIC("RPM Limit: %u (0: No limit)\n", grcan_inverter_config_msg->absolute_max_rpm_limit);
+            LOGOMATIC("Motor Direction: %s\n", (grcan_inverter_config_msg->motor_direction == 1) ? "Inverted" : "Normal");
+            break;
+
+        case GRCAN_INVERTER_COMMAND:
+            if (data_length > sizeof(GRCAN_INVERTER_COMMAND_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_INVERTER_COMMAND_MSG * grcan_inverter_command_msg = (GRCAN_INVERTER_COMMAND_MSG *)data;
+            LOGOMATIC("Set AC Current: %u\n", grcan_inverter_command_msg->set_ac_current);
+            LOGOMATIC("Set DC Current: %u\n", grcan_inverter_command_msg->set_dc_current);
+            LOGOMATIC("RPM Limit: %u\n", grcan_inverter_command_msg->rpm_limit);
+            LOGOMATIC("Field Weakening: %u\n", grcan_inverter_command_msg->field_weakening);
+            LOGOMATIC("Drive Enable: %s\n", (grcan_inverter_command_msg->drive_enable == 1) ? "ENABLED" : "DISABLED");
+            break;
+
+        case GRCAN_FAN_STATUS:
+            if (data_length > sizeof(GRCAN_FAN_STATUS_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_FAN_STATUS_MSG * grcan_fan_status_msg = (GRCAN_FAN_STATUS_MSG *)data;
+            LOGOMATIC("Fan Speed: %u RPM\n", grcan_fan_status_msg->fan_speed);
+            LOGOMATIC("Input Voltage: %u (0-22)\n", grcan_fan_status_msg->input_voltage);
+            LOGOMATIC("Input Current: %u (0-10)\n", grcan_fan_status_msg->input_current);
+            break;
+
+        case GRCAN_FAN_COMMAND:
+            if (data_length > sizeof(GRCAN_FAN_COMMAND_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_FAN_COMMAND_MSG * grcan_fan_command_msg = (GRCAN_FAN_COMMAND_MSG *)data;
+            LOGOMATIC("Fan Command: %u Percent\n", grcan_fan_command_msg->fan_command);
+            break;
+
+		//is this correct
+        case GRCAN_DASH_STATUS:
+            if (data_length > sizeof(GRCAN_DASH_STATUS_MSG)) {
+                ReportBadMessageLength(bus_id, msg_id, sender_id);
+                break;
+            }
+            GRCAN_DASH_STATUS_MSG * grcan_dash_status_msg = (GRCAN_DASH_STATUS_MSG *)data;
+            LOGOMATIC("TS Active: %s\n", GETBIT(grcan_dash_status_msg->button_flags, 0) ? "YES" : "NO");
+            LOGOMATIC("RTD: %s\n", GETBIT(grcan_dash_status_msg->button_flags, 1) ? "YES" : "NO");
+            LOGOMATIC("LED BMS: %s\n", GETBIT(grcan_dash_status_msg->led_bits, 0) ? "ON" : "OFF");
+            LOGOMATIC("LED IMD: %s\n", GETBIT(grcan_dash_status_msg->led_bits, 1) ? "ON" : "OFF");
+            LOGOMATIC("LED BSPD: %s\n", GETBIT(grcan_dash_status_msg->led_bits, 2) ? "ON" : "OFF");
+            break;
 
 
 
