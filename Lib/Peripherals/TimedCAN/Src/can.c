@@ -1,9 +1,10 @@
+#include "can.h"
+
 #include <assert.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "can.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_dma.h"
 #include "stm32g4xx_ll_tim.h"
