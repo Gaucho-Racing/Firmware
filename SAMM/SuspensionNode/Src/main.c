@@ -179,12 +179,12 @@ int main(void)
 		int8_t temp_test = temp - 60;
 		float angle_test = angle * 360.f / 4096.0f;
 
-		printf("Temperature: %d C\n", temp_test);
-		printf("Angle: %f deg\n", angle_test);
-		printf("Turns: %d\n", turns);
+		LOGOMATIC("Temperature: %d C\n", temp_test);
+		LOGOMATIC("Angle: %f deg\n", angle_test);
+		LOGOMATIC("Turns: %d\n", turns);
 
 		if (bad) {
-			printf("Something is cooked\n");
+			LOGOMATIC("Something is cooked");
 			mag_clear_errors(&mag_dev);
 		}
 
