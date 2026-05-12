@@ -89,7 +89,6 @@ typedef enum {
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
 CAN_STATUS can_start(CANHandle *handle);
 CAN_STATUS can_stop(CANHandle *handle);
-CAN_STATUS can_send(CANHandle *handle, FDCANTxMessage *buffer);
 CAN_STATUS can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
 CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 CAN_STATUS can_enqueue(CANHandle *handle, FDCANTxMessage *message); // adds to software buffer, returns error if full
