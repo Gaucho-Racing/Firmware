@@ -41,7 +41,8 @@ uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDe
 /*
 TODO: VIN DO THESE FUNCYIONS
 */
-uint16_t bmi323_read(bmi323 *bmi323_dev, uint8_t reg) {
+uint16_t bmi323_read(bmi323 *bmi323_dev, uint8_t reg)
+{
 	uint8_t tx_word[4] = {reg | 0x80, 0, 0, 0}; // Separate into two bytes
 	uint8_t rx_word[4] = {0};
 

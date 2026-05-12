@@ -8,7 +8,7 @@ static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
 static GRCAN_BUS_ID subnetBusMode = GRCAN_BUS_DATA_SUBNET; // still needs to be defined
-static GRCAN_NODE_ID sensorNode; // tire temp -> q from shravya: sensorNode declared twice?
+static GRCAN_NODE_ID sensorNode;			   // tire temp -> q from shravya: sensorNode declared twice?
 static data_length = 64;
 
 // get rid of mag functions once their functionality added
@@ -88,7 +88,8 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 	return 1; // success
 }
 
-bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void* data) {
+bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *data)
+{
 	if (data == NULL) {
 		LOGOMATIC("Suspension Node CAN send: NULL data");
 	}
@@ -106,7 +107,6 @@ bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void* data) 
 
 	return 1;
 }
-
 
 /* ================================================================================================== */
 
