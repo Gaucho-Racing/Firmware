@@ -126,7 +126,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4HELLO"
+												"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4HELLO"
 		},
 		{
 			"label": "CMake: configure and build G4PERTESTING",
