@@ -13,50 +13,58 @@ void TripSoftwareLatch(CCU_StateData *state_data)
 
 bool ACU_Warnings(const CCU_StateData *state_data)
 {
+	bool any_warnings = false;
+
 	if (state_data->ACU_S2_UNDER20v_WARNING) {
 		LOGOMATIC("Under 20v Warning\n");
-		return true;
-	} else if (state_data->ACU_S2_UNDER12v_WARNING) {
-		LOGOMATIC("Under 12v Warning\n");
-		return true;
-	} else if (state_data->ACU_S2_UNDERVOLTSDC_WARNING) {
-		LOGOMATIC("Undervolt TSDC Warning\n");
-		return true;
-	} else {
-		return false;
+		any_warnings = true;
 	}
+	if (state_data->ACU_S2_UNDER12v_WARNING) {
+		LOGOMATIC("Under 12v Warning\n");
+		any_warnings = true;
+	}
+	if (state_data->ACU_S2_UNDERVOLTSDC_WARNING) {
+		LOGOMATIC("Undervolt TSDC Warning\n");
+		any_warnings = true;
+	}
+	return any_warnings;
 }
 
 bool CriticalError(const CCU_StateData *state_data)
 {
+	bool any_error = false;
 
 	if (state_data->ACU_S2_OVERCURR_ERROR) {
 		LOGOMATIC("OVERCURR\n");
-		return true;
-
-	} else if (state_data->ACU_S2_OVERTEMP_ERROR) {
-		LOGOMATIC("OVERTEMP\n");
-		return true;
-
-	} else if (state_data->ACU_S2_OVERVOLT_ERROR) {
-		LOGOMATIC("OVERVOLT\n");
-		return true;
-
-	} else if (state_data->ACU_S2_UNDERCURR_ERROR) {
-		LOGOMATIC("UNDERCURR\n");
-		return true;
-
-	} else if (state_data->ACU_S2_UNDERVOLT_ERROR) {
-		LOGOMATIC("UNDERVOLT\n");
-		return true;
-
-	} else if (!state_data->IR_MINUS && state_data->IR_PLUS) {
-		LOGOMATIC("IMPOSSIBLE IR STATE\n");
-		return true;
-
-	} else {
-		return false;
+		any_error = true;
 	}
+
+	if (state_data->ACU_S2_OVERTEMP_ERROR) {
+		LOGOMATIC("OVERTEMP\n");
+		any_error = true;
+	}
+
+	if (state_data->ACU_S2_OVERVOLT_ERROR) {
+		LOGOMATIC("OVERVOLT\n");
+		any_error = true;
+	}
+
+	if (state_data->ACU_S2_UNDERCURR_ERROR) {
+		LOGOMATIC("UNDERCURR\n");
+		any_error = true;
+	}
+
+	if (state_data->ACU_S2_UNDERVOLT_ERROR) {
+		LOGOMATIC("UNDERVOLT\n");
+		any_error = true;
+	}
+
+	if (!state_data->IR_MINUS && state_data->IR_PLUS) {
+		LOGOMATIC("IMPOSSIBLE IR STATE\n");
+		any_error = true;
+	}
+
+	return any_error;
 }
 
 uint32_t MillisecondsSinceBoot(void)
