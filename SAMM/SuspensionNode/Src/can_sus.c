@@ -1,4 +1,5 @@
 #include "can_sus.h"
+
 #include "can_cfg.h"
 
 static GRCAN_NODE_ID sensorNode = GRCAN_ALL;
