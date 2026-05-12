@@ -29,13 +29,13 @@ jobs:
           fetch-depth: 1
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@e46ed2cbd01164d986452f91f178727624ae40d7  # v4.35.3
+        uses: github/codeql-action/init@68bde559dea0fdcac2102bfdf6230c5f70eb485e  # v4.35.4
         with:
           languages: ${{ matrix.language }}
           build-mode: 'none'
 
       - name: Analyze CodeQL
-        uses: github/codeql-action/analyze@e46ed2cbd01164d986452f91f178727624ae40d7 # v4.35.3
+        uses: github/codeql-action/analyze@68bde559dea0fdcac2102bfdf6230c5f70eb485e # v4.35.4
         with:
           category: '${{ matrix.language }}'
 
@@ -66,7 +66,7 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@9f8c263975569ff3b4e510cb1f8813115749e146  # v1.41.0
+        uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6  # v1.41.1
         with:
           install-modules: 'Perl::Critic'
 
