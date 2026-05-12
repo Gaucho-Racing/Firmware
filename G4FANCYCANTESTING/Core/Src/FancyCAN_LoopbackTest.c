@@ -58,9 +58,9 @@ int GRCAN_Validate_InitBus(GRCAN_BUS_ID bus, GRCAN_OperatingMode mode, FDCAN_Glo
 // 	GRCAN_DGPS = 0x30,
 // 	GRCAN_Dash_Panel = 0x05,
 // 	GRCAN_Debugger = 0x01,
-// 	GRCAN_Fan_Controller_1 = 0x0D,
-// 	GRCAN_Fan_Controller_2 = 0x0E,
-// 	GRCAN_Fan_Controller_3 = 0x0F,
+// 	GRCAN_Fan_Ctrl_1 = 0x0D,
+// 	GRCAN_Fan_Ctrl_2 = 0x0E,
+// 	GRCAN_Fan_Ctrl_3 = 0x0F,
 // 	GRCAN_GR_Inv = 0x08,
 // 	GRCAN_TCM = 0x04,
 
