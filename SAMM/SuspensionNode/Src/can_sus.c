@@ -69,9 +69,9 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 	GRCAN_BusConfig bus_config;
 	GRCAN_SetDefaultBusConfig(&bus_config, bus);
 
-	#if defined(STM32H5)
-		bus_config.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz, defaults should work
-	#endif
+#if defined(STM32H5)
+	bus_config.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz, defaults should work
+#endif
 
 	if (bus == CAN_SUBNET_BUS) {
 		bus_config.fdcan_instance = FDCAN2;
@@ -92,10 +92,10 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 	return 1; // success
 }
 
-int SusNode_CAN_Send(void *data) {
+int SusNode_CAN_Send(void *data)
+{
 	// send IMU and MAG data to TCM
 	typedef struct {
-		
 	}
 }
 
