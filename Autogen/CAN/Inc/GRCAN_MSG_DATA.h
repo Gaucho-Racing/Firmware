@@ -308,15 +308,17 @@ typedef struct {
 /** Dash Status */
 typedef struct {
 	/** [Byte 0 / Bits 0-7]
-0: TS press
-1: RTD press
-2: TS hold
-3: RTD hold
-4: BSPD led
-5: IMD led
-6: BMS led
-7: Reserved (Byte 0) */
-	uint8_t button_led_flags;
+0-3: Reserved
+4: RTD Off
+5: TS Off
+6: RTD On
+7: TS On (Byte 0) */
+	uint8_t button_flags;
+	/** [Byte 1 / Bits 8-15]
+0-5: Reserved
+6: IMD
+7: BMS (Byte 1) */
+	uint8_t led_flags;
 } GRCAN_DASH_STATUS_MSG;
 
 /** Dash Config */

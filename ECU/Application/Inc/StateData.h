@@ -3,6 +3,7 @@
 
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
+#include "ecu_can.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
@@ -99,6 +100,9 @@ typedef volatile struct ECU_StateData {
 	bool apps_bse_violation;
 
 	GR_ECU_State ecu_state;
+
+	CANHandle *primary_can;
+	CANHandle *data_can;
 } ECU_StateData;
 
 #endif

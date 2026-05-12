@@ -231,4 +231,3 @@ Add a single line with the device name and a unique hex ID string:
 ```yaml
   My New Board: "0x2A"
 ```
-
