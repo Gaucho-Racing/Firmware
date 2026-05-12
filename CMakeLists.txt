@@ -93,6 +93,7 @@ include("Autogen/CAN/CANfigurator.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
+include("${lib_path}/Peripherals/TimedCAN/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
 
 include("${lib_path}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")

@@ -3,12 +3,13 @@ run-name: Unit Tests - ${{ github.ref_name }}
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 
 env:
-  ARM_GCC_VERSION: '12.2.Rel1'
+  ARM_GCC_VERSION: "12.2.Rel1"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -24,12 +25,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        prefix: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
-        operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
+        prefix: ["Debug", "Release", "MinSizeRel", "RelWithDebInfo"]
+        operatingSystem: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft && fromJson('["ubuntu-latest"]') || fromJson('["ubuntu-latest", "windows-latest", "macos-latest"]') }}
     env:
       SCCACHE_DIR: ${{ github.workspace }}/sccache
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
+      SCCACHE_SERVER_PORT: ${{ matrix.prefix == 'Debug' && '4226' || (matrix.prefix == 'Release' && '4227' || (matrix.prefix == 'MinSizeRel' && '4228' || '4229')) }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -37,22 +39,25 @@ jobs:
           fetch-depth: 1
 
       - name: Install Arm Toolchain
-        uses: carlosperate/arm-none-eabi-gcc-action@0725d97b026acf7fc8e22dfd5bee912998879ba8  # v1.12.3
+        uses: carlosperate/arm-none-eabi-gcc-action@0725d97b026acf7fc8e22dfd5bee912998879ba8 # v1.12.3
         with:
           release: ${{ env.ARM_GCC_VERSION }}
 
-      - name: Setup Shared Compilation Cache
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae  # v5.0.5
+      - name: Setup Cache
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ${{ env.SCCACHE_DIR }}
-          key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.ref_name }}-${{ github.job }}-${{ github.run_id }}
+          key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}
           restore-keys: |
-            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.ref_name }}-${{ github.job }}-
-            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.ref_name }}-
-            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-
 
       - name: Setup Shared Compilation Cache
         uses: mozilla-actions/sccache-action@9e7fa8a12102821edf02ca5dbea1acd0f89a2696 # v0.0.10
+
+      - name: Start Shared Compilation Cache Server
+        run: sccache --start-server
 
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
@@ -161,7 +166,7 @@ jobs:
 
       - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf
@@ -175,138 +180,140 @@ jobs:
     needs: cmake
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
-        contents: read
-        actions: write
+      contents: read
+      actions: write
     strategy:
-        fail-fast: true
-        matrix:
-          operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
+      fail-fast: true
+      matrix:
+        operatingSystem: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft && fromJson('["ubuntu-latest"]') || fromJson('["ubuntu-latest", "windows-latest", "macos-latest"]') }}
     env:
-        SCCACHE_DIR: ${{ github.workspace }}/sccache
-        SCCACHE_LOG: "info"
-        SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
+      SCCACHE_DIR: ${{ github.workspace }}/sccache
+      SCCACHE_LOG: "info"
+      SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-            fetch-depth: 1
+          fetch-depth: 1
 
-      - name: Setup Shared Compilation Cache
+      - name: Setup Cache
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-            path: ${{ env.SCCACHE_DIR }}
-            key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.ref_name }}-${{ github.job }}-${{ github.run_id }}
-            restore-keys: |
-              sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.ref_name }}-${{ github.job }}-
-              sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.ref_name }}-
-              sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-
+          path: ${{ env.SCCACHE_DIR }}
+          key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ github.ref_name }}
+          restore-keys: |
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ github.ref_name }}
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-
 
       - name: Setup Shared Compilation Cache
         uses: mozilla-actions/sccache-action@9e7fa8a12102821edf02ca5dbea1acd0f89a2696 # v0.0.10
+
+      - name: Start Shared Compilation Cache Server
+        run: sccache --start-server
 
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
-            set -o pipefail
-            echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cmake --preset HOOTLTest -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          set -o pipefail
+          echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cmake --preset HOOTLTest -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Configuration (Windows)
         if: matrix.operatingSystem == 'windows-latest'
         shell: pwsh
         run: |
-            echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            cmake --preset HOOTLTest -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset HOOTLTest -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: CMake Build (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
-            set -o pipefail
-            echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cmake --build --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          set -o pipefail
+          echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cmake --build --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Build (Windows)
         if: matrix.operatingSystem == 'windows-latest'
         shell: pwsh
         run: |
-            echo "<details><summary>CMake Build (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            cmake --build --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "<details><summary>CMake Build (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --build --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: Run CTest (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
-            set -o pipefail
-            echo "<details open><summary>Run CTest (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          set -o pipefail
+          echo "<details open><summary>Run CTest (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Run CTest (Windows)
         if: matrix.operatingSystem == 'windows-latest'
         shell: pwsh
         run: |
-            echo "<details open><summary>Run CTest (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "<details open><summary>Run CTest (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: Shared Compilation Cache Errors (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
-            set -o pipefail
-            if [ -f "$SCCACHE_ERROR_LOG" ]; then
-              echo "<details><summary>Shared Compilation Cache Errors</summary>" >> $GITHUB_STEP_SUMMARY
-              echo "" >> $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              cat "$SCCACHE_ERROR_LOG" | tee -a $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              echo "" >> $GITHUB_STEP_SUMMARY
-              echo "</details>" >> $GITHUB_STEP_SUMMARY
-            fi
+          set -o pipefail
+          if [ -f "$SCCACHE_ERROR_LOG" ]; then
+            echo "<details><summary>Shared Compilation Cache Errors</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            cat "$SCCACHE_ERROR_LOG" | tee -a $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Shared Compilation Cache Errors (Windows)
         if: matrix.operatingSystem == 'windows-latest'
         shell: pwsh
         run: |
-            if (Test-Path $env:SCCACHE_ERROR_LOG) {
-              echo "<details><summary>Shared Compilation Cache Errors</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-              echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-              echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-              Get-Content $env:SCCACHE_ERROR_LOG | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-              echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-              echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-              echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-            }
+          if (Test-Path $env:SCCACHE_ERROR_LOG) {
+            echo "<details><summary>Shared Compilation Cache Errors</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            Get-Content $env:SCCACHE_ERROR_LOG | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          }
 
   valgrind:
     name: Valgrind
@@ -321,7 +328,7 @@ jobs:
           fetch-depth: 1
 
       - name: Set up Valgrind
-        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05  # v1.6.0
+        uses: awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05 # v1.6.0
         with:
           packages: valgrind
 
@@ -337,27 +344,27 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
   prove:
+    if: false # TODO Implement formal testing for CANfigurator
     name: Prove CANfigurator
     runs-on: ubuntu-slim
-    permissions: { }
+    permissions: {}
     steps:
       - name: Placeholder for CANfigurator Unit Tests
         run: echo "Placeholder for CANfigurator unit tests using Prove (or some other testing framework)."
 
   all:
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All HOOTL Unit Tests
-    needs: [ cmake, ctest, valgrind, prove ]
+    needs: [cmake, ctest, valgrind] # TODO Add prove once implemented
     runs-on: ubuntu-slim
-    permissions: { }
-    if: always()
+    permissions: {}
     steps:
       - name: Fail HOOTL Unit Tests
-        if: >
+        if: > # TODO Add prove once implemented
           ${{
             needs.cmake.result != 'success' ||
             needs.ctest.result != 'success' ||
-            needs.valgrind.result != 'success' ||
-            needs.prove.result != 'success'
+            needs.valgrind.result != 'success'
           }}
         run: |
           echo "One or more HOOTL unit test jobs have failed."
