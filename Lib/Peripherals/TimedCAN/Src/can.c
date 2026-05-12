@@ -671,7 +671,7 @@ CAN_STATUS can_start(CANHandle *canHandle)
 
 	HAL_NVIC_EnableIRQ(rx0it);
 	HAL_NVIC_EnableIRQ(txit);
-	
+
 	CAN_Timer_Start();
 
 	return CAN_SUCCESS;
@@ -1080,14 +1080,14 @@ void TIM5_IRQHandler(void)
 {
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM5)) {
 		LL_TIM_ClearFlag_UPDATE(TIM5);
-		#ifdef USECAN1
+#ifdef USECAN1
 		can_tx_dequeue_helper(can_get_handle(&hal_fdcan1));
-		#endif
-		#ifdef USECAN2
+#endif
+#ifdef USECAN2
 		can_tx_dequeue_helper(can_get_handle(&hal_fdcan2));
-		#endif
-		#ifdef USECAN3
+#endif
+#ifdef USECAN3
 		can_tx_dequeue_helper(can_get_handle(&hal_fdcan3));
-		#endif
+#endif
 	}
 }
