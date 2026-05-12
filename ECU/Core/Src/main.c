@@ -82,7 +82,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
-#define NUM_SIGNALS_DIGITAL 8
+#define NUM_SIGNALS_DIGITAL 1
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {1024}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	     // Updated averages
@@ -107,7 +107,6 @@ void SystemClock_Config(void);
 // TODO: TS and RTD button signals will come over CAN
 void read_digital(void)
 {
-	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
 }
 
@@ -375,12 +374,12 @@ int main(void)
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
-	// TODO: do we need these?
+	// TODO: Figure out DMA Init and GPIO Init
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	// MX_FDCAN1_Init();
-	MX_ADC1_Init();
-	MX_ADC2_Init();
+	// MX_ADC1_Init();
+	// MX_ADC2_Init();
 	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
 
