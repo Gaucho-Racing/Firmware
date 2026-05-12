@@ -49,90 +49,37 @@ int GRCAN_Validate_InitBus(GRCAN_BUS_ID bus, GRCAN_OperatingMode mode, FDCAN_Glo
 	}
 }
 
-// GRCAN_ALL = 0xFF,
-// 	GRCAN_BCU = 0x03,
-// 	GRCAN_ECU = 0x02,
-// 	GRCAN_CCU = 0x02,
-// 	GRCAN_Charger = 0x00,
-// 	GRCAN_Charging_SDC = 0x0C,
-// 	GRCAN_DGPS = 0x30,
-// 	GRCAN_Dash_Panel = 0x05,
-// 	GRCAN_Debugger = 0x01,
-// 	GRCAN_Fan_Controller_1 = 0x0D,
-// 	GRCAN_Fan_Controller_2 = 0x0E,
-// 	GRCAN_Fan_Controller_3 = 0x0F,
-// 	GRCAN_GR_Inverter = 0x08,
-// 	GRCAN_TCM = 0x04,
-
 GRCAN_NODE_ID get_nodeID(GRCAN_BUS_ID bus)
 {
-	switch (bus) {
+	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
-			return GRCAN_BCU;
+			return GRCAN_ACU;
 		case GRCAN_BUS_DATA:
 			return GRCAN_ECU;
 		case GRCAN_BUS_TESTING:
 			return GRCAN_Debugger;
 		case GRCAN_BUS_CHARGER:
-			return GRCAN_Charger;
+			return GRCAN_CCU;
+		case GRCAN_BUS_DATA_SUBNET:
+			return GRCAN_ECU;
 		default:
 			return GRCAN_ALL; // All causes error
 	}
 }
 
-// typedef enum {
-// 	GRCAN_DEBUG_2_0 = 0x000,
-// 	GRCAN_DEBUG_FD = 0x001,
-// 	GRCAN_PING = 0x002,
-// 	GRCAN_ECU_STATUS_1 = 0x003,
-// 	GRCAN_ECU_STATUS_2 = 0x004,
-// 	GRCAN_ECU_STATUS_3 = 0x005,
-// 	GRCAN_ECU_CONFIG = 0x006,
-// 	GRCAN_BCU_STATUS_1 = 0x007,
-// 	GRCAN_BCU_STATUS_2 = 0x008,
-// 	GRCAN_BCU_STATUS_3 = 0x009,
-// 	GRCAN_BCU_PRECHARGE = 0x00A,
-// 	GRCAN_BCU_CONFIG_CHARGE_PARAMETERS = 0x00B,
-// 	GRCAN_BCU_CONFIG_OPERATIONAL_PARAMETERS = 0x00C,
-// 	GRCAN_BCU_CELL_DATA_1 = 0x00D,
-// 	GRCAN_BCU_CELL_DATA_2 = 0x00E,
-// 	GRCAN_BCU_CELL_DATA_3 = 0x00F,
-// 	GRCAN_BCU_CELL_DATA_4 = 0x010,
-// 	GRCAN_BCU_CELL_DATA_5 = 0x011,
-// 	GRCAN_INVERTER_STATUS_1 = 0x013,
-// 	GRCAN_INVERTER_STATUS_2 = 0x014,
-// 	GRCAN_INVERTER_STATUS_3 = 0x015,
-// 	GRCAN_INVERTER_CONFIG = 0x016,
-// 	GRCAN_INVERTER_COMMAND = 0x017,
-// 	GRCAN_FAN_STATUS = 0x018,
-// 	GRCAN_FAN_COMMAND = 0x019,
-// 	GRCAN_DASH_STATUS = 0x01A,
-// 	GRCAN_DASH_CONFIG = 0x01B,
-// 	GRCAN_TCM_STATUS = 0x029,
-// 	GRCAN_TCM_RESOURCE_UTILIZATION = 0x02A,
-// 	GRCAN_DASH_WARNING_FLAGS = 0x02B,
-// 	GRCAN_ECU_ANALOG_DATA = 0x02E,
-// 	GRCAN_GPS_LAT = 0x031,
-// 	GRCAN_GPS_LON = 0x032,
-// 	GRCAN_GPS_ALT = 0x033,
-// 	GRCAN_GPS_PX = 0x034,
-// 	GRCAN_GPS_QY = 0x035,
-// 	GRCAN_GPS_RZ = 0x036,
-// 	GRCAN_UVW_DGPS = 0x030,
-// 	GRCAN_ECU_PERFORMANCE = 0x123,
-// } GRCAN_MSG_ID;
-
 GRCAN_MSG_ID get_messageID(GRCAN_BUS_ID bus)
 {
-	switch (bus) {
+	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
-			return GRCAN_BCU_STATUS_1;
+			return GRCAN_ACU_STATUS_1;
 		case GRCAN_BUS_DATA:
 			return GRCAN_ECU_STATUS_1;
 		case GRCAN_BUS_TESTING:
 			return GRCAN_DEBUG_2_0;
 		case GRCAN_BUS_CHARGER:
-			return GRCAN_BCU_CONFIG_CHARGE_PARAMETERS;
+			return GRCAN_ACU_CONFIG_CHARGE_PARAMETERS;
+		case GRCAN_BUS_DATA_SUBNET:
+			return GRCAN_ECU_STATUS_1;
 		default:
 			return (GRCAN_MSG_ID)0xFF; // Invalid message ID
 	}
@@ -303,7 +250,7 @@ int FancyCAN_LoopbackTest(void)
 {
 	GRCAN_BUS_ID bus;
 
-	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER + 1; bus++) {
 		LOGOMATIC("\n--- Testing bus %d ---\n", bus);
 		int res1 = GRCAN_Validate_InitBus(bus, GRCAN_OPMODE_INTERNAL_LOOPBACK, FDCAN2);
 		// GRCAN_OPMODE_EXTERNAL_LOOPBACK needs to be tested, can change FDCAN: make sure to #define USECANx
@@ -320,7 +267,7 @@ int FancyCAN_LoopbackTest(void)
 			res2 = GRCAN_SendReceive(bus, nodeID, dest_nodeID, messageID, data, size); //
 			if (res2 == 0) {
 				uint8_t data_value = *(uint8_t *)data;
-				switch (bus) {
+				switch ((int)bus) {
 					case GRCAN_BUS_PRIMARY:
 						LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
@@ -333,6 +280,9 @@ int FancyCAN_LoopbackTest(void)
 					case GRCAN_BUS_TESTING:
 						LOGOMATIC("Testing Bus:TESTING Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
+					case GRCAN_BUS_DATA_SUBNET:
+						LOGOMATIC("Testing Bus:DATA_SUBNET Loopback Test FAILED for message with first byte: %d.\n", data_value);
+						break;
 					default:
 						LOGOMATIC("Testing Bus:UNKNOWN Loopback Test FAILED for message with first byte: %d.\n", data_value);
 						break;
@@ -344,7 +294,7 @@ int FancyCAN_LoopbackTest(void)
 		bool res4 = GRCAN_DeactivateBus(bus);
 
 		if (!res1 || !res2) {
-			switch (bus) {
+			switch ((int)bus) {
 				case GRCAN_BUS_PRIMARY:
 					LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED during initialization or send/receive test.\n");
 					break;
@@ -357,13 +307,16 @@ int FancyCAN_LoopbackTest(void)
 				case GRCAN_BUS_CHARGER:
 					LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED during initialization or send/receive test.\n");
 					break;
+				case GRCAN_BUS_DATA_SUBNET:
+					LOGOMATIC("Testing Bus:DATA_SUBNET Loopback Test FAILED during initialization or send/receive test.\n");
+					break;
 				default:
 					LOGOMATIC("Testing Bus:UNKNOWN Loopback Test FAILED during initialization or send/receive test.\n");
 					break;
 			}
 		}
 		if (!res4) {
-			switch (bus) {
+			switch ((int)bus) {
 				case GRCAN_BUS_PRIMARY:
 					LOGOMATIC("Testing Bus:PRIMARY Loopback Test FAILED during bus deactivation.\n");
 					break;
@@ -376,6 +329,9 @@ int FancyCAN_LoopbackTest(void)
 				case GRCAN_BUS_CHARGER:
 					LOGOMATIC("Testing Bus:CHARGER Loopback Test FAILED during bus deactivation.\n");
 					break;
+				case GRCAN_BUS_DATA_SUBNET:
+					LOGOMATIC("Testing Bus:DATA_SUBNET Loopback Test FAILED during bus deactivation.\n");
+					break;
 				default:
 					LOGOMATIC("Testing Bus:UNKNOWN Loopback Test FAILED during bus deactivation.\n");
 					break;
@@ -383,13 +339,12 @@ int FancyCAN_LoopbackTest(void)
 		}
 	}
 
-	if (bus < 4) {
+	if (bus < 5) {
 		LOGOMATIC("\nLoopback Test FAILED. Not all buses were tested.\n");
 		return 0;
 	}
 
-	// The next tests takes a while, completely fine to remove
-	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER+1; bus++) {
 		LOGOMATIC("\n--- Testing burst send on bus %d ---\n", bus);
 		GRCAN_Validate_InitBus(bus, GRCAN_OPMODE_INTERNAL_LOOPBACK, FDCAN2);
 		int burst_result = GRCAN_BurstSendTest(bus, get_nodeID(bus), get_nodeID(bus), get_messageID(bus), 100);
@@ -400,7 +355,7 @@ int FancyCAN_LoopbackTest(void)
 		GRCAN_DeactivateBus(bus);
 	}
 
-	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER + 1; bus++) {
 		LOGOMATIC("\n--- Testing init/deactivate stress test on bus %d ---\n", bus);
 		int stress_result = GRCAN_InitDeactivateStressTest(bus, get_nodeID(bus), get_nodeID(bus), get_messageID(bus), FDCAN2, 50);
 		if (!stress_result) {

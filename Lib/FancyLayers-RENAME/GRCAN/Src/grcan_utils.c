@@ -9,7 +9,7 @@
 
 GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 {
-	switch (bus) {
+	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
 			return GRCAN_MODE_FD;
 		case GRCAN_BUS_TESTING:
@@ -18,6 +18,9 @@ GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 			return GRCAN_MODE_CLASSIC;
 		case GRCAN_BUS_CHARGER:
 			return GRCAN_MODE_CLASSIC; // update later
+		case GRCAN_BUS_DATA_SUBNET:
+			LOGOMATIC("GRCAN_BusModeForBus: returning bus mode for subnet bus\n");
+			return GRCAN_MODE_FD;
 		default:
 			LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
 			return GRCAN_MODE_CLASSIC;
@@ -161,6 +164,27 @@ GRCAN_ClockSource GRCAN_DefaultClockSource(void)
 #endif
 }
 
+GRCAN_FrameFormat GRCAN_Frame_FormatForBus(GRCAN_BUS_ID bus) {
+	//This is an educate guess, the frame format for FD may change to GRCAN_FRAME_FD_BRS
+	switch ((int)bus) {
+		case GRCAN_BUS_PRIMARY:
+			return GRCAN_FRAME_FD_NO_BRS;
+		case GRCAN_BUS_TESTING:
+			return GRCAN_FRAME_FD_NO_BRS;
+		case GRCAN_BUS_DATA:
+			return GRCAN_FRAME_CLASSIC;
+		case GRCAN_BUS_CHARGER:
+			return GRCAN_FRAME_CLASSIC;
+		case GRCAN_BUS_DATA_SUBNET:
+			LOGOMATIC("GRCAN_Frame_FormatForBus: returning frame format for subnet bus\n");
+			return GRCAN_FRAME_FD_NO_BRS;
+		default:
+			LOGOMATIC("GRCAN_Frame_FormatForBus: unknown bus %d\n", bus);
+			return GRCAN_FRAME_CLASSIC;
+	}
+}
+
+
 void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 {
 	if (busCfg == NULL) {
@@ -168,15 +192,15 @@ void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 		return;
 	}
 
-	busCfg->fdcan_instance = FDCAN2;
-
 	memset(busCfg, 0, sizeof(*busCfg));
+
+	busCfg->fdcan_instance = FDCAN2;
 
 	busCfg->bus = bus;
 
 	busCfg->clock_source = GRCAN_DefaultClockSource();
 	busCfg->clock_divider = GRCAN_CLK_DIV1;
-	busCfg->frame_format = GRCAN_FRAME_FD_NO_BRS;
+	busCfg->frame_format = GRCAN_Frame_FormatForBus(bus);
 	busCfg->operating_mode = GRCAN_OPMODE_NORMAL;
 
 	busCfg->auto_retransmission = GRCAN_Feature_ENABLE;
