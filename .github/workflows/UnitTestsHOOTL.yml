@@ -30,7 +30,7 @@ jobs:
       SCCACHE_DIR: ${{ github.workspace }}/sccache
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
-      SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && format('/tmp/sccache-{0}-{1}.sock', matrix.prefix, matrix.operatingSystem) || '' }}
+      SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && '/tmp/sccache.sock' || '' }}
       SCCACHE_SERVER_PORT: ${{ matrix.operatingSystem == 'windows-latest' && (matrix.prefix == 'Debug' && '4226' || matrix.prefix == 'Release' && '4227' || matrix.prefix == 'MinSizeRel' && '4228' || '4229') || '' }}
     steps:
       - name: Checkout Repository
@@ -187,7 +187,7 @@ jobs:
         SCCACHE_DIR: ${{ github.workspace }}/sccache
         SCCACHE_LOG: "info"
         SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
-        SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && '/tmp/sccache-ctest.sock' || '' }}
+        SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && '/tmp/sccache.sock' || '' }}
         SCCACHE_SERVER_PORT: ${{ matrix.operatingSystem == 'windows-latest' && '4226' || '' }}
     steps:
       - name: Checkout Repository
