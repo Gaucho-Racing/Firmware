@@ -39,7 +39,7 @@
 // HAL handles
 #ifdef USECAN1
 #ifndef TX_BUFFER_1_SIZE
-#error "Please Define TX_BUFFER_1_SIZE"
+#error "Please define TX_BUFFER_1_SIZE"
 #endif
 static FDCAN_HandleTypeDef hal_fdcan1 = {.Instance = FDCAN1};
 FDCANTxMessage tx_buffer_1[TX_BUFFER_1_SIZE] = {0};
@@ -48,7 +48,7 @@ static CANHandle CAN1 = {.hal_fdcanP = &hal_fdcan1, .tx_buffer = tx_buffer_1};
 
 #ifdef USECAN2
 #ifndef TX_BUFFER_2_SIZE
-#error "Please Define TX_BUFFER_2_SIZE"
+#error "Please define TX_BUFFER_2_SIZE"
 #endif
 static FDCAN_HandleTypeDef hal_fdcan2 = {.Instance = FDCAN2};
 FDCANTxMessage tx_buffer_2[TX_BUFFER_2_SIZE] = {0};
@@ -57,11 +57,17 @@ static CANHandle CAN2 = {.hal_fdcanP = &hal_fdcan2, .tx_buffer = tx_buffer_2};
 
 #ifdef USECAN3
 #ifndef TX_BUFFER_3_SIZE
-#error "Please Define TX_BUFFER_3_SIZE"
+#error "Please define TX_BUFFER_3_SIZE"
 #endif
 static FDCAN_HandleTypeDef hal_fdcan3 = {.Instance = FDCAN3};
 FDCANTxMessage tx_buffer_3[TX_BUFFER_3_SIZE] = {0};
 static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
+#endif
+
+#ifndef CAN_TIMER_SEND_PERIOD_US
+#error "Please define CAN_TIMER_SEND_PERIOD_US"
+#else
+static_assert(CAN_TIMER_SEND_PERIOD_US > 0, "CAN_TIMER_SEND_PERIOD_US must be positive");
 #endif
 
 #define MIN(A, B) ((A < B) ? A : B)
