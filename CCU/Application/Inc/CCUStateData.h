@@ -18,7 +18,6 @@ typedef volatile struct {
 	// ACU_STATUS_2
 
 	// Error & Warnings
-	// uint8_t ACU_S2_ERROR_BITS;
 	bool ACU_S2_OVERTEMP_ERROR;
 	bool ACU_S2_OVERVOLT_ERROR;
 	bool ACU_S2_UNDERVOLT_ERROR;
@@ -27,7 +26,7 @@ typedef volatile struct {
 	bool ACU_S2_UNDER20v_WARNING;
 	bool ACU_S2_UNDER12v_WARNING;
 	bool ACU_S2_UNDERVOLTSDC_WARNING;
-	
+
 
 	// State
 	bool IR_MINUS; // IR- State
