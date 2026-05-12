@@ -27,7 +27,6 @@ typedef volatile struct {
 	bool ACU_S2_UNDER12v_WARNING;
 	bool ACU_S2_UNDERVOLTSDC_WARNING;
 
-
 	// State
 	bool IR_MINUS; // IR- State
 	bool IR_PLUS;  // IR+ State
