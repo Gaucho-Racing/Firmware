@@ -337,6 +337,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
   prove:
+    if: false # TODO Implement formal testing for CANfigurator
     name: Prove CANfigurator
     runs-on: ubuntu-slim
     permissions: { }
@@ -346,7 +347,7 @@ jobs:
 
   all:
     name: Completed All HOOTL Unit Tests
-    needs: [ cmake, ctest, valgrind, prove ]
+    needs: [ cmake, ctest, valgrind ] # TODO Add prove once implemented
     runs-on: ubuntu-slim
     permissions: { }
     if: always()
