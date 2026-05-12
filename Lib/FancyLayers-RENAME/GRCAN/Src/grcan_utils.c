@@ -164,8 +164,9 @@ GRCAN_ClockSource GRCAN_DefaultClockSource(void)
 #endif
 }
 
-GRCAN_FrameFormat GRCAN_Frame_FormatForBus(GRCAN_BUS_ID bus) {
-	//This is an educate guess, the frame format for FD may change to GRCAN_FRAME_FD_BRS
+GRCAN_FrameFormat GRCAN_Frame_FormatForBus(GRCAN_BUS_ID bus)
+{
+	// This is an educate guess, the frame format for FD may change to GRCAN_FRAME_FD_BRS
 	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
 			return GRCAN_FRAME_FD_NO_BRS;
@@ -183,7 +184,6 @@ GRCAN_FrameFormat GRCAN_Frame_FormatForBus(GRCAN_BUS_ID bus) {
 			return GRCAN_FRAME_CLASSIC;
 	}
 }
-
 
 void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 {

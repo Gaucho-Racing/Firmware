@@ -344,7 +344,7 @@ int FancyCAN_LoopbackTest(void)
 		return 0;
 	}
 
-	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER+1; bus++) {
+	for (bus = GRCAN_BUS_TESTING; bus <= GRCAN_BUS_CHARGER + 1; bus++) {
 		LOGOMATIC("\n--- Testing burst send on bus %d ---\n", bus);
 		GRCAN_Validate_InitBus(bus, GRCAN_OPMODE_INTERNAL_LOOPBACK, FDCAN2);
 		int burst_result = GRCAN_BurstSendTest(bus, get_nodeID(bus), get_nodeID(bus), get_messageID(bus), 100);
