@@ -74,8 +74,9 @@ BO_ 2152727041 Dash_Panel_Ping_to_Debugger: 4 Dash_Panel
 BO_ 2152727042 Dash_Panel_Ping_to_ECU: 4 Dash_Panel
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
 
-BO_ 2152733186 Dash_Panel_Status_to_ECU: 1 Dash_Panel
- SG_ button_led_flags : 0|8@1+ (1,0) [0|0] ""  ECU
+BO_ 2152733186 Dash_Panel_Status_to_ECU: 2 Dash_Panel
+ SG_ button_flags : 0|8@1+ (1,0) [0|0] ""  ECU
+ SG_ led_flags : 8|8@1+ (1,0) [0|0] ""  ECU
 
 BO_ 2148532226 Debugger_2_0_to_ECU: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] ""  ECU
@@ -385,7 +386,8 @@ CM_ SG_ 2150631682 HV_Output_Current "20v output current";
 CM_ SG_ 2152726529 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2152727041 Timestamp "Time in millis";
 CM_ SG_ 2152727042 Timestamp "Time in millis";
-CM_ SG_ 2152733186 button_led_flags "[Byte 0 / Bits 0-7] 0: TS press 1: RTD press 2: TS hold 3: RTD hold 4: BSPD led 5: IMD led 6: BMS led 7: Reserved";
+CM_ SG_ 2152733186 button_flags "[Byte 0 / Bits 0-7] 0-3: Reserved 4: RTD Off 5: TS Off 6: RTD On 7: TS On";
+CM_ SG_ 2152733186 led_flags "[Byte 1 / Bits 8-15] 0-5: Reserved 6: IMD 7: BMS";
 CM_ SG_ 2148532226 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2148532738 Timestamp "Time in millis";
 CM_ SG_ 2148532227 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
