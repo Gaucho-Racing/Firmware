@@ -34,7 +34,8 @@ typedef enum {
 	CAN_DATAMAIN_BUS = 1
 } CAN_SAMM_ROUTING_BUS;
 
-int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID);
-int can_mag_send(unsigned int *data);
+void TireTemp_Callback(uint32_t id, void *data, uint32_t size);
+void TCM_Callback(uint32_t id, void *data, uint32_t size);
+int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus);
 
 #endif

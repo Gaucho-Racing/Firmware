@@ -61,13 +61,17 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 
 int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 {
+	if (sensorNode != GRCAN_ALL) {
+		LOGOMATIC("Suspension Node already initialized");
+		return 0;
+	}
+
 	GRCAN_BusConfig bus_config;
 	GRCAN_SetDefaultBusConfig(&bus_config, bus);
 
-#if defined(STM32H5)
-	bus_config.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz
-						      // defaults should work
-#endif
+	#if defined(STM32H5)
+		bus_config.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz, defaults should work
+	#endif
 
 	if (bus == CAN_SUBNET_BUS) {
 		bus_config.fdcan_instance = FDCAN2;
@@ -83,8 +87,16 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 		LOGOMATIC("Failed to intialize Suspension CAN Bus");
 		return 0;
 	}
+
 	GRCAN_SetLocalNodeID(LOCAL_GR_ID);
 	return 1; // success
+}
+
+int SusNode_CAN_Send(void *data) {
+	// send IMU and MAG data to TCM
+	typedef struct {
+		
+	}
 }
 
 /* ================================================================================================== */
