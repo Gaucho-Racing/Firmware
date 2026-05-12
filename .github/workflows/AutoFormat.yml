@@ -3,6 +3,7 @@ run-name: Auto Format - ${{ github.ref_name }}
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
