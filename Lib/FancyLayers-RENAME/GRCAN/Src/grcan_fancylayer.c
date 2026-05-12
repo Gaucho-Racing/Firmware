@@ -9,7 +9,6 @@
 
 static CANHandle *grcan_primary = NULL;
 static CANHandle *grcan_data = NULL;
-static CANHandle *grcan_data_subnet = NULL;
 static CANHandle *grcan_testing = NULL;
 static CANHandle *grcan_charging = NULL;
 static CANHandle *grcan_data_subnet = NULL;
