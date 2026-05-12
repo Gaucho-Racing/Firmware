@@ -133,7 +133,7 @@
 			"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"CMake: configure"
+													"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4PERTESTING"
 		},
