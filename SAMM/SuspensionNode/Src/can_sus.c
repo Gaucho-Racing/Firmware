@@ -62,7 +62,7 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 		return 0;
 	}
 
-	GRCAN_BusConfig bus_config;
+	GRCAN_BusConfig bus_config = {0};
 	GRCAN_SetDefaultBusConfig(&bus_config, bus);
 
 #if defined(STM32H5)
@@ -111,12 +111,7 @@ bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void* data) 
 /* ================================================================================================== */
 
 /*
-int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
-{
-	if (localNode != GRCAN_ALL) {
-		LOGOMATIC("CAN MAG already initialized\n");
-		return 0;
-	}
+todo: error checker stuff
 
 	switch (init_msgID) {
 		case CAN_MAG_MSG_DATA:
@@ -134,31 +129,4 @@ int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 			break;
 	}
 
-	GRCAN_BusConfig busCfg = {0};
-	GRCAN_SetDefaultBusConfig(&busCfg, busMode);
-
-#if defined(STM32H5)
-	busCfg.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz
-						  // defaults should work
-#endif
-
-	if (mag_ID == GRCAN_SAMM_Mag_1) {
-		GRCAN_SetLocalNodeID(GRCAN_SAMM_Mag_1);
-		localNode = GRCAN_SAMM_Mag_1;
-	} else if (mag_ID == GRCAN_SAMM_Mag_2) {
-		GRCAN_SetLocalNodeID(GRCAN_SAMM_Mag_2);
-		localNode = GRCAN_SAMM_Mag_2;
-	} else {
-		LOGOMATIC("Mag number not defined, defaulting to Mag 1\n");
-		GRCAN_SetLocalNodeID(GRCAN_SAMM_Mag_1);
-		localNode = GRCAN_SAMM_Mag_1;
-	}
-
-	if (!GRCAN_InitBus(&busCfg)) {
-		LOGOMATIC("CAN MAG bus init failed\n");
-		localNode = GRCAN_ALL;
-		return 0;
-	}
-
-	return 1;
-}*/
+*/
