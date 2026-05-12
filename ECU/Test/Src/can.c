@@ -1,5 +1,5 @@
 #include "Unused.h"
-#include "ecu_can.h"
+#include "can.h"
 
 int can_start(CANHandle *handle)
 {
@@ -13,10 +13,10 @@ int can_stop(CANHandle *handle)
 	return 0;
 }
 
-int can_send(CANHandle *handle, FDCANTxMessage *buffer)
+int can_enqueue(CANHandle *canHandle, FDCANTxMessage *message)
 {
-	UNUSED(handle);
-	UNUSED(buffer);
+	UNUSED(canHandle);
+	UNUSED(message);
 	return 0;
 }
 
