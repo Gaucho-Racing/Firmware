@@ -208,7 +208,7 @@ void ADC_Configure(void)
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
 	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_PRIMARY,
-			       (0x000FFF00 & ID) >> 8, // TODO: Double check
+			       (0x000FFF00 & ID) >> 8,
 			       (0xFF00000 & ID) >> 20, data, size);
 }
 
