@@ -346,11 +346,11 @@ jobs:
         run: echo "Placeholder for CANfigurator unit tests using Prove (or some other testing framework)."
 
   all:
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All HOOTL Unit Tests
     needs: [ cmake, ctest, valgrind ] # TODO Add prove once implemented
     runs-on: ubuntu-slim
     permissions: { }
-    if: always()
     steps:
       - name: Fail HOOTL Unit Tests
         if: >
