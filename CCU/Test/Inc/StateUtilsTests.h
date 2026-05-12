@@ -1,4 +1,3 @@
-
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
