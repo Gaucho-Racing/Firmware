@@ -24,7 +24,10 @@ void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
 	// Filtering likely needs to be adjusted if this is happening often
-	LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+	UNUSED(bus_id);
+	UNUSED(msg_id);
+	UNUSED(sender_id);
+	// LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
@@ -51,7 +54,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			respondToPing(sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
+			respondToPing(bus_id, sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
 			break;
 
 		case GRCAN_ACU_STATUS_1:
@@ -73,9 +76,10 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
 			state_data->max_cell_temp_c = acu_status_2->max_cell_temp * 0.25f;
 			state_data->acu_error_warning_bits = acu_status_2->status_flags;
-			state_data->ir_minus = GETBIT(acu_status_2->precharge_latch_flags, 1);
-			state_data->ir_plus = GETBIT(acu_status_2->precharge_latch_flags, 2);
-			state_data->acu_software_latch = GETBIT(acu_status_2->precharge_latch_flags, 3);
+			// ACU does weird stuff
+			state_data->ir_minus = GETBIT(acu_status_2->precharge_latch_flags, 4);
+			state_data->ir_plus = GETBIT(acu_status_2->precharge_latch_flags, 5);
+			state_data->acu_software_latch = GETBIT(acu_status_2->precharge_latch_flags, 6);
 			break;
 
 		case GRCAN_INVERTER_STATUS_1:
@@ -100,18 +104,43 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				break;
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
-			if (state_data->ecu_state != GR_TS_DISCHARGE) {
-				state_data->ts_active_button_pressed = GETBIT(dash_data->button_led_flags, 0);
+
+			LOGOMATIC("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
+				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
+
+			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later
+			if (state_data->ecu_state == GR_GLV_ON) {
+				state_data->ts_active_button_pressed = dash_data->button_flags & 1;
 			} else {
-				state_data->ts_active_button_pressed = false;
+				state_data->ts_active_button_pressed = (dash_data->button_flags >> 2) & 1;
 			}
-			if (state_data->ecu_state == GR_DRIVE_ACTIVE || state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
-				state_data->rtd_button_pressed = GETBIT(dash_data->button_led_flags, 1);
+
+			if (state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
+				state_data->rtd_button_pressed = (dash_data->button_flags >> 1) & 1;
+			} else if (state_data->ecu_state == GR_DRIVE_ACTIVE) {
+				state_data->rtd_button_pressed = (dash_data->button_flags >> 3) & 1;
 			} else {
 				state_data->rtd_button_pressed = false;
 			}
 
 			break;
+
+		case GRCAN_ECU_ANALOG_DATA:
+			if (data_length != sizeof(GRCAN_ECU_ANALOG_DATA_MSG)) {
+				ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+			GRCAN_ECU_ANALOG_DATA_MSG *analog_data = (GRCAN_ECU_ANALOG_DATA_MSG *)data;
+			state_data->bspd_signal = analog_data->bspd_signal;
+			state_data->bse_signal = analog_data->bse_signal;
+			state_data->APPS1_Signal = analog_data->apps_1_signal;
+			state_data->APPS2_Signal = analog_data->apps_2_signal;
+			state_data->Brake_F_Signal = analog_data->brakeline_f_signal;
+			state_data->Brake_R_Signal = analog_data->brakeline_r_signal;
+			state_data->steering_angle_signal = analog_data->steering_angle_signal;
+			state_data->aux_signal = analog_data->aux_signal;
+			break;
+
 		/*
 		case GRCAN_STEERING_STATUS:
 			if (data_length != sizeof(GRCAN_STEERING_STATUS_MSG)) {

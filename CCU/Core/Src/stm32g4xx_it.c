@@ -23,6 +23,8 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <ctype.h>
+
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateUtils.h"
@@ -59,8 +61,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern FDCAN_HandleTypeDef hfdcan1;
-extern FDCAN_HandleTypeDef hfdcan2;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -200,18 +201,14 @@ void USART2_IRQHandler(void)
 		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
 		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
 		LOGOMATIC("VCP: %c\n", receivedData);
-		if (receivedData == 'C' && !state_data.recv_charge_cmd) {
+		if (receivedData == 'C' || receivedData == 'c') {
 			LOGOMATIC("Received charge command\n");
 			state_data.recv_charge_cmd = true;
-			LL_USART_TransmitData8(USART2, 'C');
-		} else if (receivedData == '?') {
-
-			request_print_statedata = true;
-
-			LL_USART_TransmitData8(USART2, '?');
-
+			LL_USART_TransmitData8(USART2, receivedData);
+		} else if (isspace(receivedData)) {
+			LL_USART_TransmitData8(USART2, receivedData);
 		} else {
-			state_data.recv_charge_cmd = false;
+			state_data.recv_stop_cmd = true;
 			LL_USART_TransmitData8(USART2, 'X');
 		}
 	}
