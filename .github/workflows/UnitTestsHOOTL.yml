@@ -43,7 +43,7 @@ jobs:
         with:
           release: ${{ env.ARM_GCC_VERSION }}
 
-      - name: Setup Shared Compilation Cache
+      - name: Setup Cache
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ${{ env.SCCACHE_DIR }}
