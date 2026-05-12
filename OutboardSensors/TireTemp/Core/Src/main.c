@@ -169,8 +169,12 @@ int main(void)
 
 	MLX90640_FullReset();
 
-	while (MLX90640_DumpEE(MLX90640_address, eeMLX90640) < 0) HAL_Delay(50);
-	while (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) < 0) HAL_Delay(50);
+	while (MLX90640_DumpEE(MLX90640_address, eeMLX90640) < 0) {
+		HAL_Delay(50);
+	}
+	while (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) < 0) {
+		HAL_Delay(50);
+	}
 
 	/* USER CODE END 2 */
 
