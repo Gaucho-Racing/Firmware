@@ -34,14 +34,14 @@ void CANInitialize()
 
 uint16_t _temp_f2u16(float temp)
 {
-	float v = ((temp + 40.) / 340.0);
-	if (v < 0.0) {
-		v = 0.0;
+	float v = ((temp + 40.f) / 340.0f);
+	if (v < 0.0f) {
+		v = 0.0f;
 	}
-	if (v > 1.0) {
-		v = 1.0;
+	if (v > 1.0f) {
+		v = 1.0f;
 	}
-	return (uint16_t)(v * 65535.0);
+	return (uint16_t)(v * 65535.0f);
 }
 
 void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
