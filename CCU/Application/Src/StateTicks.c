@@ -48,8 +48,7 @@ void STATE_IDLE(CCU_StateData *state_data)
 	if (CriticalError(state_data)) {
 		TripSoftwareLatch(state_data);
 		LOGOMATIC("Critical Error Occured!\n");
-	}
-	else if (state_data->recv_charge_cmd) {
+	} else if (state_data->recv_charge_cmd) {
 		SendPrechargeStatus(true);
 		LOGOMATIC("Set PRECHARGE TS ACTIVE = 1\n");
 		state_data->recv_charge_cmd = false;
