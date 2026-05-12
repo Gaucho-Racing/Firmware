@@ -170,7 +170,7 @@ void SystemClock_Config(void)
 	while (LL_RCC_PLL_IsReady() != 1) {}
 
 	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
+									LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
 	/* Wait till System clock is ready */
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
 
