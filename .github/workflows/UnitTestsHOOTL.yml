@@ -31,8 +31,8 @@ jobs:
       SCCACHE_DIR: ${{ github.workspace }}/sccache
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
-      SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && '/tmp/sccache.sock' || '' }}
-      SCCACHE_SERVER_PORT: ${{ matrix.operatingSystem == 'windows-latest' && (matrix.prefix == 'Debug' && '4226' || matrix.prefix == 'Release' && '4227' || matrix.prefix == 'MinSizeRel' && '4228' || '4229') || '' }}
+      SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && format('/tmp/sccache-{0}.sock', matrix.prefix) || '' }}
+      SCCACHE_SERVER_PORT: ${{ matrix.operatingSystem == 'windows-latest' && (matrix.prefix == 'Debug' && '4226' || (matrix.prefix == 'Release' && '4227' || (matrix.prefix == 'MinSizeRel' && '4228' || '4229'))) || '' }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -188,7 +188,7 @@ jobs:
         SCCACHE_DIR: ${{ github.workspace }}/sccache
         SCCACHE_LOG: "info"
         SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
-        SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && '/tmp/sccache.sock' || '' }}
+        SCCACHE_SERVER_UDS: ${{ matrix.operatingSystem != 'windows-latest' && format('/tmp/sccache-{0}.sock', github.job) || '' }}
         SCCACHE_SERVER_PORT: ${{ matrix.operatingSystem == 'windows-latest' && '4226' || '' }}
     steps:
       - name: Checkout Repository
