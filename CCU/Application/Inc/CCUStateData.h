@@ -27,18 +27,13 @@ typedef volatile struct {
 	bool ACU_S2_UNDER20v_WARNING;
 	bool ACU_S2_UNDER12v_WARNING;
 	bool ACU_S2_UNDERVOLTSDC_WARNING;
-	// bool ACU_S2_PRECHARGE_ERROR;
+	
 
 	// State
-	// uint8_t ACU_S2_PRECHARGE_BITS;
 	bool IR_MINUS; // IR- State
 	bool IR_PLUS;  // IR+ State
 	bool SOFTWARE_LATCH;
 
-	// ACU_PRECHARGE
-	// bool PRECHARGE_SET_TS_ACTIVE_FLAG;
-
-	// CCU_Precharge_Step precharge_step;
 } CCU_StateData;
 
 extern CCU_StateData state_data;
