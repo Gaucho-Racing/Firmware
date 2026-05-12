@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 
 concurrency:
@@ -13,6 +14,7 @@ concurrency:
 
 jobs:
   codeql:
+    if: ${{ !github.event.pull_request.draft }}
     name: CodeQL
     runs-on: ubuntu-latest
     permissions:
@@ -145,11 +147,11 @@ jobs:
           log_level: 'DEBUG'
 
   all:
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Linting
     needs: [ configs, codeql, perllinter, web ]
     runs-on: ubuntu-slim
     permissions: { }
-    if: always()
     steps:
       - name: Fail Linting
         if: >
