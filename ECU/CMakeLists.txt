@@ -81,6 +81,7 @@ target_sources(
 		Application/Src/CANutils.c
 		Application/Src/Pinging.c
 		Application/Src/Lights.c
+		Application/Src/ecu_can.c
 )
 
 target_link_libraries(
