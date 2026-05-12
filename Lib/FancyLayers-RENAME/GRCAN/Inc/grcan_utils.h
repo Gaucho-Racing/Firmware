@@ -11,7 +11,7 @@
 #ifndef GRCAN_UTILS_H
 #define GRCAN_UTILS_H
 
-#define GRCAN_BUS_DATA_SUBNET ((GRCAN_BUS_ID)4) //could be source of error
+#define GRCAN_BUS_DATA_SUBNET ((GRCAN_BUS_ID)4) // could be source of error
 typedef enum {
 	GRCAN_MODE_CLASSIC,
 	GRCAN_MODE_FD

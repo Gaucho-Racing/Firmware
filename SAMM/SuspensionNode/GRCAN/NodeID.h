@@ -6,7 +6,7 @@
 
 #ifndef NODE
 #pragma message("NODE is not defined. Please compile Suspension Node for a specific target. Defaulting to FL.")
-#define LOCAL_GR_ID GRCAN_SuspensionNode_FL
+#define LOCAL_GR_ID GRCAN_Suspension_FL
 #else
 #define LOCAL_GR_ID CONCAT(GRCAN_SuspensionNode_, NODE)
 #endif

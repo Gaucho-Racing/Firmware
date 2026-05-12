@@ -6,5 +6,4 @@
 
 #define TX_BUFFER_2_SIZE 10
 
-
 #endif
