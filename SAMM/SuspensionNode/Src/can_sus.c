@@ -1,23 +1,22 @@
 #include "can_sus.h"
-
 #include "can_cfg.h"
 
-// static GRCAN_NODE_ID localNode = GRCAN_ALL;
-static GRCAN_NODE_ID sensorNode = GRCAN_ALL; // q from shravya: what is GRCAN_ALL?
+static GRCAN_NODE_ID sensorNode = GRCAN_ALL;
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
 static GRCAN_BUS_ID subnetBusMode = GRCAN_BUS_DATA_SUBNET; // still needs to be defined
-static GRCAN_NODE_ID sensorNode;			   // tire temp -> q from shravya: sensorNode declared twice?
 static data_length = 64;
 
-// get rid of mag functions once their functionality added
+// get rid of mag functions once their functionality added -> need to add error checking, otherwise DONE
 // fix callbacks for all requried functionality
-// might need to implement logic for receiving and forwarding for specific sensor location (FL -> FL)
+// might need to implement logic for receiving and forwarding for specific sensor location (FL -> FL) -> DONE
 // might be better way to do this
 // check if came from tire temp or tcm in the callback-- should not interfere
 // might need to get rid of TCM checking if you really want to forward everything
-// handle sensorNode logic in init, you can use enum in can_sus.h
+// handle sensorNode logic in init, you can use enum in can_sus.h -> DONE
+
+// lowkey change naming -> low priority, do after everything else
 
 // For messages from tire temp
 void TireTemp_Callback(uint32_t id, void *data, uint32_t size)
@@ -32,6 +31,7 @@ void TireTemp_Callback(uint32_t id, void *data, uint32_t size)
 
 	uint32_t forward_data = (uint32_t *)data;
 
+	// Forward messages to TCM via main data bus
 	GRCAN_Fancy_Send(busMode, TCMNode, GRCAN_Fancy_ID.messageID, data, size);
 }
 
@@ -46,7 +46,7 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 
 	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
 
-	// Forward all messages to subnet bus
+	// Forward all messages to tire temp sensor via subnet bus
 	GRCAN_Fancy_Send(subnetBusMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
 
 	if (GRCAN_Fancy_ID.messageID == GRCAN_PING) {
@@ -84,7 +84,19 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 		return 0;
 	}
 
-	GRCAN_SetLocalNodeID(LOCAL_GR_ID);
+	GRCAN_SetLocalNodeID(localNode);
+
+	switch (localNode) {
+		case Sus_FL:
+			sensorNode = TireTemp_FL;
+		case Sus_FR:
+			sensorNode = TireTemp_FR;
+		case Sus_RL:
+			sensorNode = TireTemp_RL;
+		case Sus_RR:
+			sensorNode = TireTemp_RR;
+	}
+
 	return 1; // success
 }
 
