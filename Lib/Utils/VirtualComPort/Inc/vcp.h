@@ -125,7 +125,7 @@ typedef struct {
 	uint32_t alternate_function;
 } VCP_Config;
 
-void VCP_Send(uint8_t *data, uint32_t length);
+void VCP_Send(const char *data, uint32_t length);
 bool VCP_IsDataAvailable();
 uint8_t VCP_Receive(void);
 uint8_t VCP_ReceiveLine(uint8_t *buffer, uint8_t buffer_size);

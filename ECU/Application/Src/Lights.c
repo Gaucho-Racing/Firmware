@@ -5,7 +5,7 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 
@@ -21,7 +21,7 @@ void BrakeLightControl(ECU_StateData *stateLump)
 void TSSILightControl(ECU_StateData *stateLump)
 {
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
-	//     Here we chose a period of 350ms
+	//     Here we chose a period of 286ms
 	if (stateLump->tssi_fault) {
 		LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 		if (MillisecondsSinceBoot() % 286 < 143) {
@@ -53,32 +53,14 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 	}
 }
 
-void BMSLights(ECU_StateData *stateLump)
+void dashLights(ECU_StateData *stateLump)
 {
-	bool light = 0;
-	light |= stateLump->max_cell_temp_c > CRITICAL_MAX_CELL_TEMP_C;
-	light |= stateLump->ts_voltage > CRITICAL_TS_VOLTAGE;
-	light |= bmsFailure(stateLump);
-	// TODO: interrupted/missing BMS vals
-	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = SetBitInByte(0, 0, light)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
-}
+	// light control for if signal goog
+	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = bspdFailure(stateLump) << 2 | imdFailure(stateLump) << 1 | bmsFailure(stateLump)};
 
-void IMDLights(ECU_StateData *stateLump)
-{
-	uint8_t light = 0;
-	// TODO: isolation failure?
-	light |= imdFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = SetBitInByte(0, 1, light)};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
-}
+	// this is needed for the latch open control
+	message.led_latch_flags |= ((uint8_t)!bspdFailure(stateLump) << 5) | ((uint8_t)!imdFailure(stateLump) << 4) | ((uint8_t)!bmsFailure(stateLump) << 3);
 
-void BSPDLights(ECU_StateData *stateLump)
-{
-	uint8_t light = 0;
-	// TODO: isolation failure?
-	light |= bspdFailure(stateLump);
-	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = SetBitInByte(0, 2, light)};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
@@ -87,8 +69,5 @@ void lightControl(ECU_StateData *stateData)
 	BrakeLightControl(stateData);
 	TSSILightControl(stateData);
 	RTDButtonLightControl(stateData);
-	TSActiveButtonLightControl(stateData);
-	BMSLights(stateData);
-	IMDLights(stateData);
-	BSPDLights(stateData);
+	dashLights(stateData);
 }

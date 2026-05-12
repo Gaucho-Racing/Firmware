@@ -3,6 +3,7 @@ run-name: Auto Format - ${{ github.ref_name }}
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -10,6 +11,7 @@ concurrency:
 
 jobs:
   clang:
+    if: ${{ !github.event.pull_request.draft }}
     name: Clang
     runs-on: ubuntu-latest
     permissions:
@@ -44,6 +46,7 @@ jobs:
           fetch: 'false'
 
   cmake:
+    if: ${{ !github.event.pull_request.draft }}
     name: CMake
     runs-on: ubuntu-slim
     permissions:
@@ -76,6 +79,7 @@ jobs:
           fetch: 'false'
 
   json:
+    if: ${{ !github.event.pull_request.draft }}
     name: Json
     runs-on: ubuntu-slim
     permissions:
@@ -104,6 +108,7 @@ jobs:
           fetch: 'false'
 
   perl:
+    if: ${{ !github.event.pull_request.draft }}
     name: Perl
     runs-on: ubuntu-slim
     permissions:
@@ -137,6 +142,7 @@ jobs:
           fetch: 'false'
 
   asm:
+    if: ${{ !github.event.pull_request.draft }}
     name: Assembly
     runs-on: ubuntu-slim
     permissions:
@@ -176,6 +182,7 @@ jobs:
           fetch: 'false'
 
   web:
+    if: ${{ !github.event.pull_request.draft }}
     name: Web
     runs-on: ubuntu-slim
     permissions:
@@ -216,11 +223,11 @@ jobs:
           fetch: 'false'
 
   all:
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Auto Formatters
     needs: [ clang, cmake, json, perl, asm, web ]
     runs-on: ubuntu-slim
     permissions: { }
-    if: always()
     steps:
       - name: Fail Auto Format
         if: >

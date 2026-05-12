@@ -8,7 +8,7 @@
 static bool is_initialized = false;
 static VCP_Config vcp_config = {0};
 
-void VCP_Send(uint8_t *data, uint32_t length)
+void VCP_Send(const char *data, uint32_t length)
 {
 	if (!is_initialized) {
 		LOGOMATIC("VCP_Send called before successful initialization\n");

@@ -151,7 +151,7 @@ void DMA_Init(DMA_Init_Values *Init_Values)
 	config.Mode = LL_DMA_MODE_CIRCULAR;			  // Circular mode: continuously transfers after the last cycle finishes
 	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT; // Peripheral memory address doesn't increments - all results written to the ADCx->DR register
 	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;	  // Memory address increments after every transfer
-	config.NbData = 1;					  // Transfers one data unit at a time
+	config.NbData = Init_Values->Num_Data;			  // Transfers num data unit at a time
 	switch (Init_Values->Data_Size) {
 		case (Byte):
 			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_BYTE;

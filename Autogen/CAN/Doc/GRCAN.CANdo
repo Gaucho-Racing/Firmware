@@ -3605,19 +3605,24 @@ Message ID:
       map equation: "1x"
   Dash Status:
     MSG ID: 0x01A
-    MSG LENGTH: 1
-    button_led_flags:
+    MSG LENGTH: 2
+    button_flags:
       bit_start: 0
       comment:
         [Byte 0 / Bits 0-7]
-        0: TS press
-        1: RTD press
-        2: TS hold
-        3: RTD hold
-        4: BSPD led
-        5: IMD led
-        6: BMS led
-        7: Reserved
+        0-3: Reserved
+        4: RTD Off
+        5: TS Off
+        6: RTD On
+        7: TS On
+      data type: u8
+    led_flags:
+      bit_start: 8
+      comment:
+        [Byte 1 / Bits 8-15]
+        0-5: Reserved
+        6: IMD
+        7: BMS
       data type: u8
   Dash Config:
     MSG ID: 0x01B
