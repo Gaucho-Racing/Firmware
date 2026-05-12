@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 
 concurrency:
@@ -13,6 +14,7 @@ concurrency:
 
 jobs:
   codeql:
+    if: ${{ !github.event.pull_request.draft }}
     name: CodeQL
     runs-on: ubuntu-latest
     permissions:
@@ -29,15 +31,15 @@ jobs:
           fetch-depth: 1
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@68bde559dea0fdcac2102bfdf6230c5f70eb485e  # v4.35.4
+        uses: github/codeql-action/init@68bde559dea0fdcac2102bfdf6230c5f70eb485e # v4.35.4
         with:
           languages: ${{ matrix.language }}
-          build-mode: 'none'
+          build-mode: "none"
 
       - name: Analyze CodeQL
         uses: github/codeql-action/analyze@68bde559dea0fdcac2102bfdf6230c5f70eb485e # v4.35.4
         with:
-          category: '${{ matrix.language }}'
+          category: "${{ matrix.language }}"
 
   configs:
     name: Configuration Files
@@ -51,7 +53,7 @@ jobs:
           fetch-depth: 1
 
       - name: Validate Configuration Files
-        uses: Boeing/validate-configs-action@a31830f9bec7d3ec001cfab7951a966d08180a72  # v2.0.0
+        uses: Boeing/validate-configs-action@a31830f9bec7d3ec001cfab7951a966d08180a72 # v2.0.0
 
   perllinter:
     name: Perl Linter
@@ -66,9 +68,9 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6  # v1.41.1
+        uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1
         with:
-          install-modules: 'Perl::Critic'
+          install-modules: "Perl::Critic"
 
       - name: Perl Critic Output
         run: |
@@ -119,11 +121,11 @@ jobs:
 
       - name: Upload Annotations
         if: failure() && github.event_name == 'pull_request'
-        uses: yuzutech/annotations-action@00b2d488bcba3bd01014dc073d276ef4a45d5c6c  # v0.6.0
+        uses: yuzutech/annotations-action@00b2d488bcba3bd01014dc073d276ef4a45d5c6c # v0.6.0
         with:
-          title: 'Perl Linter Findings'
+          title: "Perl Linter Findings"
           repo-token: ${{ github.token }}
-          input: 'perlcritic_annotations.json'
+          input: "perlcritic_annotations.json"
 
   web:
     name: Web Linter
@@ -138,18 +140,18 @@ jobs:
           fetch-depth: 1
 
       - name: HTML5 Validator
-        uses: Cyb3r-Jak3/html5validator-action@4ea5e57383ed7e14432ebbaae1b64893b7c5210b  # v8.0.0
+        uses: Cyb3r-Jak3/html5validator-action@4ea5e57383ed7e14432ebbaae1b64893b7c5210b # v8.0.0
         with:
-          root: 'Web'
-          css: 'true'
-          log_level: 'DEBUG'
+          root: "Web"
+          css: "true"
+          log_level: "DEBUG"
 
   all:
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Linting
-    needs: [ configs, codeql, perllinter, web ]
+    needs: [configs, codeql, perllinter, web]
     runs-on: ubuntu-slim
-    permissions: { }
-    if: always()
+    permissions: {}
     steps:
       - name: Fail Linting
         if: >
