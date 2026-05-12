@@ -180,7 +180,7 @@ jobs:
     strategy:
         fail-fast: true
         matrix:
-          operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
+          operatingSystem: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft && fromJson('["ubuntu-latest"]') || fromJson('["ubuntu-latest", "windows-latest", "macos-latest"]') }}
     env:
         SCCACHE_DIR: ${{ github.workspace }}/sccache
         SCCACHE_LOG: "info"
