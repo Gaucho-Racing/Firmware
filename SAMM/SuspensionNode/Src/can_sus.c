@@ -3,11 +3,11 @@
 #include "can_cfg.h"
 
 // static GRCAN_NODE_ID localNode = GRCAN_ALL;
-static GRCAN_NODE_ID sensorNode = GRCAN_ALL;
+static GRCAN_NODE_ID sensorNode = GRCAN_ALL; // q from shravya: what is GRCAN_ALL?
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
-static GRCAN_NODE_ID sensorNode; // tire temp
+static GRCAN_NODE_ID sensorNode; // tire temp -> q from shravya: sensorNode declared twice?
 static data_length = 64;
 
 // get rid of mag functions once their functionality added
@@ -18,7 +18,8 @@ static data_length = 64;
 // might need to get rid of TCM checking if you really want to forward everything
 // handle sensorNode logic in init, you can use enum in can_sus.h
 
-void TireTemp_callback(uint32_t ID, void *data, uint32_t size)
+// For messages from tire temp
+void TireTemp_Callback(uint32_t id, void *data, uint32_t size)
 {
 
 	GRCAN_Fancy_ID GRCAN_Fancy_ID;
@@ -26,16 +27,18 @@ void TireTemp_callback(uint32_t ID, void *data, uint32_t size)
 	GRCAN_Fancy_ID.destNode = 0;
 	GRCAN_Fancy_ID.messageID = 0;
 
-	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, ID);
+	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
 
 	uint32_t forward_data = (uint32_t *)data;
 
+	// q from shravya: doesn't this send from TCM to tire temp instead of other way around?
 	if (GRCAN_Fancy_ID.srcID == TCMNode) {
-		GRCAN_Fancy_Send(busMode, sensorNode, msgID, data, size);
+		GRCAN_Fancy_Send(busMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
 	}
 }
 
-void TCM_callback(uint32_t ID, void *data, uint32_t size)
+// For messages from TCM
+void TCM_Callback(uint32_t id, void *data, uint32_t size)
 {
 
 	GRCAN_Fancy_ID GRCAN_Fancy_ID;
@@ -43,14 +46,16 @@ void TCM_callback(uint32_t ID, void *data, uint32_t size)
 	GRCAN_Fancy_ID.destNode = 0;
 	GRCAN_Fancy_ID.messageID = 0;
 
-	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, ID);
+	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
 
 	// Forward all messages to subnet bus
-	GRCAN_Fancy_Send(CAN_SUBNET_BUS, sender_id, msgID, data, data_length);
+	// q from shravya: busMode is just the default bus... need to indicate that it's being sent thru
+	// subnet bus somehow?
+	GRCAN_Fancy_Send(busMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
 
-	if (msg_id == GRCAN_PING) {
+	if (GRCAN_Fancy_ID.messageID == GRCAN_PING) {
 		// Send ping back to sender on main data bus
-		GRCAN_Fancy_Send(CAN_DATAMAIN_BUS, sender_id, msg_id, data, data_length);
+		GRCAN_Fancy_Send(busMode, GRCAN_Fancy_ID.srcID, GRCAN_Fancy_ID.messageID, data, size);
 	}
 }
 
@@ -66,10 +71,10 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 
 	if (bus == CAN_SUBNET_BUS) {
 		bus_config.fdcan_instance = FDCAN2;
-		bus_config.rx_callback = TireTemp_callback; // callback
+		bus_config.rx_callback = TireTemp_Callback; // callback
 	} else if (bus == CAN_DATAMAIN_BUS) {
 		bus_config.fdcan_instance = FDCAN1;
-		bus_config.rx_callback = TCM_callback; // callback
+		bus_config.rx_callback = TCM_Callback; // callback
 	}
 
 	bool result = GRCAN_InitBus(&bus_config);
@@ -82,35 +87,7 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 	return 1; // success
 }
 
-void SusNode_CAN_MessageHandler(bool primary, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, void *data, uint32_t data_length)
-{
-	// Forward all messages to subnet bus
-	GRCAN_Fancy_Send(CAN_SUBNET_BUS, sender_id, msg_id, data, data_length);
-
-	if (msg_id == GRCAN_PING) {
-		// Send ping back to sender on main data bus
-		GRCAN_Fancy_Send(CAN_DATAMAIN_BUS, sender_id, msg_id, data, data_length);
-	}
-}
-
 /* ================================================================================================== */
-
-void SusNode_ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
-{
-	LOGOMATIC("Bad Suspension Node CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
-}
-
-void SusNode_ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
-{
-	LOGOMATIC("Unhandled Suspension Node CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
-}
-
-void SusNode_CAN_Send(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, GRCAN_NODE_ID dest_id, void *data, uint32_t data_length)
-{
-	if (data_length > FDCAN_MAX_DATA_BYTES) {
-		LOGOMATIC("Tried to send more than 64 bytes over suspension node CAN!");
-	}
-}
 
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {
