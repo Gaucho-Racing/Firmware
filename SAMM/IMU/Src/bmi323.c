@@ -41,17 +41,26 @@ uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDe
 /*
 TODO: VIN DO THESE FUNCYIONS
 */
-uint16_t bmi323_read(bmi323 *bmi323_dev, uint8_t reg)
-{
-	uint16_t data;
-	// i2c_read_single(BMI323_I2C_ADDR, reg, &data, bmi323_dev->i2c_port);
-	return data;
+uint16_t bmi323_read(bmi323 *bmi323_dev, uint8_t reg) {
+	uint8_t tx_word[4] = {reg | 0x80, 0, 0, 0}; // Separate into two bytes
+	uint8_t rx_word[4] = {0};
+
+	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_RESET); // bmi323 chip select active low
+	HAL_SPI_TransmitReceive(bmi323_dev->spi_port, tx_word, rx_word, 4, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_SET); // Release chip select back to high
+	return ((uint16_t)rx_word[3] << 8) | rx_word[2];
 }
 
 uint8_t bmi323_write(bmi323 *bmi323_dev, uint8_t reg, uint16_t data)
 {
-	// i2c_write(BMI323_I2C_ADDR, reg, data, bmi323_dev->i2c_port);
-	return 1;
+	uint8_t tx_word[3] = {reg, data & 0xFF, data >> 8}; // Separate into two bytes
+	uint8_t rx_word[3] = {0};
+
+	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_RESET); // bmi323 chip select active low
+
+	HAL_SPI_TransmitReceive(bmi323_dev->spi_port, tx_word, rx_word, 3, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_SET); // Release chip select back to high
+	return 0;
 }
 
 uint8_t bmi323_soft_reset(bmi323 *bmi323_dev)

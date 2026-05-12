@@ -34,6 +34,21 @@ typedef enum {
 	CAN_DATAMAIN_BUS = 1
 } CAN_SAMM_ROUTING_BUS;
 
+typedef struct {
+	uint16_t bmi323_acc_x;
+	uint16_t bmi323_acc_y;
+	uint16_t bmi323_acc_z;
+	uint16_t bmi323_gyro_x;
+	uint16_t bmi323_gyro_y;
+	uint16_t bmi323_gyro_z;
+	uint16_t bmi323_temp;
+	uint16_t bmi323_status;
+	uint16_t mag_angle;
+	int16_t mag_turns;
+	uint8_t mag_temp;
+	bool mag_status;
+} IMU_Mag_Data;
+
 void TireTemp_Callback(uint32_t id, void *data, uint32_t size);
 void TCM_Callback(uint32_t id, void *data, uint32_t size);
 int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus);

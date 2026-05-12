@@ -7,6 +7,7 @@ static GRCAN_NODE_ID sensorNode = GRCAN_ALL; // q from shravya: what is GRCAN_AL
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
+static GRCAN_BUS_ID subnetBusMode = GRCAN_BUS_DATA_SUBNET; // still needs to be defined
 static GRCAN_NODE_ID sensorNode; // tire temp -> q from shravya: sensorNode declared twice?
 static data_length = 64;
 
@@ -31,10 +32,7 @@ void TireTemp_Callback(uint32_t id, void *data, uint32_t size)
 
 	uint32_t forward_data = (uint32_t *)data;
 
-	// q from shravya: doesn't this send from TCM to tire temp instead of other way around?
-	if (GRCAN_Fancy_ID.srcID == TCMNode) {
-		GRCAN_Fancy_Send(busMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
-	}
+	GRCAN_Fancy_Send(busMode, TCMNode, GRCAN_Fancy_ID.messageID, data, size);
 }
 
 // For messages from TCM
@@ -49,9 +47,7 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
 
 	// Forward all messages to subnet bus
-	// q from shravya: busMode is just the default bus... need to indicate that it's being sent thru
-	// subnet bus somehow?
-	GRCAN_Fancy_Send(busMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
+	GRCAN_Fancy_Send(subnetBusMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
 
 	if (GRCAN_Fancy_ID.messageID == GRCAN_PING) {
 		// Send ping back to sender on main data bus
@@ -92,15 +88,29 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 	return 1; // success
 }
 
-int SusNode_CAN_Send(void *data)
-{
-	// send IMU and MAG data to TCM
-	typedef struct {
+bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void* data) {
+	if (data == NULL) {
+		LOGOMATIC("Suspension Node CAN send: NULL data");
 	}
+
+	if (localNode == GRCAN_ALL) {
+		LOGOMATIC("Suspension Node not initialized");
+	}
+
+	bool result = GRCAN_Fancy_Send(busMode, dest_node, msg_id, data, data_length);
+
+	if (!result) {
+		LOGOMATIC("Suspension Node CAN send failed");
+		return 0;
+	}
+
+	return 1;
 }
+
 
 /* ================================================================================================== */
 
+/*
 int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 {
 	if (localNode != GRCAN_ALL) {
@@ -151,24 +161,4 @@ int can_mag_init(GRCAN_NODE_ID mag_ID, CAN_MAG_MSG_ID init_msgID)
 	}
 
 	return 1;
-}
-
-int can_mag_send(unsigned int *data)
-{
-	if (data == NULL) {
-		LOGOMATIC("can_mag_send: NULL data\n");
-		return 0;
-	}
-
-	if (localNode == GRCAN_ALL) {
-		LOGOMATIC("can_mag_send: CAN MAG not initialized\n");
-		return 0;
-	}
-
-	if (!GRCAN_Fancy_Send(busMode, destNode, msgID, (void *)data, 64)) {
-		LOGOMATIC("can_mag_send failed\n");
-		return 0;
-	}
-
-	return 1;
-}
+}*/
