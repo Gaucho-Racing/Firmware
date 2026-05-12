@@ -49,9 +49,8 @@ void STATE_IDLE(CCU_StateData *state_data)
 		TripSoftwareLatch(state_data);
 		LOGOMATIC("Critical Error Occured!\n");
 	}
-
-	else if (state_data->recv_charge_cmd) { // FIXME: same or nah
-		SendPrechargeStatus(true);	// IR- should be set to 1 at this point, IR+ may become 1 if charging complete
+	else if (state_data->recv_charge_cmd) {
+		SendPrechargeStatus(true);
 		LOGOMATIC("Set PRECHARGE TS ACTIVE = 1\n");
 		state_data->recv_charge_cmd = false;
 
