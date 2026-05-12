@@ -75,7 +75,7 @@ target_link_libraries(
 	INTERFACE
 		CANfigurator
 		BitManipulations_Lib
-		PERIPHERAL_CAN_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 		VCP_LIB
 )
 

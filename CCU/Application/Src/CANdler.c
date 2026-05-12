@@ -175,7 +175,7 @@ void SendPrechargeStatus(bool setPrecharge)
 
 	LOGOMATIC("PRECHARGE SET: %d\n", setPrecharge);
 
-	can_send(primary_can, &msg);
+	can_enqueue(primary_can, &msg);
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
 }
