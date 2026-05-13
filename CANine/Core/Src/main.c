@@ -87,13 +87,57 @@ void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 
 void sendMSG(){
 
+		FDCANTxMessage sendBCUCellData1;
+
+		sendBCUCellData1.tx_header.Identifier = (GRCAN_BCU << 20) | (GRCAN_BCU_CELL_DATA_1 << 8) | GRCAN_Debugger;
+		sendBCUCellData1.tx_header.IdType = FDCAN_EXTENDED_ID;
+		sendBCUCellData1.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+		sendBCUCellData1.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+		sendBCUCellData1.tx_header.DataLength = FDCAN_DLC_BYTES_64;
+		sendBCUCellData1.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+		sendBCUCellData1.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+		sendBCUCellData1.tx_header.MessageMarker = 0;
+
+		GRCAN_BCU_CELL_DATA_1_MSG grcan_bcu_cell_data_1_msg = {
+			.cells[0].voltage = 0xAF,
+    		.cells[0].temperature = 45,
+    		.cells[1].voltage = 0xBE,
+    		.cells[1].temperature = 48,
+    		.cells[2].voltage = 0xFF,
+    		.cells[2].temperature = 60,
+			.cells[3].voltage = 0xAF,
+    		.cells[3].temperature = 45,
+    		.cells[4].voltage = 0xBE,
+    		.cells[4].temperature = 48,
+    		.cells[5].voltage = 0xFF,
+    		.cells[5].temperature = 60,
+			.cells[6].voltage = 0xAF,
+    		.cells[6].temperature = 45,
+    		.cells[7].voltage = 0xBE,
+    		.cells[7].temperature = 48,
+    		.cells[8].voltage = 0xFF,
+    		.cells[8].temperature = 60,
+			.cells[9].voltage = 0xAF,
+    		.cells[9].temperature = 45,
+    		.cells[10].voltage = 0xBE,
+    		.cells[10].temperature = 48,
+    		.cells[11].voltage = 0xFF,
+    		.cells[11].temperature = 60
+
+
+		};
+
+		memcpy(sendBCUCellData1.data, &grcan_bcu_cell_data_1_msg, sizeof(grcan_bcu_cell_data_1_msg));
+
+		can_send(can1, &sendBCUCellData1);
+
 		FDCANTxMessage sendInverterStatus3;
 
 		sendInverterStatus3.tx_header.Identifier = (GRCAN_GR_Inverter << 20) | (GRCAN_INVERTER_STATUS_3 << 8) | GRCAN_Debugger;
 		sendInverterStatus3.tx_header.IdType = FDCAN_EXTENDED_ID;
 		sendInverterStatus3.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 		sendInverterStatus3.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-		sendInverterStatus3.tx_header.DataLength = FDCAN_DLC_BYTES_8;
+		sendInverterStatus3.tx_header.DataLength = FDCAN_DLC_BYTES_2;
 		sendInverterStatus3.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 		sendInverterStatus3.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 		sendInverterStatus3.tx_header.MessageMarker = 0;
@@ -108,36 +152,32 @@ void sendMSG(){
 		can_send(can1, &sendInverterStatus3);
 
 
-		// FDCANTxMessage sendECUStatus1;
+		FDCANTxMessage sendECUStatus1;
 
-		// sendECUStatus1.tx_header.Identifier = (GRCAN_ECU << 20) | (GRCAN_ECU_STATUS_1 << 8) | GRCAN_Debugger;
-		// sendECUStatus1.tx_header.IdType = FDCAN_EXTENDED_ID;
-		// sendECUStatus1.tx_header.TxFrameType = FDCAN_DATA_FRAME;
-		// sendECUStatus1.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-		// sendECUStatus1.tx_header.DataLength = FDCAN_DLC_BYTES_8;
-		// sendECUStatus1.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-		// sendECUStatus1.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-		// sendECUStatus1.tx_header.MessageMarker = 0;
+		sendECUStatus1.tx_header.Identifier = (GRCAN_ECU << 20) | (GRCAN_ECU_STATUS_1 << 8) | GRCAN_Debugger;
+		sendECUStatus1.tx_header.IdType = FDCAN_EXTENDED_ID;
+		sendECUStatus1.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+		sendECUStatus1.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+		sendECUStatus1.tx_header.DataLength = FDCAN_DLC_BYTES_8;
+		sendECUStatus1.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+		sendECUStatus1.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+		sendECUStatus1.tx_header.MessageMarker = 0;
 
-		// GRCAN_ECU_STATUS_1_MSG ecu_status1_msg = {
-		// 	.ecu_state = GR_DRIVE_ACTIVE,
+		GRCAN_ECU_STATUS_1_MSG ecu_status1_msg = {
+			.ecu_state = GR_DRIVE_ACTIVE,
 
-		// 	.status_flags = 0x67,
+			.status_flags = 0x65,
 
-		// 	.power_level_torque_map = (0xA << 4) | 0x3,
-		// 	.max_cell_temp = 35,
-		// 	.accumulator_state_of_charge = 90,
-		// 	.glv_state_of_charge = 95,
-		// 	.tractive_system_voltage = 560
-		// };
+			.power_level_torque_map = (0xA << 4) | 0x3,
+			.max_cell_temp = 35,
+			.accumulator_state_of_charge = 90,
+			.glv_state_of_charge = 95,
+			.tractive_system_voltage = 560
+		};
 
-		// LOGOMATIC("Power Level (in hex, Controls the AC current limits): 0x%X\n", GETBITS(ecu_status1_msg.power_level_torque_map, 0, 4));
-		// LOGOMATIC("Torque Map (in hex): 0x%X\n", GETBITS(ecu_status1_msg.power_level_torque_map, 4, 4));
+		memcpy(sendECUStatus1.data, &ecu_status1_msg, sizeof(ecu_status1_msg));
 
-
-		// memcpy(sendECUStatus1.data, &ecu_status1_msg, sizeof(ecu_status1_msg));
-
-		// can_send(can1, &sendECUStatus1);
+		can_send(can1, &sendECUStatus1);
 
 
 		FDCANTxMessage sendECUMsg;
