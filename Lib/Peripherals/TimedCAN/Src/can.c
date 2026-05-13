@@ -420,6 +420,30 @@ void can_tx_dequeue_helper(CANHandle *handle)
 dwt_timer_t send_timer = {0};
 #endif
 
+uint8_t BytesToCANDLC(uint32_t num_bytes)
+{
+	if (num_bytes <= 8) {
+		return num_bytes;
+	} else if (num_bytes <= 12) {
+		return FDCAN_DLC_BYTES_12;
+	} else if (num_bytes <= 16) {
+		return FDCAN_DLC_BYTES_16;
+	} else if (num_bytes <= 20) {
+		return FDCAN_DLC_BYTES_20;
+	} else if (num_bytes <= 24) {
+		return FDCAN_DLC_BYTES_24;
+	} else if (num_bytes <= 32) {
+		return FDCAN_DLC_BYTES_32;
+	} else if (num_bytes <= 48) {
+		return FDCAN_DLC_BYTES_48;
+	} else if (num_bytes <= 64) {
+		return FDCAN_DLC_BYTES_64;
+	} else {	// Should never happen
+		return FDCAN_DLC_BYTES_0;
+		LOGOMATIC("Invalid CAN data size after check: %ld\n", num_bytes);
+	}
+}
+
 CAN_STATUS can_enqueue(CANHandle *canHandle, FDCANTxMessage *message)
 {
 

@@ -377,11 +377,12 @@ int can_stop(CANHandle *handle);
 int can_enqueue(CANHandle *canHandle, FDCANTxMessage *message);
 int can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
 int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
-// alternatively use
-// HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
-// HAL_FDCAN_ConfigFilter()
+uint8_t BytesToCANDLC(uint32_t num_bytes);
+    // alternatively use
+    // HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into
+    // HAL_FDCAN_ConfigFilter()
 
-// doesn't need a handle, CAN cores share peripheral clock
-void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
+    // doesn't need a handle, CAN cores share peripheral clock
+    void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
 #endif
