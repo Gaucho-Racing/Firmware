@@ -85,9 +85,7 @@
 		const highlightTypes = isLeft ? ["del", "mod"] : ["add", "mod"];
 		const highlightClass = isLeft ? "dv-del" : "dv-add";
 		const lnHeader = isLeft ? "Old#" : "New#";
-		const fileHeader = isLeft
-			? "Original GRCAN.CANdo"
-			: "Modified GRCAN.CANdo";
+		const fileHeader = isLeft ? "Original GRCAN.CANdo" : "Modified GRCAN.CANdo";
 
 		const body = rows
 			.map((r) => {
