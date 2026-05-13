@@ -12,10 +12,10 @@
 // MUST be in agreement with Autogen/CAN/Inc/GRCAN_MSG_DATA.h/GRCAN_ECU_PINGING_RTT_MSG
 #define PING_LIST(OP)                                                                                                                                                                                  \
 	OP(GRCAN_ACU, 0, GRCAN_BUS_PRIMARY)                                                                                                                                                            \
-	OP(GRCAN_GR_Inv, 1, GRCAN_BUS_PRIMARY)                                                                                                                                                    \
-	OP(GRCAN_Fan_Ctrl_1, 2, GRCAN_BUS_PRIMARY)                                                                                                                                               \
-	OP(GRCAN_Fan_Ctrl_2, 3, GRCAN_BUS_PRIMARY)                                                                                                                                               \
-	OP(GRCAN_Fan_Ctrl_3, 4, GRCAN_BUS_PRIMARY)                                                                                                                                               \
+	OP(GRCAN_GR_Inv, 1, GRCAN_BUS_PRIMARY)                                                                                                                                                         \
+	OP(GRCAN_Fan_Ctrl_1, 2, GRCAN_BUS_PRIMARY)                                                                                                                                                     \
+	OP(GRCAN_Fan_Ctrl_2, 3, GRCAN_BUS_PRIMARY)                                                                                                                                                     \
+	OP(GRCAN_Fan_Ctrl_3, 4, GRCAN_BUS_PRIMARY)                                                                                                                                                     \
 	OP(GRCAN_Dash_Panel, 5, GRCAN_BUS_PRIMARY)                                                                                                                                                     \
 	OP(GRCAN_TCM, 6, GRCAN_BUS_PRIMARY)                                                                                                                                                            \
 	OP(GRCAN_TireTemp_FL, 7, GRCAN_BUS_DATA)                                                                                                                                                       \
