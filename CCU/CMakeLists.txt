@@ -28,8 +28,8 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			Test/Src/CCUStateTicksTests.c
 			Test/Src/stm32g4xx_hal.c
 			Test/Src/stm32g4xx_ll_gpio.c
+			Test/Src/StateUtilsTests.c
 			Application/Src/StateTicks.c
-			Application/Src/StateUtils.c
 	)
 	target_link_libraries(
 		CCUStateTicksTests
@@ -60,14 +60,12 @@ target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
-		Core/Src/dma.c
-		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		# Application
-		Application/Src/CANDler.c
+		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
 )
@@ -77,7 +75,7 @@ target_link_libraries(
 	INTERFACE
 		CANfigurator
 		BitManipulations_Lib
-		PERIPHERAL_CAN_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 		VCP_LIB
 )
 

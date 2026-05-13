@@ -4,7 +4,7 @@
 #include "Logomatic.h"
 #include "StateMachine.h"
 #include "StateTicks.h"
-#include "StateUtils.h"
+#include "StateUtilsTests.h"
 #include "Unused.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
@@ -14,7 +14,6 @@ static void CCU_PSUEDO_STATE_TICK(CCU_StateData *state_data)
 
 	LOGOMATIC("CCU Current State: %d\n", state_data->state);
 
-	// FIXME:
 	switch (state_data->state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 				     // General checks for State Transition, if any error detected, transition back to IDLE state
 
@@ -38,284 +37,272 @@ int main(void)
 {
 	{
 		// #########
-		// No Errors + No Button Pressed (0)
+		//
 		// #########
 		LOGOMATIC("----State Tick Started---- \n");
-		CCU_StateData state_dataTest = {0};
-		LOGOMATIC("No Errors Occurs, button is not pressed\n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
 
+		// Test 1: in Idle, receive charge command with no errors
+		LOGOMATIC("In Idle, receive charge command with no errors\n");
+		state_dataTest.recv_charge_cmd = 1;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
+			LOGOMATIC("Should be no errors and move to Charging\n");
+			return 1;
+		}
+		LOGOMATIC("\n\n\n");
+
+		// Test 2: in Charging, receive stop charge command with no errors
+		LOGOMATIC("In Charging, receive stop charge command with no errors\n");
+		state_dataTest.recv_stop_cmd = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("Should be no errors and move to Idle\n");
+			return 2;
+		}
+		LOGOMATIC("\n\n\n");
+
+		// Test 3: in Idle, receive charge command, 1 error
+		LOGOMATIC("In Idle, receive charge command, 1 error\n");
+		state_dataTest.ACU_S2_OVERTEMP_ERROR = 1;
+		state_dataTest.recv_charge_cmd = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("There should be an overtemp error and stay in state Idle\n");
+			return 3;
+		}
+		LOGOMATIC("\n\n\n");
+
+		// Test 4: in Idle, receive charge command, 2 errors
+		LOGOMATIC("in Idle, receive charge command, 2 errors");
+		state_dataTest.recv_charge_cmd = 1;
+		state_dataTest.ACU_S2_UNDERCURR_ERROR = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("There should be a critical error and stay in state Idle\n");
+			return 4;
+		}
+		LOGOMATIC("\n\n\n");
+
+		// Test 5: in Charging, no start or stop command, but an error
+		LOGOMATIC("In Charging, no start or stop command, but an error\n");
+		state_dataTest.recv_charge_cmd = 1;
+		state_dataTest.ACU_S2_OVERTEMP_ERROR = 0;
+		state_dataTest.ACU_S2_UNDERCURR_ERROR = 0;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		state_dataTest.ACU_S2_UNDERCURR_ERROR = 1;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("There should be a critical error and move to Idle\n");
+			return 5;
+		}
 		LOGOMATIC("\n\n\n");
 	}
 	{
 		// #########
-		// No Errors + Button Pressed (1)
+		//
 		// #########
-		LOGOMATIC("----No Errors Occurs, button is pressed----\n");
-		CCU_StateData state_dataTest = {0};
+		LOGOMATIC("----Recv Charge Cmd, Charging Complete, Return to IDLE---- \n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
+		state_dataTest.recv_charge_cmd = true;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
+			LOGOMATIC("Did not move to charging\n");
+			return 6;
+		}
+
+		state_dataTest.IR_MINUS = true;
+		state_dataTest.IR_PLUS = true;
+
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("Did not move to IDLE after charging complete\n");
+			return 6;
+		}
+
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software latch should not have tripped\n");
+			return 6;
+		}
+
+		LOGOMATIC("\n\n\n");
+	}
+	{
+		// #########
+		//
+		// #########
+		LOGOMATIC("----Recv Charge Cmd, IR PRECHARGE, IR CHARGE COMPLETE, Return to IDLE---- \n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
+
+		state_dataTest.state = CCU_STATE_IDLE;
+		state_dataTest.recv_charge_cmd = true;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
+			LOGOMATIC("Did not move to charging\n");
+			return 7;
+		}
+
+		state_dataTest.IR_MINUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_CHARGING) {
-			LOGOMATIC("CCU STATE did not switch to CHARGING\n");
-			return 1;
+			LOGOMATIC("Should not have moved to IDLE\n");
+			return 7;
 		}
 
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 1;
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software latch should not have tripped\n");
+			return 7;
 		}
 
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
-			LOGOMATIC("Software Latch tripped when it shouldn't\n");
-			return 1;
-		}
-		LOGOMATIC("\n\n\n");
-	}
-	{
-		// ######### FIXME: Double check valid test
-		// 1 Error + No Button Pressed (2)
-		// #########
-		LOGOMATIC("----1 Errors Occurs, button is not pressed----\n");
-		CCU_StateData state_dataTest = {0};
-
-		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-		state_dataTest.BCU_S2_OVERCURR_ERROR = 1;
-
+		state_dataTest.IR_PLUS = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
-			LOGOMATIC("CCU STATE did not stay IDLE\n");
-			return 2;
+			LOGOMATIC("Did not move to IDLE after charging complete\n");
+			return 7;
 		}
 
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 2;
-		}
-
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
-			LOGOMATIC("Software Latch was not tripped and set to low\n");
-			return 2;
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software latch should not have tripped\n");
+			return 7;
 		}
 
 		LOGOMATIC("\n\n\n");
 	}
 	{
-		// ######### FIXME: Double check valid test
-		// 1 Error + Button Pressed (3)
 		// #########
-		LOGOMATIC("----1 Errors Occurs, button pressed----\n");
-		CCU_StateData state_dataTest = {0};
+		//
+		// #########
+		LOGOMATIC("----Recv Charge Cmd, Charging Complete, Return to IDLE---- \n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
-
-		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-
-		if (state_dataTest.state != CCU_STATE_IDLE) {
-			LOGOMATIC("CCU STATE did not stay IDLE\n");
-			return 3;
-		}
-
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 3;
-		}
-
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
-			LOGOMATIC("Software Latch was not tripped and set to low\n");
-			return 3;
-		}
-
-		LOGOMATIC("\n\n\n");
-	}
-	{
-		// ######### FIXME: Double check valid test
-		// Some Errors + Button Pressed (4)
-		// #########
-
-		LOGOMATIC("----Some Errors Occur, button pressed----\n");
-		CCU_StateData state_dataTest = {0};
-
-		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
-		state_dataTest.BCU_S2_OVERVOLT_ERROR = 1;
-
-		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-
-		if (state_dataTest.state != CCU_STATE_IDLE) {
-			LOGOMATIC("CCU STATE did not stay IDLE\n");
-			return 4;
-		}
-
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 4;
-		}
-
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
-			LOGOMATIC("Software Latch was not tripped and set to low\n");
-			return 4;
-		}
-
-		LOGOMATIC("\n\n\n");
-	}
-	{
-		// ######### FIXME: Double check valid test
-		// Every Error + Button Pressed (5)
-		// #########
-
-		LOGOMATIC("----Every Error Occurs, button pressed----\n");
-		CCU_StateData state_dataTest = {0};
-
-		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
-		state_dataTest.BCU_S2_OVERVOLT_ERROR = 1;
-		state_dataTest.BCU_S2_UNDERCURR_ERROR = 1;
-		state_dataTest.BCU_S2_UNDERVOLT_ERROR = 1;
-
-		CCU_PSUEDO_STATE_TICK(&state_dataTest);
-
-		if (state_dataTest.state != CCU_STATE_IDLE) {
-			LOGOMATIC("CCU STATE did not stay IDLE\n");
-			return 5;
-		}
-
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 5;
-		}
-
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
-			LOGOMATIC("Software Latch was not tripped and set to low\n");
-			return 5;
-		}
-
-		LOGOMATIC("\n\n\n");
-	}
-	{
-		// ######### FIXME: Double check valid test
-		// No Error + Button Pressed ON then OFF (6)
-		// #########
-
-		LOGOMATIC("----No Errors Occur, button is pressed ON then OFF----\n");
-		CCU_StateData state_dataTest = {0};
-
-		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-
+		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_CHARGING) {
-			LOGOMATIC("CCU STATE did not stay CHARGING\n");
-			return 6;
+			LOGOMATIC("Did not move to charging\n");
+			return 8;
 		}
 
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 6;
-		}
+		state_dataTest.IR_MINUS = true;
+		state_dataTest.IR_PLUS = true;
 
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
-			LOGOMATIC("Software Latch was tripped and set to low\n");
-		}
-
-		state_dataTest.recv_charge_cmd = 0;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
-			LOGOMATIC("CCU STATE did not stay IDLE\n");
-			return 6;
+			LOGOMATIC("Did not move to IDLE after charging complete\n");
+			return 8;
 		}
 
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 6;
-		}
-
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
-			LOGOMATIC("Software Latch was tripped and set to low\n");
-			return 6;
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software latch should not have tripped\n");
+			return 8;
 		}
 
 		LOGOMATIC("\n\n\n");
 	}
 	{
-		// ######### FIXME: Double check valid test
-		// No Error, is Charging + Then Error (7)
 		// #########
-		LOGOMATIC("----In Charging, then error occurs----\n");
-		CCU_StateData state_dataTest = {0};
+		//
+		// #########
+		LOGOMATIC("----Recv Charge Cmd, IR IMPOSSIBILITY ERROR, Return to IDLE, Trip Latch---- \n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
 
 		state_dataTest.state = CCU_STATE_IDLE;
-		state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE = 0;
-		state_dataTest.recv_charge_cmd = 1;
-		state_dataTest.BCU_S2_SOFTWARE_LATCH = 1;
-
+		state_dataTest.recv_charge_cmd = true;
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_CHARGING) {
-			LOGOMATIC("CCU STATE did not stay CHARGING\n");
-			return 7;
+			LOGOMATIC("Did not move to charging\n");
+			return 9;
 		}
 
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 1) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 7;
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software latch should not have tripped\n");
+			return 9;
 		}
 
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 1) {
-			LOGOMATIC("Software Latch was tripped and set to low\n");
-		}
-
-		state_dataTest.BCU_S2_OVERTEMP_ERROR = 1;
+		state_dataTest.IR_PLUS = true;
 
 		CCU_PSUEDO_STATE_TICK(&state_dataTest);
 
 		if (state_dataTest.state != CCU_STATE_IDLE) {
-			LOGOMATIC("CCU STATE did not stay IDLE\n");
-			return 7;
+			LOGOMATIC("Did not move to IDLE after encountering CritError\n");
+			return 9;
 		}
 
-		if (state_dataTest.BCU_PRECHARGE_SET_TS_ACTIVE != 0) {
-			LOGOMATIC("PRECHARGE Message did not send correct message\n");
-			return 7;
+		if (state_dataTest.SOFTWARE_LATCH != 0) {
+			LOGOMATIC("Software latch should have tripped\n");
+			return 9;
 		}
 
-		if (state_dataTest.BCU_S2_SOFTWARE_LATCH != 0) {
-			LOGOMATIC("Software Latch was not tripped and set to low\n");
-			return 7;
+		LOGOMATIC("\n\n\n");
+	}
+	{
+		// #########
+		//
+		// #########
+		LOGOMATIC("----Recv Charge Cmd, Recv Stop Cmd, Return to IDLE---- \n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
+
+		state_dataTest.state = CCU_STATE_IDLE;
+		state_dataTest.recv_charge_cmd = true;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_CHARGING) {
+			LOGOMATIC("Did not move to charging\n");
+			return 10;
+		}
+
+		state_dataTest.recv_stop_cmd = true;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("Did not move to IDLE after receiving stop cmd\n");
+			return 10;
 		}
 		LOGOMATIC("\n\n\n");
 	}
-	LOGOMATIC("----ALL CURRENT TEST CASES PASSED\n----");
-	return 0;
+	{
+		// #########
+		//
+		// #########
+		LOGOMATIC("---- Recv Stop Cmd in IDLE, STAY to IDLE---- \n");
+		CCU_StateData state_dataTest = {0, .SOFTWARE_LATCH = 1};
+
+		state_dataTest.state = CCU_STATE_IDLE;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("Did not stay IDLE\n");
+			return 11;
+		}
+
+		state_dataTest.recv_stop_cmd = true;
+		CCU_PSUEDO_STATE_TICK(&state_dataTest);
+
+		if (state_dataTest.state != CCU_STATE_IDLE) {
+			LOGOMATIC("Did not stay IDLE\n");
+			return 11;
+		}
+
+		if (state_dataTest.SOFTWARE_LATCH != 1) {
+			LOGOMATIC("Software latch should not have tripped\n");
+			return 11;
+		}
+		LOGOMATIC("\n\n\n");
+	}
+	LOGOMATIC("All TESTS PASSED \n");
 }

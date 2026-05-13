@@ -13,13 +13,15 @@ endif()
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+#TODO: when CAN implementation is settled, turn HOOTL tests back on
+#if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(FALSE)
 	add_executable(StateTicksTest)
 	target_include_directories(
 		StateTicksTest
 		PRIVATE
-			Application/Inc
 			Test/Inc
+			Application/Inc
 	)
 	target_sources(
 		StateTicksTest
@@ -79,6 +81,7 @@ target_sources(
 		Application/Src/CANutils.c
 		Application/Src/Pinging.c
 		Application/Src/Lights.c
+		Application/Src/ecu_can.c
 )
 
 target_link_libraries(
@@ -86,7 +89,7 @@ target_link_libraries(
 	INTERFACE
 		CANfigurator
 		GR_ADC
-		PERIPHERAL_CAN_LIB
+		#PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
 )
 

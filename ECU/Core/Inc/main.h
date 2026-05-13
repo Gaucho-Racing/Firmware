@@ -58,7 +58,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define LOCAL_GR_ID GRCAN_ECU
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -69,6 +69,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* USER CODE BEGIN Private defines */
+#define MAIN_LOOP_PERIOD_US 10000
+#define CAN_TIMER_SEND_PERIOD_US (MAIN_LOOP_PERIOD_US >> 4)
 
 /* Private defines -----------------------------------------------------------*/
 // GPIOC

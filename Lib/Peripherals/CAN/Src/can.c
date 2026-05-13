@@ -94,30 +94,6 @@ static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3, .tx_buffer = tx_buffer_3};
 
 */
 
-#define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
-	do {                                                                                                                                                                                           \
-		if (GPIOX == GPIOA)                                                                                                                                                                    \
-			__HAL_RCC_GPIOA_CLK_ENABLE();                                                                                                                                                  \
-		else if (GPIOX == GPIOB)                                                                                                                                                               \
-			__HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                                                                  \
-		else if (GPIOX == GPIOD)                                                                                                                                                               \
-			__HAL_RCC_GPIOD_CLK_ENABLE();                                                                                                                                                  \
-		else                                                                                                                                                                                   \
-			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
-	} while (0)
-
-#define GPIOx_CLK_DISABLE(GPIOX)                                                                                                                                                                       \
-	do {                                                                                                                                                                                           \
-		if (GPIOX == GPIOA)                                                                                                                                                                    \
-			__HAL_RCC_GPIOA_CLK_DISABLE();                                                                                                                                                 \
-		else if (GPIOX == GPIOB)                                                                                                                                                               \
-			__HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                                                                 \
-		else if (GPIOX == GPIOD)                                                                                                                                                               \
-			__HAL_RCC_GPIOD_CLK_DISABLE();                                                                                                                                                 \
-		else                                                                                                                                                                                   \
-			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
-	} while (0)
-
 // TODO: Modify helpers to work across families
 // helpers =================
 static int fdcan_shared_clock_ref = 0;
@@ -166,6 +142,7 @@ CANHandle *can_init(const CANConfig *config)
 		} else {
 			canHandle = &CAN2;
 			canHandle->tx_capacity = TX_BUFFER_2_SIZE;
+			LOGOMATIC("CAN: CAN2 selected with tx capacity %lu\n", canHandle->tx_capacity);
 		}
 	}
 #endif
@@ -180,6 +157,21 @@ CANHandle *can_init(const CANConfig *config)
 		}
 	}
 #endif
+
+// TODO: figure out a better way to extend this to other families besides ifdef soup
+#elif defined(STM32G431xx)
+#ifdef USECAN1
+	if (config->fdcan_instance == FDCAN1) {
+		if (CAN1.init) {
+			LOGOMATIC("CAN: CAN1 is already initialized\n");
+			return CAN_SUCCESS;
+		} else {
+			canHandle = &CAN1;
+			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+		}
+	}
+#endif
+
 #endif
 
 	// #elif defined(STM32L476xx)
@@ -251,10 +243,14 @@ CANHandle *can_init(const CANConfig *config)
 	uint32_t tx_events = FDCAN_IT_TX_COMPLETE | FDCAN_IT_TX_FIFO_EMPTY;
 	status |= HAL_FDCAN_ActivateNotification(canHandle->hal_fdcanP, tx_events, destinations);
 	status |= HAL_FDCAN_ConfigInterruptLines(canHandle->hal_fdcanP, tx_events, FDCAN_INTERRUPT_LINE1);
+
+	uint32_t err_events = FDCAN_IT_BUS_OFF | FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR;
+	status |= HAL_FDCAN_ActivateNotification(canHandle->hal_fdcanP, err_events, 0);
+	status |= HAL_FDCAN_ConfigInterruptLines(canHandle->hal_fdcanP, err_events, FDCAN_INTERRUPT_LINE1);
 	// Callbacks redefined later
 
 	if (status & HAL_ERROR) {
-		LOGOMATIC("CAN: Could not activate rx and tx interrupts\n");
+		LOGOMATIC("CAN: Could not activate rx, tx, and error interrupts\n");
 		failure |= status;
 	}
 
@@ -426,19 +422,38 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 	uint32_t basepri = __get_BASEPRI();
 	__set_BASEPRI((canHandle->tx_interrupt_priority) << 4);
 
+	FDCAN_ProtocolStatusTypeDef protocol_status = {0};
+	if (HAL_FDCAN_GetProtocolStatus(canHandle->hal_fdcanP, &protocol_status) == HAL_OK && protocol_status.BusOff) {
+		LOGOMATIC("CAN_send: bus off detected, attempting recovery\n");
+		if (HAL_FDCAN_Stop(canHandle->hal_fdcanP) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to stop FDCAN peripheral during bus off recovery\n");
+			__set_BASEPRI(basepri);
+			return CAN_ERROR;
+		}
+		uint32_t abort_mask = FDCAN_TX_BUFFER0 | FDCAN_TX_BUFFER1 | FDCAN_TX_BUFFER2;
+		HAL_FDCAN_AbortTxRequest(canHandle->hal_fdcanP, abort_mask);
+		if (HAL_FDCAN_Start(canHandle->hal_fdcanP) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to restart FDCAN peripheral during bus off recovery\n");
+			__set_BASEPRI(basepri);
+			return CAN_ERROR;
+		}
+	}
+
+	if (HAL_FDCAN_IsRestrictedOperationMode(canHandle->hal_fdcanP)) {
+		LOGOMATIC("CAN_send: currently in restricted operation mode\n");
+		HAL_FDCAN_ExitRestrictedOperationMode(canHandle->hal_fdcanP);
+	}
+
 	uint32_t free = 0;
 	if ((free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP)) > 0) {
 		HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(canHandle->hal_fdcanP, &(message->tx_header), message->data);
 
-		uint32_t val = 0;
 		if (status != HAL_OK) {
-			LOGOMATIC("CAN_send: failed to add to HW FIFO\n");
-			val = CAN_ERROR;
+			LOGOMATIC("CAN_send: failed to add to HW FIFO, falling back to SW queue\n");
 		} else {
-			val = CAN_SUCCESS;
+			__set_BASEPRI(basepri);
+			return CAN_SUCCESS; // Successfully added to HW FIFO
 		}
-		__set_BASEPRI(basepri);
-		return val;
 	}
 	//}
 
@@ -449,6 +464,7 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		uint32_t idx = (canHandle->tx_tail + canHandle->tx_elements) % canHandle->tx_capacity;
 		canHandle->tx_buffer[idx] = *message;
 		canHandle->tx_elements++;
+
 		// memcpy(&canHandle->tx_buffer[idx], message , sizeof(FDCANTxMessage) );
 
 		__set_BASEPRI(basepri);
@@ -460,9 +476,9 @@ CAN_STATUS can_send(CANHandle *canHandle, FDCANTxMessage *message)
 		} else {
 		    return CAN_SUCCESS;
 		}*/
-	} else {
-		LOGOMATIC("CAN_send: all buffers full\n"); // p
 	}
+
+	LOGOMATIC("CAN_send: all buffers full\n"); // p
 	__set_BASEPRI(basepri);
 	// Both buffers full
 	return CAN_ERROR;
@@ -483,6 +499,20 @@ void HAL_FDCAN_TxFifoEmptyCallback(FDCAN_HandleTypeDef *hfdcan)
 {
 	CANHandle *handle = can_get_handle(hfdcan);
 	can_tx_dequeue_helper(handle);
+}
+
+void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs)
+{
+	CANHandle *handle = can_get_handle(hfdcan);
+	if (!handle || !handle->init) {
+		return;
+	}
+
+	LOGOMATIC("%s: FDCAN error status interrupt: 0x%08lX\n", can_get_instance_name(handle->hal_fdcanP->Instance), ErrorStatusITs);
+
+	if (HAL_FDCAN_IsRestrictedOperationMode(hfdcan)) {
+		HAL_FDCAN_ExitRestrictedOperationMode(hfdcan);
+	}
 }
 
 // #define PROFILE
@@ -554,7 +584,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		// GR_OLD_MSG_ID messageID = (rx_header.Identifier & (0xFFF << 8)) >> 8;
 
 		// TODO: move callbacks to correct positions, but right now you are using polling DMA so this is fine.
-		handle->rx_callback(rx_header.Identifier, rx_data, DLCtoBytes[rx_header.DataLength]);
+		handle->rx_callback(rx_header.Identifier, rx_data, CANFD_DLCtoBytes[rx_header.DataLength]);
 	}
 
 	//__set_BASEPRI(prev_priority);
@@ -701,7 +731,7 @@ static inline void fdcan_disable_shared_clock(void)
 // valid only for STM32G4
 static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1)
 {
-#ifdef STM32G4
+#ifdef STM32G474xx
 	if (instance == FDCAN1) {
 		*it0 = FDCAN1_IT0_IRQn;
 		*it1 = FDCAN1_IT1_IRQn;
@@ -715,6 +745,14 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 	if (instance == FDCAN3) {
 		*it0 = FDCAN3_IT0_IRQn;
 		*it1 = FDCAN3_IT1_IRQn;
+		return CAN_SUCCESS;
+	}
+
+	// TODO: START of possible ifdef soup
+#elif defined(STM32G431xx)
+	if (instance == FDCAN1) {
+		*it0 = FDCAN1_IT0_IRQn;
+		*it1 = FDCAN1_IT1_IRQn;
 		return CAN_SUCCESS;
 	}
 #endif
@@ -908,6 +946,10 @@ static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 		return "FDCAN2";
 	} else if (instance == FDCAN3) {
 		return "FDCAN3";
+	}
+#elif defined(STM32G431xx)
+	if (instance == FDCAN1) {
+		return "FDCAN1";
 	}
 #endif
 	return "UNKNOWN";

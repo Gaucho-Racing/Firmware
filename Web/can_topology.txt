@@ -1,0 +1,43 @@
+# Physical CAN bus topology.
+# Edit this file when hardware layout changes.
+# Node names must exactly match GR ID entries in GRCAN.CANdo.
+# "Debugger" and "ALL" are always exempt — do not list them here.
+# A node can appear on multiple buses.
+# Lines starting with # are comments. Blank lines are ignored.
+
+Primary:
+  ECU
+  TCM
+  ACU
+  DGPS
+  # Both inverters share the Primary bus. Whichever isn't physically connected
+  # has its messages go nowhere — no firmware switch needed.
+  GR Inverter
+  DTI Inverter
+  Fan Controller 1
+  Fan Controller 2
+  Fan Controller 3
+  Energy Meter
+  Dash Panel
+
+Data:
+  ECU
+  TCM
+  ACU
+  DGPS
+  SAMM_Mag_1
+  SAMM_Mag_2
+  SAMM_ToF_1
+  SAMM_ToF_2
+  TireTemp_1
+  TireTemp_2
+  TireTemp_3
+  TireTemp_4
+
+Charger:
+  CCU
+  ACU
+  Charger
+  IMD
+  Energy Meter
+  Charging SDC

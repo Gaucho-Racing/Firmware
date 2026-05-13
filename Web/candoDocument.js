@@ -29,6 +29,7 @@
 	let _busIdsText = ""; // verbatim Bus ID section text
 	let _byteOrderText = ""; // verbatim byte order line text
 	let _customCanIds = new Map(); // Map<name, {name, canId, length, signals[]}>
+	let _busIds = new Map(); // Map<busName, numericId: number> derived from Bus ID section
 
 	// ==================== CAN ID format utilities ====================
 	// Custom CAN ID section canonical form: bare uppercase hex, no 0x prefix (e.g. "2416").
@@ -57,6 +58,7 @@
 		_busIdsText = "";
 		_byteOrderText = "";
 		_customCanIds = new Map();
+		_busIds = new Map();
 
 		if (!rawText) return;
 		const lines = rawText.split("\n");
@@ -80,6 +82,7 @@
 		// Verbatim: Bus ID = everything before routing section header.
 		if (routingStart > 0) {
 			_busIdsText = lines.slice(0, routingStart).join("\n").replace(/\n+$/, "");
+			_parseBusIdsSection(lines, 0, routingStart);
 		}
 
 		// Verbatim: byte order line through the blank line before Message ID.
@@ -113,6 +116,26 @@
 		}
 		if (grIdStart > -1) {
 			_parseGrIds(lines, grIdStart, lines.length);
+		}
+	}
+
+	// Parses the "Bus ID:" header block into _busIds (name → numeric id).
+	// Mirrors parseBusIdsFromText in logic.js so candoDocument has its own
+	// authoritative copy without depending on window.GrcanApi.
+	function _parseBusIdsSection(lines, start, end) {
+		let inSection = false;
+		for (let i = start; i < end; i++) {
+			const line = lines[i];
+			if (!inSection) {
+				if (line.startsWith("Bus ID:")) inSection = true;
+				continue;
+			}
+			// Stop at next top-level (non-indented, non-blank) line.
+			if (/^\S/.test(line) && line.trim() !== "") break;
+			const match = line.match(/^\s+([^:]+):\s*(\d+)\s*(?:#.*)?$/);
+			if (match) {
+				_busIds.set(match[1].trim(), parseInt(match[2], 10));
+			}
 		}
 	}
 
@@ -373,9 +396,10 @@
 		return out;
 	}
 
-	function _serializeMessageIds() {
+	function _serializeMessageIds(routedOnly = null) {
 		let out = "Message ID:\n";
 		for (const msg of _messageIds.values()) {
+			if (routedOnly && !routedOnly.has(msg.name)) continue;
 			out += "  " + msg.name + ":\n";
 			out += "    MSG ID: " + msg.msgId + "\n";
 			out += "    MSG LENGTH: " + msg.msgLength + "\n";
@@ -409,9 +433,10 @@
 		return out;
 	}
 
-	function _serializeCustomCanIds() {
+	function _serializeCustomCanIds(routedOnly = null) {
 		let out = "Custom CAN ID:\n";
 		for (const entry of _customCanIds.values()) {
+			if (routedOnly && !routedOnly.has(entry.name)) continue;
 			out += "  " + entry.name + ":\n";
 			out += "    CAN ID: " + entry.canId + "\n";
 			out += "    Length: " + entry.length + "\n";
@@ -448,13 +473,28 @@
 		return out;
 	}
 
-	function _serialize() {
+	function _getRoutedMessageNames() {
+		const routed = new Set();
+		for (const device of _devices.values()) {
+			for (const bus of device.buses.values()) {
+				for (const receiver of bus.receivers.values()) {
+					for (const route of receiver.routes) {
+						routed.add(route.msgName);
+					}
+				}
+			}
+		}
+		return routed;
+	}
+
+	function _serialize(pruneUnrouted = false) {
+		const routedOnly = pruneUnrouted ? _getRoutedMessageNames() : null;
 		const parts = [
 			_busIdsText,
 			_serializeRouting(),
 			_byteOrderText,
-			_serializeMessageIds(),
-			_serializeCustomCanIds(),
+			_serializeMessageIds(routedOnly),
+			_serializeCustomCanIds(routedOnly),
 			_serializeGrIds(),
 		];
 		// Strip trailing newlines from each part, join with exactly one blank line,
@@ -590,6 +630,42 @@
 			}
 		}
 
+		// V8: PHYSICAL_BUS_VIOLATION
+		// Only runs when PhysicalTopology has successfully loaded can_topology.txt.
+		const _topo = (typeof window !== "undefined" ? window : {})
+			.PhysicalTopology;
+		if (_topo && _topo.isLoaded()) {
+			for (const device of _devices.values()) {
+				for (const bus of device.buses.values()) {
+					if (!_topo.isOnBus(device.deviceName, bus.busPort)) {
+						results.push({
+							severity: "warning",
+							code: "PHYSICAL_BUS_VIOLATION",
+							message: `Device "${device.deviceName}" is not physically wired to ${bus.busPort}`,
+							context: {
+								device: device.deviceName,
+								bus: bus.busPort,
+							},
+						});
+					}
+					for (const receiverName of bus.receivers.keys()) {
+						if (!_topo.isOnBus(receiverName, bus.busPort)) {
+							results.push({
+								severity: "warning",
+								code: "PHYSICAL_BUS_VIOLATION",
+								message: `Receiver "${receiverName}" in "${device.deviceName}" > ${bus.busPort} is not physically on ${bus.busPort}`,
+								context: {
+									device: device.deviceName,
+									bus: bus.busPort,
+									receiver: receiverName,
+								},
+							});
+						}
+					}
+				}
+			}
+		}
+
 		return results;
 	}
 
@@ -623,7 +699,16 @@
 		_parse(editor.getRawText());
 		const result = fn();
 		if (result.ok !== false) {
-			editor.updateRawText(_serialize());
+			const newText = _serialize();
+			editor.updateRawText(newText);
+			// If the post-mutation canonical text matches the canonical original,
+			// the user has undone all their changes — clear the changed indicators.
+			_parse(editor.getOriginalRawText());
+			const canonicalOriginal = _serialize();
+			_parse(newText); // restore internal state to current
+			if (newText === canonicalOriginal) {
+				editor.resetEditState();
+			}
 		}
 		return result;
 	}
@@ -746,8 +831,16 @@
 			deviceName = (deviceName || "").trim();
 			busPort = (busPort || "").trim();
 			if (!deviceName) return { ok: false, error: "Device name is required" };
-			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
-				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
+			if (!_isValidBusPort(busPort)) {
+				const valid = getBusNames();
+				return {
+					ok: false,
+					error:
+						valid.length > 0
+							? `Bus must be one of: ${valid.join(", ")}`
+							: "No buses are declared in the Bus ID section",
+				};
+			}
 
 			const warnings = [];
 			let device = _devices.get(deviceName);
@@ -776,8 +869,16 @@
 					error:
 						'"ALL" is a reserved broadcast receiver and cannot be used as a sender device',
 				};
-			if (!["CAN1", "CAN2", "CAN3"].includes(busPort))
-				return { ok: false, error: "Bus must be CAN1, CAN2, or CAN3" };
+			if (!_isValidBusPort(busPort)) {
+				const valid = getBusNames();
+				return {
+					ok: false,
+					error:
+						valid.length > 0
+							? `Bus must be one of: ${valid.join(", ")}`
+							: "No buses are declared in the Bus ID section",
+				};
+			}
 			if (!receiverName)
 				return { ok: false, error: "Receiver name is required" };
 			if (!msgName) return { ok: false, error: "Message name is required" };
@@ -1166,6 +1267,21 @@
 		return [..._devices.keys()];
 	}
 
+	// Returns bus names declared in the "Bus ID:" section, sorted by their
+	// numeric id (lowest first). This is the single source of truth for
+	// "what buses exist" — used by forms, graph view, and validation.
+	function getBusNames() {
+		_ensureParsed();
+		return [..._busIds.entries()]
+			.sort((a, b) => a[1] - b[1])
+			.map(([name]) => name);
+	}
+
+	// True if busPort is a name declared in the "Bus ID:" section.
+	function _isValidBusPort(busPort) {
+		return _busIds.has(busPort);
+	}
+
 	function getGrIds() {
 		_ensureParsed();
 		return new Map(_grIds);
@@ -1259,13 +1375,24 @@
 		return _serialize();
 	}
 
+	function _serializeFromStatePruned() {
+		return _serialize(true);
+	}
+
 	// Returns the canonical serialized form of the current editor text.
 	// Parse → serialize without side effects (does not update editor state).
 	function getSerializedText() {
 		const editor = _getEditor();
 		if (!editor) return null;
 		_parse(editor.getRawText());
-		return _serialize();
+		return _serialize(true);
+	}
+
+	// Parse an arbitrary raw text and serialize it with pruning — used to compute
+	// the canonical download form of any snapshot (e.g. the original file).
+	function getSerializedTextFrom(rawText) {
+		_parse(rawText || "");
+		return _serialize(true);
 	}
 
 	// ==================== Public API ====================
@@ -1291,6 +1418,7 @@
 		deviceExists,
 		grIdExists,
 		getDeviceNames,
+		getBusNames,
 		getGrIds,
 		getGrId,
 		getMessageDef,
@@ -1301,8 +1429,10 @@
 		getRouteReceivers,
 		getGraphDataForBus,
 		getSerializedText,
+		getSerializedTextFrom,
 		// Test hooks
 		_parseForTest,
 		_serializeFromState,
+		_serializeFromStatePruned,
 	};
 });

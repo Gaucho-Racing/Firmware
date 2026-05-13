@@ -20,6 +20,8 @@
 #include "main.h"
 
 #include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_NODE_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
 #include "adc.h"
@@ -27,7 +29,6 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "gr_adc.h"
-#include "malloc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -39,7 +40,8 @@
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "adc.h"
-#include "can.h"
+#include "ecu_can.h"
+#include "stm32g4xx_hal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -78,12 +80,12 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
-#define NUM_SIGNALS_ADC2 3
+#define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 #define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
-volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0}; // Contains new values
-uint16_t ADC_outputs[NUM_SIGNALS] = {0};	  // Updated averages
+volatile uint16_t ADC_buffers[NUM_SIGNALS] = {1024}; // Contains new values
+uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	     // Updated averages
 
 // DIGITAL
 
@@ -105,13 +107,11 @@ void SystemClock_Config(void);
 // TODO: TS and RTD button signals will come over CAN
 void read_digital(void)
 {
-	// TODO: implement CAN button messenge receiving
-
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
 }
 
-void write_adc_values_to_state_data()
+void write_adc_values_to_state_data(void)
 {
 	// analog
 	stateLump.bse_signal = ADC_outputs[0];
@@ -121,11 +121,12 @@ void write_adc_values_to_state_data()
 	stateLump.Brake_F_Signal = ADC_outputs[4];
 	stateLump.Brake_R_Signal = ADC_outputs[5];
 	stateLump.aux_signal = ADC_outputs[6];
+	stateLump.steering_angle_signal = ADC_outputs[10]; // TODO: convert to rad/deg...?
 
 	// TODO: determine conversion factors for all of these (uint to float)
-	stateLump.bspd_sense = ADC_outputs[7];
-	stateLump.imd_sense = ADC_outputs[8];
-	stateLump.ams_sense = ADC_outputs[9];
+	stateLump.bspd_sense = ADC_outputs[7] / 4095.0 * 3.3;
+	stateLump.imd_sense = ADC_outputs[8] / 4095.0 * 3.3;
+	stateLump.ams_sense = ADC_outputs[9] / 4095.0 * 3.3;
 }
 
 void ADC_Configure(void)
@@ -158,10 +159,10 @@ void ADC_Configure(void)
 	Init_Vals_ADC2.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC2.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC2.Num_Pin_Port_Objs = 1;
-	Pin_Ports p2 = {.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA};
-	Init_Vals_ADC2.Pins = &p2;
-	Init_Vals_ADC2.Num_Channels = 3; // check multiple GPIO stuff
-	Channel c2[] = {ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4};
+	Pin_Ports p2[2] = {{.pin = BSPD_SENSE_Pin | IMD_SENSE_Pin | AMS_SENSE_Pin, .port = GPIOA}, {.pin = STEERING_ANGLE_Pin, .port = GPIOB}};
+	Init_Vals_ADC2.Pins = p2;
+	Init_Vals_ADC2.Num_Channels = 4;
+	Channel c2[] = {ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4, ADC_CHANNEL_15};
 	Init_Vals_ADC2.Channels = c2;
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
@@ -182,8 +183,9 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC1.Channel = DMA_CHANNEL_1;
 	DMA_Init_Vals_ADC1.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
 	DMA_Init_Vals_ADC1.Dest_Address = ADC_buffers;
-	DMA_Init_Vals_ADC1.Data_Size = Word;
+	DMA_Init_Vals_ADC1.Data_Size = Half_Word;
 	DMA_Init_Vals_ADC1.Priority = HIGH; // TODO: check what this does
+	DMA_Init_Vals_ADC1.Num_Data = NUM_SIGNALS_ADC1;
 	DMA_Init(&DMA_Init_Vals_ADC1);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
@@ -191,10 +193,11 @@ void ADC_Configure(void)
 	DMA_Init_Vals_ADC2.DMA = DMA1;
 	DMA_Init_Vals_ADC2.ADC = ADC2;
 	DMA_Init_Vals_ADC2.Channel = DMA_CHANNEL_2;
-	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals_ADC2.Src_Address = LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA);
 	DMA_Init_Vals_ADC2.Dest_Address = ADC_buffers + NUM_SIGNALS_ADC1;
-	DMA_Init_Vals_ADC2.Data_Size = Word;
+	DMA_Init_Vals_ADC2.Data_Size = Half_Word;
 	DMA_Init_Vals_ADC2.Priority = HIGH; // TODO: check what this does
+	DMA_Init_Vals_ADC2.Num_Data = NUM_SIGNALS_ADC2;
 	DMA_Init(&DMA_Init_Vals_ADC2);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
 
@@ -204,9 +207,7 @@ void ADC_Configure(void)
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_PRIMARY,
-			       (0x000FFF00 & ID) >> 8, // TODO: Double check
-			       (0xFF00000 & ID) >> 20, data, size);
+	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_PRIMARY, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
 }
 
 void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)
@@ -214,7 +215,7 @@ void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)
 	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
 }
 
-void CAN_Configure()
+void CAN_Configure(void)
 {
 	CANConfig canCfg;
 
@@ -228,14 +229,14 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
-	canCfg.hal_fdcan_init.DataPrescaler = 2;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119; // Updated for 160MHz: (1+119+40)*1 = 160 ticks -> 1 Mbps
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
+	canCfg.hal_fdcan_init.DataPrescaler = 1;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 12; // Updated for 170MHz: 170 MHz/((1+12+4)*2) = 5 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 4;
-	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 9; // Updated for 160MHz: 160 MHz/((1+9+10)*1) = 8 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 10;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 1;
 
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
@@ -284,21 +285,26 @@ void CAN_Configure()
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	primary_can = can_init(&canCfg);
+	FDCAN_FilterTypeDef fdcan_primary_filter_ecu = {0};
+	fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_ecu.FilterIndex = 0;
+	fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_primary_filter_ecu.FilterID2 = 0x000000FF;
 
-	// Filter 1 Definitions
-	FDCAN_FilterTypeDef fdcan1_filter;
+	FDCAN_FilterTypeDef fdcan_primary_filter_all = {0};
+	fdcan_primary_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_all.FilterIndex = 1;
+	fdcan_primary_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
 
-	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan1_filter.FilterIndex = 0;
-	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
-	fdcan1_filter.FilterID2 = 0x00000FF;
+	stateLump.primary_can = can_init(&canCfg);
 
-	fdcan1_filter.FilterIndex = 1;
-	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
+	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_ecu);
+	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_all);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -313,25 +319,31 @@ void CAN_Configure()
 	// RX Callback CAN2
 	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	// Filter definitions
-	FDCAN_FilterTypeDef fdcan2_filter;
+	FDCAN_FilterTypeDef fdcan_data_filter_ecu = {0};
+	fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_ecu.FilterIndex = 0;
+	fdcan_data_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
 
-	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan2_filter.FilterIndex = 0;
-	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
-	fdcan2_filter.FilterID2 = 0x00000FF;
+	FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
+	fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_all.FilterIndex = 1;
+	fdcan_data_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_data_filter_all.FilterID2 = 0x000000FF;
 
-	fdcan2_filter.FilterIndex = 1;
-	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
+	stateLump.data_can = can_init(&canCfg);
 
-	data_can = can_init(&canCfg);
+	can_add_filter(stateLump.data_can, &fdcan_data_filter_ecu);
+	can_add_filter(stateLump.data_can, &fdcan_data_filter_all);
 
-	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigFilter(data_can->hal_fdcanP, &fdcan2_filter);
-
-	can_start(primary_can);
-	can_start(data_can);
+	// timer can
+	can_start(stateLump.primary_can);
+	can_start(stateLump.data_can);
+	CAN_Timer_Start();
 }
 /**
  * @brief  The application entry point.
@@ -366,10 +378,10 @@ int main(void)
 	// TODO: do we need these?
 	MX_GPIO_Init();
 	MX_DMA_Init();
-	MX_FDCAN1_Init();
+	// MX_FDCAN1_Init();
 	MX_ADC1_Init();
 	MX_ADC2_Init();
-	MX_FDCAN2_Init();
+	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
 
 	// Initialize DWT
@@ -384,51 +396,35 @@ int main(void)
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
-	LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	HAL_Delay(5000); // Notes per Andrey and Ryan
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	uint32_t elapsed_cycles, cycle_counter_accumulator = -1;
 	while (1) {
-		/* USER CODE END WHILE */
-
-		/* USER CODE BEGIN 3 */
-		if (cycle_counter_accumulator == 10) {
-			elapsed_cycles = DWT->CYCCNT;
-			LOGOMATIC("Cycles elapsed for 10 iterations of the main loop: %lu\n", elapsed_cycles);
-			GRCAN_ECU_PERFORMANCE_MSG performance_message = {.elapsed_cycles = elapsed_cycles};
-			ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PERFORMANCE, &performance_message, sizeof(GRCAN_ECU_PERFORMANCE_MSG));
-			cycle_counter_accumulator = 0;
-			DWT->CYCCNT = 0;
-		} else {
-			cycle_counter_accumulator++;
-		}
-
-		static uint32_t nextPing;
-		if (MillisecondsSinceBoot() >= nextPing) {
-			pingAll();
-
-			if (nextPing != 0) {
-				if (getRTT(GRCAN_BCU) == PINGTIMEOUT_VALUE) {
-					LOGOMATIC("ERROR: BCU is not responding to pings!\n");
-				}
-				if (getRTT(GRCAN_Dash_Panel) == PINGTIMEOUT_VALUE) {
-					LOGOMATIC("ERROR: Dash Panel is not responding to pings!\n");
-				}
-			}
-			nextPing = MillisecondsSinceBoot() + PINGTIMEOUT_TIME;
-		}
-
+		// adcs
 		read_digital();
-		// TODO: determine alpha
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.3, ADC_outputs);
-		SendECUStateDataOverCAN(&stateLump);
-
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
 		write_adc_values_to_state_data();
-		ECU_State_Tick();
-		lightControl(&stateLump);
-		LOGOMATIC("Main Loop Tick Complete. I use Arch btw\n");
+
+		// main state lopp, queues can messages within it
+		static uint32_t delay_timer;
+		static uint32_t ping_timer;
+		if (MillisecondsSinceBoot() >= delay_timer) {
+			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
+
+			// state tick
+			ECU_State_Tick();
+
+			// preipheral updates
+			SendECUStateDataOverCAN(&stateLump);
+			if (MillisecondsSinceBoot() >= ping_timer) {
+				ping_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 500); // half period
+				pingAll();
+			}
+			lightControl(&stateLump);
+		}
 	}
 	/* USER CODE END 3 */
 }
@@ -447,7 +443,7 @@ void SystemClock_Config(void)
 	while (LL_RCC_HSI_IsReady() != 1) {}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 80, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
@@ -460,14 +456,14 @@ void SystemClock_Config(void)
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
 
 	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (170 >> 1); i != 0; i--)
+	for (__IO uint32_t i = (160 >> 1); i != 0; i--)
 		;
 
 	/* Set AHB prescaler*/
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(170000000);
+	LL_SetSystemCoreClock(160000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {

@@ -73,24 +73,19 @@ sub generate_gr_header_content {
 	push @header_lines, "#define GR_IDS_H\n\n";
 	push @header_lines, "typedef enum {\n";
 
-	# --- TRACKERS FOR ISSUE #373 ---
+	# Track emitted names to avoid exact duplicate enum symbols.
 	my %seen_names;
-	my %seen_values;
 
-	my @sorted = sort { $a->{name} cmp $b->{name} } @{$ids_ref};
+	my @sorted = sort { hex $a->{id} <=> hex $b->{id} || $a->{name} cmp $b->{name} } @{$ids_ref};
 
 	for my $item (@sorted) {
-		my $const_name = $item->{name};
+		my $const_name = 'GRCAN_' . $item->{name};
 		$const_name =~ s/[[:^alnum:]]/_/gsmx;
 		my $val = $item->{id};
 
-		# --- FIX FOR #373: Skip if name or ID value is already in the list ---
+		# Skip only duplicate enum names.
 		if ( $seen_names{$const_name} ) {
 			warn "Skipping duplicate Node Name: $const_name\n";
-			next;
-		}
-		if ( defined $val && $seen_values{$val} ) {
-			warn "Issue #373: Skipping duplicate Node ID value: $val ($const_name)\n";
 			next;
 		}
 
@@ -99,7 +94,6 @@ sub generate_gr_header_content {
 
 			# Mark as processed
 			$seen_names{$const_name} = 1;
-			$seen_values{$val}       = 1;
 		}
 	}
 

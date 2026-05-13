@@ -3,6 +3,7 @@
 
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
+#include "ecu_can.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
@@ -51,14 +52,6 @@ typedef volatile struct ECU_StateData {
 
 	// TODO: Remove unneeded states
 
-	uint32_t millisSinceBoot;
-	uint32_t can_msg_cooldown_tick;
-
-	int32_t dischargeStartMillis;
-	uint32_t lastECUStatusMsgMillis;
-	uint32_t lastTSSIFlash;
-	int32_t last_drive_active_control_ms;
-
 	float min_amk_heat_cap_throttle_percent;
 	float ts_voltage;
 	float max_cell_temp_c; /** Temperature of hottest cell, celsius */
@@ -86,18 +79,19 @@ typedef volatile struct ECU_StateData {
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
 	uint16_t aux_signal;
+	uint16_t steering_angle_signal;
 	uint8_t status_bits[3];
 	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t tractivebattery_soc;
 	uint8_t glv_soc;
-	uint8_t bcu_error_warning_bits;
+	uint8_t acu_error_warning_bits;
 	uint8_t inverter_fault_map;
-	bool ts_active_button_active;
-	bool rtd_button_active;
+	bool ts_active_button_pressed;
+	bool rtd_button_pressed;
 	bool ir_plus;
 	bool ir_minus;
-	bool bcu_software_latch;
+	bool acu_software_latch;
 
 	bool bms_light;
 	bool imd_light;
@@ -106,6 +100,9 @@ typedef volatile struct ECU_StateData {
 	bool apps_bse_violation;
 
 	GR_ECU_State ecu_state;
+
+	CANHandle *primary_can;
+	CANHandle *data_can;
 } ECU_StateData;
 
 #endif

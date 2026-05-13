@@ -19,13 +19,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "CANDler.h"
+#include "CANdler.h"
 #include "CCUStateData.h"
 #include "StateMachine.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "dma.h"
-#include "fdcan.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -52,7 +50,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-CCU_StateData state_data = {0};
+CCU_StateData state_data = {0, .SOFTWARE_LATCH = 1};
+
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
@@ -124,27 +123,27 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_FDCAN1_Init();
 	/* USER CODE BEGIN 2 */
 
 	// Initialize CAN
 	CAN_Configure();
-
+	LL_mDelay(5000);
 	LOGOMATIC("Initialization complete\n");
 
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	setSoftwareLatch(1, &state_data);
+	// Initialize SoftwareLatch High
+
+	LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	LOGOMATIC("Software Latch: High");
+
 	while (1) {
-		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
-		LL_mDelay(100);
-
-		// Initialize SoftwareLatch High
 		CCU_State_Tick(&state_data);
+		VCP_Oneliner(&state_data);
 
-		LL_mDelay(200);
+		LL_mDelay(20);
 
 		/* USER CODE END 3 */
 	}
@@ -159,12 +158,12 @@ void SystemClock_Config(void)
 	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
 	LL_PWR_EnableRange1BoostMode();
-	LL_RCC_HSI_Enable();
-	/* Wait till HSI is ready */
-	while (LL_RCC_HSI_IsReady() != 1) {}
+	LL_RCC_HSE_Enable();
+	/* Wait till HSE is ready */
+	while (LL_RCC_HSE_IsReady() != 1) {}
 
-	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
+	LL_RCC_HSE_EnableCSS();
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
