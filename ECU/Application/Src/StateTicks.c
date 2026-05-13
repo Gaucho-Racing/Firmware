@@ -179,6 +179,9 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		ECU_Transition_To_Drive_Active(stateData);
 		stateData->rtd_button_pressed = false;
 		return;
+	} else {
+		// Demand that we only transition to drive active if the RTD button is pressed while pressing the brake.
+		stateData->rtd_button_pressed = false;
 	}
 }
 
