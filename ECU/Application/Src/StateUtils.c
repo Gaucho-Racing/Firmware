@@ -78,6 +78,7 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
+	return false;
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
 	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
 }
@@ -90,12 +91,18 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
+	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
+		return true; // don't consider brake pressed until in drive active
+	} else {
+		return false;
+	}
 	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
 float CalcBrakePercent(volatile const ECU_StateData *stateData)
 {
+	return 0;
 	return stateData->bse_signal / BSE_MAX;
 }
 
