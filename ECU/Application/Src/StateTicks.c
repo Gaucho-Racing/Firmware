@@ -249,8 +249,8 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	static uint32_t last_can_inverter_request_millis;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_inverter_request_millis)) {
-		GRCAN_INVERTER_COMMAND_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_COMMAND, &message, sizeof(message));
+		GRCAN_INV_CMD_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
 		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 2);
 		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
 		last_can_inverter_request_millis = millis_since_boot;
