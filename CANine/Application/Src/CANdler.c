@@ -57,8 +57,7 @@ void CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID 
 			}
         	GRCAN_PING_MSG * grcan_ping_msg = (GRCAN_PING_MSG *) data;
 
-			//comment 1
-			//LOGOMATIC("Time in millis: %u", grcan_ping_msg->timestamp);
+			LOGOMATIC("Time in millis: %lu", grcan_ping_msg->timestamp);
         	break;
 		case GRCAN_ECU_STATUS_1:
 			if (data_length > sizeof(GRCAN_ECU_STATUS_1_MSG)) {
@@ -90,17 +89,19 @@ void CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID 
 					break;
 			}
 
-			LOGOMATIC("BCU Node Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 0) ? "OK" : "Timeout");
-			LOGOMATIC("GR Inverter Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 1) ? "OK" : "Timeout");
-			LOGOMATIC("Fan Controller 1 Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 2) ? "OK" : "Timeout");
-			LOGOMATIC("Fan Controller 2 Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 3) ? "OK" : "Timeout");
-			LOGOMATIC("Fan Controller 3 Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 4) ? "OK" : "Timeout");
-			LOGOMATIC("Dash Panel Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 5) ? "OK" : "Timeout");
-			LOGOMATIC("TCM Node Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 6) ? "OK" : "Timeout");
+			LOGOMATIC("BCU Node Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 7) ? "OK" : "Timeout");
+			LOGOMATIC("GR Inverter Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 6) ? "OK" : "Timeout");
+			LOGOMATIC("Fan Controller 1 Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 5) ? "OK" : "Timeout");
+			LOGOMATIC("Fan Controller 2 Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 4) ? "OK" : "Timeout");
+			LOGOMATIC("Fan Controller 3 Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 3) ? "OK" : "Timeout");
+			LOGOMATIC("Dash Panel Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 2) ? "OK" : "Timeout");
+			LOGOMATIC("TCM Node Status: %s\n", GETBIT(grcan_ecu_status_1_msg->status_flags, 1) ? "OK" : "Timeout");
 
-			//What is this value?????
-			// LOGOMATIC("Power Level (in hex, Controls the AC current limits): 0x%X\n", GETBITS(grcan_ecu_status_1_msg->power_level_torque_map, 0, 4));
-			// LOGOMATIC("Torque Map (in hex): 0x%X\n", GETBITS(grcan_ecu_status_1_msg->power_level_torque_map, 4, 4));
+			uint8_t torque_map = grcan_ecu_status_1_msg->power_level_torque_map & 0x0F;
+            uint8_t power_lvl = (grcan_ecu_status_1_msg->power_level_torque_map >> 4) & 0x0F;
+
+			LOGOMATIC("Power Level (hex value, controls the AC current limits): 0x%X\n", power_lvl);
+            LOGOMATIC("Torque Map (hex value): 0x%X\n", torque_map);
 
 			LOGOMATIC("Max Cell Temperature: %u\n", grcan_ecu_status_1_msg->max_cell_temp);
 			LOGOMATIC("Percent of accumlator charged: %u\n", grcan_ecu_status_1_msg->accumulator_state_of_charge);
@@ -138,27 +139,11 @@ void CAN_MessageHandler(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID 
                 ReportBadMessageLength(bus_id, msg_id, sender_id);
                 break;
             }
-            // GRCAN_BCU_CELL_DATA_1_MSG * grcan_bcu_cell_data_1_msg = (GRCAN_BCU_CELL_DATA_1_MSG *)data;
-            // for (int i = 0; i < 32; i++) {
-            //     LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 1, grcan_bcu_cell_data_1_msg->cells[i].voltage, grcan_bcu_cell_data_1_msg->cells[i].temperature);
-            // }
-            // break;
-
-				for (int i = 0; i < 32; i++) {
-		// 1. Voltage Conversion (mV to V)
-		// We use %u.%03u to simulate a float: 3500mV -> "3.500 V"
-		// uint32_t v_mv = msg->cells[i].voltage;
-		// uint32_t v_whole = v_mv / 1000;
-		// uint32_t v_frac = v_mv % 1000;
-
-		//comment #2
-
-		// // 2. Temp Conversion (Offset of -40)
-		// int32_t temp_c = (int32_t)msg->cells[i].temperature - 40;
-
-		// LOGOMATIC("Cell %d | %u.%03u V | %ld C\n", i + 1, v_whole, v_frac, temp_c);
-	}
-		break;
+            GRCAN_BCU_CELL_DATA_1_MSG * grcan_bcu_cell_data_1_msg = (GRCAN_BCU_CELL_DATA_1_MSG *)data;
+            for (int i = 0; i < 32; i++) {
+                LOGOMATIC("Cell %d - Voltage: %u, Temp: %u\n", i + 1, grcan_bcu_cell_data_1_msg->cells[i].voltage, grcan_bcu_cell_data_1_msg->cells[i].temperature);
+            }
+            break;
         case GRCAN_BCU_CELL_DATA_2:
             if (data_length > sizeof(GRCAN_BCU_CELL_DATA_2_MSG)) {
                 ReportBadMessageLength(bus_id, msg_id, sender_id);
