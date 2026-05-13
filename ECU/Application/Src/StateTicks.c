@@ -60,6 +60,20 @@ void ECU_State_Tick(void)
 
 	// bmsFailure(&stateLump) || imdFailure(&stateLump);
 
+	if (stateLump.ts_active_button_press_interrupt) {
+		stateLump.ts_active_button_press_interrupt = false;
+		stateLump.ts_active_button_pressed = true;
+	} else {
+		stateLump.ts_active_button_pressed = false;
+	}
+
+	if (stateLump.rtd_button_press_interrupt) {
+		stateLump.rtd_button_press_interrupt = false;
+		stateLump.rtd_button_pressed = true;
+	} else {
+		stateLump.rtd_button_pressed = false;
+	}
+
 	switch (stateLump.ecu_state) {
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
@@ -106,7 +120,6 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	if (stateData->ts_active_button_pressed /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
 		LOGOMATIC("GLV ON to PRECHARGE START!\n");
 		ECU_Transition_To_Precharge_Engaged(stateData);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 }
@@ -142,7 +155,6 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		LOGOMATIC("ERROR: ts_active PRESSED! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 }
@@ -153,7 +165,6 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (stateData->ts_active_button_pressed) {
 		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 	if (CriticalError(stateData)) {
@@ -177,11 +188,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
-		stateData->rtd_button_pressed = false;
 		return;
-	} else {
-		// Demand that we only transition to drive active if the RTD button is pressed while pressing the brake.
-		stateData->rtd_button_pressed = false;
 	}
 }
 
@@ -205,7 +212,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		LOGOMATIC("Error: TS active button pressed in Drive Active state. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 
@@ -221,7 +227,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		if (vehicle_is_moving(stateData)) {
 			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
 		}
-		stateData->rtd_button_pressed = false;
 		return;
 	}
 

@@ -438,7 +438,7 @@ uint8_t BytesToCANDLC(uint32_t num_bytes)
 		return FDCAN_DLC_BYTES_48;
 	} else if (num_bytes <= 64) {
 		return FDCAN_DLC_BYTES_64;
-	} else {	// Should never happen
+	} else { // Should never happen
 		return FDCAN_DLC_BYTES_0;
 		LOGOMATIC("Invalid CAN data size after check: %ld\n", num_bytes);
 	}
