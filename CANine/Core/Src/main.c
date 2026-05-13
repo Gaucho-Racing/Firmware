@@ -125,9 +125,9 @@ void sendMSG(){
     		.cells[11].temperature = 60
 		};
 
-		for (int i = 12; i < 32;) {
-			grcan_bcu_cell_data_1_msg.cells[i].voltage = i++;
-			grcan_bcu_cell_data_1_msg.cells[i].temperature = i++;
+		for (int i = 12; i < 32; i++) {
+			grcan_bcu_cell_data_1_msg.cells[i].voltage = i * 2;
+			grcan_bcu_cell_data_1_msg.cells[i].temperature = i * 2 + 1;
 		}
 
 		memcpy(sendBCUCellData1.data, &grcan_bcu_cell_data_1_msg, sizeof(grcan_bcu_cell_data_1_msg));
