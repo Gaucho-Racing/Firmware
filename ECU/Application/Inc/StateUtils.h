@@ -54,5 +54,7 @@ float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
 bool APPS_Plausible(volatile const ECU_StateData *stateData);
 bool BSE_Plausible(volatile const ECU_StateData *stateData);
 bool vehicle_is_moving(volatile const ECU_StateData *stateData);
+/* Disable inverter for both DTI and Custom */
+void disable_inverter(void);
 
 #endif

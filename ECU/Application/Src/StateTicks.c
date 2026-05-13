@@ -103,6 +103,7 @@ void ECU_State_Tick(void)
 
 void ECU_GLV_Off(ECU_StateData *stateData)
 {
+	disable_inverter();
 	UNUSED(stateData);
 	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!\n");
 	// TODO ERROR --> GLV_OFF should never be reached
@@ -110,6 +111,8 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		LOGOMATIC("Error: TS Voltage >= %d!\n", SAFE_VOLTAGE_LIMIT);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
@@ -139,6 +142,8 @@ void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	if (stateData->ir_plus) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		LOGOMATIC("PRECHARGE ENGAGED to PRECHARGE COMPLETE!\n");
@@ -162,6 +167,8 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 // TODO: change for CAN button messenging
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	if (stateData->ts_active_button_pressed) {
 		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
@@ -188,7 +195,6 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
-		return;
 	}
 }
 
@@ -291,11 +297,12 @@ void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 	LOGOMATIC("ECU: ACU discharge Tractive System\n");
 	GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
-	discharge_start_millis = millis_since_boot;
-}
+	discharge_start_millis = millis_since_boot;}
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	/*
 		Discharge the tractive system to below 60(SAFE_VOLTAGE_LIMIT) volts
 	*/
@@ -321,4 +328,4 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
 	}
-} // init
+}
