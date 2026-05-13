@@ -28,12 +28,34 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 
 	uint32_t ID = ((0xFF & GRCAN_ECU) << 20) | ((0xFFF & messageID) << 8) | (0xFF & destNode);
 
+	uint8_t dlc = 0;
+	if (size <= 8) {
+		dlc = size;
+	} else if (size <= 12) {
+		dlc = 9;
+	} else if (size <= 16) {
+		dlc = 10;
+	} else if (size <= 20) {
+		dlc = 11;
+	} else if (size <= 24) {
+		dlc = 12;
+	} else if (size <= 32) {
+		dlc = 13;
+	} else if (size <= 48) {
+		dlc = 14;
+	} else if (size <= 64) {
+		dlc = 15;
+	} else {
+		dlc = FDCAN_MAX_DATA_BYTES; // should never happen due to earlier check
+		LOGOMATIC("Invalid CAN data size after check: %ld\n", size);
+	}
+
 	FDCAN_TxHeaderTypeDef header = {
 	    .Identifier = ID,
 	    .IdType = FDCAN_EXTENDED_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-	    .DataLength = size,
+	    .DataLength = dlc,
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
 	    .MessageMarker = 0,
