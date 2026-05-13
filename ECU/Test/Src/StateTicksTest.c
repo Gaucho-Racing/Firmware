@@ -5,7 +5,7 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateUtils.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_hal_fdcan.h"
 
@@ -26,10 +26,7 @@
 
 static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 {
-
-	if (bmsFailure(stateLumpTest) || imdFailure(stateLumpTest)) {
-		stateLumpTest->tssi_fault = true;
-	}
+	stateLumpTest->tssi_fault = bmsFailure(stateLumpTest) || imdFailure(stateLumpTest);
 
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
@@ -73,7 +70,7 @@ int main(void)
 		// ## Step 0.0              ##
 		// ###########################
 		LOGOMATIC("State Ticks test started\n");
-		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2, .bspd_sense = 2};
+		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 1.5, .imd_sense = 1.5, .bspd_sense = 1.5};
 		LOGOMATIC("Check GLV ON at boot\n");
 		stateLumpTest.ecu_state = GR_GLV_ON;
 		stateLumpTest.acu_software_latch = 1;
@@ -113,8 +110,7 @@ int main(void)
 		stateLumpTest.APPS2_Signal = 0;
 
 		LOGOMATIC("Press brake: STAY IN GLV ON\n");
-		stateLumpTest.Brake_F_Signal = BRAKE_F_MAX;
-		stateLumpTest.Brake_R_Signal = BRAKE_R_MAX;
+		stateLumpTest.bse_signal = BSE_MAX;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -126,8 +122,7 @@ int main(void)
 		}
 
 		LOGOMATIC("Release brake: STAY IN GLV ON\n");
-		stateLumpTest.Brake_F_Signal = 0;
-		stateLumpTest.Brake_R_Signal = 0;
+		stateLumpTest.bse_signal = 0.0f;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -208,8 +203,7 @@ int main(void)
 		// ## Step 0.7             ##
 		// ##########################
 		LOGOMATIC("Press and release the RTD button WHILE pressing the brake\n");
-		stateLumpTest.Brake_F_Signal = BRAKE_F_MAX;
-		stateLumpTest.Brake_R_Signal = BRAKE_R_MAX;
+		stateLumpTest.bse_signal = BSE_MAX;
 		LOGOMATIC("Press RTD\n");
 		stateLumpTest.rtd_button_pressed = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
@@ -228,8 +222,7 @@ int main(void)
 		// ## Step 0.8             ##
 		// ##########################
 		LOGOMATIC("Release Brakes -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.Brake_F_Signal = 0;
-		stateLumpTest.Brake_R_Signal = 0;
+		stateLumpTest.bse_signal = 0.0f;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.8 Failure: ecu state not in drive active\n");
@@ -278,8 +271,7 @@ int main(void)
 		LOGOMATIC("Press Throttle and Brake -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = THROTTLE_MAX_1;
 		stateLumpTest.APPS2_Signal = THROTTLE_MAX_2;
-		stateLumpTest.Brake_F_Signal = BRAKE_F_MAX;
-		stateLumpTest.Brake_R_Signal = BRAKE_R_MAX;
+		stateLumpTest.bse_signal = BSE_MAX;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.11 Failure: ecu state not in drive active\n");
@@ -296,8 +288,7 @@ int main(void)
 		LOGOMATIC("Release Throttle and Brake-> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = 0;
 		stateLumpTest.APPS2_Signal = 0;
-		stateLumpTest.Brake_F_Signal = 0;
-		stateLumpTest.Brake_R_Signal = 0;
+		stateLumpTest.bse_signal = 0.0f;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.12 Failure: ecu state not in drive active\n");
@@ -446,7 +437,7 @@ int main(void)
 		// ## Step 1.0             ##
 		// ##########################
 		LOGOMATIC("Reset system\n");
-		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 2, .imd_sense = 2, .bspd_sense = 2};
+		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 1.5, .imd_sense = 1.5, .bspd_sense = 1.5};
 		LOGOMATIC("State Tick Test 1 started\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {

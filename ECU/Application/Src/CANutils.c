@@ -1,16 +1,21 @@
 #include "CANutils.h"
 
+#include <stdint.h>
+
 #include "GRCAN_BUS_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "can.h"
+#include "ecu_can.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 #include "string.h"
+
+extern ECU_StateData stateLump;
 
 uint32_t lastTickECUStateDataSent = 0;
 
@@ -18,7 +23,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 {
 	if (size > FDCAN_MAX_DATA_BYTES) {
 		size = FDCAN_MAX_DATA_BYTES;
-		LOGOMATIC("Tried to send more than 64 bytes over CAN");
+		LOGOMATIC("Tried to send more than 64 bytes over CAN\n");
 	}
 
 	uint32_t ID = ((0xFF & GRCAN_ECU) << 20) | ((0xFFF & messageID) << 8) | (0xFF & destNode);
@@ -41,10 +46,10 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 
 	switch (bus) {
 		case GRCAN_BUS_PRIMARY:
-			can_send(primary_can, &msg);
+			can_enqueue(stateLump.primary_can, &msg);
 			break;
 		case GRCAN_BUS_DATA:
-			can_send(data_can, &msg);
+			can_enqueue(stateLump.data_can, &msg);
 			break;
 		default:
 			LOGOMATIC("CAN: Invalid bus ID %d\n", bus);
@@ -54,39 +59,39 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 
 // TODO: If you try to send anything but control messages, you are cooked buddy
 // Doesn't actually use Motorola order for multiple fields, just sends the bytes in reverse order
-/*void ECU_CAN_Send_DTI(uint16_t msgID, uint8_t data[], uint32_t length)
+void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 {
-	if ((MSG_DTI_CONTROL_10 & 0xFF) != 0x16) {
-		LOGOMATIC("NOT A DTI MESSAGE");
-	}
+	// if ((MSG_DTI_CONTROL_10 & 0xFF) != 0x16) {
+	// 	LOGOMATIC("NOT A DTI MESSAGE");
+	// }
 
 	FDCAN_TxHeaderTypeDef TxHeader = {
-    .IdType = FDCAN_EXTENDED_ID,
-    .TxFrameType = FDCAN_DATA_FRAME,
-    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-	// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-    .BitRateSwitch = FDCAN_BRS_OFF,
-    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-    .MessageMarker = 0 // also change this to a real address if you change fifo control
+	    .IdType = FDCAN_EXTENDED_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+	    // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
 
-    TxHeader.Identifier = msgID;
-    TxHeader.DataLength = length;
+	TxHeader.Identifier = msgID;
+	TxHeader.DataLength = size;
 
-    TxHeader.IdType = FDCAN_EXTENDED_ID;
+	TxHeader.IdType = FDCAN_EXTENDED_ID;
 
-    TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
+	TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
 
-    uint8_t temp;
-    for(uint16_t i = 0; i < length / 2; ++i)
-    {
-	temp = data[i];
-	data[i] = data[length - i - 1];
-	data[length - i - 1] = temp;
-    }
+	FDCANTxMessage msg = {0};
+	msg.tx_header = TxHeader;
 
-	can_send(primary_can, &msg);
-}*/
+	for (uint32_t i = 0; i < size; i++) {
+		msg.data[size - i - 1] = ((uint8_t *)data)[i];
+	}
+
+	// can_send(primary_can, &msg);
+	can_enqueue(stateLump.primary_can, &msg);
+}
 
 void SendECUStateDataOverCAN(ECU_StateData *stateData)
 {
@@ -111,7 +116,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 					.RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
 					.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 32768)};
 
-	LOGOMATIC("Sending ECU State Data over CAN");
+	// LOGOMATIC("Sending ECU State Data over CAN\n");
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));

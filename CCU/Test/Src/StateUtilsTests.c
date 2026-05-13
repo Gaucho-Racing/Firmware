@@ -1,14 +1,8 @@
-#include "StateUtils.h"
-
-#include "CANdler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
-#include "StateMachine.h"
-#include "Stringification.h"
-#include "bitManipulations.h"
-#include "can.h"
+#include "StateUtils.h"
 #include "gpio.h"
-#include "vcp.h"
+#include "stdint.h"
 
 void TripSoftwareLatch(CCU_StateData *state_data)
 {
@@ -71,38 +65,6 @@ bool CriticalError(const CCU_StateData *state_data)
 	}
 
 	return any_error;
-}
-
-void VCP_Oneliner(const CCU_StateData *state_data)
-{
-	static char buffer[50]; // Static to avoid allocating 50 bytes on the stack every time this function is called
-	uint8_t length = 0;
-
-	length = snprintf(buffer, sizeof(buffer), "[%lu]", MillisecondsSinceBoot());
-	VCP_Send(buffer, length);
-
-	length = snprintf(buffer, sizeof(buffer), " IR- %s", state_data->IR_MINUS ? "Closed" : "Open");
-	VCP_Send(buffer, length);
-
-	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->IR_PLUS ? "Closed" : "Open");
-	VCP_Send(buffer, length);
-
-	length = snprintf(buffer, sizeof(buffer), " | %huV", state_data->Accumulator_Voltage / 100);
-	VCP_Send(buffer, length);
-
-	length = snprintf(buffer, sizeof(buffer), " | SOC %hu%%", (uint8_t)(state_data->Accumulator_SOC * 20.0f / 51.0f));
-	VCP_Send(buffer, length);
-
-	LOGOMATIC("\n--- State Bits ---\n");
-	LOGOMATIC("SOFTWARE LATCH: %d\n", state_data->SOFTWARE_LATCH);
-	length = snprintf(buffer, sizeof(buffer), " | Max Cell %huC", state_data->Max_Cell_Temp / 4);
-	VCP_Send(buffer, length);
-
-	length = snprintf(buffer, sizeof(buffer), " | %s", state_data->state == CCU_STATE_IDLE ? "IDLE" : "CHARGING");
-	VCP_Send(buffer, length);
-
-	length = snprintf(buffer, sizeof(buffer), "\n");
-	VCP_Send(buffer, length);
 }
 
 uint32_t MillisecondsSinceBoot(void)

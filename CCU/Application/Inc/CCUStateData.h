@@ -5,19 +5,19 @@
 #ifndef STATE_STATEDATA_H
 #define STATE_STATEDATA_H
 
-typedef struct {
+typedef volatile struct {
+	uint16_t Accumulator_Voltage;
+	uint8_t Accumulator_SOC;
+	uint8_t Max_Cell_Temp;
+
 	CCU_STATE state;
 
 	bool recv_charge_cmd;
+	bool recv_stop_cmd;
 
 	// ACU_STATUS_2
-	uint8_t ACU_S2_20Volt;
-	uint8_t ACU_S2_12Volt;
-	uint8_t ACU_S2_SDC_Volt;
-	uint8_t ACU_S2_MIN_CELL_Volt;
-	uint8_t ACU_S2_MAX_CELL_TEMP;
+
 	// Error & Warnings
-	// uint8_t ACU_S2_ERROR_BITS;
 	bool ACU_S2_OVERTEMP_ERROR;
 	bool ACU_S2_OVERVOLT_ERROR;
 	bool ACU_S2_UNDERVOLT_ERROR;
@@ -26,16 +26,11 @@ typedef struct {
 	bool ACU_S2_UNDER20v_WARNING;
 	bool ACU_S2_UNDER12v_WARNING;
 	bool ACU_S2_UNDERVOLTSDC_WARNING;
-	// bool ACU_S2_PRECHARGE_ERROR;
 
 	// State
-	uint8_t ACU_S2_PRECHARGE_BITS;
-	// bool ACU_S2_PRECHARGE_STATE;
-	// bool ACU_S2_IR_STATE;
-	bool ACU_S2_SOFTWARE_LATCH;
-
-	// ACU_PRECHARGE
-	bool ACU_PRECHARGE_SET_TS_ACTIVE;
+	bool IR_MINUS; // IR- State
+	bool IR_PLUS;  // IR+ State
+	bool SOFTWARE_LATCH;
 
 } CCU_StateData;
 

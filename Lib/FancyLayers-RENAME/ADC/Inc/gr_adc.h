@@ -151,6 +151,7 @@ typedef struct {
 	const volatile void *Dest_Address;
 	DMA_Data_Size Data_Size;
 	DMA_Priority Priority;
+	uint32_t Num_Data;
 } DMA_Init_Values;
 
 void DMA_Init(DMA_Init_Values *Init_Values);

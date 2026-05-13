@@ -1,7 +1,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "CANDler.h"
+#include "CANdler.h"
 
 #include "CCUStateData.h"
 #include "GRCAN_BUS_ID.h"
@@ -22,26 +22,23 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 	GRCAN_MSG_ID messageId = (0x000FFF00 & ID) >> 8;
 
 	switch (messageId) {
+		case GRCAN_ACU_STATUS_1:
+			if (size != sizeof(GRCAN_ACU_STATUS_1_MSG)) {
+				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
+				return;
+			}
+			GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (GRCAN_ACU_STATUS_1_MSG *)data;
+			state_data.Accumulator_Voltage = acu_status_1->accumulator_voltage;
+			state_data.Accumulator_SOC = acu_status_1->accumulator_soc;
+			break;
+
 		case GRCAN_ACU_STATUS_2:
 			if (size != sizeof(GRCAN_ACU_STATUS_2_MSG)) {
 				LOGOMATIC("Bad CCU CAN Rx length! ID: %lu, Size %lu\n", ID, size);
-				break;
+				return;
 			}
 
-			LOGOMATIC("Received a ACU STATUS 2 msg\n");
-
-			// FIXME: Might need to double check we are doing this v
-			//  cast *data to whatever msg dti control 10 struct there is
-			//  copy data from that struct into the ccu state data struct (eg GETBIT)
-
-			// What the rewrite would look like: STATUS 2
-
 			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
-			state_data.ACU_S2_20Volt = acu_status_2->_20v_voltage;
-			state_data.ACU_S2_12Volt = acu_status_2->_12v_voltage;
-			state_data.ACU_S2_SDC_Volt = acu_status_2->sdc_voltage;
-			state_data.ACU_S2_MIN_CELL_Volt = acu_status_2->min_cell_voltage;
-			state_data.ACU_S2_MAX_CELL_TEMP = acu_status_2->max_cell_temp;
 
 			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(acu_status_2->status_flags, 0);
 			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 1);
@@ -53,10 +50,16 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 			state_data.ACU_S2_UNDER12v_WARNING = GETBIT(acu_status_2->status_flags, 6);
 			state_data.ACU_S2_UNDERVOLTSDC_WARNING = GETBIT(acu_status_2->status_flags, 7);
 
-			break;
+			state_data.IR_MINUS = GETBIT(acu_status_2->precharge_latch_flags, 1);
+			state_data.IR_PLUS = GETBIT(acu_status_2->precharge_latch_flags, 2);
 
+			state_data.Max_Cell_Temp = acu_status_2->max_cell_temp;
+			break;
+		case GRCAN_ACU_STATUS_3:
+			// Currently unused
+			break;
 		default:
-			LOGOMATIC("Unhandled CCU CAN Rx msg! ID: %lu, Size %lu\n", ID, size);
+			// Unhandled message ID, ignoring
 			break;
 	}
 }
@@ -156,9 +159,8 @@ void CAN_Configure(void)
 	can_start(primary_can);
 }
 
-void SendPrechargeStatus(CCU_StateData *state_data)
+void SendPrechargeStatus(bool setPrecharge)
 {
-
 	FDCANTxMessage msg;
 	msg.tx_header.Identifier = ((0xFF & GRCAN_CCU) << 20) | ((0xFFF & GRCAN_ACU_PRECHARGE) << 8) | (0xFF & GRCAN_ACU);
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
@@ -169,11 +171,11 @@ void SendPrechargeStatus(CCU_StateData *state_data)
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
 
-	msg.data[0] = (state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
+	msg.data[0] = setPrecharge;
 
-	LOGOMATIC("PRECHARGE SET: %d\n", state_data->ACU_PRECHARGE_SET_TS_ACTIVE);
+	LOGOMATIC("PRECHARGE SET: %d\n", setPrecharge);
 
-	can_send(primary_can, &msg);
+	can_enqueue(primary_can, &msg);
 
 	LOGOMATIC("CAN MESSAGE SENT:\n");
 }
