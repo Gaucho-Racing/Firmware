@@ -36,14 +36,14 @@ static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 		LOGOMATIC("TSSI: TS Normal\n");
 	}
 
-	if(stateLumpTest->ts_active_button_press_interrupt) {
+	if (stateLumpTest->ts_active_button_press_interrupt) {
 		stateLumpTest->ts_active_button_press_interrupt = false;
 		stateLumpTest->ts_active_button_pressed = true;
 	} else {
 		stateLumpTest->ts_active_button_pressed = false;
 	}
 
-	if(stateLumpTest->rtd_button_press_interrupt) {
+	if (stateLumpTest->rtd_button_press_interrupt) {
 		stateLumpTest->rtd_button_press_interrupt = false;
 		stateLumpTest->rtd_button_pressed = true;
 	} else {

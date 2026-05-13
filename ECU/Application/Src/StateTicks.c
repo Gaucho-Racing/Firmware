@@ -60,20 +60,19 @@ void ECU_State_Tick(void)
 
 	// bmsFailure(&stateLump) || imdFailure(&stateLump);
 
-	if(stateLump.ts_active_button_press_interrupt) {
+	if (stateLump.ts_active_button_press_interrupt) {
 		stateLump.ts_active_button_press_interrupt = false;
 		stateLump.ts_active_button_pressed = true;
 	} else {
 		stateLump.ts_active_button_pressed = false;
 	}
 
-	if(stateLump.rtd_button_press_interrupt) {
+	if (stateLump.rtd_button_press_interrupt) {
 		stateLump.rtd_button_press_interrupt = false;
 		stateLump.rtd_button_pressed = true;
 	} else {
 		stateLump.rtd_button_pressed = false;
 	}
-
 
 	switch (stateLump.ecu_state) {
 		case GR_GLV_OFF:
