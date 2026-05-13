@@ -270,8 +270,8 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 						     .brakeline_r_signal = stateData->Brake_R_Signal,
 						     .steering_angle_signal = stateData->steering_angle_signal,
 						     .aux_signal = stateData->aux_signal};
-		UNUSED(message); // FIXME Eventually figure out what to do with this message here
-		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, 10);	// FIXME
+		UNUSED(message);							      // FIXME Eventually figure out what to do with this message here
+		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, 10); // FIXME
 		last_can_tcm_request_millis = millis_since_boot;
 	}
 }

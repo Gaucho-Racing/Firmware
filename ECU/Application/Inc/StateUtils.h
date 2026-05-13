@@ -15,9 +15,9 @@ uint32_t MillisecondsSinceBoot(void);
 #define BRAKE_F_MAX 4095    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_R_MIN 0	    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_R_MAX 4095    // TODO: need to be determined FIXME: Rename better
-#define THROTTLE_MIN_1 308    // TODO: need to be determined
+#define THROTTLE_MIN_1 308  // TODO: need to be determined
 #define THROTTLE_MAX_1 3689 // TODO: need to be determined
-#define THROTTLE_MIN_2 303    // TODO: need to be determined
+#define THROTTLE_MIN_2 303  // TODO: need to be determined
 #define THROTTLE_MAX_2 3735 // TODO: need to be determined
 #define BSE_MAX 4096.0f
 #define BSE_DEADZONE 1.2f
