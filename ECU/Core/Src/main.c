@@ -404,14 +404,15 @@ int main(void)
 	while (1) {
 		// adcs
 		read_digital();
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
-		write_adc_values_to_state_data();
-
 		// main state lopp, queues can messages within it
 		static uint32_t delay_timer;
 		static uint32_t ping_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
+
+			// ADC
+			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
+			write_adc_values_to_state_data();
 
 			// state tick
 			ECU_State_Tick();
