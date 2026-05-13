@@ -100,16 +100,19 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	TxHeader.Identifier = msgID;
 	TxHeader.DataLength = size;
 
-	TxHeader.IdType = FDCAN_EXTENDED_ID;
-
 	TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = TxHeader;
 
-	for (uint32_t i = 0; i < size; i++) {
-		msg.data[size - i - 1] = ((uint8_t *)data)[i];
+	uint8_t temp;
+	for (uint16_t i = 0; i < size / 2; ++i) {
+		temp = ((uint8_t *)data)[i];
+		((uint8_t *)data)[i] = ((uint8_t *)data)[size - i - 1];
+		((uint8_t *)data)[size - i - 1] = temp;
 	}
+
+	memcpy(&(msg.data), data, size);
 
 	// can_send(primary_can, &msg);
 	can_enqueue(stateLump.primary_can, &msg);
