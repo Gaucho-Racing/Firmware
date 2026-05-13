@@ -1,5 +1,6 @@
-#include "Unused.h"
 #include "can.h"
+
+#include "Unused.h"
 
 int can_start(CANHandle *handle)
 {
