@@ -10,7 +10,7 @@
 #include "StateData.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "ecu_can.h"
+#include "can.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 #include "string.h"
