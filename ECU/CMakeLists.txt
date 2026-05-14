@@ -14,8 +14,7 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 #TODO: when CAN implementation is settled, turn HOOTL tests back on
-#if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-if(FALSE)
+if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	add_executable(StateTicksTest)
 	target_include_directories(
 		StateTicksTest
@@ -81,7 +80,6 @@ target_sources(
 		Application/Src/CANutils.c
 		Application/Src/Pinging.c
 		Application/Src/Lights.c
-		Application/Src/ecu_can.c
 )
 
 target_link_libraries(
@@ -89,7 +87,7 @@ target_link_libraries(
 	INTERFACE
 		CANfigurator
 		GR_ADC
-		#PERIPHERAL_CAN_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 		BitManipulations_Lib
 )
 

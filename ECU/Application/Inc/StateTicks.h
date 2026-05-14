@@ -1,7 +1,7 @@
 #include "StateData.h"
 #include "StateMachine.h"
 #include "adc.h"
-#include "ecu_can.h"
+#include "can.h"
 
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_
