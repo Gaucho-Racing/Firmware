@@ -425,23 +425,6 @@ int main(void)
 			}
 			lightControl(&stateLump);
 		}
-		static uint16_t min_apps_1 = 4095;
-		static uint16_t min_apps_2 = 4095;
-		if (stateLump.APPS1_Signal < min_apps_1) {
-			min_apps_1 = stateLump.APPS1_Signal;
-		}
-		if (stateLump.APPS2_Signal < min_apps_2) {
-			min_apps_2 = stateLump.APPS2_Signal;
-		}
-		static uint16_t max_apps_1 = 0;
-		static uint16_t max_apps_2 = 0;
-		if (stateLump.APPS1_Signal > max_apps_1) {
-			max_apps_1 = stateLump.APPS1_Signal;
-		}
-		if (stateLump.APPS2_Signal > max_apps_2) {
-			max_apps_2 = stateLump.APPS2_Signal;
-		}
-		LOGOMATIC("APPS 1 %d, APPS 2 %d | Min: %d, %d | Max: %d, %d\n", stateLump.APPS1_Signal, stateLump.APPS2_Signal, min_apps_1, min_apps_2, max_apps_1, max_apps_2);
 	}
 	/* USER CODE END 3 */
 }
