@@ -40,7 +40,7 @@
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "adc.h"
-#include "ecu_can.h"
+#include "can.h"
 #include "stm32g4xx_hal.h"
 /* USER CODE END Includes */
 
@@ -343,7 +343,6 @@ void CAN_Configure(void)
 	// timer can
 	can_start(stateLump.primary_can);
 	can_start(stateLump.data_can);
-	CAN_Timer_Start();
 }
 /**
  * @brief  The application entry point.
