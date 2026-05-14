@@ -96,7 +96,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				break;
 			}
 			GRCAN_INV_STATUS_3_MSG *inv_status_3 = (GRCAN_INV_STATUS_3_MSG *)data;
-			state_data->inv_fault_map = inv_status_3->fault_bits;
+			state_data->inverter_fault_map = inv_status_3->fault_bits;
 			break;
 		case GRCAN_DASH_STATUS:
 			if (data_length != sizeof(GRCAN_DASH_STATUS_MSG)) {
