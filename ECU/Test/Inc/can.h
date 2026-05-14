@@ -374,7 +374,7 @@ typedef struct {
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
 int can_start(CANHandle *handle);
 int can_stop(CANHandle *handle);
-int can_send(CANHandle *handle, FDCANTxMessage *buffer);
+int can_enqueue(CANHandle *canHandle, FDCANTxMessage *message);
 int can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
 int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // alternatively use

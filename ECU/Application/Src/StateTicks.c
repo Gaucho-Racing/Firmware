@@ -13,7 +13,7 @@
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
-#include "ecu_can.h"
+#include "can.h"
 #include "stm32g4xx_ll_gpio.h"
 
 /**
