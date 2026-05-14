@@ -50,6 +50,7 @@ jobs:
           key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}
           restore-keys: |
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-main
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-
 
@@ -203,6 +204,7 @@ jobs:
           key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ github.ref_name }}
           restore-keys: |
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ github.ref_name }}
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-main
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-
 
       - name: Setup Shared Compilation Cache
