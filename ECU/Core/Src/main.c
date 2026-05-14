@@ -419,6 +419,7 @@ int main(void)
 
 			// preipheral updates
 			SendECUStateDataOverCAN(&stateLump);
+			SendECUAnalogDataOverCAN(&stateLump);
 			if (MillisecondsSinceBoot() >= ping_timer) {
 				ping_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 500); // half period
 				pingAll();

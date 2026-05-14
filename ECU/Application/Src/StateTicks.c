@@ -184,15 +184,6 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (PressingBrake(stateData) && stateData->rtd_button_pressed) {
 		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
-		GRCAN_ECU_ANALOG_DATA_MSG pedals_message = {.bspd_signal = stateData->bspd_signal,
-							    .bse_signal = stateData->bse_signal,
-							    .apps_1_signal = stateData->APPS1_Signal,
-							    .apps_2_signal = stateData->APPS2_Signal,
-							    .brakeline_f_signal = stateData->Brake_F_Signal,
-							    .brakeline_r_signal = stateData->Brake_R_Signal,
-							    .steering_angle_signal = stateData->steering_angle_signal,
-							    .aux_signal = stateData->aux_signal};
-		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
 	}
@@ -270,24 +261,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
 		last_can_inverter_request_millis = millis_since_boot;
 	}
-
-	// placeholder for pedal data
-	// TODO: determine send time (15, 20 ms?)
-
-	static uint32_t last_can_tcm_request_millis = 0;
-	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_tcm_request_millis)) {
-		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
-						     .bse_signal = stateData->bse_signal,
-						     .apps_1_signal = stateData->APPS1_Signal,
-						     .apps_2_signal = stateData->APPS2_Signal,
-						     .brakeline_f_signal = stateData->Brake_F_Signal,
-						     .brakeline_r_signal = stateData->Brake_R_Signal,
-						     .steering_angle_signal = stateData->steering_angle_signal,
-						     .aux_signal = stateData->aux_signal};
-		UNUSED(message);							      // FIXME Eventually figure out what to do with this message here
-		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, 10); // FIXME
-		last_can_tcm_request_millis = millis_since_boot;
-	}
 }
 
 static uint32_t discharge_start_millis;
@@ -297,7 +270,8 @@ void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 	LOGOMATIC("ECU: ACU discharge Tractive System\n");
 	GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
-	discharge_start_millis = millis_since_boot;}
+	discharge_start_millis = millis_since_boot;
+}
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {

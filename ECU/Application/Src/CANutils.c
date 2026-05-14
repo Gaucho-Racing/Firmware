@@ -119,9 +119,27 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 					.RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
 					.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 32768)};
 
-	// LOGOMATIC("Sending ECU State Data over CAN\n");
-
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
+}
+
+void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
+{
+	uint32_t millis_since_boot = MillisecondsSinceBoot();
+
+	static uint32_t last_can_tcm_request_millis = 0;
+	
+	if (millis_since_boot - last_can_tcm_request_millis > 100) {
+		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
+						     .bse_signal = stateData->bse_signal,
+						     .apps_1_signal = stateData->APPS1_Signal,
+						     .apps_2_signal = stateData->APPS2_Signal,
+						     .brakeline_f_signal = stateData->Brake_F_Signal,
+						     .brakeline_r_signal = stateData->Brake_R_Signal,
+						     .steering_angle_signal = stateData->steering_angle_signal,
+						     .aux_signal = stateData->aux_signal};
+		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
+		last_can_tcm_request_millis = millis_since_boot;
+	}
 }
