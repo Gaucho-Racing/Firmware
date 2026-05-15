@@ -33,7 +33,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 	    .IdType = FDCAN_EXTENDED_ID,
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-	    .DataLength = size,
+	    .DataLength = BytesToCANDLC(size),
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
 	    .MessageMarker = 0,
@@ -78,16 +78,19 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	TxHeader.Identifier = msgID;
 	TxHeader.DataLength = size;
 
-	TxHeader.IdType = FDCAN_EXTENDED_ID;
-
 	TxHeader.FDFormat = FDCAN_CLASSIC_CAN;
 
 	FDCANTxMessage msg = {0};
 	msg.tx_header = TxHeader;
 
-	for (uint32_t i = 0; i < size; i++) {
-		msg.data[size - i - 1] = ((uint8_t *)data)[i];
+	uint8_t temp;
+	for (uint16_t i = 0; i < size / 2; ++i) {
+		temp = ((uint8_t *)data)[i];
+		((uint8_t *)data)[i] = ((uint8_t *)data)[size - i - 1];
+		((uint8_t *)data)[size - i - 1] = temp;
 	}
+
+	memcpy(&(msg.data), data, size);
 
 	// can_send(primary_can, &msg);
 	can_enqueue(stateLump.primary_can, &msg);
@@ -116,9 +119,27 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 					.RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
 					.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 32768)};
 
-	// LOGOMATIC("Sending ECU State Data over CAN\n");
-
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
+}
+
+void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
+{
+	uint32_t millis_since_boot = MillisecondsSinceBoot();
+
+	static uint32_t last_can_tcm_request_millis = 0;
+	
+	if (millis_since_boot - last_can_tcm_request_millis > 100) {
+		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
+						     .bse_signal = stateData->bse_signal,
+						     .apps_1_signal = stateData->APPS1_Signal,
+						     .apps_2_signal = stateData->APPS2_Signal,
+						     .brakeline_f_signal = stateData->Brake_F_Signal,
+						     .brakeline_r_signal = stateData->Brake_R_Signal,
+						     .steering_angle_signal = stateData->steering_angle_signal,
+						     .aux_signal = stateData->aux_signal};
+		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
+		last_can_tcm_request_millis = millis_since_boot;
+	}
 }

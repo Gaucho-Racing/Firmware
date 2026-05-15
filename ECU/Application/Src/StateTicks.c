@@ -60,6 +60,20 @@ void ECU_State_Tick(void)
 
 	// bmsFailure(&stateLump) || imdFailure(&stateLump);
 
+	if (stateLump.ts_active_button_press_interrupt) {
+		stateLump.ts_active_button_press_interrupt = false;
+		stateLump.ts_active_button_pressed = true;
+	} else {
+		stateLump.ts_active_button_pressed = false;
+	}
+
+	if (stateLump.rtd_button_press_interrupt) {
+		stateLump.rtd_button_press_interrupt = false;
+		stateLump.rtd_button_pressed = true;
+	} else {
+		stateLump.rtd_button_pressed = false;
+	}
+
 	switch (stateLump.ecu_state) {
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
@@ -89,6 +103,7 @@ void ECU_State_Tick(void)
 
 void ECU_GLV_Off(ECU_StateData *stateData)
 {
+	disable_inverter();
 	UNUSED(stateData);
 	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!\n");
 	// TODO ERROR --> GLV_OFF should never be reached
@@ -96,6 +111,8 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		LOGOMATIC("Error: TS Voltage >= %d!\n", SAFE_VOLTAGE_LIMIT);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
@@ -106,7 +123,6 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	if (stateData->ts_active_button_pressed /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
 		LOGOMATIC("GLV ON to PRECHARGE START!\n");
 		ECU_Transition_To_Precharge_Engaged(stateData);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 }
@@ -126,6 +142,8 @@ void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	if (stateData->ir_plus) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		LOGOMATIC("PRECHARGE ENGAGED to PRECHARGE COMPLETE!\n");
@@ -142,7 +160,6 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		LOGOMATIC("ERROR: ts_active PRESSED! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 }
@@ -150,10 +167,11 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 // TODO: change for CAN button messenging
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	if (stateData->ts_active_button_pressed) {
 		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 	if (CriticalError(stateData)) {
@@ -166,19 +184,8 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (PressingBrake(stateData) && stateData->rtd_button_pressed) {
 		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
-		GRCAN_ECU_ANALOG_DATA_MSG pedals_message = {.bspd_signal = stateData->bspd_signal,
-							    .bse_signal = stateData->bse_signal,
-							    .apps_1_signal = stateData->APPS1_Signal,
-							    .apps_2_signal = stateData->APPS2_Signal,
-							    .brakeline_f_signal = stateData->Brake_F_Signal,
-							    .brakeline_r_signal = stateData->Brake_R_Signal,
-							    .steering_angle_signal = stateData->steering_angle_signal,
-							    .aux_signal = stateData->aux_signal};
-		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &pedals_message, sizeof(pedals_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
-		stateData->rtd_button_pressed = false;
-		return;
 	}
 }
 
@@ -202,7 +209,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		LOGOMATIC("Error: TS active button pressed in Drive Active state. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
-		stateData->ts_active_button_pressed = false;
 		return;
 	}
 
@@ -218,7 +224,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		if (vehicle_is_moving(stateData)) {
 			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
 		}
-		stateData->rtd_button_pressed = false;
 		return;
 	}
 
@@ -247,29 +252,13 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		torque_request = 0;
 	}
 
-	static uint32_t last_can_inverter_request_millis;
+	static uint32_t last_can_inverter_request_millis = 0;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_inverter_request_millis)) {
 		GRCAN_INVERTER_COMMAND_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_COMMAND, &message, sizeof(message));
-		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 2);
+		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 1);
+		message.set_ac_current = torque_request * 10;
 		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
-		last_can_inverter_request_millis = millis_since_boot;
-	}
-
-	// placeholder for pedal data
-	// TODO: determine send time (15, 20 ms?)
-
-	static uint32_t last_can_tcm_request_millis;
-	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_tcm_request_millis)) {
-		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
-						     .bse_signal = stateData->bse_signal,
-						     .apps_1_signal = stateData->APPS1_Signal,
-						     .apps_2_signal = stateData->APPS2_Signal,
-						     .brakeline_f_signal = stateData->Brake_F_Signal,
-						     .brakeline_r_signal = stateData->Brake_R_Signal,
-						     .steering_angle_signal = stateData->steering_angle_signal,
-						     .aux_signal = stateData->aux_signal};
-		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
@@ -286,6 +275,8 @@ void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
+	disable_inverter();
+
 	/*
 		Discharge the tractive system to below 60(SAFE_VOLTAGE_LIMIT) volts
 	*/
@@ -311,4 +302,4 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
 	}
-} // init
+}

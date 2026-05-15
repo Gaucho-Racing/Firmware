@@ -110,17 +110,15 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 
 			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later
 			if (state_data->ecu_state == GR_GLV_ON) {
-				state_data->ts_active_button_pressed = dash_data->button_flags & 1;
+				state_data->ts_active_button_press_interrupt = dash_data->button_flags & 1;
 			} else {
-				state_data->ts_active_button_pressed = (dash_data->button_flags >> 2) & 1;
+				state_data->ts_active_button_press_interrupt = (dash_data->button_flags >> 2) & 1;
 			}
 
 			if (state_data->ecu_state == GR_PRECHARGE_COMPLETE) {
-				state_data->rtd_button_pressed = (dash_data->button_flags >> 1) & 1;
+				state_data->rtd_button_press_interrupt = (dash_data->button_flags >> 1) & 1;
 			} else if (state_data->ecu_state == GR_DRIVE_ACTIVE) {
-				state_data->rtd_button_pressed = (dash_data->button_flags >> 3) & 1;
-			} else {
-				state_data->rtd_button_pressed = false;
+				state_data->rtd_button_press_interrupt = (dash_data->button_flags >> 3) & 1;
 			}
 
 			break;
