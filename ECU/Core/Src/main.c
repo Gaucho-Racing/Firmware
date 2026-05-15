@@ -153,6 +153,10 @@ void ADC_Configure(void)
 	Init_Vals_ADC1.SamplingTimes = &s1;
 	ADC_Init(&Init_Vals_ADC1);
 
+	// TODO Use ADC peripheral API for configuring ideally... but honestly its fine
+	LL_ADC_SetOverSamplingScope(ADC1, LL_ADC_OVS_GRP_REGULAR_CONTINUED);
+	LL_ADC_ConfigOverSamplingRatioShift(ADC1, LL_ADC_OVS_RATIO_64, LL_ADC_OVS_SHIFT_RIGHT_6);
+
 	// ADC 2
 	ADC_Init_Values Init_Vals_ADC2 = {0};
 	Init_Vals_ADC2.ADC = ADC2;
@@ -167,6 +171,10 @@ void ADC_Configure(void)
 	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
 	ADC_Init(&Init_Vals_ADC2);
+
+	// TODO Use ADC peripheral API for configuring ideally... but honestly its fine
+	LL_ADC_SetOverSamplingScope(ADC2, LL_ADC_OVS_GRP_REGULAR_CONTINUED);
+	LL_ADC_ConfigOverSamplingRatioShift(ADC2, LL_ADC_OVS_RATIO_64, LL_ADC_OVS_SHIFT_RIGHT_6);
 
 	/*
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
