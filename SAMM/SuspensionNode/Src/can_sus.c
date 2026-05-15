@@ -1,14 +1,15 @@
 #include "can_sus.h"
-
 #include "can_cfg.h"
 
 static GRCAN_NODE_ID sensorNode = GRCAN_ALL;
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID busMode = GRCAN_BUS_DATA;
-static GRCAN_BUS_ID subnetBusMode = GRCAN_BUS_DATA_SUBNET; // still needs to be defined
-static data_length = 64;
+static GRCAN_BUS_ID subnetBus = GRCAN_BUS_DATA_SUBNET; // still needs to be defined
+static uint32_t data_length = 64;
 
+uint32_t *forwarded_tire_temp_data = 0;
+uint32_t *forwarded_TCM_data = 0;
 // get rid of mag functions once their functionality added -> need to add error checking, otherwise DONE
 // fix callbacks for all requried functionality
 // might need to implement logic for receiving and forwarding for specific sensor location (FL -> FL) -> DONE
@@ -30,9 +31,9 @@ void TireTemp_Callback(uint32_t id, void *data, uint32_t size)
 
 	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
 
-	uint32_t forward_data = (uint32_t *)data;
+	forwarded_tire_temp_data = (uint32_t *)data;
 
-	// Forward messages to TCM via main data bus
+	// Forward messages to TCM via main data bus -- does not filter anything right now (should only be tire temp though)
 	GRCAN_Fancy_Send(busMode, TCMNode, GRCAN_Fancy_ID.messageID, data, size);
 }
 
@@ -47,8 +48,9 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 
 	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
 
-	// Forward all messages to tire temp sensor via subnet bus
-	GRCAN_Fancy_Send(subnetBusMode, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
+	forwarded_TCM_data = (uint32_t *)data;
+	// Forward all messages to tire temp sensor via subnet bus -- does not filter for anything right now
+	GRCAN_Fancy_Send(subnetBus, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
 
 	if (GRCAN_Fancy_ID.messageID == GRCAN_PING) {
 		// Send ping back to sender on main data bus
@@ -56,10 +58,12 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 	}
 }
 
-int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
+int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 {
-	if (sensorNode != GRCAN_ALL) {
-		LOGOMATIC("Suspension Node already initialized");
+	int bus = (int)busID; //technically GRCAN_BUS_DATA_SUBNET does not exist, avoid warnings by casting to int
+
+	if (bus != GRCAN_BUS_DATA && bus != GRCAN_BUS_DATA_SUBNET) {
+		LOGOMATIC("Invalid bus for Suspension Node CAN Init");
 		return 0;
 	}
 
@@ -70,12 +74,34 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 	bus_config.clock_source = GRCAN_CLKSRC_PLL1Q; // should be 180MHz, defaults should work
 #endif
 
-	if (bus == CAN_SUBNET_BUS) {
+	if (bus == GRCAN_BUS_DATA_SUBNET) {
 		bus_config.fdcan_instance = FDCAN2;
 		bus_config.rx_callback = TireTemp_Callback; // callback
-	} else if (bus == CAN_DATAMAIN_BUS) {
+	} else if (bus == GRCAN_BUS_DATA) {
 		bus_config.fdcan_instance = FDCAN1;
 		bus_config.rx_callback = TCM_Callback; // callback
+
+		Sus_Node sus_node = localNode;
+		TireTemp_Node tire_temp_node;
+		switch(sus_node){
+			case Sus_FL:
+				tire_temp_node = TireTemp_FL;
+				break;
+			case Sus_FR:
+				tire_temp_node = TireTemp_FR;
+				break;
+			case Sus_RL:
+				tire_temp_node = TireTemp_RL;
+				break;
+			case Sus_RR:
+				tire_temp_node = TireTemp_RR;
+				break;
+			default:
+				LOGOMATIC("Invalid suspension node, defaulting to FL\n");
+				tire_temp_node = TireTemp_FL;
+				break;
+		}
+		sensorNode = tire_temp_node;
 	}
 
 	bool result = GRCAN_InitBus(&bus_config);
@@ -87,17 +113,6 @@ int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus)
 
 	GRCAN_SetLocalNodeID(localNode);
 
-	switch (localNode) {
-		case Sus_FL:
-			sensorNode = TireTemp_FL;
-		case Sus_FR:
-			sensorNode = TireTemp_FR;
-		case Sus_RL:
-			sensorNode = TireTemp_RL;
-		case Sus_RR:
-			sensorNode = TireTemp_RR;
-	}
-
 	return 1; // success
 }
 
@@ -105,20 +120,26 @@ bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *data)
 {
 	if (data == NULL) {
 		LOGOMATIC("Suspension Node CAN send: NULL data");
+		return false;
 	}
 
-	if (localNode == GRCAN_ALL) {
-		LOGOMATIC("Suspension Node not initialized");
+	switch ((Sus_MSG_ID)msg_id) {
+		case CAN_SUS_MSG_DATA: break;
+		case CAN_SUS_MSG_STATUS: break;
+		case CAN_SUS_MSG_FAULT: break;
+		default:
+			LOGOMATIC("Invalid Suspension Node message ID, defaulting to DATA\n");
+			msg_id = CAN_SUS_MSG_DATA;
+			break;
 	}
 
 	bool result = GRCAN_Fancy_Send(busMode, dest_node, msg_id, data, data_length);
 
 	if (!result) {
 		LOGOMATIC("Suspension Node CAN send failed");
-		return 0;
 	}
 
-	return 1;
+	return result;
 }
 
 /* ================================================================================================== */

@@ -1,13 +1,11 @@
-#ifndef CAN_MAG_H
-#define CAN_MAG_H
-
-#include <stdint.h>
+#ifndef CAN_SUS_H
+#define CAN_SUS_H
 
 #include "GRCAN_FancyLayer.h"
 #include "Logomatic.h"
 #include "NodeID.h"
-
-static GRCAN_NODE_ID destNode = GRCAN_TCM;
+#include <stdbool.h>
+#include <stdint.h>
 
 typedef enum {
 	CAN_SUS_MSG_DATA = 0x2C,
@@ -29,11 +27,6 @@ typedef enum {
 	Sus_RR = GRCAN_Suspension_RR
 } Sus_Node;
 
-typedef enum {
-	CAN_SUBNET_BUS = 0,
-	CAN_DATAMAIN_BUS = 1
-} CAN_SAMM_ROUTING_BUS;
-
 typedef struct {
 	uint16_t bmi323_acc_x;
 	uint16_t bmi323_acc_y;
@@ -51,6 +44,7 @@ typedef struct {
 
 void TireTemp_Callback(uint32_t id, void *data, uint32_t size);
 void TCM_Callback(uint32_t id, void *data, uint32_t size);
-int SusNode_CAN_Init(CAN_SAMM_ROUTING_BUS bus);
+int SusNode_CAN_Init(GRCAN_BUS_ID busID);
+bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *data);
 
 #endif
