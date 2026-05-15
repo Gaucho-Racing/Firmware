@@ -352,6 +352,20 @@
 	border-radius: 4px;
 }
 
+/* ── Mobile: hide expand arrow; tap name row to expand instead ── */
+.is-mobile .msg-expand-btn {
+	display: none;
+}
+
+.is-mobile .msg-name-row-tappable {
+	cursor: pointer;
+}
+
+.is-mobile .msg-name-row-tappable:active {
+	background: rgba(124, 58, 237, 0.08);
+	border-radius: 4px;
+}
+
 /* ── Message expand/collapse toggle ── */
 .msg-expand-btn {
 	flex-shrink: 0;

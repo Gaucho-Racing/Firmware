@@ -931,6 +931,13 @@ window.addEventListener("DOMContentLoaded", function () {
 						expandBtn.classList.toggle("collapsed", collapsed);
 					});
 				}
+				if (isMobileLayout()) {
+					details.classList.add("collapsed");
+					nameRow.classList.add("msg-name-row-tappable");
+					nameRow.addEventListener("click", () => {
+						details.classList.toggle("collapsed");
+					});
+				}
 			}
 			msgList.appendChild(item);
 		});

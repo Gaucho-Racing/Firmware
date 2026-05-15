@@ -7,7 +7,7 @@
 (function () {
 	"use strict";
 
-	const NODE_WIDTH = 112;
+	const NODE_MIN_WIDTH = 80;
 	const NODE_HEIGHT = 54;
 	const NODE_GAP_X = 16;
 	const NODE_GAP_Y = 14;
@@ -19,6 +19,18 @@
 	const PAGE_PAD_X = 56;
 	const PAGE_PAD_Y = 60;
 
+	// Approximate character width for 12px monospace in SVG user units,
+	// plus horizontal padding for the node rect.
+	const CHAR_WIDTH = 7.5;
+	const NODE_H_PAD = 24; // total left+right padding inside the node rect
+
+	function _nodeWidth(name) {
+		return Math.max(
+			NODE_MIN_WIDTH,
+			Math.ceil((name || "").length * CHAR_WIDTH) + NODE_H_PAD,
+		);
+	}
+
 	function _chooseCols(n) {
 		if (n <= 3) return n;
 		if (n <= 4) return 2;
@@ -26,17 +38,30 @@
 		return 4;
 	}
 
-	function _groupBlockSize(nodeCount) {
-		if (nodeCount === 0) return { w: 0, h: 0, cols: 0, rows: 0 };
+	// Accepts the array of node name strings so each column can be sized to
+	// the widest name it contains.
+	function _groupBlockSize(nodes) {
+		const nodeCount = nodes.length;
+		if (nodeCount === 0) return { w: 0, h: 0, cols: 0, rows: 0, colWidths: [] };
 		const cols = _chooseCols(nodeCount);
 		const rows = Math.ceil(nodeCount / cols);
-		const innerW = cols * NODE_WIDTH + (cols - 1) * NODE_GAP_X;
+
+		// Per-column max width.
+		const colWidths = new Array(cols).fill(NODE_MIN_WIDTH);
+		nodes.forEach((name, i) => {
+			const col = i % cols;
+			colWidths[col] = Math.max(colWidths[col], _nodeWidth(name));
+		});
+
+		const innerW =
+			colWidths.reduce((s, w) => s + w, 0) + (cols - 1) * NODE_GAP_X;
 		const innerH = rows * NODE_HEIGHT + (rows - 1) * NODE_GAP_Y;
 		return {
 			w: innerW + 2 * GROUP_INNER_PAD,
 			h: innerH + 2 * GROUP_INNER_PAD + GROUP_TITLE_HEIGHT,
 			cols,
 			rows,
+			colWidths,
 		};
 	}
 
@@ -60,11 +85,18 @@
 		const result = [];
 		for (const b of blocks) {
 			const positions = [];
-			const { cols } = b.size;
+			const { cols, colWidths } = b.size;
+			// Running x-offset within the group for each column.
+			const colOffsets = [];
+			let colCursor = 0;
+			for (let c = 0; c < cols; c++) {
+				colOffsets.push(colCursor);
+				colCursor += colWidths[c] + NODE_GAP_X;
+			}
 			b.group.nodes.forEach((nodeId, i) => {
 				const col = i % cols;
 				const row = Math.floor(i / cols);
-				const nx = cursorX + GROUP_INNER_PAD + col * (NODE_WIDTH + NODE_GAP_X);
+				const nx = cursorX + GROUP_INNER_PAD + colOffsets[col];
 				const ny =
 					topY +
 					GROUP_TITLE_HEIGHT +
@@ -74,7 +106,7 @@
 					id: nodeId,
 					x: nx,
 					y: ny,
-					w: NODE_WIDTH,
+					w: colWidths[col],
 					h: NODE_HEIGHT,
 				});
 			});
@@ -96,18 +128,21 @@
 
 		const topBlocks = top.map((g) => ({
 			group: g,
-			size: _groupBlockSize(g.nodes.length),
+			size: _groupBlockSize(g.nodes),
 		}));
 		const bottomBlocks = bottom.map((g) => ({
 			group: g,
-			size: _groupBlockSize(g.nodes.length),
+			size: _groupBlockSize(g.nodes),
 		}));
 
 		const topTotalW = _sideTotalWidth(topBlocks);
 		const bottomTotalW = _sideTotalWidth(bottomBlocks);
+
+		// Bus-spine nodes each get their own measured width.
 		const busRowW =
 			bus.length > 0
-				? bus.length * NODE_WIDTH + (bus.length - 1) * NODE_GAP_X
+				? bus.reduce((s, id) => s + _nodeWidth(id), 0) +
+					(bus.length - 1) * NODE_GAP_X
 				: 0;
 
 		const contentW = Math.max(topTotalW, bottomTotalW, busRowW);
@@ -140,15 +175,17 @@
 
 		const busNodes = [];
 		if (bus.length > 0) {
-			const startX = (logicalWidth - busRowW) / 2;
-			bus.forEach((id, i) => {
+			let bx = (logicalWidth - busRowW) / 2;
+			bus.forEach((id) => {
+				const nw = _nodeWidth(id);
 				busNodes.push({
 					id,
-					x: startX + i * (NODE_WIDTH + NODE_GAP_X),
+					x: bx,
 					y: busY - NODE_HEIGHT / 2,
-					w: NODE_WIDTH,
+					w: nw,
 					h: NODE_HEIGHT,
 				});
+				bx += nw + NODE_GAP_X;
 			});
 		}
 
