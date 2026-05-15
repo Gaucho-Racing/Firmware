@@ -23,8 +23,21 @@
 #   - UTF-8 input/output so smart quotes / em-dashes are mapped, not corrupted
 #   - signal min/max printed fixed-point (Vector rejects scientific notation)
 #   - CR/LF line endings (Vector tools expect Windows endings)
-#   - CAN FD attributes (VFrameFormat / CANFD_BRS) emitted for every frame
-#     with DLC > 8 so Vector accepts the database
+#   - per-bus BusType / VFrameFormat defaults come from the "Bus ID:"
+#     section's max_dlc field: max_dlc > 8 is treated as a CAN FD bus and
+#     gets "CAN FD" + "StandardCAN_FD" defaults plus a CANFD_BRS="1"
+#     default; classic buses get "CAN" + "StandardCAN" defaults and omit
+#     CANFD_BRS entirely. Only extended-ID frames need a per-frame
+#     VFrameFormat override (to ExtendedCAN on classic buses,
+#     ExtendedCAN_FD on FD buses); standard-ID frames ride the default.
+#     Without these per-bus defaults, Vector flags extended-ID classic
+#     frames as "invalid CAN-id in standard format" because the bit-31
+#     extended flag on the BO_ line disagrees with the default
+#     "StandardCAN" attribute.
+#   - each message's MSG LENGTH is validated against the hardcoded
+#     %VALID_DLC_SIZES set and against the routed bus's max_dlc; either
+#     violation dies with a descriptive error so broken inputs fail at
+#     DBC generation time instead of producing a malformed database.
 
 use strict;
 use warnings;
@@ -44,9 +57,8 @@ Readonly::Scalar my $UNDERSCORE            => q{_};
 Readonly::Scalar my $HYPHEN                => q{-};
 Readonly::Scalar my $MAX_DBC_NAME_LEN      => 32;
 Readonly::Scalar my $MIN_TOKEN_DROP_LEN    => 4;
-Readonly::Scalar my $CLASSIC_DLC           => 8;
+Readonly::Scalar my $V_FRAME_EXT           => 1;
 Readonly::Scalar my $V_FRAME_EXT_FD        => 15;
-Readonly::Scalar my $V_FRAME_STD_FD        => 14;
 Readonly::Scalar my $LARGE_NUM_THRESHOLD   => 1.0e15;
 Readonly::Scalar my $RANGE_DECIMAL_DIGITS  => 10;
 
@@ -90,6 +102,10 @@ Readonly::Hash my %NONASCII_XLAT => (
 	chr 0x00B0 => 'deg',
 );
 
+# CAN/CAN FD frames are only legal at these payload sizes. Zero is excluded
+# deliberately: empty messages are filtered out earlier in get_dbc_message.
+Readonly::Hash my %VALID_DLC_SIZES => map { $_ => 1 } ( 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 32, 48, 64, );
+
 Readonly::Array my @NS_SYMBOLS => qw(
   NS_DESC_ CM_ BA_DEF_ BA_ VAL_ CAT_DEF_ CAT_ FILTER BA_DEF_DEF_
   EV_DATA_ ENVVAR_DATA_ SGTYPE_ SGTYPE_VAL_ BA_DEF_SGTYPE_ BA_SGTYPE_
@@ -127,15 +143,24 @@ sub main {
 
 		my @output_lines;
 		my @comment_lines;
-		my @fd_frames;
+		my @frames;
 		my %seen_ids;
 		my %bus_nodes;
 
+		my $bus_def = $data_ref->{buses}{$bus};
+		if ( !$bus_def || !defined $bus_def->{max_dlc} ) {
+			die "Bus '$bus' has no max_dlc declaration in the Bus ID section\n";
+		}
+		my $bus_max_dlc = $bus_def->{max_dlc} + 0;
+		my $is_fd_bus   = ( $bus_max_dlc > 8 ) ? 1 : 0;
+
 		my %ctx = (
-			comments  => \@comment_lines,
-			fd_frames => \@fd_frames,
-			seen_ids  => \%seen_ids,
-			nodes     => \%bus_nodes,
+			comments    => \@comment_lines,
+			frames      => \@frames,
+			seen_ids    => \%seen_ids,
+			nodes       => \%bus_nodes,
+			is_fd_bus   => $is_fd_bus,
+			bus_max_dlc => $bus_max_dlc,
 		);
 
 		for my $route (@routes) {
@@ -151,10 +176,10 @@ sub main {
 
 		unshift @output_lines, _build_header( \%bus_nodes );
 
-		push @output_lines, _build_attribute_section( \@fd_frames );
+		push @output_lines, _build_attribute_section( \@frames, $is_fd_bus );
 		push @output_lines, "\n";
 
-		_self_check( \@fd_frames, \@output_lines );
+		_self_check( \@frames, \@output_lines );
 
 		my $bus_path = _bus_path( $output_base, $bus );
 		write_file( $bus_path, \@output_lines );
@@ -183,7 +208,7 @@ sub _build_header {
 }
 
 sub _build_attribute_section {
-	my ($fd_frames_ref) = @_;
+	my ( $frames_ref, $is_fd_bus ) = @_;
 	my @lines;
 
 	push @lines, q{BA_DEF_  "BusType" STRING ;} . "\n";
@@ -192,26 +217,29 @@ sub _build_attribute_section {
 	    'BA_DEF_ BO_  "VFrameFormat" ENUM  '
 	  . q{"StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";}
 	  . "\n";
-	push @lines, q{BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";} . "\n";
+	if ($is_fd_bus) {
+		push @lines, q{BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";} . "\n";
+	}
 
-	push @lines, q{BA_DEF_DEF_  "BusType" "CAN FD";} . "\n";
+	push @lines, sprintf qq{BA_DEF_DEF_  "BusType" "%s";\n}, $is_fd_bus ? 'CAN FD' : 'CAN';
 	push @lines, q{BA_DEF_DEF_  "DBName" "";} . "\n";
-	push @lines, q{BA_DEF_DEF_  "VFrameFormat" "StandardCAN";} . "\n";
-	push @lines, q{BA_DEF_DEF_  "CANFD_BRS" "1";} . "\n";
+	push @lines, sprintf qq{BA_DEF_DEF_  "VFrameFormat" "%s";\n}, $is_fd_bus ? 'StandardCAN_FD' : 'StandardCAN';
+	if ($is_fd_bus) {
+		push @lines, q{BA_DEF_DEF_  "CANFD_BRS" "1";} . "\n";
+	}
 
-	for my $f ( @{$fd_frames_ref} ) {
-		my $vff = ( $f->{can_id} & $EXTENDED_ID_MASK ) ? $V_FRAME_EXT_FD : $V_FRAME_STD_FD;
-		push @lines, sprintf qq{BA_ "VFrameFormat" BO_ %u %d;\n}, $f->{can_id}, $vff;
-		push @lines, sprintf qq{BA_ "CANFD_BRS" BO_ %u 1;\n}, $f->{can_id};
+	my $ext_vff = $is_fd_bus ? $V_FRAME_EXT_FD : $V_FRAME_EXT;
+	for my $f ( @{$frames_ref} ) {
+		push @lines, sprintf qq{BA_ "VFrameFormat" BO_ %u %d;\n}, $f->{can_id}, $ext_vff;
 	}
 
 	return join $EMPTY_STR, @lines;
 }
 
 sub _self_check {
-	my ( $fd_frames_ref, $output_ref ) = @_;
+	my ( $frames_ref, $output_ref ) = @_;
 	my $joined = join $EMPTY_STR, @{$output_ref};
-	for my $f ( @{$fd_frames_ref} ) {
+	for my $f ( @{$frames_ref} ) {
 		my $expected = sprintf 'BA_ "VFrameFormat" BO_ %u', $f->{can_id};
 		if ( index( $joined, $expected ) < 0 ) {
 			die "Self-check failed: missing VFrameFormat attribute for BO_ $f->{can_id}\n";
@@ -251,6 +279,20 @@ sub _check_name_collisions {
 				$sg_seen{$name} = 1;
 			}
 		}
+	}
+	return;
+}
+
+sub _validate_msg_len {
+	my ( $m_name, $msg_len, $bus_max_dlc, $bus ) = @_;
+	if ( $msg_len == 0 ) {
+		return;
+	}
+	if ( !exists $VALID_DLC_SIZES{$msg_len} ) {
+		die "Message '$m_name' has invalid DLC $msg_len (not a valid CAN/CAN FD frame size)\n";
+	}
+	if ( defined $bus_max_dlc && $msg_len > $bus_max_dlc ) {
+		die "Message '$m_name' has DLC $msg_len which exceeds bus '$bus' max_dlc $bus_max_dlc\n";
 	}
 	return;
 }
@@ -314,9 +356,10 @@ sub get_dbc_message {
 	my $m_name = $r_ref->{msg};
 
 	my $comments_ref = $ctx->{comments};
-	my $fd_ref       = $ctx->{fd_frames};
+	my $frames_ref   = $ctx->{frames};
 	my $seen_ids_ref = $ctx->{seen_ids};
 	my $nodes_ref    = $ctx->{nodes};
+	my $bus_max_dlc  = $ctx->{bus_max_dlc};
 
 	my $is_custom = exists $d_ref->{custom}{$m_name};
 	my $m_def     = $is_custom ? $d_ref->{custom}{$m_name} : $d_ref->{messages}{$m_name};
@@ -338,7 +381,8 @@ sub get_dbc_message {
 	my $shortened_m  = _shorten_against_sender( $s_norm, $m_norm );
 	my $dbc_msg_name = _fit_dbc_name( $s_norm . $UNDERSCORE . $shortened_m . '_to_' . $t_norm );
 
-	my $msg_len = $m_def->{len} // $BITS_PER_BYTE;
+	my $msg_len = ( $m_def->{len} // $BITS_PER_BYTE ) + 0;
+	_validate_msg_len( $m_name, $msg_len, $bus_max_dlc, $r_ref->{bus} );
 
 	my @sigs;
 	if ($is_custom) {
@@ -369,8 +413,8 @@ sub get_dbc_message {
 		$nodes_ref->{$t_norm} = 1;
 	}
 
-	if ( $fd_ref && $msg_len > $CLASSIC_DLC ) {
-		push @{$fd_ref}, { can_id => $can_id, len => $msg_len };
+	if ( $frames_ref && ( $can_id & $EXTENDED_ID_MASK ) ) {
+		push @{$frames_ref}, { can_id => $can_id };
 	}
 
 	my $output = sprintf "BO_ %u %s: %d %s\n", $can_id, $dbc_msg_name, $msg_len, $s_norm;
@@ -580,12 +624,14 @@ sub parse_input {
 		messages => {},
 		custom   => {},
 		grid     => {},
+		buses    => {},
 	);
 
 	my %state = (
 		sec            => $EMPTY_STR,
 		cur_msg        => $EMPTY_STR,
 		cur_sig        => $EMPTY_STR,
+		cur_bus        => $EMPTY_STR,
 		sender         => $EMPTY_STR,
 		bus            => $EMPTY_STR,
 		target         => $EMPTY_STR,
@@ -642,6 +688,10 @@ sub parse_input {
 sub _dispatch_line_parser {
 	my ( $data_ref, $state_ref, $ind, $line ) = @_;
 
+	if ( $state_ref->{sec} eq 'Bus ID' ) {
+		parse_bus_id( $data_ref, $state_ref, $ind, $line );
+		return;
+	}
 	if ( $state_ref->{sec} eq 'routing' ) {
 		parse_routing( $data_ref, $state_ref, $ind, $line );
 		return;
@@ -681,6 +731,30 @@ sub _finalize_comment {
 		}
 	}
 
+	return;
+}
+
+sub parse_bus_id {
+	my ( $data_ref, $state_ref, $ind, $line ) = @_;
+
+	if ( $ind == 2 && $line =~ /^ ([^:\s][^:]*) : \s* $/smx ) {
+		my $name = $1;
+		$name =~ s/\s+$//smx;
+		$state_ref->{cur_bus} = $name;
+		$data_ref->{buses}{$name} //= {};
+		return;
+	}
+
+	if ( $ind == 4 && $state_ref->{cur_bus} ne $EMPTY_STR ) {
+		if ( $line =~ /^ id \s* : \s* (\d+) /smx ) {
+			$data_ref->{buses}{ $state_ref->{cur_bus} }{id} = $1;
+			return;
+		}
+		if ( $line =~ /^ max_dlc \s* : \s* (\d+) /smx ) {
+			$data_ref->{buses}{ $state_ref->{cur_bus} }{max_dlc} = $1;
+			return;
+		}
+	}
 	return;
 }
 

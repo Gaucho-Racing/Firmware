@@ -1,8 +1,16 @@
 Bus ID:
-  Testing: 0
-  Primary: 1
-  Data: 2
-  Charger: 3
+  Testing:
+    id: 0
+    max_dlc: 8
+  Primary:
+    id: 1
+    max_dlc: 8
+  Data:
+    id: 2
+    max_dlc: 64
+  Charger:
+    id: 3
+    max_dlc: 8
 
 routing:
   messages:
@@ -164,39 +172,7 @@ routing:
         TCM:
           - msg: ECU Analog Data
           - msg: ECU Pinging RTT
-        DGPS:
-          - msg: Ping
-        Suspension FL:
-          - msg: Ping
-        Suspension FR:
-          - msg: Ping
-        Suspension RL:
-          - msg: Ping
-        Suspension RR:
-          - msg: Ping
-        InboardFloor FL:
-          - msg: Ping
-        InboardFloor FR:
-          - msg: Ping
-        InboardFloor RL:
-          - msg: Ping
-        InboardFloor RR:
-          - msg: Ping
-        TireTemp FL:
-          - msg: Ping
-        TireTemp FR:
-          - msg: Ping
-        TireTemp RL:
-          - msg: Ping
-        TireTemp RR:
-          - msg: Ping
-        BrakeTemp FL:
-          - msg: Ping
-        BrakeTemp FR:
-          - msg: Ping
-        BrakeTemp RL:
-          - msg: Ping
-        BrakeTemp RR:
+        ALL:
           - msg: Ping
     EM:
       Charger:

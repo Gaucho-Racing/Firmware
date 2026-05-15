@@ -157,9 +157,16 @@ CM_ SG_ 2149580803 Debug "Essentially a print statement up to 8 bytes long that 
 BA_DEF_  "BusType" STRING ;
 BA_DEF_  "DBName" STRING ;
 BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
-BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";
-BA_DEF_DEF_  "BusType" "CAN FD";
+BA_DEF_DEF_  "BusType" "CAN";
 BA_DEF_DEF_  "DBName" "";
 BA_DEF_DEF_  "VFrameFormat" "StandardCAN";
-BA_DEF_DEF_  "CANFD_BRS" "1";
+BA_ "VFrameFormat" BO_ 2550588916 1;
+BA_ "VFrameFormat" BO_ 2150631170 1;
+BA_ "VFrameFormat" BO_ 2150631426 1;
+BA_ "VFrameFormat" BO_ 2150631682 1;
+BA_ "VFrameFormat" BO_ 2566869221 1;
+BA_ "VFrameFormat" BO_ 2148532748 1;
+BA_ "VFrameFormat" BO_ 2566849012 1;
+BA_ "VFrameFormat" BO_ 2149583363 1;
+BA_ "VFrameFormat" BO_ 2149580803 1;
 
