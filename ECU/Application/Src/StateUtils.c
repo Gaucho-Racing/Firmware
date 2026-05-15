@@ -91,6 +91,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
+	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
 	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
 		return true; // don't consider brake pressed until in drive active
 	} else {
