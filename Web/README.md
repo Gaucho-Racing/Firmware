@@ -16,7 +16,7 @@ Edits are **not** saved to a backend. They exist in browser memory until the use
 | `editor.js` | In-memory mutation engine, raw text state (`window.GrcanEditor`) |
 | `viewer.js` | Main controller: rendering, navigation, edit/delete wiring |
 | `physicalTopology.js` | Parses `can_topology.json` to enforce physical bus-to-node constraints |
-| `physicalGroups.js` | Parses `can_groups.json` — functional groupings used by the Graph View renderer (`window.PhysicalGroups`) |
+| `physicalGroups.js` | Derives functional groupings dynamically from prefixes for the Graph View renderer (`window.PhysicalGroups`) |
 | `layoutPhysicalBus.js` | Pure SVG layout for the physical-bus Graph View (`window.LayoutPhysicalBus`) |
 | `graphView.js` | Physical-bus SVG graph visualization (`window.GrcanGraphView`) |
 | `diffViewer.js` | Side-by-side text diff modal shown before download |
