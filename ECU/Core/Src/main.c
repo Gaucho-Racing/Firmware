@@ -383,11 +383,6 @@ int main(void)
 	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
 
-	// Initialize DWT
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	DWT->CYCCNT = 0;
-	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-
 	// Initialize CAN
 	CAN_Configure();
 
