@@ -172,22 +172,20 @@ int main(void)
 	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
-		uint8_t temp = mag_read_temp(&mag_dev);
+		uint16_t temp = mag_read_temp(&mag_dev);
+		uint16_t hysteresis = mag_read_HANG(&mag_dev);
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
 		uint8_t bad = check_status(&mag_dev);
 
 		int8_t temp_test = temp - 60;
 		float angle_test = angle * 360.f / 4096.0f;
+		float hysteresis_test = hysteresis * 360.f / 4096.0f;
 
 		LOGOMATIC("Temperature: %d C\n", temp_test);
 		LOGOMATIC("Angle: %f deg\n", angle_test);
 		LOGOMATIC("Turns: %d\n", turns);
-
-		if (bad != 0) {
-			LOGOMATIC("Something is cooked");
-			//mag_clear_errors(&mag_dev);
-		}
+		LOGOMATIC("Hysteresis Angle: %f\n", hysteresis_test)
 
 		// uint8_t buffer[8] = {0};
 		// buffer[0] = (angle >> 8) & 0xFF;
@@ -207,11 +205,17 @@ int main(void)
 		test_data.mag_angle = angle;
 		test_data.mag_temp = temp;
 		test_data.mag_turns = turns;
-		test_data.mag_status = !bad;
+		test_data.mag_status = bad;
+		test_data.mag_hysteresis = hysteresis;
 
 		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
 		GRCAN_MSG_ID test_msg_id = GRCAN_TCM_RESOURCE_UTILIZATION;
 		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
+
+		if (bad != 0) {
+			LOGOMATIC("Something is cooked");
+			mag_write_error(&mag_dev);
+		}
 
 		HAL_Delay(10);
 	}
