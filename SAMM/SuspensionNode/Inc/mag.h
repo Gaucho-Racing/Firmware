@@ -22,17 +22,17 @@ uint16_t mag_read(mag *mag_dev, uint8_t reg);
 
 void mag_write(mag *mag_dev, uint8_t reg, uint16_t data);
 
-uint16_t mag_read_encoder_angle(mag *mag_dev);
-
 bool mag_read_device_status(mag *mag_dev);
 
-uint8_t mag_read_temp(mag *mag_dev);
+uint16_t mag_read_temp(mag *mag_dev);
 
-bool check_status(mag *mag_dev);
+uint16_t mag_read_HANG(mag *mag_dev);
+
+uint16_t mag_read_encoder_angle(mag *mag_dev);
 
 int16_t mag_read_turns(mag *mag_dev);
 
-float mag_read_HANG(mag *mag_dev);
+uint8_t check_status(mag *mag_dev);
 
 void mag_write_error(mag *mag_dev);
 

@@ -175,7 +175,7 @@ int main(void)
 		uint8_t temp = mag_read_temp(&mag_dev);
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
 		int16_t turns = mag_read_turns(&mag_dev);
-		bool bad = check_status(&mag_dev);
+		uint8_t bad = check_status(&mag_dev);
 
 		int8_t temp_test = temp - 60;
 		float angle_test = angle * 360.f / 4096.0f;
@@ -184,7 +184,7 @@ int main(void)
 		LOGOMATIC("Angle: %f deg\n", angle_test);
 		LOGOMATIC("Turns: %d\n", turns);
 
-		if (bad) {
+		if (bad != 0) {
 			LOGOMATIC("Something is cooked");
 			//mag_clear_errors(&mag_dev);
 		}
@@ -199,7 +199,7 @@ int main(void)
 		// buffer[4] = turns & 0xFF;
 
 		// // status
-		// buffer[5] = bad ? 0x01 : 0x00;
+		// buffer[5] = bad;
 		// buffer[6] = 0x00;
 		// buffer[7] = 0x00;
 

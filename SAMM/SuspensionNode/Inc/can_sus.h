@@ -39,7 +39,7 @@ typedef struct {
 	uint16_t mag_angle;
 	int16_t mag_turns;
 	uint8_t mag_temp;
-	bool mag_status;
+	uint8_t mag_status;
 } IMU_Mag_Data;
 
 void TireTemp_Callback(uint32_t id, void *data, uint32_t size);
