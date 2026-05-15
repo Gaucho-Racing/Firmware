@@ -81,7 +81,7 @@ int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 		bus_config.fdcan_instance = FDCAN1;
 		bus_config.rx_callback = TCM_Callback; // callback
 
-		Sus_Node sus_node = localNode;
+		Sus_Node sus_node = (Sus_Node)localNode;
 		TireTemp_Node tire_temp_node;
 		switch(sus_node){
 			case Sus_FL:
@@ -101,7 +101,7 @@ int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 				tire_temp_node = TireTemp_FL;
 				break;
 		}
-		sensorNode = tire_temp_node;
+		sensorNode = (GRCAN_NODE_ID)tire_temp_node;
 	}
 
 	bool result = GRCAN_InitBus(&bus_config);
@@ -129,7 +129,7 @@ bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *data)
 		case CAN_SUS_MSG_FAULT: break;
 		default:
 			LOGOMATIC("Invalid Suspension Node message ID, defaulting to DATA\n");
-			msg_id = CAN_SUS_MSG_DATA;
+			msg_id = (GRCAN_MSG_ID)CAN_SUS_MSG_DATA;
 			break;
 	}
 
@@ -141,26 +141,3 @@ bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *data)
 
 	return result;
 }
-
-/* ================================================================================================== */
-
-/*
-todo: error checker stuff
-
-	switch (init_msgID) {
-		case CAN_MAG_MSG_DATA:
-			msgID = init_msgID;
-			break;
-		case CAN_MAG_MSG_STATUS:
-			msgID = init_msgID;
-			break;
-		case CAN_MAG_MSG_FAULT:
-			msgID = init_msgID;
-			break;
-		default:
-			LOGOMATIC("Invalid MAG message ID, defaulting to DATA\n");
-			msgID = CAN_MAG_MSG_DATA;
-			break;
-	}
-
-*/

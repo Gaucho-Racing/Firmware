@@ -111,7 +111,8 @@ int main(void)
 	MX_SPI1_Init();
 	MX_SPI3_Init();
 	/* USER CODE BEGIN 2 */
-	can_mag_init(GRCAN_SAMM_Mag_1, CAN_MAG_MSG_DATA);
+	SusNode_CAN_Init(GRCAN_BUS_DATA);
+	SusNode_CAN_Init(GRCAN_BUS_DATA_SUBNET);
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
@@ -185,24 +186,32 @@ int main(void)
 
 		if (bad) {
 			LOGOMATIC("Something is cooked");
-			mag_clear_errors(&mag_dev);
+			//mag_clear_errors(&mag_dev);
 		}
 
-		uint8_t buffer[8] = {0};
-		buffer[0] = (angle >> 8) & 0xFF;
-		buffer[1] = angle & 0xFF;
+		// uint8_t buffer[8] = {0};
+		// buffer[0] = (angle >> 8) & 0xFF;
+		// buffer[1] = angle & 0xFF;
 
-		buffer[2] = temp;
+		// buffer[2] = temp;
 
-		buffer[3] = (turns >> 8) & 0xFF;
-		buffer[4] = turns & 0xFF;
+		// buffer[3] = (turns >> 8) & 0xFF;
+		// buffer[4] = turns & 0xFF;
 
-		// status
-		buffer[5] = bad ? 0x01 : 0x00;
-		buffer[6] = 0x00;
-		buffer[7] = 0x00;
+		// // status
+		// buffer[5] = bad ? 0x01 : 0x00;
+		// buffer[6] = 0x00;
+		// buffer[7] = 0x00;
 
-		can_mag_send((unsigned int *)buffer);
+		IMU_Mag_Data test_data;
+		test_data.mag_angle = angle;
+		test_data.mag_temp = temp;
+		test_data.mag_turns = turns;
+		test_data.mag_status = !bad;
+
+		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
+		GRCAN_MSG_ID test_msg_id = GRCAN_TCM_RESOURCE_UTILIZATION;
+		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
 
 		HAL_Delay(10);
 	}
