@@ -9,7 +9,7 @@
 #endif
 
 #include "can_cfg.h"
-#include "ecu_can_platform_deps.h"
+#include "can_platform_deps.h"
 // #include "StateData.h"
 
 // #include "circularBuffer.h"
@@ -89,7 +89,6 @@ typedef enum {
 CANHandle *can_init(const CANConfig *config); // user must supply an rx callback function
 CAN_STATUS can_start(CANHandle *handle);
 CAN_STATUS can_stop(CANHandle *handle);
-CAN_STATUS can_send(CANHandle *handle, FDCANTxMessage *buffer);
 CAN_STATUS can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
 CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 CAN_STATUS can_enqueue(CANHandle *handle, FDCANTxMessage *message); // adds to software buffer, returns error if full
@@ -133,6 +132,8 @@ int get_cfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *o
 
 // converts CAN FD TxHeader DataLength Field
 static const uint8_t CANFD_DLCtoBytes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 32, 48, 64};
+
+// NEW THINGS
 
 void CAN_Timer_Start(void);
 void can_tx_dequeue_helper(CANHandle *handle);

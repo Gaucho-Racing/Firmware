@@ -3,7 +3,7 @@
 
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
-#include "ecu_can.h"
+#include "can.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_

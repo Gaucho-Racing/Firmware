@@ -3,6 +3,7 @@ run-name: Auto Format - ${{ github.ref_name }}
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -10,6 +11,7 @@ concurrency:
 
 jobs:
   clang:
+    if: ${{ !github.event.pull_request.draft }}
     name: Clang
     runs-on: ubuntu-latest
     permissions:
@@ -34,16 +36,17 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321  # v10.0.0
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Clang-Format: Standardized formatting automatically'
-          fetch: 'false'
+          message: "Automatic Clang-Format: Standardized formatting automatically"
+          fetch: "false"
 
   cmake:
+    if: ${{ !github.event.pull_request.draft }}
     name: CMake
     runs-on: ubuntu-slim
     permissions:
@@ -59,23 +62,24 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: '3.x'
+          python-version: "3.x"
           pip-install: gersemi
 
       - name: Format CMake Files
         run: gersemi --in-place ${{ github.workspace }}
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321  # v10.0.0
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic CMake Format: Standardized formatting automatically'
-          fetch: 'false'
+          message: "Automatic CMake Format: Standardized formatting automatically"
+          fetch: "false"
 
   json:
+    if: ${{ !github.event.pull_request.draft }}
     name: Json
     runs-on: ubuntu-slim
     permissions:
@@ -94,16 +98,17 @@ jobs:
           git ls-files '*.json' | xargs -r -I{} sh -c 'jq --tab . {} > {}.tmp && mv {}.tmp {}'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321  # v10.0.0
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Json Format: Standardized formatting automatically'
-          fetch: 'false'
+          message: "Automatic Json Format: Standardized formatting automatically"
+          fetch: "false"
 
   perl:
+    if: ${{ !github.event.pull_request.draft }}
     name: Perl
     runs-on: ubuntu-slim
     permissions:
@@ -117,9 +122,9 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@9f8c263975569ff3b4e510cb1f8813115749e146  # v1.41.0
+        uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1
         with:
-          install-modules: 'Perl::Tidy'
+          install-modules: "Perl::Tidy"
 
       - name: Format Perl Files
         run: |
@@ -127,16 +132,17 @@ jobs:
           git ls-files '*.pl' '*.pm' | xargs perltidy -b -bext='/'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321  # v10.0.0
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Perl Tidy: Standardized formatting automatically'
-          fetch: 'false'
+          message: "Automatic Perl Tidy: Standardized formatting automatically"
+          fetch: "false"
 
   asm:
+    if: ${{ !github.event.pull_request.draft }}
     name: Assembly
     runs-on: ubuntu-slim
     permissions:
@@ -152,7 +158,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
         with:
-          go-version: 'stable'
+          go-version: "stable"
           cache: false
 
       - name: Install asmfmt
@@ -166,16 +172,17 @@ jobs:
           git ls-files '*.s' '*.asm' | xargs -r asmfmt -w -e
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321  # v10.0.0
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Assembly Format: Standardized formatting automatically'
-          fetch: 'false'
+          message: "Automatic Assembly Format: Standardized formatting automatically"
+          fetch: "false"
 
   web:
+    if: ${{ !github.event.pull_request.draft }}
     name: Web
     runs-on: ubuntu-slim
     permissions:
@@ -206,21 +213,21 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321  # v10.0.0
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Web Format: Standardized formatting automatically'
-          fetch: 'false'
+          message: "Automatic Web Format: Standardized formatting automatically"
+          fetch: "false"
 
   all:
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Auto Formatters
-    needs: [ clang, cmake, json, perl, asm, web ]
+    needs: [clang, cmake, json, perl, asm, web]
     runs-on: ubuntu-slim
-    permissions: { }
-    if: always()
+    permissions: {}
     steps:
       - name: Fail Auto Format
         if: >

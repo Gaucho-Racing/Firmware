@@ -5,7 +5,7 @@
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
-#include "ecu_can.h"
+#include "can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 
