@@ -397,7 +397,13 @@ int main(void)
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
-	HAL_Delay(5000); // Notes per Andrey and Ryan
+	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
+		LL_mDelay(MAIN_LOOP_PERIOD_US / 1000);
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
+		write_adc_values_to_state_data();
+	}
+
+	LOGOMATIC("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
 
 	/* USER CODE END 2 */
 
@@ -429,7 +435,7 @@ int main(void)
 			lightControl(&stateLump);
 		}
 	}
-	/* USER CODE END 3 */
+/* USER CODE END 3 */
 }
 
 /**
