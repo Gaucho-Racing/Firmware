@@ -1,110 +1,95 @@
-// Purpose: Functional grouping metadata for the Graph View physical-bus
-// renderer. Loads and parses Web/can_groups.json — human-editable mapping
-// of device names to functional groups (POWER/HV, THERMAL CONTROL, …).
-// Each group declares a side: "top", "bottom", or "bus".
+// Purpose: Functional grouping for the Graph View physical-bus renderer.
+// Derives groups automatically from node name prefixes — no external JSON needed.
+// Nodes sharing the same prefix (e.g. "Fan Controller 1", "Fan Controller 2")
+// are placed in a named group. Nodes with no shared prefix are NOT lumped into
+// "Other" — instead each becomes its own single-node group, ordered by their
+// position in the document and distributed alternately top/bottom (up-down-up…).
+// All groups (prefix and singleton) are interleaved top/bottom in the order they
+// first appear, so the visual layout stays close to declaration order.
 // Exposed as: window.PhysicalGroups.
 
 (function () {
 	"use strict";
 
-	// Nodes always placed on the bus spine, regardless of can_groups.json.
+	// Nodes always placed on the bus spine.
 	const _BUS_SPINE = ["Debugger", "ALL"];
 
-	// Array of { name, side, nodes: Set<string> }, preserving declaration order.
-	let _groups = [];
-	let _loaded = false;
-
-	// ==================== Parser ====================
-	// Pure function: JSON text → Array<{name, side, nodes: Set<string>}>
-
-	function _parse(text) {
-		const data = JSON.parse(text);
-		const result = [];
-		const groups = Array.isArray(data.groups) ? data.groups : [];
-		for (const group of groups) {
-			if (!group || typeof group.name !== "string") continue;
-			if (
-				group.side !== "top" &&
-				group.side !== "bottom" &&
-				group.side !== "bus"
-			)
-				continue;
-			result.push({
-				name: group.name,
-				side: group.side,
-				nodes: new Set(Array.isArray(group.nodes) ? group.nodes : []),
-			});
-		}
-		return result;
+	// Extract the shared prefix from a node name by stripping a trailing number
+	// ("Fan Controller 1" → "Fan Controller", "SAMM_Mag_1" → "SAMM_Mag") or a
+	// short uppercase positional abbreviation ("TireTemp_FL" → "TireTemp").
+	// Returns the full name unchanged when nothing can be stripped.
+	function _extractPrefix(name) {
+		// Trailing space/underscore + digits
+		let m = name.match(/^(.+?)[\s_]+\d+$/);
+		if (m) return m[1];
+		// Trailing underscore/space + 1–3 uppercase letters (positional suffix)
+		m = name.match(/^(.+?)[_\s]+[A-Z]{1,3}$/);
+		if (m) return m[1];
+		return name;
 	}
 
-	// ==================== Public API ====================
+	// Build an ordered list of display groups from an array of node names.
+	// Groups appear in the order their first member was seen in `names`
+	// (i.e. document/ID order is preserved). Nodes with a unique prefix each
+	// become their own single-node group — no "Other" bucket is created.
+	function _buildGroups(names) {
+		// First pass: assign every name to a prefix bucket.
+		const byPrefix = new Map(); // prefix → [name, ...]
+		for (const name of names) {
+			const prefix = _extractPrefix(name);
+			if (!byPrefix.has(prefix)) byPrefix.set(prefix, []);
+			byPrefix.get(prefix).push(name);
+		}
+
+		// Second pass: emit groups in first-seen order, keeping the original
+		// name sequence within each prefix bucket.
+		const seenPrefixes = new Set();
+		const groups = [];
+		for (const name of names) {
+			const prefix = _extractPrefix(name);
+			if (seenPrefixes.has(prefix)) continue;
+			seenPrefixes.add(prefix);
+			const members = byPrefix.get(prefix);
+			// Use the prefix as the group label when there are siblings;
+			// use the bare node name when it stands alone.
+			const label = members.length > 1 ? prefix : name;
+			groups.push({ name: label, nodes: members });
+		}
+		return groups;
+	}
 
 	window.PhysicalGroups = {
-		// Fetch and parse can_groups.json. Resolves even on failure;
-		// isLoaded() tells you whether it succeeded.
-		load: async function () {
-			try {
-				const resp = await fetch("can_groups.json");
-				if (!resp.ok) return;
-				const text = await resp.text();
-				_groups = _parse(text);
-				_loaded = true;
-			} catch (_) {
-				// Silently no-op: fetch unavailable or malformed JSON
-				// (e.g. file:// local mode, or hand-edit syntax error).
-			}
-		},
+		// No-op: groups are derived dynamically, no file to fetch.
+		load: async function () {},
 
 		isLoaded: function () {
-			return _loaded;
+			return true;
 		},
 
-		// Intersect the groups with the nodes actually present on a bus.
-		// Returns { top: [{name, nodes[]}], bottom: [{name, nodes[]}], bus: [ids] }.
-		// Debugger / ALL are forced onto the bus spine. Unassigned nodes go
-		// into an implicit "Other" group at the bottom.
+		// Partition present nodes into { top, bottom, bus } for the layout engine.
+		// Bus-spine nodes (Debugger, ALL) go on the spine. Remaining groups are
+		// distributed alternately top/bottom in document order: first group → top,
+		// second → bottom, third → top, etc.
 		getGroupsForBus: function (_busPort, presentNodes) {
-			const present = new Set(presentNodes);
-			const assigned = new Set();
-			const top = [];
-			const bottom = [];
 			const busNodes = [];
-
-			if (_loaded) {
-				for (const group of _groups) {
-					const members = [];
-					for (const nodeName of group.nodes) {
-						if (present.has(nodeName) && !assigned.has(nodeName)) {
-							members.push(nodeName);
-							assigned.add(nodeName);
-						}
-					}
-					if (members.length === 0) continue;
-					if (group.side === "top") {
-						top.push({ name: group.name, nodes: members });
-					} else if (group.side === "bottom") {
-						bottom.push({ name: group.name, nodes: members });
-					} else if (group.side === "bus") {
-						for (const m of members) busNodes.push(m);
-					}
-				}
-			}
+			const assigned = new Set();
 
 			for (const spineId of _BUS_SPINE) {
-				if (present.has(spineId) && !assigned.has(spineId)) {
+				if (presentNodes.includes(spineId)) {
 					busNodes.push(spineId);
 					assigned.add(spineId);
 				}
 			}
 
-			const others = [];
-			for (const nodeName of presentNodes) {
-				if (!assigned.has(nodeName)) others.push(nodeName);
-			}
-			if (others.length > 0) {
-				bottom.push({ name: "Other", nodes: others });
-			}
+			const remaining = presentNodes.filter((n) => !assigned.has(n));
+			const groups = _buildGroups(remaining);
+
+			const top = [];
+			const bottom = [];
+			groups.forEach((g, i) => {
+				if (i % 2 === 0) top.push(g);
+				else bottom.push(g);
+			});
 
 			return { top, bottom, bus: busNodes };
 		},

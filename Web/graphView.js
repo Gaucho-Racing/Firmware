@@ -12,10 +12,6 @@ window.GrcanGraphView = (() => {
 		"#f97316",
 	];
 
-	// Per-bus speed annotations rendered next to the bus header. Keyed by the
-	// bus names declared in the "Bus ID:" section of GRCAN.CANdo. Falls back
-	// to "" for any bus not listed here.
-	const BUS_SPEED = { Primary: "1 Mbps", Data: "1 Mbps", Charger: "500 kbps" };
 	const SVG_NS = "http://www.w3.org/2000/svg";
 	const ZOOM_MIN = 0.4;
 	const ZOOM_MAX = 3.0;
@@ -393,89 +389,41 @@ window.GrcanGraphView = (() => {
 
 		const bus = layout.busGeometry;
 
-		// Group boxes + titles.
-		for (const g of layout.groups) {
-			baseLayerG.appendChild(
-				_el("rect", {
-					class: "gv-group-box",
-					x: g.x,
-					y: g.y,
-					width: g.w,
-					height: g.h,
-					rx: 10,
-					ry: 10,
-				}),
-			);
-			baseLayerG.appendChild(
-				_text(g.name, {
-					class: "gv-group-title",
-					x: g.x + 14,
-					y: g.y + 14,
-				}),
-			);
-		}
-
-		// Bus rails + terminators + labels.
+		// Single bus rail + terminators + label.
+		const busY =
+			bus.yCenter != null ? bus.yCenter : (bus.yHigh + bus.yLow) / 2;
 		baseLayerG.appendChild(
 			_el("line", {
 				class: "gv-bus-rail",
 				x1: bus.x1,
-				y1: bus.yHigh,
+				y1: busY,
 				x2: bus.x2,
-				y2: bus.yHigh,
-			}),
-		);
-		baseLayerG.appendChild(
-			_el("line", {
-				class: "gv-bus-rail",
-				x1: bus.x1,
-				y1: bus.yLow,
-				x2: bus.x2,
-				y2: bus.yLow,
+				y2: busY,
 			}),
 		);
 		baseLayerG.appendChild(
 			_el("line", {
 				class: "gv-bus-terminator",
 				x1: bus.x1,
-				y1: bus.yHigh - 8,
+				y1: busY - 10,
 				x2: bus.x1,
-				y2: bus.yLow + 8,
+				y2: busY + 10,
 			}),
 		);
 		baseLayerG.appendChild(
 			_el("line", {
 				class: "gv-bus-terminator",
 				x1: bus.x2,
-				y1: bus.yHigh - 8,
+				y1: busY - 10,
 				x2: bus.x2,
-				y2: bus.yLow + 8,
+				y2: busY + 10,
 			}),
 		);
 		baseLayerG.appendChild(
-			_text("CAN", {
-				class: "gv-bus-rail-label",
-				x: bus.x1 - 14,
-				y: bus.yHigh + 4,
-				"text-anchor": "end",
-			}),
-		);
-		baseLayerG.appendChild(
-			_text("Low", {
-				class: "gv-bus-rail-label",
-				x: bus.x1 - 14,
-				y: bus.yLow + 4,
-				"text-anchor": "end",
-			}),
-		);
-		const speedSuffix = BUS_SPEED[currentBus]
-			? ` · ${BUS_SPEED[currentBus]}`
-			: "";
-		baseLayerG.appendChild(
-			_text(`${_busLabel(currentBus).toUpperCase()} CAN BUS${speedSuffix}`, {
+			_text(`${_busLabel(currentBus).toUpperCase()} CAN BUS`, {
 				class: "gv-bus-speed",
 				x: bus.x2 - 8,
-				y: bus.yHigh - 14,
+				y: busY - 14,
 				"text-anchor": "end",
 			}),
 		);
@@ -495,15 +443,7 @@ window.GrcanGraphView = (() => {
 				_el("circle", {
 					class: "gv-stub-drop",
 					cx: s.x,
-					cy: bus.yHigh,
-					r: 3,
-				}),
-			);
-			baseLayerG.appendChild(
-				_el("circle", {
-					class: "gv-stub-drop",
-					cx: s.x,
-					cy: bus.yLow,
+					cy: busY,
 					r: 3,
 				}),
 			);

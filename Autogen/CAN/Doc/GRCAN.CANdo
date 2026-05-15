@@ -9083,7 +9083,7 @@ Custom CAN ID:
           Bit 3: true = Earth connection failure
           Bit 4: true = Iso Alarm (iso value below threshold error)
           Bit 5: true = Iso Warning (iso value below threshold warning)
-          Bit 6: true = Iso Outdated (value „Time elapsed since lst Meas“ > = „Meas timeout“)
+          Bit 6: true = Iso Outdated (value "Time elapsed since lst Meas“ > = "Meas timeout“)
           Bit 7: true = Unbalance Alarm (unbalance value below threshold)
           Bit 8: true = Undervoltage Alarm
           Bit 9: true = Unsafe to Start
