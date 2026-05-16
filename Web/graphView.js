@@ -404,8 +404,7 @@ window.GrcanGraphView = (() => {
 		const bus = layout.busGeometry;
 
 		// Single bus rail + terminators + label.
-		const busY =
-			bus.yCenter != null ? bus.yCenter : (bus.yHigh + bus.yLow) / 2;
+		const busY = bus.yCenter != null ? bus.yCenter : (bus.yHigh + bus.yLow) / 2;
 		baseLayerG.appendChild(
 			_el("line", {
 				class: "gv-bus-rail",
