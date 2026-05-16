@@ -28,6 +28,28 @@
 		return result;
 	}
 
+	// Surface entries in can_topology.json that don't exist as devices in the
+	// .CANdo GR ID block. Drift here = unreachable receivers in the form.
+	// Idempotent: warns once per call, no internal state mutation.
+	function _validateAgainstDeviceRegistry() {
+		const doc = window.GrcanDocument;
+		if (!doc || typeof doc.getDeviceNames !== "function") return;
+		const known = new Set(doc.getDeviceNames());
+		const unknown = [];
+		for (const [bus, nodes] of _topology) {
+			for (const n of nodes) {
+				if (_EXEMPT.has(n)) continue;
+				if (!known.has(n)) unknown.push(`${bus}: ${n}`);
+			}
+		}
+		if (unknown.length) {
+			console.warn(
+				"[PhysicalTopology] can_topology.json lists nodes not in the .CANdo GR ID registry:",
+				unknown,
+			);
+		}
+	}
+
 	// ==================== Public API ====================
 
 	window.PhysicalTopology = {
@@ -68,5 +90,10 @@
 			const busSet = _topology.get(busPort);
 			return busSet ? [...busSet] : [];
 		},
+
+		// Caller should invoke this once after the .CANdo has been parsed so
+		// GrcanDocument.getDeviceNames() returns a populated set. Safe to call
+		// even before load() resolves — it short-circuits.
+		validate: _validateAgainstDeviceRegistry,
 	};
 })();

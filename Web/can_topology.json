@@ -6,10 +6,10 @@
 		"DGPS",
 		"GR Inv",
 		"DTI Inv",
-		"Fan Controller 1",
-		"Fan Controller 2",
-		"Fan Controller 3",
-		"Energy Meter",
+		"Fan Ctrl 1",
+		"Fan Ctrl 2",
+		"Fan Ctrl 3",
+		"EM",
 		"Dash Panel"
 	],
 	"Data": [
@@ -17,21 +17,16 @@
 		"TCM",
 		"ACU",
 		"DGPS",
-		"SAMM_Mag_1",
-		"SAMM_Mag_2",
-		"SAMM_ToF_1",
-		"SAMM_ToF_2",
-		"TireTemp_FL",
-		"TireTemp_FR",
-		"TireTemp_RL",
-		"TireTemp_RR"
+		"TireTemp FL",
+		"TireTemp FR",
+		"TireTemp RL",
+		"TireTemp RR"
 	],
 	"Charger": [
 		"CCU",
 		"ACU",
 		"Charger",
 		"IMD",
-		"Energy Meter",
-		"Charging SDC"
+		"EM"
 	]
 }

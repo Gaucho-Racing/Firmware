@@ -1594,6 +1594,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			await renderHierarchy(initialRef);
 			currentRef = initialRef;
 			updateLocationState(currentRef);
+			if (window.PhysicalTopology && window.PhysicalTopology.validate) {
+				window.PhysicalTopology.validate();
+			}
 		} else {
 			setPlaceholder(firstList, "Select a ref");
 			updateLocationState("");
