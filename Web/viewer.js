@@ -1484,41 +1484,47 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	// ==================== Event handlers ====================
 
+	// Returns true if it's safe to proceed with an action that would discard
+	// in-memory edits, false if the caller should abort (so the user can save first).
+	function promptDownloadBeforeDiscard() {
+		if (!editor || !editor.hasUnsavedEdits()) return true;
+		const wantsDownload = window.confirm(
+			"You have unsaved changes. Download your changes before switching reference?",
+		);
+		if (wantsDownload) {
+			const doc = window.GrcanDocument;
+			const origRaw = editor.getOriginalRawText
+				? editor.getOriginalRawText()
+				: "";
+			const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
+			const newDownload = doc
+				? doc.getSerializedText()
+				: editor.getRawText
+					? editor.getRawText()
+					: "";
+			if (window.DiffViewer && origDownload !== newDownload) {
+				window.DiffViewer.show({
+					oldText: origDownload,
+					newText: newDownload,
+					onConfirm: function () {
+						editor.downloadCando();
+					},
+				});
+			} else {
+				editor.downloadCando();
+			}
+		}
+		return false;
+	}
+
 	async function onRefInputChange() {
 		const ref = refSelect.value;
 		if (
-			editor &&
 			currentRef &&
 			ref &&
 			ref !== currentRef &&
-			editor.hasUnsavedEdits()
+			!promptDownloadBeforeDiscard()
 		) {
-			const wantsDownload = window.confirm(
-				"You have unsaved changes. Download your changes before switching reference?",
-			);
-			if (wantsDownload) {
-				const doc = window.GrcanDocument;
-				const origRaw = editor.getOriginalRawText
-					? editor.getOriginalRawText()
-					: "";
-				const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
-				const newDownload = doc
-					? doc.getSerializedText()
-					: editor.getRawText
-						? editor.getRawText()
-						: "";
-				if (window.DiffViewer && origDownload !== newDownload) {
-					window.DiffViewer.show({
-						oldText: origDownload,
-						newText: newDownload,
-						onConfirm: function () {
-							editor.downloadCando();
-						},
-					});
-				} else {
-					editor.downloadCando();
-				}
-			}
 			refSelect.value = currentRef;
 			return;
 		}
@@ -1606,6 +1612,10 @@ window.addEventListener("DOMContentLoaded", function () {
 				localFileInput.style.display = "block";
 				localFileInput.click();
 			} else {
+				if (!promptDownloadBeforeDiscard()) {
+					localToggle.checked = true;
+					return;
+				}
 				localFileInput.style.display = "none";
 				localFileInput.value = "";
 				window.GrcanApi.setLocalCandoText(null);
