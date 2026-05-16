@@ -57,7 +57,9 @@
 		// Resolves even on failure — isLoaded() will return false in that case.
 		load: async function () {
 			try {
-				const resp = await fetch("can_topology.json");
+				// no-cache: re-validate with server every load so a topology JSON
+				// edit reaches users on next page open, not on next hard-refresh.
+				const resp = await fetch("can_topology.json", { cache: "no-cache" });
 				if (!resp.ok) return;
 				const text = await resp.text();
 				_topology = _parse(text);
