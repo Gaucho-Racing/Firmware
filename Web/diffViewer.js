@@ -125,10 +125,10 @@
 		const overlay = document.createElement("div");
 		overlay.className = "dv-overlay";
 		overlay.innerHTML =
-			'<div class="dv-modal"><div class="dv-head"><h2>Review Changes</h2><button class="dv-close">&times;</button></div><div class="dv-body">' +
+			'<div class="dv-modal"><div class="dv-head"><h2>Review Changes</h2><button class="dv-close" type="button" aria-label="Close">&times;</button></div><div class="dv-body">' +
 			renderPane(rows, "left") +
 			renderPane(rows, "right") +
-			'</div><div class="dv-foot"><button class="dv-btn" data-act="cancel">Cancel</button><button class="dv-btn dv-btn-primary" data-act="confirm">Download</button></div></div>';
+			'</div><div class="dv-foot"><button class="dv-btn" type="button" data-act="cancel">Cancel</button><button class="dv-btn dv-btn-primary" type="button" data-act="confirm">Download</button></div></div>';
 		document.body.appendChild(overlay);
 
 		const panes = overlay.querySelectorAll(".dv-pane");

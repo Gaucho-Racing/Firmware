@@ -122,7 +122,7 @@
 						break;
 					}
 				}
-				if (arithmetic && j - i > bestEnd - bestStart) {
+				if (stride > 0 && arithmetic && j - i > bestEnd - bestStart) {
 					bestStart = i;
 					bestEnd = j;
 				}

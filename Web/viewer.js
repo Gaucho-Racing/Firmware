@@ -238,7 +238,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		notice.innerHTML =
 			'<span class="download-notice-icon">\u2139\ufe0f</span>' +
 			'<span class="download-notice-msg"></span>' +
-			'<button class="download-notice-close" aria-label="Dismiss">&times;</button>';
+			'<button class="download-notice-close" type="button" aria-label="Dismiss">&times;</button>';
 		notice.querySelector(".download-notice-msg").textContent = message;
 		notice
 			.querySelector(".download-notice-close")
@@ -781,9 +781,12 @@ window.addEventListener("DOMContentLoaded", function () {
 					customCanIdDef.signals.length > 0);
 
 			if (hasPreview) {
-				const expandBtn = document.createElement("span");
+				const expandBtn = document.createElement("button");
+				expandBtn.type = "button";
 				expandBtn.className = "msg-expand-btn";
 				expandBtn.textContent = "›";
+				expandBtn.setAttribute("aria-label", "Toggle message details");
+				expandBtn.setAttribute("aria-expanded", "true");
 				nameRow.appendChild(expandBtn);
 			}
 
@@ -924,19 +927,37 @@ window.addEventListener("DOMContentLoaded", function () {
 
 				// Wire expand/collapse toggle
 				const expandBtn = nameRow.querySelector(".msg-expand-btn");
+				function setCollapsed(collapsed) {
+					details.classList.toggle("collapsed", collapsed);
+					if (expandBtn) {
+						expandBtn.classList.toggle("collapsed", collapsed);
+						expandBtn.setAttribute("aria-expanded", String(!collapsed));
+					}
+					if (nameRow.hasAttribute("role")) {
+						nameRow.setAttribute("aria-expanded", String(!collapsed));
+					}
+				}
+				function toggleDetails() {
+					setCollapsed(!details.classList.contains("collapsed"));
+				}
 				if (expandBtn) {
 					expandBtn.addEventListener("click", (e) => {
 						e.stopPropagation();
-						const collapsed = details.classList.toggle("collapsed");
-						expandBtn.classList.toggle("collapsed", collapsed);
+						toggleDetails();
 					});
 				}
 				if (isMobileLayout()) {
-					details.classList.add("collapsed");
 					nameRow.classList.add("msg-name-row-tappable");
-					nameRow.addEventListener("click", () => {
-						details.classList.toggle("collapsed");
+					nameRow.setAttribute("role", "button");
+					nameRow.setAttribute("tabindex", "0");
+					nameRow.addEventListener("click", toggleDetails);
+					nameRow.addEventListener("keydown", (e) => {
+						if (e.target !== nameRow) return;
+						if (e.key !== "Enter" && e.key !== " ") return;
+						e.preventDefault();
+						toggleDetails();
 					});
+					setCollapsed(true);
 				}
 			}
 			msgList.appendChild(item);

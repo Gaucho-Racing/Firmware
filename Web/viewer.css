@@ -116,6 +116,10 @@
 	color: #67728b;
 }
 
+body.is-mobile .item-chevron {
+	display: none;
+}
+
 .item-accent {
 	flex: 0 0 auto;
 	font-size: 0.68rem;
@@ -361,6 +365,12 @@
 	cursor: pointer;
 }
 
+.is-mobile .msg-name-row-tappable:focus-visible {
+	outline: 2px solid #8b5cf6;
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
 .is-mobile .msg-name-row-tappable:active {
 	background: rgba(124, 58, 237, 0.08);
 	border-radius: 4px;
@@ -369,6 +379,8 @@
 /* ── Message expand/collapse toggle ── */
 .msg-expand-btn {
 	flex-shrink: 0;
+	background: transparent;
+	border: 0;
 	color: #8b5cf6;
 	cursor: pointer;
 	font-size: 0.82rem;

@@ -51,7 +51,6 @@ Edits are **not** saved to a backend. They exist in browser memory until the use
 | File | Purpose |
 |---|---|
 | `can_topology.json` | Physical CAN bus topology: which nodes are wired to which bus. Node names must match `GR ID` entries in `GRCAN.CANdo`. |
-| `can_groups.json` | Functional groupings (POWER/HV, THERMAL CONTROL, …) used by the Graph View renderer. Each group declares a side: `top`, `bottom`, or `bus`. Node names must match `GR ID` entries. |
 
 ### Vendored (retained for rollback, no longer loaded)
 
@@ -85,11 +84,12 @@ Scripts are loaded in `index.html` in strict dependency order. `viewer.js` expec
 
 ## Tests
 
-Tests live in `tests/` and run under Node.js:
+There is no committed Web test harness. For a quick smoke check, run syntax checks
+against the browser scripts:
 
-- `candoDocument.test.js` — semantic document model tests
-- `logic.test.js` — parser/API utility tests
-- `manual/` — manual test scenarios
+```sh
+for f in Web/*.js; do node --check "$f" || exit 1; done
+```
 
 ## Editing `can_topology.json`
 
@@ -108,21 +108,3 @@ This file defines which devices are physically connected to each CAN bus. The fo
 - JSON has no comment syntax. Rationale for entries should go in this README instead.
 - Hardware note: both `GR Inv` and `DTI Inv` share `Primary`. Whichever isn't physically connected has its messages go nowhere — no firmware switch needed.
 
-## Editing `can_groups.json`
-
-This file defines functional groupings for the Graph View physical-bus renderer. Each group has a name, a `side` (`top`, `bottom`, or `bus`), and an array of node names:
-
-```json
-{
-  "groups": [
-    { "name": "POWER/HV", "side": "top", "nodes": ["DTI Inv", "GR Inv"] },
-    { "name": "CORE CONTROL (Bottom)", "side": "bottom", "nodes": ["TCM", "ACU"] }
-  ]
-}
-```
-
-- `side` semantics: `top` sits above the bus, `bottom` sits below, `bus` renders on the bus spine itself.
-- Nodes not listed in any group fall into an implicit `Other` group on the bottom side.
-- `Debugger` and `ALL` are always auto-placed on the bus spine.
-- Node names must exactly match `GR ID` entries in `GRCAN.CANdo` (same convention as `can_topology.json`).
-- Group order in the array is the render order.

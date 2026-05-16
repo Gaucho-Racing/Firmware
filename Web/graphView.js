@@ -24,6 +24,20 @@ window.GrcanGraphView = (() => {
 	// builder and _loadBus to render labels / titles.
 	let _busList = [];
 
+	function _normalizeBusList(busList) {
+		return (busList || [])
+			.map((bus) => {
+				if (typeof bus === "string") return { name: bus, label: bus };
+				if (!bus || bus.name == null) return null;
+				const name = String(bus.name);
+				return {
+					name,
+					label: bus.label == null ? name : String(bus.label),
+				};
+			})
+			.filter((bus) => bus && bus.name);
+	}
+
 	function _busLabel(busName) {
 		const entry = _busList.find((b) => b.name === busName);
 		return (entry && entry.label) || busName;
@@ -796,12 +810,12 @@ window.GrcanGraphView = (() => {
 		// builder reads from _busList. Fall back to the buses declared in
 		// GRCAN.CANdo when no explicit list is provided.
 		if (Array.isArray(busList) && busList.length) {
-			_busList = busList;
+			_busList = _normalizeBusList(busList);
 		} else if (
 			window.GrcanDocument &&
 			typeof window.GrcanDocument.getBusNames === "function"
 		) {
-			_busList = window.GrcanDocument.getBusNames().map((name) => ({ name }));
+			_busList = _normalizeBusList(window.GrcanDocument.getBusNames());
 		} else {
 			_busList = [];
 		}
