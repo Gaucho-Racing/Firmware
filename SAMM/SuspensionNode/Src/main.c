@@ -178,14 +178,14 @@ int main(void)
 		int16_t turns = mag_read_turns(&mag_dev);
 		uint8_t bad = check_status(&mag_dev);
 
-		int8_t temp_test = temp - 60;
+		int16_t temp_test = temp - 60;
 		float angle_test = angle * 360.f / 4096.0f;
 		float hysteresis_test = hysteresis * 360.f / 4096.0f;
 
 		LOGOMATIC("Temperature: %d C\n", temp_test);
 		LOGOMATIC("Angle: %f deg\n", angle_test);
 		LOGOMATIC("Turns: %d\n", turns);
-		LOGOMATIC("Hysteresis Angle: %f\n", hysteresis_test)
+		LOGOMATIC("Hysteresis Angle: %f\n", hysteresis_test);
 
 		// uint8_t buffer[8] = {0};
 		// buffer[0] = (angle >> 8) & 0xFF;

@@ -8,12 +8,6 @@
 #include <stdint.h>
 
 typedef enum {
-	CAN_SUS_MSG_DATA = 0x2C,
-	CAN_SUS_MSG_STATUS = 0x2D,
-	CAN_SUS_MSG_FAULT = 0x2F
-} Sus_MSG_ID; // change with updates <- fixme
-
-typedef enum {
 	TireTemp_FL = GRCAN_TireTemp_FL,
 	TireTemp_FR = GRCAN_TireTemp_FR,
 	TireTemp_RL = GRCAN_TireTemp_RL,

@@ -5,6 +5,7 @@
 #include "main.h"
 #include "spi.h"
 #include "stm32h5xx.h"
+#include "Logomatic.h"
 
 typedef struct {
 	SPI_HandleTypeDef *spi_port;
