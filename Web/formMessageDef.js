@@ -60,11 +60,11 @@
 						mapEquation: "",
 					};
 				}
-		} else if (indent >= 6 && cur) {
-			// Any indent-6 line starts a new field property; only deeper
-			// lines are valid comment continuation lines.
-			if (indent === 6) _inComment = false;
-			if (c.startsWith("bit_start:")) {
+			} else if (indent >= 6 && cur) {
+				// Any indent-6 line starts a new field property; only deeper
+				// lines are valid comment continuation lines.
+				if (indent === 6) _inComment = false;
+				if (c.startsWith("bit_start:")) {
 					const v = c.slice(10).trim();
 					const rm = v.match(/^(\d+)\s*-\s*(\d+)$/);
 					if (rm) {
