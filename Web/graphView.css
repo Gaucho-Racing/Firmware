@@ -204,22 +204,6 @@
 	font-weight: 700;
 }
 
-.gv-group-box {
-	fill: none;
-	stroke: #2c3350;
-	stroke-dasharray: 4 4;
-	stroke-width: 1;
-}
-
-.gv-group-title {
-	font-size: 10px;
-	fill: #67728b;
-	font-family: monospace;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	font-weight: 700;
-}
-
 .gv-stub {
 	stroke: #3d4872;
 	stroke-width: 1.5;
@@ -283,8 +267,6 @@
 .gv-svg.gv-focused .gv-bus-rail,
 .gv-svg.gv-focused .gv-stub,
 .gv-svg.gv-focused .gv-stub-drop,
-.gv-svg.gv-focused .gv-group-box,
-.gv-svg.gv-focused .gv-group-title,
 .gv-svg.gv-focused .gv-bus-rail-label,
 .gv-svg.gv-focused .gv-bus-speed,
 .gv-svg.gv-focused .gv-bus-terminator {

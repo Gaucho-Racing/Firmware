@@ -230,7 +230,6 @@
 			nodePositions,
 			busGeometry,
 			stubs,
-			groups: [...topGroupLayouts, ...bottomGroupLayouts],
 			busNodes,
 			logicalWidth,
 			logicalHeight,
