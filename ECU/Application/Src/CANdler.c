@@ -80,6 +80,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->ir_minus = GETBIT(acu_status_2->precharge_latch_flags, 4);
 			state_data->ir_plus = GETBIT(acu_status_2->precharge_latch_flags, 5);
 			state_data->acu_software_latch = GETBIT(acu_status_2->precharge_latch_flags, 6);
+			state_data->glv_voltage_20V = acu_status_2->_20v_voltage * 0.1f;
 			break;
 
 		case GRCAN_INVERTER_STATUS_1:

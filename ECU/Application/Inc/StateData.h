@@ -54,6 +54,7 @@ typedef volatile struct ECU_StateData {
 
 	float min_amk_heat_cap_throttle_percent;
 	float ts_voltage;
+	float glv_voltage_20V;
 	float max_cell_temp_c; /** Temperature of hottest cell, celsius */
 
 	float vehicle_speed_mph; /** Vehicle speed, MPH */
@@ -62,9 +63,7 @@ typedef volatile struct ECU_StateData {
 	float rr_wheel_rpm;	 /** RRv wheel, RPM */
 	float rl_wheel_rpm;	 /** RL wheel, RPM */
 
-	// 0.5V when things go to shit (X_OK low) (BAD)
-	// 3V when things almost poggers (X_OK high but SDC not reset) (BAD)
-	// 2.4V when things are actually poggers (X_OK high and SDC is not triggered)
+
 	float ams_sense;
 	float imd_sense;
 	float bspd_sense;
