@@ -60,9 +60,11 @@
 						mapEquation: "",
 					};
 				}
-			} else if (indent >= 6 && cur) {
-				if (c.startsWith("bit_start:")) {
-					_inComment = false;
+		} else if (indent >= 6 && cur) {
+			// Any indent-6 line starts a new field property; only deeper
+			// lines are valid comment continuation lines.
+			if (indent === 6) _inComment = false;
+			if (c.startsWith("bit_start:")) {
 					const v = c.slice(10).trim();
 					const rm = v.match(/^(\d+)\s*-\s*(\d+)$/);
 					if (rm) {
@@ -192,12 +194,17 @@
 			topRow.appendChild(fType.row);
 			card.appendChild(topRow);
 
-			const botRow = document.createElement("div");
-			botRow.className = "editor-field-grid editor-field-grid-5";
+			const commentRow = document.createElement("div");
+			commentRow.className = "editor-field-comment-row";
 			const fComment = fu.makeFormRow(
 				"Comment",
 				fu.makeInput("textarea", field?.comment || "", "Description"),
 			);
+			commentRow.appendChild(fComment.row);
+			card.appendChild(commentRow);
+
+			const botRow = document.createElement("div");
+			botRow.className = "editor-field-grid editor-field-grid-4";
 			const fUnits = fu.makeFormRow(
 				"Units",
 				fu.makeInput("text", field?.units || "", "e.g. Volts"),
@@ -214,7 +221,6 @@
 				"Map Equation",
 				fu.makeInput("text", field?.mapEquation || "", "e.g. 0.01x"),
 			);
-			botRow.appendChild(fComment.row);
 			botRow.appendChild(fUnits.row);
 			botRow.appendChild(fMin.row);
 			botRow.appendChild(fMax.row);

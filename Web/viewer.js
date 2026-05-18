@@ -885,14 +885,32 @@ window.addEventListener("DOMContentLoaded", function () {
 							row.appendChild(bit);
 						}
 
-						if (mapping.comment) {
-							const c = document.createElement("div");
-							c.className = "msg-byte-comment";
-							c.textContent = mapping.comment;
-							row.appendChild(c);
-						}
+					if (mapping.mapEquation) {
+						const eq = document.createElement("span");
+						eq.className = "msg-map-equation";
+						eq.textContent = mapping.mapEquation;
+						eq.title = "Map equation";
+						row.appendChild(eq);
+					}
 
-						bytesWrap.appendChild(row);
+					if (mapping.scaledMin != null || mapping.scaledMax != null) {
+						const range = document.createElement("span");
+						range.className = "msg-scaled-range";
+						const minPart = mapping.scaledMin != null ? mapping.scaledMin : "?";
+						const maxPart = mapping.scaledMax != null ? mapping.scaledMax : "?";
+						range.textContent = `${minPart} – ${maxPart}`;
+						range.title = "Scaled range";
+						row.appendChild(range);
+					}
+
+					if (mapping.comment) {
+						const c = document.createElement("div");
+						c.className = "msg-byte-comment";
+						c.textContent = mapping.comment;
+						row.appendChild(c);
+					}
+
+					bytesWrap.appendChild(row);
 					});
 				} else if (customCanIdDef) {
 					customCanIdDef.signals.forEach((signal) => {

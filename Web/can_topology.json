@@ -20,7 +20,19 @@
 		"TireTemp FL",
 		"TireTemp FR",
 		"TireTemp RL",
-		"TireTemp RR"
+		"TireTemp RR",
+		"BrakeTemp FL",
+		"BrakeTemp FR",
+		"BrakeTemp RL",
+		"BrakeTemp RR",
+		"Suspension FL",
+		"Suspension FR",
+		"Suspension RL",
+		"Suspension RR",
+		"InboardFloor FL",
+		"InboardFloor FR",
+		"InboardFloor RL",
+		"InboardFloor RR"
 	],
 	"Charger": [
 		"CCU",

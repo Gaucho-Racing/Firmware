@@ -219,6 +219,32 @@ body.is-mobile .item-chevron {
 	color: #9aa8c8;
 }
 
+.msg-map-equation {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	font-size: 0.63rem;
+	font-family: "Fira Mono", "Consolas", monospace;
+	color: #6ee7b7;
+	background: rgba(16, 185, 129, 0.12);
+	border: 1px solid rgba(52, 211, 153, 0.3);
+	vertical-align: middle;
+}
+
+.msg-scaled-range {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	font-size: 0.63rem;
+	font-family: "Fira Mono", "Consolas", monospace;
+	color: #93c5fd;
+	background: rgba(59, 130, 246, 0.12);
+	border: 1px solid rgba(147, 197, 253, 0.3);
+	vertical-align: middle;
+}
+
 .msg-byte-comment {
 	margin-top: 1px;
 	color: #7f8ca6;

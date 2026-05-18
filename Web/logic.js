@@ -97,6 +97,9 @@ function parseMessageDefinitions(candoText) {
 					bitEnd: null,
 					dataType: null,
 					comment: null,
+					scaledMin: null,
+					scaledMax: null,
+					mapEquation: null,
 				};
 				continue;
 			}
@@ -120,20 +123,35 @@ function parseMessageDefinitions(candoText) {
 					: lineComment;
 				continue;
 			}
-			if (content.startsWith("data type:")) {
-				const rawType = content.slice("data type:".length).trim();
-				if (rawType === "s") {
-					currentField.dataType = "string";
-				} else if (rawType === "i16") {
-					currentField.dataType = "s16";
-				} else if (rawType === "i32") {
-					currentField.dataType = "s32";
-				} else {
-					currentField.dataType = rawType || null;
-				}
+		if (content.startsWith("data type:")) {
+			const rawType = content.slice("data type:".length).trim();
+			if (rawType === "s") {
+				currentField.dataType = "string";
+			} else if (rawType === "i16") {
+				currentField.dataType = "s16";
+			} else if (rawType === "i32") {
+				currentField.dataType = "s32";
+			} else {
+				currentField.dataType = rawType || null;
 			}
 		}
+		if (content.startsWith("scaled min:")) {
+			const v = content.slice("scaled min:".length).trim().replace(/,/g, "");
+			currentField.scaledMin = v || null;
+		}
+		if (content.startsWith("scaled max:")) {
+			const v = content.slice("scaled max:".length).trim().replace(/,/g, "");
+			currentField.scaledMax = v || null;
+		}
+		if (content.startsWith("map equation:")) {
+			const v = content
+				.slice("map equation:".length)
+				.trim()
+				.replace(/^["']|["']$/g, "");
+			currentField.mapEquation = v || null;
+		}
 	}
+}
 
 	pushField();
 
@@ -155,9 +173,12 @@ function parseMessageDefinitions(candoText) {
 						f.bitStart === f.bitEnd
 							? `${f.bitStart}`
 							: `${f.bitStart}-${f.bitEnd}`,
-					dataType: f.dataType,
-					comment: f.comment,
-				};
+				dataType: f.dataType,
+				comment: f.comment,
+				scaledMin: f.scaledMin ?? null,
+				scaledMax: f.scaledMax ?? null,
+				mapEquation: f.mapEquation ?? null,
+			};
 			});
 	}
 

@@ -622,6 +622,16 @@ textarea.editor-input {
 	grid-template-columns: repeat(5, 1fr);
 }
 
+.editor-field-grid-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.editor-field-comment-row textarea {
+	width: 100%;
+	min-height: 64px;
+	resize: vertical;
+}
+
 .editor-field-controls {
 	display: flex;
 	justify-content: flex-end;
@@ -672,6 +682,10 @@ textarea.editor-input {
 	}
 
 	.editor-field-grid-5 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.editor-field-grid-4 {
 		grid-template-columns: repeat(2, 1fr);
 	}
 

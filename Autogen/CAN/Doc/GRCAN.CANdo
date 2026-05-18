@@ -252,6 +252,7 @@ routing:
         ACU:
           - msg: ACU Precharge
           - msg: Debug 2.0
+    Charging SDC:
     DGPS:
       Data:
         ECU:
