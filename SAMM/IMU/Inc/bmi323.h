@@ -108,10 +108,10 @@
 #define BMI323_FEATURE_IO1_STATUS 0x0001
 
 // defines for acc and gyro conf
-#define SUSPEND 0b000
-#define LOW_POWER 0b011
-#define HIGH_PERF 0b111
-#define NORMAL 0b100
+#define SUSPEND 0x0
+#define LOW_POWER 0x3
+#define HIGH_PERF 0x7
+#define NORMAL 0x4
 
 // these are the values that are used for the polling frequency
 #define ODR_0_78 0x1

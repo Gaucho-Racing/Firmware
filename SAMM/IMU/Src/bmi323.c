@@ -99,14 +99,14 @@ uint8_t bmi323_calib(bmi323 *bmi323_dev)
 	uint16_t acc_conf = bmi323_read(bmi323_dev, BMI323_ACC_CONF);
 	uint16_t gyro_conf = bmi323_read(bmi323_dev, BMI323_GYR_CONF);
 	uint32_t timeout_ref = 0;
-	if ((acc_conf & 0x7000) != 0b000) {
+	if ((acc_conf & 0x7000) != 0x0000) {
 		bmi323_write(bmi323_dev, BMI323_ACC_CONF, BMI323_ACC_CONF_RESET_VAL);
 	}
-	if ((gyro_conf & 0x7000) != 0b000) {
+	if ((gyro_conf & 0x7000) != 0x0000) {
 		bmi323_write(bmi323_dev, BMI323_GYR_CONF, BMI323_GYR_CONF_RESET_VAL);
 	}
 	// now we need to check if the feature engine has been enabled prior
-	if ((bmi323_read(bmi323_dev, BMI323_FEATURE_CTRL) & 0x0001) == 0b0) {
+	if ((bmi323_read(bmi323_dev, BMI323_FEATURE_CTRL) & 0x0001) == 0x0000) {
 		// then we write 0x012C to Feature Io 2
 		bmi323_write(bmi323_dev, BMI323_FEATURE_IO2, BMI323_FEATURE_IO2_EN);
 		// then we write 0x0001 to Feature Io status
@@ -115,7 +115,7 @@ uint8_t bmi323_calib(bmi323 *bmi323_dev)
 		bmi323_write(bmi323_dev, BMI323_FEATURE_CTRL, BMI323_FEATURE_CTRL_ENGINE_EN);
 		// now we poll the feature engine
 		timeout_ref = MillisecondsSinceBoot();
-		while ((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x000F) != 0b001) {
+		while ((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x000F) != 0x0001) {
 			if (MillisecondsSinceBoot() - timeout_ref > BMI323_TIMEOUT) {
 				////D_println("Feature engine enable timeout");
 				return 0;
@@ -128,7 +128,7 @@ uint8_t bmi323_calib(bmi323 *bmi323_dev)
 	// now we need to check if a calibration is already in progress
 	// polls the bmi323 FEATURE I01 state untill the state is 0b00, this means calibration can start.
 	timeout_ref = MillisecondsSinceBoot();
-	while (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & (0x1800)) >> 11) != 0b00) {
+	while (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & (0x1800)) >> 11) != 0x0000) {
 		if (MillisecondsSinceBoot() - timeout_ref > BMI323_TIMEOUT) {
 			////D_println("Calibration state timeout");
 			return 0;
@@ -145,12 +145,12 @@ calibrate:
 		// D_println("Starting calibration");
 		//  if it is, then we can start the calibration
 		//  first we check if the alernalte configuration acc mode is set to 0:
-		if (((bmi323_read(bmi323_dev, BMI323_ALT_ACC_CONF) & 0x7000) >> 11) != 0b000) {
+		if (((bmi323_read(bmi323_dev, BMI323_ALT_ACC_CONF) & 0x7000) >> 11) != 0x0000) {
 			// if it is, we set it to 0
 			bmi323_write(bmi323_dev, BMI323_ALT_ACC_CONF, 0x0206);
 		}
 		// next we check if the alternate configuration gyro mode is set to 0:
-		if (((bmi323_read(bmi323_dev, BMI323_ALT_GYR_CONF) & 0x7000) >> 11) != 0b000) {
+		if (((bmi323_read(bmi323_dev, BMI323_ALT_GYR_CONF) & 0x7000) >> 11) != 0x0000) {
 			// if it is, we set it to 0
 			bmi323_write(bmi323_dev, BMI323_ALT_GYR_CONF, 0x0206);
 		}
@@ -170,7 +170,7 @@ calibrate:
 		// D_println("Polling calibration state");
 		//  check if the feature engine is enabled
 		timeout_ref = MillisecondsSinceBoot();
-		while (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x0010) >> 4) != 0b1) {
+		while (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x0010) >> 4) != 0x0001) {
 			if (MillisecondsSinceBoot() - timeout_ref > BMI323_TIMEOUT) {
 				// D_println("Feature engine enable timeout");
 				return 0;
@@ -178,7 +178,7 @@ calibrate:
 			continue;
 		}
 		// D_println("Calibration complete");
-		if (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x0020) >> 5) == 0b1) {
+		if (((bmi323_read(bmi323_dev, BMI323_FEATURE_I01) & 0x0020) >> 5) == 0x0001) {
 			// //D_println("Calibration successful");
 			// //D_println("reseting values to original configuration");
 			// cycle the acc
