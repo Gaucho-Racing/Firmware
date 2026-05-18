@@ -32,6 +32,9 @@ uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDe
 	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_RESET);
 	status = HAL_SPI_TransmitReceive(bmi323_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
 	HAL_GPIO_WritePin(bmi323_dev->port, bmi323_dev->pin, GPIO_PIN_SET);
+
+	(void)status; //TODO: double check that the status does not actually need to be used
+
 	if (rx_word[3] == 0x43) {
 		return HAL_OK;
 	}
