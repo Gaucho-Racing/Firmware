@@ -37,6 +37,7 @@ target_sources(
 		Src/platform.c
 		Src/VL53L4ED_api.c
 		Src/VL53L4ED_calibration.c
+		Src/can_inboardfloor.c
 	# TODO
 )
 
@@ -47,6 +48,7 @@ target_link_libraries(
 		PERIPHERAL_CAN_LIB
 		BitManipulations_Lib
 		SAMM_IMU_Lib
+		GRCAN_FANCYLAYER
 )
 
 target_include_directories(

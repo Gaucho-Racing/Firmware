@@ -90,6 +90,7 @@ STEPS:
 9. Done
 */
 
+// TODO: MOVE THIS FUNCTION ELSEWHERE
 uint32_t MillisecondsSinceBoot()
 {
 	return HAL_GetTick() * HAL_GetTickFreq();
@@ -211,7 +212,7 @@ calibrate:
 	// turn on the acc
 	bmi323_write(bmi323_dev, BMI323_ACC_CONF, BMI323_ACC_CONF_RESET_VAL | 0x7000);
 	// jumps to the calibration sequence
-	goto calibrate; // TODO Goto are evil but we did not write this so leave it be until it breaks things because it is evil
+	goto calibrate; // TODO: Goto are evil but we did not write this so leave it be until it breaks things because it is evil
 	return 1;
 }
 
@@ -222,7 +223,7 @@ uint8_t bmi323_calib_abort(bmi323 *bmi323_dev)
 }
 
 /*
-TODO:
+TODO: this todo is from last year lol
 Check the status of the acc, gyro and temp before returning the values
     if they are not ready return 0
     if they are ready return 1
