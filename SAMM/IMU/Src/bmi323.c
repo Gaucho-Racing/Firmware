@@ -91,6 +91,7 @@ uint32_t MillisecondsSinceBoot()
 {
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
+
 uint8_t bmi323_calib(bmi323 *bmi323_dev)
 {
 	// first we have to fucking start the feature engine

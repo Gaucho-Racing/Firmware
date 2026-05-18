@@ -25,6 +25,7 @@
 /* USER CODE END 0 */
 
 SPI_HandleTypeDef hspi1;
+SPI_HandleTypeDef hspi3;
 
 /**
  * @brief SPI1 Initialization Function
