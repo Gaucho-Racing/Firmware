@@ -42,8 +42,17 @@ uint32_t MillisecondsSinceBoot(void);
 #define RATE_LIMIT_100_HZ(x, y) (x - y > 10)
 #define RATE_LIMIT_10_HZ(x, y) (x - y > 100)
 
+typedef enum {
+    SDC_OK,
+    SDC_ONGOING_FAILURE,
+    SDC_LATCHED_FAILURE
+} SDC_Level;
+
 // Checks stateData for critical errors
 bool CriticalError(volatile const ECU_StateData *stateData);
+SDC_Level bmsLevel(volatile const ECU_StateData *stateData);
+SDC_Level imdLevel(volatile const ECU_StateData *stateData);
+SDC_Level bspdLevel(volatile const ECU_StateData *stateData);
 bool bmsFailure(volatile const ECU_StateData *stateData);
 bool imdFailure(volatile const ECU_StateData *stateData);
 bool bspdFailure(volatile const ECU_StateData *stateData);
