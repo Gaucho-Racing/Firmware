@@ -56,15 +56,13 @@ sub parse_bus_ids {
 		last if $in_section && $line =~ /^\S/ && $line !~ /^Bus/i;
 		next if !$in_section;
 
-		# 3. Match the Bus Entry: "  Name: ID"
-		# Matches: 2 spaces, captures Name (everything before colon), captures ID (the number)
-		if ( $line =~ /^\s{2} ([^:#\s][^:]+) : \s* (\d+) /x ) {
+		# 3. Match a bus name at indent 2 with no inline value: "  Name:"
+		if ( $line =~ /^\s{2} ([^:\#\s][^:]*) : \s* $/x ) {
 			my $name = $1;
-			my $val  = $2;
 			$name =~ s/^\s+|\s+$//g;
 
-			my $entry = { name => $name, id => $val, comment => q{} };
-			$entry->{comment} = _extract_comment_block( \@lines, $i, $entry->{comment} );
+			my $entry = { name => $name, id => q{}, comment => q{} };
+			_populate_bus_children( \@lines, $i, $entry );
 
 			push @found_ids, $entry;
 		}
@@ -72,32 +70,41 @@ sub parse_bus_ids {
 	return \@found_ids;
 }
 
-sub _extract_comment_block {
-	my ( $lines_ref, $index, $existing ) = @_;
-	my $comment = $existing // q{};
-	my $j       = $index + 1;
+sub _populate_bus_children {
+	my ( $lines_ref, $index, $entry ) = @_;
+	my $j = $index + 1;
 
 	while ( $j <= $#{$lines_ref} && ${$lines_ref}[$j] =~ /^\s{4,}/ ) {
 		my $line = ${$lines_ref}[$j];
-		if ( $line =~ /^\s{4} comment: \s* (.*) /ix ) {
+		chomp $line;
+
+		if ( $line =~ /^\s{4} id: \s* (\d+) /x ) {
+			$entry->{id} = $1;
+		}
+		elsif ( $line =~ /^\s{4} max_dlc: \s* (\d+) /x ) {
+			$entry->{max_dlc} = $1;
+		}
+		elsif ( $line =~ /^\s{4} comment: \s* (.*) /ix ) {
 			my $text = $1;
 			$text =~ s/^\s+|\s+$//g;
 			if ( $text ne q{} ) {
-				$comment = $text;
+				$entry->{comment} = $text;
 			}
 			else {
 				my $k = $j + 1;
 				while ( $k <= $#{$lines_ref} && ${$lines_ref}[$k] =~ /^\s{6,} (.+) /x ) {
 					my $sub_text = $1;
 					$sub_text =~ s/^\s+|\s+$//g;
-					$comment .= ( $comment ? q{ } : q{} ) . $sub_text;
+					$entry->{comment} .= ( $entry->{comment} ? q{ } : q{} ) . $sub_text;
 					$k++;
 				}
+				$j = $k;
+				next;
 			}
 		}
 		$j++;
 	}
-	return $comment;
+	return;
 }
 
 sub generate_bus_header_content {
@@ -120,9 +127,9 @@ sub generate_bus_header_content {
 		$const_name =~ s/[[:^alnum:]]/_/g;    # Clean name for C constant
 
 		if ( $item->{comment} ne q{} ) {
-			push @header_lines, sprintf "    /** %s */\n", $item->{comment};
+			push @header_lines, sprintf "\t/** %s */\n", $item->{comment};
 		}
-		push @header_lines, sprintf "    GRCAN_BUS_%s = %s,\n", uc $const_name, $item->{id};
+		push @header_lines, sprintf "\tGRCAN_BUS_%s = %s,\n", uc $const_name, $item->{id};
 	}
 
 	push @header_lines, "} GRCAN_BUS_ID;\n\n";

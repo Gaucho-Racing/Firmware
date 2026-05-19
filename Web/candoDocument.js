@@ -122,8 +122,11 @@
 	// Parses the "Bus ID:" header block into _busIds (name → numeric id).
 	// Mirrors parseBusIdsFromText in logic.js so candoDocument has its own
 	// authoritative copy without depending on window.GrcanApi.
+	// Handles both the old flat format ("  BusName: 0") and the new nested
+	// format ("  BusName:\n    id: 0\n    max_dlc: 8").
 	function _parseBusIdsSection(lines, start, end) {
 		let inSection = false;
+		let pendingBusName = null; // for nested format: "  BusName:" then "    id: N"
 		for (let i = start; i < end; i++) {
 			const line = lines[i];
 			if (!inSection) {
@@ -132,9 +135,28 @@
 			}
 			// Stop at next top-level (non-indented, non-blank) line.
 			if (/^\S/.test(line) && line.trim() !== "") break;
-			const match = line.match(/^\s+([^:]+):\s*(\d+)\s*(?:#.*)?$/);
-			if (match) {
-				_busIds.set(match[1].trim(), parseInt(match[2], 10));
+			// Old flat format: "  BusName: 0"
+			// \S after the two leading spaces ensures we don't match deeper-indented lines.
+			const flatMatch = line.match(/^  (\S[^:]*):\s*(\d+)\s*(?:#.*)?$/);
+			if (flatMatch) {
+				_busIds.set(flatMatch[1].trim(), parseInt(flatMatch[2], 10));
+				pendingBusName = null;
+				continue;
+			}
+			// New nested format: "  BusName:" (indent 2, no value)
+			// \S ensures we don't match deeper-indented child lines like "    id:".
+			const busNameMatch = line.match(/^  (\S[^:]*):\s*$/);
+			if (busNameMatch) {
+				pendingBusName = busNameMatch[1].trim();
+				continue;
+			}
+			// New nested format: "    id: N" (indent 4, child of pending bus name)
+			if (pendingBusName !== null) {
+				const idMatch = line.match(/^    id:\s*(\d+)\s*(?:#.*)?$/);
+				if (idMatch) {
+					_busIds.set(pendingBusName, parseInt(idMatch[1], 10));
+					pendingBusName = null;
+				}
 			}
 		}
 	}
@@ -631,7 +653,7 @@
 		}
 
 		// V8: PHYSICAL_BUS_VIOLATION
-		// Only runs when PhysicalTopology has successfully loaded can_topology.txt.
+		// Only runs when PhysicalTopology has successfully loaded can_topology.json.
 		const _topo = (typeof window !== "undefined" ? window : {})
 			.PhysicalTopology;
 		if (_topo && _topo.isLoaded()) {

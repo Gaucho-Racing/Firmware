@@ -378,9 +378,11 @@
 
 	function createEditBtn(onClick) {
 		const btn = document.createElement("button");
+		btn.type = "button";
 		btn.className = "editor-icon-btn editor-icon-edit";
 		btn.innerHTML = window.FormUtils.PENCIL_SVG;
 		btn.title = "Edit";
+		btn.setAttribute("aria-label", "Edit");
 		btn.addEventListener("click", (e) => {
 			e.stopPropagation();
 			onClick();
@@ -390,9 +392,11 @@
 
 	function createDeleteBtn(onClick) {
 		const btn = document.createElement("button");
+		btn.type = "button";
 		btn.className = "editor-icon-btn editor-icon-delete";
 		btn.innerHTML = window.FormUtils.TRASH_SVG;
 		btn.title = "Delete";
+		btn.setAttribute("aria-label", "Delete");
 		btn.addEventListener("click", (e) => {
 			e.stopPropagation();
 			onClick();
@@ -402,6 +406,7 @@
 
 	function createAddBtn(label, onClick) {
 		const btn = document.createElement("button");
+		btn.type = "button";
 		btn.className = "editor-add-btn";
 		btn.innerHTML = window.FormUtils.PLUS_SVG + " " + label;
 		btn.addEventListener("click", (e) => {
