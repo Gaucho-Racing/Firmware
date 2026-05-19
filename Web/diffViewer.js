@@ -78,32 +78,41 @@
 		return rows;
 	}
 
-	function renderRows(rows) {
-		return rows
+	function renderPane(rows, side) {
+		const isLeft = side === "left";
+		const lnKey = isLeft ? "li" : "ri";
+		const txtKey = isLeft ? "l" : "r";
+		const highlightTypes = isLeft ? ["del", "mod"] : ["add", "mod"];
+		const highlightClass = isLeft ? "dv-del" : "dv-add";
+		const lnHeader = isLeft ? "Old#" : "New#";
+		const fileHeader = isLeft ? "Original GRCAN.CANdo" : "Modified GRCAN.CANdo";
+
+		const body = rows
 			.map((r) => {
-				const lc = r.t === "del" || r.t === "mod" ? "dv-del" : "";
-				const rc = r.t === "add" || r.t === "mod" ? "dv-add" : "";
+				const cc = highlightTypes.indexOf(r.t) !== -1 ? highlightClass : "";
 				return (
 					'<tr><td class="dv-ln ' +
-					lc +
+					cc +
 					'">' +
-					r.li +
+					r[lnKey] +
 					'</td><td class="dv-code ' +
-					lc +
+					cc +
 					'">' +
-					esc(r.l) +
-					'</td><td class="dv-ln ' +
-					rc +
-					'">' +
-					r.ri +
-					'</td><td class="dv-code ' +
-					rc +
-					'">' +
-					esc(r.r) +
+					esc(r[txtKey]) +
 					"</td></tr>"
 				);
 			})
 			.join("");
+
+		return (
+			'<div class="dv-pane"><table class="dv-table"><thead><tr><th class="dv-ln">' +
+			lnHeader +
+			'</th><th class="dv-code-head">' +
+			fileHeader +
+			"</th></tr></thead><tbody>" +
+			body +
+			"</tbody></table></div>"
+		);
 	}
 
 	function show(opts) {
@@ -116,10 +125,28 @@
 		const overlay = document.createElement("div");
 		overlay.className = "dv-overlay";
 		overlay.innerHTML =
-			'<div class="dv-modal"><div class="dv-head"><h2>Review Changes</h2><button class="dv-close">&times;</button></div><div class="dv-body"><table class="dv-table"><thead><tr><th class="dv-ln">Old#</th><th>Original GRCAN.CANdo</th><th class="dv-ln">New#</th><th>Modified GRCAN.CANdo</th></tr></thead><tbody>' +
-			renderRows(rows) +
-			'</tbody></table></div><div class="dv-foot"><button class="dv-btn" data-act="cancel">Cancel</button><button class="dv-btn dv-btn-primary" data-act="confirm">Download</button></div></div>';
+			'<div class="dv-modal"><div class="dv-head"><h2>Review Changes</h2><button class="dv-close" type="button" aria-label="Close">&times;</button></div><div class="dv-body">' +
+			renderPane(rows, "left") +
+			renderPane(rows, "right") +
+			'</div><div class="dv-foot"><button class="dv-btn" type="button" data-act="cancel">Cancel</button><button class="dv-btn dv-btn-primary" type="button" data-act="confirm">Download</button></div></div>';
 		document.body.appendChild(overlay);
+
+		const panes = overlay.querySelectorAll(".dv-pane");
+		let syncing = false;
+		panes.forEach((pane) => {
+			pane.addEventListener("scroll", () => {
+				if (syncing) return;
+				syncing = true;
+				panes.forEach((other) => {
+					if (other !== pane && other.scrollTop !== pane.scrollTop) {
+						other.scrollTop = pane.scrollTop;
+					}
+				});
+				requestAnimationFrame(() => {
+					syncing = false;
+				});
+			});
+		});
 
 		function close() {
 			if (overlay && overlay.parentNode) overlay.remove();

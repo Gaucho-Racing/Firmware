@@ -54,6 +54,81 @@ window.addEventListener("DOMContentLoaded", function () {
 		};
 	}
 
+	// ==================== Mobile drill-down (≤768px) ====================
+	// Drives the CSS-translate viewer-track. Step 0 = primary list (nodes/buses),
+	// step 1 = secondary list, step 2 = messages. Three steps are coupled to the
+	// `.viewer-track` width: 300vw in viewer.css.
+	const MobileNav = (function () {
+		const viewer = document.getElementById("viewer");
+		const titleEl = document.getElementById("appbar-title");
+		const backBtn = document.getElementById("appbar-back");
+		let step = 0;
+
+		function titleForStep(n) {
+			if (n === 0) return "GRCAN Viewer";
+			if (HIERARCHY_MODE === "NODE_BUS") {
+				if (n === 1)
+					return currentDeviceName ? "Buses on " + currentDeviceName : "Buses";
+				if (n === 2) {
+					if (currentDeviceName && currentBusCanonical)
+						return currentDeviceName + " · " + currentBusCanonical;
+					return currentBusCanonical || "Messages";
+				}
+			} else {
+				if (n === 1)
+					return currentBusCanonical
+						? "Nodes on " + currentBusCanonical
+						: "Nodes";
+				if (n === 2) {
+					if (currentDeviceName && currentBusCanonical)
+						return currentBusCanonical + " · " + currentDeviceName;
+					return currentDeviceName || "Messages";
+				}
+			}
+			return "GRCAN Viewer";
+		}
+
+		function go(n) {
+			step = Math.max(0, Math.min(2, n));
+			if (viewer) viewer.dataset.step = String(step);
+			if (titleEl) titleEl.textContent = titleForStep(step);
+			if (backBtn) {
+				if (step > 0) backBtn.removeAttribute("hidden");
+				else backBtn.setAttribute("hidden", "");
+			}
+		}
+
+		function back() {
+			if (step > 0) go(step - 1);
+		}
+
+		function reset() {
+			go(0);
+		}
+
+		function refreshTitle() {
+			if (titleEl) titleEl.textContent = titleForStep(step);
+		}
+
+		return {
+			go,
+			back,
+			reset,
+			refreshTitle,
+			get step() {
+				return step;
+			},
+		};
+	})();
+
+	function isMobileLayout() {
+		return document.body.classList.contains("is-mobile");
+	}
+
+	function maybeStep(n) {
+		if (isMobileLayout()) MobileNav.go(n);
+	}
+
 	function isChanged(key) {
 		return !!editor && !!editor.isEdited && editor.isEdited(key);
 	}
@@ -163,7 +238,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		notice.innerHTML =
 			'<span class="download-notice-icon">\u2139\ufe0f</span>' +
 			'<span class="download-notice-msg"></span>' +
-			'<button class="download-notice-close" aria-label="Dismiss">&times;</button>';
+			'<button class="download-notice-close" type="button" aria-label="Dismiss">&times;</button>';
 		notice.querySelector(".download-notice-msg").textContent = message;
 		notice
 			.querySelector(".download-notice-close")
@@ -706,9 +781,12 @@ window.addEventListener("DOMContentLoaded", function () {
 					customCanIdDef.signals.length > 0);
 
 			if (hasPreview) {
-				const expandBtn = document.createElement("span");
+				const expandBtn = document.createElement("button");
+				expandBtn.type = "button";
 				expandBtn.className = "msg-expand-btn";
 				expandBtn.textContent = "›";
+				expandBtn.setAttribute("aria-label", "Toggle message details");
+				expandBtn.setAttribute("aria-expanded", "true");
 				nameRow.appendChild(expandBtn);
 			}
 
@@ -807,6 +885,26 @@ window.addEventListener("DOMContentLoaded", function () {
 							row.appendChild(bit);
 						}
 
+						if (mapping.mapEquation) {
+							const eq = document.createElement("span");
+							eq.className = "msg-map-equation";
+							eq.textContent = mapping.mapEquation;
+							eq.title = "Map equation";
+							row.appendChild(eq);
+						}
+
+						if (mapping.scaledMin != null || mapping.scaledMax != null) {
+							const range = document.createElement("span");
+							range.className = "msg-scaled-range";
+							const minPart =
+								mapping.scaledMin != null ? mapping.scaledMin : "?";
+							const maxPart =
+								mapping.scaledMax != null ? mapping.scaledMax : "?";
+							range.textContent = `${minPart} – ${maxPart}`;
+							range.title = "Scaled range";
+							row.appendChild(range);
+						}
+
 						if (mapping.comment) {
 							const c = document.createElement("div");
 							c.className = "msg-byte-comment";
@@ -849,12 +947,37 @@ window.addEventListener("DOMContentLoaded", function () {
 
 				// Wire expand/collapse toggle
 				const expandBtn = nameRow.querySelector(".msg-expand-btn");
+				function setCollapsed(collapsed) {
+					details.classList.toggle("collapsed", collapsed);
+					if (expandBtn) {
+						expandBtn.classList.toggle("collapsed", collapsed);
+						expandBtn.setAttribute("aria-expanded", String(!collapsed));
+					}
+					if (nameRow.hasAttribute("role")) {
+						nameRow.setAttribute("aria-expanded", String(!collapsed));
+					}
+				}
+				function toggleDetails() {
+					setCollapsed(!details.classList.contains("collapsed"));
+				}
 				if (expandBtn) {
 					expandBtn.addEventListener("click", (e) => {
 						e.stopPropagation();
-						const collapsed = details.classList.toggle("collapsed");
-						expandBtn.classList.toggle("collapsed", collapsed);
+						toggleDetails();
 					});
+				}
+				if (isMobileLayout()) {
+					nameRow.classList.add("msg-name-row-tappable");
+					nameRow.setAttribute("role", "button");
+					nameRow.setAttribute("tabindex", "0");
+					nameRow.addEventListener("click", toggleDetails);
+					nameRow.addEventListener("keydown", (e) => {
+						if (e.target !== nameRow) return;
+						if (e.key !== "Enter" && e.key !== " ") return;
+						e.preventDefault();
+						toggleDetails();
+					});
+					setCollapsed(true);
 				}
 			}
 			msgList.appendChild(item);
@@ -945,6 +1068,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderMessages(node.messages);
+				maybeStep(2);
 			});
 			secondList.appendChild(item);
 		});
@@ -1032,6 +1156,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					(node) => node.hasBus || (node.messages || []).length > 0,
 				);
 				renderBusNodeSecondary(nodesOnBus);
+				maybeStep(1);
 			});
 			firstList.appendChild(item);
 		});
@@ -1112,6 +1237,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderMessages(entry.messages);
+				maybeStep(2);
 			});
 			secondList.appendChild(item);
 		});
@@ -1264,6 +1390,7 @@ window.addEventListener("DOMContentLoaded", function () {
 					.forEach((el) => el.classList.remove("active"));
 				item.classList.add("active");
 				renderNodeBusSecondary(nodeEntry.buses, nodeEntry.name);
+				maybeStep(1);
 			});
 			firstList.appendChild(item);
 		});
@@ -1288,6 +1415,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	// ==================== Hierarchy entry points ====================
 
 	async function renderHierarchy(ref) {
+		MobileNav.reset();
 		const candoResult = await window.GrcanApi.fetchCando(ref);
 		const localText = candoResult.notFound ? null : candoResult.content;
 
@@ -1376,41 +1504,47 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	// ==================== Event handlers ====================
 
+	// Returns true if it's safe to proceed with an action that would discard
+	// in-memory edits, false if the caller should abort (so the user can save first).
+	function promptDownloadBeforeDiscard() {
+		if (!editor || !editor.hasUnsavedEdits()) return true;
+		const wantsDownload = window.confirm(
+			"You have unsaved changes. Download your changes before switching reference?",
+		);
+		if (wantsDownload) {
+			const doc = window.GrcanDocument;
+			const origRaw = editor.getOriginalRawText
+				? editor.getOriginalRawText()
+				: "";
+			const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
+			const newDownload = doc
+				? doc.getSerializedText()
+				: editor.getRawText
+					? editor.getRawText()
+					: "";
+			if (window.DiffViewer && origDownload !== newDownload) {
+				window.DiffViewer.show({
+					oldText: origDownload,
+					newText: newDownload,
+					onConfirm: function () {
+						editor.downloadCando();
+					},
+				});
+			} else {
+				editor.downloadCando();
+			}
+		}
+		return false;
+	}
+
 	async function onRefInputChange() {
 		const ref = refSelect.value;
 		if (
-			editor &&
 			currentRef &&
 			ref &&
 			ref !== currentRef &&
-			editor.hasUnsavedEdits()
+			!promptDownloadBeforeDiscard()
 		) {
-			const wantsDownload = window.confirm(
-				"You have unsaved changes. Download your changes before switching reference?",
-			);
-			if (wantsDownload) {
-				const doc = window.GrcanDocument;
-				const origRaw = editor.getOriginalRawText
-					? editor.getOriginalRawText()
-					: "";
-				const origDownload = doc ? doc.getSerializedTextFrom(origRaw) : origRaw;
-				const newDownload = doc
-					? doc.getSerializedText()
-					: editor.getRawText
-						? editor.getRawText()
-						: "";
-				if (window.DiffViewer && origDownload !== newDownload) {
-					window.DiffViewer.show({
-						oldText: origDownload,
-						newText: newDownload,
-						onConfirm: function () {
-							editor.downloadCando();
-						},
-					});
-				} else {
-					editor.downloadCando();
-				}
-			}
 			refSelect.value = currentRef;
 			return;
 		}
@@ -1442,8 +1576,10 @@ window.addEventListener("DOMContentLoaded", function () {
 		setHierarchyHeaders();
 		wireEditModeButtons();
 		setPlaceholder(firstList, "Loading...");
-		// Load physical topology in the background; non-blocking.
+		// Load physical topology + functional groups in the background;
+		// non-blocking. Both feed the Graph View renderer.
 		if (window.PhysicalTopology) window.PhysicalTopology.load();
+		if (window.PhysicalGroups) window.PhysicalGroups.load();
 
 		const [branches, tags] = await Promise.all([
 			window.GrcanApi.fetchBranches(),
@@ -1478,6 +1614,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			await renderHierarchy(initialRef);
 			currentRef = initialRef;
 			updateLocationState(currentRef);
+			if (window.PhysicalTopology && window.PhysicalTopology.validate) {
+				window.PhysicalTopology.validate();
+			}
 		} else {
 			setPlaceholder(firstList, "Select a ref");
 			updateLocationState("");
@@ -1496,6 +1635,10 @@ window.addEventListener("DOMContentLoaded", function () {
 				localFileInput.style.display = "block";
 				localFileInput.click();
 			} else {
+				if (!promptDownloadBeforeDiscard()) {
+					localToggle.checked = true;
+					return;
+				}
 				localFileInput.style.display = "none";
 				localFileInput.value = "";
 				window.GrcanApi.setLocalCandoText(null);
@@ -1533,6 +1676,82 @@ window.addEventListener("DOMContentLoaded", function () {
 			updateLocationState(currentRef);
 		});
 	}
+
+	// ==================== Mobile responsive setup ====================
+	(function setupMobileResponsive() {
+		const mq = window.matchMedia("(max-width: 768px)");
+		const sidebar = document.querySelector(".app-sidebar");
+		const sidebarMount = document.getElementById("sidebar-mount");
+		const sheet = document.getElementById("mobile-menu-sheet");
+		const backdrop = document.getElementById("mobile-menu-backdrop");
+		const backBtn = document.getElementById("appbar-back");
+		const menuBtn = document.getElementById("appbar-menu");
+
+		function moveChildren(from, to) {
+			if (!from || !to) return;
+			const kids = Array.from(from.children);
+			kids.forEach((k) => to.appendChild(k));
+		}
+
+		function openSheet() {
+			if (!sheet || !backdrop) return;
+			sheet.removeAttribute("hidden");
+			backdrop.removeAttribute("hidden");
+			requestAnimationFrame(() =>
+				requestAnimationFrame(() => {
+					sheet.classList.add("open");
+					backdrop.classList.add("open");
+				}),
+			);
+		}
+
+		function closeSheet() {
+			if (!sheet || !backdrop) return;
+			sheet.classList.remove("open");
+			backdrop.classList.remove("open");
+			window.setTimeout(() => {
+				if (!sheet.classList.contains("open")) {
+					sheet.setAttribute("hidden", "");
+					backdrop.setAttribute("hidden", "");
+				}
+			}, 260);
+		}
+
+		function applyLayout(matches) {
+			const wasMobile = document.body.classList.contains("is-mobile");
+			if (matches === wasMobile) return;
+			document.body.classList.toggle("is-mobile", matches);
+			if (matches) {
+				moveChildren(sidebar, sidebarMount);
+				MobileNav.reset();
+			} else {
+				moveChildren(sidebarMount, sidebar);
+				closeSheet();
+			}
+		}
+
+		applyLayout(mq.matches);
+		mq.addEventListener("change", (e) => applyLayout(e.matches));
+
+		if (backBtn) backBtn.addEventListener("click", () => MobileNav.back());
+		if (menuBtn) menuBtn.addEventListener("click", openSheet);
+		if (backdrop) backdrop.addEventListener("click", closeSheet);
+
+		// Close the sheet when an action button inside it is tapped, but leave
+		// the native <select> alone so the picker can open.
+		if (sidebarMount) {
+			sidebarMount.addEventListener("click", (e) => {
+				const btn = e.target.closest("button.sidebar-btn");
+				if (btn) closeSheet();
+			});
+		}
+
+		// Closing the sheet on ref change keeps the user oriented when the
+		// viewer reloads underneath.
+		refSelect.addEventListener("change", () => {
+			if (document.body.classList.contains("is-mobile")) closeSheet();
+		});
+	})();
 
 	init();
 });
