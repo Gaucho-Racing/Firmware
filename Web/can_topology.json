@@ -1,0 +1,44 @@
+{
+	"Primary": [
+		"ECU",
+		"TCM",
+		"ACU",
+		"DGPS",
+		"GR Inv",
+		"DTI Inv",
+		"Fan Ctrl 1",
+		"Fan Ctrl 2",
+		"Fan Ctrl 3",
+		"EM",
+		"Dash Panel"
+	],
+	"Data": [
+		"ECU",
+		"TCM",
+		"ACU",
+		"DGPS",
+		"TireTemp FL",
+		"TireTemp FR",
+		"TireTemp RL",
+		"TireTemp RR",
+		"BrakeTemp FL",
+		"BrakeTemp FR",
+		"BrakeTemp RL",
+		"BrakeTemp RR",
+		"Suspension FL",
+		"Suspension FR",
+		"Suspension RL",
+		"Suspension RR",
+		"InboardFloor FL",
+		"InboardFloor FR",
+		"InboardFloor RL",
+		"InboardFloor RR"
+	],
+	"Charger": [
+		"CCU",
+		"ACU",
+		"Charger",
+		"IMD",
+		"EM"
+	]
+}
