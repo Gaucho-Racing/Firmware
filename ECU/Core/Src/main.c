@@ -123,7 +123,6 @@ void write_adc_values_to_state_data(void)
 	stateLump.aux_signal = ADC_outputs[6];
 	stateLump.steering_angle_signal = ADC_outputs[10]; // TODO: convert to rad/deg...?
 
-	// TODO: determine conversion factors for all of these (uint to float)
 	stateLump.bspd_sense = ADC_outputs[7] / 4095.0 * 3.3;
 	stateLump.imd_sense = ADC_outputs[8] / 4095.0 * 3.3;
 	stateLump.ams_sense = ADC_outputs[9] / 4095.0 * 3.3;
