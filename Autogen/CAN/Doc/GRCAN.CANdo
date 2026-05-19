@@ -269,34 +269,50 @@ routing:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Suspension IMU Mag Data
     Suspension FR:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Suspension IMU Mag Data
     Suspension RL:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Suspension IMU Mag Data
     Suspension RR:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: Suspension IMU Mag Data
     InboardFloor FL:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: InboardFloor IMU ToF Data
     InboardFloor FR:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: InboardFloor IMU ToF Data
     InboardFloor RL:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: InboardFloor IMU ToF Data
     InboardFloor RR:
       Data:
         ECU:
           - msg: Ping
+        TCM:
+          - msg: InboardFloor IMU ToF Data
     TireTemp FL:
       Data:
         ECU:
@@ -8723,6 +8739,135 @@ Message ID:
       comment: Wheel speed rpm
       units: RPM
       map equation: "x/8"
+  Suspension IMU Mag Data:
+    MSG ID: 0x051
+    MSG LENGTH: 22
+    bmi323_acc_x:
+      bit_start: 0
+      data type: u16
+      comment: BMI323 accelerometer X
+    bmi323_acc_y:
+      bit_start: 16
+      data type: u16
+      comment: BMI323 accelerometer Y
+    bmi323_acc_z:
+      bit_start: 32
+      data type: u16
+      comment: BMI323 accelerometer Z
+    bmi323_gyro_x:
+      bit_start: 48
+      data type: u16
+      comment: BMI323 gyroscope X
+    bmi323_gyro_y:
+      bit_start: 64
+      data type: u16
+      comment: BMI323 gyroscope Y
+    bmi323_gyro_z:
+      bit_start: 80
+      data type: u16
+      comment: BMI323 gyroscope Z
+    bmi323_temp:
+      bit_start: 96
+      data type: u16
+      comment: BMI323 temperature
+    bmi323_status:
+      bit_start: 112
+      data type: u16
+      comment: BMI323 status
+    mag_temp:
+      bit_start: 128
+      data type: u16
+      comment: Magnetic encoder temperature
+    mag_hysteresis:
+      bit_start: 144
+      data type: u16
+      comment: The lineation of groupings for hysteresis
+    mag_angle:
+      bit_start: 160
+      data type: u16
+      comment: Magnetic encoder angle
+    mag_turns:
+      bit_start: 176
+      data type: i16
+      comment: Magnetic encoder turns
+    mag_status:
+      bit_start: 192
+      data type: b
+      units: u8
+      comment: Magnetic encoder status
+  InboardFloor IMU ToF Data:
+    MSG ID: 0x052
+    MSG LENGTH: 31
+    bmi323_acc_x:
+      bit_start: 0
+      data type: u16
+      comment: BMI323 accelerometer X
+    bmi323_acc_y:
+      bit_start: 16
+      data type: u16
+      comment: BMI323 accelerometer Y
+    bmi323_acc_z:
+      bit_start: 32
+      data type: u16
+      comment: BMI323 accelerometer Z
+    bmi323_gyro_x:
+      bit_start: 48
+      data type: u16
+      comment: BMI323 gyroscope X
+    bmi323_gyro_y:
+      bit_start: 64
+      data type: u16
+      comment: BMI323 gyroscope Y
+    bmi323_gyro_z:
+      bit_start: 80
+      data type: u16
+      comment: BMI323 gyroscope Z
+    bmi323_temp:
+      bit_start: 96
+      data type: u16
+      comment: BMI323 temperature
+    bmi323_status:
+      bit_start: 112
+      data type: u16
+      comment: BMI323 status
+    range_status:
+      bit_start: 128
+      data type: u8
+      comment: Time-of-flight range status
+    distance_mm:
+      bit_start: 136
+      data type: u16
+      units: mm
+      comment: Time-of-flight distance
+    ambient_rate_kcps:
+      bit_start: 152
+      data type: u16
+      units: kcps
+      comment: Time-of-flight ambient rate
+    ambient_per_spad_kcps:
+      bit_start: 168
+      data type: u16
+      units: kcps
+      comment: Time-of-flight ambient rate per SPAD
+    signal_rate_kcps:
+      bit_start: 184
+      data type: u16
+      units: kcps
+      comment: Time-of-flight signal rate
+    signal_per_spad_kcps:
+      bit_start: 200
+      data type: u16
+      units: kcps
+      comment: Time-of-flight signal rate per SPAD
+    number_of_spad:
+      bit_start: 216
+      data type: u16
+      comment: Time-of-flight SPAD count
+    sigma_mm:
+      bit_start: 232
+      data type: u16
+      units: mm
+      comment: Time-of-flight sigma
 
 Custom CAN ID:
   DTI Control 1:
