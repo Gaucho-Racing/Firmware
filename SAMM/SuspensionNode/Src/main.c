@@ -52,6 +52,14 @@
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
+
+#define BMI_ACC_ODR 0x7 // Output data rate -> 50 Hz
+#define BMI_ACC_RANGE 0x2 // +/- 8g
+#define BMI_ACC_BITWIDTH 0x0 // Sets cut off freq to ODR/2
+#define BMI_ACC_AVGNUM 0x3 // Averaging of 8 samples
+#define BMI_ACC_MODE 0x4 // Normal mode
+
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -120,7 +128,7 @@ int main(void)
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
-	// bmi323 bmi323_dev;
+
 	bmi323 bmi323_dev;
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 
@@ -140,6 +148,8 @@ int main(void)
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 	HAL_Delay(1);  // Short delay after mode switch
 
+	// bmi323_enable_acc(&bmi323_dev, BMI323_ACC_CONF, )
+
 	// Initialize magnetic encoder
 	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
 		LOGOMATIC("MAG initialization failed!\n");
@@ -158,7 +168,7 @@ int main(void)
 		uint16_t imu_temp = bmi323_read_temp_data(&bmi323_dev);
 		uint16_t imu_status = bmi323_read_status(&bmi323_dev);
 
-		
+
 
 
 		uint16_t temp = mag_read_temp(&mag_dev);
@@ -205,8 +215,12 @@ int main(void)
 			LOGOMATIC("Something is cooked");
 			mag_write_error(&mag_dev);
 		}
-
+/* TODO:
 		HAL_Delay(10);
+		static uint32_t millis_since_last = 0
+		if (millis since last < b)
+		only run loop every ~8-ish samples
+*/
 	}
 	/* USER CODE END 3 */
 }
