@@ -15,8 +15,10 @@ Edits are **not** saved to a backend. They exist in browser memory until the use
 | `candoDocument.js` | Semantic document model with cross-section invariants (`window.GrcanDocument`) |
 | `editor.js` | In-memory mutation engine, raw text state (`window.GrcanEditor`) |
 | `viewer.js` | Main controller: rendering, navigation, edit/delete wiring |
-| `physicalTopology.js` | Parses `can_topology.txt` to enforce physical bus-to-node constraints |
-| `graphView.js` | Cytoscape.js network graph visualization (`window.GrcanGraphView`) |
+| `physicalTopology.js` | Parses `can_topology.json` to enforce physical bus-to-node constraints |
+| `physicalGroups.js` | Derives functional groupings dynamically from prefixes for the Graph View renderer (`window.PhysicalGroups`) |
+| `layoutPhysicalBus.js` | Pure SVG layout for the physical-bus Graph View (`window.LayoutPhysicalBus`) |
+| `graphView.js` | Physical-bus SVG graph visualization (`window.GrcanGraphView`) |
 | `diffViewer.js` | Side-by-side text diff modal shown before download |
 | `background.js` | Decorative animated canvas background |
 
@@ -48,62 +50,61 @@ Edits are **not** saved to a backend. They exist in browser memory until the use
 
 | File | Purpose |
 |---|---|
-| `can_topology.txt` | Physical CAN bus topology: which nodes are wired to which bus. Node names must match `GR ID` entries in `GRCAN.CANdo`. |
+| `can_topology.json` | Physical CAN bus topology: which nodes are wired to which bus. Node names must match `GR ID` entries in `GRCAN.CANdo`. |
 
-### Vendored
+### Vendored (retained for rollback, no longer loaded)
 
 | File | Purpose |
 |---|---|
-| `cytoscape.min.js` | Cytoscape.js graph library (vendored) |
+| `cytoscape.min.js` | Previous graph library. The current Graph View renders pure SVG and does not load this. |
 
 ## Script Load Order
 
 Scripts are loaded in `index.html` in strict dependency order. `viewer.js` expects `window.GrcanApi`, `window.GrcanEditor`, and all form-augmented methods to exist. Reordering will break runtime symbol availability.
 
-1. `logic.js`
-2. `formUtils.js`
-3. `candoDocument.js`
-4. `editor.js`
-5. `formMessageDef.js`
-6. `formRoutingAdd.js`
-7. `formRoutingEdit.js`
-8. `formNodeEdit.js`
-9. `formBusEdit.js`
-10. `formBusAdd.js`
-11. `formConfirmDelete.js`
-12. `formSuperAdd.js`
-13. `formCustomCanId.js`
-14. `physicalTopology.js`
+1. `physicalTopology.js`
+2. `physicalGroups.js`
+3. `logic.js`
+4. `formUtils.js`
+5. `editor.js`
+6. `candoDocument.js`
+7. `formMessageDef.js`
+8. `formCustomCanId.js`
+9. `formRoutingAdd.js`
+10. `formNodeEdit.js`
+11. `formBusEdit.js`
+12. `formBusAdd.js`
+13. `formConfirmDelete.js`
+14. `formSuperAdd.js`
 15. `diffViewer.js`
-16. `graphView.js`
-17. `viewer.js`
-18. `background.js`
+16. `viewer.js`
+17. `layoutPhysicalBus.js`
+18. `graphView.js`
+19. `background.js`
 
 ## Tests
 
-Tests live in `tests/` and run under Node.js:
+There is no committed Web test harness. For a quick smoke check, run syntax checks
+against the browser scripts:
 
-- `candoDocument.test.js` — semantic document model tests
-- `logic.test.js` — parser/API utility tests
-- `manual/` — manual test scenarios
-
-## Editing `can_topology.txt`
-
-This file defines which devices are physically connected to each CAN bus. Bus headers must match the bus names declared in the `Bus ID:` section of `GRCAN.CANdo`. The format is:
-
-```
-Primary:
-  ECU
-  ACU
-  ...
-
-Data:
-  ECU
-  SAMM_Mag_1
-  ...
+```sh
+for f in Web/*.js; do node --check "$f" || exit 1; done
 ```
 
-- Bus headers must exactly match `Bus ID` names in `GRCAN.CANdo` (e.g. `Primary`, `Data`, `Charger`).
+## Editing `can_topology.json`
+
+This file defines which devices are physically connected to each CAN bus. The format is a JSON object keyed by bus name, with arrays of node names:
+
+```json
+{
+  "Primary": ["ECU", "ACU", "..."],
+  "Data": ["ECU", "SAMM_Mag_1", "..."]
+}
+```
+
+- Bus keys must exactly match entries in the `Bus ID:` section of `GRCAN.CANdo` (e.g. `Primary`, `Data`, `Charger`).
 - Node names must exactly match `GR ID` entries in `GRCAN.CANdo`.
 - `Debugger` and `ALL` are always exempt and should not be listed.
-- Lines starting with `#` are comments.
+- JSON has no comment syntax. Rationale for entries should go in this README instead.
+- Hardware note: both `GR Inv` and `DTI Inv` share `Primary`. Whichever isn't physically connected has its messages go nowhere — no firmware switch needed.
+

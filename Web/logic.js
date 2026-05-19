@@ -97,6 +97,9 @@ function parseMessageDefinitions(candoText) {
 					bitEnd: null,
 					dataType: null,
 					comment: null,
+					scaledMin: null,
+					scaledMax: null,
+					mapEquation: null,
 				};
 				continue;
 			}
@@ -132,6 +135,21 @@ function parseMessageDefinitions(candoText) {
 					currentField.dataType = rawType || null;
 				}
 			}
+			if (content.startsWith("scaled min:")) {
+				const v = content.slice("scaled min:".length).trim().replace(/,/g, "");
+				currentField.scaledMin = v || null;
+			}
+			if (content.startsWith("scaled max:")) {
+				const v = content.slice("scaled max:".length).trim().replace(/,/g, "");
+				currentField.scaledMax = v || null;
+			}
+			if (content.startsWith("map equation:")) {
+				const v = content
+					.slice("map equation:".length)
+					.trim()
+					.replace(/^["']|["']$/g, "");
+				currentField.mapEquation = v || null;
+			}
 		}
 	}
 
@@ -157,6 +175,9 @@ function parseMessageDefinitions(candoText) {
 							: `${f.bitStart}-${f.bitEnd}`,
 					dataType: f.dataType,
 					comment: f.comment,
+					scaledMin: f.scaledMin ?? null,
+					scaledMax: f.scaledMax ?? null,
+					mapEquation: f.mapEquation ?? null,
 				};
 			});
 	}
@@ -614,16 +635,40 @@ function parseBusIdsFromText(candoText) {
 	const startIdx = lines.findIndex((l) => l.startsWith("Bus ID:"));
 	if (startIdx === -1) return { buses: [], error: null };
 	const buses = [];
+	let pendingBusName = null; // for nested format: "  BusName:" then "    id: N"
 	for (let i = startIdx + 1; i < lines.length; i++) {
 		const line = lines[i];
 		if (/^\S/.test(line) && line.trim() !== "") break;
-		const match = line.match(/^\s+([^:]+):\s*(\d+)\s*(?:#\s*(.*))?/);
-		if (match) {
+		// Old flat format: "  BusName: 0" or "  BusName: 0  # label"
+		// \S after the two leading spaces ensures we don't match deeper-indented lines.
+		const flatMatch = line.match(/^  (\S[^:]*):\s*(\d+)\s*(?:#\s*(.*))?$/);
+		if (flatMatch) {
 			buses.push({
-				name: match[1].trim(),
-				id: parseInt(match[2], 10),
-				label: (match[3] || match[1]).trim(),
+				name: flatMatch[1].trim(),
+				id: parseInt(flatMatch[2], 10),
+				label: (flatMatch[3] || flatMatch[1]).trim(),
 			});
+			pendingBusName = null;
+			continue;
+		}
+		// New nested format: "  BusName:" (indent 2, no value)
+		// \S ensures we don't match deeper-indented child lines like "    id:".
+		const busNameMatch = line.match(/^  (\S[^:]*):\s*$/);
+		if (busNameMatch) {
+			pendingBusName = busNameMatch[1].trim();
+			continue;
+		}
+		// New nested format: "    id: N" (indent 4, child of pending bus name)
+		if (pendingBusName !== null) {
+			const idMatch = line.match(/^    id:\s*(\d+)\s*(?:#.*)?$/);
+			if (idMatch) {
+				buses.push({
+					name: pendingBusName,
+					id: parseInt(idMatch[1], 10),
+					label: pendingBusName,
+				});
+				pendingBusName = null;
+			}
 		}
 	}
 	return { buses, error: null };
