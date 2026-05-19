@@ -474,26 +474,158 @@ BO_ 2181050372 DGPS_UVW_DGPS_to_TCM: 6 DGPS
 BO_ 2168455682 Suspension_FL_Ping_to_ECU: 4 Suspension_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
 
+BO_ 2168475908 Suspension_FL_IMU_Mag_Data_to_TC: 24 Suspension_FL
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_temp : 128|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_hysteresis : 144|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_angle : 160|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_turns : 176|16@1- (1,0) [0|0] ""  TCM
+ SG_ mag_status : 192|1@1+ (1,0) [0|0] "u8"  TCM
+
 BO_ 2169504258 Suspension_FR_Ping_to_ECU: 4 Suspension_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2169524484 Suspension_FR_IMU_Mag_Data_to_TC: 24 Suspension_FR
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_temp : 128|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_hysteresis : 144|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_angle : 160|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_turns : 176|16@1- (1,0) [0|0] ""  TCM
+ SG_ mag_status : 192|1@1+ (1,0) [0|0] "u8"  TCM
 
 BO_ 2170552834 Suspension_RL_Ping_to_ECU: 4 Suspension_RL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
 
+BO_ 2170573060 Suspension_RL_IMU_Mag_Data_to_TC: 24 Suspension_RL
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_temp : 128|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_hysteresis : 144|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_angle : 160|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_turns : 176|16@1- (1,0) [0|0] ""  TCM
+ SG_ mag_status : 192|1@1+ (1,0) [0|0] "u8"  TCM
+
 BO_ 2171601410 Suspension_RR_Ping_to_ECU: 4 Suspension_RR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2171621636 Suspension_RR_IMU_Mag_Data_to_TC: 24 Suspension_RR
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_temp : 128|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_hysteresis : 144|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_angle : 160|16@1+ (1,0) [0|0] ""  TCM
+ SG_ mag_turns : 176|16@1- (1,0) [0|0] ""  TCM
+ SG_ mag_status : 192|1@1+ (1,0) [0|0] "u8"  TCM
 
 BO_ 2172649986 InboardFloor_FL_Ping_to_ECU: 4 InboardFloor_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
 
+BO_ 2172670468 InboardFloor_FL_IMU_ToF_Data_to_: 32 InboardFloor_FL
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ range_status : 128|8@1+ (1,0) [0|0] ""  TCM
+ SG_ distance_mm : 136|16@1+ (1,0) [0|0] "mm"  TCM
+ SG_ ambient_rate_kcps : 152|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ ambient_per_spad_kcps : 168|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_rate_kcps : 184|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_per_spad_kcps : 200|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ number_of_spad : 216|16@1+ (1,0) [0|0] ""  TCM
+ SG_ sigma_mm : 232|16@1+ (1,0) [0|0] "mm"  TCM
+
 BO_ 2173698562 InboardFloor_FR_Ping_to_ECU: 4 InboardFloor_FR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2173719044 InboardFloor_FR_IMU_ToF_Data_to_: 32 InboardFloor_FR
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ range_status : 128|8@1+ (1,0) [0|0] ""  TCM
+ SG_ distance_mm : 136|16@1+ (1,0) [0|0] "mm"  TCM
+ SG_ ambient_rate_kcps : 152|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ ambient_per_spad_kcps : 168|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_rate_kcps : 184|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_per_spad_kcps : 200|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ number_of_spad : 216|16@1+ (1,0) [0|0] ""  TCM
+ SG_ sigma_mm : 232|16@1+ (1,0) [0|0] "mm"  TCM
 
 BO_ 2174747138 InboardFloor_RL_Ping_to_ECU: 4 InboardFloor_RL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
 
+BO_ 2174767620 InboardFloor_RL_IMU_ToF_Data_to_: 32 InboardFloor_RL
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ range_status : 128|8@1+ (1,0) [0|0] ""  TCM
+ SG_ distance_mm : 136|16@1+ (1,0) [0|0] "mm"  TCM
+ SG_ ambient_rate_kcps : 152|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ ambient_per_spad_kcps : 168|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_rate_kcps : 184|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_per_spad_kcps : 200|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ number_of_spad : 216|16@1+ (1,0) [0|0] ""  TCM
+ SG_ sigma_mm : 232|16@1+ (1,0) [0|0] "mm"  TCM
+
 BO_ 2175795714 InboardFloor_RR_Ping_to_ECU: 4 InboardFloor_RR
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2175816196 InboardFloor_RR_IMU_ToF_Data_to_: 32 InboardFloor_RR
+ SG_ bmi323_acc_x : 0|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_y : 16|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_acc_z : 32|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_x : 48|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_y : 64|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_gyro_z : 80|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_temp : 96|16@1+ (1,0) [0|0] ""  TCM
+ SG_ bmi323_status : 112|16@1+ (1,0) [0|0] ""  TCM
+ SG_ range_status : 128|8@1+ (1,0) [0|0] ""  TCM
+ SG_ distance_mm : 136|16@1+ (1,0) [0|0] "mm"  TCM
+ SG_ ambient_rate_kcps : 152|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ ambient_per_spad_kcps : 168|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_rate_kcps : 184|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ signal_per_spad_kcps : 200|16@1+ (1,0) [0|0] "kcps"  TCM
+ SG_ number_of_spad : 216|16@1+ (1,0) [0|0] ""  TCM
+ SG_ sigma_mm : 232|16@1+ (1,0) [0|0] "mm"  TCM
 
 BO_ 2164261378 TireTemp_FL_Ping_to_ECU: 4 TireTemp_FL
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
@@ -4180,13 +4312,129 @@ CM_ SG_ 2181050372 DGPS_U "U";
 CM_ SG_ 2181050372 DGPS_V "V";
 CM_ SG_ 2181050372 DGPS_W "W";
 CM_ SG_ 2168455682 Timestamp "Time in millis";
+CM_ SG_ 2168475908 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2168475908 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2168475908 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2168475908 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2168475908 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2168475908 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2168475908 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2168475908 bmi323_status "BMI323 status";
+CM_ SG_ 2168475908 mag_temp "Magnetic encoder temperature";
+CM_ SG_ 2168475908 mag_hysteresis "The lineation of groupings for hysteresis";
+CM_ SG_ 2168475908 mag_angle "Magnetic encoder angle";
+CM_ SG_ 2168475908 mag_turns "Magnetic encoder turns";
+CM_ SG_ 2168475908 mag_status "Magnetic encoder status";
 CM_ SG_ 2169504258 Timestamp "Time in millis";
+CM_ SG_ 2169524484 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2169524484 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2169524484 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2169524484 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2169524484 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2169524484 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2169524484 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2169524484 bmi323_status "BMI323 status";
+CM_ SG_ 2169524484 mag_temp "Magnetic encoder temperature";
+CM_ SG_ 2169524484 mag_hysteresis "The lineation of groupings for hysteresis";
+CM_ SG_ 2169524484 mag_angle "Magnetic encoder angle";
+CM_ SG_ 2169524484 mag_turns "Magnetic encoder turns";
+CM_ SG_ 2169524484 mag_status "Magnetic encoder status";
 CM_ SG_ 2170552834 Timestamp "Time in millis";
+CM_ SG_ 2170573060 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2170573060 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2170573060 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2170573060 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2170573060 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2170573060 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2170573060 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2170573060 bmi323_status "BMI323 status";
+CM_ SG_ 2170573060 mag_temp "Magnetic encoder temperature";
+CM_ SG_ 2170573060 mag_hysteresis "The lineation of groupings for hysteresis";
+CM_ SG_ 2170573060 mag_angle "Magnetic encoder angle";
+CM_ SG_ 2170573060 mag_turns "Magnetic encoder turns";
+CM_ SG_ 2170573060 mag_status "Magnetic encoder status";
 CM_ SG_ 2171601410 Timestamp "Time in millis";
+CM_ SG_ 2171621636 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2171621636 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2171621636 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2171621636 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2171621636 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2171621636 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2171621636 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2171621636 bmi323_status "BMI323 status";
+CM_ SG_ 2171621636 mag_temp "Magnetic encoder temperature";
+CM_ SG_ 2171621636 mag_hysteresis "The lineation of groupings for hysteresis";
+CM_ SG_ 2171621636 mag_angle "Magnetic encoder angle";
+CM_ SG_ 2171621636 mag_turns "Magnetic encoder turns";
+CM_ SG_ 2171621636 mag_status "Magnetic encoder status";
 CM_ SG_ 2172649986 Timestamp "Time in millis";
+CM_ SG_ 2172670468 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2172670468 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2172670468 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2172670468 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2172670468 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2172670468 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2172670468 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2172670468 bmi323_status "BMI323 status";
+CM_ SG_ 2172670468 range_status "Time-of-flight range status";
+CM_ SG_ 2172670468 distance_mm "Time-of-flight distance";
+CM_ SG_ 2172670468 ambient_rate_kcps "Time-of-flight ambient rate";
+CM_ SG_ 2172670468 ambient_per_spad_kcps "Time-of-flight ambient rate per SPAD";
+CM_ SG_ 2172670468 signal_rate_kcps "Time-of-flight signal rate";
+CM_ SG_ 2172670468 signal_per_spad_kcps "Time-of-flight signal rate per SPAD";
+CM_ SG_ 2172670468 number_of_spad "Time-of-flight SPAD count";
+CM_ SG_ 2172670468 sigma_mm "Time-of-flight sigma";
 CM_ SG_ 2173698562 Timestamp "Time in millis";
+CM_ SG_ 2173719044 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2173719044 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2173719044 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2173719044 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2173719044 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2173719044 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2173719044 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2173719044 bmi323_status "BMI323 status";
+CM_ SG_ 2173719044 range_status "Time-of-flight range status";
+CM_ SG_ 2173719044 distance_mm "Time-of-flight distance";
+CM_ SG_ 2173719044 ambient_rate_kcps "Time-of-flight ambient rate";
+CM_ SG_ 2173719044 ambient_per_spad_kcps "Time-of-flight ambient rate per SPAD";
+CM_ SG_ 2173719044 signal_rate_kcps "Time-of-flight signal rate";
+CM_ SG_ 2173719044 signal_per_spad_kcps "Time-of-flight signal rate per SPAD";
+CM_ SG_ 2173719044 number_of_spad "Time-of-flight SPAD count";
+CM_ SG_ 2173719044 sigma_mm "Time-of-flight sigma";
 CM_ SG_ 2174747138 Timestamp "Time in millis";
+CM_ SG_ 2174767620 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2174767620 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2174767620 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2174767620 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2174767620 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2174767620 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2174767620 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2174767620 bmi323_status "BMI323 status";
+CM_ SG_ 2174767620 range_status "Time-of-flight range status";
+CM_ SG_ 2174767620 distance_mm "Time-of-flight distance";
+CM_ SG_ 2174767620 ambient_rate_kcps "Time-of-flight ambient rate";
+CM_ SG_ 2174767620 ambient_per_spad_kcps "Time-of-flight ambient rate per SPAD";
+CM_ SG_ 2174767620 signal_rate_kcps "Time-of-flight signal rate";
+CM_ SG_ 2174767620 signal_per_spad_kcps "Time-of-flight signal rate per SPAD";
+CM_ SG_ 2174767620 number_of_spad "Time-of-flight SPAD count";
+CM_ SG_ 2174767620 sigma_mm "Time-of-flight sigma";
 CM_ SG_ 2175795714 Timestamp "Time in millis";
+CM_ SG_ 2175816196 bmi323_acc_x "BMI323 accelerometer X";
+CM_ SG_ 2175816196 bmi323_acc_y "BMI323 accelerometer Y";
+CM_ SG_ 2175816196 bmi323_acc_z "BMI323 accelerometer Z";
+CM_ SG_ 2175816196 bmi323_gyro_x "BMI323 gyroscope X";
+CM_ SG_ 2175816196 bmi323_gyro_y "BMI323 gyroscope Y";
+CM_ SG_ 2175816196 bmi323_gyro_z "BMI323 gyroscope Z";
+CM_ SG_ 2175816196 bmi323_temp "BMI323 temperature";
+CM_ SG_ 2175816196 bmi323_status "BMI323 status";
+CM_ SG_ 2175816196 range_status "Time-of-flight range status";
+CM_ SG_ 2175816196 distance_mm "Time-of-flight distance";
+CM_ SG_ 2175816196 ambient_rate_kcps "Time-of-flight ambient rate";
+CM_ SG_ 2175816196 ambient_per_spad_kcps "Time-of-flight ambient rate per SPAD";
+CM_ SG_ 2175816196 signal_rate_kcps "Time-of-flight signal rate";
+CM_ SG_ 2175816196 signal_per_spad_kcps "Time-of-flight signal rate per SPAD";
+CM_ SG_ 2175816196 number_of_spad "Time-of-flight SPAD count";
+CM_ SG_ 2175816196 sigma_mm "Time-of-flight sigma";
 CM_ SG_ 2164261378 Timestamp "Time in millis";
 CM_ SG_ 2164274948 pixel0 "Tire Temp frame 0 pixel 0";
 CM_ SG_ 2164274948 pixel1 "Tire Temp frame 0 pixel 1";
@@ -7312,13 +7560,21 @@ BA_ "VFrameFormat" BO_ 2181051652 15;
 BA_ "VFrameFormat" BO_ 2181051908 15;
 BA_ "VFrameFormat" BO_ 2181050372 15;
 BA_ "VFrameFormat" BO_ 2168455682 15;
+BA_ "VFrameFormat" BO_ 2168475908 15;
 BA_ "VFrameFormat" BO_ 2169504258 15;
+BA_ "VFrameFormat" BO_ 2169524484 15;
 BA_ "VFrameFormat" BO_ 2170552834 15;
+BA_ "VFrameFormat" BO_ 2170573060 15;
 BA_ "VFrameFormat" BO_ 2171601410 15;
+BA_ "VFrameFormat" BO_ 2171621636 15;
 BA_ "VFrameFormat" BO_ 2172649986 15;
+BA_ "VFrameFormat" BO_ 2172670468 15;
 BA_ "VFrameFormat" BO_ 2173698562 15;
+BA_ "VFrameFormat" BO_ 2173719044 15;
 BA_ "VFrameFormat" BO_ 2174747138 15;
+BA_ "VFrameFormat" BO_ 2174767620 15;
 BA_ "VFrameFormat" BO_ 2175795714 15;
+BA_ "VFrameFormat" BO_ 2175816196 15;
 BA_ "VFrameFormat" BO_ 2164261378 15;
 BA_ "VFrameFormat" BO_ 2164274948 15;
 BA_ "VFrameFormat" BO_ 2164275204 15;

@@ -2181,4 +2181,74 @@ typedef struct {
 	uint16_t speed;
 } GRCAN_WHEEL_SPEED_MSG;
 
+/** Suspension IMU Mag Data */
+typedef struct {
+	/** BMI323 accelerometer X (Byte 0) */
+	uint16_t bmi323_acc_x;
+	/** BMI323 accelerometer Y (Byte 2) */
+	uint16_t bmi323_acc_y;
+	/** BMI323 accelerometer Z (Byte 4) */
+	uint16_t bmi323_acc_z;
+	/** BMI323 gyroscope X (Byte 6) */
+	uint16_t bmi323_gyro_x;
+	/** BMI323 gyroscope Y (Byte 8) */
+	uint16_t bmi323_gyro_y;
+	/** BMI323 gyroscope Z (Byte 10) */
+	uint16_t bmi323_gyro_z;
+	/** BMI323 temperature (Byte 12) */
+	uint16_t bmi323_temp;
+	/** BMI323 status (Byte 14) */
+	uint16_t bmi323_status;
+	/** Magnetic encoder temperature (Byte 16) */
+	uint16_t mag_temp;
+	/** The lineation of groupings for hysteresis (Byte 18) */
+	uint16_t mag_hysteresis;
+	/** Magnetic encoder angle (Byte 20) */
+	uint16_t mag_angle;
+	/** Magnetic encoder turns (Byte 22) */
+	uint16_t mag_turns;
+	/** Magnetic encoder status (Byte 24) */
+	uint8_t mag_status;
+	/** Reserved (Byte 25) */
+	uint16_t reserved;
+} GRCAN_SUSPENSION_IMU_MAG_DATA_MSG;
+
+/** InboardFloor IMU ToF Data */
+typedef struct {
+	/** BMI323 accelerometer X (Byte 0) */
+	uint16_t bmi323_acc_x;
+	/** BMI323 accelerometer Y (Byte 2) */
+	uint16_t bmi323_acc_y;
+	/** BMI323 accelerometer Z (Byte 4) */
+	uint16_t bmi323_acc_z;
+	/** BMI323 gyroscope X (Byte 6) */
+	uint16_t bmi323_gyro_x;
+	/** BMI323 gyroscope Y (Byte 8) */
+	uint16_t bmi323_gyro_y;
+	/** BMI323 gyroscope Z (Byte 10) */
+	uint16_t bmi323_gyro_z;
+	/** BMI323 temperature (Byte 12) */
+	uint16_t bmi323_temp;
+	/** BMI323 status (Byte 14) */
+	uint16_t bmi323_status;
+	/** Time-of-flight range status (Byte 16) */
+	uint8_t range_status;
+	/** Time-of-flight distance (Byte 17) */
+	uint16_t distance_mm;
+	/** Time-of-flight ambient rate (Byte 19) */
+	uint16_t ambient_rate_kcps;
+	/** Time-of-flight ambient rate per SPAD (Byte 21) */
+	uint16_t ambient_per_spad_kcps;
+	/** Time-of-flight signal rate (Byte 23) */
+	uint16_t signal_rate_kcps;
+	/** Time-of-flight signal rate per SPAD (Byte 25) */
+	uint16_t signal_per_spad_kcps;
+	/** Time-of-flight SPAD count (Byte 27) */
+	uint16_t number_of_spad;
+	/** Time-of-flight sigma (Byte 29) */
+	uint16_t sigma_mm;
+	/** Byte 31 (Byte 31) */
+	uint8_t reserved;
+} GRCAN_INBOARDFLOOR_IMU_TOF_DATA_MSG;
+
 #endif
