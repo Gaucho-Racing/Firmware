@@ -8741,7 +8741,7 @@ Message ID:
       map equation: "x/8"
   Suspension IMU Mag Data:
     MSG ID: 0x051
-    MSG LENGTH: 22
+    MSG LENGTH: 24
     bmi323_acc_x:
       bit_start: 0
       data type: u16
@@ -8795,9 +8795,13 @@ Message ID:
       data type: b
       units: u8
       comment: Magnetic encoder status
+    reserved:
+      bit_start: 200
+      data type: u16
+      comment: Reserved
   InboardFloor IMU ToF Data:
     MSG ID: 0x052
-    MSG LENGTH: 31
+    MSG LENGTH: 32
     bmi323_acc_x:
       bit_start: 0
       data type: u16
@@ -8868,7 +8872,9 @@ Message ID:
       data type: u16
       units: mm
       comment: Time-of-flight sigma
-
+    reserved:
+      bit_start: 248
+      data type: u8
 Custom CAN ID:
   DTI Control 1:
     CAN ID: 0x116
