@@ -18,12 +18,6 @@
 
 CANHandle *can_handler;
 
-static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TIRE_TEMP_FRAME_0,  GRCAN_TIRE_TEMP_FRAME_1,	 GRCAN_TIRE_TEMP_FRAME_2,  GRCAN_TIRE_TEMP_FRAME_3,  GRCAN_TIRE_TEMP_FRAME_4,
-						     GRCAN_TIRE_TEMP_FRAME_5,  GRCAN_TIRE_TEMP_FRAME_6,	 GRCAN_TIRE_TEMP_FRAME_7,  GRCAN_TIRE_TEMP_FRAME_8,  GRCAN_TIRE_TEMP_FRAME_9,
-						     GRCAN_TIRE_TEMP_FRAME_10, GRCAN_TIRE_TEMP_FRAME_11, GRCAN_TIRE_TEMP_FRAME_12, GRCAN_TIRE_TEMP_FRAME_13, GRCAN_TIRE_TEMP_FRAME_14,
-						     GRCAN_TIRE_TEMP_FRAME_15, GRCAN_TIRE_TEMP_FRAME_16, GRCAN_TIRE_TEMP_FRAME_17, GRCAN_TIRE_TEMP_FRAME_18, GRCAN_TIRE_TEMP_FRAME_19,
-						     GRCAN_TIRE_TEMP_FRAME_20, GRCAN_TIRE_TEMP_FRAME_21, GRCAN_TIRE_TEMP_FRAME_22, GRCAN_TIRE_TEMP_FRAME_23};
-
 void CANInitialize()
 {
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL);
@@ -34,7 +28,7 @@ void CANInitialize()
 
 uint16_t _temp_f2u16(float temp)
 {
-	float v = ((temp + 40.f) / 340.0f);
+	float v = ((temp + 70.f) / 450.0f); // Normalize temp (ranges from -70 C to +380 C)
 	if (v < 0.0f) {
 		v = 0.0f;
 	}
@@ -44,25 +38,20 @@ uint16_t _temp_f2u16(float temp)
 	return (uint16_t)(v * 65535.0f);
 }
 
-void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
+void CAN_sendTemp(float to)
 {
-
 	FDCANTxMessage msg;
-	msg.tx_header.Identifier = (LOCAL_GR_ID << 20) | (canMsgNumber[msgNumber] << 8) | GRCAN_TCM; // do this
+	msg.tx_header.Identifier = (LOCAL_GR_ID << 20) | (GRCAN_BRAKE_TEMP << 8) | GRCAN_TCM; // do this
 	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
 	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE; // honestly this might be a value you have to read from a node
 							      // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	msg.tx_header.DataLength = FDCAN_DLC_BYTES_64;
+	msg.tx_header.DataLength = FDCAN_DLC_BYTES_2;
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_ON;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
 
-	msgNumber <<= 5;
-
-	for (int i = 0; i < 32; i++) {
-		((uint16_t *)(msg.data))[i] = _temp_f2u16(data[msgNumber + i]);
-	}
+	((uint16_t *)(msg.data))[0] = _temp_f2u16(to);
 
 	can_send(can_handler, &msg);
 }

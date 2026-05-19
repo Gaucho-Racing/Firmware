@@ -184,14 +184,6 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		// I was testing zero'd out array to verify mlx90640To updates
-		for (int j = 0; j < 768; j++) {
-			mlx90640To[j] = 63;
-		}
-
-		// for (int j = 0; j < 833; j++) {
-		// 	mlx90640Frame[j] = 63;
-		// }
 
 		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
 

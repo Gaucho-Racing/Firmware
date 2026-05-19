@@ -31,8 +31,8 @@
 #include <stdio.h>
 
 #include "CANdler.h"
-#include "MLX90640_API.h"
-#include "MLX90640_I2C_Driver.h"
+#include "MLX90614_API.h"
+#include "MLX90614_SMBus_Driver.h"
 #include "can.h"
 /* USER CODE END Includes */
 
@@ -62,14 +62,11 @@
 uint8_t aTxBuffer[] = "****SPI - Two Boards communication based on Polling **** SPI Message ******** SPI Message ******** SPI Message ****";
 
 // MLX stuff
-float emmissivity = 0.95;
-uint16_t MLX90640_address = 0x33;
-paramsMLX90640 mlx90640;
-static uint16_t eeMLX90640[832];
-static uint16_t mlx90640Frame[834];
-static float mlx90640To[768];
+static uint16_t eeMLX90614[32];
+float emissivity = 0.95;
+float ta, to;
 int status;
-float tr;
+uint8_t MLX90614_address = 0x5A;
 
 /* Buffer used for reception */
 uint8_t aRxBuffer[BUFFERSIZE];
@@ -90,20 +87,14 @@ PUTCHAR_PROTOTYPE
 	return ch;
 }
 
-int MLX90640_FullReset(void)
+int MLX90640_Initialize(void)
 {
-	while (true) {
-		if (MLX90640_SetRefreshRate(MLX90640_address, 0x07) != 0) {
-			continue;
-		}
-		if (MLX90640_DumpEE(MLX90640_address, eeMLX90640) != 0) {
-			continue;
-		}
-		if (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) != 0) {
-			continue;
-		}
-		break;
-	}
+	MLX90614_SMBusSendCommand(MLX90614_address, 0x60); // Unlock EEPROM
+	MLX90614_SetEmissivity(MLX90614_address, emissivity);
+	MLX90614_SetFIR(MLX90614_address, 6); // 512 pt averaging
+	MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
+	MLX90614_DumpEE(MLX90614_address, &eeMLX90614);
+	MLX90614_SMBusSendCommand(MLX90614_address, 0x61); // Lock EEPROM
 
 	return 0;
 }
@@ -165,59 +156,20 @@ int main(void)
 	   "aTxBuffer" buffer & receive data through "aRxBuffer" */
 	/* Timeout is set to 5S */
 
-	MLX90640_FullReset();
-
-	// get initial
-	while ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
-		break; // MLX90640_FullReset();
-	}
+	MLX90614_Initialize();
 
 	/* USER CODE END 2 */
-
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		// I was testing zero'd out array to verify mlx90640To updates
-		// for (int j = 0; j < 768; j++) {
-		// 	mlx90640To[j] = 0;
-		// }
 
-		while ((status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame)) != 0) {
-			break; // MLX90640_FullReset();
-		}
+		status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
+		status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
 
-		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
-		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
-		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
-		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
-
-		while ((status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame)) != 0) {
-			break; // MLX90640_FullReset();
-		}
-
-		// for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
-		// 	CAN_sendTemp(mlx90640To, i);
-		// 	HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
-		// }
-
-		HAL_Delay(24 * TIRETEMP_SEND_INTERVAL_MS);
-
-		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
-		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
-		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
-		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
-
-		while ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
-			break; // MLX90640_FullReset();
-		}
-
-		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
-			CAN_sendTemp(mlx90640To, i);
-			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
-		}
+		CAN_sendTemp(to);
+		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
 		/* USER CODE END WHILE */
-
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
