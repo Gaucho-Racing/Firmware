@@ -25,7 +25,7 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1};
+ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1, .glv_voltage_20V = 20.0f};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
