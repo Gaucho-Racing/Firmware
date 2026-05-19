@@ -110,9 +110,10 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
-	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
-	float travel = fminf(fmaxf(total_signal_value / total_signal_range, 0.0f), 1.0f);
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+
+	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
 	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
 }
 
