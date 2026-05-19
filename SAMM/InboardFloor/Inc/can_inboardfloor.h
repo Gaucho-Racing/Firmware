@@ -34,7 +34,6 @@ typedef struct {
 
 	/* Time of Flight Data */
     // TODO: figure out how to get these values from tof results struct when more awake
-	uint8_t range_status;
     uint16_t distance_mm;
     uint16_t ambient_rate_kcps;
     uint16_t ambient_per_spad_kcps;
@@ -42,6 +41,7 @@ typedef struct {
     uint16_t signal_per_spad_kcps;
     uint16_t number_of_spad;
     uint16_t sigma_mm;
+	uint8_t range_status;
 } IMU_ToF_Data;
 
 void BrakeTemp_Callback(uint32_t id, void *data, uint32_t size);

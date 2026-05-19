@@ -33,11 +33,14 @@
 
 // #include "VL53L4ED_api.h"
 #include "mag.h"
+#include "bmi323.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+#define BMI323_CS_GPIO_Port GPIOA
+#define BMI323_CS_Pin GPIO_PIN_4
 #define MAG_CS_GPIO_Port GPIOB
 #define MAG_CS_Pin GPIO_PIN_10
 /* USER CODE END PTD */
@@ -118,60 +121,46 @@ int main(void)
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// bmi323 bmi323_dev;
+	bmi323 bmi323_dev;
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+
 	mag mag_dev;
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
 
-	// Send 2 dummy bytes to switch BMI323 to SPI mode
-	// uint16_t dummy_byte = 0x8000;
-	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
-	// HAL_SPI_Transmit(&hspi1,(uint8_t*)&dummy_byte, 1, HAL_MAX_DELAY);
-	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	// HAL_Delay(1);  // Short delay after mode switch
-
-	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
-		printf("MAG initialization failed!\r\n");
+	// Initialize IMU
+	if (bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin) != HAL_OK) {
+		LOGOMATIC("BMI323 initialization failed!\n");
 		Error_Handler();
 	}
 
-	// static uint16_t eeMLX90640[832];
-	// static paramsMLX90640 mlx90640;
-	// #define MLX90640_ADDRESS 0x33<<1
-	// MLX90640_DumpEE(MLX90640_ADDRESS, eeMLX90640);
+	// Send 2 dummy bytes to switch BMI323 to SPI mode
+	uint16_t dummy_byte = 0x0000;
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi1,(uint8_t*)&dummy_byte, 1, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	HAL_Delay(1);  // Short delay after mode switch
 
-	// MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
+	// Initialize magnetic encoder
+	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
+		LOGOMATIC("MAG initialization failed!\n");
+		Error_Handler();
+	}
 
-	// MLX90640_SetRefreshRate(MLX90640_ADDRESS, 0x05);
-
-	// MLX90640_SynchFrame(MLX90640_ADDRESS);
-	//  MLX90640_SetRefreshRate(0x33, 0x05);
-	/* USER CODE END 2 */
-
-	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	// begin VL53L4ED
-	// HAL_Delay(100);					      // wait for 5ms to power up the device
-	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
-	// // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
-	// HAL_Delay(100);					    // wait for 5ms to reset the device
-	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
-	// // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
-	// HAL_Delay(100); // wait for 5ms to power up the device
-
-	// uint16_t status = 0;
-
-	// uint16_t sensor_id = 0;
-	// VL53L4ED_ResultsData_t results;
-	// uint8_t p_data_ready;
-
-	// int TOF_ID = 0x52;
-	// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-	// status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
-	// printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
-	// status = VL53L4ED_StartRanging(TOF_ID);
-	// status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
-	// status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
 
 	while (1) {
+		uint16_t imu_ax = bmi323_read_acc_x(&bmi323_dev);
+		uint16_t imu_ay = bmi323_read_acc_y(&bmi323_dev);
+		uint16_t imu_az = bmi323_read_acc_z(&bmi323_dev);
+		uint16_t imu_gyrx = bmi323_read_gyr_x(&bmi323_dev);
+		uint16_t imu_gyry = bmi323_read_gyr_y(&bmi323_dev);
+		uint16_t imu_gyrz = bmi323_read_gyr_z(&bmi323_dev);
+		uint16_t imu_temp = bmi323_read_temp_data(&bmi323_dev);
+		uint16_t imu_status = bmi323_read_status(&bmi323_dev);
+
+		
+
+
 		uint16_t temp = mag_read_temp(&mag_dev);
 		uint16_t hysteresis = mag_read_HANG(&mag_dev);
 		uint16_t angle = mag_read_encoder_angle(&mag_dev);
