@@ -73,12 +73,19 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
+	return false;
+#endif
+
 	return stateData->bspd_sense < 0.6f || stateData->bspd_sense > 1.35f; // possible values are 0.3, 1.2, 1.6
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
 	return false;
+#endif
+
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
 	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
 }
@@ -86,24 +93,32 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
+	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
+		return true;
+	} else {
+		return false;
+	}
+#endif
+
 	// uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
 	// uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
 	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
 	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
-		return true; // don't consider brake pressed until in drive active
-	} else {
-		return false;
-	}
+
+
 	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
 float CalcBrakePercent(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
 	return 0;
+#endif
+
 	return stateData->bse_signal / BSE_MAX;
 }
 
@@ -125,6 +140,10 @@ bool APPS_Plausible(volatile const ECU_StateData *stateData)
 
 bool BSE_Plausible(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
+	return true;
+#endif
+
 	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
 	// T.4.3.3
 	return stateData->bse_signal > BSE_DEADZONE && stateData->bse_signal < BSE_MAX;

@@ -417,6 +417,10 @@ int main(void)
 		static uint32_t delay_timer;
 		static uint32_t ping_timer;
 		if (MillisecondsSinceBoot() >= delay_timer) {
+#ifdef PLAN_C
+			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "!PLAN_C!", 8);
+#endif
+
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 
 			// ADC
@@ -509,7 +513,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
 	/* USER CODE BEGIN 6 */
-	LOGOMATIC("Assertion failed: file %s on line %d\r\n", file, line)
+	LOGOMATIC("Assertion failed: file %s on line %d\r\n", file, line);
 	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
