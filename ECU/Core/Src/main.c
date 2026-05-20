@@ -400,7 +400,7 @@ int main(void)
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		LL_mDelay(MAIN_LOOP_PERIOD_US / 1000);
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.4, ADC_outputs);
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.6, ADC_outputs);
 		write_adc_values_to_state_data();
 	}
 
@@ -424,7 +424,7 @@ int main(void)
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 
 			// ADC
-			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.4, ADC_outputs);
+			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.6, ADC_outputs);
 			write_adc_values_to_state_data();
 
 			// state tick
