@@ -105,6 +105,71 @@ void SystemClock_Config(void);
 
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 // TODO: TS and RTD button signals will come over CAN
+void ADC_Logomatic(void)
+{
+	static uint16_t min_apps_1 = 4095;
+		static uint16_t min_apps_2 = 4095;
+		if (stateLump.APPS1_Signal < min_apps_1) {
+			min_apps_1 = stateLump.APPS1_Signal;
+		}
+		if (stateLump.APPS2_Signal < min_apps_2) {
+			min_apps_2 = stateLump.APPS2_Signal;
+		}
+		static uint16_t max_apps_1 = 0;
+		static uint16_t max_apps_2 = 0;
+		if (stateLump.APPS1_Signal > max_apps_1) {
+			max_apps_1 = stateLump.APPS1_Signal;
+		}
+		if (stateLump.APPS2_Signal > max_apps_2) {
+			max_apps_2 = stateLump.APPS2_Signal;
+		}
+		static uint16_t min_BSE = 4095;
+		if (stateLump.bse_signal < min_BSE) {
+			min_BSE = stateLump.bse_signal;
+		}
+		static uint16_t max_BSE = 0;
+		if (stateLump.bse_signal > max_BSE) {
+			max_BSE = stateLump.bse_signal;
+		}
+
+		static uint16_t min_BR = 4095;
+		if (stateLump.Brake_R_Signal < min_BR) {
+			min_BR = stateLump.Brake_R_Signal;
+		}
+		static uint16_t max_BR = 0;
+		if (stateLump.Brake_R_Signal > max_BR) {
+			max_BR = stateLump.Brake_R_Signal;
+		}
+
+		static uint16_t min_BF = 4095;
+		if (stateLump.Brake_F_Signal < min_BF) {
+			min_BF = stateLump.Brake_F_Signal;
+		}
+		static uint16_t max_BF = 0;
+		if (stateLump.Brake_F_Signal > max_BF) {
+			max_BF = stateLump.Brake_F_Signal;
+		}
+
+		static uint16_t min_BSPD = 4095;
+		if (stateLump.bspd_signal < min_BSPD) {
+			min_BSPD = stateLump.bspd_signal;
+		}
+		static uint16_t max_BSPD = 0;
+		if (stateLump.bspd_signal > max_BSPD) {
+			max_BSPD = stateLump.bspd_signal;
+		}
+
+		LOGOMATIC("APPS1 %d (min %d, max %d) APPS2 %d (min %d, max %d) BSE %d (min %d, max %d) BSPD %d (min %d, max %d) Brake F %d (min %d, max %d), Brake R %d (min %d, max %d), Aux %d, Steering Angle %d\n",
+			stateLump.APPS1_Signal, min_apps_1, max_apps_1,
+			stateLump.APPS2_Signal, min_apps_2, max_apps_2,
+			stateLump.bse_signal, min_BSE, max_BSE,
+			stateLump.bspd_signal, min_BSPD, max_BSPD,
+			stateLump.Brake_F_Signal, min_BF, max_BF,
+			stateLump.Brake_R_Signal, min_BR, max_BR,
+			stateLump.aux_signal, stateLump.steering_angle_signal);
+}
+
+
 void read_digital(void)
 {
 	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
@@ -149,7 +214,7 @@ void ADC_Configure(void)
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
 	Init_Vals_ADC1.Channels = c1;
-	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
+	SamplingTime s1 = LL_ADC_SAMPLINGTIME_92CYCLES_5;
 	Init_Vals_ADC1.SamplingTimes = &s1;
 	ADC_Init(&Init_Vals_ADC1);
 
@@ -168,7 +233,7 @@ void ADC_Configure(void)
 	Init_Vals_ADC2.Num_Channels = 4;
 	Channel c2[] = {ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4, ADC_CHANNEL_15};
 	Init_Vals_ADC2.Channels = c2;
-	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
+	SamplingTime s2 = LL_ADC_SAMPLINGTIME_92CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
 	ADC_Init(&Init_Vals_ADC2);
 
@@ -416,16 +481,25 @@ int main(void)
 		// main state lopp, queues can messages within it
 		static uint32_t delay_timer;
 		static uint32_t ping_timer;
+		static uint32_t adc_timer;
+		// ADC
+		if (adc_timer % 1000 == 0){
+			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
+			write_adc_values_to_state_data();
+		}
+		adc_timer ++;
+
 		if (MillisecondsSinceBoot() >= delay_timer) {
-#ifdef PLAN_C
+			#ifdef PLAN_C
 			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "!PLAN_C!", 8);
-#endif
+			#endif
 
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 
-			// ADC
-			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
-			write_adc_values_to_state_data();
+			// ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
+			// void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output)
+			//ADC_UpdateAnalogValues(ADC_buffers, ADC_outputs, NUM_SIGNALS, WINDOW_SIZE, ); // TODO: figure out which alpha values to use for the different signals
+			// write_adc_values_to_state_data();
 
 			// state tick
 			ECU_State_Tick();
@@ -438,24 +512,7 @@ int main(void)
 				pingAll();
 			}
 			lightControl(&stateLump);
-
-			static uint16_t min_apps_1 = 4095;
-			static uint16_t min_apps_2 = 4095;
-			if (stateLump.APPS1_Signal < min_apps_1) {
-				min_apps_1 = stateLump.APPS1_Signal;
-			}
-			if (stateLump.APPS2_Signal < min_apps_2) {
-				min_apps_2 = stateLump.APPS2_Signal;
-			}
-			static uint16_t max_apps_1 = 0;
-			static uint16_t max_apps_2 = 0;
-			if (stateLump.APPS1_Signal > max_apps_1) {
-				max_apps_1 = stateLump.APPS1_Signal;
-			}
-			if (stateLump.APPS2_Signal > max_apps_2) {
-				max_apps_2 = stateLump.APPS2_Signal;
-			}
-			LOGOMATIC("APPS1 %d (min %d, max %d) APPS2 %d (min %d, max %d)\n", stateLump.APPS1_Signal, min_apps_1, max_apps_1, stateLump.APPS2_Signal, min_apps_2, max_apps_2);
+			ADC_Logomatic();
 		}
 	}
 	/* USER CODE END 3 */
