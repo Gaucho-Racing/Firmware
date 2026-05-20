@@ -108,7 +108,6 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// return brakeFpress || brakeRpress;
 	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
 
-
 	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
@@ -125,17 +124,21 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
-	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
-	float travel = fminf(fmaxf(total_signal_value / total_signal_range, 0.0f), 1.0f);
+	// float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	// float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+	// float travel = fminf(fmaxf((2.0f - appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
+	float travel1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
+	float travel2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
+	float travel = (travel1 + travel2) / 2.0f;
 	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float deviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	return deviation < 0.1f && deviation > -0.1f;
+	float travel1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
+	float travel2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
+	return fabsf(travel1 - travel2) < 0.1f;
 }
 
 bool BSE_Plausible(volatile const ECU_StateData *stateData)
