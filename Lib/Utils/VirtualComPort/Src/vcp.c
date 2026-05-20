@@ -73,6 +73,9 @@ void VCP_Send(const char *data, uint32_t length)
 
 	uint32_t primask = vcp_enter_critical();
 	vcp_tx_from_buffer();
+	if (vcp_tx_count > 0 && !LL_USART_IsEnabledIT_TXE(vcp_config.usart_instance)) {
+		LL_USART_EnableIT_TXE(vcp_config.usart_instance);
+	}
 	vcp_exit_critical(primask);
 }
 
@@ -216,7 +219,6 @@ void Setup_VCP(VCP_Config *input_config)
 	}
 
 	LL_USART_EnableIT_RXNE(vcp_config.usart_instance);
-	LL_USART_EnableIT_TXE(vcp_config.usart_instance);
 	LL_USART_Enable(vcp_config.usart_instance);
 	while ((!(LL_USART_IsActiveFlag_TEACK(vcp_config.usart_instance))) || (!(LL_USART_IsActiveFlag_REACK(vcp_config.usart_instance)))) {}
 

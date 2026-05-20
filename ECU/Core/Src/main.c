@@ -394,8 +394,7 @@ int main(void)
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-	Setup_Logomatic(&logomaticConfig);
-	Setup_VCP(&vcp_config);
+
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
@@ -407,6 +406,8 @@ int main(void)
 	MX_ADC2_Init();
 	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
+	Setup_Logomatic(&logomaticConfig);
+	Setup_VCP(&vcp_config);
 
 	// Initialize CAN
 	CAN_Configure();
