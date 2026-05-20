@@ -123,12 +123,11 @@ typedef struct {
 	VCP_FifoThreshold rx_fifo_threshold;
 	/* Alternate function for use on pins */
 	uint32_t alternate_function;
+	/* Callback function for handling received data */
+	void (*rx_callback)(const char data);
 } VCP_Config;
 
 void VCP_Send(const char *data, uint32_t length);
-bool VCP_IsDataAvailable();
-uint8_t VCP_Receive(void);
-uint8_t VCP_ReceiveLine(uint8_t *buffer, uint8_t buffer_size);
 void Setup_VCP(VCP_Config *input_config);
 
 #endif

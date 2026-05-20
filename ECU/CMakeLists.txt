@@ -89,6 +89,7 @@ target_link_libraries(
 		GR_ADC
 		PERIPHERAL_TIMEDCAN_LIB
 		BitManipulations_Lib
+		VCP_LIB
 )
 
 target_include_directories(
