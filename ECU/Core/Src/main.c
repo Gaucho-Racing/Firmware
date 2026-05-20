@@ -155,7 +155,7 @@ void ADC_Configure(void)
 
 	// TODO Use ADC peripheral API for configuring ideally... but honestly its fine
 	LL_ADC_SetOverSamplingScope(ADC1, LL_ADC_OVS_GRP_REGULAR_CONTINUED);
-	LL_ADC_ConfigOverSamplingRatioShift(ADC1, LL_ADC_OVS_RATIO_128, LL_ADC_OVS_SHIFT_RIGHT_7);
+	LL_ADC_ConfigOverSamplingRatioShift(ADC1, LL_ADC_OVS_RATIO_256, LL_ADC_OVS_SHIFT_RIGHT_8);
 
 	// ADC 2
 	ADC_Init_Values Init_Vals_ADC2 = {0};
@@ -174,7 +174,7 @@ void ADC_Configure(void)
 
 	// TODO Use ADC peripheral API for configuring ideally... but honestly its fine
 	LL_ADC_SetOverSamplingScope(ADC2, LL_ADC_OVS_GRP_REGULAR_CONTINUED);
-	LL_ADC_ConfigOverSamplingRatioShift(ADC2, LL_ADC_OVS_RATIO_128, LL_ADC_OVS_SHIFT_RIGHT_7);
+	LL_ADC_ConfigOverSamplingRatioShift(ADC2, LL_ADC_OVS_RATIO_256, LL_ADC_OVS_SHIFT_RIGHT_8);
 
 	/*
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
@@ -400,7 +400,7 @@ int main(void)
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		LL_mDelay(MAIN_LOOP_PERIOD_US / 1000);
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.6, ADC_outputs);
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
 		write_adc_values_to_state_data();
 	}
 
@@ -424,7 +424,7 @@ int main(void)
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
 
 			// ADC
-			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.6, ADC_outputs);
+			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
 			write_adc_values_to_state_data();
 
 			// state tick
