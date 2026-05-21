@@ -37,7 +37,36 @@ uint32_t MillisecondsSinceBoot(void);
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
 
 // Rate Limiting Macros
+/**
+ * @brief Macro to rate limit an action to 100 Hz (every 10 ms)
+ *
+ * Usage:
+ * static uint32_t last_action_time = 0;
+ * if (RATE_LIMIT_100_HZ(MillisecondsSinceBoot(), last_action_time)) {
+ *     // Perform action
+ *     last_action_time = MillisecondsSinceBoot();
+ * }
+ *
+ * @param x Current time in milliseconds (e.g., from MillisecondsSinceBoot())
+ * @param y Last time the action was performed in milliseconds
+ * @return true if at least 10 ms have passed since last action, false otherwise
+ */
 #define RATE_LIMIT_100_HZ(x, y) (x - y > 10)
+
+/**
+ * @brief Macro to rate limit an action to 10 Hz (every 100 ms)
+ *
+ * Usage:
+ * static uint32_t last_action_time = 0;
+ * if (RATE_LIMIT_10_HZ(MillisecondsSinceBoot(), last_action_time)) {
+ *     // Perform action
+ *     last_action_time = MillisecondsSinceBoot();
+ * }
+ *
+ * @param x Current time in milliseconds (e.g., from MillisecondsSinceBoot())
+ * @param y Last time the action was performed in milliseconds
+ * @return true if at least 100 ms have passed since last action, false otherwise
+ */
 #define RATE_LIMIT_10_HZ(x, y) (x - y > 100)
 
 // Checks stateData for critical errors
