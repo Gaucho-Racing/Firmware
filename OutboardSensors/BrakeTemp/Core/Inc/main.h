@@ -44,6 +44,12 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 #define BRAKETEMP_INTERVAL_MS 33
+#define WHEEL_SPEED_TIMEOUT_TICKS 10000
+#define MAX_RPM 341.51f
+#define SECONDS_PER_MIN 60
+#define PULSES_PER_ROT 1
+#define MAX_NUM_PULSES 32
+#define LOG_NUM_PULSES 5
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -55,7 +61,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+extern TIM_HandleTypeDef htim6;
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

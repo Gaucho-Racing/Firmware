@@ -186,6 +186,18 @@ void SysTick_Handler(void)
 	/* USER CODE END SysTick_IRQn 1 */
 }
 
+/**
+ * @brief This function handles EXTI timer for GPIO pins 10-15.
+ */
+void EXTI15_10_IRQHandler(void) {
+    // This calls the HAL dispatcher for Pin 11
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
+}
+
+void TIM6_DAC_IRQHandler(void) {
+    HAL_TIM_IRQHandler(&htim6);
+}
+
 /******************************************************************************/
 /* STM32G4xx Peripheral Interrupt Handlers                                    */
 /* Add here the Interrupt Handlers for the used peripherals.                  */

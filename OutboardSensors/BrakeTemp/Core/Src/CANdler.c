@@ -56,6 +56,32 @@ void CAN_sendTemp(float to)
 	can_send(can_handler, &msg);
 }
 
+uint16_t _rpm_f2u16(float rpm) {
+	float v = rpm / MAX_RPM;
+	if (v > 1.0f) {
+		v = 1.0f;
+	}
+	return (uint16_t)(v * 65535.0f);
+}
+
+void CAN_sendRPM(float rpm)
+{
+	FDCANTxMessage msg;
+	msg.tx_header.Identifier = (LOCAL_GR_ID << 20) | (GRCAN_WHEEL_SPEED << 8) | GRCAN_TCM; // do this
+	msg.tx_header.IdType = FDCAN_EXTENDED_ID;
+	msg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
+	msg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE; // honestly this might be a value you have to read from a node
+							      // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	msg.tx_header.DataLength = FDCAN_DLC_BYTES_2;
+	msg.tx_header.BitRateSwitch = FDCAN_BRS_ON;
+	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
+
+	((uint16_t *)(msg.data))[0] = _rpm_f2u16(rpm);
+
+	can_send(can_handler, &msg);
+}
+
 void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 {
 	FDCANTxMessage pingMsg;

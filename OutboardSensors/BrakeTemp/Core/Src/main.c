@@ -68,6 +68,13 @@ float ta, to;
 int status;
 uint8_t MLX90614_address = 0x5A;
 
+// Wheel speed stuff
+TIM_HandleTypeDef htim6;
+uint32_t pulse_time_deltas[MAX_NUM_PULSES];
+uint32_t last_tick = 0, temp_tick;
+uint8_t head = 0, tail = 0;
+uint8_t num_pulses = 0;
+
 /* Buffer used for reception */
 uint8_t aRxBuffer[BUFFERSIZE];
 /* USER CODE END PV */
@@ -97,6 +104,61 @@ int MLX90640_Initialize(void)
 	MLX90614_SMBusSendCommand(MLX90614_address, 0x61); // Lock EEPROM
 
 	return 0;
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance == TIM6) {
+		__HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_11);
+		HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+    }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	temp_tick = HAL_GetTick();
+
+    if (GPIO_Pin == GPIO_PIN_11) {
+		HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+
+		pulse_time_deltas[tail] = temp_tick - last_tick;
+		tail = (tail + 1) & (MAX_NUM_PULSES-1);
+
+		if (num_pulses < MAX_NUM_PULSES) {
+			num_pulses++;
+		} else {
+			head = (head + 1) & (MAX_NUM_PULSES-1);
+		}
+
+		last_tick = temp_tick;
+
+		HAL_TIM_Base_Start_IT(&htim6);
+    }
+}
+
+void ResetRPMHistory(void) {
+	for(uint8_t i = 0; i < MAX_NUM_PULSES; i++) {
+		pulse_time_deltas = 0;
+	}
+	head = 0;
+	tail = 0;
+	num_pulses = 0;
+	last_tick = HAL_GetTick();
+}
+
+float GetRPM(void) {
+	float rpm = 0.0f;
+	uint32_t time = 0;
+	for(uint8_t i = 0; i < num_pulses; i++) {
+		time += pulse_time_deltas[i];
+	}
+	time >>= 5;
+
+	if (time == 0) return 0.0f;
+
+	rpm = ((float)num_pulses) / time;
+	rpm *= SECONDS_PER_MIN;
+	rpm /= PULSES_PER_ROT;
+
+	return rpm;
 }
 
 /* USER CODE END 0 */
@@ -145,6 +207,9 @@ int main(void)
 	MX_I2C2_Init();
 	/* USER CODE BEGIN 2 */
 
+	WHEEL_SPEED_GPIO_INIT();
+	WHEEL_SPEED_TIMER_INIT(htim6, 1);
+
 	/* Configure LED2 */
 	// BSP_LED_Init(LED2);
 
@@ -165,8 +230,10 @@ int main(void)
 
 		status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
 		status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
+		if (HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
 		CAN_sendTemp(to);
+		CAN_sendRPM(GetRPM());
 		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
 		/* USER CODE END WHILE */
