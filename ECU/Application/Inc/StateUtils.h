@@ -11,7 +11,7 @@
 uint32_t MillisecondsSinceBoot(void);
 
 // Constants
-#define BRAKE_F_MIN 664	    // TODO: need to be determined FIXME: Rename better
+#define BRAKE_F_MIN 700	    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_F_MAX 4095    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_R_MIN 0	    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_R_MAX 4095    // TODO: need to be determined FIXME: Rename better
@@ -26,7 +26,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_BUZZER_TIME_MS 1000
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
-#define BSE_MIN 690
+#define BSE_MIN 720
 
 #define REGEN_STRENGTH 2.0f	      // define ratio of regen braking percent to brake pressure percent
 #define REGEN_MIN_SPEED_MPH 3.106856f // MPH
@@ -53,7 +53,6 @@ bool PressingBrake(volatile const ECU_StateData *stateData);
 float CalcBrakePercent(volatile const ECU_StateData *stateData);
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
 bool APPS_Plausible(volatile const ECU_StateData *stateData);
-bool BSE_Plausible(volatile const ECU_StateData *stateData);
 bool vehicle_is_moving(volatile const ECU_StateData *stateData);
 /* Disable inverter for both DTI and Custom */
 void disable_inverter(void);

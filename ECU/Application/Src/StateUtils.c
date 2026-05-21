@@ -107,7 +107,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
 	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-	if (stateData->Brake_F_Signal > (BRAKE_F_MIN + 15) || stateData->bse_signal > (BSE_MIN + 15)) {
+	if (stateData->Brake_F_Signal > (BRAKE_F_MIN) || stateData->bse_signal > (BSE_MIN)) {
 		return true;
 	}
 	return false;
@@ -141,17 +141,6 @@ bool APPS_Plausible(volatile const ECU_StateData *stateData)
 	float travel1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
 	float travel2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
 	return fabsf(travel1 - travel2) < 0.1f;
-}
-
-bool BSE_Plausible(volatile const ECU_StateData *stateData)
-{
-#ifdef PLAN_C
-	return true;
-#endif
-
-	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
-	// T.4.3.3
-	return stateData->bse_signal > BSE_MIN && stateData->bse_signal < BSE_MAX;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)

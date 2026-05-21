@@ -238,17 +238,12 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		last_apps_plausible_frame_millis = millis_since_boot;
 	}
 
-	static uint32_t last_bse_plausible_millis;
-	if (BSE_Plausible(stateData)) {
-		last_bse_plausible_millis = millis_since_boot;
-	}
-
 	float torque_request;
 	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= 100;
-	bool bse_plausible = (millis_since_boot - last_bse_plausible_millis) <= MAX_BSE_FAILURE_TIME;
-	if (stateData->apps_bse_violation || !apps_plausible || !bse_plausible) {
+
+	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (PressingBrake(stateData) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
+	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
 		torque_request = -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
 		torque_request = CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS;
