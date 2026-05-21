@@ -19,13 +19,10 @@ uint32_t MillisecondsSinceBoot(void);
 #define THROTTLE_MAX_1 1897 // TODO: need to be determined
 #define THROTTLE_MIN_2 2430 // TODO: need to be determined
 #define THROTTLE_MAX_2 1926 // TODO: need to be determined
-#define BSE_MAX 2000 // 1187 max , 1187/4096*3.3 = 0.96
-#define BSE_DEADZONE 500 // 688
-#define MAX_BSE_FAILURE_TIME 100
-#define MAX_APPS_FAILURE_TIME 100
+#define BSE_MAX 2000	    // 1187 max , 1187/4096*3.3 = 0.96
+#define BSE_DEADZONE 500    // 688
+#define MAX_APPS_IMPLAUSIBLE_TIME_MS 100
 #define MAX_BUZZER_TIME_MS 1000
-#define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
-#define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 #define BSE_MIN 720
 
 #define REGEN_STRENGTH 2.0f	      // define ratio of regen braking percent to brake pressure percent

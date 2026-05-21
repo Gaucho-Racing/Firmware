@@ -239,7 +239,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	float torque_request;
-	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= 100;
+	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= MAX_APPS_IMPLAUSIBLE_TIME_MS;
 
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
