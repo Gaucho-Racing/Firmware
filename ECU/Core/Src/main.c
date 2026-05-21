@@ -476,7 +476,7 @@ int main(void)
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		LL_mDelay(MAIN_LOOP_PERIOD_US / 1000);
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
 		write_adc_values_to_state_data();
 	}
 
