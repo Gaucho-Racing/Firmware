@@ -107,8 +107,10 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
 	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-
-	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
+	if (stateData->Brake_F_Signal > (BRAKE_F_MIN + 15) || stateData->bse_signal > (BSE_MIN + 15)) {
+		return true;
+	}
+	return false;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
@@ -118,7 +120,7 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 	return 0;
 #endif
 
-	return stateData->bse_signal / BSE_MAX;
+	return stateData->bse_signal / 4096.0f;
 }
 
 // TODO: reconsider deadzone
@@ -149,7 +151,7 @@ bool BSE_Plausible(volatile const ECU_StateData *stateData)
 
 	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
 	// T.4.3.3
-	return stateData->bse_signal > BSE_DEADZONE && stateData->bse_signal < BSE_MAX;
+	return stateData->bse_signal > BSE_MIN && stateData->bse_signal < BSE_MAX;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)

@@ -42,6 +42,7 @@
 #include "adc.h"
 #include "can.h"
 #include "stm32g4xx_hal.h"
+// #define PLAN_C
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -167,6 +168,16 @@ void ADC_Logomatic(void)
 			stateLump.Brake_F_Signal, min_BF, max_BF,
 			stateLump.Brake_R_Signal, min_BR, max_BR,
 			stateLump.aux_signal, stateLump.steering_angle_signal);
+
+		static float travel1 = 0;
+		static float travel2 = 0;
+		static float travel = 0;
+
+		travel1 = (stateLump.APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
+		travel2 = (stateLump.APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
+		travel = (travel1 + travel2) / 2.0f;
+
+		// LOGOMATIC("APPS1 Travel %f, APPS2 Travel %f, Average Travel %f\n", travel1, travel2, travel);
 }
 
 
@@ -512,7 +523,7 @@ int main(void)
 				pingAll();
 			}
 			lightControl(&stateLump);
-			ADC_Logomatic();
+			// ADC_Logomatic();
 		}
 	}
 	/* USER CODE END 3 */

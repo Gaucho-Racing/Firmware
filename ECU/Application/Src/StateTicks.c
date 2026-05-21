@@ -53,8 +53,8 @@ void ECU_State_Tick(void)
 	// stateLump.bms_light &= (bmsFailure(&stateLump));
 	// stateLump.imd_light &= (imdFailure(&stateLump));
 
-	stateLump.bms_light = (stateLump.ams_sense <= 0.5f) || (stateLump.bms_light && bmsFailure(&stateLump));
-	stateLump.imd_light = (stateLump.ams_sense <= 0.5f) || (stateLump.imd_light && imdFailure(&stateLump));
+	stateLump.bms_light = (stateLump.ams_sense <= 0.4f) || (stateLump.bms_light && bmsFailure(&stateLump));
+	stateLump.imd_light = (stateLump.imd_sense <= 0.4f) || (stateLump.imd_light && imdFailure(&stateLump));
 
 	stateLump.tssi_fault = stateLump.bms_light || stateLump.imd_light;
 

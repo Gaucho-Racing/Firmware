@@ -11,21 +11,22 @@
 uint32_t MillisecondsSinceBoot(void);
 
 // Constants
-#define BRAKE_F_MIN 0	    // TODO: need to be determined FIXME: Rename better
+#define BRAKE_F_MIN 664	    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_F_MAX 4095    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_R_MIN 0	    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_R_MAX 4095    // TODO: need to be determined FIXME: Rename better
-#define THROTTLE_MIN_1 2350 // TODO: need to be determined
-#define THROTTLE_MAX_1 1950 // TODO: need to be determined
-#define THROTTLE_MIN_2 2400 // TODO: need to be determined
-#define THROTTLE_MAX_2 2000 // TODO: need to be determined
-#define BSE_MAX 4096.0f
-#define BSE_DEADZONE 1.2f
+#define THROTTLE_MIN_1 2375 // TODO: need to be determined
+#define THROTTLE_MAX_1 1897 // TODO: need to be determined
+#define THROTTLE_MIN_2 2430 // TODO: need to be determined
+#define THROTTLE_MAX_2 1926 // TODO: need to be determined
+#define BSE_MAX 2000 // 1187 max , 1187/4096*3.3 = 0.96
+#define BSE_DEADZONE 500 // 688
 #define MAX_BSE_FAILURE_TIME 100
 #define MAX_APPS_FAILURE_TIME 100
 #define MAX_BUZZER_TIME_MS 3000
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
+#define BSE_MIN 690
 
 #define REGEN_STRENGTH 2.0f	      // define ratio of regen braking percent to brake pressure percent
 #define REGEN_MIN_SPEED_MPH 3.106856f // MPH
