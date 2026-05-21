@@ -23,7 +23,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define BSE_DEADZONE 500 // 688
 #define MAX_BSE_FAILURE_TIME 100
 #define MAX_APPS_FAILURE_TIME 100
-#define MAX_BUZZER_TIME_MS 3000
+#define MAX_BUZZER_TIME_MS 1000
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 #define BSE_MIN 690
