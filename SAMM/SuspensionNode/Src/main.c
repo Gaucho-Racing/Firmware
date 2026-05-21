@@ -55,10 +55,15 @@
 
 #define BMI_ACC_ODR 0x7 // Output data rate -> 50 Hz
 #define BMI_ACC_RANGE 0x2 // +/- 8g
-#define BMI_ACC_BITWIDTH 0x0 // Sets cut off freq to ODR/2
+#define BMI_ACC_MODE 0x7 // High performance mode
+#define BMI_ACC_BW 0x0 // Sets cut off freq to ODR/2
 #define BMI_ACC_AVGNUM 0x3 // Averaging of 8 samples
-#define BMI_ACC_MODE 0x4 // Normal mode
 
+#define BMI_GYR_ODR 0x7 // Output data rate -> 50 Hz
+#define BMI_GYR_RANGE 0x4 // 2000 deg/s (default)
+#define BMI_GYR_MODE 0x7 // High performance mode
+#define BMI_GYR_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_GYR_AVGNUM 0x3 // Averaging of 8 samples
 
 /* USER CODE END PD */
 
@@ -141,14 +146,18 @@ int main(void)
 		Error_Handler();
 	}
 
-	// Send 2 dummy bytes to switch BMI323 to SPI mode
-	uint16_t dummy_byte = 0x0000;
-	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi1,(uint8_t*)&dummy_byte, 1, HAL_MAX_DELAY);
-	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	HAL_Delay(1);  // Short delay after mode switch
+	bmi323_soft_reset(&bmi323_dev);
 
-	// bmi323_enable_acc(&bmi323_dev, BMI323_ACC_CONF, )
+	// Switch to IMU to SPI mode
+	uint8_t bmi323_mode_tx[4] = {0x00 | 0x80, 0x00, 0x00, 0x00};
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi1, bmi323_mode_tx, 4, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	HAL_Delay(1); // Short delay after mode switch
+
+	// Set up accelerometer and gyroscope configuration
+	bmi323_enable_acc(&bmi323_dev, BMI_ACC_MODE, BMI_ACC_AVGNUM, BMI_ACC_BW, BMI_ACC_RANGE, BMI_ACC_ODR);
+	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
 
 	// Initialize magnetic encoder
 	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
@@ -168,23 +177,33 @@ int main(void)
 		uint16_t imu_temp = bmi323_read_temp_data(&bmi323_dev);
 		uint16_t imu_status = bmi323_read_status(&bmi323_dev);
 
+		float imu_ax_test = ((float)imu_ax) / 4096.f;
+		float imu_ay_test = ((float)imu_ay) / 4096.f;
+		float imu_az_test = ((float)imu_az) / 4096.f;
+		float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+		float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+		float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+		float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
 
+		LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
+		LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
+		LOGOMATIC("IMU temperature: %f", imu_temp_test);
 
+		uint16_t mag_temp = mag_read_temp(&mag_dev);
+		uint16_t mag_hysteresis = mag_read_HANG(&mag_dev);
+		uint16_t mag_angle = mag_read_encoder_angle(&mag_dev);
+		int16_t mag_turns = mag_read_turns(&mag_dev);
+		uint8_t mag_status = check_status(&mag_dev);
 
-		uint16_t temp = mag_read_temp(&mag_dev);
-		uint16_t hysteresis = mag_read_HANG(&mag_dev);
-		uint16_t angle = mag_read_encoder_angle(&mag_dev);
-		int16_t turns = mag_read_turns(&mag_dev);
-		uint8_t bad = check_status(&mag_dev);
+		// TODO: check these conversion formulas
+		int16_t mag_temp_test = mag_temp - 60;
+		float mag_angle_test = mag_angle * 360.f / 4096.0f;
+		float mag_hysteresis_test = mag_hysteresis * 360.f / 4096.0f;
 
-		int16_t temp_test = temp - 60;
-		float angle_test = angle * 360.f / 4096.0f;
-		float hysteresis_test = hysteresis * 360.f / 4096.0f;
-
-		LOGOMATIC("Temperature: %d C\n", temp_test);
-		LOGOMATIC("Angle: %f deg\n", angle_test);
-		LOGOMATIC("Turns: %d\n", turns);
-		LOGOMATIC("Hysteresis Angle: %f\n", hysteresis_test);
+		LOGOMATIC("Mag temperature: %d C\n", mag_temp_test);
+		LOGOMATIC("Angle: %f deg\n", mag_angle_test);
+		LOGOMATIC("Turns: %d\n", mag_turns);
+		LOGOMATIC("Hysteresis Angle: %f\n", mag_hysteresis_test);
 
 		// uint8_t buffer[8] = {0};
 		// buffer[0] = (angle >> 8) & 0xFF;
@@ -201,18 +220,33 @@ int main(void)
 		// buffer[7] = 0x00;
 
 		IMU_Mag_Data test_data;
-		test_data.mag_angle = angle;
-		test_data.mag_temp = temp;
-		test_data.mag_turns = turns;
-		test_data.mag_status = bad;
-		test_data.mag_hysteresis = hysteresis;
+
+		test_data.bmi323_acc_x = imu_ax_test;
+		test_data.bmi323_acc_y = imu_ay_test;
+		test_data.bmi323_acc_z = imu_az_test;
+		test_data.bmi323_gyro_x = imu_gyrx_test;
+		test_data.bmi323_gyro_y = imu_gyry_test;
+		test_data.bmi323_gyro_z = imu_gyrz_test;
+		test_data.bmi323_temp = imu_temp_test;
+		test_data.bmi323_status = imu_status;
+
+		test_data.mag_angle = mag_angle;
+		test_data.mag_temp = mag_temp;
+		test_data.mag_turns = mag_turns;
+		test_data.mag_status = mag_status;
+		test_data.mag_hysteresis = mag_hysteresis;
 
 		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
 		GRCAN_MSG_ID test_msg_id = GRCAN_TCM_RESOURCE_UTILIZATION;
 		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
 
-		if (bad != 0) {
-			LOGOMATIC("Something is cooked");
+		if (imu_status != 0) {
+			LOGOMATIC("IMU is cooked");
+			Error_Handler();
+		}
+
+		if (mag_status != 0) {
+			LOGOMATIC("Mag encoder is cooked");
 			mag_write_error(&mag_dev);
 		}
 /* TODO:
