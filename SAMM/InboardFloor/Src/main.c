@@ -81,6 +81,9 @@ PUTCHAR_PROTOTYPE
 
 /* USER CODE BEGIN PV */
 // FDCAN_RxHeaderTypeDef RxHeader_FDCAN2;
+const uint16_t avgcalc_interval = 100;
+const uint16_t send_interval = 100;
+const float alpha = 0.2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,6 +94,21 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+// TODO: MOVE THIS FUNCTION ELSEWHERE
+uint32_t MillisecondsSinceBoot()
+{
+	return HAL_GetTick() * HAL_GetTickFreq();
+}
+
+
+uint16_t ema(uint16_t new_value, uint16_t old_value) {
+	if (old_value == 0xFFFF) {
+		return new_value;
+	}
+	return alpha * new_value + (1 - alpha) * old_value;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -167,10 +185,10 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	// begin VL53L4ED
 	HAL_Delay(100);					      // wait for 5ms to power up the device
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
+	HAL_GPIO_WritePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
 	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
 	HAL_Delay(100);					    // wait for 5ms to reset the device
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
+	HAL_GPIO_WritePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
 	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
 	HAL_Delay(100); // wait for 5ms to power up the device
 
@@ -179,7 +197,7 @@ int main(void)
 	VL53L4ED_ResultsData_t results;
 	uint8_t p_data_ready;
 
-	int TOF_ID = 0x52; // TODO: find where this address is from
+	int TOF_ID = 0x52;
 	HAL_GPIO_TogglePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin);
 	status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
 	LOGOMATIC("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
@@ -188,79 +206,122 @@ int main(void)
 	status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
 	status = VL53L4ED_SetOffset(TOF_ID, 0); // Set offset to 0 for testing, 50 otherwise?
 
+	uint32_t last_avgcalc_ms = MillisecondsSinceBoot();
+	uint32_t last_send_ms = MillisecondsSinceBoot();
+
+	uint16_t imu_ax = 0xFFFF;
+	uint16_t imu_ay = 0xFFFF;
+	uint16_t imu_az = 0xFFFF;
+	uint16_t imu_gyrx = 0xFFFF;
+	uint16_t imu_gyry = 0xFFFF;
+	uint16_t imu_gyrz = 0xFFFF;
+	uint16_t imu_temp = 0xFFFF;
+	uint16_t imu_status = 0;
+
+	results.distance_mm = 0xFFFF;
+	results.ambient_rate_kcps = 0xFFFF;
+	results.ambient_per_spad_kcps = 0xFFFF;
+	results.signal_rate_kcps = 0xFFFF;
+	results.signal_per_spad_kcps = 0xFFFF;
+	results.number_of_spad = 0xFFFF;
+	results.sigma_mm = 0xFFFF;
+	results.range_status = 0xFFFF;
+
 	while (1) {
 		/* USER CODE BEGIN 3 */
-		uint16_t imu_ax = bmi323_read_acc_x(&bmi323_dev);
-		uint16_t imu_ay = bmi323_read_acc_y(&bmi323_dev);
-		uint16_t imu_az = bmi323_read_acc_z(&bmi323_dev);
-		uint16_t imu_gyrx = bmi323_read_gyr_x(&bmi323_dev);
-		uint16_t imu_gyry = bmi323_read_gyr_y(&bmi323_dev);
-		uint16_t imu_gyrz = bmi323_read_gyr_z(&bmi323_dev);
-		uint16_t imu_temp = bmi323_read_temp_data(&bmi323_dev);
-		uint16_t imu_status = bmi323_read_status(&bmi323_dev);
-
-		float imu_ax_test = ((float)imu_ax) / 4096.f;
-		float imu_ay_test = ((float)imu_ay) / 4096.f;
-		float imu_az_test = ((float)imu_az) / 4096.f;
-		float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
-		float imu_gyry_test = ((float)imu_gyry) / 16.384f;
-		float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
-		float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
-
-		LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
-		LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
-		LOGOMATIC("IMU temperature: %f", imu_temp_test);
-
-		// begin VL53L4ED
-		status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
-		if (p_data_ready) {
-			/* (Mandatory) Clear HW interrupt to restart measurements */
-			VL53L4ED_ClearInterrupt(TOF_ID);
-			/* Read measured distance. RangeStatus = 0 means valid data */
-			VL53L4ED_GetResult(TOF_ID, &results);
-			LOGOMATIC("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67, results.signal_per_spad_kcps);
-		} else {
-			HAL_Delay(10);
-			__disable_irq();
-			__enable_irq();
-		}
-
-		HAL_Delay(100); // Read every 100ms
-
+		uint32_t current_time = MillisecondsSinceBoot();
 		IMU_ToF_Data test_data;
 
-		test_data.bmi323_acc_x = imu_ax_test;
-		test_data.bmi323_acc_y = imu_ay_test;
-		test_data.bmi323_acc_z = imu_az_test;
-		test_data.bmi323_gyro_x = imu_gyrx_test;
-		test_data.bmi323_gyro_y = imu_gyry_test;
-		test_data.bmi323_gyro_z = imu_gyrz_test;
-		test_data.bmi323_temp = imu_temp_test;
-		test_data.bmi323_status = imu_status;
+		if (current_time - last_avgcalc_ms > avgcalc_interval) {
+			last_avgcalc_ms = current_time;
 
-		test_data.distance_mm = results.distance_mm;
-		test_data.ambient_rate_kcps = results.ambient_rate_kcps;
-		test_data.ambient_per_spad_kcps = results.ambient_per_spad_kcps;
-		test_data.signal_rate_kcps = results.signal_rate_kcps;
-		test_data.signal_per_spad_kcps = results.signal_per_spad_kcps;
-		test_data.number_of_spad = results.number_of_spad;
-		test_data.sigma_mm = results.sigma_mm;
-		test_data.range_status = results.range_status;
+			imu_ax = ewa(bmi323_read_acc_x(&bmi323_dev), imu_ax);
+			imu_ay = ewa(bmi323_read_acc_x(&bmi323_dev), imu_ay);
+			imu_az = ewa(bmi323_read_acc_z(&bmi323_dev), imu_az);
+			imu_gyrx = ewa(bmi323_read_gyr_x(&bmi323_dev), imu_az);
+			imu_gyry = ewa(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
+			imu_gyrz = ewa(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
+			imu_temp = ewa(bmi323_read_temp_data(&bmi323_dev), imu_temp);
+			imu_status = bmi323_read_status(&bmi323_dev);
 
-		GRCAN_NODE_ID dest_node = GRCAN_TCM;
-		GRCAN_MSG_ID msg_id = GRCAN_INBOARDFLOOR_IMU_TOF_DATA;
-		InboardFloor_CAN_Send(dest_node, msg_id, &test_data);
+			float imu_ax_test = ((float)imu_ax) / 4096.f;
+			float imu_ay_test = ((float)imu_ay) / 4096.f;
+			float imu_az_test = ((float)imu_az) / 4096.f;
+			float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+			float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+			float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+			float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
 
-		if (imu_status != 0) {
-			LOGOMATIC("IMU is cooked");
-			Error_Handler();
+			LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
+			LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
+			LOGOMATIC("IMU temperature: %f", imu_temp_test);
+
+			// begin VL53L4ED
+			status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
+			if (p_data_ready) {
+				/* (Mandatory) Clear HW interrupt to restart measurements */
+				VL53L4ED_ClearInterrupt(TOF_ID);
+
+				VL53L4ED_ResultsData_t old_results = results;
+
+				/* Read measured distance. RangeStatus = 0 means valid data */
+				VL53L4ED_GetResult(TOF_ID, &results);
+				results.distance_mm = ewa(results.distance_mm, old_results.distance_mm);
+				results.ambient_rate_kcps = ewa(results.ambient_rate_kcps, old_results.ambient_rate_kcps);
+				results.ambient_per_spad_kcps = ewa(results.ambient_per_spad_kcps, old_results.ambient_per_spad_kcps);
+				results.signal_rate_kcps = ewa(results.signal_rate_kcps, old_results.signal_rate_kcps);
+				results.signal_per_spad_kcps = ewa(results.distance_mm, old_results.distance_mm);
+				results.number_of_spad = ewa(results.number_of_spad, old_results.number_of_spad);
+				results.sigma_mm = ewa(results.sigma_mm, old_results.sigma_mm);
+
+				LOGOMATIC("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67, results.signal_per_spad_kcps);
+			} else {
+				HAL_Delay(10);
+				__disable_irq();
+				__enable_irq();
+			}
+
+			HAL_Delay(100); // Read every 100ms
+
+			test_data.bmi323_acc_x = imu_ax;
+			test_data.bmi323_acc_y = imu_ay;
+			test_data.bmi323_acc_z = imu_az;
+			test_data.bmi323_gyro_x = imu_gyrx;
+			test_data.bmi323_gyro_y = imu_gyry;
+			test_data.bmi323_gyro_z = imu_gyrz;
+			test_data.bmi323_temp = imu_temp;
+			test_data.bmi323_status = imu_status;
+
+			test_data.distance_mm = results.distance_mm;
+			test_data.ambient_rate_kcps = results.ambient_rate_kcps;
+			test_data.ambient_per_spad_kcps = results.ambient_per_spad_kcps;
+			test_data.signal_rate_kcps = results.signal_rate_kcps;
+			test_data.signal_per_spad_kcps = results.signal_per_spad_kcps;
+			test_data.number_of_spad = results.number_of_spad;
+			test_data.sigma_mm = results.sigma_mm;
+			test_data.range_status = results.range_status;
+
 		}
-		if (results.range_status != 0) {
-			LOGOMATIC("ToF is cooked");
-			Error_Handler();
+
+		if (current_time - last_send_ms > send_interval) {
+			last_send_ms = current_time;
+
+			GRCAN_NODE_ID dest_node = GRCAN_TCM;
+			GRCAN_MSG_ID msg_id = GRCAN_INBOARDFLOOR_IMU_TOF_DATA;
+			InboardFloor_CAN_Send(dest_node, msg_id, &test_data);
+
+			if (imu_status != 0) {
+				LOGOMATIC("IMU is cooked");
+				Error_Handler();
+			}
+			if (results.range_status != 0) {
+				LOGOMATIC("ToF is cooked");
+				Error_Handler();
+			}
 		}
-	}
+
 	/* USER CODE END 3 */
+	}
 }
 
 /**
@@ -316,6 +377,7 @@ void SystemClock_Config(void)
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
 		Error_Handler();
 	}
+
 }
 
 /* USER CODE BEGIN 4 */

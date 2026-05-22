@@ -81,7 +81,9 @@ PUTCHAR_PROTOTYPE
 
 /* USER CODE BEGIN PV */
 // FDCAN_RxHeaderTypeDef RxHeader_FDCAN2;
-
+const uint16_t avgcalc_interval = 100;
+const uint16_t send_interval = 100;
+const float alpha = 0.2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,6 +94,18 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint32_t MillisecondsSinceBoot()
+{
+	return HAL_GetTick() * HAL_GetTickFreq();
+}
+
+
+uint16_t ema(uint16_t new_value, uint16_t old_value) {
+	if (old_value == 0xFFFF) {
+		return new_value;
+	}
+	return alpha * new_value + (1 - alpha) * old_value;
+}
 /* USER CODE END 0 */
 
 /**
@@ -221,13 +235,13 @@ int main(void)
 
 		IMU_Mag_Data test_data;
 
-		test_data.bmi323_acc_x = imu_ax_test;
-		test_data.bmi323_acc_y = imu_ay_test;
-		test_data.bmi323_acc_z = imu_az_test;
-		test_data.bmi323_gyro_x = imu_gyrx_test;
-		test_data.bmi323_gyro_y = imu_gyry_test;
-		test_data.bmi323_gyro_z = imu_gyrz_test;
-		test_data.bmi323_temp = imu_temp_test;
+		test_data.bmi323_acc_x = imu_ax;
+		test_data.bmi323_acc_y = imu_ay;
+		test_data.bmi323_acc_z = imu_az;
+		test_data.bmi323_gyro_x = imu_gyrx;
+		test_data.bmi323_gyro_y = imu_gyry;
+		test_data.bmi323_gyro_z = imu_gyrz;
+		test_data.bmi323_temp = imu_temp;
 		test_data.bmi323_status = imu_status;
 
 		test_data.mag_angle = mag_angle;
