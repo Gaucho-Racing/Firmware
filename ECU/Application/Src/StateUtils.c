@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "CANutils.h"
 #include "GRCAN_BUS_ID.h"
@@ -14,6 +15,7 @@
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
+#include "vcp.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -159,7 +161,7 @@ void disable_inverter(void)
 
 void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw)
 {
-	#define SIZE 64
+#define SIZE 64
 	static char buf[SIZE];
 	snprintf(buf, SIZE, "%ld A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
 	VCP_Send(buf, strlen(buf));
