@@ -168,6 +168,6 @@ void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, 
 /// @param num_signals Number of signals to be updated
 /// @param alphas The weights of the newest values (0.0 - 1.0)
 /// @param weighted_output Takes in the current output, overwrites with the new output
-void ADC_UpdateAnalogValues_EMA_Multi(volatile uint16_t *new_values, int num_signals, double alphas[], uint16_t *weighted_output)
+void ADC_UpdateAnalogValues_EMA_Multi(volatile uint16_t *new_values, int num_signals, double alphas[], uint16_t *weighted_output);
 
 #endif
