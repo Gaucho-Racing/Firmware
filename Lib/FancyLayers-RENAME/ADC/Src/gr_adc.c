@@ -210,10 +210,17 @@ void ADC_WeightedOutput(uint16_t *latest, float *weighted_output, int num_signal
 }
 */
 
-void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output)
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, float alpha, uint16_t *weighted_output)
 {
 	for (int i = 0; i < num_signals; ++i) {
 		weighted_output[i] = alpha * new_values[i] + (1 - alpha) * weighted_output[i];
+	}
+}
+
+void ADC_UpdateAnalogValues_EMA_Multi(volatile uint16_t *new_values, int num_signals, float alphas[], uint16_t *weighted_output)
+{
+	for (int i = 0; i < num_signals; ++i) {
+		weighted_output[i] = alphas[i] * new_values[i] + (1 - alphas[i]) * weighted_output[i];
 	}
 }
 

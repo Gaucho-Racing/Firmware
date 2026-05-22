@@ -161,8 +161,13 @@ void DMA_Init(DMA_Init_Values *Init_Values);
 /// @param num_signals Number of signals to be updated
 /// @param alpha The weight of the newest values (0.0 - 1.0)
 /// @param weighted_output Takes in the current output, overwrites with the new output
-void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, float alpha, uint16_t *weighted_output);
 
-void ADC_UpdateAnalogValues_EMA(volatile uint16_t *new_values, int num_signals, double alpha, uint16_t *weighted_output);
+/// @brief A smoothing function using an Exponential Moving Average with a different alpha per signal
+/// @param new_values An array of the most recent values
+/// @param num_signals Number of signals to be updated
+/// @param alphas The weights of the newest values (0.0 - 1.0)
+/// @param weighted_output Takes in the current output, overwrites with the new output
+void ADC_UpdateAnalogValues_EMA_Multi(volatile uint16_t *new_values, int num_signals, float alphas[], uint16_t *weighted_output);
 
 #endif
