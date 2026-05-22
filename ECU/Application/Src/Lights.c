@@ -55,9 +55,8 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 
 void dashLights(ECU_StateData *stateLump)
 {
-	uint8_t timeState = (MillisecondsSinceBoot() >> 8) % 32; // counter from 0 to 15 that increments every 256 ms:
+	uint8_t timeState = (MillisecondsSinceBoot() >> 8) % 32;						      // counter from 0 to 15 that increments every 256 ms:
 	bool powerLevelLight = (stateLump->ecu_state == GR_GLV_ON) && (timeState == (stateLump->powerlevel + 1) * 2); // 2 Hz light: # of blinks is power level plus one
-
 
 	// light control for if signal goog
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bspdFailure(stateLump) || powerLevelLight) << 2 | stateLump->imd_light << 1 | stateLump->bms_light};

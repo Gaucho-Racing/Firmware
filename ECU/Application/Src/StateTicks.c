@@ -1,7 +1,7 @@
 #include "StateTicks.h"
 
-#include <stdint.h>
 #include <math.h>
+#include <stdint.h>
 
 #include "CANutils.h"
 #include "ComparatorMacros.h"
