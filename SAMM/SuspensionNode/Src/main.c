@@ -165,6 +165,7 @@ int main(void)
 		Error_Handler();
 	}
 
+	uint16_t millis_since_last = HAL_GetTick();
 	/* USER CODE BEGIN WHILE */
 
 	while (1) {
@@ -246,11 +247,16 @@ int main(void)
 		}
 
 		if (mag_status != 0) {
-			LOGOMATIC("Mag encoder is cooked");
+			LOGOMATIC("Mag is cooked");
 			mag_write_error(&mag_dev);
+			Error_Handler();
 		}
-/* TODO:
+
 		HAL_Delay(10);
+
+/* TODO:
+
+	AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
 		static uint32_t millis_since_last = 0
 		if (millis since last < b)
 		only run loop every ~8-ish samples
