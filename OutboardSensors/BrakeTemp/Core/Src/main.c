@@ -20,16 +20,14 @@
 #include "main.h"
 
 #include "NodeID.h"
-#include "adc.h"
 #include "crc.h"
 #include "gpio.h"
 #include "i2c.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <arm_math.h>
 #include <stdio.h>
-
+#include "timer.h"
 #include "CANdler.h"
 #include "MLX90614_API.h"
 #include "MLX90614_SMBus_Driver.h"
@@ -58,8 +56,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-/* Buffer used for transmission */
-uint8_t aTxBuffer[] = "****SPI - Two Boards communication based on Polling **** SPI Message ******** SPI Message ******** SPI Message ****";
 
 // MLX stuff
 static uint16_t eeMLX90614[32];
@@ -75,8 +71,6 @@ uint32_t last_tick = 0, temp_tick;
 uint8_t head = 0, tail = 0;
 uint8_t num_pulses = 0;
 
-/* Buffer used for reception */
-uint8_t aRxBuffer[BUFFERSIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,12 +90,12 @@ PUTCHAR_PROTOTYPE
 
 int MLX90640_Initialize(void)
 {
-	MLX90614_SMBusSendCommand(MLX90614_address, 0x60); // Unlock EEPROM
+	MLX90614_SendCommand(MLX90614_address, 0x60); // Unlock EEPROM
 	MLX90614_SetEmissivity(MLX90614_address, emissivity);
 	MLX90614_SetFIR(MLX90614_address, 6); // 512 pt averaging
 	MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
-	MLX90614_DumpEE(MLX90614_address, &eeMLX90614);
-	MLX90614_SMBusSendCommand(MLX90614_address, 0x61); // Lock EEPROM
+	MLX90614_DumpEE(MLX90614_address, eeMLX90614);
+	MLX90614_SendCommand(MLX90614_address, 0x61); // Lock EEPROM
 
 	return 0;
 }
@@ -136,7 +130,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 void ResetRPMHistory(void) {
 	for(uint8_t i = 0; i < MAX_NUM_PULSES; i++) {
-		pulse_time_deltas = 0;
+		pulse_time_deltas[i] = 0;
 	}
 	head = 0;
 	tail = 0;
@@ -202,9 +196,8 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_ADC1_Init();
 	MX_CRC_Init();
-	MX_I2C2_Init();
+	MX_I2C2_SMBUS_Init();
 	/* USER CODE BEGIN 2 */
 
 	WHEEL_SPEED_GPIO_INIT();
@@ -216,12 +209,7 @@ int main(void)
 	CANInitialize();
 	can_start(can_handler);
 
-	/*##-1- Start the Full Duplex Communication process ########################*/
-	/* While the SPI in TransmitReceive process, user can transmit data through
-	   "aTxBuffer" buffer & receive data through "aRxBuffer" */
-	/* Timeout is set to 5S */
-
-	MLX90614_Initialize();
+	//MLX90614_Initialize();
 
 	/* USER CODE END 2 */
 	/* Infinite loop */

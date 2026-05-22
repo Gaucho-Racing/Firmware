@@ -67,13 +67,13 @@ void WHEEL_SPEED_GPIO_INIT(void) {
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 
 	GPIO_InitStruct.Pin = GPIO_PIN_11; // PB11
-	GPIO_InitStruct.Mode = GPIO_MODE_INT_RISING;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1); // e.g., EXTI15_10_IRQn
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 1); // e.g., EXTI15_10_IRQn
 	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 

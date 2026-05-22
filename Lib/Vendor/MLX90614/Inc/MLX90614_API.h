@@ -17,6 +17,8 @@
 #ifndef _MLX614_API_H_
 #define _MLX614_API_H_
 
+#include <stdint.h>
+
 int MLX90614_DumpEE(uint8_t slaveAddr, uint16_t *eeData);
 int MLX90614_GetTa(uint8_t slaveAddr, float *ta);
 int MLX90614_GetTo(uint8_t slaveAddr, float *to);
