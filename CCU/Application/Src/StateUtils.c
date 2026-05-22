@@ -1,5 +1,7 @@
 #include "StateUtils.h"
 
+#include <ctype.h>
+
 #include "CANdler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
