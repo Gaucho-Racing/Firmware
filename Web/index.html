@@ -2,15 +2,67 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+		/>
 		<title>GRCAN Viewer</title>
-		<link rel="stylesheet" href="index.css?v=2" />
-		<link rel="stylesheet" href="viewer.css?v=5" />
-		<link rel="stylesheet" href="editor.css?v=6" />
-		<link rel="stylesheet" href="graphView.css?v=2" />
+		<script>
+			(function () {
+				var s = document.createElement("style");
+				s.textContent =
+					":root{--_sat:env(safe-area-inset-top,0px);--_sab:env(safe-area-inset-bottom,0px)}";
+				document.head.appendChild(s);
+				var cs = getComputedStyle(document.documentElement);
+				var top = parseFloat(cs.getPropertyValue("--_sat")) || 0;
+				var bottom = parseFloat(cs.getPropertyValue("--_sab")) || 0;
+				var root = document.documentElement.style;
+				if (top > 0) root.setProperty("--sat", top + "px");
+				if (bottom > 0) root.setProperty("--sab", bottom + "px");
+				s.remove();
+			})();
+		</script>
+		<link rel="stylesheet" href="index.css?v=3" />
+		<link rel="stylesheet" href="viewer.css?v=6" />
+		<link rel="stylesheet" href="editor.css?v=8" />
+		<link rel="stylesheet" href="graphView.css?v=4" />
 	</head>
 	<body>
 		<canvas id="bg-canvas"></canvas>
+
+		<header id="mobile-appbar">
+			<button id="appbar-back" type="button" aria-label="Back" hidden>
+				<svg
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M15 18l-6-6 6-6" />
+				</svg>
+			</button>
+			<h1 id="appbar-title">GRCAN Viewer</h1>
+			<button id="appbar-menu" type="button" aria-label="Menu">
+				<svg
+					width="22"
+					height="22"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<line x1="4" x2="20" y1="7" y2="7" />
+					<line x1="4" x2="20" y1="12" y2="12" />
+					<line x1="4" x2="20" y1="17" y2="17" />
+				</svg>
+			</button>
+		</header>
 
 		<div class="app-shell">
 			<aside class="app-sidebar">
@@ -52,15 +104,27 @@
 					/>
 				</div>
 
-				<button id="edit-mode-toggle" class="sidebar-btn sidebar-btn-edit">
+				<button
+					id="edit-mode-toggle"
+					type="button"
+					class="sidebar-btn sidebar-btn-edit"
+				>
 					Edit Mode
 				</button>
 
-				<button id="download-btn" class="sidebar-btn sidebar-btn-download">
+				<button
+					id="download-btn"
+					type="button"
+					class="sidebar-btn sidebar-btn-download"
+				>
 					Download GRCAN.CANdo
 				</button>
 
-				<button id="graph-view-btn" class="sidebar-btn sidebar-btn-graph">
+				<button
+					id="graph-view-btn"
+					type="button"
+					class="sidebar-btn sidebar-btn-graph"
+				>
 					Graph View
 				</button>
 			</aside>
@@ -73,27 +137,41 @@
 						placeholder="Search nodes, buses, messages..."
 					/>
 				</div>
-				<div id="viewer">
-					<div class="panel" id="bus-panel">
-						<div class="panel-header">Bus</div>
-						<div class="panel-list" id="bus-list">
-							<span class="placeholder">Select a ref</span>
+				<div id="viewer" data-step="0">
+					<div class="viewer-track">
+						<div class="panel" id="bus-panel">
+							<div class="panel-header">Bus</div>
+							<div class="panel-list" id="bus-list">
+								<span class="placeholder">Select a ref</span>
+							</div>
 						</div>
-					</div>
-					<div class="panel" id="node-panel">
-						<div class="panel-header">Nodes</div>
-						<div class="panel-list" id="node-list">
-							<span class="placeholder">Select a bus</span>
+						<div class="panel" id="node-panel">
+							<div class="panel-header">Nodes</div>
+							<div class="panel-list" id="node-list">
+								<span class="placeholder">Select a bus</span>
+							</div>
 						</div>
-					</div>
-					<div class="panel" id="msg-panel">
-						<div class="panel-header">Messages</div>
-						<div class="panel-list" id="msg-list">
-							<span class="placeholder">Select a node</span>
+						<div class="panel" id="msg-panel">
+							<div class="panel-header">Messages</div>
+							<div class="panel-list" id="msg-list">
+								<span class="placeholder">Select a node</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</main>
+		</div>
+
+		<div id="mobile-menu-backdrop" class="sheet-backdrop" hidden></div>
+		<div
+			id="mobile-menu-sheet"
+			class="sheet"
+			hidden
+			role="dialog"
+			aria-label="Menu"
+		>
+			<div class="sheet-grabber"></div>
+			<div id="sidebar-mount"></div>
 		</div>
 
 		<!-- Script load order is significant: each layer depends on the ones above.
@@ -104,7 +182,8 @@
 		     diffViewer.js → DiffViewer (standalone diff modal)
 		     viewer.js     → main controller (rendering + edit-mode wiring)
 		     background.js → decorative canvas (no dependencies) -->
-		<script src="physicalTopology.js"></script>
+		<script src="physicalTopology.js?v=1"></script>
+		<script src="physicalGroups.js"></script>
 		<script src="logic.js?v=5"></script>
 		<script src="formUtils.js?v=2"></script>
 		<script src="editor.js?v=5"></script>
@@ -117,10 +196,10 @@
 		<script src="formBusAdd.js?v=1"></script>
 		<script src="formConfirmDelete.js?v=1"></script>
 		<script src="formSuperAdd.js?v=1"></script>
-		<script src="diffViewer.js?v=2"></script>
-		<script src="cytoscape.min.js"></script>
-		<script src="viewer.js?v=15"></script>
-		<script src="graphView.js?v=3"></script>
+		<script src="diffViewer.js?v=3"></script>
+		<script src="viewer.js?v=17"></script>
+		<script src="layoutPhysicalBus.js"></script>
+		<script src="graphView.js?v=5"></script>
 		<script src="background.js?v=3"></script>
 	</body>
 </html>

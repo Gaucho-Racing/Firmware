@@ -116,6 +116,10 @@
 	color: #67728b;
 }
 
+body.is-mobile .item-chevron {
+	display: none;
+}
+
 .item-accent {
 	flex: 0 0 auto;
 	font-size: 0.68rem;
@@ -213,6 +217,32 @@
 
 .msg-byte-bits {
 	color: #9aa8c8;
+}
+
+.msg-map-equation {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	font-size: 0.63rem;
+	font-family: "Fira Mono", "Consolas", monospace;
+	color: #6ee7b7;
+	background: rgba(16, 185, 129, 0.12);
+	border: 1px solid rgba(52, 211, 153, 0.3);
+	vertical-align: middle;
+}
+
+.msg-scaled-range {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	font-size: 0.63rem;
+	font-family: "Fira Mono", "Consolas", monospace;
+	color: #93c5fd;
+	background: rgba(59, 130, 246, 0.12);
+	border: 1px solid rgba(147, 197, 253, 0.3);
+	vertical-align: middle;
 }
 
 .msg-byte-comment {
@@ -352,9 +382,31 @@
 	border-radius: 4px;
 }
 
+/* ── Mobile: hide expand arrow; tap name row to expand instead ── */
+.is-mobile .msg-expand-btn {
+	display: none;
+}
+
+.is-mobile .msg-name-row-tappable {
+	cursor: pointer;
+}
+
+.is-mobile .msg-name-row-tappable:focus-visible {
+	outline: 2px solid #8b5cf6;
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.is-mobile .msg-name-row-tappable:active {
+	background: rgba(124, 58, 237, 0.08);
+	border-radius: 4px;
+}
+
 /* ── Message expand/collapse toggle ── */
 .msg-expand-btn {
 	flex-shrink: 0;
+	background: transparent;
+	border: 0;
 	color: #8b5cf6;
 	cursor: pointer;
 	font-size: 0.82rem;
@@ -381,4 +433,100 @@
 
 .msg-details.collapsed {
 	max-height: 0;
+}
+
+/* ── Desktop: viewer-track is transparent (panels participate directly in #viewer's flex) ── */
+body:not(.is-mobile) .viewer-track {
+	display: contents;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   Mobile drill-down (≤768px): three panels become a horizontally
+   translating track. Track width and step indices are coupled to the
+   number of panels — adding a 4th step requires bumping `width: 300vw`,
+   the translateX amounts, and the MobileNav step ceiling in viewer.js.
+   ────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+	#viewer {
+		flex-direction: row;
+		overflow: hidden;
+		height: calc(100dvh - 56px - 56px); /* appbar (56) + search row (~56) */
+		min-height: 0;
+		border-radius: 8px;
+	}
+
+	.viewer-track {
+		display: flex;
+		flex-direction: row;
+		width: 300vw;
+		height: 100%;
+		transition: transform 0.25s ease-out;
+		will-change: transform;
+	}
+
+	#viewer[data-step="0"] .viewer-track {
+		transform: translateX(0);
+	}
+	#viewer[data-step="1"] .viewer-track {
+		transform: translateX(-100vw);
+	}
+	#viewer[data-step="2"] .viewer-track {
+		transform: translateX(-200vw);
+	}
+
+	.panel {
+		flex: 0 0 100vw;
+		max-width: 100vw;
+		border-right: none;
+	}
+
+	#bus-panel,
+	#node-panel,
+	#msg-panel {
+		flex: 0 0 100vw;
+	}
+
+	.panel-item {
+		min-height: 48px;
+		padding: 12px 14px;
+		font-size: 0.95rem;
+	}
+
+	.msg-item {
+		min-height: 56px;
+		padding: 14px;
+		font-size: 0.95rem;
+	}
+
+	.msg-name {
+		font-size: 0.95rem;
+	}
+
+	.panel-header {
+		padding: 14px 16px 12px;
+		font-size: 0.74rem;
+	}
+
+	#viewer-search-row {
+		padding: 0 0 10px;
+	}
+
+	#viewer-search {
+		font-size: 16px; /* iOS zoom-on-focus prevention */
+		padding: 11px 14px;
+		min-height: 44px;
+	}
+
+	#search-dropdown {
+		max-height: 60dvh;
+	}
+
+	.search-result-row {
+		min-height: 48px;
+		padding: 10px 14px;
+	}
+
+	.sr-name {
+		font-size: 0.92rem;
+	}
 }

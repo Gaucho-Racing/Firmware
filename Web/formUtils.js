@@ -59,8 +59,10 @@
 		h2.textContent = title;
 		header.appendChild(h2);
 		const closeBtn = document.createElement("button");
+		closeBtn.type = "button";
 		closeBtn.className = "editor-modal-close";
 		closeBtn.innerHTML = "&times;";
+		closeBtn.setAttribute("aria-label", "Close");
 		closeBtn.addEventListener("click", () => closeOverlay(overlay));
 		header.appendChild(closeBtn);
 

@@ -36,6 +36,7 @@ function(add_gr_project)
 				${TARGET_NAME}_USER_CODE # Blame Owen
 				LOGOMATIC_LIB
 				GLOBALSHARE_LIB
+				m
 		)
 
 		target_link_options(
