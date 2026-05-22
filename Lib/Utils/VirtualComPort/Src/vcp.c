@@ -5,9 +5,16 @@
 
 #include "Logomatic.h"
 #include "main.h"
+#include "vcp_config.h"
 
-#ifndef VCP_TX_BUFFER_SIZE
-#define VCP_TX_BUFFER_SIZE 128
+#ifdef VCP_CONFIG_CLAIM_USART1
+static USART_TypeDef *usart_instance = USART1;
+#elif defined(VCP_CONFIG_CLAIM_USART2)
+static USART_TypeDef *usart_instance = USART2;
+#elif defined(VCP_CONFIG_CLAIM_USART3)
+static USART_TypeDef *usart_instance = USART3;
+#else
+#error "No USART instance claimed in `vcp_config.h`"
 #endif
 
 static bool is_initialized = false;
@@ -36,8 +43,8 @@ static void vcp_tx_from_buffer(void)
 		return;
 	}
 
-	while (vcp_tx_count > 0 && LL_USART_IsActiveFlag_TXE(vcp_config.usart_instance)) {
-		LL_USART_TransmitData8(vcp_config.usart_instance, vcp_tx_buffer[vcp_tx_tail]);
+	while (vcp_tx_count > 0 && LL_USART_IsActiveFlag_TXE(usart_instance)) {
+		LL_USART_TransmitData8(usart_instance, vcp_tx_buffer[vcp_tx_tail]);
 		vcp_tx_tail = (vcp_tx_tail + 1) % VCP_TX_BUFFER_SIZE;
 		vcp_tx_count--;
 	}
@@ -73,8 +80,8 @@ void VCP_Send(const char *data, uint32_t length)
 
 	uint32_t primask = vcp_enter_critical();
 	vcp_tx_from_buffer();
-	if (vcp_tx_count > 0 && !LL_USART_IsEnabledIT_TXE(vcp_config.usart_instance)) {
-		LL_USART_EnableIT_TXE(vcp_config.usart_instance);
+	if (vcp_tx_count > 0 && !LL_USART_IsEnabledIT_TXE(usart_instance)) {
+		LL_USART_EnableIT_TXE(usart_instance);
 	}
 	vcp_exit_critical(primask);
 }
@@ -87,7 +94,7 @@ void Setup_VCP(VCP_Config *input_config)
 	}
 	vcp_config = *input_config;
 
-	if (vcp_config.usart_instance == NULL) {
+	if (usart_instance == NULL) {
 		LOGOMATIC("USART instance is NULL in Setup_VCP\n");
 		return;
 	}
@@ -97,7 +104,7 @@ void Setup_VCP(VCP_Config *input_config)
 		return;
 	}
 
-	if (vcp_config.usart_instance == USART1) {
+	if (usart_instance == USART1) {
 		switch (vcp_config.clock_source) {
 			case VCP_CLOCK_PCLK:
 				LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
@@ -116,7 +123,7 @@ void Setup_VCP(VCP_Config *input_config)
 				return;
 		}
 		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-	} else if (vcp_config.usart_instance == USART2) {
+	} else if (usart_instance == USART2) {
 		switch (vcp_config.clock_source) {
 			case VCP_CLOCK_PCLK:
 				LL_RCC_SetUSARTClockSource(LL_RCC_USART2_CLKSOURCE_PCLK1);
@@ -135,7 +142,7 @@ void Setup_VCP(VCP_Config *input_config)
 				return;
 		}
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
-	} else if (vcp_config.usart_instance == USART3) {
+	} else if (usart_instance == USART3) {
 		switch (vcp_config.clock_source) {
 			case VCP_CLOCK_PCLK:
 				LL_RCC_SetUSARTClockSource(LL_RCC_USART3_CLKSOURCE_PCLK1);
@@ -203,24 +210,28 @@ void Setup_VCP(VCP_Config *input_config)
 						 .TransferDirection = LL_USART_DIRECTION_TX_RX,
 						 .HardwareFlowControl = LL_USART_HWCONTROL_NONE,
 						 .OverSampling = vcp_config.oversampling};
-	LL_USART_Init(vcp_config.usart_instance, &USART_InitStruct);
+	LL_USART_Init(usart_instance, &USART_InitStruct);
 
-	LL_USART_SetTXFIFOThreshold(vcp_config.usart_instance, vcp_config.tx_fifo_threshold);
-	LL_USART_SetRXFIFOThreshold(vcp_config.usart_instance, vcp_config.rx_fifo_threshold);
-	LL_USART_DisableFIFO(vcp_config.usart_instance);
-	LL_USART_ConfigAsyncMode(vcp_config.usart_instance);
+	LL_USART_SetTXFIFOThreshold(usart_instance, vcp_config.tx_fifo_threshold);
+	LL_USART_SetRXFIFOThreshold(usart_instance, vcp_config.rx_fifo_threshold);
+	LL_USART_DisableFIFO(usart_instance);
+	LL_USART_ConfigAsyncMode(usart_instance);
 
-	if (vcp_config.usart_instance == USART1) {
+	if (usart_instance == USART1) {
 		NVIC_EnableIRQ(USART1_IRQn);
-	} else if (vcp_config.usart_instance == USART2) {
+	} else if (usart_instance == USART2) {
 		NVIC_EnableIRQ(USART2_IRQn);
-	} else if (vcp_config.usart_instance == USART3) {
+	} else if (usart_instance == USART3) {
 		NVIC_EnableIRQ(USART3_IRQn);
 	}
 
-	LL_USART_EnableIT_RXNE(vcp_config.usart_instance);
-	LL_USART_Enable(vcp_config.usart_instance);
-	while ((!(LL_USART_IsActiveFlag_TEACK(vcp_config.usart_instance))) || (!(LL_USART_IsActiveFlag_REACK(vcp_config.usart_instance)))) {}
+	if (vcp_config.rx_callback != NULL) {
+		LL_USART_EnableIT_RXNE(usart_instance);
+	}
+
+	LL_USART_EnableIT_RXNE(usart_instance);
+	LL_USART_Enable(usart_instance);
+	while ((!(LL_USART_IsActiveFlag_TEACK(usart_instance))) || (!(LL_USART_IsActiveFlag_REACK(usart_instance)))) {}
 
 	is_initialized = true;
 }
@@ -237,38 +248,46 @@ void VCP_IRQHandler(void)
 		return;
 	}
 
-	if (LL_USART_IsEnabledIT_TXE(vcp_config.usart_instance) && LL_USART_IsActiveFlag_TXE(vcp_config.usart_instance)) {
+	if (LL_USART_IsEnabledIT_TXE(usart_instance) && LL_USART_IsActiveFlag_TXE(usart_instance)) {
 		uint32_t primask = vcp_enter_critical();
 		vcp_tx_from_buffer();
 		if (vcp_tx_count == 0) {
-			LL_USART_DisableIT_TXE(vcp_config.usart_instance);
+			LL_USART_DisableIT_TXE(usart_instance);
 		}
 		vcp_exit_critical(primask);
 	}
 
-	if (LL_USART_IsEnabledIT_RXNE(vcp_config.usart_instance) && LL_USART_IsActiveFlag_RXNE(vcp_config.usart_instance)) {
-		char received_data = (char)LL_USART_ReceiveData8(vcp_config.usart_instance);
+	if (LL_USART_IsEnabledIT_RXNE(usart_instance) && LL_USART_IsActiveFlag_RXNE(usart_instance)) {
+		char received_data = (char)LL_USART_ReceiveData8(usart_instance);
 		if (vcp_config.rx_callback != NULL) {
 			vcp_config.rx_callback(received_data);
+		} else {
+			LOGOMATIC("VCP Rx: %c\n", received_data);
 		}
 	}
 
-	if (LL_USART_IsActiveFlag_ORE(vcp_config.usart_instance)) {
-		LL_USART_ClearFlag_ORE(vcp_config.usart_instance);
+	if (LL_USART_IsActiveFlag_ORE(usart_instance)) {
+		LL_USART_ClearFlag_ORE(usart_instance);
 	}
 }
 
-__weak void USART1_IRQHandler(void)
+#ifdef VCP_CONFIG_CLAIM_USART1
+void USART1_IRQHandler(void)
 {
 	VCP_IRQHandler();
 }
+#endif
 
-__weak void USART2_IRQHandler(void)
+#ifdef VCP_CONFIG_CLAIM_USART2
+void USART2_IRQHandler(void)
 {
 	VCP_IRQHandler();
 }
+#endif
 
-__weak void USART3_IRQHandler(void)
+#ifdef VCP_CONFIG_CLAIM_USART3
+void USART3_IRQHandler(void)
 {
 	VCP_IRQHandler();
 }
+#endif
