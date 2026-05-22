@@ -169,14 +169,12 @@ void ADC_Logomatic(void)
 			stateLump.Brake_R_Signal, min_BR, max_BR,
 			stateLump.aux_signal, stateLump.steering_angle_signal);
 
-		static float travel1 = 0;
-		static float travel2 = 0;
-		static float travel = 0;
-
-		travel1 = (stateLump.APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
-		travel2 = (stateLump.APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
-		travel = (travel1 + travel2) / 2.0f;
-
+		// static float travel1 = 0;
+		// static float travel2 = 0;
+		// static float travel = 0;
+		// travel1 = (stateLump.APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
+		// travel2 = (stateLump.APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
+		// travel = (travel1 + travel2) / 2.0f;
 		// LOGOMATIC("APPS1 Travel %f, APPS2 Travel %f, Average Travel %f\n", travel1, travel2, travel);
 }
 
