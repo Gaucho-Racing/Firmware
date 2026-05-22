@@ -81,6 +81,7 @@ PUTCHAR_PROTOTYPE
 
 /* USER CODE BEGIN PV */
 // FDCAN_RxHeaderTypeDef RxHeader_FDCAN2;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
