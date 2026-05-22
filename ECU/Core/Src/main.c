@@ -486,7 +486,20 @@ int main(void)
 		static uint32_t adc_timer;
 		// ADC
 		if (adc_timer % 1000 == 0) {
-			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
+			static float alphas[] = {
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+				0.01,
+			};
+			ADC_UpdateAnalogValues_EMA_Multi(ADC_buffers, NUM_SIGNALS, alphas, ADC_outputs);
 			write_adc_values_to_state_data();
 		}
 		adc_timer++;
