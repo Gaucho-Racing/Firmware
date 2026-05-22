@@ -126,21 +126,29 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	// float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
-	// float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	// float travel = fminf(fmaxf((2.0f - appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
-	float travel1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
-	float travel2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
-	float travel = (travel1 + travel2) / 2.0f;
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+
+	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
 	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float travel1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
-	float travel2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
-	return fabsf(travel1 - travel2) < 0.1f;
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+
+	float error = fabsf(appspos1 - appspos2);
+
+	return error < 0.1f;
+}
+
+bool BSE_Plausible(volatile const ECU_StateData *stateData)
+{
+	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
+	// T.4.3.3
+	return stateData->bse_signal > BSE_DEADZONE && stateData->bse_signal < BSE_MAX;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)

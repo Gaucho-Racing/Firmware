@@ -286,15 +286,15 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
 	*/
-	// TODO: Rate limit
-	if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
-		LOGOMATIC("Warning: Tractive System fails to discharge in %d seconds.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
-		// ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
-	}
 
 	// Discharge the car @ 100 Hz
 	static uint32_t last_discharge_request_millis;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_discharge_request_millis)) {
+		if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
+			LOGOMATIC("Warning: Tractive System fails to discharge in %d ms.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
+			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
+		}
+
 		GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;
