@@ -39,6 +39,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			GLOBALSHARE_LIB
 			CANfigurator
 			LOGOMATIC_LIB
+			m
 			# GR_ADC
 			# PERIPHERAL_CAN_LIB
 			BitManipulations_Lib

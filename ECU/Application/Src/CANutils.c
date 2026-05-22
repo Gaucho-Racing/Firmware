@@ -84,7 +84,7 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	msg.tx_header = TxHeader;
 
 	uint8_t temp;
-	for (uint16_t i = 0; i < size / 2; ++i) {
+	for (uint32_t i = 0; i < size / 2; ++i) {
 		temp = ((uint8_t *)data)[i];
 		((uint8_t *)data)[i] = ((uint8_t *)data)[size - i - 1];
 		((uint8_t *)data)[size - i - 1] = temp;
@@ -129,7 +129,7 @@ void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
 	uint32_t millis_since_boot = MillisecondsSinceBoot();
 
 	static uint32_t last_can_tcm_request_millis = 0;
-	
+
 	if (millis_since_boot - last_can_tcm_request_millis > 100) {
 		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
 						     .bse_signal = stateData->bse_signal,

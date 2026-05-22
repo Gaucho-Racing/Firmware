@@ -1,2 +1,2 @@
 /* Disables brakes */
-#define PLAN_C
+// #define PLAN_C

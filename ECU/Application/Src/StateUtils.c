@@ -107,9 +107,10 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
 	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-
-
-	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
+	if (stateData->Brake_F_Signal > (BRAKE_F_MIN) || stateData->bse_signal > (BSE_MIN)) {
+		return true;
+	}
+	return false;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
@@ -119,34 +120,28 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 	return 0;
 #endif
 
-	return stateData->bse_signal / BSE_MAX;
+	return stateData->bse_signal / 4096.0f;
 }
 
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
-	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
-	float travel = fminf(fmaxf(total_signal_value / total_signal_range, 0.0f), 1.0f);
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+
+	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
 	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float deviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	return deviation < 0.1f && deviation > -0.1f;
-}
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
 
-bool BSE_Plausible(volatile const ECU_StateData *stateData)
-{
-#ifdef PLAN_C
-	return true;
-#endif
+	float error = fabsf(appspos1 - appspos2);
 
-	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
-	// T.4.3.3
-	return stateData->bse_signal > BSE_DEADZONE && stateData->bse_signal < BSE_MAX;
+	return error < 0.1f;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)
@@ -174,7 +169,7 @@ void SendEcuBonusInfo(const ECU_StateData *stateData)
 
 void disable_inverter(void)
 {
-	GRCAN_INVERTER_COMMAND_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_COMMAND, &inverter_msg, sizeof(inverter_msg));
+	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
 	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
 }
