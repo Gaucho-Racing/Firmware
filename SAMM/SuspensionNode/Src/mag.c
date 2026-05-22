@@ -44,7 +44,7 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET); // Release chip select back to high
 
 	if (res != HAL_OK) {
-		return 0xFFFF; // TODO: Find appropriate error indicator
+		return 0xFFFF;
 	}
 
 	return ((uint16_t)rx_word[0] << 8) | rx_word[1];

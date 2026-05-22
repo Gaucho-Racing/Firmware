@@ -33,7 +33,6 @@ typedef struct {
 	uint16_t bmi323_status;
 
 	/* Time of Flight Data */
-    // TODO: figure out how to get these values from tof results struct when more awake
     uint16_t distance_mm;
     uint16_t ambient_rate_kcps;
     uint16_t ambient_per_spad_kcps;

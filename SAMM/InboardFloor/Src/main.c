@@ -41,6 +41,9 @@
 /* USER CODE BEGIN PTD */
 #define BMI323_CS_GPIO_Port GPIOA
 #define BMI323_CS_Pin GPIO_PIN_4
+
+#define TOF_XSHUT_GPIO_Port GPIOA
+#define TOF_XSHUT_Pin GPIO_PIN_1
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -172,18 +175,18 @@ int main(void)
 	HAL_Delay(100); // wait for 5ms to power up the device
 
 	uint16_t status = 0;
-
 	uint16_t sensor_id = 0;
 	VL53L4ED_ResultsData_t results;
 	uint8_t p_data_ready;
 
-	int TOF_ID = 0x52;
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+	int TOF_ID = 0x52; // TODO: find where this address is from
+	HAL_GPIO_TogglePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin);
 	status = VL53L4ED_GetSensorId(TOF_ID, &sensor_id);
-	printf("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
+	LOGOMATIC("VL53L4ED Sensor ID: 0x%04X\n", sensor_id);
+
 	status = VL53L4ED_StartRanging(TOF_ID);
 	status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
-	status = VL53L4ED_SetOffset(TOF_ID, 50); // Set offset to 0 for testing
+	status = VL53L4ED_SetOffset(TOF_ID, 0); // Set offset to 0 for testing, 50 otherwise?
 
 	while (1) {
 		/* USER CODE BEGIN 3 */
@@ -215,19 +218,47 @@ int main(void)
 			VL53L4ED_ClearInterrupt(TOF_ID);
 			/* Read measured distance. RangeStatus = 0 means valid data */
 			VL53L4ED_GetResult(TOF_ID, &results);
-			printf("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67, results.signal_per_spad_kcps);
+			LOGOMATIC("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67, results.signal_per_spad_kcps);
 		} else {
 			HAL_Delay(10);
 			__disable_irq();
 			__enable_irq();
 		}
 
-		// begin BMI323
-		//  int16_t ax, ay, az;
-		//  if (BMI323_ReadAccel(&ax, &ay, &az) == HAL_OK) {
-		//      printf("Accel: X=%d, Y=%d, Z=%d\r\n", ax, ay, az);
-		//  }
 		HAL_Delay(100); // Read every 100ms
+
+		IMU_ToF_Data test_data;
+
+		test_data.bmi323_acc_x = imu_ax_test;
+		test_data.bmi323_acc_y = imu_ay_test;
+		test_data.bmi323_acc_z = imu_az_test;
+		test_data.bmi323_gyro_x = imu_gyrx_test;
+		test_data.bmi323_gyro_y = imu_gyry_test;
+		test_data.bmi323_gyro_z = imu_gyrz_test;
+		test_data.bmi323_temp = imu_temp_test;
+		test_data.bmi323_status = imu_status;
+
+		test_data.distance_mm = results.distance_mm;
+		test_data.ambient_rate_kcps = results.ambient_rate_kcps;
+		test_data.ambient_per_spad_kcps = results.ambient_per_spad_kcps;
+		test_data.signal_rate_kcps = results.signal_rate_kcps;
+		test_data.signal_per_spad_kcps = results.signal_per_spad_kcps;
+		test_data.number_of_spad = results.number_of_spad;
+		test_data.sigma_mm = results.sigma_mm;
+		test_data.range_status = results.range_status;
+
+		GRCAN_NODE_ID dest_node = GRCAN_TCM;
+		GRCAN_MSG_ID msg_id = GRCAN_INBOARDFLOOR_IMU_TOF_DATA;
+		InboardFloor_CAN_Send(dest_node, msg_id, &test_data);
+
+		if (imu_status != 0) {
+			LOGOMATIC("IMU is cooked");
+			Error_Handler();
+		}
+		if (results.range_status != 0) {
+			LOGOMATIC("ToF is cooked");
+			Error_Handler();
+		}
 	}
 	/* USER CODE END 3 */
 }

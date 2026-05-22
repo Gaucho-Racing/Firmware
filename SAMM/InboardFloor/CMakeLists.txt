@@ -38,7 +38,6 @@ target_sources(
 		Src/VL53L4ED_api.c
 		Src/VL53L4ED_calibration.c
 		Src/can_inboardfloor.c
-	# TODO
 )
 
 target_link_libraries(

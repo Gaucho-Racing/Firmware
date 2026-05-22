@@ -236,7 +236,7 @@ int main(void)
 		test_data.mag_hysteresis = mag_hysteresis;
 
 		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
-		GRCAN_MSG_ID test_msg_id = GRCAN_TCM_RESOURCE_UTILIZATION;
+		GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
 		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
 
 		if (imu_status != 0) {

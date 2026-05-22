@@ -1,7 +1,7 @@
 #include "can_sus.h"
 #include "can_cfg.h"
 
-static GRCAN_MSG_ID CAN_SUS_MSG_DATA = 0x051; // TODO: Finalize with GRCAN viewer and use from Autogen instead
+static GRCAN_MSG_ID CAN_SUS_MSG_DATA = GRCAN_SUSPENSION_IMU_MAG_DATA;
 static GRCAN_NODE_ID sensorNode = GRCAN_ALL; // Before initialization
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;

@@ -1,7 +1,7 @@
 #include "can_inboardfloor.h"
 #include "can_cfg.h"
 
-static GRCAN_MSG_ID CAN_INBOARDFLOOR_MSG_DATA = 0x052; // TODO: Finalize with GRCAN viewer and use from Autogen instead
+static GRCAN_MSG_ID CAN_INBOARDFLOOR_MSG_DATA = GRCAN_INBOARDFLOOR_IMU_TOF_DATA;
 static GRCAN_NODE_ID sensorNode = GRCAN_ALL; // Before initialization
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
 static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
