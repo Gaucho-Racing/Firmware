@@ -84,7 +84,7 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	msg.tx_header = TxHeader;
 
 	uint8_t temp;
-	for (uint16_t i = 0; i < size / 2; ++i) {
+	for (uint32_t i = 0; i < size / 2; ++i) {
 		temp = ((uint8_t *)data)[i];
 		((uint8_t *)data)[i] = ((uint8_t *)data)[size - i - 1];
 		((uint8_t *)data)[size - i - 1] = temp;
