@@ -43,6 +43,7 @@ Each tick:
 | `IR_MINUS && IR_PLUS` (charging complete) | Transitions to `CCU_STATE_IDLE` |
 | `recv_charge_cmd == True` | Calls `SendPrechargeStatus(true)`, clears `recv_charge_cmd`, stays in `CCU_STATE_CHARGING`|
 
+---
 
 ## `FUNCTIONS DEFINITIONS`
 
@@ -90,6 +91,22 @@ Logs any active error bits from `GRCAN_ACU_STATUS_2`, and checks for an impossib
 | `ACU_S2_UNDERVOLT_ERROR` | `"UNDERVOLT"` |
 | `!IR_MINUS && IR_PLUS` | `"IMPOSSIBLE IR STATE"` |
 
+
+### `SendPrechargeStatus(setPrecharge)`
+
+Sends single byte CAN message ID `GRCAN_ACU_PRECHARGE`.
+Note, in both states, `SendPrechargeStatus(true)` is sent only once per `recv_charge_cmd`, the flag is cleared immediately after. `STATE_IDLE` otherwise continuously sends `SendPrechargeStatus(false)` on the `PRECHARGE_SET_MSG_PERIOD_MILLIS` interval.
+
+
+
+**Parameters:** `setPrecharge` — `bool`
+
+| Condition | Log |
+|---|---|
+| `setPrecharge = True` | `Send TS Precharge status active` |
+|`setPrecharge = False`| `Send TS Precharge status unactive`|
+
+
 ### `VCP_Oneliner(state_data)`
 
 Transmits a compact status line over VCP and logs state bits to Logomatic. Uses a static 50-byte buffer to avoid repeated stack allocation.
@@ -98,6 +115,8 @@ Transmits a compact status line over VCP and logs state bits to Logomatic. Uses 
 
 **VCP output format:**
 [<ms>] IR- <Open|Closed> | IR+ <Open|Closed> | <V>V | SOC <n>% | Max Cell <n>C | <IDLE|CHARGING>
+
+---
 
 ## Usage
 Requires using the serial port and send:
