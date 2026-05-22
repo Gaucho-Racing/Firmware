@@ -139,8 +139,8 @@ void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
 						     .brakeline_r_signal = stateData->Brake_R_Signal,
 						     .steering_angle_signal = stateData->steering_angle_signal,
 						     .aux_signal = stateData->aux_signal,
-						     .acc_pedal_travel = stateData->acc_pedal_travel,
-						     .brake_pedal_travel = stateData->brake_pedal_travel};
+						     .acc_pedal_travel = CalcAccPedalTravel(stateData) * 65535,
+						     .brake_pedal_travel = CalcBrakePercent(stateData) * 65535};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_tcm_request_millis = millis_since_boot;
 	}
