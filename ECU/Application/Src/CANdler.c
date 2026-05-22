@@ -137,6 +137,8 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->Brake_R_Signal = analog_data->brakeline_r_signal;
 			state_data->steering_angle_signal = analog_data->steering_angle_signal;
 			state_data->aux_signal = analog_data->aux_signal;
+			state_data->acc_pedal_travel = analog_data->acc_pedal_travel;
+			state_data->brake_pedal_travel = analog_data->brake_pedal_travel;
 			break;
 
 		/*
