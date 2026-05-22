@@ -108,7 +108,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 
 	ECU_StateDataToSend messages = {.ECUState = stateData->ecu_state,
 					.StatusBits = {stateData->status_bits[0], stateData->status_bits[1], stateData->status_bits[2]},
-					.PowerLevelTorqueMap = stateData->powerlevel_torquemap,
+					.PowerLevelTorqueMap = (stateData->powerlevel << 4) | (stateData->torquemap & 0x0F),
 					.MaxCellTemp = (uint8_t)(stateData->max_cell_temp_c * 4),
 					.AccumulatorStateOfCharge = (uint8_t)(stateData->tractivebattery_soc),
 					.GLVStateOfCharge = (uint8_t)(stateData->glv_soc),
@@ -138,7 +138,9 @@ void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
 						     .brakeline_f_signal = stateData->Brake_F_Signal,
 						     .brakeline_r_signal = stateData->Brake_R_Signal,
 						     .steering_angle_signal = stateData->steering_angle_signal,
-						     .aux_signal = stateData->aux_signal};
+						     .aux_signal = stateData->aux_signal,
+						     .acc_pedal_travel = CalcAccPedalTravel(stateData) * 65535,
+						     .brake_pedal_travel = CalcBrakePercent(stateData) * 65535};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_tcm_request_millis = millis_since_boot;
 	}

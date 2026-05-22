@@ -150,23 +150,6 @@ bool vehicle_is_moving(volatile const ECU_StateData *stateData)
 	return stateData->vehicle_speed_mph > tolerance;
 }
 
-void SendEcuBonusInfo(const ECU_StateData *stateData)
-{
-	// All analog data
-	GRCAN_ECU_ANALOG_DATA_MSG analogData = {.bspd_signal = stateData->bspd_signal,
-						.bse_signal = stateData->bse_signal,
-						.apps_1_signal = stateData->APPS1_Signal,
-						.apps_2_signal = stateData->APPS2_Signal,
-						.brakeline_f_signal = stateData->Brake_F_Signal,
-						.brakeline_r_signal = stateData->Brake_R_Signal,
-						.steering_angle_signal = stateData->steering_angle_signal,
-						.aux_signal = stateData->aux_signal};
-	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &analogData, sizeof(analogData));
-
-	// RTT ping data
-	// TODO Setup using data from Pinging.c per Andrey request
-}
-
 void disable_inverter(void)
 {
 	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
