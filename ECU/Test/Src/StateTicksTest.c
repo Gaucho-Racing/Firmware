@@ -120,8 +120,8 @@ int main(void)
 			LOGOMATIC("0.2 Failure: TSSI reports faulty\n");
 			return 1;
 		}
-		stateLumpTest.APPS1_Signal = 0;
-		stateLumpTest.APPS2_Signal = 0;
+		stateLumpTest.APPS1_Signal = THROTTLE_MIN_1;
+		stateLumpTest.APPS2_Signal = THROTTLE_MIN_2;
 
 		LOGOMATIC("Press brake: STAY IN GLV ON\n");
 		stateLumpTest.bse_signal = BSE_MAX;
