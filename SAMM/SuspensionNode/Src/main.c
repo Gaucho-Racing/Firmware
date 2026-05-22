@@ -84,6 +84,7 @@ PUTCHAR_PROTOTYPE
 const uint16_t avgcalc_interval = 100;
 const uint16_t send_interval = 100;
 const float alpha = 0.2;
+static bool ewa_signed_initialization = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,13 +101,22 @@ uint32_t MillisecondsSinceBoot()
 }
 
 
-uint16_t ema(uint16_t new_value, uint16_t old_value) {
+uint16_t ewa_u(uint16_t new_value, uint16_t old_value) {
 	if (old_value == 0xFFFF) {
 		return new_value;
 	}
 	return alpha * new_value + (1 - alpha) * old_value;
 }
+
+int16_t ewa_i(int16_t new_value, int16_t old_value) {
+	if (!ewa_signed_initialization) {
+		ewa_signed_initialization = true;
+		return new_value;
+	}
+	return alpha * new_value + (1 - alpha) * old_value;
+}
 /* USER CODE END 0 */
+
 
 /**
  * @brief  The application entry point.
@@ -159,6 +169,7 @@ int main(void)
 	}
 
 	bmi323_soft_reset(&bmi323_dev);
+	HAL_Delay(10);
 
 	// Switch to IMU to SPI mode
 	uint8_t bmi323_mode_tx[4] = {0x00 | 0x80, 0x00, 0x00, 0x00};
@@ -181,91 +192,114 @@ int main(void)
 	}
 	/* USER CODE BEGIN WHILE */
 
+	uint16_t imu_ax = 0xFFFF;
+	uint16_t imu_ay = 0xFFFF;
+	uint16_t imu_az = 0xFFFF;
+	uint16_t imu_gyrx = 0xFFFF;
+	uint16_t imu_gyry = 0xFFFF;
+	uint16_t imu_gyrz = 0xFFFF;
+	uint16_t imu_temp = 0xFFFF;
+	uint16_t imu_status = 0;
+	uint16_t mag_temp = 0xFFFF;
+	uint16_t mag_hysteresis = 0xFFFF;
+	uint16_t mag_angle = 0xFFFF;
+	int16_t mag_turns = 0;
+	uint8_t mag_status = 0;
+
+	uint32_t last_avgcalc_ms = MillisecondsSinceBoot();
+	uint32_t last_send_ms = MillisecondsSinceBoot();
+	IMU_Mag_Data test_data = {0};
+
 	while (1) {
-		uint16_t imu_ax = bmi323_read_acc_x(&bmi323_dev);
-		uint16_t imu_ay = bmi323_read_acc_y(&bmi323_dev);
-		uint16_t imu_az = bmi323_read_acc_z(&bmi323_dev);
-		uint16_t imu_gyrx = bmi323_read_gyr_x(&bmi323_dev);
-		uint16_t imu_gyry = bmi323_read_gyr_y(&bmi323_dev);
-		uint16_t imu_gyrz = bmi323_read_gyr_z(&bmi323_dev);
-		uint16_t imu_temp = bmi323_read_temp_data(&bmi323_dev);
-		uint16_t imu_status = bmi323_read_status(&bmi323_dev);
+		uint32_t current_time = MillisecondsSinceBoot();
 
-		float imu_ax_test = ((float)imu_ax) / 4096.f;
-		float imu_ay_test = ((float)imu_ay) / 4096.f;
-		float imu_az_test = ((float)imu_az) / 4096.f;
-		float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
-		float imu_gyry_test = ((float)imu_gyry) / 16.384f;
-		float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
-		float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
+		if (current_time - last_avgcalc_ms > avgcalc_interval) {
+			last_avgcalc_ms = current_time;
 
-		LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
-		LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
-		LOGOMATIC("IMU temperature: %f", imu_temp_test);
+			imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
+			imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
+			imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
+			imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
+			imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
+			imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
+			imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
+			imu_status = bmi323_read_status(&bmi323_dev);
 
-		uint16_t mag_temp = mag_read_temp(&mag_dev);
-		uint16_t mag_hysteresis = mag_read_HANG(&mag_dev);
-		uint16_t mag_angle = mag_read_encoder_angle(&mag_dev);
-		int16_t mag_turns = mag_read_turns(&mag_dev);
-		uint8_t mag_status = check_status(&mag_dev);
+			float imu_ax_test = ((float)imu_ax) / 4096.f;
+			float imu_ay_test = ((float)imu_ay) / 4096.f;
+			float imu_az_test = ((float)imu_az) / 4096.f;
+			float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+			float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+			float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+			float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
 
-		// TODO: check these conversion formulas
-		int16_t mag_temp_test = mag_temp - 60;
-		float mag_angle_test = mag_angle * 360.f / 4096.0f;
-		float mag_hysteresis_test = mag_hysteresis * 360.f / 4096.0f;
+			LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
+			LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
+			LOGOMATIC("IMU temperature: %f", imu_temp_test);
 
-		LOGOMATIC("Mag temperature: %d C\n", mag_temp_test);
-		LOGOMATIC("Angle: %f deg\n", mag_angle_test);
-		LOGOMATIC("Turns: %d\n", mag_turns);
-		LOGOMATIC("Hysteresis Angle: %f\n", mag_hysteresis_test);
+			mag_temp = ewa_u(mag_read_temp(&mag_dev), mag_temp);
+			mag_hysteresis = ewa_u(mag_read_HANG(&mag_dev), mag_hysteresis);
+			mag_angle = ewa_u(mag_read_encoder_angle(&mag_dev), mag_angle);
+			mag_turns = ewa_i(mag_read_turns(&mag_dev), mag_turns);
+			mag_status = check_status(&mag_dev);
 
-		// uint8_t buffer[8] = {0};
-		// buffer[0] = (angle >> 8) & 0xFF;
-		// buffer[1] = angle & 0xFF;
+			// TODO: check these conversion formulas
+			int16_t mag_temp_test = mag_temp - 60;
+			float mag_angle_test = mag_angle * 360.f / 4096.0f;
+			float mag_hysteresis_test = mag_hysteresis * 360.f / 4096.0f;
 
-		// buffer[2] = temp;
+			LOGOMATIC("Mag temperature: %d C\n", mag_temp_test);
+			LOGOMATIC("Angle: %f deg\n", mag_angle_test);
+			LOGOMATIC("Turns: %d\n", mag_turns);
+			LOGOMATIC("Hysteresis Angle: %f\n", mag_hysteresis_test);
 
-		// buffer[3] = (turns >> 8) & 0xFF;
-		// buffer[4] = turns & 0xFF;
+			// uint8_t buffer[8] = {0};
+			// buffer[0] = (angle >> 8) & 0xFF;
+			// buffer[1] = angle & 0xFF;
 
-		// // status
-		// buffer[5] = bad;
-		// buffer[6] = 0x00;
-		// buffer[7] = 0x00;
+			// buffer[2] = temp;
 
-		IMU_Mag_Data test_data;
+			// buffer[3] = (turns >> 8) & 0xFF;
+			// buffer[4] = turns & 0xFF;
 
-		test_data.bmi323_acc_x = imu_ax;
-		test_data.bmi323_acc_y = imu_ay;
-		test_data.bmi323_acc_z = imu_az;
-		test_data.bmi323_gyro_x = imu_gyrx;
-		test_data.bmi323_gyro_y = imu_gyry;
-		test_data.bmi323_gyro_z = imu_gyrz;
-		test_data.bmi323_temp = imu_temp;
-		test_data.bmi323_status = imu_status;
+			// // status
+			// buffer[5] = bad;
+			// buffer[6] = 0x00;
+			// buffer[7] = 0x00;
 
-		test_data.mag_angle = mag_angle;
-		test_data.mag_temp = mag_temp;
-		test_data.mag_turns = mag_turns;
-		test_data.mag_status = mag_status;
-		test_data.mag_hysteresis = mag_hysteresis;
+			test_data.bmi323_acc_x = imu_ax;
+			test_data.bmi323_acc_y = imu_ay;
+			test_data.bmi323_acc_z = imu_az;
+			test_data.bmi323_gyro_x = imu_gyrx;
+			test_data.bmi323_gyro_y = imu_gyry;
+			test_data.bmi323_gyro_z = imu_gyrz;
+			test_data.bmi323_temp = imu_temp;
+			test_data.bmi323_status = imu_status;
 
-		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
-		GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
-		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
-
-		if (imu_status != 0) {
-			LOGOMATIC("IMU is cooked");
-			Error_Handler();
+			test_data.mag_angle = mag_angle;
+			test_data.mag_temp = mag_temp;
+			test_data.mag_turns = mag_turns;
+			test_data.mag_status = mag_status;
+			test_data.mag_hysteresis = mag_hysteresis;
 		}
 
-		if (mag_status != 0) {
-			LOGOMATIC("Mag is cooked");
-			mag_write_error(&mag_dev);
-			Error_Handler();
-		}
+		if (current_time - last_send_ms > send_interval) {
+			last_send_ms = current_time;
+			GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
+			GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
+			SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
 
-		HAL_Delay(50); // TODO: how long should delay be?
+			if (imu_status != 0) {
+				LOGOMATIC("IMU is cooked");
+				Error_Handler();
+			}
+
+			if (mag_status != 0) {
+				LOGOMATIC("Mag is cooked");
+				mag_write_error(&mag_dev);
+				Error_Handler();
+			}
+		}
 
 /* TODO:
 

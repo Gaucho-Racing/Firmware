@@ -102,7 +102,7 @@ uint32_t MillisecondsSinceBoot()
 }
 
 
-uint16_t ema(uint16_t new_value, uint16_t old_value) {
+uint16_t ewa(uint16_t new_value, uint16_t old_value) {
 	if (old_value == 0xFFFF) {
 		return new_value;
 	}
@@ -167,6 +167,7 @@ int main(void)
 	}
 
 	bmi323_soft_reset(&bmi323_dev);
+	HAL_Delay(10);
 
 	// Switch to IMU to SPI mode
 	uint8_t bmi323_mode_tx[4] = {0x00 | 0x80, 0x00, 0x00, 0x00};
@@ -179,10 +180,7 @@ int main(void)
 	bmi323_enable_acc(&bmi323_dev, BMI_ACC_MODE, BMI_ACC_AVGNUM, BMI_ACC_BW, BMI_ACC_RANGE, BMI_ACC_ODR);
 	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
 
-	/* USER CODE END 2 */
-
 	/* Infinite loop */
-	/* USER CODE BEGIN WHILE */
 	// begin VL53L4ED
 	HAL_Delay(100);					      // wait for 5ms to power up the device
 	HAL_GPIO_WritePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
@@ -206,9 +204,6 @@ int main(void)
 	status = VL53L4ED_SetRangeTiming(TOF_ID, 50, 70);
 	status = VL53L4ED_SetOffset(TOF_ID, 0); // Set offset to 0 for testing, 50 otherwise?
 
-	uint32_t last_avgcalc_ms = MillisecondsSinceBoot();
-	uint32_t last_send_ms = MillisecondsSinceBoot();
-
 	uint16_t imu_ax = 0xFFFF;
 	uint16_t imu_ay = 0xFFFF;
 	uint16_t imu_az = 0xFFFF;
@@ -227,18 +222,23 @@ int main(void)
 	results.sigma_mm = 0xFFFF;
 	results.range_status = 0xFFFF;
 
+	uint32_t last_avgcalc_ms = MillisecondsSinceBoot();
+	uint32_t last_send_ms = MillisecondsSinceBoot();
+	IMU_ToF_Data test_data = {0};
+	/* USER CODE END 2 */
+
+	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE BEGIN 3 */
 		uint32_t current_time = MillisecondsSinceBoot();
-		IMU_ToF_Data test_data;
 
 		if (current_time - last_avgcalc_ms > avgcalc_interval) {
 			last_avgcalc_ms = current_time;
 
 			imu_ax = ewa(bmi323_read_acc_x(&bmi323_dev), imu_ax);
-			imu_ay = ewa(bmi323_read_acc_x(&bmi323_dev), imu_ay);
+			imu_ay = ewa(bmi323_read_acc_y(&bmi323_dev), imu_ay);
 			imu_az = ewa(bmi323_read_acc_z(&bmi323_dev), imu_az);
-			imu_gyrx = ewa(bmi323_read_gyr_x(&bmi323_dev), imu_az);
+			imu_gyrx = ewa(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
 			imu_gyry = ewa(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
 			imu_gyrz = ewa(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
 			imu_temp = ewa(bmi323_read_temp_data(&bmi323_dev), imu_temp);
@@ -270,7 +270,7 @@ int main(void)
 				results.ambient_rate_kcps = ewa(results.ambient_rate_kcps, old_results.ambient_rate_kcps);
 				results.ambient_per_spad_kcps = ewa(results.ambient_per_spad_kcps, old_results.ambient_per_spad_kcps);
 				results.signal_rate_kcps = ewa(results.signal_rate_kcps, old_results.signal_rate_kcps);
-				results.signal_per_spad_kcps = ewa(results.distance_mm, old_results.distance_mm);
+				results.signal_per_spad_kcps = ewa(results.signal_per_spad_kcps, old_results.signal_per_spad_kcps);
 				results.number_of_spad = ewa(results.number_of_spad, old_results.number_of_spad);
 				results.sigma_mm = ewa(results.sigma_mm, old_results.sigma_mm);
 
@@ -281,7 +281,6 @@ int main(void)
 				__enable_irq();
 			}
 
-			HAL_Delay(100); // Read every 100ms
 
 			test_data.bmi323_acc_x = imu_ax;
 			test_data.bmi323_acc_y = imu_ay;
