@@ -22,6 +22,7 @@
 // #include "crc.h"
 // #include "fdcan.h"
 #include "NodeID.h"
+#include "can_inboardfloor.h"
 #include "gpio.h"
 #include "i2c.h"
 #include "spi.h"
@@ -49,6 +50,18 @@
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
+
+#define BMI_ACC_ODR 0x7 // Output data rate -> 50 Hz
+#define BMI_ACC_RANGE 0x2 // +/- 8g
+#define BMI_ACC_MODE 0x7 // High performance mode
+#define BMI_ACC_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_ACC_AVGNUM 0x0 // No averaging
+
+#define BMI_GYR_ODR 0x7 // Output data rate -> 50 Hz
+#define BMI_GYR_RANGE 0x4 // 2000 deg/s (default)
+#define BMI_GYR_MODE 0x7 // High performance mode
+#define BMI_GYR_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_GYR_AVGNUM 0x0 // No averaging
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -115,39 +128,36 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 	/* USER CODE BEGIN Init */
+	InboardFloor_CAN_Init(GRCAN_BUS_DATA);
+	InboardFloor_CAN_Init(GRCAN_BUS_DATA_SUBNET);
 
 	// HAL_FDCAN_Start(&hfdcan1);
 	// HAL_FDCAN_Start(&hfdcan2);
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+
 	bmi323 bmi323_dev;
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin); // TODO:
-	// Send 2 dummy bytes to switch BMI323 to SPI mode
-	// uint16_t dummy_byte = 0x8000;
-	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
-	// HAL_SPI_Transmit(&hspi1,(uint8_t*)&dummy_byte, 1, HAL_MAX_DELAY);
-	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
-	// HAL_Delay(1);  // Short delay after mode switch
 
-	// Initialize BMI323 sensor
+	// Initialize IMU
+	if (bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin) != HAL_OK) {
+		LOGOMATIC("BMI323 initialization failed!\n");
+		Error_Handler();
+	}
 
-	// if (BMI323_Init() != HAL_OK) {
-	//   printf("BMI323 initialization failed!\r\n");
-	//   Error_Handler();
-	// }
+	bmi323_soft_reset(&bmi323_dev);
 
-	// static uint16_t eeMLX90640[832];
-	// static paramsMLX90640 mlx90640;
-	// #define MLX90640_ADDRESS 0x33<<1
-	// MLX90640_DumpEE(MLX90640_ADDRESS, eeMLX90640);
+	// Switch to IMU to SPI mode
+	uint8_t bmi323_mode_tx[4] = {0x00 | 0x80, 0x00, 0x00, 0x00};
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi1, bmi323_mode_tx, 4, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	HAL_Delay(1); // Short delay after mode switch
 
-	// MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
+	// Set up accelerometer and gyroscope configuration
+	bmi323_enable_acc(&bmi323_dev, BMI_ACC_MODE, BMI_ACC_AVGNUM, BMI_ACC_BW, BMI_ACC_RANGE, BMI_ACC_ODR);
+	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
 
-	// MLX90640_SetRefreshRate(MLX90640_ADDRESS, 0x05);
-
-	// MLX90640_SynchFrame(MLX90640_ADDRESS);
-	//  MLX90640_SetRefreshRate(0x33, 0x05);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -177,6 +187,27 @@ int main(void)
 
 	while (1) {
 		/* USER CODE BEGIN 3 */
+		uint16_t imu_ax = bmi323_read_acc_x(&bmi323_dev);
+		uint16_t imu_ay = bmi323_read_acc_y(&bmi323_dev);
+		uint16_t imu_az = bmi323_read_acc_z(&bmi323_dev);
+		uint16_t imu_gyrx = bmi323_read_gyr_x(&bmi323_dev);
+		uint16_t imu_gyry = bmi323_read_gyr_y(&bmi323_dev);
+		uint16_t imu_gyrz = bmi323_read_gyr_z(&bmi323_dev);
+		uint16_t imu_temp = bmi323_read_temp_data(&bmi323_dev);
+		uint16_t imu_status = bmi323_read_status(&bmi323_dev);
+
+		float imu_ax_test = ((float)imu_ax) / 4096.f;
+		float imu_ay_test = ((float)imu_ay) / 4096.f;
+		float imu_az_test = ((float)imu_az) / 4096.f;
+		float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+		float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+		float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+		float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
+
+		LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
+		LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
+		LOGOMATIC("IMU temperature: %f", imu_temp_test);
+
 		// begin VL53L4ED
 		status = VL53L4ED_CheckForDataReady(TOF_ID, &p_data_ready);
 		if (p_data_ready) {

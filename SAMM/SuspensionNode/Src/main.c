@@ -57,13 +57,13 @@
 #define BMI_ACC_RANGE 0x2 // +/- 8g
 #define BMI_ACC_MODE 0x7 // High performance mode
 #define BMI_ACC_BW 0x0 // Sets cut off freq to ODR/2
-#define BMI_ACC_AVGNUM 0x3 // Averaging of 8 samples
+#define BMI_ACC_AVGNUM 0x0 // No averaging
 
 #define BMI_GYR_ODR 0x7 // Output data rate -> 50 Hz
 #define BMI_GYR_RANGE 0x4 // 2000 deg/s (default)
 #define BMI_GYR_MODE 0x7 // High performance mode
 #define BMI_GYR_BW 0x0 // Sets cut off freq to ODR/2
-#define BMI_GYR_AVGNUM 0x3 // Averaging of 8 samples
+#define BMI_GYR_AVGNUM 0x0 // No averaging
 
 /* USER CODE END PD */
 
@@ -137,9 +137,6 @@ int main(void)
 	bmi323 bmi323_dev;
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 
-	mag mag_dev;
-	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
-
 	// Initialize IMU
 	if (bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin) != HAL_OK) {
 		LOGOMATIC("BMI323 initialization failed!\n");
@@ -159,13 +156,14 @@ int main(void)
 	bmi323_enable_acc(&bmi323_dev, BMI_ACC_MODE, BMI_ACC_AVGNUM, BMI_ACC_BW, BMI_ACC_RANGE, BMI_ACC_ODR);
 	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
 
+	mag mag_dev;
+	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
+
 	// Initialize magnetic encoder
 	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
 		LOGOMATIC("MAG initialization failed!\n");
 		Error_Handler();
 	}
-
-	uint16_t millis_since_last = HAL_GetTick();
 	/* USER CODE BEGIN WHILE */
 
 	while (1) {
@@ -252,7 +250,7 @@ int main(void)
 			Error_Handler();
 		}
 
-		HAL_Delay(10);
+		HAL_Delay(50); // TODO: how long should delay be?
 
 /* TODO:
 
