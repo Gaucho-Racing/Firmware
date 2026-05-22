@@ -14,5 +14,5 @@ void TripSoftwareLatch(CCU_StateData *state_data);
 bool CriticalError(const CCU_StateData *state_data);
 bool ACU_Warnings(const CCU_StateData *state_data);
 uint32_t MillisecondsSinceBoot(void);
-bool IR_Check(CCU_StateData *state_data);
+void VCP_RxCallback(char receivedData);
 #endif
