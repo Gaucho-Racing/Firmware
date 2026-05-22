@@ -14,7 +14,7 @@ The CCU manages two states — `CCU_STATE_IDLE` and `CCU_STATE_CHARGING` — and
 - CCU state: `CCU_STATE_IDLE`
 - Software latch: High (True)
 
-
+---
 
 ## State Machine
 
@@ -45,7 +45,7 @@ Each tick:
 
 ---
 
-## `FUNCTIONS DEFINITIONS`
+## `FUNCTION DEFINITIONS`
 
 ### `TripSoftwareLatch(state_data)`
 
