@@ -4,7 +4,7 @@ Compile and flash `CCU.elf`.
 
 GR26 CCU is the GR25 ECU (aka GR25 Big Bird).
 
----
+
 
 ## Overview
 
@@ -14,7 +14,7 @@ The CCU manages two states — `CCU_STATE_IDLE` and `CCU_STATE_CHARGING` — and
 - CCU state: `CCU_STATE_IDLE`
 - Software latch: High (True)
 
----
+
 
 ## State Machine
 
