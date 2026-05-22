@@ -173,3 +173,11 @@ void disable_inverter(void)
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
 	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
 }
+
+void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw)
+{
+	#define SIZE 64
+	static char buf[SIZE];
+	snprintf(buf, SIZE, "%ld A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
+	VCP_Send(buf, strlen(buf));
+}

@@ -90,8 +90,8 @@ VCP_Config vcp_config = {.baud_rate = 2000000,
 			 .oversampling = VCP_Oversampling_16,
 			 .tx_fifo_threshold = VCP_Threshold_1_8,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .usart_instance = USART2,
-			 .alternate_function = LL_GPIO_AF_7};
+			 .alternate_function = LL_GPIO_AF_7,
+			 .rx_callback = NULL};
 /* USER CODE END PV */
 
 // ADC 1
@@ -532,10 +532,8 @@ int main(void)
 				pingAll();
 			}
 			lightControl(&stateLump);
-			static char buf[100];
-			snprintf(buf, 100, "%ld %d %d %d %d\n", MillisecondsSinceBoot(), stateLump.APPS1_Signal, stateLump.APPS2_Signal, ADC_buffers[2], ADC_buffers[3]);
-			LOGOMATIC(buf);
-			VCP_Send(buf, strlen(buf));
+
+			Send_VCP_APPS(&stateLump, ADC_outputs[2], ADC_outputs[3]);
 			// ADC_Logomatic();
 		}
 	}
