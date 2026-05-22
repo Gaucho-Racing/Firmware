@@ -1,6 +1,7 @@
 #include "StateTicks.h"
 
 #include <stdint.h>
+#include <math.h>
 
 #include "CANutils.h"
 #include "ComparatorMacros.h"
@@ -25,7 +26,7 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1};
+ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1, .powerlevel = 3};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -124,6 +125,11 @@ void ECU_GLV_On(ECU_StateData *stateData)
 		LOGOMATIC("GLV ON to PRECHARGE START!\n");
 		ECU_Transition_To_Precharge_Engaged(stateData);
 		return;
+	}
+
+	if (stateData->rtd_button_pressed) {
+		stateData->powerlevel = (stateData->powerlevel + 1) % 4;
+		LOGOMATIC("Power level now at %d\n", stateData->powerlevel);
 	}
 }
 
@@ -246,7 +252,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
 		torque_request = -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
-		torque_request = CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS;
+		torque_request = fminf(CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS * (stateData->powerlevel + 1.0f) / 4.0f, MAX_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;

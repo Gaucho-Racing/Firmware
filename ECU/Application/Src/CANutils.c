@@ -108,7 +108,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 
 	ECU_StateDataToSend messages = {.ECUState = stateData->ecu_state,
 					.StatusBits = {stateData->status_bits[0], stateData->status_bits[1], stateData->status_bits[2]},
-					.PowerLevelTorqueMap = stateData->powerlevel_torquemap,
+					.PowerLevelTorqueMap = stateData->powerlevel << 4 | stateData->torquemap,
 					.MaxCellTemp = (uint8_t)(stateData->max_cell_temp_c * 4),
 					.AccumulatorStateOfCharge = (uint8_t)(stateData->tractivebattery_soc),
 					.GLVStateOfCharge = (uint8_t)(stateData->glv_soc),
