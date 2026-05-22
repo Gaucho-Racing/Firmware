@@ -1,11 +1,11 @@
+#include <stdint.h>
+
 #include "CCUStateData.h"
 #include "Logomatic.h"
 #include "StateMachine.h"
 #include "bitManipulations.h"
 #include "can.h"
 #include "gpio.h"
-
-#include <stdint.h>
 
 #ifndef STATE_UTILS_H
 #define STATE_UTILS_H
