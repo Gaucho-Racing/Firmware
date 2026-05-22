@@ -252,7 +252,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
 		torque_request = -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
-		torque_request = fminf(CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS * (stateData->powerlevel + 1.0f) / 4.0f, MAX_CURRENT_AMPS);
+		torque_request = fminf(CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS * (1 << stateData->powerlevel) / 8.0f, MAX_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
