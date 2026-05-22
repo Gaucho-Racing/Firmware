@@ -114,7 +114,7 @@ Transmits a compact status line over VCP and logs state bits to Logomatic. Uses 
 **Parameters:** `state_data` — `const CCU_StateData*`
 
 **VCP output format:**
-[<ms>] IR- <Open|Closed> | IR+ <Open|Closed> | <V>V | SOC <n>% | Max Cell <n>C | <IDLE|CHARGING>
+`[<ms>] IR- <Open|Closed> | IR+ <Open|Closed> | <V>V | SOC <n>% | Max Cell <n>C | <IDLE|CHARGING>`
 
 ---
 
