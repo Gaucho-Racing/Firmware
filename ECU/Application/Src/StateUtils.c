@@ -1,5 +1,6 @@
 #include "StateUtils.h"
 
+#include <inttypes.h>
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
@@ -163,6 +164,6 @@ void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t 
 {
 #define SIZE 64
 	static char buf[SIZE];
-	snprintf(buf, SIZE, "%ld A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
+	snprintf(buf, SIZE, "%" PRIu32 " A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
 	VCP_Send(buf, strlen(buf));
 }
