@@ -33,3 +33,9 @@ int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter)
 	UNUSED(filter);
 	return 0;
 }
+
+uint8_t BytesToCANDLC(uint32_t num_bytes)
+{
+	UNUSED(num_bytes);
+	return 0;
+}

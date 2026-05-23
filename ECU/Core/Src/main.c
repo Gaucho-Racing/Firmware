@@ -32,6 +32,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
+
 #include "CANdler.h"
 #include "CANutils.h"
 #include "Lights.h"
@@ -42,6 +44,8 @@
 #include "adc.h"
 #include "can.h"
 #include "stm32g4xx_hal.h"
+#include "vcp.h"
+// #define PLAN_C
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,7 +69,7 @@
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
 				   .baud_rate = 115200,
 				   .data_width = LOGOMATIC_DATAWIDTH_8B,
 				   .stop_bits = LOGOMATIC_STOPBITS_1,
@@ -75,6 +79,19 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+VCP_Config vcp_config = {.baud_rate = 2000000,
+			 .clock_source = VCP_CLOCK_PCLK,
+			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+			 .bus_port = VCP_Port_A,
+			 .parity = VCP_Parity_None,
+			 .prescaler = VCP_Prescalar_Div2,
+			 .stop_bits = VCP_StopBits_1,
+			 .oversampling = VCP_Oversampling_16,
+			 .tx_fifo_threshold = VCP_Threshold_1_8,
+			 .rx_fifo_threshold = VCP_Threshold_1_8,
+			 .alternate_function = LL_GPIO_AF_7,
+			 .rx_callback = NULL};
 /* USER CODE END PV */
 
 // ADC 1
@@ -82,7 +99,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 4
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
-#define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {1024}; // Contains new values
 uint16_t ADC_outputs[NUM_SIGNALS] = {1024};	     // Updated averages
@@ -105,9 +121,76 @@ void SystemClock_Config(void);
 
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 // TODO: TS and RTD button signals will come over CAN
+void ADC_Logomatic(void)
+{
+	static uint16_t min_apps_1 = 4095;
+	static uint16_t min_apps_2 = 4095;
+	if (stateLump.APPS1_Signal < min_apps_1) {
+		min_apps_1 = stateLump.APPS1_Signal;
+	}
+	if (stateLump.APPS2_Signal < min_apps_2) {
+		min_apps_2 = stateLump.APPS2_Signal;
+	}
+	static uint16_t max_apps_1 = 0;
+	static uint16_t max_apps_2 = 0;
+	if (stateLump.APPS1_Signal > max_apps_1) {
+		max_apps_1 = stateLump.APPS1_Signal;
+	}
+	if (stateLump.APPS2_Signal > max_apps_2) {
+		max_apps_2 = stateLump.APPS2_Signal;
+	}
+	static uint16_t min_BSE = 4095;
+	if (stateLump.bse_signal < min_BSE) {
+		min_BSE = stateLump.bse_signal;
+	}
+	static uint16_t max_BSE = 0;
+	if (stateLump.bse_signal > max_BSE) {
+		max_BSE = stateLump.bse_signal;
+	}
+
+	static uint16_t min_BR = 4095;
+	if (stateLump.Brake_R_Signal < min_BR) {
+		min_BR = stateLump.Brake_R_Signal;
+	}
+	static uint16_t max_BR = 0;
+	if (stateLump.Brake_R_Signal > max_BR) {
+		max_BR = stateLump.Brake_R_Signal;
+	}
+
+	static uint16_t min_BF = 4095;
+	if (stateLump.Brake_F_Signal < min_BF) {
+		min_BF = stateLump.Brake_F_Signal;
+	}
+	static uint16_t max_BF = 0;
+	if (stateLump.Brake_F_Signal > max_BF) {
+		max_BF = stateLump.Brake_F_Signal;
+	}
+
+	static uint16_t min_BSPD = 4095;
+	if (stateLump.bspd_signal < min_BSPD) {
+		min_BSPD = stateLump.bspd_signal;
+	}
+	static uint16_t max_BSPD = 0;
+	if (stateLump.bspd_signal > max_BSPD) {
+		max_BSPD = stateLump.bspd_signal;
+	}
+
+	LOGOMATIC("APPS1 %d (min %d, max %d) APPS2 %d (min %d, max %d) BSE %d (min %d, max %d) BSPD %d (min %d, max %d) Brake F %d (min %d, max %d), Brake R %d (min %d, max %d), Aux %d, Steering "
+		  "Angle %d\n",
+		  stateLump.APPS1_Signal, min_apps_1, max_apps_1, stateLump.APPS2_Signal, min_apps_2, max_apps_2, stateLump.bse_signal, min_BSE, max_BSE, stateLump.bspd_signal, min_BSPD, max_BSPD,
+		  stateLump.Brake_F_Signal, min_BF, max_BF, stateLump.Brake_R_Signal, min_BR, max_BR, stateLump.aux_signal, stateLump.steering_angle_signal);
+
+	// static float travel1 = 0;
+	// static float travel2 = 0;
+	// static float travel = 0;
+	// travel1 = (stateLump.APPS1_Signal - THROTTLE_MIN_1) * (1.0f - 0.0f) / (THROTTLE_MAX_1 - THROTTLE_MIN_1) + 0.0f;
+	// travel2 = (stateLump.APPS2_Signal - THROTTLE_MIN_2) * (1.0f - 0.0f) / (THROTTLE_MAX_2 - THROTTLE_MIN_2) + 0.0f;
+	// travel = (travel1 + travel2) / 2.0f;
+	// LOGOMATIC("APPS1 Travel %f, APPS2 Travel %f, Average Travel %f\n", travel1, travel2, travel);
+}
+
 void read_digital(void)
 {
-	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 	stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
 }
 
@@ -149,9 +232,13 @@ void ADC_Configure(void)
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
 	Init_Vals_ADC1.Channels = c1;
-	SamplingTime s1 = SAMPLINGTIME_247CYCLES_5;
+	SamplingTime s1 = LL_ADC_SAMPLINGTIME_92CYCLES_5;
 	Init_Vals_ADC1.SamplingTimes = &s1;
 	ADC_Init(&Init_Vals_ADC1);
+
+	// TODO Use ADC peripheral API for configuring ideally... but honestly its fine
+	LL_ADC_SetOverSamplingScope(ADC1, LL_ADC_OVS_GRP_REGULAR_CONTINUED);
+	LL_ADC_ConfigOverSamplingRatioShift(ADC1, LL_ADC_OVS_RATIO_256, LL_ADC_OVS_SHIFT_RIGHT_8);
 
 	// ADC 2
 	ADC_Init_Values Init_Vals_ADC2 = {0};
@@ -164,9 +251,13 @@ void ADC_Configure(void)
 	Init_Vals_ADC2.Num_Channels = 4;
 	Channel c2[] = {ADC_CHANNEL_13, ADC_CHANNEL_3, ADC_CHANNEL_4, ADC_CHANNEL_15};
 	Init_Vals_ADC2.Channels = c2;
-	SamplingTime s2 = SAMPLINGTIME_247CYCLES_5;
+	SamplingTime s2 = LL_ADC_SAMPLINGTIME_92CYCLES_5;
 	Init_Vals_ADC2.SamplingTimes = &s2;
 	ADC_Init(&Init_Vals_ADC2);
+
+	// TODO Use ADC peripheral API for configuring ideally... but honestly its fine
+	LL_ADC_SetOverSamplingScope(ADC2, LL_ADC_OVS_GRP_REGULAR_CONTINUED);
+	LL_ADC_ConfigOverSamplingRatioShift(ADC2, LL_ADC_OVS_RATIO_256, LL_ADC_OVS_SHIFT_RIGHT_8);
 
 	/*
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
@@ -363,7 +454,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	Setup_Logomatic(&logomaticConfig);
+
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -374,7 +465,7 @@ int main(void)
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
-	// TODO: do we need these?
+	// TODO: Figure out GPIO Init
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	// MX_FDCAN1_Init();
@@ -382,11 +473,8 @@ int main(void)
 	MX_ADC2_Init();
 	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
-
-	// Initialize DWT
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	DWT->CYCCNT = 0;
-	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	Setup_Logomatic(&logomaticConfig);
+	Setup_VCP(&vcp_config);
 
 	// Initialize CAN
 	CAN_Configure();
@@ -395,7 +483,13 @@ int main(void)
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
-	HAL_Delay(5000); // Notes per Andrey and Ryan
+	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
+		LL_mDelay(MAIN_LOOP_PERIOD_US / 1000);
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
+		write_adc_values_to_state_data();
+	}
+
+	LOGOMATIC("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
 
 	/* USER CODE END 2 */
 
@@ -404,25 +498,46 @@ int main(void)
 	while (1) {
 		// adcs
 		read_digital();
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.2, ADC_outputs);
-		write_adc_values_to_state_data();
-
 		// main state lopp, queues can messages within it
 		static uint32_t delay_timer;
 		static uint32_t ping_timer;
+		static uint32_t adc_timer;
+		// ADC
+		if (adc_timer % 1000 == 0) {
+			static float alphas[] = {
+			    0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+			};
+			ADC_UpdateAnalogValues_EMA_Multi(ADC_buffers, NUM_SIGNALS, alphas, ADC_outputs);
+			write_adc_values_to_state_data();
+		}
+		adc_timer++;
+
 		if (MillisecondsSinceBoot() >= delay_timer) {
+#ifdef PLAN_C
+			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "!PLAN_C!", 8);
+#endif
+
 			delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
+
+			// ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
+			// void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output)
+			// ADC_UpdateAnalogValues(ADC_buffers, ADC_outputs, NUM_SIGNALS, WINDOW_SIZE, ); // TODO: figure out which alpha values to use for the different signals
+			// write_adc_values_to_state_data();
 
 			// state tick
 			ECU_State_Tick();
 
 			// preipheral updates
 			SendECUStateDataOverCAN(&stateLump);
+			SendECUAnalogDataOverCAN(&stateLump);
 			if (MillisecondsSinceBoot() >= ping_timer) {
 				ping_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 500); // half period
 				pingAll();
 			}
 			lightControl(&stateLump);
+
+			Send_VCP_APPS(&stateLump, ADC_outputs[2], ADC_outputs[3]);
+			// ADC_Logomatic();
 		}
 	}
 	/* USER CODE END 3 */
@@ -498,7 +613,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
 	/* USER CODE BEGIN 6 */
-	LOGOMATIC("Assertion failed: file %s on line %d\r\n", file, line)
+	LOGOMATIC("Assertion failed: file %s on line %d\r\n", file, line);
 	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

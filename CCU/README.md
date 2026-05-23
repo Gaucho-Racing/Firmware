@@ -1,110 +1,125 @@
-# STM32G474 CCU
+# STM32G474 CCU — Charging Control Unit
 
-Charging Control Unit
+Compile and flash `CCU.elf`.
 
-Compile and flash CCU.elf
-
-GR26 CCU is the GR25 ECU (aka GR25 Big Bird)
-
-## State Transitions
-
-Two States: CCU_STATE_IDLE and CCU_STATE_CHARGING
-
-`STATE_IDLE()`:
-
-- Calls `ACU_Warnings()`
-- Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set `SoftwareLatch` to low (False) and `ACU_PRECHARGE_SET_TS_ACTIVE` to False
-  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
-- If no errors and `recv_charge_cmd` set to True
-  - switches state to `CCU_STATE_CHARGING` and set `ACU_PRECHARGE_SET_TS_ACTIVE` to True
-  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
-
-`STATE_CHARGING()`:
-
-- Calls `ACU_Warnings()`
-- Checks state_data for errors by calling `CriticalErrors()`
-- If there are error(s), set `SoftwareLatch` to low (False) and `ACU_PRECHARGE_SET_TS_ACTIVE` to False
-  - Sets state to `CCU_STATE_IDLE`
-  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
-- If `recv_charge_cmd` set to False
-  - set state to `CCU_STATE_IDLE` and `ACU_PRECHARGE_SET_TS_ACTIVE` to False
-  - Sends CAN message `GR_CAN_PRECHARGE_MSG`
-
-## Initializations and Implementations
-
-State_Data: Stores data given from 'GR_CAN_ACU_STATUS_2'
+GR26 CCU is the GR25 ECU (aka GR25 Big Bird).
 
 
-CCU State: Initialized to `CCU_STATE_IDLE`
-Software Latch: Initialized to high (True)
 
-In main infinite while loop:
+## Overview
 
-- `CCU_State_Tick()`:
-  - Checks for state transition for every "tick"
-- `CheckDebuggerPrint()`:
-  - Dumps a full log of the current CCU state, including errors and warnings, when a print request flag is set to True.
+The CCU manages two states — `CCU_STATE_IDLE` and `CCU_STATE_CHARGING` — and controls the TS precharge over CAN via `SendPrechargeStatus()`.
 
-## State Utils and State Data
+**Initial conditions:**
+- CCU state: `CCU_STATE_IDLE`
+- Software latch: High (True)
 
-`SetSoftwareLatch()`
+---
 
-- Purpose: Controls hardware GPIO Pins that act as a software-controlled latch, while keeping the 'state_data' in sync. If any critical errors occur, 'SetSoftwareLatch()' is tripped and set to low, and Emergency Shutdown Circuit is also tripped.
+## State Machine
 
-- Parameters:
-  - state: boolean value, desired latch state
-    - True: drive pin High
-    - False: drive pin Low
-  - 'state_data': const ptr of CCU_StateData
-- Behaviour:
+### `CCU_STATE_IDLE`
 
-| `state` | Current Pin | Action | `ACU_S2_SOFTWARE_LATCH` | Log Output |
-| --- | --- | --- | --- | --- |
-| `true` | Low | Pin driven HIGH | `true` | `"Software Latch: High"` |
-| `false` | High | Pin driven LOW | `false` | `"Software Latch: Low"` |
+Each tick:
+1. If `PRECHARGE_SET_MSG_PERIOD_MILLIS` = 20ms has elapsed since last send, calls `SendPrechargeStatus(false)`
+2. Calls `ACU_Warnings()`
+3. Calls `CriticalError()`, checking `state_data`
 
-`ACU_Warnings()`
+| Condition | Action |
+|---|---|
+| Error detected | Calls `TripSoftwareLatch()` |
+| No errors and `recv_charge_cmd == True` | Calls `SendPrechargeStatus(true)`, clears `recv_charge_cmd`, transitions to `CCU_STATE_CHARGING` |
 
-- Purpose: logs if any `GR_CAN_ACU_STATUS_2` warning bits are true
-- Parameters:
-  - state_data: const pointer to `state_data`
-- Behavior: does not affect state data or state transitions
+### `CCU_STATE_CHARGING`
 
-`CriticalError()`
+Each tick:
+1. Calls `ACU_Warnings()`
+2. Checks `recv_stop_cmd`, `CriticalError()`, IR latch state, and `recv_charge_cmd` in order
 
-- Purpose: logs if any `GR_CAN_ACU_STATUS_2` error bits are true
-- Parameters:
-  - state_data: const pointer to `state_data`
-- Behavior: function returns boolean, does not affect state_data
+| Condition | Action |
+|---|---|
+| `recv_stop_cmd == True` | Clears `recv_stop_cmd`, transitions to `CCU_STATE_IDLE` |
+| Error detected | Calls `TripSoftwareLatch()`, transitions to `CCU_STATE_IDLE` |
+| `IR_MINUS && IR_PLUS` (charging complete) | Transitions to `CCU_STATE_IDLE` |
+| `recv_charge_cmd == True` | Calls `SendPrechargeStatus(true)`, clears `recv_charge_cmd`, stays in `CCU_STATE_CHARGING`|
 
-`CheckDebuggerPrint()`
+---
 
-- Purpose: logs all information in `state_data` if extern boolean `request_print_statedata` is True
+## `FUNCTION DEFINITIONS`
 
-- Parameters:
-  - state_data: const pointer to `state_data`,
-- Behavior:
+### `TripSoftwareLatch(state_data)`
 
-| `request_print_statedata` | Action |
-| --- | --- |
-| `true` | Logs All 'state_data', then 'request_print_statedata' set to false|
-| `false` | Does nothing |
+Sets the `SOFTWARE_OK_CONTROL` GPIO pin Low and sets `state_data->SOFTWARE_LATCH = false`, resulting in tripping the Emergency Shutdown Circuit.
+Note: There is no software path to restore the latch to High
+
+**Parameters:** `state_data` — `CCU_StateData*`
+
+| Action | `SOFTWARE_LATCH` | Log |
+|---|---|---|
+| Sets pin Low | `false` | `"Software Latch: Low"` |
+
+---
+
+### `ACU_Warnings(state_data)`
+
+Logs any active warning bits from `GRCAN_ACU_STATUS_2`. Returns `true` if any warnings are active. This function does not affect state or state transitions.
+
+**Parameters:** `state_data` — `const CCU_StateData*`
+**Returns:** boolean `true` if any warning is active
+
+| Flag | Log output |
+|---|---|
+| `ACU_S2_UNDER20v_WARNING` | `"Under 20v Warning"` |
+| `ACU_S2_UNDER12v_WARNING` | `"Under 12v Warning"` |
+| `ACU_S2_UNDERVOLTSDC_WARNING` | `"Undervolt TSDC Warning"` |
+
+---
+
+### `CriticalError(state_data)`
+
+Logs any active error bits from `GRCAN_ACU_STATUS_2`, and checks for an impossible IR latch state. Returns `true` if any error is active.
+
+**Parameters:** `state_data` — `const CCU_StateData*`
+**Returns:** boolean `true` if any error is active
+
+| Condition | Log |
+|---|---|
+| `ACU_S2_OVERCURR_ERROR` | `"OVERCURR"` |
+| `ACU_S2_OVERTEMP_ERROR` | `"OVERTEMP"` |
+| `ACU_S2_OVERVOLT_ERROR` | `"OVERVOLT"` |
+| `ACU_S2_UNDERCURR_ERROR` | `"UNDERCURR"` |
+| `ACU_S2_UNDERVOLT_ERROR` | `"UNDERVOLT"` |
+| `!IR_MINUS && IR_PLUS` | `"IMPOSSIBLE IR STATE"` |
 
 
-### VCP
+### `SendPrechargeStatus(setPrecharge)`
 
-- Receives/Transmits data with USART (receives user input)
-- If the data received is `C` and `recv_charge_cmd` is False:
-  - Change `recv_charge_cmd` to True (used in State Transitions)
-  - Transmit `C`
-- If data received is `?`:
-  - Change `request_print_statedata` to True (used in `CheckDebuggerPrint()`)
-  - Transmit `?`
-- Else:
-  - Change `recv_charge_cmd` to False (used in State Transitions)
-  - Tranmist `X`
+Sends single byte CAN message ID `GRCAN_ACU_PRECHARGE`.
+Note, in both states, `SendPrechargeStatus(true)` is sent only once per `recv_charge_cmd`, the flag is cleared immediately after. `STATE_IDLE` otherwise continuously sends `SendPrechargeStatus(false)` on the `PRECHARGE_SET_MSG_PERIOD_MILLIS` interval.
+
+
+
+**Parameters:** `setPrecharge` — `bool`
+
+| Condition | Log |
+|---|---|
+| `setPrecharge = True` | `Send TS Precharge status active` |
+|`setPrecharge = False`| `Send TS Precharge status unactive`|
+
+
+### `VCP_Oneliner(state_data)`
+
+Transmits a compact status line over VCP and logs state bits to Logomatic. Uses a static 50-byte buffer to avoid repeated stack allocation.
+
+**Parameters:** `state_data` — `const CCU_StateData*`
+
+**VCP output format:**
+`[<ms>] IR- <Open|Closed> | IR+ <Open|Closed> | <V>V | SOC <n>% | Max Cell <n>C | <IDLE|CHARGING>`
+
+---
 
 ## Usage
-
-Requires using the serial port to send `C` to toggle charging and any other input to disable it. Send '?' for state data
+Requires using the serial port and send:
+- **`C`** — activate precharge (transitions IDLE → CHARGING, or try sending precharge again)
+- **Any other key** — stop charging (transitions CHARGING → IDLE)
+- **`?`** — print one-line status to VCP

@@ -50,7 +50,7 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
+void VCP_RxCallback(char receivedData);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -71,7 +71,7 @@ LogomaticConfig logomatic_config = {
     .bus = LOGOMATIC_BUS,
 };
 
-VCP_Config vcp_config = {.baud_rate = 115200,
+VCP_Config vcp_config = {.baud_rate = 2000000,
 			 .clock_source = VCP_CLOCK_PCLK,
 			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
 			 .bus_port = VCP_Port_A,
@@ -81,8 +81,8 @@ VCP_Config vcp_config = {.baud_rate = 115200,
 			 .oversampling = VCP_Oversampling_16,
 			 .tx_fifo_threshold = VCP_Threshold_1_8,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .usart_instance = USART2,
-			 .alternate_function = LL_GPIO_AF_7};
+			 .alternate_function = LL_GPIO_AF_7,
+			 .rx_callback = VCP_RxCallback};
 /* USER CODE END 0 */
 
 /**
@@ -197,7 +197,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void VCP_RxCallback(char receivedData)
+{
+	VCP_Send(&receivedData, 1);
+}
 /* USER CODE END 4 */
 
 /**

@@ -92,6 +92,7 @@ CAN_STATUS can_stop(CANHandle *handle);
 CAN_STATUS can_release(CANHandle *handle); // deinit circular buffer and turn off can peripheral and gpios
 CAN_STATUS can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 CAN_STATUS can_enqueue(CANHandle *handle, FDCANTxMessage *message); // adds to software buffer, returns error if full
+uint8_t BytesToCANDLC(uint32_t num_bytes);
 
 // pass in a buffer to store the status string
 // int can_info(char* );

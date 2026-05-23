@@ -425,6 +425,10 @@ typedef struct {
 	uint16_t steering_angle_signal;
 	/** 4-20 mA signal (Byte 14) */
 	uint16_t aux_signal;
+	/** 0-100% percentage (Byte 16) */
+	uint16_t acc_pedal_travel;
+	/** 0-100% percentage (Byte 18) */
+	uint16_t brake_pedal_travel;
 } GRCAN_ECU_ANALOG_DATA_MSG;
 
 /** GPS LAT */

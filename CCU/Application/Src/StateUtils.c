@@ -1,5 +1,7 @@
 #include "StateUtils.h"
 
+#include <ctype.h>
+
 #include "CANdler.h"
 #include "CCUStateData.h"
 #include "Logomatic.h"
@@ -108,4 +110,20 @@ void VCP_Oneliner(const CCU_StateData *state_data)
 uint32_t MillisecondsSinceBoot(void)
 {
 	return HAL_GetTick() * HAL_GetTickFreq();
+}
+
+void VCP_RxCallback(char receivedData)
+{
+	LOGOMATIC("VCP: %c\n", receivedData);
+	if (receivedData == 'C' || receivedData == 'c') {
+		LOGOMATIC("Received charge command\n");
+		state_data.recv_charge_cmd = true;
+		VCP_Send(&receivedData, 1);
+	} else if (isspace(receivedData)) {
+		VCP_Send(&receivedData, 1);
+	} else {
+		state_data.recv_stop_cmd = true;
+		receivedData = 'X';
+		VCP_Send(&receivedData, 1);
+	}
 }

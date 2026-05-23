@@ -3772,7 +3772,7 @@ Message ID:
       units: Celsius
   ECU Analog Data:
     MSG ID: 0x02E
-    MSG LENGTH: 16
+    MSG LENGTH: 20
     BSPD Signal:
       bit_start: 0
       comment: 4-20 mA signal
@@ -3832,6 +3832,22 @@ Message ID:
     AUX Signal:
       bit_start: 112
       comment: 4-20 mA signal
+      data type: u16
+      units: %
+      scaled min: 0
+      scaled max: 100
+      map equation: "x/655.35"
+    Acc Pedal Travel:
+      bit_start: 128
+      comment: 0-100% percentage
+      data type: u16
+      units: %
+      scaled min: 0
+      scaled max: 100
+      map equation: "x/655.35"
+    Brake Pedal Travel:
+      bit_start: 144
+      comment: 0-100% percentage
       data type: u16
       units: %
       scaled min: 0
