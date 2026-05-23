@@ -227,9 +227,10 @@ void Setup_VCP(VCP_Config *input_config)
 
 	if (vcp_config.rx_callback != NULL) {
 		LL_USART_EnableIT_RXNE(usart_instance);
+	} else {
+		LL_USART_DisableIT_RXNE(usart_instance);
 	}
 
-	LL_USART_EnableIT_RXNE(usart_instance);
 	LL_USART_Enable(usart_instance);
 	while ((!(LL_USART_IsActiveFlag_TEACK(usart_instance))) || (!(LL_USART_IsActiveFlag_REACK(usart_instance)))) {}
 
