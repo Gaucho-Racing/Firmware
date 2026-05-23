@@ -1,12 +1,54 @@
 #include "vcp.h"
 
 #include <stdbool.h>
+#include <string.h>
 
 #include "Logomatic.h"
 #include "main.h"
+#include "vcp_config.h"
+
+#ifdef VCP_CONFIG_CLAIM_USART1
+static USART_TypeDef *usart_instance = USART1;
+#elif defined(VCP_CONFIG_CLAIM_USART2)
+static USART_TypeDef *usart_instance = USART2;
+#elif defined(VCP_CONFIG_CLAIM_USART3)
+static USART_TypeDef *usart_instance = USART3;
+#else
+#error "No USART instance claimed in `vcp_config.h`"
+#endif
 
 static bool is_initialized = false;
 static VCP_Config vcp_config = {0};
+
+static uint8_t vcp_tx_buffer[VCP_TX_BUFFER_SIZE] = {0};
+static uint32_t vcp_tx_head = 0;
+static uint32_t vcp_tx_tail = 0;
+static uint32_t vcp_tx_count = 0;
+
+static uint32_t vcp_enter_critical(void)
+{
+	uint32_t primask = __get_PRIMASK();
+	__disable_irq();
+	return primask;
+}
+
+static void vcp_exit_critical(uint32_t primask)
+{
+	__set_PRIMASK(primask);
+}
+
+static void vcp_tx_from_buffer(void)
+{
+	if (vcp_tx_count == 0) {
+		return;
+	}
+
+	while (vcp_tx_count > 0 && LL_USART_IsActiveFlag_TXE(usart_instance)) {
+		LL_USART_TransmitData8(usart_instance, vcp_tx_buffer[vcp_tx_tail]);
+		vcp_tx_tail = (vcp_tx_tail + 1) % VCP_TX_BUFFER_SIZE;
+		vcp_tx_count--;
+	}
+}
 
 void VCP_Send(const char *data, uint32_t length)
 {
@@ -22,59 +64,26 @@ void VCP_Send(const char *data, uint32_t length)
 		LOGOMATIC("Length is 0 in VCP_Send\n");
 		return;
 	}
+
 	for (uint32_t i = 0; i < length; i++) {
-		while (!LL_USART_IsActiveFlag_TXE(vcp_config.usart_instance)) {}
-		LL_USART_TransmitData8(vcp_config.usart_instance, data[i]);
-	}
-}
-
-bool VCP_IsDataAvailable()
-{
-	if (!is_initialized) {
-		LOGOMATIC("VCP_IsDataAvailable called before successful initialization\n");
-		return false;
-	}
-	return LL_USART_IsActiveFlag_RXNE(vcp_config.usart_instance);
-}
-
-uint8_t VCP_Receive(void)
-{
-	if (!is_initialized) {
-		LOGOMATIC("VCP_Receive called before successful initialization\n");
-		return BAD_OP;
-	}
-	if (!VCP_IsDataAvailable()) {
-		LOGOMATIC("VCP_Receive called when no data is available\n");
-		return BAD_OP;
-	}
-	return LL_USART_ReceiveData8(vcp_config.usart_instance);
-}
-
-uint8_t VCP_ReceiveLine(uint8_t *buffer, uint8_t buffer_size)
-{
-	if (!is_initialized) {
-		LOGOMATIC("VCP_ReceiveLine called before successful initialization\n");
-		return 0;
-	}
-	if (buffer == NULL) {
-		LOGOMATIC("Buffer pointer is NULL in VCP_ReceiveLine\n");
-		return 0;
-	}
-	if (buffer_size == 0) {
-		LOGOMATIC("Buffer size must be greater than 0 in VCP_ReceiveLine\n");
-		return 0;
-	}
-	uint8_t index = 0;
-	while (index < buffer_size - 1) {
-		while (!LL_USART_IsActiveFlag_RXNE(vcp_config.usart_instance)) {}
-		uint8_t received_char = LL_USART_ReceiveData8(vcp_config.usart_instance);
-		if ((received_char == '\n') || (received_char == '\0')) {
-			break;
+		uint32_t primask = vcp_enter_critical();
+		if (vcp_tx_count >= VCP_TX_BUFFER_SIZE) {
+			vcp_tx_tail = (vcp_tx_tail + 1) % VCP_TX_BUFFER_SIZE;
+			vcp_tx_count--;
 		}
-		buffer[index++] = received_char;
+
+		vcp_tx_buffer[vcp_tx_head] = data[i];
+		vcp_tx_head = (vcp_tx_head + 1) % VCP_TX_BUFFER_SIZE;
+		vcp_tx_count++;
+		vcp_exit_critical(primask);
 	}
-	buffer[index] = '\0';
-	return index;
+
+	uint32_t primask = vcp_enter_critical();
+	vcp_tx_from_buffer();
+	if (vcp_tx_count > 0 && !LL_USART_IsEnabledIT_TXE(usart_instance)) {
+		LL_USART_EnableIT_TXE(usart_instance);
+	}
+	vcp_exit_critical(primask);
 }
 
 void Setup_VCP(VCP_Config *input_config)
@@ -85,7 +94,7 @@ void Setup_VCP(VCP_Config *input_config)
 	}
 	vcp_config = *input_config;
 
-	if (vcp_config.usart_instance == NULL) {
+	if (usart_instance == NULL) {
 		LOGOMATIC("USART instance is NULL in Setup_VCP\n");
 		return;
 	}
@@ -95,7 +104,26 @@ void Setup_VCP(VCP_Config *input_config)
 		return;
 	}
 
-	if (vcp_config.usart_instance == USART2) {
+	if (usart_instance == USART1) {
+		switch (vcp_config.clock_source) {
+			case VCP_CLOCK_PCLK:
+				LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
+				break;
+			case VCP_CLOCK_SYSCLK:
+				LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_SYSCLK);
+				break;
+			case VCP_CLOCK_HSI:
+				LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_HSI);
+				break;
+			case VCP_CLOCK_LSE:
+				LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_LSE);
+				break;
+			default:
+				LOGOMATIC("Unsupported clock source for USART1 in Setup_VCP\n");
+				return;
+		}
+		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
+	} else if (usart_instance == USART2) {
 		switch (vcp_config.clock_source) {
 			case VCP_CLOCK_PCLK:
 				LL_RCC_SetUSARTClockSource(LL_RCC_USART2_CLKSOURCE_PCLK1);
@@ -114,7 +142,7 @@ void Setup_VCP(VCP_Config *input_config)
 				return;
 		}
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
-	} else if (vcp_config.usart_instance == USART3) {
+	} else if (usart_instance == USART3) {
 		switch (vcp_config.clock_source) {
 			case VCP_CLOCK_PCLK:
 				LL_RCC_SetUSARTClockSource(LL_RCC_USART3_CLKSOURCE_PCLK1);
@@ -133,26 +161,6 @@ void Setup_VCP(VCP_Config *input_config)
 				return;
 		}
 		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART3);
-
-	} else if (vcp_config.usart_instance == LPUART1) {
-		switch (vcp_config.clock_source) {
-			case VCP_CLOCK_PCLK:
-				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_PCLK1);
-				break;
-			case VCP_CLOCK_SYSCLK:
-				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_SYSCLK);
-				break;
-			case VCP_CLOCK_HSI:
-				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_HSI);
-				break;
-			case VCP_CLOCK_LSE:
-				LL_RCC_SetUSARTClockSource(LL_RCC_LPUART1_CLKSOURCE_LSE);
-				break;
-			default:
-				LOGOMATIC("Unsupported clock source for LPUART1 in Setup_VCP\n");
-				return;
-		}
-		LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_LPUART1);
 	} else {
 		LOGOMATIC("Unsupported USART instance for Setup_VCP\n");
 		return;
@@ -194,50 +202,93 @@ void Setup_VCP(VCP_Config *input_config)
 			return;
 	}
 
-	if (vcp_config.usart_instance == LPUART1) {
-		LL_LPUART_InitTypeDef LPUART_InitStruct = {.PrescalerValue = vcp_config.prescaler,
-							   .BaudRate = vcp_config.baud_rate,
-							   .DataWidth = LL_LPUART_DATAWIDTH_8B,
-							   .StopBits = vcp_config.stop_bits,
-							   .Parity = vcp_config.parity,
-							   .TransferDirection = LL_LPUART_DIRECTION_TX_RX,
-							   .HardwareFlowControl = LL_LPUART_HWCONTROL_NONE};
-		LL_LPUART_Init(vcp_config.usart_instance, &LPUART_InitStruct);
-	} else {
-		LL_USART_InitTypeDef USART_InitStruct = {.PrescalerValue = vcp_config.prescaler,
-							 .BaudRate = vcp_config.baud_rate,
-							 .DataWidth = LL_USART_DATAWIDTH_8B,
-							 .StopBits = vcp_config.stop_bits,
-							 .Parity = vcp_config.parity,
-							 .TransferDirection = LL_USART_DIRECTION_TX_RX,
-							 .HardwareFlowControl = LL_USART_HWCONTROL_NONE,
-							 .OverSampling = vcp_config.oversampling};
-		LL_USART_Init(vcp_config.usart_instance, &USART_InitStruct);
-	}
-	LL_USART_SetTXFIFOThreshold(vcp_config.usart_instance, vcp_config.tx_fifo_threshold);
-	LL_USART_SetRXFIFOThreshold(vcp_config.usart_instance, vcp_config.rx_fifo_threshold);
-	LL_USART_DisableFIFO(vcp_config.usart_instance);
-	LL_USART_ConfigAsyncMode(vcp_config.usart_instance);
+	LL_USART_InitTypeDef USART_InitStruct = {.PrescalerValue = vcp_config.prescaler,
+						 .BaudRate = vcp_config.baud_rate,
+						 .DataWidth = LL_USART_DATAWIDTH_8B,
+						 .StopBits = vcp_config.stop_bits,
+						 .Parity = vcp_config.parity,
+						 .TransferDirection = LL_USART_DIRECTION_TX_RX,
+						 .HardwareFlowControl = LL_USART_HWCONTROL_NONE,
+						 .OverSampling = vcp_config.oversampling};
+	LL_USART_Init(usart_instance, &USART_InitStruct);
 
-	if (vcp_config.usart_instance == USART2) {
+	LL_USART_SetTXFIFOThreshold(usart_instance, vcp_config.tx_fifo_threshold);
+	LL_USART_SetRXFIFOThreshold(usart_instance, vcp_config.rx_fifo_threshold);
+	LL_USART_DisableFIFO(usart_instance);
+	LL_USART_ConfigAsyncMode(usart_instance);
+
+	if (usart_instance == USART1) {
+		NVIC_EnableIRQ(USART1_IRQn);
+	} else if (usart_instance == USART2) {
 		NVIC_EnableIRQ(USART2_IRQn);
-		LL_USART_EnableIT_RXNE(USART2);
-		LL_USART_Enable(USART2);
-		while ((!(LL_USART_IsActiveFlag_TEACK(USART2))) || (!(LL_USART_IsActiveFlag_REACK(USART2)))) {}
-	} else if (vcp_config.usart_instance == USART3) {
+	} else if (usart_instance == USART3) {
 		NVIC_EnableIRQ(USART3_IRQn);
-		LL_USART_EnableIT_RXNE(USART3);
-		LL_USART_Enable(USART3);
-		while ((!(LL_USART_IsActiveFlag_TEACK(USART3))) || (!(LL_USART_IsActiveFlag_REACK(USART3)))) {}
-	} else if (vcp_config.usart_instance == LPUART1) {
-		NVIC_EnableIRQ(LPUART1_IRQn);
-		LL_USART_EnableIT_RXNE(LPUART1);
-		LL_USART_Enable(LPUART1);
-		while ((!(LL_USART_IsActiveFlag_TEACK(LPUART1))) || (!(LL_USART_IsActiveFlag_REACK(LPUART1)))) {}
-	} else {
-		LOGOMATIC("Unsupported USART instance for Setup_VCP\n");
-		return;
 	}
+
+	if (vcp_config.rx_callback != NULL) {
+		LL_USART_EnableIT_RXNE(usart_instance);
+	} else {
+		LL_USART_DisableIT_RXNE(usart_instance);
+	}
+
+	LL_USART_Enable(usart_instance);
+	while ((!(LL_USART_IsActiveFlag_TEACK(usart_instance))) || (!(LL_USART_IsActiveFlag_REACK(usart_instance)))) {}
 
 	is_initialized = true;
 }
+
+/**
+ * @brief USART interrupt handler for VCP TX/RX processing
+ * This function should be called from whichever USART IRQ handler is configured for VCP
+ * (USART2_IRQHandler, USART3_IRQHandler, or LPUART1_IRQHandler)
+ * It uses vcp_config to determine which USART instance to service.
+ */
+void VCP_IRQHandler(void)
+{
+	if (!is_initialized) {
+		return;
+	}
+
+	if (LL_USART_IsEnabledIT_TXE(usart_instance) && LL_USART_IsActiveFlag_TXE(usart_instance)) {
+		uint32_t primask = vcp_enter_critical();
+		vcp_tx_from_buffer();
+		if (vcp_tx_count == 0) {
+			LL_USART_DisableIT_TXE(usart_instance);
+		}
+		vcp_exit_critical(primask);
+	}
+
+	if (LL_USART_IsEnabledIT_RXNE(usart_instance) && LL_USART_IsActiveFlag_RXNE(usart_instance)) {
+		char received_data = (char)LL_USART_ReceiveData8(usart_instance);
+		if (vcp_config.rx_callback != NULL) {
+			vcp_config.rx_callback(received_data);
+		} else {
+			LOGOMATIC("VCP Rx: %c\n", received_data);
+		}
+	}
+
+	if (LL_USART_IsActiveFlag_ORE(usart_instance)) {
+		LL_USART_ClearFlag_ORE(usart_instance);
+	}
+}
+
+#ifdef VCP_CONFIG_CLAIM_USART1
+void USART1_IRQHandler(void)
+{
+	VCP_IRQHandler();
+}
+#endif
+
+#ifdef VCP_CONFIG_CLAIM_USART2
+void USART2_IRQHandler(void)
+{
+	VCP_IRQHandler();
+}
+#endif
+
+#ifdef VCP_CONFIG_CLAIM_USART3
+void USART3_IRQHandler(void)
+{
+	VCP_IRQHandler();
+}
+#endif

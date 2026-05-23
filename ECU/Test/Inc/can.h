@@ -385,4 +385,7 @@ uint8_t BytesToCANDLC(uint32_t num_bytes);
 // doesn't need a handle, CAN cores share peripheral clock
 void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
+#define FDCAN_CLASSIC_CAN 0
+#define FDCAN_FD_CAN 1
+
 #endif
