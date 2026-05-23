@@ -43,6 +43,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			# GR_ADC
 			# PERIPHERAL_CAN_LIB
 			BitManipulations_Lib
+			VCP_LIB
 	)
 	add_test(StateTicksTest StateTicksTest)
 
@@ -90,7 +91,7 @@ target_link_libraries(
 		GR_ADC
 		PERIPHERAL_TIMEDCAN_LIB
 		BitManipulations_Lib
-		m
+		VCP_LIB
 )
 
 target_include_directories(

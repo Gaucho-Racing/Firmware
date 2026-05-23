@@ -8,41 +8,29 @@ A wrapper around USART to provide easier control of the VCP.
 
 Does not conflict with Logomatic using SWO.
 
+## Quick Setup
+
+0. Link agains the `VCP_LIB` target library
+1. Copy the example header into your project and edit accordingly
+2. Run `VCP_Setup` on your `VCP_Config` struct (do not leave the Rx callback uninitialized)
+3. Use `VCP_Send` and your Rx callback to send and receive messages
+
 ## What it does
-- Initializes `USART2` or `USART3` for simple serial TX/RX.
-- Provides lightweight polling helpers for byte and line-based input.
-- Intended for quick debug/CLI-style communication over ST-Link VCP.
+- Initializes USART for simple serial transmission
+- Provides a callback for receiving characters
+- Allows sending strings over VCP using interrupts
 
-## Quick setup
-1. Include `vcp.h`.
-2. Fill a `VCP_Config` with your USART, GPIO port/pins, baud, and framing settings.
-3. Call `VCP_Init(&config)` once during startup.
-4. Use `VCP_Send`, `VCP_IsDataAvailable`, `VCP_Receive`, and `VCP_ReceiveLine`.
-5. Alternatively, configure [interrupts](#advanced-interrupts)
+## Setup
 
-## Core API
-- `VCP_Init(VCP_Config *input_config)` initializes clocks, GPIO, USART, and enables IRQ.
-- `VCP_Send(uint8_t *data, uint32_t length)` transmits raw bytes.
-- `VCP_IsDataAvailable()` returns `true` if RX data is ready.
-- `VCP_Receive()` reads one byte (returns `0` if uninitialized).
-- `VCP_ReceiveLine(uint8_t *buffer, uint8_t buffer_size)` reads until newline/NULL or buffer full.
+0. Link against the interface library `VCP_LIB`
+1. Copy `vcp_config_example.h` into your `Application/Inc`, rename the file to `vcp_config.h` and edit as instructed
+2. Include `vcp.h` into your project files that you wish to interact with
+3. Fill a `VCP_Config` with your USART configuration: GPIO port/pins, baud, and framing settings. Optionally define your callback or use `NULL` (do not leave it uninitialized)
+4. Call `VCP_Setup(&config)` exactly once during startup
+5. Use `VCP_Send` to send data, to receive use the callback you previously defined
 
-## Advanced Interrupts
-STM32 provides a weak reference to `USARTx_IRQHandler`.
+## HOOTL Test
 
-To process on interrutps instead of polling simply write that function, for `USART2` that could be:
-```c
-void USART2_IRQHandler(void)
-{
-	if (LL_USART_IsActiveFlag_ORE(USART2)) {
-		LL_USART_ClearFlag_ORE(USART2);
-	}
+Simply add the `VCP_LIB` linked library for any executable test you would like to use, no other changes are necesary.
 
-	while (LL_USART_IsEnabledIT_RXNE(USART2) && LL_USART_IsActiveFlag_RXNE(USART2)) {
-		uint8_t receivedData = LL_USART_ReceiveData8(USART2);
-		while (!LL_USART_IsActiveFlag_TXE_TXFNF(USART2)) {}
-		LL_USART_TransmitData8(USART2, receivedData);
-		LOGOMATIC("Received: %c\n", receivedData);
-	}
-}
-```
+If you run into warnings while printing 32-bit integers using the `l` specifier in `snprintf` or family simply use `inttypes.h`

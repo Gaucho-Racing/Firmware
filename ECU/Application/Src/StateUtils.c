@@ -1,7 +1,9 @@
 #include "StateUtils.h"
 
+#include <inttypes.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "CANutils.h"
 #include "GRCAN_BUS_ID.h"
@@ -14,6 +16,7 @@
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
+#include "vcp.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -155,4 +158,12 @@ void disable_inverter(void)
 	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
 	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
+}
+
+void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw)
+{
+#define SIZE 64
+	static char buf[SIZE];
+	snprintf(buf, SIZE, "%" PRIu32 " A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
+	VCP_Send(buf, strlen(buf));
 }

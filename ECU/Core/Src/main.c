@@ -32,6 +32,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
+
 #include "CANdler.h"
 #include "CANutils.h"
 #include "Lights.h"
@@ -42,6 +44,7 @@
 #include "adc.h"
 #include "can.h"
 #include "stm32g4xx_hal.h"
+#include "vcp.h"
 // #define PLAN_C
 /* USER CODE END Includes */
 
@@ -66,7 +69,7 @@
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
 				   .baud_rate = 115200,
 				   .data_width = LOGOMATIC_DATAWIDTH_8B,
 				   .stop_bits = LOGOMATIC_STOPBITS_1,
@@ -76,6 +79,19 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+
+VCP_Config vcp_config = {.baud_rate = 2000000,
+			 .clock_source = VCP_CLOCK_PCLK,
+			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
+			 .bus_port = VCP_Port_A,
+			 .parity = VCP_Parity_None,
+			 .prescaler = VCP_Prescalar_Div2,
+			 .stop_bits = VCP_StopBits_1,
+			 .oversampling = VCP_Oversampling_16,
+			 .tx_fifo_threshold = VCP_Threshold_1_8,
+			 .rx_fifo_threshold = VCP_Threshold_1_8,
+			 .alternate_function = LL_GPIO_AF_7,
+			 .rx_callback = NULL};
 /* USER CODE END PV */
 
 // ADC 1
@@ -438,7 +454,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-	Setup_Logomatic(&logomaticConfig);
+
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -457,6 +473,8 @@ int main(void)
 	MX_ADC2_Init();
 	// MX_FDCAN2_Init();
 	/* USER CODE BEGIN 2 */
+	Setup_Logomatic(&logomaticConfig);
+	Setup_VCP(&vcp_config);
 
 	// Initialize CAN
 	CAN_Configure();
@@ -517,6 +535,8 @@ int main(void)
 				pingAll();
 			}
 			lightControl(&stateLump);
+
+			Send_VCP_APPS(&stateLump, ADC_outputs[2], ADC_outputs[3]);
 			// ADC_Logomatic();
 		}
 	}
