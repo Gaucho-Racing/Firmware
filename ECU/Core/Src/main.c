@@ -197,19 +197,19 @@ void read_digital(void)
 void write_adc_values_to_state_data(void)
 {
 	// analog
-	stateLump.bse_signal = ADC_outputs[0];
-	stateLump.bspd_signal = ADC_outputs[1];
-	stateLump.APPS1_Signal = ADC_outputs[2];
-	stateLump.APPS2_Signal = ADC_outputs[3];
-	stateLump.Brake_F_Signal = ADC_outputs[4];
-	stateLump.Brake_R_Signal = ADC_outputs[5];
-	stateLump.aux_signal = ADC_outputs[6];
-	stateLump.steering_angle_signal = ADC_outputs[10]; // TODO: convert to rad/deg...?
+	stateLump.bse_signal = ADC_outputs[ADC_BUFFER_SIG_BSE];
+	stateLump.bspd_signal = ADC_outputs[ADC_BUFFER_SIG_BSPD];
+	stateLump.APPS1_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS1];
+	stateLump.APPS2_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS2];
+	stateLump.Brake_F_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE_F];
+	stateLump.Brake_R_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE_R];
+	stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
+	stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE]; // TODO: convert to rad/deg...?
 
 	// TODO: determine conversion factors for all of these (uint to float)
-	stateLump.bspd_sense = ADC_outputs[7] / 4095.0 * 3.3;
-	stateLump.imd_sense = ADC_outputs[8] / 4095.0 * 3.3;
-	stateLump.ams_sense = ADC_outputs[9] / 4095.0 * 3.3;
+	stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0 * 3.3;
+	stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0 * 3.3;
+	stateLump.ams_sense = ADC_outputs[ADC_BUFFER_SENSE_AMS] / 4095.0 * 3.3;
 }
 
 void ADC_Configure(void)
@@ -536,7 +536,7 @@ int main(void)
 			}
 			lightControl(&stateLump);
 
-			Send_VCP_APPS(&stateLump, ADC_outputs[2], ADC_outputs[3]);
+			Send_VCP_APPS(&stateLump, ADC_outputs[ADC_BUFFER_SIG_APPS1], ADC_outputs[ADC_BUFFER_SIG_APPS2]);
 			// ADC_Logomatic();
 		}
 	}
