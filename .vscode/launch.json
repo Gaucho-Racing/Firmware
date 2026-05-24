@@ -288,7 +288,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -304,7 +304,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -320,7 +320,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -336,7 +336,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -352,7 +352,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -368,7 +368,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -384,7 +384,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -400,7 +400,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
@@ -976,7 +976,7 @@
 			"type": "cortex-debug",
 			"servertype": "openocd",
 			"configFiles": [
-				"interface/stlink.cfg",
+				"interface/stlink-dap.cfg",
 				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
