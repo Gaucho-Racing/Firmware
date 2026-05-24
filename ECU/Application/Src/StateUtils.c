@@ -123,7 +123,7 @@ float CalcBrakePercent(volatile const ECU_StateData *stateData)
 	return 0;
 #endif
 
-	return stateData->bse_signal / 4096.0f;
+	return (stateData->bse_signal - BSE_MIN) / (float)(BSE_MAX - BSE_MIN);
 }
 
 // TODO: reconsider deadzone
