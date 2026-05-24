@@ -8,7 +8,7 @@
 #pragma message("NODE is not defined. Please compile Suspension Node for a specific target. Defaulting to FL.")
 #define LOCAL_GR_ID GRCAN_Suspension_FL
 #else
-#define LOCAL_GR_ID CONCAT(GRCAN_SuspensionNode_, NODE)
+#define LOCAL_GR_ID CONCAT(GRCAN_Suspension_, NODE)
 #endif
 
 #pragma message "Compiling Suspension Node node as " STRINGIFY_MACRO(LOCAL_GR_ID)
