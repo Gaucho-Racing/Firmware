@@ -11,7 +11,7 @@ uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDe
 {
 	uint8_t tx_word[4];
 	uint8_t rx_word[4] = {0};
-	uint8_t status = 0;
+	HAL_StatusTypeDef status = 0;
 
 	bmi323_dev->spi_port = spi_port;
 	bmi323_dev->port = port;
