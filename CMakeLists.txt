@@ -63,7 +63,7 @@ if(
 elseif(CMAKE_C_COMPILER_LAUNCHER OR CMAKE_ASM_COMPILER_LAUNCHER)
 	message(
 		STATUS
-		"Not using sccache: CMAKE_C_COMPILER_LAUNCHER already set to ${CMAKE_C_COMPILER_LAUNCHER} or CMAKE_ASM_COMPILER_LAUNCHER already set to ${CMAKE_ASM_COMPILER_LAUNCHER}"
+		"Not using sccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
 	)
 else()
 	message(STATUS "Not using sccache: sccache not found in PATH")
@@ -102,7 +102,7 @@ if(
 elseif(CMAKE_C_COMPILER_LAUNCHER OR CMAKE_ASM_COMPILER_LAUNCHER)
 	message(
 		STATUS
-		"Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to ${CMAKE_C_COMPILER_LAUNCHER} or CMAKE_ASM_COMPILER_LAUNCHER already set to ${CMAKE_ASM_COMPILER_LAUNCHER}"
+		"Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
 	)
 else()
 	message(STATUS "Not using ccache: ccache not found in PATH")
