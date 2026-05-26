@@ -68,7 +68,7 @@ jobs:
           echo "<details><summary>CMake Configuration</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset ${{ matrix.prefix }} -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset ${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -80,7 +80,7 @@ jobs:
           echo "<details><summary>CMake Configuration</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          cmake --preset ${{ matrix.prefix }} -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
@@ -221,7 +221,7 @@ jobs:
           echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset HOOTLTest -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -233,7 +233,7 @@ jobs:
           echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          cmake --preset HOOTLTest -DCMAKE_C_COMPILER_LAUNCHER=sccache 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
