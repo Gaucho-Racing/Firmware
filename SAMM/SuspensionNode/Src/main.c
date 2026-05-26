@@ -95,11 +95,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t MillisecondsSinceBoot()
-{
-	return HAL_GetTick() * HAL_GetTickFreq();
-}
-
 
 uint16_t ewa_u(uint16_t new_value, uint16_t old_value) {
 	if (old_value == 0xFFFF) {
