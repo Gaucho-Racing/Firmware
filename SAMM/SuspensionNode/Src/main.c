@@ -154,6 +154,7 @@ int main(void)
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
+	/*
 	bmi323 bmi323_dev;
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 
@@ -176,6 +177,7 @@ int main(void)
 	// Set up accelerometer and gyroscope configuration
 	bmi323_enable_acc(&bmi323_dev, BMI_ACC_MODE, BMI_ACC_AVGNUM, BMI_ACC_BW, BMI_ACC_RANGE, BMI_ACC_ODR);
 	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
+	*/
 
 	mag mag_dev;
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
@@ -210,7 +212,7 @@ int main(void)
 
 		if (current_time - last_avgcalc_ms > avgcalc_interval) {
 			last_avgcalc_ms = current_time;
-
+/*
 			imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
 			imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
 			imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
@@ -231,7 +233,7 @@ int main(void)
 			LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
 			LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
 			LOGOMATIC("IMU temperature: %f", imu_temp_test);
-
+*/
 			mag_temp = ewa_u(mag_read_temp(&mag_dev), mag_temp);
 			mag_hysteresis = ewa_u(mag_read_HANG(&mag_dev), mag_hysteresis);
 			mag_angle = ewa_u(mag_read_encoder_angle(&mag_dev), mag_angle);
