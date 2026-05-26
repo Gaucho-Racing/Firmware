@@ -44,6 +44,8 @@ jobs:
           release: ${{ env.ARM_GCC_VERSION }}
 
       - name: Setup Cache
+        id: cache-setup
+        continue-on-error: true
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ${{ env.SCCACHE_DIR }}
@@ -55,9 +57,15 @@ jobs:
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-
 
       - name: Setup Shared Compilation Cache
+        id: sccache-setup
+        if: steps.cache-setup.outcome == 'success'
+        continue-on-error: true
         uses: mozilla-actions/sccache-action@9e7fa8a12102821edf02ca5dbea1acd0f89a2696 # v0.0.10
 
       - name: Start Shared Compilation Cache Server
+        id: sccache-start
+        continue-on-error: true
+        if: steps.sccache-setup.outcome == 'success'
         run: sccache --start-server
 
       - name: CMake Configuration (Unix)
@@ -137,7 +145,7 @@ jobs:
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: Shared Compilation Cache Errors (Unix)
-        if: matrix.operatingSystem != 'windows-latest'
+        if: matrix.operatingSystem != 'windows-latest' && steps.sccache-setup.outcome == 'success'
         shell: bash
         run: |
           set -o pipefail
@@ -152,7 +160,7 @@ jobs:
           fi
 
       - name: Shared Compilation Cache Errors (Windows)
-        if: matrix.operatingSystem == 'windows-latest'
+        if: matrix.operatingSystem == 'windows-latest' && steps.sccache-setup.outcome == 'success'
         shell: pwsh
         run: |
           if (Test-Path $env:SCCACHE_ERROR_LOG) {
@@ -198,6 +206,8 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Cache
+        id: cache-setup
+        continue-on-error: true
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ${{ env.SCCACHE_DIR }}
@@ -208,9 +218,15 @@ jobs:
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-
 
       - name: Setup Shared Compilation Cache
+        id: sccache-setup
+        if: steps.cache-setup.outcome == 'success'
         uses: mozilla-actions/sccache-action@9e7fa8a12102821edf02ca5dbea1acd0f89a2696 # v0.0.10
+        continue-on-error: true
 
       - name: Start Shared Compilation Cache Server
+        id: sccache-start
+        continue-on-error: true
+        if: steps.sccache-setup.outcome == 'success'
         run: sccache --start-server
 
       - name: CMake Configuration (Unix)
@@ -289,7 +305,8 @@ jobs:
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: Shared Compilation Cache Errors (Unix)
-        if: matrix.operatingSystem != 'windows-latest'
+        if: matrix.operatingSystem != 'windows-latest' && steps.sccache-setup.outcome == 'success'
+        continue-on-error: true
         shell: bash
         run: |
           set -o pipefail
@@ -304,7 +321,8 @@ jobs:
           fi
 
       - name: Shared Compilation Cache Errors (Windows)
-        if: matrix.operatingSystem == 'windows-latest'
+        if: matrix.operatingSystem == 'windows-latest' && steps.sccache-setup.outcome == 'success'
+        continue-on-error: true
         shell: pwsh
         run: |
           if (Test-Path $env:SCCACHE_ERROR_LOG) {
