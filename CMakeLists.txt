@@ -30,9 +30,56 @@ message(
 	${CMAKE_PRESET_NAME}
 )
 
+# Shared Compiler Cache Configuration
+find_program(SCCACHE_PROGRAM sccache)
+if(
+	SCCACHE_PROGRAM
+	AND
+		NOT
+			CMAKE_C_COMPILER_LAUNCHER
+	AND
+		NOT
+			CMAKE_ASM_COMPILER_LAUNCHER
+)
+	message(STATUS "Found sccache: ${SCCACHE_PROGRAM}")
+	set(SCCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/sccache")
+	set(
+		CMAKE_C_COMPILER_LAUNCHER
+		"${CMAKE_COMMAND}"
+		-E
+		env
+		"SCCACHE_DIR=${SCCACHE_DIR_PATH}"
+		"${SCCACHE_PROGRAM}"
+	)
+	set(
+		CMAKE_ASM_COMPILER_LAUNCHER
+		"${CMAKE_COMMAND}"
+		-E
+		env
+		"SCCACHE_DIR=${SCCACHE_DIR_PATH}"
+		"${SCCACHE_PROGRAM}"
+	)
+	message(STATUS "sccache directory: ${SCCACHE_DIR_PATH}")
+elseif(CMAKE_C_COMPILER_LAUNCHER OR CMAKE_ASM_COMPILER_LAUNCHER)
+	message(
+		STATUS
+		"Not using sccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
+	)
+else()
+	message(STATUS "Not using sccache: sccache not found in PATH")
+endif()
+
 # Compiler Cache Configuration
 find_program(CCACHE_PROGRAM ccache)
-if(CCACHE_PROGRAM AND NOT CMAKE_C_COMPILER_LAUNCHER)
+if(
+	CCACHE_PROGRAM
+	AND
+		NOT
+			CMAKE_C_COMPILER_LAUNCHER
+	AND
+		NOT
+			CMAKE_ASM_COMPILER_LAUNCHER
+)
 	message(STATUS "Found ccache: ${CCACHE_PROGRAM}")
 	set(CCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/ccache")
 	set(
@@ -52,10 +99,10 @@ if(CCACHE_PROGRAM AND NOT CMAKE_C_COMPILER_LAUNCHER)
 		"${CCACHE_PROGRAM}"
 	)
 	message(STATUS "ccache directory: ${CCACHE_DIR_PATH}")
-elseif(CMAKE_C_COMPILER_LAUNCHER)
+elseif(CMAKE_C_COMPILER_LAUNCHER OR CMAKE_ASM_COMPILER_LAUNCHER)
 	message(
 		STATUS
-		"Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to ${CMAKE_C_COMPILER_LAUNCHER}"
+		"Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
 	)
 else()
 	message(STATUS "Not using ccache: ccache not found in PATH")
