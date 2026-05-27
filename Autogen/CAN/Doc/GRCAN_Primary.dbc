@@ -521,10 +521,8 @@ CM_ SG_ 2155877634 fault_bits "TS above set max voltage, TS below set min voltag
 CM_ SG_ 2151678465 Timestamp "Time in millis";
 CM_ SG_ 2151678466 Timestamp "Time in millis";
 BA_DEF_  "BusType" STRING ;
-BA_DEF_  "DBName" STRING ;
 BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
 BA_DEF_DEF_  "BusType" "CAN";
-BA_DEF_DEF_  "DBName" "";
 BA_DEF_DEF_  "VFrameFormat" "StandardCAN";
 BA_ "VFrameFormat" BO_ 2150629377 1;
 BA_ "VFrameFormat" BO_ 2150629889 1;
