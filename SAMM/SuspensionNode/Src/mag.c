@@ -24,7 +24,7 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 
 	// Check AOK=1 (bit 0) and BIP=0 (bit 1)
 	// If either not true, return error
-	if (!(status & 0x0001) || (status & 0x0002)) {
+	if (!((status & 0x0001) || (status & 0x0002))) {
 		return HAL_ERROR;
 	}
 
@@ -44,9 +44,7 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
     uint8_t rx_word[4] = {0};
 
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); // A1113 chip select active low
-	LL_mDelay(1);
 	HAL_StatusTypeDef res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
-	LL_mDelay(1);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET); // Release chip select back to high
 
 	if (res != HAL_OK) {
@@ -73,8 +71,9 @@ crc
 uint16_t mag_read(mag *mag_dev, uint8_t reg)
 {
 	uint16_t cmd = (uint16_t)((reg & mag_addr_mask) << 8); // read: bit 14 = 0, address in bits 13:8
-	mag_transmit(mag_dev, cmd);			       // frame 1: send command, discard response
-	return mag_transmit(mag_dev, 0x0000);		       // frame 2: NOP, receive data
+	uint16_t dummy1 = mag_transmit(mag_dev, cmd);			       // frame 1: send command, discard response
+	uint16_t dummy2 = mag_transmit(mag_dev, 0x0000);		       // frame 2: NOP, receive data
+	return dummy2;
 }
 
 
