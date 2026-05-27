@@ -179,7 +179,7 @@ int main(void)
 	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
 	*/
 
-	mag mag_dev;
+	mag mag_dev = {0};
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
 
 	// Initialize magnetic encoder
