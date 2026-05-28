@@ -220,7 +220,7 @@ sub _build_attribute_section {
 		push @lines, q{BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";} . "\n";
 	}
 
-	push @lines, sprintf qq{BA_DEF_DEF_  "BusType" "%s";\n}, $is_fd_bus ? 'CAN FD' : 'CAN';
+	push @lines, sprintf qq{BA_DEF_DEF_  "BusType" "%s";\n},      $is_fd_bus ? 'CAN FD'         : 'CAN';
 	push @lines, sprintf qq{BA_DEF_DEF_  "VFrameFormat" "%s";\n}, $is_fd_bus ? 'StandardCAN_FD' : 'StandardCAN';
 	if ($is_fd_bus) {
 		push @lines, q{BA_DEF_DEF_  "CANFD_BRS" "1";} . "\n";
