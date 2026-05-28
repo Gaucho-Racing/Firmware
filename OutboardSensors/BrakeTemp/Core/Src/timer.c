@@ -33,6 +33,6 @@ void WHEEL_SPEED_TIMER_INIT(TIM_HandleTypeDef *handle, uint32_t period_multiple_
     handle->Instance->CR1 |= TIM_CR1_OPM;
 
     // 4. Configure NVIC for Interrupts
-    HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 2, 1);
     HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
 }

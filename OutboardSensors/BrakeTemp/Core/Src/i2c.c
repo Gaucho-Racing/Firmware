@@ -39,8 +39,8 @@ void MX_I2C2_SMBUS_Init(void)
 
   /* USER CODE END I2C2_Init 1 */
   hsmbus2.Instance = I2C2;
-  hsmbus2.Init.Timing = 0x00503D58;
-  hsmbus2.Init.AnalogFilter = SMBUS_ANALOGFILTER_ENABLE;
+  hsmbus2.Init.Timing = 0x00503D5A;
+  hsmbus2.Init.AnalogFilter = SMBUS_ANALOGFILTER_DISABLE;
   hsmbus2.Init.OwnAddress1 = 2;
   hsmbus2.Init.AddressingMode = SMBUS_ADDRESSINGMODE_7BIT;
   hsmbus2.Init.DualAddressMode = SMBUS_DUALADDRESS_DISABLE;
@@ -75,7 +75,7 @@ void HAL_SMBUS_MspInit(SMBUS_HandleTypeDef* smbusHandle)
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C2;
-    PeriphClkInit.I2c2ClockSelection = RCC_I2C2CLKSOURCE_PCLK1;
+    PeriphClkInit.I2c2ClockSelection = RCC_I2C2CLKSOURCE_HSI;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
     {
       Error_Handler();
@@ -95,6 +95,12 @@ void HAL_SMBUS_MspInit(SMBUS_HandleTypeDef* smbusHandle)
 
     /* I2C2 clock enable */
     __HAL_RCC_I2C2_CLK_ENABLE();
+
+    /* I2C2 interrupt Init */
+    HAL_NVIC_SetPriority(I2C2_EV_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(I2C2_EV_IRQn);
+    HAL_NVIC_SetPriority(I2C2_ER_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(I2C2_ER_IRQn);
   /* USER CODE BEGIN I2C2_MspInit 1 */
 
   /* USER CODE END I2C2_MspInit 1 */
@@ -120,6 +126,9 @@ void HAL_SMBUS_MspDeInit(SMBUS_HandleTypeDef* smbusHandle)
 
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9);
 
+    /* I2C2 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(I2C2_EV_IRQn);
+    HAL_NVIC_DisableIRQ(I2C2_ER_IRQn);
   /* USER CODE BEGIN I2C2_MspDeInit 1 */
 
   /* USER CODE END I2C2_MspDeInit 1 */

@@ -73,7 +73,7 @@ void WHEEL_SPEED_GPIO_INIT(void) {
 
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 1); // e.g., EXTI15_10_IRQn
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 0); // e.g., EXTI15_10_IRQn
 	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 

@@ -45,7 +45,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-#define BRAKETEMP_INTERVAL_MS 33
+#define BRAKETEMP_INTERVAL_MS 500
 #define WHEEL_SPEED_TIMEOUT_TICKS 10000
 #define MAX_RPM 341.51f
 #define SECONDS_PER_MIN 60

@@ -61,13 +61,14 @@
 // MLX stuff
 static uint16_t eeMLX90614[32];
 float emissivity = GR_BRAKE_EMISSIVITY;
-float ta, to;
+float ta = 0.0, to = 0.0;
 int status;
 uint8_t MLX90614_address = 0x5A;
 
 // Wheel speed stuff
 TIM_HandleTypeDef htim6;
 volatile uint32_t pulse_time_deltas[MAX_NUM_PULSES];
+uint32_t HAL_tick_freq_hz = 0;
 volatile uint32_t last_tick = 0;
 volatile uint8_t head = 0;
 volatile uint8_t tail = 0;
@@ -92,12 +93,22 @@ PUTCHAR_PROTOTYPE
 
 int MLX90614_Initialize(void)
 {
-	MLX90614_SendCommand(MLX90614_address, 0x60); // Unlock EEPROM
-	MLX90614_SetEmissivity(MLX90614_address, emissivity);
-	MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
-	MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
-	MLX90614_DumpEE(MLX90614_address, eeMLX90614);
-	MLX90614_SendCommand(MLX90614_address, 0x61); // Lock EEPROM
+	HAL_Delay(100);
+	uint16_t data = 65535;
+
+	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
+	status = MLX90614_SMBusWrite(MLX90614_address, 0x04, data-100);
+	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
+	/*
+	status = MLX90614_SetEmissivity(MLX90614_address, emissivity);
+	HAL_Delay(20);
+	status = MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
+	HAL_Delay(20);
+	status = MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
+	HAL_Delay(20);
+	status = MLX90614_DumpEE(MLX90614_address, eeMLX90614);
+	HAL_Delay(20);
+	*/
 
 	return 0;
 }
@@ -146,7 +157,7 @@ void ResetRPMHistory(void) {
 	head = 0;
 	tail = 0;
 	num_pulses = 0;
-	last_tick = HAL_GetTick();
+	last_tick = 0;
 }
 
 float GetRPM(void) {
@@ -155,11 +166,10 @@ float GetRPM(void) {
 	for(uint8_t i = 0; i < num_pulses; i++) {
 		time += pulse_time_deltas[i];
 	}
-	time >>= 5;
 
 	if (time == 0) return 0.0f;
 
-	rpm = ((float)num_pulses) / time;
+	rpm = ((float)num_pulses * HAL_tick_freq_hz) / time;
 	rpm *= SECONDS_PER_MIN;
 	rpm /= PULSES_PER_ROT;
 
@@ -211,11 +221,9 @@ int main(void)
 	MX_I2C2_SMBUS_Init();
 	/* USER CODE BEGIN 2 */
 
-	WHEEL_SPEED_GPIO_INIT();
-	WHEEL_SPEED_TIMER_INIT(&htim6, 10);
-
-	/* Configure LED2 */
-	// BSP_LED_Init(LED2);
+	//WHEEL_SPEED_GPIO_INIT();
+	//WHEEL_SPEED_TIMER_INIT(&htim6, 10);
+	HAL_tick_freq_hz = 1000 / HAL_GetTickFreq();
 
 	CANInitialize();
 	can_start(can_handler);
@@ -227,12 +235,12 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 
-		status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
+		//status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
 		status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
-		if (HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
-		CAN_sendTemp(to);
-		CAN_sendRPM(GetRPM());
+		//CAN_sendTemp(to);
+		//CAN_sendRPM(GetRPM());
 		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
 		/* USER CODE END WHILE */

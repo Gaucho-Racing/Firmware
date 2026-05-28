@@ -19,7 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_it.h"
-
+#include "i2c.h"
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -58,7 +58,7 @@
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
-
+extern SMBUS_HandleTypeDef hsmbus2;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -186,6 +186,13 @@ void SysTick_Handler(void)
 	/* USER CODE END SysTick_IRQn 1 */
 }
 
+/******************************************************************************/
+/* STM32G4xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32g4xx.s).                    */
+/******************************************************************************/
+
 /**
  * @brief This function handles EXTI timer for GPIO pins 10-15.
  */
@@ -194,16 +201,28 @@ void EXTI15_10_IRQHandler(void) {
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
 }
 
+/**
+ * @brief This function handles TIM6 interrupt for wheel speed debouncing.
+ */
 void TIM6_DAC_IRQHandler(void) {
     HAL_TIM_IRQHandler(&htim6);
 }
 
-/******************************************************************************/
-/* STM32G4xx Peripheral Interrupt Handlers                                    */
-/* Add here the Interrupt Handlers for the used peripherals.                  */
-/* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32g4xx.s).                    */
-/******************************************************************************/
+/**
+  * @brief This function handles I2C2 event interrupt / SMBus event interrupt.
+  */
+void I2C2_EV_IRQHandler(void)
+{
+    HAL_SMBUS_EV_IRQHandler(&hsmbus2);
+}
+
+/**
+  * @brief This function handles I2C2 error interrupt / SMBus error interrupt.
+  */
+void I2C2_ER_IRQHandler(void)
+{
+    HAL_SMBUS_ER_IRQHandler(&hsmbus2);
+}
 
 /* USER CODE BEGIN 1 */
 
