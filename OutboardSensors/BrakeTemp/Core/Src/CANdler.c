@@ -105,7 +105,7 @@ void CAN_callback(uint32_t ID, void *data, uint32_t size)
 	UNUSED(ID);
 	UNUSED(data);
 	UNUSED(size);
-	volatile int i = 0;
+	// volatile int i = 0;
 	// GRCAN_MSG_ID msg_id = (0x000FFF00 & ID) >> 8;
 	// GRCAN_NODE_ID node_id = (0x0FF00000 & ID) >> 20;
 

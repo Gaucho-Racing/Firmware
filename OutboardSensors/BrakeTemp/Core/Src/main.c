@@ -32,6 +32,7 @@
 #include "MLX90614_API.h"
 #include "MLX90614_SMBus_Driver.h"
 #include "can.h"
+#include "emissivity.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,17 +60,18 @@
 
 // MLX stuff
 static uint16_t eeMLX90614[32];
-float emissivity = 0.95;
+float emissivity = GR_BRAKE_EMISSIVITY;
 float ta, to;
 int status;
 uint8_t MLX90614_address = 0x5A;
 
 // Wheel speed stuff
 TIM_HandleTypeDef htim6;
-uint32_t pulse_time_deltas[MAX_NUM_PULSES];
-uint32_t last_tick = 0, temp_tick;
-uint8_t head = 0, tail = 0;
-uint8_t num_pulses = 0;
+volatile uint32_t pulse_time_deltas[MAX_NUM_PULSES];
+volatile uint32_t last_tick = 0;
+volatile uint8_t head = 0;
+volatile uint8_t tail = 0;
+volatile uint8_t num_pulses = 0;
 
 /* USER CODE END PV */
 
@@ -88,11 +90,11 @@ PUTCHAR_PROTOTYPE
 	return ch;
 }
 
-int MLX90640_Initialize(void)
+int MLX90614_Initialize(void)
 {
 	MLX90614_SendCommand(MLX90614_address, 0x60); // Unlock EEPROM
 	MLX90614_SetEmissivity(MLX90614_address, emissivity);
-	MLX90614_SetFIR(MLX90614_address, 6); // 512 pt averaging
+	MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
 	MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
 	MLX90614_DumpEE(MLX90614_address, eeMLX90614);
 	MLX90614_SendCommand(MLX90614_address, 0x61); // Lock EEPROM
@@ -102,29 +104,38 @@ int MLX90640_Initialize(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM6) {
-		__HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_11);
-		HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+        // Optional: Clear any lingering noise flags on the EXTI line
+        // that happened during the blanking period
+        __HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_11);
     }
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	temp_tick = HAL_GetTick();
-
     if (GPIO_Pin == GPIO_PIN_11) {
-		HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
 
-		pulse_time_deltas[tail] = temp_tick - last_tick;
-		tail = (tail + 1) & (MAX_NUM_PULSES-1);
-
-		if (num_pulses < MAX_NUM_PULSES) {
-			num_pulses++;
-		} else {
-			head = (head + 1) & (MAX_NUM_PULSES-1);
+        // Timer-based cool-off check (Debounce)
+		// If TIM6 is actively running (CEN bit is set), we are inside the cool-off window. Reject this edge.
+		if ((htim6.Instance->CR1 & TIM_CR1_CEN) != 0) {
+			return;
 		}
 
-		last_tick = temp_tick;
+        uint32_t temp_tick = HAL_GetTick();
 
-		HAL_TIM_Base_Start_IT(&htim6);
+        // Enqueue the valid delta time
+        pulse_time_deltas[tail] = temp_tick - last_tick;
+        tail = (tail + 1) & (MAX_NUM_PULSES - 1);
+
+        if (num_pulses < MAX_NUM_PULSES) {
+            num_pulses++;
+        } else {
+            head = (head + 1) & (MAX_NUM_PULSES - 1); // Buffer overflow: advance head
+        }
+
+        last_tick = temp_tick;
+
+        // Reset and restart the cool-off timer peripheral
+        __HAL_TIM_SET_COUNTER(&htim6, 0);
+        HAL_TIM_Base_Start_IT(&htim6);
     }
 }
 
@@ -201,7 +212,7 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 
 	WHEEL_SPEED_GPIO_INIT();
-	WHEEL_SPEED_TIMER_INIT(htim6, 1);
+	WHEEL_SPEED_TIMER_INIT(&htim6, 10);
 
 	/* Configure LED2 */
 	// BSP_LED_Init(LED2);
@@ -209,7 +220,7 @@ int main(void)
 	CANInitialize();
 	can_start(can_handler);
 
-	//MLX90614_Initialize();
+	MLX90614_Initialize();
 
 	/* USER CODE END 2 */
 	/* Infinite loop */

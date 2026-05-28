@@ -48,7 +48,7 @@ int MLX90614_GetTa(uint8_t slaveAddr, float *ta)
 		return -4;
 	}
 
-	*ta = (float)data * 0.02f - 273.15;
+	*ta = (float)data * 0.02f - 273.15f;
 
 	return error;
 }
@@ -67,7 +67,7 @@ int MLX90614_GetTo(uint8_t slaveAddr, float *to)
 	}
 
 	if (error == 0) {
-		*to = (float)data * 0.02f - 273.15;
+		*to = (float)data * 0.02f - 273.15f;
 	}
 
 	return error;
@@ -87,7 +87,7 @@ int MLX90614_GetTo2(uint8_t slaveAddr, float *to2)
 	}
 
 	if (error == 0) {
-		*to2 = (float)data * 0.02 - 273.15;
+		*to2 = (float)data * 0.02f - 273.15f;
 	}
 
 	return error;
@@ -147,11 +147,11 @@ int MLX90614_SetEmissivity(uint8_t slaveAddr, float value)
 	uint16_t newE = 0;
 	float temp = 0;
 
-	if (value > 1.0 || value < 0.05) {
+	if (value > 1.0f || value < 0.05f) {
 		return -6;
 	}
 
-	temp = value * 65535 + 0.5;
+	temp = value * 65535 + 0.5f;
 	newE = temp;
 
 	error = MLX90614_SMBusRead(slaveAddr, 0x24, &curE);
@@ -161,7 +161,7 @@ int MLX90614_SetEmissivity(uint8_t slaveAddr, float value)
 
 		if (error == 0) {
 			temp = curE * data;
-			temp = temp / newE + 0.5;
+			temp = temp / newE + 0.5f;
 			data = temp;
 
 			if (data > 0x7FFF) {
@@ -274,7 +274,7 @@ int MLX90614_SetIIR(uint8_t slaveAddr, uint8_t value)
 
 float MLX90614_TemperatureInFahrenheit(float temperature)
 {
-	return temperature * 1.8f + 32.0;
+	return temperature * 1.8f + 32.0f;
 }
 
 //------------------------------------------------------------------------------

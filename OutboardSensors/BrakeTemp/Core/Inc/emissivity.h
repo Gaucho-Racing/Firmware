@@ -1,0 +1,6 @@
+#ifndef EMISSIVITY_H
+#define EMISSIVITY_H
+
+#define GR_BRAKE_EMISSIVITY 0.5
+
+#endif // EMISSIVITY_H

@@ -1,30 +1,36 @@
 #include "timer.h"
 
-void WHEEL_SPEED_TIMER_INIT(TIM_HandleTypeDef handle, uint32_t period_ms) {
-    TIM_MasterConfigTypeDef sMasterConfig = {0};
+// Operates in terms of multiples of 0.1ms=100us !!
+void WHEEL_SPEED_TIMER_INIT(TIM_HandleTypeDef *handle, uint32_t period_multiple_of_100us) {
 
-    // 1. Enable Clock for the Timer
+    // 1. Enable Clock for Basic Timer 6
     __HAL_RCC_TIM6_CLK_ENABLE();
 
-    // 2. Configure Timer Parameters
-    // Formula: Update_Event = TIM_CLK / ((PSC + 1) * (ARR + 1))
-    // To make it easy, we set PSC to (SystemCoreClock / 10000) - 1.
-    // This makes the timer frequency 10kHz (1 tick = 0.1ms).
+    // 2. Fetch the true Timer Clock Frequency (handles the x2 multiplier automatically)
+    // For STM32G4, TIM6 is on APB1.
+    uint32_t pclk1 = HAL_RCC_GetPCLK1Freq();
+    uint32_t tim_clk = pclk1;
 
-    handle.Instance = TIM6;
-    handle.Init.Prescaler = (HAL_RCC_GetPCLK1Freq() / 10000) - 1;
-    handle.Init.CounterMode = TIM_COUNTERMODE_UP;
-    handle.Init.Period = (period_ms * 10) - 1; // Convert ms to 0.1ms ticks
-    handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-
-    if (HAL_TIM_Base_Init(&handle) != HAL_OK) {
-        Error_Handler();
+    // If APB1 prescaler != 1, clock is multiplied by 2
+    if ((RCC->CFGR & RCC_CFGR_PPRE1) != 0) {
+        tim_clk = pclk1 * 2;
     }
 
-    // 3. Set One-Pulse Mode
-    // This is the CRITICAL line that prevents renewal.
-    __HAL_TIM_ENABLE_OCxPRELOAD(&handle, TIM_AUTORELOAD_PRELOAD_DISABLE);
-    HAL_TIM_OnePulse_Init(&handle, TIM_OPMODE_SINGLE);
+    // Configure Timer Parameters to achieve 10kHz (0.1ms per tick)
+    handle->Instance = TIM6;
+    handle->Init.Prescaler = (tim_clk / 10000) - 1;
+    handle->Init.CounterMode = TIM_COUNTERMODE_UP;
+    handle->Init.Period = period_multiple_of_100us - 1; // 0.1ms ticks
+    handle->Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+
+    if (HAL_TIM_Base_Init(handle) != HAL_OK) {
+        // Replace with your project's error handler
+        while(1);
+    }
+
+    // 3. Set One-Pulse Mode directly via the Control Register 1 (CR1)
+    // This tells TIM6 to automatically stop itself (clear CEN bit) when the update event fires.
+    handle->Instance->CR1 |= TIM_CR1_OPM;
 
     // 4. Configure NVIC for Interrupts
     HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0);

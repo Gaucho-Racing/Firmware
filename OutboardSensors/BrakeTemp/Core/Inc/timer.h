@@ -39,7 +39,7 @@ extern "C" {
 
 /* USER CODE BEGIN Prototypes */
 
-void WHEEL_SPEED_TIMER_INIT(TIM_HandleTypeDef handle, uint32_t period_ms);
+void WHEEL_SPEED_TIMER_INIT(TIM_HandleTypeDef *handle, uint32_t period_multiple_of_100us);
 
 
 
