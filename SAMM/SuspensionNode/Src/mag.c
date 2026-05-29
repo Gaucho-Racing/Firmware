@@ -35,23 +35,20 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 
 uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 {
-	uint8_t tx_word[4] = {
-        (uint8_t)(data >> 8),   // Frame 1 high byte
-        (uint8_t)(data & 0xFF),  // Frame 1 low byte
-        0x00,                  // Frame 2 high byte (NOP)
-        0x00                   // Frame 2 low byte (NOP)
-    };
-    uint8_t rx_word[4] = {0};
+	uint8_t tx_bytes[4] = {(uint8_t)(data >> 8), (uint8_t)(data & 0xFF), 0x00, 0x00};
+	uint8_t rx_bytes[4] = {0};
 
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET); // A1113 chip select active low
-	HAL_StatusTypeDef res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_word, rx_word, 2, HAL_MAX_DELAY);
-	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET); // Release chip select back to high
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	HAL_StatusTypeDef res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_bytes, rx_bytes,
+							4,
+							HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
 	if (res != HAL_OK) {
 		return 0xFFFF;
 	}
 
-    return ((uint16_t)rx_word[2] << 8) | rx_word[3];
+	return ((uint16_t)rx_bytes[2] << 8) | rx_bytes[3];
 }
 
 /*
@@ -71,11 +68,10 @@ crc
 uint16_t mag_read(mag *mag_dev, uint8_t reg)
 {
 	uint16_t cmd = (uint16_t)((reg & mag_addr_mask) << 8); // read: bit 14 = 0, address in bits 13:8
-	uint16_t dummy1 = mag_transmit(mag_dev, cmd);			       // frame 1: send command, discard response
-	uint16_t dummy2 = mag_transmit(mag_dev, 0x0000);		       // frame 2: NOP, receive data
+	uint16_t dummy1 = mag_transmit(mag_dev, cmd);	       // frame 1: send command, discard response
+	uint16_t dummy2 = mag_transmit(mag_dev, 0x0000);       // frame 2: NOP, receive data
 	return dummy2;
 }
-
 
 /*
 write cycle:
@@ -111,9 +107,9 @@ bool mag_read_device_status(mag *mag_dev)
 // Difference between junction (internal) temperature and room temperature
 uint16_t mag_read_temp(mag *mag_dev)
 {
-	uint16_t read_temp = mag_read(mag_dev, 0x28);			     // 0x28 is temp register
+	uint16_t read_temp = mag_read(mag_dev, 0x28);			       // 0x28 is temp register
 	float_t masked_temp = ((uint16_t)(read_temp & 0x0FFF) / 8.0f) + 25.0f; // Mask to 12 bits (valid temp data), range is -60 to 180 C
-	float_t normalized_temp = (masked_temp + 60.0f) * (4095.0f / 240.0f); // Map to range of 0x0000 to 0x0FFF
+	float_t normalized_temp = (masked_temp + 60.0f) * (4095.0f / 240.0f);  // Map to range of 0x0000 to 0x0FFF
 	return ((uint16_t)normalized_temp);
 }
 
@@ -121,8 +117,8 @@ uint16_t mag_read_temp(mag *mag_dev)
 // Hysteresis Angle Value (original range is 0 to 360 degrees)
 uint16_t mag_read_HANG(mag *mag_dev)
 {
-	uint16_t read_HANG = mag_read(mag_dev, 0x30);		   // 0x30 is Hysteresis Angle Value
-	return ((uint16_t)(read_HANG & 0x0FFF)); // Mask to 12 bits
+	uint16_t read_HANG = mag_read(mag_dev, 0x30); // 0x30 is Hysteresis Angle Value
+	return ((uint16_t)(read_HANG & 0x0FFF));      // Mask to 12 bits
 }
 
 // Address 0x32:0x33 (ANG15) — 15 bits
@@ -138,7 +134,7 @@ uint16_t mag_read_encoder_angle(mag *mag_dev)
 int16_t mag_read_turns(mag *mag_dev)
 {
 	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
-	int16_t masked_turns = read_turns & 0x0FFF;	       // Mask to 12 bits (valid angle data)
+	int16_t masked_turns = read_turns & 0x0FFF;    // Mask to 12 bits (valid angle data)
 	if (masked_turns & 0x0800) {
 		masked_turns |= 0xF000; // sign extend bit 11 to bits 15:12
 	}
@@ -191,11 +187,8 @@ uint8_t check_status(mag *mag_dev)
 	return errors;
 }
 
-
 // Address 0x24:0x25 (ERR)—Device Error Flags
 //  FIXME: add error handling
-
-
 
 // Address 0x1E:0x1F (CTRL)—Device Control
 void mag_write_error(mag *mag_dev)
