@@ -54,16 +54,16 @@
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
 
-#define BMI_ACC_ODR 0x7 // Output data rate -> 50 Hz
-#define BMI_ACC_RANGE 0x2 // +/- 8g
-#define BMI_ACC_MODE 0x7 // High performance mode
-#define BMI_ACC_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_ACC_ODR 0x7	   // Output data rate -> 50 Hz
+#define BMI_ACC_RANGE 0x2  // +/- 8g
+#define BMI_ACC_MODE 0x7   // High performance mode
+#define BMI_ACC_BW 0x0	   // Sets cut off freq to ODR/2
 #define BMI_ACC_AVGNUM 0x0 // No averaging
 
-#define BMI_GYR_ODR 0x7 // Output data rate -> 50 Hz
-#define BMI_GYR_RANGE 0x4 // 2000 deg/s (default)
-#define BMI_GYR_MODE 0x7 // High performance mode
-#define BMI_GYR_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_GYR_ODR 0x7	   // Output data rate -> 50 Hz
+#define BMI_GYR_RANGE 0x4  // 2000 deg/s (default)
+#define BMI_GYR_MODE 0x7   // High performance mode
+#define BMI_GYR_BW 0x0	   // Sets cut off freq to ODR/2
 #define BMI_GYR_AVGNUM 0x0 // No averaging
 /* USER CODE END PD */
 
@@ -96,7 +96,8 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 // TODO: MOVE THIS FUNCTION ELSEWHERE
-uint16_t ewa(uint16_t new_value, uint16_t old_value) {
+uint16_t ewa(uint16_t new_value, uint16_t old_value)
+{
 	if (old_value == 0xFFFF) {
 		return new_value;
 	}
@@ -176,10 +177,10 @@ int main(void)
 
 	/* Infinite loop */
 	// begin VL53L4ED
-	HAL_Delay(100);					      // wait for 5ms to power up the device
+	HAL_Delay(100);							       // wait for 5ms to power up the device
 	HAL_GPIO_WritePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin, GPIO_PIN_RESET); // TOF_L_XSHUT_Pin
 	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_RESET); //TOF_C_XSHUT_Pin
-	HAL_Delay(100);					    // wait for 5ms to reset the device
+	HAL_Delay(100);							     // wait for 5ms to reset the device
 	HAL_GPIO_WritePin(TOF_XSHUT_GPIO_Port, TOF_XSHUT_Pin, GPIO_PIN_SET); // TOF_L_XSHUT_Pin
 	// HAL_GPIO_WritePin(GPIOF, GPIO_PIN_1, GPIO_PIN_SET); //TOF_C_XSHUT_Pin
 	HAL_Delay(100); // wait for 5ms to power up the device
@@ -268,13 +269,13 @@ int main(void)
 				results.number_of_spad = ewa(results.number_of_spad, old_results.number_of_spad);
 				results.sigma_mm = ewa(results.sigma_mm, old_results.sigma_mm);
 
-				LOGOMATIC("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67, results.signal_per_spad_kcps);
+				LOGOMATIC("Status = %3u & Internal = %3u, Distance = %5u mm, Signal = %6u kcps/spad\n", results.range_status, status, results.distance_mm - 67,
+					  results.signal_per_spad_kcps);
 			} else {
 				HAL_Delay(10);
 				__disable_irq();
 				__enable_irq();
 			}
-
 
 			test_data.bmi323_acc_x = imu_ax;
 			test_data.bmi323_acc_y = imu_ay;
@@ -293,7 +294,6 @@ int main(void)
 			test_data.number_of_spad = results.number_of_spad;
 			test_data.sigma_mm = results.sigma_mm;
 			test_data.range_status = results.range_status;
-
 		}
 
 		if (current_time - last_send_ms > send_interval) {
@@ -313,7 +313,7 @@ int main(void)
 			}
 		}
 
-	/* USER CODE END 3 */
+		/* USER CODE END 3 */
 	}
 }
 
@@ -370,7 +370,6 @@ void SystemClock_Config(void)
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
 		Error_Handler();
 	}
-
 }
 
 /* USER CODE BEGIN 4 */

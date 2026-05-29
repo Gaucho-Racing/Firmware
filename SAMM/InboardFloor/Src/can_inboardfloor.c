@@ -1,4 +1,5 @@
 #include "can_inboardfloor.h"
+
 #include "can_cfg.h"
 
 static GRCAN_MSG_ID CAN_INBOARDFLOOR_MSG_DATA = GRCAN_INBOARDFLOOR_IMU_TOF_DATA;
@@ -52,7 +53,7 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 
 int InboardFloor_CAN_Init(GRCAN_BUS_ID busID)
 {
-	int bus = (int)busID; //technically GRCAN_BUS_DATA_SUBNET does not exist, avoid warnings by casting to int
+	int bus = (int)busID; // technically GRCAN_BUS_DATA_SUBNET does not exist, avoid warnings by casting to int
 
 	if (bus != GRCAN_BUS_DATA && bus != GRCAN_BUS_DATA_SUBNET) {
 		LOGOMATIC("Invalid bus for Inboard Floor Node CAN Init");
@@ -73,27 +74,27 @@ int InboardFloor_CAN_Init(GRCAN_BUS_ID busID)
 		bus_config.fdcan_instance = FDCAN1;
 		bus_config.rx_callback = TCM_Callback; // callback
 
-        InboardFloor_Node if_node = (InboardFloor_Node)localNode;
-        BrakeTemp_Node braketemp_node;
+		InboardFloor_Node if_node = (InboardFloor_Node)localNode;
+		BrakeTemp_Node braketemp_node;
 
-        switch(if_node) {
-            case InboardFloor_FL:
-                braketemp_node = BrakeTemp_FL;
-                break;
-            case InboardFloor_FR:
-                braketemp_node = BrakeTemp_FR;
-                break;
-            case InboardFloor_RL:
-                braketemp_node = BrakeTemp_RL;
-                break;
-            case InboardFloor_RR:
-                braketemp_node = BrakeTemp_RR;
-                break;
-            default:
-                LOGOMATIC("Invalid inboard floor node, defaulting to FL\n");
-                braketemp_node = BrakeTemp_FL;
-                break;
-        }
+		switch (if_node) {
+			case InboardFloor_FL:
+				braketemp_node = BrakeTemp_FL;
+				break;
+			case InboardFloor_FR:
+				braketemp_node = BrakeTemp_FR;
+				break;
+			case InboardFloor_RL:
+				braketemp_node = BrakeTemp_RL;
+				break;
+			case InboardFloor_RR:
+				braketemp_node = BrakeTemp_RR;
+				break;
+			default:
+				LOGOMATIC("Invalid inboard floor node, defaulting to FL\n");
+				braketemp_node = BrakeTemp_FL;
+				break;
+		}
 
 		sensorNode = (GRCAN_NODE_ID)braketemp_node;
 	}
@@ -118,8 +119,8 @@ bool InboardFloor_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *d
 	}
 
 	if (msg_id != CAN_INBOARDFLOOR_MSG_DATA) {
-			LOGOMATIC("Invalid Inboard Floor Node message ID, defaulting to DATA\n");
-			msg_id = (GRCAN_MSG_ID)CAN_INBOARDFLOOR_MSG_DATA;
+		LOGOMATIC("Invalid Inboard Floor Node message ID, defaulting to DATA\n");
+		msg_id = (GRCAN_MSG_ID)CAN_INBOARDFLOOR_MSG_DATA;
 	}
 
 	bool result = GRCAN_Fancy_Send(mainBus, dest_node, msg_id, data, data_length);

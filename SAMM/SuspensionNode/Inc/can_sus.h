@@ -1,11 +1,12 @@
 #ifndef CAN_SUS_H
 #define CAN_SUS_H
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "GRCAN_FancyLayer.h"
 #include "Logomatic.h"
 #include "NodeID.h"
-#include <stdbool.h>
-#include <stdint.h>
 
 typedef enum {
 	TireTemp_FL = GRCAN_TireTemp_FL,

@@ -18,9 +18,9 @@ uint8_t bmi323_init(bmi323 *bmi323_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDe
 	bmi323_dev->pin = pin;
 
 	tx_word[0] = (BMI323_CHIP_ID) | 0x80; // Read register
-	tx_word[1] = 0x69; // Dummy byte
-	tx_word[2] = 0x00; // Nothing to get back chip id low byte in rx
-	tx_word[3] = 0x00; // Nothing to get back chip id high byte in rx
+	tx_word[1] = 0x69;		      // Dummy byte
+	tx_word[2] = 0x00;		      // Nothing to get back chip id low byte in rx
+	tx_word[3] = 0x00;		      // Nothing to get back chip id high byte in rx
 
 	/*
 	Okay so for one of these transmits we need to follow the following operation:bmi323_dev

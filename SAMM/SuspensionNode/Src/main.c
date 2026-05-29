@@ -32,8 +32,8 @@
 #include <stdio.h>
 
 // #include "VL53L4ED_api.h"
-#include "mag.h"
 #include "bmi323.h"
+#include "mag.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
 
@@ -53,16 +53,16 @@
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
 
-#define BMI_ACC_ODR 0x7 // Output data rate -> 50 Hz
-#define BMI_ACC_RANGE 0x2 // +/- 8g
-#define BMI_ACC_MODE 0x7 // High performance mode
-#define BMI_ACC_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_ACC_ODR 0x7	   // Output data rate -> 50 Hz
+#define BMI_ACC_RANGE 0x2  // +/- 8g
+#define BMI_ACC_MODE 0x7   // High performance mode
+#define BMI_ACC_BW 0x0	   // Sets cut off freq to ODR/2
 #define BMI_ACC_AVGNUM 0x0 // No averaging
 
-#define BMI_GYR_ODR 0x7 // Output data rate -> 50 Hz
-#define BMI_GYR_RANGE 0x4 // 2000 deg/s (default)
-#define BMI_GYR_MODE 0x7 // High performance mode
-#define BMI_GYR_BW 0x0 // Sets cut off freq to ODR/2
+#define BMI_GYR_ODR 0x7	   // Output data rate -> 50 Hz
+#define BMI_GYR_RANGE 0x4  // 2000 deg/s (default)
+#define BMI_GYR_MODE 0x7   // High performance mode
+#define BMI_GYR_BW 0x0	   // Sets cut off freq to ODR/2
 #define BMI_GYR_AVGNUM 0x0 // No averaging
 
 /* USER CODE END PD */
@@ -96,14 +96,16 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint16_t ewa_u(uint16_t new_value, uint16_t old_value) {
+uint16_t ewa_u(uint16_t new_value, uint16_t old_value)
+{
 	if (old_value == 0xFFFF) {
 		return new_value;
 	}
 	return alpha * new_value + (1 - alpha) * old_value;
 }
 
-int16_t ewa_i(int16_t new_value, int16_t old_value) {
+int16_t ewa_i(int16_t new_value, int16_t old_value)
+{
 	if (!ewa_signed_initialization) {
 		ewa_signed_initialization = true;
 		return new_value;
@@ -111,7 +113,6 @@ int16_t ewa_i(int16_t new_value, int16_t old_value) {
 	return alpha * new_value + (1 - alpha) * old_value;
 }
 /* USER CODE END 0 */
-
 
 /**
  * @brief  The application entry point.
@@ -212,28 +213,28 @@ int main(void)
 
 		if (current_time - last_avgcalc_ms > avgcalc_interval) {
 			last_avgcalc_ms = current_time;
-/*
-			imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
-			imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
-			imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
-			imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
-			imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
-			imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
-			imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
-			imu_status = bmi323_read_status(&bmi323_dev);
+			/*
+						imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
+						imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
+						imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
+						imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
+						imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
+						imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
+						imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
+						imu_status = bmi323_read_status(&bmi323_dev);
 
-			float imu_ax_test = ((float)imu_ax) / 4096.f;
-			float imu_ay_test = ((float)imu_ay) / 4096.f;
-			float imu_az_test = ((float)imu_az) / 4096.f;
-			float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
-			float imu_gyry_test = ((float)imu_gyry) / 16.384f;
-			float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
-			float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
+						float imu_ax_test = ((float)imu_ax) / 4096.f;
+						float imu_ay_test = ((float)imu_ay) / 4096.f;
+						float imu_az_test = ((float)imu_az) / 4096.f;
+						float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+						float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+						float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+						float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
 
-			LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
-			LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
-			LOGOMATIC("IMU temperature: %f", imu_temp_test);
-*/
+						LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
+						LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
+						LOGOMATIC("IMU temperature: %f", imu_temp_test);
+			*/
 			mag_temp = ewa_u(mag_read_temp(&mag_dev), mag_temp);
 			mag_hysteresis = ewa_u(mag_read_HANG(&mag_dev), mag_hysteresis);
 			mag_angle = ewa_u(mag_read_encoder_angle(&mag_dev), mag_angle);
@@ -298,13 +299,13 @@ int main(void)
 			}
 		}
 
-/* TODO:
+		/* TODO:
 
-	AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
-		static uint32_t millis_since_last = 0
-		if (millis since last < b)
-		only run loop every ~8-ish samples
-*/
+			AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
+				static uint32_t millis_since_last = 0
+				if (millis since last < b)
+				only run loop every ~8-ish samples
+		*/
 	}
 	/* USER CODE END 3 */
 }

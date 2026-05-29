@@ -1,4 +1,5 @@
 #include "can_sus.h"
+
 #include "can_cfg.h"
 
 static GRCAN_MSG_ID CAN_SUS_MSG_DATA = GRCAN_SUSPENSION_IMU_MAG_DATA;
@@ -52,7 +53,7 @@ void TCM_Callback(uint32_t id, void *data, uint32_t size)
 
 int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 {
-	int bus = (int)busID; //technically GRCAN_BUS_DATA_SUBNET does not exist, avoid warnings by casting to int
+	int bus = (int)busID; // technically GRCAN_BUS_DATA_SUBNET does not exist, avoid warnings by casting to int
 
 	if (bus != GRCAN_BUS_DATA && bus != GRCAN_BUS_DATA_SUBNET) {
 		LOGOMATIC("Invalid bus for Suspension Node CAN Init");
@@ -75,7 +76,7 @@ int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 
 		Sus_Node sus_node = (Sus_Node)localNode;
 		TireTemp_Node tire_temp_node;
-		switch(sus_node){
+		switch (sus_node) {
 			case Sus_FL:
 				tire_temp_node = TireTemp_FL;
 				break;
@@ -116,8 +117,8 @@ bool SusNode_CAN_Send(GRCAN_NODE_ID dest_node, GRCAN_MSG_ID msg_id, void *data)
 	}
 
 	if (msg_id != CAN_SUS_MSG_DATA) {
-			LOGOMATIC("Invalid Suspension Node message ID, defaulting to DATA\n");
-			msg_id = (GRCAN_MSG_ID)CAN_SUS_MSG_DATA;
+		LOGOMATIC("Invalid Suspension Node message ID, defaulting to DATA\n");
+		msg_id = (GRCAN_MSG_ID)CAN_SUS_MSG_DATA;
 	}
 
 	bool result = GRCAN_Fancy_Send(mainBus, dest_node, msg_id, data, data_length);
