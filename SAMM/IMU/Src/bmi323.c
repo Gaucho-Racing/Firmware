@@ -99,7 +99,9 @@ STEPS:
 
 uint32_t MillisecondsSinceBoot()
 {
-	return HAL_GetTick() * HAL_GetTickFreq();
+	uint32_t tick = HAL_GetTick();
+	HAL_TickFreqTypeDef freq = HAL_GetTickFreq();
+	return tick * freq;
 }
 
 uint8_t bmi323_calib(bmi323 *bmi323_dev)

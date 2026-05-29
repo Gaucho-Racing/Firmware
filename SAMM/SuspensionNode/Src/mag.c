@@ -21,10 +21,17 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 	LL_mDelay(20);
 
 	uint16_t status = mag_read(mag_dev, 0x22);
+	uint16_t error_reg = mag_read(mag_dev, 0x24);
 
 	// Check AOK=1 (bit 0) and BIP=0 (bit 1)
 	// If either not true, return error
-	if (!((status & 0x0001) || (status & 0x0002))) {
+	/*
+	if (!((status & 0x0001) || ((status | ~(0x0002)) != 0xFFFF))) {
+		return HAL_ERROR;
+	}
+	*/
+
+	if (!(status & 0x0003)) {
 		return HAL_ERROR;
 	}
 
@@ -35,11 +42,14 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 
 uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 {
+	/*
 	uint8_t tx_bytes[4] = {(uint8_t)(data >> 8), (uint8_t)(data & 0xFF), 0x00, 0x00};
 	uint8_t rx_bytes[4] = {0};
 
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	LL_mDelay(5);
 	HAL_StatusTypeDef res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_bytes, rx_bytes, 4, HAL_MAX_DELAY);
+	LL_mDelay(5);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
 	if (res != HAL_OK) {
@@ -47,6 +57,32 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 	}
 
 	return ((uint16_t)rx_bytes[2] << 8) | rx_bytes[3];
+	*/
+
+	uint8_t tx_bytes[2] = {(uint8_t)(data >> 8), (uint8_t)(data & 0xFF)};
+	uint8_t tx_dummy[2] = {0};
+
+	uint8_t rx_dummy[2] = {0};
+	uint8_t rx_bytes[2] = {0};
+
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	HAL_StatusTypeDef send_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_bytes, rx_dummy, 2, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
+
+	LL_mDelay(1);
+
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
+	HAL_StatusTypeDef receive_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_dummy, rx_bytes, 2, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
+
+	if (receive_res != HAL_OK) {
+		return 0xFFFF;
+	}
+
+	uint16_t new_data = ((uint16_t)rx_bytes[0] << 8) | rx_bytes[1];
+
+	return new_data;
+
 }
 
 /*
@@ -66,9 +102,7 @@ crc
 uint16_t mag_read(mag *mag_dev, uint8_t reg)
 {
 	uint16_t cmd = (uint16_t)((reg & mag_addr_mask) << 8); // read: bit 14 = 0, address in bits 13:8
-	uint16_t dummy1 = mag_transmit(mag_dev, cmd);	       // frame 1: send command, discard response
-	uint16_t dummy2 = mag_transmit(mag_dev, 0x0000);       // frame 2: NOP, receive data
-	return dummy2;
+	return mag_transmit(mag_dev, cmd);	       // frame 1: send command, discard response
 }
 
 /*

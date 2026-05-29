@@ -183,8 +183,10 @@ int main(void)
 	mag mag_dev = {0};
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
 
+	HAL_StatusTypeDef init_status = mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin);
+
 	// Initialize magnetic encoder
-	if (mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin) != HAL_OK) {
+	if (init_status != HAL_OK) {
 		LOGOMATIC("MAG initialization failed!\n");
 		Error_Handler();
 	}
@@ -204,8 +206,10 @@ int main(void)
 	int16_t mag_turns = 0;
 	uint8_t mag_status = 0;
 
-	uint32_t last_avgcalc_ms = MillisecondsSinceBoot();
-	uint32_t last_send_ms = MillisecondsSinceBoot();
+	uint32_t mssinceboot = MillisecondsSinceBoot();
+
+	uint32_t last_avgcalc_ms = mssinceboot;
+	uint32_t last_send_ms = mssinceboot;
 	IMU_Mag_Data test_data = {0};
 
 	while (1) {
@@ -352,6 +356,10 @@ void SystemClock_Config(void)
 
 	/* Wait till System clock is ready */
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {}
+
+	/* Insure 1us transition state at intermediate medium speed clock*/
+	for (__IO uint32_t i = (160 >> 1); i != 0; i--)
+		;
 
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
