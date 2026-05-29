@@ -93,6 +93,7 @@ PUTCHAR_PROTOTYPE
 
 int MLX90614_Initialize(void)
 {
+	/*
 	HAL_Delay(100);
 	status = MLX90614_SetEmissivity(MLX90614_address, emissivity);
 	HAL_Delay(20);
@@ -102,6 +103,7 @@ int MLX90614_Initialize(void)
 	HAL_Delay(20);
 	status = MLX90614_DumpEE(MLX90614_address, eeMLX90614);
 	HAL_Delay(20);
+	*/
 
 	return 0;
 }
@@ -214,8 +216,8 @@ int main(void)
 	MX_I2C2_SMBUS_Init();
 	/* USER CODE BEGIN 2 */
 
-	//WHEEL_SPEED_GPIO_INIT();
-	//WHEEL_SPEED_TIMER_INIT(&htim6, 10);
+	WHEEL_SPEED_GPIO_INIT();
+	WHEEL_SPEED_TIMER_INIT(&htim6, 10);
 	HAL_tick_freq_hz = 1000 / HAL_GetTickFreq();
 
 	CANInitialize();
@@ -229,8 +231,8 @@ int main(void)
 	while (1) {
 
 		//status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
-		status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
-		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		//status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
+		// if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
 		//CAN_sendTemp(to);
 		//CAN_sendRPM(GetRPM());
