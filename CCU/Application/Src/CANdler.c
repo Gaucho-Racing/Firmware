@@ -170,6 +170,7 @@ void SendPrechargeStatus(bool setPrecharge)
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	msg.tx_header.MessageMarker = 0;
+	msg.tx_header.FDFormat = FDCAN_CLASSIC_CAN;
 
 	msg.data[0] = setPrecharge;
 
