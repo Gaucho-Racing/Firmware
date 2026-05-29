@@ -94,12 +94,6 @@ PUTCHAR_PROTOTYPE
 int MLX90614_Initialize(void)
 {
 	HAL_Delay(100);
-	uint16_t data = 65535;
-
-	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
-	status = MLX90614_SMBusWrite(MLX90614_address, 0x04, data-100);
-	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
-	/*
 	status = MLX90614_SetEmissivity(MLX90614_address, emissivity);
 	HAL_Delay(20);
 	status = MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
@@ -108,7 +102,6 @@ int MLX90614_Initialize(void)
 	HAL_Delay(20);
 	status = MLX90614_DumpEE(MLX90614_address, eeMLX90614);
 	HAL_Delay(20);
-	*/
 
 	return 0;
 }
