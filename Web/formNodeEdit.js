@@ -16,8 +16,7 @@
 		const { overlay, body, footer } = fu.createModal("Edit Node");
 
 		const oldGrId =
-			(window.GrcanDocument &&
-				window.GrcanDocument.getGrId(oldDeviceName)) ||
+			(window.GrcanDocument && window.GrcanDocument.getGrId(oldDeviceName)) ||
 			"";
 
 		const nameF = fu.makeFormRow(
