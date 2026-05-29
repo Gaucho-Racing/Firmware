@@ -21,7 +21,7 @@ The CCU manages two states — `CCU_STATE_IDLE` and `CCU_STATE_CHARGING` — and
 ### `CCU_STATE_IDLE`
 
 Each tick:
-1. If `PRECHARGE_SET_MSG_PERIOD_MILLIS` = 20ms has elapsed since last send, calls `SendPrechargeStatus(false)`
+1. If `PRECHARGE_SET_MSG_PERIOD_MILLIS` = 50ms has elapsed since last send, calls `SendPrechargeStatus(false)`
 2. Calls `ACU_Warnings()`
 3. Calls `CriticalError()`, checking `state_data`
 
