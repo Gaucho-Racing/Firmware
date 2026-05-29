@@ -68,6 +68,7 @@ uint8_t MLX90614_address = 0x5A;
 // Wheel speed stuff
 TIM_HandleTypeDef htim6;
 volatile uint32_t pulse_time_deltas[MAX_NUM_PULSES];
+volatile uint32_t total_time = 0;
 uint32_t HAL_tick_freq_hz = 0;
 volatile uint32_t last_tick = 0;
 volatile uint8_t head = 0;
@@ -128,7 +129,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         uint32_t temp_tick = HAL_GetTick();
 
         // Enqueue the valid delta time
+		if (num_pulses >= MAX_NUM_PULSES) total_time -= pulse_time_deltas[tail];
         pulse_time_deltas[tail] = temp_tick - last_tick;
+		total_time += pulse_time_deltas[tail];
         tail = (tail + 1) & (MAX_NUM_PULSES - 1);
 
         if (num_pulses < MAX_NUM_PULSES) {
@@ -152,19 +155,14 @@ void ResetRPMHistory(void) {
 	head = 0;
 	tail = 0;
 	num_pulses = 0;
+	total_time = 0;
 	last_tick = 0;
 }
 
 float GetRPM(void) {
-	float rpm = 0.0f;
-	uint32_t time = 0;
-	for(uint8_t i = 0; i < num_pulses; i++) {
-		time += pulse_time_deltas[i];
-	}
+	if (total_time == 0) return 0.0f;
 
-	if (time == 0) return 0.0f;
-
-	rpm = ((float)num_pulses * HAL_tick_freq_hz) / time;
+	float rpm = ((float)num_pulses * HAL_tick_freq_hz) / total_time;
 	rpm *= SECONDS_PER_MIN;
 	rpm /= PULSES_PER_ROT;
 
@@ -228,14 +226,16 @@ int main(void)
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	float test_rpm = 0.0;
 	while (1) {
 
 		//status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
 		//status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
-		// if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
 		//CAN_sendTemp(to);
 		//CAN_sendRPM(GetRPM());
+		test_rpm = GetRPM();
 		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
 		/* USER CODE END WHILE */
