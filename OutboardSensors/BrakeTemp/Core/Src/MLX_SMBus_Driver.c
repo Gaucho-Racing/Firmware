@@ -31,17 +31,8 @@ static int Wait_For_Transaction(uint32_t timeout_ms) {
     return (smbus_status == HAL_OK) ? 0 : -1;
 }
 
-/**
- * @brief Reads a 16-bit word from MLX90614 RAM using 2-phase SMBus Interrupts.
- * Flow: [Start][Addr+W] -> [RAM Cmd] -> [Repeated Start][Addr+R] -> [DataL][DataH][PEC][Stop]
- * @return 0 on success, -1 on NACK/Timeout, -2 on PEC error.
- */
-int MLX90614_SMBusRead(uint8_t slaveAddr, uint8_t readAddress, uint16_t *data)
-{
+static int SMBusRead(uint8_t slaveAddr, uint8_t cmd, uint16_t *data) {
     uint8_t buffer[3] = {0};
-
-    // Enforce 5-bit isolation and apply RAM prefix (0b000x_xxxx)
-    uint8_t cmd = 0x00 | (readAddress & 0x1F);
 
     if (HAL_SMBUS_Master_Transmit_IT(&hsmbus2, (slaveAddr << 1), &cmd, 1, SMBUS_FIRST_FRAME) != HAL_OK) {
         smbus_busy = 0;
@@ -60,6 +51,19 @@ int MLX90614_SMBusRead(uint8_t slaveAddr, uint8_t readAddress, uint16_t *data)
     // Process data (Little-Endian)
     *data = (uint16_t)buffer[0] | ((uint16_t)buffer[1] << 8);
     return 0;
+}
+
+/**
+ * @brief Reads a 16-bit word from MLX90614 RAM using 2-phase SMBus Interrupts.
+ * Flow: [Start][Addr+W] -> [RAM Cmd] -> [Repeated Start][Addr+R] -> [DataL][DataH][PEC][Stop]
+ * @return 0 on success, -1 on NACK/Timeout, -2 on PEC error.
+ */
+int MLX90614_SMBusRead(uint8_t slaveAddr, uint8_t readAddress, uint16_t *data)
+{
+    // Enforce 5-bit isolation and apply RAM prefix (0b000x_xxxx)
+    uint8_t cmd = 0x20 | (readAddress & 0x1F);
+
+    return SMBusRead(slaveAddr, cmd, data);
 }
 
 /**
@@ -86,7 +90,7 @@ int MLX90614_SMBusWrite(uint8_t slaveAddr, uint8_t writeAddress, uint16_t data)
     HAL_Delay(1000);
 
     // Process and check data mismatch
-    MLX90614_SMBusRead(slaveAddr, writeAddress, &readBackData);
+    SMBusRead(slaveAddr, cmd, &readBackData);
     if (readBackData != data) {
         return -3;
     }

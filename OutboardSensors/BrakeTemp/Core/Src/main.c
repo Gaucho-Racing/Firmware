@@ -94,17 +94,18 @@ PUTCHAR_PROTOTYPE
 
 int MLX90614_Initialize(void)
 {
-	/*
 	HAL_Delay(100);
+	uint16_t data = 0;
+	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
+	status = MLX90614_SMBusWrite(MLX90614_address, 0x04, 0x0000);
+	status = MLX90614_SMBusWrite(MLX90614_address, 0x04, data-1000);
+	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
+	/*
 	status = MLX90614_SetEmissivity(MLX90614_address, emissivity);
-	HAL_Delay(20);
 	status = MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
-	HAL_Delay(20);
 	status = MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
-	HAL_Delay(20);
-	status = MLX90614_DumpEE(MLX90614_address, eeMLX90614);
-	HAL_Delay(20);
 	*/
+	status = MLX90614_DumpEE(MLX90614_address, eeMLX90614);
 
 	return 0;
 }
@@ -226,16 +227,14 @@ int main(void)
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	float test_rpm = 0.0;
 	while (1) {
 
 		//status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
 		//status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
-		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		//if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
 		//CAN_sendTemp(to);
 		//CAN_sendRPM(GetRPM());
-		test_rpm = GetRPM();
 		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
 		/* USER CODE END WHILE */

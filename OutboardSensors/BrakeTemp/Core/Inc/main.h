@@ -47,9 +47,9 @@ extern "C" {
 /* USER CODE BEGIN EC */
 #define BRAKETEMP_INTERVAL_MS 500
 #define WHEEL_SPEED_TIMEOUT_TICKS 10000
-#define MAX_RPM 341.51f
+#define MAX_RPM 1891 // Assumes 8 inch wheels @ max speed of 90 mph
 #define SECONDS_PER_MIN 60
-#define PULSES_PER_ROT 1
+#define PULSES_PER_ROT 42 // TODO !!!
 #define MAX_NUM_PULSES 32
 #define LOG_NUM_PULSES 5
 /* USER CODE END EC */
