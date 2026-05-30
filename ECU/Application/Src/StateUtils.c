@@ -17,6 +17,7 @@
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "vcp.h"
+#include "Plan_C.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
