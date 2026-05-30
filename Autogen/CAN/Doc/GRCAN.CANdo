@@ -542,11 +542,11 @@ Message ID:
       bit_start: 32
       comment:
         Controls the AC current limits to each of the inverters
-        Discrete Mapping, actual values TBD (16 possible values)
+        Discrete Mapping, actual current values described by the torque map
       data type: u4
     Torque Map:
       bit_start: 36
-      comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
+      comment: The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor. 0 is max current amps, 1 is 50 / 100 / 150 / 200 / 250 / 275, 2 and later is tbd
       data type: u4
     Max Cell Temp:
       bit_start: 40
