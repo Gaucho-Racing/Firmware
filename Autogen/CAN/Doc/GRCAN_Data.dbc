@@ -451,7 +451,7 @@ BO_ 2149585412 ECU_ECU_Config_to_TCM: 20 ECU
  SG_ IMD_Max_Threshold : 96|8@1+ (0.05,0) [0|12.75] "V"  TCM
  SG_ BSPD_Min_Threshold : 104|8@1+ (0.05,0) [0|12.75] "V"  TCM
  SG_ BSPD_Max_Threshold : 112|8@1+ (0.05,0) [0|12.75] "V"  TCM
- SG_ Max_Precharge_Time : 120|8@1+ (1,0) [0|255] "ms"  TCM
+ SG_ Max_Precharge_Time : 120|8@1+ (10,0) [0|2550] "ms"  TCM
  SG_ Regen_Strength : 128|8@1+ (0.1,0) [0|25.5] "Ratio"  TCM
  SG_ Enable_Regen : 136|1@1+ (1,0) [0|0] "Bool"  TCM
 
@@ -474,7 +474,7 @@ BO_ 2151682562 TCM_ECU_Config_to_ECU: 20 TCM
  SG_ IMD_Max_Threshold : 96|8@1+ (0.05,0) [0|12.75] "V"  ECU
  SG_ BSPD_Min_Threshold : 104|8@1+ (0.05,0) [0|12.75] "V"  ECU
  SG_ BSPD_Max_Threshold : 112|8@1+ (0.05,0) [0|12.75] "V"  ECU
- SG_ Max_Precharge_Time : 120|8@1+ (1,0) [0|255] "ms"  ECU
+ SG_ Max_Precharge_Time : 120|8@1+ (10,0) [0|2550] "ms"  ECU
  SG_ Regen_Strength : 128|8@1+ (0.1,0) [0|25.5] "Ratio"  ECU
  SG_ Enable_Regen : 136|1@1+ (1,0) [0|0] "Bool"  ECU
 
