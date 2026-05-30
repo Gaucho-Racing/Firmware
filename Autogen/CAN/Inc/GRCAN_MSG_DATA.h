@@ -2188,11 +2188,11 @@ typedef struct {
 	/** Delay for which to consider pings timed out (Byte 0) */
 	uint8_t ping_timeout_delay;
 	/** Minimum brake f psi for which to consider the brakes pressed (Byte 1) */
-	uint8_t brake_f_minimum;
+	uint8_t brake_f_min;
 	/** Minimum brake r psi for which to consider the brakes pressed (Byte 2) */
-	uint8_t brake_r_minimum;
+	uint8_t brake_r_min;
 	/** Minimum brake bse psi for which to consider the brakes pressed (Byte 3) */
-	uint8_t brake_bse_minimum;
+	uint8_t brake_bse_min;
 	/** Minimum value that the APPS 1 sensor is expected to read (Byte 4) */
 	uint8_t apps_1_min;
 	/** Minimum value that the APPS 2 sensor is expected to read (Byte 5) */
@@ -2204,17 +2204,17 @@ typedef struct {
 	/** Percentage deadzone of the APPS for which to not consider the pedals to have traveled (Byte 8) */
 	uint8_t apps_deadzone;
 	/** Minimum acceptable BMS sense value such that the BMS is not considered in failure (Byte 9) */
-	uint8_t bms_minimum_threshold;
+	uint8_t bms_min_threshold;
 	/** Maximum acceptable BMS sense value such that the BMS is not considered in failure (Byte 10) */
-	uint8_t bms_maximum_threshold;
+	uint8_t bms_max_threshold;
 	/** Minimum acceptable IMD sense value such that the BMS is not considered in failure (Byte 11) */
-	uint8_t imd_minimum_threshold;
+	uint8_t imd_min_threshold;
 	/** Maximum acceptable IMD sense value such that the BMS is not considered in failure (Byte 12) */
-	uint8_t imd_maximum_threshold;
+	uint8_t imd_max_threshold;
 	/** Minimum acceptable BSPD sense value such that the BMS is not considered in failure (Byte 13) */
-	uint8_t bspd_minimum_threshold;
+	uint8_t bspd_min_threshold;
 	/** Maximum acceptable BSPD sense value such that the BMS is not considered in failure (Byte 14) */
-	uint8_t bspd_maximum_threshold;
+	uint8_t bspd_max_threshold;
 	/** Maximum acceptable time to remain precharging before discharging (Byte 15) */
 	uint8_t max_precharge_time;
 	/** TBD (Byte 16) */
