@@ -165,7 +165,6 @@ routing:
           - msg: ECU Status 3
         TCM:
           - msg: Ping
-          - msg: ECU Config
       Data:
         Debugger:
           - msg: Debug FD
@@ -173,6 +172,7 @@ routing:
         TCM:
           - msg: ECU Analog Data
           - msg: ECU Pinging RTT
+          - msg: ECU Config
         ALL:
           - msg: Ping
     EM:
@@ -245,8 +245,9 @@ routing:
           - msg: Ping
         ECU:
           - msg: Ping
-          - msg: ECU Config
       Data:
+        ECU:
+          - msg: ECU Config
         Debugger:
           - msg: Ping
     CCU:
@@ -8756,7 +8757,7 @@ Message ID:
       data type: u8
   ECU Config:
     MSG ID: 0x012
-    MSG LENGTH: 8
+    MSG LENGTH: 20
     Ping Timeout Delay:
       bit_start: 0
       comment: Delay for which to consider pings timed out
@@ -8821,6 +8822,87 @@ Message ID:
       scaled min: 0
       scaled max: 2550
       map equation: "10x"
+    APPS Deadzone:
+      bit_start: 64
+      comment: Percentage deadzone of the APPS for which to not consider the pedals to have traveled
+      data type: u8
+      units: %
+      scaled min: 0
+      scaled max: 100
+      map equation: "x/25.5"
+    BMS Minimum Threshold:
+      bit_start: 72
+      comment: Minimum acceptable BMS sense value such that the BMS is not considered in failure
+      data type: u8
+      units: V
+      scaled min: 0
+      scaled max: 12.75
+      map equation: "x/20"
+    BMS Maximum Threshold:
+      bit_start: 80
+      comment: Maximum acceptable BMS sense value such that the BMS is not considered in failure
+      data type: u8
+      units: V
+      scaled min: 0
+      scaled max: 12.75
+      map equation: "x/20"
+    IMD Minimum Threshold:
+      bit_start: 88
+      comment: Minimum acceptable IMD sense value such that the BMS is not considered in failure
+      data type: u8
+      units: V
+      scaled min: 0
+      scaled max: 12.75
+      map equation: "x/20"
+    IMD Maximum Threshold:
+      bit_start: 96
+      comment: Maximum acceptable IMD sense value such that the BMS is not considered in failure
+      data type: u8
+      units: V
+      scaled min: 0
+      scaled max: 12.75
+      map equation: "x/20"
+    BSPD Minimum Threshold:
+      bit_start: 104
+      comment: Minimum acceptable BSPD sense value such that the BMS is not considered in failure
+      data type: u8
+      units: V
+      scaled min: 0
+      scaled max: 12.75
+      map equation: "x/20"
+    BSPD Maximum Threshold:
+      bit_start: 112
+      comment: Maximum acceptable BSPD sense value such that the BMS is not considered in failure
+      data type: u8
+      units: V
+      scaled min: 0
+      scaled max: 12.75
+      map equation: "x/20"
+    Max Precharge Time:
+      bit_start: 120
+      comment: Maximum acceptable time to remain precharging before discharging
+      data type: u8
+      units: ms
+      scaled min: 0
+      scaled max: 255
+      map equation: "x"
+    Regen Strength:
+      bit_start: 128
+      comment: TBD
+      data type: u8
+      units: Ratio
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "x/10"
+    Enable Regen:
+      bit_start: 136
+      comment: Enable or disable regenerative braking
+      data type: b
+      units: Bool
+    Reserved:
+      bit_start: 144
+      comment: Reserved
+      data type: u16
 
 Custom CAN ID:
   DTI Control 1:
