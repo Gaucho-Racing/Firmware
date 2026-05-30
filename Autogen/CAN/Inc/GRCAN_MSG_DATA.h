@@ -2201,6 +2201,28 @@ typedef struct {
 	uint8_t apps_1_max;
 	/** Maximum value that the APPS 2 sensor is expected to read (Byte 7) */
 	uint8_t apps_2_max;
+	/** Percentage deadzone of the APPS for which to not consider the pedals to have traveled (Byte 8) */
+	uint8_t apps_deadzone;
+	/** Minimum acceptable BMS sense value such that the BMS is not considered in failure (Byte 9) */
+	uint8_t bms_minimum_threshold;
+	/** Maximum acceptable BMS sense value such that the BMS is not considered in failure (Byte 10) */
+	uint8_t bms_maximum_threshold;
+	/** Minimum acceptable IMD sense value such that the BMS is not considered in failure (Byte 11) */
+	uint8_t imd_minimum_threshold;
+	/** Maximum acceptable IMD sense value such that the BMS is not considered in failure (Byte 12) */
+	uint8_t imd_maximum_threshold;
+	/** Minimum acceptable BSPD sense value such that the BMS is not considered in failure (Byte 13) */
+	uint8_t bspd_minimum_threshold;
+	/** Maximum acceptable BSPD sense value such that the BMS is not considered in failure (Byte 14) */
+	uint8_t bspd_maximum_threshold;
+	/** Maximum acceptable time to remain precharging before discharging (Byte 15) */
+	uint8_t max_precharge_time;
+	/** TBD (Byte 16) */
+	uint8_t regen_strength;
+	/** Enable or disable regenerative braking (Byte 17) */
+	uint8_t enable_regen;
+	/** Reserved (Byte 18) */
+	uint16_t reserved;
 } GRCAN_ECU_CONFIG_MSG;
 
 #endif
