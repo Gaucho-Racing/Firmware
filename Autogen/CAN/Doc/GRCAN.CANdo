@@ -8766,7 +8766,7 @@ Message ID:
       scaled min: 0
       scaled max: 2550
       map equation: "10x"
-    Brake F Minimum:
+    Brake F Min:
       bit_start: 8
       comment: Minimum brake f psi for which to consider the brakes pressed
       data type: u8
@@ -8774,7 +8774,7 @@ Message ID:
       scaled min: 0
       scaled max: 6375
       map equation: "25x"
-    Brake R Minimum:
+    Brake R Min:
       bit_start: 16
       comment: Minimum brake r psi for which to consider the brakes pressed
       data type: u8
@@ -8782,7 +8782,7 @@ Message ID:
       scaled min: 0
       scaled max: 6375
       map equation: "25x"
-    Brake BSE Minimum:
+    Brake BSE Min:
       bit_start: 24
       comment: Minimum brake bse psi for which to consider the brakes pressed
       data type: u8
@@ -8830,7 +8830,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "x/25.5"
-    BMS Minimum Threshold:
+    BMS Min Threshold:
       bit_start: 72
       comment: Minimum acceptable BMS sense value such that the BMS is not considered in failure
       data type: u8
@@ -8838,7 +8838,7 @@ Message ID:
       scaled min: 0
       scaled max: 12.75
       map equation: "x/20"
-    BMS Maximum Threshold:
+    BMS Max Threshold:
       bit_start: 80
       comment: Maximum acceptable BMS sense value such that the BMS is not considered in failure
       data type: u8
@@ -8846,7 +8846,7 @@ Message ID:
       scaled min: 0
       scaled max: 12.75
       map equation: "x/20"
-    IMD Minimum Threshold:
+    IMD Min Threshold:
       bit_start: 88
       comment: Minimum acceptable IMD sense value such that the BMS is not considered in failure
       data type: u8
@@ -8854,7 +8854,7 @@ Message ID:
       scaled min: 0
       scaled max: 12.75
       map equation: "x/20"
-    IMD Maximum Threshold:
+    IMD Max Threshold:
       bit_start: 96
       comment: Maximum acceptable IMD sense value such that the BMS is not considered in failure
       data type: u8
@@ -8862,7 +8862,7 @@ Message ID:
       scaled min: 0
       scaled max: 12.75
       map equation: "x/20"
-    BSPD Minimum Threshold:
+    BSPD Min Threshold:
       bit_start: 104
       comment: Minimum acceptable BSPD sense value such that the BMS is not considered in failure
       data type: u8
@@ -8870,7 +8870,7 @@ Message ID:
       scaled min: 0
       scaled max: 12.75
       map equation: "x/20"
-    BSPD Maximum Threshold:
+    BSPD Max Threshold:
       bit_start: 112
       comment: Maximum acceptable BSPD sense value such that the BMS is not considered in failure
       data type: u8
