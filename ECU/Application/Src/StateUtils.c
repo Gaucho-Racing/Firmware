@@ -90,6 +90,7 @@ SDC_Level bspdLevel(volatile const ECU_StateData *stateData) {
 	return SDC_OK;
 }
 
+
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
 	SDC_Level level = bmsLevel(stateData);
