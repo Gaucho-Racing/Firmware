@@ -32,7 +32,7 @@ NS_ :
 
 BS_:
 
-BU_: ACU DTI_Inv Dash_Panel Debugger ECU Fan_Ctrl_1 Fan_Ctrl_2 Fan_Ctrl_3 GR_Inv TCM ALL
+BU_: ACU DTI_Inv Dash_Panel Debugger ECU Fan_Ctrl_1 Fan_Ctrl_2 Fan_Ctrl_3 GR_Inv HV_DC_DC LV_DC_DC TCM ALL
 
 BO_ 2150629377 ACU_Debug_2_0_to_Debugger: 8 ACU
  SG_ Debug : 0|64@1- (1,0) [0|0] ""  Debugger
@@ -168,6 +168,32 @@ BO_ 2147492886 DTI_Inv_DTI_Data_5_to_ECU: 8 DTI_Inv
  SG_ RPM_max_limit : 41|1@1+ (1,0) [0|0] ""  ECU
  SG_ Power_limit : 42|1@1+ (1,0) [0|0] ""  ECU
  SG_ CAN_Version : 56|8@1+ (1,0) [0|0] ""  ECU
+
+BO_ 2191528450 HV_DC_DC_Status_to_ECU: 7 HV_DC_DC
+ SG_ Input_Voltage : 0|16@1+ (0.001,0) [0|65.535] "V"  ECU
+ SG_ Output_Voltage : 16|16@1+ (0.001,0) [0|65.535] "V"  ECU
+ SG_ Input_Current : 32|8@1+ (0.1,0) [0|25.5] "A"  ECU
+ SG_ Output_Current : 40|8@1+ (0.1,0) [0|25.5] "A"  ECU
+ SG_ DC_DC_Temp : 48|8@1+ (1,0) [0|255] "C"  ECU
+
+BO_ 2191524354 HV_DC_DC_Ping_to_ECU: 4 HV_DC_DC
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2191524353 HV_DC_DC_Ping_to_Debugger: 4 HV_DC_DC
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Debugger
+
+BO_ 2190479874 LV_DC_DC_Status_to_ECU: 7 LV_DC_DC
+ SG_ Input_Voltage : 0|16@1+ (0.001,0) [0|65.535] "V"  ECU
+ SG_ Output_Voltage : 16|16@1+ (0.001,0) [0|65.535] "V"  ECU
+ SG_ Input_Current : 32|8@1+ (0.1,0) [0|25.5] "A"  ECU
+ SG_ Output_Current : 40|8@1+ (0.1,0) [0|25.5] "A"  ECU
+ SG_ DC_DC_Temp : 48|8@1+ (1,0) [0|255] "C"  ECU
+
+BO_ 2190475778 LV_DC_DC_Ping_to_ECU: 4 LV_DC_DC
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2190475777 LV_DC_DC_Ping_to_Debugger: 4 LV_DC_DC
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Debugger
 
 BO_ 278 ECU_DTI_Control_1_to_DTI_Inv: 2 ECU
  SG_ Target_AC_Current : 0|16@1+ (1,0) [0|0] ""  DTI_Inv
@@ -431,6 +457,20 @@ CM_ SG_ 2147492886 RPM_min_limit "1: RPM min limit active 0: RPM min limit inact
 CM_ SG_ 2147492886 RPM_max_limit "1: RPM max limit active 0: RPM max limit inactive";
 CM_ SG_ 2147492886 Power_limit "1: Power limit by Config active 0: Power limit by Config inactive";
 CM_ SG_ 2147492886 CAN_Version "Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)";
+CM_ SG_ 2191528450 Input_Voltage "~20v for LV (LV only. Send 0 for HV)";
+CM_ SG_ 2191528450 Output_Voltage "~12v for LV and ~20v for HV";
+CM_ SG_ 2191528450 Input_Current "Input current (LV only. Send 0 for HV)";
+CM_ SG_ 2191528450 Output_Current "Output current";
+CM_ SG_ 2191528450 DC_DC_Temp "Temp of DC-DC converter";
+CM_ SG_ 2191524354 Timestamp "Time in millis";
+CM_ SG_ 2191524353 Timestamp "Time in millis";
+CM_ SG_ 2190479874 Input_Voltage "~20v for LV (LV only. Send 0 for HV)";
+CM_ SG_ 2190479874 Output_Voltage "~12v for LV and ~20v for HV";
+CM_ SG_ 2190479874 Input_Current "Input current (LV only. Send 0 for HV)";
+CM_ SG_ 2190479874 Output_Current "Output current";
+CM_ SG_ 2190479874 DC_DC_Temp "Temp of DC-DC converter";
+CM_ SG_ 2190475778 Timestamp "Time in millis";
+CM_ SG_ 2190475777 Timestamp "Time in millis";
 CM_ SG_ 278 Target_AC_Current "This Cmd sets the target motor AC current (peak, not RMS). When the Ctrl receives this message, it automatically switches to current control mode. This value must not be above the limits of the Inv and must be multiplied by 10 before sending. This is a signed parameter, and the sign represents the direction of the torque which correlates with the motor AC current. (For the correlation, please refer to the motor Params)";
 CM_ SG_ 534 Target_Brake_Current "Targets the brake current of the motor. It will result negative torque relatively to the forward direction of the motor. This value must be multiplied by 10 before sending, only positive currents are accepted.";
 CM_ SG_ 790 Target_ERPM "This Cmd enables the speed control of the motor with a target ERPM. This is a signed parameter, and the sign represents the direction of the spinning. For better operation you need to tune the PID of speed control. Equation: ERPM = Motor RPM * number of the motor pole pairs";
@@ -555,6 +595,12 @@ BA_ "VFrameFormat" BO_ 2147492118 1;
 BA_ "VFrameFormat" BO_ 2147492374 1;
 BA_ "VFrameFormat" BO_ 2147492630 1;
 BA_ "VFrameFormat" BO_ 2147492886 1;
+BA_ "VFrameFormat" BO_ 2191528450 1;
+BA_ "VFrameFormat" BO_ 2191524354 1;
+BA_ "VFrameFormat" BO_ 2191524353 1;
+BA_ "VFrameFormat" BO_ 2190479874 1;
+BA_ "VFrameFormat" BO_ 2190475778 1;
+BA_ "VFrameFormat" BO_ 2190475777 1;
 BA_ "VFrameFormat" BO_ 2147485718 1;
 BA_ "VFrameFormat" BO_ 2147485974 1;
 BA_ "VFrameFormat" BO_ 2147486230 1;
