@@ -60,9 +60,9 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 SDC_Level bmsLevel(volatile const ECU_StateData *stateData) {
 	// TODO: DYNAMIC LOGIC HERE
-	if (stateData->ams_sense < 0.2f) {
+	if (stateData->bms_sense < 0.2f) {
 		return SDC_ONGOING_FAILURE;
-	} else if (stateData->ams_sense > 1.6f) {
+	} else if (stateData->bms_sense > 1.6f) {
 		return SDC_LATCHED_FAILURE;
 	}
 

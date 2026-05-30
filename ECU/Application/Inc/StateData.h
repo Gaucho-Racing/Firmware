@@ -64,7 +64,7 @@ typedef volatile struct ECU_StateData {
 	float rl_wheel_rpm;	 /** RL wheel, RPM */
 
 
-	float ams_sense;
+	float bms_sense;
 	float imd_sense;
 	float bspd_sense;
 
