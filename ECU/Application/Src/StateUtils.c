@@ -59,9 +59,43 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	return problem;
 }
 
+SDC_Level bmsLevel(volatile const ECU_StateData *stateData) {
+	// TODO: DYNAMIC LOGIC HERE
+	if (stateData->bms_sense < 0.2f) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->bms_sense > 1.6f) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+SDC_Level imdLevel(volatile const ECU_StateData *stateData) {
+	// TODO: DYNAMIC LOGIC HERE
+	if (stateData->imd_sense < 0.2f) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->imd_sense > 1.6f) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+SDC_Level bspdLevel(volatile const ECU_StateData *stateData) {
+	if (stateData->bspd_sense < 0.6f) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->bspd_sense > 1.35f) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return stateData->bms_sense < stateData->bms_min_thresh || stateData->bms_sense > stateData->bms_max_thresh;
+	SDC_Level level = bmsLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
@@ -72,7 +106,8 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 		return false;
 	}
 
-	return stateData->imd_sense < stateData->imd_min_thresh || stateData->imd_sense > stateData->imd_max_thresh;
+	SDC_Level level = imdLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
@@ -80,8 +115,8 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 #ifdef PLAN_C
 	return false;
 #endif
-
-	return stateData->bspd_sense < stateData->bspd_min_thresh || stateData->bspd_sense > stateData->bspd_max_thresh;
+	SDC_Level level = bspdLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)

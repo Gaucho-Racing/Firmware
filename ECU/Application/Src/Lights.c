@@ -20,11 +20,35 @@ void BrakeLightControl(ECU_StateData *stateLump)
 	}
 }
 
+static bool SDCStartupCondition = true; // prevent false positive TSSI on startup
+// PRECONDITION: IMD assumed to give valid readings before this is run
 void TSSILightControl(ECU_StateData *stateLump)
 {
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 286ms
-	if (stateLump->tssi_fault) {
+
+	bool redCar;
+
+	// if we are before SDC is reset, don't red car unless there is an active failure
+	if (SDCStartupCondition) {
+		redCar = false;
+
+		SDC_Level bms = bmsLevel(stateLump);
+		SDC_Level imd = imdLevel(stateLump);
+
+		if (bms == SDC_OK && imd == SDC_OK) {
+			SDCStartupCondition = false;
+		} else if (bms == SDC_ONGOING_FAILURE || imd == SDC_ONGOING_FAILURE) {
+			SDCStartupCondition = false;
+			redCar = true;
+		}
+	} else {
+		redCar = bmsFailure(stateLump) || imdFailure(stateLump);
+	}
+
+
+	// if red car blink tssi
+	if (redCar) {
 		LL_GPIO_ResetOutputPin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin);
 		if (MillisecondsSinceBoot() % 286 < 143) {
 			LL_GPIO_SetOutputPin(TSSI_R_CONTROL_GPIO_Port, TSSI_R_CONTROL_Pin);

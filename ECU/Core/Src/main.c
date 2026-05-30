@@ -540,7 +540,7 @@ int main(void)
 			// ADC_Logomatic();
 		}
 	}
-	/* USER CODE END 3 */
+/* USER CODE END 3 */
 }
 
 /**
