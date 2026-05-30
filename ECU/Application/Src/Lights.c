@@ -1,15 +1,15 @@
 #include "Lights.h"
 
 #include "CANutils.h"
+#include "Logomatic.h"
 #include "StateData.h"
+#include "StateMachine.h"
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
 #include "can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
-#include "StateMachine.h"
-#include "Logomatic.h"
 
 void BrakeLightControl(ECU_StateData *stateLump)
 {
@@ -45,7 +45,6 @@ void TSSILightControl(ECU_StateData *stateLump)
 	} else {
 		redCar = bmsFailure(stateLump) || imdFailure(stateLump);
 	}
-
 
 	// if red car blink tssi
 	if (redCar) {
@@ -86,8 +85,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 
 	GRCAN_RTD_LIGHT_CTRL_MSG light_control = {0};
 
-	if (stateLump->torquemap == 0)
-	{
+	if (stateLump->torquemap == 0) {
 		light_control.red = 0;
 		light_control.green = 0;
 		light_control.blue = 0;
@@ -135,6 +133,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 
 void dashLights(ECU_StateData *stateLump)
 {
+	/*
 	bool bms_nonlatch = stateLump->bms_light;
 	bool imd_nonlatch = stateLump->imd_light;
 	bool bspd_nonlatch = bspdFailure(stateLump);
@@ -143,6 +142,9 @@ void dashLights(ECU_StateData *stateLump)
 	bool bspd_latch = !bspdFailure(stateLump);
 
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 5) | (imd_nonlatch << 4) | (bspd_nonlatch << 3) | (bms_latch << 2) | (imd_latch << 1) | (bspd_latch << 0)};
+	*/
+	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
+							    (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
