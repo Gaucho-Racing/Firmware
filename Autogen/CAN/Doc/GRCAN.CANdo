@@ -108,6 +108,20 @@ routing:
             can_id_override: 0x2316
           - msg: DTI Data 5
             can_id_override: 0x2416
+    HV DC-DC:
+      Primary:
+        ECU:
+          - msg: DC-DC Status
+          - msg: Ping
+        Debugger:
+          - msg: Ping
+    LV DC-DC:
+      Primary:
+        ECU:
+          - msg: DC-DC Status
+          - msg: Ping
+        Debugger:
+          - msg: Ping
     ECU:
       Primary:
         DTI Inv:
@@ -3921,6 +3935,7 @@ Message ID:
       comment: Round trip time
       data type: u8
       units: ms
+
   Tire Temp Frame 0:
     MSG ID: 0x037
     MSG LENGTH: 64
@@ -8756,7 +8771,7 @@ Message ID:
       bit_start: 248
       data type: u8
   ECU Config:
-    MSG ID: 0x012
+    MSG ID: 0x02F
     MSG LENGTH: 20
     Ping Timeout Delay:
       bit_start: 0
@@ -8903,6 +8918,49 @@ Message ID:
       bit_start: 144
       comment: Reserved
       data type: u16
+  DC-DC Status:
+    MSG ID: 0x012
+    MSG LENGTH: 7
+    Input Voltage:
+      bit_start: 0
+      comment: ~20v for LV (LV only. Send 0 for HV)
+      data type: u16
+      units: V
+      scaled min: 0
+      scaled max: 65.535
+      map equation: "x/1000"
+    Output Voltage:
+      bit_start: 16
+      comment: ~12v for LV and ~20v for HV
+      data type: u16
+      units: V
+      scaled min: 0
+      scaled max: 65.535
+      map equation: "x/1000"
+    Input Current:
+      bit_start: 32
+      comment: Input current (LV only. Send 0 for HV)
+      data type: u8
+      units: A
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "x/10"
+    Output Current:
+      bit_start: 40
+      comment: Output current
+      data type: u8
+      units: A
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "x/10"
+    DC-DC Temp:
+      bit_start: 48
+      comment: Temp of DC-DC converter
+      data type: u8
+      units: C
+      scaled min: 0
+      scaled max: 255
+      map equation: "x"
 
 Custom CAN ID:
   DTI Control 1:
@@ -9438,3 +9496,5 @@ GR ID:
   BrakeTemp RL: "0x1E"
   BrakeTemp RR: "0x1F"
   DGPS: "0x20"
+  LV DC-DC: "0x29"
+  HV DC-DC: "0x2A"
