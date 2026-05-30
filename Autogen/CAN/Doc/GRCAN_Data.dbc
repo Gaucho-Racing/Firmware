@@ -407,7 +407,7 @@ BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 20 ECU
  SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ AUX_Signal : 112|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ Acc_Pedal_Travel : 128|16@1+ (0.0015259022,0) [0|100] "%"  TCM
- SG_ Brake_Pedal_Travel : 144|16@1+ (0.0015259022,0) [0|100] "%"  TCM
+ SG_ Brake_Pedal_Pressure : 144|16@1+ (1,0) [0|5000] "PSI"  TCM
 
 BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
  SG_ ACU_RTT : 0|8@1+ (1,0) [0|0] "ms"  TCM
@@ -4281,7 +4281,7 @@ CM_ SG_ 2149592580 Brakeline_R_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Steering_Angle_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 AUX_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Acc_Pedal_Travel "0-100% percentage";
-CM_ SG_ 2149592580 Brake_Pedal_Travel "0-100% percentage";
+CM_ SG_ 2149592580 Brake_Pedal_Pressure "Pressure";
 CM_ SG_ 2149592324 ACU_RTT "Round trip time";
 CM_ SG_ 2149592324 GR_Inv_RTT "Round trip time";
 CM_ SG_ 2149592324 Fan_Ctrl_1_RTT "Round trip time";

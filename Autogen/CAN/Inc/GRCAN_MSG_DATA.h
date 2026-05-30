@@ -53,7 +53,8 @@ See diagram in StateMachine.h (Byte 0) */
 31: BrakeTemp RR (1: OK, 0: Timeout) (Byte 3) */
 	uint8_t ping_group_3;
 	/** Controls the AC current limits to each of the inverters
-Discrete Mapping, actual values TBD (16 possible values) The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor (Byte 4) */
+Discrete Mapping, actual current values described by the torque map The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor. 0 is max current amps, 1 is 50
+/ 100 / 150 / 200 / 250 / 275, 2 and later is tbd (Byte 4) */
 	uint8_t power_level_torque_map;
 	/** the Temp of the hottest cell of the accumulator (Byte 5) */
 	uint8_t max_cell_temp;
@@ -427,8 +428,8 @@ typedef struct {
 	uint16_t aux_signal;
 	/** 0-100% percentage (Byte 16) */
 	uint16_t acc_pedal_travel;
-	/** 0-100% percentage (Byte 18) */
-	uint16_t brake_pedal_travel;
+	/** Pressure (Byte 18) */
+	uint16_t brake_pedal_pressure;
 } GRCAN_ECU_ANALOG_DATA_MSG;
 
 /** GPS LAT */
