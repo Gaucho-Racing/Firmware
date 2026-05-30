@@ -73,19 +73,19 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 		float multiplier = 1.0f;
 		switch (stateLump->powerlevel) {
 			case 0:
-				multiplier = 0.125f;
+				multiplier = 0.05f;
 				break;
 			case 1:
-				multiplier = 0.25f;
+				multiplier = 0.1f;
 				break;
 			case 2:
-				multiplier = 0.5f;
+				multiplier = 0.2f;
 				break;
 			case 3:
-				multiplier = 0.75f;
+				multiplier = 0.4f;
 				break;
 			case 4:
-				multiplier = 0.85f;
+				multiplier = 0.7f;
 				break;
 			case 5:
 				multiplier = 1.0f;
@@ -96,7 +96,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 		}
 
 		light_control.red = (uint8_t)(255 * multiplier);
-		light_control.green = (uint8_t)(165 * multiplier);
+		light_control.green = (uint8_t)(63 * multiplier);
 		light_control.blue = (uint8_t)(0 * multiplier);
 
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
