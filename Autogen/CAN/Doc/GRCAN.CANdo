@@ -156,29 +156,26 @@ routing:
           - msg: ACU Precharge
           - msg: ACU Config Chg Params
           - msg: ACU Config Op Params
-          - msg: Ping
         GR Inv:
           - msg: Inv Config
           - msg: Inv Cmd
-          - msg: Ping
         Fan Ctrl 1:
           - msg: Fan Cmd
-          - msg: Ping
         Fan Ctrl 2:
           - msg: Fan Cmd
-          - msg: Ping
         Fan Ctrl 3:
           - msg: Fan Cmd
-          - msg: Ping
         Dash Panel:
           - msg: Dash Config
-          - msg: Ping
         ALL:
           - msg: ECU Status 1
           - msg: ECU Status 2
           - msg: ECU Status 3
-        TCM:
           - msg: Ping
+        LV DC-DC:
+          - msg: DC-DC Status
+        HV DC-DC:
+          - msg: DC-DC Status
       Data:
         Debugger:
           - msg: Debug FD
