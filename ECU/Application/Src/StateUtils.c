@@ -144,7 +144,7 @@ float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
 
 	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
-	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
+	return travel > 0.08f ? (travel - 0.08f) / 0.92f : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
