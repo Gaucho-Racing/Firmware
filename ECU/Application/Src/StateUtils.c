@@ -60,7 +60,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return stateData->ams_sense < 0.5f || stateData->ams_sense > 1.6f; // 0.5 to 1.6 is valid
+	return stateData->bms_sense < 0.5f || stateData->bms_sense > 1.6f; // 0.5 to 1.6 is valid
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)

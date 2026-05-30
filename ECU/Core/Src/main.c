@@ -209,7 +209,7 @@ void write_adc_values_to_state_data(void)
 	// TODO: determine conversion factors for all of these (uint to float)
 	stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0 * 3.3;
 	stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0 * 3.3;
-	stateLump.ams_sense = ADC_outputs[ADC_BUFFER_SENSE_AMS] / 4095.0 * 3.3;
+	stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0 * 3.3;
 }
 
 void ADC_Configure(void)

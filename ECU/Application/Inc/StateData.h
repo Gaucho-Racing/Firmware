@@ -65,7 +65,7 @@ typedef volatile struct ECU_StateData {
 	// 0.5V when things go to shit (X_OK low) (BAD)
 	// 3V when things almost poggers (X_OK high but SDC not reset) (BAD)
 	// 2.4V when things are actually poggers (X_OK high and SDC is not triggered)
-	float ams_sense;
+	float bms_sense;
 	float imd_sense;
 	float bspd_sense;
 
