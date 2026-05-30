@@ -58,11 +58,20 @@ void dashLights(ECU_StateData *stateLump)
 	uint8_t timeState = (MillisecondsSinceBoot() >> 8) % 16; // counter from 0 to 15 that increments every 256 ms:
 	bool powerLevelLight = (stateLump->ecu_state == GR_GLV_ON) && (timeState < (stateLump->powerlevel + 1) * 2) && ((timeState % 2) == 0);
 
-	// light control for if signal goog
-	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bspdFailure(stateLump) || powerLevelLight) << 2 | stateLump->imd_light << 1 | stateLump->bms_light};
+	// // light control for if signal goog
+	// GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bspdFailure(stateLump) || powerLevelLight) << 2 | stateLump->imd_light << 1 | stateLump->bms_light};
 
-	// this is needed for the latch open control
-	message.led_latch_flags |= ((uint8_t)!(bspdFailure(stateLump) || powerLevelLight) << 5) | ((uint8_t)!stateLump->imd_light << 4) | ((uint8_t)!stateLump->bms_light << 3);
+	// // this is needed for the latch open control
+	// message.led_latch_flags |= ((uint8_t)!(bspdFailure(stateLump) || powerLevelLight) << 5) | ((uint8_t)!stateLump->imd_light << 4) | ((uint8_t)!stateLump->bms_light << 3);
+
+	bool bms_nonlatch = stateLump->bms_light;
+	bool imd_nonlatch = stateLump->imd_light;
+	bool bspd_nonlatch = bspdFailure(stateLump) || powerLevelLight;
+	bool bms_latch = !stateLump->bms_light;
+	bool imd_latch = !stateLump->imd_light;
+	bool bspd_latch = !(bspdFailure(stateLump) || powerLevelLight);
+
+	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 0) | (imd_nonlatch << 1) | (bspd_nonlatch << 2) | (bms_latch << 3) | (imd_latch << 4) | (bspd_latch << 5)};
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
