@@ -61,7 +61,7 @@ static int SMBusRead(uint8_t slaveAddr, uint8_t cmd, uint16_t *data) {
 int MLX90614_SMBusRead(uint8_t slaveAddr, uint8_t readAddress, uint16_t *data)
 {
     // Enforce 5-bit isolation and apply RAM prefix (0b000x_xxxx)
-    uint8_t cmd = 0x20 | (readAddress & 0x1F);
+    uint8_t cmd = 0x00 | (readAddress & 0x1F);
 
     return SMBusRead(slaveAddr, cmd, data);
 }
@@ -104,12 +104,18 @@ int MLX90614_SMBusWrite(uint8_t slaveAddr, uint8_t writeAddress, uint16_t data)
  * @param command   - Command to send (0x60 to unlock, 0x61 to lock)
  * @return 0 on success, -1 on NACK/timeout, -5 for an invalid command.
  */
-int MLX90614_SendCommand(uint8_t slaveAddr, uint8_t command)
+int MLX90614_SendCommand(uint8_t slaveAddr, uint8_t cmd)
 {
     // Validate the expected parameter values for driver compliance
-    if (command != 0x60 && command != 0x61) {
+    if (cmd != 0x60 && cmd != 0x61) {
         return -5; // Invalid command according to spec
     }
+
+    if (HAL_SMBUS_Master_Transmit_IT(&hsmbus2, (slaveAddr << 1), &cmd, 1, SMBUS_FIRST_AND_LAST_FRAME_WITH_PEC) != HAL_OK) {
+        return -1;
+    }
+
+    while(HAL_SMBUS_GetState(&hsmbus2) != HAL_SMBUS_STATE_READY);
 
     // Do NOT transmit anything over the wire.
     // Return 0 to tell the higher-level driver everything is fine.

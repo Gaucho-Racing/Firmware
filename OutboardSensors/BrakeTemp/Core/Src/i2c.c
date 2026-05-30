@@ -39,8 +39,8 @@ void MX_I2C2_SMBUS_Init(void)
 
   /* USER CODE END I2C2_Init 1 */
   hsmbus2.Instance = I2C2;
-  hsmbus2.Init.Timing = 0x00503D5A;
-  hsmbus2.Init.AnalogFilter = SMBUS_ANALOGFILTER_DISABLE;
+  hsmbus2.Init.Timing = 0x00503D58;
+  hsmbus2.Init.AnalogFilter = SMBUS_ANALOGFILTER_ENABLE;
   hsmbus2.Init.OwnAddress1 = 2;
   hsmbus2.Init.AddressingMode = SMBUS_ADDRESSINGMODE_7BIT;
   hsmbus2.Init.DualAddressMode = SMBUS_DUALADDRESS_DISABLE;
@@ -48,7 +48,7 @@ void MX_I2C2_SMBUS_Init(void)
   hsmbus2.Init.OwnAddress2Masks = SMBUS_OA2_NOMASK;
   hsmbus2.Init.GeneralCallMode = SMBUS_GENERALCALL_DISABLE;
   hsmbus2.Init.NoStretchMode = SMBUS_NOSTRETCH_DISABLE;
-  hsmbus2.Init.PacketErrorCheckMode = SMBUS_PEC_DISABLE;
+  hsmbus2.Init.PacketErrorCheckMode = SMBUS_PEC_ENABLE;
   hsmbus2.Init.PeripheralMode = SMBUS_PERIPHERAL_MODE_SMBUS_SLAVE;
   hsmbus2.Init.SMBusTimeout = 0x000080C3;
   if (HAL_SMBUS_Init(&hsmbus2) != HAL_OK)

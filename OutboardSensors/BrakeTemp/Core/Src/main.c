@@ -67,13 +67,17 @@ uint8_t MLX90614_address = 0x5A;
 
 // Wheel speed stuff
 TIM_HandleTypeDef htim6;
-volatile uint32_t pulse_time_deltas[MAX_NUM_PULSES];
+volatile uint32_t pulses[MAX_NUM_INTERVALS];
+volatile uint32_t time_deltas[MAX_NUM_INTERVALS];
 volatile uint32_t total_time = 0;
-uint32_t HAL_tick_freq_hz = 0;
+volatile uint32_t total_pulses = 0;
 volatile uint32_t last_tick = 0;
+volatile uint32_t temp_num_pulses = 0;
+volatile uint32_t temp_tick = 0;
+uint32_t HAL_tick_freq_hz = 0;
 volatile uint8_t head = 0;
 volatile uint8_t tail = 0;
-volatile uint8_t num_pulses = 0;
+volatile uint8_t num_pulse_intervals = 0;
 
 /* USER CODE END PV */
 
@@ -95,11 +99,6 @@ PUTCHAR_PROTOTYPE
 int MLX90614_Initialize(void)
 {
 	HAL_Delay(100);
-	uint16_t data = 0;
-	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
-	status = MLX90614_SMBusWrite(MLX90614_address, 0x04, 0x0000);
-	status = MLX90614_SMBusWrite(MLX90614_address, 0x04, data-1000);
-	status = MLX90614_SMBusRead(MLX90614_address, 0x04, &data);
 	/*
 	status = MLX90614_SetEmissivity(MLX90614_address, emissivity);
 	status = MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
@@ -110,6 +109,7 @@ int MLX90614_Initialize(void)
 	return 0;
 }
 
+// This function is triggered by TIM6 (one-pulse mode)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM6) {
         // Optional: Clear any lingering noise flags on the EXTI line
@@ -118,6 +118,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     }
 }
 
+// This function is triggered by the rising edge interrupt from pin B11 (wheel_speed_in)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_11) {
 
@@ -127,19 +128,32 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			return;
 		}
 
-        uint32_t temp_tick = HAL_GetTick();
+        temp_tick = HAL_GetTick();
+		temp_num_pulses++;
 
-        // Enqueue the valid delta time
-		if (num_pulses >= MAX_NUM_PULSES) total_time -= pulse_time_deltas[tail];
-        pulse_time_deltas[tail] = temp_tick - last_tick;
-		total_time += pulse_time_deltas[tail];
-        tail = (tail + 1) & (MAX_NUM_PULSES - 1);
+		// HAL_GetTick() is in ms resolution --> only push the number of pulses onto buffer
+		// after at least MIN_TICK_DELTA has elapsed.
+		if (temp_tick - last_tick < MIN_TICK_DELTA) return;
 
-        if (num_pulses < MAX_NUM_PULSES) {
-            num_pulses++;
-        } else {
-            head = (head + 1) & (MAX_NUM_PULSES - 1); // Buffer overflow: advance head
-        }
+        // If buffer is full, take off the amount that is being kicked out
+		if (num_pulse_intervals >= MAX_NUM_INTERVALS) {
+			total_time -= time_deltas[tail];
+			total_pulses -= pulses[tail];
+            head = (head + 1) & (MAX_NUM_INTERVALS - 1); // Buffer overflow: advance head
+		} else {
+            num_pulse_intervals++;
+		}
+
+		// Push the current sample pair into the buffers
+		pulses[tail] = temp_num_pulses;
+		temp_num_pulses = 0;
+        time_deltas[tail] = temp_tick - last_tick;
+
+		// Increment running totals
+		total_pulses += pulses[tail];
+		total_time += time_deltas[tail];
+
+        tail = (tail + 1) & (MAX_NUM_INTERVALS - 1);
 
         last_tick = temp_tick;
 
@@ -149,23 +163,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     }
 }
 
+// Note that pulses[] and time_deltas[] do NOT need to be zero'd out here
+// because the head and tail indices take care of bounds.
 void ResetRPMHistory(void) {
-	for(uint8_t i = 0; i < MAX_NUM_PULSES; i++) {
-		pulse_time_deltas[i] = 0;
-	}
 	head = 0;
 	tail = 0;
-	num_pulses = 0;
+	num_pulse_intervals = 0;
+	total_pulses = 0;
 	total_time = 0;
 	last_tick = 0;
 }
 
 float GetRPM(void) {
+	// This is more safe than just checking if total_pulses or num_pulse_intervals == 0
 	if (total_time == 0) return 0.0f;
 
-	float rpm = ((float)num_pulses * HAL_tick_freq_hz) / total_time;
-	rpm *= SECONDS_PER_MIN;
-	rpm /= PULSES_PER_ROT;
+	float rpm = ((float)total_pulses * HAL_tick_freq_hz) / total_time; // Pulses per second
+	rpm *= SECONDS_PER_MIN; // Pulses per min
+	rpm /= PULSES_PER_ROT; // Rotations per min
 
 	return rpm;
 }
@@ -230,11 +245,11 @@ int main(void)
 	while (1) {
 
 		//status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
-		//status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
-		//if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
+		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
-		//CAN_sendTemp(to);
-		//CAN_sendRPM(GetRPM());
+		CAN_sendTemp(to);
+		CAN_sendRPM(GetRPM());
 		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
 		/* USER CODE END WHILE */
