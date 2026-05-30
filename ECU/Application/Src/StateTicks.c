@@ -26,7 +26,15 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1, .powerlevel = 3};
+ECU_StateData stateLump = {
+    // Start on GLV On
+    .ecu_state = GR_GLV_ON,
+    // Assume ACU good at boot
+    .acu_software_latch = 1,
+    // Startup at minimum power
+    .powerlevel = 0,
+    // See CANdo specification
+    .torquemap = 1};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -252,7 +260,33 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
 		torque_request = -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
-		torque_request = fminf(CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS * (1 << stateData->powerlevel) / 8.0f, MAX_CURRENT_AMPS);
+		uint16_t max_current = 0;
+		// Chosen max current for different power level / torque maps
+		switch (stateData->powerlevel) {
+			case 0:
+				max_current = 50;
+				break;
+			case 1:
+				max_current = 100;
+				break;
+			case 2:
+				max_current = 150;
+				break;
+			case 3:
+				max_current = 200;
+				break;
+			case 4:
+				max_current = 250;
+				break;
+			case 5:
+				max_current = 275;
+				break;
+			default:
+				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);
+				max_current = 0;
+				break;
+		}
+		torque_request = fminf(CalcAccPedalTravel(stateData) * max_current, MAX_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
