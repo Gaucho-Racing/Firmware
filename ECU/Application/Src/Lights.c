@@ -118,7 +118,7 @@ void dashLights(ECU_StateData *stateLump)
 	bool imd_latch = !stateLump->imd_light;
 	bool bspd_latch = !bspdFailure(stateLump);
 
-	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 0) | (imd_nonlatch << 1) | (bspd_nonlatch << 2) | (bms_latch << 3) | (imd_latch << 4) | (bspd_latch << 5)};
+	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 5) | (imd_nonlatch << 4) | (bspd_nonlatch << 3) | (bms_latch << 2) | (imd_latch << 1) | (bspd_latch << 0)};
 
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
