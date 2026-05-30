@@ -93,7 +93,6 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
 }
 
-// TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
 #ifdef PLAN_C
@@ -104,37 +103,18 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	}
 #endif
 
-	// uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
-	// uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
-	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
-	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
-	// return brakeFpress || brakeRpress;
-	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-	if (stateData->Brake_F_Signal > (BRAKE_F_MIN) || stateData->bse_signal > (BSE_MIN)) {
-		return true;
-	}
-	return false;
-	// Ideally TCM receives values of 0 after this is no longer called xD.
+	return (stateData->Brake_F_Signal > BRAKE_F_MIN) || (stateData->bse_signal > BSE_MIN);
 }
 
-float CalcBrakePercent(volatile const ECU_StateData *stateData)
+float CalcBrakePressure(volatile const ECU_StateData *stateData)
 {
 #ifdef PLAN_C
 	return 0;
 #endif
 
-	if (stateData->bse_signal <= BSE_MIN) {
-		return 0;
-	}
-
-	const uint16_t numerator = stateData->bse_signal - BSE_MIN;
-	const uint16_t denominator = BSE_MAX - BSE_MIN;
-
-	if (numerator > denominator) {
-		return 1.0f;
-	}
-
-	return (float)numerator / (float)denominator;
+	float psi_front = stateData->bse_signal / 4096.0f * 5000.0f;
+	float psi_rear = stateData->Brake_F_Signal / 4096.0f * 5000.0f;
+	return fmaxf(psi_front, psi_rear);
 }
 
 // TODO: reconsider deadzone

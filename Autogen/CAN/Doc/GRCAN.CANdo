@@ -3845,14 +3845,14 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    Brake Pedal Travel:
+    Brake Pedal Pressure:
       bit_start: 144
-      comment: 0-100% percentage
+      comment: Pressure
       data type: u16
-      units: %
+      units: PSI
       scaled min: 0
-      scaled max: 100
-      map equation: "x/655.35"
+      scaled max: 5000
+      map equation: "x"
   GPS LAT:
     MSG ID: 0x031
     MSG LENGTH: 8
