@@ -167,6 +167,7 @@ routing:
           - msg: Fan Cmd
         Dash Panel:
           - msg: Dash Config
+          - msg: RTD Light Ctrl
         ALL:
           - msg: ECU Status 1
           - msg: ECU Status 2
@@ -8958,6 +8959,24 @@ Message ID:
       scaled min: 0
       scaled max: 255
       map equation: "x"
+  RTD Light Ctrl:
+    MSG ID: 0x53
+    MSG LENGTH: 3
+    Red:
+      bit_start: 0
+      comment: Intensity of the red channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
+      data type: u8
+      units: Intensity
+    Green:
+      bit_start: 0
+      comment: Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
+      data type: u8
+      units: Intensity
+    Blue:
+      bit_start: 0
+      comment: Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
+      data type: u8
+      units: Intensity
 
 Custom CAN ID:
   DTI Control 1:
