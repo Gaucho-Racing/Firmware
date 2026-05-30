@@ -60,7 +60,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return stateData->bms_sense < 0.5f || stateData->bms_sense > 1.6f; // 0.5 to 1.6 is valid
+	return stateData->bms_sense < stateData->bms_min_thresh || stateData->bms_sense > stateData->bms_max_thresh;
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
@@ -71,7 +71,7 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 		return false;
 	}
 
-	return stateData->imd_sense < 0.5f || stateData->imd_sense > 1.6f; // 0.5 to 1.6 is valid
+	return stateData->imd_sense < stateData->imd_min_thresh || stateData->imd_sense > stateData->imd_max_thresh;
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
@@ -80,7 +80,7 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 	return false;
 #endif
 
-	return stateData->bspd_sense < 0.6f || stateData->bspd_sense > 1.35f; // possible values are 0.3, 1.2, 1.6
+	return stateData->bspd_sense < stateData->bspd_min_thresh || stateData->bspd_sense > stateData->bspd_max_thresh;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
@@ -89,8 +89,7 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 	return false;
 #endif
 
-	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
-	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
+	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) > stateData->apps_deadzone;
 }
 
 bool PressingBrake(volatile const ECU_StateData *stateData)
@@ -103,7 +102,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	}
 #endif
 
-	return (stateData->Brake_F_Signal > BRAKE_F_MIN) || (stateData->bse_signal > BSE_MIN);
+	return (stateData->Brake_F_Signal > stateData->brake_f_min) || (stateData->bse_signal > stateData->brake_bse_min);
 }
 
 float CalcBrakePressure(volatile const ECU_StateData *stateData)
@@ -124,7 +123,7 @@ float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
 
 	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
-	return travel > 0.08f ? (travel - 0.08f) / 0.92f : 0.0f;
+	return travel > stateData->apps_deadzone ? (travel - stateData->apps_deadzone) / (1.0f - stateData->apps_deadzone) : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)

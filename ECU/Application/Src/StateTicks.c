@@ -59,7 +59,9 @@ ECU_StateData stateLump = {
     .apps_2_max = 1926,
     // Regen
     .regen_strength = 2,
-    .enable_regen = false };
+    .enable_regen = false
+}
+;
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -87,8 +89,8 @@ void ECU_State_Tick(void)
 	// stateLump.bms_light &= (bmsFailure(&stateLump));
 	// stateLump.imd_light &= (imdFailure(&stateLump));
 
-	stateLump.bms_light = (stateLump.bms_sense <= 0.2f) || (stateLump.bms_light && bmsFailure(&stateLump));
-	stateLump.imd_light = (stateLump.imd_sense <= 0.2f) || (stateLump.imd_light && imdFailure(&stateLump));
+	stateLump.bms_light = (stateLump.bms_sense <= stateLump.bms_min_thresh) || (stateLump.bms_light && bmsFailure(&stateLump));
+	stateLump.imd_light = (stateLump.imd_sense <= stateLump.imd_min_thresh) || (stateLump.imd_light && imdFailure(&stateLump));
 
 	stateLump.tssi_fault = stateLump.bms_light || stateLump.imd_light;
 
@@ -189,7 +191,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= MAX_PRECHARGE_TIME) {
+	if (CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= stateData->max_precharge_time_ms) {
 		LOGOMATIC("CRITICAL ERROR! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
@@ -220,7 +222,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		return;
 	}
 
-	if (PressingBrake(stateData) && stateData->rtd_button_pressed && (CalcAccPedalTravel(stateData) < 0.05f)) {
+	if (PressingBrake(stateData) && stateData->rtd_button_pressed && (CalcAccPedalTravel(stateData) < stateData->apps_deadzone)) {
 		GRCAN_INV_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CONFIG, &inverter_message, sizeof(inverter_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
@@ -268,7 +270,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (APPS_BSE_Violation(stateData)) {
 		stateData->apps_bse_violation = true;
-	} else if (CalcAccPedalTravel(stateData) < 0.05f) {
+	} else if (CalcAccPedalTravel(stateData) < stateData->apps_deadzone) {
 		stateData->apps_bse_violation = false;
 	}
 
@@ -282,8 +284,8 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
-		torque_request = -MIN_WITH_TYPES(CalcBrakePressure(stateData) / 5000.0f * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
+	} else if (stateData->enable_regen && PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
+		torque_request = -MIN_WITH_TYPES(CalcBrakePressure(stateData) / 5000.0f * stateData->regen_strength, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
 		uint16_t max_current = 0;
 		// Chosen max current for different power level / torque maps
