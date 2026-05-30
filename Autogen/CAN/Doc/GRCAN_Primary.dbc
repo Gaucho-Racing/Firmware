@@ -251,9 +251,6 @@ BO_ 2149583875 ECU_ACU_Config_Op_Params_to_ACU: 2 ECU
  SG_ Minimium_Cell_Voltage : 0|8@1+ (0.01,2) [2|4.55] "Volts"  ACU
  SG_ Max_Cell_Temp : 8|8@1+ (0.25,0) [0|63.75] "Celsius"  ACU
 
-BO_ 2149581315 ECU_Ping_to_ACU: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ACU
-
 BO_ 2149586440 ECU_Inv_Config_to_GR_Inv: 7 ECU
  SG_ Max_AC_Current : 0|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps"  GR_Inv
  SG_ Max_DC_Current : 16|16@1+ (0.01,-327.68) [-327.68|327.67] "Amps"  GR_Inv
@@ -267,32 +264,17 @@ BO_ 2149586696 ECU_Inv_Cmd_to_GR_Inv: 8 ECU
  SG_ Field_weakening : 48|8@1+ (0.1,0) [0|25.5] "Amps"  GR_Inv
  SG_ Drive_enable : 56|1@1+ (1,0) [0|0] "Enable"  GR_Inv
 
-BO_ 2149581320 ECU_Ping_to_GR_Inv: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  GR_Inv
-
 BO_ 2149587213 ECU_Fan_Cmd_to_Fan_Ctrl_1: 1 ECU
  SG_ Fan_Cmd : 0|8@1+ (1,0) [0|255] "%"  Fan_Ctrl_1
-
-BO_ 2149581325 ECU_Ping_to_Fan_Ctrl_1: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Fan_Ctrl_1
 
 BO_ 2149587214 ECU_Fan_Cmd_to_Fan_Ctrl_2: 1 ECU
  SG_ Fan_Cmd : 0|8@1+ (1,0) [0|255] "%"  Fan_Ctrl_2
 
-BO_ 2149581326 ECU_Ping_to_Fan_Ctrl_2: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Fan_Ctrl_2
-
 BO_ 2149587215 ECU_Fan_Cmd_to_Fan_Ctrl_3: 1 ECU
  SG_ Fan_Cmd : 0|8@1+ (1,0) [0|255] "%"  Fan_Ctrl_3
 
-BO_ 2149581327 ECU_Ping_to_Fan_Ctrl_3: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Fan_Ctrl_3
-
 BO_ 2149587717 ECU_Dash_Config_to_Dash_Panel: 1 ECU
  SG_ led_latch_flags : 0|8@1+ (1,0) [0|0] ""  Dash_Panel
-
-BO_ 2149581317 ECU_Ping_to_Dash_Panel: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Dash_Panel
 
 BO_ 2149581568 ECU_ECU_Status_1_to_ALL: 8 ECU
  SG_ ECU_State : 0|1@1+ (1,0) [0|0] "Bool"  ALL
@@ -316,8 +298,22 @@ BO_ 2149582080 ECU_ECU_Status_3_to_ALL: 5 ECU
  SG_ RR_Wheel_RPM : 16|16@1+ (0.1,-3276.8) [-3276.8|3276.7] "RPM"  ALL
  SG_ Relay_States : 32|1@1+ (1,0) [0|0] ""  ALL
 
-BO_ 2149581316 ECU_Ping_to_TCM: 4 ECU
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  TCM
+BO_ 2149581312 ECU_Ping_to_ALL: 4 ECU
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ALL
+
+BO_ 2149585449 ECU_DC_DC_Status_to_LV_DC_DC: 7 ECU
+ SG_ Input_Voltage : 0|16@1+ (0.001,0) [0|65.535] "V"  LV_DC_DC
+ SG_ Output_Voltage : 16|16@1+ (0.001,0) [0|65.535] "V"  LV_DC_DC
+ SG_ Input_Current : 32|8@1+ (0.1,0) [0|25.5] "A"  LV_DC_DC
+ SG_ Output_Current : 40|8@1+ (0.1,0) [0|25.5] "A"  LV_DC_DC
+ SG_ DC_DC_Temp : 48|8@1+ (1,0) [0|255] "C"  LV_DC_DC
+
+BO_ 2149585450 ECU_DC_DC_Status_to_HV_DC_DC: 7 ECU
+ SG_ Input_Voltage : 0|16@1+ (0.001,0) [0|65.535] "V"  HV_DC_DC
+ SG_ Output_Voltage : 16|16@1+ (0.001,0) [0|65.535] "V"  HV_DC_DC
+ SG_ Input_Current : 32|8@1+ (0.1,0) [0|25.5] "A"  HV_DC_DC
+ SG_ Output_Current : 40|8@1+ (0.1,0) [0|25.5] "A"  HV_DC_DC
+ SG_ DC_DC_Temp : 48|8@1+ (1,0) [0|255] "C"  HV_DC_DC
 
 BO_ 2161115137 Fan_Ctrl_1_Debug_2_0_to_Debugger: 8 Fan_Ctrl_1
  SG_ Debug : 0|64@1- (1,0) [0|0] ""  Debugger
@@ -493,7 +489,6 @@ CM_ SG_ 2149583619 Chg_Voltage "Sets the Target Charging voltage";
 CM_ SG_ 2149583619 Chg_Current "Sets the Target Charging Current";
 CM_ SG_ 2149583875 Minimium_Cell_Voltage "Sets the threshold for Minimum Cell Voltage before Shutdown";
 CM_ SG_ 2149583875 Max_Cell_Temp "Sets the threshold for Max Cell Temp before Shutdown";
-CM_ SG_ 2149581315 Timestamp "Time in millis";
 CM_ SG_ 2149586440 Max_AC_Current "Max AC Current";
 CM_ SG_ 2149586440 Max_DC_Current "Max DC Current";
 CM_ SG_ 2149586440 Absolute_Max_RPM_Limit "0: No limit      n :limited at n RPM";
@@ -503,15 +498,10 @@ CM_ SG_ 2149586696 Set_DC_Current "Commanded DC Current";
 CM_ SG_ 2149586696 RPM_Limit "0: No limit      n :limited at n RPM";
 CM_ SG_ 2149586696 Field_weakening "Field weakening strength";
 CM_ SG_ 2149586696 Drive_enable "Write this to 1 every 100ms to enable Inv";
-CM_ SG_ 2149581320 Timestamp "Time in millis";
 CM_ SG_ 2149587213 Fan_Cmd "0-100 Percent";
-CM_ SG_ 2149581325 Timestamp "Time in millis";
 CM_ SG_ 2149587214 Fan_Cmd "0-100 Percent";
-CM_ SG_ 2149581326 Timestamp "Time in millis";
 CM_ SG_ 2149587215 Fan_Cmd "0-100 Percent";
-CM_ SG_ 2149581327 Timestamp "Time in millis";
 CM_ SG_ 2149587717 led_latch_flags "[Byte 0 / Bits 0-7] 0: BSPD led 1: IMD led 2: BMS led 3: BSPD latch 4: IMD latch 5: BMS latch 6-7: Reserved";
-CM_ SG_ 2149581317 Timestamp "Time in millis";
 CM_ SG_ 2149581568 ECU_State "[Byte 0 / Bits 0-7] ECU state machine data 0: GLV Off State 1: GLV On State 2: Precharge Engaged State 3: Precharge Complete State 4: Drive Active State 5: TS Discharge State 6-7: Reserved See diagram in StateMachine.h";
 CM_ SG_ 2149581568 Ping_Group_1 "[Byte 1 / Bits 8-15] ECU ping targets 8: ACU (1: OK, 0: Timeout) 9: GR Inv (1: OK, 0: Timeout) 10: Fan Ctrl 1 (1: OK, 0: Timeout) 11: Fan Ctrl 2 (1: OK, 0: Timeout) 12: Fan Ctrl 3 (1: OK, 0: Timeout) 13: Dash Panel (1: OK, 0: Timeout) 14: TCM (1: OK, 0: Timeout) 15: DGPS (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Ping_Group_2 "[Byte 2 / Bits 16-23] ECU ping targets 16: Suspension FL (1: OK, 0: Timeout) 17: Suspension FR (1: OK, 0: Timeout) 18: Suspension RL (1: OK, 0: Timeout) 19: Suspension RR (1: OK, 0: Timeout) 20: InboardFloor FL (1: OK, 0: Timeout) 21: InboardFloor FR (1: OK, 0: Timeout) 22: InboardFloor RL (1: OK, 0: Timeout) 23: InboardFloor RR (1: OK, 0: Timeout)";
@@ -528,7 +518,17 @@ CM_ SG_ 2149581824 FR_Wheel_RPM "FR Wheel RPM";
 CM_ SG_ 2149582080 RL_Wheel_RPM "RL Wheel RPM";
 CM_ SG_ 2149582080 RR_Wheel_RPM "RR Wheel RPM";
 CM_ SG_ 2149582080 Relay_States "[Byte 4 / Bits 32-39] 0: BMS OK 1: IMD OK 2: BSPD OK 3: Software OK 4-7: Reserved";
-CM_ SG_ 2149581316 Timestamp "Time in millis";
+CM_ SG_ 2149581312 Timestamp "Time in millis";
+CM_ SG_ 2149585449 Input_Voltage "~20v for LV (LV only. Send 0 for HV)";
+CM_ SG_ 2149585449 Output_Voltage "~12v for LV and ~20v for HV";
+CM_ SG_ 2149585449 Input_Current "Input current (LV only. Send 0 for HV)";
+CM_ SG_ 2149585449 Output_Current "Output current";
+CM_ SG_ 2149585449 DC_DC_Temp "Temp of DC-DC converter";
+CM_ SG_ 2149585450 Input_Voltage "~20v for LV (LV only. Send 0 for HV)";
+CM_ SG_ 2149585450 Output_Voltage "~12v for LV and ~20v for HV";
+CM_ SG_ 2149585450 Input_Current "Input current (LV only. Send 0 for HV)";
+CM_ SG_ 2149585450 Output_Current "Output current";
+CM_ SG_ 2149585450 DC_DC_Temp "Temp of DC-DC converter";
 CM_ SG_ 2161115137 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2161115649 Timestamp "Time in millis";
 CM_ SG_ 2161115650 Timestamp "Time in millis";
@@ -611,22 +611,18 @@ BA_ "VFrameFormat" BO_ 2149581313 1;
 BA_ "VFrameFormat" BO_ 2149583363 1;
 BA_ "VFrameFormat" BO_ 2149583619 1;
 BA_ "VFrameFormat" BO_ 2149583875 1;
-BA_ "VFrameFormat" BO_ 2149581315 1;
 BA_ "VFrameFormat" BO_ 2149586440 1;
 BA_ "VFrameFormat" BO_ 2149586696 1;
-BA_ "VFrameFormat" BO_ 2149581320 1;
 BA_ "VFrameFormat" BO_ 2149587213 1;
-BA_ "VFrameFormat" BO_ 2149581325 1;
 BA_ "VFrameFormat" BO_ 2149587214 1;
-BA_ "VFrameFormat" BO_ 2149581326 1;
 BA_ "VFrameFormat" BO_ 2149587215 1;
-BA_ "VFrameFormat" BO_ 2149581327 1;
 BA_ "VFrameFormat" BO_ 2149587717 1;
-BA_ "VFrameFormat" BO_ 2149581317 1;
 BA_ "VFrameFormat" BO_ 2149581568 1;
 BA_ "VFrameFormat" BO_ 2149581824 1;
 BA_ "VFrameFormat" BO_ 2149582080 1;
-BA_ "VFrameFormat" BO_ 2149581316 1;
+BA_ "VFrameFormat" BO_ 2149581312 1;
+BA_ "VFrameFormat" BO_ 2149585449 1;
+BA_ "VFrameFormat" BO_ 2149585450 1;
 BA_ "VFrameFormat" BO_ 2161115137 1;
 BA_ "VFrameFormat" BO_ 2161115649 1;
 BA_ "VFrameFormat" BO_ 2161115650 1;
