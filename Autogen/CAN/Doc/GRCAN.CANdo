@@ -8884,8 +8884,8 @@ Message ID:
       data type: u8
       units: ms
       scaled min: 0
-      scaled max: 255
-      map equation: "x"
+      scaled max: 2550
+      map equation: "10x"
     Regen Strength:
       bit_start: 128
       comment: TBD
