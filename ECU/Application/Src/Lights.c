@@ -8,6 +8,8 @@
 #include "can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
+#include "StateMachine.h"
+#include "Logomatic.h"
 
 void BrakeLightControl(ECU_StateData *stateLump)
 {
@@ -35,15 +37,6 @@ void TSSILightControl(ECU_StateData *stateLump)
 	}
 }
 
-void RTDButtonLightControl(ECU_StateData *stateLump)
-{
-	if (stateLump->ecu_state == GR_DRIVE_ACTIVE) {
-		LL_GPIO_SetOutputPin(RTD_BTN_LED_CONTROL_GPIO_Port, RTD_BTN_LED_CONTROL_Pin);
-	} else {
-		LL_GPIO_ResetOutputPin(RTD_BTN_LED_CONTROL_GPIO_Port, RTD_BTN_LED_CONTROL_Pin);
-	}
-}
-
 void TSActiveButtonLightControl(ECU_StateData *stateLump)
 {
 	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
@@ -53,23 +46,87 @@ void TSActiveButtonLightControl(ECU_StateData *stateLump)
 	}
 }
 
+void RTD_ButtonLightControl(ECU_StateData *stateLump)
+{
+	// Ignored anyway if not in GLV On
+	if (stateLump->ecu_state != GR_GLV_ON) {
+		return;
+	}
+
+	// Send every 10 ms
+	static uint32_t last_rtd_light_update_millis;
+	if (MillisecondsSinceBoot() - last_rtd_light_update_millis < 10) {
+		return;
+	}
+	last_rtd_light_update_millis = MillisecondsSinceBoot();
+
+	GRCAN_RTD_LIGHT_CTRL_MSG light_control = {0};
+
+	if (stateLump->torquemap == 0)
+	{
+		light_control.red = 0;
+		light_control.green = 0;
+		light_control.blue = 0;
+
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
+	} else if (stateLump->torquemap == 1) {
+		switch (stateLump->powerlevel) {
+			case 0:
+				light_control.red = 255;
+				light_control.green = 0;
+				light_control.blue = 0;
+				break;
+			case 1:
+				light_control.red = 255;
+				light_control.green = 127;
+				light_control.blue = 0;
+				break;
+			case 2:
+				light_control.red = 255;
+				light_control.green = 255;
+				light_control.blue = 0;
+				break;
+			case 3:
+				light_control.red = 127;
+				light_control.green = 255;
+				light_control.blue = 0;
+				break;
+			case 4:
+				light_control.red = 0;
+				light_control.green = 255;
+				light_control.blue = 0;
+				break;
+			case 5:
+				light_control.red = 0;
+				light_control.green = 255;
+				light_control.blue = 127;
+				break;
+			default:
+				light_control.red = 255;
+				light_control.green = 0;
+				light_control.blue = 0;
+				LOGOMATIC("Invalid power level: %d. Defaulting to red.\n", stateLump->powerlevel);
+				break;
+		}
+
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
+	} else {
+		LOGOMATIC("Invalid torquemap: %d. Defaulting to off.\n", stateLump->torquemap);
+		light_control.red = 0;
+		light_control.green = 0;
+		light_control.blue = 0;
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
+	}
+}
+
 void dashLights(ECU_StateData *stateLump)
 {
-	uint8_t timeState = (MillisecondsSinceBoot() >> 8) % 16; // counter from 0 to 15 that increments every 256 ms:
-	bool powerLevelLight = (stateLump->ecu_state == GR_GLV_ON) && (timeState < (stateLump->powerlevel + 1) * 2) && ((timeState % 2) == 0);
-
-	// // light control for if signal goog
-	// GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bspdFailure(stateLump) || powerLevelLight) << 2 | stateLump->imd_light << 1 | stateLump->bms_light};
-
-	// // this is needed for the latch open control
-	// message.led_latch_flags |= ((uint8_t)!(bspdFailure(stateLump) || powerLevelLight) << 5) | ((uint8_t)!stateLump->imd_light << 4) | ((uint8_t)!stateLump->bms_light << 3);
-
 	bool bms_nonlatch = stateLump->bms_light;
 	bool imd_nonlatch = stateLump->imd_light;
-	bool bspd_nonlatch = bspdFailure(stateLump) || powerLevelLight;
+	bool bspd_nonlatch = bspdFailure(stateLump);
 	bool bms_latch = !stateLump->bms_light;
 	bool imd_latch = !stateLump->imd_light;
-	bool bspd_latch = !(bspdFailure(stateLump) || powerLevelLight);
+	bool bspd_latch = !(bspdFailure(stateLump));
 
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 0) | (imd_nonlatch << 1) | (bspd_nonlatch << 2) | (bms_latch << 3) | (imd_latch << 4) | (bspd_latch << 5)};
 
@@ -80,6 +137,6 @@ void lightControl(ECU_StateData *stateData)
 {
 	BrakeLightControl(stateData);
 	TSSILightControl(stateData);
-	RTDButtonLightControl(stateData);
+	RTD_ButtonLightControl(stateData);
 	dashLights(stateData);
 }
