@@ -2239,4 +2239,14 @@ typedef struct {
 	uint8_t dc_dc_temp;
 } GRCAN_DC_DC_STATUS_MSG;
 
+/** RTD Light Ctrl */
+typedef struct {
+	/** Intensity of the red channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 0) */
+	uint8_t red;
+	/** Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 0) */
+	uint8_t green;
+	/** Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 0) */
+	uint8_t blue;
+} GRCAN_RTD_LIGHT_CTRL_MSG;
+
 #endif
