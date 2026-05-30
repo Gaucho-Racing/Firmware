@@ -70,44 +70,34 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
 	} else if (stateLump->torquemap == 1) {
+		float multiplier = 1.0f;
 		switch (stateLump->powerlevel) {
 			case 0:
-				light_control.red = 255;
-				light_control.green = 0;
-				light_control.blue = 0;
+				multiplier = 0.125f;
 				break;
 			case 1:
-				light_control.red = 255;
-				light_control.green = 127;
-				light_control.blue = 0;
+				multiplier = 0.25f;
 				break;
 			case 2:
-				light_control.red = 255;
-				light_control.green = 255;
-				light_control.blue = 0;
+				multiplier = 0.5f;
 				break;
 			case 3:
-				light_control.red = 127;
-				light_control.green = 255;
-				light_control.blue = 0;
+				multiplier = 0.75f;
 				break;
 			case 4:
-				light_control.red = 0;
-				light_control.green = 255;
-				light_control.blue = 0;
+				multiplier = 0.85f;
 				break;
 			case 5:
-				light_control.red = 0;
-				light_control.green = 255;
-				light_control.blue = 127;
+				multiplier = 1.0f;
 				break;
 			default:
-				light_control.red = 255;
-				light_control.green = 0;
-				light_control.blue = 0;
-				LOGOMATIC("Invalid power level: %d. Defaulting to red.\n", stateLump->powerlevel);
-				break;
+				LOGOMATIC("Invalid powerlevel: %d. Defaulting to 0.\n", stateLump->powerlevel);
+				multiplier = 0.0f;
 		}
+
+		light_control.red = (uint8_t)(255 * multiplier);
+		light_control.green = (uint8_t)(165 * multiplier);
+		light_control.blue = (uint8_t)(0 * multiplier);
 
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
 	} else {
