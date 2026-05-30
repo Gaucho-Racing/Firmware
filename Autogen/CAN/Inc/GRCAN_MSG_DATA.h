@@ -335,79 +335,6 @@ typedef struct {
 	uint8_t led_latch_flags;
 } GRCAN_DASH_CONFIG_MSG;
 
-/** TCM Status */
-typedef struct {
-	/** [Byte 0 / Bits 0-7]
-0: Connection Status
-1: MQTT Status
-2: Epic Shelter Status
-3: Camera Status
-4-7: Reserved (Byte 0) */
-	uint8_t status_bits;
-	/** Mapache ping (upload) (Byte 1) */
-	uint16_t mapache_ping;
-	/** # of messages on cache (non-synced) (Byte 3) */
-	uint32_t cache_size;
-	/** Byte 7 (Byte 7) */
-	uint8_t reserved;
-} GRCAN_TCM_STATUS_MSG;
-
-/** TCM Resource Utilization */
-typedef struct {
-	/** core 0 frequency in MHz (Byte 0) */
-	uint16_t cpu_0_freq;
-	/** core 0 utilization in % (Byte 2) */
-	uint8_t cpu_0_util;
-	/** core 1 frequency in MHz (Byte 3) */
-	uint16_t cpu_1_freq;
-	/** core 1 utilization in % (Byte 5) */
-	uint8_t cpu_1_util;
-	/** core 2 frequency in MHz (Byte 6) */
-	uint16_t cpu_2_freq;
-	/** core 2 utilization in % (Byte 8) */
-	uint8_t cpu_2_util;
-	/** core 3 frequency in MHz (Byte 9) */
-	uint16_t cpu_3_freq;
-	/** core 3 utilization in % (Byte 11) */
-	uint8_t cpu_3_util;
-	/** core 4 frequency in MHz (Byte 12) */
-	uint16_t cpu_4_freq;
-	/** core 4 utilization in % (Byte 14) */
-	uint8_t cpu_4_util;
-	/** core 5 frequency in MHz (Byte 15) */
-	uint16_t cpu_5_freq;
-	/** core 5 utilization in % (Byte 17) */
-	uint8_t cpu_5_util;
-	/** total cpu utilization in % (Byte 18) */
-	uint8_t cpu_total_util;
-	/** total memory in MB (Byte 19) */
-	uint16_t ram_total;
-	/** used memory in MB (Byte 21) */
-	uint16_t ram_used;
-	/** memory utilization in % (Byte 23) */
-	uint8_t ram_util;
-	/** gpu utilization in % (Byte 24) */
-	uint8_t gpu_util;
-	/** gpu frequency in MHz (Byte 25) */
-	uint16_t gpu_freq;
-	/** total disk space in MB (Byte 27) */
-	uint32_t disk_total;
-	/** used disk space in MB (Byte 31) */
-	uint32_t disk_used;
-	/** disk utilization in % (Byte 35) */
-	uint8_t disk_util;
-	/** cpu temp in ˚C (Byte 36) */
-	uint8_t cpu_temp;
-	/** gpu temp in ˚C (Byte 37) */
-	uint8_t gpu_temp;
-	/** voltage draw in mV (Byte 38) */
-	uint16_t voltage_draw;
-	/** current draw in mA (Byte 40) */
-	uint16_t current_draw;
-	/** power draw in mW (Byte 42) */
-	uint16_t power_draw;
-} GRCAN_TCM_RESOURCE_UTILIZATION_MSG;
-
 /** ECU Analog Data */
 typedef struct {
 	/** 4-20 mA signal (Byte 0) */
@@ -2255,5 +2182,25 @@ typedef struct {
 	/** Byte 31 (Byte 31) */
 	uint8_t reserved;
 } GRCAN_INBOARDFLOOR_IMU_TOF_DATA_MSG;
+
+/** ECU Config */
+typedef struct {
+	/** Delay for which to consider pings timed out (Byte 0) */
+	uint8_t ping_timeout_delay;
+	/** Minimum brake f psi for which to consider the brakes pressed (Byte 1) */
+	uint8_t brake_f_minimum;
+	/** Minimum brake r psi for which to consider the brakes pressed (Byte 2) */
+	uint8_t brake_r_minimum;
+	/** Minimum brake bse psi for which to consider the brakes pressed (Byte 3) */
+	uint8_t brake_bse_minimum;
+	/** Minimum value that the APPS 1 sensor is expected to read (Byte 4) */
+	uint8_t apps_1_min;
+	/** Minimum value that the APPS 2 sensor is expected to read (Byte 5) */
+	uint8_t apps_2_min;
+	/** Maximum value that the APPS 1 sensor is expected to read (Byte 6) */
+	uint8_t apps_1_max;
+	/** Maximum value that the APPS 2 sensor is expected to read (Byte 7) */
+	uint8_t apps_2_max;
+} GRCAN_ECU_CONFIG_MSG;
 
 #endif

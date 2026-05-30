@@ -293,6 +293,16 @@ BO_ 2149582080 ECU_ECU_Status_3_to_ALL: 5 ECU
 BO_ 2149581316 ECU_Ping_to_TCM: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  TCM
 
+BO_ 2149585412 ECU_ECU_Config_to_TCM: 8 ECU
+ SG_ Ping_Timeout_Delay : 0|8@1+ (10,0) [0|2550] "ms"  TCM
+ SG_ Brake_F_Minimum : 8|8@1+ (25,0) [0|6375] "PSI"  TCM
+ SG_ Brake_R_Minimum : 16|8@1+ (25,0) [0|6375] "PSI"  TCM
+ SG_ Brake_BSE_Minimum : 24|8@1+ (25,0) [0|6375] "PSI"  TCM
+ SG_ APPS_1_Min : 32|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_2_Min : 40|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_1_Max : 48|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_2_Max : 56|8@1+ (10,0) [0|2550] "ADC"  TCM
+
 BO_ 2161115137 Fan_Ctrl_1_Debug_2_0_to_Debugger: 8 Fan_Ctrl_1
  SG_ Debug : 0|64@1- (1,0) [0|0] ""  Debugger
 
@@ -363,6 +373,16 @@ BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
 
 BO_ 2151678466 TCM_Ping_to_ECU: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ECU
+
+BO_ 2151682562 TCM_ECU_Config_to_ECU: 8 TCM
+ SG_ Ping_Timeout_Delay : 0|8@1+ (10,0) [0|2550] "ms"  ECU
+ SG_ Brake_F_Minimum : 8|8@1+ (25,0) [0|6375] "PSI"  ECU
+ SG_ Brake_R_Minimum : 16|8@1+ (25,0) [0|6375] "PSI"  ECU
+ SG_ Brake_BSE_Minimum : 24|8@1+ (25,0) [0|6375] "PSI"  ECU
+ SG_ APPS_1_Min : 32|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_2_Min : 40|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_1_Max : 48|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_2_Max : 56|8@1+ (10,0) [0|2550] "ADC"  ECU
 
 CM_ SG_ 2150629377 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2150629889 Timestamp "Time in millis";
@@ -489,6 +509,14 @@ CM_ SG_ 2149582080 RL_Wheel_RPM "RL Wheel RPM";
 CM_ SG_ 2149582080 RR_Wheel_RPM "RR Wheel RPM";
 CM_ SG_ 2149582080 Relay_States "[Byte 4 / Bits 32-39] 0: BMS OK 1: IMD OK 2: BSPD OK 3: Software OK 4-7: Reserved";
 CM_ SG_ 2149581316 Timestamp "Time in millis";
+CM_ SG_ 2149585412 Ping_Timeout_Delay "Delay for which to consider pings timed out";
+CM_ SG_ 2149585412 Brake_F_Minimum "Minimum brake f psi for which to consider the brakes pressed";
+CM_ SG_ 2149585412 Brake_R_Minimum "Minimum brake r psi for which to consider the brakes pressed";
+CM_ SG_ 2149585412 Brake_BSE_Minimum "Minimum brake bse psi for which to consider the brakes pressed";
+CM_ SG_ 2149585412 APPS_1_Min "Minimum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2149585412 APPS_2_Min "Minimum value that the APPS 2 sensor is expected to read";
+CM_ SG_ 2149585412 APPS_1_Max "Maximum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2149585412 APPS_2_Max "Maximum value that the APPS 2 sensor is expected to read";
 CM_ SG_ 2161115137 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2161115649 Timestamp "Time in millis";
 CM_ SG_ 2161115650 Timestamp "Time in millis";
@@ -520,6 +548,14 @@ CM_ SG_ 2155877634 Motor_Temp "Celsius + 40, uint8_t";
 CM_ SG_ 2155877634 fault_bits "TS above set max voltage, TS below set min voltage, Inv over set max temp, Motor over set max temp, Mosfet or mosfet drive error, Encoder communication or calc error, CAN message error or timeout";
 CM_ SG_ 2151678465 Timestamp "Time in millis";
 CM_ SG_ 2151678466 Timestamp "Time in millis";
+CM_ SG_ 2151682562 Ping_Timeout_Delay "Delay for which to consider pings timed out";
+CM_ SG_ 2151682562 Brake_F_Minimum "Minimum brake f psi for which to consider the brakes pressed";
+CM_ SG_ 2151682562 Brake_R_Minimum "Minimum brake r psi for which to consider the brakes pressed";
+CM_ SG_ 2151682562 Brake_BSE_Minimum "Minimum brake bse psi for which to consider the brakes pressed";
+CM_ SG_ 2151682562 APPS_1_Min "Minimum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2151682562 APPS_2_Min "Minimum value that the APPS 2 sensor is expected to read";
+CM_ SG_ 2151682562 APPS_1_Max "Maximum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2151682562 APPS_2_Max "Maximum value that the APPS 2 sensor is expected to read";
 BA_DEF_  "BusType" STRING ;
 BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
 BA_DEF_DEF_  "BusType" "CAN";
@@ -581,6 +617,7 @@ BA_ "VFrameFormat" BO_ 2149581568 1;
 BA_ "VFrameFormat" BO_ 2149581824 1;
 BA_ "VFrameFormat" BO_ 2149582080 1;
 BA_ "VFrameFormat" BO_ 2149581316 1;
+BA_ "VFrameFormat" BO_ 2149585412 1;
 BA_ "VFrameFormat" BO_ 2161115137 1;
 BA_ "VFrameFormat" BO_ 2161115649 1;
 BA_ "VFrameFormat" BO_ 2161115650 1;
@@ -601,4 +638,5 @@ BA_ "VFrameFormat" BO_ 2155877378 1;
 BA_ "VFrameFormat" BO_ 2155877634 1;
 BA_ "VFrameFormat" BO_ 2151678465 1;
 BA_ "VFrameFormat" BO_ 2151678466 1;
+BA_ "VFrameFormat" BO_ 2151682562 1;
 
