@@ -50,6 +50,16 @@ typedef union {
 
 typedef volatile struct ECU_StateData {
 
+	float apps_deadzone;
+	float bms_min_thresh;
+	float bms_max_thresh;
+	float imd_min_thresh;
+	float imd_max_thresh;
+	float bspd_min_thresh;
+	float bspd_max_thresh;
+
+	float regen_strength;
+
 	// TODO: Remove unneeded states
 
 	float min_amk_heat_cap_throttle_percent;
@@ -80,6 +90,16 @@ typedef volatile struct ECU_StateData {
 	uint16_t Brake_F_Signal;
 	uint16_t aux_signal;
 	uint16_t steering_angle_signal;
+	uint16_t ping_timeout_delay_ms;
+	uint16_t brake_f_min;
+	uint16_t brake_r_min;
+	uint16_t brake_bse_min;
+	uint16_t apps_1_min;
+	uint16_t apps_2_min;
+	uint16_t apps_1_max;
+	uint16_t apps_2_max;
+	uint16_t max_precharge_time_ms;
+
 	uint8_t status_bits[3];
 	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
 
@@ -90,6 +110,7 @@ typedef volatile struct ECU_StateData {
 	uint8_t glv_soc;
 	uint8_t acu_error_warning_bits;
 	uint8_t inverter_fault_map;
+
 	bool ts_active_button_press_interrupt;
 	bool ts_active_button_pressed;
 	bool rtd_button_press_interrupt;
@@ -101,6 +122,8 @@ typedef volatile struct ECU_StateData {
 	bool bms_light;
 	bool imd_light;
 	bool tssi_fault;
+
+	bool enable_regen;
 
 	bool apps_bse_violation;
 

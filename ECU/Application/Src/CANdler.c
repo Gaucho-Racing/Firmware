@@ -12,8 +12,6 @@
 
 #define WHEEL_RPM_TO_MPH_RATIO 0.0476f
 
-extern ECU_StateData stateLump;
-
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
 	// TODO Ideally change some state data to note a bad message, ie if ACU
@@ -125,45 +123,33 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 
 			break;
 
-		case GRCAN_ECU_ANALOG_DATA:
-			if (data_length != sizeof(GRCAN_ECU_ANALOG_DATA_MSG)) {
+		case GRCAN_ECU_CONFIG:
+			if (data_length != sizeof(GRCAN_ECU_CONFIG_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_ECU_ANALOG_DATA_MSG *analog_data = (GRCAN_ECU_ANALOG_DATA_MSG *)data;
-			state_data->bspd_signal = analog_data->bspd_signal;
-			state_data->bse_signal = analog_data->bse_signal;
-			state_data->APPS1_Signal = analog_data->apps_1_signal;
-			state_data->APPS2_Signal = analog_data->apps_2_signal;
-			state_data->Brake_F_Signal = analog_data->brakeline_f_signal;
-			state_data->Brake_R_Signal = analog_data->brakeline_r_signal;
-			state_data->steering_angle_signal = analog_data->steering_angle_signal;
-			state_data->aux_signal = analog_data->aux_signal;
+			GRCAN_ECU_CONFIG_MSG *ecu_config = (GRCAN_ECU_CONFIG_MSG *)data;
+			state_data->ping_timeout_delay_ms = ecu_config->ping_timeout_delay * 10;
+			state_data->brake_f_min = ecu_config->brake_f_min * 25;
+			state_data->brake_r_min = ecu_config->brake_r_min * 25;
+			state_data->brake_bse_min = ecu_config->brake_bse_min * 25;
+			state_data->apps_1_min = ecu_config->apps_1_min * 10;
+			state_data->apps_2_min = ecu_config->apps_2_min * 10;
+			state_data->apps_1_max = ecu_config->apps_1_max * 10;
+			state_data->apps_2_max = ecu_config->apps_2_max * 10;
+			state_data->apps_deadzone = ecu_config->apps_deadzone / 25.5f;
+			state_data->bms_min_thresh = ecu_config->bms_min_threshold / 20.0f;
+			state_data->bms_max_thresh = ecu_config->bms_max_threshold / 20.0f;
+			state_data->imd_min_thresh = ecu_config->imd_min_threshold / 20.0f;
+			state_data->imd_max_thresh = ecu_config->imd_max_threshold / 20.0f;
+			state_data->bspd_min_thresh = ecu_config->bspd_min_threshold / 20.0f;
+			state_data->bspd_max_thresh = ecu_config->bspd_max_threshold / 20.0f;
+			state_data->max_precharge_time_ms = ecu_config->max_precharge_time;
+			state_data->regen_strength = ecu_config->regen_strength / 10.0f;
+			state_data->enable_regen = ecu_config->enable_regen;
+
 			break;
 
-		/*
-		case GRCAN_STEERING_STATUS:
-			if (data_length != sizeof(GRCAN_STEERING_STATUS_MSG)) {
-				ReportBadMessageLength(bus_id, msg_id, sender_id);
-				break;
-			}
-			GRCAN_STEERING_STATUS_MSG *steering_status = (GRCAN_STEERING_STATUS_MSG *)data;
-			state_data->powerlevel_torquemap = steering_status->encoder_bits;
-			break;
-		*/
-
-		// TODO: fix when sensors done
-		/*
-		case GRCAN_SAM_REAR_WHEELSPEED:
-			if (data_length != sizeof(GRCAN_SAM_REAR_WHEELSPEED_MSG)) {
-				ReportBadMessageLength(bus_id, msg_id, sender_id);
-				break;
-			}
-			GRCAN_SAM_REAR_WHEELSPEED_MSG *encoder_status = (GRCAN_SAM_REAR_WHEELSPEED_MSG *)data;
-			state_data->rr_wheel_rpm = encoder_status->wheel_speed * 0.1 - 32768; // TODO: find out which wheel this actually measures: one or 4 sensors?
-			state_data->vehicle_speed_mph = state_data->rr_wheel_rpm * WHEEL_RPM_TO_MPH_RATIO;
-			break;
-		*/
 		default:
 			ReportUnhandledMessage(bus_id, msg_id, sender_id);
 			break;
