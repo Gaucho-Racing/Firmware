@@ -136,7 +136,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 
 	if (stateData->rtd_button_pressed) {
-		stateData->powerlevel = (stateData->powerlevel + 1) % 4;
+		stateData->powerlevel = (stateData->powerlevel + 1) % 6;
 		LOGOMATIC("Power level now at %d\n", stateData->powerlevel);
 	}
 }
