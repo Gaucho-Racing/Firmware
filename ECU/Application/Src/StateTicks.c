@@ -38,10 +38,10 @@ ECU_StateData stateLump = {
     // APPS Deadzone
     .apps_deadzone = 0.08f,
     // BMS thresholds
-    .bms_min_thresh = 0.5f,
+    .bms_min_thresh = 0.2f,
     .bms_max_thresh = 1.6f,
     // IMD thresholds
-    .imd_min_thresh = 0.5f,
+    .imd_min_thresh = 0.2f,
     .imd_max_thresh = 1.6f,
     // BSPD thresholds
     .bspd_min_thresh = 0.6f,
