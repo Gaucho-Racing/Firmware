@@ -61,9 +61,9 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 
 SDC_Level bmsLevel(volatile const ECU_StateData *stateData) {
 	// TODO: DYNAMIC LOGIC HERE
-	if (stateData->bms_sense < 0.2f) {
+	if (stateData->bms_sense < stateData->bms_min_thresh) {
 		return SDC_ONGOING_FAILURE;
-	} else if (stateData->bms_sense > 1.6f) {
+	} else if (stateData->bms_sense > stateData->bms_max_thresh) {
 		return SDC_LATCHED_FAILURE;
 	}
 
@@ -72,9 +72,9 @@ SDC_Level bmsLevel(volatile const ECU_StateData *stateData) {
 
 SDC_Level imdLevel(volatile const ECU_StateData *stateData) {
 	// TODO: DYNAMIC LOGIC HERE
-	if (stateData->imd_sense < 0.2f) {
+	if (stateData->imd_sense < stateData->imd_min_thresh) {
 		return SDC_ONGOING_FAILURE;
-	} else if (stateData->imd_sense > 1.6f) {
+	} else if (stateData->imd_sense > stateData->imd_max_thresh) {
 		return SDC_LATCHED_FAILURE;
 	}
 
