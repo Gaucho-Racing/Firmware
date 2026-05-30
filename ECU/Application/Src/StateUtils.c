@@ -1,7 +1,9 @@
 #include "StateUtils.h"
 
+#include <inttypes.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "CANutils.h"
 #include "GRCAN_BUS_ID.h"
@@ -14,6 +16,7 @@
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
+#include "vcp.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -113,7 +116,10 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
 	return false;
+#endif
+
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
 	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
 }
@@ -121,48 +127,66 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
+	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
+		return true;
+	} else {
+		return false;
+	}
+#endif
+
 	// uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
 	// uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
 	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
 	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
 	// return brakeFpress || brakeRpress;
 	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
-		return true; // don't consider brake pressed until in drive active
-	} else {
-		return false;
+	if (stateData->Brake_F_Signal > (BRAKE_F_MIN) || stateData->bse_signal > (BSE_MIN)) {
+		return true;
 	}
-	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
+	return false;
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
 float CalcBrakePercent(volatile const ECU_StateData *stateData)
 {
+#ifdef PLAN_C
 	return 0;
-	return stateData->bse_signal / BSE_MAX;
+#endif
+
+	if (stateData->bse_signal <= BSE_MIN) {
+		return 0;
+	}
+
+	const uint16_t numerator = stateData->bse_signal - BSE_MIN;
+	const uint16_t denominator = BSE_MAX - BSE_MIN;
+
+	if (numerator > denominator) {
+		return 1.0f;
+	}
+
+	return (float)numerator / (float)denominator;
 }
 
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
-	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
-	float travel = total_signal_value / total_signal_range;
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+
+	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
 	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float deviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	return deviation < 0.1f && deviation > -0.1f;
-}
+	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
+	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
 
-bool BSE_Plausible(volatile const ECU_StateData *stateData)
-{
-	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
-	// T.4.3.3
-	return stateData->bse_signal > BSE_DEADZONE && stateData->bse_signal < BSE_MAX;
+	float error = fabsf(appspos1 - appspos2);
+
+	return error < 0.1f;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)
@@ -171,21 +195,19 @@ bool vehicle_is_moving(volatile const ECU_StateData *stateData)
 	return stateData->vehicle_speed_mph > tolerance;
 }
 
-void SendEcuBonusInfo(const ECU_StateData *stateData)
+void disable_inverter(void)
 {
-	// All analog data
-	GRCAN_ECU_ANALOG_DATA_MSG analogData = {.bspd_signal = stateData->bspd_signal,
-						.bse_signal = stateData->bse_signal,
-						.apps_1_signal = stateData->APPS1_Signal,
-						.apps_2_signal = stateData->APPS2_Signal,
-						.brakeline_f_signal = stateData->Brake_F_Signal,
-						.brakeline_r_signal = stateData->Brake_R_Signal,
-						.steering_angle_signal = stateData->steering_angle_signal,
-						.aux_signal = stateData->aux_signal};
-	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &analogData, sizeof(analogData));
+	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
+	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
+}
 
-	// RTT ping data
-	// TODO Setup using data from Pinging.c per Andrey request
+void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw)
+{
+#define SIZE 64
+	static char buf[SIZE];
+	snprintf(buf, SIZE, "%" PRIu32 " A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
+	VCP_Send(buf, strlen(buf));
 }
 
 void disable_inverter(void)

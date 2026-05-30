@@ -1,5 +1,6 @@
 #include "StateTicks.h"
 
+#include <math.h>
 #include <stdint.h>
 
 #include "CANutils.h"
@@ -25,7 +26,7 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1, .glv_voltage_20V = 20.0f};
+ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1, .glv_voltage_20V = 20.0f, .powerlevel = 3};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -128,6 +129,11 @@ void ECU_GLV_On(ECU_StateData *stateData)
 		ECU_Transition_To_Precharge_Engaged(stateData);
 		return;
 	}
+
+	if (stateData->rtd_button_pressed) {
+		stateData->powerlevel = (stateData->powerlevel + 1) % 4;
+		LOGOMATIC("Power level now at %d\n", stateData->powerlevel);
+	}
 }
 
 static uint32_t time_start_precharge; // for potential comms errors while precharging
@@ -184,9 +190,9 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		return;
 	}
 
-	if (PressingBrake(stateData) && stateData->rtd_button_pressed) {
-		GRCAN_INVERTER_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_CONFIG, &inverter_message, sizeof(inverter_message));
+	if (PressingBrake(stateData) && stateData->rtd_button_pressed && (CalcAccPedalTravel(stateData) < 0.05f)) {
+		GRCAN_INV_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CONFIG, &inverter_message, sizeof(inverter_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
 	}
@@ -230,10 +236,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	float torque_request = PressingBrake(stateData) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH
-				   ? -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS
-				   : CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS;
-
 	if (APPS_BSE_Violation(stateData)) {
 		stateData->apps_bse_violation = true;
 	} else if (CalcAccPedalTravel(stateData) < 0.05f) {
@@ -245,20 +247,21 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		last_apps_plausible_frame_millis = millis_since_boot;
 	}
 
-	static uint32_t last_bse_plausible_millis;
-	if (BSE_Plausible(stateData)) {
-		last_bse_plausible_millis = millis_since_boot;
-	}
+	float torque_request;
+	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= MAX_APPS_IMPLAUSIBLE_TIME_MS;
 
-	// Stop throttle if implausible for > 100ms
-	if (stateData->apps_bse_violation || millis_since_boot - last_apps_plausible_frame_millis > 100 || millis_since_boot - last_bse_plausible_millis > MAX_BSE_FAILURE_TIME) {
+	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
+	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
+		torque_request = -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
+	} else {
+		torque_request = fminf(CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS * (1 << stateData->powerlevel) / 8.0f, MAX_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_inverter_request_millis)) {
-		GRCAN_INVERTER_COMMAND_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inverter, GRCAN_INVERTER_COMMAND, &message, sizeof(message));
+		GRCAN_INV_CMD_MSG message = {.set_ac_current = torque_request * 100 + 32768, .set_dc_current = torque_request * 100 + 32768, .drive_enable = 1, .rpm_limit = 0};
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
 		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 1);
 		message.set_ac_current = torque_request * 10;
 		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
@@ -292,15 +295,15 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
 	*/
-	// TODO: Rate limit
-	if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
-		LOGOMATIC("Warning: Tractive System fails to discharge in %d seconds.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
-		// ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
-	}
 
 	// Discharge the car @ 100 Hz
 	static uint32_t last_discharge_request_millis;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_discharge_request_millis)) {
+		if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
+			LOGOMATIC("Warning: Tractive System fails to discharge in %d ms.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
+			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
+		}
+
 		GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 		last_discharge_request_millis = millis_since_boot;

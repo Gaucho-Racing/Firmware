@@ -36,6 +36,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 	    .DataLength = BytesToCANDLC(size),
 	    .BitRateSwitch = FDCAN_BRS_OFF,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+	    .FDFormat = (bus == GRCAN_BUS_PRIMARY) ? FDCAN_CLASSIC_CAN : FDCAN_FD_CAN,
 	    .MessageMarker = 0,
 	};
 
@@ -84,7 +85,7 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	msg.tx_header = TxHeader;
 
 	uint8_t temp;
-	for (uint16_t i = 0; i < size / 2; ++i) {
+	for (uint32_t i = 0; i < size / 2; ++i) {
 		temp = ((uint8_t *)data)[i];
 		((uint8_t *)data)[i] = ((uint8_t *)data)[size - i - 1];
 		((uint8_t *)data)[size - i - 1] = temp;
@@ -108,7 +109,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 
 	ECU_StateDataToSend messages = {.ECUState = stateData->ecu_state,
 					.StatusBits = {stateData->status_bits[0], stateData->status_bits[1], stateData->status_bits[2]},
-					.PowerLevelTorqueMap = stateData->powerlevel_torquemap,
+					.PowerLevelTorqueMap = (stateData->powerlevel << 4) | (stateData->torquemap & 0x0F),
 					.MaxCellTemp = (uint8_t)(stateData->max_cell_temp_c * 4),
 					.AccumulatorStateOfCharge = (uint8_t)(stateData->tractivebattery_soc),
 					.GLVStateOfCharge = (uint8_t)(stateData->glv_soc),
@@ -129,7 +130,6 @@ void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
 	uint32_t millis_since_boot = MillisecondsSinceBoot();
 
 	static uint32_t last_can_tcm_request_millis = 0;
-	
 	if (millis_since_boot - last_can_tcm_request_millis > 100) {
 		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
 						     .bse_signal = stateData->bse_signal,
@@ -138,7 +138,9 @@ void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
 						     .brakeline_f_signal = stateData->Brake_F_Signal,
 						     .brakeline_r_signal = stateData->Brake_R_Signal,
 						     .steering_angle_signal = stateData->steering_angle_signal,
-						     .aux_signal = stateData->aux_signal};
+						     .aux_signal = stateData->aux_signal,
+						     .acc_pedal_travel = CalcAccPedalTravel(stateData) * 65535,
+						     .brake_pedal_travel = CalcBrakePercent(stateData) * 65535};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_tcm_request_millis = millis_since_boot;
 	}
