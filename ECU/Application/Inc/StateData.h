@@ -83,7 +83,7 @@ typedef volatile struct ECU_StateData {
 	uint8_t status_bits[3];
 	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
 
-	uint8_t powerlevel; // 4 bits wide, currently values of 0 - 3
+	uint8_t powerlevel; // 4 bits wide
 	uint8_t torquemap;  // 4 bits wide
 
 	uint8_t tractivebattery_soc;
