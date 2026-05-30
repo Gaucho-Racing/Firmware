@@ -28,7 +28,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define REGEN_STRENGTH 2.0f	      // define ratio of regen braking percent to brake pressure percent
 #define REGEN_MIN_SPEED_MPH 3.106856f // MPH
 
-#define MAX_CURRENT_AMPS 250.0f	       // TODO: Change as appropriate
+#define MAX_CURRENT_AMPS 300.0f	       // Determined by Ryan
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
 #define MAX_PRECHARGE_TIME 8000 // in ms
