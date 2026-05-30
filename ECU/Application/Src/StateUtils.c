@@ -119,8 +119,8 @@ float CalcBrakePressure(volatile const ECU_StateData *stateData)
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
-	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
+	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
 
 	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
 	return travel > stateData->apps_deadzone ? (travel - stateData->apps_deadzone) / (1.0f - stateData->apps_deadzone) : 0.0f;
@@ -129,8 +129,8 @@ float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
-	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
+	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
 
 	float error = fabsf(appspos1 - appspos2);
 
