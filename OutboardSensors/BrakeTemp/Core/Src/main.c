@@ -113,6 +113,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         // that happened during the blanking period
         __HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_11);
     }
+
+	htim->Instance->SR   &= ~TIM_SR_UIF;  // clear update interrupt flag
 }
 
 // This function is triggered by the rising edge interrupt from pin B11 (wheel_speed_in)
@@ -127,6 +129,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
         temp_tick = HAL_GetTick();
 		temp_num_pulses++;
+
+		// Reset and restart the cool-off timer peripheral
+		htim6.Instance->CNT   = 0;			  // reset count
+		htim6.Instance->CR1  |= TIM_CR1_CEN;  // restart
 
 		// HAL_GetTick() is in ms resolution --> only push the number of pulses onto buffer
 		// after at least MIN_TICK_DELTA has elapsed.
@@ -153,10 +159,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         tail = (tail + 1) & (MAX_NUM_INTERVALS - 1);
 
         last_tick = temp_tick;
-
-        // Reset and restart the cool-off timer peripheral
-        __HAL_TIM_SET_COUNTER(&htim6, 0);
-        HAL_TIM_Base_Start_IT(&htim6);
     }
 }
 
@@ -228,7 +230,7 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 
 	WHEEL_SPEED_GPIO_INIT();
-	WHEEL_SPEED_TIMER_INIT(&htim6, 10);
+	WHEEL_SPEED_TIMER_INIT(&htim6, DEBOUNCE_NUM_10us);
 	HAL_tick_freq_hz = 1000 / HAL_GetTickFreq();
 
 	CANInitialize();

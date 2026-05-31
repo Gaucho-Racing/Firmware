@@ -48,11 +48,12 @@ extern "C" {
 #define MLX90614_ADDRESS 0x5A
 #define BRAKETEMP_INTERVAL_MS 36 // Delay of FIR=128 and IIR=100% settings
 #define WHEEL_SPEED_TIMEOUT_TICKS 1000 // 1 second of no pulse means the car stopped moving
+#define DEBOUNCE_NUM_10us 10 // Multiple of 100 microseconds
 #define MAX_RPM 1891 // Assumes 8 inch wheels @ max speed of 90 mph
 #define SECONDS_PER_MIN 60
 #define PULSES_PER_ROT 42 // TODO !!!
 #define MAX_NUM_INTERVALS 32 // Max of 255 because we are using uint8_t
-#define MIN_TICK_DELTA 10
+#define MIN_TICK_DELTA 100
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
