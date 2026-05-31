@@ -146,6 +146,7 @@ void dashLights(ECU_StateData *stateLump)
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
 							    (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
 
+	message.led_latch_flags = ~message.led_latch_flags;
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
