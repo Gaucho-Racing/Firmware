@@ -11,13 +11,13 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
+#include "Plan_C.h"
 #include "StateData.h"
 #include "Unused.h"
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "vcp.h"
-#include "Plan_C.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -59,7 +59,8 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	return problem;
 }
 
-SDC_Level bmsLevel(volatile const ECU_StateData *stateData) {
+SDC_Level bmsLevel(volatile const ECU_StateData *stateData)
+{
 	// TODO: DYNAMIC LOGIC HERE
 	if (stateData->bms_sense < stateData->bms_min_thresh) {
 		return SDC_ONGOING_FAILURE;
@@ -70,7 +71,8 @@ SDC_Level bmsLevel(volatile const ECU_StateData *stateData) {
 	return SDC_OK;
 }
 
-SDC_Level imdLevel(volatile const ECU_StateData *stateData) {
+SDC_Level imdLevel(volatile const ECU_StateData *stateData)
+{
 	// TODO: DYNAMIC LOGIC HERE
 	if (stateData->imd_sense < stateData->imd_min_thresh) {
 		return SDC_ONGOING_FAILURE;
@@ -81,7 +83,8 @@ SDC_Level imdLevel(volatile const ECU_StateData *stateData) {
 	return SDC_OK;
 }
 
-SDC_Level bspdLevel(volatile const ECU_StateData *stateData) {
+SDC_Level bspdLevel(volatile const ECU_StateData *stateData)
+{
 	if (stateData->bspd_sense < stateData->bspd_min_thresh) {
 		return SDC_ONGOING_FAILURE;
 	} else if (stateData->bspd_sense > stateData->bspd_max_thresh) {
@@ -90,7 +93,6 @@ SDC_Level bspdLevel(volatile const ECU_StateData *stateData) {
 
 	return SDC_OK;
 }
-
 
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {

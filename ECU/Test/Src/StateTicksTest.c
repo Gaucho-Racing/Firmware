@@ -79,41 +79,39 @@ static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 
 int main(void)
 {
-	ECU_StateData defaultState = {
-		// Start on GLV On
-		.ecu_state = GR_GLV_ON,
-		// Assume ACU good at boot
-		.acu_software_latch = 1,
-		// Startup at minimum power
-		.powerlevel = 0,
-		// See CANdo specification
-		.torquemap = 1,
-		// APPS Deadzone
-		.apps_deadzone = 0.08f,
-		// BMS thresholds
-		.bms_min_thresh = 0.3f,
-		.bms_max_thresh = 1.6f,
-		// IMD thresholds
-		.imd_min_thresh = 0.3f,
-		.imd_max_thresh = 1.6f,
-		// BSPD thresholds
-		.bspd_min_thresh = 0.6f,
-		.bspd_max_thresh = 1.35f,
-		// Timings
-		.ping_timeout_delay_ms = 250,
-		.max_precharge_time_ms = 8000,
-		// Pedals
-		.brake_f_min = 700,
-		.brake_r_min = 0,
-		.brake_bse_min = 720,
-		.apps_1_min = 2375,
-		.apps_2_min = 2430,
-		.apps_1_max = 1897,
-		.apps_2_max = 1926,
-		// Regen
-		.regen_strength = 2,
-		.enable_regen = false
-	};
+	ECU_StateData defaultState = {// Start on GLV On
+				      .ecu_state = GR_GLV_ON,
+				      // Assume ACU good at boot
+				      .acu_software_latch = 1,
+				      // Startup at minimum power
+				      .powerlevel = 0,
+				      // See CANdo specification
+				      .torquemap = 1,
+				      // APPS Deadzone
+				      .apps_deadzone = 0.08f,
+				      // BMS thresholds
+				      .bms_min_thresh = 0.3f,
+				      .bms_max_thresh = 1.6f,
+				      // IMD thresholds
+				      .imd_min_thresh = 0.3f,
+				      .imd_max_thresh = 1.6f,
+				      // BSPD thresholds
+				      .bspd_min_thresh = 0.6f,
+				      .bspd_max_thresh = 1.35f,
+				      // Timings
+				      .ping_timeout_delay_ms = 250,
+				      .max_precharge_time_ms = 8000,
+				      // Pedals
+				      .brake_f_min = 700,
+				      .brake_r_min = 0,
+				      .brake_bse_min = 720,
+				      .apps_1_min = 2375,
+				      .apps_2_min = 2430,
+				      .apps_1_max = 1897,
+				      .apps_2_max = 1926,
+				      // Regen
+				      .regen_strength = 2,
+				      .enable_regen = false};
 
 	defaultState.bms_sense = 1.5;
 	defaultState.imd_sense = 1.5;

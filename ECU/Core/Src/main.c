@@ -39,13 +39,13 @@
 #include "Lights.h"
 #include "Logomatic.h"
 #include "Pinging.h"
+#include "Plan_C.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
 #include "stm32g4xx_hal.h"
 #include "vcp.h"
-#include "Plan_C.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -540,7 +540,7 @@ int main(void)
 			// ADC_Logomatic();
 		}
 	}
-/* USER CODE END 3 */
+	/* USER CODE END 3 */
 }
 
 /**

@@ -148,27 +148,26 @@ void SendECUAnalogDataOverCAN(const ECU_StateData *stateData)
 	}
 }
 
-void SendECUConfigOverCAN(const ECU_StateData * stateData)
+void SendECUConfigOverCAN(const ECU_StateData *stateData)
 {
 	GRCAN_ECU_CONFIG_MSG message = {.ping_timeout_delay = (uint8_t)(stateData->ping_timeout_delay_ms / 10.0f),
-		.brake_f_min = (uint8_t)(stateData->brake_f_min / 25.0f),
-		.brake_r_min = (uint8_t)(stateData->brake_r_min / 25.0f),
-		.brake_bse_min = (uint8_t)(stateData->brake_bse_min / 25.0f),
-		.apps_1_min = (uint8_t)(stateData->apps_1_min / 10.0f),
-		.apps_2_min = (uint8_t)(stateData->apps_2_min / 10.0f),
-		.apps_1_max = (uint8_t)(stateData->apps_1_max / 10.0f),
-		.apps_2_max = (uint8_t)(stateData->apps_2_max / 10),
-		.apps_deadzone = (uint8_t)(stateData->apps_deadzone * 25.5f),
-		.bms_min_threshold = (uint8_t)(stateData->bms_min_thresh * 20.0f),
-		.bms_max_threshold = (uint8_t)(stateData->bms_max_thresh * 20.0f),
-		.imd_min_threshold = (uint8_t)(stateData->imd_min_thresh * 20.0f),
-		.imd_max_threshold = (uint8_t)(stateData->imd_max_thresh * 20.0f),
-		.bspd_min_threshold = (uint8_t)(stateData->bspd_min_thresh * 20.0f),
-		.bspd_max_threshold = (uint8_t)(stateData->bspd_max_thresh * 20.0f),
-		.max_precharge_time = (uint8_t)(stateData->max_precharge_time_ms / 10),
-		.regen_strength = (uint8_t)(stateData->regen_strength * 10),
-		.enable_regen = stateData->enable_regen
-	};
+					.brake_f_min = (uint8_t)(stateData->brake_f_min / 25.0f),
+					.brake_r_min = (uint8_t)(stateData->brake_r_min / 25.0f),
+					.brake_bse_min = (uint8_t)(stateData->brake_bse_min / 25.0f),
+					.apps_1_min = (uint8_t)(stateData->apps_1_min / 10.0f),
+					.apps_2_min = (uint8_t)(stateData->apps_2_min / 10.0f),
+					.apps_1_max = (uint8_t)(stateData->apps_1_max / 10.0f),
+					.apps_2_max = (uint8_t)(stateData->apps_2_max / 10),
+					.apps_deadzone = (uint8_t)(stateData->apps_deadzone * 25.5f),
+					.bms_min_threshold = (uint8_t)(stateData->bms_min_thresh * 20.0f),
+					.bms_max_threshold = (uint8_t)(stateData->bms_max_thresh * 20.0f),
+					.imd_min_threshold = (uint8_t)(stateData->imd_min_thresh * 20.0f),
+					.imd_max_threshold = (uint8_t)(stateData->imd_max_thresh * 20.0f),
+					.bspd_min_threshold = (uint8_t)(stateData->bspd_min_thresh * 20.0f),
+					.bspd_max_threshold = (uint8_t)(stateData->bspd_max_thresh * 20.0f),
+					.max_precharge_time = (uint8_t)(stateData->max_precharge_time_ms / 10),
+					.regen_strength = (uint8_t)(stateData->regen_strength * 10),
+					.enable_regen = stateData->enable_regen};
 
 	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_CONFIG, &message, sizeof(message));
 }

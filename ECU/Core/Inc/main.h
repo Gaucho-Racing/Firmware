@@ -44,8 +44,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Plan_C.h"
 #include "GRCAN_NODE_ID.h"
+#include "Plan_C.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

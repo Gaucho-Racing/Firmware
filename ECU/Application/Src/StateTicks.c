@@ -59,9 +59,7 @@ ECU_StateData stateLump = {
     .apps_2_max = 1926,
     // Regen
     .regen_strength = 2,
-    .enable_regen = false
-}
-;
+    .enable_regen = false};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -73,7 +71,6 @@ void ECU_State_Tick(void)
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
-
 
 	if (stateLump.ts_active_button_press_interrupt) {
 		stateLump.ts_active_button_press_interrupt = false;

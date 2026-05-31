@@ -56,9 +56,9 @@ uint32_t MillisecondsSinceBoot(void);
 #define RATE_LIMIT_10_HZ(x, y) ((x) - (y) > 100)
 
 typedef enum {
-    SDC_OK,
-    SDC_ONGOING_FAILURE,
-    SDC_LATCHED_FAILURE
+	SDC_OK,
+	SDC_ONGOING_FAILURE,
+	SDC_LATCHED_FAILURE
 } SDC_Level;
 
 // Checks stateData for critical errors
