@@ -82,9 +82,9 @@ SDC_Level imdLevel(volatile const ECU_StateData *stateData) {
 }
 
 SDC_Level bspdLevel(volatile const ECU_StateData *stateData) {
-	if (stateData->bspd_sense < 0.6f) {
+	if (stateData->bspd_sense < stateData->bspd_min_thresh) {
 		return SDC_ONGOING_FAILURE;
-	} else if (stateData->bspd_sense > 1.35f) {
+	} else if (stateData->bspd_sense > stateData->bspd_max_thresh) {
 		return SDC_LATCHED_FAILURE;
 	}
 
