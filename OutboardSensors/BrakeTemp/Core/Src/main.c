@@ -60,10 +60,8 @@
 
 // MLX stuff
 static uint16_t eeMLX90614[32];
-float emissivity = GR_BRAKE_EMISSIVITY;
 float ta = 0.0, to = 0.0;
 int status;
-uint8_t MLX90614_address = 0x5A;
 
 // Wheel speed stuff
 TIM_HandleTypeDef htim6;
@@ -96,15 +94,14 @@ PUTCHAR_PROTOTYPE
 	return ch;
 }
 
-int MLX90614_Initialize(void)
+// Only call this function once to flash the EEPROM of a new brake temp sensor.
+// Make sure to power cycle the device afterwards.
+int MLX90614_Configure_EEPROM(void)
 {
-	HAL_Delay(100);
-	/*
-	status = MLX90614_SetEmissivity(MLX90614_address, emissivity);
-	status = MLX90614_SetFIR(MLX90614_address, 4); // 128 pt averaging
-	status = MLX90614_SetIIR(MLX90614_address, 4); // 100% spike limit (instant response)
-	*/
-	status = MLX90614_DumpEE(MLX90614_address, eeMLX90614);
+	HAL_Delay(100); // For good measure
+	status = MLX90614_SetEmissivity(MLX90614_ADDRESS, GR_BRAKE_EMISSIVITY);
+	status = MLX90614_SetFIR(MLX90614_ADDRESS, 0x4); // 128 pt averaging
+	status = MLX90614_SetIIR(MLX90614_ADDRESS, 0x4); // 100% spike limit (instant response)
 
 	return 0;
 }
@@ -237,15 +234,17 @@ int main(void)
 	CANInitialize();
 	can_start(can_handler);
 
-	MLX90614_Initialize();
+	HAL_Delay(10);
+	MLX90614_DumpEE(MLX90614_ADDRESS, eeMLX90614);
+	// MLX90614_Configure_EEPROM();
 
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 
-		//status = MLX90614_GetTa(MLX90614_address, &ta); // Sensor ambient temperature
-		status = MLX90614_GetTo(MLX90614_address, &to); // Sensor object temperature
+		status = MLX90614_GetTa(MLX90614_ADDRESS, &ta); // Sensor ambient temperature
+		status = MLX90614_GetTo(MLX90614_ADDRESS, &to); // Sensor object temperature
 		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
 
 		CAN_sendTemp(to);

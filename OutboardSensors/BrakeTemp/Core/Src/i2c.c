@@ -48,7 +48,7 @@ void MX_I2C2_SMBUS_Init(void)
   hsmbus2.Init.OwnAddress2Masks = SMBUS_OA2_NOMASK;
   hsmbus2.Init.GeneralCallMode = SMBUS_GENERALCALL_DISABLE;
   hsmbus2.Init.NoStretchMode = SMBUS_NOSTRETCH_DISABLE;
-  hsmbus2.Init.PacketErrorCheckMode = SMBUS_PEC_ENABLE;
+  hsmbus2.Init.PacketErrorCheckMode = SMBUS_PEC_DISABLE;
   hsmbus2.Init.PeripheralMode = SMBUS_PERIPHERAL_MODE_SMBUS_SLAVE;
   hsmbus2.Init.SMBusTimeout = 0x000080C3;
   if (HAL_SMBUS_Init(&hsmbus2) != HAL_OK)
