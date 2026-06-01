@@ -407,7 +407,7 @@ BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 20 ECU
  SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ AUX_Signal : 112|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ Acc_Pedal_Travel : 128|16@1+ (0.0015259022,0) [0|100] "%"  TCM
- SG_ Brake_Pedal_Travel : 144|16@1+ (0.0015259022,0) [0|100] "%"  TCM
+ SG_ Brake_Pedal_Pressure : 144|16@1+ (1,0) [0|5000] "PSI"  TCM
 
 BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
  SG_ ACU_RTT : 0|8@1+ (1,0) [0|0] "ms"  TCM
@@ -435,8 +435,48 @@ BO_ 2149592324 ECU_ECU_Pinging_RTT_to_TCM: 24 ECU
  SG_ Brake_Temp_RR_RTT : 176|8@1+ (1,0) [0|0] "ms"  TCM
  SG_ DGPS_RTT : 184|8@1+ (1,0) [0|0] "ms"  TCM
 
+BO_ 2149592836 ECU_ECU_Config_to_TCM: 20 ECU
+ SG_ Ping_Timeout_Delay : 0|8@1+ (10,0) [0|2550] "ms"  TCM
+ SG_ Brake_F_Min : 8|8@1+ (25,0) [0|6375] "PSI"  TCM
+ SG_ Brake_R_Min : 16|8@1+ (25,0) [0|6375] "PSI"  TCM
+ SG_ Brake_BSE_Min : 24|8@1+ (25,0) [0|6375] "PSI"  TCM
+ SG_ APPS_1_Min : 32|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_2_Min : 40|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_1_Max : 48|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_2_Max : 56|8@1+ (10,0) [0|2550] "ADC"  TCM
+ SG_ APPS_Deadzone : 64|8@1+ (0.0392156863,0) [0|100] "%"  TCM
+ SG_ BMS_Min_Threshold : 72|8@1+ (0.05,0) [0|12.75] "V"  TCM
+ SG_ BMS_Max_Threshold : 80|8@1+ (0.05,0) [0|12.75] "V"  TCM
+ SG_ IMD_Min_Threshold : 88|8@1+ (0.05,0) [0|12.75] "V"  TCM
+ SG_ IMD_Max_Threshold : 96|8@1+ (0.05,0) [0|12.75] "V"  TCM
+ SG_ BSPD_Min_Threshold : 104|8@1+ (0.05,0) [0|12.75] "V"  TCM
+ SG_ BSPD_Max_Threshold : 112|8@1+ (0.05,0) [0|12.75] "V"  TCM
+ SG_ Max_Precharge_Time : 120|8@1+ (10,0) [0|2550] "ms"  TCM
+ SG_ Regen_Strength : 128|8@1+ (0.1,0) [0|25.5] "Ratio"  TCM
+ SG_ Enable_Regen : 136|1@1+ (1,0) [0|0] "Bool"  TCM
+
 BO_ 2149581312 ECU_Ping_to_ALL: 4 ECU
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  ALL
+
+BO_ 2151689986 TCM_ECU_Config_to_ECU: 20 TCM
+ SG_ Ping_Timeout_Delay : 0|8@1+ (10,0) [0|2550] "ms"  ECU
+ SG_ Brake_F_Min : 8|8@1+ (25,0) [0|6375] "PSI"  ECU
+ SG_ Brake_R_Min : 16|8@1+ (25,0) [0|6375] "PSI"  ECU
+ SG_ Brake_BSE_Min : 24|8@1+ (25,0) [0|6375] "PSI"  ECU
+ SG_ APPS_1_Min : 32|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_2_Min : 40|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_1_Max : 48|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_2_Max : 56|8@1+ (10,0) [0|2550] "ADC"  ECU
+ SG_ APPS_Deadzone : 64|8@1+ (0.0392156863,0) [0|100] "%"  ECU
+ SG_ BMS_Min_Threshold : 72|8@1+ (0.05,0) [0|12.75] "V"  ECU
+ SG_ BMS_Max_Threshold : 80|8@1+ (0.05,0) [0|12.75] "V"  ECU
+ SG_ IMD_Min_Threshold : 88|8@1+ (0.05,0) [0|12.75] "V"  ECU
+ SG_ IMD_Max_Threshold : 96|8@1+ (0.05,0) [0|12.75] "V"  ECU
+ SG_ BSPD_Min_Threshold : 104|8@1+ (0.05,0) [0|12.75] "V"  ECU
+ SG_ BSPD_Max_Threshold : 112|8@1+ (0.05,0) [0|12.75] "V"  ECU
+ SG_ Max_Precharge_Time : 120|8@1+ (10,0) [0|2550] "ms"  ECU
+ SG_ Regen_Strength : 128|8@1+ (0.1,0) [0|25.5] "Ratio"  ECU
+ SG_ Enable_Regen : 136|1@1+ (1,0) [0|0] "Bool"  ECU
 
 BO_ 2151678465 TCM_Ping_to_Debugger: 4 TCM
  SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Debugger
@@ -4281,7 +4321,7 @@ CM_ SG_ 2149592580 Brakeline_R_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Steering_Angle_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 AUX_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Acc_Pedal_Travel "0-100% percentage";
-CM_ SG_ 2149592580 Brake_Pedal_Travel "0-100% percentage";
+CM_ SG_ 2149592580 Brake_Pedal_Pressure "Pressure";
 CM_ SG_ 2149592324 ACU_RTT "Round trip time";
 CM_ SG_ 2149592324 GR_Inv_RTT "Round trip time";
 CM_ SG_ 2149592324 Fan_Ctrl_1_RTT "Round trip time";
@@ -4306,7 +4346,43 @@ CM_ SG_ 2149592324 Brake_Temp_FR_RTT "Round trip time";
 CM_ SG_ 2149592324 Brake_Temp_RL_RTT "Round trip time";
 CM_ SG_ 2149592324 Brake_Temp_RR_RTT "Round trip time";
 CM_ SG_ 2149592324 DGPS_RTT "Round trip time";
+CM_ SG_ 2149592836 Ping_Timeout_Delay "Delay for which to consider pings timed out";
+CM_ SG_ 2149592836 Brake_F_Min "Minimum brake f psi for which to consider the brakes pressed";
+CM_ SG_ 2149592836 Brake_R_Min "Minimum brake r psi for which to consider the brakes pressed";
+CM_ SG_ 2149592836 Brake_BSE_Min "Minimum brake bse psi for which to consider the brakes pressed";
+CM_ SG_ 2149592836 APPS_1_Min "Minimum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2149592836 APPS_2_Min "Minimum value that the APPS 2 sensor is expected to read";
+CM_ SG_ 2149592836 APPS_1_Max "Maximum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2149592836 APPS_2_Max "Maximum value that the APPS 2 sensor is expected to read";
+CM_ SG_ 2149592836 APPS_Deadzone "Percentage deadzone of the APPS for which to not consider the pedals to have traveled";
+CM_ SG_ 2149592836 BMS_Min_Threshold "Minimum acceptable BMS sense value such that the BMS is not considered in failure";
+CM_ SG_ 2149592836 BMS_Max_Threshold "Maximum acceptable BMS sense value such that the BMS is not considered in failure";
+CM_ SG_ 2149592836 IMD_Min_Threshold "Minimum acceptable IMD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2149592836 IMD_Max_Threshold "Maximum acceptable IMD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2149592836 BSPD_Min_Threshold "Minimum acceptable BSPD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2149592836 BSPD_Max_Threshold "Maximum acceptable BSPD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2149592836 Max_Precharge_Time "Maximum acceptable time to remain precharging before discharging";
+CM_ SG_ 2149592836 Regen_Strength "TBD";
+CM_ SG_ 2149592836 Enable_Regen "Enable or disable regenerative braking";
 CM_ SG_ 2149581312 Timestamp "Time in millis";
+CM_ SG_ 2151689986 Ping_Timeout_Delay "Delay for which to consider pings timed out";
+CM_ SG_ 2151689986 Brake_F_Min "Minimum brake f psi for which to consider the brakes pressed";
+CM_ SG_ 2151689986 Brake_R_Min "Minimum brake r psi for which to consider the brakes pressed";
+CM_ SG_ 2151689986 Brake_BSE_Min "Minimum brake bse psi for which to consider the brakes pressed";
+CM_ SG_ 2151689986 APPS_1_Min "Minimum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2151689986 APPS_2_Min "Minimum value that the APPS 2 sensor is expected to read";
+CM_ SG_ 2151689986 APPS_1_Max "Maximum value that the APPS 1 sensor is expected to read";
+CM_ SG_ 2151689986 APPS_2_Max "Maximum value that the APPS 2 sensor is expected to read";
+CM_ SG_ 2151689986 APPS_Deadzone "Percentage deadzone of the APPS for which to not consider the pedals to have traveled";
+CM_ SG_ 2151689986 BMS_Min_Threshold "Minimum acceptable BMS sense value such that the BMS is not considered in failure";
+CM_ SG_ 2151689986 BMS_Max_Threshold "Maximum acceptable BMS sense value such that the BMS is not considered in failure";
+CM_ SG_ 2151689986 IMD_Min_Threshold "Minimum acceptable IMD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2151689986 IMD_Max_Threshold "Maximum acceptable IMD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2151689986 BSPD_Min_Threshold "Minimum acceptable BSPD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2151689986 BSPD_Max_Threshold "Maximum acceptable BSPD sense value such that the BMS is not considered in failure";
+CM_ SG_ 2151689986 Max_Precharge_Time "Maximum acceptable time to remain precharging before discharging";
+CM_ SG_ 2151689986 Regen_Strength "TBD";
+CM_ SG_ 2151689986 Enable_Regen "Enable or disable regenerative braking";
 CM_ SG_ 2151678465 Timestamp "Time in millis";
 CM_ SG_ 2181038594 Timestamp "Time in millis";
 CM_ SG_ 2181051140 ALT "altitude";
@@ -7551,7 +7627,9 @@ BA_ "VFrameFormat" BO_ 2149581057 15;
 BA_ "VFrameFormat" BO_ 2149581313 15;
 BA_ "VFrameFormat" BO_ 2149592580 15;
 BA_ "VFrameFormat" BO_ 2149592324 15;
+BA_ "VFrameFormat" BO_ 2149592836 15;
 BA_ "VFrameFormat" BO_ 2149581312 15;
+BA_ "VFrameFormat" BO_ 2151689986 15;
 BA_ "VFrameFormat" BO_ 2151678465 15;
 BA_ "VFrameFormat" BO_ 2181038594 15;
 BA_ "VFrameFormat" BO_ 2181051140 15;

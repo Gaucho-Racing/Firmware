@@ -11,6 +11,7 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
+#include "Plan_C.h"
 #include "StateData.h"
 #include "Unused.h"
 #include "main.h"
@@ -58,9 +59,45 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	return problem;
 }
 
+SDC_Level bmsLevel(volatile const ECU_StateData *stateData)
+{
+	// TODO: DYNAMIC LOGIC HERE
+	if (stateData->bms_sense < stateData->bms_min_thresh) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->bms_sense > stateData->bms_max_thresh) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+SDC_Level imdLevel(volatile const ECU_StateData *stateData)
+{
+	// TODO: DYNAMIC LOGIC HERE
+	if (stateData->imd_sense < stateData->imd_min_thresh) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->imd_sense > stateData->imd_max_thresh) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+SDC_Level bspdLevel(volatile const ECU_StateData *stateData)
+{
+	if (stateData->bspd_sense < stateData->bspd_min_thresh) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->bspd_sense > stateData->bspd_max_thresh) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return stateData->ams_sense < 0.5f || stateData->ams_sense > 1.6f; // 0.5 to 1.6 is valid
+	SDC_Level level = bmsLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
@@ -71,7 +108,8 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 		return false;
 	}
 
-	return stateData->imd_sense < 0.5f || stateData->imd_sense > 1.6f; // 0.5 to 1.6 is valid
+	SDC_Level level = imdLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
@@ -79,8 +117,8 @@ bool bspdFailure(volatile const ECU_StateData *stateData)
 #ifdef PLAN_C
 	return false;
 #endif
-
-	return stateData->bspd_sense < 0.6f || stateData->bspd_sense > 1.35f; // possible values are 0.3, 1.2, 1.6
+	SDC_Level level = bspdLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
@@ -89,11 +127,9 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 	return false;
 #endif
 
-	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
-	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
+	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) > stateData->apps_deadzone;
 }
 
-// TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
 #ifdef PLAN_C
@@ -104,54 +140,35 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	}
 #endif
 
-	// uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
-	// uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
-	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
-	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
-	// return brakeFpress || brakeRpress;
-	// FIXME: DELETE THE FOLLOWING CONTROL BLOCK FOR BRAKE TESTING
-	if (stateData->Brake_F_Signal > (BRAKE_F_MIN) || stateData->bse_signal > (BSE_MIN)) {
-		return true;
-	}
-	return false;
-	// Ideally TCM receives values of 0 after this is no longer called xD.
+	return (stateData->Brake_F_Signal > stateData->brake_f_min) || (stateData->bse_signal > stateData->brake_bse_min);
 }
 
-float CalcBrakePercent(volatile const ECU_StateData *stateData)
+float CalcBrakePressure(volatile const ECU_StateData *stateData)
 {
 #ifdef PLAN_C
 	return 0;
 #endif
 
-	if (stateData->bse_signal <= BSE_MIN) {
-		return 0;
-	}
-
-	const uint16_t numerator = stateData->bse_signal - BSE_MIN;
-	const uint16_t denominator = BSE_MAX - BSE_MIN;
-
-	if (numerator > denominator) {
-		return 1.0f;
-	}
-
-	return (float)numerator / (float)denominator;
+	float psi_front = stateData->bse_signal / 4096.0f * 5000.0f;
+	float psi_rear = stateData->Brake_F_Signal / 4096.0f * 5000.0f;
+	return fmaxf(psi_front, psi_rear);
 }
 
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
-	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
+	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
 
 	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
-	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
+	return travel > stateData->apps_deadzone ? (travel - stateData->apps_deadzone) / (1.0f - stateData->apps_deadzone) : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float appspos1 = (stateData->APPS1_Signal - THROTTLE_MIN_1) / (float)(THROTTLE_MAX_1 - THROTTLE_MIN_1);
-	float appspos2 = (stateData->APPS2_Signal - THROTTLE_MIN_2) / (float)(THROTTLE_MAX_2 - THROTTLE_MIN_2);
+	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
+	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
 
 	float error = fabsf(appspos1 - appspos2);
 

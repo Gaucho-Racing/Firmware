@@ -79,12 +79,51 @@ static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 
 int main(void)
 {
+	ECU_StateData defaultState = {// Start on GLV On
+				      .ecu_state = GR_GLV_ON,
+				      // Assume ACU good at boot
+				      .acu_software_latch = 1,
+				      // Startup at minimum power
+				      .powerlevel = 0,
+				      // See CANdo specification
+				      .torquemap = 1,
+				      // APPS Deadzone
+				      .apps_deadzone = 0.08f,
+				      // BMS thresholds
+				      .bms_min_thresh = 0.3f,
+				      .bms_max_thresh = 1.6f,
+				      // IMD thresholds
+				      .imd_min_thresh = 0.3f,
+				      .imd_max_thresh = 1.6f,
+				      // BSPD thresholds
+				      .bspd_min_thresh = 0.6f,
+				      .bspd_max_thresh = 1.35f,
+				      // Timings
+				      .ping_timeout_delay_ms = 250,
+				      .max_precharge_time_ms = 8000,
+				      // Pedals
+				      .brake_f_min = 700,
+				      .brake_r_min = 0,
+				      .brake_bse_min = 720,
+				      .apps_1_min = 2375,
+				      .apps_2_min = 2430,
+				      .apps_1_max = 1897,
+				      .apps_2_max = 1926,
+				      // Regen
+				      .regen_strength = 2,
+				      .enable_regen = false};
+
+	defaultState.bms_sense = 1.5;
+	defaultState.imd_sense = 1.5;
+	defaultState.bspd_sense = 1.2;
+
 	{
 		// ###########################
 		// ## Step 0.0              ##
 		// ###########################
 		LOGOMATIC("State Ticks test started\n");
-		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 1.5, .imd_sense = 1.5, .bspd_sense = 1.2};
+		ECU_StateData stateLumpTest = defaultState;
+
 		LOGOMATIC("Check GLV ON at boot\n");
 		stateLumpTest.ecu_state = GR_GLV_ON;
 		stateLumpTest.acu_software_latch = 1;
@@ -109,8 +148,8 @@ int main(void)
 		// ## Step 0.2             ##
 		// ##########################
 		LOGOMATIC("Press throttle (1 and 2): STAY IN GLV ON\n");
-		stateLumpTest.APPS1_Signal = THROTTLE_MAX_1;
-		stateLumpTest.APPS2_Signal = THROTTLE_MAX_2;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -120,11 +159,11 @@ int main(void)
 			LOGOMATIC("0.2 Failure: TSSI reports faulty\n");
 			return 1;
 		}
-		stateLumpTest.APPS1_Signal = THROTTLE_MIN_1;
-		stateLumpTest.APPS2_Signal = THROTTLE_MIN_2;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 
 		LOGOMATIC("Press brake: STAY IN GLV ON\n");
-		stateLumpTest.bse_signal = BSE_MAX;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -136,7 +175,7 @@ int main(void)
 		}
 
 		LOGOMATIC("Release brake: STAY IN GLV ON\n");
-		stateLumpTest.bse_signal = 0.0f;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -217,7 +256,7 @@ int main(void)
 		// ## Step 0.7             ##
 		// ##########################
 		LOGOMATIC("Press and release the RTD button WHILE pressing the brake\n");
-		stateLumpTest.bse_signal = BSE_MAX;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		LOGOMATIC("Press RTD\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
@@ -236,7 +275,7 @@ int main(void)
 		// ## Step 0.8             ##
 		// ##########################
 		LOGOMATIC("Release Brakes -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.bse_signal = 0.0f;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.8 Failure: ecu state not in drive active\n");
@@ -251,8 +290,8 @@ int main(void)
 		// ## Step 0.9             ##
 		// ##########################
 		LOGOMATIC("Press Throttle -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.APPS1_Signal = THROTTLE_MAX_1;
-		stateLumpTest.APPS2_Signal = THROTTLE_MAX_2;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.9 Failure: ecu state not in drive active\n");
@@ -283,9 +322,9 @@ int main(void)
 		// ## Step 0.11            ##
 		// ##########################
 		LOGOMATIC("Press Throttle and Brake -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.APPS1_Signal = THROTTLE_MAX_1;
-		stateLumpTest.APPS2_Signal = THROTTLE_MAX_2;
-		stateLumpTest.bse_signal = BSE_MAX;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.11 Failure: ecu state not in drive active\n");
@@ -300,9 +339,9 @@ int main(void)
 		// ## Step 0.12            ##
 		// ##########################
 		LOGOMATIC("Release Throttle and Brake-> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.APPS1_Signal = 0;
-		stateLumpTest.APPS2_Signal = 0;
-		stateLumpTest.bse_signal = 0.0f;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.12 Failure: ecu state not in drive active\n");
@@ -317,8 +356,8 @@ int main(void)
 		// ## Step 0.13             ##
 		// ##########################
 		LOGOMATIC("Press Throttle -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.APPS1_Signal = THROTTLE_MAX_1;
-		stateLumpTest.APPS2_Signal = THROTTLE_MAX_2;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.13 Failure: ecu state not in drive active\n");
@@ -333,8 +372,8 @@ int main(void)
 		// ## Step 0.14            ##
 		// ##########################
 		LOGOMATIC("Release Throttle -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.APPS1_Signal = 0;
-		stateLumpTest.APPS2_Signal = 0;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.14 Failure: ecu state not in drive active\n");
@@ -374,8 +413,8 @@ int main(void)
 		// ## Step 0.16             ##
 		// ##########################
 		LOGOMATIC("Press Throttle -> STAY IN Precharge Complete\n");
-		stateLumpTest.APPS1_Signal = THROTTLE_MAX_1;
-		stateLumpTest.APPS2_Signal = THROTTLE_MAX_2;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 			LOGOMATIC("0.16 Failure: ecu state not in precharge complete\n");
@@ -390,8 +429,8 @@ int main(void)
 		// ## Step 0.17            ##
 		// ##########################
 		LOGOMATIC("Release Throttle -> STAY IN Precharge Complete\n");
-		stateLumpTest.APPS1_Signal = 0;
-		stateLumpTest.APPS2_Signal = 0;
+		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
+		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
 			LOGOMATIC("0.17 Failure: ecu state not in precharge complete\n");
@@ -451,7 +490,7 @@ int main(void)
 		// ## Step 1.0             ##
 		// ##########################
 		LOGOMATIC("Reset system\n");
-		ECU_StateData stateLumpTest = {.ecu_state = GR_GLV_ON, .ams_sense = 1.5, .imd_sense = 1.5, .bspd_sense = 1.5};
+		ECU_StateData stateLumpTest = defaultState;
 		LOGOMATIC("State Tick Test 1 started\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
