@@ -40,6 +40,8 @@ target_sources(
 		../Core/Src/stm32h5xx_hal_msp.c
 		../Core/Src/stm32h5xx_it.c
 		../Core/Src/FancyCAN_LoopbackTest.c
+		profile.c
+		can_basic_test.c
 	#../Core/Src/tim.c
 	#../Core/Src/usart.c
 )
@@ -50,8 +52,6 @@ set_target_properties(
 		OUTPUT_NAME
 			"CAN_${NAME}"
 )
-
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
 
 target_include_directories(
 	${PROJECT_NAME}_USER_CODE
