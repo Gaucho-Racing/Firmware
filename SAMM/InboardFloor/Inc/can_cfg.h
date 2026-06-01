@@ -7,4 +7,6 @@
 #define USECAN2
 #define TX_BUFFER_2_SIZE 16
 
+#define CAN_TIMER_SEND_PERIOD_US 625
+
 #endif
