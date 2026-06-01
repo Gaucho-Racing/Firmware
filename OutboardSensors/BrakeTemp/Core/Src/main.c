@@ -32,7 +32,7 @@
 #include "MLX90614_API.h"
 #include "MLX90614_SMBus_Driver.h"
 #include "can.h"
-#include "emissivity.h"
+#include "brake_emissivity.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

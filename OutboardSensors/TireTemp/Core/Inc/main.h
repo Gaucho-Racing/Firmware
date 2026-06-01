@@ -43,8 +43,8 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+#define TIRETEMP_TA_SHIFT 8 // 8C offset from ambient to reflected temperature in open air
 #define TIRETEMP_TOTAL_INTERVAL_MS 33
-
 #define TIRETEMP_PIXELS 768
 #define TIRETEMP_ROUNDS (TIRETEMP_PIXELS / 32)
 #define TIRETEMP_SEND_INTERVAL_MS ((TIRETEMP_TOTAL_INTERVAL_MS) / TIRETEMP_ROUNDS)
@@ -52,7 +52,6 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define COUNTOF(__BUFFER__) (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -65,8 +64,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-/* Size of buffer */
-#define BUFFERSIZE (COUNTOF(aTxBuffer))
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

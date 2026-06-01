@@ -20,7 +20,6 @@
 #include "main.h"
 
 #include "NodeID.h"
-#include "adc.h"
 #include "crc.h"
 #include "gpio.h"
 #include "i2c.h"
@@ -34,6 +33,7 @@
 #include "MLX90640_API.h"
 #include "MLX90640_I2C_Driver.h"
 #include "can.h"
+#include "tire_emissivity.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,11 +58,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-/* Buffer used for transmission */
-uint8_t aTxBuffer[] = "****SPI - Two Boards communication based on Polling **** SPI Message ******** SPI Message ******** SPI Message ****";
 
 // MLX stuff
-float emmissivity = 0.95;
 uint16_t MLX90640_address = 0x33;
 paramsMLX90640 mlx90640;
 static uint16_t eeMLX90640[832];
@@ -71,8 +68,6 @@ static float mlx90640To[768];
 int status;
 float tr;
 
-/* Buffer used for reception */
-uint8_t aRxBuffer[BUFFERSIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,25 +87,20 @@ PUTCHAR_PROTOTYPE
 
 int MLX90640_FullReset(void)
 {
-	while (true) {
-		if (MLX90640_I2CGeneralReset() != 0) {
-			continue;
-		}
+	HAL_Delay(50);
+	while (MLX90640_SetRefreshRate(MLX90640_address, 0x03) != 0) {
 		HAL_Delay(50);
-		if (MLX90640_SetRefreshRate(MLX90640_address, 0x03) != 0) {
-			continue;
-		}
-		HAL_Delay(50);
-		if (MLX90640_SetInterleavedMode(MLX90640_address) != 0) {
-			continue;
-		}
-		HAL_Delay(50);
-		if ((status = MLX90640_TriggerMeasurement(MLX90640_address)) != 0) {
-			// NOOP
-		}
-		HAL_Delay(50);
-		break;
 	}
+	while (MLX90640_SetInterleavedMode(MLX90640_address) != 0) {
+		HAL_Delay(50);
+	}
+	while (MLX90640_DumpEE(MLX90640_address, eeMLX90640) < 0) {
+		HAL_Delay(50);
+	}
+	while (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) < 0) {
+		HAL_Delay(50);
+	}
+	HAL_Delay(50);
 
 	return 0;
 }
@@ -156,7 +146,6 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_ADC1_Init();
 	MX_CRC_Init();
 	MX_I2C2_Init();
 	/* USER CODE BEGIN 2 */
@@ -169,17 +158,7 @@ int main(void)
 
 	MLX90640_FullReset();
 
-	while (MLX90640_DumpEE(MLX90640_address, eeMLX90640) < 0) {
-		HAL_Delay(50);
-	}
-	while (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) < 0) {
-		HAL_Delay(50);
-	}
-
 	/* USER CODE END 2 */
-
-	int debugVar = 0;
-	volatile uint32_t total = HAL_GetTick();
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
@@ -187,29 +166,21 @@ int main(void)
 
 		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
 
-		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
-		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
+		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640) - TIRETEMP_TA_SHIFT;
+		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, GR_TIRE_EMISSIVITY, tr, mlx90640To);
 		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
 		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
 
-		// // Process the raw data into temperature
-		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
-		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
+		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640) - TIRETEMP_TA_SHIFT;
+		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, GR_TIRE_EMISSIVITY, tr, mlx90640To);
 		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
 		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
 			CAN_sendTemp(mlx90640To, i);
-			// HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
-		}
-
-		debugVar++;
-		if (debugVar % 100 == 0) {
-			total = HAL_GetTick() - total;
-			volatile int i = HAL_GetTickFreq();
-			total = HAL_GetTick();
+			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
 		}
 
 		/* USER CODE END WHILE */

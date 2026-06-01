@@ -52,13 +52,12 @@ extern "C" {
 #define MAX_RPM 1891 // Assumes 8 inch wheels @ max speed of 90 mph
 #define SECONDS_PER_MIN 60
 #define PULSES_PER_ROT 42 // TODO !!!
-#define MAX_NUM_INTERVALS 32 // Max of 255 because we are using uint8_t
-#define MIN_TICK_DELTA 100
+#define MAX_NUM_INTERVALS 32 // Must be a power of 2 and be storable in uint8_t
+#define MIN_TICK_DELTA 100 // 100ms (somewhat arbitrary)
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define COUNTOF(__BUFFER__) (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -72,7 +71,6 @@ extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN Private defines */
 /* Size of buffer */
-#define BUFFERSIZE (COUNTOF(aTxBuffer))
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
