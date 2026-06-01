@@ -15,6 +15,10 @@
 // #include "circularBuffer.h"
 #include <stdbool.h>
 
+#ifdef SKETCHY_OVERRIDE
+#include "timed_can_override.h"
+#endif
+
 // RX Callback must perform a deep copy of the data
 //
 typedef void (*CAN_RXCallback)(uint32_t ID, void *data, uint32_t size);
