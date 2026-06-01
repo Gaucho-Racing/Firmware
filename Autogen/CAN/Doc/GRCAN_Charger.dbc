@@ -155,10 +155,8 @@ CM_ SG_ 2566849012 Status "Bit 0: true = Device error active Bit 1: true = HV_po
 CM_ SG_ 2149583363 Set_TS_Active "0: shutdown, 1: go TS Active/Precharge";
 CM_ SG_ 2149580803 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 BA_DEF_  "BusType" STRING ;
-BA_DEF_  "DBName" STRING ;
 BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
 BA_DEF_DEF_  "BusType" "CAN";
-BA_DEF_DEF_  "DBName" "";
 BA_DEF_DEF_  "VFrameFormat" "StandardCAN";
 BA_ "VFrameFormat" BO_ 2550588916 1;
 BA_ "VFrameFormat" BO_ 2150631170 1;

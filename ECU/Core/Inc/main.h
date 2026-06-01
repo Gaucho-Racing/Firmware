@@ -44,8 +44,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Config.h"
 #include "GRCAN_NODE_ID.h"
+#include "Plan_C.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -72,7 +72,7 @@ enum {
 	/* Insulation Monitoring Device - Sense */
 	ADC_BUFFER_SENSE_IMD = 8,
 	/* Accumulator Management System - Sense */
-	ADC_BUFFER_SENSE_AMS = 9,
+	ADC_BUFFER_SENSE_BMS = 9,
 	/* Steering Angle - Signal */
 	ADC_BUFFER_SIG_STEERING_ANGLE = 10,
 };

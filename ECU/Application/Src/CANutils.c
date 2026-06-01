@@ -97,7 +97,7 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	can_enqueue(stateLump.primary_can, &msg);
 }
 
-void SendECUStateDataOverCAN(ECU_StateData *stateData)
+void SendECUStateDataOverCAN(const ECU_StateData *stateData)
 {
 	uint32_t currentTime = MillisecondsSinceBoot();
 
@@ -123,14 +123,15 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ALL, GRCAN_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
+
+	SendECUConfigOverCAN(stateData);
 }
 
-void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
+void SendECUAnalogDataOverCAN(const ECU_StateData *stateData)
 {
 	uint32_t millis_since_boot = MillisecondsSinceBoot();
 
 	static uint32_t last_can_tcm_request_millis = 0;
-
 	if (millis_since_boot - last_can_tcm_request_millis > 100) {
 		GRCAN_ECU_ANALOG_DATA_MSG message = {.bspd_signal = stateData->bspd_signal,
 						     .bse_signal = stateData->bse_signal,
@@ -141,8 +142,32 @@ void SendECUAnalogDataOverCAN(ECU_StateData *stateData)
 						     .steering_angle_signal = stateData->steering_angle_signal,
 						     .aux_signal = stateData->aux_signal,
 						     .acc_pedal_travel = CalcAccPedalTravel(stateData) * 65535,
-						     .brake_pedal_travel = CalcBrakePercent(stateData) * 65535};
+						     .brake_pedal_pressure = CalcBrakePressure(stateData)};
 		ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &message, sizeof(message));
 		last_can_tcm_request_millis = millis_since_boot;
 	}
+}
+
+void SendECUConfigOverCAN(const ECU_StateData *stateData)
+{
+	GRCAN_ECU_CONFIG_MSG message = {.ping_timeout_delay = (uint8_t)(stateData->ping_timeout_delay_ms / 10.0f),
+					.brake_f_min = (uint8_t)(stateData->brake_f_min / 25.0f),
+					.brake_r_min = (uint8_t)(stateData->brake_r_min / 25.0f),
+					.brake_bse_min = (uint8_t)(stateData->brake_bse_min / 25.0f),
+					.apps_1_min = (uint8_t)(stateData->apps_1_min / 10.0f),
+					.apps_2_min = (uint8_t)(stateData->apps_2_min / 10.0f),
+					.apps_1_max = (uint8_t)(stateData->apps_1_max / 10.0f),
+					.apps_2_max = (uint8_t)(stateData->apps_2_max / 10),
+					.apps_deadzone = (uint8_t)(stateData->apps_deadzone * 25.5f),
+					.bms_min_threshold = (uint8_t)(stateData->bms_min_thresh * 20.0f),
+					.bms_max_threshold = (uint8_t)(stateData->bms_max_thresh * 20.0f),
+					.imd_min_threshold = (uint8_t)(stateData->imd_min_thresh * 20.0f),
+					.imd_max_threshold = (uint8_t)(stateData->imd_max_thresh * 20.0f),
+					.bspd_min_threshold = (uint8_t)(stateData->bspd_min_thresh * 20.0f),
+					.bspd_max_threshold = (uint8_t)(stateData->bspd_max_thresh * 20.0f),
+					.max_precharge_time = (uint8_t)(stateData->max_precharge_time_ms / 10),
+					.regen_strength = (uint8_t)(stateData->regen_strength * 10),
+					.enable_regen = stateData->enable_regen};
+
+	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_CONFIG, &message, sizeof(message));
 }
