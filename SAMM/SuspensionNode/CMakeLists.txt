@@ -41,7 +41,7 @@ target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		CANfigurator
-		PERIPHERAL_CAN_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 		BitManipulations_Lib
 		SAMM_IMU_Lib
 		GRCAN_FANCYLAYER
