@@ -410,8 +410,8 @@ bool GRCAN_Raw_Send(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
 		memcpy(msg.data, data, size);
 	}
 
-	if (can_send(handle, &msg) != 0) {
-		LOGOMATIC("GRCAN_Raw_Send: can_send failed on bus %d\n", bus);
+	if (can_enqueue(handle, &msg) != 0) {
+		LOGOMATIC("GRCAN_Raw_Send: can_enqueue failed on bus %d\n", bus);
 		return false;
 	}
 
