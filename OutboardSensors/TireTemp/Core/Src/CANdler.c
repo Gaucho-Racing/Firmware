@@ -24,11 +24,78 @@ static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TIRE_TEMP_FRAME_0,  G
 						     GRCAN_TIRE_TEMP_FRAME_15, GRCAN_TIRE_TEMP_FRAME_16, GRCAN_TIRE_TEMP_FRAME_17, GRCAN_TIRE_TEMP_FRAME_18, GRCAN_TIRE_TEMP_FRAME_19,
 						     GRCAN_TIRE_TEMP_FRAME_20, GRCAN_TIRE_TEMP_FRAME_21, GRCAN_TIRE_TEMP_FRAME_22, GRCAN_TIRE_TEMP_FRAME_23};
 
+CAN_STATUS defaultSTM32G431x8_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)
+{
+	CANConfig canCfg;
+
+	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_BRS;
+	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+	canCfg.hal_fdcan_init.Mode = Mode;
+	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
+	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
+	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
+	canCfg.hal_fdcan_init.NominalPrescaler = 1;
+	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119; // 160 MHz PLL1Q clock -> (1+119+40) = 160 tq, 1 Mbps at 75% sample point
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
+	canCfg.hal_fdcan_init.DataPrescaler = 1;
+	canCfg.hal_fdcan_init.DataSyncJumpWidth = 2;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 14; // 160 MHz PLL1Q clock -> (1+14+5) = 20 tq, 8 Mbps at 75% sample point
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
+	canCfg.hal_fdcan_init.StdFiltersNbr = numStdFilters;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = numExtFilters;
+
+	canCfg.rx_callback = NULL;	   // PLEASE SET
+	canCfg.rx_interrupt_priority = 14; // PLEASE SET
+	canCfg.tx_interrupt_priority = 14; // PLEASE SET
+
+	// canCfg.rx_gpio = GPIOB;
+	// canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
+	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
+	canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
+	canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	// canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	// canCfg.tx_gpio = GPIOB;
+	// canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
+	canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
+	canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
+	canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	// canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	// Not testing filters at the moment
+	// FDCAN_FilterTypeDef filter;
+
+	// can_add_filter(data_can, &filter);
+	/* USER CODE END 2 */
+
+	canCfg.rx_callback = callback;
+
+#ifdef USECAN1
+	if (instance == FDCAN1) {
+		canCfg.fdcan_instance = FDCAN1;
+		canCfg.rx_gpio = GPIOA;
+		canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+		canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+		canCfg.tx_gpio = GPIOA;
+		canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+		canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+		*out_cfg = canCfg;
+		return CAN_SUCCESS;
+	}
+#endif
+
+	return CAN_ERROR;
+}
+
 void CANInitialize()
 {
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL);
 	CANConfig my_cfg;
-	get_cfg(FDCAN1, CAN_callback, &my_cfg, FDCAN_MODE_EXTERNAL_LOOPBACK, 0, 0);
+	defaultSTM32G431x8_CANCfg(FDCAN1, CAN_callback, &my_cfg, FDCAN_MODE_EXTERNAL_LOOPBACK, 0, 0);
 	can_handler = can_init(&my_cfg);
 }
 
@@ -64,7 +131,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 		((uint16_t *)(msg.data))[i] = _temp_f2u16(data[msgNumber + i]);
 	}
 
-	can_send(can_handler, &msg);
+	can_enqueue(can_handler, &msg);
 }
 
 void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
@@ -82,7 +149,7 @@ void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 	GRCAN_PING_MSG msg = {.timestamp = data};
 	memcpy(pingMsg.data, &msg, sizeof(msg));
 
-	can_send(can_handler, &pingMsg);
+	can_enqueue(can_handler, &pingMsg);
 }
 
 void CAN_callback(uint32_t ID, void *data, uint32_t size)
