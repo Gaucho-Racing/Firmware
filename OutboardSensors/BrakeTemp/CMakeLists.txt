@@ -49,7 +49,7 @@ target_link_libraries(
 		CANfigurator
 		BitManipulations_Lib
 		MLX90614_LIB
-		PERIPHERAL_CAN_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 )
 
 target_include_directories(
