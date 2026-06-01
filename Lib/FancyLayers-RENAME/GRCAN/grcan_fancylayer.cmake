@@ -23,7 +23,7 @@ target_link_libraries(
 		GLOBALSHARE_LIB
 		CANfigurator
 		CircularBuffer_Lib
-		PERIPHERAL_CAN_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 )
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
