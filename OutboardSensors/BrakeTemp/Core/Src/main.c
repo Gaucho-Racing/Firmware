@@ -65,8 +65,8 @@ int status;
 
 // Wheel speed stuff
 TIM_HandleTypeDef htim6;
-volatile uint32_t pulses[MAX_NUM_INTERVALS];
-volatile uint32_t time_deltas[MAX_NUM_INTERVALS];
+volatile uint16_t pulses[MAX_NUM_INTERVALS];
+volatile uint16_t time_deltas[MAX_NUM_INTERVALS];
 volatile uint32_t total_time = 0;
 volatile uint32_t total_pulses = 0;
 volatile uint32_t last_tick = 0;
@@ -238,21 +238,26 @@ int main(void)
 
 	HAL_Delay(10);
 	MLX90614_DumpEE(MLX90614_ADDRESS, eeMLX90614);
-	// MLX90614_Configure_EEPROM();
+	// MLX90614_Configure_EEPROM(); // NOTE: Only call this once, power-cycle sensor, then comment out
 
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
 	while (1) {
+		NVIC_DisableIRQ(EXTI15_10_IRQn); // Enter atomic section
 
-		status = MLX90614_GetTa(MLX90614_ADDRESS, &ta); // Sensor ambient temperature
+		//status = MLX90614_GetTa(MLX90614_ADDRESS, &ta); // Sensor ambient temperature
 		status = MLX90614_GetTo(MLX90614_ADDRESS, &to); // Sensor object temperature
-		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
-
 		CAN_sendTemp(to);
-		CAN_sendRPM(GetRPM());
-		HAL_Delay(BRAKETEMP_INTERVAL_MS);
 
+		// Reset wheel speed history after inactivity
+		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		CAN_sendRPM(GetRPM()); // Send RPM data
+
+		NVIC_EnableIRQ(EXTI15_10_IRQn); // Exit atomic section
+
+		HAL_Delay(BRAKETEMP_INTERVAL_MS); // Rate-limit CAN messages and temp sensor polling
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
 	}

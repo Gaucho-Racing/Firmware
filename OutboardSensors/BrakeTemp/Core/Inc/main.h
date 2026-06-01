@@ -46,7 +46,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 #define MLX90614_ADDRESS 0x5A
-#define BRAKETEMP_INTERVAL_MS 36 // Delay of FIR=128 and IIR=100% settings
+#define BRAKETEMP_INTERVAL_MS 33 // 30 Hz transmission speed (will be slightly slower in practice)
 #define WHEEL_SPEED_TIMEOUT_TICKS 1000 // 1 second of no pulse means the car stopped moving
 #define DEBOUNCE_NUM_10us 10 // Multiple of 100 microseconds
 #define MAX_RPM 1891 // Assumes 8 inch wheels @ max speed of 90 mph
