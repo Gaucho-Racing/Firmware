@@ -45,6 +45,7 @@
 
 # CMake
 build
+sccache
 ccache
 CMakeLists.txt.user
 CMakeCache.txt

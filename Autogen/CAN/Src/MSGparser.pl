@@ -52,7 +52,7 @@ sub parse_msg_yaml {
 			last;
 		}
 
-		if ( $line =~ /^ \s{2} ( \w [\w\s\d.]+ ) : \s* $/smx ) {
+		if ( $line =~ /^ \s{2} ( .+ ) : \s* $/smx ) {
 			my $name = $1;
 
 			# Pass by reference so we can skip lines in the array

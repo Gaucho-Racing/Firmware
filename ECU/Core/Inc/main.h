@@ -39,15 +39,43 @@ extern "C" {
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_system.h"
+#include "stm32g4xx_ll_usart.h"
 #include "stm32g4xx_ll_utils.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "GRCAN_NODE_ID.h"
+#include "Plan_C.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+
+/* ADC mappings from `ADC_buffers` and `ADC_outputs` arrays to signal/sense names */
+enum {
+	/* Brake Signal Encoder - Signal */
+	ADC_BUFFER_SIG_BSE = 0,
+	/* Brake System Plausibility Device - Signal */
+	ADC_BUFFER_SIG_BSPD = 1,
+	/* Accelerator Pedal Position Sensor 1 - Signal */
+	ADC_BUFFER_SIG_APPS1 = 2,
+	/* Accelerator Pedal Position Sensor 2 - Signal */
+	ADC_BUFFER_SIG_APPS2 = 3,
+	/* Front Brake Pressure - Signal */
+	ADC_BUFFER_SIG_BRAKE_F = 4,
+	/* Rear Brake Pressure - Signal */
+	ADC_BUFFER_SIG_BRAKE_R = 5,
+	/* Auxiliary - Signal */
+	ADC_BUFFER_SIG_AUX = 6,
+	/* Brake System Plausibility Device - Sense */
+	ADC_BUFFER_SENSE_BSPD = 7,
+	/* Insulation Monitoring Device - Sense */
+	ADC_BUFFER_SENSE_IMD = 8,
+	/* Accumulator Management System - Sense */
+	ADC_BUFFER_SENSE_BMS = 9,
+	/* Steering Angle - Signal */
+	ADC_BUFFER_SIG_STEERING_ANGLE = 10,
+};
 
 /* USER CODE END ET */
 

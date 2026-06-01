@@ -66,7 +66,7 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
-VCP_Config vcp_config = {.baud_rate = 19200,
+VCP_Config vcp_config = {.baud_rate = 2000000,
 			 .clock_source = VCP_CLOCK_PCLK,
 			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
 			 .bus_port = VCP_Port_A,
@@ -76,8 +76,8 @@ VCP_Config vcp_config = {.baud_rate = 19200,
 			 .oversampling = VCP_Oversampling_16,
 			 .tx_fifo_threshold = VCP_Threshold_1_8,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .usart_instance = USART2,
-			 .alternate_function = LL_GPIO_AF_7};
+			 .alternate_function = LL_GPIO_AF_7,
+			 .rx_callback = VCP_RxCallback};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -140,10 +140,13 @@ int main(void)
 	LOGOMATIC("Software Latch: High");
 
 	while (1) {
-		CCU_State_Tick(&state_data);
-		VCP_Oneliner(&state_data);
+		static uint32_t last_tick_time = 0;
 
-		LL_mDelay(20);
+		if (MillisecondsSinceBoot() - last_tick_time >= 20) {
+			last_tick_time = MillisecondsSinceBoot();
+			CCU_State_Tick(&state_data);
+			VCP_Oneliner(&state_data);
+		}
 
 		/* USER CODE END 3 */
 	}

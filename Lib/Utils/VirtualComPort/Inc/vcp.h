@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 #include "main.h"
+#include "vcp_config.h"
 
 #ifndef VCP_H
 
@@ -99,8 +100,6 @@ typedef enum {
  * This structure contains all the necessary parameters to initialize and configure the USART peripheral for virtual COM port functionality.
  */
 typedef struct {
-	/* USART instance to use for VCP */
-	USART_TypeDef *usart_instance;
 	/* Clock source for the USART peripheral */
 	VCP_ClockSource clock_source;
 	/* GPIO port for TX/RX pins */
@@ -123,12 +122,39 @@ typedef struct {
 	VCP_FifoThreshold rx_fifo_threshold;
 	/* Alternate function for use on pins */
 	uint32_t alternate_function;
+	/* Callback function for handling received data */
+	void (*rx_callback)(const char data);
 } VCP_Config;
 
 void VCP_Send(const char *data, uint32_t length);
-bool VCP_IsDataAvailable();
-uint8_t VCP_Receive(void);
-uint8_t VCP_ReceiveLine(uint8_t *buffer, uint8_t buffer_size);
 void Setup_VCP(VCP_Config *input_config);
+
+#ifndef VCP_CONFIG
+#error "VCP_CONFIG must be defined in vcp_config.h. Please create this file based on vcp_config_example.h and define the necessary configuration parameters for your application."
+#endif
+
+#if defined(VCP_CONFIG_CLAIM_USART1) && (defined(VCP_CONFIG_CLAIM_USART2) || defined(VCP_CONFIG_CLAIM_USART3))
+#error "Multiple USART instances claimed in VCP configuration: 1 and 2 or 3"
+#endif
+
+#if defined(VCP_CONFIG_CLAIM_USART2) && (defined(VCP_CONFIG_CLAIM_USART1) || defined(VCP_CONFIG_CLAIM_USART3))
+#error "Multiple USART instances claimed in VCP configuration: 2 and 1 or 3"
+#endif
+
+#if defined(VCP_CONFIG_CLAIM_USART3) && (defined(VCP_CONFIG_CLAIM_USART1) || defined(VCP_CONFIG_CLAIM_USART2))
+#error "Multiple USART instances claimed in VCP configuration: 3 and 1 or 2"
+#endif
+
+#if !defined(VCP_CONFIG_CLAIM_USART1) && !defined(VCP_CONFIG_CLAIM_USART2) && !defined(VCP_CONFIG_CLAIM_USART3)
+#error "No USART instance claimed in `vcp_config.h`. Please define one of VCP_CONFIG_CLAIM_USART1, VCP_CONFIG_CLAIM_USART2, or VCP_CONFIG_CLAIM_USART3."
+#endif
+
+#ifndef VCP_TX_BUFFER_SIZE
+#define VCP_TX_BUFFER_SIZE 128
+#endif
+
+#if VCP_TX_BUFFER_SIZE < 16
+#error "VCP_TX_BUFFER_SIZE must be at least 16 bytes to function correctly"
+#endif
 
 #endif

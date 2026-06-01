@@ -1,7 +1,9 @@
 #include "StateUtils.h"
 
+#include <inttypes.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "CANutils.h"
 #include "GRCAN_BUS_ID.h"
@@ -9,11 +11,13 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
+#include "Plan_C.h"
 #include "StateData.h"
 #include "Unused.h"
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
+#include "vcp.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -55,9 +59,45 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	return problem;
 }
 
+SDC_Level bmsLevel(volatile const ECU_StateData *stateData)
+{
+	// TODO: DYNAMIC LOGIC HERE
+	if (stateData->bms_sense < stateData->bms_min_thresh) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->bms_sense > stateData->bms_max_thresh) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+SDC_Level imdLevel(volatile const ECU_StateData *stateData)
+{
+	// TODO: DYNAMIC LOGIC HERE
+	if (stateData->imd_sense < stateData->imd_min_thresh) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->imd_sense > stateData->imd_max_thresh) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
+SDC_Level bspdLevel(volatile const ECU_StateData *stateData)
+{
+	if (stateData->bspd_sense < stateData->bspd_min_thresh) {
+		return SDC_ONGOING_FAILURE;
+	} else if (stateData->bspd_sense > stateData->bspd_max_thresh) {
+		return SDC_LATCHED_FAILURE;
+	}
+
+	return SDC_OK;
+}
+
 bool bmsFailure(volatile const ECU_StateData *stateData)
 {
-	return stateData->ams_sense < 0.5f || stateData->ams_sense > 1.6f; // 0.5 to 1.6 is valid
+	SDC_Level level = bmsLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool imdFailure(volatile const ECU_StateData *stateData)
@@ -68,58 +108,71 @@ bool imdFailure(volatile const ECU_StateData *stateData)
 		return false;
 	}
 
-	return stateData->imd_sense < 0.5f || stateData->imd_sense > 1.6f; // 0.5 to 1.6 is valid
+	SDC_Level level = imdLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool bspdFailure(volatile const ECU_StateData *stateData)
 {
-	return stateData->bspd_sense < 0.6f || stateData->bspd_sense > 1.35f; // possible values are 0.3, 1.2, 1.6
+#ifdef PLAN_C
+	return false;
+#endif
+	SDC_Level level = bspdLevel(stateData);
+	return level == SDC_ONGOING_FAILURE || level == SDC_LATCHED_FAILURE;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
-	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
-	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) >= 0.25f;
+#ifdef PLAN_C
+	return false;
+#endif
+
+	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) > stateData->apps_deadzone;
 }
 
-// TODO: reconsider deadzones
 bool PressingBrake(volatile const ECU_StateData *stateData)
 {
-	// uint16_t brakeRangeF = BRAKE_F_MAX - BRAKE_F_MIN;
-	// uint16_t brakeRangeR = BRAKE_R_MAX - BRAKE_R_MIN;
-	// bool brakeFpress = stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * brakeRangeF;
-	// bool brakeRpress = stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * brakeRangeR;
-	// return brakeFpress || brakeRpress;
-	return ((stateData->bse_signal) / BSE_MAX * 3.3f) > BSE_DEADZONE;
-	// Ideally TCM receives values of 0 after this is no longer called xD.
+#ifdef PLAN_C
+	if (stateData->ecu_state < GR_DRIVE_ACTIVE) {
+		return true;
+	} else {
+		return false;
+	}
+#endif
+
+	return (stateData->Brake_F_Signal > stateData->brake_f_min) || (stateData->bse_signal > stateData->brake_bse_min);
 }
 
-float CalcBrakePercent(volatile const ECU_StateData *stateData)
+float CalcBrakePressure(volatile const ECU_StateData *stateData)
 {
-	return stateData->bse_signal / BSE_MAX;
+#ifdef PLAN_C
+	return 0;
+#endif
+
+	float psi_front = stateData->bse_signal / 4096.0f * 5000.0f;
+	float psi_rear = stateData->Brake_F_Signal / 4096.0f * 5000.0f;
+	return fmaxf(psi_front, psi_rear);
 }
 
 // TODO: reconsider deadzone
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData)
 {
-	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
-	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
-	float travel = total_signal_value / total_signal_range;
-	return travel > 0.05f ? (travel - 0.05f) / 0.95f : 0.0f;
+	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
+	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
+
+	float travel = fminf(fmaxf((appspos1 + appspos2) / 2.0f, 0.0f), 1.0f);
+	return travel > stateData->apps_deadzone ? (travel - stateData->apps_deadzone) / (1.0f - stateData->apps_deadzone) : 0.0f;
 }
 
 // APPS implausibility check (within 10% travel)
 bool APPS_Plausible(volatile const ECU_StateData *stateData)
 {
-	float deviation = (stateData->APPS1_Signal - THROTTLE_MIN_1 - stateData->APPS2_Signal + THROTTLE_MIN_2) * 2.0f / (THROTTLE_MAX_1 - THROTTLE_MIN_1 + THROTTLE_MAX_2 - THROTTLE_MIN_2);
-	return deviation < 0.1f && deviation > -0.1f;
-}
+	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
+	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
 
-bool BSE_Plausible(volatile const ECU_StateData *stateData)
-{
-	// checks for BSE signal failures --> > max failure time (100 ms) then result in apps/bse violation and kill motors
-	// T.4.3.3
-	return stateData->bse_signal > BSE_DEADZONE && stateData->bse_signal < BSE_MAX;
+	float error = fabsf(appspos1 - appspos2);
+
+	return error < 0.1f;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)
@@ -128,19 +181,17 @@ bool vehicle_is_moving(volatile const ECU_StateData *stateData)
 	return stateData->vehicle_speed_mph > tolerance;
 }
 
-void SendEcuBonusInfo(const ECU_StateData *stateData)
+void disable_inverter(void)
 {
-	// All analog data
-	GRCAN_ECU_ANALOG_DATA_MSG analogData = {.bspd_signal = stateData->bspd_signal,
-						.bse_signal = stateData->bse_signal,
-						.apps_1_signal = stateData->APPS1_Signal,
-						.apps_2_signal = stateData->APPS2_Signal,
-						.brakeline_f_signal = stateData->Brake_F_Signal,
-						.brakeline_r_signal = stateData->Brake_R_Signal,
-						.steering_angle_signal = stateData->steering_angle_signal,
-						.aux_signal = stateData->aux_signal};
-	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_ANALOG_DATA, &analogData, sizeof(analogData));
+	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
+	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
+}
 
-	// RTT ping data
-	// TODO Setup using data from Pinging.c per Andrey request
+void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw)
+{
+#define SIZE 64
+	static char buf[SIZE];
+	snprintf(buf, SIZE, "%" PRIu32 " A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
+	VCP_Send(buf, strlen(buf));
 }
