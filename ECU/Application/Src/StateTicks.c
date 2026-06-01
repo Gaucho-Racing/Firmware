@@ -26,7 +26,40 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-ECU_StateData stateLump = {.ecu_state = GR_GLV_ON, .acu_software_latch = 1, .powerlevel = 3};
+ECU_StateData stateLump = {
+    // Start on GLV On
+    .ecu_state = GR_GLV_ON,
+    // Assume ACU good at boot
+    .acu_software_latch = 1,
+    // Startup at minimum power
+    .powerlevel = 0,
+    // See CANdo specification
+    .torquemap = 1,
+    // APPS Deadzone
+    .apps_deadzone = 0.08f,
+    // BMS thresholds
+    .bms_min_thresh = 0.3f,
+    .bms_max_thresh = 1.6f,
+    // IMD thresholds
+    .imd_min_thresh = 0.3f,
+    .imd_max_thresh = 1.6f,
+    // BSPD thresholds
+    .bspd_min_thresh = 0.6f,
+    .bspd_max_thresh = 1.35f,
+    // Timings
+    .ping_timeout_delay_ms = 250,
+    .max_precharge_time_ms = 8000,
+    // Pedals
+    .brake_f_min = 700,
+    .brake_r_min = 0,
+    .brake_bse_min = 720,
+    .apps_1_min = 2375,
+    .apps_2_min = 2430,
+    .apps_1_max = 1897,
+    .apps_2_max = 1926,
+    // Regen
+    .regen_strength = 2,
+    .enable_regen = false};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -38,28 +71,6 @@ void ECU_State_Tick(void)
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
-
-	// light control
-	//  false or imd_sense  > 0.5 -> false -> no light
-	//  false or imd_sense < 0.5 -> true -> light
-	//  true or imd_sense > 0.5 -> true -> light stays on
-	//  stateLump.bms_light |= !(stateLump.ams_sense > 0.5f);
-	//  stateLump.imd_light |= !(stateLump.imd_sense > 0.5f);
-	// lgoht control reset
-
-	// true and no failiure -> flase
-	// true and failiure -> true
-	// false and failure -> false
-	// flase and no failure -> false
-	// stateLump.bms_light &= (bmsFailure(&stateLump));
-	// stateLump.imd_light &= (imdFailure(&stateLump));
-
-	stateLump.bms_light = (stateLump.ams_sense <= 0.4f) || (stateLump.bms_light && bmsFailure(&stateLump));
-	stateLump.imd_light = (stateLump.imd_sense <= 0.4f) || (stateLump.imd_light && imdFailure(&stateLump));
-
-	stateLump.tssi_fault = stateLump.bms_light || stateLump.imd_light;
-
-	// bmsFailure(&stateLump) || imdFailure(&stateLump);
 
 	if (stateLump.ts_active_button_press_interrupt) {
 		stateLump.ts_active_button_press_interrupt = false;
@@ -128,7 +139,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 
 	if (stateData->rtd_button_pressed) {
-		stateData->powerlevel = (stateData->powerlevel + 1) % 4;
+		stateData->powerlevel = (stateData->powerlevel + 1) % 6;
 		LOGOMATIC("Power level now at %d\n", stateData->powerlevel);
 	}
 }
@@ -156,7 +167,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= MAX_PRECHARGE_TIME) {
+	if (CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= stateData->max_precharge_time_ms) {
 		LOGOMATIC("CRITICAL ERROR! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
@@ -187,7 +198,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		return;
 	}
 
-	if (PressingBrake(stateData) && stateData->rtd_button_pressed && (CalcAccPedalTravel(stateData) < 0.05f)) {
+	if (PressingBrake(stateData) && stateData->rtd_button_pressed && (CalcAccPedalTravel(stateData) < stateData->apps_deadzone)) {
 		GRCAN_INV_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CONFIG, &inverter_message, sizeof(inverter_message));
 		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
@@ -235,7 +246,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (APPS_BSE_Violation(stateData)) {
 		stateData->apps_bse_violation = true;
-	} else if (CalcAccPedalTravel(stateData) < 0.05f) {
+	} else if (CalcAccPedalTravel(stateData) < stateData->apps_deadzone) {
 		stateData->apps_bse_violation = false;
 	}
 
@@ -249,10 +260,36 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
-		torque_request = -MIN_WITH_TYPES(CalcBrakePercent(stateData) * REGEN_STRENGTH, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
+	} else if (stateData->enable_regen && PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
+		torque_request = -MIN_WITH_TYPES(CalcBrakePressure(stateData) / 5000.0f * stateData->regen_strength, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
-		torque_request = fminf(CalcAccPedalTravel(stateData) * MAX_CURRENT_AMPS * (1 << stateData->powerlevel) / 8.0f, MAX_CURRENT_AMPS);
+		uint16_t max_current = 0;
+		// Chosen max current for different power level / torque maps
+		switch (stateData->powerlevel) {
+			case 0:
+				max_current = 50;
+				break;
+			case 1:
+				max_current = 100;
+				break;
+			case 2:
+				max_current = 150;
+				break;
+			case 3:
+				max_current = 200;
+				break;
+			case 4:
+				max_current = 250;
+				break;
+			case 5:
+				max_current = 275;
+				break;
+			default:
+				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);
+				max_current = 0;
+				break;
+		}
+		torque_request = fminf(CalcAccPedalTravel(stateData) * max_current, MAX_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
