@@ -108,6 +108,8 @@ routing:
             can_id_override: 0x2316
           - msg: DTI Data 5
             can_id_override: 0x2416
+          - msg: DTI Data 6
+            can_id_override: 0x1F16
     HV DC-DC:
       Primary:
         ECU:
@@ -9319,6 +9321,31 @@ Custom CAN ID:
       - name: "CAN Version"
         bit_start: 56
         comment: Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
+  DTI Data 6:
+    CAN ID: 0x1F16
+    Length: 8
+    signals:
+      - name: "Control mode"
+        bit_start: 0
+        comment: Describes the control mode of the inverter:
+          1: CONTROL_MODE_SPEED
+          2: CONTROL_MODE_CURRENT
+          3: CONTROL_MODE_CURRENT_BRAKE
+          4: CONTROL_MODE_POS
+          7: CONTROL_MODE_NONE
+          0, 5, 6: NOT USED
+          Mainly used in multi-controller configurations for internal communication.
+      - name: "Target Iq"
+        bit_start: 8
+        comment: The value represent how much Iq current the inverter is targeted to reach. This value excludes limits. For ex. if the target Iq is 50 A and temperature limit is hit, the values keep 50 A in any case, not including the deration of the temp. limit. This is useful in multi-inverter configuration to let know the secondary inverter the target Iq.
+      - name: "Motor position"
+        bit_start: 24
+        comment: Motor position expressed in degrees
+      - name: "isMotorStill"
+        bit_start: 40
+        comment: Represents if the motor in still position or not.
+          1: still
+          0: rotating
   IMD general:
     CAN ID: 0x18FF01F4
     Length: 8

@@ -124,6 +124,8 @@ typedef volatile struct ECU_StateData {
 
 	bool apps_bse_violation;
 
+	bool is_moving;
+
 	GR_ECU_State ecu_state;
 
 	CANHandle *primary_can;

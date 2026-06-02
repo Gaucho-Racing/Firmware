@@ -175,12 +175,6 @@ bool APPS_Plausible(volatile const ECU_StateData *stateData)
 	return error < 0.1f;
 }
 
-bool vehicle_is_moving(volatile const ECU_StateData *stateData)
-{
-	const float tolerance = 0.1f; // In MPH
-	return stateData->vehicle_speed_mph > tolerance;
-}
-
 void disable_inverter(void)
 {
 	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};

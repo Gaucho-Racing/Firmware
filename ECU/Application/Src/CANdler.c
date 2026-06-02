@@ -1,16 +1,20 @@
 #include "CANdler.h"
 
 #include <stdint.h>
+#include <math.h>
 
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "Logomatic.h"
 #include "Pinging.h"
 #include "StateData.h"
 #include "bitManipulations.h"
 
 #define WHEEL_RPM_TO_MPH_RATIO 0.0476f
+#define NUM_MOTOR_POLE_PAIRS 10
+#define GEAR_RATIO 3.0f
 
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
@@ -153,6 +157,36 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 
 		default:
 			ReportUnhandledMessage(bus_id, msg_id, sender_id);
+			break;
+	}
+}
+
+void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, uint8_t *data, uint32_t data_length)
+{
+	switch (id) {
+		case DTI_DATA_1_CAN_ID:
+			if(data_length != 8) {
+				ReportBadMessageLength(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
+				break;
+			}
+			int32_t erpm = (data[0] << 24)
+				| (data[1] << 16)
+				| (data[2] << 8)
+				| (data[3]);
+			state_data->vehicle_speed_mph = (float) erpm / NUM_MOTOR_POLE_PAIRS / GEAR_RATIO * WHEEL_RPM_TO_MPH_RATIO;
+			break;
+
+		case DTI_DATA_6_CAN_ID:
+			if(data_length != 8) {
+				ReportBadMessageLength(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
+				break;
+			}
+			state_data->is_moving = !data[5];
+			break;
+
+		default:
+			// don't really gaf
+			// ReportUnhandledMessage(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
 			break;
 	}
 }
