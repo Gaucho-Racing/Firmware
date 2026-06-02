@@ -112,6 +112,13 @@ int16_t ewa_i(int16_t new_value, int16_t old_value)
 	}
 	return alpha * new_value + (1 - alpha) * old_value;
 }
+
+uint32_t MillisecondsSinceBoot()
+{
+	uint32_t tick = HAL_GetTick();
+	HAL_TickFreqTypeDef freq = HAL_GetTickFreq();
+	return tick * freq;
+}
 /* USER CODE END 0 */
 
 /**
@@ -352,7 +359,8 @@ void SystemClock_Config(void)
 	/* Wait till PLL is ready */
 	while (LL_RCC_PLL1_IsReady() != 1) {}
 
-	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
+	// LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
+	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL1);
 
 	/* Wait till System clock is ready */
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {}
@@ -384,26 +392,7 @@ void SystemClock_Config(void)
 // }
 /* USER CODE END 4 */
 
-/**
- * @brief  Period elapsed callback in non blocking mode
- * @note   This function is called  when TIM1 interrupt took place, inside
- * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
- * a global variable "uwTick" used as application time base.
- * @param  htim : TIM handle
- * @retval None
- */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	/* USER CODE BEGIN Callback 0 */
 
-	/* USER CODE END Callback 0 */
-	if (htim->Instance == TIM1) {
-		HAL_IncTick();
-	}
-	/* USER CODE BEGIN Callback 1 */
-
-	/* USER CODE END Callback 1 */
-}
 
 /**
  * @brief  This function is executed in case of error occurrence.

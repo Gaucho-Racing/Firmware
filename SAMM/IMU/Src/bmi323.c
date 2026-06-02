@@ -97,13 +97,6 @@ STEPS:
 9. Done
 */
 
-uint32_t MillisecondsSinceBoot()
-{
-	uint32_t tick = HAL_GetTick();
-	HAL_TickFreqTypeDef freq = HAL_GetTickFreq();
-	return tick * freq;
-}
-
 uint8_t bmi323_calib(bmi323 *bmi323_dev)
 {
 	// first we have to fucking start the feature engine

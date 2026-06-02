@@ -104,6 +104,13 @@ uint16_t ewa(uint16_t new_value, uint16_t old_value)
 	return alpha * new_value + (1 - alpha) * old_value;
 }
 
+uint32_t MillisecondsSinceBoot()
+{
+	uint32_t tick = HAL_GetTick();
+	HAL_TickFreqTypeDef freq = HAL_GetTickFreq();
+	return tick * freq;
+}
+
 /* USER CODE END 0 */
 
 /**
