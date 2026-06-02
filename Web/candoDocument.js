@@ -848,6 +848,21 @@
 		});
 	}
 
+	function updateGrId(name, newGrId) {
+		return _withEditor(() => {
+			if (!name || !name.trim())
+				return { ok: false, error: "Node name is required" };
+			const n = name.trim();
+			if (!newGrId || !/^0x[0-9a-fA-F]+$/i.test(newGrId.trim()))
+				return {
+					ok: false,
+					error: "GR ID must be a hex value (e.g. 0x2B)",
+				};
+			_grIds.set(n, newGrId.trim());
+			return { ok: true, warnings: [] };
+		});
+	}
+
 	function addBus(deviceName, busPort) {
 		return _withEditor(() => {
 			deviceName = (deviceName || "").trim();
@@ -1424,6 +1439,7 @@
 		addDevice,
 		deleteDevice,
 		renameDevice,
+		updateGrId,
 		addBus,
 		addRoute,
 		deleteRouteEntry,
