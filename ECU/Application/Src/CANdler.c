@@ -14,7 +14,7 @@
 
 #define WHEEL_RPM_TO_MPH_RATIO 0.0476f
 #define NUM_MOTOR_POLE_PAIRS 10
-#define GEAR_RATIO 3.0f
+#define GEAR_RATIO 3.92f // will be 3.0 when the sprocket is changed
 
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
