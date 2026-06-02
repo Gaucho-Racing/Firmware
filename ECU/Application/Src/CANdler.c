@@ -169,10 +169,10 @@ void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, u
 				ReportBadMessageLength(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
 				break;
 			}
-			int32_t erpm = (data[0] << 24)
-				| (data[1] << 16)
-				| (data[2] << 8)
-				| (data[3]);
+			int32_t erpm = ((uint32_t)data[0] << 24)
+				| ((uint32_t)data[1] << 16)
+				| ((uint32_t)data[2] << 8)
+				| ((uint32_t)data[3]);
 			state_data->vehicle_speed_mph = (float) erpm / NUM_MOTOR_POLE_PAIRS / GEAR_RATIO * WHEEL_RPM_TO_MPH_RATIO;
 			break;
 
