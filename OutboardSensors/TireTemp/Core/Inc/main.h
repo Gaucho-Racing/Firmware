@@ -43,11 +43,9 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-#define TIRETEMP_TA_SHIFT 8 // 8C offset from ambient to reflected temperature in open air
 #define TIRETEMP_TOTAL_INTERVAL_MS 33
 #define TIRETEMP_PIXELS 768
 #define TIRETEMP_ROUNDS (TIRETEMP_PIXELS / 32)
-#define TIRETEMP_SEND_INTERVAL_MS ((TIRETEMP_TOTAL_INTERVAL_MS) / TIRETEMP_ROUNDS)
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

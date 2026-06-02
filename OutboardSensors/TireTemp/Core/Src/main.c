@@ -180,8 +180,9 @@ int main(void)
 
 		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
 			CAN_sendTemp(mlx90640To, i);
-			HAL_Delay(TIRETEMP_SEND_INTERVAL_MS);
 		}
+
+		HAL_Delay(TIRETEMP_TOTAL_INTERVAL_MS);
 
 		/* USER CODE END WHILE */
 
