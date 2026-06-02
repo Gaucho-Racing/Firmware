@@ -115,6 +115,7 @@ int16_t ewa_i(int16_t new_value, int16_t old_value)
 
 uint32_t MillisecondsSinceBoot()
 {
+	uint32_t tick_prio = HAL_GetTickPrio();
 	uint32_t tick = HAL_GetTick();
 	HAL_TickFreqTypeDef freq = HAL_GetTickFreq();
 	return tick * freq;
@@ -195,7 +196,7 @@ int main(void)
 	// Initialize magnetic encoder
 	if (init_status != HAL_OK) {
 		LOGOMATIC("MAG initialization failed!\n");
-		Error_Handler();
+		// Error_Handler();
 	}
 	/* USER CODE BEGIN WHILE */
 
@@ -217,6 +218,9 @@ int main(void)
 
 	uint32_t last_avgcalc_ms = mssinceboot;
 	uint32_t last_send_ms = mssinceboot;
+
+	LOGOMATIC("%d", MillisecondsSinceBoot());
+
 	IMU_Mag_Data test_data = {0};
 
 	while (1) {
@@ -363,17 +367,17 @@ void SystemClock_Config(void)
 	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL1);
 
 	/* Wait till System clock is ready */
-	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {}
+	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL1) {}
 
 	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (160 >> 1); i != 0; i--)
+	for (__IO uint32_t i = (180 >> 1); i != 0; i--)
 		;
 
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 	LL_RCC_SetAPB3Prescaler(LL_RCC_APB3_DIV_1);
-	LL_SetSystemCoreClock(32000000);
+	LL_SetSystemCoreClock(180000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
