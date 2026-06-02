@@ -115,10 +115,7 @@ int16_t ewa_i(int16_t new_value, int16_t old_value)
 
 uint32_t MillisecondsSinceBoot()
 {
-	uint32_t tick_prio = HAL_GetTickPrio();
-	uint32_t tick = HAL_GetTick();
-	HAL_TickFreqTypeDef freq = HAL_GetTickFreq();
-	return tick * freq;
+	return HAL_GetTick() * HAL_GetTickFreq();
 }
 /* USER CODE END 0 */
 
@@ -163,15 +160,16 @@ int main(void)
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
-	/*
 	bmi323 bmi323_dev;
 	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 
+	/*
 	// Initialize IMU
 	if (bmi323_init(&bmi323_dev, &hspi1, BMI323_CS_GPIO_Port, BMI323_CS_Pin) != HAL_OK) {
 		LOGOMATIC("BMI323 initialization failed!\n");
 		Error_Handler();
 	}
+
 
 	bmi323_soft_reset(&bmi323_dev);
 	HAL_Delay(10);
@@ -198,6 +196,7 @@ int main(void)
 		LOGOMATIC("MAG initialization failed!\n");
 		// Error_Handler();
 	}
+
 	/* USER CODE BEGIN WHILE */
 
 	uint16_t imu_ax = 0xFFFF;
@@ -219,8 +218,6 @@ int main(void)
 	uint32_t last_avgcalc_ms = mssinceboot;
 	uint32_t last_send_ms = mssinceboot;
 
-	LOGOMATIC("%d", MillisecondsSinceBoot());
-
 	IMU_Mag_Data test_data = {0};
 
 	while (1) {
@@ -228,28 +225,26 @@ int main(void)
 
 		if (current_time - last_avgcalc_ms > avgcalc_interval) {
 			last_avgcalc_ms = current_time;
+
 			/*
-						imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
-						imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
-						imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
-						imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
-						imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
-						imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
-						imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
-						imu_status = bmi323_read_status(&bmi323_dev);
+			imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
+			imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
+			imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
+			imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
+			imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
+			imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
+			imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
+			imu_status = bmi323_read_status(&bmi323_dev);
 
-						float imu_ax_test = ((float)imu_ax) / 4096.f;
-						float imu_ay_test = ((float)imu_ay) / 4096.f;
-						float imu_az_test = ((float)imu_az) / 4096.f;
-						float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
-						float imu_gyry_test = ((float)imu_gyry) / 16.384f;
-						float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
-						float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
-
-						LOGOMATIC("Acceleration: x = %f g, y = %f g, z = %f g\n", imu_ax_test, imu_ay_test, imu_az_test);
-						LOGOMATIC("Angular rate: x = %f deg/s, y = %f deg/s, z = %f deg/s\n", imu_gyrx_test, imu_gyry_test, imu_gyrz_test);
-						LOGOMATIC("IMU temperature: %f", imu_temp_test);
+			float imu_ax_test = ((float)imu_ax) / 4096.f;
+			float imu_ay_test = ((float)imu_ay) / 4096.f;
+			float imu_az_test = ((float)imu_az) / 4096.f;
+			float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+			float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+			float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+			float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
 			*/
+
 			mag_temp = ewa_u(mag_read_temp(&mag_dev), mag_temp);
 			mag_hysteresis = ewa_u(mag_read_HANG(&mag_dev), mag_hysteresis);
 			mag_angle = ewa_u(mag_read_encoder_angle(&mag_dev), mag_angle);
@@ -257,14 +252,9 @@ int main(void)
 			mag_status = check_status(&mag_dev);
 
 			// TODO: check these conversion formulas
-			int16_t mag_temp_test = mag_temp - 60;
+			float mag_temp_test = (mag_temp / 256.0f) - 60;
 			float mag_angle_test = mag_angle * 360.f / 4096.0f;
 			float mag_hysteresis_test = mag_hysteresis * 360.f / 4096.0f;
-
-			LOGOMATIC("Mag temperature: %d C\n", mag_temp_test);
-			LOGOMATIC("Angle: %f deg\n", mag_angle_test);
-			LOGOMATIC("Turns: %d\n", mag_turns);
-			LOGOMATIC("Hysteresis Angle: %f\n", mag_hysteresis_test);
 
 			// uint8_t buffer[8] = {0};
 			// buffer[0] = (angle >> 8) & 0xFF;
@@ -296,33 +286,34 @@ int main(void)
 			test_data.mag_hysteresis = mag_hysteresis;
 		}
 
-		if (current_time - last_send_ms > send_interval) {
-			last_send_ms = current_time;
-			GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
-			GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
-			SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
 
-			if (imu_status != 0) {
-				LOGOMATIC("IMU is cooked");
-				Error_Handler();
-			}
+	if (current_time - last_send_ms > send_interval) {
 
-			if (mag_status != 0) {
-				LOGOMATIC("Mag is cooked");
-				mag_write_error(&mag_dev);
-				Error_Handler();
-			}
+		last_send_ms = current_time;
+		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
+		GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
+		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
+
+		if (imu_status != 0) {
+			LOGOMATIC("IMU is cooked");
+			Error_Handler();
 		}
 
-		/* TODO:
-
-			AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
-				static uint32_t millis_since_last = 0
-				if (millis since last < b)
-				only run loop every ~8-ish samples
-		*/
+		if (mag_status != 0) {
+			LOGOMATIC("Mag is cooked");
+			mag_write_error(&mag_dev);
+		}
 	}
-	/* USER CODE END 3 */
+
+	/* TODO:
+
+		AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
+			static uint32_t millis_since_last = 0
+			if (millis since last < b)
+			only run loop every ~8-ish samples
+	*/
+}
+/* USER CODE END 3 */
 }
 
 /**
@@ -331,10 +322,10 @@ int main(void)
  */
 void SystemClock_Config(void)
 {
-	LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
-	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_1) {}
+	LL_FLASH_SetLatency(LL_FLASH_LATENCY_5);
+	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_5) {}
 
-	LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
+	LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
 	while (LL_PWR_IsActiveFlag_VOS() == 0) {}
 	LL_RCC_HSI_Enable();
 
@@ -342,36 +333,28 @@ void SystemClock_Config(void)
 	while (LL_RCC_HSI_IsReady() != 1) {}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_HSI_SetDivider(LL_RCC_HSI_DIV_2);
-	LL_RCC_CSI_Enable();
-
-	/* Wait till CSI is ready */
-	while (LL_RCC_CSI_IsReady() != 1) {}
-
-	LL_RCC_CSI_SetCalibTrimming(32);
-	LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_CSI);
-	LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_4_8);
+	LL_RCC_HSI_SetDivider(LL_RCC_HSI_DIV_1);
+	LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_HSI);
+	LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_8_16);
 	LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
-	LL_RCC_PLL1_SetM(1);
-	LL_RCC_PLL1_SetN(32);
+	LL_RCC_PLL1_SetM(4);
+	LL_RCC_PLL1_SetN(22);
 	LL_RCC_PLL1_SetP(2);
-	LL_RCC_PLL1_SetQ(2);
+	LL_RCC_PLL1_SetQ(15);
 	LL_RCC_PLL1_SetR(2);
 	LL_RCC_PLL1Q_Enable();
+	LL_RCC_PLL1P_Enable();
+	LL_RCC_PLL1FRACN_Enable();
+	LL_RCC_PLL1_SetFRACN(4096);
 	LL_RCC_PLL1_Enable();
 
 	/* Wait till PLL is ready */
 	while (LL_RCC_PLL1_IsReady() != 1) {}
 
-	// LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
 	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL1);
 
 	/* Wait till System clock is ready */
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL1) {}
-
-	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (180 >> 1); i != 0; i--)
-		;
 
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
@@ -395,8 +378,6 @@ void SystemClock_Config(void)
 
 // }
 /* USER CODE END 4 */
-
-
 
 /**
  * @brief  This function is executed in case of error occurrence.
