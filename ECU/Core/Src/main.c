@@ -556,8 +556,8 @@ void SystemClock_Config(void)
 	/* Wait till HSI is ready */
 	while (LL_RCC_HSI_IsReady() != 1) {}
 
-	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 80, LL_RCC_PLLR_DIV_2);
+	LL_RCC_HSE_EnableCSS();
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
