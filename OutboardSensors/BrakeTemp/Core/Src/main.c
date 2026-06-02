@@ -27,12 +27,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "timer.h"
+
 #include "CANdler.h"
 #include "MLX90614_API.h"
 #include "MLX90614_SMBus_Driver.h"
-#include "can.h"
 #include "brake_emissivity.h"
+#include "can.h"
+#include "timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,64 +108,69 @@ int MLX90614_Configure_EEPROM(void)
 }
 
 // This function is triggered by TIM6 (one-pulse mode)
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance == TIM6) {
-        // Optional: Clear any lingering noise flags on the EXTI line
-        // that happened during the blanking period
-        __HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_11);
-    }
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim->Instance == TIM6) {
+		// Optional: Clear any lingering noise flags on the EXTI line
+		// that happened during the blanking period
+		__HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_11);
+	}
 
-	htim->Instance->SR   &= ~TIM_SR_UIF;  // clear update interrupt flag
+	htim->Instance->SR &= ~TIM_SR_UIF; // clear update interrupt flag
 }
 
 // This function is triggered by the rising edge interrupt from pin B11 (wheel_speed_in)
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    if (GPIO_Pin == GPIO_PIN_11) {
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if (GPIO_Pin == GPIO_PIN_11) {
 
-        // Timer-based cool-off check (Debounce)
+		// Timer-based cool-off check (Debounce)
 		// If TIM6 is actively running (CEN bit is set), we are inside the cool-off window. Reject this edge.
 		if ((htim6.Instance->CR1 & TIM_CR1_CEN) != 0) {
 			return;
 		}
 
-        temp_tick = HAL_GetTick();
+		temp_tick = HAL_GetTick();
 		temp_num_pulses++;
 
 		// Reset and restart the cool-off timer peripheral
-		htim6.Instance->CNT   = 0;			  // reset count
-		htim6.Instance->CR1  |= TIM_CR1_CEN;  // restart
+		htim6.Instance->CNT = 0;	    // reset count
+		htim6.Instance->CR1 |= TIM_CR1_CEN; // restart
 
 		// HAL_GetTick() is in ms resolution --> only push the number of pulses onto buffer
 		// after at least MIN_TICK_DELTA has elapsed.
-		if (temp_tick - last_tick < MIN_TICK_DELTA) return;
+		if (temp_tick - last_tick < MIN_TICK_DELTA) {
+			return;
+		}
 
-        // If buffer is full, take off the amount that is being kicked out
+		// If buffer is full, take off the amount that is being kicked out
 		if (num_pulse_intervals >= MAX_NUM_INTERVALS) {
 			total_time -= time_deltas[tail];
 			total_pulses -= pulses[tail];
-            head = (head + 1) & (MAX_NUM_INTERVALS - 1); // Buffer overflow: advance head
+			head = (head + 1) & (MAX_NUM_INTERVALS - 1); // Buffer overflow: advance head
 		} else {
-            num_pulse_intervals++;
+			num_pulse_intervals++;
 		}
 
 		// Push the current sample pair into the buffers
 		pulses[tail] = temp_num_pulses;
 		temp_num_pulses = 0;
-        time_deltas[tail] = temp_tick - last_tick;
+		time_deltas[tail] = temp_tick - last_tick;
 
 		// Increment running totals
 		total_pulses += pulses[tail];
 		total_time += time_deltas[tail];
 
-        tail = (tail + 1) & (MAX_NUM_INTERVALS - 1);
+		tail = (tail + 1) & (MAX_NUM_INTERVALS - 1);
 
-        last_tick = temp_tick;
-    }
+		last_tick = temp_tick;
+	}
 }
 
 // Note that pulses[] and time_deltas[] do NOT need to be zero'd out here
 // because the head and tail indices take care of bounds.
-void ResetRPMHistory(void) {
+void ResetRPMHistory(void)
+{
 	head = 0;
 	tail = 0;
 	num_pulse_intervals = 0;
@@ -173,13 +179,16 @@ void ResetRPMHistory(void) {
 	last_tick = 0;
 }
 
-float GetRPM(void) {
+float GetRPM(void)
+{
 	// This is more safe than just checking if total_pulses or num_pulse_intervals == 0
-	if (total_time == 0) return 0.0f;
+	if (total_time == 0) {
+		return 0.0f;
+	}
 
 	float rpm = ((float)total_pulses * HAL_tick_freq_hz) / total_time; // Pulses per second
-	rpm *= SECONDS_PER_MIN; // Pulses per min
-	rpm /= PULSES_PER_ROT; // Rotations per min
+	rpm *= SECONDS_PER_MIN;						   // Pulses per min
+	rpm /= PULSES_PER_ROT;						   // Rotations per min
 
 	return rpm;
 }
@@ -247,19 +256,21 @@ int main(void)
 	while (1) {
 		NVIC_DisableIRQ(EXTI15_10_IRQn); // Enter atomic section
 
-		//status = MLX90614_GetTa(MLX90614_ADDRESS, &ta); // Sensor ambient temperature
+		// status = MLX90614_GetTa(MLX90614_ADDRESS, &ta); // Sensor ambient temperature
 		status = MLX90614_GetTo(MLX90614_ADDRESS, &to); // Sensor object temperature
 		CAN_sendTemp(to);
 
 		// Reset wheel speed history after inactivity
-		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) ResetRPMHistory();
+		if (last_tick != 0 && HAL_GetTick() - last_tick > WHEEL_SPEED_TIMEOUT_TICKS) {
+			ResetRPMHistory();
+		}
 		CAN_sendRPM(GetRPM()); // Send RPM data
 
 		NVIC_EnableIRQ(EXTI15_10_IRQn); // Exit atomic section
 
 		HAL_Delay(BRAKETEMP_INTERVAL_MS); // Rate-limit CAN messages and temp sensor polling
-		/* USER CODE END WHILE */
-		/* USER CODE BEGIN 3 */
+						  /* USER CODE END WHILE */
+						  /* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
 }

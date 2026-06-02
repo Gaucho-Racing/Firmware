@@ -61,7 +61,8 @@ void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 2 */
 
-void WHEEL_SPEED_GPIO_INIT(void) {
+void WHEEL_SPEED_GPIO_INIT(void)
+{
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 	__HAL_RCC_GPIOB_CLK_ENABLE();

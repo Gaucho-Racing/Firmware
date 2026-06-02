@@ -32,10 +32,10 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_hal_fdcan.h"
+#include "stm32g4xx_hal_smbus.h"
+#include "stm32g4xx_hal_tim.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_lpuart.h"
-#include "stm32g4xx_hal_tim.h"
-#include "stm32g4xx_hal_smbus.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -46,14 +46,14 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 #define MLX90614_ADDRESS 0x5A
-#define BRAKETEMP_INTERVAL_MS 33 // 30 Hz transmission speed (will be slightly slower in practice)
+#define BRAKETEMP_INTERVAL_MS 33       // 30 Hz transmission speed (will be slightly slower in practice)
 #define WHEEL_SPEED_TIMEOUT_TICKS 1000 // 1 second of no pulse means the car stopped moving
-#define DEBOUNCE_NUM_10us 10 // Multiple of 100 microseconds
-#define MAX_RPM 1891 // Assumes 8 inch wheels @ max speed of 90 mph
+#define DEBOUNCE_NUM_10us 10	       // Multiple of 100 microseconds
+#define MAX_RPM 1891		       // Assumes 8 inch wheels @ max speed of 90 mph
 #define SECONDS_PER_MIN 60
-#define PULSES_PER_ROT 42 // TODO !!!
+#define PULSES_PER_ROT 42    // TODO !!!
 #define MAX_NUM_INTERVALS 32 // Must be a power of 2 and be storable in uint8_t
-#define MIN_TICK_DELTA 100 // 100ms (somewhat arbitrary)
+#define MIN_TICK_DELTA 100   // 100ms (somewhat arbitrary)
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
