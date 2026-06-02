@@ -14,7 +14,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_APPS_IMPLAUSIBLE_TIME_MS 100
 #define MAX_BUZZER_TIME_MS 1000
 
-#define REGEN_MIN_SPEED_MPH 3.106856f // MPH
+#define REGEN_MIN_SPEED_MPH 3.106856f // 5 KPH
 
 #define MAX_CURRENT_AMPS 300.0f	       // Determined by Ryan
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
