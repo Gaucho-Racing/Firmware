@@ -2,9 +2,9 @@
 #include <stdint.h>
 
 #include "GRCAN_BUS_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
-#include "GRCAN_CUSTOM_ID.h"
 #include "StateData.h"
 
 #ifndef CANDLER_H
