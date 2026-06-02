@@ -79,11 +79,11 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
 	canCfg.hal_fdcan_init.NominalPrescaler = 1;
 	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.NominalTimeSeg1 = 127; // Updated for 170MHz: (1+127+42)*1 = 170 ticks -> 1 Mbps
-	canCfg.hal_fdcan_init.NominalTimeSeg2 = 42;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119; // Setup for (1+119+40)*1 = 160 ticks which at 160 MHz yields 1 Mbps
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
 	canCfg.hal_fdcan_init.DataPrescaler = 8;
 	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Updated for 170MHz: (1+15+5)*8 = 168 ticks -> ~5 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 15; // Ignored as we are using CAN 2.0B without BRS
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;

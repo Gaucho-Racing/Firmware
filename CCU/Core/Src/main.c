@@ -178,14 +178,14 @@ void SystemClock_Config(void)
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
 
 	/* Insure 1us transition state at intermediate medium speed clock*/
-	for (__IO uint32_t i = (170 >> 1); i != 0; i--)
+	for (__IO uint32_t i = (160 >> 1); i != 0; i--)
 		;
 
 	/* Set AHB prescaler*/
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(170000000);
+	LL_SetSystemCoreClock(160000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
