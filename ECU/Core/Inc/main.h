@@ -102,8 +102,8 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 // GPIOC
-#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0
-#define BRAKE_F_SIGNAL_GPIO_Port GPIOC
+#define BSE_SIGNAL_Pin LL_GPIO_PIN_0 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
+#define BSE_SIGNAL_GPIO_Port GPIOC   /// Following net names, see @ref ADC_BUFFER_SIG_BSE
 #define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
 #define BSPD_SIGNAL_GPIO_Port GPIOC
 #define APPS1_SIGNAL_Pin LL_GPIO_PIN_2
@@ -122,10 +122,10 @@ void Error_Handler(void);
 #define ESTOP_SENSE_GPIO_Port GPIOA
 
 // GPIOB
-#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_0
-#define BRAKE_R_SIGNAL_GPIO_Port GPIOB
-#define BSE_SIGNAL_Pin LL_GPIO_PIN_1
-#define BSE_SIGNAL_GPIO_Port GPIOB
+#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
+#define BRAKE_F_SIGNAL_GPIO_Port GPIOB	 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
+#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_1 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
+#define BRAKE_R_SIGNAL_GPIO_Port GPIOB	 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
 #define LED_TEST_Pin LL_GPIO_PIN_11
 #define LED_TEST_GPIO_Port GPIOB
 #define AUX_SIGNAL_Pin LL_GPIO_PIN_14
