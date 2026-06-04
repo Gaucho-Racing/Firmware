@@ -222,7 +222,7 @@ int main(void)
 	results.signal_per_spad_kcps = 0xFFFF;
 	results.number_of_spad = 0xFFFF;
 	results.sigma_mm = 0xFFFF;
-	results.range_status = 0xFFFF;
+	results.range_status = 0xFF;
 
 	uint32_t last_avgcalc_ms = MillisecondsSinceBoot();
 	uint32_t last_send_ms = MillisecondsSinceBoot();
