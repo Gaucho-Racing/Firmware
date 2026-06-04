@@ -399,11 +399,11 @@ BO_ 2149581313 ECU_Ping_to_Debugger: 4 ECU
 
 BO_ 2149592580 ECU_ECU_Analog_Data_to_TCM: 20 ECU
  SG_ BSPD_Signal : 0|16@1+ (0.0015259022,0) [0|100] "%"  TCM
- SG_ BSE_Signal : 16|16@1+ (0.0015259022,0) [0|100] "%"  TCM
+ SG_ Brakeline_F_Signal : 16|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ APPS_1_Signal : 32|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ APPS_2_Signal : 48|16@1+ (0.0015259022,0) [0|100] "%"  TCM
- SG_ Brakeline_F_Signal : 64|16@1+ (0.0015259022,0) [0|100] "%"  TCM
- SG_ Brakeline_R_Signal : 80|16@1+ (0.0015259022,0) [0|100] "%"  TCM
+ SG_ Brakeline_R_Signal : 64|16@1+ (0.0015259022,0) [0|100] "%"  TCM
+ SG_ BSE_Signal : 80|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ Steering_Angle_Signal : 96|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ AUX_Signal : 112|16@1+ (0.0015259022,0) [0|100] "%"  TCM
  SG_ Acc_Pedal_Travel : 128|16@1+ (0.0015259022,0) [0|100] "%"  TCM
@@ -4313,11 +4313,11 @@ CM_ SG_ 2148532740 Timestamp "Time in millis";
 CM_ SG_ 2149581057 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
 CM_ SG_ 2149581313 Timestamp "Time in millis";
 CM_ SG_ 2149592580 BSPD_Signal "4-20 mA signal";
-CM_ SG_ 2149592580 BSE_Signal "4-20 mA signal";
+CM_ SG_ 2149592580 Brakeline_F_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 APPS_1_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 APPS_2_Signal "4-20 mA signal";
-CM_ SG_ 2149592580 Brakeline_F_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Brakeline_R_Signal "4-20 mA signal";
+CM_ SG_ 2149592580 BSE_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Steering_Angle_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 AUX_Signal "4-20 mA signal";
 CM_ SG_ 2149592580 Acc_Pedal_Travel "0-100% percentage";
