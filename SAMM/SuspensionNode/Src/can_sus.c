@@ -75,6 +75,9 @@ int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 		bus_config.rx_callback = TCM_Callback; // callback
 	}
 
+	// TODO Comment in/out for testing loopback
+	// bus_config.operating_mode = GRCAN_OPMODE_EXTERNAL_LOOPBACK;
+
 	bool result = GRCAN_InitBus(&bus_config);
 
 	if (!result) {
