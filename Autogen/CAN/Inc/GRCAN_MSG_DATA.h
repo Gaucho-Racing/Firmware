@@ -346,9 +346,9 @@ typedef struct {
 	/** 4-20 mA signal (Byte 6) */
 	uint16_t apps_2_signal;
 	/** 4-20 mA signal (Byte 8) */
-	uint16_t brakeline_r_signal;
-	/** 4-20 mA signal (Byte 10) */
 	uint16_t brakeline_f_signal;
+	/** 4-20 mA signal (Byte 10) */
+	uint16_t brakeline_r_signal;
 	/** 4-20 mA signal (Byte 12) */
 	uint16_t steering_angle_signal;
 	/** 4-20 mA signal (Byte 14) */
