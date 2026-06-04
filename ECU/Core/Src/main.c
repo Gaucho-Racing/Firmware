@@ -226,8 +226,8 @@ void ADC_Configure(void)
 	Init_Vals_ADC1.PS_Value = PS_8;	    // TODO: change later
 	Init_Vals_ADC1.Res = RESOLUTION_12; // TODO: change later
 	Init_Vals_ADC1.Num_Pin_Port_Objs = 2;
-	Pin_Ports p1[2] = {{.pin = BRAKE_F_SIGNAL_Pin | BSPD_SENSE_Pin | APPS1_SIGNAL_Pin | APPS2_SIGNAL_Pin, .port = GPIOC},
-			   {.pin = BRAKE_R_SIGNAL_Pin | BSE_SIGNAL_Pin | AUX_SIGNAL_Pin, .port = GPIOB}};
+	Pin_Ports p1[2] = {{.pin = BSE_SIGNAL_Pin | BSPD_SENSE_Pin | APPS1_SIGNAL_Pin | APPS2_SIGNAL_Pin, .port = GPIOC},
+			   {.pin = BRAKE_F_SIGNAL_Pin | BRAKE_R_SIGNAL_Pin | AUX_SIGNAL_Pin, .port = GPIOB}};
 	Init_Vals_ADC1.Pins = p1;
 	Init_Vals_ADC1.Num_Channels = 7; // check multiple GPIO stuff
 	Channel c1[] = {ADC_CHANNEL_6, ADC_CHANNEL_7, ADC_CHANNEL_8, ADC_CHANNEL_9, ADC_CHANNEL_15, ADC_CHANNEL_12, ADC_CHANNEL_5};
