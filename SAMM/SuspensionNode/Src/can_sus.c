@@ -73,28 +73,6 @@ int SusNode_CAN_Init(GRCAN_BUS_ID busID)
 	} else if (bus == GRCAN_BUS_DATA) {
 		bus_config.fdcan_instance = FDCAN1;
 		bus_config.rx_callback = TCM_Callback; // callback
-
-		Sus_Node sus_node = (Sus_Node)localNode;
-		TireTemp_Node tire_temp_node;
-		switch (sus_node) {
-			case Sus_FL:
-				tire_temp_node = TireTemp_FL;
-				break;
-			case Sus_FR:
-				tire_temp_node = TireTemp_FR;
-				break;
-			case Sus_RL:
-				tire_temp_node = TireTemp_RL;
-				break;
-			case Sus_RR:
-				tire_temp_node = TireTemp_RR;
-				break;
-			default:
-				LOGOMATIC("Invalid suspension node, defaulting to FL\n");
-				tire_temp_node = TireTemp_FL;
-				break;
-		}
-		sensorNode = (GRCAN_NODE_ID)tire_temp_node;
 	}
 
 	bool result = GRCAN_InitBus(&bus_config);

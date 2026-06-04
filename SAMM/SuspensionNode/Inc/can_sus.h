@@ -8,20 +8,6 @@
 #include "Logomatic.h"
 #include "NodeID.h"
 
-typedef enum {
-	TireTemp_FL = GRCAN_TireTemp_FL,
-	TireTemp_FR = GRCAN_TireTemp_FR,
-	TireTemp_RL = GRCAN_TireTemp_RL,
-	TireTemp_RR = GRCAN_TireTemp_RR
-} TireTemp_Node;
-
-typedef enum {
-	Sus_FL = GRCAN_Suspension_FL,
-	Sus_FR = GRCAN_Suspension_FR,
-	Sus_RL = GRCAN_Suspension_RL,
-	Sus_RR = GRCAN_Suspension_RR
-} Sus_Node;
-
 typedef struct {
 	/* IMU Data */
 	uint16_t bmi323_acc_x;
