@@ -256,6 +256,11 @@ int main(void)
 			float mag_angle_test = mag_angle * 360.f / 4096.0f;
 			float mag_hysteresis_test = mag_hysteresis * 360.f / 4096.0f;
 
+			// Used for debugging so keep in
+			UNUSED(mag_temp_test);
+			UNUSED(mag_angle_test);
+			UNUSED(mag_hysteresis_test);
+
 			// uint8_t buffer[8] = {0};
 			// buffer[0] = (angle >> 8) & 0xFF;
 			// buffer[1] = angle & 0xFF;
