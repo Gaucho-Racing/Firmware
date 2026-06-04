@@ -52,7 +52,7 @@ ECU_StateData stateLump = {
     // Pedals
     .brake_f_min = 720,
     .brake_r_min = 700,
-    .brake_bse_min = 0,	// Unused
+    .brake_bse_min = 0, // Unused
     .apps_1_min = 2375,
     .apps_2_min = 2430,
     .apps_1_max = 1897,
