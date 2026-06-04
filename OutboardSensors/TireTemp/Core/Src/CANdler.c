@@ -91,7 +91,7 @@ CAN_STATUS defaultSTM32G431x8_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallba
 	return CAN_ERROR;
 }
 
-void CANInitialize()
+void CANInitialize(void)
 {
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PLL);
 	CANConfig my_cfg;
@@ -122,6 +122,7 @@ void CAN_sendTemp(float data[TIRETEMP_PIXELS], int msgNumber)
 							      // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
 	msg.tx_header.DataLength = FDCAN_DLC_BYTES_64;
 	msg.tx_header.BitRateSwitch = FDCAN_BRS_ON;
+	msg.tx_header.FDFormat = FDCAN_FD_CAN;
 	msg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS; // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 	msg.tx_header.MessageMarker = 0;		       // also change this to a real address if you change fifo control
 
@@ -143,6 +144,7 @@ void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 	pingMsg.tx_header.DataLength = FDCAN_DLC_BYTES_4;
 	pingMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	pingMsg.tx_header.FDFormat = FDCAN_FD_CAN;
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
 
