@@ -3657,7 +3657,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    Brakeline F Signal:
+    BSE Signal:
       bit_start: 16
       comment: 4-20 mA signal
       data type: u16
@@ -3689,7 +3689,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    BSE Signal:
+    Brakeline F Signal:
       bit_start: 80
       comment: 4-20 mA signal
       data type: u16
