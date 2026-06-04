@@ -53,18 +53,18 @@ extern "C" {
 
 /* ADC mappings from `ADC_buffers` and `ADC_outputs` arrays to signal/sense names */
 enum {
-	/* Brake Signal Encoder - Signal */
-	ADC_BUFFER_SIG_BSE = 0,
+	/* Front Brake Pressure - Signal */
+	ADC_BUFFER_SIG_BRAKE_F = 0,
 	/* Brake System Plausibility Device - Signal */
 	ADC_BUFFER_SIG_BSPD = 1,
 	/* Accelerator Pedal Position Sensor 1 - Signal */
 	ADC_BUFFER_SIG_APPS1 = 2,
 	/* Accelerator Pedal Position Sensor 2 - Signal */
 	ADC_BUFFER_SIG_APPS2 = 3,
-	/* Front Brake Pressure - Signal */
-	ADC_BUFFER_SIG_BRAKE_F = 4,
 	/* Rear Brake Pressure - Signal */
-	ADC_BUFFER_SIG_BRAKE_R = 5,
+	ADC_BUFFER_SIG_BRAKE_R = 4,
+	/* Brake Signal Encoder - Signal */
+	ADC_BUFFER_SIG_BSE = 5,
 	/* Auxiliary - Signal */
 	ADC_BUFFER_SIG_AUX = 6,
 	/* Brake System Plausibility Device - Sense */
@@ -102,8 +102,8 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 // GPIOC
-#define BSE_SIGNAL_Pin LL_GPIO_PIN_0
-#define BSE_SIGNAL_GPIO_Port GPIOC
+#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0
+#define BRAKE_F_SIGNAL_GPIO_Port GPIOC
 #define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
 #define BSPD_SIGNAL_GPIO_Port GPIOC
 #define APPS1_SIGNAL_Pin LL_GPIO_PIN_2
@@ -122,10 +122,10 @@ void Error_Handler(void);
 #define ESTOP_SENSE_GPIO_Port GPIOA
 
 // GPIOB
-#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0
-#define BRAKE_F_SIGNAL_GPIO_Port GPIOB
-#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_1
+#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_0
 #define BRAKE_R_SIGNAL_GPIO_Port GPIOB
+#define BSE_SIGNAL_Pin LL_GPIO_PIN_1
+#define BSE_SIGNAL_GPIO_Port GPIOB
 #define LED_TEST_Pin LL_GPIO_PIN_11
 #define LED_TEST_GPIO_Port GPIOB
 #define AUX_SIGNAL_Pin LL_GPIO_PIN_14
