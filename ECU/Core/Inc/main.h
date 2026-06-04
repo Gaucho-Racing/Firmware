@@ -53,18 +53,18 @@ extern "C" {
 
 /* ADC mappings from `ADC_buffers` and `ADC_outputs` arrays to signal/sense names */
 enum {
-	/* Front Brake Pressure - Signal */
-	ADC_BUFFER_SIG_BRAKE_F = 0,
+	/* Brake Signal Encoder - Signal */
+	ADC_BUFFER_SIG_BSE = 0,
 	/* Brake System Plausibility Device - Signal */
 	ADC_BUFFER_SIG_BSPD = 1,
 	/* Accelerator Pedal Position Sensor 1 - Signal */
 	ADC_BUFFER_SIG_APPS1 = 2,
 	/* Accelerator Pedal Position Sensor 2 - Signal */
 	ADC_BUFFER_SIG_APPS2 = 3,
+	/* Front Brake Pressure - Signal */
+	ADC_BUFFER_SIG_BRAKE_F = 0,
 	/* Rear Brake Pressure - Signal */
 	ADC_BUFFER_SIG_BRAKE_R = 4,
-	/* Brake Signal Encoder - Signal */
-	ADC_BUFFER_SIG_BSE = 5,
 	/* Auxiliary - Signal */
 	ADC_BUFFER_SIG_AUX = 6,
 	/* Brake System Plausibility Device - Sense */
