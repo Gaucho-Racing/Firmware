@@ -3681,7 +3681,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    Brakeline R Signal:
+    Brakeline F Signal:
       bit_start: 64
       comment: 4-20 mA signal
       data type: u16
@@ -3689,7 +3689,7 @@ Message ID:
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
-    Brakeline F Signal:
+    Brakeline R Signal:
       bit_start: 80
       comment: 4-20 mA signal
       data type: u16
