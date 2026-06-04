@@ -340,7 +340,7 @@ typedef struct {
 	/** 4-20 mA signal (Byte 0) */
 	uint16_t bspd_signal;
 	/** 4-20 mA signal (Byte 2) */
-	uint16_t brakeline_f_signal;
+	uint16_t bse_signal;
 	/** 4-20 mA signal (Byte 4) */
 	uint16_t apps_1_signal;
 	/** 4-20 mA signal (Byte 6) */
@@ -348,7 +348,7 @@ typedef struct {
 	/** 4-20 mA signal (Byte 8) */
 	uint16_t brakeline_r_signal;
 	/** 4-20 mA signal (Byte 10) */
-	uint16_t bse_signal;
+	uint16_t brakeline_f_signal;
 	/** 4-20 mA signal (Byte 12) */
 	uint16_t steering_angle_signal;
 	/** 4-20 mA signal (Byte 14) */
