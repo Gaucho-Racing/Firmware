@@ -25,9 +25,9 @@ void WHEEL_SPEED_TIMER_INIT(TIM_HandleTypeDef *handle, uint32_t period_multiple_
 	handle->Init.Period = period_multiple_of_10us - 1; // 0.1ms ticks
 	handle->Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
-    if (HAL_TIM_Base_Init(handle) != HAL_OK) {
-        Error_Handler();
-    }
+	if (HAL_TIM_Base_Init(handle) != HAL_OK) {
+		Error_Handler();
+	}
 
 	// 3. Set One-Pulse Mode directly via the Control Register 1 (CR1)
 	// This tells TIM6 to automatically stop itself (clear CEN bit) when the update event fires.
