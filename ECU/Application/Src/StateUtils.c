@@ -140,7 +140,6 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	}
 #endif
 
-
 	return (stateData->Brake_F_Signal > stateData->brake_f_min) || (stateData->Brake_R_Signal > stateData->brake_r_min);
 }
 
