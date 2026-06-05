@@ -13,9 +13,6 @@
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 
-#define ECU_ID GRCAN_ECU
-#define PING_ID MSG_PING
-
 CANHandle *can_handler;
 
 CAN_STATUS defaultSTM32G431x8_CANCfg(FDCAN_GlobalTypeDef *instance, CAN_RXCallback callback, CANConfig *out_cfg, uint32_t Mode, uint32_t numStdFilters, uint32_t numExtFilters)

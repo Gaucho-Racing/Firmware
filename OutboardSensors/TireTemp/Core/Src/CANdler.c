@@ -13,9 +13,6 @@
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 
-#define ECU_ID GRCAN_ECU
-#define PING_ID MSG_PING
-
 CANHandle *can_handler;
 
 static GRCAN_MSG_ID canMsgNumber[TIRETEMP_ROUNDS] = {GRCAN_TIRE_TEMP_FRAME_0,  GRCAN_TIRE_TEMP_FRAME_1,	 GRCAN_TIRE_TEMP_FRAME_2,  GRCAN_TIRE_TEMP_FRAME_3,  GRCAN_TIRE_TEMP_FRAME_4,
