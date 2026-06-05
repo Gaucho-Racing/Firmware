@@ -140,7 +140,7 @@ void CAN_sendPing(GRCAN_NODE_ID to, uint32_t data)
 	pingMsg.tx_header.TxFrameType = FDCAN_DATA_FRAME;
 	pingMsg.tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 	pingMsg.tx_header.DataLength = FDCAN_DLC_BYTES_4;
-	pingMsg.tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+	pingMsg.tx_header.BitRateSwitch = FDCAN_BRS_ON;
 	pingMsg.tx_header.FDFormat = FDCAN_FD_CAN;
 	pingMsg.tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	pingMsg.tx_header.MessageMarker = 0;
