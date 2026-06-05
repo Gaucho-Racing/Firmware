@@ -1,0 +1,11 @@
+add_library(MLX90614_LIB INTERFACE)
+
+target_include_directories(MLX90614_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Inc)
+
+target_sources(
+	MLX90614_LIB
+	INTERFACE
+		${CMAKE_CURRENT_LIST_DIR}/Src/MLX90614_API.c
+)
+
+target_link_libraries(MLX90614_LIB INTERFACE m)
