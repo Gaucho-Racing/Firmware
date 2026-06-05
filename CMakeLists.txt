@@ -117,6 +117,7 @@ include("${lib_path}/Vendor/CMSIS_5/cmsis_5.cmake")
 include("${lib_path}/Vendor/STM32_HAL_LL/cube.cmake")
 add_subdirectory("${lib_path}/Vendor/BCC")
 include("${lib_path}/Vendor/MLX90640/combined.cmake")
+include("${lib_path}/Vendor/MLX90614/combined.cmake")
 
 # Platforms
 include("${platform_path}/STM32G474xE/chip.cmake")
@@ -152,7 +153,8 @@ add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
 # add_gr_project(STM32G474xE DashPanel)
 add_gr_project(STM32G474xE CANine)
-add_gr_project(STM32G431x8 TireTemp)
+add_gr_project(STM32G431x8 OutboardSensors TireTemp)
+add_gr_project(STM32G431x8 OutboardSensors BrakeTemp)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)

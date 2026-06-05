@@ -28,13 +28,11 @@ project(${CMAKE_PROJECT_NAME})
 
 add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_compile_definitions(${GR_PROJECT_NAME}_USER_CODE INTERFACE NODE=${NODE})
-
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		# Core
-		Core/Src/adc.c
+		Core/Src/CANdler.c
 		Core/Src/crc.c
 		Core/Src/gpio.c
 		Core/Src/i2c.c
@@ -50,6 +48,7 @@ target_link_libraries(
 		CANfigurator
 		BitManipulations_Lib
 		MLX90640_LIB
+		PERIPHERAL_TIMEDCAN_LIB
 )
 
 target_include_directories(

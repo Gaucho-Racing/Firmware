@@ -428,10 +428,10 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 	vdd = MLX90640_GetVdd(frameData, params);
 	ta = MLX90640_GetTa(frameData, params);
 
-	ta4 = (ta + 273.15);
+	ta4 = (ta + 273.15f);
 	ta4 = ta4 * ta4;
 	ta4 = ta4 * ta4;
-	tr4 = (tr + 273.15);
+	tr4 = (tr + 273.15f);
 	tr4 = tr4 * tr4;
 	tr4 = tr4 * tr4;
 	taTr = tr4 - (tr4 - ta4) / emissivity;
@@ -440,10 +440,10 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 	kvScale = POW2(params->kvScale);
 	alphaScale = POW2(params->alphaScale);
 
-	alphaCorrR[0] = 1 / (1 + params->ksTo[0] * 40);
-	alphaCorrR[1] = 1;
-	alphaCorrR[2] = (1 + params->ksTo[1] * params->ct[2]);
-	alphaCorrR[3] = alphaCorrR[2] * (1 + params->ksTo[2] * (params->ct[3] - params->ct[2]));
+	alphaCorrR[0] = 1.f / (1.f + params->ksTo[0] * 40.f);
+	alphaCorrR[1] = 1.f;
+	alphaCorrR[2] = (1.f + params->ksTo[1] * params->ct[2]);
+	alphaCorrR[3] = alphaCorrR[2] * (1.f + params->ksTo[2] * (params->ct[3] - params->ct[2]));
 
 	//------------------------- Gain calculation -----------------------------------
 
@@ -455,11 +455,11 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 	irDataCP[0] = (int16_t)frameData[776] * gain;
 	irDataCP[1] = (int16_t)frameData[808] * gain;
 
-	irDataCP[0] = irDataCP[0] - params->cpOffset[0] * (1 + params->cpKta * (ta - 25)) * (1 + params->cpKv * (vdd - 3.3));
+	irDataCP[0] = irDataCP[0] - params->cpOffset[0] * (1.f + params->cpKta * (ta - 25.f)) * (1.f + params->cpKv * (vdd - 3.3f));
 	if (mode == params->calibrationModeEE) {
-		irDataCP[1] = irDataCP[1] - params->cpOffset[1] * (1 + params->cpKta * (ta - 25)) * (1 + params->cpKv * (vdd - 3.3));
+		irDataCP[1] = irDataCP[1] - params->cpOffset[1] * (1.f + params->cpKta * (ta - 25.f)) * (1.f + params->cpKv * (vdd - 3.3f));
 	} else {
-		irDataCP[1] = irDataCP[1] - (params->cpOffset[1] + params->ilChessC[0]) * (1 + params->cpKta * (ta - 25)) * (1 + params->cpKv * (vdd - 3.3));
+		irDataCP[1] = irDataCP[1] - (params->cpOffset[1] + params->ilChessC[0]) * (1.f + params->cpKta * (ta - 25.f)) * (1.f + params->cpKv * (vdd - 3.3f));
 	}
 
 	for (int pixelNumber = 0; pixelNumber < 768; pixelNumber++) {
@@ -479,7 +479,7 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 
 			kta = params->kta[pixelNumber] / ktaScale;
 			kv = params->kv[pixelNumber] / kvScale;
-			irData = irData - params->offset[pixelNumber] * (1 + kta * (ta - 25)) * (1 + kv * (vdd - 3.3));
+			irData = irData - params->offset[pixelNumber] * (1.f + kta * (ta - 25.f)) * (1.f + kv * (vdd - 3.3f));
 
 			if (mode != params->calibrationModeEE) {
 				irData = irData + params->ilChessC[2] * ((ilPattern << 1) - 1) - params->ilChessC[1] * conversionPattern;
@@ -489,13 +489,13 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 			irData = irData / emissivity;
 
 			alphaCompensated = SCALEALPHA * alphaScale / params->alpha[pixelNumber];
-			alphaCompensated = alphaCompensated * (1 + params->KsTa * (ta - 25));
+			alphaCompensated = alphaCompensated * (1.f + params->KsTa * (ta - 25.f));
 
 			Sx = alphaCompensated * alphaCompensated * alphaCompensated * (irData + alphaCompensated * taTr);
 
 			Sx = sqrt(sqrt(Sx)) * params->ksTo[1];
 
-			To = sqrt(sqrt(irData / (alphaCompensated * (1 - params->ksTo[1] * 273.15) + Sx) + taTr)) - 273.15;
+			To = sqrt(sqrt(irData / (alphaCompensated * (1.f - params->ksTo[1] * 273.15f) + Sx) + taTr)) - 273.15f;
 
 			if (To < params->ct[1]) {
 				range = 0;
@@ -507,7 +507,7 @@ void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, flo
 				range = 3;
 			}
 
-			To = sqrt(sqrt(irData / (alphaCompensated * alphaCorrR[range] * (1 + params->ksTo[range] * (To - params->ct[range]))) + taTr)) - 273.15;
+			To = sqrt(sqrt(irData / (alphaCompensated * alphaCorrR[range] * (1.f + params->ksTo[range] * (To - params->ct[range]))) + taTr)) - 273.15f;
 
 			result[pixelNumber] = To;
 		}
