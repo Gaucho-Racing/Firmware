@@ -256,9 +256,11 @@ int main(void)
 
 	while (1) {
 		if (HAL_GetTick() < delay) {
-			continue; // The MLX90614 commands below take < 1 ms on average
+			LL_mDelay(1);
+			continue;
 		}
 
+		// The MLX90614 commands below take < 1 ms on average
 		delay = HAL_GetTick() + BRAKETEMP_INTERVAL_MS;
 
 		NVIC_DisableIRQ(EXTI15_10_IRQn); // Enter atomic section

@@ -165,9 +165,11 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		if (HAL_GetTick() < delay) {
-			continue; // Note that the MLX90640 commands below takes ~129ms on average!
+			LL_mDelay(1);
+			continue;
 		}
 
+		// Note that the MLX90640 commands below takes a little over 129ms on average!
 		delay = HAL_GetTick() + TIRETEMP_TOTAL_INTERVAL_MS;
 
 		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
