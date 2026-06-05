@@ -61,6 +61,7 @@
 
 // MLX stuff
 static uint16_t eeMLX90614[32];
+uint32_t delay = 0;
 float ta = 0.0, to = 0.0;
 int status;
 
@@ -254,6 +255,10 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 
 	while (1) {
+		if (HAL_GetTick() < delay) continue; // The MLX90614 commands below take < 1 ms on average
+
+		delay = HAL_GetTick() + BRAKETEMP_INTERVAL_MS;
+
 		NVIC_DisableIRQ(EXTI15_10_IRQn); // Enter atomic section
 
 		// status = MLX90614_GetTa(MLX90614_ADDRESS, &ta); // Sensor ambient temperature
@@ -268,9 +273,8 @@ int main(void)
 
 		NVIC_EnableIRQ(EXTI15_10_IRQn); // Exit atomic section
 
-		HAL_Delay(BRAKETEMP_INTERVAL_MS); // Rate-limit CAN messages and temp sensor polling
-						  /* USER CODE END WHILE */
-						  /* USER CODE BEGIN 3 */
+		/* USER CODE END WHILE */
+		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
 }

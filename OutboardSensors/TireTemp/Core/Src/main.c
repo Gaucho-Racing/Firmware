@@ -65,8 +65,9 @@ paramsMLX90640 mlx90640;
 static uint16_t eeMLX90640[832];
 static uint16_t mlx90640Frame[834];
 static float mlx90640To[768];
-int status;
-float tr;
+uint32_t delay = 0;
+float tr = 0.0;
+int status = 0;
 
 /* USER CODE END PV */
 
@@ -163,6 +164,9 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
+		if (HAL_GetTick() < delay) continue; // Note that the MLX90640 commands below takes ~129ms on average!
+
+		delay = HAL_GetTick() + TIRETEMP_TOTAL_INTERVAL_MS;
 
 		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
 
@@ -181,8 +185,6 @@ int main(void)
 		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
 			CAN_sendTemp(mlx90640To, i);
 		}
-
-		HAL_Delay(TIRETEMP_TOTAL_INTERVAL_MS);
 
 		/* USER CODE END WHILE */
 

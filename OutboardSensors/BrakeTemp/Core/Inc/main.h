@@ -51,7 +51,7 @@ extern "C" {
 #define DEBOUNCE_NUM_10us 10	       // Multiple of 100 microseconds
 #define MAX_RPM 1891		       // Assumes 8 inch wheels @ max speed of 90 mph
 #define SECONDS_PER_MIN 60
-#define PULSES_PER_ROT 42    // TODO !!!
+#define PULSES_PER_ROT 6    // This is often the same as the number of teeth in the gear in front of the Hall Effect sensor
 #define MAX_NUM_INTERVALS 32 // Must be a power of 2 and be storable in uint8_t
 #define MIN_TICK_DELTA 100   // 100ms (somewhat arbitrary)
 /* USER CODE END EC */
