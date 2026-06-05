@@ -140,7 +140,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	}
 #endif
 
-	// BSE unused
+
 	return (stateData->Brake_F_Signal > stateData->brake_f_min) || (stateData->Brake_R_Signal > stateData->brake_r_min);
 }
 
@@ -150,7 +150,6 @@ float CalcBrakePressure(volatile const ECU_StateData *stateData)
 	return 0;
 #endif
 
-	// BSE unused
 	float psi_front = stateData->Brake_F_Signal / 4096.0f * 5000.0f;
 	float psi_rear = stateData->Brake_R_Signal / 4096.0f * 5000.0f;
 	return fmaxf(psi_front, psi_rear);
