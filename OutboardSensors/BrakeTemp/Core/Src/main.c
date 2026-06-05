@@ -255,7 +255,9 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 
 	while (1) {
-		if (HAL_GetTick() < delay) continue; // The MLX90614 commands below take < 1 ms on average
+		if (HAL_GetTick() < delay) {
+			continue; // The MLX90614 commands below take < 1 ms on average
+		}
 
 		delay = HAL_GetTick() + BRAKETEMP_INTERVAL_MS;
 

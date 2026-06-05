@@ -164,7 +164,9 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		if (HAL_GetTick() < delay) continue; // Note that the MLX90640 commands below takes ~129ms on average!
+		if (HAL_GetTick() < delay) {
+			continue; // Note that the MLX90640 commands below takes ~129ms on average!
+		}
 
 		delay = HAL_GetTick() + TIRETEMP_TOTAL_INTERVAL_MS;
 
