@@ -39,8 +39,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define BMI323_CS_GPIO_Port GPIOA
-#define BMI323_CS_Pin GPIO_PIN_4
+// #define BMI323_CS_GPIO_Port GPIOA
+// #define BMI323_CS_Pin GPIO_PIN_4
 #define MAG_CS_GPIO_Port GPIOB
 #define MAG_CS_Pin GPIO_PIN_10
 /* USER CODE END PTD */
@@ -193,8 +193,8 @@ int main(void)
 
 	// Initialize magnetic encoder
 	if (init_status != HAL_OK) {
-		LOGOMATIC("MAG initialization failed!\n");
-		// Error_Handler();
+		LOGOMATIC("MAG initialization failed!\n"); // logomatic does NOT work for SAMM lol
+		Error_Handler();
 	}
 
 	/* USER CODE BEGIN WHILE */

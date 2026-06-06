@@ -10,6 +10,7 @@
 
 typedef struct {
 	/* IMU Data */
+	/*
 	uint16_t bmi323_acc_x;
 	uint16_t bmi323_acc_y;
 	uint16_t bmi323_acc_z;
@@ -18,6 +19,7 @@ typedef struct {
 	uint16_t bmi323_gyro_z;
 	uint16_t bmi323_temp;
 	uint16_t bmi323_status;
+	*/
 
 	/* Mag Encoder Data */
 	uint16_t mag_temp;
