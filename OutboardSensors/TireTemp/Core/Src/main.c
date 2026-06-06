@@ -20,7 +20,6 @@
 #include "main.h"
 
 #include "NodeID.h"
-#include "adc.h"
 #include "crc.h"
 #include "gpio.h"
 #include "i2c.h"
@@ -30,8 +29,11 @@
 #include <arm_math.h>
 #include <stdio.h>
 
+#include "CANdler.h"
 #include "MLX90640_API.h"
 #include "MLX90640_I2C_Driver.h"
+#include "can.h"
+#include "tire_emissivity.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,21 +58,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-/* Buffer used for transmission */
-uint8_t aTxBuffer[] = "****SPI - Two Boards communication based on Polling **** SPI Message ******** SPI Message ******** SPI Message ****";
 
 // MLX stuff
-float emmissivity = 0.95;
 uint16_t MLX90640_address = 0x33;
 paramsMLX90640 mlx90640;
 static uint16_t eeMLX90640[832];
 static uint16_t mlx90640Frame[834];
 static float mlx90640To[768];
-int status;
-float tr;
+uint32_t delay = 0;
+float tr = 0.0;
+int status = 0;
 
-/* Buffer used for reception */
-uint8_t aRxBuffer[BUFFERSIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,6 +84,26 @@ PUTCHAR_PROTOTYPE
 {
 	ITM_SendChar(ch);
 	return ch;
+}
+
+int MLX90640_FullReset(void)
+{
+	HAL_Delay(50);
+	while (MLX90640_SetRefreshRate(MLX90640_address, 0x03) != 0) {
+		HAL_Delay(50);
+	}
+	while (MLX90640_SetInterleavedMode(MLX90640_address) != 0) {
+		HAL_Delay(50);
+	}
+	while (MLX90640_DumpEE(MLX90640_address, eeMLX90640) < 0) {
+		HAL_Delay(50);
+	}
+	while (MLX90640_ExtractParameters(eeMLX90640, &mlx90640) < 0) {
+		HAL_Delay(50);
+	}
+	HAL_Delay(50);
+
+	return 0;
 }
 
 /* USER CODE END 0 */
@@ -129,7 +147,6 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_ADC1_Init();
 	MX_CRC_Init();
 	MX_I2C2_Init();
 	/* USER CODE BEGIN 2 */
@@ -137,38 +154,42 @@ int main(void)
 	/* Configure LED2 */
 	// BSP_LED_Init(LED2);
 
-	/*##-1- Start the Full Duplex Communication process ########################*/
-	/* While the SPI in TransmitReceive process, user can transmit data through
-	   "aTxBuffer" buffer & receive data through "aRxBuffer" */
-	/* Timeout is set to 5S */
+	CANInitialize();
+	can_start(can_handler);
 
-	status = MLX90640_SetRefreshRate(MLX90640_address, 0x07);
-
-	status = MLX90640_DumpEE(MLX90640_address, eeMLX90640);
-	if (status != 0) {
-		Error_Handler();
-	}
-
-	status = MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
-	if (status != 0) {
-		Error_Handler();
-	}
+	MLX90640_FullReset();
 
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-
-		status = MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
-		if (status != 0) {
-			Error_Handler();
+		if (HAL_GetTick() < delay) {
+			LL_mDelay(1);
+			continue;
 		}
-		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640);
-		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, emmissivity, tr, mlx90640To);
+
+		// Note that the MLX90640 commands below takes a little over 129ms on average!
+		delay = HAL_GetTick() + TIRETEMP_TOTAL_INTERVAL_MS;
+
+		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
+
+		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640) - TIRETEMP_TA_SHIFT;
+		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, GR_TIRE_EMISSIVITY, tr, mlx90640To);
 		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
 		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
-		// HAL_Delay(16);
+
+		MLX90640_GetFrameData(MLX90640_address, mlx90640Frame);
+
+		tr = MLX90640_GetTa(mlx90640Frame, &mlx90640) - TIRETEMP_TA_SHIFT;
+		MLX90640_CalculateTo(mlx90640Frame, &mlx90640, GR_TIRE_EMISSIVITY, tr, mlx90640To);
+		MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
+		MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
+
+		for (size_t i = 0; i < TIRETEMP_ROUNDS; i++) {
+			CAN_sendTemp(mlx90640To, i);
+		}
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -198,13 +219,16 @@ void SystemClock_Config(void)
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
 	RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
-	RCC_OscInitStruct.PLL.PLLN = 85;
+	RCC_OscInitStruct.PLL.PLLN = 80;
 	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
 	RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
 	RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
+
+	// Make sure that the PLL Q output is enabled (PLL R output seems to be enabled by default because its for SysClock)
+	__HAL_RCC_PLLCLKOUT_ENABLE(RCC_PLL_48M1CLK);
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */
