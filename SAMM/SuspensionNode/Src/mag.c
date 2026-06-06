@@ -69,6 +69,10 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 	HAL_StatusTypeDef send_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_bytes, rx_dummy, 2, HAL_MAX_DELAY);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
+	if (send_res != HAL_OK) {
+		return 0xFFFF;
+	}
+
 	LL_mDelay(1);
 
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
