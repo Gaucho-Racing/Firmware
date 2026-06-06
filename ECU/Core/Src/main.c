@@ -552,9 +552,9 @@ void SystemClock_Config(void)
 	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
 	LL_PWR_EnableRange1BoostMode();
-	LL_RCC_HSI_Enable();
-	/* Wait till HSI is ready */
-	while (LL_RCC_HSI_IsReady() != 1) {}
+	LL_RCC_HSE_Enable();
+	/* Wait till HSE is ready */
+	while (LL_RCC_HSE_IsReady() != 1) {}
 
 	LL_RCC_HSE_EnableCSS();
 	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
