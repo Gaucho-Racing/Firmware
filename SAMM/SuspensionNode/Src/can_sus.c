@@ -3,9 +3,7 @@
 #include "can_cfg.h"
 
 static GRCAN_MSG_ID CAN_SUS_MSG_DATA = GRCAN_SUSPENSION_IMU_MAG_DATA;
-static GRCAN_NODE_ID sensorNode = GRCAN_ALL; // Before initialization
 static GRCAN_NODE_ID localNode = LOCAL_GR_ID;
-static GRCAN_NODE_ID TCMNode = GRCAN_TCM;
 static GRCAN_BUS_ID mainBus = GRCAN_BUS_DATA;
 static GRCAN_BUS_ID subnetBus = GRCAN_BUS_DATA_SUBNET;
 static uint32_t data_length = 64;
@@ -16,37 +14,17 @@ uint32_t *forwarded_TCM_data = 0;
 // For messages from tire temp
 void TireTemp_Callback(uint32_t id, void *data, uint32_t size)
 {
-
-	GRCAN_Fancy_ID GRCAN_Fancy_ID;
-	GRCAN_Fancy_ID.srcID = 0;
-	GRCAN_Fancy_ID.destNode = 0;
-	GRCAN_Fancy_ID.messageID = 0;
-
-	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
-
-	forwarded_tire_temp_data = (uint32_t *)data;
-
-	// Forward messages to TCM via main data bus -- does not filter anything right now (should only be tire temp though)
-	GRCAN_Fancy_Send(mainBus, TCMNode, GRCAN_Fancy_ID.messageID, data, size);
+	GRCAN_Raw_Send(mainBus, id, data, size);
 }
 
 // For messages from TCM
 void TCM_Callback(uint32_t id, void *data, uint32_t size)
 {
+	GRCAN_Raw_Send(subnetBus, id, data, size);
 
-	GRCAN_Fancy_ID GRCAN_Fancy_ID;
-	GRCAN_Fancy_ID.srcID = 0;
-	GRCAN_Fancy_ID.destNode = 0;
-	GRCAN_Fancy_ID.messageID = 0;
-
+	GRCAN_Fancy_ID GRCAN_Fancy_ID = {0};
 	GRCAN_Fancy_DecodeID(&GRCAN_Fancy_ID, id);
-
-	forwarded_TCM_data = (uint32_t *)data;
-	// Forward all messages to tire temp sensor via subnet bus -- does not filter for anything right now
-	GRCAN_Fancy_Send(subnetBus, sensorNode, GRCAN_Fancy_ID.messageID, data, size);
-
 	if (GRCAN_Fancy_ID.messageID == GRCAN_PING) {
-		// Send ping back to sender on main data bus
 		GRCAN_Fancy_Send(mainBus, GRCAN_Fancy_ID.srcID, GRCAN_PING, data, size);
 	}
 }
