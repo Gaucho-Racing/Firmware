@@ -32,7 +32,7 @@
 #include <stdio.h>
 
 // #include "VL53L4ED_api.h"
-#include "bmi323.h"
+// #include "bmi323.h"
 #include "mag.h"
 // #include "circularBuffer.h"
 /* USER CODE END Includes */
@@ -53,17 +53,17 @@
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
 
-#define BMI_ACC_ODR 0x7	   // Output data rate -> 50 Hz
-#define BMI_ACC_RANGE 0x2  // +/- 8g
-#define BMI_ACC_MODE 0x7   // High performance mode
-#define BMI_ACC_BW 0x0	   // Sets cut off freq to ODR/2
-#define BMI_ACC_AVGNUM 0x0 // No averaging
+// #define BMI_ACC_ODR 0x7	   // Output data rate -> 50 Hz
+// #define BMI_ACC_RANGE 0x2  // +/- 8g
+// #define BMI_ACC_MODE 0x7   // High performance mode
+// #define BMI_ACC_BW 0x0	   // Sets cut off freq to ODR/2
+// #define BMI_ACC_AVGNUM 0x0 // No averaging
 
-#define BMI_GYR_ODR 0x7	   // Output data rate -> 50 Hz
-#define BMI_GYR_RANGE 0x4  // 2000 deg/s (default)
-#define BMI_GYR_MODE 0x7   // High performance mode
-#define BMI_GYR_BW 0x0	   // Sets cut off freq to ODR/2
-#define BMI_GYR_AVGNUM 0x0 // No averaging
+// #define BMI_GYR_ODR 0x7	   // Output data rate -> 50 Hz
+// #define BMI_GYR_RANGE 0x4  // 2000 deg/s (default)
+// #define BMI_GYR_MODE 0x7   // High performance mode
+// #define BMI_GYR_BW 0x0	   // Sets cut off freq to ODR/2
+// #define BMI_GYR_AVGNUM 0x0 // No averaging
 
 /* USER CODE END PD */
 
@@ -160,8 +160,8 @@ int main(void)
 	// HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	// HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
-	bmi323 bmi323_dev;
-	HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
+	// bmi323 bmi323_dev;
+	// HAL_GPIO_WritePin(BMI323_CS_GPIO_Port, BMI323_CS_Pin, GPIO_PIN_SET);
 
 	/*
 	// Initialize IMU
@@ -199,14 +199,14 @@ int main(void)
 
 	/* USER CODE BEGIN WHILE */
 
-	uint16_t imu_ax = 0xFFFF;
-	uint16_t imu_ay = 0xFFFF;
-	uint16_t imu_az = 0xFFFF;
-	uint16_t imu_gyrx = 0xFFFF;
-	uint16_t imu_gyry = 0xFFFF;
-	uint16_t imu_gyrz = 0xFFFF;
-	uint16_t imu_temp = 0xFFFF;
-	uint16_t imu_status = 0;
+	// uint16_t imu_ax = 0xFFFF;
+	// uint16_t imu_ay = 0xFFFF;
+	// uint16_t imu_az = 0xFFFF;
+	// uint16_t imu_gyrx = 0xFFFF;
+	// uint16_t imu_gyry = 0xFFFF;
+	// uint16_t imu_gyrz = 0xFFFF;
+	// uint16_t imu_temp = 0xFFFF;
+	// uint16_t imu_status = 0;
 	uint16_t mag_temp = 0xFFFF;
 	uint16_t mag_hysteresis = 0xFFFF;
 	uint16_t mag_angle = 0xFFFF;
@@ -275,6 +275,7 @@ int main(void)
 			// buffer[6] = 0x00;
 			// buffer[7] = 0x00;
 
+			/*
 			test_data.bmi323_acc_x = imu_ax;
 			test_data.bmi323_acc_y = imu_ay;
 			test_data.bmi323_acc_z = imu_az;
@@ -283,6 +284,7 @@ int main(void)
 			test_data.bmi323_gyro_z = imu_gyrz;
 			test_data.bmi323_temp = imu_temp;
 			test_data.bmi323_status = imu_status;
+			*/
 
 			test_data.mag_angle = mag_angle;
 			test_data.mag_temp = mag_temp;
@@ -291,34 +293,35 @@ int main(void)
 			test_data.mag_hysteresis = mag_hysteresis;
 		}
 
+		if (current_time - last_send_ms > send_interval) {
 
-	if (current_time - last_send_ms > send_interval) {
+			last_send_ms = current_time;
+			GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
+			GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
+			SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
 
-		last_send_ms = current_time;
-		GRCAN_NODE_ID test_dest_node = GRCAN_TCM;
-		GRCAN_MSG_ID test_msg_id = GRCAN_SUSPENSION_IMU_MAG_DATA;
-		SusNode_CAN_Send(test_dest_node, test_msg_id, &test_data);
+			/*
+			if (imu_status != 0) {
+				LOGOMATIC("IMU is cooked");
+				Error_Handler();
+			}
+			*/
 
-		if (imu_status != 0) {
-			LOGOMATIC("IMU is cooked");
-			Error_Handler();
+			if (mag_status != 0) {
+				LOGOMATIC("Mag is cooked");
+				mag_write_error(&mag_dev);
+			}
 		}
 
-		if (mag_status != 0) {
-			LOGOMATIC("Mag is cooked");
-			mag_write_error(&mag_dev);
-		}
+		/* TODO:
+
+			AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
+				static uint32_t millis_since_last = 0
+				if (millis since last < b)
+				only run loop every ~8-ish samples
+		*/
 	}
-
-	/* TODO:
-
-		AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
-			static uint32_t millis_since_last = 0
-			if (millis since last < b)
-			only run loop every ~8-ish samples
-	*/
-}
-/* USER CODE END 3 */
+	/* USER CODE END 3 */
 }
 
 /**
