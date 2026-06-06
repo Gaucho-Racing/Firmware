@@ -23,6 +23,19 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 	uint16_t status = mag_read(mag_dev, 0x22);
 	uint16_t error_reg = mag_read(mag_dev, 0x24);
 
+	if (error_reg != 0) {
+		/*
+		TODO Add error/reset handling to clear error flags
+
+		See https://www.allegromicro.com/-/media/files/datasheets/a1333-datasheet.pdf#page=54
+
+		This is the error register. All errors are latched, meaning they remain high after they occur. Errors
+		need to be read and then cleared in order to remove them. It is important that the user clears errors
+		so that subsequent errors become visible. This is especially important for the RST error flag (reset),
+		which is always enabled after power-on. If it is not removed, an unexpected reset cannot be discovered.
+		*/
+	}
+
 	// Check AOK=1 (bit 0) and BIP=0 (bit 1)
 	// If either not true, return error
 	/*
@@ -86,7 +99,6 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 	uint16_t new_data = ((uint16_t)rx_bytes[0] << 8) | rx_bytes[1];
 
 	return new_data;
-
 }
 
 /*
@@ -106,7 +118,7 @@ crc
 uint16_t mag_read(mag *mag_dev, uint8_t reg)
 {
 	uint16_t cmd = (uint16_t)((reg & mag_addr_mask) << 8); // read: bit 14 = 0, address in bits 13:8
-	return mag_transmit(mag_dev, cmd);	       // frame 1: send command, discard response
+	return mag_transmit(mag_dev, cmd);		       // frame 1: send command, discard response
 }
 
 /*
