@@ -251,16 +251,6 @@ int main(void)
 			mag_turns = ewa_i(mag_read_turns(&mag_dev), mag_turns);
 			mag_status = check_status(&mag_dev);
 
-			// TODO: check these conversion formulas
-			float mag_temp_test = (mag_temp / 256.0f) - 60;
-			float mag_angle_test = mag_angle * 360.f / 4096.0f;
-			float mag_hysteresis_test = mag_hysteresis * 360.f / 4096.0f;
-
-			// Used for debugging so keep in
-			UNUSED(mag_temp_test);
-			UNUSED(mag_angle_test);
-			UNUSED(mag_hysteresis_test);
-
 			// uint8_t buffer[8] = {0};
 			// buffer[0] = (angle >> 8) & 0xFF;
 			// buffer[1] = angle & 0xFF;
@@ -312,14 +302,6 @@ int main(void)
 				mag_write_error(&mag_dev);
 			}
 		}
-
-		/* TODO:
-
-			AVERAGING IS NOT POSSIBLE IN HIGH PERFORMANCE MODE -> still implement?
-				static uint32_t millis_since_last = 0
-				if (millis since last < b)
-				only run loop every ~8-ish samples
-		*/
 	}
 	/* USER CODE END 3 */
 }
