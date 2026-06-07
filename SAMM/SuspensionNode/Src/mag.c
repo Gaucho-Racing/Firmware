@@ -69,7 +69,7 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 	uint8_t rx_bytes[2] = {0};
 
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
-	HAL_StatusTypeDef send_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_bytes, rx_dummy, 2, HAL_MAX_DELAY);
+	HAL_StatusTypeDef send_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_bytes, rx_dummy, 2, 100);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
 	if (send_res != HAL_OK) {
@@ -79,7 +79,7 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 	LL_mDelay(1);
 
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
-	HAL_StatusTypeDef receive_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_dummy, rx_bytes, 2, HAL_MAX_DELAY);
+	HAL_StatusTypeDef receive_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_dummy, rx_bytes, 2, 100);
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_SET);
 
 	if (receive_res != HAL_OK) {
@@ -178,7 +178,7 @@ uint16_t mag_read_encoder_angle(mag *mag_dev)
 int16_t mag_read_turns(mag *mag_dev)
 {
 	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
-	int parity_bit = read_turns && (0x1000);
+	int parity_bit = read_turns & (0x1000);
 	UNUSED(parity_bit); // for debugging
 
 	int16_t masked_turns = (int16_t)((read_turns & 0x0FFF) << 4) >> 4; // Mask to 12 bits (valid angle data)
