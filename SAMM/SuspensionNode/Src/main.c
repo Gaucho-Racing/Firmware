@@ -81,8 +81,8 @@ PUTCHAR_PROTOTYPE
 
 /* USER CODE BEGIN PV */
 // FDCAN_RxHeaderTypeDef RxHeader_FDCAN2;
-const uint16_t avgcalc_interval = 100;
-const uint16_t send_interval = 100;
+const uint16_t avgcalc_interval = 1;
+const uint16_t send_interval = 1;
 const float alpha = 0.2;
 static bool ewa_signed_initialization = false;
 /* USER CODE END PV */

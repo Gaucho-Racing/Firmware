@@ -76,7 +76,9 @@ uint16_t mag_transmit(mag *mag_dev, uint16_t data)
 		return 0xFFFF;
 	}
 
-	LL_mDelay(1);
+	for (int i = 0; i < 40; i++) {
+		__NOP();
+	}
 
 	HAL_GPIO_WritePin(mag_dev->port, mag_dev->pin, GPIO_PIN_RESET);
 	HAL_StatusTypeDef receive_res = HAL_SPI_TransmitReceive(mag_dev->spi_port, tx_dummy, rx_bytes, 2, 100);
