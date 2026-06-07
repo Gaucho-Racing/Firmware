@@ -246,7 +246,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (APPS_BSE_Violation(stateData)) {
 		stateData->apps_bse_violation = true;
-	} else if (CalcAccPedalTravel(stateData) < stateData->apps_deadzone) {
+	} else if (CalcAccPedalTravel(stateData) < (stateData->apps_deadzone + 0.05f)) {
 		stateData->apps_bse_violation = false;
 	}
 
