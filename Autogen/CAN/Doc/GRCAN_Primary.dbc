@@ -169,12 +169,6 @@ BO_ 2147492886 DTI_Inv_DTI_Data_5_to_ECU: 8 DTI_Inv
  SG_ Power_limit : 42|1@1+ (1,0) [0|0] ""  ECU
  SG_ CAN_Version : 56|8@1+ (1,0) [0|0] ""  ECU
 
-BO_ 2147491606 DTI_Inv_DTI_Data_6_to_ECU: 8 DTI_Inv
- SG_ Control_mode : 0|8@1+ (1,0) [0|0] ""  ECU
- SG_ Target_Iq : 8|16@1+ (1,0) [0|0] ""  ECU
- SG_ Motor_position : 24|16@1+ (1,0) [0|0] ""  ECU
- SG_ isMotorStill : 40|16@1+ (1,0) [0|0] ""  ECU
-
 BO_ 2191528450 HV_DC_DC_Status_to_ECU: 7 HV_DC_DC
  SG_ Input_Voltage : 0|16@1+ (0.001,0) [0|65.535] "V"  ECU
  SG_ Output_Voltage : 16|16@1+ (0.001,0) [0|65.535] "V"  ECU
@@ -464,10 +458,6 @@ CM_ SG_ 2147492886 RPM_min_limit "1: RPM min limit active 0: RPM min limit inact
 CM_ SG_ 2147492886 RPM_max_limit "1: RPM max limit active 0: RPM max limit inactive";
 CM_ SG_ 2147492886 Power_limit "1: Power limit by Config active 0: Power limit by Config inactive";
 CM_ SG_ 2147492886 CAN_Version "Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)";
-CM_ SG_ 2147491606 Control_mode "Describes the control mode of the inverter:";
-CM_ SG_ 2147491606 Target_Iq "The value represent how much Iq current the inverter is targeted to reach. This value excludes limits. For ex. if the target Iq is 50 A and temperature limit is hit, the values keep 50 A in any case, not including the deration of the temp. limit. This is useful in multi-inverter configuration to let know the secondary inverter the target Iq.";
-CM_ SG_ 2147491606 Motor_position "Motor position expressed in degrees";
-CM_ SG_ 2147491606 isMotorStill "Represents if the motor in still position or not.";
 CM_ SG_ 2191528450 Input_Voltage "~20v for LV (LV only. Send 0 for HV)";
 CM_ SG_ 2191528450 Output_Voltage "~12v for LV and ~20v for HV";
 CM_ SG_ 2191528450 Input_Current "Input current (LV only. Send 0 for HV)";
@@ -613,7 +603,6 @@ BA_ "VFrameFormat" BO_ 2147492118 1;
 BA_ "VFrameFormat" BO_ 2147492374 1;
 BA_ "VFrameFormat" BO_ 2147492630 1;
 BA_ "VFrameFormat" BO_ 2147492886 1;
-BA_ "VFrameFormat" BO_ 2147491606 1;
 BA_ "VFrameFormat" BO_ 2191528450 1;
 BA_ "VFrameFormat" BO_ 2191524354 1;
 BA_ "VFrameFormat" BO_ 2191524353 1;
