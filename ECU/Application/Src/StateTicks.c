@@ -245,6 +245,9 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 
 	if (APPS_BSE_Violation(stateData)) {
+		// FIXME Strongly illegal! We are not allowed to do this at all! EV.9.7.3
+		buzzer_start_millis = millis_since_boot + MAX_BUZZER_TIME_MS - 100;
+		// FIXME Strongly illegal! We are not allowed to do this at all! EV.9.7.3
 		stateData->apps_bse_violation = true;
 	} else if (CalcAccPedalTravel(stateData) < (stateData->apps_deadzone + 0.05f)) {
 		stateData->apps_bse_violation = false;
