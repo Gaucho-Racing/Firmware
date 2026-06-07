@@ -108,8 +108,6 @@ routing:
             can_id_override: 0x2316
           - msg: DTI Data 5
             can_id_override: 0x2416
-          - msg: DTI Data 6
-            can_id_override: 0x1F16
     HV DC-DC:
       Primary:
         ECU:
