@@ -50,9 +50,9 @@ ECU_StateData stateLump = {
     .ping_timeout_delay_ms = 250,
     .max_precharge_time_ms = 8000,
     // Pedals
-    .brake_f_min = 700,
-    .brake_r_min = 0,
-    .brake_bse_min = 720,
+    .brake_f_min = 720,
+    .brake_r_min = 700,
+    .brake_bse_min = 720, // Same exact input as brake f
     .apps_1_min = 2375,
     .apps_2_min = 2430,
     .apps_1_max = 1897,
