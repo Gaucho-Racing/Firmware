@@ -12,9 +12,13 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 
-#define WHEEL_RPM_TO_MPH_RATIO 0.0476f
+#define WHEEL_RADIUS_INCHES 8.0f
+#define WHEEL_CIRCUMFERENCE_INCHES (2.0f * M_PI * WHEEL_RADIUS_INCHES)
+#define WHEEL_RPM_TO_MPH_RATIO (WHEEL_CIRCUMFERENCE_INCHES / 63360.0f * 60.0f)
 #define NUM_MOTOR_POLE_PAIRS 10
-#define GEAR_RATIO 3.92f // will be 3.0 when the sprocket is changed
+#define DRIVEN_SPROCKET_TEETH 51.0f
+#define DRIVING_SPROCKET_TEETH 19.0f
+#define GEAR_RATIO (51.0f / 19.0f)
 
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
