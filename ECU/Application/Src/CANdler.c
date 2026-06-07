@@ -173,14 +173,6 @@ void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, u
 			state_data->vehicle_speed_mph = (float)erpm / NUM_MOTOR_POLE_PAIRS / GEAR_RATIO * WHEEL_RPM_TO_MPH_RATIO;
 			break;
 
-		case DTI_DATA_6_CAN_ID:
-			if (data_length != 8) {
-				ReportBadMessageLength(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
-				break;
-			}
-			state_data->is_moving = !data[5];
-			break;
-
 		default:
 			// don't really gaf
 			// ReportUnhandledMessage(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);

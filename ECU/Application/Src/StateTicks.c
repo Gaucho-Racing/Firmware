@@ -238,7 +238,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (stateData->rtd_button_pressed) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
-		if (stateData->is_moving) {
+		if (stateData->vehicle_speed_mph > 0) {
 			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
 		}
 		return;
