@@ -34,37 +34,6 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/AnalogCalibration.elf",
-			"name": "AnalogCalibration",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build AnalogCalibration",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 500000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/CCU.elf",
 			"name": "CCU",
 			"request": "launch",

@@ -480,12 +480,13 @@ int main(void)
 	CAN_Configure();
 
 	ADC_Configure();
+	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop
 
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
-		LL_mDelay(MAIN_LOOP_PERIOD_US / 1000);
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, 0.01, ADC_outputs);
+		LL_mDelay(1);
+		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 		write_adc_values_to_state_data();
 	}
 
@@ -503,14 +504,12 @@ int main(void)
 		static uint32_t ping_timer;
 		static uint32_t adc_timer;
 		// ADC
-		if (adc_timer % 1000 == 0) {
-			static float alphas[] = {
-			    0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
-			};
-			ADC_UpdateAnalogValues_EMA_Multi(ADC_buffers, NUM_SIGNALS, alphas, ADC_outputs);
+		if (MillisecondsSinceBoot() >= adc_timer) {
+			adc_timer = MillisecondsSinceBoot() + 1;
+
+			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 			write_adc_values_to_state_data();
 		}
-		adc_timer++;
 
 		if (MillisecondsSinceBoot() >= delay_timer) {
 #ifdef PLAN_C
