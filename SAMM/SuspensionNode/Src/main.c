@@ -98,19 +98,26 @@ void SystemClock_Config(void);
 
 uint16_t ewa_u(uint16_t new_value, uint16_t old_value)
 {
+	float new_value_f = (float)new_value;
+	float old_value_f = (float)old_value;
+
 	if (old_value == 0xFFFF) {
 		return new_value;
 	}
-	return alpha * new_value + (1 - alpha) * old_value;
+	return (uint16_t)(alpha * new_value_f + (1.0f - alpha) * old_value_f);
 }
 
 int16_t ewa_i(int16_t new_value, int16_t old_value)
 {
+	float new_value_f = (float)new_value;
+	float old_value_f = (float)old_value;
+
 	if (!ewa_signed_initialization) {
 		ewa_signed_initialization = true;
 		return new_value;
 	}
-	return alpha * new_value + (1 - alpha) * old_value;
+
+	return (int16_t)(alpha * new_value_f + (1.0f - alpha) * old_value_f);
 }
 
 uint32_t MillisecondsSinceBoot()
