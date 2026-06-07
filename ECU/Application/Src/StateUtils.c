@@ -127,7 +127,7 @@ bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 	return false;
 #endif
 
-	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) > stateData->apps_deadzone;
+	return PressingBrake(stateData) && CalcAccPedalTravel(stateData) > (0.25f + stateData->apps_deadzone);
 }
 
 bool PressingBrake(volatile const ECU_StateData *stateData)
