@@ -148,6 +148,8 @@ uint16_t mag_read_temp(mag *mag_dev)
 	uint16_t read_temp = mag_read(mag_dev, 0x28);			       // 0x28 is temp register
 	uint16_t masked_temp = read_temp & 0x0FFF;
 	float_t calc_temp = (masked_temp / 8.0f) + 25.0f; // Mask to 12 bits (valid temp data), range is -60 to 180 C
+	UNUSED(calc_temp); // for debugging
+
 	return ((uint16_t)masked_temp);
 }
 
@@ -166,6 +168,8 @@ uint16_t mag_read_encoder_angle(mag *mag_dev)
 	uint16_t read_angle = mag_read(mag_dev, 0x32); // 0x32 is angle register
 	uint16_t masked_angle = read_angle & 0x7FFF;
 	float_t calc_angle = masked_angle * (360.0f / 32768.0f);
+	UNUSED(calc_angle); // for debugging
+
 	return ((uint16_t)(masked_angle));      // Mask to 15 bits (valid angle data) before conversion
 }
 
@@ -175,6 +179,8 @@ int16_t mag_read_turns(mag *mag_dev)
 {
 	uint16_t read_turns = mag_read(mag_dev, 0x2C); // 0x2C is turn counter
 	int parity_bit = read_turns && (0x1000);
+	UNUSED(parity_bit); // for debugging
+
 	int16_t masked_turns = (int16_t)((read_turns & 0x0FFF) << 4) >> 4; // Mask to 12 bits (valid angle data)
 	return masked_turns;
 }
