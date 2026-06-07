@@ -20,8 +20,10 @@ HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeD
 
 	LL_mDelay(20);
 
-	uint16_t status = mag_read(mag_dev, 0x22);
+	uint16_t null = mag_read(mag_dev, 0x00);
 	uint16_t error_reg = mag_read(mag_dev, 0x24);
+	uint16_t status = mag_read(mag_dev, 0x22);
+	UNUSED(null);	  // Used for debugging
 	UNUSED(error_reg); // Used for debugging
 
 	// Check AOK=1 (bit 0) and BIP=0 (bit 1)
