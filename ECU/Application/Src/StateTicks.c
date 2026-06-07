@@ -31,8 +31,8 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at minimum power
-    .powerlevel = 0,
+    // Startup at just above minimum power
+    .powerlevel = 1,
     // See CANdo specification
     .torquemap = 1,
     // APPS Deadzone
