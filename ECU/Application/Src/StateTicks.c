@@ -233,7 +233,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	} else {
 		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-		// LOGOMATIC("buzz!\n");
 	}
 
 	if (stateData->rtd_button_pressed) {
