@@ -485,6 +485,8 @@ int main(void)
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
+		BrakeLightControl(&stateLump);
+		dashLights(&stateLump);
 		LL_mDelay(1);
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 		write_adc_values_to_state_data();
