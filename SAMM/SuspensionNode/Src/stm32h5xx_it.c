@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_it.h"
 
+#include "mag.h"
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -56,7 +57,6 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN EV */
 
@@ -174,6 +174,31 @@ void PendSV_Handler(void)
 }
 
 /**
+ * @brief  Period elapsed callback in non blocking mode
+ * @note   This function is called  when TIM1 interrupt took place, inside
+ * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+ * a global variable "uwTick" used as application time base.
+ * @param  htim : TIM handle
+ * @retval None
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	/* USER CODE BEGIN Callback 0 */
+
+	/* USER CODE END Callback 0 */
+	if (htim->Instance == TIM1) {
+		HAL_IncTick();
+	}
+
+	if (htim->Instance == TIM3) {
+		mag_read_data();
+	}
+	/* USER CODE BEGIN Callback 1 */
+
+	/* USER CODE END Callback 1 */
+}
+
+/**
  * @brief This function handles System tick timer.
  */
 void SysTick_Handler(void)
@@ -186,3 +211,46 @@ void SysTick_Handler(void)
 
 	/* USER CODE END SysTick_IRQn 1 */
 }
+
+/******************************************************************************/
+/* STM32H5xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32h5xx.s).                    */
+/******************************************************************************/
+
+/**
+ * @brief This function handles TIM1 update interrupt and TIM16 global interrupt.
+ */
+void TIM1_UP_TIM16_IRQHandler(void)
+{
+	/* USER CODE BEGIN TIM1_UP_TIM16_IRQn 0 */
+
+	/* USER CODE END TIM1_UP_TIM16_IRQn 0 */
+	HAL_TIM_IRQHandler(&htim1);
+	/* USER CODE BEGIN TIM1_UP_TIM16_IRQn 1 */
+
+	/* USER CODE END TIM1_UP_TIM16_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */
+
+/**
+  * @brief This function handles TIM3 global interrupt.
+  */
+void TIM3_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM3_IRQn 0 */
+
+  /* USER CODE END TIM3_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim3);
+  /* USER CODE BEGIN TIM3_IRQn 1 */
+
+  /* USER CODE END TIM3_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */

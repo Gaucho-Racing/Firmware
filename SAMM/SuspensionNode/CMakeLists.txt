@@ -35,6 +35,7 @@ target_sources(
 		Src/spi.c
 		Src/stm32h5xx_it.c
 		Src/can_sus.c
+		Src/tim.c
 )
 
 target_link_libraries(

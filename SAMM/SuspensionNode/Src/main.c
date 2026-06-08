@@ -25,6 +25,7 @@
 #include "can_sus.h"
 #include "gpio.h"
 #include "spi.h"
+#include "stm32h5xx_it.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -82,7 +83,7 @@ PUTCHAR_PROTOTYPE
 /* USER CODE BEGIN PV */
 // FDCAN_RxHeaderTypeDef RxHeader_FDCAN2;
 const uint16_t avgcalc_interval = 1;
-const uint16_t send_interval = 1;
+const uint16_t send_interval = 30;
 const float alpha = 0.2;
 static bool ewa_signed_initialization = false;
 /* USER CODE END PV */
@@ -124,6 +125,9 @@ uint32_t MillisecondsSinceBoot()
 {
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
+
+mag mag_dev = {0};
+IMU_Mag_Data test_data = {0};
 /* USER CODE END 0 */
 
 /**
@@ -193,7 +197,6 @@ int main(void)
 	bmi323_enable_gyro(&bmi323_dev, BMI_GYR_MODE, BMI_GYR_AVGNUM, BMI_GYR_BW, BMI_GYR_RANGE, BMI_GYR_ODR);
 	*/
 
-	mag mag_dev = {0};
 	HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
 
 	HAL_StatusTypeDef init_status = mag_init(&mag_dev, &hspi3, MAG_CS_GPIO_Port, MAG_CS_Pin);
@@ -203,6 +206,8 @@ int main(void)
 		LOGOMATIC("MAG initialization failed!\n"); // logomatic does NOT work for SAMM lol
 		Error_Handler();
 	}
+
+	HAL_TIM_Base_Start_IT(&htim3);
 
 	/* USER CODE BEGIN WHILE */
 
@@ -225,70 +230,64 @@ int main(void)
 	uint32_t last_avgcalc_ms = mssinceboot;
 	uint32_t last_send_ms = mssinceboot;
 
-	IMU_Mag_Data test_data = {0};
-
 	while (1) {
 		uint32_t current_time = MillisecondsSinceBoot();
 
-		if (current_time - last_avgcalc_ms > avgcalc_interval) {
-			last_avgcalc_ms = current_time;
+		/*
+		imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
+		imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
+		imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
+		imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
+		imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
+		imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
+		imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
+		imu_status = bmi323_read_status(&bmi323_dev);
 
-			/*
-			imu_ax = ewa_u(bmi323_read_acc_x(&bmi323_dev), imu_ax);
-			imu_ay = ewa_u(bmi323_read_acc_y(&bmi323_dev), imu_ay);
-			imu_az = ewa_u(bmi323_read_acc_z(&bmi323_dev), imu_az);
-			imu_gyrx = ewa_u(bmi323_read_gyr_x(&bmi323_dev), imu_gyrx);
-			imu_gyry = ewa_u(bmi323_read_gyr_y(&bmi323_dev), imu_gyry);
-			imu_gyrz = ewa_u(bmi323_read_gyr_z(&bmi323_dev), imu_gyrz);
-			imu_temp = ewa_u(bmi323_read_temp_data(&bmi323_dev), imu_temp);
-			imu_status = bmi323_read_status(&bmi323_dev);
+		float imu_ax_test = ((float)imu_ax) / 4096.f;
+		float imu_ay_test = ((float)imu_ay) / 4096.f;
+		float imu_az_test = ((float)imu_az) / 4096.f;
+		float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
+		float imu_gyry_test = ((float)imu_gyry) / 16.384f;
+		float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
+		float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
+		*/
 
-			float imu_ax_test = ((float)imu_ax) / 4096.f;
-			float imu_ay_test = ((float)imu_ay) / 4096.f;
-			float imu_az_test = ((float)imu_az) / 4096.f;
-			float imu_gyrx_test = ((float)imu_gyrx) / 16.384f;
-			float imu_gyry_test = ((float)imu_gyry) / 16.384f;
-			float imu_gyrz_test = ((float)imu_gyrz) / 16.384f;
-			float imu_temp_test = ((float)imu_temp / 512.f) + 23.0f;
-			*/
+		mag_temp = ewa_u(test_data.mag_temp, mag_temp);
+		mag_hysteresis = ewa_u(test_data.mag_hysteresis, mag_hysteresis);
+		mag_angle = ewa_u(test_data.mag_angle, mag_angle);
+		mag_turns = ewa_i(test_data.mag_turns, mag_turns);
+		mag_status = test_data.mag_status;
 
-			mag_temp = ewa_u(mag_read_temp(&mag_dev), mag_temp);
-			mag_hysteresis = ewa_u(mag_read_HANG(&mag_dev), mag_hysteresis);
-			mag_angle = ewa_u(mag_read_encoder_angle(&mag_dev), mag_angle);
-			mag_turns = ewa_i(mag_read_turns(&mag_dev), mag_turns);
-			mag_status = check_status(&mag_dev);
+		// uint8_t buffer[8] = {0};
+		// buffer[0] = (angle >> 8) & 0xFF;
+		// buffer[1] = angle & 0xFF;
 
-			// uint8_t buffer[8] = {0};
-			// buffer[0] = (angle >> 8) & 0xFF;
-			// buffer[1] = angle & 0xFF;
+		// buffer[2] = temp;
 
-			// buffer[2] = temp;
+		// buffer[3] = (turns >> 8) & 0xFF;
+		// buffer[4] = turns & 0xFF;
 
-			// buffer[3] = (turns >> 8) & 0xFF;
-			// buffer[4] = turns & 0xFF;
+		// // status
+		// buffer[5] = bad;
+		// buffer[6] = 0x00;
+		// buffer[7] = 0x00;
 
-			// // status
-			// buffer[5] = bad;
-			// buffer[6] = 0x00;
-			// buffer[7] = 0x00;
+		/*
+		test_data.bmi323_acc_x = imu_ax;
+		test_data.bmi323_acc_y = imu_ay;
+		test_data.bmi323_acc_z = imu_az;
+		test_data.bmi323_gyro_x = imu_gyrx;
+		test_data.bmi323_gyro_y = imu_gyry;
+		test_data.bmi323_gyro_z = imu_gyrz;
+		test_data.bmi323_temp = imu_temp;
+		test_data.bmi323_status = imu_status;
+		*/
 
-			/*
-			test_data.bmi323_acc_x = imu_ax;
-			test_data.bmi323_acc_y = imu_ay;
-			test_data.bmi323_acc_z = imu_az;
-			test_data.bmi323_gyro_x = imu_gyrx;
-			test_data.bmi323_gyro_y = imu_gyry;
-			test_data.bmi323_gyro_z = imu_gyrz;
-			test_data.bmi323_temp = imu_temp;
-			test_data.bmi323_status = imu_status;
-			*/
-
-			test_data.mag_angle = mag_angle;
-			test_data.mag_temp = mag_temp;
-			test_data.mag_turns = mag_turns;
-			test_data.mag_status = mag_status;
-			test_data.mag_hysteresis = mag_hysteresis;
-		}
+		test_data.mag_angle = mag_angle;
+		test_data.mag_temp = mag_temp;
+		test_data.mag_turns = mag_turns;
+		test_data.mag_status = mag_status;
+		test_data.mag_hysteresis = mag_hysteresis;
 
 		if (current_time - last_send_ms > send_interval) {
 

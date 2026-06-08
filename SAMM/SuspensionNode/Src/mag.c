@@ -243,3 +243,11 @@ void mag_write_error(mag *mag_dev)
 	return;
 }
 //  FIXME: add error flag handling
+
+void mag_read_data(void) {
+	test_data.mag_temp = mag_read_temp(&mag_dev);
+	test_data.mag_hysteresis = mag_read_HANG(&mag_dev);
+	test_data.mag_angle = mag_read_encoder_angle(&mag_dev);
+	test_data.mag_turns = mag_read_turns(&mag_dev);
+	test_data.mag_status = check_status(&mag_dev);
+}

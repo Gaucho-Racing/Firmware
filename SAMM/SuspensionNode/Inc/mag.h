@@ -5,6 +5,7 @@
 #include "Logomatic.h"
 #include "main.h"
 #include "spi.h"
+#include "can_sus.h"
 #include "stm32h5xx.h"
 
 typedef struct {
@@ -14,6 +15,17 @@ typedef struct {
 	uint16_t pin;
 	/* data */
 } mag;
+
+typedef struct {
+	uint16_t mag_temp;
+	uint16_t mag_HANG;
+	uint16_t mag_angle;
+	int16_t mag_turns;
+	uint8_t mag_status;
+} mag_values;
+
+extern mag mag_dev;
+extern IMU_Mag_Data test_data;
 
 HAL_StatusTypeDef mag_init(mag *mag_dev, SPI_HandleTypeDef *spi_port, GPIO_TypeDef *port, uint16_t pin);
 
@@ -36,5 +48,7 @@ int16_t mag_read_turns(mag *mag_dev);
 uint8_t check_status(mag *mag_dev);
 
 void mag_write_error(mag *mag_dev);
+
+void mag_read_data(void);
 
 #endif
