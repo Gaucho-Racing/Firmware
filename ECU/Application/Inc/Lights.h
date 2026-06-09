@@ -12,6 +12,8 @@
  *
  * @return void
  */
+void BrakeLightControl(ECU_StateData *stateLump);
+void dashLights(ECU_StateData *stateLump);
 void lightControl(ECU_StateData *stateData);
 
 #endif
