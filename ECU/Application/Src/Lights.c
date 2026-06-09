@@ -13,7 +13,13 @@
 
 void BrakeLightControl(ECU_StateData *stateLump)
 {
+	static uint32_t brake_light_start_millis;
+
 	if (PressingBrake(stateLump)) {
+		brake_light_start_millis = MillisecondsSinceBoot();
+	}
+
+	if (MillisecondsSinceBoot() - brake_light_start_millis < 100) {
 		LL_GPIO_SetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
 	} else {
 		LL_GPIO_ResetOutputPin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin);
