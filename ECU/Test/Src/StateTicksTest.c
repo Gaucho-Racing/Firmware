@@ -163,7 +163,7 @@ int main(void)
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 
 		LOGOMATIC("Press brake: STAY IN GLV ON\n");
-		stateLumpTest.Brake_F_Signal = stateLumpTest.brake_f_min + 69;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -175,7 +175,7 @@ int main(void)
 		}
 
 		LOGOMATIC("Release brake: STAY IN GLV ON\n");
-		stateLumpTest.Brake_F_Signal = 0;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
@@ -256,7 +256,7 @@ int main(void)
 		// ## Step 0.7             ##
 		// ##########################
 		LOGOMATIC("Press and release the RTD button WHILE pressing the brake\n");
-		stateLumpTest.Brake_F_Signal = stateLumpTest.brake_f_min + 69;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		LOGOMATIC("Press RTD\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
@@ -275,7 +275,7 @@ int main(void)
 		// ## Step 0.8             ##
 		// ##########################
 		LOGOMATIC("Release Brakes -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.Brake_F_Signal = 0;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.8 Failure: ecu state not in drive active\n");
@@ -324,7 +324,7 @@ int main(void)
 		LOGOMATIC("Press Throttle and Brake -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
-		stateLumpTest.Brake_F_Signal = stateLumpTest.brake_f_min + 69;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.11 Failure: ecu state not in drive active\n");
@@ -341,7 +341,7 @@ int main(void)
 		LOGOMATIC("Release Throttle and Brake-> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
-		stateLumpTest.Brake_F_Signal = 0;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.12 Failure: ecu state not in drive active\n");
