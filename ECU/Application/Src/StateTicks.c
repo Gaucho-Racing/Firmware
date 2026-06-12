@@ -31,8 +31,8 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at just above minimum power
-    .powerlevel = 1,
+    // Startup at minimum power
+    .powerlevel = 0,
     // See CANdo specification
     .torquemap = 1,
     // APPS Deadzone
@@ -266,22 +266,22 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		// Chosen max current for different power level / torque maps
 		switch (stateData->powerlevel) {
 			case 0:
-				max_current = 50;
-				break;
-			case 1:
 				max_current = 100;
 				break;
-			case 2:
-				max_current = 150;
-				break;
-			case 3:
+			case 1:
 				max_current = 200;
 				break;
-			case 4:
+			case 2:
 				max_current = 250;
 				break;
+			case 3:
+				max_current = 300;
+				break;
+			case 4:
+				max_current = 325;
+				break;
 			case 5:
-				max_current = 275;
+				max_current = 350;
 				break;
 			default:
 				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);
