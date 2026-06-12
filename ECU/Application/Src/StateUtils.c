@@ -149,7 +149,7 @@ float CalcBrakePressure(volatile const ECU_StateData *stateData)
 	return 0;
 #endif
 
-	return stateData->bse_signal / 4096.0f * 5000.0f;
+	return ((float)stateData->bse_signal - 654.09f) * 5000.0f / 2614.73f;
 }
 
 // TODO: reconsider deadzone
