@@ -499,11 +499,10 @@ int main(void)
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		BrakeLightControl(&stateLump);
-		//GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
+		// GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
 		//					    (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
 
-		GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) |
-						    (false << 1) | (false << 0)};
+		GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) | (false << 1) | (false << 0)};
 
 		message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
 

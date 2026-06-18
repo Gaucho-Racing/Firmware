@@ -60,8 +60,7 @@ ECU_StateData stateLump = {
     // Regen
     .regen_strength = 2,
     .enable_regen = false,
-	.SDC_startup_condition = true
-};
+    .SDC_startup_condition = true};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)

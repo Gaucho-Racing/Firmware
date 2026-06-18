@@ -149,12 +149,11 @@ void dashLights(ECU_StateData *stateLump)
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 5) | (imd_nonlatch << 4) | (bspd_nonlatch << 3) | (bms_latch << 2) | (imd_latch << 1) | (bspd_latch << 0)};
 	*/
 	GRCAN_DASH_CONFIG_MSG message;
-	if(stateLump->SDC_startup_condition) {
-		message = (GRCAN_DASH_CONFIG_MSG){.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) |
-						    (false << 1) | (false << 0)};
+	if (stateLump->SDC_startup_condition) {
+		message = (GRCAN_DASH_CONFIG_MSG){.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) | (false << 1) | (false << 0)};
 	} else {
 		message = (GRCAN_DASH_CONFIG_MSG){.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
-									(imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
+								     (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
 	}
 
 	message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
