@@ -499,7 +499,16 @@ int main(void)
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		BrakeLightControl(&stateLump);
-		dashLights(&stateLump);
+		//GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
+		//					    (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
+
+		GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) |
+						    (false << 1) | (false << 0)};
+
+		message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
+
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+
 		LL_mDelay(1);
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 		write_adc_values_to_state_data();

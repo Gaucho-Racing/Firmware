@@ -26,7 +26,6 @@ void BrakeLightControl(ECU_StateData *stateLump)
 	}
 }
 
-static bool SDCStartupCondition = true; // prevent false positive TSSI on startup
 // PRECONDITION: IMD assumed to give valid readings before this is run
 void TSSILightControl(ECU_StateData *stateLump)
 {
@@ -36,16 +35,16 @@ void TSSILightControl(ECU_StateData *stateLump)
 	bool redCar;
 
 	// if we are before SDC is reset, don't red car unless there is an active failure
-	if (SDCStartupCondition) {
+	if (stateLump->SDC_startup_condition) {
 		redCar = false;
 
 		SDC_Level bms = bmsLevel(stateLump);
 		SDC_Level imd = imdLevel(stateLump);
 
 		if (bms == SDC_OK && imd == SDC_OK) {
-			SDCStartupCondition = false;
+			stateLump->SDC_startup_condition = false;
 		} else if (bms == SDC_ONGOING_FAILURE || imd == SDC_ONGOING_FAILURE) {
-			SDCStartupCondition = false;
+			stateLump->SDC_startup_condition = false;
 			redCar = true;
 		}
 	} else {
@@ -149,8 +148,14 @@ void dashLights(ECU_StateData *stateLump)
 
 	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (bms_nonlatch << 5) | (imd_nonlatch << 4) | (bspd_nonlatch << 3) | (bms_latch << 2) | (imd_latch << 1) | (bspd_latch << 0)};
 	*/
-	GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
-							    (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
+	GRCAN_DASH_CONFIG_MSG message;
+	if(stateLump->SDC_startup_condition) {
+		message = (GRCAN_DASH_CONFIG_MSG){.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) |
+						    (false << 1) | (false << 0)};
+	} else {
+		message = (GRCAN_DASH_CONFIG_MSG){.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
+									(imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
+	}
 
 	message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
