@@ -41,7 +41,7 @@ BO_ 2550588916 ACU_Charger_Control_to_Charger: 5 ACU
 
 BO_ 2150631170 ACU_ACU_Status_1_to_CCU: 8 ACU
  SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts"  CCU
- SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts"  CCU
+ SG_ TS_Voltage : 16|16@1+ (0.1,0) [0|655.35] "Volts"  CCU
  SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps"  CCU
  SG_ Accumulator_SOC : 48|8@1+ (0.3921568627,0) [0|100] "%"  CCU
  SG_ GLV_SOC : 56|8@1+ (0.3921568627,0) [0|100] "%"  CCU
