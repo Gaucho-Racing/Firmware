@@ -71,7 +71,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (GRCAN_ACU_STATUS_1_MSG *)data;
 			state_data->tractivebattery_soc = acu_status_1->accumulator_soc;
 			state_data->glv_soc = acu_status_1->glv_soc;
-			state_data->ts_voltage = acu_status_1->ts_voltage * 0.01f;
+			state_data->ts_voltage = acu_status_1->ts_voltage * 0.1f;
 			break;
 
 		case GRCAN_ACU_STATUS_2:
