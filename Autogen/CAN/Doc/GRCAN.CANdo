@@ -668,7 +668,7 @@ Message ID:
       units: Volts
       scaled min: 0
       scaled max: 655.35
-      map equation: "0.01x"
+      map equation: "0.1x"
     Accumulator Current:
       bit_start: 32
       comment: Current output of accumulator
