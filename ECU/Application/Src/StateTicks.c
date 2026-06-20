@@ -267,22 +267,22 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		// Chosen max current for different power level / torque maps
 		switch (stateData->powerlevel) {
 			case 0:
-				max_current = 100;
+				max_current = 325;
 				break;
 			case 1:
-				max_current = 200;
+				max_current = 325;
 				break;
 			case 2:
-				max_current = 250;
+				max_current = 325;
 				break;
 			case 3:
-				max_current = 300;
+				max_current = 325;
 				break;
 			case 4:
 				max_current = 325;
 				break;
 			case 5:
-				max_current = 350;
+				max_current = 325;
 				break;
 			default:
 				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);
