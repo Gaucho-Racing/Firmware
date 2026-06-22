@@ -1,6 +1,7 @@
-#include <StateMachine.h>
 #include <stdbool.h>
 #include <stdint.h>
+
+#include "StateMachine.h"
 
 #ifndef STATE_STATEDATA_H
 #define STATE_STATEDATA_H
