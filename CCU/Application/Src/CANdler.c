@@ -40,20 +40,18 @@ void Read_CAN(uint32_t ID, void *data, uint32_t size)
 
 			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
 
-			// ACU bit field orderings are different weird stuff
+			state_data.ACU_S2_OVERTEMP_ERROR = GETBIT(acu_status_2->status_flags, 0);
+			state_data.ACU_S2_OVERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 1);
+			state_data.ACU_S2_UNDERVOLT_ERROR = GETBIT(acu_status_2->status_flags, 2);
+			state_data.ACU_S2_OVERCURR_ERROR = GETBIT(acu_status_2->status_flags, 3);
+			state_data.ACU_S2_UNDERCURR_ERROR = GETBIT(acu_status_2->status_flags, 4);
 
-			state_data.ACU_S2_OVERTEMP_ERROR = false;  // GETBIT(acu_status_2->status_flags, 0);
-			state_data.ACU_S2_OVERVOLT_ERROR = false;  // GETBIT(acu_status_2->status_flags, 1);
-			state_data.ACU_S2_UNDERVOLT_ERROR = false; // GETBIT(acu_status_2->status_flags, 2);
-			state_data.ACU_S2_OVERCURR_ERROR = false;  // GETBIT(acu_status_2->status_flags, 3);
-			state_data.ACU_S2_UNDERCURR_ERROR = false; // GETBIT(acu_status_2->status_flags, 4);
+			state_data.ACU_S2_UNDER20v_WARNING = GETBIT(acu_status_2->status_flags, 5);
+			state_data.ACU_S2_UNDER12v_WARNING = GETBIT(acu_status_2->status_flags, 6);
+			state_data.ACU_S2_UNDERVOLTSDC_WARNING = GETBIT(acu_status_2->status_flags, 7);
 
-			state_data.ACU_S2_UNDER20v_WARNING = false;	// GETBIT(acu_status_2->status_flags, 5);
-			state_data.ACU_S2_UNDER12v_WARNING = false;	// GETBIT(acu_status_2->status_flags, 6);
-			state_data.ACU_S2_UNDERVOLTSDC_WARNING = false; // GETBIT(acu_status_2->status_flags, 7);
-
-			state_data.IR_MINUS = GETBIT(acu_status_2->precharge_latch_flags, 4);
-			state_data.IR_PLUS = GETBIT(acu_status_2->precharge_latch_flags, 5);
+			state_data.IR_MINUS = GETBIT(acu_status_2->precharge_latch_flags, 1);
+			state_data.IR_PLUS = GETBIT(acu_status_2->precharge_latch_flags, 2);
 
 			state_data.Max_Cell_Temp = acu_status_2->max_cell_temp;
 			break;
