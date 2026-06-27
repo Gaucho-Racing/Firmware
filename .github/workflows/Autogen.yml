@@ -37,6 +37,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Setup Perl
         uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1

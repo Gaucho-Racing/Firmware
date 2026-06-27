@@ -36,6 +36,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Format C Files
         run: |
@@ -84,6 +85,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -130,6 +132,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Format JSON Files
         run: |
@@ -172,6 +175,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Setup Perl
         uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1
@@ -219,6 +223,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Setup Go
         uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
@@ -272,6 +277,7 @@ jobs:
           test -n "${GITHUB_PAT:-}" || { echo "GITHUB_PAT is empty"; exit 1; }
           auth="$(printf 'x-access-token:%s' "$GITHUB_PAT" | base64 | tr -d '\n')"
           git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git remote set-url origin "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Setup NodeJS
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
