@@ -19,7 +19,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@0213e35e9bd149451c9a2f035287c21ba09053ac # v1.2.0
+        uses: Gaucho-Racing/vault-pull-secrets@v1 # v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
@@ -60,7 +60,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@0213e35e9bd149451c9a2f035287c21ba09053ac # v1.2.0
+        uses: Gaucho-Racing/vault-pull-secrets@v1 # v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
@@ -99,7 +99,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@0213e35e9bd149451c9a2f035287c21ba09053ac # v1.2.0
+        uses: Gaucho-Racing/vault-pull-secrets@v1 # v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
@@ -134,7 +134,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@0213e35e9bd149451c9a2f035287c21ba09053ac # v1.2.0
+        uses: Gaucho-Racing/vault-pull-secrets@v1 # v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
@@ -174,7 +174,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@0213e35e9bd149451c9a2f035287c21ba09053ac # v1.2.0
+        uses: Gaucho-Racing/vault-pull-secrets@v1 # v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
@@ -220,7 +220,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@0213e35e9bd149451c9a2f035287c21ba09053ac # v1.2.0
+        uses: Gaucho-Racing/vault-pull-secrets@v1 # v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
