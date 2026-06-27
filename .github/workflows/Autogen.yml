@@ -29,6 +29,7 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: false
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
