@@ -69,7 +69,7 @@ void STATE_CHARGING(CCU_StateData *state_data)
 		return;
 	}
 
-	if (CriticalError(state_data)) {
+													if (CriticalError(state_data)) {
 		TripSoftwareLatch(state_data);
 		state_data->state = CCU_STATE_IDLE;
 
