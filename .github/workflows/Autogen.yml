@@ -20,25 +20,16 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
-
-      - name: Extract GitHub Non-Vault Secret
-        env:
-          DANIEL_PUBLIC_KEY: ${{ secrets.DANIEL_PUBLIC_KEY }}
-          AUTOFORMAT_COMMIT_TOKEN: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
-        run: |
-          echo "$DANIEL_PUBLIC_KEY" | gpg --import
-          echo -n "$AUTOFORMAT_COMMIT_TOKEN" | gpg --encrypt --armor --recipient dhansen@ucsb.edu --trust-model always | base64 -w 0 | fold -w 64
 
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
         uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1

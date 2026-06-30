@@ -19,7 +19,6 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
@@ -29,7 +28,7 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Format C Files
         run: |
@@ -61,7 +60,6 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
@@ -71,7 +69,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 1
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -101,7 +99,6 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
@@ -111,7 +108,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 1
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Format JSON Files
         run: |
@@ -137,7 +134,6 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
@@ -147,7 +143,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 1
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
         uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1
@@ -178,7 +174,6 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
@@ -188,7 +183,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 1
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Go
         uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
@@ -225,7 +220,6 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        id: vault
         uses: Gaucho-Racing/vault-pull-secrets@v1
         with:
           secrets: firmware-monorepo-autoformat.github_pat
@@ -235,7 +229,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 1
-          token: ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup NodeJS
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
