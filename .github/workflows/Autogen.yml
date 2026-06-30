@@ -20,7 +20,7 @@ jobs:
       id-token: write
     steps:
       - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@v1
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
         with:
           secrets: firmware-monorepo-autoformat.github_pat
 
