@@ -190,13 +190,11 @@ function isValidSha(str) {
 	if (str.length < 7 || str.length > 40) return false;
 	for (let i = 0; i < str.length; ++i) {
 		const c = str[i];
-		if (
-			!(
-				(c >= "0" && c <= "9") ||
-				(c >= "a" && c <= "f") ||
-				(c >= "A" && c <= "F")
-			)
-		) {
+		if (!(
+			(c >= "0" && c <= "9") ||
+			(c >= "a" && c <= "f") ||
+			(c >= "A" && c <= "F")
+		)) {
 			return false;
 		}
 	}

@@ -1,3 +1,4 @@
+#include <stdint.h>
 
 #include "CCUStateData.h"
 #include "Logomatic.h"
