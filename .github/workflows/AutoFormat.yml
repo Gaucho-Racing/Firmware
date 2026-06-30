@@ -16,13 +16,19 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
     steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Format C Files
         run: |
@@ -51,13 +57,19 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: write
+      id-token: write
     steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -84,13 +96,19 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: write
+      id-token: write
     steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Format JSON Files
         run: |
@@ -113,13 +131,19 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: write
+      id-token: write
     steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
         uses: shogo82148/actions-setup-perl@a198315ec4e9244f206879ea7b63078003aec8a6 # v1.41.1
@@ -147,13 +171,19 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: write
+      id-token: write
     steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Go
         uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
@@ -187,13 +217,19 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: write
+      id-token: write
     steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
       - name: Checkout Pull Request
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
           fetch-depth: 1
+          token: ${{ env.GITHUB_PAT }}
 
       - name: Setup NodeJS
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
