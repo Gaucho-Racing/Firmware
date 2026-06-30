@@ -43,18 +43,18 @@ jobs:
 
       - name: Diagnose Validity
         run: |
-          RESPONSE = $(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}" https://api.github.com/user)
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ fromJSON(steps.vault.outputs.secrets_json).GITHUB_PAT }}" https://api.github.com/user)
           if [ "$RESPONSE" -ne 200 ]; then
-            echo "GITHUB_PAT is invalid via JSON"
+            echo "GITHUB_PAT is invalid via JSON with status code $RESPONSE"
           else
-            echo "GITHUB_PAT is valid via JSON"
+            echo "GITHUB_PAT is valid via JSON with status code $RESPONSE"
           fi
 
-          RESPONSE = $(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ env.GITHUB_PAT }}" https://api.github.com/user)
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ env.GITHUB_PAT }}" https://api.github.com/user)
           if [ "$RESPONSE" -ne 200 ]; then
-            echo "GITHUB_PAT is invalid via env"
+            echo "GITHUB_PAT is invalid via env with status code $RESPONSE"
           else
-            echo "GITHUB_PAT is valid via env"
+            echo "GITHUB_PAT is valid via env with status code $RESPONSE"
           fi
 
       - name: Checkout Pull Request
