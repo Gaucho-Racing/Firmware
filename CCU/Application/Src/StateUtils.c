@@ -89,7 +89,7 @@ void VCP_Oneliner(const CCU_StateData *state_data)
 	length = snprintf(buffer, sizeof(buffer), " | IR+ %s", state_data->IR_PLUS ? "Closed" : "Open");
 	VCP_Send(buffer, length);
 
-	length = snprintf(buffer, sizeof(buffer), " | %huV", state_data->Accumulator_Voltage / 100);
+	length = snprintf(buffer, sizeof(buffer), " | %huV", state_data->Accumulator_Voltage / 10);
 	VCP_Send(buffer, length);
 
 	length = snprintf(buffer, sizeof(buffer), " | SOC %hu%%", (uint8_t)(state_data->Accumulator_SOC * 20.0f / 51.0f));

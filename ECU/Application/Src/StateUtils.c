@@ -140,7 +140,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 	}
 #endif
 
-	return (stateData->Brake_F_Signal > stateData->brake_f_min) || (stateData->Brake_R_Signal > stateData->brake_r_min);
+	return stateData->bse_signal > stateData->brake_bse_min;
 }
 
 float CalcBrakePressure(volatile const ECU_StateData *stateData)
@@ -149,9 +149,7 @@ float CalcBrakePressure(volatile const ECU_StateData *stateData)
 	return 0;
 #endif
 
-	float psi_front = stateData->Brake_F_Signal / 4096.0f * 5000.0f;
-	float psi_rear = stateData->Brake_R_Signal / 4096.0f * 5000.0f;
-	return fmaxf(psi_front, psi_rear);
+	return ((float)stateData->bse_signal - 654.09f) * 5000.0f / 2614.73f;
 }
 
 // TODO: reconsider deadzone
@@ -175,15 +173,9 @@ bool APPS_Plausible(volatile const ECU_StateData *stateData)
 	return error < 0.1f;
 }
 
-bool vehicle_is_moving(volatile const ECU_StateData *stateData)
-{
-	const float tolerance = 0.1f; // In MPH
-	return stateData->vehicle_speed_mph > tolerance;
-}
-
 void disable_inverter(void)
 {
-	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 0, .set_dc_current = 0};
+	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 32768, .set_dc_current = 32768};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
 	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
 }
