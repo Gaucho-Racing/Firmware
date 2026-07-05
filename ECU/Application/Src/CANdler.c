@@ -1,8 +1,10 @@
 #include "CANdler.h"
 
+#include <math.h>
 #include <stdint.h>
 
 #include "GRCAN_BUS_ID.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
@@ -10,7 +12,13 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 
-#define WHEEL_RPM_TO_MPH_RATIO 0.0476f
+#define WHEEL_RADIUS_INCHES 8.0f
+#define WHEEL_CIRCUMFERENCE_INCHES (2.0f * (float)M_PI * WHEEL_RADIUS_INCHES)
+#define WHEEL_RPM_TO_MPH_RATIO (WHEEL_CIRCUMFERENCE_INCHES / 63360.0f * 60.0f)
+#define NUM_MOTOR_POLE_PAIRS 10
+#define DRIVEN_SPROCKET_TEETH 51.0f
+#define DRIVING_SPROCKET_TEETH 19.0f
+#define GEAR_RATIO (51.0f / 19.0f)
 
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
@@ -63,7 +71,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (GRCAN_ACU_STATUS_1_MSG *)data;
 			state_data->tractivebattery_soc = acu_status_1->accumulator_soc;
 			state_data->glv_soc = acu_status_1->glv_soc;
-			state_data->ts_voltage = acu_status_1->ts_voltage * 0.01f;
+			state_data->ts_voltage = acu_status_1->ts_voltage * 0.1f;
 			break;
 
 		case GRCAN_ACU_STATUS_2:
@@ -153,6 +161,25 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 
 		default:
 			ReportUnhandledMessage(bus_id, msg_id, sender_id);
+			break;
+	}
+}
+
+void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, uint8_t *data, uint32_t data_length)
+{
+	switch (id) {
+		case DTI_DATA_1_CAN_ID:
+			if (data_length != 8) {
+				ReportBadMessageLength(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
+				break;
+			}
+			int32_t erpm = ((uint32_t)data[0] << 24) | ((uint32_t)data[1] << 16) | ((uint32_t)data[2] << 8) | ((uint32_t)data[3]);
+			state_data->vehicle_speed_mph = (float)erpm * WHEEL_RPM_TO_MPH_RATIO / (NUM_MOTOR_POLE_PAIRS * GEAR_RATIO);
+			break;
+
+		default:
+			// don't really gaf
+			// ReportUnhandledMessage(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
 			break;
 	}
 }

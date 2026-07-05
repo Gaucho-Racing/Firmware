@@ -14,10 +14,10 @@ uint32_t MillisecondsSinceBoot(void);
 #define MAX_APPS_IMPLAUSIBLE_TIME_MS 100
 #define MAX_BUZZER_TIME_MS 1000
 
-#define REGEN_MIN_SPEED_MPH 3.106856f // MPH
+#define REGEN_MIN_SPEED_MPH 3.106856f // 5 KPH
 
-#define MAX_CURRENT_AMPS 300.0f	       // Determined by Ryan
-#define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
+#define MAX_CURRENT_AMPS 375.0f	       // Determined by Ryan
+#define MAX_REVERSE_CURRENT_AMPS 30.0f // TODO: Change as appropriate
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
@@ -74,7 +74,6 @@ bool PressingBrake(volatile const ECU_StateData *stateData);
 float CalcBrakePressure(volatile const ECU_StateData *stateData);
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
 bool APPS_Plausible(volatile const ECU_StateData *stateData);
-bool vehicle_is_moving(volatile const ECU_StateData *stateData);
 /* Disable inverter for both DTI and Custom */
 void disable_inverter(void);
 void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw);

@@ -45,7 +45,7 @@ BO_ 2150629890 ACU_Ping_to_ECU: 4 ACU
 
 BO_ 2150631170 ACU_ACU_Status_1_to_ECU: 8 ACU
  SG_ Accumulator_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts"  ECU
- SG_ TS_Voltage : 16|16@1+ (0.01,0) [0|655.35] "Volts"  ECU
+ SG_ TS_Voltage : 16|16@1+ (0.1,0) [0|655.35] "Volts"  ECU
  SG_ Accumulator_Current : 32|16@1- (0.01,0) [-327.68|327.67] "Amps"  ECU
  SG_ Accumulator_SOC : 48|8@1+ (0.3921568627,0) [0|100] "%"  ECU
  SG_ GLV_SOC : 56|8@1+ (0.3921568627,0) [0|100] "%"  ECU
@@ -515,7 +515,7 @@ CM_ SG_ 2149581568 Ping_Group_1 "[Byte 1 / Bits 8-15] ECU ping targets 8: ACU (1
 CM_ SG_ 2149581568 Ping_Group_2 "[Byte 2 / Bits 16-23] ECU ping targets 16: Suspension FL (1: OK, 0: Timeout) 17: Suspension FR (1: OK, 0: Timeout) 18: Suspension RL (1: OK, 0: Timeout) 19: Suspension RR (1: OK, 0: Timeout) 20: InboardFloor FL (1: OK, 0: Timeout) 21: InboardFloor FR (1: OK, 0: Timeout) 22: InboardFloor RL (1: OK, 0: Timeout) 23: InboardFloor RR (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Ping_Group_3 "[Byte 3 / Bits 24-31] ECU ping targets 24: TireTemp FL (1: OK, 0: Timeout) 25: TireTemp FR (1: OK, 0: Timeout) 26: TireTemp RL (1: OK, 0: Timeout) 27: TireTemp RR (1: OK, 0: Timeout) 28: BrakeTemp FL (1: OK, 0: Timeout) 29: BrakeTemp FR (1: OK, 0: Timeout) 30: BrakeTemp RL (1: OK, 0: Timeout) 31: BrakeTemp RR (1: OK, 0: Timeout)";
 CM_ SG_ 2149581568 Power_Level "Controls the AC current limits to each of the inverters Discrete Mapping, actual current values described by the torque map";
-CM_ SG_ 2149581568 Torque_Map "The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor. 0 is max current amps, 1 is 50 / 100 / 150 / 200 / 250 / 275, 2 and later is tbd";
+CM_ SG_ 2149581568 Torque_Map "The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor. 0 is max current amps, 1 is 100 / 200 / 250 / 300 / 325 / 350 Amps, 2 and later is tbd";
 CM_ SG_ 2149581568 Max_Cell_Temp "the Temp of the hottest cell of the accumulator";
 CM_ SG_ 2149581568 Accumulator_State_of_Chg "% charged of the Accumulator";
 CM_ SG_ 2149581568 GLV_State_of_Chg "% charged of the Low Voltage Bat";

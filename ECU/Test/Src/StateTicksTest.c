@@ -26,11 +26,9 @@
 
 static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 {
-	stateLumpTest->tssi_fault = bmsFailure(stateLumpTest) || imdFailure(stateLumpTest);
-
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
-	if (stateLumpTest->tssi_fault) {
+	if (bmsFailure(stateLumpTest) || imdFailure(stateLumpTest)) {
 		LOGOMATIC("TSSI: TS Faulty\n");
 	} else {
 		LOGOMATIC("TSSI: TS Normal\n");
@@ -139,8 +137,8 @@ int main(void)
 			LOGOMATIC("0.1 Failure: ecu state not in GLV ON\n");
 			return 1;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.1 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.1 Failure: BMS or IMD reports faulty\n");
 			return 1;
 		}
 
@@ -155,34 +153,34 @@ int main(void)
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.2 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
 			return 1;
 		}
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 
 		LOGOMATIC("Press brake: STAY IN GLV ON\n");
-		stateLumpTest.Brake_F_Signal = stateLumpTest.brake_f_min + 69;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.2 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
 			return 2;
 		}
 
 		LOGOMATIC("Release brake: STAY IN GLV ON\n");
-		stateLumpTest.Brake_F_Signal = 0;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.2 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
 			return 2;
 		}
 
@@ -197,8 +195,8 @@ int main(void)
 			LOGOMATIC("0.3 Failure: ecu state not in precharge engaged\n");
 			return 3;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.3 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.3 Failure: BMS or IMD reports faulty\n");
 			return 3;
 		}
 
@@ -221,8 +219,8 @@ int main(void)
 			LOGOMATIC("0.5 Failure: ecu state not in precharge complete\n");
 			return 5;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.5 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.5 Failure: BMS or IMD reports faulty\n");
 			return 5;
 		}
 
@@ -236,8 +234,8 @@ int main(void)
 			LOGOMATIC("0.6 Failure: ecu state not in precharge complete\n");
 			return 6;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.6 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.6 Failure: BMS or IMD reports faulty\n");
 			return 6;
 		}
 		LOGOMATIC("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
@@ -247,8 +245,8 @@ int main(void)
 			LOGOMATIC("0.6 Failure: ecu state not in precharge complete\n");
 			return 6;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.6 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.6 Failure: BMS or IMD reports faulty\n");
 			return 6;
 		}
 
@@ -256,7 +254,7 @@ int main(void)
 		// ## Step 0.7             ##
 		// ##########################
 		LOGOMATIC("Press and release the RTD button WHILE pressing the brake\n");
-		stateLumpTest.Brake_F_Signal = stateLumpTest.brake_f_min + 69;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		LOGOMATIC("Press RTD\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
@@ -266,8 +264,8 @@ int main(void)
 			LOGOMATIC("0.7 Failure: ecu state not in drive active\n");
 			return 7;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.7 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.7 Failure: BMS or IMD reports faulty\n");
 			return 7;
 		}
 
@@ -275,14 +273,14 @@ int main(void)
 		// ## Step 0.8             ##
 		// ##########################
 		LOGOMATIC("Release Brakes -> STAY IN DRIVE ACTIVE\n");
-		stateLumpTest.Brake_F_Signal = 0;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.8 Failure: ecu state not in drive active\n");
 			return 8;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.8 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.8 Failure: BMS or IMD reports faulty\n");
 			return 8;
 		}
 
@@ -297,8 +295,8 @@ int main(void)
 			LOGOMATIC("0.9 Failure: ecu state not in drive active\n");
 			return 9;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.9 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.9 Failure: BMS or IMD reports faulty\n");
 			return 9;
 		}
 
@@ -313,8 +311,8 @@ int main(void)
 			LOGOMATIC("0.10 Failure: ecu state not in drive active\n");
 			return 10;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.10 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.10 Failure: BMS or IMD reports faulty\n");
 			return 10;
 		}
 
@@ -324,14 +322,14 @@ int main(void)
 		LOGOMATIC("Press Throttle and Brake -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
-		stateLumpTest.Brake_F_Signal = stateLumpTest.brake_f_min + 69;
+		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.11 Failure: ecu state not in drive active\n");
 			return 11;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.11 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.11 Failure: BMS or IMD reports faulty\n");
 			return 11;
 		}
 
@@ -341,14 +339,14 @@ int main(void)
 		LOGOMATIC("Release Throttle and Brake-> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
-		stateLumpTest.Brake_F_Signal = 0;
+		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
 			LOGOMATIC("0.12 Failure: ecu state not in drive active\n");
 			return 12;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.12 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.12 Failure: BMS or IMD reports faulty\n");
 			return 12;
 		}
 
@@ -363,8 +361,8 @@ int main(void)
 			LOGOMATIC("0.13 Failure: ecu state not in drive active\n");
 			return 13;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.13 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.13 Failure: BMS or IMD reports faulty\n");
 			return 13;
 		}
 
@@ -379,8 +377,8 @@ int main(void)
 			LOGOMATIC("0.14 Failure: ecu state not in drive active\n");
 			return 14;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.14 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.14 Failure: BMS or IMD reports faulty\n");
 			return 14;
 		}
 
@@ -394,8 +392,8 @@ int main(void)
 			LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
 			return 15;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.15 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.15 Failure: BMS or IMD reports faulty\n");
 			return 15;
 		}
 		LOGOMATIC("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
@@ -404,8 +402,8 @@ int main(void)
 			LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
 			return 15;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.15 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.15 Failure: BMS or IMD reports faulty\n");
 			return 15;
 		}
 
@@ -420,8 +418,8 @@ int main(void)
 			LOGOMATIC("0.16 Failure: ecu state not in precharge complete\n");
 			return 16;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.16 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.16 Failure: BMS or IMD reports faulty\n");
 			return 16;
 		}
 
@@ -436,8 +434,8 @@ int main(void)
 			LOGOMATIC("0.17 Failure: ecu state not in precharge complete\n");
 			return 17;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.17 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.17 Failure: BMS or IMD reports faulty\n");
 			return 17;
 		}
 
@@ -451,8 +449,8 @@ int main(void)
 			LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");
 			return 18;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.18 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.18 Failure: BMS or IMD reports faulty\n");
 			return 18;
 		}
 
@@ -462,8 +460,8 @@ int main(void)
 			LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");
 			return 18;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.18 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.18 Failure: BMS or IMD reports faulty\n");
 			return 18;
 		}
 
@@ -479,8 +477,8 @@ int main(void)
 			LOGOMATIC("0.19 Failure: ecu state not in GLV ON\n");
 			return 19;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("0.19 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("0.19 Failure: BMS or IMD reports faulty\n");
 			return 19;
 		}
 	}
@@ -497,8 +495,8 @@ int main(void)
 			LOGOMATIC("1.0 Failure: ecu state not in GLV ON\n");
 			return 21;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("1.0 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("1.0 Failure: BMS or IMD reports faulty\n");
 			return 21;
 		}
 
@@ -512,8 +510,8 @@ int main(void)
 			LOGOMATIC("1.1 Failure: ecu state not in TS DISCHARGE\n");
 			return 21;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("1.1 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("1.1 Failure: BMS or IMD reports faulty\n");
 			return 21;
 		}
 
@@ -527,8 +525,8 @@ int main(void)
 			LOGOMATIC("1.2 Failure: ecu state not in GLV ON\n");
 			return 22;
 		}
-		if (stateLumpTest.tssi_fault) {
-			LOGOMATIC("1.2 Failure: TSSI reports faulty\n");
+		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+			LOGOMATIC("1.2 Failure: BMS or IMD reports faulty\n");
 			return 21;
 		}
 	}

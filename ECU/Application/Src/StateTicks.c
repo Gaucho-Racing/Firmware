@@ -31,8 +31,8 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at just above minimum power
-    .powerlevel = 1,
+    // Startup at minimum power
+    .powerlevel = 0,
     // See CANdo specification
     .torquemap = 1,
     // APPS Deadzone
@@ -59,7 +59,8 @@ ECU_StateData stateLump = {
     .apps_2_max = 1926,
     // Regen
     .regen_strength = 2,
-    .enable_regen = false};
+    .enable_regen = false,
+    .SDC_startup_condition = true};
 
 static uint32_t millis_since_boot;
 void ECU_State_Tick(void)
@@ -233,12 +234,11 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	} else {
 		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-		// LOGOMATIC("buzz!\n");
 	}
 
 	if (stateData->rtd_button_pressed) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
-		if (vehicle_is_moving(stateData)) {
+		if (stateData->vehicle_speed_mph > 0) {
 			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
 		}
 		return;
@@ -260,29 +260,29 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (stateData->enable_regen && PressingBrake(stateData) && 0 > REGEN_MIN_SPEED_MPH) { // stateData->vehicle_speed_mph
+	} else if (stateData->enable_regen && PressingBrake(stateData) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
 		torque_request = -MIN_WITH_TYPES(CalcBrakePressure(stateData) / 5000.0f * stateData->regen_strength, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
 	} else {
 		uint16_t max_current = 0;
 		// Chosen max current for different power level / torque maps
 		switch (stateData->powerlevel) {
 			case 0:
-				max_current = 50;
-				break;
-			case 1:
 				max_current = 100;
 				break;
-			case 2:
-				max_current = 150;
-				break;
-			case 3:
+			case 1:
 				max_current = 200;
 				break;
-			case 4:
+			case 2:
 				max_current = 250;
 				break;
+			case 3:
+				max_current = 300;
+				break;
+			case 4:
+				max_current = 325;
+				break;
 			case 5:
-				max_current = 275;
+				max_current = 350;
 				break;
 			default:
 				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);

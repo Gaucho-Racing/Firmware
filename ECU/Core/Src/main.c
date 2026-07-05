@@ -298,7 +298,11 @@ void ADC_Configure(void)
 
 void CAN1_rx_callback(uint32_t ID, void *data, uint32_t size)
 {
-	ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_PRIMARY, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
+	if ((ID & 0x1FFFC0FF) == 0x00000016) {
+		ECU_CAN_DTI_MessageHandler(&stateLump, ID, data, size);
+	} else {
+		ECU_CAN_MessageHandler(&stateLump, GRCAN_BUS_PRIMARY, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size);
+	}
 }
 
 void CAN2_rx_callback(uint32_t ID, void *data, uint32_t size)
@@ -327,7 +331,7 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.DataTimeSeg1 = 9; // Updated for 160MHz: 160 MHz/((1+9+10)*1) = 8 Mbps
 	canCfg.hal_fdcan_init.DataTimeSeg2 = 10;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
-	canCfg.hal_fdcan_init.ExtFiltersNbr = 1;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 3;
 
 	canCfg.rx_callback = NULL;
 	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
@@ -392,10 +396,19 @@ void CAN_Configure(void)
 	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
 	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
 
+	FDCAN_FilterTypeDef fdcan_primary_filter_dti = {0};
+	fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_ecu.FilterIndex = 2;
+	fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_ecu.FilterID1 = 0x00000016;
+	fdcan_primary_filter_ecu.FilterID2 = 0x1FFFC0FF;
+
 	stateLump.primary_can = can_init(&canCfg);
 
 	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_ecu);
 	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_all);
+	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_dti);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -485,6 +498,16 @@ int main(void)
 	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
+		BrakeLightControl(&stateLump);
+		// GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (!bspdFailure(stateLump) << 5) | (!imdFailure(stateLump) << 4) | (!bmsFailure(stateLump) << 3) | (bspdFailure(stateLump) << 2) |
+		//					    (imdFailure(stateLump) << 1) | (bmsFailure(stateLump) << 0)};
+
+		GRCAN_DASH_CONFIG_MSG message = {.led_latch_flags = (true << 5) | (true << 4) | (true << 3) | (false << 2) | (false << 1) | (false << 0)};
+
+		message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
+
+		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+
 		LL_mDelay(1);
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 		write_adc_values_to_state_data();
