@@ -211,57 +211,10 @@ jobs:
           message: "Automatic Assembly Format: Standardized formatting automatically"
           fetch: "false"
 
-  web:
-    if: ${{ !github.event.pull_request.draft }}
-    name: Web
-    runs-on: ubuntu-slim
-    permissions:
-      contents: write
-      id-token: write
-    steps:
-      - name: Acquire Secrets
-        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
-        with:
-          secrets: firmware-monorepo-autoformat.github_pat
-
-      - name: Checkout Pull Request
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 1
-          token: ${{ env.GITHUB_PAT }}
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-
-      - name: Install Prettier
-        run: npm install -g --no-fund prettier
-
-      - name: Format Web Files
-        run: |
-          set -o pipefail
-          echo "<details open><summary>Prettier Output</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git ls-files 'Web/*.html' 'Web/*.css' 'Web/*.js' | xargs -r prettier --write --use-tabs 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-
-      - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
-        if: github.ref_type != 'tag'
-        env:
-          HOME: ${{ github.workspace }}
-        with:
-          default_author: github_actions
-          message: "Automatic Web Format: Standardized formatting automatically"
-          fetch: "false"
-
   all:
     if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Auto Formatters
-    needs: [clang, cmake, json, perl, asm, web]
+    needs: [clang, cmake, json, perl, asm]
     runs-on: ubuntu-slim
     permissions: {}
     steps:
@@ -272,8 +225,7 @@ jobs:
             needs.cmake.result != 'success' ||
             needs.json.result != 'success' ||
             needs.perl.result != 'success' ||
-            needs.asm.result != 'success' ||
-            needs.web.result != 'success'
+            needs.asm.result != 'success'
           }}
         run: |
           echo "One or more auto format jobs have failed."
@@ -282,5 +234,5 @@ jobs:
 
       - name: Complete Auto Format
         run: |
-          echo "Auto Format has been completed for Clang, CMake, JSON, Perl, and Web files."
+          echo "Auto Format has been completed for Clang, CMake, JSON, Perl, and Assembly files."
           echo "Please refer to the individual job logs for detailed formatting information."
