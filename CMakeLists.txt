@@ -185,5 +185,3 @@ add_gr_project(STM32G474xE BLINKY G4ECHO)
 # Onboarding Workshops
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
-
-add_gr_project(STM32G474xE Nucleo-Blinky)
