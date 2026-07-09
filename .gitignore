@@ -81,3 +81,9 @@ local
 
 # Makefile
 GNUmakefile
+
+# CubeMX Integration
+EWARM
+.mxproject
+*/Core/Src/system_stm32*xx.c
+*/*/Core/Src/system_stm32*xx.c
