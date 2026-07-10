@@ -3,10 +3,14 @@
 
 // TODO Add a template to the library
 
+#include "stm32g4xx_ll_tim.h"
+
 #define USECAN1
 #define TX_BUFFER_1_SIZE 20
 
 #define USECAN2
 #define TX_BUFFER_2_SIZE 20
+
+#define CAN_TIMER_SEND_PERIOD_US 500
 
 #endif

@@ -1,7 +1,7 @@
 #include "main.h"
 
-#ifndef CUBEMX_CAN_INTERNAL_H
-#define CUBEMX_CAN_INTERNAL_H
+#ifndef CUBE_CAN_PRIVATE_COMMON_H
+#define CUBE_CAN_PRIVATE_COMMON_H
 
 /**
  * @brief Get the name of the FDCAN instance as a string.

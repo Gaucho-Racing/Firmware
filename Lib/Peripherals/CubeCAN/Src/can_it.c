@@ -1,6 +1,10 @@
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "CubeCAN_Config.h"
 #include "CubeMXCan.h"
 #include "CubeMXCanExt.h"
+#include "Logomatic.h"
 #include "Private/common.h"
 #include "main.h"
 
