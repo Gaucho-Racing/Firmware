@@ -10,8 +10,13 @@ target_sources(
 	CUBEMX_CAN_LIB
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_it.c
-		${CMAKE_CURRENT_LIST_DIR}/Src/can_clock.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_utils.c
+)
+
+target_link_libraries(
+	CUBEMX_CAN_LIB
+	INTERFACE
+		CANfigurator
 )
 
 # TODO Unit testing

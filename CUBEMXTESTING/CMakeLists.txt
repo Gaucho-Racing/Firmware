@@ -33,7 +33,7 @@ target_sources(
 		Core/Src/stm32g4xx_it.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE VCP_LIB)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE VCP_LIB CUBEMX_CAN_LIB)
 
 target_include_directories(
 	${PROJECT_NAME}_USER_CODE

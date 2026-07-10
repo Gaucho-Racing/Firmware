@@ -48,18 +48,18 @@
 
 /* USER CODE BEGIN PV */
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
-				   .bus = LOGOMATIC_BUS,
-				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
-				   .baud_rate = 115200,
-				   .data_width = LOGOMATIC_DATAWIDTH_8B,
-				   .stop_bits = LOGOMATIC_STOPBITS_1,
-				   .parity = LOGOMATIC_PARITY_NONE,
-				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
-				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
-				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+					 .bus = LOGOMATIC_BUS,
+					 .gpio_port = LOGOMATIC_GPIOA,
+					 .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
+					 .baud_rate = 115200,
+					 .data_width = LOGOMATIC_DATAWIDTH_8B,
+					 .stop_bits = LOGOMATIC_STOPBITS_1,
+					 .parity = LOGOMATIC_PARITY_NONE,
+					 .transfer_direction = LOGOMATIC_DIRECTION_TX,
+					 .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+					 .prescaler = LOGOMATIC_PRESCALER_DIV1,
+					 .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+					 .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
 VCP_Config vcp_config = {.baud_rate = 2000000,
 			 .clock_source = VCP_CLOCK_PCLK,
@@ -203,7 +203,7 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
 	/* USER CODE BEGIN 6 */
 	/* User can add his own implementation to report the file name and line number,
-	   ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+		 ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
