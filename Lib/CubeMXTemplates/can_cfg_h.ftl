@@ -1,5 +1,15 @@
 [#ftl]
 
+[#--
+Generates can_cfg.h from the active STM32CubeMX project.
+
+Detects enabled FDCAN instances and emits the corresponding USECANx macros.
+TX buffer sizes remain user-configurable and are preserved across normal
+CubeMX regeneration.
+
+STM32 hardware configuration remains owned by CubeMX.
+--]
+
 [#list configs as dt]
 
 [#assign usedIPs = (dt.usedIPs)![]]
