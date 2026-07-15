@@ -9,6 +9,7 @@
 		"github.vscode-pull-request-github",
 		"eamodio.gitlens",
 		"davidanson.vscode-markdownlint",
-		"ms-vscode.vscode-serial-monitor"
+		"ms-vscode.vscode-serial-monitor",
+		"dcortes92.freemarker"
 	]
 }
