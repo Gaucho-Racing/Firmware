@@ -11,6 +11,7 @@ target_sources(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_it.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_utils.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/can_init.c
 )
 
 target_link_libraries(

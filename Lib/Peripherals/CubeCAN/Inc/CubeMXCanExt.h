@@ -2,6 +2,7 @@
 
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
+#include "main.h"
 
 #ifndef CUBEMX_CAN_EXT_H
 #define CUBEMX_CAN_EXT_H
@@ -41,5 +42,10 @@ uint32_t Construct_CAN_Identifier(const CAN_Identifier *identifier);
  * @warning The function does not support custom IDs.
  */
 CAN_Identifier Deconstruct_CAN_Identifier(uint32_t message_id);
+
+/**
+ * @brief Builds an exact-match extended-ID filter for a given CAN identifier.
+ */
+HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *identifier, uint32_t filter_index, uint32_t fifo, FDCAN_FilterTypeDef *filter);
 
 #endif

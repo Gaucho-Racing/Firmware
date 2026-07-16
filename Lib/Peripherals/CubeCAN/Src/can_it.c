@@ -1,127 +1,59 @@
 #include <stdbool.h>
-#include <stdint.h>
+#include <string.h>
 
 #include "CubeCAN_Config.h"
 #include "CubeMXCan.h"
 #include "CubeMXCanExt.h"
 #include "Logomatic.h"
-#include "Private/common.h"
-#include "main.h"
+#include "Private/PrivateCubeMXCAN.h"
 
-void FDCAN1_IT0_IRQHandler(void)
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-#ifdef USECAN1
-	HAL_FDCAN_IRQHandler(&hal_fdcan1);
-#endif
+	if (htim != NULL && htim->Instance == CUBEMX_CAN_TIMER_INSTANCE) {
+		CubeMXCan_Tick();
+	}
 }
 
-void FDCAN1_IT1_IRQHandler(void)
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
-#ifdef USECAN1
-	HAL_FDCAN_IRQHandler(&hal_fdcan1);
-#endif
+	(void)RxFifo0ITs;
+	CubeMXCan_OnRxFifo0(hfdcan);
 }
 
-void FDCAN2_IT0_IRQHandler(void)
+void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
 {
-#ifdef USECAN2
-	HAL_FDCAN_IRQHandler(&hal_fdcan2);
-#endif
-}
-void FDCAN2_IT1_IRQHandler(void)
-{
-#ifdef USECAN2
-	HAL_FDCAN_IRQHandler(&hal_fdcan2);
-#endif
+	(void)hfdcan;
+	(void)BufferIndexes;
 }
 
-void FDCAN3_IT0_IRQHandler(void)
+void CubeMXCan_Private_DispatchRx(FDCAN_HandleTypeDef *hfdcan)
 {
-#ifdef USECAN3
-	HAL_FDCAN_IRQHandler(&hal_fdcan3);
-#endif
-}
-void FDCAN3_IT1_IRQHandler(void)
-{
-#ifdef USECAN3
-	HAL_FDCAN_IRQHandler(&hal_fdcan3);
-#endif
+	CubeMXCan_OnRxFifo0(hfdcan);
 }
 
-void CAN_Timer_Start(void)
+void CubeMXCan_OnRxFifo0(FDCAN_HandleTypeDef *hfdcan)
 {
-	static bool initialized = false;
-
-	if (initialized) {
-		LOGOMATIC("CAN_Timer_Start: timer is already initialized\n");
+	if (hfdcan == NULL) {
 		return;
 	}
 
-	RCC_ClkInitTypeDef clkconfig = {0};
-	uint32_t latency = 0;
-	HAL_RCC_GetClockConfig(&clkconfig, &latency);
-
-	uint32_t apb1_div = clkconfig.APB1CLKDivider;
-	uint32_t tim_clock = (apb1_div == RCC_HCLK_DIV1) ? HAL_RCC_GetPCLK1Freq() : (2U * HAL_RCC_GetPCLK1Freq());
-
-	// 10 kHz counter clock keeps both PSC/ARR in range for a 1 second period.
-	const uint32_t counter_hz = 10000U;
-	if (tim_clock < counter_hz) {
-		LOGOMATIC("CAN_Timer_Start: APB1 clock is too slow to achieve desired timer frequency\n");
+	CubeMXCan_Handle *handle = CubeMXCan_Private_GetHandle(hfdcan);
+	if (handle == NULL || handle->config.rx_callback == NULL) {
+		FDCAN_RxHeaderTypeDef rx_header = {0};
+		uint8_t rx_data[FDCAN_MAX_DATA_BYTES] = {0};
+		(void)HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
+		LOGOMATIC("CubeMXCan_OnRxFifo0: no handle or callback registered for %s\n", can_get_instance_name(hfdcan->Instance));
 		return;
 	}
 
-	uint32_t prescaler = (tim_clock / counter_hz) - 1U;
-	if (prescaler > 0xFFFFU) {
-		LOGOMATIC("CAN_Timer_Start: failed to initialize timer prescaler\n");
+	FDCAN_RxHeaderTypeDef rx_header = {0};
+	uint8_t rx_data[FDCAN_MAX_DATA_BYTES] = {0};
+	if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data) != HAL_OK) {
+		LOGOMATIC("CubeMXCan_OnRxFifo0: failed to get RX message\n");
 		return;
 	}
 
-	uint32_t autoreload = ((CAN_TIMER_SEND_PERIOD_US * counter_hz) / 1000000U) - 1U;
-	if (autoreload > 0xFFFFU) {
-		LOGOMATIC("CAN_Timer_Start: failed to initialize timer autoreload\n");
-		return;
-	}
-
-	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM5);
-
-	LL_TIM_InitTypeDef tim_init = {0};
-	tim_init.Prescaler = prescaler;
-	tim_init.CounterMode = LL_TIM_COUNTERMODE_UP;
-	tim_init.Autoreload = autoreload;
-	tim_init.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
-
-	if (LL_TIM_Init(TIM5, &tim_init) != SUCCESS) {
-		LOGOMATIC("CAN_Timer_Start: failed to initialize timer\n");
-		return;
-	}
-
-	LL_TIM_SetClockSource(TIM5, LL_TIM_CLOCKSOURCE_INTERNAL);
-	LL_TIM_ClearFlag_UPDATE(TIM5);
-	LL_TIM_EnableIT_UPDATE(TIM5);
-
-	HAL_NVIC_SetPriority(TIM5_IRQn, 15U, 0U);
-	HAL_NVIC_EnableIRQ(TIM5_IRQn);
-
-	LL_TIM_EnableCounter(TIM5);
-
-	initialized = true;
-	LOGOMATIC("CAN_Timer_Start: timer initialized\n");
-	return;
-}
-
-void TIM5_IRQHandler(void)
-{
-	if (LL_TIM_IsActiveFlag_UPDATE(TIM5)) {
-		LL_TIM_ClearFlag_UPDATE(TIM5);
-#ifdef USECAN1
-		can_tx_dequeue_helper(can_get_handle(&hal_fdcan1));
-#endif
-#ifdef USECAN2
-		can_tx_dequeue_helper(can_get_handle(&hal_fdcan2));
-#endif
-#ifdef USECAN3
-		can_tx_dequeue_helper(can_get_handle(&hal_fdcan3));
-#endif
-	}
+	CAN_Identifier identifier = Deconstruct_CAN_Identifier(rx_header.Identifier);
+	uint8_t size = CubeMXCan_Private_DlcToBytes(rx_header.DataLength);
+	handle->config.rx_callback(handle->config.user_ctx, &identifier, rx_data, size);
 }
