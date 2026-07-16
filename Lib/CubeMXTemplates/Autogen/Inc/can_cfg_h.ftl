@@ -33,7 +33,6 @@ STM32 hardware configuration remains owned by CubeMX.
         [#assign hasFDCAN3 = true]
     [/#if]
 [/#list]
-
 #ifndef CAN_CFG_H
 #define CAN_CFG_H
 
@@ -41,17 +40,9 @@ STM32 hardware configuration remains owned by CubeMX.
 
 /* USER CODE BEGIN CAN_USER_CONFIG */
 
-#ifndef TX_BUFFER_1_SIZE
 #define TX_BUFFER_1_SIZE 20U
-#endif
-
-#ifndef TX_BUFFER_2_SIZE
 #define TX_BUFFER_2_SIZE 20U
-#endif
-
-#ifndef TX_BUFFER_3_SIZE
 #define TX_BUFFER_3_SIZE 20U
-#endif
 
 /* USER CODE END CAN_USER_CONFIG */
 
