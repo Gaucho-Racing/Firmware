@@ -99,14 +99,34 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 		return NULL;
 	}
 
-	CubeMXCan_Handle *handle = CubeMXCan_Private_GetHandle(hfdcan);
-	if (handle == NULL) {
-		for (uint32_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
-			if (s_handles[i].hfdcan == NULL) {
-				handle = &s_handles[i];
+	CubeMXCan_Handle *handle = NULL;
+	bool register_ok = false;
+
+	CRITICAL_SECTION
+	{
+		handle = CubeMXCan_Private_GetHandle(hfdcan);
+		if (handle == NULL) {
+			for (uint32_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
+				if (s_handles[i].hfdcan == NULL) {
+					handle = &s_handles[i];
+					memset(handle, 0, sizeof(*handle));
+					handle->hfdcan = hfdcan;
+					break;
+				}
+			}
+		}
+
+		if (handle != NULL) {
+			handle->config = *config;
+			handle->tx_head = 0U;
+			handle->tx_count = 0U;
+			handle->started = false;
+
+			if (CubeMXCan_Private_RegisterHandle(hfdcan, handle) == HAL_OK) {
+				register_ok = true;
+			} else {
 				memset(handle, 0, sizeof(*handle));
-				handle->hfdcan = hfdcan;
-				break;
+				handle = NULL;
 			}
 		}
 	}
@@ -116,12 +136,7 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 		return NULL;
 	}
 
-	handle->config = *config;
-	handle->tx_head = 0U;
-	handle->tx_count = 0U;
-	handle->started = false;
-
-	if (CubeMXCan_Private_RegisterHandle(hfdcan, handle) != HAL_OK) {
+	if (!register_ok) {
 		LOGOMATIC("CubeMXCan_Init: failed to register handle\n");
 		return NULL;
 	}
@@ -135,7 +150,6 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 	if (!s_timer_started) {
 		s_timer_started = true;
 	}
-
 	return handle;
 }
 
@@ -149,7 +163,11 @@ HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *handle)
 		return HAL_ERROR;
 	}
 
-	handle->started = true;
+	CRITICAL_SECTION
+	{
+		handle->started = true;
+	}
+
 	return HAL_OK;
 }
 
@@ -159,11 +177,14 @@ HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *handle)
 		return HAL_ERROR;
 	}
 
+	CRITICAL_SECTION
+	{
+		handle->started = false;
+	}
+
 	if (HAL_FDCAN_Stop(handle->hfdcan) != HAL_OK) {
 		return HAL_ERROR;
 	}
-
-	handle->started = false;
 
 	return HAL_OK;
 }
@@ -175,8 +196,13 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 	}
 
 	(void)CubeMXCan_Stop(handle);
-	CubeMXCan_Private_UnregisterHandle(handle->hfdcan);
-	memset(handle, 0, sizeof(*handle));
+	
+	CRITICAL_SECTION
+	{
+		CubeMXCan_Private_UnregisterHandle(handle->hfdcan);
+		memset(handle, 0, sizeof(*handle));
+	}
+
 	return HAL_OK;
 }
 
@@ -195,13 +221,16 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
 		return HAL_ERROR;
 	}
 
-	uint32_t insert_index = (handle->tx_head + handle->tx_count) % CUBEMX_CAN_TX_QUEUE_SIZE;
-	handle->tx_queue[insert_index] = *message;
+	CRITICAL_SECTION
+	{
+		uint32_t insert_index = (handle->tx_head + handle->tx_count) % CUBEMX_CAN_TX_QUEUE_SIZE;
+		handle->tx_queue[insert_index] = *message;
 
-	if (handle->tx_count < CUBEMX_CAN_TX_QUEUE_SIZE) {
-		handle->tx_count++;
-	} else {
-		handle->tx_head = (handle->tx_head + 1U) % CUBEMX_CAN_TX_QUEUE_SIZE;
+		if (handle->tx_count < CUBEMX_CAN_TX_QUEUE_SIZE) {
+			handle->tx_count++;
+		} else {
+			handle->tx_head = (handle->tx_head + 1U) % CUBEMX_CAN_TX_QUEUE_SIZE;
+		}
 	}
 
 	return HAL_OK;

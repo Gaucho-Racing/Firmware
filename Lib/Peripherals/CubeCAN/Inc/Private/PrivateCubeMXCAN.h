@@ -1,3 +1,4 @@
+#include <cmsis_compiler.h>
 #include <stdbool.h>
 #include <stdint.h>
 

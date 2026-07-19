@@ -86,6 +86,10 @@ uint8_t CubeMXCan_Private_DlcToBytes(uint32_t dlc)
 HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL || handle->tx_count == 0U) {
+		return HAL_ERROR;
+	}
+
+	if (handle->tx_count == 0U) {
 		return HAL_OK;
 	}
 
