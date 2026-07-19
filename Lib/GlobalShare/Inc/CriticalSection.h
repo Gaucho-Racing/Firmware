@@ -37,7 +37,7 @@ static inline void __set_PRIMASK(uint32_t state)
  *
  * @warning This function is intended for internal use only and should not be called directly by user code. Use the CRITICAL_SECTION macro instead.
  */
-static inline void _magic_auto_exit_critical(uint32_t *state_var)
+static inline void _magic_auto_critical_exit(uint32_t *state_var)
 {
 	if (state_var) {
 		__set_PRIMASK(*state_var);
@@ -53,7 +53,7 @@ static inline void _magic_auto_exit_critical(uint32_t *state_var)
  * disable interrupts for a short period of time.
  */
 #define CRITICAL_SECTION                                                                                                                                                                               \
-	for (__attribute__((cleanup(_magic_auto_exit_critical))) uint32_t CONCAT(auto_state_, __LINE__) = __get_PRIMASK(), CONCAT(auto_run_, __LINE__) = (__disable_irq(), 1);                         \
-	     CONCAT(auto_run_, __LINE__); CONCAT(auto_run_, __LINE__) = 0)
+	for (__attribute__((cleanup(_magic_auto_critical_exit))) uint32_t CONCAT(_magic_auto_critical_state_, __LINE__) = __get_PRIMASK(), CONCAT(_magic_auto_critical_run_, __LINE__) = (__disable_irq(), 1);                         \
+	     CONCAT(_magic_auto_critical_run_, __LINE__); CONCAT(_magic_auto_critical_run_, __LINE__) = 0)
 
 #endif
