@@ -122,6 +122,7 @@ int main(void)
   MX_FDCAN1_Init();
   MX_FDCAN2_Init();
   MX_TIM5_Init();
+  MX_FDCAN3_Init();
   /* USER CODE BEGIN 2 */
 	Logomatic_Init(&logomaticConfig);
 	VCP_Init(&vcp_config);
