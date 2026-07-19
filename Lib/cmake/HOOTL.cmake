@@ -29,6 +29,7 @@ add_compile_options(
 	-Wvla
 	-Wdouble-promotion
 	-g
+	-DHOOTL_TEST
 )
 
 if(APPLE) # MacOS has a different syntax for linker fatal warnings

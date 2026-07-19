@@ -20,4 +20,6 @@ target_link_libraries(
 		CANfigurator
 )
 
-# TODO Unit testing
+if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+	# FIXME Add HOOTL tests
+endif()

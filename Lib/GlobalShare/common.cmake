@@ -51,4 +51,14 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	)
 	target_link_libraries(verify_min_max PRIVATE GLOBALSHARE_LIB)
 	add_test(verify_min_max_test verify_min_max)
+
+	find_package(Threads REQUIRED)
+	add_executable(criticalsection)
+	target_sources(
+		criticalsection
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/criticalsection.c
+	)
+	target_link_libraries(criticalsection PRIVATE GLOBALSHARE_LIB Threads::Threads)
+	add_test(criticalsection_test criticalsection)
 endif()
