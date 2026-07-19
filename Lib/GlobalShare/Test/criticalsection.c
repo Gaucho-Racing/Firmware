@@ -10,7 +10,8 @@
 #define INCREMENTS_PER_THREAD 100000
 
 pthread_mutex_t __mock_global_irq_mutex;
-uint32_t __mock_primask_state = 0;
+_Thread_local uint32_t __mock_primask_state = 0;
+_Thread_local uint32_t __mock_irq_nesting_depth = 0;
 
 __attribute__((constructor)) static void init_recursive_mock_mutex(void)
 {
@@ -21,7 +22,7 @@ __attribute__((constructor)) static void init_recursive_mock_mutex(void)
 	pthread_mutexattr_destroy(&attr);
 }
 
-long long global_counter = 0;
+volatile long long global_counter = 0;
 
 void *thread_worker_good(void *arg)
 {

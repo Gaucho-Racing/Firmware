@@ -52,7 +52,7 @@ void CubeMXCan_OnRxFifo0(FDCAN_HandleTypeDef *hfdcan)
 		FDCAN_RxHeaderTypeDef rx_header = {0};
 		uint8_t rx_data[FDCAN_MAX_DATA_BYTES] = {0};
 		(void)HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data);
-		LOGOMATIC("CubeMXCan_OnRxFifo0: no handle or callback registered for %s\n", can_get_instance_name(hfdcan->Instance));
+		LOGOMATIC("CubeMXCan_OnRxFifo0: no handle or callback registered for %s\n", CAN_GetInstanceName(hfdcan->Instance));
 		return;
 	}
 

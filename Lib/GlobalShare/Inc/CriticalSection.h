@@ -9,7 +9,8 @@
 #include <pthread.h>
 
 extern pthread_mutex_t __mock_global_irq_mutex;
-extern uint32_t __mock_primask_state;
+extern _Thread_local uint32_t __mock_primask_state;
+extern _Thread_local uint32_t __mock_irq_nesting_depth;
 
 static inline uint32_t __get_PRIMASK(void)
 {
@@ -19,13 +20,23 @@ static inline uint32_t __get_PRIMASK(void)
 static inline void __disable_irq(void)
 {
 	pthread_mutex_lock(&__mock_global_irq_mutex);
-	__mock_primask_state = 1;
+	if (__mock_irq_nesting_depth == 0) {
+		__mock_primask_state = 1;
+	}
+	__mock_irq_nesting_depth++;
 }
 
 static inline void __set_PRIMASK(uint32_t state)
 {
+	(void)state;
+
+	__mock_irq_nesting_depth--;
+
+	if (__mock_irq_nesting_depth == 0) {
+		__mock_primask_state = 0;
+	}
+
 	pthread_mutex_unlock(&__mock_global_irq_mutex);
-	__mock_primask_state = state;
 }
 #endif
 

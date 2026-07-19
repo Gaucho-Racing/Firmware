@@ -85,20 +85,36 @@ uint8_t CubeMXCan_Private_DlcToBytes(uint32_t dlc)
 
 HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle)
 {
-	if (handle == NULL || handle->hfdcan == NULL || handle->tx_count == 0U) {
+	if (handle == NULL || handle->hfdcan == NULL) {
 		return HAL_ERROR;
 	}
 
-	if (handle->tx_count == 0U) {
-		return HAL_OK;
+	GRCAN_TxMessage message_copy;
+	bool message_found = false;
+
+	CRITICAL_SECTION
+	{
+		if (handle->tx_count > 0U) {
+			message_copy = handle->tx_queue[handle->tx_head];
+			message_found = true;
+		}
 	}
 
-	const GRCAN_TxMessage *message = &handle->tx_queue[handle->tx_head];
-	if (HAL_FDCAN_AddMessageToTxFifoQ(handle->hfdcan, &message->tx_header, message->data) != HAL_OK) {
+	if (!message_found) {
 		return HAL_ERROR;
 	}
 
-	handle->tx_head = (handle->tx_head + 1U) % CUBEMX_CAN_TX_QUEUE_SIZE;
-	handle->tx_count--;
+	if (HAL_FDCAN_AddMessageToTxFifoQ(handle->hfdcan, &message_copy.tx_header, message_copy.data) != HAL_OK) {
+		return HAL_ERROR;
+	}
+
+	CRITICAL_SECTION
+	{
+		if (handle->tx_count > 0U) {
+			handle->tx_head = (handle->tx_head + 1U) % CUBEMX_CAN_TX_QUEUE_SIZE;
+			handle->tx_count--;
+		}
+	}
+
 	return HAL_OK;
 }

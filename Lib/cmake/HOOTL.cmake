@@ -59,11 +59,13 @@ if(ADDRESS_SANITIZER)
 			-fsanitize=address
 			-fsanitize=undefined
 			-fsanitize=leak
+			# -fsanitize=thread
 		)
 		add_link_options(
 			-fsanitize=address
 			-fsanitize=undefined
 			-fsanitize=leak
+			# -fsanitize=thread
 		)
 	endif()
 endif()
