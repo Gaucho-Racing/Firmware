@@ -260,7 +260,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (stateData->enable_regen && PressingBrake(stateData) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
+	} else if (stateData->enable_regen && (PressingBrake(stateData) || CalcAccPedalTravel(stateData) < (stateData->apps_deadzone + 0.05f)) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
 		torque_request = -MAX_REVERSE_CURRENT_AMPS;
 	} else {
 		uint16_t max_current = 0;
