@@ -12,6 +12,53 @@ Bus ID:
     id: 3
     max_dlc: 8
 
+# physical topology: which devices are physically wired to each CAN bus.
+# Hand-editable by design. Device names must match the GR ID section and bus
+# names must match the Bus ID section above. Buses omitted here (e.g. Testing)
+# are treated as unrestricted. Mirrors can_topology.json from the GRCAN-Web viewer.
+physical topology:
+  Primary:
+    - ECU
+    - TCM
+    - ACU
+    - DGPS
+    - GR Inv
+    - DTI Inv
+    - Fan Ctrl 1
+    - Fan Ctrl 2
+    - Fan Ctrl 3
+    - EM
+    - Dash Panel
+    - HV DC-DC
+    - LV DC-DC
+  Data:
+    - ECU
+    - TCM
+    - ACU
+    - DGPS
+    - TireTemp FL
+    - TireTemp FR
+    - TireTemp RL
+    - TireTemp RR
+    - BrakeTemp FL
+    - BrakeTemp FR
+    - BrakeTemp RL
+    - BrakeTemp RR
+    - Suspension FL
+    - Suspension FR
+    - Suspension RL
+    - Suspension RR
+    - InboardFloor FL
+    - InboardFloor FR
+    - InboardFloor RL
+    - InboardFloor RR
+  Charger:
+    - CCU
+    - ACU
+    - Charger
+    - IMD
+    - EM
+
 routing:
   messages:
     ACU:
