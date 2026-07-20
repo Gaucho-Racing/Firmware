@@ -58,7 +58,7 @@ ECU_StateData stateLump = {
     .apps_1_max = 1897,
     .apps_2_max = 1926,
     // Regen
-    .regen_strength = 0.8f,
+    .regen_strength = 2,
     .enable_regen = false,
     .SDC_startup_condition = true};
 

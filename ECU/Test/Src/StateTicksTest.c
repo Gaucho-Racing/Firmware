@@ -108,7 +108,7 @@ int main(void)
 				      .apps_1_max = 1897,
 				      .apps_2_max = 1926,
 				      // Regen
-				      .regen_strength = 0.8f,
+				      .regen_strength = 2,
 				      .enable_regen = false};
 
 	defaultState.bms_sense = 1.5;
