@@ -51,6 +51,8 @@
 
 #define USECAN2
 
+#define USECAN3
+
 /* Timers enabled in CubeMX. */
 
 #define CUBEMX_HAS_TIM5
