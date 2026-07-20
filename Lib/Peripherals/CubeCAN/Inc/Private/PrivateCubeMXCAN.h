@@ -1,14 +1,17 @@
 #include <cmsis_compiler.h>
+#include <stdatomic.h>
 #include <stdbool.h>
 #include <stdint.h>
 
 #include "CubeMXCan.h"
-#include "Stringification.h"
 #include "Logomatic.h"
+#include "Stringification.h"
 #include "main.h"
 
 #ifndef PRIVATE_CUBE_MX_CAN_H
 #define PRIVATE_CUBE_MX_CAN_H
+
+#define TX_QUEUE_MASK (CUBEMX_CAN_TX_QUEUE_SIZE - 1U)
 
 /**
  * @brief CubeMX CAN handle structure
@@ -25,10 +28,10 @@ typedef struct CubeMXCan_Handle {
 	CubeCAN_Config config;
 	/// @brief Transmission queue for the CubeMX CAN handle, containing the messages to be transmitted.
 	GRCAN_TxMessage tx_queue[CUBEMX_CAN_TX_QUEUE_SIZE];
-	/// @brief Index of the head of the transmission queue, indicating the next message to be transmitted.
-	uint32_t tx_head;
-	/// @brief Count of messages in the transmission queue, indicating the number of messages waiting to be transmitted.
-	uint32_t tx_count;
+	/// @brief Atomic head index for the transmission queue, indicating the next message to be transmitted.
+	_Atomic uint32_t tx_head;
+	/// @brief Atomic tail index for the transmission queue, indicating the next available slot for a new message.
+	_Atomic uint32_t tx_tail;
 	/// @brief Flag indicating whether the CubeMX CAN handle has been started.
 	bool started;
 } CubeMXCan_Handle;

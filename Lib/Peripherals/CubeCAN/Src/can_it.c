@@ -6,6 +6,9 @@
 #include "CubeMXCanExt.h"
 #include "Logomatic.h"
 #include "Private/PrivateCubeMXCAN.h"
+#include <assert.h>
+
+static_assert((CUBEMX_CAN_TX_QUEUE_SIZE > 0) && !(CUBEMX_CAN_TX_QUEUE_SIZE & (CUBEMX_CAN_TX_QUEUE_SIZE - 1)), "CUBEMX_CAN_TX_QUEUE_SIZE must be a power of 2");
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {

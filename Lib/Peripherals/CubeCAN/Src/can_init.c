@@ -17,7 +17,7 @@ static bool s_timer_started = false;
 
 static CubeMXCan_RegistryEntry *CubeMXCan_FindRegistryEntry(FDCAN_GlobalTypeDef *instance)
 {
-	for (uint32_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
+	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
 		if (s_registry[i].instance == instance) {
 			return &s_registry[i];
 		}
@@ -33,7 +33,7 @@ static CubeMXCan_RegistryEntry *CubeMXCan_AllocRegistryEntry(FDCAN_GlobalTypeDef
 		return entry;
 	}
 
-	for (uint32_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
+	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
 		if (s_registry[i].instance == NULL) {
 			s_registry[i].instance = instance;
 			return &s_registry[i];
@@ -83,10 +83,18 @@ void CubeMXCan_Private_UnregisterHandle(FDCAN_HandleTypeDef *hfdcan)
 
 void CubeMXCan_Tick(void)
 {
-	for (uint32_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
+	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
 		CubeMXCan_Handle *handle = s_registry[i].handle;
-		if (handle == NULL || !handle->started) {
+		if (handle == NULL || handle->hfdcan == NULL || !handle->started) {
 			continue;
+		}
+
+		if (CubeMXCan_Private_IsDisabled(handle)) {
+			LOGOMATIC("CAN_send: currently in restricted operation mode\n");
+			if (CubeMXCan_Private_RecoverPeripheral(handle->hfdcan) != HAL_OK) {
+				LOGOMATIC("CAN_send %d: failed to recover peripheral\n", (int)i);
+				continue;
+			}
 		}
 
 		(void)CubeMXCan_Private_SendQueuedMessage(handle);
@@ -106,7 +114,7 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 	{
 		handle = CubeMXCan_Private_GetHandle(hfdcan);
 		if (handle == NULL) {
-			for (uint32_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
+			for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
 				if (s_handles[i].hfdcan == NULL) {
 					handle = &s_handles[i];
 					memset(handle, 0, sizeof(*handle));
@@ -118,8 +126,8 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 
 		if (handle != NULL) {
 			handle->config = *config;
-			handle->tx_head = 0U;
-			handle->tx_count = 0U;
+			atomic_init (&handle->tx_head, 0U);
+			atomic_init (&handle->tx_tail, 0U);
 			handle->started = false;
 
 			if (CubeMXCan_Private_RegisterHandle(hfdcan, handle) == HAL_OK) {
@@ -196,7 +204,7 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 	}
 
 	(void)CubeMXCan_Stop(handle);
-	
+
 	CRITICAL_SECTION
 	{
 		CubeMXCan_Private_UnregisterHandle(handle->hfdcan);
@@ -221,17 +229,18 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
 		return HAL_ERROR;
 	}
 
-	CRITICAL_SECTION
-	{
-		uint32_t insert_index = (handle->tx_head + handle->tx_count) % CUBEMX_CAN_TX_QUEUE_SIZE;
-		handle->tx_queue[insert_index] = *message;
+	uint32_t current_tail = atomic_load(&handle->tx_tail);
+	uint32_t current_head = atomic_load(&handle->tx_head);
 
-		if (handle->tx_count < CUBEMX_CAN_TX_QUEUE_SIZE) {
-			handle->tx_count++;
-		} else {
-			handle->tx_head = (handle->tx_head + 1U) % CUBEMX_CAN_TX_QUEUE_SIZE;
-		}
+	if ((current_tail - current_head) >= CUBEMX_CAN_TX_QUEUE_SIZE) {
+		LOGOMATIC("CubeMXCan_QueueTx: queue is full\n");
+		return HAL_BUSY;	// FIXME QUEUE IS FULL WHAT TO DO
 	}
+
+	uint32_t insert_index = current_tail & TX_QUEUE_MASK;
+	handle->tx_queue[insert_index] = *message;
+
+	atomic_store_explicit(&handle->tx_tail, current_tail + 1U, memory_order_release);
 
 	return HAL_OK;
 }

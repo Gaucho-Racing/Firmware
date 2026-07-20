@@ -83,38 +83,75 @@ uint8_t CubeMXCan_Private_DlcToBytes(uint32_t dlc)
 	return s_dlc_to_bytes[dlc];
 }
 
-HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle)
+bool CubeMXCan_Private_IsDisabled(CubeMXCan_Handle *handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {
-		return HAL_ERROR;
+		return true;
 	}
 
-	GRCAN_TxMessage message_copy;
-	bool message_found = false;
+	HAL_FDCAN_StateTypeDef state = HAL_FDCAN_GetState(handle->hfdcan);
+	if (state == HAL_FDCAN_STATE_ERROR || state == HAL_FDCAN_STATE_READY) {
+		return true;
+	}
 
-	CRITICAL_SECTION
-	{
-		if (handle->tx_count > 0U) {
-			message_copy = handle->tx_queue[handle->tx_head];
-			message_found = true;
+	uint32_t error_status = HAL_FDCAN_GetErrorStatus(handle->hfdcan);
+	if ((error_status & FDCAN_PSR_BO) != 0U) { // BO = Bus-Off Flag
+		return true;
+	}
+
+	return false;
+}
+
+HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(CubeMXCan_Handle *handle)
+{
+	FDCAN_ProtocolStatusTypeDef protocol_status = {0};
+
+	if (HAL_FDCAN_GetProtocolStatus(handle->hfdcan, &protocol_status) == HAL_OK && protocol_status.BusOff) {
+		LOGOMATIC("CAN_send: bus off detected, attempting recovery\n");
+
+		if (HAL_FDCAN_Stop(handle->hfdcan) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to stop FDCAN peripheral during bus off recovery\n");
+			return HAL_ERROR;
+		}
+
+		HAL_FDCAN_AbortTxRequest(handle->hfdcan, FDCAN_TX_BUFFER0 | FDCAN_TX_BUFFER1 | FDCAN_TX_BUFFER2);
+
+		if (HAL_FDCAN_Start(handle->hfdcan) != HAL_OK) {
+			LOGOMATIC("CAN_send: failed to restart FDCAN peripheral during bus off recovery\n");
+			return HAL_ERROR;
 		}
 	}
 
-	if (!message_found) {
+	if (HAL_FDCAN_IsRestrictedOperationMode(handle->hfdcan)) {
+		LOGOMATIC("CAN_send: currently in restricted operation mode\n");
+		HAL_FDCAN_ExitRestrictedOperationMode(handle->hfdcan);
+	}
+
+	return HAL_OK;
+}
+
+HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle)
+{
+	if (handle == NULL || handle->hfdcan == NULL) {
+		// Invalid parameter
 		return HAL_ERROR;
 	}
+
+	uint32_t current_head = atomic_load_explicit(&handle->tx_head, memory_order_relaxed);
+	uint32_t current_tail = atomic_load_explicit(&handle->tx_tail, memory_order_acquire);
+
+	if (current_head == current_tail) {
+		// Queue empty
+		return HAL_OK;
+	}
+
+	uint32_t current_index = current_head & TX_QUEUE_MASK;
+	GRCAN_TxMessage message_copy = handle->tx_queue[current_index];
 
 	if (HAL_FDCAN_AddMessageToTxFifoQ(handle->hfdcan, &message_copy.tx_header, message_copy.data) != HAL_OK) {
 		return HAL_ERROR;
 	}
 
-	CRITICAL_SECTION
-	{
-		if (handle->tx_count > 0U) {
-			handle->tx_head = (handle->tx_head + 1U) % CUBEMX_CAN_TX_QUEUE_SIZE;
-			handle->tx_count--;
-		}
-	}
-
+	atomic_store_explicit(&handle->tx_head, (current_head + 1U), memory_order_release);
 	return HAL_OK;
 }
