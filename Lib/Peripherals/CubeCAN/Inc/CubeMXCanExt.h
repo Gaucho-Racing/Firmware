@@ -1,3 +1,4 @@
+#include <stdatomic.h>
 #include <stdint.h>
 
 #include "GRCAN_MSG_ID.h"

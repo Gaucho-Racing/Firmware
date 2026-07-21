@@ -1,6 +1,7 @@
 #include <stdint.h>
 
 #include "Stringification.h"
+#include "main.h"
 
 #ifndef CRITICAL_SECTION_H
 #define CRITICAL_SECTION_H
@@ -64,7 +65,8 @@ static inline void _magic_auto_critical_exit(uint32_t *state_var)
  * disable interrupts for a short period of time.
  */
 #define CRITICAL_SECTION                                                                                                                                                                               \
-	for (__attribute__((cleanup(_magic_auto_critical_exit))) uint32_t CONCAT(_magic_auto_critical_state_, __LINE__) = __get_PRIMASK(), CONCAT(_magic_auto_critical_run_, __LINE__) = (__disable_irq(), 1);                         \
+	for (__attribute__((cleanup(_magic_auto_critical_exit))) uint32_t CONCAT(_magic_auto_critical_state_, __LINE__) = __get_PRIMASK(),                                                             \
+													      CONCAT(_magic_auto_critical_run_, __LINE__) = (__disable_irq(), 1);                      \
 	     CONCAT(_magic_auto_critical_run_, __LINE__); CONCAT(_magic_auto_critical_run_, __LINE__) = 0)
 
 #endif

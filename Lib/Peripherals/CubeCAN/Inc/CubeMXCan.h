@@ -1,3 +1,4 @@
+#include <stdatomic.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -100,5 +101,13 @@ HAL_StatusTypeDef CubeMXCan_AddFilter(CubeMXCan_Handle *handle, const FDCAN_Filt
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
 HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMessage *message);
+
+/**
+ * @brief Converts a Data Length Code (DLC) to the corresponding number of data bytes.
+ * @param dlc The Data Length Code to be converted.
+ * @return The number of data bytes corresponding to the given DLC.
+ * @warning The DLC value must be between 0 and 15, inclusive. Values outside this range will result in undefined behavior.
+ */
+bool CubeMXCan_Private_IsDisabled(CubeMXCan_Handle *handle);
 
 #endif

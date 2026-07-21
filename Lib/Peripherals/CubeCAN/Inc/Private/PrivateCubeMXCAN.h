@@ -1,8 +1,8 @@
-#include <cmsis_compiler.h>
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "CubeCAN_Config.h"
 #include "CubeMXCan.h"
 #include "Logomatic.h"
 #include "Stringification.h"
@@ -11,17 +11,37 @@
 #ifndef PRIVATE_CUBE_MX_CAN_H
 #define PRIVATE_CUBE_MX_CAN_H
 
+/**
+ * @brief Macro to convert a CubeMX CAN instance pointer to its corresponding index.
+ *
+ * Works on all supported boards, but new boards should be verified against this operation
+ *
+ * @param inst Pointer to the CubeMX CAN instance (FDCAN1, FDCAN2, or FDCAN3).
+ * @return The index corresponding to the given CubeMX CAN instance (0 for FDCAN1, 1 for FDCAN2, and 2 for FDCAN3).
+ * @warning This macro assumes that the CubeMX CAN instances are contiguous in memory and that FDCAN1 is the first instance. It may not work correctly if the instances are not contiguous or if FDCAN1
+ * is not the first instance.
+ */
+#define CUBEMX_CAN_INSTANCE_TO_INDEX(inst) ((uint32_t)((uintptr_t)(inst) - FDCAN1_BASE) >> 10)
+
+/**
+ * @brief Mask for the transmission queue index, used to wrap around the queue when it reaches its maximum size.
+ *
+ * Application code should not use this macro directly. It is intended for internal use only
+ *
+ * @warning The transmission queue size must be a power of two for this mask to work correctly
+ * @warning The transmission queue size must be defined as CUBEMX_CAN_TX_QUEUE_SIZE in the CubeMX CAN configuration header file
+ */
 #define TX_QUEUE_MASK (CUBEMX_CAN_TX_QUEUE_SIZE - 1U)
 
 /**
  * @brief CubeMX CAN handle structure
  *
- * This structure is used to represent a CubeMX CAN handle, which consists of a pointer to the FDCAN handle, a configuration structure, a transmission queue, and other relevant parameters.\
+ * This structure is used to represent a CubeMX CAN handle, which consists of a pointer to the FDCAN handle, a configuration structure, a transmission queue, and other relevant parameters.
  *
  * @warning Use the provided API functions to interact with the CubeMX CAN handle.
  * @warning The structure is intended for internal use only and should not be accessed directly by user code.
  */
-typedef struct CubeMXCan_Handle {
+struct CubeMXCan_Handle {
 	/// @brief Pointer to the FDCAN handle associated with this CubeMX CAN handle.
 	FDCAN_HandleTypeDef *hfdcan;
 	/// @brief Configuration structure for the CubeMX CAN handle, containing the receive callback and user context.
@@ -34,7 +54,7 @@ typedef struct CubeMXCan_Handle {
 	_Atomic uint32_t tx_tail;
 	/// @brief Flag indicating whether the CubeMX CAN handle has been started.
 	bool started;
-} CubeMXCan_Handle;
+};
 
 /// @brief Maximum number of CubeMX CAN instances supported by the library.
 #define CUBEMX_CAN_MAX_INSTANCES 3U
@@ -90,5 +110,42 @@ void CubeMXCan_Tick(void);
  * @param hfdcan Pointer to the FDCAN handle associated with the received message.
  */
 void CubeMXCan_OnRxFifo0(FDCAN_HandleTypeDef *hfdcan);
+
+/**
+ * @brief Structure representing a registry entry for the CubeMX CAN library, used to associate a CubeMX CAN handle with its corresponding FDCAN handle.
+ */
+struct CubeMXCan_RegistryEntry {
+	/// @brief Pointer to the FDCAN instance associated with this registry entry.
+	FDCAN_GlobalTypeDef *instance;
+	/// @brief Pointer to the CubeMX CAN handle associated with this registry entry.
+	CubeMXCan_Handle *handle;
+};
+
+/**
+ * @brief Registry entry structure for the CubeMX CAN library, used to associate a CubeMX CAN handle with its corresponding FDCAN handle.
+ * @note The number of entries in the registry is defined by CUBEMX_CAN_MAX_INSTANCES.
+ */
+extern struct CubeMXCan_RegistryEntry registry[CUBEMX_CAN_MAX_INSTANCES];
+
+/**
+ * @brief Array of CubeMX CAN handles, one for each supported instance.
+ * @note The number of instances is defined by CUBEMX_CAN_MAX_INSTANCES.
+ */
+extern struct CubeMXCan_Handle handles[CUBEMX_CAN_MAX_INSTANCES];
+
+/**
+ * @brief Flag indicating whether the CubeMX CAN Tx timer has been started.
+ */
+extern bool s_timer_started;
+
+/**
+ * @brief Attempts to recover the FDCAN peripheral associated with the given CubeMX CAN handle.
+ *
+ * Handles recovery from bus off or restricted operation mode by reinitializing the FDCAN peripheral and restoring its configuration.
+ *
+ * @param handle Pointer to the CubeMX CAN handle associated with the FDCAN peripheral to be recovered.
+ * @return HAL_StatusTypeDef indicating the success or failure of the recovery operation.
+ */
+HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(CubeMXCan_Handle *handle);
 
 #endif
