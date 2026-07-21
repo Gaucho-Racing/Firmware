@@ -32,7 +32,7 @@ target_sources(
 		Core/Src/adc.c
 		Core/Src/crc.c
 		Core/Src/dma.c
-									Core/Src/fdcan.c
+		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/i2c.c
 		Core/Src/main.c
