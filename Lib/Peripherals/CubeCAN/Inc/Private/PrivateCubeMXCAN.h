@@ -6,6 +6,7 @@
 #include "CubeMXCan.h"
 #include "Logomatic.h"
 #include "Stringification.h"
+#include "fdcan.h"
 #include "main.h"
 
 #ifndef PRIVATE_CUBE_MX_CAN_H
@@ -45,7 +46,15 @@ struct CubeMXCan_Handle {
 };
 
 /// @brief Maximum number of CubeMX CAN instances supported by the library.
+#if defined(FDCAN3) || defined(CAN3)
 #define CUBEMX_CAN_MAX_INSTANCES 3U
+#elif (defined(FDCAN2) || defined(CAN2))
+#define CUBEMX_CAN_MAX_INSTANCES 2U
+#elif (defined(FDCAN1) || defined(CAN1))
+#define CUBEMX_CAN_MAX_INSTANCES 1U
+#else
+#error "No CAN or FDCAN instances defined. Please check your CubeMX configuration."
+#endif
 
 /**
  * @brief Sends a queued message from the CubeMX CAN handle.
