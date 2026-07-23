@@ -21,6 +21,7 @@ target_link_libraries(
 	CUBEMX_CAN_LIB
 	INTERFACE
 		CANfigurator
+		LOGOMATIC_LIB
 )
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")

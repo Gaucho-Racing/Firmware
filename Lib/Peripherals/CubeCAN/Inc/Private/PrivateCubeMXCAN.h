@@ -12,18 +12,6 @@
 #define PRIVATE_CUBE_MX_CAN_H
 
 /**
- * @brief Macro to convert a CubeMX CAN instance pointer to its corresponding index.
- *
- * Works on all supported boards, but new boards should be verified against this operation
- *
- * @param inst Pointer to the CubeMX CAN instance (FDCAN1, FDCAN2, or FDCAN3).
- * @return The index corresponding to the given CubeMX CAN instance (0 for FDCAN1, 1 for FDCAN2, and 2 for FDCAN3).
- * @warning This macro assumes that the CubeMX CAN instances are contiguous in memory and that FDCAN1 is the first instance. It may not work correctly if the instances are not contiguous or if FDCAN1
- * is not the first instance.
- */
-#define CUBEMX_CAN_INSTANCE_TO_INDEX(inst) ((uint32_t)((uintptr_t)(inst) - FDCAN1_BASE) >> 10)
-
-/**
  * @brief Mask for the transmission queue index, used to wrap around the queue when it reaches its maximum size.
  *
  * Application code should not use this macro directly. It is intended for internal use only
@@ -32,6 +20,16 @@
  * @warning The transmission queue size must be defined as CUBEMX_CAN_TX_QUEUE_SIZE in the CubeMX CAN configuration header file
  */
 #define TX_QUEUE_MASK (CUBEMX_CAN_TX_QUEUE_SIZE - 1U)
+
+/**
+ * @brief Function to convert a CubeMX CAN instance pointer to its corresponding index.
+ *
+ * Works on all supported boards, but new boards should be verified against this operation
+ *
+ * @param can Pointer to the CubeMX CAN instance (FDCAN1, FDCAN2, or FDCAN3).
+ * @return The index corresponding to the given CubeMX CAN instance (0 for FDCAN1, 1 for FDCAN2, and 2 for FDCAN3).
+ */
+uint32_t CubeMXCan_Private_InstanceToIndex(FDCAN_GlobalTypeDef *can);
 
 /**
  * @brief CubeMX CAN handle structure

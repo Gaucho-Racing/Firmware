@@ -19,8 +19,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	CubeMXCan_Handle *handle = NULL;
 	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
-		if (s_handles[i].hfdcan == hfdcan) {
-			handle = &s_handles[i];
+		if (handles[i].hfdcan == hfdcan) {
+			handle = &handles[i];
 			break;
 		}
 	}

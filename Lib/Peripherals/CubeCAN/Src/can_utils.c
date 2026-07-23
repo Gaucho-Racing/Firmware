@@ -10,6 +10,28 @@
 #include "Logomatic.h"
 #include "Private/PrivateCubeMXCAN.h"
 
+uint32_t CubeMXCan_Private_InstanceToIndex(FDCAN_GlobalTypeDef *can)
+{
+	assert(can != NULL && "Invalid null parameter");
+
+	switch ((uint32_t)can) {
+#if defined(FDCAN1)
+		case (uint32_t)FDCAN1:
+			return 0U;
+#endif
+#if defined(FDCAN2)
+		case (uint32_t)FDCAN2:
+			return 1U;
+#endif
+#if defined(FDCAN3)
+		case (uint32_t)FDCAN3:
+			return 2U;
+#endif
+		default:
+			assert(false && "Invalid CubeMX CAN instance or improper setup in main.h, please use CubeMX to regenerate code and verify your parameters.");
+	}
+}
+
 uint32_t Construct_CAN_Identifier(const CAN_Identifier *identifier)
 {
 	if (identifier == NULL) {
