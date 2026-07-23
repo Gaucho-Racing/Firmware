@@ -55,13 +55,6 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
 	return status;
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	if (htim != NULL && htim->Instance == CUBEMX_CAN_TIMER_INSTANCE) {
-		CubeMXCan_Tick();
-	}
-}
-
 HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {

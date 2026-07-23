@@ -62,11 +62,6 @@ HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle);
 uint8_t CubeMXCan_Private_DlcToBytes(uint32_t dlc);
 
 /**
- * @brief Processes periodic tasks for the CubeMX CAN handle, such as handling timeouts and managing the transmission queue.
- */
-void CubeMXCan_Tick(void);
-
-/**
  * @brief Callback function for handling received messages from the FDCAN peripheral. This function is called when a message is received in the RX FIFO 0 of the FDCAN peripheral.
  * @param hfdcan Pointer to the FDCAN handle associated with the received message.
  */

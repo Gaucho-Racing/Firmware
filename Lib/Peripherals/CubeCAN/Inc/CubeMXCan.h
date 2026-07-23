@@ -110,4 +110,10 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
  */
 bool CubeMXCan_Private_IsDisabled(CubeMXCan_Handle *handle);
 
+/**
+ * @brief Processes periodic tasks for the CubeMX CAN handle, such as handling timeouts and managing the transmission queue.
+ * @warning This function sends one can message per configured bus per call. Not calling it will simply not send any messages.
+ */
+void CubeMXCan_Tick(void);
+
 #endif
