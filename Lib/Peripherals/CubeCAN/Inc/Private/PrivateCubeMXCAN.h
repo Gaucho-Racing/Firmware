@@ -22,16 +22,6 @@
 #define TX_QUEUE_MASK (CUBEMX_CAN_TX_QUEUE_SIZE - 1U)
 
 /**
- * @brief Function to convert a CubeMX CAN instance pointer to its corresponding index.
- *
- * Works on all supported boards, but new boards should be verified against this operation
- *
- * @param can Pointer to the CubeMX CAN instance (FDCAN1, FDCAN2, or FDCAN3).
- * @return The index corresponding to the given CubeMX CAN instance (0 for FDCAN1, 1 for FDCAN2, and 2 for FDCAN3).
- */
-uint32_t CubeMXCan_Private_InstanceToIndex(FDCAN_GlobalTypeDef *can);
-
-/**
  * @brief CubeMX CAN handle structure
  *
  * This structure is used to represent a CubeMX CAN handle, which consists of a pointer to the FDCAN handle, a configuration structure, a transmission queue, and other relevant parameters.
@@ -58,38 +48,11 @@ struct CubeMXCan_Handle {
 #define CUBEMX_CAN_MAX_INSTANCES 3U
 
 /**
- * @brief Retrieves the CubeMX CAN handle associated with the given FDCAN handle.
- * @param hfdcan Pointer to the FDCAN handle.
- * @return Pointer to the CubeMX CAN handle associated with the given FDCAN handle
- */
-CubeMXCan_Handle *CubeMXCan_Private_GetHandle(FDCAN_HandleTypeDef *hfdcan);
-
-/**
- * @brief Registers a CubeMX CAN handle with the given FDCAN handle.
- * @param hfdcan Pointer to the FDCAN handle.
- * @param handle Pointer to the CubeMX CAN handle.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- */
-HAL_StatusTypeDef CubeMXCan_Private_RegisterHandle(FDCAN_HandleTypeDef *hfdcan, CubeMXCan_Handle *handle);
-
-/**
- * @brief Unregisters the CubeMX CAN handle associated with the given FDCAN handle.
- * @param hfdcan Pointer to the FDCAN handle.
- */
-void CubeMXCan_Private_UnregisterHandle(FDCAN_HandleTypeDef *hfdcan);
-
-/**
  * @brief Sends a queued message from the CubeMX CAN handle.
  * @param handle Pointer to the CubeMX CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
 HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle);
-
-/**
- * @brief Dispatches a received message from the CubeMX CAN handle.
- * @param hfdcan Pointer to the FDCAN handle.
- */
-void CubeMXCan_Private_DispatchRx(FDCAN_HandleTypeDef *hfdcan);
 
 /**
  * @brief Converts a Data Length Code (DLC) to the corresponding number of bytes.
@@ -110,22 +73,6 @@ void CubeMXCan_Tick(void);
 void CubeMXCan_OnRxFifo0(FDCAN_HandleTypeDef *hfdcan);
 
 /**
- * @brief Structure representing a registry entry for the CubeMX CAN library, used to associate a CubeMX CAN handle with its corresponding FDCAN handle.
- */
-struct CubeMXCan_RegistryEntry {
-	/// @brief Pointer to the FDCAN instance associated with this registry entry.
-	FDCAN_GlobalTypeDef *instance;
-	/// @brief Pointer to the CubeMX CAN handle associated with this registry entry.
-	CubeMXCan_Handle *handle;
-};
-
-/**
- * @brief Registry entry structure for the CubeMX CAN library, used to associate a CubeMX CAN handle with its corresponding FDCAN handle.
- * @note The number of entries in the registry is defined by CUBEMX_CAN_MAX_INSTANCES.
- */
-extern struct CubeMXCan_RegistryEntry registry[CUBEMX_CAN_MAX_INSTANCES];
-
-/**
  * @brief Array of CubeMX CAN handles, one for each supported instance.
  * @note The number of instances is defined by CUBEMX_CAN_MAX_INSTANCES.
  */
@@ -134,7 +81,7 @@ extern struct CubeMXCan_Handle handles[CUBEMX_CAN_MAX_INSTANCES];
 /**
  * @brief Flag indicating whether the CubeMX CAN Tx timer has been started.
  */
-extern bool s_timer_started;
+extern bool timer_started;
 
 /**
  * @brief Attempts to recover the FDCAN peripheral associated with the given CubeMX CAN handle.

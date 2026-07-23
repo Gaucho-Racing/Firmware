@@ -14,7 +14,7 @@
  * This structure is used to represent a CAN message identifier, which consists of a transmitting node ID, a receiving node ID, and a message ID. The structure is used in conjunction with the
  * Construct_Message_ID and Deconstruct_Message_ID functions to convert between the structure representation and the 32-bit integer representation of the CAN message identifier.
  *
- * @warning The structure does not represent cusotm IDs.
+ * @warning The structure does not represent custom IDs.
  * @warning The structure does not represent actual bit depth
  */
 typedef struct {

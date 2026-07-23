@@ -18,9 +18,9 @@ void CubeMXCan_Tick(void)
 		}
 
 		if (CubeMXCan_Private_IsDisabled(handle)) {
-			LOGOMATIC("CAN_send: currently in restricted operation mode\n");
+			LOGOMATIC("CubeMXCan_Tick: currently in restricted operation mode\n");
 			if (CubeMXCan_Private_RecoverPeripheral(handle) != HAL_OK) {
-				LOGOMATIC("CAN_send %d: failed to recover peripheral\n", (int)i);
+				LOGOMATIC("CubeMXCan_Tick %d: failed to recover peripheral\n", (int)i);
 				continue;
 			}
 		}
@@ -35,17 +35,24 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
 		return HAL_ERROR;
 	}
 
-	uint32_t current_tail = atomic_load_explicit(&handle->tx_tail, memory_order_relaxed);
-	uint32_t current_head = atomic_load_explicit(&handle->tx_head, memory_order_acquire);
+	HAL_StatusTypeDef status = HAL_OK;
 
-	if ((current_tail - current_head) >= CUBEMX_CAN_TX_QUEUE_SIZE) {
-		LOGOMATIC("CubeMXCan_QueueTx: queue is full\n");
-		return HAL_TIMEOUT;
+	CRITICAL_SECTION
+	{
+		uint32_t tail = atomic_load_explicit(&handle->tx_tail, memory_order_relaxed);
+		uint32_t head = atomic_load_explicit(&handle->tx_head, memory_order_relaxed);
+
+		if ((tail - head) >= CUBEMX_CAN_TX_QUEUE_SIZE) {
+			head++; // Drop oldest message to make room for the new one
+			atomic_store_explicit(&handle->tx_head, head, memory_order_relaxed);
+			status = HAL_TIMEOUT;
+		}
+		handle->tx_queue[tail & TX_QUEUE_MASK] = *message;
+
+		atomic_store_explicit(&handle->tx_tail, tail + 1U, memory_order_release);
 	}
 
-	handle->tx_queue[current_tail & TX_QUEUE_MASK] = *message;
-	atomic_store_explicit(&handle->tx_tail, current_tail + 1U, memory_order_release);
-	return HAL_OK;
+	return status;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)

@@ -63,6 +63,7 @@ static inline void _magic_auto_critical_exit(uint32_t *state_var)
  *
  * @warning This macro should be used with caution, as it can lead to deadlocks or other issues if not used correctly. It is recommended to use this macro only in situations where it is necessary to
  * disable interrupts for a short period of time.
+ * @warning If you use goto statements it will not automatically cleanup. However, you should not use goto at all.
  */
 #define CRITICAL_SECTION                                                                                                                                                                               \
 	for (__attribute__((cleanup(_magic_auto_critical_exit))) uint32_t CONCAT(_magic_auto_critical_state_, __LINE__) = __get_PRIMASK(),                                                             \

@@ -7,6 +7,5 @@
 #include "CubeMXCanExt.h"
 #include "Private/PrivateCubeMXCAN.h"
 
-struct CubeMXCan_RegistryEntry registry[CUBEMX_CAN_MAX_INSTANCES] = {0};
 struct CubeMXCan_Handle handles[CUBEMX_CAN_MAX_INSTANCES] = {0};
 bool timer_started = false;

@@ -58,7 +58,10 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 		return HAL_ERROR;
 	}
 
-	(void)CubeMXCan_Stop(handle);
+	if (CubeMXCan_Stop(handle) != HAL_OK) {
+		LOGOMATIC("CubeMXCan_Release: failed to stop CAN peripheral\n");
+		return HAL_ERROR;
+	}
 
 	CRITICAL_SECTION
 	{
@@ -66,30 +69,6 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 	}
 
 	return HAL_OK;
-}
-
-void CubeMXCan_Tick(void)
-{
-	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
-		CubeMXCan_Handle *handle = registry[i].handle;
-
-		CRITICAL_SECTION
-		{
-			if (handle == NULL || handle->hfdcan == NULL || !handle->started) {
-				continue;
-			}
-		}
-
-		if (CubeMXCan_Private_IsDisabled(handle)) {
-			LOGOMATIC("CAN_send: currently in restricted operation mode\n");
-			if (CubeMXCan_Private_RecoverPeripheral(handle) != HAL_OK) {
-				LOGOMATIC("CAN_send %d: failed to recover peripheral\n", (int)i);
-				continue;
-			}
-		}
-
-		(void)CubeMXCan_Private_SendQueuedMessage(handle);
-	}
 }
 
 HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *handle)
@@ -116,45 +95,14 @@ HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *handle)
 		return HAL_ERROR;
 	}
 
-	CRITICAL_SECTION
-	{
-		handle->started = false;
-	}
-
 	if (HAL_FDCAN_Stop(handle->hfdcan) != HAL_OK) {
 		return HAL_ERROR;
 	}
 
-	return HAL_OK;
-}
-
-HAL_StatusTypeDef CubeMXCan_AddFilter(CubeMXCan_Handle *handle, const FDCAN_FilterTypeDef *filter)
-{
-	if (handle == NULL || handle->hfdcan == NULL || filter == NULL) {
-		return HAL_ERROR;
+	CRITICAL_SECTION
+	{
+		handle->started = false;
 	}
-
-	return HAL_FDCAN_ConfigFilter(handle->hfdcan, (FDCAN_FilterTypeDef *)filter);
-}
-
-HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMessage *message)
-{
-	if (handle == NULL || message == NULL) {
-		return HAL_ERROR;
-	}
-
-	uint32_t current_tail = atomic_load(&handle->tx_tail);
-	uint32_t current_head = atomic_load(&handle->tx_head);
-
-	if ((current_tail - current_head) >= CUBEMX_CAN_TX_QUEUE_SIZE) {
-		LOGOMATIC("CubeMXCan_QueueTx: queue is full\n");
-		return HAL_TIMEOUT;
-	}
-
-	uint32_t insert_index = current_tail & TX_QUEUE_MASK;
-	handle->tx_queue[insert_index] = *message;
-
-	atomic_store_explicit(&handle->tx_tail, current_tail + 1U, memory_order_release);
 
 	return HAL_OK;
 }

@@ -98,7 +98,7 @@ HAL_StatusTypeDef CubeMXCan_AddFilter(CubeMXCan_Handle *handle, const FDCAN_Filt
  * @brief Queues a transmission message for the CubeMX CAN handle, allowing for asynchronous message transmission.
  * @param handle Pointer to the CubeMX CAN handle.
  * @param message Pointer to the GRCAN transmission message structure.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ * @return HAL_StatusTypeDef if the parameters are non-null or the queue is full.
  */
 HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMessage *message);
 
