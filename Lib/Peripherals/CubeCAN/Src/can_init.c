@@ -32,7 +32,7 @@ HAL_StatusTypeDef CubeMXCan_OneShotReleaseStop(CubeMXCan_Handle *handle)
 {
 	if (handle == NULL) {
 		LOGOMATIC("CubeMXCan_OneShotReleaseStop: invalid null parameter\n");
-		return NULL;
+		return HAL_ERROR;
 	}
 
 	HAL_StatusTypeDef status = CubeMXCan_Stop(handle);
@@ -85,7 +85,7 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *co
 		return NULL;
 	}
 
-	if (HAL_FDCAN_ActivateNotification(hfdcan, rx_events, 0U) != HAL_OK) {
+	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_EVENTS, 0U) != HAL_OK) {
 		LOGOMATIC("CubeMXCan_Init: failed to activate RX notifications\n");
 		CRITICAL_SECTION
 		{
@@ -121,7 +121,7 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 	HAL_StatusTypeDef status = HAL_FDCAN_Stop(hfdcan_to_stop);
 
 	if (status == HAL_OK) {
-		status = HAL_FDCAN_DeactivateNotification(hfdcan_to_stop, rx_events);
+		status = HAL_FDCAN_DeactivateNotification(hfdcan_to_stop, FDCAN_IT_RX_EVENTS);
 	}
 
 	if (status != HAL_OK) {

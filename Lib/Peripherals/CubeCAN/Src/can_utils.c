@@ -57,6 +57,7 @@ HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const ide
 HAL_StatusTypeDef CubeMXCan_AddFilter(const CubeMXCan_Handle *const handle, const FDCAN_FilterTypeDef *filter)
 {
 	if (handle == NULL || filter == NULL) {
+		LOGOMATIC("CubeMXCan_AddFilter: Invalid handle or filter pointer\n");
 		return HAL_ERROR;
 	}
 
@@ -72,21 +73,86 @@ HAL_StatusTypeDef CubeMXCan_AddFilter(const CubeMXCan_Handle *const handle, cons
 	return status;
 }
 
+uint8_t CubeMXCan_Private_BytesToDlc(const uint8_t bytes)
+{
+	switch (bytes) {
+		case 0U:
+			return FDCAN_DLC_BYTES_0;
+		case 1U:
+			return FDCAN_DLC_BYTES_1;
+		case 2U:
+			return FDCAN_DLC_BYTES_2;
+		case 3U:
+			return FDCAN_DLC_BYTES_3;
+		case 4U:
+			return FDCAN_DLC_BYTES_4;
+		case 5U:
+			return FDCAN_DLC_BYTES_5;
+		case 6U:
+			return FDCAN_DLC_BYTES_6;
+		case 7U:
+			return FDCAN_DLC_BYTES_7;
+		case 8U:
+			return FDCAN_DLC_BYTES_8;
+		case 12U:
+			return FDCAN_DLC_BYTES_12;
+		case 16U:
+			return FDCAN_DLC_BYTES_16;
+		case 20U:
+			return FDCAN_DLC_BYTES_20;
+		case 24U:
+			return FDCAN_DLC_BYTES_24;
+		case 32U:
+			return FDCAN_DLC_BYTES_32;
+		case 48U:
+			return FDCAN_DLC_BYTES_48;
+		case 64U:
+			return FDCAN_DLC_BYTES_64;
+		default:
+			LOGOMATIC("CubeMXCan_Private_BytesToDlc: Invalid byte count\n");
+			return FDCAN_DLC_BYTES_0;
+	}
+}
+
 uint8_t CubeMXCan_Private_DlcToBytes(const uint32_t dlc)
 {
-	uint32_t dlc_index = (dlc >> 16U) & 0x0FU;
-
-	if (dlc <= 8U) {
-		return (uint8_t)dlc;
+	switch (dlc) {
+		case FDCAN_DLC_BYTES_0:
+			return 0U;
+		case FDCAN_DLC_BYTES_1:
+			return 1U;
+		case FDCAN_DLC_BYTES_2:
+			return 2U;
+		case FDCAN_DLC_BYTES_3:
+			return 3U;
+		case FDCAN_DLC_BYTES_4:
+			return 4U;
+		case FDCAN_DLC_BYTES_5:
+			return 5U;
+		case FDCAN_DLC_BYTES_6:
+			return 6U;
+		case FDCAN_DLC_BYTES_7:
+			return 7U;
+		case FDCAN_DLC_BYTES_8:
+			return 8U;
+		case FDCAN_DLC_BYTES_12:
+			return 12U;
+		case FDCAN_DLC_BYTES_16:
+			return 16U;
+		case FDCAN_DLC_BYTES_20:
+			return 20U;
+		case FDCAN_DLC_BYTES_24:
+			return 24U;
+		case FDCAN_DLC_BYTES_32:
+			return 32U;
+		case FDCAN_DLC_BYTES_48:
+			return 48U;
+		case FDCAN_DLC_BYTES_64:
+			return 64U;
+		default:
+			LOGOMATIC("CubeMXCan_Private_DlcToBytes: Invalid DLC value\n");
+			return 0U;
 	}
-
-	if (dlc_index == 0U) {
-		dlc_index = dlc & 0x0FU;
-	}
-
-	static const uint8_t dlc_to_bytes[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 32, 48, 64};
-
-	return (dlc_index > 15U) ? 0U : dlc_to_bytes[dlc_index];
 }
 
 bool CubeMXCan_Private_IsDisabled(const CubeMXCan_Handle *const handle)
@@ -137,7 +203,7 @@ HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(const CubeMXCan_Handle *co
 				status = HAL_FDCAN_Init(handle->hfdcan);
 
 				if (status == HAL_OK) {
-					status = HAL_FDCAN_ActivateNotification(handle->hfdcan, rx_events, 0U);
+					status = HAL_FDCAN_ActivateNotification(handle->hfdcan, FDCAN_IT_RX_EVENTS, 0U);
 				}
 
 				if (status == HAL_OK) {

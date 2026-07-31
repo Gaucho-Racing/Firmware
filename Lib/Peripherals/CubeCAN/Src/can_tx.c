@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "CriticalSection.h"
 #include "CubeMXCan.h"
@@ -29,7 +30,57 @@ void CubeMXCan_Tick(void)
 	}
 }
 
-HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMessage *message)
+HAL_StatusTypeDef CubeMXCan_Send(CubeMXCan_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
+{
+	if (handle == NULL || data == NULL || size > FDCAN_MAX_DATA_BYTES) {
+		return HAL_ERROR;
+	}
+
+	const uint32_t dlc = CubeMXCan_Private_BytesToDlc(size);
+	if (dlc == FDCAN_DLC_BYTES_0 && size != 0) {
+		LOGOMATIC("CubeMXCan_Send: invalid data length code\n");
+		return HAL_ERROR;
+	}
+
+	uint32_t fdformat = 0;
+	uint32_t brs = 0;
+	switch (handle->hfdcan->Init.FrameFormat) {
+		case FDCAN_FRAME_CLASSIC:
+			fdformat = FDCAN_CLASSIC_CAN;
+			brs = FDCAN_BRS_OFF;
+			break;
+		case FDCAN_FRAME_FD_NO_BRS:
+			fdformat = FDCAN_FD_CAN;
+			brs = FDCAN_BRS_OFF;
+			break;
+		case FDCAN_FRAME_FD_BRS:
+			fdformat = FDCAN_FD_CAN;
+			brs = FDCAN_BRS_ON;
+			break;
+		default:
+			LOGOMATIC("CubeMXCan_Send: unsupported frame format\n");
+			return HAL_ERROR;
+	}
+
+	const CAN_Identifier identifier_struct = {.tx_node_id = handle->config.sending_node_id, .rx_node_id = rx_node, .msg_id = msg_id};
+
+	const FDCAN_TxHeaderTypeDef header = {.BitRateSwitch = brs,
+					      .DataLength = CubeMXCan_Private_BytesToDlc(size),
+					      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+					      .FDFormat = fdformat,
+					      .Identifier = Construct_CAN_Identifier(&identifier_struct),
+					      .IdType = FDCAN_EXTENDED_ID,
+					      .MessageMarker = 0U, // TODO We can do cool things with this to track transmission queue statistics
+					      .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+					      .TxFrameType = FDCAN_DATA_FRAME};
+
+	GRCAN_Private_TxMessage message = {.tx_header = header};
+	memcpy(message.data, data, size);
+
+	return CubeMXCan_Private_QueueTx(handle, &message);
+}
+
+HAL_StatusTypeDef CubeMXCan_Private_QueueTx(CubeMXCan_Handle *handle, const GRCAN_Private_TxMessage *message)
 {
 	if (handle == NULL || message == NULL) {
 		return HAL_ERROR;
@@ -74,7 +125,7 @@ HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *co
 		return HAL_OK;
 	}
 
-	const GRCAN_TxMessage *const message_ptr = &handle->tx_queue[current_head & TX_QUEUE_MASK];
+	const GRCAN_Private_TxMessage *const message_ptr = &handle->tx_queue[current_head & TX_QUEUE_MASK];
 
 	if (HAL_FDCAN_AddMessageToTxFifoQ(handle->hfdcan, &message_ptr->tx_header, message_ptr->data) != HAL_OK) {
 		return HAL_ERROR;
