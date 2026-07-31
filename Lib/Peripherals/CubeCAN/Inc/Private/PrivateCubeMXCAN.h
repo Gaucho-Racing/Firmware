@@ -46,14 +46,16 @@ struct CubeMXCan_Handle {
 };
 
 /// @brief Maximum number of CubeMX CAN instances supported by the library.
-#if defined(FDCAN3) || defined(CAN3)
+#ifndef CUBEMX_CAN_MAX_INSTANCES
+#if (defined(FDCAN3) || defined(CAN3)) && (defined(FDCAN2) || defined(CAN2)) && (defined(FDCAN1) || defined(CAN1))
 #define CUBEMX_CAN_MAX_INSTANCES 3U
-#elif (defined(FDCAN2) || defined(CAN2))
+#elif (defined(FDCAN2) || defined(CAN2)) && (defined(FDCAN1) || defined(CAN1))
 #define CUBEMX_CAN_MAX_INSTANCES 2U
 #elif (defined(FDCAN1) || defined(CAN1))
 #define CUBEMX_CAN_MAX_INSTANCES 1U
 #else
 #error "No CAN or FDCAN instances defined. Please check your CubeMX configuration."
+#endif
 #endif
 
 /**
