@@ -12,10 +12,6 @@ Bus ID:
     id: 3
     max_dlc: 8
 
-# physical topology: which devices are physically wired to each CAN bus.
-# Hand-editable by design. Device names must match the GR ID section and bus
-# names must match the Bus ID section above. Buses omitted here (e.g. Testing)
-# are treated as unrestricted. Mirrors can_topology.json from the GRCAN-Web viewer.
 physical topology:
   Primary:
     - ECU
