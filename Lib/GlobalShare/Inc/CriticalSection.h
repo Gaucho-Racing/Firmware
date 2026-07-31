@@ -1,7 +1,6 @@
 #include <stdint.h>
 
 #include "Stringification.h"
-#include "main.h"
 
 #ifndef CRITICAL_SECTION_H
 #define CRITICAL_SECTION_H
@@ -29,16 +28,17 @@ static inline void __disable_irq(void)
 
 static inline void __set_PRIMASK(uint32_t state)
 {
-	(void)state;
-
-	__mock_irq_nesting_depth--;
-
-	if (__mock_irq_nesting_depth == 0) {
-		__mock_primask_state = 0;
+	if (__mock_irq_nesting_depth > 0) {
+		__mock_irq_nesting_depth--;
+		if (__mock_irq_nesting_depth == 0 || state == 0) {
+			__mock_primask_state = 0;
+			__mock_irq_nesting_depth = 0;
+		}
 	}
-
 	pthread_mutex_unlock(&__mock_global_irq_mutex);
 }
+#else
+#include "main.h"
 #endif
 
 /**
