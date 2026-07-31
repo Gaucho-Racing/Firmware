@@ -26,8 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
-#include "CubeMXCan.h"
-#include "CubeMXCanExt.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "loop.h"
 #include "tim.h"
@@ -132,9 +131,9 @@ int main(void)
 	Logomatic_Init(&logomaticConfig);
 	VCP_Init(&vcp_config);
 
-	CubeCAN_Config can_config = {.rx_callback = CANdler_Callback, .user_ctx = (void *)1};
+	CubeCAN_Config can_config = {.rx_callback = CANdler_Callback, .user_context = (void *)1};
 
-	CubeMXCan_Init(&hfdcan1, &can_config);
+	CubeCAN_Init(&hfdcan1, &can_config);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -199,7 +198,7 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if (htim == &CAN_TIMER_HANDLE) {
-		CubeMXCan_Tick();
+		CubeCAN_Tick();
 	}
 }
 

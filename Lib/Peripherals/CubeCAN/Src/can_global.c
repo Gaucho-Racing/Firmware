@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 #include "CriticalSection.h"
-#include "CubeMXCan.h"
+#include "CubeCAN.h"
 #include "PrivateInc/internal.h"
 
-struct CubeMXCan_Private_Handle handles[CUBEMX_CAN_MAX_INSTANCES] = {0};
+struct CubeCAN_Private_Handle handles[CUBEMX_CAN_MAX_INSTANCES] = {0};

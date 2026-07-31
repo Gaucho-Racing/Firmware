@@ -3,41 +3,41 @@
 #include <string.h>
 
 #include "CriticalSection.h"
-#include "CubeMXCan.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "PrivateInc/internal.h"
 #include "main.h"
 
-void CubeMXCan_Tick(void)
+void CubeCAN_Tick(void)
 {
 	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
-		CubeMXCan_Handle *handle = &handles[i];
+		CubeCAN_Handle *handle = &handles[i];
 
 		if (handle->hfdcan == NULL || !handle->started) {
 			continue;
 		}
 
-		if (CubeMXCan_Private_IsDisabled(handle)) {
-			LOGOMATIC("CubeMXCan_Tick: currently in restricted operation mode\n");
-			if (CubeMXCan_Private_RecoverPeripheral(handle) != HAL_OK) {
-				LOGOMATIC("CubeMXCan_Tick %d: failed to recover peripheral\n", (int)i);
+		if (CubeCAN_Private_IsDisabled(handle)) {
+			LOGOMATIC("CubeCAN_Tick: currently in restricted operation mode\n");
+			if (CubeCAN_Private_RecoverPeripheral(handle) != HAL_OK) {
+				LOGOMATIC("CubeCAN_Tick %d: failed to recover peripheral\n", (int)i);
 				continue;
 			}
 		}
 
-		(void)CubeMXCan_Private_SendQueuedMessage(handle);
+		(void)CubeCAN_Private_SendQueuedMessage(handle);
 	}
 }
 
-HAL_StatusTypeDef CubeMXCan_Send(CubeMXCan_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
+HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
 {
 	if (handle == NULL || data == NULL || size > FDCAN_MAX_DATA_BYTES) {
 		return HAL_ERROR;
 	}
 
-	const uint32_t dlc = CubeMXCan_Private_BytesToDlc(size);
+	const uint32_t dlc = CubeCAN_Private_BytesToDlc(size);
 	if (dlc == FDCAN_DLC_BYTES_0 && size != 0) {
-		LOGOMATIC("CubeMXCan_Send: invalid data length code\n");
+		LOGOMATIC("CubeCAN_Send: invalid data length code\n");
 		return HAL_ERROR;
 	}
 
@@ -57,14 +57,14 @@ HAL_StatusTypeDef CubeMXCan_Send(CubeMXCan_Handle *const handle, const GRCAN_NOD
 			brs = FDCAN_BRS_ON;
 			break;
 		default:
-			LOGOMATIC("CubeMXCan_Send: unsupported frame format\n");
+			LOGOMATIC("CubeCAN_Send: unsupported frame format\n");
 			return HAL_ERROR;
 	}
 
 	const CAN_Identifier identifier_struct = {.tx_node_id = handle->config.sending_node_id, .rx_node_id = rx_node, .msg_id = msg_id};
 
 	const FDCAN_TxHeaderTypeDef header = {.BitRateSwitch = brs,
-					      .DataLength = CubeMXCan_Private_BytesToDlc(size),
+					      .DataLength = CubeCAN_Private_BytesToDlc(size),
 					      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 					      .FDFormat = fdformat,
 					      .Identifier = Construct_CAN_Identifier(&identifier_struct),
@@ -76,10 +76,10 @@ HAL_StatusTypeDef CubeMXCan_Send(CubeMXCan_Handle *const handle, const GRCAN_NOD
 	GRCAN_Private_TxMessage message = {.tx_header = header};
 	memcpy(message.data, data, size);
 
-	return CubeMXCan_Private_QueueTx(handle, &message);
+	return CubeCAN_Private_QueueTx(handle, &message);
 }
 
-HAL_StatusTypeDef CubeMXCan_Private_QueueTx(CubeMXCan_Handle *handle, const GRCAN_Private_TxMessage *message)
+HAL_StatusTypeDef CubeCAN_Private_QueueTx(CubeCAN_Handle *handle, const GRCAN_Private_TxMessage *message)
 {
 	if (handle == NULL || message == NULL) {
 		return HAL_ERROR;
@@ -105,15 +105,15 @@ HAL_StatusTypeDef CubeMXCan_Private_QueueTx(CubeMXCan_Handle *handle, const GRCA
 	return status;
 }
 
-HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *const handle)
+HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {
-		LOGOMATIC("CubeMXCan_Private_SendQueuedMessage: invalid null parameter\n");
+		LOGOMATIC("CubeCAN_Private_SendQueuedMessage: invalid null parameter\n");
 		return HAL_ERROR;
 	}
 
 	if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hfdcan) == 0U) {
-		LOGOMATIC("CubeMXCan_Private_SendQueuedMessage: Tx FIFO full, cannot send message\n");
+		LOGOMATIC("CubeCAN_Private_SendQueuedMessage: Tx FIFO full, cannot send message\n");
 		return HAL_BUSY;
 	}
 

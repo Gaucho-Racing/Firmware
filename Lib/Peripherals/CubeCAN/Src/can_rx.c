@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 #include "CriticalSection.h"
-#include "CubeMXCan.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "PrivateInc/internal.h"
 #include "Unused.h"
@@ -52,7 +52,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0U) {
 		if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data) == HAL_OK) {
 			CAN_Identifier id = Deconstruct_CAN_Identifier(rx_header.Identifier);
-			uint8_t size = CubeMXCan_Private_DlcToBytes(rx_header.DataLength);
+			uint8_t size = CubeCAN_Private_DlcToBytes(rx_header.DataLength);
 			rx_callback(user_context, &id, rx_data, size);
 		} else {
 			LOGOMATIC("HAL_FDCAN_RxFifo0Callback: Failed to get Rx message from FIFO\n");

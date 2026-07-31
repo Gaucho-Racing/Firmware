@@ -142,7 +142,7 @@ include("Autogen/CAN/CANfigurator.cmake")
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/TimedCAN/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
-include("${lib_path}/Peripherals/CubeCAN/cubemx_can.cmake")
+include("${lib_path}/Peripherals/CubeCAN/cube_can.cmake")
 
 include("${lib_path}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")

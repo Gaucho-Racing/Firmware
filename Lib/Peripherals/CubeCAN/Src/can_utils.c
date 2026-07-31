@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 #include "CriticalSection.h"
-#include "CubeMXCan.h"
+#include "CubeCAN.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
@@ -53,10 +53,10 @@ HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const ide
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef CubeMXCan_AddFilter(const CubeMXCan_Handle *const handle, const FDCAN_FilterTypeDef *filter)
+HAL_StatusTypeDef CubeCAN_AddFilter(const CubeCAN_Handle *const handle, const FDCAN_FilterTypeDef *filter)
 {
 	if (handle == NULL || filter == NULL) {
-		LOGOMATIC("CubeMXCan_AddFilter: Invalid handle or filter pointer\n");
+		LOGOMATIC("CubeCAN_AddFilter: Invalid handle or filter pointer\n");
 		return HAL_ERROR;
 	}
 
@@ -72,7 +72,7 @@ HAL_StatusTypeDef CubeMXCan_AddFilter(const CubeMXCan_Handle *const handle, cons
 	return status;
 }
 
-uint8_t CubeMXCan_Private_BytesToDlc(const uint8_t bytes)
+uint8_t CubeCAN_Private_BytesToDlc(const uint8_t bytes)
 {
 	switch (bytes) {
 		case 0U:
@@ -108,12 +108,12 @@ uint8_t CubeMXCan_Private_BytesToDlc(const uint8_t bytes)
 		case 64U:
 			return FDCAN_DLC_BYTES_64;
 		default:
-			LOGOMATIC("CubeMXCan_Private_BytesToDlc: Invalid byte count\n");
+			LOGOMATIC("CubeCAN_Private_BytesToDlc: Invalid byte count\n");
 			return FDCAN_DLC_BYTES_0;
 	}
 }
 
-uint8_t CubeMXCan_Private_DlcToBytes(const uint32_t dlc)
+uint8_t CubeCAN_Private_DlcToBytes(const uint32_t dlc)
 {
 	switch (dlc) {
 		case FDCAN_DLC_BYTES_0:
@@ -149,12 +149,12 @@ uint8_t CubeMXCan_Private_DlcToBytes(const uint32_t dlc)
 		case FDCAN_DLC_BYTES_64:
 			return 64U;
 		default:
-			LOGOMATIC("CubeMXCan_Private_DlcToBytes: Invalid DLC value\n");
+			LOGOMATIC("CubeCAN_Private_DlcToBytes: Invalid DLC value\n");
 			return 0U;
 	}
 }
 
-bool CubeMXCan_Private_IsDisabled(const CubeMXCan_Handle *const handle)
+bool CubeCAN_Private_IsDisabled(const CubeCAN_Handle *const handle)
 {
 	if (handle == NULL) {
 		return true;
@@ -181,7 +181,7 @@ bool CubeMXCan_Private_IsDisabled(const CubeMXCan_Handle *const handle)
 	return disabled;
 }
 
-HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(const CubeMXCan_Handle *const handle)
+HAL_StatusTypeDef CubeCAN_Private_RecoverPeripheral(const CubeCAN_Handle *const handle)
 {
 	if (handle == NULL) {
 		return HAL_ERROR;
@@ -195,7 +195,7 @@ HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(const CubeMXCan_Handle *co
 			FDCAN_ProtocolStatusTypeDef protocol_status = {0};
 
 			if (HAL_FDCAN_GetProtocolStatus(handle->hfdcan, &protocol_status) == HAL_OK && protocol_status.BusOff) {
-				LOGOMATIC("CubeMXCan_Private_RecoverPeripheral: CRITICAL BUS-OFF DETECTED. Forcing instant hardware reset...\n");
+				LOGOMATIC("CubeCAN_Private_RecoverPeripheral: CRITICAL BUS-OFF DETECTED. Forcing instant hardware reset...\n");
 
 				HAL_FDCAN_Stop(handle->hfdcan);
 
@@ -210,12 +210,12 @@ HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(const CubeMXCan_Handle *co
 				}
 
 				if (status != HAL_OK) {
-					LOGOMATIC("CubeMXCan_Private_RecoverPeripheral: Aggressive hardware start failed!\n");
+					LOGOMATIC("CubeCAN_Private_RecoverPeripheral: Aggressive hardware start failed!\n");
 				}
 			}
 
 			if (HAL_FDCAN_IsRestrictedOperationMode(handle->hfdcan)) {
-				LOGOMATIC("CubeMXCan_Private_RecoverPeripheral: Forcing exit from restricted operation mode\n");
+				LOGOMATIC("CubeCAN_Private_RecoverPeripheral: Forcing exit from restricted operation mode\n");
 				HAL_FDCAN_ExitRestrictedOperationMode(handle->hfdcan);
 			}
 		}

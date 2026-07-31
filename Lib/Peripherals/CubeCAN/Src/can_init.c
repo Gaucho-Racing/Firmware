@@ -4,54 +4,54 @@
 #include <string.h>
 
 #include "CriticalSection.h"
-#include "CubeMXCan.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "PrivateInc/internal.h"
 #include "main.h"
 
-CubeMXCan_Handle *CubeMXCan_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)
+CubeCAN_Handle *CubeCAN_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)
 {
-	CubeMXCan_Handle *handle = CubeMXCan_Init(hfdcan, config);
+	CubeCAN_Handle *handle = CubeCAN_Init(hfdcan, config);
 
 	if (handle == NULL) {
-		LOGOMATIC("CubeMXCan_OneShotInit: failed to initialize handle\n");
+		LOGOMATIC("CubeCAN_OneShotInit: failed to initialize handle\n");
 		return NULL;
 	}
 
-	if (CubeMXCan_Start(handle) != HAL_OK) {
-		LOGOMATIC("CubeMXCan_OneShotInit: failed to start handle\n");
-		CubeMXCan_Release(handle);
+	if (CubeCAN_Start(handle) != HAL_OK) {
+		LOGOMATIC("CubeCAN_OneShotInit: failed to start handle\n");
+		CubeCAN_Release(handle);
 		return NULL;
 	}
 
 	return handle;
 }
 
-HAL_StatusTypeDef CubeMXCan_OneShotReleaseStop(CubeMXCan_Handle *handle)
+HAL_StatusTypeDef CubeCAN_OneShotReleaseStop(CubeCAN_Handle *handle)
 {
 	if (handle == NULL) {
-		LOGOMATIC("CubeMXCan_OneShotReleaseStop: invalid null parameter\n");
+		LOGOMATIC("CubeCAN_OneShotReleaseStop: invalid null parameter\n");
 		return HAL_ERROR;
 	}
 
-	HAL_StatusTypeDef status = CubeMXCan_Stop(handle);
+	HAL_StatusTypeDef status = CubeCAN_Stop(handle);
 
 	if (status != HAL_OK) {
-		LOGOMATIC("CubeMXCan_OneShotReleaseStop: failed to stop FDCAN instance\n");
+		LOGOMATIC("CubeCAN_OneShotReleaseStop: failed to stop FDCAN instance\n");
 		return status;
 	}
 
-	return CubeMXCan_Release(handle);
+	return CubeCAN_Release(handle);
 }
 
-CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)
+CubeCAN_Handle *CubeCAN_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)
 {
 	if (hfdcan == NULL || config == NULL) {
-		LOGOMATIC("CubeMXCan_Init: invalid null parameters\n");
+		LOGOMATIC("CubeCAN_Init: invalid null parameters\n");
 		return NULL;
 	}
 
-	CubeMXCan_Handle *handle = NULL;
+	CubeCAN_Handle *handle = NULL;
 	uint8_t free_handle_index = (uint8_t)-1;
 
 	CRITICAL_SECTION
@@ -66,7 +66,7 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *co
 		}
 
 		if (handle != NULL) {
-			LOGOMATIC("CubeMXCan_Init: handle already initialized for this FDCAN instance\n");
+			LOGOMATIC("CubeCAN_Init: handle already initialized for this FDCAN instance\n");
 			return NULL;
 		} else if (free_handle_index != (uint8_t)-1) {
 			handle = &handles[free_handle_index];
@@ -80,12 +80,12 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *co
 	}
 
 	if (handle == NULL) {
-		LOGOMATIC("CubeMXCan_Init: no free handle slots\n");
+		LOGOMATIC("CubeCAN_Init: no free handle slots\n");
 		return NULL;
 	}
 
 	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_EVENTS, 0U) != HAL_OK) {
-		LOGOMATIC("CubeMXCan_Init: failed to activate RX notifications\n");
+		LOGOMATIC("CubeCAN_Init: failed to activate RX notifications\n");
 		CRITICAL_SECTION
 		{
 			memset(handle, 0, sizeof(*handle));
@@ -96,7 +96,7 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *co
 	return handle;
 }
 
-HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
+HAL_StatusTypeDef CubeCAN_Release(CubeCAN_Handle *handle)
 {
 	if (handle == NULL) {
 		return HAL_ERROR;
@@ -124,7 +124,7 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 	}
 
 	if (status != HAL_OK) {
-		LOGOMATIC("CubeMXCan_Release: peripheral deactivation failed\n");
+		LOGOMATIC("CubeCAN_Release: peripheral deactivation failed\n");
 
 		CRITICAL_SECTION
 		{
@@ -142,7 +142,7 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *const handle)
+HAL_StatusTypeDef CubeCAN_Start(CubeCAN_Handle *const handle)
 {
 	if (handle == NULL) {
 		return HAL_ERROR;
@@ -175,7 +175,7 @@ HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *const handle)
 	return status;
 }
 
-HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *const handle)
+HAL_StatusTypeDef CubeCAN_Stop(CubeCAN_Handle *const handle)
 {
 	if (handle == NULL) {
 		return HAL_ERROR;

@@ -11,13 +11,11 @@
 #ifndef CUBEMX_CAN_H
 #define CUBEMX_CAN_H
 
-#pragma region Type Definitions
-
-/// @brief CAN handle for CubeMX CAN. @warning Do not access directly, use the provided API functions.
-typedef struct CubeMXCan_Private_Handle CubeMXCan_Handle;
-
-/// @brief Callback function type for receiving CAN messages. @warning Do not call directly, use the provided API functions.
-typedef void (*CubeCAN_RxCallback)(const void *const user_context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
+/**
+ * @brief CAN handle for CubeCAN CAN.
+ * @warning Do not access directly, use the provided API functions.
+ */
+typedef struct CubeCAN_Private_Handle CubeCAN_Handle;
 
 /**
  * @brief CAN Identifier structure
@@ -35,9 +33,18 @@ typedef struct {
 } CAN_Identifier;
 
 /**
- * @brief Configuration structure for CubeMX CAN.
+ * @brief Callback function type for receiving CAN messages.
  *
- * This structure is used to configure the CubeMX CAN handle, including the receive callback function and user context. The receive callback function is called when a CAN message is received, and the
+ * @warning The callback function should not perform blocking operations or take too long to execute.
+ * @warning The callback function should not call any CubeCAN functions, as it may lead to undefined behavior.
+ * @warning It is the responsibility of the callback function to verify the integrity of the received data and handle any errors or null inputs.
+ */
+typedef void (*CubeCAN_RxCallback)(const void *const user_context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
+
+/**
+ * @brief Configuration structure for CubeCAN CAN.
+ *
+ * This structure is used to configure the CubeCAN CAN handle, including the receive callback function and user context. The receive callback function is called when a CAN message is received, and the
  * user context is a pointer to user-defined data that can be passed to the callback function.
  *
  * @warning Do not edit after initialization, as it may lead to undefined behavior.
@@ -51,75 +58,71 @@ typedef struct {
 	GRCAN_NODE_ID sending_node_id;
 } CubeCAN_Config;
 
-#pragma endregion
-
-#pragma region Function Prototypes
-
 /**
- * @brief Initializes a CubeMX CAN handle with the given FDCAN handle and configuration, and starts the CAN peripheral.
+ * @brief Initializes a CubeCAN CAN handle with the given FDCAN handle and configuration, and starts the CAN peripheral.
  * @param hfdcan Pointer to the FDCAN handle.
  * @param config Pointer to the CubeCAN configuration structure.
- * @return Pointer to the initialized CubeMX CAN handle, or NULL if initialization fails.
- * @note This functions wraps <c>CubeMXCan_Init</c> and <c>CubeMXCan_Start</c> into a single call. If either of those functions fails, this function will return NULL and the handle will be released.
+ * @return Pointer to the initialized CubeCAN CAN handle, or NULL if initialization fails.
+ * @note This functions wraps <c>CubeCAN_Init</c> and <c>CubeCAN_Start</c> into a single call. If either of those functions fails, this function will return NULL and the handle will be released.
  */
-CubeMXCan_Handle *CubeMXCan_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
+CubeCAN_Handle *CubeCAN_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
 
 /**
- * @brief Stops the CubeMX CAN peripheral and releases the associated handle.
- * @param handle Pointer to the CubeMX CAN handle.
+ * @brief Stops the CubeCAN CAN peripheral and releases the associated handle.
+ * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- * @note This functions wraps <c>CubeMXCan_Stop</c> and <c>CubeMXCan_Release</c> into a single call. If either of those functions fails, this function will return the error code and the handle will
+ * @note This functions wraps <c>CubeCAN_Stop</c> and <c>CubeCAN_Release</c> into a single call. If either of those functions fails, this function will return the error code and the handle will
  * not be released.
- * @note This function can be used regardless of if <c>CubeMXCan_OneShotInitStart</c> was used to initialize the handle.
+ * @note This function can be used regardless of if <c>CubeCAN_OneShotInitStart</c> was used to initialize the handle.
  */
-HAL_StatusTypeDef CubeMXCan_OneShotReleaseStop(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeCAN_OneShotReleaseStop(CubeCAN_Handle *handle);
 
 /**
- * @brief Initializes a CubeMX CAN handle with the given FDCAN handle and configuration.
+ * @brief Initializes a CubeCAN CAN handle with the given FDCAN handle and configuration.
  * @param hfdcan Pointer to the FDCAN handle.
  * @param config Pointer to the CubeCAN configuration structure.
- * @return Pointer to the initialized CubeMX CAN handle, or NULL if initialization fails.
+ * @return Pointer to the initialized CubeCAN CAN handle, or NULL if initialization fails.
  */
-CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
+CubeCAN_Handle *CubeCAN_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
 
 /**
- * @brief Starts the CubeMX CAN handle, enabling message transmission and reception.
- * @param handle Pointer to the CubeMX CAN handle.
+ * @brief Starts the CubeCAN CAN handle, enabling message transmission and reception.
+ * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *const handle);
+HAL_StatusTypeDef CubeCAN_Start(CubeCAN_Handle *const handle);
 
 /**
- * @brief Stops the CubeMX CAN handle, disabling message transmission and reception.
- * @param handle Pointer to the CubeMX CAN handle.
+ * @brief Stops the CubeCAN CAN handle, disabling message transmission and reception.
+ * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *const handle);
+HAL_StatusTypeDef CubeCAN_Stop(CubeCAN_Handle *const handle);
 
 /**
- * @brief Releases the resources associated with the CubeMX CAN handle.
- * @param handle Pointer to the CubeMX CAN handle.
+ * @brief Releases the resources associated with the CubeCAN CAN handle.
+ * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *const handle);
+HAL_StatusTypeDef CubeCAN_Release(CubeCAN_Handle *const handle);
 
 /**
- * @brief Adds a filter to the CubeMX CAN handle, allowing for selective message reception based on the specified filter criteria.
- * @param handle Pointer to the CubeMX CAN handle.
+ * @brief Adds a filter to the CubeCAN CAN handle, allowing for selective message reception based on the specified filter criteria.
+ * @param handle Pointer to the CubeCAN CAN handle.
  * @param filter Pointer to the FDCAN filter configuration structure.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_AddFilter(const CubeMXCan_Handle *const handle, const FDCAN_FilterTypeDef *const filter);
+HAL_StatusTypeDef CubeCAN_AddFilter(const CubeCAN_Handle *const handle, const FDCAN_FilterTypeDef *const filter);
 
 /**
- * @brief Processes periodic tasks for the CubeMX CAN handle, such as handling timeouts and managing the transmission queue.
+ * @brief Processes periodic tasks for the CubeCAN CAN handle, such as handling timeouts and managing the transmission queue.
  * @warning This function sends one can message per configured bus per call. Not calling it will simply not send any messages.
  */
-void CubeMXCan_Tick(void);
+void CubeCAN_Tick(void);
 
 /**
- * @brief Sends a CAN message using the CubeMX CAN handle, with the specified receive node, message ID, data payload, and size.
- * @param handle Pointer to the CubeMX CAN handle.
+ * @brief Sends a CAN message using the CubeCAN CAN handle, with the specified receive node, message ID, data payload, and size.
+ * @param handle Pointer to the CubeCAN CAN handle.
  * @param rx_node The receive node identifier for the message.
  * @param msg_id The message ID for the message.
  * @param data Pointer to the data payload of the message.
@@ -127,7 +130,7 @@ void CubeMXCan_Tick(void);
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
  */
-HAL_StatusTypeDef CubeMXCan_Send(CubeMXCan_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size);
+HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size);
 
 /**
  * @brief Constructs a CAN message identifier from the given transmitting node ID, receiving node ID, and message ID.
@@ -154,7 +157,5 @@ CAN_Identifier Deconstruct_CAN_Identifier(const uint32_t message_id);
  * @brief Builds an exact-match extended-ID filter for a given CAN identifier.
  */
 HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter);
-
-#pragma endregion
 
 #endif
