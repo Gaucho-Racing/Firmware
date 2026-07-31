@@ -501,7 +501,7 @@ Message ID:
     MSG LENGTH: 8
     ECU State:
       bit_start: 0
-      comment:
+      comment: |-
         [Byte 0 / Bits 0-7] ECU state machine data
         0: GLV Off State
         1: GLV On State
@@ -515,7 +515,7 @@ Message ID:
       units: Bool
     Ping Group 1:
       bit_start: 8
-      comment:
+      comment: |-
         [Byte 1 / Bits 8-15] ECU ping targets
         8: ACU (1: OK, 0: Timeout)
         9: GR Inv (1: OK, 0: Timeout)
@@ -528,7 +528,7 @@ Message ID:
       data type: u8
     Ping Group 2:
       bit_start: 16
-      comment:
+      comment: |-
         [Byte 2 / Bits 16-23] ECU ping targets
         16: Suspension FL (1: OK, 0: Timeout)
         17: Suspension FR (1: OK, 0: Timeout)
@@ -541,7 +541,7 @@ Message ID:
       data type: u8
     Ping Group 3:
       bit_start: 24
-      comment:
+      comment: |-
         [Byte 3 / Bits 24-31] ECU ping targets
         24: TireTemp FL (1: OK, 0: Timeout)
         25: TireTemp FR (1: OK, 0: Timeout)
@@ -554,7 +554,7 @@ Message ID:
       data type: u8
     Power Level:
       bit_start: 32
-      comment:
+      comment: |-
         Controls the AC current limits to each of the inverters
         Discrete Mapping, actual current values described by the torque map
       data type: u4
@@ -572,7 +572,7 @@ Message ID:
       map equation: "0.25x"
     Accumulator State of Chg:
       bit_start: 48
-      comment: % charged of the Accumulator
+      comment: "% charged of the Accumulator"
       data type: u8
       units: '%'
       scaled min: 0
@@ -580,7 +580,7 @@ Message ID:
       map equation: "20x/51"
     GLV State of Chg:
       bit_start: 56
-      comment: % charged of the Low Voltage Bat
+      comment: "% charged of the Low Voltage Bat"
       data type: u8
       units: '%'
       scaled min: 0
@@ -642,7 +642,7 @@ Message ID:
       map equation: "0.1x-3276.8"
     Relay States:
       bit_start: 32
-      comment:
+      comment: |-
         [Byte 4 / Bits 32-39]
         0: BMS OK
         1: IMD OK
@@ -698,7 +698,7 @@ Message ID:
     MSG LENGTH: 7
     20v Voltage:
       bit_start: 0
-      comment:
+      comment: |-
         20v GLV voltage
         data type: u8
         units: Volts
@@ -708,7 +708,7 @@ Message ID:
       data type: u8
     12v Voltage:
       bit_start: 8
-      comment:
+      comment: |-
         12v supply voltage
         data type: u8
         units: Volts
@@ -718,7 +718,7 @@ Message ID:
       data type: u8
     SDC Voltage:
       bit_start: 16
-      comment:
+      comment: |-
         Voltage before ACU Latch
         data type: u8
         units: Volts
@@ -728,7 +728,7 @@ Message ID:
       data type: u8
     Min Cell Voltage:
       bit_start: 24
-      comment:
+      comment: |-
         Lowest cell voltage in accumulator
         data type: u8
         units: Volts
@@ -738,7 +738,7 @@ Message ID:
       data type: u8
     Max Cell Temp:
       bit_start: 32
-      comment:
+      comment: |-
         Hottest cell in accumulator
         data type: u8
         units: Celsius
@@ -748,7 +748,7 @@ Message ID:
       data type: u8
     status_flags:
       bit_start: 40
-      comment:
+      comment: |-
         [Byte 5 / Bits 40-47]
         40: Over Temp (>60C)
         41: Over Voltage (>4.2V/cell)
@@ -761,7 +761,7 @@ Message ID:
       data type: b
     precharge_latch_flags:
       bit_start: 48
-      comment:
+      comment: |-
         [Byte 6 / Bits 48-55]
         55: Precharge Timeout
         54: IR- / Precharge State (0:Open, 1:Closed)
@@ -809,7 +809,7 @@ Message ID:
     MSG LENGTH: 1
     Set TS Active:
       bit_start: 0
-      comment: 0: shutdown, 1: go TS Active/Precharge
+      comment: "0: shutdown, 1: go TS Active/Precharge"
       data type: b
       units: Bool
   ACU Config Chg Params:
@@ -3515,7 +3515,7 @@ Message ID:
       map equation: "0.01x-327.68"
     Absolute Max RPM Limit:
       bit_start: 32
-      comment: 0: No limit      n :limited at n RPM
+      comment: "0: No limit      n :limited at n RPM"
       data type: u16
       units: RPM
       scaled min: -32768
@@ -3550,7 +3550,7 @@ Message ID:
       map equation: "0.01x-327.68"
     RPM Limit:
       bit_start: 32
-      comment: 0: No limit      n :limited at n RPM
+      comment: "0: No limit      n :limited at n RPM"
       data type: u16
       units: RPM
       scaled min: -32768
@@ -3615,7 +3615,7 @@ Message ID:
     MSG LENGTH: 2
     button_flags:
       bit_start: 0
-      comment:
+      comment: |-
         [Byte 0 / Bits 0-7]
         0-3: Reserved
         4: RTD Off
@@ -3625,7 +3625,7 @@ Message ID:
       data type: u8
     led_flags:
       bit_start: 8
-      comment:
+      comment: |-
         [Byte 1 / Bits 8-15]
         0-5: Reserved
         6: IMD
@@ -3636,7 +3636,7 @@ Message ID:
     MSG LENGTH: 1
     led_latch_flags:
       bit_start: 0
-      comment:
+      comment: |-
         [Byte 0 / Bits 0-7]
         0: BSPD led
         1: IMD led
@@ -3653,7 +3653,7 @@ Message ID:
       bit_start: 0
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3661,7 +3661,7 @@ Message ID:
       bit_start: 16
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3669,7 +3669,7 @@ Message ID:
       bit_start: 32
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3677,7 +3677,7 @@ Message ID:
       bit_start: 48
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3685,7 +3685,7 @@ Message ID:
       bit_start: 64
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3693,7 +3693,7 @@ Message ID:
       bit_start: 80
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3701,7 +3701,7 @@ Message ID:
       bit_start: 96
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3709,7 +3709,7 @@ Message ID:
       bit_start: 112
       comment: 4-20 mA signal
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -3717,7 +3717,7 @@ Message ID:
       bit_start: 128
       comment: 0-100% percentage
       data type: u16
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/655.35"
@@ -8839,7 +8839,7 @@ Message ID:
       bit_start: 64
       comment: Percentage deadzone of the APPS for which to not consider the pedals to have traveled
       data type: u8
-      units: %
+      units: '%'
       scaled min: 0
       scaled max: 100
       map equation: "x/25.5"
@@ -8985,7 +8985,7 @@ Custom CAN ID:
     signals:
       - name: "Target AC Current"
         bit_start: 0
-        comment:
+        comment: |-
           This Cmd sets the target motor AC current (peak, not
           RMS). When the Ctrl receives this message, it
           automatically switches to current control mode.
@@ -9000,7 +9000,7 @@ Custom CAN ID:
     signals:
       - name: "Target Brake Current"
         bit_start: 0
-        comment:
+        comment: |-
           Targets the brake current of the motor. It will result negative
           torque relatively to the forward direction of the motor.
           This value must be multiplied by 10 before sending, only
@@ -9011,7 +9011,7 @@ Custom CAN ID:
     signals:
       - name: "Target ERPM"
         bit_start: 0
-        comment:
+        comment: |-
           This Cmd enables the speed control of the motor with a
           target ERPM. This is a signed parameter, and the sign
           represents the direction of the spinning. For better operation you
@@ -9023,7 +9023,7 @@ Custom CAN ID:
     signals:
       - name: "Target Position"
         bit_start: 0
-        comment:
+        comment: |-
           This value targets the desired position of the motor in degrees.
           This Cmd is used to hold a position of the motor.
           This feature is enabled only if encoder is used as position
@@ -9034,7 +9034,7 @@ Custom CAN ID:
     signals:
       - name: "R-AC Current"
         bit_start: 0
-        comment:
+        comment: |-
           This Cmd sets a relative AC current to the minimum and
           maximum limits set by Config. This achieves the same
           function as the “Set AC current” Cmd. Gives you a freedom
@@ -9048,7 +9048,7 @@ Custom CAN ID:
     signals:
       - name: "R-AC Brake Current"
         bit_start: 0
-        comment:
+        comment: |-
           Targets the relative brake current of the motor. It will result
           negative torque relatively to the forward direction of the motor.
           This value must be between 0 and 100 and must be multiplied
@@ -9079,7 +9079,7 @@ Custom CAN ID:
     signals:
       - name: "Max AC Current"
         bit_start: 0
-        comment:
+        comment: |-
           This value determines the maximum allowable drive current on
           the AC side. With this function you are able maximize the
           maximum torque on the motor.
@@ -9090,7 +9090,7 @@ Custom CAN ID:
     signals:
       - name: "Max Brake AC Current"
         bit_start: 0
-        comment:
+        comment: |-
           This value sets the maximum allowable brake current on the AC
           side.
           This value must be multiplied by 10 before sending, only
@@ -9101,7 +9101,7 @@ Custom CAN ID:
     signals:
       - name: "Max DC Current"
         bit_start: 0
-        comment:
+        comment: |-
           This value determines the maximum allowable drive current on
           the DC side. With this Cmd the BMS can limit the
           maximum allowable battery discharge current.
@@ -9112,7 +9112,7 @@ Custom CAN ID:
     signals:
       - name: "Max Brake DC Current"
         bit_start: 0
-        comment:
+        comment: |-
           This value determines the maximum allowable brake current
           on the DC side. With this Cmd the BMS can limit the
           maximum allowable battery Chg current.
@@ -9124,7 +9124,7 @@ Custom CAN ID:
     signals:
       - name: "Drive Enable"
         bit_start: 0
-        comment:
+        comment: |-
           0: Drive not allowed
           1: Drive allowed
           Only 0 and 1 values are accepted. Must be sent periodically to
@@ -9135,12 +9135,12 @@ Custom CAN ID:
     signals:
       - name: "ERPM"
         bit_start: 0
-        comment:
+        comment: |-
           Electrical RPM
           Equation: ERPM = Motor RPM * number of the motor pole pairs.
       - name: "Duty Cycle"
         bit_start: 32
-        comment:
+        comment: |-
           The Ctrl duty cycle. The sign of this value will represent
           whether the motor is running(positive) current or regenerating
           (negative) current.
@@ -9153,13 +9153,13 @@ Custom CAN ID:
     signals:
       - name: "AC Current"
         bit_start: 0
-        comment:
+        comment: |-
           The motor current. The sign of this value represents whether the
           motor is running(positive) current or regenerating (negative)
           current.
       - name: "DC Current"
         bit_start: 16
-        comment:
+        comment: |-
           DC Current: Current on DC side. The sign of this value
           represents whether the motor is running(positive) current or
           regenerating (negative) current.
@@ -9178,7 +9178,7 @@ Custom CAN ID:
         comment: Temp of the motor measured by the Inv
       - name: "Fault Codes"
         bit_start: 32
-        comment:
+        comment: |-
           0x00 : NO FAULTS
           0x01 : Overvoltage - The input voltage is higher than the set
           maximum.
@@ -9223,7 +9223,7 @@ Custom CAN ID:
         comment: Brake signal derived from analog inputs or data CAN
       - name: "Digital input 1"
         bit_start: 16
-        comment:
+        comment: |-
           1: Digital input is active
           0: Digital input is inactive
       - name: "Digital input 2"
@@ -9234,7 +9234,7 @@ Custom CAN ID:
         bit_start: 19
       - name: "Digital output 1"
         bit_start: 20
-        comment:
+        comment: |-
           1: Digital output is active
           0: Digital output is inactive
       - name: "Digital output 2"
@@ -9245,26 +9245,26 @@ Custom CAN ID:
         bit_start: 23
       - name: "Drive Enable"
         bit_start: 24
-        comment:
+        comment: |-
           1: Drive enabled
           0: Drive disabled
           Drive can be enabled/disbled by the digital input or/and via
           Data_Bus interface
       - name: "Capacitor temp limit"
         bit_start: 32
-        comment:
+        comment: |-
           1: Capacitor Temp limit active
           0: Capacitor Temp limit inactive
           The Inv can limit the output power to not to overheat the
           internal capacitors. (only valid HW version 3.6 or newer)
       - name: "DC current limit"
         bit_start: 33
-        comment:
+        comment: |-
           1: DC current limit active
           0: DC current limit inactive
       - name: "Drive enable limit"
         bit_start: 34
-        comment:
+        comment: |-
           1: Drive enable limit active
           0: Drive enable limit inactive
           Indicates whether the drive enable limitation is active or inactive.
@@ -9272,42 +9272,42 @@ Custom CAN ID:
           of the drive state please use byte 3, bit 24 of this message.
       - name: "IGBT Accel Temp limit"
         bit_start: 35
-        comment:
+        comment: |-
           1: IGBT Accel limit active
           0: IGBT Accel limit inactive
       - name: "IGBT Temp limit"
         bit_start: 36
-        comment:
+        comment: |-
           1: IGBT Temp limit active
           0: IGBT Temp limit inactive
       - name: "Input voltage limit"
         bit_start: 37
-        comment:
+        comment: |-
           1: Input voltage limit active
           0: Input voltage limit inactive
       - name: "Motor Accel Temp limit"
         bit_start: 38
-        comment:
+        comment: |-
           1: Motor Accel Temp limit active
           0: Motor Accel Temp limit inactive
       - name: "Motor Temp limit"
         bit_start: 39
-        comment:
+        comment: |-
           1: Motor Temp limit active
           0: Motor Temp limit inactive
       - name: "RPM min limit"
         bit_start: 40
-        comment:
+        comment: |-
           1: RPM min limit active
           0: RPM min limit inactive
       - name: "RPM max limit"
         bit_start: 41
-        comment:
+        comment: |-
           1: RPM max limit active
           0: RPM max limit inactive
       - name: "Power limit"
         bit_start: 42
-        comment:
+        comment: |-
           1: Power limit by Config active
           0: Power limit by Config inactive
       - name: "RESERVED"
@@ -9318,7 +9318,7 @@ Custom CAN ID:
         comment: Filled with FF's. For future use.
       - name: "CAN Version"
         bit_start: 56
-        comment: Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)
+        comment: "Indicates the CAN map version. For ex: 23 -> 2,3 (V2,3)"
   IMD general:
     CAN ID: 0x18FF01F4
     Length: 8
@@ -9331,7 +9331,7 @@ Custom CAN ID:
         bit_start: 24
       - name: "Status"
         bit_start: 32
-        comment:
+        comment: |-
           Bit 0: true = Device error active
           Bit 1: true = HV_pos connection failure
           Bit 2: true = HV_neg connection failure
@@ -9378,19 +9378,19 @@ Custom CAN ID:
         bit_start: 16
       - name: "Hardware Failure"
         bit_start: 17
-        comment: Bit 0: Hardware Failure: 0-Normal, 1-Error
+        comment: "Bit 0: Hardware Failure: 0-Normal, 1-Error"
       - name: "OverTemp"
         bit_start: 18
-        comment: Bit 1: OverTemp: 0-Normal, 1-Error
+        comment: "Bit 1: OverTemp: 0-Normal, 1-Error"
       - name: "Input Voltage Error"
         bit_start: 19
-        comment: Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage
+        comment: "Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage"
       - name: "Connection Error"
         bit_start: 20
-        comment: Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC
+        comment: "Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC"
       - name: "Communication State"
         bit_start: 21
-        comment: Bit 4: Communication State: 0-Normal, 1-Timeout
+        comment: "Bit 4: Communication State: 0-Normal, 1-Timeout"
       - name: "RESERVED"
         bit_start: 24
   Charger Control:
@@ -9403,7 +9403,7 @@ Custom CAN ID:
         bit_start: 16
       - name: "Chg Enable"
         bit_start: 17
-        comment:
+        comment: |-
           1: Start Charging
           0: Stop Charging
   EM Meas:
@@ -9447,7 +9447,7 @@ Custom CAN ID:
         comment: Max temp of all sensors
       - name: "Temp 5n"
         bit_start: 24
-        comment: [0,5,10,15,20,25,30] based on n above
+        comment: "[0,5,10,15,20,25,30] based on n above"
       - name: "Temp 5n+1"
         bit_start: 32
       - name: "Temp 5n+2"
