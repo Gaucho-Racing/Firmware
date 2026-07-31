@@ -14,7 +14,8 @@
 /**
  * @brief Received CAN message structure
  *
- * This structure is used to represent a received CAN message, which consists of a header and data payload. The header contains information about the message, such as its identifier, data length, and other relevant parameters. The data payload contains the actual data bytes of the message.
+ * This structure is used to represent a received CAN message, which consists of a header and data payload. The header contains information about the message, such as its identifier, data length, and
+ * other relevant parameters. The data payload contains the actual data bytes of the message.
  *
  * @warning The length of the data array may be longer than the actual CAN message.
  */
@@ -28,7 +29,8 @@ typedef struct {
 /**
  * @brief Transmission CAN message structure
  *
- * This structure is used to represent a transmission CAN message, which consists of a header and data payload. The header contains information about the message, such as its identifier, data length, and other relevant parameters. The data payload contains the actual data bytes of the message.
+ * This structure is used to represent a transmission CAN message, which consists of a header and data payload. The header contains information about the message, such as its identifier, data length,
+ * and other relevant parameters. The data payload contains the actual data bytes of the message.
  *
  * @warning The length of the data array may be longer than the actual CAN message.
  */
@@ -41,12 +43,13 @@ typedef struct {
 typedef struct CubeMXCan_Handle CubeMXCan_Handle;
 
 /// @brief Callback function type for receiving CAN messages. @warning Do not call directly, use the provided API functions.
-typedef void (*CubeCAN_RxCallback)(void *user_ctx, const CAN_Identifier *identifier, const uint8_t *data, uint8_t size);
+typedef void (*CubeCAN_RxCallback)(const void *const user_ctx, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
 
 /**
  * @brief Configuration structure for CubeMX CAN.
  *
- * This structure is used to configure the CubeMX CAN handle, including the receive callback function and user context. The receive callback function is called when a CAN message is received, and the user context is a pointer to user-defined data that can be passed to the callback function.
+ * This structure is used to configure the CubeMX CAN handle, including the receive callback function and user context. The receive callback function is called when a CAN message is received, and the
+ * user context is a pointer to user-defined data that can be passed to the callback function.
  *
  * @warning Do not edit after initialization, as it may lead to undefined behavior.
  */
@@ -63,28 +66,28 @@ typedef struct {
  * @param config Pointer to the CubeCAN configuration structure.
  * @return Pointer to the initialized CubeMX CAN handle, or NULL if initialization fails.
  */
-CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Config *config);
+CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
 
 /**
  * @brief Starts the CubeMX CAN handle, enabling message transmission and reception.
  * @param handle Pointer to the CubeMX CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *const handle);
 
 /**
  * @brief Stops the CubeMX CAN handle, disabling message transmission and reception.
  * @param handle Pointer to the CubeMX CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *const handle);
 
 /**
  * @brief Releases the resources associated with the CubeMX CAN handle.
  * @param handle Pointer to the CubeMX CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *const handle);
 
 /**
  * @brief Adds a filter to the CubeMX CAN handle, allowing for selective message reception based on the specified filter criteria.
@@ -92,7 +95,7 @@ HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle);
  * @param filter Pointer to the FDCAN filter configuration structure.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_AddFilter(CubeMXCan_Handle *handle, const FDCAN_FilterTypeDef *filter);
+HAL_StatusTypeDef CubeMXCan_AddFilter(const CubeMXCan_Handle *const handle, const FDCAN_FilterTypeDef *const filter);
 
 /**
  * @brief Queues a transmission message for the CubeMX CAN handle, allowing for asynchronous message transmission.
@@ -100,15 +103,7 @@ HAL_StatusTypeDef CubeMXCan_AddFilter(CubeMXCan_Handle *handle, const FDCAN_Filt
  * @param message Pointer to the GRCAN transmission message structure.
  * @return HAL_StatusTypeDef if the parameters are non-null or the queue is full.
  */
-HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMessage *message);
-
-/**
- * @brief Converts a Data Length Code (DLC) to the corresponding number of data bytes.
- * @param dlc The Data Length Code to be converted.
- * @return The number of data bytes corresponding to the given DLC.
- * @warning The DLC value must be between 0 and 15, inclusive. Values outside this range will result in undefined behavior.
- */
-bool CubeMXCan_Private_IsDisabled(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *const handle, const GRCAN_TxMessage *const message);
 
 /**
  * @brief Processes periodic tasks for the CubeMX CAN handle, such as handling timeouts and managing the transmission queue.

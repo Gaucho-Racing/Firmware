@@ -39,13 +39,13 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
 
 	CRITICAL_SECTION
 	{
-		uint32_t tail = atomic_load_explicit(&handle->tx_tail, memory_order_relaxed);
+		const uint32_t tail = atomic_load_explicit(&handle->tx_tail, memory_order_relaxed);
 		uint32_t head = atomic_load_explicit(&handle->tx_head, memory_order_relaxed);
 
 		if ((tail - head) >= CUBEMX_CAN_TX_QUEUE_SIZE) {
 			head++; // Drop oldest message to make room for the new one
 			atomic_store_explicit(&handle->tx_head, head, memory_order_relaxed);
-			status = HAL_TIMEOUT;
+			status = HAL_BUSY;
 		}
 		handle->tx_queue[tail & TX_QUEUE_MASK] = *message;
 
@@ -55,23 +55,28 @@ HAL_StatusTypeDef CubeMXCan_QueueTx(CubeMXCan_Handle *handle, const GRCAN_TxMess
 	return status;
 }
 
-HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle)
+HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *const handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {
 		LOGOMATIC("CubeMXCan_Private_SendQueuedMessage: invalid null parameter\n");
 		return HAL_ERROR;
 	}
 
-	uint32_t current_head = atomic_load_explicit(&handle->tx_head, memory_order_relaxed);
-	uint32_t current_tail = atomic_load_explicit(&handle->tx_tail, memory_order_acquire);
+	if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hfdcan) == 0U) {
+		LOGOMATIC("CubeMXCan_Private_SendQueuedMessage: Tx FIFO full, cannot send message\n");
+		return HAL_BUSY;
+	}
+
+	const uint32_t current_head = atomic_load_explicit(&handle->tx_head, memory_order_relaxed);
+	const uint32_t current_tail = atomic_load_explicit(&handle->tx_tail, memory_order_acquire);
 
 	if (current_head == current_tail) {
 		return HAL_OK;
 	}
 
-	GRCAN_TxMessage message_copy = handle->tx_queue[current_head & TX_QUEUE_MASK];
+	const GRCAN_TxMessage *const message_ptr = &handle->tx_queue[current_head & TX_QUEUE_MASK];
 
-	if (HAL_FDCAN_AddMessageToTxFifoQ(handle->hfdcan, &message_copy.tx_header, message_copy.data) != HAL_OK) {
+	if (HAL_FDCAN_AddMessageToTxFifoQ(handle->hfdcan, &message_ptr->tx_header, message_ptr->data) != HAL_OK) {
 		return HAL_ERROR;
 	}
 

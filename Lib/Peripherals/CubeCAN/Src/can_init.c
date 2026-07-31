@@ -10,7 +10,7 @@
 #include "Private/PrivateCubeMXCAN.h"
 #include "main.h"
 
-CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Config *config)
+CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)
 {
 	if (hfdcan == NULL || config == NULL) {
 		LOGOMATIC("CubeMXCan_Init: invalid null parameters\n");
@@ -42,10 +42,12 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 		return NULL;
 	}
 
-	uint32_t rx_events = FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL | FDCAN_IT_RX_FIFO0_MESSAGE_LOST;
 	if (HAL_FDCAN_ActivateNotification(hfdcan, rx_events, 0U) != HAL_OK) {
 		LOGOMATIC("CubeMXCan_Init: failed to activate RX notifications\n");
-		memset(handle, 0, sizeof(*handle));
+		CRITICAL_SECTION
+		{
+			memset(handle, 0, sizeof(*handle));
+		}
 		return NULL;
 	}
 
@@ -54,55 +56,71 @@ CubeMXCan_Handle *CubeMXCan_Init(FDCAN_HandleTypeDef *hfdcan, const CubeCAN_Conf
 
 HAL_StatusTypeDef CubeMXCan_Release(CubeMXCan_Handle *handle)
 {
-	if (handle == NULL || handle->hfdcan == NULL) {
+	if (handle == NULL) {
 		return HAL_ERROR;
 	}
 
-	if (CubeMXCan_Stop(handle) != HAL_OK) {
-		LOGOMATIC("CubeMXCan_Release: failed to stop CAN peripheral\n");
-		return HAL_ERROR;
-	}
+	HAL_StatusTypeDef status = HAL_OK;
 
 	CRITICAL_SECTION
 	{
-		memset(handle, 0, sizeof(*handle));
-	}
+		if (handle->hfdcan != NULL) {
+			status = HAL_FDCAN_Stop(handle->hfdcan);
 
-	return HAL_OK;
+			if (status == HAL_OK) {
+				status = HAL_FDCAN_DeactivateNotification(handle->hfdcan, rx_events);
+			}
+			if (status == HAL_OK) {
+				memset(handle, 0, sizeof(*handle));
+			} else {
+				LOGOMATIC("CubeMXCan_Release: peripheral deactivation failed\n");
+			}
+
+			return status;
+		} else {
+			return HAL_ERROR;
+		}
+	}
 }
 
-HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *handle)
+HAL_StatusTypeDef CubeMXCan_Start(CubeMXCan_Handle *const handle)
 {
-	if (handle == NULL || handle->hfdcan == NULL) {
+	if (handle == NULL) {
 		return HAL_ERROR;
 	}
 
-	if (HAL_FDCAN_Start(handle->hfdcan) != HAL_OK) {
-		return HAL_ERROR;
-	}
+	HAL_StatusTypeDef status = HAL_ERROR;
 
 	CRITICAL_SECTION
 	{
-		handle->started = true;
+		if (handle->hfdcan != NULL && !handle->started) {
+			status = HAL_FDCAN_Start(handle->hfdcan);
+			if (status == HAL_OK) {
+				handle->started = true;
+			}
+		}
 	}
 
-	return HAL_OK;
+	return status;
 }
 
-HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *handle)
+HAL_StatusTypeDef CubeMXCan_Stop(CubeMXCan_Handle *const handle)
 {
-	if (handle == NULL || handle->hfdcan == NULL) {
+	if (handle == NULL) {
 		return HAL_ERROR;
 	}
 
-	if (HAL_FDCAN_Stop(handle->hfdcan) != HAL_OK) {
-		return HAL_ERROR;
-	}
+	HAL_StatusTypeDef status = HAL_ERROR;
 
 	CRITICAL_SECTION
 	{
-		handle->started = false;
+		if (handle->hfdcan != NULL && handle->started) {
+			status = HAL_FDCAN_Stop(handle->hfdcan);
+			if (status == HAL_OK) {
+				handle->started = false;
+			}
+		}
 	}
 
-	return HAL_OK;
+	return status;
 }

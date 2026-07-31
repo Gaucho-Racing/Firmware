@@ -23,6 +23,13 @@
 #define TX_QUEUE_MASK (CUBEMX_CAN_TX_QUEUE_SIZE - 1U)
 
 /**
+ * @brief Rx events mask for FDCAN notifications.
+ *
+ * This mask is used to enable notifications for new messages, full FIFO, and message lost events in the FDCAN peripheral.
+ */
+static const uint32_t rx_events = FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL | FDCAN_IT_RX_FIFO0_MESSAGE_LOST;
+
+/**
  * @brief CubeMX CAN handle structure
  *
  * This structure is used to represent a CubeMX CAN handle, which consists of a pointer to the FDCAN handle, a configuration structure, a transmission queue, and other relevant parameters.
@@ -63,20 +70,20 @@ struct CubeMXCan_Handle {
  * @param handle Pointer to the CubeMX CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *const handle);
 
 /**
  * @brief Converts a Data Length Code (DLC) to the corresponding number of bytes.
  * @param dlc The Data Length Code to be converted.
  * @return The number of bytes corresponding to the given DLC.
  */
-uint8_t CubeMXCan_Private_DlcToBytes(uint32_t dlc);
+uint8_t CubeMXCan_Private_DlcToBytes(const uint32_t dlc);
 
 /**
  * @brief Callback function for handling received messages from the FDCAN peripheral. This function is called when a message is received in the RX FIFO 0 of the FDCAN peripheral.
  * @param hfdcan Pointer to the FDCAN handle associated with the received message.
  */
-void CubeMXCan_OnRxFifo0(FDCAN_HandleTypeDef *hfdcan);
+void CubeMXCan_OnRxFifo0(FDCAN_HandleTypeDef *const hfdcan);
 
 /**
  * @brief Array of CubeMX CAN handles, one for each supported instance.
@@ -97,6 +104,14 @@ extern bool timer_started;
  * @param handle Pointer to the CubeMX CAN handle associated with the FDCAN peripheral to be recovered.
  * @return HAL_StatusTypeDef indicating the success or failure of the recovery operation.
  */
-HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(CubeMXCan_Handle *handle);
+HAL_StatusTypeDef CubeMXCan_Private_RecoverPeripheral(const CubeMXCan_Handle *const handle);
+
+/**
+ * @brief Converts a Data Length Code (DLC) to the corresponding number of data bytes.
+ * @param dlc The Data Length Code to be converted.
+ * @return The number of data bytes corresponding to the given DLC.
+ * @warning The DLC value must be between 0 and 15, inclusive. Values outside this range will result in undefined behavior.
+ */
+bool CubeMXCan_Private_IsDisabled(const CubeMXCan_Handle *const handle);
 
 #endif
