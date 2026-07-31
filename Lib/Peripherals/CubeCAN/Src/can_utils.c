@@ -4,11 +4,10 @@
 
 #include "CriticalSection.h"
 #include "CubeMXCan.h"
-#include "CubeMXCanExt.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
-#include "Private/PrivateCubeMXCAN.h"
+#include "PrivateInc/internal.h"
 
 #define CAN_TX_NODE_SHIFT 20U
 #define CAN_MSG_SHIFT 8U

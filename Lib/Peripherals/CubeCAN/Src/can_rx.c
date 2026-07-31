@@ -3,9 +3,8 @@
 
 #include "CriticalSection.h"
 #include "CubeMXCan.h"
-#include "CubeMXCanExt.h"
 #include "Logomatic.h"
-#include "Private/PrivateCubeMXCAN.h"
+#include "PrivateInc/internal.h"
 #include "Unused.h"
 #include "main.h"
 

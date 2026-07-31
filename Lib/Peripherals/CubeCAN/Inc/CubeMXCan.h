@@ -3,19 +3,36 @@
 #include <stdint.h>
 
 #include "CubeCAN_Config.h"
-#include "CubeMXCanExt.h"
+#include "GRCAN_CUSTOM_ID.h"
+#include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "main.h"
 
 #ifndef CUBEMX_CAN_H
 #define CUBEMX_CAN_H
 
-#define FDCAN_MAX_DATA_BYTES 64U
+#pragma region Type Definitions
 
 /// @brief CAN handle for CubeMX CAN. @warning Do not access directly, use the provided API functions.
 typedef struct CubeMXCan_Private_Handle CubeMXCan_Handle;
 
 /// @brief Callback function type for receiving CAN messages. @warning Do not call directly, use the provided API functions.
 typedef void (*CubeCAN_RxCallback)(const void *const user_context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
+
+/**
+ * @brief CAN Identifier structure
+ *
+ * This structure is used to represent a CAN message identifier, which consists of a transmitting node ID, a receiving node ID, and a message ID. The structure is used in conjunction with the
+ * Construct_Message_ID and Deconstruct_Message_ID functions to convert between the structure representation and the 32-bit integer representation of the CAN message identifier.
+ *
+ * @warning The structure does not represent custom IDs.
+ * @warning The structure does not represent actual bit depth
+ */
+typedef struct {
+	GRCAN_NODE_ID tx_node_id;
+	GRCAN_NODE_ID rx_node_id;
+	GRCAN_MSG_ID msg_id;
+} CAN_Identifier;
 
 /**
  * @brief Configuration structure for CubeMX CAN.
@@ -33,6 +50,10 @@ typedef struct {
 	/// @brief Node ID of the sending device. This is used to identify the source of the CAN messages and must be unique on the CAN bus.
 	GRCAN_NODE_ID sending_node_id;
 } CubeCAN_Config;
+
+#pragma endregion
+
+#pragma region Function Prototypes
 
 /**
  * @brief Initializes a CubeMX CAN handle with the given FDCAN handle and configuration, and starts the CAN peripheral.
@@ -107,5 +128,33 @@ void CubeMXCan_Tick(void);
  * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
  */
 HAL_StatusTypeDef CubeMXCan_Send(CubeMXCan_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size);
+
+/**
+ * @brief Constructs a CAN message identifier from the given transmitting node ID, receiving node ID, and message ID.
+ *
+ * @param identifier Pointer to the CAN_Identifier structure containing the node and message IDs.
+ *
+ * @return The constructed 29-bit CAN message extended identifier.
+ */
+uint32_t Construct_CAN_Identifier(const CAN_Identifier *const identifier);
+
+/**
+ * @brief Deconstructs a 29-bit CAN message extended identifier into its constituent transmitting node ID, receiving node ID, and message ID.
+ *
+ * @param message_id The 29-bit CAN message extended identifier to be deconstructed.
+ *
+ * @return A CAN_Identifier structure containing the deconstructed node and message IDs.
+ *
+ * @warning The function does not guarantee that the returned structure will represent a valid CAN message identifier.
+ * @warning The function does not support custom IDs.
+ */
+CAN_Identifier Deconstruct_CAN_Identifier(const uint32_t message_id);
+
+/**
+ * @brief Builds an exact-match extended-ID filter for a given CAN identifier.
+ */
+HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter);
+
+#pragma endregion
 
 #endif

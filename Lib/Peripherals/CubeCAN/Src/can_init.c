@@ -5,9 +5,8 @@
 
 #include "CriticalSection.h"
 #include "CubeMXCan.h"
-#include "CubeMXCanExt.h"
 #include "Logomatic.h"
-#include "Private/PrivateCubeMXCAN.h"
+#include "PrivateInc/internal.h"
 #include "main.h"
 
 CubeMXCan_Handle *CubeMXCan_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)

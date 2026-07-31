@@ -11,6 +11,27 @@
 #ifndef PRIVATE_CUBE_MX_CAN_H
 #define PRIVATE_CUBE_MX_CAN_H
 
+#pragma region Definitions
+
+/**
+ * @brief Maximum number of CubeMX CAN instances supported by the library.
+ *
+ * This value is determined based on the available FDCAN peripherals in the STM32 microcontroller.
+ *
+ * @warning You can override it, but you should only reduce it to a lower value, there is no point to increase it beyond what their is hardware for.
+ */
+#ifndef CUBEMX_CAN_MAX_INSTANCES
+#if (defined(FDCAN3) || defined(CAN3)) && (defined(FDCAN2) || defined(CAN2)) && (defined(FDCAN1) || defined(CAN1))
+#define CUBEMX_CAN_MAX_INSTANCES (3U)
+#elif (defined(FDCAN2) || defined(CAN2)) && (defined(FDCAN1) || defined(CAN1))
+#define CUBEMX_CAN_MAX_INSTANCES (2U)
+#elif (defined(FDCAN1) || defined(CAN1))
+#define CUBEMX_CAN_MAX_INSTANCES (1U)
+#else
+#error "No CAN or FDCAN instances defined. Please check your CubeMX configuration."
+#endif
+#endif
+
 /**
  * @brief Mask for the transmission queue index, used to wrap around the queue when it reaches its maximum size.
  *
@@ -27,6 +48,17 @@
  * This mask is used to enable notifications for new messages, full FIFO, and message lost events in the FDCAN peripheral.
  */
 #define FDCAN_IT_RX_EVENTS (FDCAN_IT_RX_FIFO0_NEW_MESSAGE | FDCAN_IT_RX_FIFO0_FULL | FDCAN_IT_RX_FIFO0_MESSAGE_LOST)
+
+/**
+ * @brief Maximum number of data bytes in an FDCAN message.
+ *
+ * This macro defines the maximum number of data bytes that can be included in an FDCAN message.
+ */
+#define FDCAN_MAX_DATA_BYTES (64U)
+
+#pragma endregion
+
+#pragma region Type Definitions
 
 /**
  * @brief Transmission CAN message structure
@@ -64,25 +96,9 @@ struct CubeMXCan_Private_Handle {
 	bool started;
 };
 
-/// @brief Maximum number of CubeMX CAN instances supported by the library.
-#ifndef CUBEMX_CAN_MAX_INSTANCES
-#if (defined(FDCAN3) || defined(CAN3)) && (defined(FDCAN2) || defined(CAN2)) && (defined(FDCAN1) || defined(CAN1))
-#define CUBEMX_CAN_MAX_INSTANCES 3U
-#elif (defined(FDCAN2) || defined(CAN2)) && (defined(FDCAN1) || defined(CAN1))
-#define CUBEMX_CAN_MAX_INSTANCES 2U
-#elif (defined(FDCAN1) || defined(CAN1))
-#define CUBEMX_CAN_MAX_INSTANCES 1U
-#else
-#error "No CAN or FDCAN instances defined. Please check your CubeMX configuration."
-#endif
-#endif
+#pragma endregion
 
-/**
- * @brief Sends a queued message from the CubeMX CAN handle.
- * @param handle Pointer to the CubeMX CAN handle.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- */
-HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *const handle);
+#pragma region External Variables
 
 /**
  * @brief Array of CubeMX CAN handles, one for each supported instance.
@@ -90,10 +106,16 @@ HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *co
  */
 extern struct CubeMXCan_Private_Handle handles[CUBEMX_CAN_MAX_INSTANCES];
 
+#pragma endregion
+
+#pragma region Function Prototypes
+
 /**
- * @brief Flag indicating whether the CubeMX CAN Tx timer has been started.
+ * @brief Sends a queued message from the CubeMX CAN handle.
+ * @param handle Pointer to the CubeMX CAN handle.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-extern bool timer_started;
+HAL_StatusTypeDef CubeMXCan_Private_SendQueuedMessage(const CubeMXCan_Handle *const handle);
 
 /**
  * @brief Attempts to recover the FDCAN peripheral associated with the given CubeMX CAN handle.
@@ -136,5 +158,7 @@ uint8_t CubeMXCan_Private_DlcToBytes(const uint32_t dlc);
  * @warning The number of bytes must be between 0 and 8, inclusive. Values outside this range will result in undefined behavior.
  */
 uint8_t CubeMXCan_Private_BytesToDlc(const uint8_t bytes);
+
+#pragma endregion
 
 #endif
