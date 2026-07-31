@@ -61,6 +61,24 @@ typedef struct {
 } CubeCAN_Config;
 
 /**
+ * @brief Initializes a CubeMX CAN handle with the given FDCAN handle and configuration, and starts the CAN peripheral.
+ * @param hfdcan Pointer to the FDCAN handle.
+ * @param config Pointer to the CubeCAN configuration structure.
+ * @return Pointer to the initialized CubeMX CAN handle, or NULL if initialization fails.
+ * @note This functions wraps <c>CubeMXCan_Init</c> and <c>CubeMXCan_Start</c> into a single call. If either of those functions fails, this function will return NULL and the handle will be released.
+ */
+CubeMXCan_Handle *CubeMXCan_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
+
+/**
+ * @brief Stops the CubeMX CAN peripheral and releases the associated handle.
+ * @param handle Pointer to the CubeMX CAN handle.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ * @note This functions wraps <c>CubeMXCan_Stop</c> and <c>CubeMXCan_Release</c> into a single call. If either of those functions fails, this function will return the error code and the handle will not be released.
+ * @note This function can be used regardless of if <c>CubeMXCan_OneShotInitStart</c> was used to initialize the handle.
+*/
+HAL_StatusTypeDef CubeMXCan_OneShotReleaseStop(CubeMXCan_Handle *handle);
+
+/**
  * @brief Initializes a CubeMX CAN handle with the given FDCAN handle and configuration.
  * @param hfdcan Pointer to the FDCAN handle.
  * @param config Pointer to the CubeCAN configuration structure.
