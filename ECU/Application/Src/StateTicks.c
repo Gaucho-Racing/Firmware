@@ -263,33 +263,32 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	} else if (stateData->enable_regen && (PressingBrake(stateData) || CalcAccPedalTravel(stateData) < (stateData->apps_deadzone + 0.05f)) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
 		torque_request = -MAX_REVERSE_CURRENT_AMPS;
 	} else {
-		uint16_t max_current = 0;
-		// Chosen max current for different power level / torque maps
+		uint16_t max_fwd_current = 0;
 		switch (stateData->powerlevel) {
 			case 0:
-				max_current = 100;
+				max_fwd_current = 300;
 				break;
 			case 1:
-				max_current = 200;
+				max_fwd_current = 300;
 				break;
 			case 2:
-				max_current = 250;
+				max_fwd_current = 300;
 				break;
 			case 3:
-				max_current = 300;
+				max_fwd_current = 300;
 				break;
 			case 4:
-				max_current = 325;
+				max_fwd_current = 300;
 				break;
 			case 5:
-				max_current = 350;
+				max_fwd_current = 300;
 				break;
 			default:
-				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);
-				max_current = 0;
+				LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
+				max_fwd_current = 0;
 				break;
 		}
-		torque_request = fminf(CalcAccPedalTravel(stateData) * max_current, MAX_CURRENT_AMPS);
+		torque_request = fminf(CalcAccPedalTravel(stateData) * max_fwd_current, MAX_FORWARD_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
