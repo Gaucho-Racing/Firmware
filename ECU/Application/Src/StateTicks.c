@@ -261,7 +261,32 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
 	} else if (stateData->enable_regen && (PressingBrake(stateData) || CalcAccPedalTravel(stateData) < (stateData->apps_deadzone + 0.05f)) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
-		torque_request = -MAX_REVERSE_CURRENT_AMPS;
+		uint16_t rev_current = 0;
+		switch (stateData->powerlevel) {
+			case 0:
+				rev_current = 60;
+				break;
+			case 1:
+				rev_current = 120;
+				break;
+			case 2:
+				rev_current = 150;
+				break;
+			case 3:
+				rev_current = 180;
+				break;
+			case 4:
+				rev_current = 210;
+				break;
+			case 5:
+				rev_current = 240;
+				break;
+			default:
+				LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
+				rev_current = 0;
+				break;
+		}
+		torque_request = -fminf(rev_current, MAX_REVERSE_CURRENT_AMPS);
 	} else {
 		uint16_t max_fwd_current = 0;
 		switch (stateData->powerlevel) {
