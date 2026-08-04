@@ -60,7 +60,7 @@ jobs:
         id: sccache-setup
         if: steps.cache-setup.outcome == 'success'
         continue-on-error: true
-        uses: mozilla-actions/sccache-action@9e7fa8a12102821edf02ca5dbea1acd0f89a2696 # v0.0.10
+        uses: mozilla-actions/sccache-action@fc920bf0ec8de6ee65d409111f7ec508035751ba # v0.0.11
 
       - name: Start Shared Compilation Cache Server
         id: sccache-start
@@ -220,7 +220,7 @@ jobs:
       - name: Setup Shared Compilation Cache
         id: sccache-setup
         if: steps.cache-setup.outcome == 'success'
-        uses: mozilla-actions/sccache-action@9e7fa8a12102821edf02ca5dbea1acd0f89a2696 # v0.0.10
+        uses: mozilla-actions/sccache-action@fc920bf0ec8de6ee65d409111f7ec508035751ba # v0.0.11
         continue-on-error: true
 
       - name: Start Shared Compilation Cache Server
