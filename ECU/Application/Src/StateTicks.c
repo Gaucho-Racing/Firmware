@@ -58,7 +58,7 @@ ECU_StateData stateLump = {
     .apps_1_max = 1897,
     .apps_2_max = 1926,
     // Regen
-    .regen_strength = 2,	// Not used
+    .regen_strength = 2, // Not used
     .enable_regen = true,
     .SDC_startup_condition = true};
 
@@ -258,62 +258,79 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	float torque_request;
 	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= MAX_APPS_IMPLAUSIBLE_TIME_MS;
 
+	float pedal = CalcAccPedalTravel(stateData);
+
+	uint16_t max_rev_current = 0;
+	switch (stateData->powerlevel) {
+		case 0:
+			max_rev_current = 60;
+			break;
+		case 1:
+			max_rev_current = 120;
+			break;
+		case 2:
+			max_rev_current = 150;
+			break;
+		case 3:
+			max_rev_current = 180;
+			break;
+		case 4:
+			max_rev_current = 210;
+			break;
+		case 5:
+			max_rev_current = 240;
+			break;
+		default:
+			LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
+			max_rev_current = 0;
+			break;
+	}
+
+	uint16_t max_fwd_current = 0;
+	switch (stateData->powerlevel) {
+		case 0:
+			max_fwd_current = 300;
+			break;
+		case 1:
+			max_fwd_current = 300;
+			break;
+		case 2:
+			max_fwd_current = 300;
+			break;
+		case 3:
+			max_fwd_current = 300;
+			break;
+		case 4:
+			max_fwd_current = 300;
+			break;
+		case 5:
+			max_fwd_current = 300;
+			break;
+		default:
+			LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
+			max_fwd_current = 0;
+			break;
+	}
+
+	if (pedal < 0.05f) {
+		torque_request = -max_rev_current;
+	} else if (pedal < 0.1f) {
+		torque_request = -max_rev_current * (1.0f - (pedal - 0.05f) / 0.05f);
+	} else if (pedal < 0.2f) {
+		torque_request = 0.0f;
+	} else {
+		torque_request = max_fwd_current * ((pedal - 0.2f) / 0.8f);
+	}
+
+	if (!stateData->enable_regen || stateData->vehicle_speed_mph <= REGEN_MIN_SPEED_MPH) {
+		torque_request = fmaxf(torque_request, 0);
+	}
+
+	torque_request = fminf(torque_request, MAX_FORWARD_CURRENT_AMPS);
+	torque_request = fmaxf(torque_request, -MAX_REVERSE_CURRENT_AMPS);
+
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (stateData->enable_regen && (PressingBrake(stateData) || CalcAccPedalTravel(stateData) < (stateData->apps_deadzone + 0.05f)) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
-		uint16_t rev_current = 0;
-		switch (stateData->powerlevel) {
-			case 0:
-				rev_current = 60;
-				break;
-			case 1:
-				rev_current = 120;
-				break;
-			case 2:
-				rev_current = 150;
-				break;
-			case 3:
-				rev_current = 180;
-				break;
-			case 4:
-				rev_current = 210;
-				break;
-			case 5:
-				rev_current = 240;
-				break;
-			default:
-				LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
-				rev_current = 0;
-				break;
-		}
-		torque_request = -fminf(rev_current, MAX_REVERSE_CURRENT_AMPS);
-	} else {
-		uint16_t max_fwd_current = 0;
-		switch (stateData->powerlevel) {
-			case 0:
-				max_fwd_current = 300;
-				break;
-			case 1:
-				max_fwd_current = 300;
-				break;
-			case 2:
-				max_fwd_current = 300;
-				break;
-			case 3:
-				max_fwd_current = 300;
-				break;
-			case 4:
-				max_fwd_current = 300;
-				break;
-			case 5:
-				max_fwd_current = 300;
-				break;
-			default:
-				LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
-				max_fwd_current = 0;
-				break;
-		}
-		torque_request = fminf(CalcAccPedalTravel(stateData) * max_fwd_current, MAX_FORWARD_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
