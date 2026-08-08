@@ -34,7 +34,7 @@ ECU_StateData stateLump = {
     // Startup at minimum power
     .powerlevel = 0,
     // See CANdo specification
-    .torquemap = 2,
+    .torquemap = 1,
     // APPS Deadzone
     .apps_deadzone = 0.08f,
     // BMS thresholds
