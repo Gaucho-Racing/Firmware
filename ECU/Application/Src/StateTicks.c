@@ -339,7 +339,14 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
 		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 1);
 		message.set_ac_current = torque_request * 10;
-		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
+		LOGOMATIC("%f\t\t%f\n", stateData->vehicle_speed_mph, torque_request);
+
+		if (torque_request < 0) {
+			message.set_ac_current = torque_request * -10;
+			ECU_CAN_Send_DTI(DTI_CONTROL_2_CAN_ID, &message.set_ac_current, 2);
+		} else {
+			ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
+		}
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
