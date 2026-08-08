@@ -263,22 +263,22 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	uint16_t max_rev_current = 0;
 	switch (stateData->powerlevel) {
 		case 0:
-			max_rev_current = 60;
+			max_rev_current = 20;
 			break;
 		case 1:
-			max_rev_current = 120;
+			max_rev_current = 40;
 			break;
 		case 2:
-			max_rev_current = 150;
+			max_rev_current = 60;
 			break;
 		case 3:
-			max_rev_current = 180;
+			max_rev_current = 80;
 			break;
 		case 4:
-			max_rev_current = 210;
+			max_rev_current = 100;
 			break;
 		case 5:
-			max_rev_current = 240;
+			max_rev_current = 120;
 			break;
 		default:
 			LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
