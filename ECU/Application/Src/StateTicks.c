@@ -312,14 +312,22 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 			break;
 	}
 
-	if (pedal < 0.05f) {
+	// See https://www.desmos.com/calculator/nxxz5zxgku
+	const float A_REV_MAX_END_POINT = 0.05f;
+	const float B_DEADZONE_START_POINT = 0.1f;
+	const float C_DEADZONE_END_POINT = 0.2f;
+
+	const float PEDAL_REV_TRANSITION_RANGE_INV = 1.0f / (B_DEADZONE_START_POINT - A_REV_MAX_END_POINT);
+	const float PEDAL_FWD_TRANSITION_RANGE_INV = 1.0f / (1.0f - C_DEADZONE_END_POINT);
+
+	if (pedal < A_REV_MAX_END_POINT) {
 		torque_request = -max_rev_current;
-	} else if (pedal < 0.1f) {
-		torque_request = -max_rev_current * (1.0f - (pedal - 0.05f) / 0.05f);
-	} else if (pedal < 0.2f) {
+	} else if (pedal < B_DEADZONE_START_POINT) {
+		torque_request = -max_rev_current * (1.0f - (pedal - A_REV_MAX_END_POINT) * PEDAL_REV_TRANSITION_RANGE_INV);
+	} else if (pedal < C_DEADZONE_END_POINT) {
 		torque_request = 0.0f;
 	} else {
-		torque_request = max_fwd_current * ((pedal - 0.2f) / 0.8f);
+		torque_request = max_fwd_current * (pedal - C_DEADZONE_END_POINT) * PEDAL_FWD_TRANSITION_RANGE_INV;
 	}
 
 	if (!stateData->enable_regen || stateData->vehicle_speed_mph <= REGEN_MIN_SPEED_MPH) {
