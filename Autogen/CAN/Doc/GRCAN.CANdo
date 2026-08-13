@@ -52,6 +52,7 @@ Bus ID:
       - Charger
       - IMD
       - EM
+      - Charging SDC
 
 routing:
   messages:
