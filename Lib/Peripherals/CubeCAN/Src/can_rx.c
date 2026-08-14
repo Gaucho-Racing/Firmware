@@ -18,7 +18,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		return;
 	}
 
-	const void *user_context = NULL;
+	CubeCAN_Config_Context context;
 	CubeCAN_RxCallback rx_callback = NULL;
 	bool is_started = false;
 
@@ -26,7 +26,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	{
 		for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
 			if (handles[i].hfdcan == hfdcan) {
-				user_context = handles[i].config.user_context;
+				context = handles[i].config.context;
 				rx_callback = handles[i].config.rx_callback;
 				is_started = handles[i].started;
 				break;
@@ -53,7 +53,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data) == HAL_OK) {
 			CAN_Identifier id = CubeCAN_Deconstruct_Identifier(rx_header.Identifier);
 			uint8_t size = CubeCAN_Private_DlcToBytes(rx_header.DataLength);
-			rx_callback(user_context, &id, rx_data, size);
+			rx_callback(&context, &id, rx_data, size);
 		} else {
 			LOGOMATIC("HAL_FDCAN_RxFifo0Callback: Failed to get Rx message from FIFO\n");
 			break;

@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "CubeCAN_Config.h"
+#include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
@@ -33,13 +34,29 @@ typedef struct {
 } CAN_Identifier;
 
 /**
+ * @brief Union for user-defined context data in CubeCAN configuration.
+ *
+ * This union allows for flexible user-defined context data to be passed to the receive callback function. It can hold either a pointer to any user-defined data or a specific GRCAN_BUS_ID value.
+ *
+ * @warning The union should be used carefully to ensure that the correct type of data is accessed in the callback function.
+ *
+ * @note Compile time checks verify that GRCAN_BUS_ID is the same size or smaller than the pointer, ensuring safe usage of the union.
+ */
+typedef union {
+	/// @brief Pointer to user-defined context data. This can be used to pass additional data or state information to the receive callback function.
+	void *full_user_context;
+	/// @brief GRCAN_BUS_ID value for user-defined context data. This can be used to pass the bus ID to the receive callback function.
+	GRCAN_BUS_ID busid_user_context;
+} CubeCAN_Config_Context;
+
+/**
  * @brief Callback function type for receiving CAN messages.
  *
  * @warning The callback function should not perform blocking operations or take too long to execute.
  * @warning The callback function should not call any CubeCAN functions, as it may lead to undefined behavior.
  * @warning It is the responsibility of the callback function to verify the integrity of the received data and handle any errors or null inputs.
  */
-typedef void (*CubeCAN_RxCallback)(const void *const user_context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
+typedef void (*CubeCAN_RxCallback)(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
 
 /**
  * @brief Configuration structure for CubeCAN CAN.
@@ -50,8 +67,8 @@ typedef void (*CubeCAN_RxCallback)(const void *const user_context, const CAN_Ide
  * @warning Do not edit after initialization, as it may lead to undefined behavior.
  */
 typedef struct {
-	/// @brief User-defined context pointer that can be passed to the receive callback function. This can be used to pass additional data or state information to the callback function.
-	void *user_context;
+	/// @brief Union for user-defined context data. This can be used to pass additional data or state information to the receive callback function.
+	CubeCAN_Config_Context context;
 	/// @brief Callback function for receiving CAN messages. This function is called when a CAN message is received.
 	CubeCAN_RxCallback rx_callback;
 	/// @brief Node ID of the sending device. This is used to identify the source of the CAN messages and must be unique on the CAN bus.

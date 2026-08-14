@@ -6,6 +6,7 @@
 #include "CriticalSection.h"
 #include "CubeCAN.h"
 #include "CubeCAN_Config.h"
+#include "GRCAN_BUS_ID.h"
 #include "PrivateInc/internal.h"
 #include "main.h"
 
@@ -23,3 +24,5 @@ static_assert(ATOMIC_BOOL_LOCK_FREE == 2, "CubeCAN internal ATOMIC_BOOL_LOCK_FRE
 
 static_assert((CUBEMX_CAN_TX_QUEUE_SIZE > 0) && !(CUBEMX_CAN_TX_QUEUE_SIZE & (CUBEMX_CAN_TX_QUEUE_SIZE - 1U)), "CUBEMX_CAN_TX_QUEUE_SIZE must be a power of two and greater than zero");
 static_assert(CUBEMX_CAN_MAX_INSTANCES >= 1 && CUBEMX_CAN_MAX_INSTANCES <= 3, "CUBEMX_CAN_MAX_INSTANCES must be configured between 1 and 3 inclusive");
+
+static_assert(sizeof(GRCAN_BUS_ID) <= sizeof(void *), "GRCAN_BUS_ID must fit within a pointer-sized type to support being unioned with a pointer in CubeCAN_Config");

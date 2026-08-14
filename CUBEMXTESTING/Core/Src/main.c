@@ -27,6 +27,8 @@
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
 #include "CubeCAN.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "loop.h"
 #include "tim.h"
@@ -54,6 +56,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+CubeCAN_Handle *primaryHandle = NULL;
+
 LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .bus = LOGOMATIC_BUS,
 				   .gpio_port = LOGOMATIC_GPIOA,
@@ -116,9 +120,12 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 	Setup_Logomatic(&logomaticConfig);
 
-	CubeCAN_Config can_config = {.rx_callback = CANdler_Callback, .user_context = (void *)1};
-
-	CubeCAN_Init(&hfdcan1, &can_config);
+	CubeCAN_Config primaryCanConfig = {.rx_callback = CANdler_Callback, .context.busid_user_context = GRCAN_BUS_PRIMARY, .sending_node_id = GRCAN_Debugger};
+	primaryHandle = CubeCAN_Init(&hfdcan1, &primaryCanConfig);
+	if (primaryHandle == NULL) {
+		LOGOMATIC("Failed to initialize primary CAN handle\n");
+		Error_Handler();
+	}
 	/* USER CODE END 2 */
 
 	/* Infinite loop */

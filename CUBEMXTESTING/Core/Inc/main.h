@@ -49,7 +49,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+extern CubeCAN_Handle *primaryHandle;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
