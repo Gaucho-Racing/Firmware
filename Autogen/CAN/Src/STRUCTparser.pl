@@ -95,6 +95,18 @@ sub extract_desc_from_array {
 		if ( $sub =~ /^\s+ comment: \s* (.*)/smx ) {
 			my $text = $1;
 			$in_comment_block = 1;
+
+			# A YAML block-scalar indicator (|, |-, >, ...) means the text
+			# lives on the following indented lines, so the marker is empty.
+			if ( $text =~ /^[|>][+-]?$/smx ) {
+				$text = q{};
+			}
+
+			# Otherwise strip surrounding YAML quotes from an inline value.
+			elsif ( $text =~ /^"(.*)"$/smx || $text =~ /^'(.*)'$/smx ) {
+				$text = $1;
+			}
+
 			if ( $text ne q{} ) {
 				$description .= ( $description ? q{ } : q{} ) . $text;
 			}

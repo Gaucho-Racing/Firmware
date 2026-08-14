@@ -836,7 +836,7 @@ sub parse_message_id {
 		$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} } = {};
 		return;
 	}
-	if ( $ind == 6 && $state_ref->{cur_sig} ne $EMPTY_STR && $line =~ /^ comment \s* : \s* $/smx ) {
+	if ( $ind == 6 && $state_ref->{cur_sig} ne $EMPTY_STR && $line =~ /^ comment \s* : \s* (?: [|>][+-]? )? \s* $/smx ) {
 		$state_ref->{in_comment}     = 1;
 		$state_ref->{comment_indent} = $ind;
 		$state_ref->{comment_buf}    = $EMPTY_STR;
@@ -849,6 +849,7 @@ sub parse_message_id {
 		$v =~ s/\s+$//smx;
 
 		if ( $k eq 'comment' ) {
+			$v =~ s/^(['"])(.*)\1$/$2/smx;
 			$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} }{comment} = $v;
 			return;
 		}
@@ -888,18 +889,19 @@ sub parse_custom_id {
 		return;
 	}
 
-	if ( $line =~ /^ comment \s* : \s+ (.+) /ixsm ) {
-		my $comment = $1;
-		$comment =~ s/\s+$//smx;
-		if ( @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} } ) {
-			$data_ref->{custom}{ $state_ref->{cur_msg} }{sigs}->[-1]->{comment} = $comment;
-		}
-		return;
-	}
-	if ( $line =~ /^ comment \s* : \s* $/ixsm ) {
+	if ( $line =~ /^ comment \s* : \s* (?: [|>][+-]? )? \s* $/ixsm ) {
 		$state_ref->{in_comment}     = 1;
 		$state_ref->{comment_indent} = $ind;
 		$state_ref->{comment_buf}    = $EMPTY_STR;
+		return;
+	}
+	if ( $line =~ /^ comment \s* : \s+ (.+) /ixsm ) {
+		my $comment = $1;
+		$comment =~ s/\s+$//smx;
+		$comment =~ s/^(['"])(.*)\1$/$2/smx;
+		if ( @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} } ) {
+			$data_ref->{custom}{ $state_ref->{cur_msg} }{sigs}->[-1]->{comment} = $comment;
+		}
 		return;
 	}
 	if ( $line =~ /^ [-] \s+ name \s* : \s* ["']? ([^"']+) ["']? /smx ) {
