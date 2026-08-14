@@ -30,7 +30,7 @@
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
-#include "loop.h"
+#include "Loop.h"
 #include "tim.h"
 
 // #include "can.h"
