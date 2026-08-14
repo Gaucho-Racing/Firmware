@@ -8,7 +8,7 @@ Use STM32CubeMX to setup the CAN peripheral, then call `CubeCAN_Entrance` on it 
 Save the handle that function returns and use that to send messages. Recieve messages on your function callback.
 
 > [!IMPORTANT]
-> It is recommended to have your Rx callback function primarily be a switch case off of the message ID.
+> We recommend that your recieved message callback function is a switch-case off of the message ID that does nothing more than writing to memory.
 >
 > Your `CubeCAN_RxCallback` function must run quickly, it is inside of a low level ISR.
 
@@ -95,6 +95,12 @@ flowchart TD
 ```
 
 ## Advanced
+
+### Filters
+
+Filters are on the user to setup and manage, it is recommended to setup a filter to ignore messsages not intended for your bord
+
+You have direct access to define `HAL_FDCAN_RxFifo1Callback` as you like as well, the peripheral only uses `HAL_FDCAN_RxFifo0Callback` for all buses
 
 ### Rx Callback Context
 
