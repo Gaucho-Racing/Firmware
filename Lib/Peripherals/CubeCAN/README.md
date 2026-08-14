@@ -96,6 +96,20 @@ flowchart TD
 
 ## Advanced
 
+### Interrupt Safety
+
+We use atomic operations and locks to ensure that we do not operate on broken data.
+
+Locks are handled through [`CriticalSection.h`](../../GlobalShare/Inc/CriticalSection.h) which block interrupts from running for a
+scope and automatically clean themselves up nicely if something strange happens internally thanks to the GCC cleanup attribute.
+
+Currently the only atomic variables are `tx_head` and `tx_tail` as members of the handle, these manage the transmission queue and
+need to be quite robust in case someone decides they want to send a CAN message inside a `CubeCAN_RxCallback` ISR (nobody should be
+doing that, but if they do it needs to work)
+
+Since we have atomic variables we require `CUBEMX_CAN_TX_QUEUE_SIZE` to be a power of two so that we can do quick bitwise math on it
+instead of waiting for a slower compare and swap (CAS) loop to handle the modulus operations for us to wrap around the ring-buffer
+
 ### Filters
 
 Filters are on the user to setup and manage, it is recommended to setup a filter to ignore messsages not intended for your bord
