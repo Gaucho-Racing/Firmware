@@ -116,9 +116,9 @@ OR recieving messages from multiple buses)
 
 ### Tx Message Marker
 
-TODO
-
 Currently we do not do anything cool with this, but we could!
+
+If you would like to see this do something please open an Issue (and if you want to code it, a PR as well)
 
 ### Assertions
 
