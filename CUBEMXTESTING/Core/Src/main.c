@@ -121,7 +121,7 @@ int main(void)
 	Setup_Logomatic(&logomaticConfig);
 
 	CubeCAN_Config primaryCanConfig = {.rx_callback = CANdler_Callback, .context.busid_user_context = GRCAN_BUS_PRIMARY, .sending_node_id = GRCAN_Debugger};
-	primaryHandle = CubeCAN_Init(&hfdcan1, &primaryCanConfig);
+	primaryHandle = CubeCAN_Entrance(&hfdcan1, &primaryCanConfig);
 	if (primaryHandle == NULL) {
 		LOGOMATIC("Failed to initialize primary CAN handle\n");
 		Error_Handler();

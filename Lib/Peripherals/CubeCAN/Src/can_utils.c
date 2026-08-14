@@ -37,41 +37,6 @@ CAN_Identifier CubeCAN_Deconstruct_Identifier(const uint32_t message_id)
 	return (CAN_Identifier){.tx_node_id = tx_node_id, .msg_id = msg_id, .rx_node_id = rx_node_id};
 }
 
-HAL_StatusTypeDef CubeCAN_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter)
-{
-	if (identifier == NULL || filter == NULL) {
-		return HAL_ERROR;
-	}
-
-	filter->IdType = FDCAN_EXTENDED_ID;
-	filter->FilterIndex = filter_index;
-	filter->FilterType = FDCAN_FILTER_MASK;
-	filter->FilterConfig = fifo;
-	filter->FilterID1 = CubeCAN_Construct_Identifier(identifier);
-	filter->FilterID2 = 0x1FFFFFFFU;
-
-	return HAL_OK;
-}
-
-HAL_StatusTypeDef CubeCAN_AddFilter(const CubeCAN_Handle *const handle, const FDCAN_FilterTypeDef *filter)
-{
-	if (handle == NULL || filter == NULL) {
-		LOGOMATIC("CubeCAN_AddFilter: Invalid handle or filter pointer\n");
-		return HAL_ERROR;
-	}
-
-	HAL_StatusTypeDef status = HAL_ERROR;
-
-	CRITICAL_SECTION
-	{
-		if (handle->hfdcan != NULL) {
-			status = HAL_FDCAN_ConfigFilter(handle->hfdcan, filter);
-		}
-	}
-
-	return status;
-}
-
 uint8_t CubeCAN_Private_BytesToDlc(const uint8_t bytes)
 {
 	switch (bytes) {

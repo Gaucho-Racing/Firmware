@@ -145,4 +145,33 @@ uint8_t CubeCAN_Private_DlcToBytes(const uint32_t dlc);
  */
 uint8_t CubeCAN_Private_BytesToDlc(const uint8_t bytes);
 
+/**
+ * @brief Initializes a CubeCAN CAN handle with the given FDCAN handle and configuration.
+ * @param hfdcan Pointer to the FDCAN handle.
+ * @param config Pointer to the CubeCAN configuration structure.
+ * @return Pointer to the initialized CubeCAN CAN handle, or NULL if initialization fails.
+ */
+CubeCAN_Handle *CubeCAN_Private_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
+
+/**
+ * @brief Starts the CubeCAN CAN handle, enabling message transmission and reception.
+ * @param handle Pointer to the CubeCAN CAN handle.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ */
+HAL_StatusTypeDef CubeCAN_Private_Start(CubeCAN_Handle *const handle);
+
+/**
+ * @brief Stops the CubeCAN CAN handle, disabling message transmission and reception.
+ * @param handle Pointer to the CubeCAN CAN handle.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ */
+HAL_StatusTypeDef CubeCAN_Private_Stop(CubeCAN_Handle *const handle);
+
+/**
+ * @brief Releases the resources associated with the CubeCAN CAN handle.
+ * @param handle Pointer to the CubeCAN CAN handle.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ */
+HAL_StatusTypeDef CubeCAN_Private_Release(CubeCAN_Handle *const handle);
+
 #endif

@@ -80,56 +80,18 @@ typedef struct {
  * @param hfdcan Pointer to the FDCAN handle.
  * @param config Pointer to the CubeCAN configuration structure.
  * @return Pointer to the initialized CubeCAN CAN handle, or NULL if initialization fails.
- * @note This functions wraps <c>CubeCAN_Init</c> and <c>CubeCAN_Start</c> into a single call. If either of those functions fails, this function will return NULL and the handle will be released.
+ * @note This functions wraps <c>CubeCAN_Private_Init</c> and <c>CubeCAN_Private_Start</c> into a single call. If either of those functions fails, this function will return NULL and the handle will be
+ * released.
  */
-CubeCAN_Handle *CubeCAN_OneShotInitStart(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
+CubeCAN_Handle *CubeCAN_Entrance(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
 
 /**
  * @brief Stops the CubeCAN CAN peripheral and releases the associated handle.
  * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- * @note This functions wraps <c>CubeCAN_Stop</c> and <c>CubeCAN_Release</c> into a single call. If either of those functions fails, this function will return the error code and the handle will
- * not be released.
- * @note This function can be used regardless of if <c>CubeCAN_OneShotInitStart</c> was used to initialize the handle.
+ * @note This function can be used regardless of if <c>CubeCAN_Entrance</c> was used to initialize the handle.
  */
-HAL_StatusTypeDef CubeCAN_OneShotReleaseStop(CubeCAN_Handle *handle);
-
-/**
- * @brief Initializes a CubeCAN CAN handle with the given FDCAN handle and configuration.
- * @param hfdcan Pointer to the FDCAN handle.
- * @param config Pointer to the CubeCAN configuration structure.
- * @return Pointer to the initialized CubeCAN CAN handle, or NULL if initialization fails.
- */
-CubeCAN_Handle *CubeCAN_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config);
-
-/**
- * @brief Starts the CubeCAN CAN handle, enabling message transmission and reception.
- * @param handle Pointer to the CubeCAN CAN handle.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- */
-HAL_StatusTypeDef CubeCAN_Start(CubeCAN_Handle *const handle);
-
-/**
- * @brief Stops the CubeCAN CAN handle, disabling message transmission and reception.
- * @param handle Pointer to the CubeCAN CAN handle.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- */
-HAL_StatusTypeDef CubeCAN_Stop(CubeCAN_Handle *const handle);
-
-/**
- * @brief Releases the resources associated with the CubeCAN CAN handle.
- * @param handle Pointer to the CubeCAN CAN handle.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- */
-HAL_StatusTypeDef CubeCAN_Release(CubeCAN_Handle *const handle);
-
-/**
- * @brief Adds a filter to the CubeCAN CAN handle, allowing for selective message reception based on the specified filter criteria.
- * @param handle Pointer to the CubeCAN CAN handle.
- * @param filter Pointer to the FDCAN filter configuration structure.
- * @return HAL_StatusTypeDef indicating the success or failure of the operation.
- */
-HAL_StatusTypeDef CubeCAN_AddFilter(const CubeCAN_Handle *const handle, const FDCAN_FilterTypeDef *const filter);
+HAL_StatusTypeDef CubeCAN_Exit(CubeCAN_Handle *handle);
 
 /**
  * @brief Processes periodic tasks for the CubeCAN CAN handle, such as handling timeouts and managing the transmission queue.
@@ -169,10 +131,5 @@ uint32_t CubeCAN_Construct_Identifier(const CAN_Identifier *const identifier);
  * @warning The function does not support custom IDs.
  */
 CAN_Identifier CubeCAN_Deconstruct_Identifier(const uint32_t message_id);
-
-/**
- * @brief Builds an exact-match extended-ID filter for a given CAN identifier.
- */
-HAL_StatusTypeDef CubeCAN_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter);
 
 #endif

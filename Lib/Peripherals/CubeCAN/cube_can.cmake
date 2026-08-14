@@ -23,7 +23,3 @@ target_link_libraries(
 		CANfigurator
 		LOGOMATIC_LIB
 )
-
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-	# FIXME Add HOOTL tests
-endif()
