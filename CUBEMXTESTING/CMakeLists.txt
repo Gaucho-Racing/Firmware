@@ -27,7 +27,8 @@ target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 		Application/Src/CANdler.c
-		Application/Src/loop.c
+		Application/Src/Loop.c
+
 		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c

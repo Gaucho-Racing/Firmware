@@ -1,10 +1,10 @@
-#include "loop.h"
+#include "Loop.h"
 
-#include "Logomatic.h"
 #include "CubeCAN.h"
-#include "main.h"
-#include "GRCAN_NODE_ID.h"
 #include "GRCAN_MSG_ID.h"
+#include "GRCAN_NODE_ID.h"
+#include "Logomatic.h"
+#include "main.h"
 
 void MainLoop(void)
 {
