@@ -34,7 +34,7 @@ target_sources(
 		Core/Src/tim.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE VCP_LIB CUBEMX_CAN_LIB LOGOMATIC_LIB)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE CUBEMX_CAN_LIB LOGOMATIC_LIB)
 
 target_include_directories(
 	${PROJECT_NAME}_USER_CODE

@@ -139,7 +139,7 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
  *
  * @return The constructed 29-bit CAN message extended identifier.
  */
-uint32_t Construct_CAN_Identifier(const CAN_Identifier *const identifier);
+uint32_t CubeCAN_Construct_Identifier(const CAN_Identifier *const identifier);
 
 /**
  * @brief Deconstructs a 29-bit CAN message extended identifier into its constituent transmitting node ID, receiving node ID, and message ID.
@@ -151,11 +151,11 @@ uint32_t Construct_CAN_Identifier(const CAN_Identifier *const identifier);
  * @warning The function does not guarantee that the returned structure will represent a valid CAN message identifier.
  * @warning The function does not support custom IDs.
  */
-CAN_Identifier Deconstruct_CAN_Identifier(const uint32_t message_id);
+CAN_Identifier CubeCAN_Deconstruct_Identifier(const uint32_t message_id);
 
 /**
  * @brief Builds an exact-match extended-ID filter for a given CAN identifier.
  */
-HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter);
+HAL_StatusTypeDef CubeCAN_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter);
 
 #endif

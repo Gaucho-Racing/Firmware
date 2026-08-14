@@ -30,7 +30,6 @@
 #include "Logomatic.h"
 #include "loop.h"
 #include "tim.h"
-#include "vcp.h"
 
 // #include "can.h"
 // #include "can_cfg.h"
@@ -68,19 +67,6 @@ LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
-
-VCP_Config vcp_config = {.baud_rate = 2000000,
-			 .clock_source = VCP_CLOCK_PCLK,
-			 .gpio_tx_rx_pin_mask = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
-			 .bus_port = VCP_Port_A,
-			 .parity = VCP_Parity_None,
-			 .prescaler = VCP_Prescalar_Div2,
-			 .stop_bits = VCP_StopBits_1,
-			 .oversampling = VCP_Oversampling_16,
-			 .tx_fifo_threshold = VCP_Threshold_1_8,
-			 .rx_fifo_threshold = VCP_Threshold_1_8,
-			 .alternate_function = LL_GPIO_AF_7,
-			 .rx_callback = NULL};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,8 +114,7 @@ int main(void)
 	MX_TIM5_Init();
 	MX_FDCAN3_Init();
 	/* USER CODE BEGIN 2 */
-	Logomatic_Init(&logomaticConfig);
-	VCP_Init(&vcp_config);
+	Setup_Logomatic(&logomaticConfig);
 
 	CubeCAN_Config can_config = {.rx_callback = CANdler_Callback, .user_context = (void *)1};
 
@@ -141,7 +126,8 @@ int main(void)
 	LOGOMATIC("Hello World!\n");
 	while (1) {
 		/* USER CODE END WHILE */
-
+		MainLoop();
+		LL_mDelay(250);
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */

@@ -44,6 +44,7 @@ extern "C" {
 #include "stm32g4xx_ll_lpuart.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_usart.h"
+#include "CubeCAN.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

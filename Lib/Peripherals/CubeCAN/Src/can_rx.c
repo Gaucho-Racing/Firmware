@@ -51,7 +51,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) > 0U) {
 		if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data) == HAL_OK) {
-			CAN_Identifier id = Deconstruct_CAN_Identifier(rx_header.Identifier);
+			CAN_Identifier id = CubeCAN_Deconstruct_Identifier(rx_header.Identifier);
 			uint8_t size = CubeCAN_Private_DlcToBytes(rx_header.DataLength);
 			rx_callback(user_context, &id, rx_data, size);
 		} else {

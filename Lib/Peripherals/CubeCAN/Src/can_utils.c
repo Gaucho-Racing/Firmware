@@ -15,7 +15,7 @@
 #define CAN_NODE_MASK 0xFFU
 #define CAN_MSG_MASK 0xFFFU
 
-uint32_t Construct_CAN_Identifier(const CAN_Identifier *identifier)
+uint32_t CubeCAN_Construct_Identifier(const CAN_Identifier *identifier)
 {
 	if (identifier == NULL) {
 		return 0U;
@@ -28,7 +28,7 @@ uint32_t Construct_CAN_Identifier(const CAN_Identifier *identifier)
 	return (tx_node_id << CAN_TX_NODE_SHIFT) | (msg_id << CAN_MSG_SHIFT) | (rx_node_id << CAN_RX_NODE_SHIFT);
 }
 
-CAN_Identifier Deconstruct_CAN_Identifier(const uint32_t message_id)
+CAN_Identifier CubeCAN_Deconstruct_Identifier(const uint32_t message_id)
 {
 	const GRCAN_NODE_ID tx_node_id = (message_id >> CAN_TX_NODE_SHIFT) & CAN_NODE_MASK;
 	const GRCAN_MSG_ID msg_id = (message_id >> CAN_MSG_SHIFT) & CAN_MSG_MASK;
@@ -37,7 +37,7 @@ CAN_Identifier Deconstruct_CAN_Identifier(const uint32_t message_id)
 	return (CAN_Identifier){.tx_node_id = tx_node_id, .msg_id = msg_id, .rx_node_id = rx_node_id};
 }
 
-HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter)
+HAL_StatusTypeDef CubeCAN_BuildExtendedFilter(const CAN_Identifier *const identifier, const uint32_t filter_index, const uint32_t fifo, FDCAN_FilterTypeDef *const filter)
 {
 	if (identifier == NULL || filter == NULL) {
 		return HAL_ERROR;
@@ -47,7 +47,7 @@ HAL_StatusTypeDef CubeCANExt_BuildExtendedFilter(const CAN_Identifier *const ide
 	filter->FilterIndex = filter_index;
 	filter->FilterType = FDCAN_FILTER_MASK;
 	filter->FilterConfig = fifo;
-	filter->FilterID1 = Construct_CAN_Identifier(identifier);
+	filter->FilterID1 = CubeCAN_Construct_Identifier(identifier);
 	filter->FilterID2 = 0x1FFFFFFFU;
 
 	return HAL_OK;

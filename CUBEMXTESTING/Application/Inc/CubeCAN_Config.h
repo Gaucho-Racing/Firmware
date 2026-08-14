@@ -4,7 +4,7 @@
 #include "GRCAN_NODE_ID.h"
 #include "main.h"
 
-#define CUBEMX_CAN_TX_QUEUE_SIZE 32U
-#define CUBEMX_SENDING_NODE_ID GRCAN_ECU
+#define CUBEMX_CAN_TX_QUEUE_SIZE 16U
+#define CUBEMX_CAN_MAX_INSTANCES 1U
 
 #endif
