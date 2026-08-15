@@ -59,6 +59,11 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			${CMAKE_CURRENT_LIST_DIR}/Test/criticalsection.c
 	)
-	target_link_libraries(criticalsection PRIVATE GLOBALSHARE_LIB Threads::Threads)
+	target_link_libraries(
+		criticalsection
+		PRIVATE
+			GLOBALSHARE_LIB
+			Threads::Threads
+	)
 	add_test(criticalsection_test criticalsection)
 endif()

@@ -28,7 +28,6 @@ target_sources(
 	INTERFACE
 		Application/Src/CANdler.c
 		Application/Src/Loop.c
-
 		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c
@@ -37,7 +36,12 @@ target_sources(
 		Core/Src/usart.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE CUBEMX_CAN_LIB LOGOMATIC_LIB)
+target_link_libraries(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+		CUBEMX_CAN_LIB
+		LOGOMATIC_LIB
+)
 
 target_include_directories(
 	${PROJECT_NAME}_USER_CODE
