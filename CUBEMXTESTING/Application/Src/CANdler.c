@@ -6,10 +6,15 @@
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 
+int value;
+
 void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size)
 {
+	value++;
+
 	if (context == NULL || identifier == NULL || data == NULL || size == 0) {
-		LOGOMATIC("CANdler_Callback: Invalid parameters received. context: %u, identifier: %p, data: %p, size: %u\n", context->busid_user_context, (void* const)identifier, (void* const)data, size);
+		LOGOMATIC("CANdler_Callback: Invalid parameters received. context: %u, identifier: %p, data: %p, size: %u\n", context->busid_user_context, (void *const)identifier, (void *const)data,
+			  size);
 		return;
 	}
 

@@ -10,6 +10,8 @@
 
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
+	LOGOMATIC("HAL_FDCAN_RxFifo0Callback: FDCAN instance %p received interrupt with flags 0x%08lX\n", (void *const)hfdcan, RxFifo0ITs);
+
 	if (RxFifo0ITs & FDCAN_IT_RX_FIFO0_MESSAGE_LOST) {
 		LOGOMATIC("WARNING: CAN Rx FIFO is overflowing, messages are being lost!\n");
 	}
