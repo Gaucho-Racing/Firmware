@@ -26,17 +26,14 @@ endif()
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	add_executable(logomatic)
-	target_sources(
+	target_sources(logomatic PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/print.c)
+	target_include_directories(logomatic PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test)
+	target_link_libraries(
 		logomatic
 		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/print.c
+			LOGOMATIC_LIB
+			GLOBALSHARE_LIB
 	)
-	target_include_directories(
-		logomatic
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test
-	)
-	target_link_libraries(logomatic PRIVATE LOGOMATIC_LIB GLOBALSHARE_LIB)
 	add_test(logomatic_test logomatic)
 else()
 	target_compile_options(
