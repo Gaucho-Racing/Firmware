@@ -193,7 +193,6 @@ void SystemClock_Config(void)
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	LOGOMATIC("HAL_TIM_PeriodElapsedCallback: Timer %p elapsed\n", (void *const)htim);
 	CubeCAN_Tick();
 }
 
@@ -222,7 +221,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
 	/* USER CODE BEGIN 6 */
-	printf("Assert failed! File %s on line %ld\n", file, line);
+	printf("Assert failed! File %s on line %lu\n", file, line);
 	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
