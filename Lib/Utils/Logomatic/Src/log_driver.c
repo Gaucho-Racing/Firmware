@@ -22,13 +22,16 @@ int Logomatic_Driver_ITM(int ch)
 int Logomatic_Private_UART(USART_TypeDef *uart, int ch)
 {
 #if defined(USART_ISR_TXE_TXFNF)
-	while (!(uart->ISR & USART_ISR_TXE_TXFNF)) {}
+	while (!(uart->ISR & USART_ISR_TXE_TXFNF)) { /* Wait*/
+	}
 	uart->TDR = (uint8_t)ch;
 #elif defined(USART_ISR_TXE)
-	while (!(uart->ISR & USART_ISR_TXE)) {}
+	while (!(uart->ISR & USART_ISR_TXE)) { /* Wait */
+	}
 	uart->TDR = (uint8_t)ch;
 #else
-	while (!(uart->SR & USART_SR_TXE)) {}
+	while (!(uart->SR & USART_SR_TXE)) { /* Wait */
+	}
 	uart->DR = (uint8_t)ch;
 #endif
 	return ch;
