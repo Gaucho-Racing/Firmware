@@ -97,7 +97,7 @@ extern const Logomatic_Driver global_logomatic_driver;
 	} while (0)
 #define LOGOMATIC_VERBOSE(...)                                                                                                                                                                         \
 	do {                                                                                                                                                                                           \
-		printf("[VERBOSE - %s:%d] ", __FILE_NAME__, __LINE__);                                                                                                                      \
+		printf("[VERBOSE - %s:%d] ", __FILE_NAME__, __LINE__);                                                                                                                                 \
 		printf(__VA_ARGS__);                                                                                                                                                                   \
 	} while (0)
 
@@ -123,7 +123,7 @@ extern const Logomatic_Driver global_logomatic_driver;
 #define LOGOMATIC_DEBUG(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Debug, __VA_ARGS__)
 #define LOGOMATIC_VERBOSE(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Verbose, __VA_ARGS__)
 #else
-#define _LOGOMATIC_PRIVATE_LOG(...)                                                                                                                                                                             \
+#define _LOGOMATIC_PRIVATE_LOG(...)                                                                                                                                                                    \
 	do {                                                                                                                                                                                           \
 		if (0) {                                                                                                                                                                               \
 			printf(__VA_ARGS__);                                                                                                                                                           \

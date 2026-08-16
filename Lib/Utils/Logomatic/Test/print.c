@@ -9,11 +9,11 @@
 int main()
 {
 	const char expected[] = "[CRITICAL] Critical log message\n"
-			       "[ERROR] Error log message\n"
-			       "[WARNING] Warning log message\n"
-			       "[INFO] Informational log message\n"
-			       "[DEBUG] Debug log message\n"
-			       "[VERBOSE - print.c:34] Verbose log message\n";
+				"[ERROR] Error log message\n"
+				"[WARNING] Warning log message\n"
+				"[INFO] Informational log message\n"
+				"[DEBUG] Debug log message\n"
+				"[VERBOSE - print.c:34] Verbose log message\n";
 
 	int pipefd[2];
 	char buffer[sizeof(expected) + 50] = {0};
