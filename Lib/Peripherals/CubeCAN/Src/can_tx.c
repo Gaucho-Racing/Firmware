@@ -1,15 +1,51 @@
+#include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
 #include "CriticalSection.h"
 #include "CubeCAN.h"
+#include "CubeCAN_Config.h"
 #include "Logomatic.h"
 #include "PrivateInc/internal.h"
 #include "main.h"
 
+void CubeCAN_Private_RateChecker(void)
+{
+	static uint32_t last_tick = 0;
+	static uint32_t call_count_in_tick = 0;
+	static uint32_t violations = 0;
+
+	const uint32_t current_tick = HAL_GetTick();
+
+	if (current_tick == last_tick) {
+		call_count_in_tick++;
+	} else {
+		last_tick = current_tick;
+		call_count_in_tick = 1;
+	}
+
+	if (current_tick > 10U && call_count_in_tick > ABSOLUTE_MAX_INVOCATIONS_PER_TICK) {
+		LOGOMATIC("CubeCAN_Tick: called too frequently (%" PRIu32 " times in 1 ms), you NEED to fix your timers!\tViolation %" PRIu32 "\n", call_count_in_tick, ++violations);
+#ifdef RELAXED_TIMER_GATE // Hidden feature flag if you REALLY know what you are doing but you should fix your timers instead
+#warning "CubeCAN_Tick: Compiled with RELAXED_TIMER_GATE, this is a hidden feature flag that allows you to ignore the timer violation but you really should fix your timers"
+#else
+		Error_Handler();
+#endif
+	}
+}
+
 void CubeCAN_Tick(void)
 {
+	static bool rate_checker_gate = false;
+	if (__builtin_expect(!rate_checker_gate, 0)) {
+		CubeCAN_Private_RateChecker();
+
+		if (HAL_GetTick() > 10000U) { // Disable check after 10 sec
+			rate_checker_gate = true;
+		}
+	}
+
 	for (uint8_t i = 0U; i < CUBEMX_CAN_MAX_INSTANCES; ++i) {
 		CubeCAN_Handle *handle = &handles[i];
 

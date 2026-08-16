@@ -55,6 +55,16 @@
 #define FDCAN_MAX_DATA_BYTES (64U)
 
 /**
+ * @brief Absolute maximum number of CubeCAN_Tick invocations per millisecond.
+ *
+ * This value is used to detect if the CubeCAN_Tick function is being called too frequently, which could indicate a problem with the invocation method.
+ *
+ * @note If you need to think about increasing this, you need to evaluate
+ * @warning If this value is exceeded, the system will trigger an error handler to prevent potential issues but this is checked only during a short duration starting after early boot and ending after a few seconds
+ */
+#define ABSOLUTE_MAX_INVOCATIONS_PER_TICK 2U
+
+/**
  * @brief Transmission CAN message structure
  *
  * This structure is used to represent a transmission CAN message, which consists of a header and data payload. The header contains information about the message, such as its identifier, data length,

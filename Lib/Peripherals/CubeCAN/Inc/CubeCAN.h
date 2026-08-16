@@ -95,7 +95,12 @@ HAL_StatusTypeDef CubeCAN_Exit(CubeCAN_Handle *handle);
 
 /**
  * @brief Processes periodic tasks for the CubeCAN CAN handle, such as handling timeouts and managing the transmission queue.
- * @warning This function sends one can message per configured bus per call. Not calling it will simply not send any messages.
+ *
+ * For each configured bus, this function will send one CAN message per call. It is recommended to call this function at a regular interval to ensure timely processing of CAN messages.
+ *
+ * @note This function sends one can message per configured bus per call. Not calling it will simply not send any messages.
+ * @warning It is recommended to call this function no more than and no less than once every 625 us.
+ * @warning This function checks during early boot that it is not called more than ABSOLUTE_MAX_INVOCATIONS_PER_TICK times per millisecond, failing if so
  */
 void CubeCAN_Tick(void);
 
