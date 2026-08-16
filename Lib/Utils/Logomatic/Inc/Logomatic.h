@@ -8,12 +8,12 @@
 
 /// @brief Logomatic log level type, used to define the severity of log messages
 #define _LOGOMATIC_LOGLEVEL_PRIVATE_LIST                                                                                                                                                               \
-	X(LogLevel_Off, 0, "OFF")                                                                                                                                                                 \
-	X(LogLevel_Critical, 1, "CRITICAL")                                                                                                                                                  \
-	X(LogLevel_Error, 2, "ERROR")                                                                                                                                                           \
-	X(LogLevel_Warning, 3, "WARNING")                                                                                                                                                     \
-	X(LogLevel_Info, 4, "INFO")                                                                                                                                                              \
-	X(LogLevel_Debug, 5, "DEBUG")                                                                                                                                                           \
+	X(LogLevel_Off, 0, "OFF")                                                                                                                                                                      \
+	X(LogLevel_Critical, 1, "CRITICAL")                                                                                                                                                            \
+	X(LogLevel_Error, 2, "ERROR")                                                                                                                                                                  \
+	X(LogLevel_Warning, 3, "WARNING")                                                                                                                                                              \
+	X(LogLevel_Info, 4, "INFO")                                                                                                                                                                    \
+	X(LogLevel_Debug, 5, "DEBUG")                                                                                                                                                                  \
 	X(LogLevel_Verbose, 6, "VERBOSE")
 
 typedef enum {
