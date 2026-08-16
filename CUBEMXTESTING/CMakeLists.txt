@@ -33,12 +33,14 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/tim.c
+		Core/Src/usart.c
 )
 
 target_link_libraries(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 		CUBE_CAN_LIB
+		CUBE_VCP_LIB
 		LOGOMATIC_LIB
 )
 
