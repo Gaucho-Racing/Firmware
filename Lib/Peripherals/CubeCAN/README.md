@@ -2,15 +2,17 @@
 
 Support for STM32CubeMX and CAN. See [`CUBEMX.md`](../../../CUBEMX.md) for background.
 
-## Overview
+## Summary
 
-Use STM32CubeMX to setup the CAN peripheral, then call `CubeCAN_Entrance` on it after HAL initializes the peripheral.
-Save the handle that function returns and use that to send messages. Recieve messages on your function callback.
+Use STM32CubeMX to setup the CAN peripheral, then call `CubeCAN_Entrance()` on it after HAL initializes the peripheral.
+
+Save the handle that function returns and use that to send messages. Receive messages on your function callback.
 
 > [!IMPORTANT]
-> We recommend that your recieved message callback function is a switch-case off of the message ID that does nothing more than writing to memory.
+> We recommend that your received message callback function is a switch-case off of the message ID that does nothing more than writing to memory.
 >
-> Your `CubeCAN_RxCallback` function must run quickly, it is inside of a low level ISR.
+> Your `CubeCAN_RxCallback()` function must run quickly, it is inside of a low level ISR.
+> Read the library code yourself if you wish to call a CubeCAN function from within an ISR, but you really should not.
 
 ## Setup
 
@@ -20,7 +22,7 @@ Add `CUBEMX_CAN_LIB` as an interface target link library within your project.
 
 ### 2. Configuration
 
-Add a file named `CubeCAN_Config.h` to your project (generally `Application/Inc/CubeCAN_Config.h`) that has the following symbols defined
+Add a file named `CubeCAN_Config.h` to your project, generally `Application/Inc/CubeCAN_Config.h`, that looks something like:
 
 ```c
 #ifndef CUBE_CAN_CONFIG_H
@@ -32,25 +34,46 @@ Add a file named `CubeCAN_Config.h` to your project (generally `Application/Inc/
 #endif
 ```
 
-Note that `CUBEMX_CAN_TX_QUEUE_SIZE` must be a multiple of two and `CUBEMX_CAN_MAX_INSTANCES` must be valid for that chip.
+**Configuration Requirements:**
+
+- `CUBEMX_CAN_TX_QUEUE_SIZE`: Must be a power of two. Defines the transmission queue depth; when the queue fills, the oldest message is dropped and `CubeCAN_Send()` returns `HAL_BUSY`.
+- `CUBEMX_CAN_MAX_INSTANCES`: Must be 1-3 depending on your chip's available FDCAN peripherals. Omit this definition to automatically select the maximum supported by your MCU.
 
 From there just ensure that you have configured CAN through STM32CubeMX and setup a global variable for each `CubeCAN_Handle` you wish to use.
 
 ### 3. Entrance
 
-Make sure to `#include "CubeCAN.h"` where needed. Do not include `PrivateInc\internal.h` outside of the peripheral source files.
+Make sure to `#include "CubeCAN.h"` where needed. Do not include `PrivateInc/internal.h` outside of the peripheral source files.
 
-At the end of your STM32CubeMX-generated `MX_FDCAN#_Init` function configure your filters as needed with `HAL_FDCAN_ConfigFilter`
+At the end of your STM32CubeMX-generated `MX_FDCAN#_Init()` function, configure your filters as needed with `HAL_FDCAN_ConfigFilter()`. It is recommended to setup a filter to ignore messages not intended for your board.
 
-Within `main` after `MX_FDCAN#_Init` and `LOGOMATIC` are setup (see [Logomatic](../../Utils/Logomatic/README.md)) call `CubeCAN_Entrance` saving the handle for global use later (one entrance and handle per peripheral)
+Within `main` after `MX_FDCAN#_Init()` and `LOGOMATIC()` are setup (see [Logomatic](../../Utils/Logomatic/README.md)), call `CubeCAN_Entrance()` saving the handle for global use later (one entrance and handle per peripheral).
 
-Double check you have setup some manner to call `CubeCAN_Tick` often (a STM32CubeMX timer is recommended), it can start running at any point in execution
+Ensure you have setup some mechanism to call `CubeCAN_Tick()` frequently (a STM32CubeMX timer interrupt is recommended). This function:
 
-### 4. Transmission / Reception
+- Sends one CAN message per bus per call (limiting to one prevents overwhelming the ISR)
+- Must be called regularly for messages to be transmitted
+- Can start running at any point in execution
 
-If you are frequently calling `CubeCAN_Tick` then as you call `CubeCAN_Send` messages will be transmitted once per bus per tick
+### 4. Operation
 
-Your provided callback `CubeCAN_RxCallback` will be triggered with messages that pass any filters you setup
+#### Transmission
+
+Call `CubeCAN_Send()` to queue a message for transmission. Messages are queued in a lock-free ring buffer and processed in FIFO order.
+
+- **Returns `HAL_OK`**: Message successfully queued
+- **Returns `HAL_BUSY`**: Transmission queue is full; the oldest queued message was dropped to make room for the new one
+- **Returns `HAL_ERROR`**: Invalid parameters (null handle/data, size > 64 bytes, invalid frame format)
+
+Each call to `CubeCAN_Tick()` transmits one message from the queue per peripheral. If you need higher throughput, call `CubeCAN_Tick()` more frequently or increase `CUBEMX_CAN_TX_QUEUE_SIZE`.
+
+#### Reception
+
+Your provided callback `CubeCAN_RxCallback()` is triggered for messages that pass your configured filters.
+
+- Keep execution time minimal, you are in a hardware ISR
+- Avoid calling CubeCAN functions or performing blocking operations
+- Typical pattern is to decode the message and write results to shared memory (protected with atomic operations or critical sections as needed)
 
 ## Architecture
 
@@ -61,23 +84,23 @@ flowchart TD
     classDef internal fill:#F0E442,stroke:#333,color:#333;
     classDef other fill:#c2410c,stroke:#fed7aa,color:#ffffff;
 
-    MXInit(["MX_FDCAN#_Init"]) -->Entrance("CubeCAN_Entrance")
-    MXInit --> Filter("HAL_FDCAN_\nConfigFilter")
+    MXInit(["MX_FDCAN#_Init()"]) -->Entrance("CubeCAN_Entrance()")
+    MXInit --> Filter("HAL_FDCAN_\nConfigFilter()")
     Filter --> Filter
     Filter --> Entrance
     Entrance --> Choice{"Functions"}
-    Choice --> Exit(["CubeCAN_Exit"])
+    Choice --> Exit(["CubeCAN_Exit()"])
     Exit -.-> |"AVOID"| Entrance
-    Choice --> Send(["CubeCAN_Send"])
-    Choice --> |"Call Often\n(User Setup)"| Tick(["CubeCAN_Tick"])
-    Send -.-> Queue("CubeCAN_Private_QueueTx")
+    Choice --> Send(["CubeCAN_Send()"])
+    Choice --> |"Call Often\n(User Setup)"| Tick(["CubeCAN_Tick()"])
+    Send -.-> Queue("CubeCAN_Private_QueueTx()")
     Data -.-> Tick
     Queue -.-> Data{"Internal Queue"}
-    Tick -.-> Tx(["CubeCAN_Private\n_SendQueuedMessage"])
+    Tick -.-> Tx(["CubeCAN_Private\n_SendQueuedMessage()"])
     Data -.-> Tx
-    Tx -.->|"HAL_FDCAN_\nAddMessageToTxFifoQ"| Sent(["Transmitted over bus!"])
+    Tx -.->|"HAL_FDCAN_\nAddMessageToTxFifoQ()"| Sent(["Transmitted over bus!"])
     Choice -.->|"HAL Interrupt"| Recieved
-    Recieved(["Recieved over bus!"]) -.->|"HAL_FDCAN_\nRxFifo0Callback\n\nHAL_FDCAN_\nGetRxMessage"| Get(["CubeCAN_RxCallback"])
+    Recieved(["Recieved over bus!"]) -.->|"HAL_FDCAN_\nRxFifo0Callback()\n\nHAL_FDCAN_\nGetRxMessage()"| Get(["CubeCAN_RxCallback()"])
 
     class MXInit cubemx;
     class Filter cubemx;
@@ -98,41 +121,57 @@ flowchart TD
 
 ### Interrupt Safety
 
-We use atomic operations and locks to ensure that we do not operate on broken data.
+CubeCAN is designed to handle concurrent access from multiple execution contexts (main loop and ISR).
 
-Locks are handled through [`CriticalSection.h`](../../GlobalShare/Inc/CriticalSection.h) which block interrupts from running for a
-scope and automatically clean themselves up nicely if something strange happens internally thanks to the GCC cleanup attribute.
+#### Overview
 
-Currently the only atomic variables are `tx_head` and `tx_tail` as members of the handle, these manage the transmission queue and
-need to be quite robust in case someone decides they want to send a CAN message inside a `CubeCAN_RxCallback` ISR (nobody should be
-doing that, but if they do it needs to work)
+- `tx_head` and `tx_tail` are atomic `uint32_t` variables that implement a lock-free ring buffer
+- `CubeCAN_Send()` and `CubeCAN_Tick()` use critical sections (interrupt blocking) when necessary
+- Atomic operations use `memory_order_relaxed` within ISRs and `memory_order_release`/`memory_order_acquire` for inter-context synchronization
+- The queue size must be a power of two, allowing fast wraparound via bitwise AND instead of expensive modulo operations
 
-Since we have atomic variables we require `CUBEMX_CAN_TX_QUEUE_SIZE` to be a power of two so that we can do quick bitwise math on it
-instead of waiting for a slower compare and swap (CAS) loop to handle the modulus operations for us to wrap around the ring-buffer
+#### Critical Sections
+
+Interrupt protection is used only in:
+
+- `CubeCAN_Private_QueueTx()` while updating the queue
+- `HAL_FDCAN_RxFifo0Callback` while reading handle state
+
+#### ISR Interaction
+
+- Safe to call `CubeCAN_Send()` from `main()` or any ISR
+- Safe to call `CubeCAN_Tick()` from `main()` or any ISR
+- Do not call any CubeCAN function from `CubeCAN_RxCallback()`, use it only to write data to shared memory (with concurrency safety as needed)
 
 ### Filters
 
-Filters are on the user to setup and manage, it is recommended to setup a filter to ignore messsages not intended for your bord
+You are responsible for configuring CAN filters.
 
-You have direct access to define `HAL_FDCAN_RxFifo1Callback` as you like as well, the peripheral only uses `HAL_FDCAN_RxFifo0Callback` for all buses
+Use `HAL_FDCAN_ConfigFilter()` in `MX_FDCAN#_Init()` to setup any filters you need. Configure the number and type of filters in STM32CubeMX.
+
+#### Best Practices
+
+Create a filter to accept only messages intended for your board
+
+The library uses only `HAL_FDCAN_RxFifo0Callback()` for message reception, you can define your own `HAL_FDCAN_RxFifo1Callback()` for additional needs
+
+#### Message Overflow
+
+If your received message FIFO overflows (messages arrive faster than they're processed), the library logs a warning and drops the oldest messages.
+
+Improve this by increasing callback efficiency or adding more CAN filters to reduce unwanted messages.
 
 ### Rx Callback Context
 
-You may find it helpful to have just one Rx callback function instead of one per handle
+You may consolidate multiple receive callbacks into a single function by passing different context data to each handle.
 
-You can do this by providing the same `CubeCAN_RxCallback` function pointer for each handle and specifying a `CubeCAN_Config_Context` per handle.
-
-`CubeCAN_Config_Context` supports both `GRCAN_BUS_ID` and arbitrary void pointers thanks to a unioned field which is type checked at compile time
-
-Note that it is your responsibility to use either the void pointers or `GRCAN_BUS_ID` values, the peripheral treats this as a magic
-32-bit value, the union is provided for your convenience for common cases (recieving messages from both a subnet and the proper bus
-OR recieving messages from multiple buses)
+Use the context union for this, it can point to arbitrary data or to a bus ID. It is your responsibility to be consistent the peripheral will just return input.
 
 ### Tx Message Marker
 
 Currently we do not do anything cool with this, but we could!
 
-If you would like to see this do something please open an Issue (and if you want to code it, a PR as well)
+If you would like to see this do something please open an Issue (and if you want to code it, a Pull Request as well)
 
 ### Assertions
 
@@ -147,7 +186,15 @@ We currently provide compile time static assertions to validate:
 
 ### Globals
 
-We store a global private array of CubeCAN handles (sized to `CUBEMX_CAN_MAX_INSTANCES`)
+CubeCAN maintains a global private array of handles (sized to `CUBEMX_CAN_MAX_INSTANCES`).
 
-Main point of allowing user provided `CUBEMX_CAN_MAX_INSTANCES` values is that each handle is 28 bytes not including the queue size,
-but if you add a large queue on a chip that supports three CANFD peripherals and only need one peripherals that is a lot of wasted memory.
+- Each handle is 28 bytes (overhead)
+- Plus transmission queue: `CUBEMX_CAN_TX_QUEUE_SIZE` times `sizeof(GRCAN_Private_TxMessage)` (4 byte header and 64 bytes of data, at print time)
+
+If your chip supports multiple FDCAN peripherals but you need fewer, set `CUBEMX_CAN_MAX_INSTANCES` lower to avoid wasting memory on unused handles. Similarly, reduce `CUBEMX_CAN_TX_QUEUE_SIZE` if you send infrequently and have frequent ticks.
+
+## Troubleshooting
+
+TODO
+
+As issues are found we will extend this section. For now, please contact the Firmware Manager if you are unable to get this working.
