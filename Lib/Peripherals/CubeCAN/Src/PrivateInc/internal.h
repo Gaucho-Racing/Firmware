@@ -60,7 +60,8 @@
  * This value is used to detect if the CubeCAN_Tick function is being called too frequently, which could indicate a problem with the invocation method.
  *
  * @note If you need to think about increasing this, you need to evaluate
- * @warning If this value is exceeded, the system will trigger an error handler to prevent potential issues but this is checked only during a short duration starting after early boot and ending after a few seconds
+ * @warning If this value is exceeded, the system will trigger an error handler to prevent potential issues but this is checked only during a short duration starting after early boot and ending after
+ * a few seconds
  */
 #define ABSOLUTE_MAX_INVOCATIONS_PER_TICK 2U
 
