@@ -222,7 +222,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
 	/* USER CODE BEGIN 6 */
-	printf("Assert failed! File %s on line %lu\n", file, line);
+	LOGOMATIC("Assert failed! File %s on line %u\n", file, line);
 	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
