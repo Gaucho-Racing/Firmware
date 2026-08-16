@@ -18,7 +18,7 @@ Save the handle that function returns and use that to send messages. Receive mes
 
 ### 1. CMake
 
-Add `CUBEMX_CAN_LIB` as an interface target link library within your project.
+Add `CUBE_CAN_LIB` as an interface target link library within your project.
 
 ### 2. Configuration
 

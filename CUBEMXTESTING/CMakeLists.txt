@@ -39,7 +39,7 @@ target_sources(
 target_link_libraries(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
-		CUBEMX_CAN_LIB
+		CUBE_CAN_LIB
 		LOGOMATIC_LIB
 )
 

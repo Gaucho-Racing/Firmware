@@ -1,13 +1,13 @@
-add_library(CUBEMX_CAN_LIB INTERFACE)
+add_library(CUBE_CAN_LIB INTERFACE)
 
 target_include_directories(
-	CUBEMX_CAN_LIB
+	CUBE_CAN_LIB
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Inc
 )
 
 target_sources(
-	CUBEMX_CAN_LIB
+	CUBE_CAN_LIB
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_assert.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/can_global.c
@@ -18,7 +18,7 @@ target_sources(
 )
 
 target_link_libraries(
-	CUBEMX_CAN_LIB
+	CUBE_CAN_LIB
 	INTERFACE
 		CANfigurator
 		LOGOMATIC_LIB
