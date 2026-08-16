@@ -37,11 +37,17 @@ void CubeCAN_Private_RateChecker(void)
 
 void CubeCAN_Tick(void)
 {
+#ifdef DISABLED_TIMER_GATE
+#warning "CubeCAN_Tick: Compiled with DISABLED_TIMER_GATE, this is a hidden feature flag that disables the timer violation check but you really should fix your timers"
+	static bool rate_checker_gate = true;
+#else
 	static bool rate_checker_gate = false;
+#endif
+
 	if (__builtin_expect(!rate_checker_gate, 0)) {
 		CubeCAN_Private_RateChecker();
 
-		if (HAL_GetTick() > 10000U) { // Disable check after 10 sec
+		if (HAL_GetTick() > 5000U) { // Disable check after 5 seconds
 			rate_checker_gate = true;
 		}
 	}

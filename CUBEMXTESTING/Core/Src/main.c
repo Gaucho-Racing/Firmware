@@ -158,7 +158,7 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		MainLoop();
-		HAL_Delay(0);
+		HAL_Delay(100);
 	}
 	/* USER CODE END 3 */
 }

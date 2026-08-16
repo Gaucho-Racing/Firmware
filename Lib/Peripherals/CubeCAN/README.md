@@ -193,6 +193,18 @@ CubeCAN maintains a global private array of handles (sized to `CUBEMX_CAN_MAX_IN
 
 If your chip supports multiple FDCAN peripherals but you need fewer, set `CUBEMX_CAN_MAX_INSTANCES` lower to avoid wasting memory on unused handles. Similarly, reduce `CUBEMX_CAN_TX_QUEUE_SIZE` if you send infrequently and have frequent ticks.
 
+### Timer Rate Checker
+
+In the interest of preventing improper bus actions, during a period after early boot and ending a few seconds later we monitor how often `CubeCAN_Tick()` is callled to verify the sender is not going to bring down the bus.
+
+Ideally, you should call `CubeCAN_Tick()` about every `625 us` and you will not run into any issues with it.
+
+If for some reason you wish to go past that, such as some extreme debugging case, then you may define `RELAXED_TIMER_GATE` inside of your `CubeCAN_Config.h` file and this will turn the error handler call into a logged violation.
+
+If for some reason you wish to go even farther pas that, such as some extreme debugging case where you do not want to even check for violations, then you may define `DISABLED_TIMER_GATE` inside of your `CubeCAN_Config.h` file and this will skip running the violation check at all.
+
+However, you really should fix your timers so that it is not possible to spam the bus, needing to use either of these flags means you should reevaluate other settings, try sending larger messages instead of many smaller ones and increasing `CUBEMX_CAN_TX_QUEUE_SIZE`.
+
 ## Troubleshooting
 
 TODO
