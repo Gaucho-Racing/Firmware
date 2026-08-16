@@ -69,6 +69,14 @@ By default, we also enable printing floats which adds significant memory and CPU
 
 If we are building for testing then [`CMakePresets.json`](/CMakePresets.json) ensures that logomatic is enabled and we attempt to signal the library to default to a verbose log level, see [log levels](#log-levels)
 
+### CAN Messages
+
+Currently we do not do anything cool with CAN specifically, but we could!
+
+It can also be configured as a driver (queuing to fill a packet) within this library or by providing a strong `_write()` definition (dividing a buffer into messages).
+
+If you would like to see this do something please open an Issue (and if you want to code it, a Pull Request as well)
+
 ### Macros
 
 #### Log Levels X-Macro
