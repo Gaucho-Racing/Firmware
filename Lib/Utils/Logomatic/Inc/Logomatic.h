@@ -68,14 +68,42 @@ extern Logomatic_LogLevel _logomatic_loglevel;
  */
 extern const Logomatic_Driver global_logomatic_driver;
 
-/**
- * @brief Logomatic log level implementation macro
- *
- * This macro is used to implement the log level functionality to give fancy names
- *
- * @param level The log level of the message
- * @param ... The log message format and arguments
- */
+#ifdef LOGOMATIC_HOOTLTEST
+
+#define LOGOMATIC_CRITICAL(...)                                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		printf("[CRITICAL] ");                                                                                                                                                                 \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_ERROR(...)                                                                                                                                                                           \
+	do {                                                                                                                                                                                           \
+		printf("[ERROR] ");                                                                                                                                                                    \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_WARNING(...)                                                                                                                                                                         \
+	do {                                                                                                                                                                                           \
+		printf("[WARNING] ");                                                                                                                                                                  \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_INFO(...)                                                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		printf("[INFO] ");                                                                                                                                                                     \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_DEBUG(...)                                                                                                                                                                           \
+	do {                                                                                                                                                                                           \
+		printf("[DEBUG] ");                                                                                                                                                                    \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_VERBOSE(...)                                                                                                                                                                         \
+	do {                                                                                                                                                                                           \
+		printf("[VERBOSE - %s:%d] ", __FILE_NAME__, __LINE__);                                                                                                                      \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+
+#else
+
+#if defined(LOGOMATIC_ENABLED)
 #define _LOGOMATIC_PRIVATE_LOG(level, ...)                                                                                                                                                             \
 	do {                                                                                                                                                                                           \
 		if (_logomatic_loglevel >= (level) && (level) != LogLevel_Off && _logomatic_loglevel != LogLevel_Off) {                                                                                \
@@ -88,31 +116,26 @@ extern const Logomatic_Driver global_logomatic_driver;
 			_Pragma("GCC diagnostic pop")                                                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0)
-
-#if defined(LOGOMATIC_ENABLED)
-
 #define LOGOMATIC_CRITICAL(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Critical, __VA_ARGS__)
 #define LOGOMATIC_ERROR(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Error, __VA_ARGS__)
 #define LOGOMATIC_WARNING(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Warning, __VA_ARGS__)
 #define LOGOMATIC_INFO(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Info, __VA_ARGS__)
 #define LOGOMATIC_DEBUG(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Debug, __VA_ARGS__)
 #define LOGOMATIC_VERBOSE(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Verbose, __VA_ARGS__)
-
 #else
-
-#define LOGOMATIC_OFF(...)                                                                                                                                                                             \
+#define _LOGOMATIC_PRIVATE_LOG(...)                                                                                                                                                                             \
 	do {                                                                                                                                                                                           \
 		if (0) {                                                                                                                                                                               \
 			printf(__VA_ARGS__);                                                                                                                                                           \
 		}                                                                                                                                                                                      \
 	} while (0)
-
-#define LOGOMATIC_CRITICAL(...) LOGOMATIC_OFF(__VA_ARGS__)
-#define LOGOMATIC_ERROR(...) LOGOMATIC_OFF(__VA_ARGS__)
-#define LOGOMATIC_WARNING(...) LOGOMATIC_OFF(__VA_ARGS__)
-#define LOGOMATIC_INFO(...) LOGOMATIC_OFF(__VA_ARGS__)
-#define LOGOMATIC_DEBUG(...) LOGOMATIC_OFF(__VA_ARGS__)
-#define LOGOMATIC_VERBOSE(...) LOGOMATIC_OFF(__VA_ARGS__)
+#define LOGOMATIC_CRITICAL(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_ERROR(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_WARNING(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_INFO(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_DEBUG(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_VERBOSE(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#endif
 
 #endif
 

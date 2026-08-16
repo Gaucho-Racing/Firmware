@@ -27,7 +27,6 @@ add_compile_options(
 	-Werror
 	-Wpedantic
 	-Wvla
-	-Wdouble-promotion
 	-g
 	-DHOOTL_TEST
 )

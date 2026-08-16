@@ -108,9 +108,9 @@ We also ask that you do not use color codes because different setups on differen
 
 ### HOOTL Testing
 
-Calls to logomatic functions inside of HOOTLTest configurations will work as you expect, following the same logging level filter.
+Calls to logomatic functions inside of HOOTLTest configurations will work as you expect, except there is no more logging level filter.
 
-Note that by default the logging level for embedded is informational, but for HOOTL testing it defaults to verbose and calls to change the logging level are ignored by default.
+Note that by default the logging level for embedded is informational. You cannot set a logging level for HOOTL.
 
 ## Troubleshooting
 
