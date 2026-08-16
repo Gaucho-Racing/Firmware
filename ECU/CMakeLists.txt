@@ -70,7 +70,7 @@ target_sources(
 		# Core
 		Core/Src/adc.c
 		Core/Src/dma.c
-		Core/Src/fdcan.c
+		#Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c

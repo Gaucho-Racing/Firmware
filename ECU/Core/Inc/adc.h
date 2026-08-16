@@ -32,6 +32,10 @@ extern "C" {
 
 /* USER CODE END Includes */
 
+extern ADC_HandleTypeDef hadc1;
+
+extern ADC_HandleTypeDef hadc2;
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
@@ -48,3 +52,4 @@ void MX_ADC2_Init(void);
 #endif
 
 #endif /* __ADC_H__ */
+
