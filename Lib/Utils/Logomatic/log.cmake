@@ -25,6 +25,8 @@ if(CMAKE_LOGOMATIC_ENABLED)
 endif()
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_HOOTLTEST)
+
 	add_executable(logomatic)
 	target_sources(logomatic PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/print.c)
 	target_include_directories(logomatic PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test)

@@ -7,18 +7,18 @@
 #define LOGOMATIC_H
 
 /// @brief Logomatic log level type, used to define the severity of log messages
-#define _LOGOMATIC_LOGLEVEL_X_LIST                                                                                                                                                                     \
-	X(LogLevel_Off, 0, "OFF")                                                                                                                                                                      \
-	X(LogLevel_Critical, 1, "CRITICAL")                                                                                                                                                            \
-	X(LogLevel_Error, 2, "ERROR")                                                                                                                                                                  \
-	X(LogLevel_Warning, 3, "WARNING")                                                                                                                                                              \
-	X(LogLevel_Info, 4, "INFO")                                                                                                                                                                    \
-	X(LogLevel_Debug, 5, "DEBUG")                                                                                                                                                                  \
+#define _LOGOMATIC_LOGLEVEL_PRIVATE_LIST                                                                                                                                                               \
+	X(LogLevel_Off, 0, "OFF")                                                                                                                                                                 \
+	X(LogLevel_Critical, 1, "CRITICAL")                                                                                                                                                  \
+	X(LogLevel_Error, 2, "ERROR")                                                                                                                                                           \
+	X(LogLevel_Warning, 3, "WARNING")                                                                                                                                                     \
+	X(LogLevel_Info, 4, "INFO")                                                                                                                                                              \
+	X(LogLevel_Debug, 5, "DEBUG")                                                                                                                                                           \
 	X(LogLevel_Verbose, 6, "VERBOSE")
 
 typedef enum {
 #define X(name, val, str) name = val,
-	_LOGOMATIC_LOGLEVEL_X_LIST
+	_LOGOMATIC_LOGLEVEL_PRIVATE_LIST
 #undef X
 } Logomatic_LogLevel;
 
@@ -76,7 +76,7 @@ extern const Logomatic_Driver global_logomatic_driver;
  * @param level The log level of the message
  * @param ... The log message format and arguments
  */
-#define LOGOMATIC_PRIVATE_LEVEL(level, ...)                                                                                                                                                            \
+#define _LOGOMATIC_PRIVATE_LOG(level, ...)                                                                                                                                                             \
 	do {                                                                                                                                                                                           \
 		if (_logomatic_loglevel >= (level) && (level) != LogLevel_Off && _logomatic_loglevel != LogLevel_Off) {                                                                                \
 			if (level == LogLevel_Verbose) {                                                                                                                                               \
@@ -91,12 +91,12 @@ extern const Logomatic_Driver global_logomatic_driver;
 
 #if defined(LOGOMATIC_ENABLED)
 
-#define LOGOMATIC_CRITICAL(...) LOGOMATIC_PRIVATE_LEVEL(LogLevel_Critical, __VA_ARGS__)
-#define LOGOMATIC_ERROR(...) LOGOMATIC_PRIVATE_LEVEL(LogLevel_Error, __VA_ARGS__)
-#define LOGOMATIC_WARNING(...) LOGOMATIC_PRIVATE_LEVEL(LogLevel_Warning, __VA_ARGS__)
-#define LOGOMATIC_INFO(...) LOGOMATIC_PRIVATE_LEVEL(LogLevel_Info, __VA_ARGS__)
-#define LOGOMATIC_DEBUG(...) LOGOMATIC_PRIVATE_LEVEL(LogLevel_Debug, __VA_ARGS__)
-#define LOGOMATIC_VERBOSE(...) LOGOMATIC_PRIVATE_LEVEL(LogLevel_Verbose, __VA_ARGS__)
+#define LOGOMATIC_CRITICAL(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Critical, __VA_ARGS__)
+#define LOGOMATIC_ERROR(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Error, __VA_ARGS__)
+#define LOGOMATIC_WARNING(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Warning, __VA_ARGS__)
+#define LOGOMATIC_INFO(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Info, __VA_ARGS__)
+#define LOGOMATIC_DEBUG(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Debug, __VA_ARGS__)
+#define LOGOMATIC_VERBOSE(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Verbose, __VA_ARGS__)
 
 #else
 

@@ -39,22 +39,22 @@ bool verification(void (*print_func)(void), const char *expected_content)
 
 	switch (_logomatic_loglevel) {
 		case LogLevel_Critical:
-			snprintf(formatted, sizeof(formatted), expected_content, "[CRIT] ");
+			snprintf(formatted, sizeof(formatted), expected_content, "[CRITICAL] ");
 			break;
 		case LogLevel_Error:
 			snprintf(formatted, sizeof(formatted), expected_content, "[ERROR] ");
 			break;
 		case LogLevel_Warning:
-			snprintf(formatted, sizeof(formatted), expected_content, "[WARN] ");
+			snprintf(formatted, sizeof(formatted), expected_content, "[WARNING] ");
 			break;
 		case LogLevel_Info:
 			snprintf(formatted, sizeof(formatted), expected_content, "[INFO] ");
 			break;
 		case LogLevel_Debug:
-			snprintf(formatted, sizeof(formatted), expected_content, "[DBG] ");
+			snprintf(formatted, sizeof(formatted), expected_content, "[DEBUG] ");
 			break;
 		case LogLevel_Verbose:
-			snprintf(formatted, sizeof(formatted), expected_content, "[V - " __FILE_NAME__ ":117] ");
+			snprintf(formatted, sizeof(formatted), expected_content, "[VERBOSE - " __FILE_NAME__ ":117] ");
 			break;
 		default:
 			snprintf(formatted, sizeof(formatted), expected_content, "");
@@ -155,6 +155,8 @@ int main(void)
 	if (!verification(printf_verbose, expected_output_verbose)) {
 		return 9;
 	}
+
+	LOGOMATIC_INFO("Works as expected!\n");
 
 	return 0;
 }
