@@ -23,7 +23,7 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Ide
 	const GRCAN_NODE_ID rx_node = identifier->rx_node_id;
 	const GRCAN_MSG_ID msg_id = identifier->msg_id;
 
-	// LOGOMATIC("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
+	LOGOMATIC("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
 
 	// Uncomment to spam the bus
 	// (void)CubeCAN_Send(primaryHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Bye0", 4);
