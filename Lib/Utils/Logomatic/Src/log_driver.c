@@ -19,20 +19,20 @@ int Logomatic_Driver_ITM(int ch)
 
 #if defined(LPUART1) || defined(LPUART2) || defined(LPUART3) || defined(USART1) || defined(USART2) || defined(USART3) || defined(USART4) || defined(USART5) || defined(USART6) || defined(USART7) ||   \
     defined(USART8) || defined(UART1) || defined(UART2) || defined(UART3) || defined(UART4) || defined(UART5) || defined(UART6) || defined(UART7) || defined(UART8)
-int Logomatic_Private_UART(USART_TypeDef *uart, int ch)
+int Logomatic_Private_UART(USART_TypeDef *handle, int ch)
 {
 #if defined(USART_ISR_TXE_TXFNF)
-	while (!(uart->ISR & USART_ISR_TXE_TXFNF)) { /* Wait */
+	while (!(handle->ISR & USART_ISR_TXE_TXFNF)) { /* Wait */
 	}
-	uart->TDR = (uint8_t)ch;
+	handle->TDR = (uint8_t)ch;
 #elif defined(USART_ISR_TXE)
-	while (!(uart->ISR & USART_ISR_TXE)) { /* Wait */
+	while (!(handle->ISR & USART_ISR_TXE)) { /* Wait */
 	}
-	uart->TDR = (uint8_t)ch;
+	handle->TDR = (uint8_t)ch;
 #else
-	while (!(uart->SR & USART_SR_TXE)) { /* Wait */
+	while (!(handle->SR & USART_SR_TXE)) { /* Wait */
 	}
-	uart->DR = (uint8_t)ch;
+	handle->DR = (uint8_t)ch;
 #endif
 	return ch;
 }
