@@ -34,7 +34,7 @@ int main(void)
 				"[WARNING] Warning log message\n"
 				"[INFO] Informational log message\n"
 				"[DEBUG] Debug log message\n"
-				"[VERBOSE - print.c:34] Verbose log message\n";
+				"[VERBOSE - print.c:60] Verbose log message\n";
 
 	int pipefd[2];
 	char buffer[sizeof(expected) + 50] = {0};
