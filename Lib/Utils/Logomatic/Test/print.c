@@ -6,7 +6,7 @@
 
 #include "Logomatic.h"
 
-int main()
+int main(void)
 {
 	const char expected[] = "[CRITICAL] Critical log message\n"
 				"[ERROR] Error log message\n"
