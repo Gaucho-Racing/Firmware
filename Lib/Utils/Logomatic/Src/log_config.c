@@ -21,8 +21,8 @@ bool Logomatic_SetLogLevel(Logomatic_LogLevel level)
 {
 #define X(name, val, string)                                                                                                                                                                           \
 	if (level == val) {                                                                                                                                                                            \
-		_logomatic_loglevel = level;                                                                                                                                                         \
-		return true;                                                                                                                                                                          \
+		_logomatic_loglevel = level;                                                                                                                                                           \
+		return true;                                                                                                                                                                           \
 	}
 	_LOGOMATIC_LOGLEVEL_X_LIST
 #undef X
