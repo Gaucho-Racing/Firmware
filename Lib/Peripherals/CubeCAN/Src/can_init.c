@@ -14,12 +14,12 @@ CubeCAN_Handle *CubeCAN_Entrance(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *co
 	CubeCAN_Handle *handle = CubeCAN_Private_Init(hfdcan, config);
 
 	if (handle == NULL) {
-		LOGOMATIC("CubeCAN_Entrance: failed to initialize handle\n");
+		LOGOMATIC_ERROR("CubeCAN_Entrance: failed to initialize handle\n");
 		return NULL;
 	}
 
 	if (CubeCAN_Private_Start(handle) != HAL_OK) {
-		LOGOMATIC("CubeCAN_Entrance: failed to start handle\n");
+		LOGOMATIC_ERROR("CubeCAN_Entrance: failed to start handle\n");
 		CubeCAN_Private_Release(handle);
 		return NULL;
 	}
@@ -30,14 +30,14 @@ CubeCAN_Handle *CubeCAN_Entrance(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *co
 HAL_StatusTypeDef CubeCAN_Exit(CubeCAN_Handle *handle)
 {
 	if (handle == NULL) {
-		LOGOMATIC("CubeCAN_Exit: invalid null parameter\n");
+		LOGOMATIC_ERROR("CubeCAN_Exit: invalid null parameter\n");
 		return HAL_ERROR;
 	}
 
 	HAL_StatusTypeDef status = CubeCAN_Private_Stop(handle);
 
 	if (status != HAL_OK) {
-		LOGOMATIC("CubeCAN_Exit: failed to stop FDCAN instance\n");
+		LOGOMATIC_ERROR("CubeCAN_Exit: failed to stop FDCAN instance\n");
 		return status;
 	}
 
@@ -47,7 +47,7 @@ HAL_StatusTypeDef CubeCAN_Exit(CubeCAN_Handle *handle)
 CubeCAN_Handle *CubeCAN_Private_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config *config)
 {
 	if (hfdcan == NULL || config == NULL) {
-		LOGOMATIC("CubeCAN_Private_Init: invalid null parameters\n");
+		LOGOMATIC_ERROR("CubeCAN_Private_Init: invalid null parameters\n");
 		return NULL;
 	}
 
@@ -66,7 +66,7 @@ CubeCAN_Handle *CubeCAN_Private_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config
 		}
 
 		if (handle != NULL) {
-			LOGOMATIC("CubeCAN_Private_Init: handle already initialized for this FDCAN instance\n");
+			LOGOMATIC_WARNING("CubeCAN_Private_Init: handle already initialized for this FDCAN instance\n");
 			return NULL;
 		} else if (free_handle_index != (uint8_t)-1) {
 			handle = &handles[free_handle_index];
@@ -80,12 +80,12 @@ CubeCAN_Handle *CubeCAN_Private_Init(FDCAN_HandleTypeDef *hfdcan, CubeCAN_Config
 	}
 
 	if (handle == NULL) {
-		LOGOMATIC("CubeCAN_Private_Init: no free handle slots\n");
+		LOGOMATIC_ERROR("CubeCAN_Private_Init: no free handle slots\n");
 		return NULL;
 	}
 
 	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_EVENTS, 0U) != HAL_OK) {
-		LOGOMATIC("CubeCAN_Private_Init: failed to activate RX notifications\n");
+		LOGOMATIC_ERROR("CubeCAN_Private_Init: failed to activate RX notifications\n");
 		CRITICAL_SECTION
 		{
 			memset(handle, 0, sizeof(*handle));
@@ -124,7 +124,7 @@ HAL_StatusTypeDef CubeCAN_Private_Release(CubeCAN_Handle *handle)
 	}
 
 	if (status != HAL_OK) {
-		LOGOMATIC("CubeCAN_Release: peripheral deactivation failed\n");
+		LOGOMATIC_ERROR("CubeCAN_Release: peripheral deactivation failed\n");
 
 		CRITICAL_SECTION
 		{

@@ -13,8 +13,8 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Ide
 	value++;
 
 	if (context == NULL || identifier == NULL || data == NULL || size == 0) {
-		LOGOMATIC("CANdler_Callback: Invalid parameters received. context: %u, identifier: %p, data: %p, size: %u\n", context->busid_user_context, (void *const)identifier, (void *const)data,
-			  size);
+		LOGOMATIC_ERROR("CANdler_Callback: Invalid parameters received. context: %u, identifier: %p, data: %p, size: %u\n", context->busid_user_context, (void *const)identifier,
+				(void *const)data, size);
 		return;
 	}
 
@@ -23,5 +23,5 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Ide
 	const GRCAN_NODE_ID rx_node = identifier->rx_node_id;
 	const GRCAN_MSG_ID msg_id = identifier->msg_id;
 
-	LOGOMATIC("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
+	LOGOMATIC_VERBOSE("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
 }

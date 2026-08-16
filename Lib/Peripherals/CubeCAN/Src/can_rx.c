@@ -11,7 +11,7 @@
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
 	if (RxFifo0ITs & FDCAN_IT_RX_FIFO0_MESSAGE_LOST) {
-		LOGOMATIC("WARNING: CAN Rx FIFO is overflowing, messages are being lost!\n");
+		LOGOMATIC_ERROR("CAN Rx FIFO is overflowing, messages are being lost!\n");
 	}
 
 	if (hfdcan == NULL) {
@@ -42,7 +42,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 			(void)HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &dump_header, dump_data);
 		}
 
-		LOGOMATIC("HAL_FDCAN_RxFifo0Callback: Message dropped, unmapped handle or instance stopped\n");
+		LOGOMATIC_WARNING("HAL_FDCAN_RxFifo0Callback: Message dropped, unmapped handle or instance stopped\n");
 		return;
 	}
 
@@ -55,7 +55,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 			uint8_t size = CubeCAN_Private_DlcToBytes(rx_header.DataLength);
 			rx_callback(&context, &id, rx_data, size);
 		} else {
-			LOGOMATIC("HAL_FDCAN_RxFifo0Callback: Failed to get Rx message from FIFO\n");
+			LOGOMATIC_ERROR("HAL_FDCAN_RxFifo0Callback: Failed to get Rx message from FIFO\n");
 			break;
 		}
 	}

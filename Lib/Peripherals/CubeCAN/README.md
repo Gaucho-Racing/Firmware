@@ -47,7 +47,7 @@ Make sure to `#include "CubeCAN.h"` where needed. Do not include `PrivateInc/int
 
 At the end of your STM32CubeMX-generated `MX_FDCAN#_Init()` function, configure your filters as needed with `HAL_FDCAN_ConfigFilter()`. It is recommended to setup a filter to ignore messages not intended for your board.
 
-Within `main` after `MX_FDCAN#_Init()` and `LOGOMATIC()` are setup (see [Logomatic](../../Utils/Logomatic/README.md)), call `CubeCAN_Entrance()` saving the handle for global use later (one entrance and handle per peripheral).
+Within `main` after `MX_FDCAN#_Init()` and Logomatic are setup (see [Logomatic](../../Utils/Logomatic/README.md)), call `CubeCAN_Entrance()` saving the handle for global use later (one entrance and handle per peripheral).
 
 Ensure you have setup some mechanism to call `CubeCAN_Tick()` frequently (a STM32CubeMX timer interrupt is recommended). This function:
 

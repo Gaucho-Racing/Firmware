@@ -13,7 +13,7 @@ extern int value;
 void MainLoop(void)
 {
 	LL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	LOGOMATIC("Main Loop %d %" PRIu32 "\n", value, HAL_GetTick());
+	LOGOMATIC_DEBUG("Main Loop %d %" PRIu32 "\n", value, HAL_GetTick());
 	(void)CubeCAN_Send(primaryHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello0", 6);
 	(void)CubeCAN_Send(dataHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello1", 6);
 	(void)CubeCAN_Send(chargerHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello2", 6);

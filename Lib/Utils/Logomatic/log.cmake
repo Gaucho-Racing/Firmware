@@ -9,7 +9,8 @@ target_include_directories(
 target_sources(
 	LOGOMATIC_LIB
 	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Src/Logomatic.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/log_putchar.c
+		${CMAKE_CURRENT_LIST_DIR}/Src/log_global.c
 )
 
 target_link_libraries(LOGOMATIC_LIB INTERFACE GLOBALSHARE_LIB)

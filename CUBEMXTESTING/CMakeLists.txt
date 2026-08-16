@@ -39,7 +39,7 @@ target_link_libraries(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 		CUBE_CAN_LIB
-		LOGOMATIC_OLD_LIB
+		LOGOMATIC_LIB
 )
 
 target_include_directories(

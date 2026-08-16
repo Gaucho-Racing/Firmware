@@ -129,6 +129,7 @@ include("${platform_path}/STM32H523xE/chip.cmake")
 # Utils
 include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/OldLogomatic/logomatic.cmake")
+include("${lib_path}/Utils/Logomatic/log.cmake")
 include("${lib_path}/Utils/VirtualComPort/vcp.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")

@@ -26,7 +26,7 @@ void CubeCAN_Private_RateChecker(void)
 	}
 
 	if (current_tick > 10U && call_count_in_tick > ABSOLUTE_MAX_INVOCATIONS_PER_TICK) {
-		LOGOMATIC("CubeCAN_Tick: called too frequently (%" PRIu32 " times in 1 ms), you NEED to fix your timers!\tViolation %" PRIu32 "\n", call_count_in_tick, ++violations);
+		LOGOMATIC_ERROR("CubeCAN_Tick: called too frequently (%" PRIu32 " times in 1 ms), you NEED to fix your timers!\tViolation %" PRIu32 "\n", call_count_in_tick, ++violations);
 #ifdef RELAXED_TIMER_GATE // Hidden feature flag if you REALLY know what you are doing but you should fix your timers instead
 #warning "CubeCAN_Tick: Compiled with RELAXED_TIMER_GATE, this is a hidden feature flag that allows you to ignore the timer violation but you really should fix your timers"
 #else
@@ -60,9 +60,9 @@ void CubeCAN_Tick(void)
 		}
 
 		if (CubeCAN_Private_IsDisabled(handle)) {
-			LOGOMATIC("CubeCAN_Tick: currently in restricted operation mode\n");
+			LOGOMATIC_WARNING("CubeCAN_Tick: currently in restricted operation mode\n");
 			if (CubeCAN_Private_RecoverPeripheral(handle) != HAL_OK) {
-				LOGOMATIC("CubeCAN_Tick %d: failed to recover peripheral\n", (int)i);
+				LOGOMATIC_ERROR("CubeCAN_Tick %d: failed to recover peripheral\n", (int)i);
 				continue;
 			}
 		}
@@ -79,7 +79,7 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
 
 	const uint32_t dlc = CubeCAN_Private_BytesToDlc(size);
 	if (dlc == FDCAN_DLC_BYTES_0 && size != 0) {
-		LOGOMATIC("CubeCAN_Send: invalid data length code\n");
+		LOGOMATIC_ERROR("CubeCAN_Send: invalid data length code\n");
 		return HAL_ERROR;
 	}
 
@@ -99,7 +99,7 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
 			brs = FDCAN_BRS_ON;
 			break;
 		default:
-			LOGOMATIC("CubeCAN_Send: unsupported frame format\n");
+			LOGOMATIC_ERROR("CubeCAN_Send: unsupported frame format\n");
 			return HAL_ERROR;
 	}
 
@@ -150,12 +150,12 @@ HAL_StatusTypeDef CubeCAN_Private_QueueTx(CubeCAN_Handle *handle, const GRCAN_Pr
 HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {
-		LOGOMATIC("CubeCAN_Private_SendQueuedMessage: invalid null parameter\n");
+		LOGOMATIC_ERROR("CubeCAN_Private_SendQueuedMessage: invalid null parameter\n");
 		return HAL_ERROR;
 	}
 
 	if (HAL_FDCAN_GetTxFifoFreeLevel(handle->hfdcan) == 0U) {
-		LOGOMATIC("CubeCAN_Private_SendQueuedMessage: Tx FIFO full, cannot send message\n");
+		LOGOMATIC_ERROR("CubeCAN_Private_SendQueuedMessage: Tx FIFO full, cannot send message\n");
 		return HAL_BUSY;
 	}
 

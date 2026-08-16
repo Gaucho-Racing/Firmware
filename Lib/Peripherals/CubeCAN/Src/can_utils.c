@@ -73,7 +73,7 @@ uint8_t CubeCAN_Private_BytesToDlc(const uint8_t bytes)
 		case 64U:
 			return FDCAN_DLC_BYTES_64;
 		default:
-			LOGOMATIC("CubeCAN_Private_BytesToDlc: Invalid byte count\n");
+			LOGOMATIC_ERROR("CubeCAN_Private_BytesToDlc: Invalid byte count\n");
 			return FDCAN_DLC_BYTES_0;
 	}
 }
@@ -114,7 +114,7 @@ uint8_t CubeCAN_Private_DlcToBytes(const uint32_t dlc)
 		case FDCAN_DLC_BYTES_64:
 			return 64U;
 		default:
-			LOGOMATIC("CubeCAN_Private_DlcToBytes: Invalid DLC value\n");
+			LOGOMATIC_ERROR("CubeCAN_Private_DlcToBytes: Invalid DLC value\n");
 			return 0U;
 	}
 }
@@ -160,7 +160,7 @@ HAL_StatusTypeDef CubeCAN_Private_RecoverPeripheral(const CubeCAN_Handle *const 
 			FDCAN_ProtocolStatusTypeDef protocol_status = {0};
 
 			if (HAL_FDCAN_GetProtocolStatus(handle->hfdcan, &protocol_status) == HAL_OK && protocol_status.BusOff) {
-				LOGOMATIC("CubeCAN_Private_RecoverPeripheral: CRITICAL BUS-OFF DETECTED. Forcing hardware reset...\n");
+				LOGOMATIC_ERROR("CubeCAN_Private_RecoverPeripheral: CRITICAL BUS-OFF DETECTED. Forcing hardware reset...\n");
 
 				HAL_FDCAN_Stop(handle->hfdcan);
 
@@ -175,13 +175,17 @@ HAL_StatusTypeDef CubeCAN_Private_RecoverPeripheral(const CubeCAN_Handle *const 
 				}
 
 				if (status != HAL_OK) {
-					LOGOMATIC("CubeCAN_Private_RecoverPeripheral: Aggressive hardware start failed!\n");
+					LOGOMATIC_ERROR("CubeCAN_Private_RecoverPeripheral: Aggressive hardware start failed!\n");
 				}
 			}
 
 			if (HAL_FDCAN_IsRestrictedOperationMode(handle->hfdcan)) {
-				LOGOMATIC("CubeCAN_Private_RecoverPeripheral: Forcing exit from restricted operation mode\n");
-				HAL_FDCAN_ExitRestrictedOperationMode(handle->hfdcan);
+				LOGOMATIC_WARNING("CubeCAN_Private_RecoverPeripheral: Forcing exit from restricted operation mode\n");
+				status = HAL_FDCAN_ExitRestrictedOperationMode(handle->hfdcan);
+
+				if (status != HAL_OK) {
+					LOGOMATIC_ERROR("CubeCAN_Private_RecoverPeripheral: Failed to recover peripheral\n");
+				}
 			}
 		}
 	}
