@@ -12,6 +12,9 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Src/can.c
 )
 
-set_target_properties(PERIPHERAL_TIMEDCAN_LIB PROPERTIES
-    DEPRECATION "PERIPHERAL_TIMEDCAN_LIB is deprecated and should be replaced by CUBE_CAN_LIB."
+set_target_properties(
+	PERIPHERAL_TIMEDCAN_LIB
+	PROPERTIES
+		DEPRECATION
+			"PERIPHERAL_TIMEDCAN_LIB is deprecated and should be replaced by CUBE_CAN_LIB."
 )

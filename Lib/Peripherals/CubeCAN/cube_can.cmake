@@ -1,10 +1,6 @@
 add_library(CUBE_CAN_LIB INTERFACE)
 
-target_include_directories(
-	CUBE_CAN_LIB
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
-)
+target_include_directories(CUBE_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Inc)
 
 target_sources(
 	CUBE_CAN_LIB
