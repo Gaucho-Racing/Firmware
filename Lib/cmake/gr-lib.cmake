@@ -34,7 +34,7 @@ function(add_gr_project)
 			${TARGET_NAME}
 			PRIVATE
 				${TARGET_NAME}_USER_CODE # Blame Owen
-				LOGOMATIC_LIB
+				LOGOMATIC_OLD_LIB
 				GLOBALSHARE_LIB
 				m
 		)

@@ -17,5 +17,5 @@ target_link_libraries(
 	CUBE_CAN_LIB
 	INTERFACE
 		CANfigurator
-		LOGOMATIC_LIB
+		LOGOMATIC_OLD_LIB
 )

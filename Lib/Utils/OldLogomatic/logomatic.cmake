@@ -1,17 +1,17 @@
-add_library(LOGOMATIC_LIB INTERFACE)
+add_library(LOGOMATIC_OLD_LIB INTERFACE)
 
 # Include directories and source files for the logomatic library
 target_include_directories(
-	LOGOMATIC_LIB
+	LOGOMATIC_OLD_LIB
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Inc
 )
 target_sources(
-	LOGOMATIC_LIB
+	LOGOMATIC_OLD_LIB
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/Logomatic.c
 )
-target_link_libraries(LOGOMATIC_LIB INTERFACE GLOBALSHARE_LIB)
+target_link_libraries(LOGOMATIC_OLD_LIB INTERFACE GLOBALSHARE_LIB)
 
 # Default logomatic to be disabled
 if(NOT DEFINED CMAKE_LOGOMATIC_ENABLED)
@@ -21,7 +21,7 @@ endif()
 # Main compilation flag to enable logomatic
 if(CMAKE_LOGOMATIC_ENABLED)
 	message(STATUS "Logomatic enabled")
-	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
+	target_compile_definitions(LOGOMATIC_OLD_LIB INTERFACE LOGOMATIC_ENABLED)
 endif()
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
@@ -36,7 +36,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			${CMAKE_CURRENT_LIST_DIR}/Test/Inc
 	)
-	target_link_libraries(logomatic_simple PRIVATE LOGOMATIC_LIB)
+	target_link_libraries(logomatic_simple PRIVATE LOGOMATIC_OLD_LIB)
 	add_test(logomatic_simple_test logomatic_simple)
 
 	add_executable(logomatic_float)
@@ -50,20 +50,27 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			${CMAKE_CURRENT_LIST_DIR}/Test/Inc
 	)
-	target_link_libraries(logomatic_float PRIVATE LOGOMATIC_LIB)
+	target_link_libraries(logomatic_float PRIVATE LOGOMATIC_OLD_LIB)
 	add_test(logomatic_float_test logomatic_float)
 else()
 	# Add floating point support for printf, which goes unused on MacOS hootl builds and throws a warning
 	target_compile_options(
-		LOGOMATIC_LIB
+		LOGOMATIC_OLD_LIB
 		INTERFACE
 			-u
 			_printf_float
 	)
 	target_link_options(
-		LOGOMATIC_LIB
+		LOGOMATIC_OLD_LIB
 		INTERFACE
 			-u
 			_printf_float
 	)
 endif()
+
+set_target_properties(
+	LOGOMATIC_OLD_LIB
+	PROPERTIES
+		DEPRECATION
+			"LOGOMATIC_OLD_LIB is deprecated and should be replaced by LOGOMATIC_LIB."
+)
