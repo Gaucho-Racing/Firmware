@@ -59,6 +59,9 @@ target_include_directories(
 #	)
 #endif()
 
-set_target_properties(PERIPHERAL_CAN_LIB PROPERTIES
-    DEPRECATION "PERIPHERAL_CAN_LIB is deprecated and should be replaced by CUBE_CAN_LIB."
+set_target_properties(
+	PERIPHERAL_CAN_LIB
+	PROPERTIES
+		DEPRECATION
+			"PERIPHERAL_CAN_LIB is deprecated and should be replaced by CUBE_CAN_LIB."
 )
