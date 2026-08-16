@@ -30,8 +30,6 @@ typedef ptrdiff_t ssize_t;
 
 #include "Logomatic.h"
 
-const Logomatic_Driver global_logomatic_driver;
-
 int main(void)
 {
 	const char expected[] = "[CRITICAL] Critical log message\n"
@@ -39,7 +37,7 @@ int main(void)
 				"[WARNING] Warning log message\n"
 				"[INFO] Informational log message\n"
 				"[DEBUG] Debug log message\n"
-				"[VERBOSE - print.c:65] Verbose log message\n";
+				"[VERBOSE - print.c:63] Verbose log message\n";
 
 	int pipefd[2];
 	char buffer[sizeof(expected) + 50] = {0};

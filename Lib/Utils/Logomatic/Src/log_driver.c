@@ -3,10 +3,15 @@
 
 int __io_putchar(int ch)
 {
+#ifdef LOGOMATIC_HOOTLTEST
+	return putchar(ch);
+#else
 	if (global_logomatic_driver != NULL) {
+		putchar(ch);
 		return global_logomatic_driver(ch);
 	}
 	return ch;
+#endif
 }
 
 #if defined(ITM)

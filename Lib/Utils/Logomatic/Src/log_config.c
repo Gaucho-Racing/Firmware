@@ -1,11 +1,7 @@
 #include "Logomatic.h"
 #include "main.h"
 
-#if defined(LOGOMATIC_HOOTLTEST)
-Logomatic_LogLevel _logomatic_loglevel = LogLevel_Verbose;
-#else
 Logomatic_LogLevel _logomatic_loglevel = LogLevel_Debug;
-#endif
 
 #if defined(ITM)
 __weak const Logomatic_Driver global_logomatic_driver = Logomatic_Driver_ITM;

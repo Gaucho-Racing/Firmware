@@ -66,9 +66,7 @@ extern Logomatic_LogLevel _logomatic_loglevel;
  *
  * @note This variable should not be modified once setup by the user.
  */
-#ifdef LOGOMATIC_HOOTLTEST
-extern const Logomatic_Driver global_logomatic_driver;
-#else
+#ifndef LOGOMATIC_HOOTLTEST
 extern const __weak Logomatic_Driver global_logomatic_driver;
 #endif
 
