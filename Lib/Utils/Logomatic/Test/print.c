@@ -2,7 +2,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _WIN32
+#include <fcntl.h>
+#include <io.h>
+
+#define sys_pipe(fd) _pipe(fd, 4096, _O_BINARY)
+#define sys_dup _dup
+#define sys_dup2 _dup2
+#define sys_read _read
+#define sys_close _close
+#define STDOUT_FILENO _fileno(stdout)
+
+typedef ptrdiff_t ssize_t;
+#else
 #include <unistd.h>
+
+#define sys_pipe(fd) pipe(fd)
+#define sys_dup dup
+#define sys_dup2 dup2
+#define sys_read read
+#define sys_close close
+#endif
 
 #include "Logomatic.h"
 
@@ -18,13 +39,18 @@ int main(void)
 	int pipefd[2];
 	char buffer[sizeof(expected) + 50] = {0};
 
-	if (pipe(pipefd) == -1) {
+	if (sys_pipe(pipefd) == -1) {
 		perror("Pipe failed");
 		return 1;
 	}
 
-	int saved_stdout = dup(STDOUT_FILENO);
-	dup2(pipefd[1], STDOUT_FILENO);
+	int saved_stdout = sys_dup(STDOUT_FILENO);
+
+#ifdef _WIN32
+	_setmode(STDOUT_FILENO, _O_BINARY);
+#endif
+
+	sys_dup2(pipefd[1], STDOUT_FILENO);
 
 	LOGOMATIC_CRITICAL("Critical log message\n");
 	LOGOMATIC_ERROR("Error log message\n");
@@ -34,16 +60,20 @@ int main(void)
 	LOGOMATIC_VERBOSE("Verbose log message\n");
 
 	fflush(stdout);
-	close(pipefd[1]);
+	sys_close(pipefd[1]);
 
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
+	sys_dup2(saved_stdout, STDOUT_FILENO);
+	sys_close(saved_stdout);
 
-	ssize_t bytes_read = read(pipefd[0], buffer, sizeof(buffer) - 1);
+#ifdef _WIN32
+	_setmode(STDOUT_FILENO, _O_TEXT);
+#endif
+
+	ssize_t bytes_read = sys_read(pipefd[0], buffer, sizeof(buffer) - 1);
 	if (bytes_read >= 0) {
 		buffer[bytes_read] = '\0';
 	}
-	close(pipefd[0]);
+	sys_close(pipefd[0]);
 
 	if (strcmp(buffer, expected) == 0) {
 		printf("Test passed: Log output matches expected output.\n");
