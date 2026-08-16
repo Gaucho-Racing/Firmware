@@ -1,19 +1,7 @@
 add_library(CUBE_VCP_LIB INTERFACE)
 
-target_include_directories(
-	CUBE_VCP_LIB
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
-)
+target_include_directories(CUBE_VCP_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Inc)
 
-target_sources(
-	CUBE_VCP_LIB
-	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Src/vcp.c
-)
+target_sources(CUBE_VCP_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/vcp.c)
 
-target_link_libraries(
-	CUBE_VCP_LIB
-	INTERFACE
-		LOGOMATIC_LIB
-)
+target_link_libraries(CUBE_VCP_LIB INTERFACE LOGOMATIC_LIB)
