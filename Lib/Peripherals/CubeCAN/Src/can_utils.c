@@ -160,7 +160,7 @@ HAL_StatusTypeDef CubeCAN_Private_RecoverPeripheral(const CubeCAN_Handle *const 
 			FDCAN_ProtocolStatusTypeDef protocol_status = {0};
 
 			if (HAL_FDCAN_GetProtocolStatus(handle->hfdcan, &protocol_status) == HAL_OK && protocol_status.BusOff) {
-				LOGOMATIC("CubeCAN_Private_RecoverPeripheral: CRITICAL BUS-OFF DETECTED. Forcing instant hardware reset...\n");
+				LOGOMATIC("CubeCAN_Private_RecoverPeripheral: CRITICAL BUS-OFF DETECTED. Forcing hardware reset...\n");
 
 				HAL_FDCAN_Stop(handle->hfdcan);
 
