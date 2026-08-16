@@ -12,7 +12,10 @@
 #define sys_dup2 _dup2
 #define sys_read _read
 #define sys_close _close
+
+#ifndef STDOUT_FILENO
 #define STDOUT_FILENO _fileno(stdout)
+#endif
 
 typedef ptrdiff_t ssize_t;
 #else
