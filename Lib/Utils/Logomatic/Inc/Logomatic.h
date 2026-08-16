@@ -1,33 +1,44 @@
 #include <stdio.h>
+
 #include "main.h"
 
 #ifndef LOGOMATIC_H
 #define LOGOMATIC_H
 
-/**
- * @brief Logomatic log levels
- *
- * These are the different log levels available in Logomatic
- *
- * @note To turn off logging, you must use CMAKE_LOGOMATIC_ENABLED
- * @warning Strictly ordered in increasing severity, changing this order will break filters
- */
+/// @brief Logomatic log level type, used to define the severity of log messages
+#define _LOGOMATIC_LOGLEVEL_X_LIST                                                                                                                                                                     \
+	X(LogLevel_Off, 0, "OFF")                                                                                                                                                                      \
+	X(LogLevel_Critical, 1, "CRITICAL")                                                                                                                                                            \
+	X(LogLevel_Error, 2, "ERROR")                                                                                                                                                                  \
+	X(LogLevel_Warning, 3, "WARNING")                                                                                                                                                              \
+	X(LogLevel_Info, 4, "INFO")                                                                                                                                                                    \
+	X(LogLevel_Debug, 5, "DEBUG")                                                                                                                                                                  \
+	X(LogLevel_Verbose, 6, "VERBOSE")
+
 typedef enum {
-	/// @brief Verbose log level, used for detailed debugging information
-	LogLevel_Verbose,
-	/// @brief Debug log level, used for debugging information
-	LogLevel_Debug,
-	/// @brief Info log level, used for general information
-	LogLevel_Info,
-	/// @brief Warning log level, used for warnings
-	LogLevel_Warning,
-	/// @brief Error log level, used for errors
-	LogLevel_Error,
-	/// @brief Critical log level, used for critical errors
-	LogLevel_Critical,
-	/// @brief Disabled log level, used to turn off logging
-	LogLevel_Off
+#define X(name, val, str) name = val,
+	_LOGOMATIC_LOGLEVEL_X_LIST
+#undef X
 } Logomatic_LogLevel;
+
+/**
+ * @brief Set the global log level
+ *
+ * Only logs with a higher or equal severity than the global log level will be printed.
+ *
+ * @param level The log level to set as the global log level. This should be one of the values from the Logomatic_LogLevel enum.
+ * @return true if the log level was successfully set, false if the provided log level is invalid.
+ */
+bool Logomatic_SetLogLevel(Logomatic_LogLevel level);
+
+/**
+ * @brief Logomatic log level strings
+ *
+ * This array is used to map the log level enum values to their corresponding string representations for printing log messages.
+ *
+ * @note The order of the strings in this array must match the order of the enum values in Logomatic_LogLevel.
+ */
+extern const char *Logomatic_Private_LogLevelStrings[];
 
 /**
  * @brief Logomatic driver function pointer type
@@ -45,7 +56,7 @@ typedef int (*Logomatic_Driver)(int);
  *
  * @warning This variable should not be modified once setup by the user.
  */
-extern Logomatic_LogLevel global_logomatic_level;
+extern Logomatic_LogLevel _logomatic_loglevel;
 
 /**
  * @brief Logomatic driver function pointer
@@ -54,7 +65,7 @@ extern Logomatic_LogLevel global_logomatic_level;
  *
  * @note This variable should not be modified once setup by the user.
  */
-extern Logomatic_Driver global_logomatic_driver;
+extern const Logomatic_Driver global_logomatic_driver;
 
 /**
  * @brief Logomatic log level implementation macro
@@ -66,7 +77,12 @@ extern Logomatic_Driver global_logomatic_driver;
  */
 #define LOGOMATIC_PRIVATE_LEVEL(level, ...)                                                                                                                                                            \
 	do {                                                                                                                                                                                           \
-		if (global_logomatic_level <= (level) && (level) != LogLevel_Off && global_logomatic_level != LogLevel_Off) {                                                                                 \
+		if (_logomatic_loglevel >= (level) && (level) != LogLevel_Off && _logomatic_loglevel != LogLevel_Off) {                                                                                \
+			if (level == LogLevel_Verbose) {                                                                                                                                               \
+				printf("[%s - %s:%d] ", Logomatic_Private_LogLevelStrings[(level)], __FILE_NAME__, __LINE__);                                                                          \
+			} else {                                                                                                                                                                       \
+				printf("[%s] ", Logomatic_Private_LogLevelStrings[(level)]);                                                                                                           \
+			}                                                                                                                                                                              \
 			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"") printf(__VA_ARGS__);                                                                   \
 			_Pragma("GCC diagnostic pop")                                                                                                                                                  \
 		}                                                                                                                                                                                      \

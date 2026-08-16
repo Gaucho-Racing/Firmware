@@ -1,7 +1,7 @@
 #include "Logomatic.h"
 #include "main.h"
 
-__attribute__((weak)) int __io_putchar(int ch)
+int __io_putchar(int ch)
 {
 	if (global_logomatic_driver != NULL) {
 		return global_logomatic_driver(ch);

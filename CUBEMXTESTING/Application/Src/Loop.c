@@ -17,4 +17,6 @@ void MainLoop(void)
 	(void)CubeCAN_Send(primaryHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello0", 6);
 	(void)CubeCAN_Send(dataHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello1", 6);
 	(void)CubeCAN_Send(chargerHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello2", 6);
+
+	LOGOMATIC_VERBOSE("Main Loop %d %" PRIu32 "\n", value, HAL_GetTick());
 }
