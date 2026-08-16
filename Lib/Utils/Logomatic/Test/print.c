@@ -30,9 +30,7 @@ typedef ptrdiff_t ssize_t;
 
 #include "Logomatic.h"
 
-#ifdef _WIN32
-const Logomatic_Driver global_logomatic_driver = NULL;
-#endif
+const Logomatic_Driver global_logomatic_driver;
 
 int main(void)
 {
@@ -41,7 +39,7 @@ int main(void)
 				"[WARNING] Warning log message\n"
 				"[INFO] Informational log message\n"
 				"[DEBUG] Debug log message\n"
-				"[VERBOSE - print.c:67] Verbose log message\n";
+				"[VERBOSE - print.c:65] Verbose log message\n";
 
 	int pipefd[2];
 	char buffer[sizeof(expected) + 50] = {0};
