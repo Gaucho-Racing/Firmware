@@ -130,9 +130,9 @@ int main(void)
 	}
 
 	LOGOMATIC_INFO("Hello World!\n");
-  CubeVCP_Setup(&hlpuart1);
+	CubeVCP_Setup(&hlpuart1);
 	CubeVCP_EnableRx(CANdler_VCP_Callback);
-  CubeVCP_SendString("Hello World!\n", sizeof("Hello World!\n") - 1);
+	CubeVCP_SendString("Hello World!\n", sizeof("Hello World!\n") - 1);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
