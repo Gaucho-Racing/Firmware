@@ -25,3 +25,13 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Ide
 
 	LOGOMATIC_VERBOSE("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
 }
+
+void CANdler_VCP_Callback(const uint8_t *const data, const uint16_t size)
+{
+	if (data == NULL || size == 0) {
+		LOGOMATIC_ERROR("CANdler_VCP_Callback: Invalid parameters received. data: %p, size: %u\n", (void *const)data, size);
+		return;
+	}
+
+	LOGOMATIC_DEBUG("Received on VCP with size %u\t%.*s\n", size, size, (const char *const)data);
+}

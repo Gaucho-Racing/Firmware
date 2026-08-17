@@ -1,0 +1,7 @@
+#ifndef CUBE_VCP_CONFIG_H
+#define CUBE_VCP_CONFIG_H
+
+#define CUBE_VCP_TX_BUFFER_SIZE 256
+#define CUBE_VCP_RX_BUFFER_SIZE 8
+
+#endif

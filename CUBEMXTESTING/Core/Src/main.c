@@ -30,15 +30,12 @@
 
 #include "CANdler.h"
 #include "CubeCAN.h"
+#include "CubeVCP.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "Loop.h"
 #include "tim.h"
-
-// #include "can.h"
-// #include "can_cfg.h"
-// #include "gr_can_init.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,6 +59,7 @@
 CubeCAN_Handle *primaryHandle = NULL;
 CubeCAN_Handle *dataHandle = NULL;
 CubeCAN_Handle *chargerHandle = NULL;
+UART_HandleTypeDef *const vcp_uart_handle = &hlpuart1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -133,6 +131,7 @@ int main(void)
 	}
 
 	LOGOMATIC_INFO("Hello World!\n");
+	CubeVCP_EnableRx(CANdler_VCP_Callback);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
