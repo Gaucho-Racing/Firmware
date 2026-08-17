@@ -8,6 +8,15 @@
 #define CUBE_VCP_INTERNAL_H
 
 /**
+ * @brief Mask for the ring buffer used in VCP transmission.
+ *
+ * This mask is used to wrap the head and tail indices of the ring buffer to ensure they stay within the bounds of the buffer size.
+ *
+ * @note The size of the ring buffer must be a power of two for this mask to work correctly
+ */
+#define VCP_TX_BUFFER_MASK (CUBE_VCP_TX_BUFFER_SIZE - 1)
+
+/**
  * @brief Callback function pointer for handling received data in CubeVCP.
  *
  * This function pointer allows users to define their own callback function to handle received data in CubeVCP.
@@ -28,15 +37,6 @@ extern CubeVCP_Rx_Callback vcp_rx_callback;
  * @warning The UART handle should be properly initialized and configured before using CubeVCP functions by STM32CubeMX.
  */
 extern UART_HandleTypeDef *vcp_uart_handle;
-
-/**
- * @brief Mask for the ring buffer used in VCP transmission.
- *
- * This mask is used to wrap the head and tail indices of the ring buffer to ensure they stay within the bounds of the buffer size.
- *
- * @note The size of the ring buffer must be a power of two for this mask to work correctly
- */
-#define VCP_TX_BUFFER_MASK (CUBE_VCP_TX_BUFFER_SIZE - 1)
 
 /**
  * @brief Head of the ring buffer for VCP transmission.
@@ -87,23 +87,44 @@ extern uint8_t vcp_tx_buffer[];
 extern uint8_t vcp_rx_byte;
 
 /**
- * @brief Reception buffer for VCP.
+ * @brief Staging buffer for VCP reception.
  *
- * This buffer is used to store incoming data received over the VCP interface.
+ * This buffer is used to temporarily store received data before it is processed by the application.
  *
- * @note This is a simple buffer and does not implement a ring buffer mechanism. It is the responsibility of the user to manage the data in this buffer appropriately.
- * @remark Access only through atomic operations to ensure thread safety when accessed from multiple contexts
- * @warning The size of this buffer is defined by CUBE_VCP_RX_BUFFER_SIZE but it does not have to be since it is not a ring buffer
+ * @note The size of this buffer is defined by CUBE_VCP_RX_BUFFER_SIZE
+ */
+extern uint8_t vcp_callback_staging[];
+
+/**
+ * @brief Double reception buffers for VCP (2 buffers for seamless RX without pauses).
+ *
+ * These buffers are used for double-buffering: one buffer fills while the ISR processes and swaps to the other.
+ * This allows continuous RX reception without data loss or pauses.
+ *
+ * @note The size of each buffer is defined by CUBE_VCP_RX_BUFFER_SIZE
+ * @remark Access only from ISR context to ensure thread safety
  */
 extern uint8_t vcp_rx_buffer[];
 
 /**
- * @brief Index of the next byte to be written in the VCP reception buffer.
+ * @brief Index of the next byte to be written in the current VCP reception buffer.
  *
- * This atomic variable is used to keep track of the index where the next byte should be written in the VCP reception buffer.
+ * This atomic variable is used to keep track of the index where the next byte should be written in the current VCP reception buffer.
+ * When the buffer fills or a newline is received, the callback is invoked and this index is reset to 0.
  *
  * @warning Requires atomic operations to ensure thread safety when accessed from multiple contexts
  */
-extern _Atomic uint16_t vcp_rx_index;
+extern uint16_t vcp_rx_index;
+
+/**
+ * @brief Index of the current RX buffer (0 or 1) being written to by the ISR.
+ *
+ * This atomic variable tracks which of the two receive buffers is currently being filled.
+ * When a buffer fills or a newline is received, the callback is invoked with that buffer's contents,
+ * and the index automatically switches to the other buffer. This allows continuous RX without data loss.
+ *
+ * @warning Requires atomic operations to ensure thread safety when accessed from multiple contexts
+ */
+extern uint8_t vcp_rx_current_buffer;
 
 #endif

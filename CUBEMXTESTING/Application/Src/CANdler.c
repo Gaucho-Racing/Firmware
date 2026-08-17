@@ -33,5 +33,5 @@ void CANdler_VCP_Callback(const uint8_t *const data, const uint16_t size)
 		return;
 	}
 
-	LOGOMATIC_DEBUG("Received on VCP with size %u\t%.*s\n", size, size, (const char *const)data);
+	LOGOMATIC_DEBUG("VCP Rx with size %u\t%.*s\n", size, size, (const char *const)data);
 }

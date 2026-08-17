@@ -60,6 +60,8 @@ HAL_StatusTypeDef CubeVCP_Setup(UART_HandleTypeDef *huart);
  * @param callback Pointer to the callback function that will be called when data is received over the VCP interface.
  * @retval HAL_StatusTypeDef HAL_OK if the reception was successfully enabled, HAL_ERROR if there was an error, or HAL_BUSY if the reception is already enabled.
  * @note This function should be called after CubeVCP_Setup() and after the UART handle has been properly initialized and configured by STM32CubeMX.
+ * @note RX uses double buffering, so data reception continues uninterrupted while the callback processes data.
+ * @warning The callback function should be thread-safe and should not block for long periods of time, you easily can lose data on long messages if not properly configured.
  */
 HAL_StatusTypeDef CubeVCP_EnableRx(CubeVCP_Rx_Callback callback);
 

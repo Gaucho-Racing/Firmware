@@ -51,24 +51,45 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		return;
 	}
 
-	uint16_t index = atomic_load_explicit(&vcp_rx_index, memory_order_relaxed);
-	if (index >= CUBE_VCP_RX_BUFFER_SIZE) {
-		index = 0;
-	}
+	uint8_t received_byte = vcp_rx_byte;
+	uint16_t index = vcp_rx_index;
 
-	vcp_rx_buffer[index++] = vcp_rx_byte;
+	vcp_rx_buffer[index++] = received_byte;
 
-	atomic_store_explicit(&vcp_rx_index, index, memory_order_release);
+	if (received_byte == '\n' || index >= CUBE_VCP_RX_BUFFER_SIZE) {
+		uint16_t filled_len = index;
 
-	if (vcp_rx_byte == '\n' || index >= CUBE_VCP_RX_BUFFER_SIZE) {
 		CRITICAL_SECTION
 		{
-			if (vcp_rx_callback != NULL) {
-				vcp_rx_callback(vcp_rx_buffer, index);
+			for (uint16_t i = 0; i < filled_len; i++) {
+				vcp_callback_staging[i] = vcp_rx_buffer[i];
 			}
-			atomic_store_explicit(&vcp_rx_index, 0, memory_order_relaxed);
+			vcp_rx_index = 0;
+		}
+
+		__HAL_UART_CLEAR_OREFLAG(huart);
+		__HAL_UART_CLEAR_NEFLAG(huart);
+		__HAL_UART_CLEAR_FEFLAG(huart);
+
+		if (HAL_UART_Receive_IT(vcp_uart_handle, &vcp_rx_byte, 1) != HAL_OK) {
+			huart->RxState = HAL_UART_STATE_READY;
+			HAL_UART_Receive_IT(vcp_uart_handle, &vcp_rx_byte, 1);
+		}
+
+		if (vcp_rx_callback != NULL) {
+			vcp_rx_callback(vcp_callback_staging, filled_len);
+		}
+
+	} else {
+		CRITICAL_SECTION
+		{
+			vcp_rx_index = index;
+		}
+
+		__HAL_UART_CLEAR_OREFLAG(huart);
+		if (HAL_UART_Receive_IT(vcp_uart_handle, &vcp_rx_byte, 1) != HAL_OK) {
+			huart->RxState = HAL_UART_STATE_READY;
+			HAL_UART_Receive_IT(vcp_uart_handle, &vcp_rx_byte, 1);
 		}
 	}
-
-	HAL_UART_Receive_IT(vcp_uart_handle, &vcp_rx_byte, 1);
 }
