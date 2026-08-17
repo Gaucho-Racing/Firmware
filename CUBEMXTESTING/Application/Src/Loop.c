@@ -3,6 +3,7 @@
 #include <inttypes.h>
 
 #include "CubeCAN.h"
+#include "CubeVCP.h"
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
@@ -19,4 +20,6 @@ void MainLoop(void)
 	(void)CubeCAN_Send(chargerHandle, GRCAN_Debugger, GRCAN_DEBUG_2_0, "Hello2", 6);
 
 	LOGOMATIC_VERBOSE("Main Loop %d %" PRIu32 "\n", value, HAL_GetTick());
+
+	VCP_SendString("Hello from VCP\n", sizeof("Hello from VCP\n") - 1);
 }

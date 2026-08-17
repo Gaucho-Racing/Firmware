@@ -7,7 +7,6 @@ int __io_putchar(int ch)
 	return putchar(ch);
 #else
 	if (global_logomatic_driver != NULL) {
-		putchar(ch);
 		return global_logomatic_driver(ch);
 	}
 	return ch;
