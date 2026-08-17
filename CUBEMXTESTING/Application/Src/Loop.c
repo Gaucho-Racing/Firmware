@@ -21,5 +21,5 @@ void MainLoop(void)
 
 	LOGOMATIC_VERBOSE("Main Loop %d %" PRIu32 "\n", value, HAL_GetTick());
 
-	VCP_SendString("Hello from VCP\n", sizeof("Hello from VCP\n") - 1);
+	CubeVCP_SendString("Hello from VCP\n", sizeof("Hello from VCP\n") - 1);
 }

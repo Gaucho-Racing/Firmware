@@ -7,7 +7,7 @@
 #include "main.h"
 #include "usart.h"
 
-HAL_StatusTypeDef VCP_SendString(const char *const str, uint16_t length)
+HAL_StatusTypeDef CubeVCP_SendString(const char *const str, uint16_t length)
 {
 	if (vcp_uart_handle == NULL || str == NULL || length == 0) {
 		return HAL_ERROR;
@@ -35,20 +35,25 @@ HAL_StatusTypeDef VCP_SendString(const char *const str, uint16_t length)
 	atomic_store_explicit(&vcp_ring_head, local_head, memory_order_release);
 
 	if (!atomic_load_explicit(&vcp_tx_active, memory_order_relaxed)) {
-		atomic_thread_fence(memory_order_acquire);
-		atomic_store_explicit(&vcp_tx_active, true, memory_order_relaxed);
+		if (!atomic_exchange_explicit(&vcp_tx_active, true, memory_order_acquire)) {
+			/* We successfully set tx_active to true */
+			uint16_t current_tail = atomic_load_explicit(&vcp_ring_tail, memory_order_acquire);
+			uint16_t current_head = atomic_load_explicit(&vcp_ring_head, memory_order_acquire);
 
-		current_tail = atomic_load_explicit(&vcp_ring_tail, memory_order_relaxed);
+			if (current_tail != current_head) {
+				uint16_t tail_idx = current_tail & VCP_TX_BUFFER_MASK;
+				uint16_t head_idx = current_head & VCP_TX_BUFFER_MASK;
+				uint16_t send_size = (head_idx > tail_idx) ? (head_idx - tail_idx) : (CUBE_VCP_TX_BUFFER_SIZE - tail_idx);
 
-		uint16_t tail_idx = current_tail & VCP_TX_BUFFER_MASK;
-		uint16_t head_idx = local_head & VCP_TX_BUFFER_MASK;
-
-		uint16_t send_size = (head_idx > tail_idx) ? (head_idx - tail_idx) : (CUBE_VCP_TX_BUFFER_SIZE - tail_idx);
-
-		HAL_StatusTypeDef status = HAL_UART_Transmit_IT(vcp_uart_handle, &vcp_tx_buffer[tail_idx], send_size);
-		if (status != HAL_OK) {
-			atomic_store_explicit(&vcp_tx_active, false, memory_order_release);
-			return status;
+				HAL_StatusTypeDef status = HAL_UART_Transmit_IT(vcp_uart_handle, &vcp_tx_buffer[tail_idx], send_size);
+				if (status != HAL_OK) {
+					atomic_store_explicit(&vcp_tx_active, false, memory_order_release);
+					return status;
+				}
+			} else {
+				/* No data to send, clear the active flag */
+				atomic_store_explicit(&vcp_tx_active, false, memory_order_release);
+			}
 		}
 	}
 
