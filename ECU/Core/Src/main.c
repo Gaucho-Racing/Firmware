@@ -33,6 +33,7 @@
 #include "Pinging.h"
 #include "Plan_C.h"
 #include "StateTicks.h"
+#include "StateData.h"
 #include "StateUtils.h"
 #include "adc.h"
 #include "can.h"
@@ -84,6 +85,20 @@ VCP_Config vcp_config = {.baud_rate = 2000000,
 			 .rx_fifo_threshold = VCP_Threshold_1_8,
 			 .alternate_function = LL_GPIO_AF_7,
 			 .rx_callback = NULL};
+
+
+#define NUM_SIGNALS_ADC1 6
+#define NUM_SIGNALS_ADC2 5
+#define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
+volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};
+volatile uint16_t ADC_outputs[NUM_SIGNALS] = {0};
+
+
+// STATE DATA
+extern ECU_StateData stateLump;
+
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,6 +109,28 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void write_adc_values_to_state_data(void) {
+  stateLump.bse_signal = ADC_outputs[ADC_BUFFER_SIG_BSE];
+  stateLump.bspd_signal = ADC_outputs[ADC_BUFFER_SIG_BSPD];
+  stateLump.APPS1_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS1];
+  stateLump.APPS2_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS2];
+  stateLump.Brake_F_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE_F];
+  stateLump.Brake_R_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE_R];
+  stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
+  stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE];
+
+  stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3;
+  stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3;
+  stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3;
+}
+
+void ADC_Configure(void) {
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_buffers[0], NUM_SIGNALS_ADC1);
+  HAL_ADC_Start_DMA(&hadc2, (uint32_t *)&ADC_buffers[NUM_SIGNALS_ADC1], NUM_SIGNALS_ADC2);
+
+}
+
 
 /* USER CODE END 0 */
 
@@ -134,7 +171,7 @@ int main(void)
 	Setup_VCP(&vcp_config);
 
 	// Initialize CAN
-	CAN_Configure();
+	//CAN_Configure();
 
 	ADC_Configure();
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop

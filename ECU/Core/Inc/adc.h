@@ -45,6 +45,8 @@ void MX_ADC2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+void ADC_UpdateAnalogValues_EMA(uint16_t *ADC_buffers, uint8_t num_signals, float alpha, uint16_t *ADC_outputs);
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
@@ -52,4 +54,3 @@ void MX_ADC2_Init(void);
 #endif
 
 #endif /* __ADC_H__ */
-

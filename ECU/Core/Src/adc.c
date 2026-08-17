@@ -434,5 +434,11 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 
-/* USER CODE END 1 */
+void ADC_UpdateAnalogValues_EMA(uint16_t *ADC_buffers, uint8_t num_signals, float alpha, uint16_t *ADC_outputs) {
+    for (uint8_t i = 0; i < num_signals; i++) {
+        // Apply EMA formula: EMA_new = alpha * ADC_new + (1 - alpha) * EMA_old
+        ADC_outputs[i] = (uint16_t)(alpha * ADC_buffers[i] + (1.0f - alpha) * ADC_outputs[i]);
+    }
+}
 
+/* USER CODE END 1 */

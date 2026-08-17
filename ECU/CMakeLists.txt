@@ -38,7 +38,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			GLOBALSHARE_LIB
 			CANfigurator
-			LOGOMATIC_OLD_LIB
+			LOGOMATIC_LIB
 			m
 			# GR_ADC
 			# PERIPHERAL_CAN_LIB
@@ -88,10 +88,11 @@ target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		CANfigurator
-		GR_ADC
-		PERIPHERAL_TIMEDCAN_LIB
+		# GR_ADC
+		CAN
 		BitManipulations_Lib
-		VCP_LIB
+		CUBE_CAN_LIB
+		# VCP_LIB
 )
 
 target_include_directories(

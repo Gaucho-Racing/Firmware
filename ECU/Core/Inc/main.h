@@ -32,7 +32,14 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "GRCAN_NODE_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_NODE_ID.h"
 #include "Plan_C.h"
+#include "stm32g4xx_ll_bus.h"
+#include "stm32g4xx_ll_gpio.h"
+#include "stm32g4xx_ll_lpuart.h"
+#include "stm32g4xx_ll_usart.h"
+#include "stm32g4xx_ll_utils.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -138,53 +145,6 @@ void Error_Handler(void);
 #define CAN_TIMER_SEND_PERIOD_US (MAIN_LOOP_PERIOD_US >> 4)
 
 /* Private defines -----------------------------------------------------------*/
-// GPIOC
-#define BSE_SIGNAL_Pin LL_GPIO_PIN_0 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
-#define BSE_SIGNAL_GPIO_Port GPIOC   /// Following net names, see @ref ADC_BUFFER_SIG_BSE
-#define BSPD_SIGNAL_Pin LL_GPIO_PIN_1
-#define BSPD_SIGNAL_GPIO_Port GPIOC
-#define APPS1_SIGNAL_Pin LL_GPIO_PIN_2
-#define APPS1_SIGNAL_GPIO_Port GPIOC
-#define APPS2_SIGNAL_Pin LL_GPIO_PIN_3
-#define APPS2_SIGNAL_GPIO_Port GPIOC
-
-// GPIOA
-#define BSPD_SENSE_Pin LL_GPIO_PIN_5
-#define BSPD_SENSE_GPIO_Port GPIOA
-#define IMD_SENSE_Pin LL_GPIO_PIN_6
-#define IMD_SENSE_GPIO_Port GPIOA
-#define AMS_SENSE_Pin LL_GPIO_PIN_7
-#define AMS_SENSE_GPIO_Port GPIOA
-#define ESTOP_SENSE_Pin LL_GPIO_PIN_15
-#define ESTOP_SENSE_GPIO_Port GPIOA
-
-// GPIOB
-#define BRAKE_F_SIGNAL_Pin LL_GPIO_PIN_0 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
-#define BRAKE_F_SIGNAL_GPIO_Port GPIOB	 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
-#define BRAKE_R_SIGNAL_Pin LL_GPIO_PIN_1 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
-#define BRAKE_R_SIGNAL_GPIO_Port GPIOB	 /// Following net names, see @ref ADC_BUFFER_SIG_BSE
-#define LED_TEST_Pin LL_GPIO_PIN_11
-#define LED_TEST_GPIO_Port GPIOB
-#define AUX_SIGNAL_Pin LL_GPIO_PIN_14
-#define AUX_SIGNAL_GPIO_Port GPIOB
-#define STEERING_ANGLE_Pin LL_GPIO_PIN_15
-#define STEERING_ANGLE_GPIO_Port GPIOB
-#define BRAKE_LIGHT_Pin LL_GPIO_PIN_4
-#define BRAKE_LIGHT_GPIO_Port GPIOB
-#define TSSI_G_CONTROL_Pin LL_GPIO_PIN_5
-#define TSSI_G_CONTROL_GPIO_Port GPIOB
-#define TSSI_R_CONTROL_Pin LL_GPIO_PIN_6
-#define TSSI_R_CONTROL_GPIO_Port GPIOB
-#define TS_ACTIVE_BTN_LED_CONTROL_Pin LL_GPIO_PIN_9
-#define TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port GPIOA
-#define RTD_BTN_LED_CONTROL_Pin LL_GPIO_PIN_8
-#define RTD_BTN_LED_CONTROL_GPIO_Port GPIOA
-#define RTD_CONTROL_Pin LL_GPIO_PIN_7
-#define RTD_CONTROL_GPIO_Port GPIOB
-#define AUX_CONTROL_Pin LL_GPIO_PIN_8
-#define AUX_CONTROL_GPIO_Port GPIOB
-#define SOFTWARE_OK_CONTROL_Pin LL_GPIO_PIN_9
-#define SOFTWARE_OK_CONTROL_GPIO_Port GPIOB
 
 /* USER CODE END Private defines */
 
