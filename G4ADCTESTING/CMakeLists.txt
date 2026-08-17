@@ -43,6 +43,11 @@ target_sources(
 		Core/Src/usart.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE GR_ADC)
+target_link_libraries(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+		GR_ADC
+		LOGOMATIC_OLD_LIB
+)
 
 target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)

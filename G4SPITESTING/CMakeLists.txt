@@ -34,6 +34,11 @@ target_sources(
 		Core/Src/stm32g4xx_it.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE SPI_Lib)
+target_link_libraries(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+		SPI_Lib
+		LOGOMATIC_OLD_LIB
+)
 
 target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)

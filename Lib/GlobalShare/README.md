@@ -6,7 +6,7 @@ This directory contains shared definitions and interfaces used across multiple p
 
 Please do not add source files to this directory, this is intended for only header files.
 
-**Important**: All files in this directory are **manually maintained and hand-written**. Nothing here is auto-generated. For auto-generated files please see [Autogen](../../Autogen/).
+**Important**: All files in this directory are **manually maintained and hand-written**. Nothing here is auto-generated. For auto-generated files please see [Autogen](/Autogen).
 
 Please ensure everything is clearly doc-commented and a markdown section is present for each file as relevant.
 
@@ -21,7 +21,7 @@ When adding new shared types or constants:
 
 ## State Machine
 
-This is an enum corresponding to [`STATE_MACHINE.md`](../../STATE_MACHINE.md) exactly, no change should be made to this enum without modifying the state machine diagram and vice versa.
+This is an enum corresponding to [`STATE_MACHINE.md`](/STATE_MACHINE.md) exactly, no change should be made to this enum without modifying the state machine diagram and vice versa.
 
 It is critical that every board runs the same version of this enum so as to have correct state machine numerical definitions.
 
@@ -40,15 +40,16 @@ No warnings:
 
 ```c
 {
-	int thing = 42;
-	UNUSED(thing);
+    int thing = 42;
+    UNUSED(thing);
 }
 ```
 
 Will have a warning that will become promoted to an error for release builds:
+
 ```c
 {
-	int thing = 42;
+    int thing = 42;
 }
 ```
 
@@ -58,7 +59,7 @@ This macro converts the name of any type or variable into the corresponding quot
 
 This is helpful for cases where you need the explicit name of a variable
 
-### Example
+### String Example
 
 ```c
 int input = 42;

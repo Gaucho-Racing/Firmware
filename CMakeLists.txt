@@ -128,7 +128,8 @@ include("${platform_path}/STM32H523xE/chip.cmake")
 
 # Utils
 include("${lib_path}/GlobalShare/common.cmake")
-include("${lib_path}/Utils/Logomatic/logomatic.cmake")
+include("${lib_path}/Utils/OldLogomatic/logomatic.cmake")
+include("${lib_path}/Utils/Logomatic/log.cmake")
 include("${lib_path}/Utils/VirtualComPort/vcp.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")
@@ -142,6 +143,7 @@ include("Autogen/CAN/CANfigurator.cmake")
 include("${lib_path}/Peripherals/USART/common.cmake")
 include("${lib_path}/Peripherals/TimedCAN/common.cmake")
 include("${lib_path}/Peripherals/CAN/common.cmake")
+include("${lib_path}/Peripherals/CubeCAN/cube_can.cmake")
 
 include("${lib_path}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
@@ -161,6 +163,7 @@ add_gr_project(STM32G474xE G4PERTESTING)
 add_gr_project(STM32G474xE G4SPITESTING)
 add_gr_project(STM32G474xE G4ADCTESTING)
 add_gr_project(STM32G474xE G4NEOTESTING)
+add_gr_project(STM32G474xE CUBEMXTESTING)
 
 # CAN Peripheral Testing
 add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_BASIC_TEST)

@@ -43,7 +43,12 @@ target_sources(
 		../Core/Src/usart.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
+target_link_libraries(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+		PERIPHERAL_CAN_LIB
+		LOGOMATIC_OLD_LIB
+)
 
 target_include_directories(
 	${PROJECT_NAME}_USER_CODE

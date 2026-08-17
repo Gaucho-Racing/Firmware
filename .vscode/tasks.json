@@ -39,6 +39,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ECU"
 		},
 		{
+			"label": "CMake: configure and build CUBEMXTESTING",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CUBEMXTESTING"
+		},
+		{
 			"label": "CMake: configure and build CCU",
 			"type": "shell",
 			"dependsOrder": "sequence",

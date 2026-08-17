@@ -1,140 +1,224 @@
-#include <stdint.h>
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "main.h"
 
-#ifndef _LOGOMATIC_H_
-#define _LOGOMATIC_H_
+#ifndef LOGOMATIC_H
+#define LOGOMATIC_H
 
-#if defined(ITM) && defined(LL_GPIO_MODE_ALTERNATE)
-typedef enum {
-	LOGOMATIC_PCLK1 = LL_RCC_LPUART1_CLKSOURCE_PCLK1,
-	LOGOMATIC_SYSCLK = LL_RCC_LPUART1_CLKSOURCE_SYSCLK,
-	LOGOMATIC_HSI = LL_RCC_LPUART1_CLKSOURCE_HSI,
-	LOGOMATIC_LSE = LL_RCC_LPUART1_CLKSOURCE_LSE
-} LPUART_Clock_Source;
-
-typedef enum {
-	LOGOMATIC_BUS = LL_APB1_GRP2_PERIPH_LPUART1,
-} LPUART_Bus;
+/// @brief Logomatic log level type, used to define the severity of log messages
+#define _LOGOMATIC_LOGLEVEL_PRIVATE_LIST                                                                                                                                                               \
+	X(LogLevel_Off, 0, "OFF")                                                                                                                                                                      \
+	X(LogLevel_Critical, 1, "CRITICAL")                                                                                                                                                            \
+	X(LogLevel_Error, 2, "ERROR")                                                                                                                                                                  \
+	X(LogLevel_Warning, 3, "WARNING")                                                                                                                                                              \
+	X(LogLevel_Info, 4, "INFO")                                                                                                                                                                    \
+	X(LogLevel_Debug, 5, "DEBUG")                                                                                                                                                                  \
+	X(LogLevel_Verbose, 6, "VERBOSE")
 
 typedef enum {
-	LOGOMATIC_GPIOA = LL_AHB2_GRP1_PERIPH_GPIOA,
-	LOGOMATIC_GPIOB = LL_AHB2_GRP1_PERIPH_GPIOB,
-	LOGOMATIC_GPIOC = LL_AHB2_GRP1_PERIPH_GPIOC,
-	LOGOMATIC_GPIOD = LL_AHB2_GRP1_PERIPH_GPIOD,
-	LOGOMATIC_GPIOE = LL_AHB2_GRP1_PERIPH_GPIOE,
-	LOGOMATIC_GPIOF = LL_AHB2_GRP1_PERIPH_GPIOF,
-	LOGOMATIC_GPIOG = LL_AHB2_GRP1_PERIPH_GPIOG,
-} LPUART_GPIO_Port;
+#define X(name, val, str) name = val,
+	_LOGOMATIC_LOGLEVEL_PRIVATE_LIST
+#undef X
+} Logomatic_LogLevel;
 
-typedef enum {
-	LOGOMATIC_DATAWIDTH_7B = LL_LPUART_DATAWIDTH_7B,
-	LOGOMATIC_DATAWIDTH_8B = LL_LPUART_DATAWIDTH_8B,
-	LOGOMATIC_DATAWIDTH_9B = LL_LPUART_DATAWIDTH_9B
-} LPUART_DataWidth;
+/**
+ * @brief Set the global log level
+ *
+ * Only logs with a higher or equal severity than the global log level will be printed.
+ *
+ * @param level The log level to set as the global log level. This should be one of the values from the Logomatic_LogLevel enum.
+ * @return true if the log level was successfully set, false if the provided log level is invalid.
+ */
+bool Logomatic_SetLogLevel(Logomatic_LogLevel level);
 
-typedef enum {
-	LOGOMATIC_STOPBITS_1 = LL_LPUART_STOPBITS_1,
-	LOGOMATIC_STOPBITS_2 = LL_LPUART_STOPBITS_2
-} LPUART_StopBits;
+/**
+ * @brief Logomatic log level strings
+ *
+ * This array is used to map the log level enum values to their corresponding string representations for printing log messages.
+ *
+ * @note The order of the strings in this array must match the order of the enum values in Logomatic_LogLevel.
+ */
+extern const char *Logomatic_Private_LogLevelStrings[];
 
-typedef enum {
-	LOGOMATIC_PARITY_NONE = LL_LPUART_PARITY_NONE,
-	LOGOMATIC_PARITY_EVEN = LL_LPUART_PARITY_EVEN,
-	LOGOMATIC_PARITY_ODD = LL_LPUART_PARITY_ODD
-} LPUART_Parity;
+/**
+ * @brief Logomatic driver function pointer type
+ *
+ * This is used to define the log driver function that will be used to output log messages
+ *
+ * @note Default log drivers are provided for you but you can implement your own log driver by defining a function that matches this signature and assigning it to the global_logomatic_driver variable
+ */
+typedef int (*Logomatic_Driver)(int);
 
-typedef enum {
-	LOGOMATIC_DIRECTION_NONE = LL_LPUART_DIRECTION_NONE,
-	LOGOMATIC_DIRECTION_RX = LL_LPUART_DIRECTION_RX,
-	LOGOMATIC_DIRECTION_TX = LL_LPUART_DIRECTION_TX,
-	LOGOMATIC_DIRECTION_TX_RX = LL_LPUART_DIRECTION_TX_RX
-} LPUART_TransferDirection;
+/**
+ * @brief Global log level variable
+ *
+ * Store the global log level in this variable. It is used to determine which log messages should be printed based on their severity.
+ *
+ * @warning This variable should not be modified once setup by the user.
+ */
+extern Logomatic_LogLevel _logomatic_loglevel;
 
-typedef enum {
-	LOGOMATIC_HWCONTROL_NONE = LL_LPUART_HWCONTROL_NONE,
-	LOGOMATIC_HWCONTROL_RTS = LL_LPUART_HWCONTROL_RTS,
-	LOGOMATIC_HWCONTROL_CTS = LL_LPUART_HWCONTROL_CTS,
-	LOGOMATIC_HWCONTROL_RTS_CTS = LL_LPUART_HWCONTROL_RTS_CTS
-} LPUART_HardwareFlowControl;
-
-typedef enum {
-	LOGOMATIC_PRESCALER_DIV1 = LL_LPUART_PRESCALER_DIV1,
-	LOGOMATIC_PRESCALER_DIV2 = LL_LPUART_PRESCALER_DIV2,
-	LOGOMATIC_PRESCALER_DIV4 = LL_LPUART_PRESCALER_DIV4,
-	LOGOMATIC_PRESCALER_DIV6 = LL_LPUART_PRESCALER_DIV6,
-	LOGOMATIC_PRESCALER_DIV8 = LL_LPUART_PRESCALER_DIV8,
-	LOGOMATIC_PRESCALER_DIV10 = LL_LPUART_PRESCALER_DIV10,
-	LOGOMATIC_PRESCALER_DIV12 = LL_LPUART_PRESCALER_DIV12,
-	LOGOMATIC_PRESCALER_DIV16 = LL_LPUART_PRESCALER_DIV16,
-	LOGOMATIC_PRESCALER_DIV32 = LL_LPUART_PRESCALER_DIV32,
-	LOGOMATIC_PRESCALER_DIV64 = LL_LPUART_PRESCALER_DIV64,
-	LOGOMATIC_PRESCALER_DIV128 = LL_LPUART_PRESCALER_DIV128,
-	LOGOMATIC_PRESCALER_DIV256 = LL_LPUART_PRESCALER_DIV256
-} LPUART_Prescaler;
-
-typedef enum {
-	LOGOMATIC_FIFOTHRESHOLD_1_8 = LL_LPUART_FIFOTHRESHOLD_1_8,
-	LOGOMATIC_FIFOTHRESHOLD_1_4 = LL_LPUART_FIFOTHRESHOLD_1_4,
-	LOGOMATIC_FIFOTHRESHOLD_1_2 = LL_LPUART_FIFOTHRESHOLD_1_2,
-	LOGOMATIC_FIFOTHRESHOLD_3_4 = LL_LPUART_FIFOTHRESHOLD_3_4,
-	LOGOMATIC_FIFOTHRESHOLD_7_8 = LL_LPUART_FIFOTHRESHOLD_7_8,
-	LOGOMATIC_FIFOTHRESHOLD_8_8 = LL_LPUART_FIFOTHRESHOLD_8_8
-} LPUART_FifoThreshold;
-
-typedef struct {
-	LPUART_Clock_Source clock_source;
-	LPUART_Bus bus;
-	LPUART_GPIO_Port gpio_port;
-	uint32_t gpio_pin_rx_tx_mask;
-	uint32_t baud_rate;
-	LPUART_DataWidth data_width;
-	LPUART_StopBits stop_bits;
-	LPUART_Parity parity;
-	LPUART_TransferDirection transfer_direction;
-	LPUART_HardwareFlowControl hardware_flow_control;
-	LPUART_Prescaler prescaler;
-	LPUART_FifoThreshold tx_fifo_threshold;
-	LPUART_FifoThreshold rx_fifo_threshold;
-} LogomaticConfig;
-#else
-typedef uint8_t LogomaticConfig;
+/**
+ * @brief Logomatic driver function pointer
+ *
+ * This function pointer is used to point to the appropriate log driver function based on the selected log output method (e.g., ITM, UART, etc.)
+ *
+ * @note This variable should not be modified once setup by the user.
+ */
+#ifndef LOGOMATIC_HOOTLTEST
+extern const __weak Logomatic_Driver global_logomatic_driver;
 #endif
 
-void Setup_Logomatic(LogomaticConfig *config);
+#ifdef LOGOMATIC_HOOTLTEST
 
-#ifdef LOGOMATIC_ENABLED
-/**
- * @brief ENABLED - Logs a message to the ITM console.
- * @param ... The format string and arguments to log.
- * @note This function is only enabled when LOGOMATIC_ENABLED is defined. Otherwise, it will be compiled out.
- * @note This function is designed to be used with the ITM console, as a result printing floats is an intensive operation.
- */
-#define LOGOMATIC(...)                                                                                                                                                                                 \
+#define LOGOMATIC_CRITICAL(...)                                                                                                                                                                        \
 	do {                                                                                                                                                                                           \
-		_Pragma("GCC diagnostic push");                                                                                                                                                        \
-		_Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"");                                                                                                                              \
+		printf("[CRITICAL] ");                                                                                                                                                                 \
 		printf(__VA_ARGS__);                                                                                                                                                                   \
-		_Pragma("GCC diagnostic pop");                                                                                                                                                         \
+	} while (0)
+#define LOGOMATIC_ERROR(...)                                                                                                                                                                           \
+	do {                                                                                                                                                                                           \
+		printf("[ERROR] ");                                                                                                                                                                    \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_WARNING(...)                                                                                                                                                                         \
+	do {                                                                                                                                                                                           \
+		printf("[WARNING] ");                                                                                                                                                                  \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_INFO(...)                                                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		printf("[INFO] ");                                                                                                                                                                     \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_DEBUG(...)                                                                                                                                                                           \
+	do {                                                                                                                                                                                           \
+		printf("[DEBUG] ");                                                                                                                                                                    \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
+	} while (0)
+#define LOGOMATIC_VERBOSE(...)                                                                                                                                                                         \
+	do {                                                                                                                                                                                           \
+		printf("[VERBOSE - %s:%d] ", __FILE_NAME__, __LINE__);                                                                                                                                 \
+		printf(__VA_ARGS__);                                                                                                                                                                   \
 	} while (0)
 
 #else
-/**
- * @brief DISABLED - Logs a message to the ITM console.
- * @param ... The format string and arguments to log.
- * @note This function is only enabled when LOGOMATIC_ENABLED is defined. Otherwise, it will be compiled out
- * @note This function is designed to be used with the ITM console, as a result printing floats is an intensive operation.
- */
-#define LOGOMATIC(...)                                                                                                                                                                                 \
+
+#if defined(LOGOMATIC_ENABLED)
+#define _LOGOMATIC_PRIVATE_LOG(level, ...)                                                                                                                                                             \
 	do {                                                                                                                                                                                           \
-		if (0) {                                                                                                                                                                               \
-			_Pragma("GCC diagnostic push");                                                                                                                                                \
-			_Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"");                                                                                                                      \
-			printf(__VA_ARGS__);                                                                                                                                                           \
-			_Pragma("GCC diagnostic pop");                                                                                                                                                 \
+		if (_logomatic_loglevel >= (level) && (level) != LogLevel_Off && _logomatic_loglevel != LogLevel_Off) {                                                                                \
+			if (level == LogLevel_Verbose) {                                                                                                                                               \
+				printf("[%s - %s:%d] ", Logomatic_Private_LogLevelStrings[(level)], __FILE_NAME__, __LINE__);                                                                          \
+			} else {                                                                                                                                                                       \
+				printf("[%s] ", Logomatic_Private_LogLevelStrings[(level)]);                                                                                                           \
+			}                                                                                                                                                                              \
+			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdouble-promotion\"") printf(__VA_ARGS__);                                                                   \
+			_Pragma("GCC diagnostic pop")                                                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0)
+#define LOGOMATIC_CRITICAL(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Critical, __VA_ARGS__)
+#define LOGOMATIC_ERROR(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Error, __VA_ARGS__)
+#define LOGOMATIC_WARNING(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Warning, __VA_ARGS__)
+#define LOGOMATIC_INFO(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Info, __VA_ARGS__)
+#define LOGOMATIC_DEBUG(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Debug, __VA_ARGS__)
+#define LOGOMATIC_VERBOSE(...) _LOGOMATIC_PRIVATE_LOG(LogLevel_Verbose, __VA_ARGS__)
+#else
+#define _LOGOMATIC_PRIVATE_LOG(...)                                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		if (0) {                                                                                                                                                                               \
+			printf(__VA_ARGS__);                                                                                                                                                           \
+		}                                                                                                                                                                                      \
+	} while (0)
+#define LOGOMATIC_CRITICAL(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_ERROR(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_WARNING(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_INFO(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_DEBUG(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#define LOGOMATIC_VERBOSE(...) _LOGOMATIC_PRIVATE_LOG(__VA_ARGS__)
+#endif
+
+#endif
+
+#if defined(ITM)
+int Logomatic_Driver_ITM(int ch);
+#endif
+
+#if defined(LPUART1)
+int Logomatic_Driver_LPUART1(int ch);
+#endif
+
+#if defined(LPUART2)
+int Logomatic_Driver_LPUART2(int ch);
+#endif
+
+#if defined(LPUART3)
+int Logomatic_Driver_LPUART3(int ch);
+#endif
+
+#if defined(USART1)
+int Logomatic_Driver_USART1(int ch);
+#endif
+
+#if defined(USART2)
+int Logomatic_Driver_USART2(int ch);
+#endif
+
+#if defined(USART3)
+int Logomatic_Driver_USART3(int ch);
+#endif
+
+#if defined(USART4)
+int Logomatic_Driver_USART4(int ch);
+#endif
+
+#if defined(USART5)
+int Logomatic_Driver_USART5(int ch);
+#endif
+
+#if defined(USART6)
+int Logomatic_Driver_USART6(int ch);
+#endif
+
+#if defined(USART7)
+int Logomatic_Driver_USART7(int ch);
+#endif
+
+#if defined(USART8)
+int Logomatic_Driver_USART8(int ch);
+#endif
+
+#if defined(UART1)
+int Logomatic_Driver_UART1(int ch);
+#endif
+
+#if defined(UART2)
+int Logomatic_Driver_UART2(int ch);
+#endif
+
+#if defined(UART3)
+int Logomatic_Driver_UART3(int ch);
+#endif
+
+#if defined(UART4)
+int Logomatic_Driver_UART4(int ch);
+#endif
+
+#if defined(UART5)
+int Logomatic_Driver_UART5(int ch);
+#endif
+
+#if defined(UART6)
+int Logomatic_Driver_UART6(int ch);
+#endif
+
+#if defined(UART7)
+int Logomatic_Driver_UART7(int ch);
+#endif
+
+#if defined(UART8)
+int Logomatic_Driver_UART8(int ch);
 #endif
 
 #endif
