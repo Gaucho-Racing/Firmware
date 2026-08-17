@@ -18,6 +18,18 @@
 extern CubeVCP_Rx_Callback vcp_rx_callback;
 
 /**
+ * @brief Pointer to the UART handle used for VCP transmission.
+ *
+ * This pointer should be set to the UART handle that is used for VCP transmission.
+ * It is used internally by CubeVCP to manage the transmission of data over the VCP interface.
+ * This can be LPUART, USART, or any other UART peripheral that is configured for VCP transmission.
+ *
+ * @note This variable should not be modified once setup by the user.
+ * @warning The UART handle should be properly initialized and configured before using CubeVCP functions by STM32CubeMX.
+ */
+extern UART_HandleTypeDef *vcp_uart_handle;
+
+/**
  * @brief Mask for the ring buffer used in VCP transmission.
  *
  * This mask is used to wrap the head and tail indices of the ring buffer to ensure they stay within the bounds of the buffer size.
@@ -26,15 +38,15 @@ extern CubeVCP_Rx_Callback vcp_rx_callback;
  */
 #define VCP_TX_BUFFER_MASK (CUBE_VCP_TX_BUFFER_SIZE - 1)
 
-    /**
-     * @brief Head of the ring buffer for VCP transmission.
-     *
-     * This atomic variable keeps track of the current head index in the ring buffer
-     * It is used to determine where new data should be written in the buffer
-     *
-     * @warning Requires atomic operations to ensure thread safety when accessed from multiple contexts
-     */
-    extern _Atomic uint16_t vcp_ring_head;
+/**
+ * @brief Head of the ring buffer for VCP transmission.
+ *
+ * This atomic variable keeps track of the current head index in the ring buffer
+ * It is used to determine where new data should be written in the buffer
+ *
+ * @warning Requires atomic operations to ensure thread safety when accessed from multiple contexts
+ */
+extern _Atomic uint16_t vcp_ring_head;
 
 /**
  * @brief Tail of the ring buffer for VCP transmission.

@@ -14,6 +14,8 @@ HAL_StatusTypeDef CubeVCP_EnableRx(CubeVCP_Rx_Callback callback)
 	if (enabled) {
 		LOGOMATIC_ERROR("CubeVCP_EnableRx: already enabled");
 		return HAL_BUSY;
+	} else {
+		enabled = true;
 	}
 
 	if (vcp_uart_handle == NULL) {

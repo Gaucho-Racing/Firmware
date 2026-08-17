@@ -59,7 +59,6 @@
 CubeCAN_Handle *primaryHandle = NULL;
 CubeCAN_Handle *dataHandle = NULL;
 CubeCAN_Handle *chargerHandle = NULL;
-UART_HandleTypeDef *const vcp_uart_handle = &hlpuart1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -131,6 +130,7 @@ int main(void)
 	}
 
 	LOGOMATIC_INFO("Hello World!\n");
+  CubeVCP_Setup(&hlpuart1);
 	CubeVCP_EnableRx(CANdler_VCP_Callback);
 	/* USER CODE END 2 */
 

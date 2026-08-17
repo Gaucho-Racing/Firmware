@@ -25,18 +25,6 @@ typedef void (*CubeVCP_UART_RxCpltCallback)(UART_HandleTypeDef *huart);
 typedef void (*CubeVCP_Rx_Callback)(const uint8_t *const buffer, const uint16_t length);
 
 /**
- * @brief Pointer to the UART handle used for VCP transmission.
- *
- * This pointer should be set to the UART handle that is used for VCP transmission.
- * It is used internally by CubeVCP to manage the transmission of data over the VCP interface.
- * This can be LPUART, USART, or any other UART peripheral that is configured for VCP transmission.
- *
- * @note This variable should not be modified once setup by the user.
- * @warning The UART handle should be properly initialized and configured before using CubeVCP functions by STM32CubeMX.
- */
-extern __weak UART_HandleTypeDef *const vcp_uart_handle;
-
-/**
  * @brief Callback function pointer for handling UART transmission complete events in CubeVCP that are not related to the VCP transmission
  *
  * This function pointer allows users to define their own callback function to handle UART transmission complete events that are not related to the VCP transmission.
