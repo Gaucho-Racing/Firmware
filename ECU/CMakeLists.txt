@@ -11,7 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
-get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+get_filename_component(GR_PROJECT_NAME									${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 #TODO: when CAN implementation is settled, turn HOOTL tests back on
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
