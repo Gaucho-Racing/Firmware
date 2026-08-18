@@ -120,9 +120,9 @@ void write_adc_values_to_state_data(void) {
   stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
   stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE];
 
-  stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3;
-  stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3;
-  stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3;
+  stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3f;
+  stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3f;
+  stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3f;
 }
 
 void ADC_Configure(void) {
@@ -176,7 +176,7 @@ int main(void)
 	ADC_Configure();
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop
 
-	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
+	LOGOMATIC_H("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		BrakeLightControl(&stateLump);
@@ -194,7 +194,7 @@ int main(void)
 		write_adc_values_to_state_data();
 	}
 
-	LOGOMATIC("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
+	LOGOMATIC_H("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
 
   /* USER CODE END 2 */
 
