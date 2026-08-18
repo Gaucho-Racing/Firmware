@@ -229,7 +229,7 @@
 		},
 		{
 			"label": "CMake: configure and build W3_G4SPI_Transmit",
-			"type": "shell",
+										"type": "shell",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure"
