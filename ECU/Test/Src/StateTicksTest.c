@@ -161,7 +161,7 @@ int main(void)
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 
 		LOGOMATIC("Press brake: STAY IN GLV ON\n");
-		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
+			stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
