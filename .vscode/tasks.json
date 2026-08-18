@@ -235,7 +235,7 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Transmit"
-		},
+						},
 		{
 			"label": "CMake: configure and build W3_G4SPI_Receive",
 			"type": "shell",
