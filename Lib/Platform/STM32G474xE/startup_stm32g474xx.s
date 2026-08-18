@@ -59,7 +59,7 @@ defined in linker script */
  */
 
 .section .text.Reset_Handler
-.weak    Reset_Handler
+						.weak    Reset_Handler
 .type    Reset_Handler, %function
 
 Reset_Handler:
@@ -593,4 +593,3 @@ g_pfnVectors:
 
 	.weak FMAC_IRQHandler
 	.thumb_set FMAC_IRQHandler,Default_Handler
-
