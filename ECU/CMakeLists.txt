@@ -89,7 +89,6 @@ target_link_libraries(
 	INTERFACE
 		CANfigurator
 		# GR_ADC
-		CAN
 		BitManipulations_Lib
 		CUBE_CAN_LIB
 		# VCP_LIB
