@@ -10,8 +10,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  conditional:
+    name: Conditional Formatting Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      run_format: ${{ steps.conditional_check.outputs.run_format }}
+    steps:
+      - name: Checkout Pull Request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Conditional Check
+        id: conditional_check
+        run: |
+          if [ "${{ github.event.pull_request.draft }}" != "true" ]; then
+            echo "run_format=true" >> "$GITHUB_OUTPUT"
+          elif git log -1 --pretty=%B | grep -iq "format"; then
+            echo "run_format=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_format=false" >> "$GITHUB_OUTPUT"
+          fi
+
   clang:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Clang
     runs-on: ubuntu-latest
     permissions:
@@ -52,7 +78,8 @@ jobs:
           fetch: "false"
 
   cmake:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: CMake
     runs-on: ubuntu-slim
     permissions:
@@ -90,7 +117,8 @@ jobs:
           fetch: "false"
 
   json:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Json
     runs-on: ubuntu-slim
     permissions:
@@ -125,7 +153,8 @@ jobs:
           fetch: "false"
 
   perl:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Perl
     runs-on: ubuntu-slim
     permissions:
@@ -165,7 +194,8 @@ jobs:
           fetch: "false"
 
   asm:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Assembly
     runs-on: ubuntu-slim
     permissions:
@@ -211,7 +241,7 @@ jobs:
           fetch: "false"
 
   all:
-    if: ${{ (!github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto'))) && always() }}
+    if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Auto Formatters
     needs: [clang, cmake, json, perl, asm]
     runs-on: ubuntu-slim
