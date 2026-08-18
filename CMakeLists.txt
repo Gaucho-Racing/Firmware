@@ -109,7 +109,7 @@ else()
 endif()
 
 # Globals
-set(lib_path "Lib")
+				set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
 # Vendor
