@@ -11,7 +11,7 @@ main();
 sub main {
 	my $yaml_path   = $ARGV[0] // q{format.CANdo};
 	my $output_path = $ARGV[1] // q{GRCAN_BUS_ID.h};
-								my $dir         = dirname($output_path);
+	my $dir         = dirname($output_path);
 
 	if ( $dir && $dir ne q{.} && !-d $dir ) {
 		make_path($dir);
