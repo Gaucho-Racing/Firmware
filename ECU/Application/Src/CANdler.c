@@ -24,7 +24,7 @@ void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 {
 	// TODO Ideally change some state data to note a bad message, ie if ACU
 	// that can be a comms error
-	LOGOMATIC("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+	LOGOMATIC_H("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
 void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
@@ -44,7 +44,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
+			LOGOMATIC_H("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
 		case GRCAN_DEBUG_FD:
@@ -52,7 +52,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
+			LOGOMATIC_H("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
 		case GRCAN_PING:
@@ -112,7 +112,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
 
-			LOGOMATIC("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
+			LOGOMATIC_H("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
 				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
 
 			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later

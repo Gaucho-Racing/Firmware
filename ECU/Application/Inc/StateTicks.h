@@ -1,13 +1,13 @@
 #include "StateData.h"
 #include "StateMachine.h"
 #include "adc.h"
-#include "can.h"
+#include "CubeCAN.h"
 
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_
 
-extern CANHandle *primary_can;
-extern CANHandle *data_can;
+extern CubeCAN_Handle *primary_can;
+extern CubeCAN_Handle *data_can;
 
 /**
  * @brief Tick function for the ECU state machine.

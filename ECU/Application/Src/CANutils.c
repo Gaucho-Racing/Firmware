@@ -10,7 +10,7 @@
 #include "StateData.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "can.h"
+#include "CubeCAN.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 #include "string.h"
@@ -23,7 +23,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 {
 	if (size > FDCAN_MAX_DATA_BYTES) {
 		size = FDCAN_MAX_DATA_BYTES;
-		LOGOMATIC("Tried to send more than 64 bytes over CAN\n");
+		LOGOMATIC_H("Tried to send more than 64 bytes over CAN\n");
 	}
 
 	uint32_t ID = ((0xFF & GRCAN_ECU) << 20) | ((0xFFF & messageID) << 8) | (0xFF & destNode);
