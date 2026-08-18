@@ -167,7 +167,7 @@ int main(void)
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
-		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
+		if  (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
 			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
 			return 2;
 		}
