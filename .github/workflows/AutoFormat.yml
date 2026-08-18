@@ -62,7 +62,7 @@ jobs:
           echo "<details open><summary>Clang-Format Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git ls-files '*.c' '*.h' | xargs -r clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          git ls-files '*.c' '*.h' | xargs -P $(nproc) -r clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
