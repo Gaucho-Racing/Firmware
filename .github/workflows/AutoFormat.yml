@@ -42,7 +42,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -72,7 +72,7 @@ jobs:
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v8.3.0
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v8.3.0
         with:
           enable-cache: "false"
 
@@ -80,7 +80,7 @@ jobs:
         run: uv run --with gersemi gersemi --in-place --warnings-as-errors ${{ github.workspace }}
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -115,7 +115,7 @@ jobs:
           git ls-files '*.json' | xargs -r -I{} sh -c 'jq --tab . {} > {}.tmp && mv {}.tmp {}'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -155,7 +155,7 @@ jobs:
           git ls-files '*.pl' '*.pm' | xargs perltidy -b -bext='/'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -201,7 +201,7 @@ jobs:
           git ls-files '*.s' '*.asm' | xargs -r asmfmt -w -e
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
