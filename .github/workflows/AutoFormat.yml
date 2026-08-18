@@ -10,8 +10,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  conditional:
+    name: Conditional Formatting Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      run_format: ${{ steps.conditional_check.outputs.run_format }}
+    steps:
+      - name: Checkout Pull Request
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Conditional Check
+        id: conditional_check
+        run: |
+          if [ "${{ github.event.pull_request.draft }}" != "true" ]; then
+            echo "run_format=true" >> "$GITHUB_OUTPUT"
+          elif git log -1 --pretty=%B | grep -iq "format"; then
+            echo "run_format=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_format=false" >> "$GITHUB_OUTPUT"
+          fi
+
   clang:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Clang
     runs-on: ubuntu-latest
     permissions:
@@ -36,7 +62,7 @@ jobs:
           echo "<details open><summary>Clang-Format Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git ls-files '*.c' '*.h' | xargs -r clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          git ls-files '*.c' '*.h' | parallel clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -52,7 +78,8 @@ jobs:
           fetch: "false"
 
   cmake:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: CMake
     runs-on: ubuntu-slim
     permissions:
@@ -90,7 +117,8 @@ jobs:
           fetch: "false"
 
   json:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Json
     runs-on: ubuntu-slim
     permissions:
@@ -125,7 +153,8 @@ jobs:
           fetch: "false"
 
   perl:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Perl
     runs-on: ubuntu-slim
     permissions:
@@ -165,7 +194,8 @@ jobs:
           fetch: "false"
 
   asm:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Assembly
     runs-on: ubuntu-slim
     permissions:
