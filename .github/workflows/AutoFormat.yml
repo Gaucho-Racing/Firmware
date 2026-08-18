@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   clang:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.pull_request.title, 'format') && contains(github.event.pull_request.title, 'auto')) }}
+    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
     name: Clang
     runs-on: ubuntu-latest
     permissions:
@@ -52,7 +52,7 @@ jobs:
           fetch: "false"
 
   cmake:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.pull_request.title, 'format') && contains(github.event.pull_request.title, 'auto')) }}
+    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
     name: CMake
     runs-on: ubuntu-slim
     permissions:
@@ -90,7 +90,7 @@ jobs:
           fetch: "false"
 
   json:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.pull_request.title, 'format') && contains(github.event.pull_request.title, 'auto')) }}
+    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
     name: Json
     runs-on: ubuntu-slim
     permissions:
@@ -125,7 +125,7 @@ jobs:
           fetch: "false"
 
   perl:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.pull_request.title, 'format') && contains(github.event.pull_request.title, 'auto')) }}
+    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
     name: Perl
     runs-on: ubuntu-slim
     permissions:
@@ -165,7 +165,7 @@ jobs:
           fetch: "false"
 
   asm:
-    if: ${{ !github.event.pull_request.draft || (contains(github.event.pull_request.title, 'format') && contains(github.event.pull_request.title, 'auto')) }}
+    if: ${{ !github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto')) }}
     name: Assembly
     runs-on: ubuntu-slim
     permissions:
@@ -211,7 +211,7 @@ jobs:
           fetch: "false"
 
   all:
-    if: ${{ (!github.event.pull_request.draft || (contains(github.event.pull_request.title, 'format') && contains(github.event.pull_request.title, 'auto'))) && always() }}
+    if: ${{ (!github.event.pull_request.draft || (contains(github.event.head_commit.message, 'format') && contains(github.event.head_commit.message, 'auto'))) && always() }}
     name: Completed All Auto Formatters
     needs: [clang, cmake, json, perl, asm]
     runs-on: ubuntu-slim
