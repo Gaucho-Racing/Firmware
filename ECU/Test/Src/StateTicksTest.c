@@ -174,7 +174,7 @@ int main(void)
 
 		LOGOMATIC("Release brake: STAY IN GLV ON\n");
 		stateLumpTest.bse_signal = 0;
-		ECU_Pseudo_State_Tick(&stateLumpTest);
+		ECU_Pseudo_State_Tick(							&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
 			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
