@@ -59,19 +59,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
-				   .bus = LOGOMATIC_BUS,
-				   .gpio_port = LOGOMATIC_GPIOA,
-				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
-				   .baud_rate = 115200,
-				   .data_width = LOGOMATIC_DATAWIDTH_8B,
-				   .stop_bits = LOGOMATIC_STOPBITS_1,
-				   .parity = LOGOMATIC_PARITY_NONE,
-				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
-				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
-				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
+// LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
+// 				   .bus = LOGOMATIC_BUS,
+// 				   .gpio_port = LOGOMATIC_GPIOA,
+// 				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
+// 				   .baud_rate = 115200,
+// 				   .data_width = LOGOMATIC_DATAWIDTH_8B,
+// 				   .stop_bits = LOGOMATIC_STOPBITS_1,
+// 				   .parity = LOGOMATIC_PARITY_NONE,
+// 				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
+// 				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
+// 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
+// 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
+// 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
 // VCP_Config vcp_config = {.baud_rate = 2000000,
 // 			 .clock_source = VCP_CLOCK_PCLK,
@@ -167,7 +167,7 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-	Setup_Logomatic(&logomaticConfig);
+	//Setup_Logomatic(&logomaticConfig);
 	//Setup_VCP(&vcp_config);
 
 	// Initialize CAN
