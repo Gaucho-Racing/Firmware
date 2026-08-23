@@ -1,9 +1,16 @@
-# Prefer calling add_project() instead of the other functions directly
-# Note that add_project() will automatically add the project to the build system and link it against the appropriate CMSIS and HAL libraries
-# Link your user code against "${NAME}_USER_CODE" to ensure proper linking with the STM32 HAL and CMSIS libraries
-
+cmake_minimum_required(VERSION 3.25)
 include(FetchContent)
 
+#[[
+@brief Downloads a git repository and checks out a specific tag, using sparse checkout to only fetch specific folders
+@param NAME The name of the git repository (used for FetchContent)
+@param GIT_REPOSITORY The URL of the git repository to download
+@param GIT_TAG The git tag to checkout
+@param OUTPUT_PATH_VAR The variable to set with the path to the downloaded repository
+@param TARGET_FOLDER The folder(s) to fetch from the repository (sparse checkout)
+@note This function uses FetchContent to download the repository and sparse checkout to only fetch the specified folder(s)
+@remark Prefer calling add_project() instead of this function directly
+]]
 function(download_git)
     if(NOT ${ARGC} EQUAL 10)
         message(
@@ -92,7 +99,7 @@ function(add_arm_cmsis_core)
     target_include_directories(
         CMSIS_${ARM_CMSIS_CORE_ARG_MAJOR}_Core
         INTERFACE
-        "${ARM_CMSIS_CORE_PATH}/CMSIS/Core/Include"
+        $<BUILD_INTERFACE:${ARM_CMSIS_CORE_PATH}/CMSIS/Core/Include>
     )
 endfunction()
 
@@ -142,7 +149,7 @@ function(add_arm_cmsis_interface)
         NAME "cmsis_device_${SERIES_LOWER}"
         GIT_REPOSITORY "https://github.com/STMicroelectronics/cmsis-device-${SERIES_LOWER}.git"
         GIT_TAG ${ARM_CMSIS_INTERFACE_ARG_GIT_TAG}
-        TARGET_FOLDER "Include Source/Templates/gcc"
+        TARGET_FOLDER "Include"
         OUTPUT_PATH_VAR CMSIS_DEVICE_PATH
     )
     message(STATUS "Successfully fetched content for ARM CMSIS device ${SPECIFIER_UPPER} from ${ARM_CMSIS_INTERFACE_ARG_GIT_TAG} to ${CMSIS_DEVICE_PATH}")
@@ -150,13 +157,13 @@ function(add_arm_cmsis_interface)
     target_include_directories(
         "CMSIS_Device_${SPECIFIER_UPPER}"
         INTERFACE
-        "${CMSIS_DEVICE_PATH}/Include"
+        $<BUILD_INTERFACE:${CMSIS_DEVICE_PATH}/Include>
     )
-    target_sources(
+    target_compile_definitions(
         "CMSIS_Device_${SPECIFIER_UPPER}"
         INTERFACE
-        "${CMSIS_DEVICE_PATH}/Source/Templates/gcc/startup_stm32${SPECIFIER_LOWER}.s"
-        "${CMSIS_DEVICE_PATH}/Source/Templates/system_stm32${SERIES_LOWER}xx.c"
+        "STM32${SERIES_UPPER}xx"
+        "USE_HAL_DRIVER"
     )
 endfunction()
 
@@ -176,8 +183,6 @@ function(add_stm32_hal_interface)
     endif()
 
     set(one_value_args SERIES GIT_TAG)
-    unset(STM32_HAL_ARG_SERIES)
-    unset(STM32_HAL_ARG_GIT_TAG)
     cmake_parse_arguments("STM32_HAL_ARG" "" "${one_value_args}" "" ${ARGN})
 
     message(VERBOSE "Adding STM32 HAL driver interface for SERIES '${STM32_HAL_ARG_SERIES}' with GIT_TAG '${STM32_HAL_ARG_GIT_TAG}'")
@@ -203,11 +208,11 @@ function(add_stm32_hal_interface)
     target_include_directories(
         "STM32HAL_${SERIES_UPPER}"
         INTERFACE
-        "${STM32_HAL_DRIVER_PATH}/Inc"
-        "${STM32_HAL_DRIVER_PATH}/Inc/Legacy"
+        $<BUILD_INTERFACE:${STM32_HAL_DRIVER_PATH}/Inc>
+        $<BUILD_INTERFACE:${STM32_HAL_DRIVER_PATH}/Inc/Legacy>
     )
 
-    file(GLOB_RECURSE HAL_SOURCES "${STM32_HAL_DRIVER_PATH}/Src/*.c")
+    file(GLOB_RECURSE HAL_SOURCES CONFIGURE_DEPENDS "${STM32_HAL_DRIVER_PATH}/Src/*.c")
     list(FILTER HAL_SOURCES EXCLUDE REGEX ".*_template\.c$")
     target_sources(
         "STM32HAL_${SERIES_UPPER}"
@@ -237,6 +242,9 @@ function(add_project)
 
     set(one_value_args NAME PATH SERIES SPECIFIER HAL_GIT_TAG CMSIS_GIT_TAG CMSIS_MAJOR)
     cmake_parse_arguments("ARG" "" "${one_value_args}" "" ${ARGN})
+    string(TOUPPER "${ARG_SERIES}" SERIES_UPPER)
+    string(TOLOWER "${ARG_SERIES}" SERIES_LOWER)
+    string(TOUPPER "${ARG_SPECIFIER}" SPECIFIER_UPPER)
 
     message(DEBUG "Adding project '${ARG_NAME}' at path '${ARG_PATH}' with SERIES '${ARG_SERIES}', SPECIFIER '${ARG_SPECIFIER}', HAL_GIT_TAG '${ARG_HAL_GIT_TAG}', CMSIS_GIT_TAG '${ARG_CMSIS_GIT_TAG}', and CMSIS_MAJOR '${ARG_CMSIS_MAJOR}'")
 
@@ -254,31 +262,41 @@ function(add_project)
     if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
         # TODO Later, out of scope for now
     else()
-        message(STATUS "Adding project '${ARG_NAME}'")
-        add_executable("${ARG_NAME}")
+        set(TARGET_NAME "${ARG_NAME}")
+        message(STATUS "Adding project '${TARGET_NAME}'")
+        add_executable("${TARGET_NAME}")
+
+        include("${PROJECT_SOURCE_DIR}/Lib/Vendor/TargetFlags/stm32${SERIES_LOWER}xx.cmake")
+
+        target_compile_options(
+            "${TARGET_NAME}"
+            PRIVATE
+            "${stm32${SERIES_LOWER}xx_flags}"
+        )
 
         target_link_libraries(
-            "${ARG_NAME}"
+            "${TARGET_NAME}"
             PRIVATE
-            "CMSIS_Device_${ARG_SPECIFIER}"
+            "CMSIS_Device_${SPECIFIER_UPPER}"
             "CMSIS_${ARG_CMSIS_MAJOR}_Core"
-            "STM32HAL_${ARG_SERIES}"
+            "STM32HAL_${SERIES_UPPER}"
+            # "stm32${SERIES_LOWER}xx_flags"
             GLOBALSHARE_LIB
             m
         )
 
         target_link_options(
-            "${ARG_NAME}"
+            "${TARGET_NAME}"
             PRIVATE
-            "LINKER:-Map=$<TARGET_FILE_DIR:${ARG_NAME}>/$<TARGET_FILE_BASE_NAME:${ARG_NAME}>.map"
+            "LINKER:-Map=$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map"
         )
 
         target_compile_definitions(
-            "${ARG_NAME}"
+            "${TARGET_NAME}"
             PRIVATE
-            STM32${SERIES_UPPER}xx
             USE_HAL_DRIVER
-            ${SPECIFIER_UPPER}
+            USE_FULL_LL_DRIVER
+            STM32${SERIES_UPPER}xx
         )
     endif()
 
@@ -286,9 +304,5 @@ function(add_project)
         target_compile_definitions("${ARG_NAME}" PRIVATE NODE=${NODE})
     endif()
 
-    block()
-        set(TARGET_NAME "${ARG_NAME}")
-        add_subdirectory("${PROJECT_SOURCE_DIR}/${ARG_PATH}")
-        # set_subdirectory_properties(PROPERTIES TARGET_NAME "${TARGET_NAME}")
-    endblock()
+    add_subdirectory("${PROJECT_SOURCE_DIR}/${ARG_PATH}")
 endfunction()
