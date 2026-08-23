@@ -1,9 +1,7 @@
-> [!IMPORTANT]
-> Note that using a peripheral abstraction (eg our version of CAN) means it will no longer be compatible with CubeMX. As a result please **disable** the peripheral within CubeMX and let the peripheral abstraction handle it.
-
 # STM32CubeMX
 
-This was last verified on version `6.18.0`
+> [!IMPORTANT]
+> Note that using a peripheral abstraction (eg our old version of CAN) means it will no longer be compatible with CubeMX. As a result please **disable** the peripheral within CubeMX and let the peripheral abstraction handle it.
 
 STM32CubeMX2 is a different product that coexists with STM32CubeMX and (as of now) cannot be used.
 
