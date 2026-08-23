@@ -41,7 +41,7 @@ function(add_gr_project)
 		target_link_options(
 			${TARGET_NAME}
 			PRIVATE
-				LINKER:-Map,$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map
+				"LINKER:-Map=$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map"
 		)
 
 		if(DEFINED NODE)
