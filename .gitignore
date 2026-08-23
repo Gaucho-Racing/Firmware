@@ -95,7 +95,5 @@ EWARM
 */*/cmake/starm-clang.cmake
 */Drivers
 */*/Drivers
-*/CMakeLists.txt
-*/*/CMakeLists.txt
 */CMakePresets.json
 */*/CMakePresets.json
