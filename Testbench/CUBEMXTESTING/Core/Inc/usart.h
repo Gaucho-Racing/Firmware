@@ -49,4 +49,3 @@ void MX_LPUART1_UART_Init(void);
 #endif
 
 #endif /* __USART_H__ */
-
