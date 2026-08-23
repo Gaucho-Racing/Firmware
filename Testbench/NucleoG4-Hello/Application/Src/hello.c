@@ -2,8 +2,8 @@
 
 #include <stdint.h>
 
-#include "main.h"
 #include "Logomatic.h"
+#include "main.h"
 
 HAL_StatusTypeDef say_hello(uint8_t count)
 {
