@@ -11,6 +11,9 @@
 #include "Pinging.h"
 #include "StateData.h"
 #include "bitManipulations.h"
+#include "CubeCAN.h"
+
+extern ECU_StateData stateLump;
 
 #define WHEEL_RADIUS_INCHES 8.0f
 #define WHEEL_CIRCUMFERENCE_INCHES (2.0f * (float)M_PI * WHEEL_RADIUS_INCHES)
@@ -24,7 +27,7 @@ void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 {
 	// TODO Ideally change some state data to note a bad message, ie if ACU
 	// that can be a comms error
-	LOGOMATIC_H("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+	LOGOMATIC_ERROR("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
 void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
@@ -33,7 +36,7 @@ void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 	UNUSED(bus_id);
 	UNUSED(msg_id);
 	UNUSED(sender_id);
-	// LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+	LOGOMATIC_ERROR("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
@@ -44,7 +47,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			LOGOMATIC_H("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
+			LOGOMATIC_INFO("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
 		case GRCAN_DEBUG_FD:
@@ -52,7 +55,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			LOGOMATIC_H("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
+			LOGOMATIC_ERROR("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
 		case GRCAN_PING:
@@ -112,7 +115,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
 
-			LOGOMATIC_H("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
+			LOGOMATIC_INFO("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
 				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
 
 			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later
@@ -182,4 +185,21 @@ void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, u
 			// ReportUnhandledMessage(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
 			break;
 	}
+}
+
+
+void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size){
+
+	if (context == NULL || identifier == NULL || data == NULL || size == 0){
+		LOGOMATIC_ERROR("CANdler_Callback: Invalid parameters received. context: %p, identifier: %p, data: %p, size: %u\n",
+			(void *const)context, (void *const)identifier, (void *const)data, size);
+		return;
+	}
+
+	const GRCAN_BUS_ID bus_id = context->busid_user_context;
+	const GRCAN_NODE_ID sender_id = identifier->tx_node_id;
+	const GRCAN_MSG_ID msg_id = identifier->msg_id;
+
+	ECU_CAN_MessageHandler(&stateLump, bus_id, msg_id, sender_id, (uint8_t *)data, size);
+
 }

@@ -40,10 +40,8 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			CANfigurator
 			LOGOMATIC_LIB
 			m
-			# GR_ADC
-			# PERIPHERAL_CAN_LIB
+			CUBE_CAN_LIB
 			BitManipulations_Lib
-			VCP_LIB
 	)
 	add_test(StateTicksTest StateTicksTest)
 
@@ -70,7 +68,7 @@ target_sources(
 		# Core
 		Core/Src/adc.c
 		Core/Src/dma.c
-		#Core/Src/fdcan.c
+		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
@@ -91,7 +89,8 @@ target_link_libraries(
 		# GR_ADC
 		BitManipulations_Lib
 		CUBE_CAN_LIB
-		# VCP_LIB
+		#VCP_LIB
+		LOGOMATIC_LIB
 )
 
 target_include_directories(

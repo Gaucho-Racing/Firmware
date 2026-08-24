@@ -11,7 +11,7 @@
 
 /*
 - GLV ON
-    - LOGOMATIC working
+    - LOGOMATIC_INFO working
 - TSSI
 - PRECHARGE ENGAGED
 - PRECHARGE COMPLETE
@@ -29,9 +29,9 @@ static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 	// EV.5.11.5: Flash, 2 Hz to 5 Hz, 50% duty cycle
 	//     Here we chose a period of 350ms
 	if (bmsFailure(stateLumpTest) || imdFailure(stateLumpTest)) {
-		LOGOMATIC("TSSI: TS Faulty\n");
+		LOGOMATIC_INFO("TSSI: TS Faulty\n");
 	} else {
-		LOGOMATIC("TSSI: TS Normal\n");
+		LOGOMATIC_INFO("TSSI: TS Normal\n");
 	}
 
 	if (stateLumpTest->ts_active_button_press_interrupt) {
@@ -68,8 +68,8 @@ static void ECU_Pseudo_State_Tick(ECU_StateData *stateLumpTest)
 			ECU_Tractive_System_Discharge(stateLumpTest);
 			break;
 		default:
-			LOGOMATIC("ECU Current State Unknown: %d\n", stateLumpTest->ecu_state);
-			LOGOMATIC("ECU: Resetting to GLV On\n");
+			LOGOMATIC_INFO("ECU Current State Unknown: %d\n", stateLumpTest->ecu_state);
+			LOGOMATIC_INFO("ECU: Resetting to GLV On\n");
 			stateLumpTest->ecu_state = GR_GLV_ON;
 			break;
 	}
@@ -119,10 +119,10 @@ int main(void)
 		// ###########################
 		// ## Step 0.0              ##
 		// ###########################
-		LOGOMATIC("State Ticks test started\n");
+		LOGOMATIC_INFO("State Ticks test started\n");
 		ECU_StateData stateLumpTest = defaultState;
 
-		LOGOMATIC("Check GLV ON at boot\n");
+		LOGOMATIC_INFO("Check GLV ON at boot\n");
 		stateLumpTest.ecu_state = GR_GLV_ON;
 		stateLumpTest.acu_software_latch = 1;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
@@ -130,73 +130,73 @@ int main(void)
 		// ##########################
 		// ## Step 0.1             ##
 		// ##########################
-		LOGOMATIC("Press and release RTD -> STAY IN GLV ON\n");
+		LOGOMATIC_INFO("Press and release RTD -> STAY IN GLV ON\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("0.1 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("0.1 Failure: ecu state not in GLV ON\n");
 			return 1;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.1 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.1 Failure: BMS or IMD reports faulty\n");
 			return 1;
 		}
 
 		// ##########################
 		// ## Step 0.2             ##
 		// ##########################
-		LOGOMATIC("Press throttle (1 and 2): STAY IN GLV ON\n");
+		LOGOMATIC_INFO("Press throttle (1 and 2): STAY IN GLV ON\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.2 Failure: BMS or IMD reports faulty\n");
 			return 1;
 		}
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 
-		LOGOMATIC("Press brake: STAY IN GLV ON\n");
+		LOGOMATIC_INFO("Press brake: STAY IN GLV ON\n");
 		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.2 Failure: BMS or IMD reports faulty\n");
 			return 2;
 		}
 
-		LOGOMATIC("Release brake: STAY IN GLV ON\n");
+		LOGOMATIC_INFO("Release brake: STAY IN GLV ON\n");
 		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("0.2 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("0.2 Failure: ecu state not in GLV ON\n");
 			return 2;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.2 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.2 Failure: BMS or IMD reports faulty\n");
 			return 2;
 		}
 
 		// ##########################
 		// ## Step 0.3             ##
 		// ##########################
-		LOGOMATIC("Press TS ACTIVE: Go to PRECHARGE ENGAGE\n");
+		LOGOMATIC_INFO("Press TS ACTIVE: Go to PRECHARGE ENGAGE\n");
 		stateLumpTest.ts_active_button_press_interrupt = true;
 		stateLumpTest.ir_minus = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_ENGAGED) {
-			LOGOMATIC("0.3 Failure: ecu state not in precharge engaged\n");
+			LOGOMATIC_INFO("0.3 Failure: ecu state not in precharge engaged\n");
 			return 3;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.3 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.3 Failure: BMS or IMD reports faulty\n");
 			return 3;
 		}
 
@@ -204,281 +204,281 @@ int main(void)
 		// ## Step 0.4             ##
 		// ##########################
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_ENGAGED) {
-			LOGOMATIC("0.4 Failure: ecu state not in precharge engaged\n");
+			LOGOMATIC_INFO("0.4 Failure: ecu state not in precharge engaged\n");
 			return 4;
 		}
 
 		// ##########################
 		// ## Step 0.5            ##
 		// ##########################
-		LOGOMATIC("Test Precharge Complete (IR PLUS)\n");
+		LOGOMATIC_INFO("Test Precharge Complete (IR PLUS)\n");
 		stateLumpTest.ir_plus = true;
 		stateLumpTest.ts_voltage = 400; // dummy value
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.5 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.5 Failure: ecu state not in precharge complete\n");
 			return 5;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.5 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.5 Failure: BMS or IMD reports faulty\n");
 			return 5;
 		}
 
 		// ##########################
 		// ## Step 0.6             ##
 		// ##########################
-		LOGOMATIC("Press RTD -> STAY IN PRECHARGE COMPLETE\n");
+		LOGOMATIC_INFO("Press RTD -> STAY IN PRECHARGE COMPLETE\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.6 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.6 Failure: ecu state not in precharge complete\n");
 			return 6;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.6 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.6 Failure: BMS or IMD reports faulty\n");
 			return 6;
 		}
-		LOGOMATIC("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
+		LOGOMATIC_INFO("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
 		stateLumpTest.rtd_button_press_interrupt = false;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.6 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.6 Failure: ecu state not in precharge complete\n");
 			return 6;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.6 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.6 Failure: BMS or IMD reports faulty\n");
 			return 6;
 		}
 
 		// ##########################
 		// ## Step 0.7             ##
 		// ##########################
-		LOGOMATIC("Press and release the RTD button WHILE pressing the brake\n");
+		LOGOMATIC_INFO("Press and release the RTD button WHILE pressing the brake\n");
 		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
-		LOGOMATIC("Press RTD\n");
+		LOGOMATIC_INFO("Press RTD\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
-		LOGOMATIC("Release RTD\n");
+		LOGOMATIC_INFO("Release RTD\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.7 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.7 Failure: ecu state not in drive active\n");
 			return 7;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.7 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.7 Failure: BMS or IMD reports faulty\n");
 			return 7;
 		}
 
 		// ##########################
 		// ## Step 0.8             ##
 		// ##########################
-		LOGOMATIC("Release Brakes -> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Release Brakes -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.8 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.8 Failure: ecu state not in drive active\n");
 			return 8;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.8 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.8 Failure: BMS or IMD reports faulty\n");
 			return 8;
 		}
 
 		// ##########################
 		// ## Step 0.9             ##
 		// ##########################
-		LOGOMATIC("Press Throttle -> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Press Throttle -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.9 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.9 Failure: ecu state not in drive active\n");
 			return 9;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.9 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.9 Failure: BMS or IMD reports faulty\n");
 			return 9;
 		}
 
 		// ##########################
 		// ## Step 0.10            ##
 		// ##########################
-		LOGOMATIC("Release Throttle -> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Release Throttle -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = 0;
 		stateLumpTest.APPS2_Signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.10 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.10 Failure: ecu state not in drive active\n");
 			return 10;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.10 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.10 Failure: BMS or IMD reports faulty\n");
 			return 10;
 		}
 
 		// ##########################
 		// ## Step 0.11            ##
 		// ##########################
-		LOGOMATIC("Press Throttle and Brake -> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Press Throttle and Brake -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		stateLumpTest.bse_signal = stateLumpTest.brake_bse_min + 69;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.11 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.11 Failure: ecu state not in drive active\n");
 			return 11;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.11 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.11 Failure: BMS or IMD reports faulty\n");
 			return 11;
 		}
 
 		// ##########################
 		// ## Step 0.12            ##
 		// ##########################
-		LOGOMATIC("Release Throttle and Brake-> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Release Throttle and Brake-> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 		stateLumpTest.bse_signal = 0;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.12 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.12 Failure: ecu state not in drive active\n");
 			return 12;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.12 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.12 Failure: BMS or IMD reports faulty\n");
 			return 12;
 		}
 
 		// ##########################
 		// ## Step 0.13             ##
 		// ##########################
-		LOGOMATIC("Press Throttle -> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Press Throttle -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.13 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.13 Failure: ecu state not in drive active\n");
 			return 13;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.13 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.13 Failure: BMS or IMD reports faulty\n");
 			return 13;
 		}
 
 		// ##########################
 		// ## Step 0.14            ##
 		// ##########################
-		LOGOMATIC("Release Throttle -> STAY IN DRIVE ACTIVE\n");
+		LOGOMATIC_INFO("Release Throttle -> STAY IN DRIVE ACTIVE\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_DRIVE_ACTIVE) {
-			LOGOMATIC("0.14 Failure: ecu state not in drive active\n");
+			LOGOMATIC_INFO("0.14 Failure: ecu state not in drive active\n");
 			return 14;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.14 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.14 Failure: BMS or IMD reports faulty\n");
 			return 14;
 		}
 
 		// ##########################
 		// ## Step 0.15            ##
 		// ##########################
-		LOGOMATIC("Press RTD -> MOVE TO PRECHARGE COMPLETE\n");
+		LOGOMATIC_INFO("Press RTD -> MOVE TO PRECHARGE COMPLETE\n");
 		stateLumpTest.rtd_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.15 Failure: ecu state not in precharge complete\n");
 			return 15;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.15 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.15 Failure: BMS or IMD reports faulty\n");
 			return 15;
 		}
-		LOGOMATIC("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
+		LOGOMATIC_INFO("Release RTD -> STAY IN PRECHARGE COMPLETE\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.15 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.15 Failure: ecu state not in precharge complete\n");
 			return 15;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.15 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.15 Failure: BMS or IMD reports faulty\n");
 			return 15;
 		}
 
 		// ##########################
 		// ## Step 0.16             ##
 		// ##########################
-		LOGOMATIC("Press Throttle -> STAY IN Precharge Complete\n");
+		LOGOMATIC_INFO("Press Throttle -> STAY IN Precharge Complete\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_max;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_max;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.16 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.16 Failure: ecu state not in precharge complete\n");
 			return 16;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.16 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.16 Failure: BMS or IMD reports faulty\n");
 			return 16;
 		}
 
 		// ##########################
 		// ## Step 0.17            ##
 		// ##########################
-		LOGOMATIC("Release Throttle -> STAY IN Precharge Complete\n");
+		LOGOMATIC_INFO("Release Throttle -> STAY IN Precharge Complete\n");
 		stateLumpTest.APPS1_Signal = stateLumpTest.apps_1_min;
 		stateLumpTest.APPS2_Signal = stateLumpTest.apps_2_min;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_PRECHARGE_COMPLETE) {
-			LOGOMATIC("0.17 Failure: ecu state not in precharge complete\n");
+			LOGOMATIC_INFO("0.17 Failure: ecu state not in precharge complete\n");
 			return 17;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.17 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.17 Failure: BMS or IMD reports faulty\n");
 			return 17;
 		}
 
 		// ##########################
 		// ## Step 0.18            ##
 		// ##########################
-		LOGOMATIC("Press TS Active Button -> MOVE to TS DISCHARGE\n");
+		LOGOMATIC_INFO("Press TS Active Button -> MOVE to TS DISCHARGE\n");
 		stateLumpTest.ts_active_button_press_interrupt = true;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_TS_DISCHARGE) {
-			LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");
+			LOGOMATIC_INFO("0.18 Failure: ecu state not in ts discharge\n");
 			return 18;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.18 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.18 Failure: BMS or IMD reports faulty\n");
 			return 18;
 		}
 
-		LOGOMATIC("Release TS Active Button -> STAY IN TS DISCHARGE\n");
+		LOGOMATIC_INFO("Release TS Active Button -> STAY IN TS DISCHARGE\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_TS_DISCHARGE) {
-			LOGOMATIC("0.18 Failure: ecu state not in ts discharge\n");
+			LOGOMATIC_INFO("0.18 Failure: ecu state not in ts discharge\n");
 			return 18;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.18 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.18 Failure: BMS or IMD reports faulty\n");
 			return 18;
 		}
 
 		// ##########################
 		// ## Step 0.19            ##
 		// ##########################
-		LOGOMATIC("TS Voltage Less than 60 -> MOVE to GLV ON\n");
+		LOGOMATIC_INFO("TS Voltage Less than 60 -> MOVE to GLV ON\n");
 		stateLumpTest.ts_voltage = 40;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		stateLumpTest.ir_minus = !stateLumpTest.ir_minus;
 		stateLumpTest.ir_plus = !stateLumpTest.ir_plus;
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("0.19 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("0.19 Failure: ecu state not in GLV ON\n");
 			return 19;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("0.19 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("0.19 Failure: BMS or IMD reports faulty\n");
 			return 19;
 		}
 	}
@@ -487,46 +487,46 @@ int main(void)
 		// ##########################
 		// ## Step 1.0             ##
 		// ##########################
-		LOGOMATIC("Reset system\n");
+		LOGOMATIC_INFO("Reset system\n");
 		ECU_StateData stateLumpTest = defaultState;
-		LOGOMATIC("State Tick Test 1 started\n");
+		LOGOMATIC_INFO("State Tick Test 1 started\n");
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("1.0 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("1.0 Failure: ecu state not in GLV ON\n");
 			return 21;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("1.0 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("1.0 Failure: BMS or IMD reports faulty\n");
 			return 21;
 		}
 
 		// ##########################
 		// ## Step 1.1            ##
 		// ##########################
-		LOGOMATIC("TS Voltage Greater than 60 -> MOVE to TS DISCHARGE\n");
+		LOGOMATIC_INFO("TS Voltage Greater than 60 -> MOVE to TS DISCHARGE\n");
 		stateLumpTest.ts_voltage = 500;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_TS_DISCHARGE) {
-			LOGOMATIC("1.1 Failure: ecu state not in TS DISCHARGE\n");
+			LOGOMATIC_INFO("1.1 Failure: ecu state not in TS DISCHARGE\n");
 			return 21;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("1.1 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("1.1 Failure: BMS or IMD reports faulty\n");
 			return 21;
 		}
 
 		// ##########################
 		// ## Step 1.2            ##
 		// ##########################
-		LOGOMATIC("TS Voltage Less than 60 -> MOVE to GLV ON\n");
+		LOGOMATIC_INFO("TS Voltage Less than 60 -> MOVE to GLV ON\n");
 		stateLumpTest.ts_voltage = 40;
 		ECU_Pseudo_State_Tick(&stateLumpTest);
 		if (stateLumpTest.ecu_state != GR_GLV_ON) {
-			LOGOMATIC("1.2 Failure: ecu state not in GLV ON\n");
+			LOGOMATIC_INFO("1.2 Failure: ecu state not in GLV ON\n");
 			return 22;
 		}
 		if (bmsFailure(&stateLumpTest) || imdFailure(&stateLumpTest)) {
-			LOGOMATIC("1.2 Failure: BMS or IMD reports faulty\n");
+			LOGOMATIC_INFO("1.2 Failure: BMS or IMD reports faulty\n");
 			return 21;
 		}
 	}

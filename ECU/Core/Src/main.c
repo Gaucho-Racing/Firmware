@@ -38,6 +38,7 @@
 #include "adc.h"
 #include "CubeCAN.h"
 #include "stm32g4xx_hal.h"
+#include "fdcan.h"
 //#include "vcp.h"
 /* USER CODE END Includes */
 
@@ -59,19 +60,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-// LogomaticConfig logomaticConfig = {.clock_source = LOGOMATIC_PCLK1,
-// 				   .bus = LOGOMATIC_BUS,
-// 				   .gpio_port = LOGOMATIC_GPIOA,
-// 				   .gpio_pin_rx_tx_mask = LL_GPIO_PIN_9 | LL_GPIO_PIN_10,
-// 				   .baud_rate = 115200,
-// 				   .data_width = LOGOMATIC_DATAWIDTH_8B,
-// 				   .stop_bits = LOGOMATIC_STOPBITS_1,
-// 				   .parity = LOGOMATIC_PARITY_NONE,
-// 				   .transfer_direction = LOGOMATIC_DIRECTION_TX,
-// 				   .hardware_flow_control = LOGOMATIC_HWCONTROL_NONE,
-// 				   .prescaler = LOGOMATIC_PRESCALER_DIV1,
-// 				   .tx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8,
-// 				   .rx_fifo_threshold = LOGOMATIC_FIFOTHRESHOLD_1_8};
 
 // VCP_Config vcp_config = {.baud_rate = 2000000,
 // 			 .clock_source = VCP_CLOCK_PCLK,
@@ -167,16 +155,38 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-	//Setup_Logomatic(&logomaticConfig);
+  Logomatic_SetLogLevel(LogLevel_Info);
 	//Setup_VCP(&vcp_config);
 
 	// Initialize CAN
-	//CAN_Configure();
+	CubeCAN_Config primaryCanConfig = {
+    .rx_callback = CANdler_Callback,
+    .context.busid_user_context = GRCAN_BUS_PRIMARY,
+    .sending_node_id = GRCAN_ECU
+  };
+
+  CubeCAN_Config dataCanConfig = {
+    .rx_callback = CANdler_Callback,
+    .context.busid_user_context = GRCAN_BUS_DATA,
+    .sending_node_id = GRCAN_ECU
+  };
+
+  stateLump.primary_can = CubeCAN_Entrance(&hfdcan1, &primaryCanConfig);
+  if (stateLump.primary_can == NULL){
+    LOGOMATIC_CRITICAL("Failed to initialize primary CAN handle\n");
+    Error_Handler();
+  }
+
+  stateLump.data_can = CubeCAN_Entrance(&hfdcan2, &dataCanConfig);
+  if (stateLump.data_can == NULL){
+    LOGOMATIC_CRITICAL("Failed to initialize data CAN handle\n");
+    Error_Handler();
+  }
 
 	ADC_Configure();
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop
 
-	LOGOMATIC_H("Boot completed at %lu ms\n", MillisecondsSinceBoot());
+	LOGOMATIC_INFO("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		BrakeLightControl(&stateLump);
@@ -194,7 +204,7 @@ int main(void)
 		write_adc_values_to_state_data();
 	}
 
-	LOGOMATIC_H("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
+	LOGOMATIC_INFO("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
 
   /* USER CODE END 2 */
 
@@ -203,6 +213,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+    CubeCAN_Tick();
+    HAL_Delay(100);
 
     /* USER CODE BEGIN 3 */
   }
