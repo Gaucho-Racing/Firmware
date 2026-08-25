@@ -18,3 +18,10 @@ target_link_libraries(
 		GLOBALSHARE_LIB
 		LOGOMATIC_OLD_LIB
 )
+
+set_target_properties(
+	VCP_LIB
+	PROPERTIES
+		DEPRECATION
+			"VCP_LIB is deprecated and should be removed in favor of CUBE_VCP_LIB."
+)

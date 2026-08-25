@@ -130,6 +130,7 @@ include("${platform_path}/STM32H523xE/chip.cmake")
 include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/OldLogomatic/logomatic.cmake")
 include("${lib_path}/Utils/Logomatic/log.cmake")
+include("${lib_path}/Utils/CubeVCP/vcp.cmake")
 include("${lib_path}/Utils/VirtualComPort/vcp.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")
@@ -159,22 +160,8 @@ add_gr_project(STM32G431x8 OutboardSensors TireTemp)
 add_gr_project(STM32G431x8 OutboardSensors BrakeTemp)
 
 # Development
-add_gr_project(STM32G474xE G4PERTESTING)
-add_gr_project(STM32G474xE G4SPITESTING)
-add_gr_project(STM32G474xE G4ADCTESTING)
-add_gr_project(STM32G474xE G4NEOTESTING)
-add_gr_project(STM32G474xE CUBEMXTESTING)
-
-# CAN Peripheral Testing
-add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_BASIC_TEST)
-add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_RELEASE_TEST)
-add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_STRESS_TEST)
-add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_LOST_RX_TEST)
-add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_FILTER_TEST)
-add_gr_project(STM32G474xE G474xE_CAN_TESTING PROFILER_TEST)
-add_gr_project(STM32G431x8 G431x8_CAN_TESTING G431x8_CAN_BASIC_TEST)
-
-add_gr_project(STM32G474xE G4FANCYCANTESTING CAN_LOOPBACK_TEST)
+add_gr_project(STM32G474xE Testbench G4NEOTESTING)
+add_gr_project(STM32G474xE Testbench CUBEMXTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4BLINKY)

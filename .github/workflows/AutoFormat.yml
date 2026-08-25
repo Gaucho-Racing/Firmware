@@ -10,8 +10,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  conditional:
+    name: Conditional Formatting Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      run_format: ${{ steps.conditional_check.outputs.run_format }}
+    steps:
+      - name: Checkout Pull Request
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Conditional Check
+        id: conditional_check
+        run: |
+          if [ "${{ github.event.pull_request.draft }}" != "true" ]; then
+            echo "run_format=true" >> "$GITHUB_OUTPUT"
+          elif git log -1 --pretty=%B | grep -iq "format"; then
+            echo "run_format=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_format=false" >> "$GITHUB_OUTPUT"
+          fi
+
   clang:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Clang
     runs-on: ubuntu-latest
     permissions:
@@ -36,13 +62,13 @@ jobs:
           echo "<details open><summary>Clang-Format Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git ls-files '*.c' '*.h' | xargs -r clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          git ls-files '*.c' '*.h' | parallel clang-format -i --verbose 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -52,7 +78,8 @@ jobs:
           fetch: "false"
 
   cmake:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: CMake
     runs-on: ubuntu-slim
     permissions:
@@ -72,7 +99,7 @@ jobs:
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v8.3.0
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v8.3.0
         with:
           enable-cache: "false"
 
@@ -80,7 +107,7 @@ jobs:
         run: uv run --with gersemi gersemi --in-place --warnings-as-errors ${{ github.workspace }}
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -90,7 +117,8 @@ jobs:
           fetch: "false"
 
   json:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Json
     runs-on: ubuntu-slim
     permissions:
@@ -115,7 +143,7 @@ jobs:
           git ls-files '*.json' | xargs -r -I{} sh -c 'jq --tab . {} > {}.tmp && mv {}.tmp {}'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -125,7 +153,8 @@ jobs:
           fetch: "false"
 
   perl:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Perl
     runs-on: ubuntu-slim
     permissions:
@@ -155,7 +184,7 @@ jobs:
           git ls-files '*.pl' '*.pm' | xargs perltidy -b -bext='/'
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
@@ -165,7 +194,8 @@ jobs:
           fetch: "false"
 
   asm:
-    if: ${{ !github.event.pull_request.draft }}
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
     name: Assembly
     runs-on: ubuntu-slim
     permissions:
@@ -201,7 +231,7 @@ jobs:
           git ls-files '*.s' '*.asm' | xargs -r asmfmt -w -e
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
