@@ -213,8 +213,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    CubeCAN_Tick();
-    HAL_Delay(100);
 
     /* USER CODE BEGIN 3 */
   }

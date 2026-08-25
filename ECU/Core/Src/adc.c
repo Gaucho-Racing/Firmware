@@ -442,3 +442,4 @@ void ADC_UpdateAnalogValues_EMA(volatile uint16_t *ADC_buffers, uint8_t num_sign
 }
 
 /* USER CODE END 1 */
+

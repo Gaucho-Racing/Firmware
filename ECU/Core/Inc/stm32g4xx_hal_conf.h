@@ -42,7 +42,7 @@
 /*#define HAL_CRC_MODULE_ENABLED   */
 /*#define HAL_CRYP_MODULE_ENABLED   */
 /*#define HAL_DAC_MODULE_ENABLED   */
-#define HAL_FDCAN_MODULE_ENABLED
+/*#define HAL_FDCAN_MODULE_ENABLED   */
 /*#define HAL_FMAC_MODULE_ENABLED   */
 /*#define HAL_HRTIM_MODULE_ENABLED   */
 /*#define HAL_IRDA_MODULE_ENABLED   */
@@ -63,9 +63,9 @@
 /*#define HAL_SPI_MODULE_ENABLED   */
 /*#define HAL_SRAM_MODULE_ENABLED   */
 /*#define HAL_TIM_MODULE_ENABLED   */
-#define HAL_UART_MODULE_ENABLED   */
-#define HAL_USART_MODULE_ENABLED   */
-#define HAL_WWDG_MODULE_ENABLED   */
+/*#define HAL_UART_MODULE_ENABLED   */
+/*#define HAL_USART_MODULE_ENABLED   */
+/*#define HAL_WWDG_MODULE_ENABLED   */
 #define HAL_GPIO_MODULE_ENABLED
 #define HAL_EXTI_MODULE_ENABLED
 #define HAL_DMA_MODULE_ENABLED
@@ -192,7 +192,7 @@ The real value may vary depending on the variations in voltage and temperature.*
   * @brief Uncomment the line below to expanse the "assert_param" macro in the
   *        HAL drivers code
   */
-/* #define USE_FULL_ASSERT    1U */
+ #define USE_FULL_ASSERT    1U
 
 /* ################## SPI peripheral configuration ########################## */
 

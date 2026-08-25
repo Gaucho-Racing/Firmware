@@ -86,10 +86,9 @@ target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		CANfigurator
-		# GR_ADC
 		BitManipulations_Lib
 		CUBE_CAN_LIB
-		#VCP_LIB
+		# CUBE_VCP_LIB	# TODO Add VCP back in when we have a plan for how to use it
 		LOGOMATIC_LIB
 )
 
