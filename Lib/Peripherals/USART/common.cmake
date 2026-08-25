@@ -8,3 +8,10 @@ target_include_directories(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/../..
 )
+
+set_target_properties(
+	PERIPHERAL_USART_LIB
+	PROPERTIES
+		DEPRECATION
+			"PERIPHERAL_USART_LIB is deprecated and should be removed in favor of STM32CubeMX functionality or VCP_LIB."
+)
