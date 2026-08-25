@@ -20,6 +20,8 @@ extern ECU_StateData stateLump;
 uint32_t lastTickECUStateDataSent = 0;
 
 
+//FIXME: Help double check this is correct, current no build errors on debug
+
 void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 {
 	CubeCAN_Handle *handle = NULL;
@@ -69,7 +71,7 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 
 
 
-
+//Didnt want to delete this in case the change I made aren't necessary
 
 // void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 // {
