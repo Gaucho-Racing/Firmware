@@ -26,24 +26,14 @@ target_include_directories(
 target_sources(
 	${TARGET_NAME}
 	PRIVATE
-		Application/Src/CANdler.c
-		Application/Src/Loop.c
-		Core/Src/fdcan.c
+		Application/Src/hello.c
 		Core/Src/gpio.c
 		Core/Src/main.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-		Core/Src/tim.c
-		Core/Src/usart.c
 		startup_stm32g474xx.s
 )
 
-target_link_libraries(
-	${TARGET_NAME}
-	PRIVATE
-		CUBE_CAN_LIB
-		CUBE_VCP_LIB
-		LOGOMATIC_LIB
-)
+target_link_libraries(${TARGET_NAME} PRIVATE LOGOMATIC_LIB)

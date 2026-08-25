@@ -4,8 +4,6 @@ enable_language(
 	C
 	ASM
 )
-
-# Setup compiler settings
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
@@ -109,15 +107,22 @@ else()
 endif()
 
 # Globals
-set(lib_path "Lib")
-set(platform_path "${lib_path}/Platform")
+set(LIB_PATH "Lib")
+set(platform_path "${LIB_PATH}/Platform")
+
+include("${LIB_PATH}/cmake/cube.cmake")
+
+add_arm_cmsis_core(
+    MAJOR "5"
+    GIT_TAG "5.9.0" # https://github.com/ARM-software/CMSIS_5/tree/5.9.0
+)
 
 # Vendor
-include("${lib_path}/Vendor/CMSIS_5/cmsis_5.cmake")
-include("${lib_path}/Vendor/STM32_HAL_LL/cube.cmake")
-add_subdirectory("${lib_path}/Vendor/BCC")
-include("${lib_path}/Vendor/MLX90640/combined.cmake")
-include("${lib_path}/Vendor/MLX90614/combined.cmake")
+include("${LIB_PATH}/Vendor/CMSIS_5/cmsis_5.cmake")
+include("${LIB_PATH}/Vendor/STM32_HAL_LL/cube.cmake")
+add_subdirectory("${LIB_PATH}/Vendor/BCC")
+include("${LIB_PATH}/Vendor/MLX90640/combined.cmake")
+include("${LIB_PATH}/Vendor/MLX90614/combined.cmake")
 
 # Platforms
 include("${platform_path}/STM32G474xE/chip.cmake")
@@ -127,51 +132,88 @@ include("${platform_path}/STM32L476xG/chip.cmake")
 include("${platform_path}/STM32H523xE/chip.cmake")
 
 # Utils
-include("${lib_path}/GlobalShare/common.cmake")
-include("${lib_path}/Utils/OldLogomatic/logomatic.cmake")
-include("${lib_path}/Utils/Logomatic/log.cmake")
-include("${lib_path}/Utils/CubeVCP/vcp.cmake")
-include("${lib_path}/Utils/VirtualComPort/vcp.cmake")
-include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
-include("${lib_path}/Utils/MsgBuffer/msg-buffer-lib.cmake")
-include("${lib_path}/cmake/gr-lib.cmake")
-include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
+include("${LIB_PATH}/GlobalShare/common.cmake")
+include("${LIB_PATH}/Utils/OldLogomatic/logomatic.cmake")
+include("${LIB_PATH}/Utils/Logomatic/log.cmake")
+include("${LIB_PATH}/Utils/CubeVCP/vcp.cmake")
+include("${LIB_PATH}/Utils/VirtualComPort/vcp.cmake")
+include("${LIB_PATH}/Utils/CircularBuffer/circular-buffer-lib.cmake")
+include("${LIB_PATH}/Utils/MsgBuffer/msg-buffer-lib.cmake")
+include("${LIB_PATH}/cmake/gr-lib.cmake")
+include("${LIB_PATH}/Utils/BitManipulations/bit-utils.cmake")
 
 # Autogen
 include("Autogen/CAN/CANfigurator.cmake")
 
 # Peripherals
-include("${lib_path}/Peripherals/USART/common.cmake")
-include("${lib_path}/Peripherals/TimedCAN/common.cmake")
-include("${lib_path}/Peripherals/CAN/common.cmake")
-include("${lib_path}/Peripherals/CubeCAN/cube_can.cmake")
+include("${LIB_PATH}/Peripherals/USART/common.cmake")
+include("${LIB_PATH}/Peripherals/TimedCAN/common.cmake")
+include("${LIB_PATH}/Peripherals/CAN/common.cmake")
+include("${LIB_PATH}/Peripherals/CubeCAN/cube_can.cmake")
 
-include("${lib_path}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
-include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
-include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
-include("${lib_path}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
+include("${LIB_PATH}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
+include("${LIB_PATH}/FancyLayers-RENAME/ADC/adc.cmake")
+include("${LIB_PATH}/FancyLayers-RENAME/SPI/spi.cmake")
+include("${LIB_PATH}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 
 # Projects
+include(BLINKY/blinky.cmake)
+include(Testbench/testbench.cmake)
+
 add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
-# add_gr_project(STM32G474xE DashPanel)
 add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 OutboardSensors TireTemp)
 add_gr_project(STM32G431x8 OutboardSensors BrakeTemp)
-
-# Development
-add_gr_project(STM32G474xE Testbench G4NEOTESTING)
-add_gr_project(STM32G474xE Testbench CUBEMXTESTING)
-
-# BLINKY Demos
-add_gr_project(STM32G474xE BLINKY G4BLINKY)
-add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
-
 add_gr_project(STM32L476xG BLINKY L4HELLO)
-add_gr_project(STM32G474xE BLINKY G4HELLO)
-add_gr_project(STM32G474xE BLINKY G4ECHO)
 
-# Onboarding Workshops
-add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
-add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
+# add_project(
+#     NAME "ECU"
+#     PATH "ECU"
+#     SERIES "g4"
+#     SPECIFIER "g474re"
+#     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+#     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+#     CMSIS_MAJOR "5"
+# )
+
+# add_project(
+#     NAME "CCU"
+#     PATH "CCU"
+#     SERIES "g4"
+#     SPECIFIER "g474re"
+#     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+#     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+#     CMSIS_MAJOR "5"
+# )
+
+# add_project(
+#     NAME "CANine"
+#     PATH "CANine"
+#     SERIES "g4"
+#     SPECIFIER "g474re"
+#     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+#     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+#     CMSIS_MAJOR "5"
+# )
+
+# add_project(
+#     NAME "TireTemp"
+#     PATH "OutboardSensors/TireTemp"
+#     SERIES "g4"
+#     SPECIFIER "g474re"
+#     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+#     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+#     CMSIS_MAJOR "5"
+# )
+
+# add_project(
+#     NAME "BrakeTemp"
+#     PATH "OutboardSensors/BrakeTemp"
+#     SERIES "g4"
+#     SPECIFIER "g474re"
+#     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+#     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+#     CMSIS_MAJOR "5"
+# )

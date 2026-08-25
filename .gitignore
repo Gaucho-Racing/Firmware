@@ -85,7 +85,15 @@ GNUmakefile
 # CubeMX Integration
 EWARM
 .mxproject
-*/Core/Src/system_stm32*xx.c
-*/*/Core/Src/system_stm32*xx.c
-*/Core/Inc/stm32_assert.h
-*/*/Core/Inc/stm32_assert.h
+*/cmake/stm32cubemx
+*/*/cmake/stm32cubemx
+*/cmake/CMakeLists.txt
+*/*/cmake/CMakeLists.txt
+*/cmake/gcc-arm-none-eabi.cmake
+*/*/cmake/gcc-arm-none-eabi.cmake
+*/cmake/starm-clang.cmake
+*/*/cmake/starm-clang.cmake
+*/Drivers
+*/*/Drivers
+*/CMakePresets.json
+*/*/CMakePresets.json
