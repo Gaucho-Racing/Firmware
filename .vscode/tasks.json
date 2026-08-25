@@ -30,6 +30,33 @@
 			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=RR"
 		},
 		{
+			"label": "CMake: configure and build NucleoG4-Blinky",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Blinky"
+		},
+		{
+			"label": "CMake: configure and build NucleoG4-Hello",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Hello"
+		},
+		{
+			"label": "CMake: configure and build NucleoG4-Echo",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Echo"
+		},
+		{
 			"label": "CMake: configure and build ECU",
 			"type": "shell",
 			"dependsOrder": "sequence",

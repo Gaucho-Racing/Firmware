@@ -3,6 +3,89 @@
 	"configurations": [
 		{
 			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/NucleoG4-Blinky.elf",
+			"name": "NucleoG4-Blinky",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build NucleoG4-Blinky",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
+			"openOCDLaunchCommands": [
+				"reset_config srst_only separate connect_assert_srst",
+			],
+			"runToEntryPoint": "main",
+			"showDevDebugTimestamps": true
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/NucleoG4-Hello.elf",
+			"name": "NucleoG4-Hello",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build NucleoG4-Hello",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 160000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/NucleoG4-Echo.elf",
+			"name": "NucleoG4-Echo",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build NucleoG4-Echo",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 160000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/ECU.elf",
 			"name": "ECU",
 			"request": "launch",
@@ -15,7 +98,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build ECU",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -46,7 +129,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build CUBEMXTESTING",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -77,7 +160,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build CCU",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -108,7 +191,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build DashPanel",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -139,7 +222,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build CANine",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -170,7 +253,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build TireTemp FL",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -201,7 +284,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build TireTemp FR",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -232,7 +315,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build TireTemp RL",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -263,7 +346,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build TireTemp RR",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -294,7 +377,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build BrakeTemp FL",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -325,7 +408,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build BrakeTemp FR",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -356,7 +439,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build BrakeTemp RL",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -387,7 +470,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build BrakeTemp RR",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G431.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 160000000,
@@ -418,7 +501,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4HELLO",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -449,7 +532,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4ECHO",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -480,7 +563,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -511,7 +594,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build U5BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32U5A9.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32U5A9.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -527,7 +610,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build L4BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32L476.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -558,7 +641,7 @@
 					}
 				]
 			},
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32L476.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -574,7 +657,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build W3_G4SPI_Receive",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -590,7 +673,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build W3_G4SPI_Transmit",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -606,7 +689,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4NEOTESTING",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -622,6 +705,30 @@
 					}
 				]
 			}
+		}
+	],
+	"inputs": [
+		{
+			"id": "pickSeries",
+			"description": "Pick the series of the STM32 device to debug",
+			"type": "pickString",
+			"options": [
+				"stm32g4x",
+				"stm32l4x",
+				"stm32u5x"
+			],
+		},
+		{
+			"id": "pickSvd",
+			"description": "Pick the SVD file for the STM32 device to debug",
+			"type": "pickString",
+			"options": [
+				"STM32G431",
+				"STM32G474",
+				"STM32H523",
+				"STM32L476",
+				"STM32U5A9"
+			],
 		}
 	]
 }
