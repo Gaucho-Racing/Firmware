@@ -88,7 +88,7 @@ target_link_libraries(
 		CANfigurator
 		BitManipulations_Lib
 		CUBE_CAN_LIB
-		# CUBE_VCP_LIB	# TODO Add VCP back in when we have a plan for how to use it
+		# CUBE_VCP_LIB # TODO Add VCP back in when we have a plan for how to use it
 		LOGOMATIC_LIB
 )
 
