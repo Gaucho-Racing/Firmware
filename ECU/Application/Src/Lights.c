@@ -1,13 +1,13 @@
 #include "Lights.h"
 
 #include "CANutils.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
-#include "CubeCAN.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 

@@ -5,6 +5,7 @@
 
 #include "CANutils.h"
 #include "ComparatorMacros.h"
+#include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_MSG_ID.h"
@@ -14,7 +15,6 @@
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
-#include "CubeCAN.h"
 #include "stm32g4xx_ll_gpio.h"
 
 /**

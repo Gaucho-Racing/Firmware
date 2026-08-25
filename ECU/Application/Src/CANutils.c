@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
@@ -10,7 +11,6 @@
 #include "StateData.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "CubeCAN.h"
 #include "main.h"
 #include "stm32g4xx_hal_fdcan.h"
 #include "string.h"
@@ -19,14 +19,13 @@ extern ECU_StateData stateLump;
 
 uint32_t lastTickECUStateDataSent = 0;
 
-
-//FIXME: Help double check this is correct, current no build errors on debug
+// FIXME: Help double check this is correct, current no build errors on debug
 
 void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 {
 	CubeCAN_Handle *handle = NULL;
 
-	switch(bus) {
+	switch (bus) {
 		case GRCAN_BUS_PRIMARY:
 			handle = stateLump.primary_can;
 			break;
@@ -38,40 +37,37 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 			return;
 	}
 
-	if (handle == NULL){
+	if (handle == NULL) {
 		LOGOMATIC_ERROR("CAN: handle is NULL for bus %d\n", bus);
 		return;
 	}
 
-	if (size > ECU_CAN_MAX_DATA_BYTES){
+	if (size > ECU_CAN_MAX_DATA_BYTES) {
 		LOGOMATIC_WARNING("Tried to send more than 64 bytes over CAN\n");
 		size = ECU_CAN_MAX_DATA_BYTES;
 	}
 
 	CubeCAN_Send(handle, destNode, messageID, data, (uint8_t)size);
-
 }
 
 void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 {
-	if (stateLump.primary_can == NULL){
+	if (stateLump.primary_can == NULL) {
 		LOGOMATIC_ERROR("CAN: primary handle is NULL\n");
 		return;
 	}
 
 	uint8_t *msg = (uint8_t *)data;
-	for (uint32_t i = 0; i < size / 2; ++i){
+	for (uint32_t i = 0; i < size / 2; ++i) {
 		uint8_t temp = msg[i];
-		msg[i] = msg[size - i -1];
+		msg[i] = msg[size - i - 1];
 		msg[size - i - 1] = temp;
 	}
 
 	CubeCAN_Send(stateLump.primary_can, GRCAN_ALL, (GRCAN_MSG_ID)msgID, msg, (uint8_t)size);
 }
 
-
-
-//Didnt want to delete this in case the change I made aren't necessary
+// Didnt want to delete this in case the change I made aren't necessary
 
 // void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 // {

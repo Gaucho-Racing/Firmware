@@ -1,7 +1,7 @@
+#include "CubeCAN.h"
 #include "StateData.h"
 #include "StateMachine.h"
 #include "adc.h"
-#include "CubeCAN.h"
 
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_

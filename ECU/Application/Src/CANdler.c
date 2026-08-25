@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
@@ -11,7 +12,6 @@
 #include "Pinging.h"
 #include "StateData.h"
 #include "bitManipulations.h"
-#include "CubeCAN.h"
 
 extern ECU_StateData stateLump;
 
@@ -116,7 +116,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
 
 			LOGOMATIC_INFO("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
-				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
+				       (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
 
 			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later
 			if (state_data->ecu_state == GR_GLV_ON) {
@@ -187,12 +187,12 @@ void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, u
 	}
 }
 
+void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size)
+{
 
-void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size){
-
-	if (context == NULL || identifier == NULL || data == NULL || size == 0){
-		LOGOMATIC_ERROR("CANdler_Callback: Invalid parameters received. context: %p, identifier: %p, data: %p, size: %u\n",
-			(void *const)context, (void *const)identifier, (void *const)data, size);
+	if (context == NULL || identifier == NULL || data == NULL || size == 0) {
+		LOGOMATIC_ERROR("CANdler_Callback: Invalid parameters received. context: %p, identifier: %p, data: %p, size: %u\n", (void *const)context, (void *const)identifier, (void *const)data,
+				size);
 		return;
 	}
 
@@ -200,11 +200,10 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Ide
 	const GRCAN_NODE_ID sender_id = identifier->tx_node_id;
 	const GRCAN_MSG_ID msg_id = identifier->msg_id;
 
-	if (msg_id == (GRCAN_MSG_ID)DTI_DATA_1_CAN_ID){
+	if (msg_id == (GRCAN_MSG_ID)DTI_DATA_1_CAN_ID) {
 		ECU_CAN_DTI_MessageHandler(&stateLump, (GRCAN_CUSTOM_ID)msg_id, (uint8_t *)data, size);
 		return;
 	}
 
 	ECU_CAN_MessageHandler(&stateLump, bus_id, msg_id, sender_id, (uint8_t *)data, size);
-
 }

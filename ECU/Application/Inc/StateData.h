@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
-#include "CubeCAN.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_

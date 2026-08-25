@@ -17,7 +17,7 @@
 #include "main.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_gpio.h"
-//#include "vcp.h"
+// #include "vcp.h"
 
 /**
  * @brief Delay after startup to allow IMD sense to stabilize before considering IMD sense failures valid
@@ -52,8 +52,9 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	problem |= bmsFailure(stateData);
 	problem |= bspdFailure(stateData);
 	if (problem) {
-		LOGOMATIC_CRITICAL("Critical Error Detected in State %d | %f C | %f V | ACU SW %d | IR+ %d | IR- %d | IMD %d | BMS %d | BSPD %d\n", stateData->ecu_state, (double)stateData->max_cell_temp_c,
-			  (double)stateData->ts_voltage, stateData->acu_software_latch, stateData->ir_plus, stateData->ir_minus, imdFailure(stateData), bmsFailure(stateData), bspdFailure(stateData));
+		LOGOMATIC_CRITICAL("Critical Error Detected in State %d | %f C | %f V | ACU SW %d | IR+ %d | IR- %d | IMD %d | BMS %d | BSPD %d\n", stateData->ecu_state,
+				   (double)stateData->max_cell_temp_c, (double)stateData->ts_voltage, stateData->acu_software_latch, stateData->ir_plus, stateData->ir_minus, imdFailure(stateData),
+				   bmsFailure(stateData), bspdFailure(stateData));
 		// LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
 	}
 	return problem;
@@ -185,5 +186,5 @@ void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t 
 #define SIZE 64
 	static char buf[SIZE];
 	snprintf(buf, SIZE, "%" PRIu32 " A1 %d A2 %d A1R %d A2R %d\n", MillisecondsSinceBoot(), stateData->APPS1_Signal, stateData->APPS2_Signal, apps1_raw, apps2_raw);
-	//VCP_Send(buf, strlen(buf));
+	// VCP_Send(buf, strlen(buf));
 }

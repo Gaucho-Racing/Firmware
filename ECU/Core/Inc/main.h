@@ -31,7 +31,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "GRCAN_NODE_ID.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_NODE_ID.h"
 #include "Plan_C.h"
