@@ -23,10 +23,7 @@ target_link_libraries(
 		GLOBALSHARE_LIB
 		CANfigurator
 		CircularBuffer_Lib
-		PERIPHERAL_CAN_LIB
-		#GR_OLD_CAN_MESSAGES
-		STM32_HAL_LL_G4xx
-	#GRCAN_LIB #maybe add back
+		PERIPHERAL_TIMEDCAN_LIB
 )
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")

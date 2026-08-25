@@ -8,14 +8,28 @@
 
 #if defined(ITM) && defined(LL_GPIO_MODE_ALTERNATE)
 typedef enum {
+#if defined(STM32G4)
 	LOGOMATIC_PCLK1 = LL_RCC_LPUART1_CLKSOURCE_PCLK1,
 	LOGOMATIC_SYSCLK = LL_RCC_LPUART1_CLKSOURCE_SYSCLK,
+#elif defined(STM32H5)
+	LOGOMATIC_PCLK3 = LL_RCC_LPUART1_CLKSOURCE_PCLK3,
+	LOGOMATIC_PLL2Q = LL_RCC_LPUART1_CLKSOURCE_PLL2Q,
+	LOGOMATIC_PLL3Q = LL_RCC_LPUART1_CLKSOURCE_PLL3Q,
+	LOGOMATIC_CSI = LL_RCC_LPUART1_CLKSOURCE_CSI,
+#else
+#error "Unsupported STM32 series. Please define the appropriate clock source for LPUART1."
+#endif
 	LOGOMATIC_HSI = LL_RCC_LPUART1_CLKSOURCE_HSI,
 	LOGOMATIC_LSE = LL_RCC_LPUART1_CLKSOURCE_LSE
 } LPUART_Clock_Source;
-
 typedef enum {
+#if defined(STM32G4)
 	LOGOMATIC_BUS = LL_APB1_GRP2_PERIPH_LPUART1,
+#elif defined(STM32H5)
+	LOGOMATIC_BUS = LL_APB3_GRP1_PERIPH_LPUART1,
+#else
+#error "Unsupported STM32 series. Please define the appropriate bus for LPUART1."
+#endif
 } LPUART_Bus;
 
 typedef enum {
