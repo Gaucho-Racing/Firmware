@@ -58,8 +58,8 @@ ECU_StateData stateLump = {
     .apps_1_max = 1897,
     .apps_2_max = 1926,
     // Regen
-    .regen_strength = 2,
-    .enable_regen = false,
+    .regen_strength = 2, // Not used
+    .enable_regen = true,
     .SDC_startup_condition = true};
 
 static uint32_t millis_since_boot;
@@ -258,38 +258,87 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	float torque_request;
 	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= MAX_APPS_IMPLAUSIBLE_TIME_MS;
 
+	float pedal = CalcAccPedalTravel(stateData);
+
+	uint16_t max_rev_current = 0;
+	switch (stateData->powerlevel) {
+		case 0:
+			max_rev_current = 20;
+			break;
+		case 1:
+			max_rev_current = 40;
+			break;
+		case 2:
+			max_rev_current = 60;
+			break;
+		case 3:
+			max_rev_current = 80;
+			break;
+		case 4:
+			max_rev_current = 100;
+			break;
+		case 5:
+			max_rev_current = 120;
+			break;
+		default:
+			LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
+			max_rev_current = 0;
+			break;
+	}
+
+	uint16_t max_fwd_current = 0;
+	switch (stateData->powerlevel) {
+		case 0:
+			max_fwd_current = 300;
+			break;
+		case 1:
+			max_fwd_current = 300;
+			break;
+		case 2:
+			max_fwd_current = 300;
+			break;
+		case 3:
+			max_fwd_current = 300;
+			break;
+		case 4:
+			max_fwd_current = 300;
+			break;
+		case 5:
+			max_fwd_current = 300;
+			break;
+		default:
+			LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
+			max_fwd_current = 0;
+			break;
+	}
+
+	// See https://www.desmos.com/calculator/nxxz5zxgku
+	const float A_REV_MAX_END_POINT = 0.05f;
+	const float B_DEADZONE_START_POINT = 0.1f;
+	const float C_DEADZONE_END_POINT = 0.2f;
+
+	const float PEDAL_REV_TRANSITION_RANGE_INV = 1.0f / (B_DEADZONE_START_POINT - A_REV_MAX_END_POINT);
+	const float PEDAL_FWD_TRANSITION_RANGE_INV = 1.0f / (1.0f - C_DEADZONE_END_POINT);
+
+	if (pedal < A_REV_MAX_END_POINT) {
+		torque_request = -max_rev_current;
+	} else if (pedal < B_DEADZONE_START_POINT) {
+		torque_request = -max_rev_current * (1.0f - (pedal - A_REV_MAX_END_POINT) * PEDAL_REV_TRANSITION_RANGE_INV);
+	} else if (pedal < C_DEADZONE_END_POINT) {
+		torque_request = 0.0f;
+	} else {
+		torque_request = max_fwd_current * (pedal - C_DEADZONE_END_POINT) * PEDAL_FWD_TRANSITION_RANGE_INV;
+	}
+
+	if (!stateData->enable_regen || stateData->vehicle_speed_mph <= REGEN_MIN_SPEED_MPH) {
+		torque_request = fmaxf(torque_request, 0);
+	}
+
+	torque_request = fminf(torque_request, MAX_FORWARD_CURRENT_AMPS);
+	torque_request = fmaxf(torque_request, -MAX_REVERSE_CURRENT_AMPS);
+
 	if (stateData->apps_bse_violation || !apps_plausible) {
 		torque_request = 0;
-	} else if (stateData->enable_regen && PressingBrake(stateData) && stateData->vehicle_speed_mph > REGEN_MIN_SPEED_MPH) {
-		torque_request = -MIN_WITH_TYPES(CalcBrakePressure(stateData) / 5000.0f * stateData->regen_strength, 1.0f) * MAX_REVERSE_CURRENT_AMPS;
-	} else {
-		uint16_t max_current = 0;
-		// Chosen max current for different power level / torque maps
-		switch (stateData->powerlevel) {
-			case 0:
-				max_current = 100;
-				break;
-			case 1:
-				max_current = 200;
-				break;
-			case 2:
-				max_current = 250;
-				break;
-			case 3:
-				max_current = 300;
-				break;
-			case 4:
-				max_current = 325;
-				break;
-			case 5:
-				max_current = 350;
-				break;
-			default:
-				LOGOMATIC("Invalid power level: %d. Defaulting to no current.\n", stateData->powerlevel);
-				max_current = 0;
-				break;
-		}
-		torque_request = fminf(CalcAccPedalTravel(stateData) * max_current, MAX_CURRENT_AMPS);
 	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
@@ -298,7 +347,14 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
 		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 1);
 		message.set_ac_current = torque_request * 10;
-		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
+		LOGOMATIC("%f\t\t%f\n", stateData->vehicle_speed_mph, torque_request);
+
+		if (torque_request < 0) {
+			message.set_ac_current = torque_request * -10;
+			ECU_CAN_Send_DTI(DTI_CONTROL_2_CAN_ID, &message.set_ac_current, 2);
+		} else {
+			ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
+		}
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
