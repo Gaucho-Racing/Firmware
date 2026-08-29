@@ -9,7 +9,7 @@
 # (which equals the corresponding "Bus ID:" name).
 #
 # Per-file DBC validity is enforced by:
-#   - numeric ranges stripped of thousands separators (no commas in numbers)
+#   - numeric ranges use plain integers (no thousands separators)
 #   - identifiers normalized to [A-Za-z_][A-Za-z0-9_]* (leading digits prefixed)
 #   - identifier length capped at 32 chars; long message names dedup leading
 #     tokens that already appear in the sender, and any composed name still
@@ -572,7 +572,6 @@ sub _to_number {
 	my ($v) = @_;
 	if ( !defined $v ) { return 0; }
 	$v =~ s/["'\s]//gsmx;
-	$v =~ s/,//gsmx;
 	if ( $v !~ /^-?\d/smx ) { return 0; }
 	return ( $v + 0 );
 }
