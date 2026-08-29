@@ -855,7 +855,6 @@ sub parse_message_id {
 		}
 
 		if ( $k eq 'bit_start' || $k eq 'bit start' ) {
-			$v =~ s/-.*//smx;
 			$data_ref->{messages}{ $state_ref->{cur_msg} }{sigs}{ $state_ref->{cur_sig} }{start} = $v;
 		}
 		else {
@@ -910,9 +909,8 @@ sub parse_custom_id {
 		push @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} }, { name => $name };
 		return;
 	}
-	if ( $line =~ /^ bit_start \s* : \s* ([\d\-]+) /smx ) {
+	if ( $line =~ /^ bit_start \s* : \s* (\d+) /smx ) {
 		my $bs = $1;
-		$bs =~ s/-.*//smx;
 		if ( @{ $data_ref->{custom}{ $state_ref->{cur_msg} }{sigs} } ) {
 			$data_ref->{custom}{ $state_ref->{cur_msg} }{sigs}->[-1]->{start} = $bs;
 		}
