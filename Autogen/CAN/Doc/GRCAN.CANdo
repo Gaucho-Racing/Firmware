@@ -3856,122 +3856,122 @@ Message ID:
     MSG ID: 0x2D
     MSG LENGTH: 24
     ACU RTT:
-      bit_start: 0-7
+      bit_start: 0
       comment: Round trip time
       data type: u8
       units: ms
     GR Inv RTT:
-      bit_start: 8-15
+      bit_start: 8
       comment: Round trip time
       data type: u8
       units: ms
     Fan Ctrl 1 RTT:
-      bit_start: 16-23
+      bit_start: 16
       comment: Round trip time
       data type: u8
       units: ms
     Fan Ctrl 2 RTT:
-      bit_start: 24-31
+      bit_start: 24
       comment: Round trip time
       data type: u8
       units: ms
     Fan Ctrl 3 RTT:
-      bit_start: 32-39
+      bit_start: 32
       comment: Round trip time
       data type: u8
       units: ms
     Dash Panel RTT:
-      bit_start: 40-47
+      bit_start: 40
       comment: Round trip time
       data type: u8
       units: ms
     TCM RTT:
-      bit_start: 48-55
+      bit_start: 48
       comment: Round trip time
       data type: u8
       units: ms
     Tire Temp FL RTT:
-      bit_start: 56-63
+      bit_start: 56
       comment: Round trip time
       data type: u8
       units: ms
     Tire Temp FR RTT:
-      bit_start: 64-71
+      bit_start: 64
       comment: Round trip time
       data type: u8
       units: ms
     Tire Temp RL RTT:
-      bit_start: 72-79
+      bit_start: 72
       comment: Round trip time
       data type: u8
       units: ms
     Tire Temp RR RTT:
-      bit_start: 80-87
+      bit_start: 80
       comment: Round trip time
       data type: u8
       units: ms
     Suspension Node FL RTT:
-      bit_start: 88-95
+      bit_start: 88
       comment: Round trip time
       data type: u8
       units: ms
     Suspension Node FR RTT:
-      bit_start: 96-103
+      bit_start: 96
       comment: Round trip time
       data type: u8
       units: ms
     Suspension Node RL RTT:
-      bit_start: 104-111
+      bit_start: 104
       comment: Round trip time
       data type: u8
       units: ms
     Suspension Node RR RTT:
-      bit_start: 112-119
+      bit_start: 112
       comment: Round trip time
       data type: u8
       units: ms
     Inboard Floor FL RTT:
-      bit_start: 120-127
+      bit_start: 120
       comment: Round trip time
       data type: u8
       units: ms
     Inboard Floor FR RTT:
-      bit_start: 128-135
+      bit_start: 128
       comment: Round trip time
       data type: u8
       units: ms
     Inboard Floor RL RTT:
-      bit_start: 136-143
+      bit_start: 136
       comment: Round trip time
       data type: u8
       units: ms
     Inboard Floor RR RTT:
-      bit_start: 144-151
+      bit_start: 144
       comment: Round trip time
       data type: u8
       units: ms
     Brake Temp FL RTT:
-      bit_start: 152-159
+      bit_start: 152
       comment: Round trip time
       data type: u8
       units: ms
     Brake Temp FR RTT:
-      bit_start: 160-167
+      bit_start: 160
       comment: Round trip time
       data type: u8
       units: ms
     Brake Temp RL RTT:
-      bit_start: 168-175
+      bit_start: 168
       comment: Round trip time
       data type: u8
       units: ms
     Brake Temp RR RTT:
-      bit_start: 176-183
+      bit_start: 176
       comment: Round trip time
       data type: u8
       units: ms
     DGPS RTT:
-      bit_start: 184-191
+      bit_start: 184
       comment: Round trip time
       data type: u8
       units: ms
@@ -9476,10 +9476,10 @@ Custom CAN ID:
     Length: 8
     signals:
       - name: "Mux Signal"
-        bit_start: 0-2
+        bit_start: 0
         comment: n = [0-6]
       - name: "Num Sensors"
-        bit_start: 3-7
+        bit_start: 3
         comment: Number of sensors up to 32
       - name: "Min Temp"
         bit_start: 8
