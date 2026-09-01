@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
@@ -9,6 +10,8 @@
 
 #ifndef CANDLER_H
 #define CANDLER_H
+
+void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
 
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length);
 

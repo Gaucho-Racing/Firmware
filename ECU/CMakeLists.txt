@@ -38,12 +38,10 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			GLOBALSHARE_LIB
 			CANfigurator
-			LOGOMATIC_OLD_LIB
+			LOGOMATIC_LIB
 			m
-			# GR_ADC
-			# PERIPHERAL_CAN_LIB
+			CUBE_CAN_LIB
 			BitManipulations_Lib
-			VCP_LIB
 	)
 	add_test(StateTicksTest StateTicksTest)
 
@@ -75,6 +73,7 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
+		Core/Src/tim.c
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
@@ -88,10 +87,10 @@ target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		CANfigurator
-		GR_ADC
-		PERIPHERAL_TIMEDCAN_LIB
 		BitManipulations_Lib
-		VCP_LIB
+		CUBE_CAN_LIB
+		# CUBE_VCP_LIB # TODO Add VCP back in when we have a plan for how to use it
+		LOGOMATIC_LIB
 )
 
 target_include_directories(
