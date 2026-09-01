@@ -21,6 +21,7 @@
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -40,6 +41,7 @@
 #include "adc.h"
 #include "fdcan.h"
 #include "stm32g4xx_hal.h"
+
 // #include "vcp.h"
 /* USER CODE END Includes */
 
@@ -153,6 +155,7 @@ int main(void)
   MX_ADC2_Init();
   MX_FDCAN1_Init();
   MX_FDCAN2_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	Logomatic_SetLogLevel(LogLevel_Info);
 	// Setup_VCP(&vcp_config);
@@ -173,6 +176,14 @@ int main(void)
 		LOGOMATIC_CRITICAL("Failed to initialize data CAN handle\n");
 		Error_Handler();
 	}
+
+  //Initialize Timer
+  HAL_TIM_Base_Start_IT(&htim6);
+  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+    if (htim->Instance == TIM6){
+      CubeCAN_Tick();
+    }
+  }
 
 	ADC_Configure();
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop

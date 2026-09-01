@@ -73,6 +73,7 @@ target_sources(
 		Core/Src/main.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
+		Core/Src/tim.c
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
