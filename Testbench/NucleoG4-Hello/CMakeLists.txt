@@ -26,7 +26,7 @@ target_include_directories(
 target_sources(
 	${TARGET_NAME}
 	PRIVATE
-		Application/Src/hello.c
+		Application/Src/Loop.c
 		Core/Src/gpio.c
 		Core/Src/main.c
 		Core/Src/stm32g4xx_it.c
