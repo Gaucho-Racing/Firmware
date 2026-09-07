@@ -165,6 +165,7 @@ add_gr_project(STM32G474xE CCU)
 add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 OutboardSensors TireTemp)
 add_gr_project(STM32G431x8 OutboardSensors BrakeTemp)
+add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
 add_gr_project(STM32L476xG BLINKY L4HELLO)
 

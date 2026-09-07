@@ -97,3 +97,4 @@ EWARM
 */*/Drivers
 */CMakePresets.json
 */*/CMakePresets.json
+Lib/Vendor/FetchContent

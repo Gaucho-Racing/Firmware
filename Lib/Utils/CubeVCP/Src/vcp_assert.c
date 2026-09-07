@@ -1,8 +1,9 @@
-#include <assert.h>
-
 #include "CubeVCP.h"
 #include "CubeVCP_Config.h"
 #include "main.h"
+
+#include <stdatomic.h>
+#include <assert.h>
 
 static_assert(ATOMIC_BOOL_LOCK_FREE == 2, "CubeVCP internal ATOMIC_BOOL_LOCK_FREE must be enabled for atomic operations");
 static_assert(ATOMIC_SHORT_LOCK_FREE == 2, "CubeVCP internal ATOMIC_SHORT_LOCK_FREE must be enabled for atomic operations");
