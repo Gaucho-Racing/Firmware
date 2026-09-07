@@ -17,14 +17,6 @@ The process to add a new MCU to the monorepo is complex. Please see `CMAKE.md` o
 
 ### Creation
 
-0. Ensure the MCU you are working on has been added to the monorepo, see the list in [`Lib/Platform`](Lib/Platform).
-1. Open and setup a new project through CubeMX, follow the [Configuration](#configuration) steps
-2. Generate code and verify that it lives in the correct area, like the other projects
-3. Copy [`ProjectTemplate/CMakeLists.txt](ProjectTemplate/CMakeLists.txt) into your folder, edit as instructed by the comments
-   - Note that folders/files which are git ignored can be safely deleted or ignored.
-4. Add a new entry to the root [`CMakeLists.txt`](CMakeLists.txt) containing the appropriate `add_gr_project` call following [`CMAKE.md`](CMAKE.md)
-5. Add the appropriate entries to [`launch.json`](.vscode/launch.json) and [`tasks.json`](.vscode/tasks.json) following [`VSCODE.md`](VSCODE.md)
-
 ## Configuration
 
 > [!IMPORTANT]
@@ -35,11 +27,12 @@ The process to add a new MCU to the monorepo is complex. Please see `CMAKE.md` o
 | Field | Value |
 | :-- | :-- |
 | Project Name | (Shortname, ie CCU, ECU) |
-| Project Location | (Root of this Git repository) |
+| Project Location | (Root of this Git repository or a subfolder, eg [`Testbench`](/Testbench)) |
 | Application Structure | Advanced |
 | Do not generate the main() | FALSE / unchecked |
 | Toolchain Location | (Root of this Git repository)/(Shortname from above) |
-| Toolchain / IDE | `EWARM` |
+| Toolchain / IDE | CMake |
+| Default Compiler/Linker | GCC |
 
 ### Code Generator
 
@@ -50,6 +43,7 @@ The process to add a new MCU to the monorepo is complex. Please see `CMAKE.md` o
 | Backup previously generated files when regenerating | FALSE / unchecked |
 | Keep User Code when regenerating | TRUE / checked |
 | Delete previously generated files when not regenerating | TRUE / checked |
+| Set all free pins as analog (to optimize power consumption) | TRUE / checked |
 
 ## Website
 
