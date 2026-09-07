@@ -19,7 +19,6 @@
 			"openOCDLaunchCommands": [
 				"reset_config srst_only separate connect_assert_srst",
 			],
-			"runToEntryPoint": "main",
 			"showDevDebugTimestamps": true
 		},
 		{
