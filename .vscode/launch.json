@@ -82,7 +82,7 @@
 						"encoding": "ascii"
 					}
 				]
-			}
+			},
 		},
 		{
 			"cwd": "${workspaceFolder}",
