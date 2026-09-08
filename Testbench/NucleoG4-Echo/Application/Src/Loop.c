@@ -1,6 +1,6 @@
-#include "main.h"
-#include "Logomatic.h"
 #include "CubeVCP.h"
+#include "Logomatic.h"
+#include "main.h"
 
 void Loop(void)
 {

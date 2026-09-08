@@ -2,8 +2,8 @@
 #include <stddef.h>
 
 #include "CubeCAN.h"
-#include "cubecan_test_hal.h"
 #include "Unused.h"
+#include "cubecan_test_hal.h"
 
 static uint32_t callback_count;
 
