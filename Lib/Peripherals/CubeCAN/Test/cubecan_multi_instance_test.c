@@ -7,9 +7,9 @@
 int main(void)
 {
 	FDCAN_HandleTypeDef cans[CUBEMX_CAN_MAX_INSTANCES] = {
-		{.Init = {.FrameFormat = FDCAN_FRAME_CLASSIC}},
-		{.Init = {.FrameFormat = FDCAN_FRAME_FD_NO_BRS}},
-		{.Init = {.FrameFormat = FDCAN_FRAME_FD_BRS}},
+	    {.Init = {.FrameFormat = FDCAN_FRAME_CLASSIC}},
+	    {.Init = {.FrameFormat = FDCAN_FRAME_FD_NO_BRS}},
+	    {.Init = {.FrameFormat = FDCAN_FRAME_FD_BRS}},
 	};
 	CubeCAN_Config config = {.context.busid_user_context = 0U, .rx_callback = NULL, .sending_node_id = 1U};
 	CubeCAN_Handle *handles[CUBEMX_CAN_MAX_INSTANCES];

@@ -3,8 +3,8 @@
 #include <pthread.h>
 #include <string.h>
 
-#include "main.h"
 #include "Unused.h"
+#include "main.h"
 
 CubeCAN_TestHal cubecan_test_hal;
 
