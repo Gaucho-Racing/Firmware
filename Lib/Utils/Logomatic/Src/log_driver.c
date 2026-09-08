@@ -1,5 +1,8 @@
 #include "Logomatic.h"
+
+#ifndef LOGOMATIC_HOOTLTEST
 #include "main.h"
+#endif
 
 int __io_putchar(int ch)
 {

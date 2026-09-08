@@ -361,41 +361,37 @@ function(add_project)
         GIT_TAG ${ARG_HAL_GIT_TAG}
     )
 
-    if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-        # TODO Later, out of scope for now
-    else()
-        set(TARGET_NAME "${ARG_NAME}")
-        message(STATUS "Adding project '${TARGET_NAME}'")
-        add_executable("${TARGET_NAME}")
+    set(TARGET_NAME "${ARG_NAME}")
+    message(STATUS "Adding project '${TARGET_NAME}'")
+    add_executable("${TARGET_NAME}")
 
-        include(
-            "${PROJECT_SOURCE_DIR}/Lib/Vendor/TargetFlags/stm32${SERIES_LOWER}xx.cmake"
-        )
+    include(
+        "${PROJECT_SOURCE_DIR}/Lib/Vendor/TargetFlags/stm32${SERIES_LOWER}xx.cmake"
+    )
 
-        target_link_libraries(
-            "${TARGET_NAME}"
-            PRIVATE
-            "CMSIS_Device_${SPECIFIER_UPPER}"
-            "CMSIS_${ARG_CMSIS_MAJOR}_Core"
-            "STM32HAL_${SERIES_UPPER}"
-            GLOBALSHARE_LIB
-            m
-        )
+    target_link_libraries(
+        "${TARGET_NAME}"
+        PRIVATE
+        "CMSIS_Device_${SPECIFIER_UPPER}"
+        "CMSIS_${ARG_CMSIS_MAJOR}_Core"
+        "STM32HAL_${SERIES_UPPER}"
+        GLOBALSHARE_LIB
+        m
+    )
 
-        target_link_options(
-            "${TARGET_NAME}"
-            PRIVATE
-            "LINKER:-Map=$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map"
-        )
+    target_link_options(
+        "${TARGET_NAME}"
+        PRIVATE
+        "LINKER:-Map=$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map"
+    )
 
-        target_compile_definitions(
-            "${TARGET_NAME}"
-            PRIVATE
-            USE_HAL_DRIVER
-            USE_FULL_LL_DRIVER
-            STM32${SERIES_UPPER}xx
-        )
-    endif()
+    target_compile_definitions(
+        "${TARGET_NAME}"
+        PRIVATE
+        USE_HAL_DRIVER
+        USE_FULL_LL_DRIVER
+        STM32${SERIES_UPPER}xx
+    )
 
     if(DEFINED NODE)
         target_compile_definitions("${ARG_NAME}" PRIVATE NODE=${NODE})
@@ -405,5 +401,9 @@ function(add_project)
         add_subdirectory("${ARG_PATH}")
     else()
         add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/${ARG_PATH}")
+    endif()
+
+    if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+        set_target_properties("${TARGET_NAME}" PROPERTIES EXCLUDE_FROM_ALL TRUE)
     endif()
 endfunction()
