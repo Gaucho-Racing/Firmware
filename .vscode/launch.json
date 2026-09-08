@@ -702,29 +702,5 @@
 				]
 			}
 		}
-	],
-	"inputs": [
-		{
-			"id": "pickSeries",
-			"description": "Pick the series of the STM32 device to debug",
-			"type": "pickString",
-			"options": [
-				"stm32g4x",
-				"stm32l4x",
-				"stm32u5x"
-			],
-		},
-		{
-			"id": "pickSvd",
-			"description": "Pick the SVD file for the STM32 device to debug",
-			"type": "pickString",
-			"options": [
-				"STM32G431",
-				"STM32G474",
-				"STM32H523",
-				"STM32L476",
-				"STM32U5A9"
-			],
-		}
 	]
 }
