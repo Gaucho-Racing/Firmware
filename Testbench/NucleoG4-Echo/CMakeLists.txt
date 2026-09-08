@@ -26,7 +26,7 @@ target_include_directories(
 target_sources(
 	${TARGET_NAME}
 	PRIVATE
-        Application/Src/Loop.c
+		Application/Src/Loop.c
 		Application/Src/Serial.c
 		Core/Src/gpio.c
 		Core/Src/main.c
@@ -34,8 +34,13 @@ target_sources(
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
-        Core/Src/usart.c
+		Core/Src/usart.c
 		startup_stm32g474xx.s
 )
 
-target_link_libraries(${TARGET_NAME} PRIVATE LOGOMATIC_LIB CUBE_VCP_LIB)
+target_link_libraries(
+	${TARGET_NAME}
+	PRIVATE
+		LOGOMATIC_LIB
+		CUBE_VCP_LIB
+)
