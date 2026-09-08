@@ -39,11 +39,7 @@ If you are not using logomatic then the entry is fairly simple, see the below ex
  "searchDir": [],
  "preLaunchTask": "CMake: configure and build NucleoG4-Blinky",
  "showDevDebugOutput": "raw",
- "svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
- "openOCDLaunchCommands": [
-  "reset_config srst_only separate connect_assert_srst",
- ],
- "showDevDebugTimestamps": true
+ "svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd"
 }
 ```
 
