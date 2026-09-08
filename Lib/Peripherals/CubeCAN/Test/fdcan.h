@@ -1,7 +1,8 @@
 #include <stdint.h>
 
-// Copied from internals of STM32Cube as needed, values do not mean anything in this context
-// and should NOT be used outside of this specific test context
+#include "main.h"
+
+// Values do not mean anything in this context and should NOT be used outside of this specific test context
 
 #ifndef FDCAN_H
 #define FDCAN_H
@@ -57,11 +58,63 @@
 #define FDCAN_ESI_ACTIVE ((uint32_t)0x00000000U)
 #define FDCAN_ESI_PASSIVE ((uint32_t)0x80000000U)
 
+#define FDCAN_EXTENDED_ID ((uint32_t)0x00000001U)
+#define FDCAN_NO_TX_EVENTS ((uint32_t)0x00000000U)
+#define FDCAN_DATA_FRAME ((uint32_t)0x00000000U)
+#define FDCAN_RX_FIFO0 ((uint32_t)0x00000000U)
+
 typedef enum {
 	HAL_FDCAN_STATE_RESET = 0x00U,
 	HAL_FDCAN_STATE_READY = 0x01U,
 	HAL_FDCAN_STATE_BUSY = 0x02U,
 	HAL_FDCAN_STATE_ERROR = 0x03U
 } HAL_FDCAN_StateTypeDef;
+
+typedef struct {
+	uint32_t FrameFormat;
+} FDCAN_InitTypeDef;
+
+typedef struct {
+	uint32_t Identifier;
+	uint32_t IdType;
+	uint32_t TxFrameType;
+	uint32_t DataLength;
+	uint32_t ErrorStateIndicator;
+	uint32_t BitRateSwitch;
+	uint32_t FDFormat;
+	uint32_t TxEventFifoControl;
+	uint32_t MessageMarker;
+} FDCAN_TxHeaderTypeDef;
+
+typedef struct {
+	uint32_t Identifier;
+	uint32_t IdType;
+	uint32_t RxFrameType;
+	uint32_t DataLength;
+} FDCAN_RxHeaderTypeDef;
+
+typedef struct {
+	uint32_t BusOff;
+} FDCAN_ProtocolStatusTypeDef;
+
+typedef struct FDCAN_HandleTypeDef {
+	FDCAN_InitTypeDef Init;
+	HAL_FDCAN_StateTypeDef State;
+	FDCAN_ProtocolStatusTypeDef ProtocolStatus;
+} FDCAN_HandleTypeDef;
+
+HAL_StatusTypeDef HAL_FDCAN_ActivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t interrupts, uint32_t buffer);
+HAL_StatusTypeDef HAL_FDCAN_DeactivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t interrupts);
+HAL_StatusTypeDef HAL_FDCAN_Start(FDCAN_HandleTypeDef *hfdcan);
+HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan);
+HAL_StatusTypeDef HAL_FDCAN_Init(FDCAN_HandleTypeDef *hfdcan);
+HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *header, const uint8_t *data);
+uint32_t HAL_FDCAN_GetTxFifoFreeLevel(FDCAN_HandleTypeDef *hfdcan);
+uint32_t HAL_FDCAN_GetRxFifoFillLevel(FDCAN_HandleTypeDef *hfdcan, uint32_t fifo);
+HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t fifo, FDCAN_RxHeaderTypeDef *header, uint8_t *data);
+HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(FDCAN_HandleTypeDef *hfdcan);
+HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(FDCAN_HandleTypeDef *hfdcan, FDCAN_ProtocolStatusTypeDef *status);
+uint32_t HAL_FDCAN_IsRestrictedOperationMode(FDCAN_HandleTypeDef *hfdcan);
+HAL_StatusTypeDef HAL_FDCAN_ExitRestrictedOperationMode(FDCAN_HandleTypeDef *hfdcan);
 
 #endif
