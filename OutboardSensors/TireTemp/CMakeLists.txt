@@ -49,6 +49,7 @@ target_link_libraries(
 		BitManipulations_Lib
 		MLX90640_LIB
 		PERIPHERAL_TIMEDCAN_LIB
+		LOGOMATIC_OLD_LIB
 )
 
 target_include_directories(

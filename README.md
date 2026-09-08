@@ -43,17 +43,20 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 
 ## Install Tools/Dependencies
 *For Windows:*
-1. `winget install Ninja-build.Ninja Kitware.CMake Arm.GnuArmEmbeddedToolchain`
+
+1. `winget install Ninja-build.Ninja Kitware.CMake Arm.GnuArmEmbeddedToolchain Microsoft.VisualStudioCode`
 2. [OpenOCD](https://github.com/openocd-org/openocd/releases/latest) -> Download the `.tar.gz` file, extract to directory, add the bin directory to your `PATH`
 3. Relaunch your terminal
 
 *For MacOS:*
 1. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-2. `brew install cmake ninja open-ocd`
-3. `brew install --cask gcc-arm-embedded`
+2. `brew install cmake ninja open-ocd gcc-arm-embedded visual-studio-code`
 4. Relaunch your terminal
 
 *For Linux / BSD:*
+
+Install the Visual Studio Code IDE (prefer using the `deb` or `rpm` from [Microsoft](https://code.visualstudio.com/download)).
+
 * `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
 * `sudo dnf install cmake ninja openocd` (Normally also `arm-none-eabi-gcc-cs arm-none-eabi-newlib` which worked on Fedora 42 but is broken on Fedora 43, use [Arm's version](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) instead for the moment)
 * `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
@@ -61,6 +64,7 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 * If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
 
 ### Verify that you have all these dependencies installed:
+
 - CMake - `cmake --version`
 - Ninja - `ninja --version`
 - Arm - `arm-none-eabi-gcc --version`

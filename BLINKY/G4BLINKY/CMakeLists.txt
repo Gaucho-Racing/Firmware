@@ -40,7 +40,7 @@ target_sources(
 		Core/Src/stm32g4xx_hal_msp.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE LOGOMATIC_OLD_LIB)
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
