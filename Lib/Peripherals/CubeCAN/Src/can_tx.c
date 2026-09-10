@@ -106,7 +106,7 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
 	const CAN_Identifier identifier_struct = {.tx_node_id = handle->config.sending_node_id, .rx_node_id = rx_node, .msg_id = msg_id};
 
 	const FDCAN_TxHeaderTypeDef header = {.BitRateSwitch = brs,
-					      .DataLength = CubeCAN_Private_BytesToDlc(size),
+					      .DataLength = dlc,
 					      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 					      .FDFormat = fdformat,
 					      .Identifier = CubeCAN_Construct_Identifier(&identifier_struct),
