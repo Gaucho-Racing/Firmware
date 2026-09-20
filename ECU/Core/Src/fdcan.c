@@ -137,12 +137,12 @@ void MX_FDCAN2_Init(void)
   HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_ecu);
 
   FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
-  fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
-  fdcan_data_filter_ecu.FilterIndex = 1;
-  fdcan_data_filter_ecu.FilterType = FDCAN_FILTER_MASK;
-  fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-  fdcan_data_filter_ecu.FilterID1 = GRCAN_ALL & 0xFF;
-  fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
+  fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
+  fdcan_data_filter_all.FilterIndex = 1;
+  fdcan_data_filter_all.FilterType = FDCAN_FILTER_MASK;
+  fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+  fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+  fdcan_data_filter_all.FilterID2 = 0x000000FF;
   HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_all);
 
   /* USER CODE END FDCAN2_Init 2 */
