@@ -81,12 +81,12 @@ void MX_FDCAN1_Init(void)
   HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_all);
 
   FDCAN_FilterTypeDef fdcan_primary_filter_dti = {0};
-  fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
-  fdcan_primary_filter_ecu.FilterIndex = 2;
-  fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
-  fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-  fdcan_primary_filter_ecu.FilterID1 = 0x00000016;
-  fdcan_primary_filter_ecu.FilterID2 = 0x1FFFC0FF;
+  fdcan_primary_filter_dti.IdType = FDCAN_EXTENDED_ID;
+  fdcan_primary_filter_dti.FilterIndex = 2;
+  fdcan_primary_filter_dti.FilterType = FDCAN_FILTER_MASK;
+  fdcan_primary_filter_dti.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+  fdcan_primary_filter_dti.FilterID1 = 0x00000016;
+  fdcan_primary_filter_dti.FilterID2 = 0x1FFFC0FF;
   HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_dti);
 
   /* USER CODE END FDCAN1_Init 2 */
@@ -105,21 +105,21 @@ void MX_FDCAN2_Init(void)
   /* USER CODE END FDCAN2_Init 1 */
   hfdcan2.Instance = FDCAN2;
   hfdcan2.Init.ClockDivider = FDCAN_CLOCK_DIV1;
-  hfdcan2.Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+  hfdcan2.Init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
   hfdcan2.Init.Mode = FDCAN_MODE_NORMAL;
-  hfdcan2.Init.AutoRetransmission = DISABLE;
+  hfdcan2.Init.AutoRetransmission = ENABLE;
   hfdcan2.Init.TransmitPause = DISABLE;
-  hfdcan2.Init.ProtocolException = DISABLE;
-  hfdcan2.Init.NominalPrescaler = 16;
-  hfdcan2.Init.NominalSyncJumpWidth = 1;
-  hfdcan2.Init.NominalTimeSeg1 = 1;
-  hfdcan2.Init.NominalTimeSeg2 = 1;
+  hfdcan2.Init.ProtocolException = ENABLE;
+  hfdcan2.Init.NominalPrescaler = 1;
+  hfdcan2.Init.NominalSyncJumpWidth = 16;
+  hfdcan2.Init.NominalTimeSeg1 = 119;
+  hfdcan2.Init.NominalTimeSeg2 = 40;
   hfdcan2.Init.DataPrescaler = 1;
-  hfdcan2.Init.DataSyncJumpWidth = 1;
-  hfdcan2.Init.DataTimeSeg1 = 1;
-  hfdcan2.Init.DataTimeSeg2 = 1;
+  hfdcan2.Init.DataSyncJumpWidth = 16;
+  hfdcan2.Init.DataTimeSeg1 = 9;
+  hfdcan2.Init.DataTimeSeg2 = 10;
   hfdcan2.Init.StdFiltersNbr = 0;
-  hfdcan2.Init.ExtFiltersNbr = 0;
+  hfdcan2.Init.ExtFiltersNbr = 2;
   hfdcan2.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
   if (HAL_FDCAN_Init(&hfdcan2) != HAL_OK)
   {
