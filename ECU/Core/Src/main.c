@@ -119,6 +119,13 @@ void ADC_Configure(void)
 	HAL_ADC_Start_DMA(&hadc2, (uint32_t *)&ADC_buffers[NUM_SIGNALS_ADC1], NUM_SIGNALS_ADC2);
 }
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim->Instance == TIM6) {
+		CubeCAN_Tick();
+	}
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -179,11 +186,6 @@ int main(void)
 
   //Initialize Timer
   HAL_TIM_Base_Start_IT(&htim6);
-  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-    if (htim->Instance == TIM6){
-      CubeCAN_Tick();
-    }
-  }
 
 	ADC_Configure();
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop

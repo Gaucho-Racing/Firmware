@@ -42,11 +42,6 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 		return;
 	}
 
-	if (size > ECU_CAN_MAX_DATA_BYTES) {
-		LOGOMATIC_WARNING("Tried to send more than 64 bytes over CAN\n");
-		size = ECU_CAN_MAX_DATA_BYTES;
-	}
-
 	CubeCAN_Send(handle, destNode, messageID, data, (uint8_t)size);
 }
 
@@ -65,6 +60,9 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 	}
 
 	CubeCAN_Send(stateLump.primary_can, GRCAN_ALL, (GRCAN_MSG_ID)msgID, msg, (uint8_t)size);
+
+
+
 }
 
 // Didnt want to delete this in case the change I made aren't necessary
