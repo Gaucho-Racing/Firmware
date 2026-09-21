@@ -108,6 +108,14 @@ struct CubeCAN_Private_Handle {
 extern struct CubeCAN_Private_Handle handles[CUBEMX_CAN_MAX_INSTANCES];
 
 /**
+ * @brief Performs one-time internal checks for the CubeCAN CAN library.
+ * @note Covers self-validation of various internal tools, essentially a compile check at runtime.
+ * @return HAL_StatusTypeDef indicating the success or failure of the checks.
+ * @warning This function should be called once during system initialization to ensure that the CubeCAN CAN library is properly configured and that all internal checks pass.
+ */
+HAL_StatusTypeDef CubeCAN_Private_InternalOneTimeChecks(void);
+
+/**
  * @brief Sends a queued message from the CubeCAN CAN handle.
  * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.

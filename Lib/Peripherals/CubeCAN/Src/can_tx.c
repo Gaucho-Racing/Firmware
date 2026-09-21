@@ -109,7 +109,7 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
 					      .DataLength = dlc,
 					      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 					      .FDFormat = fdformat,
-					      .Identifier = CubeCAN_Construct_Identifier(&identifier_struct),
+					      .Identifier = identifier_struct.raw_id,
 					      .IdType = FDCAN_EXTENDED_ID,
 					      .MessageMarker = 0U, // TODO We can do cool things with this to track transmission queue statistics
 					      .TxEventFifoControl = FDCAN_NO_TX_EVENTS,

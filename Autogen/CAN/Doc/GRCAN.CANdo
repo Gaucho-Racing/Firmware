@@ -516,7 +516,7 @@ byte order: little_endian
 
 Message ID:
   UNUSED:
-    MSG ID: 0x888
+    MSG ID: 0xFFF
     MSG LENGTH: 1
     UNUSED:
       bit_start: 0
