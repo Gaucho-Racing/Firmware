@@ -19,18 +19,26 @@
 typedef struct CubeCAN_Private_Handle CubeCAN_Handle;
 
 /**
- * @brief CAN Identifier structure
+ * @brief Represents a CAN 29-bit identifier
  *
- * This structure is used to represent a CAN message identifier, which consists of a transmitting node ID, a receiving node ID, and a message ID. The structure is used in conjunction with the
- * Construct_Message_ID and Deconstruct_Message_ID functions to convert between the structure representation and the 32-bit integer representation of the CAN message identifier.
+ * This union allows for easy access to the individual components of a CAN identifier, including the receive node ID, message ID, and transmit node ID.
+ * It also provides a raw 32-bit representation of the identifier which can be used to specify custom CAN IDs.
  *
- * @warning The structure does not represent custom IDs.
- * @warning The structure does not represent actual bit depth
+ * @warning The values of the fields are not validated and may not represent a valid CAN identifier. It is the responsibility of the user to ensure that the values are valid and conform to the CAN protocol.
+ * @warning Do not use the _ field directly, as it may lead to undefined behavior. Use the provided fields instead.
+ *
+ * @note Setting any bit past the 29th bit is undefined behavior and may lead to unexpected results.
+ * @remark For raw_id 0x01122233 expect to see TX ID 0x11, MSG ID 0x222, RX ID 0x33
+ * @remark Bitfield order is only correct on little-endian systems, and may not be correct otherwise.
  */
-typedef struct {
-	GRCAN_NODE_ID tx_node_id;
-	GRCAN_NODE_ID rx_node_id;
-	GRCAN_MSG_ID msg_id;
+typedef union {
+	uint32_t raw_id;
+	struct __attribute__((packed)) {
+		GRCAN_NODE_ID rx_node_id : 8;
+		GRCAN_MSG_ID msg_id : 12;
+		GRCAN_NODE_ID tx_node_id : 8;
+		uint32_t _ : 4;
+	};
 } CAN_Identifier;
 
 /**
