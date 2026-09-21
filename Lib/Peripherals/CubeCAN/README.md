@@ -34,7 +34,7 @@ Add a file named `CubeCAN_Config.h` to your project, generally `Application/Inc/
 #endif
 ```
 
-**Configuration Requirements:**
+#### Configuration Requirements
 
 - `CUBEMX_CAN_TX_QUEUE_SIZE`: Must be a power of two. Defines the transmission queue depth; when the queue fills, the oldest message is dropped and `CubeCAN_Send()` returns `HAL_BUSY`.
 - `CUBEMX_CAN_MAX_INSTANCES`: Must be 1-3 depending on your chip's available FDCAN peripherals. Omit this definition to automatically select the maximum supported by your MCU.
@@ -183,6 +183,8 @@ We currently provide compile time static assertions to validate:
 - Lock free atomic operations for integers and booleans guaranteed by the compiler
 - `CUBEMX_CAN_TX_QUEUE_SIZE` is a power of two and non-zero (allows faster ring-buffer wrapping)
 - `CUBEMX_CAN_MAX_INSTANCES` requires management of 1 to 3 interfaces (optional parameter, otherwise automatically chooses the maximum possible)
+
+A single runtime check `CubeCAN_Private_InternalOneTimeChecks()` is called once on first call to `CubeCAN_Entrance()` which validates that the compiled bit-packing for `CAN_Identifier` is correct, if it is not the CAN peripheral entrance fails and returns `null`. Sadly this cannot be a compile-time check.
 
 ### Globals
 
