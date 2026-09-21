@@ -232,12 +232,6 @@ function(add_arm_cmsis_interface)
 		INTERFACE
 			$<BUILD_INTERFACE:${CMSIS_DEVICE_PATH}/Include>
 	)
-	target_compile_definitions(
-		"CMSIS_Device_${SPECIFIER_UPPER}"
-		INTERFACE
-			"STM32${SERIES_UPPER}xx"
-			"USE_HAL_DRIVER"
-	)
 endfunction()
 
 #[[
