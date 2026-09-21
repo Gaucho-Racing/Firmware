@@ -78,6 +78,9 @@ BO_ 2152733186 Dash_Panel_Status_to_ECU: 2 Dash_Panel
  SG_ button_flags : 0|8@1+ (1,0) [0|0] ""  ECU
  SG_ led_flags : 8|8@1+ (1,0) [0|0] ""  ECU
 
+BO_ 2149091329 Debugger_UNUSED_to_Debugger: 1 Debugger
+ SG_ UNUSED : 0|1@1+ (1,0) [0|0] ""  Debugger
+
 BO_ 2148532226 Debugger_2_0_to_ECU: 8 Debugger
  SG_ Debug : 0|64@1- (1,0) [0|0] ""  ECU
 
@@ -415,6 +418,7 @@ CM_ SG_ 2152727041 Timestamp "Time in millis";
 CM_ SG_ 2152727042 Timestamp "Time in millis";
 CM_ SG_ 2152733186 button_flags "[Byte 0 / Bits 0-7] 0-3: Reserved 4: RTD Off 5: TS Off 6: RTD On 7: TS On";
 CM_ SG_ 2152733186 led_flags "[Byte 1 / Bits 8-15] 0-5: Reserved 6: IMD 7: BMS";
+CM_ SG_ 2149091329 UNUSED "Unused";
 CM_ SG_ 2148532226 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2148532738 Timestamp "Time in millis";
 CM_ SG_ 2148532227 Debug "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
@@ -582,6 +586,7 @@ BA_ "VFrameFormat" BO_ 2152726529 1;
 BA_ "VFrameFormat" BO_ 2152727041 1;
 BA_ "VFrameFormat" BO_ 2152727042 1;
 BA_ "VFrameFormat" BO_ 2152733186 1;
+BA_ "VFrameFormat" BO_ 2149091329 1;
 BA_ "VFrameFormat" BO_ 2148532226 1;
 BA_ "VFrameFormat" BO_ 2148532738 1;
 BA_ "VFrameFormat" BO_ 2148532227 1;
