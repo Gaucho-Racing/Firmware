@@ -100,8 +100,6 @@ routing:
           - msg: Dash Status
     Debugger:
       Primary:
-        Debugger:
-          - msg: UNUSED
         ECU:
           - msg: Debug 2.0
           - msg: Ping
@@ -515,13 +513,6 @@ routing:
 byte order: little_endian
 
 Message ID:
-  UNUSED:
-    MSG ID: 0x888
-    MSG LENGTH: 1
-    UNUSED:
-      bit_start: 0
-      comment: Unused
-      data type: b
   Debug 2.0:
     MSG ID: 0x000
     MSG LENGTH: 8
