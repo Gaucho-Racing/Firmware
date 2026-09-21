@@ -4,12 +4,6 @@
 
 #include <stdint.h>
 
-/** UNUSED */
-typedef struct {
-	/** Unused (Byte 0) */
-	uint8_t unused;
-} GRCAN_UNUSED_MSG;
-
 /** Ping */
 typedef struct {
 	/** Time in millis (Byte 0) */
