@@ -125,10 +125,10 @@ HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const 
 HAL_StatusTypeDef CubeCAN_Private_RecoverPeripheral(const CubeCAN_Handle *const handle);
 
 /**
- * @brief Converts a Data Length Code (DLC) to the corresponding number of data bytes.
- * @param dlc The Data Length Code to be converted.
- * @return The number of data bytes corresponding to the given DLC.
- * @warning The DLC value must be between 0 and 15, inclusive. Values outside this range will result in undefined behavior.
+ * @brief Checks if the CubeCAN CAN handle is currently disabled due to bus off or restricted operation mode.
+ * @param handle Pointer to the CubeCAN CAN handle to be checked.
+ * @return true if the CubeCAN CAN handle is disabled, false otherwise.
+ * @note This function does not attempt to recover the peripheral; it only checks its current state.
  */
 bool CubeCAN_Private_IsDisabled(const CubeCAN_Handle *const handle);
 
