@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
-#include "can.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
@@ -124,8 +124,8 @@ typedef volatile struct ECU_StateData {
 
 	GR_ECU_State ecu_state;
 
-	CANHandle *primary_can;
-	CANHandle *data_can;
+	CubeCAN_Handle *data_can;
+	CubeCAN_Handle *primary_can;
 } ECU_StateData;
 
 #endif

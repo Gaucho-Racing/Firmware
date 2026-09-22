@@ -54,7 +54,7 @@ Ensure you have setup some mechanism to call `CubeCAN_Tick()` frequently (a STM3
 - Sends one CAN message per bus per call (limiting to one prevents overwhelming the ISR)
 - Must be called regularly for messages to be transmitted
 - Can start running at any point in execution
-
+HAL_StatusTypeDef
 ### 4. Operation
 
 #### Transmission
