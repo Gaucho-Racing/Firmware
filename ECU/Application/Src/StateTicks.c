@@ -347,7 +347,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
 		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 1);
 		message.set_ac_current = torque_request * 10;
-		LOGOMATIC("%f\t\t%f\n", stateData->vehicle_speed_mph, torque_request);
 
 		if (torque_request < 0) {
 			message.set_ac_current = torque_request * -10;
