@@ -243,8 +243,8 @@ jobs:
   rust:
     needs: conditional
     if: ${{ needs.conditional.outputs.run_format == 'true' }}
-    name: Assembly
-    runs-on: ubuntu-slim
+    name: Rust
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
