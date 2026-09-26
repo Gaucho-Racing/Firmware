@@ -20,11 +20,11 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 # Linker, Compiler, and Assembler Flags
 set(
 	CMAKE_C_LINK_FLAGS
-	"${TARGET_FLAGS} --specs=nano.specs -Wl,--gc-sections -Wl,--start-group -lc -lm -Wl,--end-group -Wl,--print-memory-usage"
+	"${TARGET_FLAGS} -mthumb --specs=nano.specs -Wl,--gc-sections -Wl,--start-group -lc -lm -Wl,--end-group -Wl,--print-memory-usage"
 )
 set(
 	CMAKE_C_FLAGS
-	"${TARGET_FLAGS} -Wall -Wextra -Wpedantic -Wvla -Wdouble-promotion -Wmissing-field-initializers -fshort-enums -fdata-sections -ffunction-sections -fstack-usage"
+	"${TARGET_FLAGS} -mthumb -Wall -Wextra -Wpedantic -Wvla -Wdouble-promotion -Wmissing-field-initializers -fshort-enums -fdata-sections -ffunction-sections -fstack-usage"
 )
 set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp -MMD -MP")
 

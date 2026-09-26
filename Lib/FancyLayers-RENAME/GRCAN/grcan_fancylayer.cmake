@@ -30,7 +30,7 @@ target_link_libraries(
 )
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-	# target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
+	# target_compile_definitions(LOGOMATIC_OLD_LIB INTERFACE LOGOMATIC_ENABLED)
 
 	# add_executable(logomatic_simple)
 	# target_sources(
@@ -43,7 +43,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	# 	PRIVATE
 	# 		${CMAKE_CURRENT_LIST_DIR}/Test/Inc
 	# )
-	# target_link_libraries(logomatic_simple PRIVATE LOGOMATIC_LIB)
+	# target_link_libraries(logomatic_simple PRIVATE LOGOMATIC_OLD_LIB)
 	# add_test(logomatic_simple_test logomatic_simple)
 
 	# add_executable(logomatic_float)
@@ -57,6 +57,13 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	# 	PRIVATE
 	# 		${CMAKE_CURRENT_LIST_DIR}/Test/Inc
 	# )
-	# target_link_libraries(logomatic_float PRIVATE LOGOMATIC_LIB)
+	# target_link_libraries(logomatic_float PRIVATE LOGOMATIC_OLD_LIB)
 	# add_test(logomatic_float_test logomatic_float)
 endif()
+
+set_target_properties(
+	GRCAN_FANCYLAYER
+	PROPERTIES
+		DEPRECATION
+			"GRCAN_FANCYLAYER is deprecated and should be replaced by CUBE_CAN_LIB."
+)
