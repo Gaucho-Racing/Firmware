@@ -278,7 +278,7 @@ jobs:
   all:
     if: ${{ !github.event.pull_request.draft && always() }}
     name: Completed All Auto Formatters
-    needs: [clang, cmake, json, perl, asm]
+    needs: [clang, cmake, json, perl, asm, rust]
     runs-on: ubuntu-slim
     permissions: {}
     steps:
@@ -289,7 +289,8 @@ jobs:
             needs.cmake.result != 'success' ||
             needs.json.result != 'success' ||
             needs.perl.result != 'success' ||
-            needs.asm.result != 'success'
+            needs.asm.result != 'success' ||
+            needs.rust.result != 'success'
           }}
         run: |
           echo "One or more auto format jobs have failed."
@@ -298,5 +299,5 @@ jobs:
 
       - name: Complete Auto Format
         run: |
-          echo "Auto Format has been completed for Clang, CMake, JSON, Perl, and Assembly files."
+          echo "Auto Format has been completed for all configured files."
           echo "Please refer to the individual job logs for detailed formatting information."
