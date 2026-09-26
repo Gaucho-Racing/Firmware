@@ -36,6 +36,7 @@ target_sources(
 		../Core/Src/gpio.c
 		../Core/Src/i2c.c
 		main.c
+		profile.c
 		../Core/Src/spi.c
 		../Core/Src/stm32g4xx_hal_msp.c
 		../Core/Src/stm32g4xx_it.c

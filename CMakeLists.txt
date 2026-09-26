@@ -156,6 +156,11 @@ add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 OutboardSensors TireTemp)
 add_gr_project(STM32G431x8 OutboardSensors BrakeTemp)
 
+# SAMM
+include("SAMM/samm.cmake")
+add_gr_project(STM32H523xE SAMM InboardFloor)
+add_gr_project(STM32H523xE SAMM SuspensionNode)
+
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)
 add_gr_project(STM32G474xE G4SPITESTING)
@@ -169,7 +174,9 @@ add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_STRESS_TEST)
 add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_LOST_RX_TEST)
 add_gr_project(STM32G474xE G474xE_CAN_TESTING CAN_FILTER_TEST)
 add_gr_project(STM32G474xE G474xE_CAN_TESTING PROFILER_TEST)
+
 add_gr_project(STM32G431x8 G431x8_CAN_TESTING G431x8_CAN_BASIC_TEST)
+add_gr_project(STM32H523xE H523xx_CAN_TESTING H523xx_CAN_BASIC_TEST)
 
 add_gr_project(STM32G474xE G4FANCYCANTESTING CAN_LOOPBACK_TEST)
 

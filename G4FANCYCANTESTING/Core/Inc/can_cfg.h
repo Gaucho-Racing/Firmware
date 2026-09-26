@@ -6,4 +6,6 @@
 
 #define TX_BUFFER_2_SIZE 10
 
+#define CAN_TIMER_SEND_PERIOD_US 625
+
 #endif

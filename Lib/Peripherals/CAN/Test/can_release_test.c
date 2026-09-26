@@ -22,7 +22,7 @@ int can_release_test()
 
 	CANHandle *can = NULL;
 
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	set_default_can_clksource();
 
 	//=============================================================================================
 	LOGOMATIC("can_release_test: initializing handle\n");

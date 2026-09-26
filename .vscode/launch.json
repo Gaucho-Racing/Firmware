@@ -375,6 +375,134 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
+			"name": "Inboard Floor FL",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build InboardFloor FL",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
+			"name": "Inboard Floor FR",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build InboardFloor FR",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
+			"name": "Inboard Floor RL",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build InboardFloor RL",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/InboardFloor.elf",
+			"name": "Inboard Floor RR",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build InboardFloor RR",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node FL",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode FL",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node FR",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode FR",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node RL",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode RL",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/SuspensionNode.elf",
+			"name": "Suspension Node RR",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build SuspensionNode RR",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/G4HELLO.elf",
 			"name": "G4HELLO",
 			"request": "launch",
@@ -932,6 +1060,22 @@
 					}
 				]
 			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/H523xx_CAN_BASIC_TEST.elf",
+			"name": "H523xx_CAN_BASIC_TEST",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink-dap.cfg",
+				"target/stm32h5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build H523xx_CAN_BASIC_TEST",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32H523.svd"
 		}
 	]
 }

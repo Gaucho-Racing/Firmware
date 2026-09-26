@@ -5,12 +5,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef STM32G4
+#include "STM32G4_hal_fdcan_defines.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_dma.h"
+#elif defined(STM32H5)
+#include "STM32H5_hal_fdcan_defines.h"
+#include "stm32h5xx_ll_bus.h"
+#include "stm32h5xx_ll_dma.h"
+#endif
 
 // TODO: make the profiler cleaner
 #include "Logomatic.h"
-#include "STM32G4_hal_fdcan_defines.h"
 #include "profile.h"
 
 // TODO: define DMA usage in a better way
@@ -168,6 +174,30 @@ CANHandle *can_init(const CANConfig *config)
 		} else {
 			canHandle = &CAN1;
 			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+		}
+	}
+#endif
+
+#elif defined(STM32H523xx)
+#ifdef USECAN1
+	if (config->fdcan_instance == FDCAN1) {
+		if (CAN1.init) {
+			LOGOMATIC("CAN: CAN1 is already initialized\n");
+			return CAN_SUCCESS;
+		} else {
+			canHandle = &CAN1;
+			canHandle->tx_capacity = TX_BUFFER_1_SIZE;
+		}
+	}
+#endif
+#ifdef USECAN2
+	if (config->fdcan_instance == FDCAN2) {
+		if (CAN2.init) {
+			LOGOMATIC("CAN: CAN2 is already initialized\n");
+			return CAN_SUCCESS;
+		} else {
+			canHandle = &CAN2;
+			canHandle->tx_capacity = TX_BUFFER_2_SIZE;
 		}
 	}
 #endif
@@ -755,6 +785,17 @@ static CAN_STATUS can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IR
 		*it1 = FDCAN1_IT1_IRQn;
 		return CAN_SUCCESS;
 	}
+#elif defined(STM32H523xx)
+	if (instance == FDCAN1) {
+		*it0 = FDCAN1_IT0_IRQn;
+		*it1 = FDCAN1_IT1_IRQn;
+		return CAN_SUCCESS;
+	}
+	if (instance == FDCAN2) {
+		*it0 = FDCAN2_IT0_IRQn;
+		*it1 = FDCAN2_IT1_IRQn;
+		return CAN_SUCCESS;
+	}
 #endif
 
 	LOGOMATIC("can_get_irqs: could not obtain irq #s\n");
@@ -777,6 +818,17 @@ static CANHandle *can_get_handle(FDCAN_HandleTypeDef *hfdcan)
 #ifdef USECAN3
 	if (hfdcan->Instance == FDCAN3) {
 		return &CAN3;
+	}
+#endif
+#elif defined(STM32H5)
+#ifdef USECAN1
+	if (hfdcan->Instance == FDCAN1) {
+		return &CAN1;
+	}
+#endif
+#ifdef USECAN2
+	if (hfdcan->Instance == FDCAN2) {
+		return &CAN2;
 	}
 #endif
 #endif
@@ -807,6 +859,17 @@ static CAN_STATUS validate_can_handle(CANHandle *canHandle)
 #endif
 #ifdef USECAN3
 	if (canHandle == &CAN3) {
+		return CAN_SUCCESS;
+	}
+#endif
+#elif defined(STM32H5)
+#ifdef USECAN1
+	if (canHandle == &CAN1) {
+		return CAN_SUCCESS;
+	}
+#endif
+#ifdef USECAN2
+	if (canHandle == &CAN2) {
 		return CAN_SUCCESS;
 	}
 #endif
@@ -939,7 +1002,6 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef *hfdcan)
 static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 {
 #ifdef STM32G474xx
-
 	if (instance == FDCAN1) {
 		return "FDCAN1";
 	} else if (instance == FDCAN2) {
@@ -950,6 +1012,12 @@ static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
 #elif defined(STM32G431xx)
 	if (instance == FDCAN1) {
 		return "FDCAN1";
+	}
+#elif defined(STM32H523xx)
+	if (instance == FDCAN1) {
+		return "FDCAN1";
+	} else if (instance == FDCAN2) {
+		return "FDCAN2";
 	}
 #endif
 	return "UNKNOWN";
@@ -983,6 +1051,7 @@ void FDCAN2_IT1_IRQHandler(void)
 #endif
 }
 
+#ifdef STM32G4
 void FDCAN3_IT0_IRQHandler(void)
 {
 #ifdef USECAN3
@@ -995,3 +1064,5 @@ void FDCAN3_IT1_IRQHandler(void)
 	HAL_FDCAN_IRQHandler(&hal_fdcan3);
 #endif
 }
+
+#endif

@@ -2,9 +2,7 @@
 #define CAN_H
 
 // Supported STM32 Families
-#ifdef STM32G4
-#elif defined(STM32L4)
-#elif defined(STM32U5)
+#if !defined(STM32G4) && !defined(STM32H5)
 #error "Unsupported STM32 Family"
 #endif
 
@@ -14,6 +12,7 @@
 
 // #include "circularBuffer.h"
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef SKETCHY_OVERRIDE
 #include "timed_can_override.h"

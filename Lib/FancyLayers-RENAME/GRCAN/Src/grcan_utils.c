@@ -9,7 +9,7 @@
 
 GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 {
-	switch (bus) {
+	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
 			return GRCAN_MODE_FD;
 		case GRCAN_BUS_TESTING:
@@ -18,6 +18,9 @@ GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 			return GRCAN_MODE_CLASSIC;
 		case GRCAN_BUS_CHARGER:
 			return GRCAN_MODE_CLASSIC; // update later
+		case GRCAN_BUS_DATA_SUBNET:
+			LOGOMATIC("GRCAN_BusModeForBus: returning bus mode for subnet bus\n");
+			return GRCAN_MODE_FD;
 		default:
 			LOGOMATIC("GRCAN_BusModeForBus: unknown bus %d\n", bus);
 			return GRCAN_MODE_CLASSIC;
@@ -26,17 +29,43 @@ GRCAN_BusMode GRCAN_BusModeForBus(GRCAN_BUS_ID bus)
 
 uint32_t GRCAN_ToHAL_ClockSource(GRCAN_ClockSource src)
 {
+#if defined(STM32H5)
+
+	switch (src) {
+		case GRCAN_CLKSRC_PLL1Q:
+			return LL_RCC_FDCAN_CLKSOURCE_PLL1Q;
+
+		case GRCAN_CLKSRC_PLL2Q:
+			return LL_RCC_FDCAN_CLKSOURCE_PLL2Q;
+
+		case GRCAN_CLKSRC_HSE:
+			return LL_RCC_FDCAN_CLKSOURCE_HSE;
+
+		default:
+			LOGOMATIC("GRCAN_ToHAL_ClockSource: default source %d, defaulting to PLL2Q\n", src);
+			return LL_RCC_FDCAN_CLKSOURCE_PLL2Q;
+	}
+
+#elif defined(STM32G4) || defined(STM32L4) || defined(STM32U5)
+
 	switch (src) {
 		case GRCAN_CLKSRC_PCLK1:
 			return LL_RCC_FDCAN_CLKSOURCE_PCLK1;
+
 		case GRCAN_CLKSRC_PLL:
 			return LL_RCC_FDCAN_CLKSOURCE_PLL;
+
 		case GRCAN_CLKSRC_HSE:
 			return LL_RCC_FDCAN_CLKSOURCE_HSE;
+
 		default:
 			LOGOMATIC("GRCAN_ToHAL_ClockSource: default source %d, defaulting to PCLK1\n", src);
 			return LL_RCC_FDCAN_CLKSOURCE_PCLK1;
 	}
+
+#else
+#error "Unsupported STM32 Family"
+#endif
 }
 
 uint32_t GRCAN_ToHAL_ClockDivider(GRCAN_ClockDivider div)
@@ -124,6 +153,38 @@ uint32_t GRCAN_ToHAL_FeatureState(GRCAN_FeatureState state)
 	}
 }
 
+GRCAN_ClockSource GRCAN_DefaultClockSource(void)
+{
+#if defined(STM32H5)
+	return GRCAN_CLKSRC_PLL2Q;
+#elif defined(STM32G4) || defined(STM32L4) || defined(STM32U5)
+	return GRCAN_CLKSRC_PCLK1;
+#else
+#error "Unsupported STM32 Family"
+#endif
+}
+
+GRCAN_FrameFormat GRCAN_Frame_FormatForBus(GRCAN_BUS_ID bus)
+{
+	// This is an educate guess, the frame format for FD may change to GRCAN_FRAME_FD_BRS
+	switch ((int)bus) {
+		case GRCAN_BUS_PRIMARY:
+			return GRCAN_FRAME_FD_NO_BRS;
+		case GRCAN_BUS_TESTING:
+			return GRCAN_FRAME_FD_NO_BRS;
+		case GRCAN_BUS_DATA:
+			return GRCAN_FRAME_CLASSIC;
+		case GRCAN_BUS_CHARGER:
+			return GRCAN_FRAME_CLASSIC;
+		case GRCAN_BUS_DATA_SUBNET:
+			LOGOMATIC("GRCAN_Frame_FormatForBus: returning frame format for subnet bus\n");
+			return GRCAN_FRAME_FD_NO_BRS;
+		default:
+			LOGOMATIC("GRCAN_Frame_FormatForBus: unknown bus %d\n", bus);
+			return GRCAN_FRAME_CLASSIC;
+	}
+}
+
 void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 {
 	if (busCfg == NULL) {
@@ -131,15 +192,15 @@ void GRCAN_SetDefaultBusConfig(GRCAN_BusConfig *busCfg, GRCAN_BUS_ID bus)
 		return;
 	}
 
-	busCfg->fdcan_instance = FDCAN2;
-
 	memset(busCfg, 0, sizeof(*busCfg));
+
+	busCfg->fdcan_instance = FDCAN2;
 
 	busCfg->bus = bus;
 
-	busCfg->clock_source = GRCAN_CLKSRC_PCLK1;
+	busCfg->clock_source = GRCAN_DefaultClockSource();
 	busCfg->clock_divider = GRCAN_CLK_DIV1;
-	busCfg->frame_format = GRCAN_FRAME_FD_NO_BRS;
+	busCfg->frame_format = GRCAN_Frame_FormatForBus(bus);
 	busCfg->operating_mode = GRCAN_OPMODE_NORMAL;
 
 	busCfg->auto_retransmission = GRCAN_Feature_ENABLE;

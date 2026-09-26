@@ -54,7 +54,7 @@ int can_filter_test(void)
 	primary_can = data_can = NULL;
 	CANConfig cfg1;
 
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+	set_default_can_clksource();
 
 	if (get_cfg(FDCAN1, can_filter_test_rx_callback, &cfg1, FDCAN_MODE_INTERNAL_LOOPBACK, 1, 0)) {
 		LOGOMATIC("can_filter_test: FAIL, could not get config for FDCAN1\n");

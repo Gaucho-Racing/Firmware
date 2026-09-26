@@ -11,6 +11,7 @@ static CANHandle *grcan_primary = NULL;
 static CANHandle *grcan_data = NULL;
 static CANHandle *grcan_testing = NULL;
 static CANHandle *grcan_charging = NULL;
+static CANHandle *grcan_data_subnet = NULL;
 
 // typedef struct {
 // 	FDCAN_HandleTypeDef *hal_fdcanP;
@@ -42,7 +43,7 @@ bool GRCAN_ValidateBusConfig(GRCAN_BusConfig *bus_config)
 
 CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 {
-	switch (bus) {
+	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
 			return grcan_primary;
 		case GRCAN_BUS_DATA:
@@ -51,6 +52,9 @@ CANHandle *GRCAN_GetHandle(GRCAN_BUS_ID bus)
 			return grcan_testing;
 		case GRCAN_BUS_CHARGER:
 			return grcan_charging;
+		case GRCAN_BUS_DATA_SUBNET: // Subnet bus, ghost bus for SAMM boards (4)
+			LOGOMATIC("GRCAN_GetHandle: returning handle for subnet bus\n");
+			return grcan_data_subnet;
 		default:
 			return NULL;
 	}
@@ -123,11 +127,6 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 		return false;
 	}
 
-	if (!GRCAN_ValidateBusConfig(bus_config)) {
-		LOGOMATIC("GRCAN_InitBus: invalid config for bus %d\n", bus_config->bus);
-		return false;
-	}
-
 	enable_port_clock(bus_config->rx_pin.port);
 	enable_port_clock(bus_config->tx_pin.port);
 
@@ -174,22 +173,51 @@ bool GRCAN_InitBus(GRCAN_BusConfig *bus_config)
 	cfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	cfg.init_tx_gpio.Alternate = bus_config->tx_pin.alternate_function;
 
-	switch (bus_config->bus) {
+	switch ((int)bus_config->bus) {
 		case GRCAN_BUS_PRIMARY:
+			if (grcan_primary != NULL) {
+				LOGOMATIC("GRCAN_InitBus: primary bus already initialized\n");
+				return false;
+			}
 			slot = &grcan_primary;
 			break;
 		case GRCAN_BUS_DATA:
+			if (grcan_data != NULL) {
+				LOGOMATIC("GRCAN_InitBus: data bus already initialized\n");
+				return false;
+			}
 			slot = &grcan_data;
 			break;
 		case GRCAN_BUS_TESTING:
+			if (grcan_testing != NULL) {
+				LOGOMATIC("GRCAN_InitBus: testing bus already initialized\n");
+				return false;
+			}
 			slot = &grcan_testing;
 			break;
 		case GRCAN_BUS_CHARGER:
+			if (grcan_charging != NULL) {
+				LOGOMATIC("GRCAN_InitBus: charging bus already initialized\n");
+				return false;
+			}
 			slot = &grcan_charging;
+			break;
+		case GRCAN_BUS_DATA_SUBNET:
+			if (grcan_data_subnet != NULL) {
+				LOGOMATIC("GRCAN_InitBus: subnet bus already initialized\n");
+				return false;
+			}
+			LOGOMATIC("GRCAN_InitBus: initializing subnet bus\n");
+			slot = &grcan_data_subnet;
 			break;
 		default:
 			LOGOMATIC("GRCAN_InitBus: invalid bus %d\n", bus_config->bus);
 			return false;
+	}
+
+	if (!GRCAN_ValidateBusConfig(bus_config)) {
+		LOGOMATIC("GRCAN_InitBus: invalid config for bus %d\n", bus_config->bus);
+		return false;
 	}
 
 	handle = can_init(&cfg);
@@ -243,7 +271,7 @@ bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus)
 	deactivate_port_clock(rx);
 	deactivate_port_clock(tx);
 
-	switch (bus) {
+	switch ((int)bus) {
 		case GRCAN_BUS_PRIMARY:
 			grcan_primary = NULL;
 			break;
@@ -255,6 +283,10 @@ bool GRCAN_DeactivateBus(GRCAN_BUS_ID bus)
 			break;
 		case GRCAN_BUS_CHARGER:
 			grcan_charging = NULL;
+			break;
+		case GRCAN_BUS_DATA_SUBNET:
+			LOGOMATIC("GRCAN_DeactivateBus: deactivating subnet bus\n");
+			grcan_data_subnet = NULL;
 			break;
 		default:
 			LOGOMATIC("GRCAN_DeactivateBus: invalid bus %d\n", bus);
@@ -378,8 +410,8 @@ bool GRCAN_Raw_Send(GRCAN_BUS_ID bus, uint32_t rawID, void *data, uint32_t size)
 		memcpy(msg.data, data, size);
 	}
 
-	if (can_send(handle, &msg) != 0) {
-		LOGOMATIC("GRCAN_Raw_Send: can_send failed on bus %d\n", bus);
+	if (can_enqueue(handle, &msg) != 0) {
+		LOGOMATIC("GRCAN_Raw_Send: can_enqueue failed on bus %d\n", bus);
 		return false;
 	}
 
