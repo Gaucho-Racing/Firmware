@@ -3568,9 +3568,9 @@ Message ID:
       comment: Write 1 inverts direction
       data type: b
       units: Enable
-      scaled min: "-"
-      scaled max: "-"
-      map equation: "-"
+      scaled min: ~
+      scaled max: ~
+      map equation: ~
   Inv Cmd:
     MSG ID: 0x017
     MSG LENGTH: 8
@@ -3611,9 +3611,9 @@ Message ID:
       comment: Write this to 1 every 100ms to enable Inv
       data type: b
       units: Enable
-      scaled min: "-"
-      scaled max: "-"
-      map equation: "-"
+      scaled min: ~
+      scaled max: ~
+      map equation: ~
   Fan Status:
     MSG ID: 0x018
     MSG LENGTH: 4
