@@ -16,8 +16,8 @@ uint32_t MillisecondsSinceBoot(void);
 
 #define REGEN_MIN_SPEED_MPH 3.106856f // 5 KPH
 
-#define MAX_CURRENT_AMPS 375.0f	       // Determined by Ryan
-#define MAX_REVERSE_CURRENT_AMPS 30.0f // TODO: Change as appropriate
+#define MAX_FORWARD_CURRENT_AMPS 325.0f
+#define MAX_REVERSE_CURRENT_AMPS 300.0f
 
 #define ECU_STATUS_MSG_PERIOD_MILLIS (1000)
 #define TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS (5000)
