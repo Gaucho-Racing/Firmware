@@ -239,6 +239,41 @@ jobs:
           default_author: github_actions
           message: "Automatic Assembly Format: Standardized formatting automatically"
           fetch: "false"
+  
+  rust:
+    needs: conditional
+    if: ${{ needs.conditional.outputs.run_format == 'true' }}
+    name: Assembly
+    runs-on: ubuntu-slim
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Acquire Secrets
+        uses: Gaucho-Racing/vault-pull-secrets@fa8269ea0faa78bd55f8628fd13680dae68908a2 # v1.3.0
+        with:
+          secrets: firmware-monorepo-autoformat.github_pat
+
+      - name: Checkout Pull Request
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 1
+          token: ${{ env.GITHUB_PAT }}
+
+      - name: Run rustfmt
+        run: cargo fmt
+        working-directory: Autogen/CAN/canfigurator
+
+      - name: Save Changes
+        uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
+        if: github.ref_type != 'tag'
+        env:
+          HOME: ${{ github.workspace }}
+        with:
+          default_author: github_actions
+          message: "Automatic Rust Format: Standardized formatting automatically"
+          fetch: "false"
 
   all:
     if: ${{ !github.event.pull_request.draft && always() }}
