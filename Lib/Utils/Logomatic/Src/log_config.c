@@ -1,5 +1,8 @@
 #include "Logomatic.h"
+
+#ifndef LOGOMATIC_HOOTLTEST
 #include "main.h"
+#endif
 
 Logomatic_LogLevel _logomatic_loglevel = LogLevel_Debug;
 

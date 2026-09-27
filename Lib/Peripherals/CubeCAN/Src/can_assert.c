@@ -26,3 +26,5 @@ static_assert((CUBEMX_CAN_TX_QUEUE_SIZE > 0) && !(CUBEMX_CAN_TX_QUEUE_SIZE & (CU
 static_assert(CUBEMX_CAN_MAX_INSTANCES >= 1 && CUBEMX_CAN_MAX_INSTANCES <= 3, "CUBEMX_CAN_MAX_INSTANCES must be configured between 1 and 3 inclusive");
 
 static_assert(sizeof(GRCAN_BUS_ID) <= sizeof(void *), "GRCAN_BUS_ID must fit within a pointer-sized type to support being unioned with a pointer in CubeCAN_Config");
+
+static_assert(sizeof(CAN_Identifier) == sizeof(uint32_t), "CAN_Identifier must be 32 bits in size");

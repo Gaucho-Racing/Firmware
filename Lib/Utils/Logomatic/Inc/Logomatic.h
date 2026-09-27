@@ -1,10 +1,16 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#ifndef LOGOMATIC_HOOTLTEST
 #include "main.h"
+#endif
 
 #ifndef LOGOMATIC_H
 #define LOGOMATIC_H
+
+#ifndef __weak
+#define __weak __attribute__((weak))
+#endif
 
 /// @brief Logomatic log level type, used to define the severity of log messages
 #define _LOGOMATIC_LOGLEVEL_PRIVATE_LIST                                                                                                                                                               \

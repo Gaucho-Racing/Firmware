@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdatomic.h>
 
 #include "CubeVCP.h"
 #include "CubeVCP_Config.h"
