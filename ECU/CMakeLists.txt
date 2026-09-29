@@ -74,7 +74,7 @@ target_compile_definitions(${TARGET_NAME} PRIVATE STM32G474xx)
 #add_library(${TARGET_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${TARGET_NAME}
-	INTERFACE
+	PRIVATE
 		# Core
 		Core/Src/adc.c
 		Core/Src/dma.c
@@ -88,7 +88,7 @@ target_sources(
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 
-		startup_stm32g474xx.s
+		#startup_stm32g474xx.s
 
 		# Application
 		Application/Src/CANdler.c
@@ -101,7 +101,7 @@ target_sources(
 
 target_link_libraries(
 	${TARGET_NAME}
-	INTERFACE
+	PRIVATE
 		CANfigurator
 		BitManipulations_Lib
 		CUBE_CAN_LIB
@@ -111,7 +111,7 @@ target_link_libraries(
 
 target_include_directories(
 	${TARGET_NAME}
-	INTERFACE
+	PRIVATE
 		Application/Inc
 		Core/Inc
 )
