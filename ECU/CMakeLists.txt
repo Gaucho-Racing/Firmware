@@ -65,7 +65,7 @@ target_link_options(
 	${TARGET_NAME}
 	PRIVATE
 		-T
-		"${CMAKE_CURRENT_SOURCE_DIR}/STM32G474RETx_FLASH.ld"
+		"${CMAKE_CURRENT_SOURCE_DIR}/STM32G474xx_FLASH.ld"
 )
 
 target_compile_definitions(${TARGET_NAME} PRIVATE STM32G474xx)
@@ -88,7 +88,7 @@ target_sources(
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 
-		#startup_stm32g474xx.s
+		startup_stm32g474xx.s
 
 		# Application
 		Application/Src/CANdler.c
