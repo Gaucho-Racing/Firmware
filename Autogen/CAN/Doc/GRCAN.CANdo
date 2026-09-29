@@ -536,7 +536,7 @@ Message ID:
       data type: u32
       units: ms
       scaled min: 0
-      scaled max: 4,294,967,296
+      scaled max: 4294967296
       map equation: "1x"
   ECU Status 1:
     MSG ID: 0x003
