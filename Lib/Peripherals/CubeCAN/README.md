@@ -36,7 +36,7 @@ Add a file named `CubeCAN_Config.h` to your project, generally `Application/Inc/
 
 #### Configuration Requirements
 
-- `CUBEMX_CAN_TX_QUEUE_SIZE`: Must be a power of two. Defines the transmission queue depth; when the queue fills, the oldest message is dropped and `CubeCAN_Send()` returns `HAL_BUSY`.
+- `CUBEMX_CAN_TX_QUEUE_SIZE`: Must be a power of two. Defines the transmission queue depth; when the queue fills, the oldest message is dropped and `CubeCAN_Send()` and `CubeCAN_Send_Custom()` return `HAL_BUSY`.
 - `CUBEMX_CAN_MAX_INSTANCES`: Must be 1-3 depending on your chip's available FDCAN peripherals. Omit this definition to automatically select the maximum supported by your MCU.
 
 From there just ensure that you have configured CAN through STM32CubeMX and setup a global variable for each `CubeCAN_Handle` you wish to use.
@@ -59,7 +59,7 @@ Ensure you have setup some mechanism to call `CubeCAN_Tick()` frequently (a STM3
 
 #### Transmission
 
-Call `CubeCAN_Send()` to queue a message for transmission. Messages are queued in a lock-free ring buffer and processed in FIFO order.
+Call `CubeCAN_Send()` or `CubeCAN_Send_Custom()` to queue a message for transmission. Messages are queued in a lock-free ring buffer and processed in FIFO order.
 
 - **Returns `HAL_OK`**: Message successfully queued
 - **Returns `HAL_BUSY`**: Transmission queue is full; the oldest queued message was dropped to make room for the new one
@@ -91,7 +91,7 @@ flowchart TD
     Entrance --> Choice{"Functions"}
     Choice --> Exit(["CubeCAN_Exit()"])
     Exit -.-> |"AVOID"| Entrance
-    Choice --> Send(["CubeCAN_Send()"])
+    Choice --> Send(["CubeCAN_Send()\nCubeCAN_Send_Custom()"])
     Choice --> |"Call Often\n(User Setup)"| Tick(["CubeCAN_Tick()"])
     Send -.-> Queue("CubeCAN_Private_QueueTx()")
     Data -.-> Tick
@@ -126,7 +126,7 @@ CubeCAN is designed to handle concurrent access from multiple execution contexts
 #### Overview
 
 - `tx_head` and `tx_tail` are atomic `uint32_t` variables that implement a lock-free ring buffer
-- `CubeCAN_Send()` and `CubeCAN_Tick()` use critical sections (interrupt blocking) when necessary
+- `CubeCAN_Send()`, `CubeCAN_Send_Custom()`, and `CubeCAN_Tick()` use critical sections (interrupt blocking) when necessary
 - Atomic operations use `memory_order_relaxed` within ISRs and `memory_order_release`/`memory_order_acquire` for inter-context synchronization
 - The queue size must be a power of two, allowing fast wraparound via bitwise AND instead of expensive modulo operations
 
@@ -139,7 +139,7 @@ Interrupt protection is used only in:
 
 #### ISR Interaction
 
-- Safe to call `CubeCAN_Send()` from `main()` or any ISR
+- Safe to call `CubeCAN_Send()` or `CubeCAN_Send_Custom()` from `main()` or any ISR
 - Safe to call `CubeCAN_Tick()` from `main()` or any ISR
 - Do not call any CubeCAN function from `CubeCAN_RxCallback()`, use it only to write data to shared memory (with concurrency safety as needed)
 
@@ -184,7 +184,7 @@ We currently provide compile time static assertions to validate:
 - `CUBEMX_CAN_TX_QUEUE_SIZE` is a power of two and non-zero (allows faster ring-buffer wrapping)
 - `CUBEMX_CAN_MAX_INSTANCES` requires management of 1 to 3 interfaces (optional parameter, otherwise automatically chooses the maximum possible)
 
-A single runtime check `CubeCAN_Private_InternalOneTimeChecks()` is called once on first call to `CubeCAN_Entrance()` which validates that the compiled bit-packing for `CAN_Identifier` is correct, if it is not the CAN peripheral entrance fails and returns `null`. Sadly this cannot be a compile-time check.
+A single runtime check `CubeCAN_Private_InternalOneTimeChecks()` is called once on first call to `CubeCAN_Entrance()` which validates that the compiled bit-packing for `CubeCAN_Identifier` is correct, if it is not the CAN peripheral entrance fails and returns `null`. Sadly this cannot be a compile-time check.
 
 ### Globals
 
