@@ -64,7 +64,7 @@ typedef union {
  * @warning The callback function should not call any CubeCAN functions, as it may lead to undefined behavior.
  * @warning It is the responsibility of the callback function to verify the integrity of the received data and handle any errors or null inputs.
  */
-typedef void (*CubeCAN_RxCallback)(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
+typedef void (*CubeCAN_RxCallback)(const CubeCAN_Config_Context *const context, const CubeCAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
 
 /**
  * @brief Configuration structure for CubeCAN CAN.
@@ -111,6 +111,17 @@ HAL_StatusTypeDef CubeCAN_Exit(CubeCAN_Handle *handle);
  * @warning This function checks during early boot that it is not called more than ABSOLUTE_MAX_INVOCATIONS_PER_TICK times per millisecond, failing if so
  */
 void CubeCAN_Tick(void);
+
+/**
+ * @brief Sends a CAN message using the CubeCAN CAN handle, with the specified custom identifier, data payload, and size.
+ * @param handle Pointer to the CubeCAN CAN handle.
+ * @param custom_id The custom identifier for the message.
+ * @param data Pointer to the data payload of the message.
+ * @param size The size of the data payload in bytes.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
+ */
+HAL_StatusTypeDef CubeCAN_Send_Custom(CubeCAN_Handle *const handle, const GRCAN_CUSTOM_ID custom_id, const void *const data, const uint8_t size);
 
 /**
  * @brief Sends a CAN message using the CubeCAN CAN handle, with the specified receive node, message ID, data payload, and size.
