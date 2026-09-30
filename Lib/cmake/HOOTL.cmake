@@ -20,7 +20,6 @@ add_compile_options(
 	-fshort-enums
 	-fdata-sections
 	-ffunction-sections
-	-fstack-usage
 	-fno-lto
 	-Wall
 	-Wextra
