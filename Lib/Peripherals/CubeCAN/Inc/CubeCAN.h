@@ -24,7 +24,8 @@ typedef struct CubeCAN_Private_Handle CubeCAN_Handle;
  * This union allows for easy access to the individual components of a CAN identifier, including the receive node ID, message ID, and transmit node ID.
  * It also provides a raw 32-bit representation of the identifier which can be used to specify custom CAN IDs.
  *
- * @warning The values of the fields are not validated and may not represent a valid CAN identifier. It is the responsibility of the user to ensure that the values are valid and conform to the CAN protocol.
+ * @warning The values of the fields are not validated and may not represent a valid CAN identifier. It is the responsibility of the user to ensure that the values are valid and conform to the CAN
+ * protocol.
  * @warning Do not use the _ field directly, as it may lead to undefined behavior. Use the provided fields instead.
  *
  * @note Setting any bit past the 29th bit is undefined behavior and may lead to unexpected results.
