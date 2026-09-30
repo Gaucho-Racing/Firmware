@@ -39,7 +39,7 @@ typedef union {
 		GRCAN_NODE_ID tx_node_id : 8;
 		uint32_t _ : 4;
 	};
-} CAN_Identifier;
+} CubeCAN_Identifier;
 
 /**
  * @brief Union for user-defined context data in CubeCAN configuration.
@@ -123,26 +123,5 @@ void CubeCAN_Tick(void);
  * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
  */
 HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size);
-
-/**
- * @brief Constructs a CAN message identifier from the given transmitting node ID, receiving node ID, and message ID.
- *
- * @param identifier Pointer to the CAN_Identifier structure containing the node and message IDs.
- *
- * @return The constructed 29-bit CAN message extended identifier.
- */
-uint32_t CubeCAN_Construct_Identifier(const CAN_Identifier *const identifier);
-
-/**
- * @brief Deconstructs a 29-bit CAN message extended identifier into its constituent transmitting node ID, receiving node ID, and message ID.
- *
- * @param message_id The 29-bit CAN message extended identifier to be deconstructed.
- *
- * @return A CAN_Identifier structure containing the deconstructed node and message IDs.
- *
- * @warning The function does not guarantee that the returned structure will represent a valid CAN message identifier.
- * @warning The function does not support custom IDs.
- */
-CAN_Identifier CubeCAN_Deconstruct_Identifier(const uint32_t message_id);
 
 #endif
