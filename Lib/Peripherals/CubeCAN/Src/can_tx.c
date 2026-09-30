@@ -6,9 +6,9 @@
 #include "CriticalSection.h"
 #include "CubeCAN.h"
 #include "CubeCAN_Config.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "Logomatic.h"
 #include "PrivateInc/internal.h"
-#include "GRCAN_CUSTOM_ID.h"
 #include "main.h"
 
 void CubeCAN_Private_RateChecker(void)
@@ -128,6 +128,10 @@ HAL_StatusTypeDef CubeCAN_Send_Custom(CubeCAN_Handle *const handle, const GRCAN_
 
 HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
 {
+	if (handle == NULL) {
+		return HAL_ERROR;
+	}
+
 	CubeCAN_Identifier id = {.rx_node_id = rx_node, .msg_id = msg_id, .tx_node_id = handle->config.sending_node_id};
 	return CubeCAN_Private_Send(handle, id, data, size);
 }
