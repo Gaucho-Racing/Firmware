@@ -36,6 +36,10 @@ else()
 	add_link_options(-Wl,--fatal-warnings)
 endif()
 
+if(WIN32) # Windows has different bitfield layout and semantics
+	add_compile_options(-mno-ms-bitfields)
+endif()
+
 if(ADDRESS_SANITIZER)
 	message(STATUS "Address sanitizer enabled for tests")
 
