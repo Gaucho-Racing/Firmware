@@ -120,7 +120,7 @@ HAL_StatusTypeDef CubeCAN_Private_InternalOneTimeChecks(void);
  * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const handle);
+HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(CubeCAN_Handle *const handle);
 
 /**
  * @brief Attempts to recover the FDCAN peripheral associated with the given CubeCAN CAN handle.

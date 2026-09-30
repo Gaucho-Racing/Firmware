@@ -162,7 +162,7 @@ HAL_StatusTypeDef CubeCAN_Private_QueueTx(CubeCAN_Handle *handle, const GRCAN_Pr
 	return status;
 }
 
-HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const handle)
+HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(CubeCAN_Handle *const handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {
 		LOGOMATIC_ERROR("CubeCAN_Private_SendQueuedMessage: invalid null parameter\n");
