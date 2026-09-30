@@ -4,7 +4,9 @@
 #ifndef CUBEVCP_TEST_MAIN_H
 #define CUBEVCP_TEST_MAIN_H
 
+#ifndef __weak
 #define __weak __attribute__((weak))
+#endif
 
 typedef enum {
 	HAL_OK = 0x00,
