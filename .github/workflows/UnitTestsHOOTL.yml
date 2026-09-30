@@ -32,6 +32,7 @@ jobs:
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
       SCCACHE_SERVER_PORT: ${{ matrix.prefix == 'Debug' && '4226' || (matrix.prefix == 'Release' && '4227' || (matrix.prefix == 'MinSizeRel' && '4228' || '4229')) }}
+      FETCHCONTENT_DIR: ${{ github.workspace }}/Lib/Vendor/FetchContent
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -43,14 +44,24 @@ jobs:
         with:
           release: ${{ env.ARM_GCC_VERSION }}
 
+      - name: Setup FetchContent Cache
+        continue-on-error: true
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ env.FETCHCONTENT_DIR }}
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('Lib/cmake/cube.cmake', 'CMakeLists.txt', 'Testbench/testbench.cmake') }}
+          restore-keys: |
+            fetchcontent-${{ runner.os }}-
+
       - name: Setup Cache
         id: cache-setup
         continue-on-error: true
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ env.SCCACHE_DIR }}
-          key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}
+          key: sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
+            sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}-${{ github.sha }}
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-${{ github.ref_name }}
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-main
             sccache-${{ runner.os }}-${{ env.ARM_GCC_VERSION }}-${{ github.job }}-${{ matrix.prefix }}-
@@ -199,11 +210,21 @@ jobs:
       SCCACHE_DIR: ${{ github.workspace }}/sccache
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
+      FETCHCONTENT_DIR: ${{ github.workspace }}/Lib/Vendor/FetchContent
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
+
+      - name: Setup FetchContent Cache
+        continue-on-error: true
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ env.FETCHCONTENT_DIR }}
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('Lib/cmake/cube.cmake', 'CMakeLists.txt', 'Testbench/testbench.cmake', 'BLINKY/blinky.cmake') }}
+          restore-keys: |
+            fetchcontent-${{ runner.os }}-
 
       - name: Setup Cache
         id: cache-setup

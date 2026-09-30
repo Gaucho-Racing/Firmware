@@ -30,6 +30,33 @@
 			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=RR"
 		},
 		{
+			"label": "CMake: configure and build NucleoG4-Blinky",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Blinky"
+		},
+		{
+			"label": "CMake: configure and build NucleoG4-Hello",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Hello"
+		},
+		{
+			"label": "CMake: configure and build NucleoG4-Echo",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Echo"
+		},
+		{
 			"label": "CMake: configure and build ECU",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -37,6 +64,15 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ECU"
+		},
+		{
+			"label": "CMake: configure and build CUBEMXTESTING",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CUBEMXTESTING"
 		},
 		{
 			"label": "CMake: configure and build CCU",
@@ -156,33 +192,6 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4HELLO"
 		},
 		{
-			"label": "CMake: configure and build G4PERTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4PERTESTING"
-		},
-		{
-			"label": "CMake: configure and build G4ADCTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4ADCTESTING"
-		},
-		{
-			"label": "CMake: configure and build G4SPITESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4SPITESTING"
-		},
-		{
 			"label": "CMake: configure and build G4NEOTESTING",
 			"type": "shell",
 			"dependsOrder": "sequence",
@@ -244,78 +253,6 @@
 				"CMake: configure"
 			],
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
-		},
-		{
-			"label": "CMake: configure and build CAN_BASIC_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_BASIC_TEST"
-		},
-		{
-			"label": "CMake: configure and build CAN_STRESS_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_STRESS_TEST"
-		},
-		{
-			"label": "CMake: configure and build CAN_FILTER_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_FILTER_TEST"
-		},
-		{
-			"label": "CMake: configure and build CAN_RELEASE_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_RELEASE_TEST"
-		},
-		{
-			"label": "CMake: configure and build CAN_LOST_RX_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_LOST_RX_TEST"
-		},
-		{
-			"label": "CMake: configure and build CAN_LOOPBACK_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CAN_LOOPBACK_TEST"
-		},
-		{
-			"label": "CMake: configure and build PROFILER_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target PROFILER_TEST"
-		},
-		{
-			"label": "CMake: configure and build G431x8_CAN_BASIC_TEST",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G431x8_CAN_BASIC_TEST"
 		}
 	]
 }

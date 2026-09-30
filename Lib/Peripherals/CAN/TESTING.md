@@ -43,7 +43,7 @@ These targets allow different test scenarios to be compiled independently.
 The CAN API and related utilities are included through CMake modules:
 
 ```
-include("${lib_path}/Peripherals/CAN/common.cmake")
+include("${LIB_PATH}/Peripherals/CAN/common.cmake")
 ```
 
 These modules provide:
@@ -197,10 +197,8 @@ To initialize and run a CAN test:
 can_stress_test();
 ```
 
-5. Results and diagnostics are printed through `LOGOMATIC`.
+1. Results and diagnostics are printed through `LOGOMATIC`.
 
 This design allows each CAN test to run as a standalone firmware target while sharing the same CAN API implementation.
-
-
 
 ---

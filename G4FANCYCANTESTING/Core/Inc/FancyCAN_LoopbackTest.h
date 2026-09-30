@@ -1,6 +1,0 @@
-#ifndef FANCYCAN_LOOPBACKTEST_H
-#define FANCYCAN_LOOPBACKTEST_H
-
-int FancyCAN_LoopbackTest(void);
-
-#endif // FANCYCAN_LOOPBACKTEST_H
