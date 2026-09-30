@@ -6,6 +6,7 @@
 #include "CriticalSection.h"
 #include "CubeCAN.h"
 #include "CubeCAN_Config.h"
+#include "GRCAN_CUSTOM_ID.h"
 #include "Logomatic.h"
 #include "PrivateInc/internal.h"
 #include "main.h"
@@ -71,7 +72,7 @@ void CubeCAN_Tick(void)
 	}
 }
 
-HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
+HAL_StatusTypeDef CubeCAN_Private_Send(CubeCAN_Handle *const handle, const CubeCAN_Identifier id, const void *const data, const uint8_t size)
 {
 	if (handle == NULL || data == NULL || size > FDCAN_MAX_DATA_BYTES) {
 		return HAL_ERROR;
@@ -103,13 +104,11 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
 			return HAL_ERROR;
 	}
 
-	const CAN_Identifier identifier_struct = {.tx_node_id = handle->config.sending_node_id, .rx_node_id = rx_node, .msg_id = msg_id};
-
 	const FDCAN_TxHeaderTypeDef header = {.BitRateSwitch = brs,
 					      .DataLength = dlc,
 					      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 					      .FDFormat = fdformat,
-					      .Identifier = identifier_struct.raw_id,
+					      .Identifier = id.raw_id,
 					      .IdType = FDCAN_EXTENDED_ID,
 					      .MessageMarker = 0U, // TODO We can do cool things with this to track transmission queue statistics
 					      .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
@@ -119,6 +118,22 @@ HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID
 	memcpy(message.data, data, size);
 
 	return CubeCAN_Private_QueueTx(handle, &message);
+}
+
+HAL_StatusTypeDef CubeCAN_Send_Custom(CubeCAN_Handle *const handle, const GRCAN_CUSTOM_ID custom_id, const void *const data, const uint8_t size)
+{
+	CubeCAN_Identifier id = {.raw_id = custom_id};
+	return CubeCAN_Private_Send(handle, id, data, size);
+}
+
+HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
+{
+	if (handle == NULL) {
+		return HAL_ERROR;
+	}
+
+	CubeCAN_Identifier id = {.rx_node_id = rx_node, .msg_id = msg_id, .tx_node_id = handle->config.sending_node_id};
+	return CubeCAN_Private_Send(handle, id, data, size);
 }
 
 HAL_StatusTypeDef CubeCAN_Private_QueueTx(CubeCAN_Handle *handle, const GRCAN_Private_TxMessage *message)
@@ -147,7 +162,7 @@ HAL_StatusTypeDef CubeCAN_Private_QueueTx(CubeCAN_Handle *handle, const GRCAN_Pr
 	return status;
 }
 
-HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const handle)
+HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(CubeCAN_Handle *const handle)
 {
 	if (handle == NULL || handle->hfdcan == NULL) {
 		LOGOMATIC_ERROR("CubeCAN_Private_SendQueuedMessage: invalid null parameter\n");

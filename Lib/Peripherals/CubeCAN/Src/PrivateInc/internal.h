@@ -120,7 +120,7 @@ HAL_StatusTypeDef CubeCAN_Private_InternalOneTimeChecks(void);
  * @param handle Pointer to the CubeCAN CAN handle.
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
-HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(const CubeCAN_Handle *const handle);
+HAL_StatusTypeDef CubeCAN_Private_SendQueuedMessage(CubeCAN_Handle *const handle);
 
 /**
  * @brief Attempts to recover the FDCAN peripheral associated with the given CubeCAN CAN handle.
@@ -192,5 +192,16 @@ HAL_StatusTypeDef CubeCAN_Private_Stop(CubeCAN_Handle *const handle);
  * @return HAL_StatusTypeDef indicating the success or failure of the operation.
  */
 HAL_StatusTypeDef CubeCAN_Private_Release(CubeCAN_Handle *const handle);
+
+/**
+ * @brief Sends a CAN message using the CubeCAN CAN handle, with the specified identifier, data payload, and size.
+ * @param handle Pointer to the CubeCAN CAN handle.
+ * @param id The identifier for the message.
+ * @param data Pointer to the data payload of the message.
+ * @param size The size of the data payload in bytes.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
+ */
+HAL_StatusTypeDef CubeCAN_Private_Send(CubeCAN_Handle *const handle, const CubeCAN_Identifier id, const void *const data, const uint8_t size);
 
 #endif

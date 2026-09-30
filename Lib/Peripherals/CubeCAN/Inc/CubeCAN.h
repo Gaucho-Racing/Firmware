@@ -24,7 +24,8 @@ typedef struct CubeCAN_Private_Handle CubeCAN_Handle;
  * This union allows for easy access to the individual components of a CAN identifier, including the receive node ID, message ID, and transmit node ID.
  * It also provides a raw 32-bit representation of the identifier which can be used to specify custom CAN IDs.
  *
- * @warning The values of the fields are not validated and may not represent a valid CAN identifier. It is the responsibility of the user to ensure that the values are valid and conform to the CAN protocol.
+ * @warning The values of the fields are not validated and may not represent a valid CAN identifier. It is the responsibility of the user to ensure that the values are valid and conform to the CAN
+ * protocol.
  * @warning Do not use the _ field directly, as it may lead to undefined behavior. Use the provided fields instead.
  *
  * @note Setting any bit past the 29th bit is undefined behavior and may lead to unexpected results.
@@ -39,7 +40,7 @@ typedef union {
 		GRCAN_NODE_ID tx_node_id : 8;
 		uint32_t _ : 4;
 	};
-} CAN_Identifier;
+} CubeCAN_Identifier;
 
 /**
  * @brief Union for user-defined context data in CubeCAN configuration.
@@ -64,7 +65,7 @@ typedef union {
  * @warning The callback function should not call any CubeCAN functions, as it may lead to undefined behavior.
  * @warning It is the responsibility of the callback function to verify the integrity of the received data and handle any errors or null inputs.
  */
-typedef void (*CubeCAN_RxCallback)(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
+typedef void (*CubeCAN_RxCallback)(const CubeCAN_Config_Context *const context, const CubeCAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
 
 /**
  * @brief Configuration structure for CubeCAN CAN.
@@ -113,6 +114,17 @@ HAL_StatusTypeDef CubeCAN_Exit(CubeCAN_Handle *handle);
 void CubeCAN_Tick(void);
 
 /**
+ * @brief Sends a CAN message using the CubeCAN CAN handle, with the specified custom identifier, data payload, and size.
+ * @param handle Pointer to the CubeCAN CAN handle.
+ * @param custom_id The custom identifier for the message.
+ * @param data Pointer to the data payload of the message.
+ * @param size The size of the data payload in bytes.
+ * @return HAL_StatusTypeDef indicating the success or failure of the operation.
+ * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
+ */
+HAL_StatusTypeDef CubeCAN_Send_Custom(CubeCAN_Handle *const handle, const GRCAN_CUSTOM_ID custom_id, const void *const data, const uint8_t size);
+
+/**
  * @brief Sends a CAN message using the CubeCAN CAN handle, with the specified receive node, message ID, data payload, and size.
  * @param handle Pointer to the CubeCAN CAN handle.
  * @param rx_node The receive node identifier for the message.
@@ -123,26 +135,5 @@ void CubeCAN_Tick(void);
  * @note The size of the data payload must not exceed FDCAN_MAX_DATA_BYTES (64 bytes). If the size exceeds this limit, the function will return HAL_ERROR.
  */
 HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size);
-
-/**
- * @brief Constructs a CAN message identifier from the given transmitting node ID, receiving node ID, and message ID.
- *
- * @param identifier Pointer to the CAN_Identifier structure containing the node and message IDs.
- *
- * @return The constructed 29-bit CAN message extended identifier.
- */
-uint32_t CubeCAN_Construct_Identifier(const CAN_Identifier *const identifier);
-
-/**
- * @brief Deconstructs a 29-bit CAN message extended identifier into its constituent transmitting node ID, receiving node ID, and message ID.
- *
- * @param message_id The 29-bit CAN message extended identifier to be deconstructed.
- *
- * @return A CAN_Identifier structure containing the deconstructed node and message IDs.
- *
- * @warning The function does not guarantee that the returned structure will represent a valid CAN message identifier.
- * @warning The function does not support custom IDs.
- */
-CAN_Identifier CubeCAN_Deconstruct_Identifier(const uint32_t message_id);
 
 #endif

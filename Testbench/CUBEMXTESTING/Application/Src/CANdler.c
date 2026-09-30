@@ -8,7 +8,7 @@
 
 int value;
 
-void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size)
+void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size)
 {
 	value++;
 
@@ -23,7 +23,7 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CAN_Ide
 	const GRCAN_NODE_ID rx_node = identifier->rx_node_id;
 	const GRCAN_MSG_ID msg_id = identifier->msg_id;
 
-	LOGOMATIC_VERBOSE("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
+	LOGOMATIC_DEBUG("Received on bus %d with node %d -> %d with message %d and size %u\t%.*s\n", busid, tx_node, rx_node, msg_id, size, size, (const char *const)data);
 }
 
 void CANdler_VCP_Callback(const uint8_t *const data, const uint16_t size)

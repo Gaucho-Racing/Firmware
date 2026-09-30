@@ -6,12 +6,12 @@
 #include "main.h"
 
 static uint32_t callback_count;
-static CAN_Identifier callback_ids[2];
+static CubeCAN_Identifier callback_ids[2];
 static uint8_t callback_data[2][64];
 static uint8_t callback_sizes[2];
 static uint32_t callback_context;
 
-static void receive_callback(const CubeCAN_Config_Context *context, const CAN_Identifier *identifier, const uint8_t *data, uint8_t size)
+static void receive_callback(const CubeCAN_Config_Context *context, const CubeCAN_Identifier *identifier, const uint8_t *data, uint8_t size)
 {
 	const uint32_t index = callback_count++;
 	callback_context = context->busid_user_context;
