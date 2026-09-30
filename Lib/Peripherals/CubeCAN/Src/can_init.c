@@ -13,7 +13,7 @@ static bool cubecan_internal_checks_passed = false;
 
 HAL_StatusTypeDef CubeCAN_Private_InternalOneTimeChecks(void)
 {
-	CAN_Identifier test_id = {.raw_id = 0x01122233};
+	CubeCAN_Identifier test_id = {.raw_id = 0x01122233};
 	if (test_id._ != 0 || test_id.tx_node_id != 0x11 || test_id.msg_id != 0x222 || test_id.rx_node_id != 0x33) {
 		LOGOMATIC_ERROR("CubeCAN_Private_InternalOneTimeChecks: CAN_Identifier bitfield order is incorrect on this platform, expected TX ID 0x11, MSG ID 0x222, RX ID 0x33 for raw_id 0x01122233, got TX ID 0x%02X, MSG ID 0x%03X, RX ID 0x%02X\n", test_id.tx_node_id, test_id.msg_id, test_id.rx_node_id);
 		return HAL_ERROR;
