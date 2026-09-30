@@ -123,13 +123,13 @@ HAL_StatusTypeDef CubeCAN_Private_Send(CubeCAN_Handle *const handle, const CubeC
 HAL_StatusTypeDef CubeCAN_Send_Custom(CubeCAN_Handle *const handle, const GRCAN_CUSTOM_ID custom_id, const void *const data, const uint8_t size)
 {
 	CubeCAN_Identifier id = {.raw_id = custom_id};
-	return CubeCAN_Send_Raw(handle, id, data, size);
+	return CubeCAN_Private_Send(handle, id, data, size);
 }
 
 HAL_StatusTypeDef CubeCAN_Send(CubeCAN_Handle *const handle, const GRCAN_NODE_ID rx_node, const GRCAN_MSG_ID msg_id, const void *const data, const uint8_t size)
 {
 	CubeCAN_Identifier id = {.rx_node_id = rx_node, .msg_id = msg_id, .tx_node_id = handle->config.sending_node_id};
-	return CubeCAN_Send_Raw(handle, id, data, size);
+	return CubeCAN_Private_Send(handle, id, data, size);
 }
 
 HAL_StatusTypeDef CubeCAN_Private_QueueTx(CubeCAN_Handle *handle, const GRCAN_Private_TxMessage *message)
