@@ -107,16 +107,6 @@ extern uint8_t vcp_callback_staging[];
 extern uint8_t vcp_rx_buffer[];
 
 /**
- * @brief Index of the next byte to be written in the current VCP reception buffer.
- *
- * This atomic variable is used to keep track of the index where the next byte should be written in the current VCP reception buffer.
- * When the buffer fills or a newline is received, the callback is invoked and this index is reset to 0.
- *
- * @warning Requires atomic operations to ensure thread safety when accessed from multiple contexts
- */
-extern uint16_t vcp_rx_index;
-
-/**
  * @brief Index of the current RX buffer (0 or 1) being written to by the ISR.
  *
  * This atomic variable tracks which of the two receive buffers is currently being filled.
