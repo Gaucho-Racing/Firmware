@@ -258,10 +258,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	float torque_request;
 	bool apps_plausible = (millis_since_boot - last_apps_plausible_frame_millis) <= MAX_APPS_IMPLAUSIBLE_TIME_MS;
 
-	if (stateData->apps_bse_violation || !apps_plausible) {
-		torque_request = 0;
-	}
-
 	float pedal = CalcAccPedalTravel(stateData);
 
 	uint16_t max_rev_current = 0;
@@ -330,6 +326,10 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	torque_request = fminf(torque_request, MAX_FORWARD_CURRENT_AMPS);
 	torque_request = fmaxf(torque_request, -MAX_REVERSE_CURRENT_AMPS);
+
+	if (stateData->apps_bse_violation || !apps_plausible) {
+		torque_request = 0;
+	}
 
 	static uint32_t last_can_inverter_request_millis = 0;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_can_inverter_request_millis)) {
