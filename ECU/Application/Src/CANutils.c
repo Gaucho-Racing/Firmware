@@ -59,10 +59,7 @@ void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 		msg[size - i - 1] = temp;
 	}
 
-	CubeCAN_Send(stateLump.primary_can, GRCAN_ALL, (GRCAN_MSG_ID)msgID, msg, (uint8_t)size);
-
-
-
+	CubeCAN_Send_Custom(stateLump.primary_can, msgID, msg, size);
 }
 
 // Didnt want to delete this in case the change I made aren't necessary
