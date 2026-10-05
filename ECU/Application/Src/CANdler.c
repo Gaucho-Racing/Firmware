@@ -173,7 +173,7 @@ void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, uint32_t id, const ui
 	switch (id) {
 		case DTI_DATA_1_CAN_ID:
 			if (data_length != 8) {
-				LOGOMATIC_ERROR("BAD DTI_DATA_1 CAN Rx length: %d\n", data_length)
+				LOGOMATIC_ERROR("BAD DTI_DATA_1 CAN Rx length: %d\n", data_length);
 				break;
 			}
 			int32_t erpm = ((uint32_t)data[0] << 24) | ((uint32_t)data[1] << 16) | ((uint32_t)data[2] << 8) | ((uint32_t)data[3]);
@@ -203,7 +203,7 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN
 
 	// Need to change casting
 	if (msg_id == (GRCAN_MSG_ID)DTI_DATA_1_CAN_ID) {
-		ECU_CAN_DTI_MessageHandler(&stateLump, (GRCAN_CUSTOM_ID)msg_id, data, size);
+		ECU_CAN_DTI_MessageHandler(&stateLump, msg_id, data, size);
 		return;
 	}
 
