@@ -87,6 +87,7 @@ target_sources(
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
+		Core/Src/usart.c
 
 		startup_stm32g474xx.s
 

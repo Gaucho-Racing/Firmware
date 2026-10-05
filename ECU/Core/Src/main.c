@@ -22,6 +22,7 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -163,6 +164,7 @@ int main(void)
   MX_FDCAN1_Init();
   MX_FDCAN2_Init();
   MX_TIM6_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	Logomatic_SetLogLevel(LogLevel_Info);
 	// Setup_VCP(&vcp_config);
