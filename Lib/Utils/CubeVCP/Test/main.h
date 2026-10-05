@@ -4,7 +4,13 @@
 #ifndef CUBEVCP_TEST_MAIN_H
 #define CUBEVCP_TEST_MAIN_H
 
+#ifndef __weak
+#if defined(_WIN32)
+#define __weak
+#else
 #define __weak __attribute__((weak))
+#endif
+#endif
 
 typedef enum {
 	HAL_OK = 0x00,

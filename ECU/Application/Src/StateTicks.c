@@ -58,8 +58,8 @@ ECU_StateData stateLump = {
     .apps_1_max = 1897,
     .apps_2_max = 1926,
     // Regen
-    .regen_strength = 2,
-    .enable_regen = false,
+    .regen_strength = 2, // Not used
+    .enable_regen = true,
     .SDC_startup_condition = true};
 
 static uint32_t millis_since_boot;
@@ -298,7 +298,13 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &message, sizeof(message));
 		ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &message.drive_enable, 1);
 		message.set_ac_current = torque_request * 10;
-		ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
+
+		if (torque_request < 0) {
+			message.set_ac_current = torque_request * -10;
+			ECU_CAN_Send_DTI(DTI_CONTROL_2_CAN_ID, &message.set_ac_current, 2);
+		} else {
+			ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
+		}
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }

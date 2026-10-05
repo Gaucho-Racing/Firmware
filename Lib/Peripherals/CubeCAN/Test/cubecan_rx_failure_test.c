@@ -7,7 +7,7 @@
 
 static uint32_t callback_count;
 
-static void receive_callback(const CubeCAN_Config_Context *context, const CAN_Identifier *identifier, const uint8_t *data, uint8_t size)
+static void receive_callback(const CubeCAN_Config_Context *context, const CubeCAN_Identifier *identifier, const uint8_t *data, uint8_t size)
 {
 	UNUSED(context);
 	UNUSED(identifier);

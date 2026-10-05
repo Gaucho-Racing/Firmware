@@ -8,6 +8,16 @@
 #include "PrivateInc/internal.h"
 #include "main.h"
 
+/**
+ * @brief Index of the next byte to be written in the current VCP reception buffer.
+ *
+ * This variable is used to keep track of the index where the next byte should be written in the current VCP reception buffer.
+ * When the buffer fills or a newline is received, the callback is invoked and this index is reset to 0.
+ *
+ * @note Does not require atomic operations since it is only accessed from the ISR context.
+ */
+static uint16_t vcp_rx_index = 0;
+
 HAL_StatusTypeDef CubeVCP_EnableRx(CubeVCP_Rx_Callback callback)
 {
 	static bool enabled = false;
@@ -29,8 +39,7 @@ HAL_StatusTypeDef CubeVCP_EnableRx(CubeVCP_Rx_Callback callback)
 	}
 
 	vcp_rx_callback = callback;
-
-	atomic_store_explicit(&vcp_rx_index, 0, memory_order_relaxed);
+	vcp_rx_index = 0;
 
 	HAL_StatusTypeDef status = HAL_UART_Receive_IT(vcp_uart_handle, &vcp_rx_byte, 1);
 

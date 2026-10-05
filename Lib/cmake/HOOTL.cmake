@@ -20,7 +20,6 @@ add_compile_options(
 	-fshort-enums
 	-fdata-sections
 	-ffunction-sections
-	-fstack-usage
 	-fno-lto
 	-Wall
 	-Wextra
@@ -35,6 +34,10 @@ if(APPLE) # MacOS has a different syntax for linker fatal warnings
 	add_link_options(-Wl,-fatal_warnings)
 else()
 	add_link_options(-Wl,--fatal-warnings)
+endif()
+
+if(WIN32) # Windows has different bitfield layout and semantics
+	add_compile_options(-mno-ms-bitfields)
 endif()
 
 if(ADDRESS_SANITIZER)

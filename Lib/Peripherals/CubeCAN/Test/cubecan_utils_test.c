@@ -17,13 +17,13 @@ int main(void)
 	assert(CubeCAN_Private_BytesToDlc(11U) == FDCAN_DLC_BYTES_0 && "Unsupported byte counts should be rejected");
 	assert(CubeCAN_Private_DlcToBytes(0x10U) == 0U && "Unsupported dlc values should map to 0B");
 
-	const CAN_Identifier identifier = {.tx_node_id = GRCAN_TireTemp_FL, .rx_node_id = GRCAN_BrakeTemp_RR, .msg_id = GRCAN_TIRE_TEMP_FRAME_7};
-	const CAN_Identifier decoded = {.raw_id = identifier.raw_id};
+	const CubeCAN_Identifier identifier = {.tx_node_id = GRCAN_TireTemp_FL, .rx_node_id = GRCAN_BrakeTemp_RR, .msg_id = GRCAN_TIRE_TEMP_FRAME_7};
+	const CubeCAN_Identifier decoded = {.raw_id = identifier.raw_id};
 	assert(decoded.tx_node_id == identifier.tx_node_id && "Identifier round-trip should preserve tx node");
 	assert(decoded.rx_node_id == identifier.rx_node_id && "Identifier round-trip should preserve rx node");
 	assert(decoded.msg_id == identifier.msg_id && "Identifier round-trip should preserve message id");
 
-	const CAN_Identifier wire_identifier = {.raw_id = 0x01122233U};
+	const CubeCAN_Identifier wire_identifier = {.raw_id = 0x01122233U};
 	assert(wire_identifier.tx_node_id == 0x11U && "CAN identifier should decode the tx node from the wire format");
 	assert(wire_identifier.msg_id == 0x222U && "CAN identifier should decode the message id from the wire format");
 	assert(wire_identifier.rx_node_id == 0x33U && "CAN identifier should decode the rx node from the wire format");
