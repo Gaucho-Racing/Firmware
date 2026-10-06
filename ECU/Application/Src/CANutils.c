@@ -21,12 +21,31 @@ uint32_t lastTickECUStateDataSent = 0;
 
 // FIXME: Help double check this is correct, current no build errors on debug
 
-void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
-{
-  return;
+CubeCAN_Handle *ECU_GetCANHandle(GRCAN_BUS_ID bus){
+	switch(bus){
+		case GRCAN_BUS_PRIMARY:
+			return stateLump.primary_can;
+		case GRCAN_BUS_DATA:
+			return stateLump.data_can;
+		default:
+			return NULL;
+	}
 }
 
-HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
+
+HAL_StatusTypeDef ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint8_t size)
+{
+	CubeCAN_Handle *handle = ECU_GetCANHandle(bus);
+	if (handle == NULL){
+		LOGOMATIC_ERROR("CAN: no handle for bus %d\n", bus);
+		return HAL_ERROR;
+	}
+
+	return CubeCAN_Send(handle, destNode, messageID, data, size);
+
+}
+
+HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint8_t size)
 {
 	if (data == NULL || size > 8) {
 		return HAL_ERROR;
@@ -37,9 +56,8 @@ HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t s
 	for (uint8_t i = 0; i < size; ++i){
 		msg[i] = temp[size - 1 - i];
 	}
-	}
 
-	CubeCAN_Send_Custom(stateLump.primary_can, msgID, msg, size);
+	return CubeCAN_Send_Custom(stateLump.primary_can, msgID, msg, size);
 }
 
 // Didnt want to delete this in case the change I made aren't necessary
