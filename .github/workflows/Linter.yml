@@ -31,13 +31,13 @@ jobs:
           fetch-depth: 1
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
+        uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
         with:
           languages: ${{ matrix.language }}
           build-mode: "none"
 
       - name: Analyze CodeQL
-        uses: github/codeql-action/analyze@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
+        uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
         with:
           category: "${{ matrix.language }}"
 
@@ -53,7 +53,7 @@ jobs:
           fetch-depth: 1
 
       - name: Validate Configuration Files
-        uses: Boeing/validate-configs-action@a31830f9bec7d3ec001cfab7951a966d08180a72 # v2.0.0
+        uses: Boeing/validate-configs-action@ebb76b7ccb654b01750763cff3e55d286a45c789 # v3.0.0
 
   perllinter:
     name: Perl Linter
@@ -68,7 +68,7 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@ac3202722f5744e62a8fa3af3e1aaaebb08861f3 # v1.44.0
+        uses: shogo82148/actions-setup-perl@8b574cdc2dffdae49f803204a4f2b716a2fa1db7 # v1.44.2
         with:
           install-modules: "Perl::Critic"
 
