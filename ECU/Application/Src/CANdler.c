@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
@@ -12,19 +13,21 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 
+extern ECU_StateData stateLump;
+
 #define WHEEL_RADIUS_INCHES 8.0f
 #define WHEEL_CIRCUMFERENCE_INCHES (2.0f * (float)M_PI * WHEEL_RADIUS_INCHES)
 #define WHEEL_RPM_TO_MPH_RATIO (WHEEL_CIRCUMFERENCE_INCHES / 63360.0f * 60.0f)
 #define NUM_MOTOR_POLE_PAIRS 10
 #define DRIVEN_SPROCKET_TEETH 51.0f
 #define DRIVING_SPROCKET_TEETH 19.0f
-#define GEAR_RATIO (DRIVEN_SPROCKET_TEETH / DRIVING_SPROCKET_TEETH)
+#define GEAR_RATIO (51.0f / 19.0f)
 
 void ReportBadMessageLength(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
 {
 	// TODO Ideally change some state data to note a bad message, ie if ACU
 	// that can be a comms error
-	LOGOMATIC("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+	LOGOMATIC_ERROR("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
 void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id)
@@ -33,10 +36,10 @@ void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 	UNUSED(bus_id);
 	UNUSED(msg_id);
 	UNUSED(sender_id);
-	// LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
+	LOGOMATIC_ERROR("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
-void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
+void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, const uint8_t *data, uint32_t data_length)
 {
 	switch (msg_id) {
 		case GRCAN_DEBUG_2_0:
@@ -44,7 +47,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
+			LOGOMATIC_INFO("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
 		case GRCAN_DEBUG_FD:
@@ -52,7 +55,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
+			LOGOMATIC_ERROR("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 
 		case GRCAN_PING:
@@ -60,7 +63,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			respondToPing(bus_id, sender_id, ((GRCAN_PING_MSG *)data)->timestamp);
+			respondToPing(bus_id, sender_id, ((const GRCAN_PING_MSG *)data)->timestamp);
 			break;
 
 		case GRCAN_ACU_STATUS_1:
@@ -68,7 +71,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (GRCAN_ACU_STATUS_1_MSG *)data;
+			const GRCAN_ACU_STATUS_1_MSG *acu_status_1 = (const GRCAN_ACU_STATUS_1_MSG *)data;
 			state_data->tractivebattery_soc = acu_status_1->accumulator_soc;
 			state_data->glv_soc = acu_status_1->glv_soc;
 			state_data->ts_voltage = acu_status_1->ts_voltage * 0.1f;
@@ -79,7 +82,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (GRCAN_ACU_STATUS_2_MSG *)data;
+			const GRCAN_ACU_STATUS_2_MSG *acu_status_2 = (const GRCAN_ACU_STATUS_2_MSG *)data;
 			state_data->max_cell_temp_c = acu_status_2->max_cell_temp * 0.25f;
 			state_data->acu_error_warning_bits = acu_status_2->status_flags;
 			// ACU does weird stuff
@@ -94,7 +97,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_INV_STATUS_1_MSG *inv_status_1 = (GRCAN_INV_STATUS_1_MSG *)data;
+			const GRCAN_INV_STATUS_1_MSG *inv_status_1 = (const GRCAN_INV_STATUS_1_MSG *)data;
 			UNUSED(inv_status_1);
 			break;
 		case GRCAN_INV_STATUS_3:
@@ -102,7 +105,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_INV_STATUS_3_MSG *inv_status_3 = (GRCAN_INV_STATUS_3_MSG *)data;
+			const GRCAN_INV_STATUS_3_MSG *inv_status_3 = (const GRCAN_INV_STATUS_3_MSG *)data;
 			state_data->inverter_fault_map = inv_status_3->fault_bits;
 			break;
 		case GRCAN_DASH_STATUS:
@@ -110,10 +113,10 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_DASH_STATUS_MSG *dash_data = (GRCAN_DASH_STATUS_MSG *)data;
+			const GRCAN_DASH_STATUS_MSG *dash_data = (const GRCAN_DASH_STATUS_MSG *)data;
 
-			LOGOMATIC("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
-				  (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
+			LOGOMATIC_INFO("Dash button flags: TS Press %d | TS Hold %d | RTD Press %d | RTD Hold %d\n", dash_data->button_flags & 1, (dash_data->button_flags >> 2) & 1,
+				       (dash_data->button_flags >> 1) & 1, (dash_data->button_flags >> 3) & 1);
 
 			// LET IT BE KNOWN: these things are LSB FIRST, TODO: I'll get it right later
 			if (state_data->ecu_state == GR_GLV_ON) {
@@ -137,7 +140,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
-			GRCAN_ECU_CONFIG_MSG *ecu_config = (GRCAN_ECU_CONFIG_MSG *)data;
+			const GRCAN_ECU_CONFIG_MSG *ecu_config = (const GRCAN_ECU_CONFIG_MSG *)data;
 			state_data->ping_timeout_delay_ms = ecu_config->ping_timeout_delay * 10;
 			state_data->brake_f_min = ecu_config->brake_f_min * 25;
 			state_data->brake_r_min = ecu_config->brake_r_min * 25;
@@ -165,12 +168,12 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 	}
 }
 
-void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, uint8_t *data, uint32_t data_length)
+void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, uint32_t id, const uint8_t *data, uint32_t data_length)
 {
 	switch (id) {
 		case DTI_DATA_1_CAN_ID:
 			if (data_length != 8) {
-				ReportBadMessageLength(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
+				LOGOMATIC_ERROR("BAD DTI_DATA_1 CAN Rx length: %d\n", (int)data_length);
 				break;
 			}
 			int32_t erpm = ((uint32_t)data[0] << 24) | ((uint32_t)data[1] << 16) | ((uint32_t)data[2] << 8) | ((uint32_t)data[3]);
@@ -182,4 +185,26 @@ void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, GRCAN_CUSTOM_ID id, u
 			// ReportUnhandledMessage(GRCAN_BUS_PRIMARY, (GRCAN_MSG_ID)id, GRCAN_DTI_Inv);
 			break;
 	}
+}
+
+void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size)
+{
+
+	if (context == NULL || identifier == NULL || data == NULL || size == 0) {
+		LOGOMATIC_ERROR("CANdler_Callback: Invalid parameters received. context: %p, identifier: %p, data: %p, size: %u\n", (const void *)context, (const void *)identifier, (const void *)data,
+				size);
+		return;
+	}
+
+	const GRCAN_BUS_ID bus_id = context->busid_user_context;
+	const GRCAN_NODE_ID sender_id = identifier->tx_node_id;
+	const GRCAN_MSG_ID msg_id = identifier->msg_id;
+
+
+	if (CANDLER_IS_DTI_ID(identifier->raw_id)) {
+		ECU_CAN_DTI_MessageHandler(&stateLump, identifier->raw_id, data, size);
+		return;
+	}
+
+	ECU_CAN_MessageHandler(&stateLump, bus_id, msg_id, sender_id, data, size);
 }

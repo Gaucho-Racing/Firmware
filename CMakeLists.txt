@@ -161,7 +161,6 @@ include("${LIB_PATH}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 include(BLINKY/blinky.cmake)
 include(Testbench/testbench.cmake)
 
-add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
 add_gr_project(STM32G474xE CANine)
 add_gr_project(STM32G431x8 OutboardSensors TireTemp)
@@ -170,15 +169,15 @@ add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
 add_gr_project(STM32L476xG BLINKY L4HELLO)
 
-# add_project(
-#     NAME "ECU"
-#     PATH "ECU"
-#     SERIES "g4"
-#     SPECIFIER "g474re"
-#     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
-#     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
-#     CMSIS_MAJOR "5"
-# )
+add_project(
+    NAME "ECU"
+    PATH "ECU"
+    SERIES "g4"
+    SPECIFIER "g474re"
+    HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+    CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+    CMSIS_MAJOR "5"
+)
 
 # add_project(
 #     NAME "CCU"
