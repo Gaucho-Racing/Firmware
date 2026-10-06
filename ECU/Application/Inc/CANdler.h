@@ -17,8 +17,8 @@
 
 void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);
 
-void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, const uint8_t *data, uint8_t data_length);
+void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, const uint8_t *data, uint32_t data_length);
 
-void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, uint32_t id, const uint8_t *data, uint8_t data_length);
+void ECU_CAN_DTI_MessageHandler(ECU_StateData *state_data, uint32_t id, const uint8_t *data, uint32_t data_length);
 
 #endif

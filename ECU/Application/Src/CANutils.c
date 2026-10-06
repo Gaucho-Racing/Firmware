@@ -23,40 +23,20 @@ uint32_t lastTickECUStateDataSent = 0;
 
 void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, void *data, uint32_t size)
 {
-	CubeCAN_Handle *handle = NULL;
-
-	switch (bus) {
-		case GRCAN_BUS_PRIMARY:
-			handle = stateLump.primary_can;
-			break;
-		case GRCAN_BUS_DATA:
-			handle = stateLump.data_can;
-			break;
-		default:
-			LOGOMATIC_ERROR("CAN: Invalid bus ID %d \n", bus);
-			return;
-	}
-
-	if (handle == NULL) {
-		LOGOMATIC_ERROR("CAN: handle is NULL for bus %d\n", bus);
-		return;
-	}
-
-	CubeCAN_Send(handle, destNode, messageID, data, (uint8_t)size);
+  return;
 }
 
-void ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
+HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, void *data, uint32_t size)
 {
-	if (stateLump.primary_can == NULL) {
-		LOGOMATIC_ERROR("CAN: primary handle is NULL\n");
-		return;
+	if (data == NULL || size > 8) {
+		return HAL_ERROR;
 	}
 
-	uint8_t *msg = (uint8_t *)data;
-	for (uint32_t i = 0; i < size / 2; ++i) {
-		uint8_t temp = msg[i];
-		msg[i] = msg[size - i - 1];
-		msg[size - i - 1] = temp;
+	uint8_t msg[8];
+	const uint8_t *temp = (const uint8_t *)data;
+	for (uint8_t i = 0; i < size; ++i){
+		msg[i] = temp[size - 1 - i];
+	}
 	}
 
 	CubeCAN_Send_Custom(stateLump.primary_can, msgID, msg, size);
