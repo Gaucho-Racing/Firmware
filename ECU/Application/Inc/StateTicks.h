@@ -6,8 +6,6 @@
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_
 
-extern CubeCAN_Handle *primary_can;
-extern CubeCAN_Handle *data_can;
 
 /**
  * @brief Tick function for the ECU state machine.
