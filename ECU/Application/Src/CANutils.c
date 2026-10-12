@@ -66,7 +66,7 @@ void SendECUStateDataOverCAN(const ECU_StateData *stateData)
 {
 	uint32_t currentTime = MillisecondsSinceBoot();
 
-	if (lastTickECUStateDataSent - currentTime < ECU_STATE_DATA_SEND_INTERVAL_MS) {
+	if (currentTime - lastTickECUStateDataSent < ECU_STATE_DATA_SEND_INTERVAL_MS) {
 		return;
 	}
 
