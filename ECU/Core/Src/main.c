@@ -248,8 +248,8 @@ int main(void)
 
       ECU_State_Tick();
 
-      //SendECUStateOverCAN();
-      //SendECUAnalogDataOverCAN();
+      SendECUStateDataOverCAN(&stateLump);
+      SendECUAnalogDataOverCAN(&stateLump);
 
       if (MillisecondsSinceBoot() >= ping_timer){
         ping_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 500);
