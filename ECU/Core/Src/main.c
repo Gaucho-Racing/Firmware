@@ -189,7 +189,7 @@ int main(void)
 	if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK ||
     HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED) != HAL_OK ||
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADC_buffers, NUM_SIGNALS_ADC1) != HAL_OK ||
-    HAL_ADC_Start_DMA(&hadc2, (uint32_t *)ADC_buffers + NUM_SIGNALS_ADC1, NUM_SIGNALS_ADC2) != HAL_OK) {
+    HAL_ADC_Start_DMA(&hadc2, (uint32_t *)(ADC_buffers + NUM_SIGNALS_ADC1), NUM_SIGNALS_ADC2) != HAL_OK) {
 
     LOGOMATIC_CRITICAL("Failed to start ADC calibration or DMA\n");
     Error_Handler();
