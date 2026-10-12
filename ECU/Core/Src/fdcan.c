@@ -69,7 +69,9 @@ void MX_FDCAN1_Init(void)
   fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
   fdcan_primary_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
   fdcan_primary_filter_ecu.FilterID2 = 0x000000FF;
-  HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_ecu);
+  if (HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_ecu) != HAL_OK){
+    Error_Handler();
+  }
 
   FDCAN_FilterTypeDef fdcan_primary_filter_all = {0};
   fdcan_primary_filter_all.IdType = FDCAN_EXTENDED_ID;
@@ -78,7 +80,9 @@ void MX_FDCAN1_Init(void)
   fdcan_primary_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
   fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
   fdcan_primary_filter_all.FilterID2 = 0x000000FF;
-  HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_all);
+  if (HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_all) != HAL_OK){
+    Error_Handler();
+  }
 
   FDCAN_FilterTypeDef fdcan_primary_filter_dti = {0};
   fdcan_primary_filter_dti.IdType = FDCAN_EXTENDED_ID;
@@ -87,7 +91,9 @@ void MX_FDCAN1_Init(void)
   fdcan_primary_filter_dti.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
   fdcan_primary_filter_dti.FilterID1 = DTI_RX_ID;
   fdcan_primary_filter_dti.FilterID2 = DTI_RX_MASK;
-  HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_dti);
+  if (HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_dti) != HAL_OK){
+    Error_Handler();
+  }
 
   /* USER CODE END FDCAN1_Init 2 */
 
@@ -126,6 +132,8 @@ void MX_FDCAN2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN FDCAN2_Init 2 */
+  HAL_FDCAN_ConfigTxDelayCompensation(&hfdcan2, hfdcan2.Init.DataPrescaler * hfdcan2.Init.DataTimeSeg1,0);
+  HAL_FDCAN_EnableTxDelayCompensation(&hfdcan2);
 
   FDCAN_FilterTypeDef fdcan_data_filter_ecu = {0};
   fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
@@ -134,7 +142,9 @@ void MX_FDCAN2_Init(void)
   fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
   fdcan_data_filter_ecu.FilterID1 =  GRCAN_ECU & 0xFF;
   fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
-  HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_ecu);
+  if (HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_ecu)){
+    Error_Handler();
+  }
 
   FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
   fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
@@ -143,7 +153,9 @@ void MX_FDCAN2_Init(void)
   fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
   fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
   fdcan_data_filter_all.FilterID2 = 0x000000FF;
-  HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_all);
+  if (HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_all) != HAL_OK){
+    Error_Handler();
+  }
 
   /* USER CODE END FDCAN2_Init 2 */
 
