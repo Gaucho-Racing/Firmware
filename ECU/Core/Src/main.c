@@ -333,8 +333,8 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
+  LOGOMATIC_CRITICAL("Error Handler entered at %lu ms\n", MillisecondsSinceBoot());
 	while (1) {
-    LOGOMATIC_CRITICAL("Error Handler entered at %lu ms\n", MillisecondsSinceBoot());
   }
   /* USER CODE END Error_Handler_Debug */
 }
