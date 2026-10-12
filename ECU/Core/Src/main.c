@@ -123,6 +123,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 
+void read_digital(){
+  stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -229,6 +233,39 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1) {
+    read_digital();
+
+    static uint32_t delay_timer;
+    static uint32_t ping_timer;
+    static uint32_t adc_timer;
+
+    if (MillisecondsSinceBoot() >= adc_timer){
+      adc_timer = MillisecondsSinceBoot() + 1;
+      ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs); // This needs to be updated/changes
+      write_adc_values_to_state_data();
+    }
+
+
+    if (MillisecondsSinceBoot() >= delay_timer){
+      delay_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 1000);
+
+      ECU_State_Tick();
+
+      //SendECUStateOverCAN();
+      //SendECUAnalogDataOverCAN();
+
+      if (MillisecondsSinceBoot() >= ping_timer){
+        ping_timer = MillisecondsSinceBoot() + (MAIN_LOOP_PERIOD_US / 500);
+        pingAll();
+      }
+
+      lightControl(&stateLump);
+
+
+      //Send_VCP_APPS();
+    }
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
