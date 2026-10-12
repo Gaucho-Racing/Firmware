@@ -11,7 +11,6 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
-#include "Plan_C.h"
 #include "StateData.h"
 #include "Unused.h"
 #include "main.h"

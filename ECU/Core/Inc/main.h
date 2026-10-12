@@ -33,7 +33,6 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_NODE_ID.h"
-#include "Plan_C.h"
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_gpio.h"
 #include "stm32g4xx_ll_lpuart.h"

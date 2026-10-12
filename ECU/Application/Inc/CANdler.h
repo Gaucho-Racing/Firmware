@@ -7,12 +7,11 @@
 #include "GRCAN_MSG_ID.h"
 #include "GRCAN_NODE_ID.h"
 #include "StateData.h"
+#include "fdcan.h"
 
 #ifndef CANDLER_H
 #define CANDLER_H
 
-#define DTI_RX_ID 0x00000016u
-#define DTI_RX_MASK 0x1FFFC0FFu
 #define CANDLER_IS_DTI_ID(raw_id) (((raw_id) & DTI_RX_MASK) == DTI_RX_ID)
 
 void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN_Identifier *const identifier, const uint8_t *const data, const uint8_t size);

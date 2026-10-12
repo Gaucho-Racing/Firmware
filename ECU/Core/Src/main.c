@@ -35,12 +35,9 @@
 #include "Lights.h"
 #include "Logomatic.h"
 #include "Pinging.h"
-#include "Plan_C.h"
 #include "StateData.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "adc.h"
-#include "fdcan.h"
 #include "stm32g4xx_hal.h"
 
 // #include "vcp.h"
@@ -336,7 +333,9 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
-	while (1) {}
+	while (1) {
+    LOGOMATIC_CRITICAL("Error Handler entered at %lu ms\n", MillisecondsSinceBoot());
+  }
   /* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT

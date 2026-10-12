@@ -37,6 +37,8 @@ extern FDCAN_HandleTypeDef hfdcan1;
 extern FDCAN_HandleTypeDef hfdcan2;
 
 /* USER CODE BEGIN Private defines */
+#define DTI_RX_ID 0x00000016u
+#define DTI_RX_MASK 0x1FFFC0FFu
 
 /* USER CODE END Private defines */
 
@@ -52,4 +54,3 @@ void MX_FDCAN2_Init(void);
 #endif
 
 #endif /* __FDCAN_H__ */
-
