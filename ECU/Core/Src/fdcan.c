@@ -85,8 +85,8 @@ void MX_FDCAN1_Init(void)
   fdcan_primary_filter_dti.FilterIndex = 2;
   fdcan_primary_filter_dti.FilterType = FDCAN_FILTER_MASK;
   fdcan_primary_filter_dti.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-  fdcan_primary_filter_dti.FilterID1 = 0x00000016;
-  fdcan_primary_filter_dti.FilterID2 = 0x1FFFC0FF;
+  fdcan_primary_filter_dti.FilterID1 = DTI_RX_ID;
+  fdcan_primary_filter_dti.FilterID2 = DTI_RX_MASK;
   HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_dti);
 
   /* USER CODE END FDCAN1_Init 2 */
@@ -298,4 +298,3 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef* fdcanHandle)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
