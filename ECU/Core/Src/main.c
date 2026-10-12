@@ -82,7 +82,7 @@
 #define NUM_SIGNALS_ADC2 5
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};
-volatile uint16_t ADC_outputs[NUM_SIGNALS] = {0};
+uint16_t ADC_outputs[NUM_SIGNALS] = {0};
 
 // STATE DATA
 extern ECU_StateData stateLump;
@@ -114,11 +114,7 @@ void write_adc_values_to_state_data(void)
 	stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3f;
 }
 
-void ADC_Configure(void)
-{
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_buffers[0], NUM_SIGNALS_ADC1);
-	HAL_ADC_Start_DMA(&hadc2, (uint32_t *)&ADC_buffers[NUM_SIGNALS_ADC1], NUM_SIGNALS_ADC2);
-}
+
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -189,10 +185,26 @@ int main(void)
   //Initialize Timer
   HAL_TIM_Base_Start_IT(&htim6);
 
-	ADC_Configure();
+	if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK ||
+    HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED) != HAL_OK ||
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADC_buffers, NUM_SIGNALS_ADC1) != HAL_OK ||
+    HAL_ADC_Start_DMA(&hadc2, (uint32_t *)ADC_buffers + NUM_SIGNALS_ADC1, NUM_SIGNALS_ADC2) != HAL_OK) {
+
+    LOGOMATIC_CRITICAL("Failed to start ADC calibration or DMA\n");
+    Error_Handler();
+  }
+
+  //Disabling DMA intterrupts for ADC1 and ADC2 for now
+  __HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
+  __HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
+
+
+
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop
 
 	LOGOMATIC_INFO("Boot completed at %lu ms\n", MillisecondsSinceBoot());
+
+
 
 	while (MillisecondsSinceBoot() < 5000) { // Notes per Andrey and Ryan
 		BrakeLightControl(&stateLump);
