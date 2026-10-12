@@ -95,6 +95,10 @@ void MX_FDCAN1_Init(void)
     Error_Handler();
   }
 
+  if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan1, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE) != HAL_OK){
+    Error_Handler();
+  }
+
   /* USER CODE END FDCAN1_Init 2 */
 
 }
@@ -154,6 +158,10 @@ void MX_FDCAN2_Init(void)
   fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
   fdcan_data_filter_all.FilterID2 = 0x000000FF;
   if (HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_all) != HAL_OK){
+    Error_Handler();
+  }
+
+  if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan2, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE) != HAL_OK){
     Error_Handler();
   }
 
