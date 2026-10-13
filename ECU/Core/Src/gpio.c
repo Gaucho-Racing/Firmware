@@ -55,73 +55,84 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LED_TEST_Pin|BRAKE_LIGHT_Pin|TSSI_G_CONTROL_Pin|TSSI_R_CONTROL_Pin
-                          |RTD_CONTROL_Pin|AUX_CONTROL_Pin|SOFTWARE_OK_CONTROL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RTD_BTN_LED_CONTROL_Pin|TS_ACTIVE_BTN_LED_CONTROL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10|SOFTWARE_OK_CONTROL_Pin|TSSI_R_CONTROL_Pin|RTD_CONTROL_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PC13 PC14 PC15 PC6
-                           PC7 PC8 PC9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15|GPIO_PIN_6
-                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED_TEST_GPIO_Port, LED_TEST_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(TSSI_G_CONTROL_GPIO_Port, TSSI_G_CONTROL_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PC13 PC15 PC0 PC2
+                           PC4 PC5 PC6 PC7
+                           PC8 PC9 PC12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_15|GPIO_PIN_0|GPIO_PIN_2
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
+                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : BRAKE_LIGHT_Pin */
+  GPIO_InitStruct.Pin = BRAKE_LIGHT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(BRAKE_LIGHT_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PF0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PG10 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF15_EVENTOUT;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA0 PA1 PA2 PA3
-                           PA4 PA10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_10;
+  /*Configure GPIO pins : PA0 PA1 PA2 PA5
+                           PA6 PA8 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_5
+                          |GPIO_PIN_6|GPIO_PIN_8|GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB2 PB10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_10;
+  /*Configure GPIO pins : PB1 PB5 PB6 PB8
+                           PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_8
+                          |GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED_TEST_Pin BRAKE_LIGHT_Pin TSSI_G_CONTROL_Pin TSSI_R_CONTROL_Pin
-                           RTD_CONTROL_Pin AUX_CONTROL_Pin SOFTWARE_OK_CONTROL_Pin */
-  GPIO_InitStruct.Pin = LED_TEST_Pin|BRAKE_LIGHT_Pin|TSSI_G_CONTROL_Pin|TSSI_R_CONTROL_Pin
-                          |RTD_CONTROL_Pin|AUX_CONTROL_Pin|SOFTWARE_OK_CONTROL_Pin;
+  /*Configure GPIO pins : PB10 SOFTWARE_OK_CONTROL_Pin TSSI_R_CONTROL_Pin RTD_CONTROL_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_10|SOFTWARE_OK_CONTROL_Pin|TSSI_R_CONTROL_Pin|RTD_CONTROL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : RTD_BTN_LED_CONTROL_Pin TS_ACTIVE_BTN_LED_CONTROL_Pin */
-  GPIO_InitStruct.Pin = RTD_BTN_LED_CONTROL_Pin|TS_ACTIVE_BTN_LED_CONTROL_Pin;
+  /*Configure GPIO pin : LED_TEST_Pin */
+  GPIO_InitStruct.Pin = LED_TEST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(LED_TEST_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : ESTOP_SENSE_Pin */
-  GPIO_InitStruct.Pin = ESTOP_SENSE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pin : TSSI_G_CONTROL_Pin */
+  GPIO_InitStruct.Pin = TSSI_G_CONTROL_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(ESTOP_SENSE_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : INERTIA_SW_SENSE_Pin RTD_BTN_SENSE_Pin TS_ACTIVE_BTN_SENSE_Pin */
-  GPIO_InitStruct.Pin = INERTIA_SW_SENSE_Pin|RTD_BTN_SENSE_Pin|TS_ACTIVE_BTN_SENSE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PD2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(TSSI_G_CONTROL_GPIO_Port, &GPIO_InitStruct);
 
 }
 

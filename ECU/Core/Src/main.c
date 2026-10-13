@@ -95,6 +95,8 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+
+// This will be a more generalized function prolly ADC/GPIO
 void write_adc_values_to_state_data(void)
 {
 	stateLump.bse_signal = ADC_outputs[ADC_BUFFER_SIG_BSE];
@@ -120,9 +122,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 
-void read_digital(){
-  stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
-}
+// void read_digital(){
+//   stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
+// }
 
 /* USER CODE END 0 */
 
@@ -161,7 +163,8 @@ int main(void)
   MX_FDCAN1_Init();
   MX_FDCAN2_Init();
   MX_TIM6_Init();
-  MX_USART1_UART_Init();
+  MX_ADC5_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	Logomatic_SetLogLevel(LogLevel_Info);
 	// Setup_VCP(&vcp_config);
@@ -230,7 +233,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1) {
-    read_digital();
+    // read_digital();
 
     static uint32_t delay_timer;
     static uint32_t ping_timer;
@@ -286,12 +289,13 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
-  RCC_OscInitStruct.PLL.PLLN = 20;
+  RCC_OscInitStruct.PLL.PLLN = 8;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
@@ -313,10 +317,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-
-  /** Enables the Clock Security System
-  */
-  HAL_RCC_EnableCSS();
 }
 
 /* USER CODE BEGIN 4 */
@@ -333,8 +333,8 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
-  LOGOMATIC_CRITICAL("Error Handler entered at %lu ms\n", MillisecondsSinceBoot());
 	while (1) {
+    LOGOMATIC_CRITICAL("Error Handler entered at %lu ms\n", MillisecondsSinceBoot());
   }
   /* USER CODE END Error_Handler_Debug */
 }

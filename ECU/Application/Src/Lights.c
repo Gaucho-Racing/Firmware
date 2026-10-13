@@ -65,14 +65,14 @@ void TSSILightControl(ECU_StateData *stateLump)
 	}
 }
 
-void TSActiveButtonLightControl(ECU_StateData *stateLump)
-{
-	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
-		LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
-	} else {
-		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
-	}
-}
+// void TSActiveButtonLightControl(ECU_StateData *stateLump)
+// {
+// 	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
+// 		LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
+// 	} else {
+// 		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
+// 	}
+// }
 
 void RTD_ButtonLightControl(ECU_StateData *stateLump)
 {
