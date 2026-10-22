@@ -98,15 +98,13 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 
-// This will be a more generalized function prolly ADC/GPIO
-void write_adc_values_to_state_data(void)
+void Update_ADC_to_StateData(void)
 {
 	stateLump.bse_signal = ADC_outputs[ADC_BUFFER_SIG_BSE];
 	stateLump.bspd_signal = ADC_outputs[ADC_BUFFER_SIG_BSPD];
 	stateLump.APPS1_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS1];
 	stateLump.APPS2_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS2];
-	stateLump.Brake_F_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE];
-	stateLump.Brake_R_Signal = 0;
+	stateLump.Brake_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE];
 	stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
 	stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE];
 

@@ -83,8 +83,7 @@ typedef volatile struct ECU_StateData {
 	uint16_t bspd_signal;
 	uint16_t APPS1_Signal;
 	uint16_t APPS2_Signal;
-	uint16_t Brake_R_Signal;
-	uint16_t Brake_F_Signal;
+	uint16_t Brake_Signal;
 	uint16_t aux_signal;
 	uint16_t steering_angle_signal;
 	uint16_t ping_timeout_delay_ms;
