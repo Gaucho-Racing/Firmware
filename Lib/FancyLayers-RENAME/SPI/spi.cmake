@@ -9,3 +9,10 @@ target_link_libraries(
 		MsgBuffer_Lib
 		GLOBALSHARE_LIB
 )
+
+set_target_properties(
+	SPI_Lib
+	PROPERTIES
+		DEPRECATION
+			"SPI_Lib is deprecated and should be removed in favor of STM32CubeMX functionality."
+)
