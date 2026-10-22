@@ -225,7 +225,7 @@ int main(void)
 
 		LL_mDelay(1);
 		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
-		write_adc_values_to_state_data();
+		Update_ADC_to_StateData();
 	}
 
 	LOGOMATIC_INFO("Initial ADC readings stabilized at %lu ms\n", MillisecondsSinceBoot());
@@ -244,7 +244,7 @@ int main(void)
     if (MillisecondsSinceBoot() >= adc_timer){
       adc_timer = MillisecondsSinceBoot() + 1;
       ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs); // This needs to be updated/changes
-      write_adc_values_to_state_data();
+      Update_ADC_to_StateData();
     }
 
 
