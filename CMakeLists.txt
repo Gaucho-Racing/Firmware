@@ -160,6 +160,7 @@ include("${LIB_PATH}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 # Projects
 include(BLINKY/blinky.cmake)
 include(Testbench/testbench.cmake)
+include(SensorArray/sensors.cmake)
 
 add_gr_project(STM32G474xE ECU)
 add_gr_project(STM32G474xE CCU)
