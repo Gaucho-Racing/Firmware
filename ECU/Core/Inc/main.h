@@ -46,29 +46,32 @@ extern "C" {
 
 /* ADC mappings from `ADC_buffers` and `ADC_outputs` arrays to signal/sense names */
 enum {
-	/* Auxiliary - Signal */
-	ADC_BUFFER_SIG_AUX = 0,
-	/* Brake System Plausibility Device - Signal */
-	ADC_BUFFER_SIG_BSPD = 1,
 	/* Accelerator Pedal Position Sensor 1 - Signal */
-	ADC_BUFFER_SIG_APPS1 = 2,
+	ADC_BUFFER_SIG_APPS1 = 0,
+	/* Brake Pressure - Signal */
+	ADC_BUFFER_SIG_BRAKE = 1,
+	/* Steering Angle - Signal */
+	ADC_BUFFER_SIG_STEERING_ANGLE = 2,
+	/* Brake System Plausibility Device - Signal */
+	ADC_BUFFER_SIG_BSPD = 3,
+	/* Brake System Plausibility Device - Sense */
+	ADC_BUFFER_SENSE_BSPD = 4,
+
 	/* Accelerator Pedal Position Sensor 2 - Signal */
-	ADC_BUFFER_SIG_APPS2 = 3,
-	/* Rear Brake Pressure - Signal */
-	ADC_BUFFER_SIG_BRAKE_R = 4,
-	/* Front Brake Pressure - Signal */
-	ADC_BUFFER_SIG_BRAKE_F = 5,
-	/* Insulation Monitoring Device - Sense */
-	ADC_BUFFER_SENSE_IMD = 6,
+	ADC_BUFFER_SIG_APPS2 = 5,
+	/* Brake Signal Encoder - Signal */
+	ADC_BUFFER_SIG_BSE = 6,
 	/* Accumulator Management System - Sense */
 	ADC_BUFFER_SENSE_BMS = 7,
-	/* Brake Signal Encoder - Signal */
-	ADC_BUFFER_SIG_BSE = 8,
-	/* Brake System Plausibility Device - Sense */
-	ADC_BUFFER_SENSE_BSPD = 9,
-	/* Steering Angle - Signal */
-	ADC_BUFFER_SIG_STEERING_ANGLE = 10,
+	/* Auxiliary - Signal */
+	ADC_BUFFER_SIG_AUX = 8,
+	/* Spare - Signal */
+	ADC_BUFFER_SIG_SPARE2 = 9,
+
+	/* Insulation Monitoring Device - Sense */
+	ADC_BUFFER_SENSE_IMD = 10,
 };
+
 
 /* USER CODE END ET */
 

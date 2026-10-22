@@ -75,8 +75,10 @@
 // 			 .alternate_function = LL_GPIO_AF_7,
 // 			 .rx_callback = NULL};
 
-#define NUM_SIGNALS_ADC1 6
+#define NUM_SIGNALS_ADC1 5
 #define NUM_SIGNALS_ADC2 5
+#define NUM_SIGNALS_ADC5 1
+
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};
 uint16_t ADC_outputs[NUM_SIGNALS] = {0};
@@ -103,8 +105,8 @@ void write_adc_values_to_state_data(void)
 	stateLump.bspd_signal = ADC_outputs[ADC_BUFFER_SIG_BSPD];
 	stateLump.APPS1_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS1];
 	stateLump.APPS2_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS2];
-	stateLump.Brake_F_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE_F];
-	stateLump.Brake_R_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE_R];
+	stateLump.Brake_F_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE];
+	stateLump.Brake_R_Signal = 0;
 	stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
 	stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE];
 
@@ -191,8 +193,10 @@ int main(void)
 
 	if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK ||
     HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED) != HAL_OK ||
+    HAL_ADCEx_Calibration_Start(&hadc5, ADC_SINGLE_ENDED) != HAL_OK ||
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADC_buffers, NUM_SIGNALS_ADC1) != HAL_OK ||
-    HAL_ADC_Start_DMA(&hadc2, (uint32_t *)(ADC_buffers + NUM_SIGNALS_ADC1), NUM_SIGNALS_ADC2) != HAL_OK) {
+    HAL_ADC_Start_DMA(&hadc2, (uint32_t *)(ADC_buffers + NUM_SIGNALS_ADC1), NUM_SIGNALS_ADC2) != HAL_OK ||
+    HAL_ADC_Start_DMA(&hadc5, (uint32_t *)(ADC_buffers + NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2),NUM_SIGNALS_ADC5) != HAL_OK){
 
     LOGOMATIC_CRITICAL("Failed to start ADC calibration or DMA\n");
     Error_Handler();
@@ -201,7 +205,7 @@ int main(void)
   //Disabling DMA intterrupts for ADC1 and ADC2 for now
   __HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
   __HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
-
+  __HAL_DMA_DISABLE_IT(hadc5.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
 
 
 	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop
@@ -295,7 +299,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
-  RCC_OscInitStruct.PLL.PLLN = 8;
+  RCC_OscInitStruct.PLL.PLLN = 20;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
