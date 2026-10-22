@@ -1,13 +1,13 @@
 #include "Lights.h"
 
 #include "CANutils.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
-#include "can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 
@@ -65,14 +65,14 @@ void TSSILightControl(ECU_StateData *stateLump)
 	}
 }
 
-void TSActiveButtonLightControl(ECU_StateData *stateLump)
-{
-	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
-		LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
-	} else {
-		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
-	}
-}
+// void TSActiveButtonLightControl(ECU_StateData *stateLump)
+// {
+// 	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
+// 		LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
+// 	} else {
+// 		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
+// 	}
+// }
 
 void RTD_ButtonLightControl(ECU_StateData *stateLump)
 {
@@ -118,7 +118,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 				multiplier = 1.0f;
 				break;
 			default:
-				LOGOMATIC("Invalid powerlevel: %d. Defaulting to 0.\n", stateLump->powerlevel);
+				LOGOMATIC_WARNING("Invalid powerlevel: %d. Defaulting to 0.\n", stateLump->powerlevel);
 				multiplier = 0.0f;
 		}
 
@@ -128,7 +128,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
 	} else {
-		LOGOMATIC("Invalid torquemap: %d. Defaulting to off.\n", stateLump->torquemap);
+		LOGOMATIC_WARNING("Invalid torquemap: %d. Defaulting to off.\n", stateLump->torquemap);
 		light_control.red = 0;
 		light_control.green = 0;
 		light_control.blue = 0;
