@@ -34,7 +34,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 	    .DataLength = BytesToCANDLC(size),
-	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .BitRateSwitch = (bus == GRCAN_BUS_PRIMARY) ? FDCAN_BRS_OFF : FDCAN_BRS_ON,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
 	    .FDFormat = (bus == GRCAN_BUS_PRIMARY) ? FDCAN_CLASSIC_CAN : FDCAN_FD_CAN,
 	    .MessageMarker = 0,
