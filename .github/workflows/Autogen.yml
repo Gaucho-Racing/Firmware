@@ -32,7 +32,7 @@ jobs:
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061 # v1.43.1
+        uses: shogo82148/actions-setup-perl@ac3202722f5744e62a8fa3af3e1aaaebb08861f3 # v1.44.0
         with:
           install-modules: |
             Readonly
@@ -61,7 +61,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Save Changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         if: github.ref_type != 'tag'
         env:
           HOME: ${{ github.workspace }}
