@@ -411,6 +411,7 @@ void CAN_Configure(void)
 	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_dti);
 
 	// CAN2 ======================================================
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_BRS;
 	canCfg.fdcan_instance = FDCAN2;
 	canCfg.rx_gpio = GPIOB;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
