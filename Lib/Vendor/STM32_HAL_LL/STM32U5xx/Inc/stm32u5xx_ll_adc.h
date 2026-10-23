@@ -4155,9 +4155,9 @@ typedef struct {
 #define __LL_ADC_CALC_TEMPERATURE(__ADC_INSTANCE__, __VREFANALOG_VOLTAGE__, __TEMPSENSOR_ADC_DATA__, __ADC_RESOLUTION__)                                                                               \
 	((((((int32_t)((__LL_ADC_CONVERT_DATA_RESOLUTION((__ADC_INSTANCE__), (__TEMPSENSOR_ADC_DATA__), (__ADC_RESOLUTION__), LL_ADC_RESOLUTION_14B) * (__VREFANALOG_VOLTAGE__)) /                     \
 		       TEMPSENSOR_CAL_VREFANALOG) -                                                                                                                                                    \
-	     (int32_t) * TEMPSENSOR_CAL1_ADDR)) *                                                                                                                                                      \
+	     (int32_t)*TEMPSENSOR_CAL1_ADDR)) *                                                                                                                                                        \
 	   (int32_t)(TEMPSENSOR_CAL2_TEMP - TEMPSENSOR_CAL1_TEMP)) /                                                                                                                                   \
-	  (int32_t)((int32_t) * TEMPSENSOR_CAL2_ADDR - (int32_t) * TEMPSENSOR_CAL1_ADDR)) +                                                                                                            \
+	  (int32_t)((int32_t)*TEMPSENSOR_CAL2_ADDR - (int32_t)*TEMPSENSOR_CAL1_ADDR)) +                                                                                                                \
 	 TEMPSENSOR_CAL1_TEMP)
 
 /**
@@ -4276,11 +4276,11 @@ __STATIC_INLINE uint32_t LL_ADC_DMA_GetRegAddr(const ADC_TypeDef *ADCx, uint32_t
 
 	if (RegisterValue == LL_ADC_DMA_REG_REGULAR_DATA) {
 		/* Retrieve address of register DR */
-		data_reg_addr = (uint32_t) & (ADCx->DR);
+		data_reg_addr = (uint32_t)&(ADCx->DR);
 	} else /* (RegisterValue == LL_ADC_DMA_REG_REGULAR_DATA_MULTI) */
 	{
 		/* Retrieve address of register CDR */
-		data_reg_addr = (uint32_t) & ((__LL_ADC_COMMON_INSTANCE(ADCx))->CDR);
+		data_reg_addr = (uint32_t)&((__LL_ADC_COMMON_INSTANCE(ADCx))->CDR);
 	}
 
 	return data_reg_addr;
@@ -4317,7 +4317,7 @@ __STATIC_INLINE uint32_t LL_ADC_DMA_GetRegAddr(const ADC_TypeDef *ADCx, uint32_t
 	(void)(RegisterValue);
 
 	/* Retrieve address of register DR */
-	return (uint32_t) & (ADCx->DR);
+	return (uint32_t)&(ADCx->DR);
 }
 #endif /* ADC_MULTIMODE_SUPPORT */
 

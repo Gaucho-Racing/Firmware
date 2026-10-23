@@ -6517,7 +6517,7 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim, uint32
 	hdma->XferErrorCallback = HRTIM_DMAError;
 
 	/* Enable the DMA channel */
-	if (HAL_DMA_Start_IT(hdma, BurstBufferAddress, (uint32_t) & (hhrtim->Instance->sCommonRegs.BDMADR), BurstBufferLength) != HAL_OK) {
+	if (HAL_DMA_Start_IT(hdma, BurstBufferAddress, (uint32_t)&(hhrtim->Instance->sCommonRegs.BDMADR), BurstBufferLength) != HAL_OK) {
 		hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 		/* Process Unlocked */
@@ -8260,11 +8260,11 @@ static void HRTIM_MasterBase_Config(HRTIM_HandleTypeDef *hhrtim, const HRTIM_Tim
 	hrtim_mcr = hhrtim->Instance->sMasterRegs.MCR;
 
 	/* Set the prescaler ratio */
-	hrtim_mcr &= (uint32_t) ~(HRTIM_MCR_CK_PSC);
+	hrtim_mcr &= (uint32_t)~(HRTIM_MCR_CK_PSC);
 	hrtim_mcr |= (uint32_t)pTimeBaseCfg->PrescalerRatio;
 
 	/* Set the operating mode */
-	hrtim_mcr &= (uint32_t) ~(HRTIM_MCR_CONT | HRTIM_MCR_RETRIG);
+	hrtim_mcr &= (uint32_t)~(HRTIM_MCR_CONT | HRTIM_MCR_RETRIG);
 	hrtim_mcr |= (uint32_t)pTimeBaseCfg->Mode;
 
 	/* Update the HRTIM registers */
@@ -8288,11 +8288,11 @@ static void HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t Ti
 	hrtim_timcr = hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR;
 
 	/* Set the prescaler ratio */
-	hrtim_timcr &= (uint32_t) ~(HRTIM_TIMCR_CK_PSC);
+	hrtim_timcr &= (uint32_t)~(HRTIM_TIMCR_CK_PSC);
 	hrtim_timcr |= (uint32_t)pTimeBaseCfg->PrescalerRatio;
 
 	/* Set the operating mode */
-	hrtim_timcr &= (uint32_t) ~(HRTIM_TIMCR_CONT | HRTIM_TIMCR_RETRIG);
+	hrtim_timcr &= (uint32_t)~(HRTIM_TIMCR_CONT | HRTIM_TIMCR_RETRIG);
 	hrtim_timcr |= (uint32_t)pTimeBaseCfg->Mode;
 
 	/* Update the HRTIM registers */

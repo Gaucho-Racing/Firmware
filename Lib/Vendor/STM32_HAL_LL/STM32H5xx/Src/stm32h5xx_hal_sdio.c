@@ -2156,7 +2156,7 @@ HAL_StatusTypeDef HAL_SDIO_DisableIOAsynInterrupt(SDIO_HandleTypeDef *hsdio)
 	if ((enable_asyn_it & 0x02U) == 0x00U) {
 		return HAL_OK;
 	} else {
-		enable_asyn_it &= (uint8_t) ~(0x02U);
+		enable_asyn_it &= (uint8_t)~(0x02U);
 	}
 
 	if (SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR20_SD_BYTE2, HAL_SDIO_READ_AFTER_WRITE, SDIO_FUNCTION_0, &enable_asyn_it) != HAL_OK) {

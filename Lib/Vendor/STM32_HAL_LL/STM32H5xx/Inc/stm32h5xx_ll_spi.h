@@ -2283,7 +2283,7 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_TX(const SPI_TypeDef *SPIx)
  */
 __STATIC_INLINE uint32_t LL_SPI_DMA_GetTxRegAddr(const SPI_TypeDef *SPIx)
 {
-	return (uint32_t) & (SPIx->TXDR);
+	return (uint32_t)&(SPIx->TXDR);
 }
 
 /**
@@ -2294,7 +2294,7 @@ __STATIC_INLINE uint32_t LL_SPI_DMA_GetTxRegAddr(const SPI_TypeDef *SPIx)
  */
 __STATIC_INLINE uint32_t LL_SPI_DMA_GetRxRegAddr(const SPI_TypeDef *SPIx)
 {
-	return (uint32_t) & (SPIx->RXDR);
+	return (uint32_t)&(SPIx->RXDR);
 }
 /**
  * @}
