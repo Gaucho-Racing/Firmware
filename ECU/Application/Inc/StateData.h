@@ -24,6 +24,8 @@
 #define CRITICAL_MAX_CELL_TEMP_C 60
 #define CRITICAL_TS_VOLTAGE 600
 
+#define MAX_POWER_TO_USE_KW 80
+
 typedef union {
 	struct {
 		uint8_t ECUState;
