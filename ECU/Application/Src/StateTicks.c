@@ -354,6 +354,10 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		} else {
 			ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
 		}
+
+		uint16_t dti_control_10_max_dc_current = 10 * (MAX_POWER_TO_USE_KW * 1000 / stateData->ts_voltage);
+		ECU_CAN_Send_DTI(DTI_CONTROL_10_CAN_ID, &dti_control_10_max_dc_current, 2);
+
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
