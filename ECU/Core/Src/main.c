@@ -21,6 +21,7 @@
 
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_DATA.h"
+#include "Buzzer.h"
 #include "GRCAN_NODE_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
@@ -533,6 +534,7 @@ int main(void)
 
 			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 			write_adc_values_to_state_data();
+			buzzer_tick();
 		}
 
 		if (MillisecondsSinceBoot() >= delay_timer) {
