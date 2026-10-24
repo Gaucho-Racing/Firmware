@@ -90,50 +90,33 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 
 	GRCAN_RTD_LIGHT_CTRL_MSG light_control = {0};
 
-	if (stateLump->torquemap == 0) {
-		light_control.red = 0;
-		light_control.green = 0;
-		light_control.blue = 0;
-
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
-	} else if (stateLump->torquemap == 1) {
-		float multiplier = 1.0f;
-		switch (stateLump->powerlevel) {
-			case 0:
-				multiplier = 0.05f;
-				break;
-			case 1:
-				multiplier = 0.1f;
-				break;
-			case 2:
-				multiplier = 0.2f;
-				break;
-			case 3:
-				multiplier = 0.4f;
-				break;
-			case 4:
-				multiplier = 0.7f;
-				break;
-			case 5:
-				multiplier = 1.0f;
-				break;
-			default:
-				LOGOMATIC("Invalid powerlevel: %d. Defaulting to 0.\n", stateLump->powerlevel);
-				multiplier = 0.0f;
-		}
-
-		light_control.red = (uint8_t)(255 * multiplier);
-		light_control.green = (uint8_t)(63 * multiplier);
-		light_control.blue = (uint8_t)(0 * multiplier);
-
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
-	} else {
-		LOGOMATIC("Invalid torquemap: %d. Defaulting to off.\n", stateLump->torquemap);
-		light_control.red = 0;
-		light_control.green = 0;
-		light_control.blue = 0;
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
+	float multiplier = 1.0f;
+	switch (stateLump->forward_ac_i_code) {
+		case 0:
+			multiplier = 0.05f;
+			break;
+		case 1:
+			multiplier = 0.2f;
+			break;
+		case 2:
+			multiplier = 0.4f;
+			break;
+		case 3:
+			multiplier = 0.7f;
+			break;
+		case 4:
+			multiplier = 1.0f;
+			break;
+		default:
+			LOGOMATIC("Invalid forward AC I code: %d. Defaulting to 0.\n", stateLump->forward_ac_i_code);
+			multiplier = 0.0f;
 	}
+
+	light_control.red = (uint8_t)(255 * multiplier);
+	light_control.green = (uint8_t)(63 * multiplier);
+	light_control.blue = (uint8_t)(0 * multiplier);
+
+	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
 }
 
 void dashLights(ECU_StateData *stateLump)

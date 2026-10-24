@@ -2407,9 +2407,9 @@ HAL_StatusTypeDef HAL_ETH_SetSourceMACAddrMatch(const ETH_HandleTypeDef *heth, u
 	}
 
 	/* Get mac addr high reg offset */
-	macaddrhr = ((uint32_t) & (heth->Instance->MACA0HR) + AddrNbr);
+	macaddrhr = ((uint32_t)&(heth->Instance->MACA0HR) + AddrNbr);
 	/* Get mac addr low reg offset */
-	macaddrlr = ((uint32_t) & (heth->Instance->MACA0LR) + AddrNbr);
+	macaddrlr = ((uint32_t)&(heth->Instance->MACA0LR) + AddrNbr);
 
 	/* Set MAC addr bits 32 to 47 */
 	(*(__IO uint32_t *)macaddrhr) = (((uint32_t)(pMACAddr[5]) << 8) | (uint32_t)pMACAddr[4]);

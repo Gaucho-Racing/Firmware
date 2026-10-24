@@ -677,7 +677,7 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @param  __HANDLE__ specifies the IRDA Handle.
  * @retval None
  */
-#define __HAL_IRDA_ONE_BIT_SAMPLE_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 &= (uint32_t) ~((uint32_t)USART_CR3_ONEBIT))
+#define __HAL_IRDA_ONE_BIT_SAMPLE_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 &= (uint32_t)~((uint32_t)USART_CR3_ONEBIT))
 
 /** @brief  Enable UART/USART associated to IRDA Handle.
  * @param  __HANDLE__ specifies the IRDA Handle.

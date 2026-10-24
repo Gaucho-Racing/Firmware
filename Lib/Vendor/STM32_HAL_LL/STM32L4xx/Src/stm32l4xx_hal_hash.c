@@ -1790,7 +1790,7 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, const uint8_t
 			/* Write remaining input data */
 
 			if ((Size % 4U) <= 2U) {
-				HASH->DIN = (uint32_t) * (uint16_t *)inputaddr;
+				HASH->DIN = (uint32_t)*(uint16_t *)inputaddr;
 			}
 			if ((Size % 4U) == 3U) {
 				HASH->DIN = *(uint32_t *)inputaddr;
@@ -1800,15 +1800,15 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, const uint8_t
 		{
 			/* Write remaining input data */
 			if ((Size % 4U) == 1U) {
-				HASH->DIN = (uint32_t) * (uint8_t *)inputaddr;
+				HASH->DIN = (uint32_t)*(uint8_t *)inputaddr;
 			}
 			if ((Size % 4U) == 2U) {
-				HASH->DIN = (uint32_t) * (uint16_t *)inputaddr;
+				HASH->DIN = (uint32_t)*(uint16_t *)inputaddr;
 			}
 			if ((Size % 4U) == 3U) {
 				tmp = *(uint8_t *)inputaddr;
-				tmp |= (uint32_t) * (uint8_t *)(inputaddr + 1U) << 8U;
-				tmp |= (uint32_t) * (uint8_t *)(inputaddr + 2U) << 16U;
+				tmp |= (uint32_t)*(uint8_t *)(inputaddr + 1U) << 8U;
+				tmp |= (uint32_t)*(uint8_t *)(inputaddr + 2U) << 16U;
 				HASH->DIN = tmp;
 			}
 

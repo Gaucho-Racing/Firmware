@@ -12,7 +12,6 @@ uint32_t MillisecondsSinceBoot(void);
 
 // Constants
 #define MAX_APPS_IMPLAUSIBLE_TIME_MS 100
-#define MAX_BUZZER_TIME_MS 1000
 
 #define REGEN_MIN_SPEED_MPH 3.106856f // 5 KPH
 

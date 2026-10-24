@@ -4183,10 +4183,10 @@ __STATIC_INLINE uint32_t LL_USART_DMA_GetRegAddr(const USART_TypeDef *USARTx, ui
 
 	if (Direction == LL_USART_DMA_REG_DATA_TRANSMIT) {
 		/* return address of TDR register */
-		data_reg_addr = (uint32_t) & (USARTx->TDR);
+		data_reg_addr = (uint32_t)&(USARTx->TDR);
 	} else {
 		/* return address of RDR register */
-		data_reg_addr = (uint32_t) & (USARTx->RDR);
+		data_reg_addr = (uint32_t)&(USARTx->RDR);
 	}
 
 	return data_reg_addr;

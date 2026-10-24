@@ -270,6 +270,7 @@ typedef struct {
 #define FDCAN_DATA_FRAME 0
 #define FDCAN_ESI_ACTIVE 0
 #define FDCAN_BRS_OFF 0
+#define FDCAN_BRS_ON 0
 #define FDCAN_NO_TX_EVENTS 0
 
 /**

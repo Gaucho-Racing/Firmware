@@ -60,7 +60,7 @@ extern "C" {
  */
 
 /* Defines used for position in the register */
-#define DBGMCU_REVID_POSITION (uint32_t) POSITION_VAL(DBGMCU_IDCODE_REV_ID)
+#define DBGMCU_REVID_POSITION (uint32_t)POSITION_VAL(DBGMCU_IDCODE_REV_ID)
 
 /**
  * @brief Power-down in Run mode Flash key

@@ -968,18 +968,18 @@ static const uint32_t REG_MASK_TAB_CPT[] = {
  * @brief Constants defining the events that can be selected to trigger the capture of the timing unit counter.
  */
 #define LL_HRTIM_CAPTURETRIG_NONE (uint64_t)0				       /*!< Capture trigger is disabled */
-#define LL_HRTIM_CAPTURETRIG_SW (uint64_t) HRTIM_CPT1CR_SWCPT		       /*!< The sw event triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_UPDATE (uint64_t) HRTIM_CPT1CR_UPDCPT	       /*!< The update event triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_1 (uint64_t) HRTIM_CPT1CR_EXEV1CPT	       /*!< The External event 1 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_2 (uint64_t) HRTIM_CPT1CR_EXEV2CPT	       /*!< The External event 2 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_3 (uint64_t) HRTIM_CPT1CR_EXEV3CPT	       /*!< The External event 3 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_4 (uint64_t) HRTIM_CPT1CR_EXEV4CPT	       /*!< The External event 4 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_5 (uint64_t) HRTIM_CPT1CR_EXEV5CPT	       /*!< The External event 5 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_6 (uint64_t) HRTIM_CPT1CR_EXEV6CPT	       /*!< The External event 6 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_7 (uint64_t) HRTIM_CPT1CR_EXEV7CPT	       /*!< The External event 7 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_8 (uint64_t) HRTIM_CPT1CR_EXEV8CPT	       /*!< The External event 8 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_9 (uint64_t) HRTIM_CPT1CR_EXEV9CPT	       /*!< The External event 9 triggers the Capture */
-#define LL_HRTIM_CAPTURETRIG_EEV_10 (uint64_t) HRTIM_CPT1CR_EXEV10CPT	       /*!< The External event 10 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_SW (uint64_t)HRTIM_CPT1CR_SWCPT		       /*!< The sw event triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_UPDATE (uint64_t)HRTIM_CPT1CR_UPDCPT	       /*!< The update event triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_1 (uint64_t)HRTIM_CPT1CR_EXEV1CPT	       /*!< The External event 1 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_2 (uint64_t)HRTIM_CPT1CR_EXEV2CPT	       /*!< The External event 2 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_3 (uint64_t)HRTIM_CPT1CR_EXEV3CPT	       /*!< The External event 3 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_4 (uint64_t)HRTIM_CPT1CR_EXEV4CPT	       /*!< The External event 4 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_5 (uint64_t)HRTIM_CPT1CR_EXEV5CPT	       /*!< The External event 5 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_6 (uint64_t)HRTIM_CPT1CR_EXEV6CPT	       /*!< The External event 6 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_7 (uint64_t)HRTIM_CPT1CR_EXEV7CPT	       /*!< The External event 7 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_8 (uint64_t)HRTIM_CPT1CR_EXEV8CPT	       /*!< The External event 8 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_9 (uint64_t)HRTIM_CPT1CR_EXEV9CPT	       /*!< The External event 9 triggers the Capture */
+#define LL_HRTIM_CAPTURETRIG_EEV_10 (uint64_t)HRTIM_CPT1CR_EXEV10CPT	       /*!< The External event 10 triggers the Capture */
 #define LL_HRTIM_CAPTURETRIG_TA1_SET (uint64_t)(HRTIM_CPT1CR_TA1SET) << 32     /*!< Capture is triggered by TA1 output inactive to active transition */
 #define LL_HRTIM_CAPTURETRIG_TA1_RESET (uint64_t)(HRTIM_CPT1CR_TA1RST) << 32   /*!< Capture is triggered by TA1 output active to inactive transition */
 #define LL_HRTIM_CAPTURETRIG_TIMA_CMP1 (uint64_t)(HRTIM_CPT1CR_TIMACMP1) << 32 /*!< Timer A Compare 1 triggers Capture */

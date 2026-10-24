@@ -2285,7 +2285,7 @@ static void HASH_WriteData(HASH_HandleTypeDef *hhash, const uint8_t *pInBuffer, 
 		if (hhash->Init.DataType == HASH_HALFWORD_SWAP) {
 			/* Write remaining input data */
 			if ((Size % 4U) <= 2U) {
-				hhash->Instance->DIN = (uint32_t) * (uint16_t *)inputaddr;
+				hhash->Instance->DIN = (uint32_t)*(uint16_t *)inputaddr;
 			}
 			if ((Size % 4U) == 3U) {
 				hhash->Instance->DIN = *(uint32_t *)inputaddr;
@@ -2294,10 +2294,10 @@ static void HASH_WriteData(HASH_HandleTypeDef *hhash, const uint8_t *pInBuffer, 
 		{
 			/* Write remaining input data */
 			if ((Size % 4U) == 1U) {
-				hhash->Instance->DIN = (uint32_t) * (uint8_t *)inputaddr;
+				hhash->Instance->DIN = (uint32_t)*(uint8_t *)inputaddr;
 			}
 			if ((Size % 4U) == 2U) {
-				hhash->Instance->DIN = (uint32_t) * (uint16_t *)inputaddr;
+				hhash->Instance->DIN = (uint32_t)*(uint16_t *)inputaddr;
 			}
 			if ((Size % 4U) == 3U) {
 				tmp1 = *(uint8_t *)inputaddr;
