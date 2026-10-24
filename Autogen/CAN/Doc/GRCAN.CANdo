@@ -608,11 +608,11 @@ Message ID:
       data type: u8
     Forward AC I Code:
       bit_start: 32
-      comment: Determines the forward current based on a mapping (0 = invalid, 1 = 50A, 2 = 100A, 3 = 200A, 4 = 300A, 5 = 325A, >6 invalid)
+      comment: Determines the forward current based on a mapping (0 = 50A, 1 = 100A, 2 = 200A, 3 = 300A, 4 = 325A, >4 invalid)
       data type: u4
     Regen AC I Code:
       bit_start: 36
-      comment: Determines the regen current based on a mapping (0 = 0A, 1 = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >9 invalid)
+      comment: Determines the regen current based on a mapping (0 = 0A, 1 = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >8 invalid)
       data type: u4
     Max Cell Temp:
       bit_start: 40
