@@ -103,7 +103,7 @@ typedef volatile struct ECU_StateData {
 	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
 
 	uint8_t forward_ac_i_code; // 4 bits wide
-	uint8_t regen_ac_i_code;  // 4 bits wide
+	uint8_t regen_ac_i_code;   // 4 bits wide
 
 	uint8_t tractivebattery_soc;
 	uint8_t glv_soc;
