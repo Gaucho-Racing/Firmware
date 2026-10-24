@@ -316,7 +316,7 @@ void CAN_Configure(void)
 
 	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
-	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_CLASSIC;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
@@ -411,7 +411,7 @@ void CAN_Configure(void)
 	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_dti);
 
 	// CAN2 ======================================================
-	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_BRS;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.fdcan_instance = FDCAN2;
 	canCfg.rx_gpio = GPIOB;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
