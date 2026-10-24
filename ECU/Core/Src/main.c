@@ -19,9 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "Buzzer.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_DATA.h"
-#include "Buzzer.h"
 #include "GRCAN_NODE_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
