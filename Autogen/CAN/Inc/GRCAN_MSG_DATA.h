@@ -58,10 +58,9 @@ See diagram in StateMachine.h (Byte 0) */
 30: BrakeTemp RL (1: OK, 0: Timeout)
 31: BrakeTemp RR (1: OK, 0: Timeout) (Byte 3) */
 	uint8_t ping_group_3;
-	/** Controls the AC current limits to each of the inverters
-Discrete Mapping, actual current values described by the torque map The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor. 0 is max current amps, 1 is 100
-/ 200 / 250 / 300 / 325 / 350 Amps, 2 and later is tbd (Byte 4) */
-	uint8_t power_level_torque_map;
+	/** Determines the forward current based on a mapping (0 = invalid, 1 = 50A, 2 = 100A, 3 = 200A, 4 = 300A, 5 = 325A, >6 invalid) Determines the regen current based on a mapping (0 = invalid, 1
+	 * = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >9 invalid) (Byte 4) */
+	uint8_t forward_ac_i_code_regen_ac_i_code;
 	/** the Temp of the hottest cell of the accumulator (Byte 5) */
 	uint8_t max_cell_temp;
 	/** % charged of the Accumulator (Byte 6) */
