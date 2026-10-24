@@ -11,6 +11,7 @@
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
+#include "Buzzer.h"
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
@@ -207,11 +208,9 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 }
 
-static uint32_t buzzer_start_millis;
-
 void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 {
-	buzzer_start_millis = millis_since_boot;
+	buzzer_rtd();
 	stateData->ecu_state = GR_DRIVE_ACTIVE;
 }
 
@@ -228,12 +227,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
 		return;
-	}
-
-	if (millis_since_boot - buzzer_start_millis > MAX_BUZZER_TIME_MS) {
-		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-	} else {
-		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	}
 
 	if (stateData->rtd_button_pressed) {

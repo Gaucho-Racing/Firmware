@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "Buzzer.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
 #include "GRCAN_MSG_ID.h"
@@ -48,13 +49,34 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			bool left_pressed = regen_buttons->button_flags & 0x01;
 			bool right_pressed = regen_buttons->button_flags & 0x02;
 			if (left_pressed && right_pressed) {
-				break;
-			} else if (left_pressed) {
+				LOGOMATIC("Both regen buttons pressed, ignoring\n");
+				buzzer_error_both();
+			} else if (left_pressed && state_data->regen_ac_i_code > 0) {
 				state_data->regen_ac_i_code = (state_data->regen_ac_i_code - 1) % 9;
 				LOGOMATIC("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
-			} else if (right_pressed) {
+
+				if (state_data->regen_ac_i_code == 0) {
+					buzzer_minpoint();
+				} else if (state_data->regen_ac_i_code == 4) {
+					buzzer_midpoint();
+				} else {
+					buzzer_downward();
+				}
+			} else if (left_pressed) {
+				buzzer_error_min();
+			} else if (right_pressed && state_data->regen_ac_i_code < 8) {
 				state_data->regen_ac_i_code = (state_data->regen_ac_i_code + 1) % 9;
 				LOGOMATIC("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
+
+				if (state_data->regen_ac_i_code == 8) {
+					buzzer_maxpoint();
+				} else if (state_data->regen_ac_i_code == 4) {
+					buzzer_midpoint();
+				} else {
+					buzzer_downward();
+				}
+			} else if (right_pressed) {
+				buzzer_error_max();
 			}
 			break;
 		case GRCAN_DEBUG_2_0:
