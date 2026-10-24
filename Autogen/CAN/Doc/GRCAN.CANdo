@@ -612,7 +612,7 @@ Message ID:
       data type: u4
     Regen AC I Code:
       bit_start: 36
-      comment: Determines the regen current based on a mapping (0 = invalid, 1 = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >9 invalid)
+      comment: Determines the regen current based on a mapping (0 = 0A, 1 = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >9 invalid)
       data type: u4
     Max Cell Temp:
       bit_start: 40
