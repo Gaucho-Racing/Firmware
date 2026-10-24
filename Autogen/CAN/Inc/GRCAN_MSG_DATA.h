@@ -58,8 +58,8 @@ See diagram in StateMachine.h (Byte 0) */
 30: BrakeTemp RL (1: OK, 0: Timeout)
 31: BrakeTemp RR (1: OK, 0: Timeout) (Byte 3) */
 	uint8_t ping_group_3;
-	/** Determines the forward current based on a mapping (0 = invalid, 1 = 50A, 2 = 100A, 3 = 200A, 4 = 300A, 5 = 325A, >6 invalid) Determines the regen current based on a mapping (0 = invalid, 1
-	 * = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >9 invalid) (Byte 4) */
+	/** Determines the forward current based on a mapping (0 = invalid, 1 = 50A, 2 = 100A, 3 = 200A, 4 = 300A, 5 = 325A, >6 invalid) Determines the regen current based on a mapping (0 = 0A, 1 =
+	 * 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >9 invalid) (Byte 4) */
 	uint8_t forward_ac_i_code_regen_ac_i_code;
 	/** the Temp of the hottest cell of the accumulator (Byte 5) */
 	uint8_t max_cell_temp;
