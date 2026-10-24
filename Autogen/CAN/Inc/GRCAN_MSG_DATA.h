@@ -4,6 +4,12 @@
 
 #include <stdint.h>
 
+/** Regen Buttons */
+typedef struct {
+	/** [Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved (Byte 0) */
+	uint8_t button_flags;
+} GRCAN_REGEN_BUTTONS_MSG;
+
 /** Ping */
 typedef struct {
 	/** Time in millis (Byte 0) */
