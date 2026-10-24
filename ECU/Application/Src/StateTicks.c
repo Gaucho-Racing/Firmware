@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "Buzzer.h"
 #include "CANutils.h"
 #include "ComparatorMacros.h"
 #include "GRCAN_BUS_ID.h"
@@ -11,7 +12,6 @@
 #include "GRCAN_NODE_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
-#include "Buzzer.h"
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
