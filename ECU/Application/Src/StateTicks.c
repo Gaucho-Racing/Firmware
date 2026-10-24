@@ -31,10 +31,10 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at minimum power
-    .powerlevel = 0,
-    // See CANdo specification
-    .torquemap = 1,
+    // Startup at 300A forward current
+    .forward_ac_i_code = 3,
+    // Startup at 60A regen current
+    .regen_ac_i_code = 4,
     // APPS Deadzone
     .apps_deadzone = 0.08f,
     // BMS thresholds
@@ -140,8 +140,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 
 	if (stateData->rtd_button_pressed) {
-		stateData->powerlevel = (stateData->powerlevel + 1) % 6;
-		LOGOMATIC("Power level now at %d\n", stateData->powerlevel);
+		stateData->forward_ac_i_code = (stateData->forward_ac_i_code + 1) % 5;
+		LOGOMATIC("Forward AC I Code now at %d\n", stateData->forward_ac_i_code);
 	}
 }
 
@@ -261,53 +261,59 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	float pedal = CalcAccPedalTravel(stateData);
 
 	uint16_t max_rev_current = 0;
-	switch (stateData->powerlevel) {
+	switch (stateData->regen_ac_i_code) {
 		case 0:
-			max_rev_current = 20;
+			max_rev_current = 0;
 			break;
 		case 1:
-			max_rev_current = 40;
+			max_rev_current = 15;
 			break;
 		case 2:
-			max_rev_current = 60;
+			max_rev_current = 30;
 			break;
 		case 3:
-			max_rev_current = 80;
+			max_rev_current = 45;
 			break;
 		case 4:
-			max_rev_current = 100;
+			max_rev_current = 60;
 			break;
 		case 5:
+			max_rev_current = 75;
+			break;
+		case 6:
+			max_rev_current = 90;
+			break;
+		case 7:
+			max_rev_current = 105;
+			break;
+		case 8:
 			max_rev_current = 120;
 			break;
 		default:
-			LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
+			LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->regen_ac_i_code);
 			max_rev_current = 0;
 			break;
 	}
 
 	uint16_t max_fwd_current = 0;
-	switch (stateData->powerlevel) {
+	switch (stateData->forward_ac_i_code) {
 		case 0:
-			max_fwd_current = 300;
+			max_fwd_current = 50;
 			break;
 		case 1:
-			max_fwd_current = 300;
+			max_fwd_current = 100;
 			break;
 		case 2:
-			max_fwd_current = 300;
+			max_fwd_current = 200;
 			break;
 		case 3:
 			max_fwd_current = 300;
 			break;
 		case 4:
-			max_fwd_current = 300;
-			break;
-		case 5:
-			max_fwd_current = 300;
+			max_fwd_current = 325;
 			break;
 		default:
-			LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
+			LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->forward_ac_i_code);
 			max_fwd_current = 0;
 			break;
 	}

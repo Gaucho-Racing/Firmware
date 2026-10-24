@@ -30,7 +30,7 @@ typedef union {
 	struct {
 		uint8_t ECUState;
 		uint8_t StatusBits[3];
-		uint8_t PowerLevelTorqueMap;
+		uint8_t ForwardRegenCurrentMap;
 		uint8_t MaxCellTemp;
 		uint8_t AccumulatorStateOfCharge;
 		uint8_t GLVStateOfCharge;
@@ -102,8 +102,8 @@ typedef volatile struct ECU_StateData {
 	uint8_t status_bits[3];
 	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
 
-	uint8_t powerlevel; // 4 bits wide
-	uint8_t torquemap;  // 4 bits wide
+	uint8_t forward_ac_i_code; // 4 bits wide
+	uint8_t regen_ac_i_code;  // 4 bits wide
 
 	uint8_t tractivebattery_soc;
 	uint8_t glv_soc;
