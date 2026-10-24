@@ -327,9 +327,9 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119; // Updated for 160MHz: (1+119+40)*1 = 160 ticks -> 1 Mbps
 	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
 	canCfg.hal_fdcan_init.DataPrescaler = 1;
-	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 9; // Updated for 160MHz: 160 MHz/((1+9+10)*1) = 8 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 10;
+	canCfg.hal_fdcan_init.DataSyncJumpWidth = 8;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 23; // Updated for 160MHz: 160 MHz/((1+23+8)*1) = 5 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 8;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 3;
 
