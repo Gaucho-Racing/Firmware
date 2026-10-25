@@ -73,6 +73,8 @@ void ECU_State_Tick(void)
 	static uint32_t last_ECU_status_msg_millis;
 	if (millis_since_boot - last_ECU_status_msg_millis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
+		LOGOMATIC("Forward I Code: %d, Regen I Code: %d\n", stateLump.forward_ac_i_code, stateLump.regen_ac_i_code);
+		LOGOMATIC("Max Power to Use: %d kW\n\n", stateLump.max_power_to_use_kw);
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
 
