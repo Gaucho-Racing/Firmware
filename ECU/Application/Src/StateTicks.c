@@ -50,6 +50,8 @@ ECU_StateData stateLump = {
     // Timings
     .ping_timeout_delay_ms = 250,
     .max_precharge_time_ms = 8000,
+	// Power
+	.max_power_to_use_kw = 40,
     // Pedals
     .brake_f_min = 720,
     .brake_r_min = 700,
@@ -142,7 +144,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 
 	if (stateData->rtd_button_pressed) {
 		stateData->max_power_to_use_kw = (stateData->max_power_to_use_kw == 40) ? 80 : 40;
-		LOGOMATIC("Max Power to Use now at %d kW\n", stateData->max_power_to_use_kw);
+		LOGOMATIC("Max Power to use now at %d kW\n", stateData->max_power_to_use_kw);
 	}
 }
 
