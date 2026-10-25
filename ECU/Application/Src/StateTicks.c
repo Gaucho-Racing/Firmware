@@ -32,8 +32,8 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at 300A forward current
-    .forward_ac_i_code = 3,
+    // Startup at 325A forward current
+    .forward_ac_i_code = 4,
     // Startup at 60A regen current
     .regen_ac_i_code = 4,
     // APPS Deadzone
