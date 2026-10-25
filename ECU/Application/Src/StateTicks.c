@@ -50,8 +50,8 @@ ECU_StateData stateLump = {
     // Timings
     .ping_timeout_delay_ms = 250,
     .max_precharge_time_ms = 8000,
-	// Power
-	.max_power_to_use_kw = 40,
+    // Power
+    .max_power_to_use_kw = 40,
     // Pedals
     .brake_f_min = 720,
     .brake_r_min = 700,
