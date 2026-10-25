@@ -24,8 +24,6 @@
 #define CRITICAL_MAX_CELL_TEMP_C 60
 #define CRITICAL_TS_VOLTAGE 600
 
-#define MAX_POWER_TO_USE_KW 80
-
 typedef union {
 	struct {
 		uint8_t ECUState;
@@ -98,6 +96,8 @@ typedef volatile struct ECU_StateData {
 	uint16_t apps_1_max;
 	uint16_t apps_2_max;
 	uint16_t max_precharge_time_ms;
+
+	uint16_t max_power_to_use_kw;
 
 	uint8_t status_bits[3];
 	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
