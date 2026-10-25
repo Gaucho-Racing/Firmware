@@ -141,8 +141,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 
 	if (stateData->rtd_button_pressed) {
-		stateData->forward_ac_i_code = (stateData->forward_ac_i_code + 1) % 5;
-		LOGOMATIC("Forward AC I Code now at %d\n", stateData->forward_ac_i_code);
+		stateData->max_power_to_use_kw = (stateData->max_power_to_use_kw == 40) ? 80 : 40;
+		LOGOMATIC("Max Power to Use now at %d kW\n", stateData->max_power_to_use_kw);
 	}
 }
 

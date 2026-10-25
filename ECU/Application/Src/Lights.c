@@ -91,24 +91,15 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 	GRCAN_RTD_LIGHT_CTRL_MSG light_control = {0};
 
 	float multiplier = 1.0f;
-	switch (stateLump->forward_ac_i_code) {
-		case 0:
-			multiplier = 0.05f;
+	switch (stateLump->max_power_to_use_kw) {
+		case 40:
+			multiplier = 0.3f;
 			break;
-		case 1:
-			multiplier = 0.2f;
-			break;
-		case 2:
-			multiplier = 0.4f;
-			break;
-		case 3:
-			multiplier = 0.7f;
-			break;
-		case 4:
+		case 80:
 			multiplier = 1.0f;
 			break;
 		default:
-			LOGOMATIC("Invalid forward AC I code: %d. Defaulting to 0.\n", stateLump->forward_ac_i_code);
+			LOGOMATIC("Invalid max power to use (kW): %d. Defaulting to 0.0f.\n", stateLump->max_power_to_use_kw);
 			multiplier = 0.0f;
 	}
 
