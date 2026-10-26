@@ -1402,8 +1402,8 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 	}
 
 	if ((wIstr & USB_ISTR_WKUP) == USB_ISTR_WKUP) {
-		hpcd->Instance->CNTR &= (uint16_t) ~(USB_CNTR_LPMODE);
-		hpcd->Instance->CNTR &= (uint16_t) ~(USB_CNTR_FSUSP);
+		hpcd->Instance->CNTR &= (uint16_t)~(USB_CNTR_LPMODE);
+		hpcd->Instance->CNTR &= (uint16_t)~(USB_CNTR_FSUSP);
 
 		if (hpcd->LPM_State == LPM_L1) {
 			hpcd->LPM_State = LPM_L0;

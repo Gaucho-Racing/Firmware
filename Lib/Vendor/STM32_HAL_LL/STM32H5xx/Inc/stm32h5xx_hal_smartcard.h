@@ -825,7 +825,7 @@ typedef enum {
  * @param  __HANDLE__ specifies the SMARTCARD Handle.
  * @retval None
  */
-#define __HAL_SMARTCARD_ONE_BIT_SAMPLE_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 &= (uint32_t) ~((uint32_t)USART_CR3_ONEBIT))
+#define __HAL_SMARTCARD_ONE_BIT_SAMPLE_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 &= (uint32_t)~((uint32_t)USART_CR3_ONEBIT))
 
 /** @brief  Enable the USART associated to the SMARTCARD Handle.
  * @param  __HANDLE__ specifies the SMARTCARD Handle.

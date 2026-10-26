@@ -46,7 +46,7 @@
 #define CRYP_POLLING_ON 0x1  /*!< Polling when padding    */
 
 #if defined(AES_CR_NPBLB)
-#define AES_POSITION_CR_NPBLB (uint32_t) POSITION_VAL(AES_CR_NPBLB) /*!< Required left shift to set background CLUT size */
+#define AES_POSITION_CR_NPBLB (uint32_t)POSITION_VAL(AES_CR_NPBLB) /*!< Required left shift to set background CLUT size */
 #endif
 /**
  * @}

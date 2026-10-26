@@ -1036,10 +1036,10 @@ __STATIC_INLINE uint32_t LL_SWPMI_DMA_GetRegAddr(const SWPMI_TypeDef *SWPMIx, ui
 
 	if (Direction == LL_SWPMI_DMA_REG_DATA_TRANSMIT) {
 		/* return address of TDR register */
-		data_reg_addr = (uint32_t) & (SWPMIx->TDR);
+		data_reg_addr = (uint32_t)&(SWPMIx->TDR);
 	} else {
 		/* return address of RDR register */
-		data_reg_addr = (uint32_t) & (SWPMIx->RDR);
+		data_reg_addr = (uint32_t)&(SWPMIx->RDR);
 	}
 
 	return data_reg_addr;

@@ -128,7 +128,7 @@ __PACKED_STRUCT T_UINT32_READ
 #define __RESTRICT __restrict
 #endif
 #ifndef __COMPILER_BARRIER
-#define __COMPILER_BARRIER() __ASM volatile("" ::: "memory")
+#define __COMPILER_BARRIER() __ASM volatile("" :: : "memory")
 #endif
 
 /* #########################  Startup and Lowlevel Init ########################
@@ -248,14 +248,14 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S(uint32_t *stackTop)
   \details Wait For Interrupt is a hint instruction that suspends execution
   until one of a number of events occurs.
  */
-#define __WFI() __ASM volatile("wfi" ::: "memory")
+#define __WFI() __ASM volatile("wfi" :: : "memory")
 
 /**
   \brief   Wait For Event
   \details Wait For Event is a hint instruction that permits the processor to
   enter a low-power state until one of a number of events occurs.
  */
-#define __WFE() __ASM volatile("wfe" ::: "memory")
+#define __WFE() __ASM volatile("wfe" :: : "memory")
 
 /**
   \brief   Send Event
@@ -272,7 +272,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S(uint32_t *stackTop)
  */
 __STATIC_FORCEINLINE void __ISB(void)
 {
-	__ASM volatile("isb 0xF" ::: "memory");
+	__ASM volatile("isb 0xF" :: : "memory");
 }
 
 /**
@@ -283,7 +283,7 @@ __STATIC_FORCEINLINE void __ISB(void)
  */
 __STATIC_FORCEINLINE void __DSB(void)
 {
-	__ASM volatile("dsb 0xF" ::: "memory");
+	__ASM volatile("dsb 0xF" :: : "memory");
 }
 
 /**
@@ -293,7 +293,7 @@ __STATIC_FORCEINLINE void __DSB(void)
  */
 __STATIC_FORCEINLINE void __DMB(void)
 {
-	__ASM volatile("dmb 0xF" ::: "memory");
+	__ASM volatile("dmb 0xF" :: : "memory");
 }
 
 /**
@@ -533,7 +533,7 @@ __STATIC_FORCEINLINE uint32_t __STREXW(uint32_t value, volatile uint32_t *addr)
  */
 __STATIC_FORCEINLINE void __CLREX(void)
 {
-	__ASM volatile("clrex" ::: "memory");
+	__ASM volatile("clrex" :: : "memory");
 }
 
 #endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) ||                                                                                                                         \

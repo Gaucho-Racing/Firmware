@@ -34,7 +34,7 @@ void ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID message
 	    .TxFrameType = FDCAN_DATA_FRAME,
 	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
 	    .DataLength = BytesToCANDLC(size),
-	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .BitRateSwitch = (bus == GRCAN_BUS_PRIMARY) ? FDCAN_BRS_OFF : FDCAN_BRS_ON,
 	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
 	    .FDFormat = (bus == GRCAN_BUS_PRIMARY) ? FDCAN_CLASSIC_CAN : FDCAN_FD_CAN,
 	    .MessageMarker = 0,
@@ -109,7 +109,7 @@ void SendECUStateDataOverCAN(const ECU_StateData *stateData)
 
 	ECU_StateDataToSend messages = {.ECUState = stateData->ecu_state,
 					.StatusBits = {stateData->status_bits[0], stateData->status_bits[1], stateData->status_bits[2]},
-					.PowerLevelTorqueMap = (stateData->powerlevel << 4) | (stateData->torquemap & 0x0F),
+					.ForwardRegenCurrentMap = (stateData->forward_ac_i_code << 4) | (stateData->regen_ac_i_code & 0x0F),
 					.MaxCellTemp = (uint8_t)(stateData->max_cell_temp_c * 4),
 					.AccumulatorStateOfCharge = (uint8_t)(stateData->tractivebattery_soc),
 					.GLVStateOfCharge = (uint8_t)(stateData->glv_soc),

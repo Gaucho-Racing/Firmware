@@ -460,8 +460,8 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t F
 		/* Initialize local variables */
 		current_address = Address;
 		current_line = 0U;
-		lutxl_address = (uint32_t) & (hgfxmmu->Instance->LUT[2U * FirstLine]);
-		lutxh_address = (uint32_t) & (hgfxmmu->Instance->LUT[(2U * FirstLine) + 1U]);
+		lutxl_address = (uint32_t)&(hgfxmmu->Instance->LUT[2U * FirstLine]);
+		lutxh_address = (uint32_t)&(hgfxmmu->Instance->LUT[(2U * FirstLine) + 1U]);
 
 		/* Copy LUT from flash to look up RAM */
 		while (current_line < LinesNumber) {
@@ -504,8 +504,8 @@ HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint
 
 		/* Initialize local variables */
 		current_line = 0U;
-		lutxl_address = (uint32_t) & (hgfxmmu->Instance->LUT[2U * FirstLine]);
-		lutxh_address = (uint32_t) & (hgfxmmu->Instance->LUT[(2U * FirstLine) + 1U]);
+		lutxl_address = (uint32_t)&(hgfxmmu->Instance->LUT[2U * FirstLine]);
+		lutxh_address = (uint32_t)&(hgfxmmu->Instance->LUT[(2U * FirstLine) + 1U]);
 
 		/* Disable LUT lines */
 		while (current_line < LinesNumber) {
@@ -545,8 +545,8 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU
 		uint32_t lutxl_address, lutxh_address;
 
 		/* Initialize local variables */
-		lutxl_address = (uint32_t) & (hgfxmmu->Instance->LUT[2U * lutLine->LineNumber]);
-		lutxh_address = (uint32_t) & (hgfxmmu->Instance->LUT[(2U * lutLine->LineNumber) + 1U]);
+		lutxl_address = (uint32_t)&(hgfxmmu->Instance->LUT[2U * lutLine->LineNumber]);
+		lutxh_address = (uint32_t)&(hgfxmmu->Instance->LUT[(2U * lutLine->LineNumber) + 1U]);
 
 		/* Configure LUT line */
 		if (lutLine->LineStatus == GFXMMU_LUT_LINE_ENABLE) {

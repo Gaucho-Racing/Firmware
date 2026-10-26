@@ -439,7 +439,7 @@ ErrorStatus LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx, const LL_TIM_ENCODER_InitType
 	assert_param(IS_LL_TIM_IC_FILTER(TIM_EncoderInitStruct->IC2Filter));
 
 	/* Disable the CC1 and CC2: Reset the CC1E and CC2E Bits */
-	TIMx->CCER &= (uint32_t) ~(TIM_CCER_CC1E | TIM_CCER_CC2E);
+	TIMx->CCER &= (uint32_t)~(TIM_CCER_CC1E | TIM_CCER_CC2E);
 
 	/* Get the TIMx CCMR1 register value */
 	tmpccmr1 = LL_TIM_ReadReg(TIMx, CCMR1);
@@ -448,19 +448,19 @@ ErrorStatus LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx, const LL_TIM_ENCODER_InitType
 	tmpccer = LL_TIM_ReadReg(TIMx, CCER);
 
 	/* Configure TI1 */
-	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
+	tmpccmr1 &= (uint32_t)~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC1ActiveInput >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC1Filter >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC1Prescaler >> 16U);
 
 	/* Configure TI2 */
-	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_CC2S | TIM_CCMR1_IC2F | TIM_CCMR1_IC2PSC);
+	tmpccmr1 &= (uint32_t)~(TIM_CCMR1_CC2S | TIM_CCMR1_IC2F | TIM_CCMR1_IC2PSC);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC2ActiveInput >> 8U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC2Filter >> 8U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC2Prescaler >> 8U);
 
 	/* Set TI1 and TI2 polarity and enable TI1 and TI2 */
-	tmpccer &= (uint32_t) ~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P | TIM_CCER_CC2NP);
+	tmpccer &= (uint32_t)~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P | TIM_CCER_CC2NP);
 	tmpccer |= (uint32_t)(TIM_EncoderInitStruct->IC1Polarity);
 	tmpccer |= (uint32_t)(TIM_EncoderInitStruct->IC2Polarity << 4U);
 	tmpccer |= (uint32_t)(TIM_CCER_CC1E | TIM_CCER_CC2E);
@@ -532,7 +532,7 @@ ErrorStatus LL_TIM_HALLSENSOR_Init(TIM_TypeDef *TIMx, const LL_TIM_HALLSENSOR_In
 	assert_param(IS_LL_TIM_IC_FILTER(TIM_HallSensorInitStruct->IC1Filter));
 
 	/* Disable the CC1 and CC2: Reset the CC1E and CC2E Bits */
-	TIMx->CCER &= (uint32_t) ~(TIM_CCER_CC1E | TIM_CCER_CC2E);
+	TIMx->CCER &= (uint32_t)~(TIM_CCER_CC1E | TIM_CCER_CC2E);
 
 	/* Get the TIMx CR2 register value */
 	tmpcr2 = LL_TIM_ReadReg(TIMx, CR2);
@@ -553,22 +553,22 @@ ErrorStatus LL_TIM_HALLSENSOR_Init(TIM_TypeDef *TIMx, const LL_TIM_HALLSENSOR_In
 	tmpcr2 |= LL_TIM_TRGO_OC2REF;
 
 	/* Configure the slave mode controller */
-	tmpsmcr &= (uint32_t) ~(TIM_SMCR_TS | TIM_SMCR_SMS);
+	tmpsmcr &= (uint32_t)~(TIM_SMCR_TS | TIM_SMCR_SMS);
 	tmpsmcr |= LL_TIM_TS_TI1F_ED;
 	tmpsmcr |= LL_TIM_SLAVEMODE_RESET;
 
 	/* Configure input channel 1 */
-	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
+	tmpccmr1 &= (uint32_t)~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
 	tmpccmr1 |= (uint32_t)(LL_TIM_ACTIVEINPUT_TRC >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_HallSensorInitStruct->IC1Filter >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_HallSensorInitStruct->IC1Prescaler >> 16U);
 
 	/* Configure input channel 2 */
-	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_OC2M | TIM_CCMR1_OC2FE | TIM_CCMR1_OC2PE | TIM_CCMR1_OC2CE);
+	tmpccmr1 &= (uint32_t)~(TIM_CCMR1_OC2M | TIM_CCMR1_OC2FE | TIM_CCMR1_OC2PE | TIM_CCMR1_OC2CE);
 	tmpccmr1 |= (uint32_t)(LL_TIM_OCMODE_PWM2 << 8U);
 
 	/* Set Channel 1 polarity and enable Channel 1 and Channel2 */
-	tmpccer &= (uint32_t) ~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P | TIM_CCER_CC2NP);
+	tmpccer &= (uint32_t)~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P | TIM_CCER_CC2NP);
 	tmpccer |= (uint32_t)(TIM_HallSensorInitStruct->IC1Polarity);
 	tmpccer |= (uint32_t)(TIM_CCER_CC1E | TIM_CCER_CC2E);
 

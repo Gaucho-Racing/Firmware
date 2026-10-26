@@ -632,10 +632,10 @@ __STATIC_INLINE uint32_t LL_I2C_DMA_GetRegAddr(const I2C_TypeDef *I2Cx, uint32_t
 
 	if (Direction == LL_I2C_DMA_REG_DATA_TRANSMIT) {
 		/* return address of TXDR register */
-		data_reg_addr = (uint32_t) & (I2Cx->TXDR);
+		data_reg_addr = (uint32_t)&(I2Cx->TXDR);
 	} else {
 		/* return address of RXDR register */
-		data_reg_addr = (uint32_t) & (I2Cx->RXDR);
+		data_reg_addr = (uint32_t)&(I2Cx->RXDR);
 	}
 
 	return data_reg_addr;
