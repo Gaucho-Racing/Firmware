@@ -12,6 +12,7 @@
 #include "Pinging.h"
 #include "StateData.h"
 #include "bitManipulations.h"
+#include "Unused.h"
 
 extern ECU_StateData stateLump;
 
@@ -156,7 +157,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			state_data->imd_max_thresh = ecu_config->imd_max_threshold / 20.0f;
 			state_data->bspd_min_thresh = ecu_config->bspd_min_threshold / 20.0f;
 			state_data->bspd_max_thresh = ecu_config->bspd_max_threshold / 20.0f;
-			state_data->max_precharge_time_ms = ecu_config->max_precharge_time;
+			state_data->max_precharge_time_ms = ecu_config->max_precharge_time * 10;
 			state_data->regen_strength = ecu_config->regen_strength / 10.0f;
 			state_data->enable_regen = ecu_config->enable_regen;
 

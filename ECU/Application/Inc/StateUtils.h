@@ -12,6 +12,7 @@ uint32_t MillisecondsSinceBoot(void);
 
 // Constants
 #define MAX_APPS_IMPLAUSIBLE_TIME_MS 100
+#define APPS_OUT_OF_RANGE_MARGIN 0.10f
 #define MAX_BUZZER_TIME_MS 1000
 
 #define REGEN_MIN_SPEED_MPH 3.106856f // 5 KPH
@@ -37,7 +38,7 @@ uint32_t MillisecondsSinceBoot(void);
  * @param y Last time the action was performed in milliseconds
  * @return true if at least 10 ms have passed since last action, false otherwise
  */
-#define RATE_LIMIT_100_HZ(x, y) ((x) - (y) > 10)
+#define RATE_LIMIT_100_HZ(x, y) ((x) - (y) >= 10u)
 
 /**
  * @brief Macro to rate limit an action to 10 Hz (every 100 ms)
@@ -53,7 +54,7 @@ uint32_t MillisecondsSinceBoot(void);
  * @param y Last time the action was performed in milliseconds
  * @return true if at least 100 ms have passed since last action, false otherwise
  */
-#define RATE_LIMIT_10_HZ(x, y) ((x) - (y) > 100)
+#define RATE_LIMIT_10_HZ(x, y) ((x) - (y) >= 100u)
 
 typedef enum {
 	SDC_OK,

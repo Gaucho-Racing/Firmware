@@ -48,7 +48,7 @@ ECU_StateData stateLump = {
     .bspd_max_thresh = 1.35f,
     // Timings
     .ping_timeout_delay_ms = 250,
-    .max_precharge_time_ms = 8000,
+    .max_precharge_time_ms = 1000,
     // Pedals
     .brake_f_min = 720,
     .brake_r_min = 700,
