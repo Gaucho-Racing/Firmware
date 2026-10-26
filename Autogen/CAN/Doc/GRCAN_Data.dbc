@@ -32,7 +32,10 @@ NS_ :
 
 BS_:
 
-BU_: ACU BrakeTemp_FL BrakeTemp_FR BrakeTemp_RL BrakeTemp_RR DGPS Debugger ECU InboardFloor_FL InboardFloor_FR InboardFloor_RL InboardFloor_RR Suspension_FL Suspension_FR Suspension_RL Suspension_RR TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR ALL
+BU_: ACU BrakeTemp_FL BrakeTemp_FR BrakeTemp_RL BrakeTemp_RR DGPS Debugger ECU InboardFloor_FL InboardFloor_FR InboardFloor_RL InboardFloor_RR Steering_Wheel Suspension_FL Suspension_FR Suspension_RL Suspension_RR TCM TireTemp_FL TireTemp_FR TireTemp_RL TireTemp_RR ALL
+
+BO_ 2183159554 Steering_Wheel_Regen_Buttons_to_: 1 Steering_Wheel
+ SG_ button_flags : 0|8@1+ (1,0) [0|0] ""  ECU
 
 BO_ 2150629633 ACU_Debug_FD_to_Debugger: 64 ACU
  SG_ Debug : 0|64@1- (1,0) [0|0] ""  Debugger
@@ -3981,6 +3984,7 @@ BO_ 2180009986 BrakeTemp_RR_Wheel_Speed_to_ECU: 16 BrakeTemp_RR
 BO_ 2180009730 BrakeTemp_RR_Temp_to_ECU: 16 BrakeTemp_RR
  SG_ temp : 0|16@1+ (1,0) [0|0] "C"  ECU
 
+CM_ SG_ 2183159554 button_flags "[Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved";
 CM_ SG_ 2150629633 Debug "Essentially a print statement up to 64 bytes long that whichever targeted can parse";
 CM_ SG_ 2150629889 Timestamp "Time in millis";
 CM_ SG_ 2150629890 Timestamp "Time in millis";
@@ -7609,6 +7613,7 @@ BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";
 BA_DEF_DEF_  "BusType" "CAN FD";
 BA_DEF_DEF_  "VFrameFormat" "StandardCAN_FD";
 BA_DEF_DEF_  "CANFD_BRS" "1";
+BA_ "VFrameFormat" BO_ 2183159554 15;
 BA_ "VFrameFormat" BO_ 2150629633 15;
 BA_ "VFrameFormat" BO_ 2150629889 15;
 BA_ "VFrameFormat" BO_ 2150629890 15;

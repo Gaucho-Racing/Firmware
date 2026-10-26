@@ -1603,7 +1603,7 @@ void HAL_MMC_IRQHandler(MMC_HandleTypeDef *hmmc)
 				}
 				/* Disable the DMA transfer for transmit request by setting the DMAEN bit
 				in the MMC DCTRL register */
-				hmmc->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+				hmmc->Instance->DCTRL &= (uint32_t)~((uint32_t)SDMMC_DCTRL_DMAEN);
 				/* Clear all the static flags */
 				__HAL_MMC_CLEAR_FLAG(hmmc, SDMMC_STATIC_DATA_FLAGS);
 				hmmc->State = HAL_MMC_STATE_READY;
@@ -2632,7 +2632,7 @@ HAL_StatusTypeDef HAL_MMC_Abort(MMC_HandleTypeDef *hmmc)
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	if ((hmmc->hdmatx != NULL) || (hmmc->hdmarx != NULL)) {
 		/* Disable the MMC DMA request */
-		hmmc->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+		hmmc->Instance->DCTRL &= (uint32_t)~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 		/* Abort the MMC DMA Tx Stream */
 		if (hmmc->hdmatx != NULL) {
@@ -2689,7 +2689,7 @@ HAL_StatusTypeDef HAL_MMC_Abort_IT(MMC_HandleTypeDef *hmmc)
 #if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	if ((hmmc->hdmatx != NULL) || (hmmc->hdmarx != NULL)) {
 		/* Disable the MMC DMA request */
-		hmmc->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+		hmmc->Instance->DCTRL &= (uint32_t)~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 		/* Abort the MMC DMA Tx Stream */
 		if (hmmc->hdmatx != NULL) {
@@ -3348,7 +3348,7 @@ static void MMC_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 
 	/* Disable the DMA transfer for transmit request by setting the DMAEN bit
 	in the MMC DCTRL register */
-	hmmc->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+	hmmc->Instance->DCTRL &= (uint32_t)~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 	/* Clear all the static flags */
 	__HAL_MMC_CLEAR_FLAG(hmmc, SDMMC_STATIC_DATA_FLAGS);

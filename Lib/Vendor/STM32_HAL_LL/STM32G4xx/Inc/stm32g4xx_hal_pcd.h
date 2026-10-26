@@ -726,8 +726,8 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd);
  * @param  bEpNum Endpoint Number.
  * @retval address of the buffer.
  */
-#define PCD_GET_EP_TX_ADDRESS(USBx, bEpNum) ((uint16_t) * PCD_EP_TX_ADDRESS((USBx), (bEpNum)))
-#define PCD_GET_EP_RX_ADDRESS(USBx, bEpNum) ((uint16_t) * PCD_EP_RX_ADDRESS((USBx), (bEpNum)))
+#define PCD_GET_EP_TX_ADDRESS(USBx, bEpNum) ((uint16_t)*PCD_EP_TX_ADDRESS((USBx), (bEpNum)))
+#define PCD_GET_EP_RX_ADDRESS(USBx, bEpNum) ((uint16_t)*PCD_EP_RX_ADDRESS((USBx), (bEpNum)))
 
 /**
  * @brief  Sets counter of rx buffer with no. of blocks.

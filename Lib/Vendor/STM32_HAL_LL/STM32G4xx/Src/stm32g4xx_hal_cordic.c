@@ -1127,7 +1127,7 @@ uint32_t HAL_CORDIC_GetError(const CORDIC_HandleTypeDef *hcordic)
 static void CORDIC_WriteInDataIncrementPtr(const CORDIC_HandleTypeDef *hcordic, const int32_t **ppInBuff)
 {
 	/* First write of input data in the Write Data register */
-	WRITE_REG(hcordic->Instance->WDATA, (uint32_t) * *ppInBuff);
+	WRITE_REG(hcordic->Instance->WDATA, (uint32_t)**ppInBuff);
 
 	/* Increment input data pointer */
 	(*ppInBuff)++;
@@ -1135,7 +1135,7 @@ static void CORDIC_WriteInDataIncrementPtr(const CORDIC_HandleTypeDef *hcordic, 
 	/* Check if second write of input data is expected */
 	if (HAL_IS_BIT_SET(hcordic->Instance->CSR, CORDIC_CSR_NARGS)) {
 		/* Second write of input data in the Write Data register */
-		WRITE_REG(hcordic->Instance->WDATA, (uint32_t) * *ppInBuff);
+		WRITE_REG(hcordic->Instance->WDATA, (uint32_t)**ppInBuff);
 
 		/* Increment input data pointer */
 		(*ppInBuff)++;

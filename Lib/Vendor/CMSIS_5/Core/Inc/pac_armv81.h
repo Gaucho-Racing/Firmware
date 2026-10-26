@@ -55,10 +55,8 @@ __STATIC_FORCEINLINE void __get_PAC_KEY_P(uint32_t *pPacKey)
 		       "mrs   r1, pac_key_p_2\n"
 		       "str   r1,[%0,#8]\n"
 		       "mrs   r1, pac_key_p_3\n"
-		       "str   r1,[%0,#12]\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "str   r1,[%0,#12]\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 /**
@@ -75,10 +73,8 @@ __STATIC_FORCEINLINE void __set_PAC_KEY_P(uint32_t *pPacKey)
 		       "ldr   r1,[%0,#8]\n"
 		       "msr   pac_key_p_2, r1\n"
 		       "ldr   r1,[%0,#12]\n"
-		       "msr   pac_key_p_3, r1\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "msr   pac_key_p_3, r1\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 /**
@@ -95,10 +91,8 @@ __STATIC_FORCEINLINE void __get_PAC_KEY_U(uint32_t *pPacKey)
 		       "mrs   r1, pac_key_u_2\n"
 		       "str   r1,[%0,#8]\n"
 		       "mrs   r1, pac_key_u_3\n"
-		       "str   r1,[%0,#12]\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "str   r1,[%0,#12]\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 /**
@@ -115,10 +109,8 @@ __STATIC_FORCEINLINE void __set_PAC_KEY_U(uint32_t *pPacKey)
 		       "ldr   r1,[%0,#8]\n"
 		       "msr   pac_key_u_2, r1\n"
 		       "ldr   r1,[%0,#12]\n"
-		       "msr   pac_key_u_3, r1\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "msr   pac_key_u_3, r1\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
@@ -137,10 +129,8 @@ __STATIC_FORCEINLINE void __TZ_get_PAC_KEY_P_NS(uint32_t *pPacKey)
 		       "mrs   r1, pac_key_p_2_ns\n"
 		       "str   r1,[%0,#8]\n"
 		       "mrs   r1, pac_key_p_3_ns\n"
-		       "str   r1,[%0,#12]\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "str   r1,[%0,#12]\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 /**
@@ -157,10 +147,8 @@ __STATIC_FORCEINLINE void __TZ_set_PAC_KEY_P_NS(uint32_t *pPacKey)
 		       "ldr   r1,[%0,#8]\n"
 		       "msr   pac_key_p_2_ns, r1\n"
 		       "ldr   r1,[%0,#12]\n"
-		       "msr   pac_key_p_3_ns, r1\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "msr   pac_key_p_3_ns, r1\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 /**
@@ -177,10 +165,8 @@ __STATIC_FORCEINLINE void __TZ_get_PAC_KEY_U_NS(uint32_t *pPacKey)
 		       "mrs   r1, pac_key_u_2_ns\n"
 		       "str   r1,[%0,#8]\n"
 		       "mrs   r1, pac_key_u_3_ns\n"
-		       "str   r1,[%0,#12]\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "str   r1,[%0,#12]\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 /**
@@ -197,10 +183,8 @@ __STATIC_FORCEINLINE void __TZ_set_PAC_KEY_U_NS(uint32_t *pPacKey)
 		       "ldr   r1,[%0,#8]\n"
 		       "msr   pac_key_u_2_ns, r1\n"
 		       "ldr   r1,[%0,#12]\n"
-		       "msr   pac_key_u_3_ns, r1\n"
-		       :
-		       : "r"(pPacKey)
-		       : "memory", "r1");
+		       "msr   pac_key_u_3_ns, r1\n" : : "r"(pPacKey) : "memory",
+		       "r1");
 }
 
 #endif /* (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3)) */

@@ -182,7 +182,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeS
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
 	/* Get the RTC_CR register and clear the bits to be configured */
-	tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t) ~(RTC_CR_TSEDGE | RTC_CR_TSE));
+	tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t)~(RTC_CR_TSEDGE | RTC_CR_TSE));
 
 	tmpreg |= TimeStampEdge;
 
@@ -241,7 +241,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t Ti
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
 	/* Get the RTC_CR register and clear the bits to be configured */
-	tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t) ~(RTC_CR_TSEDGE | RTC_CR_TSE));
+	tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t)~(RTC_CR_TSEDGE | RTC_CR_TSE));
 
 	tmpreg |= TimeStampEdge;
 
@@ -292,7 +292,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc)
 	__HAL_RTC_TIMESTAMP_DISABLE_IT(hrtc, RTC_IT_TS);
 
 	/* Get the RTC_CR register and clear the bits to be configured */
-	tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t) ~(RTC_CR_TSEDGE | RTC_CR_TSE));
+	tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t)~(RTC_CR_TSEDGE | RTC_CR_TSE));
 
 	/* Configure the Time Stamp TSEDGE and Enable bits */
 	hrtc->Instance->CR = (uint32_t)tmpreg;
@@ -2025,17 +2025,17 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 #if defined(RTC_TAMPER1_SUPPORT)
 	if ((Tamper & RTC_TAMPER_1) != 0U) {
 		/* Disable the Tamper1 interrupt */
-		hrtc->Instance->TAMPCR &= ((uint32_t) ~(RTC_IT_TAMP | RTC_IT_TAMP1));
+		hrtc->Instance->TAMPCR &= ((uint32_t)~(RTC_IT_TAMP | RTC_IT_TAMP1));
 	}
 #endif /* RTC_TAMPER1_SUPPORT */
 	if ((Tamper & RTC_TAMPER_2) != 0U) {
 		/* Disable the Tamper2 interrupt */
-		hrtc->Instance->TAMPCR &= ((uint32_t) ~(RTC_IT_TAMP | RTC_IT_TAMP2));
+		hrtc->Instance->TAMPCR &= ((uint32_t)~(RTC_IT_TAMP | RTC_IT_TAMP2));
 	}
 #if defined(RTC_TAMPER3_SUPPORT)
 	if ((Tamper & RTC_TAMPER_3) != 0U) {
 		/* Disable the Tamper3 interrupt */
-		hrtc->Instance->TAMPCR &= ((uint32_t) ~(RTC_IT_TAMP | RTC_IT_TAMP3));
+		hrtc->Instance->TAMPCR &= ((uint32_t)~(RTC_IT_TAMP | RTC_IT_TAMP3));
 	}
 #endif /* RTC_TAMPER3_SUPPORT */
 
@@ -2230,12 +2230,12 @@ void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint3
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
-	tmp = (uint32_t) & (tamp->BKP0R);
+	tmp = (uint32_t)&(tamp->BKP0R);
 #else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
-	tmp = (uint32_t) & (hrtc->Instance->BKP0R);
+	tmp = (uint32_t)&(hrtc->Instance->BKP0R);
 #endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	tmp += (BackupRegister * 4U);
@@ -2262,12 +2262,12 @@ uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister)
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
-	tmp = (uint32_t) & (tamp->BKP0R);
+	tmp = (uint32_t)&(tamp->BKP0R);
 #else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
-	tmp = (uint32_t) & (hrtc->Instance->BKP0R);
+	tmp = (uint32_t)&(hrtc->Instance->BKP0R);
 #endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	tmp += (BackupRegister * 4U);

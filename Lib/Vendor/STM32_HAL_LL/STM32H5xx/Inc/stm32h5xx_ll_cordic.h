@@ -675,10 +675,10 @@ __STATIC_INLINE uint32_t LL_CORDIC_DMA_GetRegAddr(const CORDIC_TypeDef *CORDICx,
 
 	if (Direction == LL_CORDIC_DMA_REG_DATA_OUT) {
 		/* return address of RDATA register */
-		data_reg_addr = (uint32_t) & (CORDICx->RDATA);
+		data_reg_addr = (uint32_t)&(CORDICx->RDATA);
 	} else {
 		/* return address of WDATA register */
-		data_reg_addr = (uint32_t) & (CORDICx->WDATA);
+		data_reg_addr = (uint32_t)&(CORDICx->WDATA);
 	}
 
 	return data_reg_addr;

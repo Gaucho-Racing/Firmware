@@ -36,6 +36,7 @@ typedef enum {
 	GRCAN_BrakeTemp_RL = 0x1E,
 	GRCAN_BrakeTemp_RR = 0x1F,
 	GRCAN_DGPS = 0x20,
+	GRCAN_Steering_Wheel = 0x22,
 	GRCAN_LV_DC_DC = 0x29,
 	GRCAN_HV_DC_DC = 0x2A,
 } GRCAN_NODE_ID;

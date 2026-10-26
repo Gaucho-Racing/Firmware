@@ -312,7 +312,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_ConfigPeriphAttributes(uint32_t PeriphId, uint32
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 		/* secure configuration */
-		register_address = (uint32_t) & (GTZC_TZSC1->SECCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZSC1->SECCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 		if ((PeriphAttributes & GTZC_TZSC_PERIPH_SEC) == GTZC_TZSC_PERIPH_SEC) {
 			SET_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId));
 		} else if ((PeriphAttributes & GTZC_TZSC_PERIPH_NSEC) == GTZC_TZSC_PERIPH_NSEC) {
@@ -323,7 +323,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_ConfigPeriphAttributes(uint32_t PeriphId, uint32
 #endif /* defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 		/* privilege configuration */
-		register_address = (uint32_t) & (GTZC_TZSC1->PRIVCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZSC1->PRIVCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 		if ((PeriphAttributes & GTZC_TZSC_PERIPH_PRIV) == GTZC_TZSC_PERIPH_PRIV) {
 			SET_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId));
 		} else if ((PeriphAttributes & GTZC_TZSC_PERIPH_NPRIV) == GTZC_TZSC_PERIPH_NPRIV) {
@@ -422,7 +422,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId, uin
 #endif /* defined (GTZC_TZIC1) */
 	} else {
 		/* privilege configuration */
-		register_address = (uint32_t) & (GTZC_TZSC1->PRIVCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZSC1->PRIVCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 
 		if (((READ_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId))) >> GTZC_GET_PERIPH_POS(PeriphId)) != 0U) {
 			*PeriphAttributes = GTZC_TZSC_PERIPH_PRIV;
@@ -433,7 +433,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId, uin
 		/* common case where only one peripheral is configured */
 #if defined(GTZC_TZIC1)
 		/* secure configuration */
-		register_address = (uint32_t) & (GTZC_TZSC1->SECCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZSC1->SECCFGR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 
 		if (((READ_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId))) >> GTZC_GET_PERIPH_POS(PeriphId)) != 0U) {
 			*PeriphAttributes |= GTZC_TZSC_PERIPH_SEC;
@@ -496,12 +496,12 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddres
 		case OCTOSPI1_BASE:
 			size = GTZC_TZSC_MPCWM1_MEM_SIZE;
 			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-				register_address = (uint32_t) & (GTZC_TZSC1->MPCWM1AR);
+				register_address = (uint32_t)&(GTZC_TZSC1->MPCWM1AR);
 			} else {
 				/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
 				 * (Parameter already checked)
 				 */
-				register_address = (uint32_t) & (GTZC_TZSC1->MPCWM1BR);
+				register_address = (uint32_t)&(GTZC_TZSC1->MPCWM1BR);
 			}
 			break;
 #endif /* (OCTOSPI1) */
@@ -509,12 +509,12 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddres
 		case FMC_BANK1:
 			size = GTZC_TZSC_MPCWM2_MEM_SIZE;
 			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-				register_address = (uint32_t) & (GTZC_TZSC1->MPCWM2AR);
+				register_address = (uint32_t)&(GTZC_TZSC1->MPCWM2AR);
 			} else {
 				/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
 				 * (Parameter already checked)
 				 */
-				register_address = (uint32_t) & (GTZC_TZSC1->MPCWM2BR);
+				register_address = (uint32_t)&(GTZC_TZSC1->MPCWM2BR);
 			}
 			break;
 #endif /* defined(FMC_BANK1) */
@@ -524,7 +524,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddres
 			 * (Parameter already checked)
 			 */
 			size = GTZC_TZSC_MPCWM3_MEM_SIZE;
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM3AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM3AR);
 			break;
 #endif /* defined(FMC_BANK3) */
 #if defined(FMC_SDRAM_BANK_1)
@@ -533,7 +533,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddres
 			 * (Parameter already checked)
 			 */
 			size = GTZC_TZSC_MPCWM3_MEM_SIZE;
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM3BR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM3BR);
 			break;
 #endif /* (FMC_SDRAM_BANK_1) */
 #if defined(BKPSRAM_BASE)
@@ -542,7 +542,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddres
 			 * (Parameter already checked)
 			 */
 			size = GTZC_TZSC_MPCWM4_MEM_SIZE;
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM4AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM4AR);
 			break;
 #endif /* (BKPSRAM_BASE) */
 #if defined(FMC_SDRAM_BANK_2)
@@ -551,19 +551,19 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddres
 			 * (Parameter already checked)
 			 */
 			size = GTZC_TZSC_MPCWM4_SDRAM_MEM_SIZE;
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM4BR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM4BR);
 			break;
 #endif /* (FMC_SDRAM_BANK_2) */
 #if defined(OCTOSPI2)
 		case OCTOSPI2_BASE:
 			size = GTZC_TZSC_MPCWM5_MEM_SIZE;
 			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-				register_address = (uint32_t) & (GTZC_TZSC1->MPCWM5AR);
+				register_address = (uint32_t)&(GTZC_TZSC1->MPCWM5AR);
 			} else {
 				/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
 				 * (Parameter already checked)
 				 */
-				register_address = (uint32_t) & (GTZC_TZSC1->MPCWM5BR);
+				register_address = (uint32_t)&(GTZC_TZSC1->MPCWM5BR);
 			}
 			break;
 #endif /* defined(OCTOSPI2) */
@@ -613,37 +613,37 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAdd
 	switch (MemBaseAddress) {
 #if defined(OCTOSPI1)
 		case OCTOSPI1_BASE:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM1AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM1AR);
 			break;
 #endif /* (OCTOSPI1) */
 #if defined(FMC_BANK1)
 		case FMC_BANK1:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM2AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM2AR);
 			break;
 #endif /* defined(FMC_BANK1) */
 #if defined(FMC_BANK3)
 		case FMC_BANK3:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM3AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM3AR);
 			break;
 #endif /* defined(FMC_BANK3) */
 #if defined(FMC_SDRAM_BANK_1)
 		case FMC_SDRAM_BANK_1:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM3BR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM3BR);
 			break;
 #endif /* (FMC_SDRAM_BANK_1) */
 #if defined(BKPSRAM_BASE)
 		case BKPSRAM_BASE:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM4AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM4AR);
 			break;
 #endif /* (BKPSRAM_BASE) */
 #if defined(FMC_SDRAM_BANK_2)
 		case FMC_SDRAM_BANK_2:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM4BR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM4BR);
 			break;
 #endif /* (FMC_SDRAM_BANK_2) */
 #if defined(OCTOSPI2)
 		case OCTOSPI2_BASE:
-			register_address = (uint32_t) & (GTZC_TZSC1->MPCWM5AR);
+			register_address = (uint32_t)&(GTZC_TZSC1->MPCWM5AR);
 			break;
 #endif /* defined(OCTOSPI2) */
 		default:
@@ -671,18 +671,18 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAdd
 #if defined(OCTOSPI2_BASE)
 	if ((MemBaseAddress == OCTOSPI1_BASE) || (MemBaseAddress == FMC_BANK1) || (MemBaseAddress == OCTOSPI2_BASE)) {
 		if (MemBaseAddress == OCTOSPI1_BASE) {
-			register_address = (uint32_t) & (GTZC_TZSC1_S->MPCWM1BR);
+			register_address = (uint32_t)&(GTZC_TZSC1_S->MPCWM1BR);
 		} else if (MemBaseAddress == OCTOSPI2_BASE) {
-			register_address = (uint32_t) & (GTZC_TZSC1_S->MPCWM5BR);
+			register_address = (uint32_t)&(GTZC_TZSC1_S->MPCWM5BR);
 		}
 #else
 	if ((MemBaseAddress == OCTOSPI1_BASE) || (MemBaseAddress == FMC_BANK1)) {
 		if (MemBaseAddress == OCTOSPI1_BASE) {
-			register_address = (uint32_t) & (GTZC_TZSC1_S->MPCWM1BR);
+			register_address = (uint32_t)&(GTZC_TZSC1_S->MPCWM1BR);
 		}
 #endif /* OCTOSPI2_BASE */
 		else {
-			register_address = (uint32_t) & (GTZC_TZSC1_S->MPCWM2BR);
+			register_address = (uint32_t)&(GTZC_TZSC1_S->MPCWM2BR);
 		}
 
 		/* read register and update the descriptor for second area*/
@@ -1432,7 +1432,7 @@ HAL_StatusTypeDef HAL_GTZC_TZIC_DisableIT(uint32_t PeriphId)
 		WRITE_REG(GTZC_TZIC1->IER4, 0U);
 	} else {
 		/* common case where only one peripheral is configured */
-		register_address = (uint32_t) & (GTZC_TZIC1->IER1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZIC1->IER1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 		CLEAR_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId));
 	}
 
@@ -1463,7 +1463,7 @@ HAL_StatusTypeDef HAL_GTZC_TZIC_EnableIT(uint32_t PeriphId)
 		WRITE_REG(GTZC_TZIC1->IER4, GTZC_CFGR4_MSK);
 	} else {
 		/* common case where only one peripheral is configured */
-		register_address = (uint32_t) & (GTZC_TZIC1->IER1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZIC1->IER1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 		SET_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId));
 	}
 
@@ -1517,7 +1517,7 @@ HAL_StatusTypeDef HAL_GTZC_TZIC_GetFlag(uint32_t PeriphId, uint32_t *pFlag)
 		}
 	} else {
 		/* common case where only one peripheral is concerned */
-		register_address = (uint32_t) & (GTZC_TZIC1->SR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZIC1->SR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 		*pFlag = READ_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId)) >> GTZC_GET_PERIPH_POS(PeriphId);
 	}
 
@@ -1548,7 +1548,7 @@ HAL_StatusTypeDef HAL_GTZC_TZIC_ClearFlag(uint32_t PeriphId)
 		WRITE_REG(GTZC_TZIC1->FCR4, GTZC_CFGR4_MSK);
 	} else {
 		/* common case where only one peripheral is configured */
-		register_address = (uint32_t) & (GTZC_TZIC1->FCR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
+		register_address = (uint32_t)&(GTZC_TZIC1->FCR1) + (4U * GTZC_GET_REG_INDEX(PeriphId));
 		SET_BIT(*(__IO uint32_t *)register_address, 1UL << GTZC_GET_PERIPH_POS(PeriphId));
 	}
 

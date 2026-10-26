@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "Buzzer.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_NODE_ID.h"
@@ -316,7 +317,7 @@ void CAN_Configure(void)
 
 	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
-	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_CLASSIC;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
@@ -327,9 +328,9 @@ void CAN_Configure(void)
 	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119; // Updated for 160MHz: (1+119+40)*1 = 160 ticks -> 1 Mbps
 	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
 	canCfg.hal_fdcan_init.DataPrescaler = 1;
-	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
-	canCfg.hal_fdcan_init.DataTimeSeg1 = 9; // Updated for 160MHz: 160 MHz/((1+9+10)*1) = 8 Mbps
-	canCfg.hal_fdcan_init.DataTimeSeg2 = 10;
+	canCfg.hal_fdcan_init.DataSyncJumpWidth = 8;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 23; // Updated for 160MHz: 160 MHz/((1+23+8)*1) = 5 Mbps
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 8;
 	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 3;
 
@@ -411,6 +412,7 @@ void CAN_Configure(void)
 	can_add_filter(stateLump.primary_can, &fdcan_primary_filter_dti);
 
 	// CAN2 ======================================================
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.fdcan_instance = FDCAN2;
 	canCfg.rx_gpio = GPIOB;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
@@ -532,6 +534,7 @@ int main(void)
 
 			ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 			write_adc_values_to_state_data();
+			buzzer_tick();
 		}
 
 		if (MillisecondsSinceBoot() >= delay_timer) {
