@@ -39,6 +39,15 @@
 			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Blinky"
 		},
 		{
+			"label": "CMake: configure and build DashboardU5-Blinky",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target DashboardU5-Blinky"
+		},
+		{
 			"label": "CMake: configure and build NucleoG4-Hello",
 			"type": "shell",
 			"dependsOrder": "sequence",

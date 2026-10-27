@@ -17,6 +17,22 @@
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"showDevDebugTimestamps": true
+		},		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/DashboardU5-Blinky.elf",
+			"name": "DashboardU5-Blinky",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32u5x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build DashboardU5-Blinky",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32U5A9.svd",
+			"showDevDebugTimestamps": true
 		},
 		{
 			"cwd": "${workspaceFolder}",
