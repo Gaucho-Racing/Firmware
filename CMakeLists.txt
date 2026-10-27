@@ -125,20 +125,12 @@ add_subdirectory("${LIB_PATH}/Vendor/BCC")
 include("${LIB_PATH}/Vendor/MLX90640/combined.cmake")
 include("${LIB_PATH}/Vendor/MLX90614/combined.cmake")
 
-# Platforms
-include("${platform_path}/STM32G474xE/chip.cmake")
-include("${platform_path}/STM32G431x8/chip.cmake")
-include("${platform_path}/STM32U5A9xJ/chip.cmake")
-include("${platform_path}/STM32L476xG/chip.cmake")
-include("${platform_path}/STM32H523xE/chip.cmake")
-
 # Utils
 include("${LIB_PATH}/GlobalShare/common.cmake")
 include("${LIB_PATH}/Utils/Logomatic/log.cmake")
 include("${LIB_PATH}/Utils/CubeVCP/vcp.cmake")
 include("${LIB_PATH}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${LIB_PATH}/Utils/MsgBuffer/msg-buffer-lib.cmake")
-include("${LIB_PATH}/cmake/gr-lib.cmake")
 include("${LIB_PATH}/Utils/BitManipulations/bit-utils.cmake")
 
 # Autogen
@@ -150,8 +142,6 @@ include("${LIB_PATH}/Peripherals/CubeCAN/cube_can.cmake")
 # Projects
 include(Testbench/testbench.cmake)
 include(SensorArray/sensors.cmake)
-
-add_gr_project(STM32G474xE ECU)
 
 # add_project(
 #     NAME "ECU"
