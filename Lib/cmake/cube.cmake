@@ -142,7 +142,7 @@ function(add_arm_cmsis_core)
 	add_library(CMSIS_${ARM_CMSIS_CORE_ARG_MAJOR}_Core INTERFACE)
 	target_include_directories(
 		CMSIS_${ARM_CMSIS_CORE_ARG_MAJOR}_Core
-		INTERFACE
+		SYSTEM INTERFACE
 			$<BUILD_INTERFACE:${ARM_CMSIS_CORE_PATH}/CMSIS/Core/Include>
 	)
 endfunction()
@@ -229,7 +229,7 @@ function(add_arm_cmsis_interface)
 	add_library("CMSIS_Device_${SPECIFIER_UPPER}" INTERFACE)
 	target_include_directories(
 		"CMSIS_Device_${SPECIFIER_UPPER}"
-		INTERFACE
+		SYSTEM INTERFACE
 			$<BUILD_INTERFACE:${CMSIS_DEVICE_PATH}/Include>
 	)
 endfunction()
@@ -291,7 +291,7 @@ function(add_stm32_hal_interface)
 
 	target_include_directories(
 		"STM32HAL_${SERIES_UPPER}"
-		INTERFACE
+		SYSTEM INTERFACE
 			$<BUILD_INTERFACE:${STM32_HAL_DRIVER_PATH}/Inc>
 			$<BUILD_INTERFACE:${STM32_HAL_DRIVER_PATH}/Inc/Legacy>
 	)
