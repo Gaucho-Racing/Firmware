@@ -32,14 +32,23 @@ extern "C" {
 
 /* USER CODE END Includes */
 
+extern ADC_HandleTypeDef hadc1;
+
+extern ADC_HandleTypeDef hadc2;
+
+extern ADC_HandleTypeDef hadc5;
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);
 void MX_ADC2_Init(void);
+void MX_ADC5_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+
+void ADC_UpdateAnalogValues_EMA(volatile uint16_t *ADC_buffers, uint8_t num_signals, float alpha, volatile uint16_t *ADC_outputs);
 
 /* USER CODE END Prototypes */
 
@@ -48,3 +57,4 @@ void MX_ADC2_Init(void);
 #endif
 
 #endif /* __ADC_H__ */
+

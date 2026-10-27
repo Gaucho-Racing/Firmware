@@ -1,13 +1,13 @@
 #include "Lights.h"
 
 #include "CANutils.h"
+#include "CubeCAN.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "adc.h"
 #include "bitManipulations.h"
-#include "can.h"
 #include "main.h"
 #include "stm32g4xx_ll_gpio.h"
 
@@ -65,14 +65,14 @@ void TSSILightControl(ECU_StateData *stateLump)
 	}
 }
 
-void TSActiveButtonLightControl(ECU_StateData *stateLump)
-{
-	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
-		LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
-	} else {
-		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
-	}
-}
+// void TSActiveButtonLightControl(ECU_StateData *stateLump)
+// {
+// 	if (stateLump->ecu_state == GR_GLV_ON || stateLump->ecu_state == GR_GLV_OFF) {
+// 		LL_GPIO_SetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
+// 	} else {
+// 		LL_GPIO_ResetOutputPin(TS_ACTIVE_BTN_LED_CONTROL_GPIO_Port, TS_ACTIVE_BTN_LED_CONTROL_Pin);
+// 	}
+// }
 
 void RTD_ButtonLightControl(ECU_StateData *stateLump)
 {
@@ -99,7 +99,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 			multiplier = 1.0f;
 			break;
 		default:
-			LOGOMATIC("Invalid max power to use (kW): %d. Defaulting to 0.0f.\n", stateLump->max_power_to_use_kw);
+			LOGOMATIC_ERROR("Invalid max power to use (kW): %d. Defaulting to 0.0f.\n", stateLump->max_power_to_use_kw);
 			multiplier = 0.0f;
 	}
 
