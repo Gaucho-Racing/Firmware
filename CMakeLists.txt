@@ -111,7 +111,7 @@ enable_language(
 set(LIB_PATH "Lib")
 set(platform_path "${LIB_PATH}/Platform")
 
-include("${LIB_PATH}/cmake/cube.cmake")
+include("${LIB_PATH}/CMake/cube.cmake")
 
 add_arm_cmsis_core(
     MAJOR "5"
