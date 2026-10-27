@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "Buzzer.h"
 #include "CANutils.h"
 #include "ComparatorMacros.h"
 #include "CubeCAN.h"
@@ -31,10 +32,10 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at minimum power
-    .powerlevel = 0,
-    // See CANdo specification
-    .torquemap = 1,
+    // Startup at 325A forward current
+    .forward_ac_i_code = 4,
+    // Startup at 60A regen current
+    .regen_ac_i_code = 4,
     // APPS Deadzone
     .apps_deadzone = 0.08f,
     // BMS thresholds
@@ -48,7 +49,9 @@ ECU_StateData stateLump = {
     .bspd_max_thresh = 1.35f,
     // Timings
     .ping_timeout_delay_ms = 250,
-    .max_precharge_time_ms = 1000,
+    .max_precharge_time_ms = 8000,
+    // Power
+    .max_power_to_use_kw = 40,
     // Pedals
     .brake_f_min = 720,
     .brake_r_min = 700,
@@ -70,6 +73,8 @@ void ECU_State_Tick(void)
 	static uint32_t last_ECU_status_msg_millis;
 	if (millis_since_boot - last_ECU_status_msg_millis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
 		LOGOMATIC_INFO("ECU Current State: %d\n", stateLump.ecu_state);
+		LOGOMATIC_INFO("Forward I Code: %d, Regen I Code: %d\n", stateLump.forward_ac_i_code, stateLump.regen_ac_i_code);
+		LOGOMATIC_INFO("Max Power to Use: %d kW\n\n", stateLump.max_power_to_use_kw);
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
 
@@ -140,8 +145,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 
 	if (stateData->rtd_button_pressed) {
-		stateData->powerlevel = (stateData->powerlevel + 1) % 6;
-		LOGOMATIC_INFO("Power level now at %d\n", stateData->powerlevel);
+		stateData->max_power_to_use_kw = (stateData->max_power_to_use_kw == 40) ? 80 : 40;
+		LOGOMATIC_INFO("Max Power to use now at %d kW\n", stateData->max_power_to_use_kw);
 	}
 }
 
@@ -207,11 +212,9 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 }
 
-static uint32_t buzzer_start_millis;
-
 void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 {
-	buzzer_start_millis = millis_since_boot;
+	buzzer_rtd();
 	stateData->ecu_state = GR_DRIVE_ACTIVE;
 }
 
@@ -228,12 +231,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
 		return;
-	}
-
-	if (millis_since_boot - buzzer_start_millis > MAX_BUZZER_TIME_MS) {
-		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-	} else {
-		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
 	}
 
 	if (stateData->rtd_button_pressed) {
@@ -261,43 +258,59 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	float pedal = CalcAccPedalTravel(stateData);
 
 	uint16_t max_rev_current = 0;
-	switch (stateData->powerlevel) {
+	switch (stateData->regen_ac_i_code) {
 		case 0:
-			max_rev_current = 20;
+			max_rev_current = 0;
 			break;
 		case 1:
-			max_rev_current = 40;
+			max_rev_current = 15;
 			break;
 		case 2:
-			max_rev_current = 60;
+			max_rev_current = 30;
 			break;
 		case 3:
-			max_rev_current = 80;
+			max_rev_current = 45;
 			break;
 		case 4:
-			max_rev_current = 100;
+			max_rev_current = 60;
 			break;
 		case 5:
+			max_rev_current = 75;
+			break;
+		case 6:
+			max_rev_current = 90;
+			break;
+		case 7:
+			max_rev_current = 105;
+			break;
+		case 8:
 			max_rev_current = 120;
 			break;
 		default:
-			LOGOMATIC_ERROR("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
+			LOGOMATIC_INFO("Invalid power level: %d. Defaulting to no regen.\n", stateData->regen_ac_i_code);
 			max_rev_current = 0;
 			break;
 	}
 
 	uint16_t max_fwd_current = 0;
-	switch (stateData->powerlevel) {
+	switch (stateData->forward_ac_i_code) {
 		case 0:
+			max_fwd_current = 50;
+			break;
 		case 1:
+			max_fwd_current = 100;
+			break;
 		case 2:
+			max_fwd_current = 200;
+			break;
 		case 3:
-		case 4:
-		case 5:
 			max_fwd_current = 300;
 			break;
+		case 4:
+			max_fwd_current = 325;
+			break;
 		default:
-			LOGOMATIC_ERROR("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
+			LOGOMATIC_ERROR("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->forward_ac_i_code);
 			max_fwd_current = 0;
 			break;
 	}
@@ -344,6 +357,10 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		} else {
 			ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
 		}
+
+		uint16_t dti_control_10_max_dc_current = 10 * (stateData->max_power_to_use_kw * 1000 / stateData->ts_voltage);
+		ECU_CAN_Send_DTI(DTI_CONTROL_10_CAN_ID, &dti_control_10_max_dc_current, 2);
+
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }

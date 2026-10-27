@@ -43,6 +43,57 @@ void ReportUnhandledMessage(GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCAN_MSG_ID msg_id, GRCAN_NODE_ID sender_id, const uint8_t *data, uint32_t data_length)
 {
 	switch (msg_id) {
+		case GRCAN_REGEN_BUTTONS:
+			if (data_length != sizeof(GRCAN_REGEN_BUTTONS_MSG)) {
+				ReportBadMessageLength(bus_id, msg_id, sender_id);
+				break;
+			}
+			GRCAN_REGEN_BUTTONS_MSG *regen_buttons = (GRCAN_REGEN_BUTTONS_MSG *)data;
+
+			static bool left_pressed_last = false;
+			static bool right_pressed_last = false;
+
+			bool left_pressed = regen_buttons->button_flags & 0x01;
+			bool right_pressed = regen_buttons->button_flags & 0x02;
+
+			if (left_pressed == left_pressed_last && right_pressed == right_pressed_last) {
+				break;
+			}
+
+			if (left_pressed && right_pressed) {
+				LOGOMATIC("Both regen buttons pressed, ignoring\n");
+				buzzer_error_both();
+			} else if (left_pressed && state_data->regen_ac_i_code > 0 && left_pressed != left_pressed_last) {
+				state_data->regen_ac_i_code = (state_data->regen_ac_i_code - 1) % 9;
+				LOGOMATIC("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
+
+				if (state_data->regen_ac_i_code == 0) {
+					buzzer_minpoint();
+				} else if (state_data->regen_ac_i_code == 4) {
+					buzzer_midpoint();
+				} else {
+					buzzer_downward();
+				}
+			} else if (left_pressed && left_pressed != left_pressed_last) {
+				buzzer_error_min();
+			} else if (right_pressed && state_data->regen_ac_i_code < 8 && right_pressed != right_pressed_last) {
+				state_data->regen_ac_i_code = (state_data->regen_ac_i_code + 1) % 9;
+				LOGOMATIC("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
+
+				if (state_data->regen_ac_i_code == 8) {
+					buzzer_maxpoint();
+				} else if (state_data->regen_ac_i_code == 4) {
+					buzzer_midpoint();
+				} else {
+					buzzer_downward();
+				}
+			} else if (right_pressed && right_pressed != right_pressed_last) {
+				buzzer_error_max();
+			}
+
+			left_pressed_last = left_pressed;
+			right_pressed_last = right_pressed;
+			break;
 		case GRCAN_DEBUG_2_0:
 			if (data_length > 8) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);

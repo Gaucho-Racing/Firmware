@@ -81,9 +81,9 @@ int main(void)
 				      // Assume ACU good at boot
 				      .acu_software_latch = 1,
 				      // Startup at minimum power
-				      .powerlevel = 0,
+				      .forward_ac_i_code = 0,
 				      // See CANdo specification
-				      .torquemap = 1,
+				      .regen_ac_i_code = 1,
 				      // APPS Deadzone
 				      .apps_deadzone = 0.08f,
 				      // BMS thresholds

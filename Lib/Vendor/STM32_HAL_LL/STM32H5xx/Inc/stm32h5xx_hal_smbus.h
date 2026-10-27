@@ -579,8 +579,8 @@ typedef void (*pSMBUS_AddrCallbackTypeDef)(SMBUS_HandleTypeDef *hsmbus, uint8_t 
 #define IS_SMBUS_TRANSFER_OTHER_OPTIONS_REQUEST(REQUEST)                                                                                                                                               \
 	(((REQUEST) == SMBUS_OTHER_FRAME_NO_PEC) || ((REQUEST) == SMBUS_OTHER_AND_LAST_FRAME_NO_PEC) || ((REQUEST) == SMBUS_OTHER_FRAME_WITH_PEC) || ((REQUEST) == SMBUS_OTHER_AND_LAST_FRAME_WITH_PEC))
 
-#define SMBUS_RESET_CR1(__HANDLE__) ((__HANDLE__)->Instance->CR1 &= (uint32_t) ~((uint32_t)(I2C_CR1_SMBHEN | I2C_CR1_SMBDEN | I2C_CR1_PECEN)))
-#define SMBUS_RESET_CR2(__HANDLE__) ((__HANDLE__)->Instance->CR2 &= (uint32_t) ~((uint32_t)(I2C_CR2_SADD | I2C_CR2_HEAD10R | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_RD_WRN)))
+#define SMBUS_RESET_CR1(__HANDLE__) ((__HANDLE__)->Instance->CR1 &= (uint32_t)~((uint32_t)(I2C_CR1_SMBHEN | I2C_CR1_SMBDEN | I2C_CR1_PECEN)))
+#define SMBUS_RESET_CR2(__HANDLE__) ((__HANDLE__)->Instance->CR2 &= (uint32_t)~((uint32_t)(I2C_CR2_SADD | I2C_CR2_HEAD10R | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_RD_WRN)))
 
 #define SMBUS_GENERATE_START(__ADDMODE__, __ADDRESS__)                                                                                                                                                 \
 	(((__ADDMODE__) == SMBUS_ADDRESSINGMODE_7BIT) ? (uint32_t)((((uint32_t)(__ADDRESS__) & (I2C_CR2_SADD)) | (I2C_CR2_START) | (I2C_CR2_AUTOEND)) & (~I2C_CR2_RD_WRN))                             \

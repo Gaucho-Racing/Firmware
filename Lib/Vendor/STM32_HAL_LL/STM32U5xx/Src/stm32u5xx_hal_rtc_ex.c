@@ -2583,7 +2583,7 @@ void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint3
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
-	tmp = (uint32_t) & (TAMP->BKP0R);
+	tmp = (uint32_t)&(TAMP->BKP0R);
 	tmp += (BackupRegister * 4U);
 
 	/* Write the specified register */
@@ -2607,7 +2607,7 @@ uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister)
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
-	tmp = (uint32_t) & (TAMP->BKP0R);
+	tmp = (uint32_t)&(TAMP->BKP0R);
 	tmp += (BackupRegister * 4U);
 
 	/* Read the specified register */

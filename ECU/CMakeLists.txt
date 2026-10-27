@@ -30,6 +30,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			Test/Src/StateTicksTest.c
 			Test/Src/stm32g4xx_hal.c
 			Test/Src/stm32g4xx_ll_gpio.c
+			Test/Src/buzzer.c
 			Application/Src/StateTicks.c
 			Application/Src/StateUtils.c
 			Application/Src/CANutils.c
@@ -98,6 +99,7 @@ target_sources(
 		Application/Src/CANutils.c
 		Application/Src/Pinging.c
 		Application/Src/Lights.c
+		Application/Src/Buzzer.c
 )
 
 target_link_libraries(

@@ -18,6 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
+#include "Buzzer.h"
+#include "GRCAN_BUS_ID.h"
+#include "GRCAN_MSG_DATA.h"
+#include "GRCAN_NODE_ID.h"
+#include "StateData.h"
+#include "StateTicks.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -245,6 +252,7 @@ int main(void)
       adc_timer = MillisecondsSinceBoot() + 1;
       ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs); // This needs to be updated/changes
       Update_ADC_to_StateData();
+	  buzzer_tick();
     }
 
 
