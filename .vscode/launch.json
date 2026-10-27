@@ -17,7 +17,8 @@
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"showDevDebugTimestamps": true
-		},		{
+		},
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/DashboardU5-Blinky.elf",
 			"name": "DashboardU5-Blinky",
