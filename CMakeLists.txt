@@ -134,7 +134,6 @@ include("${platform_path}/STM32H523xE/chip.cmake")
 
 # Utils
 include("${LIB_PATH}/GlobalShare/common.cmake")
-include("${LIB_PATH}/Utils/OldLogomatic/logomatic.cmake")
 include("${LIB_PATH}/Utils/Logomatic/log.cmake")
 include("${LIB_PATH}/Utils/CubeVCP/vcp.cmake")
 include("${LIB_PATH}/Utils/VirtualComPort/vcp.cmake")
@@ -147,15 +146,7 @@ include("${LIB_PATH}/Utils/BitManipulations/bit-utils.cmake")
 include("Autogen/CAN/CANfigurator.cmake")
 
 # Peripherals
-include("${LIB_PATH}/Peripherals/USART/common.cmake")
-include("${LIB_PATH}/Peripherals/TimedCAN/common.cmake")
-include("${LIB_PATH}/Peripherals/CAN/common.cmake")
 include("${LIB_PATH}/Peripherals/CubeCAN/cube_can.cmake")
-
-include("${LIB_PATH}/FancyLayers-RENAME/GRCAN/grcan_fancylayer.cmake")
-include("${LIB_PATH}/FancyLayers-RENAME/ADC/adc.cmake")
-include("${LIB_PATH}/FancyLayers-RENAME/SPI/spi.cmake")
-include("${LIB_PATH}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 
 # Projects
 include(Testbench/testbench.cmake)
