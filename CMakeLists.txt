@@ -119,8 +119,6 @@ add_arm_cmsis_core(
 )
 
 # Vendor
-include("${LIB_PATH}/Vendor/CMSIS_5/cmsis_5.cmake")
-include("${LIB_PATH}/Vendor/STM32_HAL_LL/cube.cmake")
 add_subdirectory("${LIB_PATH}/Vendor/BCC")
 include("${LIB_PATH}/Vendor/MLX90640/combined.cmake")
 include("${LIB_PATH}/Vendor/MLX90614/combined.cmake")
