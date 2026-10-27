@@ -6,7 +6,7 @@
 			"hidden": true,
 			"generator": "Ninja",
 			"binaryDir": "${sourceDir}/build/${presetName}",
-			"toolchainFile": "${sourceDir}/Lib/cmake/gcc-arm-none-eabi.cmake",
+			"toolchainFile": "${sourceDir}/Lib/CMake/gcc-arm-none-eabi.cmake",
 			"cacheVariables": {
 				"TARGET_TYPE": "Embedded",
 				"CMAKE_PRESET_NAME": "${presetName}"
@@ -16,7 +16,7 @@
 			"name": "HOOTLTest",
 			"generator": "Ninja",
 			"binaryDir": "${sourceDir}/build/${presetName}",
-			"toolchainFile": "${sourceDir}/Lib/cmake/HOOTL.cmake",
+			"toolchainFile": "${sourceDir}/Lib/CMake/HOOTL.cmake",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
 				"TARGET_TYPE": "Host",
