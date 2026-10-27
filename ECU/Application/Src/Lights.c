@@ -99,7 +99,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 			multiplier = 1.0f;
 			break;
 		default:
-			LOGOMATIC("Invalid max power to use (kW): %d. Defaulting to 0.0f.\n", stateLump->max_power_to_use_kw);
+			LOGOMATIC_ERROR("Invalid max power to use (kW): %d. Defaulting to 0.0f.\n", stateLump->max_power_to_use_kw);
 			multiplier = 0.0f;
 	}
 

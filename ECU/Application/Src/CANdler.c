@@ -13,6 +13,7 @@
 #include "StateData.h"
 #include "bitManipulations.h"
 #include "Unused.h"
+#include "Buzzer.h"
 
 extern ECU_StateData stateLump;
 
@@ -61,11 +62,11 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 			}
 
 			if (left_pressed && right_pressed) {
-				LOGOMATIC("Both regen buttons pressed, ignoring\n");
+				LOGOMATIC_INFO("Both regen buttons pressed, ignoring\n");
 				buzzer_error_both();
 			} else if (left_pressed && state_data->regen_ac_i_code > 0 && left_pressed != left_pressed_last) {
 				state_data->regen_ac_i_code = (state_data->regen_ac_i_code - 1) % 9;
-				LOGOMATIC("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
+				LOGOMATIC_INFO("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
 
 				if (state_data->regen_ac_i_code == 0) {
 					buzzer_minpoint();
@@ -78,7 +79,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GRCAN_BUS_ID bus_id, GRCA
 				buzzer_error_min();
 			} else if (right_pressed && state_data->regen_ac_i_code < 8 && right_pressed != right_pressed_last) {
 				state_data->regen_ac_i_code = (state_data->regen_ac_i_code + 1) % 9;
-				LOGOMATIC("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
+				LOGOMATIC_INFO("Regen AC I Code now at %d\n", state_data->regen_ac_i_code);
 
 				if (state_data->regen_ac_i_code == 8) {
 					buzzer_maxpoint();
