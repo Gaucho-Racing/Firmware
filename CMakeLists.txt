@@ -7,104 +7,104 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 # Messages
 if(NOT DEFINED CMAKE_PRESET_NAME)
-	message(
-		FATAL_ERROR
-		"This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE."
-	)
+    message(
+        FATAL_ERROR
+        "This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE."
+    )
 endif()
 message(
-	STATUS
-	"Build type: "
-	${CMAKE_BUILD_TYPE}
+    STATUS
+    "Build type: "
+    ${CMAKE_BUILD_TYPE}
 )
 message(STATUS "Target type: ${TARGET_TYPE}")
 message(
-	STATUS
-	"Active CMake Preset: "
-	${CMAKE_PRESET_NAME}
+    STATUS
+    "Active CMake Preset: "
+    ${CMAKE_PRESET_NAME}
 )
 
 # Shared Compiler Cache Configuration
 find_program(SCCACHE_PROGRAM sccache)
 if(
-	SCCACHE_PROGRAM
-	AND
-		NOT
-			CMAKE_C_COMPILER_LAUNCHER
-	AND
-		NOT
-			CMAKE_ASM_COMPILER_LAUNCHER
+    SCCACHE_PROGRAM
+    AND
+    NOT
+    CMAKE_C_COMPILER_LAUNCHER
+    AND
+    NOT
+    CMAKE_ASM_COMPILER_LAUNCHER
 )
-	message(STATUS "Found sccache: ${SCCACHE_PROGRAM}")
-	set(SCCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/sccache")
-	set(
-		CMAKE_C_COMPILER_LAUNCHER
-		"${CMAKE_COMMAND}"
-		-E
-		env
-		"SCCACHE_DIR=${SCCACHE_DIR_PATH}"
-		"${SCCACHE_PROGRAM}"
-	)
-	set(
-		CMAKE_ASM_COMPILER_LAUNCHER
-		"${CMAKE_COMMAND}"
-		-E
-		env
-		"SCCACHE_DIR=${SCCACHE_DIR_PATH}"
-		"${SCCACHE_PROGRAM}"
-	)
-	message(STATUS "sccache directory: ${SCCACHE_DIR_PATH}")
+    message(STATUS "Found sccache: ${SCCACHE_PROGRAM}")
+    set(SCCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/sccache")
+    set(
+        CMAKE_C_COMPILER_LAUNCHER
+        "${CMAKE_COMMAND}"
+        -E
+        env
+        "SCCACHE_DIR=${SCCACHE_DIR_PATH}"
+        "${SCCACHE_PROGRAM}"
+    )
+    set(
+        CMAKE_ASM_COMPILER_LAUNCHER
+        "${CMAKE_COMMAND}"
+        -E
+        env
+        "SCCACHE_DIR=${SCCACHE_DIR_PATH}"
+        "${SCCACHE_PROGRAM}"
+    )
+    message(STATUS "sccache directory: ${SCCACHE_DIR_PATH}")
 elseif(CMAKE_C_COMPILER_LAUNCHER OR CMAKE_ASM_COMPILER_LAUNCHER)
-	message(
-		STATUS
-		"Not using sccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
-	)
+    message(
+        STATUS
+        "Not using sccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
+    )
 else()
-	message(STATUS "Not using sccache: sccache not found in PATH")
+    message(STATUS "Not using sccache: sccache not found in PATH")
 endif()
 
 # Compiler Cache Configuration
 find_program(CCACHE_PROGRAM ccache)
 if(
-	CCACHE_PROGRAM
-	AND
-		NOT
-			CMAKE_C_COMPILER_LAUNCHER
-	AND
-		NOT
-			CMAKE_ASM_COMPILER_LAUNCHER
+    CCACHE_PROGRAM
+    AND
+    NOT
+    CMAKE_C_COMPILER_LAUNCHER
+    AND
+    NOT
+    CMAKE_ASM_COMPILER_LAUNCHER
 )
-	message(STATUS "Found ccache: ${CCACHE_PROGRAM}")
-	set(CCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/ccache")
-	set(
-		CMAKE_C_COMPILER_LAUNCHER
-		"${CMAKE_COMMAND}"
-		-E
-		env
-		"CCACHE_DIR=${CCACHE_DIR_PATH}"
-		"${CCACHE_PROGRAM}"
-	)
-	set(
-		CMAKE_ASM_COMPILER_LAUNCHER
-		"${CMAKE_COMMAND}"
-		-E
-		env
-		"CCACHE_DIR=${CCACHE_DIR_PATH}"
-		"${CCACHE_PROGRAM}"
-	)
-	message(STATUS "ccache directory: ${CCACHE_DIR_PATH}")
+    message(STATUS "Found ccache: ${CCACHE_PROGRAM}")
+    set(CCACHE_DIR_PATH "${CMAKE_SOURCE_DIR}/ccache")
+    set(
+        CMAKE_C_COMPILER_LAUNCHER
+        "${CMAKE_COMMAND}"
+        -E
+        env
+        "CCACHE_DIR=${CCACHE_DIR_PATH}"
+        "${CCACHE_PROGRAM}"
+    )
+    set(
+        CMAKE_ASM_COMPILER_LAUNCHER
+        "${CMAKE_COMMAND}"
+        -E
+        env
+        "CCACHE_DIR=${CCACHE_DIR_PATH}"
+        "${CCACHE_PROGRAM}"
+    )
+    message(STATUS "ccache directory: ${CCACHE_DIR_PATH}")
 elseif(CMAKE_C_COMPILER_LAUNCHER OR CMAKE_ASM_COMPILER_LAUNCHER)
-	message(
-		STATUS
-		"Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
-	)
+    message(
+        STATUS
+        "Not using ccache: CMAKE_C_COMPILER_LAUNCHER already set to '${CMAKE_C_COMPILER_LAUNCHER}' or CMAKE_ASM_COMPILER_LAUNCHER already set to '${CMAKE_ASM_COMPILER_LAUNCHER}'"
+    )
 else()
-	message(STATUS "Not using ccache: ccache not found in PATH")
+    message(STATUS "Not using ccache: ccache not found in PATH")
 endif()
 
 enable_language(
-	C
-	ASM
+    C
+    ASM
 )
 
 # Globals
@@ -142,6 +142,7 @@ include("${LIB_PATH}/Peripherals/CubeCAN/cube_can.cmake")
 # Projects
 include(Testbench/testbench.cmake)
 include(SensorArray/sensors.cmake)
+include(DriverInterface/controls.cmake)
 
 # add_project(
 #     NAME "ECU"
