@@ -21,11 +21,12 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		PRIVATE
 			Test/Inc
 			Application/Inc
+			${CMAKE_SOURCE_DIR}/Lib/Peripherals/CubeCAN/Inc
 	)
 	target_sources(
 		StateTicksTest
 		PRIVATE
-			Test/Src/can.c
+			Test/Src/CubeCAN_stub.c
 			Test/Src/StateTicksTest.c
 			Test/Src/stm32g4xx_hal.c
 			Test/Src/stm32g4xx_ll_gpio.c
@@ -40,7 +41,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			CANfigurator
 			LOGOMATIC_LIB
 			m
-			CUBE_CAN_LIB
 			BitManipulations_Lib
 	)
 	add_test(StateTicksTest StateTicksTest)

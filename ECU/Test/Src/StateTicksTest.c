@@ -5,7 +5,6 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateUtils.h"
-#include "can.h"
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_hal_fdcan.h"
 
