@@ -158,7 +158,6 @@ include("${LIB_PATH}/FancyLayers-RENAME/SPI/spi.cmake")
 include("${LIB_PATH}/FancyLayers-RENAME/NeoPixel/neopixel.cmake")
 
 # Projects
-include(BLINKY/blinky.cmake)
 include(Testbench/testbench.cmake)
 include(SensorArray/sensors.cmake)
 
