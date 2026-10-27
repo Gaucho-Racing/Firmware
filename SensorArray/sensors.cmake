@@ -7,7 +7,7 @@ add_project(
     PATH "InboardSensors"
     SERIES "h5"
     SPECIFIER "h503rb"
-    HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
-    CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+    HAL_GIT_TAG "v1.7.0" # https://github.com/STMicroelectronics/stm32h5xx-hal-driver/tree/v1.7.0
+    CMSIS_GIT_TAG "v1.7.0" # https://github.com/STMicroelectronics/cmsis-device-h5/tree/v1.7.0
     CMSIS_MAJOR "5"
 )
