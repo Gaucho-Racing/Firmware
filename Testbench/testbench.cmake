@@ -47,3 +47,13 @@ add_project(
     CMSIS_GIT_TAG "v1.4.3" # https://github.com/STMicroelectronics/cmsis-device-u5/tree/v1.4.3
     CMSIS_MAJOR "5"
 )
+
+add_project(
+    NAME "NucleoL4-Blinky"
+    PATH "NucleoL4-Blinky"
+    SERIES "l4"
+    SPECIFIER "l476re"
+    HAL_GIT_TAG "v1.13.6" # https://github.com/STMicroelectronics/stm32l4xx-hal-driver/tree/v1.13.6
+    CMSIS_GIT_TAG "v1.7.5" # https://github.com/STMicroelectronics/cmsis-device-l4/tree/v1.7.5
+    CMSIS_MAJOR "5"
+)
