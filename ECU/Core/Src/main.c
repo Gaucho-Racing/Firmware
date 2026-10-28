@@ -213,8 +213,6 @@ int main(void)
   __HAL_DMA_DISABLE_IT(hadc5.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
 
 
-	float adc_alpha = 5000.0f / MAIN_LOOP_PERIOD_US; // around 5 time constants in one cycle of the main loop
-
 	LOGOMATIC_INFO("Boot completed at %lu ms\n", MillisecondsSinceBoot());
 
 
