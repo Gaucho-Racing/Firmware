@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Active Target (OpenOCD)",
+			"name": "OpenOCD",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "openocd",
@@ -18,7 +18,7 @@
 			"preLaunchTask": "CMake: build active target",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
+				"cpuFrequency": "${input:cpuFrequency}000000",
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -31,71 +31,8 @@
 					}
 				]
 			}
-		},
-		{
-			"name": "Active Target (ST-Util)",
-			"type": "cortex-debug",
-			"request": "launch",
-			"servertype": "stutil",
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.launchTargetPath}",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
-			],
-			"searchDir": [],
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"name": "Active Target (ST-Link)",
-			"type": "cortex-debug",
-			"request": "launch",
-			"servertype": "stlink",
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.launchTargetPath}",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
-			],
-			"searchDir": [],
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"name": "Node - Active Target (OpenOCD)",
+		},{
+			"name": "OpenOCD (with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "openocd",
@@ -111,7 +48,7 @@
 			"preLaunchTask": "CMake: build active target (with NODE)",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
+				"cpuFrequency": "${input:cpuFrequency}000000",
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -126,7 +63,38 @@
 			}
 		},
 		{
-			"name": "Node - Active Target (ST-Util)",
+			"name": "ST-Util",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "stutil",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/${input:targetMcuConfig}.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}000000",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "ST-Util (with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "stutil",
@@ -142,7 +110,7 @@
 			"preLaunchTask": "CMake: build active target (with NODE)",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
+				"cpuFrequency": "${input:cpuFrequency}000000",
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -157,7 +125,38 @@
 			}
 		},
 		{
-			"name": "Node - Active Target (ST-Link)",
+			"name": "ST-Link",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "stlink",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/${input:targetMcuConfig}.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}000000",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "ST-Link (with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "stlink",
@@ -173,7 +172,7 @@
 			"preLaunchTask": "CMake: build active target (with NODE)",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
+				"cpuFrequency": "${input:cpuFrequency}000000",
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -190,43 +189,33 @@
 	],
 	"inputs": [
 		{
-			"id": "mcuSelection",
+			"id": "targetMcuConfig",
 			"type": "pickString",
-			"description": "Select Target MCU (SVD:Config):",
+			"description": "Select Target Config:",
 			"options": [
-				"STM32G474:stm32g4x",
-				"STM32G431:stm32g4x",
-				"STM32L476:stm32l4x",
-				"STM32U5A9:stm32u5x"
+				"stm32g4x",
+				"stm32l4x",
+				"stm32u5x"
 			]
 		},
 		{
-			"id": "targetMcuConfig",
-			"type": "command",
-			"command": "extension.commandvariable.transform",
-			"args": {
-				"text": "${input:mcuSelection}",
-				"find": "^(.*):(.*)$",
-				"replace": "$2"
-			}
-		},
-		{
 			"id": "svdDevice",
-			"type": "command",
-			"command": "extension.commandvariable.transform",
-			"args": {
-				"text": "${input:mcuSelection}",
-				"find": "^(.*):(.*)$",
-				"replace": "$1"
-			}
+			"type": "pickString",
+			"description": "Select Target SVD Device:",
+			"options": [
+				"STM32G474",
+				"STM32G431",
+				"STM32L476",
+				"STM32U5A9"
+			]
 		},
 		{
 			"id": "cpuFrequency",
 			"type": "pickString",
-			"description": "Select Core CPU Clock Frequency (Hz):",
+			"description": "Select Core CPU Clock Frequency (MHz):",
 			"options": [
-				"160000000",
-				"80000000"
+				"160",
+				"80"
 			]
 		}
 	]
