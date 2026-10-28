@@ -173,7 +173,7 @@ int main(void)
   MX_ADC5_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-	Logomatic_SetLogLevel(LogLevel_Info);
+	Logomatic_SetLogLevel(LogLevel_Debug);
 	// Setup_VCP(&vcp_config);
 
 	// Initialize CAN
@@ -231,7 +231,6 @@ int main(void)
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 
 		LL_mDelay(1);
-		ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs);
 		Update_ADC_to_StateData();
 	}
 
@@ -250,9 +249,8 @@ int main(void)
 
     if (MillisecondsSinceBoot() >= adc_timer){
       adc_timer = MillisecondsSinceBoot() + 1;
-      ADC_UpdateAnalogValues_EMA(ADC_buffers, NUM_SIGNALS, adc_alpha, ADC_outputs); // This needs to be updated/changes
       Update_ADC_to_StateData();
-	  buzzer_tick();
+	    buzzer_tick();
     }
 
 
