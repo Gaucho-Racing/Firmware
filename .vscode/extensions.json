@@ -9,7 +9,6 @@
 		"github.vscode-pull-request-github",
 		"eamodio.gitlens",
 		"davidanson.vscode-markdownlint",
-		"wombat.fancymon",
-		"rioj7.command-variable"
+		"wombat.fancymon"
 	]
 }
