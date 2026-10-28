@@ -24,9 +24,17 @@
 			]
 		},
 		{
+			"label": "CMake: configure (with NODE)",
+			"type": "shell",
+			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=${input:nodePosition}"
+		},
+		{
 			"label": "CMake: build active target (with NODE)",
 			"type": "shell",
-			"command": "cmake --preset ${command:cmake.activeBuildPresetName} -DNODE:STRING=${input:nodePosition} && cmake --build --preset ${command:cmake.activeBuildPresetName} --target ${command:cmake.buildTargetName}"
+			"dependsOn": [
+				"CMake: configure (with NODE)"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ${command:cmake.buildTargetName}"
 		},
 		{
 			"label": "CMake: build active target",
@@ -34,7 +42,7 @@
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ${command:cmake.buildTargetName}"
+			"command": "cmake --build --preset ${command:cmake.activeConfigurePresetName} --target ${command:cmake.buildTargetName}"
 		}
 	]
 }

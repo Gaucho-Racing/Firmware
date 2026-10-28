@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug Active CMake Target (OpenOCD)",
+			"name": "Active Target (OpenOCD)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "openocd",
@@ -33,7 +33,7 @@
 			}
 		},
 		{
-			"name": "Debug Active CMake Target (ST-Util)",
+			"name": "Active Target (ST-Util)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "stutil",
@@ -46,25 +46,10 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"preLaunchTask": "CMake: build active target"
 		},
 		{
-			"name": "Debug Active CMake Target (ST-Link)",
+			"name": "Active Target (ST-Link)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "stlink",
@@ -77,25 +62,10 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"preLaunchTask": "CMake: build active target"
 		},
 		{
-			"name": "(NODE) Debug Active CMake Target (OpenOCD)",
+			"name": "Node - Active Target (OpenOCD)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "openocd",
@@ -126,7 +96,7 @@
 			}
 		},
 		{
-			"name": "(NODE) Debug Active CMake Target (ST-Util)",
+			"name": "Node - Active Target (ST-Util)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "stutil",
@@ -139,25 +109,10 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target (with NODE)",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"preLaunchTask": "CMake: build active target (with NODE)"
 		},
 		{
-			"name": "(NODE) Debug Active CMake Target (ST-Link)",
+			"name": "Node - Active Target (ST-Link)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "stlink",
@@ -170,22 +125,7 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target (with NODE)",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}",
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"preLaunchTask": "CMake: build active target (with NODE)"
 		}
 	],
 	"inputs": [
@@ -213,11 +153,10 @@
 		{
 			"id": "cpuFrequency",
 			"type": "pickString",
-			"description": "Select Core CPU Clock Frequency (Hz):",
+			"description": "Select Core CPU Clock Frequency (MHz):",
 			"options": [
-				"170000000",
-				"160000000",
-				"80000000"
+				"160",
+				"80"
 			]
 		}
 	]
