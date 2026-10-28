@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "morse.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+const char message[] = "--. .- ..- -.-. .... ---/.-. .- -.-. .. -. --.";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,6 +97,10 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		if (morse_code_send(message, sizeof(message) / sizeof(message[0])) != HAL_OK) {
+			Error_Handler();
+		}
+		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */
 }
