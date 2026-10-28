@@ -2,74 +2,23 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/NucleoG4-Blinky.elf",
-			"name": "NucleoG4-Blinky",
-			"request": "launch",
+			"name": "Debug Active CMake Target (OpenOCD)",
 			"type": "cortex-debug",
+			"request": "launch",
 			"servertype": "openocd",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
+				"target/${input:targetMcuConfig}.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build NucleoG4-Blinky",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"showDevDebugTimestamps": true
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/DashboardU5-Blinky.elf",
-			"name": "DashboardU5-Blinky",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32u5x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build DashboardU5-Blinky",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32U5A9.svd",
-			"showDevDebugTimestamps": true
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/NucleoL4-Blinky.elf",
-			"name": "NucleoL4-Blinky",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32l4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build NucleoL4-Blinky",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd",
-			"showDevDebugTimestamps": true
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/NucleoG4-Hello.elf",
-			"name": "NucleoG4-Hello",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build NucleoG4-Hello",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 160000000,
+				"cpuFrequency": "${input:cpuFrequency}",
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -84,645 +33,23 @@
 			}
 		},
 		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/NucleoG4-Echo.elf",
-			"name": "NucleoG4-Echo",
-			"request": "launch",
+			"name": "Debug Active CMake Target (ST-Util)",
 			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build NucleoG4-Echo",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/ECU.elf",
-			"name": "ECU",
 			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build ECU",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CUBEMXTESTING.elf",
-			"name": "CUBEMXTESTING",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CUBEMXTESTING",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CCU.elf",
-			"name": "CCU",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CCU",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/DashPanel.elf",
-			"name": "DashPanel",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build DashPanel",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/CANine.elf",
-			"name": "CANine",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build CANine",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
-			"name": "Tire Temp FL",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build TireTemp FL",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
-			"name": "Tire Temp FR",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build TireTemp FR",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
-			"name": "Tire Temp RL",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build TireTemp RL",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/TireTemp.elf",
-			"name": "Tire Temp RR",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build TireTemp RR",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/BrakeTemp.elf",
-			"name": "Brake Temp FL",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build BrakeTemp FL",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/BrakeTemp.elf",
-			"name": "Brake Temp FR",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build BrakeTemp FR",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/BrakeTemp.elf",
-			"name": "Brake Temp RL",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build BrakeTemp RL",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/BrakeTemp.elf",
-			"name": "Brake Temp RR",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build BrakeTemp RR",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4HELLO.elf",
-			"name": "G4HELLO",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4HELLO",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4ECHO.elf",
-			"name": "G4ECHO",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4ECHO",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4BLINKY.elf",
-			"name": "G4BLINKY",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4BLINKY",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/U5BLINKY.elf",
-			"name": "U5BLINKY",
-			"request": "launch",
-			"type": "cortex-debug",
 			"servertype": "stutil",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32u5x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build U5BLINKY",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32U5A9.svd"
-		},
-		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/L4BLINKY.elf",
-			"name": "L4BLINKY",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
+			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32l4x.cfg"
+				"target/${input:targetMcuConfig}.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build L4BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd"
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/L4HELLO.elf",
-			"name": "L4HELLO",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32l4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build L4HELLO",
-			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 80000000,
-				"swoFrequency": 2000000,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			},
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd"
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Receive.elf",
-			"name": "SPI Receive W3 WS",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build W3_G4SPI_Receive",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd"
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Transmit.elf",
-			"name": "SPI Transmit W3 WS",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build W3_G4SPI_Transmit",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd"
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4NEOTESTING.elf",
-			"name": "G4NEOTESTING",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build G4NEOTESTING",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 170000000,
+				"cpuFrequency": "${input:cpuFrequency}",
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -735,6 +62,163 @@
 					}
 				]
 			}
+		},
+		{
+			"name": "Debug Active CMake Target (ST-Link)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "stlink",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/${input:targetMcuConfig}.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "(NODE) Debug Active CMake Target (OpenOCD)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "openocd",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/${input:targetMcuConfig}.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "(NODE) Debug Active CMake Target (ST-Util)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "stutil",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/${input:targetMcuConfig}.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "(NODE) Debug Active CMake Target (ST-Link)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "stlink",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/${input:targetMcuConfig}.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		}
+	],
+	"inputs": [
+		{
+			"id": "targetMcuConfig",
+			"type": "pickString",
+			"description": "Select Target MCU Family:",
+			"options": [
+				"stm32g4x",
+				"stm32l4x",
+				"stm32u5x"
+			]
+		},
+		{
+			"id": "svdDevice",
+			"type": "pickString",
+			"description": "Select Peripheral SVD File:",
+			"options": [
+				"STM32G474",
+				"STM32G431",
+				"STM32L476",
+				"STM32U5A9"
+			]
+		},
+		{
+			"id": "cpuFrequency",
+			"type": "pickString",
+			"description": "Select Core CPU Clock Frequency (Hz):",
+			"options": [
+				"170000000",
+				"160000000",
+				"80000000"
+			]
 		}
 	]
 }
