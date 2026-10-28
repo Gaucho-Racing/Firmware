@@ -46,7 +46,22 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target"
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		},
 		{
 			"name": "Active Target (ST-Link)",
@@ -62,7 +77,22 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target"
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		},
 		{
 			"name": "Node - Active Target (OpenOCD)",
@@ -109,7 +139,22 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target (with NODE)"
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		},
 		{
 			"name": "Node - Active Target (ST-Link)",
@@ -125,7 +170,22 @@
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
-			"preLaunchTask": "CMake: build active target (with NODE)"
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": "${input:cpuFrequency}",
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		}
 	],
 	"inputs": [
@@ -153,10 +213,10 @@
 		{
 			"id": "cpuFrequency",
 			"type": "pickString",
-			"description": "Select Core CPU Clock Frequency (MHz):",
+			"description": "Select Core CPU Clock Frequency (Hz):",
 			"options": [
-				"160",
-				"80"
+				"160000000",
+				"80000000"
 			]
 		}
 	]
