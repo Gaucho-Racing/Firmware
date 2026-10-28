@@ -1,5 +1,7 @@
 # License Information
 
+**_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
+
 ## SVD
 
 Copyright 2024 STMicroelectronics. All rights reserved.
@@ -42,7 +44,7 @@ limitations under the License.
 
 MIT License
 
-Copyright (c) 2025 Gaucho Racing
+Copyright (c) 2025-2026 Gaucho Racing
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
