@@ -37,6 +37,23 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/NucleoL4-Blinky.elf",
+			"name": "NucleoL4-Blinky",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32l4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build NucleoL4-Blinky",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd",
+			"showDevDebugTimestamps": true
+		},
+		{
+			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/NucleoG4-Hello.elf",
 			"name": "NucleoG4-Hello",
 			"request": "launch",

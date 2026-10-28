@@ -4,202 +4,204 @@
 [![Linter](https://github.com/Gaucho-Racing/Firmware/actions/workflows/Linter.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/Linter.yml)
 [![Unit Tests](https://github.com/Gaucho-Racing/Firmware/actions/workflows/UnitTestsHOOTL.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/UnitTestsHOOTL.yml)
 
-Table of Contents
-* [Quickstart](#Quickstart)
-* [Testing](#Testing)
-    * [Setup](#Setup)
-    * [Running](#Running)
-* [VS Code Setup](#VS-Code-Setup)
-* [REPO RULES (follow if you want your builds to work)](#REPO-RULES-follow-if-you-want-your-builds-to-work)
-* [To add a New Project](#To-add-a-New-Project)
-* [To add a New Platform ](#To-add-a-New-Platform )
-* [Chip Path Contamination](#Chip-Path-Contamination)
+For more, please see [`CONTRIBUTING.md`](CONTRIBUTING.md) and the various other Markdown files scattered throughout the monorepo.
 
-## Quickstart
-The goal of this section is to compile and flash any project
-The monorepo relies on CMake to build the projects.
+## State Machine
 
-If trying to run HOOTL tests or simulated development: see [Testing](#testing)
+This diagram governs the state of the car and represents the logical overview of processes on the car. This diagram must reflect the actual car operations and will help to confirm rules compliance.
 
-If simply trying to build the executable for the arm based platform: use any other configure preset (Options as of 8/28/2025: Debug, RelWithDebInfo, Release, MinSizeRel)
+If changes are made to the state machine, either in diagram or in implementation, then that PR with the change must update both representations.
 
-**To choose configure preset:**
+The state machine runs on the ECU, but it maps to an enum which is transmitted over CAN. Again, changes to implementation must be reflected in the diagram and vice-versa.
 
-*If using CMake VSCode plugin*: VScode will prompt upon first entrance, otherwise go to the CMake plugin window and click the pencil icon on the option under configure. Alternatively use the command palette and call CMake: Select Configure Preset.
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#ff6b6b',
+    'primaryTextColor': '#1f2328',
+    'lineColor': '#808080',
+    'edgeLabelBackground': 'rgba(255,255,255,0.8)',
+    'transitionLabelColor': '#1f2328',
+    'secondaryColor': '#4ecdc4',
+    'tertiaryColor': '#ffe66d',
+    'background': 'transparent',
+    'mainBkg': 'transparent',
+    'secondBkg': 'transparent',
+    'tertiaryBkg': 'transparent'
+  },
+  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; }'
+}}%%
 
-*If using CLI*: run
-`cmake -S . -B {build directory, ex: build or Debug/build} -G Ninja --preset={preset}`
+stateDiagram
 
-**Then Build**:
+    [*] --> GLV_Off
 
-*If using CMake VSCode plugin*: Check under the Project Outline Category in the CMake plugin window, There should be build all projects option and a build specific target (executable is a type of target) next to the target. Alternatively use the command palette and call CMake: Build
+    %% Main horizontal flow (top row)
+    GLV_Off --> GLV_On : GLVMS On
+    GLV_On --> GLV_Off : GLVMS Off
+    GLV_On --> Precharge_Engaged : TS Active
+    Precharge_Engaged --> Precharge_Complete : Precharge OK
+    Precharge_Complete --> Drive_Active : Brake & RTD
 
-*If using CLI*: run
-`cmake --build {path to build directory} --target {name of target; optional} --preset={build preset; optional}`
+    %% Normal Operation Cycle (horizontal)
+    Drive_Active --> Precharge_Complete : RTD
 
-**_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
+    %% Discharge state positioned below
+    GLV_Off
+    GLV_On
+    Precharge_Engaged
+    Precharge_Complete
+    Drive_Active
+    Tractive_System_Discharge
 
-When able, please add VS Code comptatible doc comments! These will help debugging and appear on the tool tip (hover) of any known function.
+    %% Downward transitions to discharge
+    Precharge_Engaged --> Tractive_System_Discharge : TS Active OR Comm Error
+    Precharge_Complete --> Tractive_System_Discharge : TS Active OR Critical Error
+    Drive_Active --> Tractive_System_Discharge : TS Active OR Critical Error
 
-## Install Tools/Dependencies
-*For Windows:*
+    %% Return upward from discharge
+    Tractive_System_Discharge --> GLV_On : TS Voltage < 60V
+
+    %% State Descriptions
+    GLV_Off : GLV Off
+    GLV_On : GLV On
+    Precharge_Engaged : Precharge Engaged
+    Precharge_Complete : Precharge Complete
+    Drive_Active : Drive Active
+    Tractive_System_Discharge : Tractive System Discharge
+
+    classDef safeState fill:#4ecdc4,stroke:#808080,stroke-width:1px,color:#000
+    classDef hvState fill:#ff6b6b,stroke:#808080,stroke-width:1px,color:#fff
+    classDef transitionState fill:#ffe66d,stroke:#808080,stroke-width:1px,color:#000
+    classDef dischargeState fill:#ff9500,stroke:#808080,stroke-width:1px,color:#000
+
+    class GLV_Off,GLV_On safeState
+    class Drive_Active hvState
+    class Precharge_Engaged,Precharge_Complete transitionState
+    class Tractive_System_Discharge dischargeState
+```
+
+- 🟦 **Blue**: Low voltage
+- 🟥 **Red**: HV charged
+- 🟨 **Yellow**: HV precharge
+- 🟧 **Orange**: HV discharge
+
+## Setup
+
+### Git and GitHub
+
+Install [`Git`](https://git-scm.com/install/) on your specific platform, prefer using your platforms package manager (WinGet, Apt, Homebrew, DNF, Pacman, Pkg, ... etc) over other methods.
+
+Authenticate your Sentinel profile with GitHub through [`sso.gauchoracing.com/settings/connected-accounts`](https://sso.gauchoracing.com/settings/connected-accounts)
+
+There are numerous ways to authenticate your Git client with your GitHub credentials, one common option is to install the [`GitHub CLI`](https://cli.github.com/) and then running `gh auth login`. You can also use [SSH Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) or other options.
+
+Clone the repository by running `gh repo clone Gaucho-Racing/Firmware` or `git clone http://github.com/Gaucho-Racing/Firmware.git` or `git clone git@github.com:Gaucho-Racing/Firmware.git` depending on your chosen authentification strategy.
+
+### Tooling
+
+Download [VS Code](https://code.visualstudio.com/download) and install it on your system, you can use other editors or IDEs but under your own support.
+
+Verify the following commands work without errors, if they fail please see the instructions below for your OS
+
+- `cmake --version`
+- `ninja --version`
+- `arm-none-eabi-gcc --version`
+- `openocd --version`
+
+**CMake** (metabuild system) --> **Ninja** (build system) --> **Arm Toolchain** (provides tools to compile & link code)
+
+**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode through our debugger **GDB**
+
+#### Windows
 
 1. `winget install Ninja-build.Ninja Kitware.CMake Arm.GnuArmEmbeddedToolchain Microsoft.VisualStudioCode`
 2. [OpenOCD](https://github.com/openocd-org/openocd/releases/latest) -> Download the `.tar.gz` file, extract to directory, add the bin directory to your `PATH`
 3. Relaunch your terminal
 
-*For MacOS:*
+#### MacOS
+
 1. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 2. `brew install cmake ninja open-ocd gcc-arm-embedded visual-studio-code`
-4. Relaunch your terminal
+3. Relaunch your terminal
 
-*For Linux / BSD:*
+#### Unix-Derived
 
-Install the Visual Studio Code IDE (prefer using the `deb` or `rpm` from [Microsoft](https://code.visualstudio.com/download)).
+Choose the below command given your specific flavor of Linux or BSD
 
 * `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
 * `sudo dnf install cmake ninja openocd` (Normally also `arm-none-eabi-gcc-cs arm-none-eabi-newlib` which worked on Fedora 42 but is broken on Fedora 43, use [Arm's version](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) instead for the moment)
 * `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
 * `sudo pkg install cmake ninja openocd arm-none-eabi-gcc`
-* If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
 
-### Verify that you have all these dependencies installed:
+If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
 
-- CMake - `cmake --version`
-- Ninja - `ninja --version`
-- Arm - `arm-none-eabi-gcc --version`
-- OpenOCD - `openocd --version`
+### Compilation and Flashing
 
-**CMake** (metabuild system) --> **Ninja** (build system) --> **Arm Toolchain** (provides tools to compile & link code)
-**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
+Note that you can also flash your executable binary files using [`STM32CubeProgrammer`](https://www.st.com/content/st_com/en/stm32cubeprogrammer.html), you still have to compile your program using one of the below methods though.
 
-# REPO RULES (follow if you want your builds to work)
-- Add a folder for each board with Core and Application, with Src and Inc in both
-- Do not question naming conventions please
-- Each project needs it's own directory where the name of the directory is the name of the project/executable
-  - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
+#### Command Line
 
-If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
+You can compile using `make <Preset>` (such as `make Debug`) which will invoke CMake, or you can compile directly from CMake using `cmake --preset <Preset> ; cmake --build --preset <Preset>`.
 
-Rebase please, run `git config pull.rebase true`
+The following presets are currently configured in [`CMakePresets.json`](CMakePresets.json)
 
-# Testing
+- `Debug`
+- `Release`
+- `MinSizeRel`
+- `RelWithDebInfo`
+- `HOOTLTest` (see [testing](#testing))
 
-## Setup
-While setting up your project using `add_GR_project`, have something that looks like this inside of your project's top level CMakeFile.txt
-```cmake
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
-    include_directories(
-        Application/Inc
-        Core/Inc
-    )
+To compile specifically for one target you can use the below command
 
-    # Can have singleton files
-    add_executable(basic_application_hootl_test
-        Application/Test/basic_application_hootl_test.c
-    )
-    add_test(basic_app basic_application_hootl_test)
-
-    # Can link files
-    add_executable(advanced_application_hootl_test
-        Application/Test/advanced_application_hootl_test.c
-        Application/Src/appdemo.c
-    )
-    add_test(advanced_app advanced_application_hootl_test)
-
-    ...
-endif()
+```sh
+cmake --preset <Preset>
+cmake --build --preset <Preset> --target <Target>
 ```
 
-Setup each of the executables as an independent program with their own `int main(int argc, char *argv[])` that links from other files as needed.
+After building, you will need to flash using OpenOCD, there are a variety of options for this, but the easiest will be to `openocd -f interface/<interface>.cfg -f target/{series}.cfg -c "program {file}.elf <commands>"`. Often this will look like the following
 
-## Running
-
-```bash
-cmake --preset HOOTLTest
-cmake --build build/HOOTLTest
-cd build/HOOTLTest && ctest --output-on-failure
+```sh
+openocd -f interface/stlink.cfg -f target/{Series}.cfg -c "program build/<Preset>/{Target}.elf verify reset exit"
 ```
 
-```bash
-cmake --preset Release
-cmake --build build/Release
-cd build/Release
-openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_project}.elf verify reset exit"
-```
-example: your_chip = stm32l4x, your_project = L4BLINKY <br>
-example: your_chip = stm32g4x, your_project = G4BLINKY
+You can get more advanced and connect to your board using OpenOCD and then launch a debugging session using GDB, this is more complicated and we recommend using VS Code instead, but it is fun to do via the commandline.
 
-This openocd command loads a configuration file 'target/{your_chip}.cfg' (defined in launch.json), and uses that to flash the '{your_project}.elf' executable onto the microcontroller.
+#### Visual Studio Code
 
-If things aren't working on MacOS, read through this [wiki page](https://wiki.gauchoracing.com/books/gr26-architecture/page/cmake-notes-for-monorepo)
+Install the recommended extensions in [`.vscode/extensions.json`](.vscode/extensions.json), if you are using the extension tab (the icon looks like 3 squares with one square at a 45 degree angle) you can also search by `@recommended` and it will show what extensions you need.
 
-## VS Code Setup
+Make sure that you select a configuration preset, you can type in the search bar `>CMake: Select Configure Preset`, or navigate to the CMake tab (the icon is the CMake triangle icon with a wrench) and ensure that "Configure" is set to one of `Debug`, `Release`, `MinSizeRel`, or `RelWithDebInfo`. More on the `HOOTLTest` option in [testing](#testing).
 
-Put into `.vscode/settings.json` the following starter template:
-```json
-{
-    "files.associations": {
-        "*.h": "c",
-        "*.c": "c"
-    },
-}
+On the run and debug tab (the icon looks like a triangle with a bug on it) select the drop down to choose the project you wish to run, and then click the green play triangle next to the drop down. If [`.vscode/launch.json`](.vscode/launch.json) is configured to open a Serial Wire Output (SWO) terminal it will open automatically for you.
 
-```
+At the top of the window you should see a series of options, you can use the different buttons to pause/resume, step into, step out of, step over, and stop debugging a program. You will see the run and debug window also populate with debugging information, and even more when the program is paused.
 
-# REPO RULES (follow if you want your builds to work)
-- Add a folder for each board with Core and Application, with Src and Inc in both
-- Do not question naming conventions please
-- Each project needs it's own directory where the name of the directory is the name of the project/executable
-  - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
+## Frequently Asked Questions
 
-If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
+### MacOS Issues
 
-Rebase please, run `git config pull.rebase true`
+See the [wiki](https://wiki.gauchoracing.com/books/architecture/page/cmake-notes-for-monorepo) which may be possibly outdated, eventually it should be ported into this
 
-# To add a New Project
+You may also have connection issues with LibUSB, try connecting through a dongle instead of directly to your board.
 
-Copy ProjectTemplate right underneath the parent directory (Firmware)
+### Rebase vs Merge
 
-All projects follow the following structure. 
+Rebase when possible for linear histories, please run `git config pull.rebase true` to set that as the default when you run `git pull`.
 
-* *Project*
-    * Application
-        * Inc
-        * Src
-        * Test
-    * Core
-        * Inc
-        * Src
-    * CMakeLists.txt
+### Comments
 
-Core should have Peripheral related code, it requires a {platform}\_hal\_conf.h, {platform}\_it.h, {platform}\_assert.h, {platform}\_hal\_msp.c, {platform}\_it.c, syscall.c, sysmem.c, and system\_{plat}.c. Some of these can be found as templates in the HAL/LL drivers section in the platform corresponding, others you might need to copy them from a cubemx project.
+When able, please add VS Code comptatible doc comments! These will help debugging and appear on the tool tip (hover) of any known function.
 
-Edit the target_sources/target_link_libraries to include all the
+Eventually, we may autogenerate documentation for the different programs and this will be key... maybe
 
-# To add a New Platform 
+### GitHub Action Emails
 
-Copy PlatformTemplate underneath Platform and rename the directory to the platform 
+If you do not want GitHub Action emails please turn off notifications on your side. See something like [stackoverflow.com/q/66116203](https://stackoverflow.com/q/66116203)
 
-* CompileDependencies
-    * startup_{platform}.s
-    * {platform}.svd
-    * {platform}_flash.ld
-* Drivers
-    * CMSIS
-    * stm32-hal-driver
-* Peripheral
-* chip.cmake
-* history.md
+## Legal
 
-Typical process would be to make a cubemx project and steal the CMSIS, startup\_{platform}.s, {platform}\_flash.ld. Copy the stm32-hal-driver from the STM github repo online, only steal Inc and Src. 
+**_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
-Check chip.cmake and look for comments with REPLACE, do what it says.
-
-in the main Cmakelists.txt include the chip.cmake next to where all the other chip.cmake files are included
-
-
-## Chip Path Contamination
-Things get moved around and we should probably have some better solution than having CHIP defined in chip.cmake and such
-
-Bad because if there is a change in one of the chip.cmake then we need to manually / physically copy it to all of the others which is not using smart thinking
+See [`LICENSE.md`](LICENSE.md) for more.
