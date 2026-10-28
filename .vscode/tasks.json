@@ -1,5 +1,18 @@
 {
 	"version": "2.0.0",
+	"inputs": [
+		{
+			"id": "nodePosition",
+			"type": "pickString",
+			"description": "Select Node ID:",
+			"options": [
+				"0",
+				"1",
+				"2",
+				"3"
+			]
+		}
+	],
 	"tasks": [
 		{
 			"label": "CMake: configure and build all",
@@ -10,267 +23,25 @@
 			]
 		},
 		{
-			"label": "CMake: configure NODE=FL",
+			"label": "CMake: configure (with NODE)",
 			"type": "shell",
-			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=FL"
+			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=${input:nodePosition}"
 		},
 		{
-			"label": "CMake: configure NODE=FR",
+			"label": "CMake: build active target (with NODE)",
 			"type": "shell",
-			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=FR"
+			"dependsOn": [
+				"CMake: configure (with NODE)"
+			],
+			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ${command:cmake.buildTargetName}"
 		},
 		{
-			"label": "CMake: configure NODE=RL",
+			"label": "CMake: build active target",
 			"type": "shell",
-			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=RL"
-		},
-		{
-			"label": "CMake: configure NODE=RR",
-			"type": "shell",
-			"command": "cmake --preset ${command:cmake.activeConfigurePresetName} -DNODE:STRING=RR"
-		},
-		{
-			"label": "CMake: configure and build NucleoG4-Blinky",
-			"type": "shell",
-			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure"
 			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Blinky"
-		},
-		{
-			"label": "CMake: configure and build DashboardU5-Blinky",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target DashboardU5-Blinky"
-		},
-		{
-			"label": "CMake: configure and build NucleoL4-Blinky",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoL4-Blinky"
-		},
-		{
-			"label": "CMake: configure and build NucleoG4-Hello",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Hello"
-		},
-		{
-			"label": "CMake: configure and build NucleoG4-Echo",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target NucleoG4-Echo"
-		},
-		{
-			"label": "CMake: configure and build ECU",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target ECU"
-		},
-		{
-			"label": "CMake: configure and build CUBEMXTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CUBEMXTESTING"
-		},
-		{
-			"label": "CMake: configure and build CCU",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CCU"
-		},
-		{
-			"label": "CMake: configure and build DashPanel",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target DashPanel"
-		},
-		{
-			"label": "CMake: configure and build CANine",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target CANine"
-		},
-		{
-			"label": "CMake: configure and build TireTemp FL",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=FL"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
-		},
-		{
-			"label": "CMake: configure and build TireTemp FR",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=FR"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
-		},
-		{
-			"label": "CMake: configure and build TireTemp RL",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=RL"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
-		},
-		{
-			"label": "CMake: configure and build TireTemp RR",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=RR"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target TireTemp"
-		},
-		{
-			"label": "CMake: configure and build BrakeTemp FL",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=FL"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
-		},
-		{
-			"label": "CMake: configure and build BrakeTemp FR",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=FR"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
-		},
-		{
-			"label": "CMake: configure and build BrakeTemp RL",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=RL"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
-		},
-		{
-			"label": "CMake: configure and build BrakeTemp RR",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure NODE=RR"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target BrakeTemp"
-		},
-		{
-			"label": "CMake: configure and build G4ECHO",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4ECHO"
-		},
-		{
-			"label": "CMake: configure and build G4HELLO",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4HELLO"
-		},
-		{
-			"label": "CMake: configure and build G4NEOTESTING",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4NEOTESTING"
-		},
-		{
-			"label": "CMake: configure and build G4BLINKY",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target G4BLINKY"
-		},
-		{
-			"label": "CMake: configure and build U5BLINKY",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target U5BLINKY"
-		},
-		{
-			"label": "CMake: configure and build L4BLINKY",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4BLINKY"
-		},
-		{
-			"label": "CMake: configure and build L4HELLO",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target L4HELLO"
-		},
-		{
-			"label": "CMake: configure and build W3_G4SPI_Transmit",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Transmit"
-		},
-		{
-			"label": "CMake: configure and build W3_G4SPI_Receive",
-			"type": "shell",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"CMake: configure"
-			],
-			"command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
+			"command": "cmake --build --preset ${command:cmake.activeConfigurePresetName} --target ${command:cmake.buildTargetName}"
 		}
 	]
 }
