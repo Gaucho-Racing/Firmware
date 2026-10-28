@@ -190,25 +190,35 @@
 	],
 	"inputs": [
 		{
-			"id": "targetMcuConfig",
+			"id": "mcuSelection",
 			"type": "pickString",
-			"description": "Select Target MCU Family:",
+			"description": "Select Target MCU (SVD:Config):",
 			"options": [
-				"stm32g4x",
-				"stm32l4x",
-				"stm32u5x"
+				"STM32G474:stm32g4x",
+				"STM32G431:stm32g4x",
+				"STM32L476:stm32l4x",
+				"STM32U5A9:stm32u5x"
 			]
 		},
 		{
+			"id": "targetMcuConfig",
+			"type": "command",
+			"command": "extension.commandvariable.transform",
+			"args": {
+				"text": "${input:mcuSelection}",
+				"find": "^(.*):(.*)$",
+				"replace": "$2"
+			}
+		},
+		{
 			"id": "svdDevice",
-			"type": "pickString",
-			"description": "Select Peripheral SVD File:",
-			"options": [
-				"STM32G474",
-				"STM32G431",
-				"STM32L476",
-				"STM32U5A9"
-			]
+			"type": "command",
+			"command": "extension.commandvariable.transform",
+			"args": {
+				"text": "${input:mcuSelection}",
+				"find": "^(.*):(.*)$",
+				"replace": "$1"
+			}
 		},
 		{
 			"id": "cpuFrequency",
