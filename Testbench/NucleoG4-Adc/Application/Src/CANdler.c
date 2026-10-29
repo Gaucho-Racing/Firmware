@@ -200,7 +200,6 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN
 	const GRCAN_NODE_ID sender_id = identifier->tx_node_id;
 	const GRCAN_MSG_ID msg_id = identifier->msg_id;
 
-
 	if (CANDLER_IS_DTI_ID(identifier->raw_id)) {
 		ECU_CAN_DTI_MessageHandler(&stateLump, identifier->raw_id, data, size);
 		return;

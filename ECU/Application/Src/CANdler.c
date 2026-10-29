@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "Buzzer.h"
 #include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_CUSTOM_ID.h"
@@ -11,9 +12,8 @@
 #include "Logomatic.h"
 #include "Pinging.h"
 #include "StateData.h"
-#include "bitManipulations.h"
 #include "Unused.h"
-#include "Buzzer.h"
+#include "bitManipulations.h"
 
 extern ECU_StateData stateLump;
 
@@ -252,7 +252,6 @@ void CANdler_Callback(const CubeCAN_Config_Context *const context, const CubeCAN
 	const GRCAN_BUS_ID bus_id = context->busid_user_context;
 	const GRCAN_NODE_ID sender_id = identifier->tx_node_id;
 	const GRCAN_MSG_ID msg_id = identifier->msg_id;
-
 
 	if (CANDLER_IS_DTI_ID(identifier->raw_id)) {
 		ECU_CAN_DTI_MessageHandler(&stateLump, identifier->raw_id, data, size);

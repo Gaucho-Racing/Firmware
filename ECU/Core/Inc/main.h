@@ -72,7 +72,6 @@ enum {
 	ADC_BUFFER_SENSE_IMD = 10,
 };
 
-
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

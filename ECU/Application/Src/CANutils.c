@@ -21,8 +21,9 @@ uint32_t lastTickECUStateDataSent = 0;
 
 // FIXME: Help double check this is correct, current no build errors on debug
 
-CubeCAN_Handle *ECU_GetCANHandle(GRCAN_BUS_ID bus){
-	switch(bus){
+CubeCAN_Handle *ECU_GetCANHandle(GRCAN_BUS_ID bus)
+{
+	switch (bus) {
 		case GRCAN_BUS_PRIMARY:
 			return stateLump.primary_can;
 		case GRCAN_BUS_DATA:
@@ -32,17 +33,15 @@ CubeCAN_Handle *ECU_GetCANHandle(GRCAN_BUS_ID bus){
 	}
 }
 
-
 HAL_StatusTypeDef ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, const void *data, uint8_t size)
 {
 	CubeCAN_Handle *handle = ECU_GetCANHandle(bus);
-	if (handle == NULL){
+	if (handle == NULL) {
 		LOGOMATIC_ERROR("CAN: no handle for bus %d\n", bus);
 		return HAL_ERROR;
 	}
 
 	return CubeCAN_Send(handle, destNode, messageID, data, size);
-
 }
 
 HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, const void *data, uint8_t size)
@@ -53,7 +52,7 @@ HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, const void *data, uint
 
 	uint8_t msg[8];
 	const uint8_t *temp = (const uint8_t *)data;
-	for (uint8_t i = 0; i < size; ++i){
+	for (uint8_t i = 0; i < size; ++i) {
 		msg[i] = temp[size - 1 - i];
 	}
 
@@ -84,7 +83,6 @@ void SendECUStateDataOverCAN(const ECU_StateData *stateData)
 					.FLWheelRPM = (uint16_t)(stateData->fl_wheel_rpm * 10 + 32768),
 					.RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
 					.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 32768)};
-
 
 	CubeCAN_Handle *primary = ECU_GetCANHandle(GRCAN_BUS_PRIMARY);
 	CubeCAN_Send(primary, GRCAN_ALL, GRCAN_ECU_STATUS_1, messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));

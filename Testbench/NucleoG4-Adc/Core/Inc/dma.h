@@ -49,4 +49,3 @@ void MX_DMA_Init(void);
 #endif
 
 #endif /* __DMA_H__ */
-

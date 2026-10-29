@@ -168,10 +168,9 @@ bool APPS_Plausible(volatile const ECU_StateData *stateData)
 	float appspos1 = (stateData->APPS1_Signal - stateData->apps_1_min) / (float)(stateData->apps_1_max - stateData->apps_1_min);
 	float appspos2 = (stateData->APPS2_Signal - stateData->apps_2_min) / (float)(stateData->apps_2_max - stateData->apps_2_min);
 
-
 	const float low = -APPS_OUT_OF_RANGE_MARGIN;
 	const float high = 1.0f + APPS_OUT_OF_RANGE_MARGIN;
-	if (appspos1 < low || appspos2 > high || appspos2 < low || appspos1 > high){
+	if (appspos1 < low || appspos2 > high || appspos2 < low || appspos1 > high) {
 		return false;
 	}
 

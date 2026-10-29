@@ -54,4 +54,3 @@ void MX_FDCAN2_Init(void);
 #endif
 
 #endif /* __FDCAN_H__ */
-

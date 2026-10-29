@@ -6,7 +6,6 @@
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_
 
-
 /**
  * @brief Tick function for the ECU state machine.
  *
