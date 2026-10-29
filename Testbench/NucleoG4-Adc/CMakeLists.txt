@@ -70,7 +70,6 @@
 
 # target_compile_definitions(${TARGET_NAME} PRIVATE STM32G474xx)
 
-
 # #add_library(${TARGET_NAME}_USER_CODE INTERFACE)
 # target_sources(
 # 	${TARGET_NAME}

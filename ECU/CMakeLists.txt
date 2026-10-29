@@ -71,7 +71,6 @@ target_link_options(
 
 target_compile_definitions(${TARGET_NAME} PRIVATE STM32G474xx)
 
-
 #add_library(${TARGET_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${TARGET_NAME}
@@ -89,9 +88,7 @@ target_sources(
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
-
 		startup_stm32g474xx.s
-
 		# Application
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
