@@ -147,9 +147,9 @@ void SystemClock_Config(void)
   LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_4_8);
   LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
   LL_RCC_PLL1_SetM(1);
-  LL_RCC_PLL1_SetN(129);
+  LL_RCC_PLL1_SetN(40);
   LL_RCC_PLL1_SetP(2);
-  LL_RCC_PLL1_SetQ(6);
+  LL_RCC_PLL1_SetQ(2);
   LL_RCC_PLL1_SetR(2);
   LL_RCC_PLL1Q_Enable();
   LL_RCC_PLL1_Enable();

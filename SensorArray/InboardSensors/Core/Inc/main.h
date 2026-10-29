@@ -71,10 +71,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define TOF_EN_Pin LL_GPIO_PIN_3
-#define TOF_EN_GPIO_Port GPIOA
-#define TOF_INT_Pin LL_GPIO_PIN_4
-#define TOF_INT_GPIO_Port GPIOA
+#define TOF_EN_Pin LL_GPIO_PIN_5
+#define TOF_EN_GPIO_Port GPIOB
+#define TOF_INT_Pin LL_GPIO_PIN_6
+#define TOF_INT_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
