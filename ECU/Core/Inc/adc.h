@@ -48,7 +48,6 @@ void MX_ADC5_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
-
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
