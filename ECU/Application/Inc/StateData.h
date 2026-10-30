@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
-#include "can.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
@@ -83,8 +83,7 @@ typedef volatile struct ECU_StateData {
 	uint16_t bspd_signal;
 	uint16_t APPS1_Signal;
 	uint16_t APPS2_Signal;
-	uint16_t Brake_R_Signal;
-	uint16_t Brake_F_Signal;
+	uint16_t Brake_Signal;
 	uint16_t aux_signal;
 	uint16_t steering_angle_signal;
 	uint16_t ping_timeout_delay_ms;
@@ -126,8 +125,8 @@ typedef volatile struct ECU_StateData {
 
 	GR_ECU_State ecu_state;
 
-	CANHandle *primary_can;
-	CANHandle *data_can;
+	CubeCAN_Handle *data_can;
+	CubeCAN_Handle *primary_can;
 } ECU_StateData;
 
 #endif
