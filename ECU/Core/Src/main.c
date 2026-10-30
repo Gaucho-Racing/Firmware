@@ -202,7 +202,7 @@ int main(void)
 		Error_Handler();
 	}
 
-	// Disabling DMA intterrupts for ADC1 and ADC2 for now
+	// Disabling DMA intterrupts for ADC1, ADC2, ADC5
 	__HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
 	__HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_HT | DMA_IT_TC);
 	__HAL_DMA_DISABLE_IT(hadc5.DMA_Handle, DMA_IT_HT | DMA_IT_TC);

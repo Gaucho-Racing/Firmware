@@ -48,7 +48,6 @@ void MX_ADC5_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
-void ADC_UpdateAnalogValues_EMA(volatile uint16_t *ADC_buffers, uint8_t num_signals, float alpha, volatile uint16_t *ADC_outputs);
 
 /* USER CODE END Prototypes */
 
