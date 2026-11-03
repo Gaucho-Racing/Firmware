@@ -31,7 +31,8 @@
 					}
 				]
 			}
-		},{
+		},
+		{
 			"name": "OpenOCD (with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
