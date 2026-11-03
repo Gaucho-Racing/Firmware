@@ -5,7 +5,6 @@ Bus ID:
   Primary:
     id: 1
     max_dlc: 8
-    # <---- DISCREPANCY: this list does not match routing: EM and DGPS have no routes on Primary, and routing uses Debugger, which is not listed.
     nodes:
       - ECU
       - TCM
@@ -524,10 +523,9 @@ Message ID:
   Regen Buttons:
     MSG ID: 0x05F
     MSG LENGTH: 1
-    # <---- DISCREPANCY: the comment two lines below is not valid YAML, because a value starting with [ needs quotes. A strict parser fails there.
     button_flags:
       bit_start: 0
-      comment: [Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved
+      comment: "[Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved"
       data type: u8
   Debug 2.0:
     MSG ID: 0x000
@@ -547,18 +545,18 @@ Message ID:
     MSG ID: 0x002
     MSG LENGTH: 4
     Timestamp:
-      bit_start: 0  # <---- DISCREPANCY: scaled max is 4294967296, one above the largest u32, 4294967295.
+      bit_start: 0
       comment: Time in millis
       data type: u32
       units: ms
       scaled min: 0
-      scaled max: 4,294,967,296
+      scaled max: 4294967295
       map equation: "1x"
   ECU Status 1:
     MSG ID: 0x003
     MSG LENGTH: 8
     ECU State:
-      bit_start: 0  # <---- DISCREPANCY: typed b (1 bit), but it is an 8-bit enum: its comment says bits 0-7, and firmware uses uint8_t (ECU/Application/Inc/StateData.h:29).
+      bit_start: 0
       comment: |-
         [Byte 0 / Bits 0-7] ECU state machine data
         0: GLV Off State
@@ -569,8 +567,8 @@ Message ID:
         5: TS Discharge State
         6-7: Reserved
         See diagram in StateMachine.h
-      data type: b
-      units: Bool
+      data type: u8
+      units: Enum
     Ping Group 1:
       bit_start: 8
       comment: |-
@@ -697,7 +695,7 @@ Message ID:
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
     Relay States:
-      bit_start: 32  # <---- DISCREPANCY: firmware never sends this field (see length above). Should it exist? Also: typed b (1 bit), but its comment says bits 32-39.
+      bit_start: 32  # <---- DISCREPANCY: firmware never sends this field (see length above). Should it exist?
       comment: |-
         [Byte 4 / Bits 32-39]
         0: BMS OK
@@ -705,7 +703,7 @@ Message ID:
         2: BSPD OK
         3: Software OK
         4-7: Reserved
-      data type: b
+      data type: u8
   ACU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
@@ -753,57 +751,47 @@ Message ID:
     MSG ID: 0x008
     MSG LENGTH: 7
     20v Voltage:
-      bit_start: 0  # <---- DISCREPANCY: units, range and map equation are inside the comment block below, so they are lost. Mapache applies this scaling (Mapache@a9f90af gr26/model/bcu.go).
-      comment: |-
-        20v GLV voltage
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      bit_start: 0
+      comment: 20v GLV voltage
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     12v Voltage:
-      bit_start: 8  # <---- DISCREPANCY: units, range and map equation are inside the comment block below, so they are lost. Mapache applies this scaling (Mapache@a9f90af gr26/model/bcu.go).
-      comment: |-
-        12v supply voltage
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      bit_start: 8
+      comment: 12v supply voltage
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     SDC Voltage:
-      bit_start: 16  # <---- DISCREPANCY: units, range and map equation are inside the comment block below, so they are lost. Mapache applies this scaling (Mapache@a9f90af gr26/model/bcu.go).
-      comment: |-
-        Voltage before ACU Latch
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      bit_start: 16
+      comment: Voltage before ACU Latch
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     Min Cell Voltage:
-      bit_start: 24  # <---- DISCREPANCY: units, range and map equation are inside the comment block below, so they are lost. Mapache applies this scaling (Mapache@a9f90af gr26/model/bcu.go).
-      comment: |-
-        Lowest cell voltage in accumulator
-        data type: u8
-        units: Volts
-        scaled min: 2
-        scaled max: 4.55
-        map equation: "0.01x+2"
+      bit_start: 24
+      comment: Lowest cell voltage in accumulator
       data type: u8
+      units: Volts
+      scaled min: 2
+      scaled max: 4.55
+      map equation: "0.01x+2"
     Max Cell Temp:
-      bit_start: 32  # <---- DISCREPANCY: units, range and map equation are inside the comment block below, so they are lost. Mapache applies this scaling (Mapache@a9f90af gr26/model/bcu.go).
-      comment: |-
-        Hottest cell in accumulator
-        data type: u8
-        units: Celsius
-        scaled min: 0
-        scaled max: 63.75
-        map equation: "0.25x"
+      bit_start: 32
+      comment: Hottest cell in accumulator
       data type: u8
+      units: Celsius
+      scaled min: 0
+      scaled max: 63.75
+      map equation: "0.25x"
     status_flags:
-      bit_start: 40  # <---- DISCREPANCY: typed b (1 bit), but its comment says bits 40-47.
+      bit_start: 40
       comment: |-
         [Byte 5 / Bits 40-47]
         40: Over Temp (>60C)
@@ -814,9 +802,9 @@ Message ID:
         45: 20V GLV Warning
         46: 12V Supply Warning
         47: SDC Warning
-      data type: b
+      data type: u8
     precharge_latch_flags:
-      bit_start: 48  # <---- DISCREPANCY: typed b (1 bit), but its comment says bits 48-55.
+      bit_start: 48
       comment: |-
         [Byte 6 / Bits 48-55]
         55: Precharge Timeout
@@ -824,7 +812,7 @@ Message ID:
         53: IR+ State (0:Open, 1:Closed)
         52: Software Latch (0:Open, 1:Closed)
         48-51: Reserved
-      data type: b
+      data type: u8
   ACU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
@@ -8892,7 +8880,7 @@ Message ID:
       scaled max: 2550
       map equation: "10x"
     APPS Deadzone:
-      bit_start: 64  # <---- DISCREPANCY: max is 100, but x/25.5 on a u8 only reaches 10. Firmware multiplies by 25.5 (ECU/Application/Src/CANutils.c:161).
+      bit_start: 64  # <---- DISCREPANCY: max is 100 and the comment says percentage, but x/25.5 on a u8 only reaches 10, and firmware treats this as a fraction: default 0.08 (ECU/Application/Src/StateTicks.c:40), sent as value * 25.5 (ECU/Application/Src/CANutils.c:161), which truncates 0.08 to raw 2. What should the scale be?
       comment: Percentage deadzone of the APPS for which to not consider the pedals to have traveled
       data type: u8
       units: '%'
@@ -9019,17 +9007,17 @@ Message ID:
     MSG ID: 0x53
     MSG LENGTH: 3
     Red:
-      bit_start: 0  # <---- DISCREPANCY: Red, Green and Blue all start at bit 0 in a 3-byte message. Struct order suggests 0, 8, 16 (ECU/Application/Src/Lights.c:106-108).
+      bit_start: 0
       comment: Intensity of the red channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
     Green:
-      bit_start: 0  # <---- DISCREPANCY: overlaps Red. Should this be 8?
+      bit_start: 8
       comment: Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
     Blue:
-      bit_start: 0  # <---- DISCREPANCY: overlaps Red. Should this be 16?
+      bit_start: 16
       comment: Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
@@ -9122,14 +9110,14 @@ Custom CAN ID:
         bit_start: 0
         comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
       - name: "Digital Output 2"
-        bit_start: 1  # <---- DISCREPANCY: the comment below says output 1, presumably should say output 2.
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        bit_start: 1
+        comment: Sets the digital output 2 to HIGH (1) or LOW (0) state
       - name: "Digital Output 3"
-        bit_start: 2  # <---- DISCREPANCY: the comment below says output 1, presumably should say output 3.
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        bit_start: 2
+        comment: Sets the digital output 3 to HIGH (1) or LOW (0) state
       - name: "Digital Output 4"
-        bit_start: 3  # <---- DISCREPANCY: the comment below says output 1, presumably should say output 4.
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        bit_start: 3
+        comment: Sets the digital output 4 to HIGH (1) or LOW (0) state
   DTI Control 8:
     CAN ID: 0x816
     Length: 2
@@ -9266,8 +9254,8 @@ Custom CAN ID:
         bit_start: 0
         comment: FOC algorithm component Id.
       - name: "FOC Iq"
-        bit_start: 32  # <---- DISCREPANCY: the comment below says "Id\q", presumably should say Iq.
-        comment: FOC algorithm component Id\q.
+        bit_start: 32
+        comment: FOC algorithm component Iq.
   DTI Data 5:
     CAN ID: 0x2416
     Length: 8
