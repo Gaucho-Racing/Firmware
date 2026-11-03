@@ -515,15 +515,17 @@ routing:
           - msg: Wheel Speed
           - msg: Brake Temp
 
+  # <---- DISCREPANCY: byte order is one global setting, but DTI is big-endian (ECU/Application/Src/CANdler.c:228, ECU/Application/Src/CANutils.c:88, Mapache@a9f90af gr26/model/dti.go) and the Elcon charger is too (https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf). The spec cannot say this per message.
 byte order: little_endian
 
 Message ID:
+  # <---- DISCREPANCY: Mapache decodes 0x200, 0x201, 0x210 and 0x211 (Mapache@a9f90af gr26/model/tcm.go), and none are in this spec.
   Regen Buttons:
     MSG ID: 0x05F
     MSG LENGTH: 1
     button_flags:
       bit_start: 0
-      comment: [Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved
+      comment: "[Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved"
       data type: u8
   Debug 2.0:
     MSG ID: 0x000
@@ -548,7 +550,7 @@ Message ID:
       data type: u32
       units: ms
       scaled min: 0
-      scaled max: 4,294,967,296
+      scaled max: 4294967295
       map equation: "1x"
   ECU Status 1:
     MSG ID: 0x003
@@ -565,8 +567,8 @@ Message ID:
         5: TS Discharge State
         6-7: Reserved
         See diagram in StateMachine.h
-      data type: b
-      units: Bool
+      data type: u8
+      units: Enum
     Ping Group 1:
       bit_start: 8
       comment: |-
@@ -607,11 +609,11 @@ Message ID:
         31: BrakeTemp RR (1: OK, 0: Timeout)
       data type: u8
     Forward AC I Code:
-      bit_start: 32
+      bit_start: 32  # <---- DISCREPANCY: firmware puts Forward in the HIGH nibble, spec says low (ECU/Application/Src/CANutils.c:112). Mapache matches firmware (Mapache@a9f90af gr26/model/ecu.go:49).
       comment: Determines the forward current based on a mapping (0 = 50A, 1 = 100A, 2 = 200A, 3 = 300A, 4 = 325A, >4 invalid)
       data type: u4
     Regen AC I Code:
-      bit_start: 36
+      bit_start: 36  # <---- DISCREPANCY: firmware puts Regen in the LOW nibble, spec says high (ECU/Application/Src/CANutils.c:112).
       comment: Determines the regen current based on a mapping (0 = 0A, 1 = 15A, 2 = 30A, 3 = 45A, 4 = 60A, 5 = 75A, 6 = 90A, 7 = 105A, 8 = 120A, >8 invalid)
       data type: u4
     Max Cell Temp:
@@ -658,7 +660,7 @@ Message ID:
       scaled max: 655.35
       map equation: "0.01x"
     FL Wheel RPM:
-      bit_start: 32
+      bit_start: 32  # <---- DISCREPANCY: firmware uses FR, FL order, not FL, FR (ECU/Application/Inc/StateData.h:37-38). Mapache follows the spec order (Mapache@a9f90af gr26/model/ecu.go:81-86).
       comment: FL Wheel RPM
       data type: u16
       units: RPM
@@ -666,7 +668,7 @@ Message ID:
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
     FR Wheel RPM:
-      bit_start: 48
+      bit_start: 48  # <---- DISCREPANCY: firmware uses FR, FL order, not FL, FR (ECU/Application/Inc/StateData.h:37-38).
       comment: FR Wheel RPM
       data type: u16
       units: RPM
@@ -675,9 +677,9 @@ Message ID:
       map equation: "0.1x-3276.8"
   ECU Status 3:
     MSG ID: 0x005
-    MSG LENGTH: 5
+    MSG LENGTH: 5  # <---- DISCREPANCY: firmware sends 4 bytes, spec says 5 (ECU/Application/Inc/StateData.h:46, ECU/Application/Src/CANutils.c:125). Mapache also expects 4.
     RL Wheel RPM:
-      bit_start: 0
+      bit_start: 0  # <---- DISCREPANCY: firmware uses RR, RL order, not RL, RR (ECU/Application/Inc/StateData.h:39-40). Mapache follows the spec order (Mapache@a9f90af gr26/model/ecu.go:94-99).
       comment: RL Wheel RPM
       data type: u16
       units: RPM
@@ -685,7 +687,7 @@ Message ID:
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
     RR Wheel RPM:
-      bit_start: 16
+      bit_start: 16  # <---- DISCREPANCY: firmware uses RR, RL order, not RL, RR (ECU/Application/Inc/StateData.h:39-40).
       comment: RR Wheel RPM
       data type: u16
       units: RPM
@@ -693,7 +695,7 @@ Message ID:
       scaled max: 3276.7
       map equation: "0.1x-3276.8"
     Relay States:
-      bit_start: 32
+      bit_start: 32  # <---- DISCREPANCY: firmware never sends this field (see length above). Should it exist?
       comment: |-
         [Byte 4 / Bits 32-39]
         0: BMS OK
@@ -701,7 +703,7 @@ Message ID:
         2: BSPD OK
         3: Software OK
         4-7: Reserved
-      data type: b
+      data type: u8
   ACU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
@@ -750,54 +752,44 @@ Message ID:
     MSG LENGTH: 7
     20v Voltage:
       bit_start: 0
-      comment: |-
-        20v GLV voltage
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      comment: 20v GLV voltage
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     12v Voltage:
       bit_start: 8
-      comment: |-
-        12v supply voltage
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      comment: 12v supply voltage
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     SDC Voltage:
       bit_start: 16
-      comment: |-
-        Voltage before ACU Latch
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      comment: Voltage before ACU Latch
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     Min Cell Voltage:
       bit_start: 24
-      comment: |-
-        Lowest cell voltage in accumulator
-        data type: u8
-        units: Volts
-        scaled min: 2
-        scaled max: 4.55
-        map equation: "0.01x+2"
+      comment: Lowest cell voltage in accumulator
       data type: u8
+      units: Volts
+      scaled min: 2
+      scaled max: 4.55
+      map equation: "0.01x+2"
     Max Cell Temp:
       bit_start: 32
-      comment: |-
-        Hottest cell in accumulator
-        data type: u8
-        units: Celsius
-        scaled min: 0
-        scaled max: 63.75
-        map equation: "0.25x"
+      comment: Hottest cell in accumulator
       data type: u8
+      units: Celsius
+      scaled min: 0
+      scaled max: 63.75
+      map equation: "0.25x"
     status_flags:
       bit_start: 40
       comment: |-
@@ -810,7 +802,7 @@ Message ID:
         45: 20V GLV Warning
         46: 12V Supply Warning
         47: SDC Warning
-      data type: b
+      data type: u8
     precharge_latch_flags:
       bit_start: 48
       comment: |-
@@ -820,7 +812,7 @@ Message ID:
         53: IR+ State (0:Open, 1:Closed)
         52: Software Latch (0:Open, 1:Closed)
         48-51: Reserved
-      data type: b
+      data type: u8
   ACU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
@@ -2964,7 +2956,7 @@ Message ID:
       map equation: "0.25x"
   ACU Cell Data 5:
     MSG ID: 0x011
-    MSG LENGTH: 64
+    MSG LENGTH: 64  # <---- DISCREPANCY: spec says 64 bytes, Mapache expects 24 bytes, or 12 cells (Mapache@a9f90af gr26/model/bcu.go). What does the ACU send?
     Cell 128 Voltage:
       bit_start: 0
       comment: Cell  n voltage
@@ -3508,7 +3500,7 @@ Message ID:
     MSG ID: 0x014
     MSG LENGTH: 6
     U MOSFET Temp:
-      bit_start: 0
+      bit_start: 0  # <---- DISCREPANCY: spec uses all 16 bits, Mapache masks to the low 8 (Mapache@a9f90af gr26/model/inverter.go). Which is right?
       comment: Celsius + 40, uint8_t
       data type: u16
       units: Celsius
@@ -3516,7 +3508,7 @@ Message ID:
       scaled max: 215
       map equation: "x-40"
     V MOSFET Temp:
-      bit_start: 16
+      bit_start: 16  # <---- DISCREPANCY: spec uses all 16 bits, Mapache masks to the low 8 (Mapache@a9f90af gr26/model/inverter.go). Which is right?
       comment: Celsius + 40, uint8_t
       data type: u16
       units: Celsius
@@ -3524,7 +3516,7 @@ Message ID:
       scaled max: 215
       map equation: "x-40"
     W MOSFET Temp:
-      bit_start: 32
+      bit_start: 32  # <---- DISCREPANCY: spec uses all 16 bits, Mapache masks to the low 8 (Mapache@a9f90af gr26/model/inverter.go). Which is right?
       comment: Celsius + 40, uint8_t
       data type: u16
       units: Celsius
@@ -3533,7 +3525,7 @@ Message ID:
       map equation: "x-40"
   Inv Status 3:
     MSG ID: 0x015
-    MSG LENGTH: 3
+    MSG LENGTH: 3  # <---- DISCREPANCY: spec says 3 bytes with faults in byte 1. Generated struct is 2 bytes, and the ECU rejects anything else (ECU/Application/Src/CANdler.c:153). Mapache reads 3 bytes with faults in byte 2 (Mapache@a9f90af gr26/model/inverter.go). What does the inverter send?
     Motor Temp:
       bit_start: 0
       comment: Celsius + 40, uint8_t
@@ -3702,7 +3694,7 @@ Message ID:
     MSG ID: 0x02E
     MSG LENGTH: 20
     BSPD Signal:
-      bit_start: 0
+      bit_start: 0  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3710,7 +3702,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     BSE Signal:
-      bit_start: 16
+      bit_start: 16  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3718,7 +3710,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     APPS 1 Signal:
-      bit_start: 32
+      bit_start: 32  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3726,7 +3718,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     APPS 2 Signal:
-      bit_start: 48
+      bit_start: 48  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3734,7 +3726,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     Brakeline F Signal:
-      bit_start: 64
+      bit_start: 64  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3742,7 +3734,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     Brakeline R Signal:
-      bit_start: 80
+      bit_start: 80  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3750,7 +3742,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     Steering Angle Signal:
-      bit_start: 96
+      bit_start: 96  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3758,7 +3750,7 @@ Message ID:
       scaled max: 100
       map equation: "x/655.35"
     AUX Signal:
-      bit_start: 112
+      bit_start: 112  # <---- DISCREPANCY: spec scales by x/655.35, Mapache stores the raw value (Mapache@a9f90af gr26/model/ecu.go). Which is right?
       comment: 4-20 mA signal
       data type: u16
       units: '%'
@@ -3799,7 +3791,7 @@ Message ID:
     MSG ID: 0x033
     MSG LENGTH: 8
     ALT:
-      bit_start: 0
+      bit_start: 0  # <---- DISCREPANCY: spec says 8-byte double, Mapache reads a float32 plus a u32 status (Mapache@a9f90af gr26/model/gps.go). What does the DGPS send?
       comment: altitude
       data type: double
   GPS PX:
@@ -8686,7 +8678,7 @@ Message ID:
       map equation: "x/8"
   Suspension IMU Mag Data:
     MSG ID: 0x051
-    MSG LENGTH: 24
+    MSG LENGTH: 24  # <---- DISCREPANCY: mag_status and reserved below sit past the end of a 24-byte frame. What is the real length?
     bmi323_acc_x:
       bit_start: 0
       comment: BMI323 accelerometer X
@@ -8736,12 +8728,12 @@ Message ID:
       comment: Magnetic encoder turns
       data type: i16
     mag_status:
-      bit_start: 192
+      bit_start: 192  # <---- DISCREPANCY: past the end of a 24-byte frame (bits 0-191).
       comment: Magnetic encoder status
       data type: b
       units: u8
     reserved:
-      bit_start: 200
+      bit_start: 200  # <---- DISCREPANCY: past the end of a 24-byte frame (bits 0-191).
       comment: Reserved
       data type: u16
   InboardFloor IMU ToF Data:
@@ -8888,7 +8880,7 @@ Message ID:
       scaled max: 2550
       map equation: "10x"
     APPS Deadzone:
-      bit_start: 64
+      bit_start: 64  # <---- DISCREPANCY: max is 100 and the comment says percentage, but x/25.5 on a u8 only reaches 10, and firmware treats this as a fraction: default 0.08 (ECU/Application/Src/StateTicks.c:40), sent as value * 25.5 (ECU/Application/Src/CANutils.c:161), which truncates 0.08 to raw 2. What should the scale be?
       comment: Percentage deadzone of the APPS for which to not consider the pedals to have traveled
       data type: u8
       units: '%'
@@ -9020,19 +9012,20 @@ Message ID:
       data type: u8
       units: Intensity
     Green:
-      bit_start: 0
+      bit_start: 8
       comment: Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
     Blue:
-      bit_start: 0
+      bit_start: 16
       comment: Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
 
 Custom CAN ID:
+  # <---- DISCREPANCY: DTI, charger, EM and IMD signals have no data types or scales in this section, so widths are guessed from the gaps between bit positions. Where are the datasheets?
   DTI Control 1:
-    CAN ID: 0x116
+    CAN ID: 0x116  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 2
     signals:
       - name: "Target AC Current"
@@ -9047,7 +9040,7 @@ Custom CAN ID:
           correlates with the motor AC current. (For the correlation, please
           refer to the motor Params)
   DTI Control 2:
-    CAN ID: 0x216
+    CAN ID: 0x216  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 2
     signals:
       - name: "Target Brake Current"
@@ -9058,7 +9051,7 @@ Custom CAN ID:
           This value must be multiplied by 10 before sending, only
           positive currents are accepted.
   DTI Control 3:
-    CAN ID: 0x316
+    CAN ID: 0x316  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 4
     signals:
       - name: "Target ERPM"
@@ -9070,7 +9063,7 @@ Custom CAN ID:
           need to tune the PID of speed control.
           Equation: ERPM = Motor RPM * number of the motor pole pairs
   DTI Control 4:
-    CAN ID: 0x416
+    CAN ID: 0x416  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 2
     signals:
       - name: "Target Position"
@@ -9081,7 +9074,7 @@ Custom CAN ID:
           This feature is enabled only if encoder is used as position
           sensor. The value has to be multiplied by 10 before sending.
   DTI Control 5:
-    CAN ID: 0x516
+    CAN ID: 0x516  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 2
     signals:
       - name: "R-AC Current"
@@ -9095,7 +9088,7 @@ Custom CAN ID:
           This value must be between -100 and 100 and must be
           multiplied by 10 before sending.
   DTI Control 6:
-    CAN ID: 0x616
+    CAN ID: 0x616  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 2
     signals:
       - name: "R-AC Brake Current"
@@ -9110,7 +9103,7 @@ Custom CAN ID:
           This value must be between 0 and 100 and has to be multiplied
           by 10 before sending
   DTI Control 7:
-    CAN ID: 0x716
+    CAN ID: 0x716  # <---- DISCREPANCY: firmware sends all DTI frames as extended (ECU/Application/Src/CANutils.c:70). The spec has no frame type field, so this ID gets generated as standard.
     Length: 1
     signals:
       - name: "Digital Output 1"
@@ -9118,13 +9111,13 @@ Custom CAN ID:
         comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
       - name: "Digital Output 2"
         bit_start: 1
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 2 to HIGH (1) or LOW (0) state
       - name: "Digital Output 3"
         bit_start: 2
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 3 to HIGH (1) or LOW (0) state
       - name: "Digital Output 4"
         bit_start: 3
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 4 to HIGH (1) or LOW (0) state
   DTI Control 8:
     CAN ID: 0x816
     Length: 2
@@ -9186,7 +9179,7 @@ Custom CAN ID:
     Length: 8
     signals:
       - name: "ERPM"
-        bit_start: 0
+        bit_start: 0  # <---- DISCREPANCY: no type or scale given. The ECU uses it unscaled (ECU/Application/Src/CANdler.c:228), Mapache divides by 10 (Mapache@a9f90af gr26/model/dti.go). Which is right?
         comment: |-
           Electrical RPM
           Equation: ERPM = Motor RPM * number of the motor pole pairs.
@@ -9262,7 +9255,7 @@ Custom CAN ID:
         comment: FOC algorithm component Id.
       - name: "FOC Iq"
         bit_start: 32
-        comment: FOC algorithm component Id\q.
+        comment: FOC algorithm component Iq.
   DTI Data 5:
     CAN ID: 0x2416
     Length: 8
@@ -9401,23 +9394,23 @@ Custom CAN ID:
         bit_start: 56
         comment: Filled with FF's
   IMD isolation info:
-    CAN ID: 0x18EFF4FE
+    CAN ID: 0x18EFF4FE  # <---- DISCREPANCY: shares this ID with 3 other IMD messages, and has length 0 and no signals. Where is the layout?
     Length: 0
     signals: []
   IMD voltage:
-    CAN ID: 0x18EFF4FE
+    CAN ID: 0x18EFF4FE  # <---- DISCREPANCY: shares this ID with 3 other IMD messages, and has length 0 and no signals. Where is the layout?
     Length: 0
     signals: []
   IMD IT-system:
-    CAN ID: 0x18EFF4FE
+    CAN ID: 0x18EFF4FE  # <---- DISCREPANCY: shares this ID with 3 other IMD messages, and has length 0 and no signals. Where is the layout?
     Length: 0
     signals: []
   IMD request:
-    CAN ID: 0x18EFF4FE
+    CAN ID: 0x18EFF4FE  # <---- DISCREPANCY: shares this ID with 3 other IMD messages, and has length 0 and no signals. Where is the layout?
     Length: 0
     signals: []
   IMD response:
-    CAN ID: 0x23
+    CAN ID: 0x23  # <---- DISCREPANCY: length 0 and no signals. Where is the layout?
     Length: 0
     signals: []
   Charger Data:
@@ -9425,36 +9418,36 @@ Custom CAN ID:
     Length: 8
     signals:
       - name: "Output Voltage"
-        bit_start: 0
+        bit_start: 0  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf says high byte first at 0.1 V/bit. Spec is little-endian with no scale.
       - name: "Output Current"
-        bit_start: 16
+        bit_start: 16  # <---- DISCREPANCY: overlaps the flags below if this is 16 bits. Documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf says bytes 3-4, high byte first, 0.1 A/bit.
       - name: "Hardware Failure"
-        bit_start: 17
+        bit_start: 17  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf claims this is bit 0 of byte 5 (our byte index 4, bit 32), not this position.
         comment: "Bit 0: Hardware Failure: 0-Normal, 1-Error"
       - name: "OverTemp"
-        bit_start: 18
+        bit_start: 18  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf claims this is bit 1 of byte 5 (our byte index 4, bit 33), not this position.
         comment: "Bit 1: OverTemp: 0-Normal, 1-Error"
       - name: "Input Voltage Error"
-        bit_start: 19
+        bit_start: 19  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf claims this is bit 2 of byte 5 (our byte index 4, bit 34), not this position.
         comment: "Bit 2: Input Voltage: 0-Normal, 1-Wrong input voltage"
       - name: "Connection Error"
-        bit_start: 20
+        bit_start: 20  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf claims this is bit 3 of byte 5 (our byte index 4, bit 35), not this position.
         comment: "Bit 3: Starting State: 0-Correct, 1-Wrong polarity or NC"
       - name: "Communication State"
-        bit_start: 21
+        bit_start: 21  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf claims this is bit 4 of byte 5 (our byte index 4, bit 36), not this position.
         comment: "Bit 4: Communication State: 0-Normal, 1-Timeout"
       - name: "RESERVED"
         bit_start: 24
   Charger Control:
     CAN ID: 0x1806E5F4
-    Length: 5
+    Length: 5  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf lists 8 bytes, spec says 5. Confirm this manual is our charger.
     signals:
       - name: "Set Voltage"
-        bit_start: 0
+        bit_start: 0  # <---- DISCREPANCY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf says high byte first at 0.1 V/bit. Spec is little-endian with no scale.
       - name: "Set Current"
-        bit_start: 16
+        bit_start: 16  # <---- DISCREPANCY: overlaps the enable bit below if this is 16 bits. Documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf says bytes 3-4, high byte first, 0.1 A/bit.
       - name: "Chg Enable"
-        bit_start: 17
+        bit_start: 17  # <---- DISCREPANCY: SAFETY: documentation at https://evwest.com/support/Elcon%20CAN%20Specification%202019.pdf claims 0 = start and 1 = stop, in byte 5. Spec comment says 1 = start, 0 = stop, at bit 17. Check what the ACU sends.
         comment: |-
           1: Start Charging
           0: Stop Charging
@@ -9486,7 +9479,7 @@ Custom CAN ID:
     Length: 8
     signals:
       - name: "Mux Signal"
-        bit_start: 0-2
+        bit_start: 0-2  # <---- DISCREPANCY: EM Temp is multiplexed, but that is only described in comment text.
         comment: n = [0-6]
       - name: "Num Sensors"
         bit_start: 3-7
@@ -9509,7 +9502,7 @@ Custom CAN ID:
       - name: "Temp 5n+4"
         bit_start: 56
   EM Team Data 1:
-    CAN ID: 0x30D
+    CAN ID: 0x30D  # <---- DISCREPANCY: signal meanings are unknown (comments say "Frick if I know"). Keep this message?
     Length: 8
     signals:
       - name: "Team Signal 1"
@@ -9519,7 +9512,7 @@ Custom CAN ID:
         bit_start: 32
         comment: Frick if I know
   EM Team Data 2:
-    CAN ID: 0x30E
+    CAN ID: 0x30E  # <---- DISCREPANCY: signal meanings are unknown (comments say "Frick if I know"). Keep this message?
     Length: 8
     signals:
       - name: "Team Signal 3"
