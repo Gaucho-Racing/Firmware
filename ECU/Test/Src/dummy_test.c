@@ -2,6 +2,6 @@
 
 int main(void)
 {
-	LOGOMATIC("Dummy test executed successfully.\n");
+	LOGOMATIC_INFO("Dummy test executed successfully.\n");
 	return 0;
 }
