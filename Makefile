@@ -3,9 +3,7 @@ define cmake_build
 	cmake --build --preset $(1)
 endef
 
-.PHONY: clean Debug Release RelWithDebInfo MinSizeRel HOOTLTest sanitizer valgrind
-
-all: Debug Release RelWithDebInfo MinSizeRel HOOTLTest
+.PHONY: purge clean Debug Release RelWithDebInfo MinSizeRel HOOTLTest sanitizer valgrind
 
 Debug:
 	$(call cmake_build,$(@))
@@ -27,6 +25,9 @@ sanitizer: HOOTLTest
 
 clean:
 	cmake -E remove_directory build
+
+purge: clean
+	cmake -E remove_directory Lib/Vendor/FetchContent
 
 valgrind:
 	cmake -S . -B build/HOOTLValgrind --preset HOOTLTest -DADDRESS_SANITIZER=OFF
