@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "OpenOCD",
+			"name": "OpenOCD (G474 160 MHz)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "openocd",
@@ -10,15 +10,15 @@
 			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
+				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"preLaunchTask": "CMake: build active target",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}000000",
+				"cpuFrequency": 160000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -33,7 +33,7 @@
 			}
 		},
 		{
-			"name": "OpenOCD (with Node ID)",
+			"name": "OpenOCD (G474 160 MHz with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
 			"servertype": "openocd",
@@ -41,15 +41,15 @@
 			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
+				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G474.svd",
 			"preLaunchTask": "CMake: build active target (with NODE)",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}000000",
+				"cpuFrequency": 160000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -64,23 +64,23 @@
 			}
 		},
 		{
-			"name": "ST-Util",
+			"name": "OpenOCD (G431 160 MHz)",
 			"type": "cortex-debug",
 			"request": "launch",
-			"servertype": "stutil",
+			"servertype": "openocd",
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
+				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"preLaunchTask": "CMake: build active target",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}000000",
+				"cpuFrequency": 160000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -95,23 +95,23 @@
 			}
 		},
 		{
-			"name": "ST-Util (with Node ID)",
+			"name": "OpenOCD (G431 160 MHz with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
-			"servertype": "stutil",
+			"servertype": "openocd",
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
+				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32G431.svd",
 			"preLaunchTask": "CMake: build active target (with NODE)",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}000000",
+				"cpuFrequency": 160000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -126,23 +126,23 @@
 			}
 		},
 		{
-			"name": "ST-Link",
+			"name": "OpenOCD (H523 160 MHz)",
 			"type": "cortex-debug",
 			"request": "launch",
-			"servertype": "stlink",
+			"servertype": "openocd",
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
+				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32H523.svd",
 			"preLaunchTask": "CMake: build active target",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}000000",
+				"cpuFrequency": 160000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -157,23 +157,23 @@
 			}
 		},
 		{
-			"name": "ST-Link (with Node ID)",
+			"name": "OpenOCD (H523 160 MHz with Node ID)",
 			"type": "cortex-debug",
 			"request": "launch",
-			"servertype": "stlink",
+			"servertype": "openocd",
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.launchTargetPath}",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/${input:targetMcuConfig}.cfg"
+				"target/stm32h5x.cfg"
 			],
 			"searchDir": [],
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/${input:svdDevice}.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32H523.svd",
 			"preLaunchTask": "CMake: build active target (with NODE)",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": "${input:cpuFrequency}000000",
+				"cpuFrequency": 160000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
@@ -186,38 +186,130 @@
 					}
 				]
 			}
-		}
-	],
-	"inputs": [
-		{
-			"id": "targetMcuConfig",
-			"type": "pickString",
-			"description": "Select Target Config:",
-			"options": [
-				"stm32g4x",
-				"stm32l4x",
-				"stm32u5x"
-			]
 		},
 		{
-			"id": "svdDevice",
-			"type": "pickString",
-			"description": "Select Target SVD Device:",
-			"options": [
-				"STM32G474",
-				"STM32G431",
-				"STM32L476",
-				"STM32U5A9"
-			]
+			"name": "OpenOCD (L476 80 MHz)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "openocd",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32l4x.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd",
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 80000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		},
 		{
-			"id": "cpuFrequency",
-			"type": "pickString",
-			"description": "Select Core CPU Clock Frequency (MHz):",
-			"options": [
-				"160",
-				"80"
-			]
+			"name": "OpenOCD (L476 80 MHz with Node ID)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "openocd",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32l4x.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32L476.svd",
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 80000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "OpenOCD (U5A9 160 MHz)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "openocd",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32u5x.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32U5A9.svd",
+			"preLaunchTask": "CMake: build active target",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 160000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"name": "OpenOCD (U5A9 160 MHz with Node ID)",
+			"type": "cortex-debug",
+			"request": "launch",
+			"servertype": "openocd",
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32u5x.cfg"
+			],
+			"searchDir": [],
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/SVD/STM32U5A9.svd",
+			"preLaunchTask": "CMake: build active target (with NODE)",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 160000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		}
 	]
 }
