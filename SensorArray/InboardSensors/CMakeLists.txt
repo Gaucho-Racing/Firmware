@@ -39,4 +39,9 @@ target_sources(
 		startup_stm32h503xx.s
 )
 
-target_link_libraries(${TARGET_NAME} PRIVATE LOGOMATIC_LIB)
+target_link_libraries(
+	${TARGET_NAME}
+	PRIVATE
+		LOGOMATIC_LIB
+		CUBE_CAN_LIB
+)
