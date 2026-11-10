@@ -126,9 +126,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 
-// void read_digital(){
-//   stateLump.estop_sense = LL_GPIO_IsInputPinSet(ESTOP_SENSE_GPIO_Port, ESTOP_SENSE_Pin);
-// }
 
 /* USER CODE END 0 */
 
