@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fdcan.h"
+#include "gpdma.h"
 #include "i2c.h"
 #include "icache.h"
 #include "gpio.h"
@@ -27,6 +28,11 @@
 /* USER CODE BEGIN Includes */
 
 #include "CubeCAN.h"
+#include "Logomatic.h"
+#include "stm32h503xx.h"
+#include "stm32h5xx_hal_def.h"
+#include "stm32h5xx_ll_gpio.h"
+#include "stm32h5xx_ll_i2c.h"
 
 /* USER CODE END Includes */
 
@@ -49,12 +55,28 @@
 
 /* USER CODE BEGIN PV */
 
+volatile uint8_t rx_buffer;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MPU_Config(void);
 /* USER CODE BEGIN PFP */
+
+static void canRxCallback(
+  	const CubeCAN_Config_Context *const context,
+  	const CubeCAN_Identifier *const identifier,
+  	const uint8_t *const data,
+  	const uint8_t size
+  ){
+  UNUSED(context);
+  UNUSED(identifier);
+  UNUSED(data);
+  UNUSED(size);
+  
+  LOGOMATIC_DEBUG("Inboard Node received something, but no action will be taken");
+}
 
 /* USER CODE END PFP */
 
@@ -95,10 +117,23 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_GPDMA1_Init();
   MX_FDCAN1_Init();
-  MX_I2C1_Init();
   MX_ICACHE_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+
+  LL_GPIO_SetOutputPin(GPIOB, GPIO_PIN_5); // Power on the sensor
+
+  CubeCAN_Config cube_can_config = {
+    .context = {
+      .busid_user_context = GRCAN_BUS_DATA
+    },
+    .rx_callback = canRxCallback,
+    .sending_node_id = GRCAN_ALL // TODO: Confirm the real name for this node
+  };
+  
+  CubeCAN_Handle* p_h_cube_can = CubeCAN_Entrance(&hfdcan1, &cube_can_config);
 
   /* USER CODE END 2 */
 
