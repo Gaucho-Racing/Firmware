@@ -126,7 +126,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 
-
 /* USER CODE END 0 */
 
 /**
