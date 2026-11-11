@@ -53,7 +53,7 @@ jobs:
           fetch-depth: 1
 
       - name: Validate Configuration Files
-        uses: Boeing/validate-configs-action@ebb76b7ccb654b01750763cff3e55d286a45c789 # v3.0.0
+        uses: Boeing/validate-configs-action@a31830f9bec7d3ec001cfab7951a966d08180a72 # v2.0.0
 
   perllinter:
     name: Perl Linter
