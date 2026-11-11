@@ -141,22 +141,23 @@ include("${LIB_PATH}/Peripherals/CubeCAN/cube_can.cmake")
 include(Testbench/testbench.cmake)
 include(SensorArray/sensors.cmake)
 include(DriverInterface/controls.cmake)
+include(GLVPD_A/glvpd.cmake)
 
 add_project(
-    NAME "ECU"
-    PATH "ECU"
+    NAME "GLVPD_B"
+    PATH "GLVPD_B"
     SERIES "g4"
-    SPECIFIER "g474re"
+    SPECIFIER "g431cbu6"
     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
     CMSIS_MAJOR "5"
 )
 
 add_project(
-    NAME "GLVControl"
-    PATH "GLVControl"
+    NAME "ECU"
+    PATH "ECU"
     SERIES "g4"
-    SPECIFIER "g431cbu6"
+    SPECIFIER "g474re"
     HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
     CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
     CMSIS_MAJOR "5"
