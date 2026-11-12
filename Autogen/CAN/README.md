@@ -2,14 +2,49 @@
 
 #### By Aarnav, Caroline, Kartik, Nandini
 
+## Source of Truth: The DBCs
+
+The CAN spec lives in `DBC/`, one DBC per bus: `GRCAN_Primary.dbc`, `GRCAN_Data.dbc` and `GRCAN_Charger.dbc`. Edit them with a DBC editor or by hand. Nothing generates them.
+
+The C headers in `Inc/` are still generated from `Doc/GRCAN.CANdo` until a DBC-based generator replaces it. **Until then, make every CAN change in both the DBC and CANdo.**
+
+`DBCparser.pl` still writes `Doc/GRCAN_*.dbc` from CANdo until it is removed. Those files are not the source of truth and have known errors, so use the DBCs in `DBC/`.
+
+### Conventions
+
+- Each route is its own `BO_` frame, named `<Sender>_<Message>_to_<Receiver>` and at most 32 characters. All frames of one message share its layout.
+- A GR message's CAN ID is `sender GR ID << 20 | MSG ID << 8 | receiver GR ID`. IDs above `0x7FF` are extended and set `VFrameFormat`.
+- Floating-point signals are marked with `SIG_VALTYPE_` (`1` = float, `2` = double).
+- Custom attributes hold what used to live only in CANdo:
+
+| Attribute   | Set on      | Meaning                                                     |
+| ----------- | ----------- | ----------------------------------------------------------- |
+| `DBName`    | file        | Bus name                                                    |
+| `GRBusID`   | file        | Bus ID                                                      |
+| `GRID`      | `BU_` node  | GR ID. Third-party nodes have `0`, as in CANdo              |
+| `GRMsgName` | `BO_` frame | Message name, the same on every frame of one message        |
+| `GRMsgID`   | `BO_` frame | MSG ID for GR messages, `-1` for third-party messages       |
+
+When you add a frame, set `GRMsgName`, and `GRMsgID` if it's a GR message. When you add a node, set `GRID`.
+
+### Not in the DBCs
+
+- `Debug 2.0` and `Debug FD`. Their payload is text, which DBC can't describe.
+- The `Testing` bus (ID 0). It has no messages.
+- IMD isolation info, voltage, IT-system, request and response. CANdo gives them no length or signals.
+- `mag_status` in Suspension IMU Mag Data. It sits past the end of the 24-byte frame.
+
+---
+
 ## Workflow: How to Apply Changes
 
 **Do not run the parsers locally.** The generated headers are produced by a GitHub Actions workflow.
 
-1. Edit `Doc/GRCAN.CANdo` with your changes. For a visual editor, use the [CANdo web viewer](https://gaucho-racing.github.io/Firmware/).
-2. Commit and push to GitHub.
-3. The CI workflow runs all parsers on every commit in any pull request and commits the regenerated headers automatically.
-4. Pull the latest changes to get the updated headers locally.
+1. Make the change in the DBC in `DBC/`.
+2. Make the same change in `Doc/GRCAN.CANdo`. For a visual editor, use the [CANdo web viewer](https://gaucho-racing.github.io/Firmware/).
+3. Commit and push to GitHub.
+4. The CI workflow runs all parsers on every commit in any pull request and commits the regenerated headers automatically.
+5. Pull the latest changes to get the updated headers locally.
 
 ---
 
@@ -39,7 +74,7 @@ All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never
 
 ## Modifying `GRCAN.CANdo`
 
-`Doc/GRCAN.CANdo` is the single source of truth for the CAN bus configuration. It is a YAML file with six top-level sections, each consumed by one or more Perl parsers during the build. Changes here propagate into auto-generated C headers and a DBC file.
+`Doc/GRCAN.CANdo` generates the C headers, and the old `Doc/*.dbc`, until a DBC-based generator replaces it. The DBCs in `DBC/` are the source of truth, so keep the two in sync. CANdo is a YAML file with six top-level sections, consumed by the Perl parsers during the build.
 
 ### Top-Level Sections
 
