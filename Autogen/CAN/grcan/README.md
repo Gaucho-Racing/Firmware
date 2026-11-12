@@ -55,6 +55,7 @@ Sort the keys before producing any output, or generated files will change on eve
 
 ## Not supported
 - Mux. The parser rejects any DBC that uses it.
+  Because of this, we are phasing out EM meter 2. Its EM Temp message uses mux.
 
 ## Not guaranteed
 - That the spec is correct. A wrong but self-consistent layout still passes.
