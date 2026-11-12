@@ -2,7 +2,7 @@
 # generate()       writes the spec to spec_gen.go, next to this file
 # signal()         turns a cantools signal into grcan Signal fields
 # message_block()  renders one message
-# attr()           reads a DBC attribute, or its default
+# attr()           reads a DBC attribute, or its default. Enums come back as their names
 # check()          exits with an error if a rule is broken
 # is_name()        tells if a name is a valid identifier
 # go()             renders a Python value as Go
@@ -78,12 +78,14 @@ def validate():
                 byte_aligned = s.length % 8 == 0 and s.start % 8 == 7
                 check(s.byte_order == 'little_endian' or s.length == 1 or byte_aligned, where, f'{s.name}: big-endian must be byte-aligned or 1 bit')
                 check(not s.is_float or s.length in (32, 64), where, f'{s.name}: floats must be 32 or 64 bits')
+                plain_byte = s.length == 8 and s.start % 8 == (0 if s.byte_order == 'little_endian' else 7) and not s.is_signed and not s.is_float and (s.scale, s.offset) == (1, 0)
+                check(attr(db, s, 'GRValueType') != 'ASCII' or plain_byte, where, f'{s.name}: ASCII must be 8 bits, unsigned, unscaled and byte-aligned')
 
             layout = {
                 'MsgID': ptr('uint16', None if msg_id == -1 else msg_id),
                 'Length': m.length,
                 'Comment': m.comment,
-                'Signals': {s.name: signal(s) for s in m.signals},
+                'Signals': {s.name: signal(db, s) for s in m.signals},
             }
             check(layouts.setdefault(name, layout) == layout, where, f'differs from other routes of {name}')
             routes.setdefault(name, []).append({
@@ -92,7 +94,7 @@ def validate():
                 'Receiver': receiver,
                 'CANID': m.frame_id,
                 'Extended': m.is_extended_frame,
-                'BRS': fd and str(attr(db, m, 'CANFD_BRS')) == '1',  # enum: default is a string, set values are ints
+                'BRS': fd and attr(db, m, 'CANFD_BRS') == '1',
             })
 
     for name, node in nodes.items():
@@ -113,11 +115,13 @@ def generate(buses, nodes, layouts, routes):
     OUT_FILE.write_text(HEADER + spec + '\n')
 
 
-def signal(s):
+def signal(db, s):
     little_endian = s.byte_order == 'little_endian'
     start = s.start if little_endian or s.length == 1 else s.start - 7  # DBC gives a big-endian signal's MSB
 
-    if s.is_float:
+    if attr(db, s, 'GRValueType') == 'ASCII':
+        value_type = Go('ASCII')
+    elif s.is_float:
         value_type = Go('Float')
     elif s.is_signed:
         value_type = Go('Signed')
@@ -157,10 +161,11 @@ def message_block(layout, routes):
 
 
 def attr(db, owner, name):
-    if name in owner.dbc.attributes:
-        return owner.dbc.attributes[name].value
     definition = db.dbc.attribute_definitions.get(name)
-    return definition.default_value if definition else None
+    if name not in owner.dbc.attributes:
+        return definition.default_value if definition else None
+    value = owner.dbc.attributes[name].value
+    return definition.choices[value] if definition and definition.type_name == 'ENUM' else value  # set enums are indices
 
 
 def check(ok, where, problem):
