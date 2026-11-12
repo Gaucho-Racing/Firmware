@@ -8,8 +8,6 @@ The CAN spec lives in `DBC/`, one DBC per bus: `GRCAN_Primary.dbc`, `GRCAN_Data.
 
 The C headers in `Inc/` are still generated from `Doc/GRCAN.CANdo` until a DBC-based generator replaces it. **Until then, make every CAN change in both the DBC and CANdo.**
 
-`DBCparser.pl` still writes `Doc/GRCAN_*.dbc` from CANdo until it is removed. Those files are not the source of truth and have known errors, so use the DBCs in `DBC/`.
-
 ### Conventions
 
 - Each route is its own `BO_` frame, named `<Sender>_<Message>_to_<Receiver>` and at most 32 characters. All frames of one message share its layout.
@@ -56,7 +54,6 @@ All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never
 - `**GRparser.pl**` — Reads the `GR ID` section. Produces `GRCAN_NODE_ID.h`, a single enum of device/node network addresses.
 - `**MSGparser.pl**` — Reads the `Message ID` section. Produces `GRCAN_MSG_ID.h`, a single enum of every team-defined message name to its MSG ID.
 - `**STRUCTparser.pl**` — Reads the `Message ID` section. Produces `GRCAN_MSG_DATA.h`, packed C structs for each message with typed fields, byte-level layout, and description comments.
-- `**DBCparser.pl**` — Reads the `routing`, `Message ID`, `Custom CAN ID`, and `GR ID` sections. Produces `Doc/GRCAN.dbc`, a DBC file for use with CAN analysis tools.
 - `**BusParser.pl**` — Reads the `Bus ID` section. Produces `GRCAN_BUS_ID.h`, an enum of logical CAN bus identifiers.
 
 
@@ -66,7 +63,6 @@ All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never
 | `GRparser.pl`     | `GR ID`                                           | Device name, hex ID value                                         | `GRCAN_NODE_ID.h`   |
 | `MSGparser.pl`    | `Message ID`                                      | Message name, `MSG ID`                                            | `GRCAN_MSG_ID.h`    |
 | `STRUCTparser.pl` | `Message ID`                                      | Message name, fields, `bit_start`, `data type`, `comment:` blocks | `GRCAN_MSG_DATA.h`  |
-| `DBCparser.pl`    | `routing`, `Message ID`, `Custom CAN ID`, `GR ID` | Sender, target, bus, message defs, signal layout                  | `GRCAN.dbc`         |
 | `BusParser.pl`    | `Bus ID`                                          | Bus name, numeric ID                                              | `GRCAN_BUS_ID.h`    |
 
 
@@ -74,7 +70,7 @@ All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never
 
 ## Modifying `GRCAN.CANdo`
 
-`Doc/GRCAN.CANdo` generates the C headers, and the old `Doc/*.dbc`, until a DBC-based generator replaces it. The DBCs in `DBC/` are the source of truth, so keep the two in sync. CANdo is a YAML file with six top-level sections, consumed by the Perl parsers during the build.
+`Doc/GRCAN.CANdo` generates the C headers until a DBC-based generator replaces it. The DBCs in `DBC/` are the source of truth, so keep the two in sync. CANdo is a YAML file with six top-level sections, consumed by the Perl parsers during the build.
 
 ### Top-Level Sections
 
@@ -82,7 +78,7 @@ All parsers live in `Src/` and read `Doc/GRCAN.CANdo` as input. You should never
 | Section         | Consumed By                                                                 | Generated Output              |
 | --------------- | --------------------------------------------------------------------------- | ----------------------------- |
 | `Bus ID`        | `BusParser.pl` -> `GRCAN_BUS_ID.h`                                          | Logical bus ID enum           |
-| `routing`       | `DBCparser.pl` -> `GRCAN.dbc`                                               | DBC message routing           |
+| `routing`       | *(not consumed by any parser; routing lives in the DBCs)*                   | None                          |
 | `byte order`    | *(shared config, not consumed by any parser directly)*                      | Endianness reference          |
 | `Message ID`    | `MSGparser.pl` -> `GRCAN_MSG_ID.h`, `STRUCTparser.pl` -> `GRCAN_MSG_DATA.h` | MSG ID enum, packed C structs |
 | `Custom CAN ID` | `CANparser.pl` -> `GRCAN_CUSTOM_ID.h`                                       | Custom CAN ID enum            |
