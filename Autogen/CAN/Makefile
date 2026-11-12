@@ -13,15 +13,11 @@ GR_ID = $(INC_DIR)/GRCAN_NODE_ID.h
 MSG_ID = $(INC_DIR)/GRCAN_MSG_ID.h
 CAN_ID = $(INC_DIR)/GRCAN_CUSTOM_ID.h
 BUS_ID = $(INC_DIR)/GRCAN_BUS_ID.h
-PRIMARY_DBC = $(DOC_DIR)/GRCAN_Primary.dbc
-DATA_DBC = $(DOC_DIR)/GRCAN_Data.dbc
-CHARGER_DBC = $(DOC_DIR)/GRCAN_Charger.dbc
-ALL_DBC = $(PRIMARY_DBC) $(DATA_DBC) $(CHARGER_DBC)
 
-.PHONY: all clean STRUCTparser CANparser DBCparser GRparser MSGparser BusParser
+.PHONY: all clean STRUCTparser CANparser GRparser MSGparser BusParser
 
-all: STRUCTparser CANparser DBCparser GRparser MSGparser BusParser
-	for file in $(STRUCT_ID) $(CAN_ID) $(ALL_DBC) $(GR_ID) $(MSG_ID) $(BUS_ID); do \
+all: STRUCTparser CANparser GRparser MSGparser BusParser
+	for file in $(STRUCT_ID) $(CAN_ID) $(GR_ID) $(MSG_ID) $(BUS_ID); do \
 		if [ -f "$$file" ]; then \
 			echo "Successfully generated $$file"; \
 		else \
@@ -31,16 +27,13 @@ all: STRUCTparser CANparser DBCparser GRparser MSGparser BusParser
 	done
 
 clean:
-	rm -f $(STRUCT_ID) $(CAN_ID) $(ALL_DBC) $(GR_ID) $(MSG_ID) $(BUS_ID)
+	rm -f $(STRUCT_ID) $(CAN_ID) $(GR_ID) $(MSG_ID) $(BUS_ID)
 
 STRUCTparser:
 	$(PERL) $(SRC_DIR)/$(@).pl $(CANDO) $(STRUCT_ID)
 
 CANparser:
 	$(PERL) $(SRC_DIR)/$(@).pl $(CANDO) $(CAN_ID)
-
-DBCparser:
-	$(PERL) $(SRC_DIR)/$(@).pl $(CANDO) $(DOC_DIR)/GRCAN.dbc
 
 GRparser:
 	$(PERL) $(SRC_DIR)/$(@).pl $(CANDO) $(GR_ID)
