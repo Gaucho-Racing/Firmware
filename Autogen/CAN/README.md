@@ -4,7 +4,7 @@
 
 ## Source of Truth: The DBCs
 
-The CAN spec lives in `DBC/`, one DBC per bus: `GRCAN_Primary.dbc`, `GRCAN_Data.dbc` and `GRCAN_Charger.dbc`. Edit them with a DBC editor or by hand. Nothing generates them.
+The CAN spec lives in `DBC/`, one DBC per bus: `GRCAN_Primary.dbc`, `GRCAN_Data.dbc`, `GRCAN_Charger.dbc` and `GRCAN_Testing.dbc`. Testing has no messages yet. Edit them with a DBC editor or by hand. Nothing generates them.
 
 The C headers in `Inc/` are still generated from `Doc/GRCAN.CANdo` until a DBC-based generator replaces it. **Until then, make every CAN change in both the DBC and CANdo.**
 
@@ -15,22 +15,22 @@ The C headers in `Inc/` are still generated from `Doc/GRCAN.CANdo` until a DBC-b
 - Each route is its own `BO_` frame, named `<Sender>_<Message>_to_<Receiver>` and at most 32 characters. All frames of one message share its layout.
 - A GR message's CAN ID is `sender GR ID << 20 | MSG ID << 8 | receiver GR ID`. IDs above `0x7FF` are extended and set `VFrameFormat`.
 - Floating-point signals are marked with `SIG_VALTYPE_` (`1` = float, `2` = double).
+- Text is one 8-bit unsigned signal per character, marked `GRValueType` `ASCII`. There is no terminator: a shorter frame carries fewer characters.
 - Custom attributes hold what used to live only in CANdo:
 
-| Attribute   | Set on      | Meaning                                                     |
-| ----------- | ----------- | ----------------------------------------------------------- |
-| `DBName`    | file        | Bus name                                                    |
-| `GRBusID`   | file        | Bus ID                                                      |
-| `GRID`      | `BU_` node  | GR ID. Third-party nodes have `0`, as in CANdo              |
-| `GRMsgName` | `BO_` frame | Message name, the same on every frame of one message        |
-| `GRMsgID`   | `BO_` frame | MSG ID for GR messages, `-1` for third-party messages       |
+| Attribute     | Set on       | Meaning                                                     |
+| ------------- | ------------ | ----------------------------------------------------------- |
+| `DBName`      | file         | Bus name                                                    |
+| `GRBusID`     | file         | Bus ID                                                      |
+| `GRID`        | `BU_` node   | GR ID. Third-party nodes have `0`, as in CANdo              |
+| `GRMsgName`   | `BO_` frame  | Message name, the same on every frame of one message        |
+| `GRMsgID`     | `BO_` frame  | MSG ID for GR messages, `-1` for third-party messages       |
+| `GRValueType` | `SG_` signal | `ASCII` for a text character, else `Number` (the default)   |
 
 When you add a frame, set `GRMsgName`, and `GRMsgID` if it's a GR message. When you add a node, set `GRID`.
 
 ### Not in the DBCs
 
-- `Debug 2.0` and `Debug FD`. Their payload is text, which DBC can't describe.
-- The `Testing` bus (ID 0). It has no messages.
 - IMD isolation info, voltage, IT-system, request and response. CANdo gives them no length or signals.
 - `mag_status` in Suspension IMU Mag Data. It sits past the end of the 24-byte frame.
 

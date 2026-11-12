@@ -111,6 +111,17 @@ BO_ 2566849012 IMD_IMD_general_to_ACU: 8 IMD
 BO_ 2149583363 CCU_ACU_Precharge_to_ACU: 1 CCU
  SG_ Set_TS_Active : 0|1@1+ (1,0) [0|0] "Bool"  ACU
 
+BO_ 2149580803 CCU_Debug_2_0_to_ACU: 8 CCU
+ SG_ Debug_0 : 0|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_1 : 8|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_2 : 16|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_3 : 24|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_4 : 32|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_5 : 40|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_6 : 48|8@1+ (1,0) [0|0] ""  ACU
+ SG_ Debug_7 : 56|8@1+ (1,0) [0|0] ""  ACU
+
+CM_ BO_ 2149580803 "Essentially a print statement up to 8 bytes long that whichever targeted can parse";
 CM_ SG_ 2550588916 Chg_Enable "1: Start Charging 0: Stop Charging";
 CM_ SG_ 2150631170 Accumulator_Voltage "All cell voltages added up";
 CM_ SG_ 2150631170 TS_Voltage "Output terminal voltage of accumulator";
@@ -157,6 +168,7 @@ BA_DEF_ BU_  "GRID" INT 0 255;
 BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
 BA_DEF_ BO_  "GRMsgName" STRING ;
 BA_DEF_ BO_  "GRMsgID" INT -1 4095;
+BA_DEF_ SG_  "GRValueType" ENUM  "Number","ASCII";
 BA_DEF_DEF_  "BusType" "CAN";
 BA_DEF_DEF_  "DBName" "";
 BA_DEF_DEF_  "GRBusID" 0;
@@ -164,6 +176,7 @@ BA_DEF_DEF_  "GRID" 0;
 BA_DEF_DEF_  "VFrameFormat" "StandardCAN";
 BA_DEF_DEF_  "GRMsgName" "";
 BA_DEF_DEF_  "GRMsgID" -1;
+BA_DEF_DEF_  "GRValueType" "Number";
 BA_ "DBName" "Charger";
 BA_ "GRBusID" 3;
 BA_ "GRID" BU_ ACU 3;
@@ -181,6 +194,7 @@ BA_ "VFrameFormat" BO_ 2566869221 1;
 BA_ "VFrameFormat" BO_ 2148532748 1;
 BA_ "VFrameFormat" BO_ 2566849012 1;
 BA_ "VFrameFormat" BO_ 2149583363 1;
+BA_ "VFrameFormat" BO_ 2149580803 1;
 BA_ "GRMsgName" BO_ 2550588916 "Charger_Control";
 BA_ "GRMsgName" BO_ 2150631170 "ACU_Status_1";
 BA_ "GRMsgName" BO_ 2150631426 "ACU_Status_2";
@@ -194,9 +208,19 @@ BA_ "GRMsgName" BO_ 1037 "EM_Status";
 BA_ "GRMsgName" BO_ 1549 "EM_Temp";
 BA_ "GRMsgName" BO_ 2566849012 "IMD_general";
 BA_ "GRMsgName" BO_ 2149583363 "ACU_Precharge";
+BA_ "GRMsgName" BO_ 2149580803 "Debug_2_0";
 BA_ "GRMsgID" BO_ 2150631170 7;
 BA_ "GRMsgID" BO_ 2150631426 8;
 BA_ "GRMsgID" BO_ 2150631682 9;
 BA_ "GRMsgID" BO_ 2148532748 2;
 BA_ "GRMsgID" BO_ 2149583363 10;
+BA_ "GRMsgID" BO_ 2149580803 0;
+BA_ "GRValueType" SG_ 2149580803 Debug_0 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_1 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_2 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_3 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_4 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_5 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_6 1;
+BA_ "GRValueType" SG_ 2149580803 Debug_7 1;
 
