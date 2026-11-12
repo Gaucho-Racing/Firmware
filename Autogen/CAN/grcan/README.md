@@ -6,16 +6,11 @@ Generators read this package and never read the DBCs.
     DBCs -> parser -> grcan -> generators
 
 - `types.go`: the shape of the data. Written by hand.
-- `spec_gen.go`: the spec itself. Generated from the DBCs.
-
-**Status:** `spec_gen.go` holds filler data until the DBC parser exists.
 
 **Maps are unordered.** Go iterates them in random order.
 Sort the keys before producing any output, or generated files will change on every run.
 
 ## The package
-- Never edit `spec_gen.go` by hand.
-- CI regenerates it and fails if it differs from what's committed.
 - All data comes from the DBCs.
 - `Schema.Version` changes when the format changes.
 
