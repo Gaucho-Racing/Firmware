@@ -72,6 +72,7 @@ const (
 	Unsigned ValueType = iota
 	Signed
 	Float
+	ASCII // one text character, stored like a uint8
 )
 
 func Ptr[T any](v T) *T { return &v }

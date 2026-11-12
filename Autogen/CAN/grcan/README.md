@@ -41,6 +41,8 @@ Sort the keys before producing any output, or generated files will change on eve
 - `Order == BigEndian` means flip the bytes after reading.
 - Big-endian signals are byte-aligned, or exactly 1 bit.
 - `Type == Float` is always 32 or 64 bits.
+- `Type == ASCII` is always one byte: 8 bits, unsigned, unscaled, byte-aligned.
+  Text has no terminator. A shorter frame carries fewer characters.
 - Real value = `raw * Factor + Offset`.
 - `Min` and `Max` are both set, or both `nil`.
 
