@@ -28,7 +28,6 @@ void HAL_GPIO_WritePin(uint32_t port, uint16_t pin, GPIO_PinState state)
 	events_add_event(event);
 }
 
-
 void events_add_event(PinEvent event)
 {
 	static int index = 0;
@@ -43,10 +42,10 @@ void events_add_event(PinEvent event)
 int main(void)
 {
 	const PinEvent expected_events[] = {
-		{.timestamp_ms = 0U, .pin_state = GPIO_PIN_SET},
-		{.timestamp_ms = morse_code_dot_delay, .pin_state = GPIO_PIN_RESET},
-		{.timestamp_ms = morse_code_dot_delay * 2U, .pin_state = GPIO_PIN_SET},
-		{.timestamp_ms = morse_code_dot_delay * 5U, .pin_state = GPIO_PIN_RESET},
+	    {.timestamp_ms = 0U, .pin_state = GPIO_PIN_SET},
+	    {.timestamp_ms = morse_code_dot_delay, .pin_state = GPIO_PIN_RESET},
+	    {.timestamp_ms = morse_code_dot_delay * 2U, .pin_state = GPIO_PIN_SET},
+	    {.timestamp_ms = morse_code_dot_delay * 5U, .pin_state = GPIO_PIN_RESET},
 	};
 
 	if (morse_code_send(".- /", 4U) != HAL_OK) {
@@ -54,8 +53,7 @@ int main(void)
 	}
 
 	for (size_t i = 0; i < sizeof(expected_events) / sizeof(expected_events[0]); i++) {
-		if (events[i].timestamp_ms != expected_events[i].timestamp_ms
-			|| events[i].pin_state != expected_events[i].pin_state) {
+		if (events[i].timestamp_ms != expected_events[i].timestamp_ms || events[i].pin_state != expected_events[i].pin_state) {
 			return 2;
 		}
 	}
