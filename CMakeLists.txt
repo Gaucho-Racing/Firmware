@@ -108,34 +108,31 @@ enable_language(
 )
 
 # Globals
-set(LIB_PATH "Lib")
-set(platform_path "${LIB_PATH}/Platform")
-
-include("${LIB_PATH}/CMake/cube.cmake")
+include("Lib/CMake/cube.cmake")
 
 add_arm_cmsis_core(
-    MAJOR "5"
-    GIT_TAG "5.9.0" # https://github.com/ARM-software/CMSIS_5/tree/5.9.0
+	MAJOR "5"
+	GIT_TAG "5.9.0" # https://github.com/ARM-software/CMSIS_5/tree/5.9.0
 )
 
 # Vendor
-add_subdirectory("${LIB_PATH}/Vendor/BCC")
-include("${LIB_PATH}/Vendor/MLX90640/combined.cmake")
-include("${LIB_PATH}/Vendor/MLX90614/combined.cmake")
+add_subdirectory("Lib/Vendor/BCC")
+include("Lib/Vendor/MLX90640/combined.cmake")
+include("Lib/Vendor/MLX90614/combined.cmake")
 
 # Utils
-include("${LIB_PATH}/GlobalShare/common.cmake")
-include("${LIB_PATH}/Utils/Logomatic/log.cmake")
-include("${LIB_PATH}/Utils/CubeVCP/vcp.cmake")
-include("${LIB_PATH}/Utils/CircularBuffer/circular-buffer-lib.cmake")
-include("${LIB_PATH}/Utils/MsgBuffer/msg-buffer-lib.cmake")
-include("${LIB_PATH}/Utils/BitManipulations/bit-utils.cmake")
+include("Lib/GlobalShare/common.cmake")
+include("Lib/Utils/Logomatic/log.cmake")
+include("Lib/Utils/CubeVCP/vcp.cmake")
+include("Lib/Utils/CircularBuffer/circular-buffer-lib.cmake")
+include("Lib/Utils/MsgBuffer/msg-buffer-lib.cmake")
+include("Lib/Utils/BitManipulations/bit-utils.cmake")
 
 # Autogen
 include("Autogen/CAN/CANfigurator.cmake")
 
 # Peripherals
-include("${LIB_PATH}/Peripherals/CubeCAN/cube_can.cmake")
+include("Lib/Peripherals/CubeCAN/cube_can.cmake")
 
 # Projects
 include(Testbench/testbench.cmake)
@@ -143,13 +140,13 @@ include(SensorArray/sensors.cmake)
 include(DriverInterface/controls.cmake)
 
 add_project(
-    NAME "ECU"
-    PATH "ECU"
-    SERIES "g4"
-    SPECIFIER "g474re"
-    HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
-    CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
-    CMSIS_MAJOR "5"
+	NAME "ECU"
+	PATH "ECU"
+	SERIES "g4"
+	SPECIFIER "g474re"
+	HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+	CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+	CMSIS_MAJOR "5"
 )
 
 # add_project(

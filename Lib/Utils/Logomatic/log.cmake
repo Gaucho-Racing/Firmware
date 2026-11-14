@@ -24,7 +24,7 @@ if(CMAKE_LOGOMATIC_ENABLED)
 	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_ENABLED)
 endif()
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	target_compile_definitions(LOGOMATIC_LIB INTERFACE LOGOMATIC_HOOTLTEST)
 
 	add_executable(logomatic)
@@ -38,12 +38,6 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	)
 	add_test(logomatic_test logomatic)
 else()
-	target_compile_options(
-		LOGOMATIC_LIB
-		INTERFACE
-			-u
-			_printf_float
-	)
 	target_link_options(
 		LOGOMATIC_LIB
 		INTERFACE

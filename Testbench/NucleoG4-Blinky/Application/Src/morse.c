@@ -1,5 +1,6 @@
 #include "morse.h"
 
+#include <stddef.h>
 #include <stdint.h>
 
 #include "main.h"

@@ -37,3 +37,7 @@ target_sources(
 )
 
 target_link_libraries(${TARGET_NAME} PRIVATE)
+
+if(BUILD_TESTING)
+	add_subdirectory(Test)
+endif()

@@ -130,10 +130,10 @@ Verify the following commands work without errors, if they fail please see the i
 
 Choose the below command given your specific flavor of Linux or BSD
 
-* `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
-* `sudo dnf install cmake ninja openocd` (Normally also `arm-none-eabi-gcc-cs arm-none-eabi-newlib` which worked on Fedora 42 but is broken on Fedora 43, use [Arm's version](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) instead for the moment)
-* `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
-* `sudo pkg install cmake ninja openocd arm-none-eabi-gcc`
+- `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
+- `sudo dnf install cmake ninja openocd` (Normally also `arm-none-eabi-gcc-cs arm-none-eabi-newlib` which worked on Fedora 42 but is broken on Fedora 43, use [Arm's version](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) instead for the moment)
+- `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
+- `sudo pkg install cmake ninja openocd arm-none-eabi-gcc`
 
 If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
 

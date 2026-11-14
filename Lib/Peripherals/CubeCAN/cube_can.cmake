@@ -20,7 +20,7 @@ target_link_libraries(
 		LOGOMATIC_LIB
 )
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	function(add_cubecan_test target source)
 		add_executable(${target})
 		target_sources(

@@ -155,7 +155,7 @@ The process to add a new MCU to the monorepo is complex. Please see `CMAKE.md` o
 | Backup previously generated files when regenerating | FALSE / unchecked |
 | Keep User Code when regenerating | TRUE / checked |
 | Delete previously generated files when not regenerating | TRUE / checked |
-| Set all free pins as analog (to optimize power consumption) | TRUE / checked |
+| Set all free pins as analog (to optimize power consumption) | FALSE / unchecked (or TRUE / checked and be smart about SWDIO/SWCLK pins) |
 
 ### Website
 

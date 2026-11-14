@@ -2,7 +2,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_C_COMPILER_FORCED TRUE)
 
-enable_testing()
+include(CTest)
 
 if(UNIX)
 	set(_ADDRESS_SANITIZER_DEFAULT_ ON)

@@ -14,7 +14,7 @@ target_sources(
 
 target_link_libraries(CUBE_VCP_LIB INTERFACE LOGOMATIC_LIB)
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	add_executable(CubeVCP_test)
 	target_sources(
 		CubeVCP_test
