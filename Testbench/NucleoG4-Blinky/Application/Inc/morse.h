@@ -1,7 +1,5 @@
 #include <stdint.h>
 
-#include "main.h"
-
 #ifndef MORSE_H
 #define MORSE_H
 
