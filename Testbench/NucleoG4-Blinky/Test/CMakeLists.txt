@@ -1,13 +1,16 @@
 add_executable(valid-morse)
 
 target_include_directories(valid-morse PRIVATE
-	Inc
-	Stub/Inc
-	../Application/Inc
-	../Core/Inc
+    Inc
+    ../Application/Inc
 )
 
 target_sources(valid-morse PRIVATE
-	valid-morse.c
-	Stub/hal.c
+    Src/valid-morse.c
+    ../Application/Src/morse.c
 )
+
+target_link_libraries(valid-morse PRIVATE LOGOMATIC_LIB)
+
+add_test(NAME NucleoG4-Blinky-Test-ValidMorse
+    COMMAND valid-morse)

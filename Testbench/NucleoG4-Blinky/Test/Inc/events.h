@@ -1,12 +1,15 @@
-#include "main.h"
 #include <stdint.h>
+
+#include "main.h"
 
 #ifndef EVENTS_H
 #define EVENTS_H
 
 typedef struct {
-	GPIO_PinState pin_state;
 	uint32_t timestamp_ms;
+	GPIO_PinState pin_state;
 } PinEvent;
+
+void events_add_event(PinEvent event);
 
 #endif

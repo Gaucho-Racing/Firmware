@@ -38,6 +38,6 @@ target_sources(
 
 target_link_libraries(${TARGET_NAME} PRIVATE)
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Test")
+if(BUILD_TESTING)
+    add_subdirectory(Test)
 endif()
