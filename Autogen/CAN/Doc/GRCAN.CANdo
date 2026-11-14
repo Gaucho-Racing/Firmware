@@ -532,7 +532,7 @@ Message ID:
     MSG LENGTH: 1
     button_flags:
       bit_start: 0
-      comment: [Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved
+      comment: "[Byte 0 / Bits 0-7] bit 0 (mask 0x01) left held. Bit 1 (mask 0x02) right held. Bits 2-7 Reserved"
       data type: u8
   Debug 2.0:
     MSG ID: 0x000
@@ -557,7 +557,7 @@ Message ID:
       data type: u32
       units: ms
       scaled min: 0
-      scaled max: 4,294,967,296
+      scaled max: 4294967295
       map equation: "1x"
   ECU Status 1:
     MSG ID: 0x003
@@ -574,8 +574,8 @@ Message ID:
         5: TS Discharge State
         6-7: Reserved
         See diagram in StateMachine.h
-      data type: b
-      units: Bool
+      data type: u8
+      units: Enum
     Ping Group 1:
       bit_start: 8
       comment: |-
@@ -710,7 +710,7 @@ Message ID:
         2: BSPD OK
         3: Software OK
         4-7: Reserved
-      data type: b
+      data type: u8
   ACU Status 1:
     MSG ID: 0x007
     MSG LENGTH: 8
@@ -759,54 +759,44 @@ Message ID:
     MSG LENGTH: 7
     20v Voltage:
       bit_start: 0
-      comment: |-
-        20v GLV voltage
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      comment: 20v GLV voltage
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     12v Voltage:
       bit_start: 8
-      comment: |-
-        12v supply voltage
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      comment: 12v supply voltage
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     SDC Voltage:
       bit_start: 16
-      comment: |-
-        Voltage before ACU Latch
-        data type: u8
-        units: Volts
-        scaled min: 0
-        scaled max: 25.5
-        map equation: "0.1x"
+      comment: Voltage before ACU Latch
       data type: u8
+      units: Volts
+      scaled min: 0
+      scaled max: 25.5
+      map equation: "0.1x"
     Min Cell Voltage:
       bit_start: 24
-      comment: |-
-        Lowest cell voltage in accumulator
-        data type: u8
-        units: Volts
-        scaled min: 2
-        scaled max: 4.55
-        map equation: "0.01x+2"
+      comment: Lowest cell voltage in accumulator
       data type: u8
+      units: Volts
+      scaled min: 2
+      scaled max: 4.55
+      map equation: "0.01x+2"
     Max Cell Temp:
       bit_start: 32
-      comment: |-
-        Hottest cell in accumulator
-        data type: u8
-        units: Celsius
-        scaled min: 0
-        scaled max: 63.75
-        map equation: "0.25x"
+      comment: Hottest cell in accumulator
       data type: u8
+      units: Celsius
+      scaled min: 0
+      scaled max: 63.75
+      map equation: "0.25x"
     status_flags:
       bit_start: 40
       comment: |-
@@ -819,7 +809,7 @@ Message ID:
         45: 20V GLV Warning
         46: 12V Supply Warning
         47: SDC Warning
-      data type: b
+      data type: u8
     precharge_latch_flags:
       bit_start: 48
       comment: |-
@@ -829,7 +819,7 @@ Message ID:
         53: IR+ State (0:Open, 1:Closed)
         52: Software Latch (0:Open, 1:Closed)
         48-51: Reserved
-      data type: b
+      data type: u8
   ACU Status 3:
     MSG ID: 0x009
     MSG LENGTH: 8
@@ -9029,12 +9019,12 @@ Message ID:
       data type: u8
       units: Intensity
     Green:
-      bit_start: 0
+      bit_start: 8
       comment: Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
     Blue:
-      bit_start: 0
+      bit_start: 16
       comment: Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise
       data type: u8
       units: Intensity
@@ -9127,13 +9117,13 @@ Custom CAN ID:
         comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
       - name: "Digital Output 2"
         bit_start: 1
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 2 to HIGH (1) or LOW (0) state
       - name: "Digital Output 3"
         bit_start: 2
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 3 to HIGH (1) or LOW (0) state
       - name: "Digital Output 4"
         bit_start: 3
-        comment: Sets the digital output 1 to HIGH (1) or LOW (0) state
+        comment: Sets the digital output 4 to HIGH (1) or LOW (0) state
   DTI Control 8:
     CAN ID: 0x816
     Length: 2
@@ -9271,7 +9261,7 @@ Custom CAN ID:
         comment: FOC algorithm component Id.
       - name: "FOC Iq"
         bit_start: 32
-        comment: FOC algorithm component Id\q.
+        comment: FOC algorithm component Iq.
   DTI Data 5:
     CAN ID: 0x2416
     Length: 8

@@ -47,13 +47,13 @@ BO_ 2150631170 ACU_ACU_Status_1_to_CCU: 8 ACU
  SG_ GLV_SOC : 56|8@1+ (0.3921568627,0) [0|100] "%"  CCU
 
 BO_ 2150631426 ACU_ACU_Status_2_to_CCU: 7 ACU
- SG_ _20v_Voltage : 0|8@1+ (1,0) [0|0] ""  CCU
- SG_ _12v_Voltage : 8|8@1+ (1,0) [0|0] ""  CCU
- SG_ SDC_Voltage : 16|8@1+ (1,0) [0|0] ""  CCU
- SG_ Min_Cell_Voltage : 24|8@1+ (1,0) [0|0] ""  CCU
- SG_ Max_Cell_Temp : 32|8@1+ (1,0) [0|0] ""  CCU
- SG_ status_flags : 40|1@1+ (1,0) [0|0] ""  CCU
- SG_ precharge_latch_flags : 48|1@1+ (1,0) [0|0] ""  CCU
+ SG_ _20v_Voltage : 0|8@1+ (0.1,0) [0|25.5] "Volts"  CCU
+ SG_ _12v_Voltage : 8|8@1+ (0.1,0) [0|25.5] "Volts"  CCU
+ SG_ SDC_Voltage : 16|8@1+ (0.1,0) [0|25.5] "Volts"  CCU
+ SG_ Min_Cell_Voltage : 24|8@1+ (0.01,2) [2|4.55] "Volts"  CCU
+ SG_ Max_Cell_Temp : 32|8@1+ (0.25,0) [0|63.75] "Celsius"  CCU
+ SG_ status_flags : 40|8@1+ (1,0) [0|0] ""  CCU
+ SG_ precharge_latch_flags : 48|8@1+ (1,0) [0|0] ""  CCU
 
 BO_ 2150631682 ACU_ACU_Status_3_to_CCU: 8 ACU
  SG_ HV_Input_Voltage : 0|16@1+ (0.01,0) [0|655.35] "Volts"  CCU
@@ -71,7 +71,7 @@ BO_ 2566869221 Charger_Data_to_ACU: 8 Charger
  SG_ Communication_State : 21|1@1+ (1,0) [0|0] ""  ACU
 
 BO_ 2148532748 Debugger_Ping_to_Charging_SDC: 4 Debugger
- SG_ Timestamp : 0|32@1+ (1,0) [0|4294967296] "ms"  Charging_SDC
+ SG_ Timestamp : 0|32@1+ (1,0) [0|4294967295] "ms"  Charging_SDC
 
 BO_ 269 EM_EM_Meas_to_ACU: 8 EM
  SG_ Current : 0|32@1+ (1,0) [0|0] ""  ACU
@@ -120,11 +120,11 @@ CM_ SG_ 2150631170 TS_Voltage "Output terminal voltage of accumulator";
 CM_ SG_ 2150631170 Accumulator_Current "Current output of accumulator";
 CM_ SG_ 2150631170 Accumulator_SOC "Accumulator state of Chg (Based on lowest cell)";
 CM_ SG_ 2150631170 GLV_SOC "GLV state of Chg";
-CM_ SG_ 2150631426 _20v_Voltage "20v GLV voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2150631426 _12v_Voltage "12v supply voltage data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2150631426 SDC_Voltage "Voltage before ACU Latch data type: u8 units: Volts scaled min: 0 scaled max: 25.5 map equation: \"0.1x\"";
-CM_ SG_ 2150631426 Min_Cell_Voltage "Lowest cell voltage in accumulator data type: u8 units: Volts scaled min: 2 scaled max: 4.55 map equation: \"0.01x+2\"";
-CM_ SG_ 2150631426 Max_Cell_Temp "Hottest cell in accumulator data type: u8 units: Celsius scaled min: 0 scaled max: 63.75 map equation: \"0.25x\"";
+CM_ SG_ 2150631426 _20v_Voltage "20v GLV voltage";
+CM_ SG_ 2150631426 _12v_Voltage "12v supply voltage";
+CM_ SG_ 2150631426 SDC_Voltage "Voltage before ACU Latch";
+CM_ SG_ 2150631426 Min_Cell_Voltage "Lowest cell voltage in accumulator";
+CM_ SG_ 2150631426 Max_Cell_Temp "Hottest cell in accumulator";
 CM_ SG_ 2150631426 status_flags "[Byte 5 / Bits 40-47] 40: Over Temp (>60C) 41: Over Voltage (>4.2V/cell) 42: Under Volt (<2.5V/cell) 43: Over Current (Discharge) 44: Under Current (Chg) 45: 20V GLV Warning 46: 12V Supply Warning 47: SDC Warning";
 CM_ SG_ 2150631426 precharge_latch_flags "[Byte 6 / Bits 48-55] 55: Precharge Timeout 54: IR- / Precharge State (0:Open, 1:Closed) 53: IR+ State (0:Open, 1:Closed) 52: Software Latch (0:Open, 1:Closed) 48-51: Reserved";
 CM_ SG_ 2150631682 HV_Input_Voltage "600v input voltage";
