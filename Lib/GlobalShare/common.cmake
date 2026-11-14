@@ -1,19 +1,19 @@
 add_library(GLOBALSHARE_LIB INTERFACE)
 
 target_include_directories(
-    GLOBALSHARE_LIB
-    INTERFACE
-    ${CMAKE_CURRENT_LIST_DIR}/Inc
+	GLOBALSHARE_LIB
+	INTERFACE
+		${CMAKE_CURRENT_LIST_DIR}/Inc
 )
 
 if(
-    CMAKE_BUILD_TYPE
-    STREQUAL
-    "Debug"
-    OR
-    CMAKE_BUILD_TYPE
-    STREQUAL
-    "RelWithDebInfo"
+	CMAKE_BUILD_TYPE
+		STREQUAL
+		"Debug"
+	OR
+		CMAKE_BUILD_TYPE
+			STREQUAL
+			"RelWithDebInfo"
 )
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 	add_link_options(
@@ -23,43 +23,43 @@ if(
 endif()
 
 if(BUILD_TESTING)
-    target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
+	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
-    add_executable(stringification)
-    target_sources(
-        stringification
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Test/stringification.c
-    )
-    target_link_libraries(stringification PRIVATE GLOBALSHARE_LIB)
-    add_test(stringification_test stringification)
+	add_executable(stringification)
+	target_sources(
+		stringification
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/stringification.c
+	)
+	target_link_libraries(stringification PRIVATE GLOBALSHARE_LIB)
+	add_test(stringification_test stringification)
 
-    add_executable(unused)
-    target_sources(unused PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/unused.c)
-    target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
-    add_test(unused_test unused)
+	add_executable(unused)
+	target_sources(unused PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/unused.c)
+	target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
+	add_test(unused_test unused)
 
-    add_executable(verify_min_max)
-    target_sources(
-        verify_min_max
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Test/comparatormacros.c
-    )
-    target_link_libraries(verify_min_max PRIVATE GLOBALSHARE_LIB)
-    add_test(verify_min_max_test verify_min_max)
+	add_executable(verify_min_max)
+	target_sources(
+		verify_min_max
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/comparatormacros.c
+	)
+	target_link_libraries(verify_min_max PRIVATE GLOBALSHARE_LIB)
+	add_test(verify_min_max_test verify_min_max)
 
-    find_package(Threads REQUIRED)
-    add_executable(criticalsection)
-    target_sources(
-        criticalsection
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Test/criticalsection.c
-    )
-    target_link_libraries(
-        criticalsection
-        PRIVATE
-        GLOBALSHARE_LIB
-        Threads::Threads
-    )
-    add_test(criticalsection_test criticalsection)
+	find_package(Threads REQUIRED)
+	add_executable(criticalsection)
+	target_sources(
+		criticalsection
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/criticalsection.c
+	)
+	target_link_libraries(
+		criticalsection
+		PRIVATE
+			GLOBALSHARE_LIB
+			Threads::Threads
+	)
+	add_test(criticalsection_test criticalsection)
 endif()
