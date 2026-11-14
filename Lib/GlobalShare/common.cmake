@@ -7,26 +7,18 @@ target_include_directories(
 )
 
 if(
-	CMAKE_PRESET_NAME
+	CMAKE_BUILD_TYPE
 		STREQUAL
 		"Debug"
 	OR
-		CMAKE_PRESET_NAME
+		CMAKE_BUILD_TYPE
 			STREQUAL
 			"RelWithDebInfo"
 )
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
-	add_compile_options(
-		-u
-		_printf_float
-	)
-	add_link_options(
-		-u
-		_printf_float
-	)
 endif()
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
 	add_executable(stringification)
@@ -51,4 +43,19 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	)
 	target_link_libraries(verify_min_max PRIVATE GLOBALSHARE_LIB)
 	add_test(verify_min_max_test verify_min_max)
+
+	find_package(Threads REQUIRED)
+	add_executable(criticalsection)
+	target_sources(
+		criticalsection
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/criticalsection.c
+	)
+	target_link_libraries(
+		criticalsection
+		PRIVATE
+			GLOBALSHARE_LIB
+			Threads::Threads
+	)
+	add_test(criticalsection_test criticalsection)
 endif()

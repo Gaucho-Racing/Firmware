@@ -49,17 +49,54 @@ void MX_FDCAN1_Init(void)
 	hfdcan1.Init.NominalSyncJumpWidth = 16;
 	hfdcan1.Init.NominalTimeSeg1 = 119;
 	hfdcan1.Init.NominalTimeSeg2 = 40;
-	hfdcan1.Init.DataPrescaler = 8;
+	hfdcan1.Init.DataPrescaler = 1;
 	hfdcan1.Init.DataSyncJumpWidth = 16;
-	hfdcan1.Init.DataTimeSeg1 = 14;
-	hfdcan1.Init.DataTimeSeg2 = 5;
+	hfdcan1.Init.DataTimeSeg1 = 9;
+	hfdcan1.Init.DataTimeSeg2 = 10;
 	hfdcan1.Init.StdFiltersNbr = 0;
-	hfdcan1.Init.ExtFiltersNbr = 2;
+	hfdcan1.Init.ExtFiltersNbr = 3;
 	hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 	if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN FDCAN1_Init 2 */
+
+	FDCAN_FilterTypeDef fdcan_primary_filter_ecu = {0};
+	fdcan_primary_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_ecu.FilterIndex = 0;
+	fdcan_primary_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_primary_filter_ecu.FilterID2 = 0x000000FF;
+	if (HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_ecu) != HAL_OK) {
+		Error_Handler();
+	}
+
+	FDCAN_FilterTypeDef fdcan_primary_filter_all = {0};
+	fdcan_primary_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_all.FilterIndex = 1;
+	fdcan_primary_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_primary_filter_all.FilterID2 = 0x000000FF;
+	if (HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_all) != HAL_OK) {
+		Error_Handler();
+	}
+
+	FDCAN_FilterTypeDef fdcan_primary_filter_dti = {0};
+	fdcan_primary_filter_dti.IdType = FDCAN_EXTENDED_ID;
+	fdcan_primary_filter_dti.FilterIndex = 2;
+	fdcan_primary_filter_dti.FilterType = FDCAN_FILTER_MASK;
+	fdcan_primary_filter_dti.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_primary_filter_dti.FilterID1 = DTI_RX_ID;
+	fdcan_primary_filter_dti.FilterID2 = DTI_RX_MASK;
+	if (HAL_FDCAN_ConfigFilter(&hfdcan1, &fdcan_primary_filter_dti) != HAL_OK) {
+		Error_Handler();
+	}
+
+	if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan1, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE) != HAL_OK) {
+		Error_Handler();
+	}
 
 	/* USER CODE END FDCAN1_Init 2 */
 }
@@ -76,7 +113,7 @@ void MX_FDCAN2_Init(void)
 	/* USER CODE END FDCAN2_Init 1 */
 	hfdcan2.Instance = FDCAN2;
 	hfdcan2.Init.ClockDivider = FDCAN_CLOCK_DIV1;
-	hfdcan2.Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+	hfdcan2.Init.FrameFormat = FDCAN_FRAME_FD_BRS;
 	hfdcan2.Init.Mode = FDCAN_MODE_NORMAL;
 	hfdcan2.Init.AutoRetransmission = ENABLE;
 	hfdcan2.Init.TransmitPause = DISABLE;
@@ -85,8 +122,8 @@ void MX_FDCAN2_Init(void)
 	hfdcan2.Init.NominalSyncJumpWidth = 16;
 	hfdcan2.Init.NominalTimeSeg1 = 119;
 	hfdcan2.Init.NominalTimeSeg2 = 40;
-	hfdcan2.Init.DataPrescaler = 8;
-	hfdcan2.Init.DataSyncJumpWidth = 16;
+	hfdcan2.Init.DataPrescaler = 1;
+	hfdcan2.Init.DataSyncJumpWidth = 2;
 	hfdcan2.Init.DataTimeSeg1 = 14;
 	hfdcan2.Init.DataTimeSeg2 = 5;
 	hfdcan2.Init.StdFiltersNbr = 0;
@@ -96,6 +133,39 @@ void MX_FDCAN2_Init(void)
 		Error_Handler();
 	}
 	/* USER CODE BEGIN FDCAN2_Init 2 */
+	if (HAL_FDCAN_ConfigTxDelayCompensation(&hfdcan2, hfdcan2.Init.DataPrescaler * hfdcan2.Init.DataTimeSeg1, 0) != HAL_OK) {
+		Error_Handler();
+	}
+
+	if (HAL_FDCAN_EnableTxDelayCompensation(&hfdcan2) != HAL_OK) {
+		Error_Handler();
+	}
+
+	FDCAN_FilterTypeDef fdcan_data_filter_ecu = {0};
+	fdcan_data_filter_ecu.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_ecu.FilterIndex = 0;
+	fdcan_data_filter_ecu.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_ecu.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_ecu.FilterID1 = GRCAN_ECU & 0xFF;
+	fdcan_data_filter_ecu.FilterID2 = 0x000000FF;
+	if (HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_ecu) != HAL_OK) {
+		Error_Handler();
+	}
+
+	FDCAN_FilterTypeDef fdcan_data_filter_all = {0};
+	fdcan_data_filter_all.IdType = FDCAN_EXTENDED_ID;
+	fdcan_data_filter_all.FilterIndex = 1;
+	fdcan_data_filter_all.FilterType = FDCAN_FILTER_MASK;
+	fdcan_data_filter_all.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	fdcan_data_filter_all.FilterID1 = GRCAN_ALL & 0xFF;
+	fdcan_data_filter_all.FilterID2 = 0x000000FF;
+	if (HAL_FDCAN_ConfigFilter(&hfdcan2, &fdcan_data_filter_all) != HAL_OK) {
+		Error_Handler();
+	}
+
+	if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan2, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE) != HAL_OK) {
+		Error_Handler();
+	}
 
 	/* USER CODE END FDCAN2_Init 2 */
 }
@@ -106,11 +176,19 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 	if (fdcanHandle->Instance == FDCAN1) {
 		/* USER CODE BEGIN FDCAN1_MspInit 0 */
 
 		/* USER CODE END FDCAN1_MspInit 0 */
-		LL_RCC_SetFDCANClockSource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
+		/** Initializes the peripherals clocks
+		 */
+		PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
+		PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
+		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
+			Error_Handler();
+		}
 
 		/* FDCAN1 clock enable */
 		HAL_RCC_FDCAN_CLK_ENABLED++;
@@ -123,23 +201,18 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 		PA11     ------> FDCAN1_RX
 		PA12     ------> FDCAN1_TX
 		*/
-		GPIO_InitStruct.Pin = GPIO_PIN_11;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_PULLUP;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN1;
-		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-		GPIO_InitStruct.Pin = GPIO_PIN_12;
+		GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12;
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 		GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN1;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 		/* FDCAN1 interrupt Init */
-		HAL_NVIC_SetPriority(FDCAN1_IT0_IRQn, 0, 0);
+		HAL_NVIC_SetPriority(FDCAN1_IT0_IRQn, 15, 0);
 		HAL_NVIC_EnableIRQ(FDCAN1_IT0_IRQn);
+		HAL_NVIC_SetPriority(FDCAN1_IT1_IRQn, 15, 0);
+		HAL_NVIC_EnableIRQ(FDCAN1_IT1_IRQn);
 		/* USER CODE BEGIN FDCAN1_MspInit 1 */
 
 		/* USER CODE END FDCAN1_MspInit 1 */
@@ -148,7 +221,13 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 
 		/* USER CODE END FDCAN2_MspInit 0 */
 
-		LL_RCC_SetFDCANClockSource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+		/** Initializes the peripherals clocks
+		 */
+		PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
+		PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
+		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
+			Error_Handler();
+		}
 
 		/* FDCAN2 clock enable */
 		HAL_RCC_FDCAN_CLK_ENABLED++;
@@ -161,23 +240,18 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 		PB12     ------> FDCAN2_RX
 		PB13     ------> FDCAN2_TX
 		*/
-		GPIO_InitStruct.Pin = GPIO_PIN_12;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_PULLUP;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN2;
-		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-		GPIO_InitStruct.Pin = GPIO_PIN_13;
+		GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13;
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 		GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN2;
 		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 		/* FDCAN2 interrupt Init */
-		HAL_NVIC_SetPriority(FDCAN2_IT0_IRQn, 0, 0);
+		HAL_NVIC_SetPriority(FDCAN2_IT0_IRQn, 15, 0);
 		HAL_NVIC_EnableIRQ(FDCAN2_IT0_IRQn);
+		HAL_NVIC_SetPriority(FDCAN2_IT1_IRQn, 15, 0);
+		HAL_NVIC_EnableIRQ(FDCAN2_IT1_IRQn);
 		/* USER CODE BEGIN FDCAN2_MspInit 1 */
 
 		/* USER CODE END FDCAN2_MspInit 1 */
@@ -205,6 +279,7 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle)
 
 		/* FDCAN1 interrupt Deinit */
 		HAL_NVIC_DisableIRQ(FDCAN1_IT0_IRQn);
+		HAL_NVIC_DisableIRQ(FDCAN1_IT1_IRQn);
 		/* USER CODE BEGIN FDCAN1_MspDeInit 1 */
 
 		/* USER CODE END FDCAN1_MspDeInit 1 */
@@ -226,6 +301,7 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle)
 
 		/* FDCAN2 interrupt Deinit */
 		HAL_NVIC_DisableIRQ(FDCAN2_IT0_IRQn);
+		HAL_NVIC_DisableIRQ(FDCAN2_IT1_IRQn);
 		/* USER CODE BEGIN FDCAN2_MspDeInit 1 */
 
 		/* USER CODE END FDCAN2_MspDeInit 1 */
