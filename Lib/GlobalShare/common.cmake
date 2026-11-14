@@ -16,10 +16,6 @@ if(
 			"RelWithDebInfo"
 )
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
-	add_link_options(
-		-u
-		_printf_float
-	)
 endif()
 
 if(BUILD_TESTING)
