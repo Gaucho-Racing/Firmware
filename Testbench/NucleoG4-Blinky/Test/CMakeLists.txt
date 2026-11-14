@@ -12,5 +12,5 @@ target_sources(valid-morse PRIVATE
 
 target_link_libraries(valid-morse PRIVATE LOGOMATIC_LIB)
 
-add_test(NAME NucleoG4-Blinky-Test-ValidMorse
-    COMMAND valid-morse)
+add_test(NucleoG4-Blinky-Test-ValidMorse
+    valid-morse)
