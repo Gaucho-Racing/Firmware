@@ -38,12 +38,6 @@ if(BUILD_TESTING)
 	)
 	add_test(logomatic_test logomatic)
 else()
-	target_compile_options(
-		LOGOMATIC_LIB
-		INTERFACE
-			-u
-			_printf_float
-	)
 	target_link_options(
 		LOGOMATIC_LIB
 		INTERFACE
