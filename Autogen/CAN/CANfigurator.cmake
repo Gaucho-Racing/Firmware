@@ -1,7 +1,7 @@
 add_library(CANfigurator INTERFACE)
 target_include_directories(CANfigurator INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Inc)
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	add_executable(Autogen_CAN_Bus_Compilation_Test)
 	target_sources(
 		Autogen_CAN_Bus_Compilation_Test

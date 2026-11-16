@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
+
 include(FetchContent)
 set(FETCHCONTENT_BASE_DIR "${CMAKE_SOURCE_DIR}/Lib/Vendor/FetchContent")
 
@@ -406,7 +407,7 @@ function(add_project)
 		add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/${ARG_PATH}")
 	endif()
 
-	if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+	if(TARGET_TYPE STREQUAL "Host")
 		set_target_properties(
 			"${TARGET_NAME}"
 			PROPERTIES
