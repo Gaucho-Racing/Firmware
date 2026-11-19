@@ -312,10 +312,10 @@ function(add_stm32_hal_interface)
 	set_source_files_properties(
 		${HAL_SOURCES}
 		PROPERTIES
-		COMPILE_OPTIONS
-		"-Wno-unused-parameter;-Wno-error=pedantic"
+			COMPILE_OPTIONS
+				"-Wno-unused-parameter;-Wno-error=pedantic"
 	)
-		target_sources("STM32HAL_${SERIES_UPPER}" INTERFACE ${HAL_SOURCES})
+	target_sources("STM32HAL_${SERIES_UPPER}" INTERFACE ${HAL_SOURCES})
 endfunction()
 
 #[[
