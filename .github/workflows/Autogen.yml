@@ -32,7 +32,7 @@ jobs:
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@ac3202722f5744e62a8fa3af3e1aaaebb08861f3 # v1.44.0
+        uses: shogo82148/actions-setup-perl@eebc5c886de14ebbfcd2493d49a12007d2c30477 # v1.44.5
         with:
           install-modules: |
             Readonly
