@@ -118,40 +118,15 @@ typedef struct {
 
 /** ACU Status 2 */
 typedef struct {
-	/** 20v GLV voltage
-data type: u8
-units: Volts
-scaled min: 0
-scaled max: 25.5
-map equation: "0.1x" (Byte 0) */
+	/** 20v GLV voltage (Byte 0) */
 	uint8_t _20v_voltage;
-	/** 12v supply voltage
-data type: u8
-units: Volts
-scaled min: 0
-scaled max: 25.5
-map equation: "0.1x" (Byte 1) */
+	/** 12v supply voltage (Byte 1) */
 	uint8_t _12v_voltage;
-	/** Voltage before ACU Latch
-data type: u8
-units: Volts
-scaled min: 0
-scaled max: 25.5
-map equation: "0.1x" (Byte 2) */
+	/** Voltage before ACU Latch (Byte 2) */
 	uint8_t sdc_voltage;
-	/** Lowest cell voltage in accumulator
-data type: u8
-units: Volts
-scaled min: 2
-scaled max: 4.55
-map equation: "0.01x+2" (Byte 3) */
+	/** Lowest cell voltage in accumulator (Byte 3) */
 	uint8_t min_cell_voltage;
-	/** Hottest cell in accumulator
-data type: u8
-units: Celsius
-scaled min: 0
-scaled max: 63.75
-map equation: "0.25x" (Byte 4) */
+	/** Hottest cell in accumulator (Byte 4) */
 	uint8_t max_cell_temp;
 	/** [Byte 5 / Bits 40-47]
 40: Over Temp (>60C)
@@ -2254,9 +2229,9 @@ typedef struct {
 typedef struct {
 	/** Intensity of the red channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 0) */
 	uint8_t red;
-	/** Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 0) */
+	/** Intensity of the green channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 1) */
 	uint8_t green;
-	/** Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 0) */
+	/** Intensity of the blue channel on the RTD button dash light ONLY when in GLV On, ignored otherwise (Byte 2) */
 	uint8_t blue;
 } GRCAN_RTD_LIGHT_CTRL_MSG;
 
