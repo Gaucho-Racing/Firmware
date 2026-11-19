@@ -11,10 +11,10 @@ target_link_options(
 	${TARGET_NAME}
 	PRIVATE
 		-T
-		"${CMAKE_CURRENT_SOURCE_DIR}/STM32G474xx_FLASH.ld"
+		"${CMAKE_CURRENT_SOURCE_DIR}/STM32H503xx_FLASH.ld"
 )
 
-target_compile_definitions(${TARGET_NAME} PRIVATE STM32G474xx)
+target_compile_definitions(${TARGET_NAME} PRIVATE STM32H503xx)
 
 target_include_directories(
 	${TARGET_NAME}
