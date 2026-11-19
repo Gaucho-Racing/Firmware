@@ -11,10 +11,10 @@ target_link_options(
 	${TARGET_NAME}
 	PRIVATE
 		-T
-		"${CMAKE_CURRENT_SOURCE_DIR}/STM32G474xx_FLASH.ld"
+		"${CMAKE_CURRENT_SOURCE_DIR}/STM32H503xx_FLASH.ld"
 )
 
-target_compile_definitions(${TARGET_NAME} PRIVATE STM32G474xx)
+target_compile_definitions(${TARGET_NAME} PRIVATE STM32H503xx)
 
 target_include_directories(
 	${TARGET_NAME}
@@ -34,7 +34,7 @@ target_sources(
 		Core/Src/syscalls.c
         Core/Src/sysmem.c
         Core/Src/system_stm32h5xx.c
-		startup_stm32g474xx.s
+		startup_stm32h503xx.s
 )
 
 target_link_libraries(${TARGET_NAME} PRIVATE)
