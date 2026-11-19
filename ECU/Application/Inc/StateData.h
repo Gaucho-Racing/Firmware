@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "CubeCAN.h"
 #include "GRCAN_MSG_DATA.h"
 #include "StateMachine.h"
-#include "can.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
@@ -28,7 +28,7 @@ typedef union {
 	struct {
 		uint8_t ECUState;
 		uint8_t StatusBits[3];
-		uint8_t PowerLevelTorqueMap;
+		uint8_t ForwardRegenCurrentMap;
 		uint8_t MaxCellTemp;
 		uint8_t AccumulatorStateOfCharge;
 		uint8_t GLVStateOfCharge;
@@ -83,8 +83,7 @@ typedef volatile struct ECU_StateData {
 	uint16_t bspd_signal;
 	uint16_t APPS1_Signal;
 	uint16_t APPS2_Signal;
-	uint16_t Brake_R_Signal;
-	uint16_t Brake_F_Signal;
+	uint16_t Brake_Signal;
 	uint16_t aux_signal;
 	uint16_t steering_angle_signal;
 	uint16_t ping_timeout_delay_ms;
@@ -97,11 +96,13 @@ typedef volatile struct ECU_StateData {
 	uint16_t apps_2_max;
 	uint16_t max_precharge_time_ms;
 
+	uint16_t max_power_to_use_kw;
+
 	uint8_t status_bits[3];
 	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
 
-	uint8_t powerlevel; // 4 bits wide
-	uint8_t torquemap;  // 4 bits wide
+	uint8_t forward_ac_i_code; // 4 bits wide
+	uint8_t regen_ac_i_code;   // 4 bits wide
 
 	uint8_t tractivebattery_soc;
 	uint8_t glv_soc;
@@ -124,8 +125,8 @@ typedef volatile struct ECU_StateData {
 
 	GR_ECU_State ecu_state;
 
-	CANHandle *primary_can;
-	CANHandle *data_can;
+	CubeCAN_Handle *data_can;
+	CubeCAN_Handle *primary_can;
 } ECU_StateData;
 
 #endif

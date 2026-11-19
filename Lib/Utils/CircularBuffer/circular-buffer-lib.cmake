@@ -12,7 +12,7 @@ target_include_directories(
 )
 
 # link test to this library
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	# Initialization
 	add_executable(
 		CircularBuffer_Lib_Initialization_test

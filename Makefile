@@ -1,17 +1,9 @@
-ifeq ($(OS), Windows_NT)
-	rmd = rmdir /q /q
-else
-	rmd = rm -rf
-endif
-
 define cmake_build
 	cmake --preset $(1)
 	cmake --build --preset $(1)
 endef
 
-.PHONY: clean Debug Release RelWithDebInfo MinSizeRel HOOTLTest sanitizer valgrind
-
-all: Debug Release RelWithDebInfo MinSizeRel HOOTLTest
+.PHONY: purge clean Debug Release RelWithDebInfo MinSizeRel HOOTLTest sanitizer valgrind
 
 Debug:
 	$(call cmake_build,$(@))
@@ -32,7 +24,10 @@ sanitizer: HOOTLTest
 	ctest --test-dir build/HOOTLTest --output-on-failure
 
 clean:
-	$(rmd) build
+	cmake -E remove_directory build
+
+purge: clean
+	cmake -E remove_directory Lib/Vendor/FetchContent
 
 valgrind:
 	cmake -S . -B build/HOOTLValgrind --preset HOOTLTest -DADDRESS_SANITIZER=OFF

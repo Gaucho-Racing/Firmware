@@ -3,8 +3,10 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "Buzzer.h"
 #include "CANutils.h"
 #include "ComparatorMacros.h"
+#include "CubeCAN.h"
 #include "GRCAN_BUS_ID.h"
 #include "GRCAN_MSG_DATA.h"
 #include "GRCAN_MSG_ID.h"
@@ -14,7 +16,6 @@
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
-#include "can.h"
 #include "stm32g4xx_ll_gpio.h"
 
 /**
@@ -31,10 +32,10 @@ ECU_StateData stateLump = {
     .ecu_state = GR_GLV_ON,
     // Assume ACU good at boot
     .acu_software_latch = 1,
-    // Startup at minimum power
-    .powerlevel = 0,
-    // See CANdo specification
-    .torquemap = 1,
+    // Startup at 325A forward current
+    .forward_ac_i_code = 4,
+    // Startup at 60A regen current
+    .regen_ac_i_code = 4,
     // APPS Deadzone
     .apps_deadzone = 0.08f,
     // BMS thresholds
@@ -49,6 +50,8 @@ ECU_StateData stateLump = {
     // Timings
     .ping_timeout_delay_ms = 250,
     .max_precharge_time_ms = 8000,
+    // Power
+    .max_power_to_use_kw = 40,
     // Pedals
     .brake_f_min = 720,
     .brake_r_min = 700,
@@ -69,7 +72,9 @@ void ECU_State_Tick(void)
 
 	static uint32_t last_ECU_status_msg_millis;
 	if (millis_since_boot - last_ECU_status_msg_millis >= ECU_STATUS_MSG_PERIOD_MILLIS) {
-		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
+		LOGOMATIC_INFO("ECU Current State: %d\n", stateLump.ecu_state);
+		LOGOMATIC_INFO("Forward I Code: %d, Regen I Code: %d\n", stateLump.forward_ac_i_code, stateLump.regen_ac_i_code);
+		LOGOMATIC_INFO("Max Power to Use: %d kW\n\n", stateLump.max_power_to_use_kw);
 		last_ECU_status_msg_millis = millis_since_boot;
 	}
 
@@ -107,8 +112,8 @@ void ECU_State_Tick(void)
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
-			LOGOMATIC("ECU Current State Unknown: %d\n", stateLump.ecu_state);
-			LOGOMATIC("ECU: Resetting to GLV On\n");
+			LOGOMATIC_ERROR("ECU Current State Unknown: %d\n", stateLump.ecu_state);
+			LOGOMATIC_ERROR("ECU: Resetting to GLV On\n");
 			stateLump.ecu_state = GR_GLV_ON;
 			break;
 	}
@@ -118,7 +123,7 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 {
 	disable_inverter();
 	UNUSED(stateData);
-	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!\n");
+	LOGOMATIC_CRITICAL("ECU_GLV_Off state reached... this should never happen!\n");
 	// TODO ERROR --> GLV_OFF should never be reached
 }
 
@@ -127,21 +132,21 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	disable_inverter();
 
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
-		LOGOMATIC("Error: TS Voltage >= %d!\n", SAFE_VOLTAGE_LIMIT);
+		LOGOMATIC_ERROR("Error: TS Voltage >= %d!\n", SAFE_VOLTAGE_LIMIT);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-Runwy", 8);
 		return;
 	}
 
 	if (stateData->ts_active_button_pressed /* && stateData->ir_plus*/) { // TODO: Talk to Owen if this is correct for precharge start confirmation
-		LOGOMATIC("GLV ON to PRECHARGE START!\n");
+		LOGOMATIC_INFO("GLV ON to PRECHARGE START!\n");
 		ECU_Transition_To_Precharge_Engaged(stateData);
 		return;
 	}
 
 	if (stateData->rtd_button_pressed) {
-		stateData->powerlevel = (stateData->powerlevel + 1) % 6;
-		LOGOMATIC("Power level now at %d\n", stateData->powerlevel);
+		stateData->max_power_to_use_kw = (stateData->max_power_to_use_kw == 40) ? 80 : 40;
+		LOGOMATIC_INFO("Max Power to use now at %d kW\n", stateData->max_power_to_use_kw);
 	}
 }
 
@@ -153,7 +158,7 @@ void ECU_Transition_To_Precharge_Engaged(ECU_StateData *stateData)
 	GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 1}; // Go TS Active/Precharge
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
-	LOGOMATIC("PRECHARGE START to PRECHARGE ENGAGED!\n");
+	LOGOMATIC_INFO("PRECHARGE START to PRECHARGE ENGAGED!\n");
 	time_start_precharge = millis_since_boot;
 	return;
 }
@@ -164,18 +169,18 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 
 	if (stateData->ir_plus) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
-		LOGOMATIC("PRECHARGE ENGAGED to PRECHARGE COMPLETE!\n");
+		LOGOMATIC_INFO("PRECHARGE ENGAGED to PRECHARGE COMPLETE!\n");
 		return;
 	}
 
 	if (CriticalError(stateData) || (millis_since_boot - time_start_precharge) >= stateData->max_precharge_time_ms) {
-		LOGOMATIC("CRITICAL ERROR! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
+		LOGOMATIC_CRITICAL("CRITICAL ERROR! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		return;
 	}
 	if (stateData->ts_active_button_pressed) {
-		LOGOMATIC("ERROR: ts_active PRESSED! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
+		LOGOMATIC_ERROR("ERROR: ts_active PRESSED! PRECHARGE ENGAGED to TS DISCHARGE START!\n");
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-P-ITR", 8);
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		return;
@@ -188,12 +193,12 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	disable_inverter();
 
 	if (stateData->ts_active_button_pressed) {
-		LOGOMATIC("TS Active Toggled Off. Discharging Tractive System.\n");
+		LOGOMATIC_INFO("TS Active Toggled Off. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		return;
 	}
 	if (CriticalError(stateData)) {
-		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.\n");
+		LOGOMATIC_CRITICAL("Error: Critical Error Occurred. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "HV-CritE", 8);
 		return;
@@ -202,44 +207,36 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	if (PressingBrake(stateData) && stateData->rtd_button_pressed && (CalcAccPedalTravel(stateData) < stateData->apps_deadzone)) {
 		GRCAN_INV_CONFIG_MSG inverter_message = {.max_ac_current = 0xFFFF, .max_dc_current = 0xFFFF, .absolute_max_rpm_limit = 0xFFFF, .motor_direction = 0};
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CONFIG, &inverter_message, sizeof(inverter_message));
-		LOGOMATIC("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
+		LOGOMATIC_INFO("PRECHARGE COMPLETE to DRIVE START/ACTIVE!\n");
 		ECU_Transition_To_Drive_Active(stateData);
 	}
 }
 
-static uint32_t buzzer_start_millis;
-
 void ECU_Transition_To_Drive_Active(ECU_StateData *stateData)
 {
-	buzzer_start_millis = millis_since_boot;
+	buzzer_rtd();
 	stateData->ecu_state = GR_DRIVE_ACTIVE;
 }
 
 void ECU_Drive_Active(ECU_StateData *stateData)
 {
 	if (CriticalError(stateData)) {
-		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.\n");
+		LOGOMATIC_CRITICAL("Error: Critical Error Occured. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
 		return;
 	}
 	if (stateData->ts_active_button_pressed) {
-		LOGOMATIC("Error: TS active button pressed in Drive Active state. Discharging Tractive System.\n");
+		LOGOMATIC_ERROR("Error: TS active button pressed in Drive Active state. Discharging Tractive System.\n");
 		ECU_Transition_To_Tractive_System_Discharge(stateData);
 		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "DA-CritE", 8);
 		return;
 	}
 
-	if (millis_since_boot - buzzer_start_millis > MAX_BUZZER_TIME_MS) {
-		LL_GPIO_ResetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-	} else {
-		LL_GPIO_SetOutputPin(RTD_CONTROL_GPIO_Port, RTD_CONTROL_Pin);
-	}
-
 	if (stateData->rtd_button_pressed) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		if (stateData->vehicle_speed_mph > 0) {
-			LOGOMATIC("Warning: Vehicle is moving during state transition.\n");
+			LOGOMATIC_WARNING("Warning: Vehicle is moving during state transition.\n");
 		}
 		return;
 	}
@@ -261,53 +258,59 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	float pedal = CalcAccPedalTravel(stateData);
 
 	uint16_t max_rev_current = 0;
-	switch (stateData->powerlevel) {
+	switch (stateData->regen_ac_i_code) {
 		case 0:
-			max_rev_current = 20;
+			max_rev_current = 0;
 			break;
 		case 1:
-			max_rev_current = 40;
+			max_rev_current = 15;
 			break;
 		case 2:
-			max_rev_current = 60;
+			max_rev_current = 30;
 			break;
 		case 3:
-			max_rev_current = 80;
+			max_rev_current = 45;
 			break;
 		case 4:
-			max_rev_current = 100;
+			max_rev_current = 60;
 			break;
 		case 5:
+			max_rev_current = 75;
+			break;
+		case 6:
+			max_rev_current = 90;
+			break;
+		case 7:
+			max_rev_current = 105;
+			break;
+		case 8:
 			max_rev_current = 120;
 			break;
 		default:
-			LOGOMATIC("Invalid power level: %d. Defaulting to no regen.\n", stateData->powerlevel);
+			LOGOMATIC_INFO("Invalid power level: %d. Defaulting to no regen.\n", stateData->regen_ac_i_code);
 			max_rev_current = 0;
 			break;
 	}
 
 	uint16_t max_fwd_current = 0;
-	switch (stateData->powerlevel) {
+	switch (stateData->forward_ac_i_code) {
 		case 0:
-			max_fwd_current = 300;
+			max_fwd_current = 50;
 			break;
 		case 1:
-			max_fwd_current = 300;
+			max_fwd_current = 100;
 			break;
 		case 2:
-			max_fwd_current = 300;
+			max_fwd_current = 200;
 			break;
 		case 3:
 			max_fwd_current = 300;
 			break;
 		case 4:
-			max_fwd_current = 300;
-			break;
-		case 5:
-			max_fwd_current = 300;
+			max_fwd_current = 325;
 			break;
 		default:
-			LOGOMATIC("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->powerlevel);
+			LOGOMATIC_ERROR("Invalid power level: %d. Defaulting to no forward torque.\n", stateData->forward_ac_i_code);
 			max_fwd_current = 0;
 			break;
 	}
@@ -354,6 +357,10 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		} else {
 			ECU_CAN_Send_DTI(DTI_CONTROL_1_CAN_ID, &message.set_ac_current, 2);
 		}
+
+		uint16_t dti_control_10_max_dc_current = 10 * (stateData->max_power_to_use_kw * 1000 / stateData->ts_voltage);
+		ECU_CAN_Send_DTI(DTI_CONTROL_10_CAN_ID, &dti_control_10_max_dc_current, 2);
+
 		last_can_inverter_request_millis = millis_since_boot;
 	}
 }
@@ -362,7 +369,7 @@ static uint32_t discharge_start_millis;
 void ECU_Transition_To_Tractive_System_Discharge(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
-	LOGOMATIC("ECU: ACU discharge Tractive System\n");
+	LOGOMATIC_INFO("ECU: ACU discharge Tractive System\n");
 	GRCAN_ACU_PRECHARGE_MSG message = {.set_ts_active = 0};
 	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_ACU, GRCAN_ACU_PRECHARGE, &message, sizeof(message));
 	discharge_start_millis = millis_since_boot;
@@ -377,7 +384,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	*/
 	if (stateData->ts_voltage < SAFE_VOLTAGE_LIMIT) {
 		stateData->ecu_state = GR_GLV_ON;
-		LOGOMATIC("TS DISCHARGE to GLV ON!\n");
+		LOGOMATIC_INFO("TS DISCHARGE to GLV ON!\n");
 		return;
 	}
 	/*
@@ -389,7 +396,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	static uint32_t last_discharge_request_millis;
 	if (RATE_LIMIT_100_HZ(millis_since_boot, last_discharge_request_millis)) {
 		if (millis_since_boot - discharge_start_millis > TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS) {
-			LOGOMATIC("Warning: Tractive System fails to discharge in %d ms.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
+			LOGOMATIC_WARNING("Warning: Tractive System fails to discharge in %d ms.\n", TRACTIVE_SYSTEM_MAX_PERMITTED_DISCHARGE_TIME_MILLIS);
 			ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Debugger, GRCAN_DEBUG_2_0, "TS-D-TLE", 8);
 		}
 
