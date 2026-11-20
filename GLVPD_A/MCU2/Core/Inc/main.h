@@ -57,6 +57,44 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define MCU2_TESTLED_Pin GPIO_PIN_14
+#define MCU2_TESTLED_GPIO_Port GPIOC
+#define U7_FLT_Pin GPIO_PIN_0
+#define U7_FLT_GPIO_Port GPIOF
+#define U7_SPLYGD_Pin GPIO_PIN_1
+#define U7_SPLYGD_GPIO_Port GPIOF
+#define U11_FLT_Pin GPIO_PIN_10
+#define U11_FLT_GPIO_Port GPIOG
+#define U11_SPLYGD_Pin GPIO_PIN_0
+#define U11_SPLYGD_GPIO_Port GPIOA
+#define U11_EN_Pin GPIO_PIN_1
+#define U11_EN_GPIO_Port GPIOA
+#define U7_EN_Pin GPIO_PIN_3
+#define U7_EN_GPIO_Port GPIOA
+#define U7_IOUT_Pin GPIO_PIN_4
+#define U7_IOUT_GPIO_Port GPIOA
+#define U11_IOUT_Pin GPIO_PIN_5
+#define U11_IOUT_GPIO_Port GPIOA
+#define U12_IOUT_Pin GPIO_PIN_12
+#define U12_IOUT_GPIO_Port GPIOB
+#define U6_IOUT_Pin GPIO_PIN_13
+#define U6_IOUT_GPIO_Port GPIOB
+#define U6_FLT_Pin GPIO_PIN_14
+#define U6_FLT_GPIO_Port GPIOB
+#define U12_FLT_Pin GPIO_PIN_15
+#define U12_FLT_GPIO_Port GPIOB
+#define U12_SPLYGD_Pin GPIO_PIN_6
+#define U12_SPLYGD_GPIO_Port GPIOC
+#define U12_EN_Pin GPIO_PIN_8
+#define U12_EN_GPIO_Port GPIOA
+#define U6_SPLYGD_Pin GPIO_PIN_9
+#define U6_SPLYGD_GPIO_Port GPIOA
+#define U6_EN_Pin GPIO_PIN_10
+#define U6_EN_GPIO_Port GPIOA
+#define _20V_IN_Sense_Pin GPIO_PIN_10
+#define _20V_IN_Sense_GPIO_Port GPIOC
+#define CurrentSense_VOUT_Pin GPIO_PIN_11
+#define CurrentSense_VOUT_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 
