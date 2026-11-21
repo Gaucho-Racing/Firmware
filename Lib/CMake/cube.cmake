@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
+
 include(FetchContent)
 set(FETCHCONTENT_BASE_DIR "${CMAKE_SOURCE_DIR}/Lib/Vendor/FetchContent")
 
