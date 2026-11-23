@@ -26,7 +26,7 @@
 | Outboard 2 RL    | &cross;     | &cross;      | &check;  | `0x2E` |
 | Outboard 3 RR    | &cross;     | &cross;      | &check;  | `0x2F` |
 | TCM              | &check;     | &cross;      | &check;  | `0x30` |
-| ALL              | &check;     | &check;      | &check;  | `0x3F` |
+| ALL              | &check;     | &check;      | &check;  | `0xFF` |
 | DTI Inverter     | &check;     | &cross;      | &cross;  | N/A    |
 | Charger          | &cross;     | &check;      | &cross;  | N/A    |
 | Energy Meter     | &cross;     | &check;      | &cross;  | N/A    |
