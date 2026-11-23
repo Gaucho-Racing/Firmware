@@ -39,6 +39,16 @@ add_project(
 )
 
 add_project(
+    NAME "NucleoG4-HelloNode"
+    PATH "NucleoG4-HelloNode"
+    SERIES "g4"
+    SPECIFIER "g474re"
+    HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+    CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+    CMSIS_MAJOR "5"
+)
+
+add_project(
     NAME "DashboardU5-Blinky"
     PATH "DashboardU5-Blinky"
     SERIES "u5"

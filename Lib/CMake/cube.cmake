@@ -129,11 +129,11 @@ function(add_arm_cmsis_core)
 	endif()
 
 	download_git(
-	        NAME "arm_cmsis_${ARM_CMSIS_CORE_ARG_MAJOR}"
-	        GIT_REPOSITORY "https://github.com/arm-software/cmsis_${ARM_CMSIS_CORE_ARG_MAJOR}.git"
-	        GIT_TAG "${ARM_CMSIS_CORE_ARG_GIT_TAG}"
-	        OUTPUT_PATH_VAR ARM_CMSIS_CORE_PATH
-	        TARGET_FOLDER "CMSIS/Core/Include"
+			NAME "arm_cmsis_${ARM_CMSIS_CORE_ARG_MAJOR}"
+			GIT_REPOSITORY "https://github.com/arm-software/cmsis_${ARM_CMSIS_CORE_ARG_MAJOR}.git"
+			GIT_TAG "${ARM_CMSIS_CORE_ARG_GIT_TAG}"
+			OUTPUT_PATH_VAR ARM_CMSIS_CORE_PATH
+			TARGET_FOLDER "CMSIS/Core/Include"
 	)
 	message(
 		STATUS
@@ -217,11 +217,11 @@ function(add_arm_cmsis_interface)
 	endif()
 
 	download_git(
-	        NAME "cmsis_device_${SERIES_LOWER}"
-	        GIT_REPOSITORY "https://github.com/STMicroelectronics/cmsis-device-${SERIES_LOWER}.git"
-	        GIT_TAG ${ARM_CMSIS_INTERFACE_ARG_GIT_TAG}
-	        TARGET_FOLDER "Include"
-	        OUTPUT_PATH_VAR CMSIS_DEVICE_PATH
+			NAME "cmsis_device_${SERIES_LOWER}"
+			GIT_REPOSITORY "https://github.com/STMicroelectronics/cmsis-device-${SERIES_LOWER}.git"
+			GIT_TAG ${ARM_CMSIS_INTERFACE_ARG_GIT_TAG}
+			TARGET_FOLDER "Include"
+			OUTPUT_PATH_VAR CMSIS_DEVICE_PATH
 	)
 	message(
 		STATUS
@@ -279,11 +279,11 @@ function(add_stm32_hal_interface)
 	endif()
 
 	download_git(
-	        NAME "stm32_hal_driver_${SERIES_LOWER}"
-	        GIT_REPOSITORY "https://github.com/STMicroelectronics/stm32${SERIES_LOWER}xx-hal-driver.git"
-	        GIT_TAG ${STM32_HAL_ARG_GIT_TAG}
-	        TARGET_FOLDER "Inc Src"
-	        OUTPUT_PATH_VAR STM32_HAL_DRIVER_PATH
+			NAME "stm32_hal_driver_${SERIES_LOWER}"
+			GIT_REPOSITORY "https://github.com/STMicroelectronics/stm32${SERIES_LOWER}xx-hal-driver.git"
+			GIT_TAG ${STM32_HAL_ARG_GIT_TAG}
+			TARGET_FOLDER "Inc Src"
+			OUTPUT_PATH_VAR STM32_HAL_DRIVER_PATH
 	)
 	message(
 		STATUS
@@ -305,12 +305,16 @@ function(add_stm32_hal_interface)
 		"${STM32_HAL_DRIVER_PATH}/Src/*.c"
 	)
 	list(FILTER HAL_SOURCES EXCLUDE REGEX ".*_template\.c$")
+	# Annoyingly some of the HAL drivers have unused parameters in their functions,
+	# which is a warning in our build system that gets promoted to be an error.
+	# Others do not follow pedantic strictness, which is an error in our build
+	# system. So we disable these warnings and errors for the HAL driver sources.
 	set_source_files_properties(
 		${HAL_SOURCES}
 		PROPERTIES
 			COMPILE_OPTIONS
-				"-Wno-unused-parameter"
-	) # Annoyingly some of the HAL drivers have unused parameters in their callbacks, which is a warning in our build system
+				"-Wno-unused-parameter;-Wno-error=pedantic"
+	)
 	target_sources("STM32HAL_${SERIES_UPPER}" INTERFACE ${HAL_SOURCES})
 endfunction()
 
@@ -354,14 +358,14 @@ function(add_project)
 	)
 
 	add_arm_cmsis_interface(
-	        SERIES ${ARG_SERIES}
-	        SPECIFIER ${ARG_SPECIFIER}
-	        GIT_TAG ${ARG_CMSIS_GIT_TAG}
+			SERIES ${ARG_SERIES}
+			SPECIFIER ${ARG_SPECIFIER}
+			GIT_TAG ${ARG_CMSIS_GIT_TAG}
 	)
 
 	add_stm32_hal_interface(
-	        SERIES ${ARG_SERIES}
-	        GIT_TAG ${ARG_HAL_GIT_TAG}
+			SERIES ${ARG_SERIES}
+			GIT_TAG ${ARG_HAL_GIT_TAG}
 	)
 
 	set(TARGET_NAME "${ARG_NAME}")
@@ -406,7 +410,7 @@ function(add_project)
 		add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/${ARG_PATH}")
 	endif()
 
-	if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+	if(TARGET_TYPE STREQUAL "Host")
 		set_target_properties(
 			"${TARGET_NAME}"
 			PROPERTIES

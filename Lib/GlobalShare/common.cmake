@@ -7,26 +7,18 @@ target_include_directories(
 )
 
 if(
-	CMAKE_PRESET_NAME
+	CMAKE_BUILD_TYPE
 		STREQUAL
 		"Debug"
 	OR
-		CMAKE_PRESET_NAME
+		CMAKE_BUILD_TYPE
 			STREQUAL
 			"RelWithDebInfo"
 )
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
-	add_compile_options(
-		-u
-		_printf_float
-	)
-	add_link_options(
-		-u
-		_printf_float
-	)
 endif()
 
-if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
+if(BUILD_TESTING)
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
 	add_executable(stringification)

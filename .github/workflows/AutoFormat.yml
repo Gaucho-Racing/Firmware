@@ -99,7 +99,7 @@ jobs:
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           enable-cache: "false"
 
@@ -174,7 +174,7 @@ jobs:
           token: ${{ env.GITHUB_PAT }}
 
       - name: Setup Perl
-        uses: shogo82148/actions-setup-perl@ac3202722f5744e62a8fa3af3e1aaaebb08861f3 # v1.44.0
+        uses: shogo82148/actions-setup-perl@eebc5c886de14ebbfcd2493d49a12007d2c30477 # v1.44.5
         with:
           install-modules: "Perl::Tidy"
 
