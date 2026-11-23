@@ -12,6 +12,7 @@
 | GLVPD 0          | &check;     | &cross;      | &cross;  | `0x10` |
 | GLVPD 1          | &check;     | &cross;      | &cross;  | `0x11` |
 | GLVPD 2          | &check;     | &cross;      | &cross;  | `0x12` |
+| RTD Speaker      | &check;     | &cross;      | &cross;  | `0x18` |
 | Fan Controller 0 | &check;     | &cross;      | &cross;  | `0x1D` |
 | Fan Controller 1 | &check;     | &cross;      | &cross;  | `0x1E` |
 | Fan Controller 2 | &check;     | &cross;      | &cross;  | `0x1F` |
