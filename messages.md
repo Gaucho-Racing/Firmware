@@ -1,5 +1,8 @@
 # Messages
 
+> [!IMPORTANT]
+> Skips over all cooling (fans and/or pumps) since it is still in planning
+
 | Message Name                    | Byte | Bit Start | Data Name                   | Data Type | Description                                                 | Units   | Min      | Max   | Scaled Min | Scaled Max | Map Equation |
 | ------------------------------- | ---- | --------- | --------------------------- | --------- | ----------------------------------------------------------- | ------- | -------- | ----- | ---------- | ---------- | ------------ |
 | Debug B                         | 0-7  | N/A       | Debug print                 | char      | Arbitrary non-null terminated string of length 0-7          | s       | N/A      | N/A   | N/A        | N/A        | N/A          |
@@ -410,3 +413,85 @@
 | ^                               | ^    | 3-7       | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
 | ^                               | ^    | 8-11      | Left dial setting           | u4        | Setting of the left dial                                    | n       | 0        | 11    | N/A        | N/A        | N/A          |
 | ^                               | ^    | 12-15     | Right dial setting          | u4        | Setting of the right dial                                   | n       | 0        | 11    | N/A        | N/A        | N/A          |
+| GLVPD Command                   | 0    | 0         | Enable efuse 1              | bool      | Enable efuse 1 on mcu 1                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 1         | Enable efuse 2              | bool      | Enable efuse 2 on mcu 1                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 2         | Enable efuse 3              | bool      | Enable efuse 3 on mcu 1                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 3         | Enable efuse 4              | bool      | Enable efuse 4 on mcu 1                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 4         | Enable efuse 5              | bool      | Enable efuse 5 on mcu 2                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 5         | Enable efuse 6              | bool      | Enable efuse 6 on mcu 2                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 6         | Enable efuse 7              | bool      | Enable efuse 7 on mcu 2                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 7         | Enable efuse 8              | bool      | Enable efuse 8 on mcu 2                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | 1    | 8         | Enable efuse 9              | bool      | Enable efuse 9 on mcu 3                                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 9         | Enable efuse 10             | bool      | Enable efuse 10 on mcu 3                                    | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 10        | Enable efuse 11             | bool      | Enable efuse 11 on mcu 3                                    | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 11        | Enable efuse 12             | bool      | Enable efuse 12 on mcu 3                                    | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 12-15     | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| GLVPD Rail Status 1             | 0    | 0-11      | Current draw 1              | u12       | Current draw through efuse 1 on mcu 1                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 12        | Supply good 1               | bool      | If the supply is good on efuse 1 on mcu 1                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 13        | Efuse 1 faulted             | bool      | If their is a fault on the efuse 1 on mcu 1                 | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 14        | Efuse 1 enabled             | bool      | If efuse 1 on mcu 1 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 15        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 2    | 16-27     | Current draw 2              | u12       | Current draw through efuse 2 on mcu 1                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 28        | Supply good 2               | bool      | If the supply is good on efuse 2 on mcu 1                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 29        | Fault 2                     | bool      | If their is a fault on efuse 2 on mcu 1                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 30        | Enable 2                    | bool      | If efuse 2 on mcu 1 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 31        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 4    | 32-43     | Current draw 3              | u12       | Current draw through efuse 3 on mcu 1                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 44        | Supply good 3               | bool      | If the supply is good on efuse 3 on mcu 1                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 45        | Fault 3                     | bool      | If their is a fault on efuse 3 on mcu 1                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 46        | Enable 3                    | bool      | If efuse 3 on mcu 1 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 47        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 6    | 48-59     | Current draw 4              | u12       | Current draw through efuse 4 on mcu 1                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 60        | Supply good 4               | bool      | If the supply is good on efuse 4 on mcu 1                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 61        | Fault 4                     | bool      | If their is a fault on efuse 4 on mcu 1                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 62        | Enable 4                    | bool      | If efuse 4 on mcu 1 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 63        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| GLVPD Rail Status     2         | 0    | 0-11      | Current draw 5              | u12       | Current draw through efuse 5 on mcu 2                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 12        | Supply good 5               | bool      | If the supply is good on efuse 5 on mcu 2                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 13        | Efuse 5 faulted             | bool      | If their is a fault on the efuse 5 on mcu 2                 | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 14        | Efuse 5 enabled             | bool      | If efuse 5 on mcu 2 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 15        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 2    | 16-27     | Current draw 6              | u12       | Current draw through efuse 6 on mcu 2                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 28        | Supply good 6               | bool      | If the supply is good on efuse 6 on mcu 2                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 29        | Fault 6                     | bool      | If their is a fault on efuse 6 on mcu 2                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 30        | Enable 6                    | bool      | If efuse 6 on mcu 2 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 31        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 4    | 32-43     | Current draw 7              | u12       | Current draw through efuse 7 on mcu 2                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 44        | Supply good 7               | bool      | If the supply is good on efuse 7 on mcu 2                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 45        | Fault 7                     | bool      | If their is a fault on efuse 7 on mcu 2                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 46        | Enable 7                    | bool      | If efuse 7 on mcu 2 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 47        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 6    | 48-59     | Current draw 8              | u12       | Current draw through efuse 8 on mcu 2                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 60        | Supply good 8               | bool      | If the supply is good on efuse 8 on mcu 2                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 61        | Fault 8                     | bool      | If their is a fault on efuse 8 on mcu 2                     | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 62        | Enable 8                    | bool      | If efuse 8 on mcu 2 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 63        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| GLVPD Rail Status 3             | 0    | 0-11      | Current draw 9              | u12       | Current draw through efuse 9 on mcu 3                       | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 12        | Supply good 9               | bool      | If the supply is good on efuse 9 on mcu 3                   | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 13        | Efuse 9 faulted             | bool      | If their is a fault on the efuse 9 on mcu 3                 | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 14        | Efuse 9 enabled             | bool      | If efuse 9 on mcu 3 is enabled                              | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 15        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 2    | 16-27     | Current draw 10             | u12       | Current draw through efuse 10 on mcu 3                      | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 28        | Supply good 10              | bool      | If the supply is good on efuse 10 on mcu 3                  | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 29        | Fault 10                    | bool      | If their is a fault on efuse 10 on mcu 3                    | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 30        | Enable 10                   | bool      | If efuse 10 on mcu 3 is enabled                             | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 31        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 4    | 32-43     | Current draw 11             | u12       | Current draw through efuse 11 on mcu 3                      | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 44        | Supply good 11              | bool      | If the supply is good on efuse 11 on mcu 3                  | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 45        | Fault 11                    | bool      | If their is a fault on efuse 11 on mcu 3                    | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 46        | Enable 11                   | bool      | If efuse 11 on mcu 3 is enabled                             | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 47        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| ^                               | 6    | 48-59     | Current draw 12             | u12       | Current draw through efuse 12 on mcu 3                      | u12     | 0        | 4095  | 0          | 12.285     | 0.003*x      |
+| ^                               | ^    | 60        | Supply good 12              | bool      | If the supply is good on efuse 12 on mcu 3                  | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 61        | Fault 12                    | bool      | If their is a fault on efuse 12 on mcu 3                    | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 62        | Enable 12                   | bool      | If efuse 12 on mcu 3 is enabled                             | b       | 0        | 1     | N/A        | N/A        | N/A          |
+| ^                               | ^    | 63        | UNUSED                      | N/A       | RESERVED                                                    | N/A     | N/A      | N/A   | N/A        | N/A        | N/A          |
+| GLVPD Input Status              | 0-1  | 0-15      | Input current               | i16       | Input current from the GLV battery on mcu 2                 | Amps    | -32768   | 32767 | -32.768    | 32.767     | 0.001*x      |
+| ^                               | 2    | 16-23     | Input voltage               | u8        | Input voltage from the GLV battery on mcu 2                 | Volts   | 0        | 255   | 12         | 28.32      | 0.064*x + 12 |
+
+| GR Inverter Status 1 |
+| GR Inverter Status 2 |
+| GR Inverter Status 3 |
+| GR Inverter Config   |
+| GR Inverter Command  |
+
