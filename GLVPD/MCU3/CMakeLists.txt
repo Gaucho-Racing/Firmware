@@ -40,5 +40,5 @@ target_link_libraries(
     ${TARGET_NAME}
     PRIVATE
     LOGOMATIC_LIB
-    GLVPD_A_COMMON_LIB
+    GLVPD_COMMON_LIB
 )
