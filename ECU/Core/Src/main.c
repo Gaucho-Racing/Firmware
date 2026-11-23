@@ -106,17 +106,17 @@ void SystemClock_Config(void);
 
 void Update_ADC_to_StateData(void)
 {
-	stateLump.bse_signal = ADC_outputs[ADC_BUFFER_SIG_BSE];
-	stateLump.bspd_signal = ADC_outputs[ADC_BUFFER_SIG_BSPD];
-	stateLump.APPS1_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS1];
-	stateLump.APPS2_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS2];
-	stateLump.Brake_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE];
-	stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
-	stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE];
+	stateLump.bse_signal = ADC_buffers[ADC_BUFFER_SIG_BSE];
+	stateLump.bspd_signal = ADC_buffers[ADC_BUFFER_SIG_BSPD];
+	stateLump.APPS1_Signal = ADC_buffers[ADC_BUFFER_SIG_APPS1];
+	stateLump.APPS2_Signal = ADC_buffers[ADC_BUFFER_SIG_APPS2];
+	stateLump.Brake_Signal = ADC_buffers[ADC_BUFFER_SIG_BRAKE];
+	stateLump.aux_signal = ADC_buffers[ADC_BUFFER_SIG_AUX];
+	stateLump.steering_angle_signal = ADC_buffers[ADC_BUFFER_SIG_STEERING_ANGLE];
 
-	stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3f;
-	stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3f;
-	stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3f;
+	stateLump.bspd_sense = ADC_buffers[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3f;
+	stateLump.imd_sense = ADC_buffers[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3f;
+	stateLump.bms_sense = ADC_buffers[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3f;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
