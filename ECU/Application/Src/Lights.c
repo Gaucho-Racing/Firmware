@@ -107,7 +107,7 @@ void RTD_ButtonLightControl(ECU_StateData *stateLump)
 	light_control.green = (uint8_t)(63 * multiplier);
 	light_control.blue = (uint8_t)(0 * multiplier);
 
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
+	CubeCAN_Send(stateLump->primary_can, GRCAN_Dash_Panel, GRCAN_RTD_LIGHT_CTRL, &light_control, sizeof(light_control));
 }
 
 void dashLights(ECU_StateData *stateLump)
@@ -131,7 +131,7 @@ void dashLights(ECU_StateData *stateLump)
 	}
 
 	message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+	CubeCAN_Send(stateLump->primary_can, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 }
 
 void lightControl(ECU_StateData *stateData)

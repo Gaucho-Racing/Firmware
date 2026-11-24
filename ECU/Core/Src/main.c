@@ -88,7 +88,6 @@
 
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2 + NUM_SIGNALS_ADC5)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};
-uint16_t ADC_outputs[NUM_SIGNALS] = {0};
 
 // STATE DATA
 extern ECU_StateData stateLump;
@@ -214,7 +213,7 @@ int main(void)
 
 		message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
 
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+		CubeCAN_Send(stateLump.primary_can, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 
 		LL_mDelay(1);
 		Update_ADC_to_StateData();
