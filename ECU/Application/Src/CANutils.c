@@ -33,16 +33,6 @@ CubeCAN_Handle *ECU_GetCANHandle(GRCAN_BUS_ID bus)
 	}
 }
 
-HAL_StatusTypeDef ECU_CAN_Send(GRCAN_BUS_ID bus, GRCAN_NODE_ID destNode, GRCAN_MSG_ID messageID, const void *data, uint8_t size)
-{
-	CubeCAN_Handle *handle = ECU_GetCANHandle(bus);
-	if (handle == NULL) {
-		LOGOMATIC_ERROR("CAN: no handle for bus %d\n", bus);
-		return HAL_ERROR;
-	}
-
-	return CubeCAN_Send(handle, destNode, messageID, data, size);
-}
 
 HAL_StatusTypeDef ECU_CAN_Send_DTI(GRCAN_CUSTOM_ID msgID, const void *data, uint8_t size)
 {

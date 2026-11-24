@@ -88,7 +88,6 @@
 
 #define NUM_SIGNALS (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2 + NUM_SIGNALS_ADC5)
 volatile uint16_t ADC_buffers[NUM_SIGNALS] = {0};
-uint16_t ADC_outputs[NUM_SIGNALS] = {0};
 
 // STATE DATA
 extern ECU_StateData stateLump;
@@ -106,17 +105,17 @@ void SystemClock_Config(void);
 
 void Update_ADC_to_StateData(void)
 {
-	stateLump.bse_signal = ADC_outputs[ADC_BUFFER_SIG_BSE];
-	stateLump.bspd_signal = ADC_outputs[ADC_BUFFER_SIG_BSPD];
-	stateLump.APPS1_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS1];
-	stateLump.APPS2_Signal = ADC_outputs[ADC_BUFFER_SIG_APPS2];
-	stateLump.Brake_Signal = ADC_outputs[ADC_BUFFER_SIG_BRAKE];
-	stateLump.aux_signal = ADC_outputs[ADC_BUFFER_SIG_AUX];
-	stateLump.steering_angle_signal = ADC_outputs[ADC_BUFFER_SIG_STEERING_ANGLE];
+	stateLump.bse_signal = ADC_buffers[ADC_BUFFER_SIG_BSE];
+	stateLump.bspd_signal = ADC_buffers[ADC_BUFFER_SIG_BSPD];
+	stateLump.APPS1_Signal = ADC_buffers[ADC_BUFFER_SIG_APPS1];
+	stateLump.APPS2_Signal = ADC_buffers[ADC_BUFFER_SIG_APPS2];
+	stateLump.Brake_Signal = ADC_buffers[ADC_BUFFER_SIG_BRAKE];
+	stateLump.aux_signal = ADC_buffers[ADC_BUFFER_SIG_AUX];
+	stateLump.steering_angle_signal = ADC_buffers[ADC_BUFFER_SIG_STEERING_ANGLE];
 
-	stateLump.bspd_sense = ADC_outputs[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3f;
-	stateLump.imd_sense = ADC_outputs[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3f;
-	stateLump.bms_sense = ADC_outputs[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3f;
+	stateLump.bspd_sense = ADC_buffers[ADC_BUFFER_SENSE_BSPD] / 4095.0f * 3.3f;
+	stateLump.imd_sense = ADC_buffers[ADC_BUFFER_SENSE_IMD] / 4095.0f * 3.3f;
+	stateLump.bms_sense = ADC_buffers[ADC_BUFFER_SENSE_BMS] / 4095.0f * 3.3f;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -214,7 +213,7 @@ int main(void)
 
 		message.led_latch_flags = ~message.led_latch_flags; // not to spec, needed as of the current iteration of the dash panel code
 
-		ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
+		CubeCAN_Send(stateLump.primary_can, GRCAN_Dash_Panel, GRCAN_DASH_CONFIG, &message, sizeof(message));
 
 		LL_mDelay(1);
 		Update_ADC_to_StateData();

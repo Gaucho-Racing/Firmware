@@ -23,7 +23,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+<<<<<<<< HEAD:Testbench/NucleoL4-Blinky/Core/Src/main.c
+#include "morse.h"
+========
 #include "Logomatic.h"
+>>>>>>>> origin/main:Testbench/NucleoG4-HelloNode/Core/Src/main.c
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+const char message[] = "--. .- ..- -.-. .... ---/.-. .- -.-. .. -. --.";
 
 /* USER CODE END PV */
 
@@ -98,6 +103,13 @@ int main(void)
 		LOGOMATIC_CRITICAL("Hello from NucleoG4-HelloNode! I am node %d\n", NODE);
 		HAL_Delay(1000);
 		/* USER CODE BEGIN 3 */
+<<<<<<<< HEAD:Testbench/NucleoL4-Blinky/Core/Src/main.c
+		if (morse_code_send(message, sizeof(message) / sizeof(message[0])) != HAL_OK) {
+			Error_Handler();
+		}
+		HAL_Delay(500);
+========
+>>>>>>>> origin/main:Testbench/NucleoG4-HelloNode/Core/Src/main.c
 	}
 	/* USER CODE END 3 */
 }
@@ -118,14 +130,22 @@ void SystemClock_Config(void)
 	/** Initializes the RCC Oscillators according to the specified parameters
 	 * in the RCC_OscInitTypeDef structure.
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
+	RCC_OscInitStruct.MSIState = RCC_MSI_ON;
+	RCC_OscInitStruct.MSICalibrationValue = 0;
+	RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+<<<<<<<< HEAD:Testbench/NucleoL4-Blinky/Core/Src/main.c
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
+	RCC_OscInitStruct.PLL.PLLM = 1;
+	RCC_OscInitStruct.PLL.PLLN = 40;
+	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
+========
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
 	RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
 	RCC_OscInitStruct.PLL.PLLN = 20;
 	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+>>>>>>>> origin/main:Testbench/NucleoG4-HelloNode/Core/Src/main.c
 	RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
 	RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {

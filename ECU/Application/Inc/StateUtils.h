@@ -76,7 +76,7 @@ float CalcBrakePressure(volatile const ECU_StateData *stateData);
 float CalcAccPedalTravel(volatile const ECU_StateData *stateData);
 bool APPS_Plausible(volatile const ECU_StateData *stateData);
 /* Disable inverter for both DTI and Custom */
-void disable_inverter(void);
+void disable_inverter(const ECU_StateData *stateData);
 void Send_VCP_APPS(const ECU_StateData *stateData, uint16_t apps1_raw, uint16_t apps2_raw);
 
 #endif

@@ -10,6 +10,9 @@
 
 // add new pingable devices here, arrays are updated automagically
 // MUST be in agreement with Autogen/CAN/Inc/GRCAN_MSG_DATA.h/GRCAN_ECU_PINGING_RTT_MSG
+// THIS PROBABLY GETTING SCRAPPED
+
+
 #define PING_LIST(OP)                                                                                                                                                                                  \
 	OP(GRCAN_ACU, 0, GRCAN_BUS_PRIMARY)                                                                                                                                                            \
 	OP(GRCAN_GR_Inv, 1, GRCAN_BUS_PRIMARY)                                                                                                                                                         \
@@ -76,12 +79,12 @@ void pingAll(void)
 		// ECU_CAN_Send(BusesToBePinged[i], IDsToBePinged[i], GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 	}
 	// send data to tcm
-	ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PINGING_RTT, RTTs, sizeof(GRCAN_ECU_PINGING_RTT_MSG));
+	//ECU_CAN_Send(GRCAN_BUS_DATA, GRCAN_TCM, GRCAN_ECU_PINGING_RTT, RTTs, sizeof(GRCAN_ECU_PINGING_RTT_MSG));
 
 	// ping en masse
-	uint32_t timestamp = MillisecondsSinceBoot();
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, 0, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
-	ECU_CAN_Send(GRCAN_BUS_DATA, 0, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+	//uint32_t timestamp = MillisecondsSinceBoot();
+	//ECU_CAN_Send(GRCAN_BUS_PRIMARY, 0, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+	//ECU_CAN_Send(GRCAN_BUS_DATA, 0, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 }
 
 uint32_t getRTT(uint8_t ID)
@@ -94,7 +97,7 @@ void respondToPing(uint8_t busID, uint8_t srcID, uint32_t timestamp)
 	if (srcID == GRCAN_Debugger) {
 		// bounce ping instead of logging RTT
 		// TODO: verify if this creates a feedback-loop.
-		ECU_CAN_Send(busID, srcID, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
+		//ECU_CAN_Send(busID, srcID, GRCAN_PING, &(GRCAN_PING_MSG){timestamp}, sizeof(GRCAN_PING_MSG));
 		return;
 	}
 

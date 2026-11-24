@@ -179,10 +179,10 @@ bool APPS_Plausible(volatile const ECU_StateData *stateData)
 	return error < 0.1f;
 }
 
-void disable_inverter(void)
+void disable_inverter(const ECU_StateData *stateData)
 {
 	GRCAN_INV_CMD_MSG inverter_msg = {.drive_enable = 0, .field_weakening = 0, .rpm_limit = 0, .set_ac_current = 32768, .set_dc_current = 32768};
-	ECU_CAN_Send(GRCAN_BUS_PRIMARY, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
+	CubeCAN_Send(stateData->primary_can, GRCAN_GR_Inv, GRCAN_INV_CMD, &inverter_msg, sizeof(inverter_msg));
 	ECU_CAN_Send_DTI(DTI_CONTROL_12_CAN_ID, &inverter_msg.drive_enable, 1);
 }
 
