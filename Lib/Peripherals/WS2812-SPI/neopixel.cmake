@@ -11,11 +11,7 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Src/neopixel_tx.c
 )
 
-target_link_libraries(
-	NEOPIXEL_LIB
-	INTERFACE
-		LOGOMATIC_LIB
-)
+target_link_libraries(NEOPIXEL_LIB INTERFACE LOGOMATIC_LIB)
 
 if(BUILD_TESTING)
 	# TODO

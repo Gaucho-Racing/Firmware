@@ -16,19 +16,15 @@ target_link_options(
 
 target_compile_definitions(${TARGET_NAME} PRIVATE STM32H503xx)
 
-target_include_directories(
-	${TARGET_NAME}
-	PRIVATE
-		Core/Inc
-)
+target_include_directories(${TARGET_NAME} PRIVATE Core/Inc)
 
 target_sources(
 	${TARGET_NAME}
 	PRIVATE
 		Core/Src/gpio.c
-        Core/Src/icache.c
+		Core/Src/icache.c
 		Core/Src/main.c
-        Core/Src/stm32h5xx_hal_msp.c
+		Core/Src/stm32h5xx_hal_msp.c
 		Core/Src/stm32h5xx_it.c
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
