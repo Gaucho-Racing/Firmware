@@ -1,9 +1,4 @@
-# WS2812 (NeoPixel) Library
-
-> [!NOTE]
-> Currently only supports 3 SPI bits per NeoPixel bit.
->
-> If support is desired for another please reach out to the Firmware manager.
+# WS2812SPI (NeoPixel over SPI) Library
 
 TODO
 
@@ -13,9 +8,7 @@ TODO
 
 Set SPI mode to transmit-only master, 8-bit data size, MSB first
 
-Baud rate should be prescaled to match the encoding, ~2.4-3 MHz for 3 SPI bits per NoePixel bit
-
-If using DMA, add a `SPIx_TX` DMA request in normal mode, not circular, memory to peripheral, byte data width; double check the DMA and SPI global interrupts get enabled
+Baud rate should be prescaled to match the encoding, for example ~2.4-3 MHz for 3 SPI bits per NoePixel bit
 
 TODO
 

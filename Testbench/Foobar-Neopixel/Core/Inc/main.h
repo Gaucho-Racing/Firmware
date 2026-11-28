@@ -59,7 +59,9 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-
+#define WS2812SPI_MAX_LEDS 4U
+#define WS2812SPI_MAX_SPI_BITS_PER_PIXEL 3U
+#define WS2812SPI_MAX_INSTANCES 1U
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

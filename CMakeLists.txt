@@ -133,7 +133,7 @@ include("Autogen/CAN/CANfigurator.cmake")
 
 # Peripherals
 include("Lib/Peripherals/CubeCAN/cube_can.cmake")
-include("Lib/Peripherals/WS2812-SPI/neopixel.cmake")
+include("Lib/Peripherals/WS2812SPI/ws2812spi.cmake")
 
 # Projects
 include(Testbench/testbench.cmake)

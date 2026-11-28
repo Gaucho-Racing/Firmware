@@ -8,34 +8,34 @@ Required components (orderless)
 ]]
 
 target_link_options(
-	${TARGET_NAME}
-	PRIVATE
-		-T
-		"${CMAKE_CURRENT_SOURCE_DIR}/STM32H503xx_FLASH.ld"
+    ${TARGET_NAME}
+    PRIVATE
+    -T
+    "${CMAKE_CURRENT_SOURCE_DIR}/STM32H503xx_FLASH.ld"
 )
 
 target_compile_definitions(${TARGET_NAME} PRIVATE STM32H503xx)
 
 target_include_directories(
-	${TARGET_NAME}
-	PRIVATE
-		Core/Inc
-		Application/Inc
+    ${TARGET_NAME}
+    PRIVATE
+    Core/Inc
+    Application/Inc
 )
 
 target_sources(
-	${TARGET_NAME}
-	PRIVATE
-		Core/Src/gpio.c
-        Core/Src/icache.c
-		Core/Src/main.c
-        Core/Src/spi.c
-        Core/Src/stm32h5xx_hal_msp.c
-		Core/Src/stm32h5xx_it.c
-		Core/Src/syscalls.c
-		Core/Src/sysmem.c
-		Core/Src/system_stm32h5xx.c
-		startup_stm32h503xx.s
+    ${TARGET_NAME}
+    PRIVATE
+    Core/Src/gpio.c
+    Core/Src/icache.c
+    Core/Src/main.c
+    Core/Src/spi.c
+    Core/Src/stm32h5xx_hal_msp.c
+    Core/Src/stm32h5xx_it.c
+    Core/Src/syscalls.c
+    Core/Src/sysmem.c
+    Core/Src/system_stm32h5xx.c
+    startup_stm32h503xx.s
 )
 
-target_link_libraries(${TARGET_NAME} PRIVATE)
+target_link_libraries(${TARGET_NAME} PRIVATE WS2812SPI_LIB)
