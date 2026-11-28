@@ -63,11 +63,11 @@ void Error_Handler(void);
 #define U7_FLT_GPIO_Port GPIOF
 #define U7_SPLYGD_Pin GPIO_PIN_1
 #define U7_SPLYGD_GPIO_Port GPIOF
-#define U11_FLT_Pin GPIO_PIN_10
-#define U11_FLT_GPIO_Port GPIOG
-#define U11_SPLYGD_Pin GPIO_PIN_0
+#define U11_FLT_Pin GPIO_PIN_0
+#define U11_FLT_GPIO_Port GPIOA
+#define U11_SPLYGD_Pin GPIO_PIN_1
 #define U11_SPLYGD_GPIO_Port GPIOA
-#define U11_EN_Pin GPIO_PIN_1
+#define U11_EN_Pin GPIO_PIN_2
 #define U11_EN_GPIO_Port GPIOA
 #define U7_EN_Pin GPIO_PIN_3
 #define U7_EN_GPIO_Port GPIOA
@@ -75,9 +75,13 @@ void Error_Handler(void);
 #define U7_IOUT_GPIO_Port GPIOA
 #define U11_IOUT_Pin GPIO_PIN_5
 #define U11_IOUT_GPIO_Port GPIOA
-#define U12_IOUT_Pin GPIO_PIN_12
+#define CurrentSense_VOUT_Pin GPIO_PIN_0
+#define CurrentSense_VOUT_GPIO_Port GPIOB
+#define _20V_IN_Sense_Pin GPIO_PIN_1
+#define _20V_IN_Sense_GPIO_Port GPIOB
+#define U12_IOUT_Pin GPIO_PIN_11
 #define U12_IOUT_GPIO_Port GPIOB
-#define U6_IOUT_Pin GPIO_PIN_13
+#define U6_IOUT_Pin GPIO_PIN_12
 #define U6_IOUT_GPIO_Port GPIOB
 #define U6_FLT_Pin GPIO_PIN_14
 #define U6_FLT_GPIO_Port GPIOB
@@ -91,10 +95,6 @@ void Error_Handler(void);
 #define U6_SPLYGD_GPIO_Port GPIOA
 #define U6_EN_Pin GPIO_PIN_10
 #define U6_EN_GPIO_Port GPIOA
-#define _20V_IN_Sense_Pin GPIO_PIN_10
-#define _20V_IN_Sense_GPIO_Port GPIOC
-#define CurrentSense_VOUT_Pin GPIO_PIN_11
-#define CurrentSense_VOUT_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 
