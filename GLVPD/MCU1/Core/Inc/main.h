@@ -63,11 +63,11 @@ void Error_Handler(void);
 #define U3_FLT_GPIO_Port GPIOF
 #define U3_SPLYGD_Pin GPIO_PIN_1
 #define U3_SPLYGD_GPIO_Port GPIOF
-#define U4_FLT_Pin GPIO_PIN_10
-#define U4_FLT_GPIO_Port GPIOG
-#define U4_SPLYGD_Pin GPIO_PIN_0
+#define U4_FLT_Pin GPIO_PIN_0
+#define U4_FLT_GPIO_Port GPIOA
+#define U4_SPLYGD_Pin GPIO_PIN_1
 #define U4_SPLYGD_GPIO_Port GPIOA
-#define U4_EN_Pin GPIO_PIN_1
+#define U4_EN_Pin GPIO_PIN_2
 #define U4_EN_GPIO_Port GPIOA
 #define U3_EN_Pin GPIO_PIN_3
 #define U3_EN_GPIO_Port GPIOA
@@ -75,9 +75,9 @@ void Error_Handler(void);
 #define U3_IOUT_GPIO_Port GPIOA
 #define U4_IOUT_Pin GPIO_PIN_5
 #define U4_IOUT_GPIO_Port GPIOA
-#define U5_IOUT_Pin GPIO_PIN_12
+#define U5_IOUT_Pin GPIO_PIN_11
 #define U5_IOUT_GPIO_Port GPIOB
-#define U2_IOUT_Pin GPIO_PIN_13
+#define U2_IOUT_Pin GPIO_PIN_12
 #define U2_IOUT_GPIO_Port GPIOB
 #define U2_FLT_Pin GPIO_PIN_14
 #define U2_FLT_GPIO_Port GPIOB

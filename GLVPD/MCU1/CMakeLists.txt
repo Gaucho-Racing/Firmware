@@ -26,6 +26,7 @@ target_include_directories(
 target_sources(
     ${TARGET_NAME}
     PRIVATE
+    Core/Src/adc.c
     Core/Src/fdcan.c
     Core/Src/gpio.c
     Core/Src/main.c
