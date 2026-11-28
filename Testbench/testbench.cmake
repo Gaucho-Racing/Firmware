@@ -59,6 +59,16 @@ add_project(
 )
 
 add_project(
+    NAME "Foobar-Neopixel"
+    PATH "Foobar-Neopixel"
+    SERIES "h5"
+    SPECIFIER "h503rbt6"
+    HAL_GIT_TAG "v1.7.0" # https://github.com/STMicroelectronics/stm32h5xx-hal-driver/tree/v1.7.0
+    CMSIS_GIT_TAG "v1.7.0" # https://github.com/STMicroelectronics/cmsis-device-h5/tree/v1.7.0
+    CMSIS_MAJOR "5"
+)
+
+add_project(
     NAME "NucleoL4-Blinky"
     PATH "NucleoL4-Blinky"
     SERIES "l4"

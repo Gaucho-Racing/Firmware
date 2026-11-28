@@ -111,8 +111,8 @@ enable_language(
 include("Lib/CMake/cube.cmake")
 
 add_arm_cmsis_core(
-	MAJOR "5"
-	GIT_TAG "5.9.0" # https://github.com/ARM-software/CMSIS_5/tree/5.9.0
+    MAJOR "5"
+    GIT_TAG "5.9.0" # https://github.com/ARM-software/CMSIS_5/tree/5.9.0
 )
 
 # Vendor
@@ -133,6 +133,7 @@ include("Autogen/CAN/CANfigurator.cmake")
 
 # Peripherals
 include("Lib/Peripherals/CubeCAN/cube_can.cmake")
+include("Lib/Peripherals/WS2812SPI/ws2812spi.cmake")
 
 # Projects
 include(Testbench/testbench.cmake)
@@ -140,13 +141,13 @@ include(SensorArray/sensors.cmake)
 include(DriverInterface/controls.cmake)
 
 add_project(
-	NAME "ECU"
-	PATH "ECU"
-	SERIES "g4"
-	SPECIFIER "g474re"
-	HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
-	CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
-	CMSIS_MAJOR "5"
+    NAME "ECU"
+    PATH "ECU"
+    SERIES "g4"
+    SPECIFIER "g474re"
+    HAL_GIT_TAG "v1.2.7" # https://github.com/STMicroelectronics/stm32g4xx-hal-driver/tree/v1.2.7
+    CMSIS_GIT_TAG "v1.2.6" # https://github.com/STMicroelectronics/cmsis-device-g4/tree/v1.2.6
+    CMSIS_MAJOR "5"
 )
 
 # add_project(
