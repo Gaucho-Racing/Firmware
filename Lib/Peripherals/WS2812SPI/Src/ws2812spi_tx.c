@@ -6,24 +6,24 @@
 #include "main.h"
 #include "ws2812spi.h"
 
-static void WS2812SPI_Private_Pack(uint8_t *buffer, uint32_t *encoded_bit, uint8_t value, uint8_t width)
+static void WS2812SPI_Private_Pack(uint8_t *const buffer, uint32_t *const encoded_bit, const uint8_t value, const uint8_t width)
 {
 	if (width != 3U && width != 8U) {
 		return;
 	}
 
-	value &= (uint8_t)((1U << width) - 1U);
+	const uint8_t masked_value = value & (uint8_t)((1U << width) - 1U);
 	for (int8_t bit = (int8_t)(width - 1U); bit >= 0; --bit) {
 		uint32_t byte_index = *encoded_bit / 8U;
 		uint32_t bit_index = *encoded_bit % 8U;
-		uint8_t output_bit = (value >> bit) & 1U;
+		uint8_t output_bit = (masked_value >> bit) & 1U;
 
 		buffer[byte_index] |= (uint8_t)(output_bit << (7U - bit_index));
 		++(*encoded_bit);
 	}
 }
 
-static void WS2812SPI_Private_Encode_3b_Color(uint8_t *buffer, uint32_t *encoded_bit, uint8_t value)
+static void WS2812SPI_Private_Encode_3b_Color(uint8_t *const buffer, uint32_t *const encoded_bit, const uint8_t value)
 {
 	for (int8_t bit = 7; bit >= 0; --bit) {
 		uint8_t neopixel_bit = (value >> bit) & 1U;
@@ -32,7 +32,7 @@ static void WS2812SPI_Private_Encode_3b_Color(uint8_t *buffer, uint32_t *encoded
 	}
 }
 
-static void WS2812SPI_Private_Encode_8b_Color(uint8_t *buffer, uint32_t *encoded_bit, uint8_t value)
+static void WS2812SPI_Private_Encode_8b_Color(uint8_t *const buffer, uint32_t *const encoded_bit, const uint8_t value)
 {
 	for (int8_t bit = 7; bit >= 0; --bit) {
 		uint8_t neopixel_bit = (value >> bit) & 1U;
@@ -41,24 +41,19 @@ static void WS2812SPI_Private_Encode_8b_Color(uint8_t *buffer, uint32_t *encoded
 	}
 }
 
-static uint8_t WS2812SPI_Private_Channel(const WS2812SPI_Private_Handle *handle, const WS2812SPI_Color *color, uint8_t channel_index)
+static uint8_t WS2812SPI_Private_Channel(const WS2812SPI_Color *const color, const uint8_t channel_index)
 {
-	if (handle->config.color_order == WS2812SPI_ORDER_GRB) {
-		static const uint8_t grb_order[3] = {1U, 0U, 2U};
-		channel_index = grb_order[channel_index];
-	}
-
 	switch (channel_index) {
 		case 0U:
-			return color->red;
-		case 1U:
 			return color->green;
+		case 1U:
+			return color->red;
 		default:
 			return color->blue;
 	}
 }
 
-HAL_StatusTypeDef WS2812SPI_Write(WS2812SPI_Handle *handle, const WS2812SPI_Color *colors, uint16_t led_count)
+HAL_StatusTypeDef WS2812SPI_Write(WS2812SPI_Handle *const handle, const WS2812SPI_Color *const colors, const uint16_t led_count)
 {
 	WS2812SPI_Private_Handle *private_handle = (WS2812SPI_Private_Handle *)handle;
 
@@ -81,7 +76,7 @@ HAL_StatusTypeDef WS2812SPI_Write(WS2812SPI_Handle *handle, const WS2812SPI_Colo
 	uint32_t encoded_bit = 0U;
 	for (uint16_t led = 0U; led < led_count; ++led) {
 		for (uint8_t channel = 0U; channel < 3U; ++channel) {
-			uint8_t value = WS2812SPI_Private_Channel(private_handle, &colors[led], channel);
+			uint8_t value = WS2812SPI_Private_Channel(&colors[led], channel);
 			if (private_handle->config.spi_bits_per_pixel == 3U) {
 				WS2812SPI_Private_Encode_3b_Color(private_handle->encoded_buffer, &encoded_bit, value);
 			} else {

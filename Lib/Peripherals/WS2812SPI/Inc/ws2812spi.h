@@ -14,13 +14,7 @@ typedef struct {
 	uint8_t blue;
 } WS2812SPI_Color;
 
-typedef enum {
-	WS2812SPI_ORDER_RGB = 0,
-	WS2812SPI_ORDER_GRB = 1,
-} WS2812SPI_ColorOrder;
-
 typedef struct {
-	WS2812SPI_ColorOrder color_order;
 	uint16_t led_count;
 	uint8_t spi_bits_per_pixel;
 } WS2812SPI_Config;
@@ -31,11 +25,11 @@ typedef struct {
 #define WS2812SPI_COLOR_WHITE ((WS2812SPI_Color){.red = 255, .green = 255, .blue = 255})
 #define WS2812SPI_COLOR_BLACK ((WS2812SPI_Color){.red = 0, .green = 0, .blue = 0})
 
-WS2812SPI_Handle* WS2812SPI_Entrance(SPI_HandleTypeDef *hspi, const WS2812SPI_Config *const config);
+WS2812SPI_Handle *WS2812SPI_Entrance(SPI_HandleTypeDef *const hspi, const WS2812SPI_Config *const config);
 
-HAL_StatusTypeDef WS2812SPI_Exit(WS2812SPI_Handle *handle);
+HAL_StatusTypeDef WS2812SPI_Exit(WS2812SPI_Handle *const handle);
 
-HAL_StatusTypeDef WS2812SPI_Write(WS2812SPI_Handle *handle, const WS2812SPI_Color *colors, uint16_t led_count);
+HAL_StatusTypeDef WS2812SPI_Write(WS2812SPI_Handle *const handle, const WS2812SPI_Color *const colors, const uint16_t led_count);
 
 #ifndef WS2812SPI_MAX_LEDS
 #pragma warning "WS2812SPI_MAX_LEDS is not defined. Please define it in `main.h` to the maximum number of LEDs available on your MCU"

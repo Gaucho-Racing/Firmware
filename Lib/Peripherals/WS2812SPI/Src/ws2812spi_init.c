@@ -7,7 +7,7 @@
 #include "spi.h"
 #include "ws2812spi.h"
 
-WS2812SPI_Handle *WS2812SPI_Entrance(SPI_HandleTypeDef *hspi, const WS2812SPI_Config *const config)
+WS2812SPI_Handle *WS2812SPI_Entrance(SPI_HandleTypeDef *const hspi, const WS2812SPI_Config *const config)
 {
 	if (hspi == NULL) {
 		LOGOMATIC_ERROR("WS2812SPI: SPI handle is NULL");
@@ -24,14 +24,8 @@ WS2812SPI_Handle *WS2812SPI_Entrance(SPI_HandleTypeDef *hspi, const WS2812SPI_Co
 		return NULL;
 	}
 
-	if (config->spi_bits_per_pixel != 3U &&
-	    config->spi_bits_per_pixel != 8U) {
+	if (config->spi_bits_per_pixel != 3U && config->spi_bits_per_pixel != 8U) {
 		LOGOMATIC_ERROR("WS2812SPI_Entrance: SPI bits per pixel must be 3 or 8");
-		return NULL;
-	}
-
-	if (config->color_order != WS2812SPI_ORDER_RGB && config->color_order != WS2812SPI_ORDER_GRB) {
-		LOGOMATIC_ERROR("WS2812SPI_Entrance: unsupported color order");
 		return NULL;
 	}
 
@@ -56,7 +50,7 @@ WS2812SPI_Handle *WS2812SPI_Entrance(SPI_HandleTypeDef *hspi, const WS2812SPI_Co
 	return NULL;
 }
 
-HAL_StatusTypeDef WS2812SPI_Exit(WS2812SPI_Handle *handle)
+HAL_StatusTypeDef WS2812SPI_Exit(WS2812SPI_Handle *const handle)
 {
 	WS2812SPI_Private_Handle *private_handle = (WS2812SPI_Private_Handle *)handle;
 
