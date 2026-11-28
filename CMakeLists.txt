@@ -138,6 +138,7 @@ include("Lib/Peripherals/CubeCAN/cube_can.cmake")
 include(Testbench/testbench.cmake)
 include(SensorArray/sensors.cmake)
 include(DriverInterface/controls.cmake)
+include(GLVPD/glvpd.cmake)
 
 add_project(
 	NAME "ECU"
